@@ -1,0 +1,10 @@
+html {
+    font-family: JetBrainsMono, monospace;
+
+    --main-size: 20px;
+}
+
+main {
+    font-size: var(--main-size);
+    line-height: var(--main-size);
+}

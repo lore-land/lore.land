@@ -1,9 +1,27 @@
 <html lang="en">
-	<head>
-		<title>lore.land</title>
-		<script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
-	</head>
-	<body>
-		welcome to lore.land
-	</body>
+<head>
+    <title>lore.land</title>
+    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+
+    <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/css/fixtures/fonts.css">
+    <link id="period-styles" rel="stylesheet" href="/css/0.css">
+
+    <script>
+      const options = ['0.css', '1.css'];
+
+      let currentSelection = 1;
+
+      setInterval(() => {
+        document.querySelector('#period-styles').href = `/css/${options[currentSelection]}`;
+
+        currentSelection = (currentSelection + 1) % options.length;
+      }, 1000);
+    </script>
+</head>
+<body>
+    <main>
+        welcome to lore.land
+    </main>
+</body>
 </html>
