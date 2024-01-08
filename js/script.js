@@ -1,11 +1,24 @@
-const options = ["0.css", "1.css"];
+let currentFrame = 1;
+const frameOptions = ["0.css", "1.css"];
+const moods = ["tldr"];
 
-let currentSelection = 1;
+beginOscillation();
+listenToMood();
 
-setInterval(() => {
-  document.querySelector(
-    "#period-styles"
-  ).href = `/css/frames/${options[currentSelection]}`;
+function listenToMood() {
+  const moodSelect = document.querySelector("#mood-select");
+  const stylesheet = document.querySelector("#mood-styles");
+  moodSelect.addEventListener("change", (event) => {
+    let value = event.target.value;
+    stylesheet.href = `/css/moods/${value}.css`;
+  });
+}
 
-  currentSelection = (currentSelection + 1) % options.length;
-}, 1000);
+function beginOscillation() {
+  setInterval(() => {
+    const stylesheet = document.querySelector("#period-styles");
+    stylesheet.href = `/css/frames/${frameOptions[currentFrame]}`;
+
+    currentFrame = (currentFrame + 1) % frameOptions.length;
+  }, 1000);
+}

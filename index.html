@@ -6,11 +6,14 @@
 
     <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" href="/css/fixtures/root.css">
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link id="period-styles" rel="stylesheet" href="/css/frames/0.css">
+    <link rel="stylesheet" href="/css/fixtures/identities.css">
+
+    <link id="period-styles" rel="stylesheet">
+    <link id="mood-styles" rel="stylesheet">
 
     <script defer src="/js/script.js"></script>
 </head>
@@ -32,6 +35,15 @@
             <li><a href="/book/chapter/12">Chapter 12</a></li>
             <li><a href="/book/chapter/13">Chapter 13</a></li>
         </ul>
+        <aside>
+            <label for="mood-select">
+                <span>mood:</span>
+                <select id="mood-select">
+                    <option selected value=""></option>
+                    <option value="tldr">tl;dr</option>
+                </select>
+            </label>
+        </aside>
     </main>
 </body>
 </html>
