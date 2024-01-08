@@ -5,7 +5,7 @@ let currentSelection = 1;
 setInterval(() => {
   document.querySelector(
     "#period-styles"
-  ).href = `/css/${options[currentSelection]}`;
+  ).href = `/css/frames/${options[currentSelection]}`;
 
   currentSelection = (currentSelection + 1) % options.length;
 }, 1000);

@@ -1,6 +1,7 @@
 :root {
     --bg-main: wheat;
     --accent-main: teal;
+    --width-header-main: 20rem;
 }
 
 body {
@@ -24,7 +25,7 @@ main > h1 {
     outline: thick solid yellow;
     height: 3rem;
     overflow: hidden;
-    width: 20rem;
+    width: var(--width-header-main);
     white-space: nowrap;
     line-height: 2rem;
     display: flex;
@@ -34,16 +35,15 @@ main > h1 {
 
 main > h1 > span {
     outline: thick solid orange;
-    max-width: 10rem;
+    width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
 }
 
 main > h1 + ul li{
     outline: thin solid red;
-    height: 1rem;
+    width: var(--width-header-main);
     padding: .5rem;
-    width: 20rem;
 }
 
 main > ul li > a {
@@ -52,6 +52,7 @@ main > ul li > a {
     height: 1rem;
     width: 50%;
     transition: background-color .3s, color .1s;
+    padding: .5rem;
 }
 
 main > ul li > a:hover {
