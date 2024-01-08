@@ -4,24 +4,29 @@ const moods = {
   tldr: "tldr",
 };
 
-beginOscillation();
-listenToMood();
+window.addEventListener("load", () => {
+  beginOscillation();
+  listenToMood();
+});
 
 function listenToMood() {
-  const moodSelect = document.querySelector("#mood-select");
   const stylesheet = document.querySelector("#mood-styles");
 
   const starterMood = new URLSearchParams(window.location.search).get("mood");
   setDocumentMood(starterMood);
 
-  moodSelect.addEventListener("change", (event) => {
-    let value = event.target.value;
-    let selection = moods[value];
-    setDocumentMood(selection);
-  });
+  const moodSelect = document.querySelector("#mood-select");
+  if (moodSelect) {
+    moodSelect.addEventListener("change", (event) => {
+      let value = event.target.value;
+      let selection = moods[value];
+      setDocumentMood(selection);
+    });
+  }
 
   function setDocumentMood(mood = starterMood) {
     document.body.dataset.mood = mood;
+    if (!mood) return;
     stylesheet.href = `/css/moods/${mood}.css`;
     adjustLinks(mood);
   }
@@ -30,13 +35,14 @@ function listenToMood() {
     const links = document.querySelectorAll('a[href*="/book/chapter/"]');
     links.forEach((link) => {
       link.href =
-        link.href.split("?")[0].replace(/\/*$/, "") + `/?mood=${mood}`;
+        link.href.split("?")[0].replace(/\/*$/, "") +
+        (mood ? `/?mood=${mood}` : "");
     });
   }
 }
 
 function beginOscillation() {
-  setInterval(() => {
+  window.oscillationIntervalId = setInterval(() => {
     const stylesheet = document.querySelector("#period-styles");
     stylesheet.href = `/css/frames/${frameOptions[currentFrame]}`;
 

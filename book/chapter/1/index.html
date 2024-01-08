@@ -10,15 +10,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script defer type="application/javascript" src="/book/chapter/1/script.js"></script>
+
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+
     <link id="period-styles" rel="stylesheet">
+    <link id="mood-styles" rel="stylesheet">
+
     <script src="/js/script.js"></script>
+
+    <style>
+        span[data-audio] {
+            cursor: pointer;
+        }
+        span[data-audio]:not(.played) {
+            opacity: .5;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', () => {
+            const paragraphs = document.querySelectorAll('p');
+            paragraphs.forEach((paragraph) => {
+                paragraph.addEventListener('click', (event) => {
+                    const target = event.target;
+                    const audioPath = target.dataset.audio;
+                    const audio = new Audio(audioPath);
+                    audio.play().then((e) => {
+                        target.classList.add('played');
+                        if (window.oscillationIntervalId) {
+                          clearInterval(window.oscillationIntervalId);
+                          window.oscillationIntervalId = null;
+                        }
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <main>
         <h1>Page 1</h1>
-        <p>Once upon a time in <a href="https://honk.land">honk.land</a> 9 honks were being forged...</p>
+        <p>
+            <span data-audio="/book/chapter/1/audio/0.mp3">Once upon a time in <a href="https://honk.land">honk.land</a>,</span>
+            <span data-audio="/book/chapter/1/audio/1.mp3">9 honks were being forged...</span>
+        </p>
         <button id="lore-button">collect lore</button>
     </main>
 </body>
