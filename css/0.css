@@ -1,10 +1,30 @@
+:root {
+    --bg-main: hsl(39, 77%, 83%);
+    --accent-main: teal;
+}
+
 html {
     font-family: JetBrainsMono, monospace;
 
-    --main-size: 10px;
+    --main-size: 20px;
 }
 
 main {
     font-size: var(--main-size);
     line-height: var(--main-size);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 1;
+        outline: thick solid red;
+    }
+    10% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+        outline: thick solid teal;
+    }
 }

@@ -12,9 +12,49 @@ body {
     align-items: center;
 
     background-color: var(--bg-main);
+    transition: background-color 1s ease-in-out
 }
 
 main {
     border: thin solid var(--accent-main);
     padding: 2rem;
+}
+
+main > h1 {
+    outline: thick solid yellow;
+    height: 3rem;
+    overflow: hidden;
+    width: 20rem;
+    white-space: nowrap;
+    line-height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main > h1 > span {
+    outline: thick solid orange;
+    max-width: 10rem;
+    display: inline-block;
+    overflow: hidden;
+}
+
+main > h1 + ul li{
+    outline: thin solid red;
+    height: 1rem;
+    padding: .5rem;
+    width: 20rem;
+}
+
+main > ul li > a {
+    outline: thin solid green;
+    display: block;
+    height: 1rem;
+    width: 50%;
+    transition: background-color .3s, color .1s;
+}
+
+main > ul li > a:hover {
+    background-color: teal;
+    color: white;
 }
