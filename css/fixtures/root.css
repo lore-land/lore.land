@@ -43,19 +43,27 @@ main > h1 > span {
 }
 
 main > h1 > a[href='/#'] {
-    border: thick solid purple;
+    border: thick solid blue;
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
-    text-decoration: none;
-    color: black;
     transition: color .3s;
 }
 
+main > h1 > a[href='/#']:visited {
+    border: thick solid purple;
+}
+
+main > h1 > a[href='/#']:hover {
+    border: thick solid var(--accent-main);
+    color: var(--accent-main);
+}
+
 main > h1 + ul li{
-    outline: thin solid red;
+    outline: thin solid rgba(0,0,0,.3);
     width: var(--width-header-main);
     padding: .5rem;
+    margin-bottom: .5rem;
 }
 
 main > ul li > a {
