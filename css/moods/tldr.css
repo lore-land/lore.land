@@ -1,3 +1,28 @@
+body[data-mood~="tldr"] {
+    --bg-main: white;
+    --accent-main: teal;
+    --width-header-main: 20rem;
+}
+
+body[data-mood~="tldr"] * {
+    outline: none !important;
+    border: none !important;
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+body[data-mood~="tldr"] p {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+body[data-mood~="tldr"] #lore-button {
+    display: none;
+}
+
 main li:has(a:not([href*="13"])) {
     display: none;
 }
