@@ -6,6 +6,7 @@
 
 body {
     height: 100%;
+    margin: 0;
 
     display: flex;
     flex-direction: column;
@@ -19,6 +20,7 @@ body {
 main {
     border: thin solid var(--accent-main);
     padding: 2rem;
+    position: relative;
 }
 
 main > h1 {

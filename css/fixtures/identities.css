@@ -1,0 +1,10 @@
+label[for="mood-select"] {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#mood-select {
+    width: 5rem;
+    padding: .5rem;
+}

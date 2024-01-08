@@ -1,0 +1,3 @@
+main li:has(a:not([href*="13"])) {
+    display: none;
+}
