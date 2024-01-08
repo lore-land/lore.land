@@ -36,10 +36,20 @@ main > h1 {
 }
 
 main > h1 > span {
-    outline: thick solid orange;
+    border: thick solid orange;
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
+}
+
+main > h1 > a[href='/#'] {
+    border: thick solid purple;
+    width: calc(var(--width-header-main) / 2);
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    transition: color .3s;
 }
 
 main > h1 + ul li{
