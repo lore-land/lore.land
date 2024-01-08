@@ -1,6 +1,6 @@
 body[data-mood~="tldr"] {
-    --bg-main: white;
-    --accent-main: teal;
+    --bg-color-main: white;
+    --accent-color-main: teal;
     --width-header-main: 20rem;
 }
 

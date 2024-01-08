@@ -1,10 +1,10 @@
 html {
     font-family: cursive, monospace;
 
-    --main-size: 20px;
+    --size-main: 20px;
 }
 
 main {
-    font-size: var(--main-size);
-    line-height: var(--main-size);
+    font-size: var(--size-main);
+    line-height: var(--size-main);
 }
