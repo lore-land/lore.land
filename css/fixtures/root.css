@@ -1,6 +1,6 @@
 :root {
-    --bg-main: wheat;
-    --accent-main: teal;
+    --bg-color-main: wheat;
+    --accent-color-main: teal;
     --width-header-main: 20rem;
 }
 
@@ -13,12 +13,12 @@ body {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--bg-main);
+    background-color: var(--bg-color-main);
     transition: background-color 1s ease-in-out
 }
 
 main {
-    border: thin solid var(--accent-main);
+    border: thin solid var(--accent-color-main);
     padding: 2rem;
     position: relative;
 }
@@ -55,8 +55,8 @@ main > h1 > a[href='/#']:visited {
 }
 
 main > h1 > a[href='/#']:hover {
-    border: thick solid var(--accent-main);
-    color: var(--accent-main);
+    border: thick solid var(--accent-color-main);
+    color: var(--accent-color-main);
 }
 
 main > h1 + ul li{

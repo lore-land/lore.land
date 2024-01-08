@@ -1,17 +1,17 @@
 :root {
-    --bg-main: hsl(39, 77%, 83%);
-    --accent-main: teal;
+    --bg-color-main: hsl(39, 77%, 83%);
+    --accent-color-main: teal;
 }
 
 html {
     font-family: JetBrainsMono, monospace;
 
-    --main-size: 20px;
+    --size-main: 20px;
 }
 
 main {
-    font-size: var(--main-size);
-    line-height: var(--main-size);
+    font-size: var(--size-main);
+    line-height: var(--size-main);
     animation: fadeIn 1s ease-in-out;
 }
 
