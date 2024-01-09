@@ -7,9 +7,11 @@
 
     <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script defer type="application/javascript" src="/book/chapter/1/script.js"></script>
+    <script defer src="/js/script.js"></script>
+    <script defer src="/book/chapter/1/script.js"></script>
+    <script defer src="/js/vendor/md5.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
@@ -17,46 +19,99 @@
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <script src="/js/script.js"></script>
 
     <style>
-        span[data-audio] {
+        span[data-content_id] {
             cursor: pointer;
         }
-        span[data-audio]:not(.played) {
+        span[data-content_id]:not(.played) {
             opacity: .5;
+        }
+        body[data-mood="tldr"] span[data-text=""] {
+            display: none;
         }
     </style>
     <script>
-        window.addEventListener('load', () => {
-            const paragraphs = document.querySelectorAll('p');
-            paragraphs.forEach((paragraph) => {
-                paragraph.addEventListener('click', (event) => {
-                    const target = event.target;
-                    const audioPath = target.dataset.audio;
-                    const audio = new Audio(audioPath);
-                    audio.play().then((e) => {
-                        target.classList.add('played');
-                        if (window.oscillationIntervalId) {
-                          clearInterval(window.oscillationIntervalId);
-                          window.oscillationIntervalId = null;
-                        }
-                    }).catch((error) => {
-                        console.error(error);
-                    });
-                });
+      const content =
+              {
+                "625c563e1a42a67736c20c690cfae19d": {
+                  f46b0441bc116f6eeee1f6eda659e9f7: "once upon a time in honk.land",
+                  b0387df74992bf71205602e56957400b: "honk.land forged 9 honks"
+                },
+                "725b48851e60e06009a30d9e4245c116": {
+                  b0387df74992bf71205602e56957400b: "honk.land forged 9 honks"
+                }
+              }
+    </script>
+    <script>
+      const predicates = [
+        ["<9 honks> were <being forged>", "<9 honks>"]
+      ]
+    </script>
+    <script>
+      window.initializeChapter = () => {
+        const paragraphs = document.querySelectorAll('p');
+        paragraphs.forEach((paragraph, i) => {
+          const detailIndex   = document.body.dataset.mood === 'tldr' ? 1 : 0;
+          const predicate     = predicates[i][detailIndex];
+          const predicateHash = window.md5(predicate);
+
+          paragraph.dataset.predicate = predicateHash;
+
+          const paragraphContent = content[predicateHash];
+
+          if (!paragraphContent) {
+            console.error('no content for predicate: ' + predicateHash);
+            return;
+          }
+
+          const spans = paragraph.querySelectorAll('span');
+
+          spans.forEach((span, i) => {
+            const spanContentId = span.dataset.content_id;
+            span.dataset.text   = paragraphContent[spanContentId] || '';
+          });
+
+          paragraph.addEventListener('click', (event) => {
+            const target    = event.target;
+            const contentId = '/book/chapter/1/audio/' + target.dataset.content_id + '.mp3';
+            const audio     = new Audio(contentId);
+            audio.play().then((e) => {
+              let loreToken         = target.dataset.text;
+              const loreCollector   = document.querySelector('#lore-collector');
+              const li              = document.createElement('li');
+              li.innerText          = loreToken;
+              li.dataset.content_id = target.dataset.content_id;
+              loreCollector.appendChild(li);
+
+              target.classList.add('played');
+              if (window.oscillationIntervalId) {
+                clearInterval(window.oscillationIntervalId);
+                window.oscillationIntervalId = null;
+              }
+            }).catch((error) => {
+              console.error(error);
             });
+          });
         });
+      }
     </script>
 </head>
 <body>
     <main>
         <h1>Page 1</h1>
-        <p>
-            <span data-audio="/book/chapter/1/audio/0.mp3">Once upon a time in <a href="https://honk.land">honk.land</a>,</span>
-            <span data-audio="/book/chapter/1/audio/1.mp3">9 honks were being forged...</span>
+        <p data-predicate="">
+            <span data-content_id="f46b0441bc116f6eeee1f6eda659e9f7">
+                Once upon a time in <a href="https://honk.land">honk.land</a>,
+            </span>
+            <span data-content_id="b0387df74992bf71205602e56957400b">
+                9 honks were being forged...
+            </span>
         </p>
-        <button id="lore-button">collect lore</button>
     </main>
+    <aside>
+        <ul id="lore-collector"></ul>
+        <button id="lore-button">collect lore</button>
+    </aside>
 </body>
 </html>
