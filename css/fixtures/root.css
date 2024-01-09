@@ -5,8 +5,15 @@
     --width-header-main: 20rem;
 }
 
+html {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
 body {
     height: 100%;
+    width: 100%;
     margin: 0;
 
     display: flex;
@@ -25,7 +32,6 @@ main {
 }
 
 main > h1 {
-    outline: thick solid yellow;
     height: 3rem;
     overflow: hidden;
     width: var(--width-header-main);
@@ -37,22 +43,28 @@ main > h1 {
 }
 
 main > h1 > span {
-    border: thick solid orange;
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
 }
 
 main > h1 > a[href='/#'] {
-    border: thick solid blue;
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
     transition: color .3s;
 }
 
-main > h1 > a[href='/#']:visited {
-    border: thick solid purple;
+main > h1 > a:link {
+    color: blue;
+}
+
+main > h1 > a:visited {
+    color: purple;
+}
+
+main > h1 > a:focus {
+    color: var(--accent-color-alt);
 }
 
 main > h1 > a[href='/#']:hover {
