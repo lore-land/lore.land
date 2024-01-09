@@ -33,11 +33,10 @@ main {
 
 main > h1 {
     height: 3rem;
-    overflow: hidden;
-    width: var(--width-header-main);
+    max-width: var(--width-header-main);
     white-space: nowrap;
     line-height: 2rem;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 }
