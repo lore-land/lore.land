@@ -1,12 +1,13 @@
 document.querySelector("#lore-button").addEventListener("click", () => {
+  const loreCollector = document.querySelector("#lore-collector");
+  const loreItems = [...loreCollector.children];
+
   const pageData = {
-    nodes: [
-      {
-        id: "honk[0]",
-        name: "honk",
-        identity: "honk.one",
-      },
-    ],
+    nodes: loreItems.map((item) => ({
+      id: item.id,
+      name: item.innerText,
+      identity: item.dataset.content_id,
+    })),
     links: [],
   };
   navigator.clipboard.writeText(JSON.stringify(pageData)).then(() => {

@@ -7,6 +7,7 @@ const moods = {
 window.addEventListener("load", () => {
   beginOscillation();
   listenToMood();
+  window.initializeChapter && window.initializeChapter();
 });
 
 function listenToMood() {
