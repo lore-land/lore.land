@@ -3,6 +3,7 @@
     --accent-color-main: teal;
     --accent-color-alt: hsl(180, 10%, 25%);
     --width-header-main: 20rem;
+    --size-main: 20px;
 }
 
 html {
@@ -10,7 +11,6 @@ html {
     width: 100%;
     display: block;
 }
-
 body {
     height: 100%;
     width: 100%;
@@ -24,11 +24,12 @@ body {
     background-color: var(--bg-color-main);
     transition: background-color 1s ease-in-out
 }
-
 main {
     border: thin solid var(--accent-color-main);
     padding: 2rem;
     position: relative;
+    font-size: var(--size-main);
+    line-height: var(--size-main);
 }
 
 main > h1 {
@@ -40,38 +41,46 @@ main > h1 {
     justify-content: center;
     align-items: center;
 }
-
 main > h1 > span {
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
 }
-
 main > h1 > a[href='/#'] {
     width: calc(var(--width-header-main) / 2);
     display: inline-block;
     overflow: hidden;
     transition: color .3s;
 }
-
 main > h1 > a:link {
     color: blue;
 }
-
 main > h1 > a:visited {
     color: purple;
 }
-
 main > h1 > a:focus {
     color: var(--accent-color-alt);
 }
-
 main > h1 > a[href='/#']:hover {
     border: thick solid var(--accent-color-main);
     color: var(--accent-color-main);
 }
 
-#book nav li > a {
+body.active {
+    outline: thick solid var(--accent-color-main);
+}
+body.active  h1 > span,
+body.active  h1 > a[href='/#'] {
+    width: auto;
+    overflow: visible;
+}
+
+body > article ul {
+    list-style: none;
+    padding: 0;
+    width: 20rem;
+}
+body > article nav li > a {
     outline: thin solid green;
     display: block;
     height: 1rem;
@@ -79,14 +88,24 @@ main > h1 > a[href='/#']:hover {
     padding: .5rem;
     transition: background-color .1s, color .1s;
 }
-#book nav li > a:focus {
+body > article nav li > a:focus {
     background-color: var(--accent-color-alt);
     transition: background-color .1s, color .1s;
     color: white;
 }
-
-#book nav li > a:hover {
+body > article nav li > a:hover {
     transition: background-color .3s, color .1s;
     background-color: var(--accent-color-main);
     color: white;
+}
+
+body > footer {
+    position: fixed;
+    bottom: 0;
+    padding: 1rem;
+    outline: thin solid var(--accent-color-main);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
