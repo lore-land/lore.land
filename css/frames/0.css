@@ -5,23 +5,33 @@
 
 html {
     font-family: JetBrainsMono, monospace;
-
-    --size-main: 20px;
 }
 
 main {
-    font-size: var(--size-main);
-    line-height: var(--size-main);
     animation: fadeIn 1s ease-in-out;
+    transition: background-color .2s ease-in-out;
 }
 
+body.active #book header {
+    cursor: pointer;
+}
+body.active #book header:hover {
+    color: teal;
+}
+
+body:not(.active):hover main {
+    cursor: pointer;
+    background: rgba(0, 0, 0, .1);
+}
+
+/* animations */
 @keyframes fadeIn {
     0% {
         opacity: 1;
-        outline: thick solid red;
+        outline: thick solid darkturquoise;
     }
     10% {
-        opacity: .5;
+        opacity: .9;
     }
     100% {
         opacity: 1;

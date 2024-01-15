@@ -42,11 +42,29 @@ function listenToMood() {
   }
 }
 
+function listenForInteraction() {
+  const activeHandlingContainer = document.querySelector("body");
+  activeHandlingContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+    activeHandlingContainer.classList.add("active");
+  });
+
+  const book = document.querySelector("#book > header");
+  if (book) {
+    book.addEventListener("click", (e) => {
+      e.stopPropagation();
+      activeHandlingContainer.classList.remove("active");
+    });
+  }
+}
+
 function beginOscillation() {
+  listenForInteraction();
+
   window.oscillationIntervalId = setInterval(() => {
     const stylesheet = document.querySelector("#period-styles");
     stylesheet.href = `/css/frames/${frameOptions[currentFrame]}`;
-
+    document.body.dataset.frame = currentFrame;
     currentFrame = (currentFrame + 1) % frameOptions.length;
   }, 1000);
 }
