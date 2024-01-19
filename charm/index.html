@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Welcome to Lore.Land</title>
+    <script type="application/ld+json">
+        {
+            "@context" : "https://schema.org",
+            "@type" : "WebSite",
+            "name" : "Lore.Land",
+            "alternateName" : ["Lore.Land", "Lore.Land Charms"],
+            "url" : "https://lore.land/"
+        }
+    </script>
+
+    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/css/fixtures/fonts.css">
+    <link rel="stylesheet" href="/css/fixtures/identities.css">
+
+    <link id="period-styles" rel="stylesheet">
+    <link id="mood-styles" rel="stylesheet">
+
+    <script defer src="/js/script.js"></script>
+</head>
+<body data-mood="">
+    <main>
+        <h1><span>Welcome to</span>&nbsp;<a href="/#">Lore.Land</a></h1>
+        <form data-netlify="true" name="charm">
+            <label>
+                <span>Name</span>
+                <input id="name" name="name" type="text" />
+            </label>
+            <label>
+                <span>Email</span>
+                <input id="email" name="email" type="email" />
+            </label>
+            <label>
+                <span>Description</span>
+                <textarea id="description" name="description"></textarea>
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <footer>
+        this site was crafted by&nbsp;<a href="https://spwashi.com/?from=lore.land">spwashi</a>
+    </footer>
+</body>
+</html>
