@@ -33,7 +33,6 @@ main {
 }
 
 main > h1 {
-    height: 3rem;
     max-width: var(--width-header-main);
     white-space: nowrap;
     line-height: 2rem;
