@@ -1,41 +1,51 @@
 /* Root Variables */
 :root {
-    --bg-color-main: wheat;
-    --bg-color-content: white;
-    --accent-color-main: teal;
-    --accent-color-alt: hsl(180, 10%, 25%);
-    --width-header-main: 100%;
-    --font-size-body: 1.2rem;
-    --font-size-h1: 2rem;
-    --font-size-h2: 1.75rem;
-    --font-size-h3: 1.5rem;
-    --font-size-h1-mobile: 1.5rem;
-    --font-size-h2-mobile: 1.25rem;
-    --font-size-caption: 0.9rem;
-    --font-size-button: 1rem;
-    --line-height-main: 1.6;
-    --padding-extra-small: 1rem;
-    --padding-small: 0.5rem;
-    --padding-medium: 0.75rem;
-    --padding-large: 1rem;
-    --padding-main: 1.5rem;
-    --margin-small: 0.5rem;
-    --margin-medium: 1rem;
-    --margin-large: 1.5rem;
-    --margin-bottom-large: 1.5rem;
-    --gap-main: 1rem;
-    --max-width-content: 1200px;
-    --font-family-main: 'Helvetica Neue', Arial, sans-serif;
-    --text-color-main: #333;
-    --text-color-alt: #666;
-    --text-color-content: white;
-    --border-radius-main: 8px;
-    --border-radius-small: 4px;
-    --box-shadow-main: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transition-duration: 0.3s;
-    --transition-function: ease-in-out;
-    --font-weight-bold: bold;
+    /* Color Palette */
+    --bg-color-main: #f0f8ff; /* Soft pastel blue */
+    --bg-color-content: rgba(255, 255, 255, 0.9); /* Semi-transparent white for overlay effect */
+    --accent-color-main: #0083b0; /* Vibrant teal */
+    --accent-color-alt: #005f6b; /* Darker teal for hover effects */
+    --accent-gradient: linear-gradient(45deg, #00b4db, #0083b0); /* Gradient for buttons and footer */
+
+    /* Typography */
+    --font-family-heading: 'Playfair Display', serif;
+    --font-family-body: 'Open Sans', sans-serif;
+    --font-size-body: 1.25rem;
+    --font-size-h1: 2.5rem;
+    --font-size-h2: 2rem;
+    --font-size-h3: 1.75rem;
+    --font-size-h1-mobile: 2rem;
+    --font-size-h2-mobile: 1.5rem;
+    --font-size-caption: 1rem;
+    --font-size-button: 1.25rem;
+    --line-height-main: 1.8;
+    --font-weight-bold: 700;
     --font-style-italic: italic;
+
+    /* Spacing */
+    --padding-extra-small: 0.5rem;
+    --padding-small: 1rem;
+    --padding-medium: 1.5rem;
+    --padding-large: 2rem;
+    --padding-main: 2.5rem;
+    --margin-small: 1rem;
+    --margin-medium: 1.5rem;
+    --margin-large: 2rem;
+    --margin-bottom-large: 2rem;
+    --gap-main: 1.5rem;
+    --max-width-content: 1200px;
+
+    /* Text Colors */
+    --text-color-main: #333;
+    --text-color-alt: #555;
+    --text-color-content: #ffffff;
+
+    /* Other Styles */
+    --border-radius-main: 12px;
+    --border-radius-small: 8px;
+    --box-shadow-main: 0 6px 12px rgba(0, 0, 0, 0.1);
+    --transition-duration: 0.4s;
+    --transition-function: ease-in-out;
 }
 
 /* Reset and Box Sizing */
@@ -60,7 +70,7 @@ body {
     background-color: var(--bg-color-main);
     font-size: var(--font-size-body);
     line-height: var(--line-height-main);
-    font-family: var(--font-family-main);
+    font-family: var(--font-family-body);
     color: var(--text-color-main);
     animation: breathAnimation 4s infinite ease-in-out;
 }
@@ -89,28 +99,36 @@ body {
 main {
     max-width: var(--max-width-content);
     width: 100%;
-    margin: 0 auto;
-    padding: var(--padding-main);
+    margin: var(--margin-large) auto;
+    padding: var(--padding-large);
     background: var(--bg-color-content);
     border-radius: var(--border-radius-main);
     box-shadow: var(--box-shadow-main);
     animation: fadeIn var(--transition-duration) var(--transition-function);
+    background-image: url('path/to/your/background-image.png'); /* Add subtle background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 main h1 {
     font-size: var(--font-size-h1);
     margin-bottom: var(--margin-medium);
     text-align: center;
+    font-family: var(--font-family-heading);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    color: var(--accent-color-alt);
 }
 
 main h1 a {
-    color: var(--accent-color-main);
+    color: inherit;
     text-decoration: none;
     transition: color var(--transition-duration) var(--transition-function);
 }
 
 main h1 a:hover {
-    color: var(--accent-color-alt);
+    color: var(--accent-color-main);
 }
 
 /* Aside Styles */
@@ -141,24 +159,32 @@ article#book {
     max-width: var(--max-width-content);
     width: 100%;
     margin: var(--margin-large) auto;
-    padding: var(--padding-main);
+    padding: var(--padding-large);
     background: var(--bg-color-content);
     border-radius: var(--border-radius-main);
     box-shadow: var(--box-shadow-main);
     animation: fadeIn var(--transition-duration) var(--transition-function);
+    background-image: url('path/to/your/section-background.png'); /* Subtle imagery */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+article#book h2, article#book h3 {
+    font-family: var(--font-family-heading);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 article#book h2 {
     font-size: var(--font-size-h2);
     margin-bottom: var(--margin-medium);
     color: var(--accent-color-alt);
-    text-align: center;
 }
 
 article#book h3 {
     font-size: var(--font-size-h3);
     margin-bottom: var(--margin-medium);
-    text-align: center;
 }
 
 article#book nav ul {
@@ -175,29 +201,32 @@ article#book nav ul li {
 }
 
 article#book nav ul li a {
-    color: var(--accent-color-main);
+    color: var(--text-color-content);
     text-decoration: none;
     font-weight: var(--font-weight-bold);
-    padding: var(--padding-small) var(--padding-large);
-    border: 2px solid var(--accent-color-main);
-    border-radius: var(--border-radius-small);
-    transition: background-color var(--transition-duration) var(--transition-function), color var(--transition-duration) var(--transition-function);
+    padding: var(--padding-medium) var(--padding-large);
+    border: none;
+    border-radius: var(--border-radius-main);
+    background: var(--accent-gradient);
+    transition: transform var(--transition-duration) var(--transition-function), box-shadow var(--transition-duration) var(--transition-function);
+    font-size: var(--font-size-button);
 }
 
 article#book nav ul li a:hover,
 article#book nav ul li a:focus {
-    background-color: var(--accent-color-main);
-    color: var(--text-color-content);
+    transform: translateY(-5px); /* Smooth upward movement */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer Styles */
 footer {
     width: 100%;
-    padding: var(--padding-main);
-    background-color: var(--accent-color-main);
+    padding: var(--padding-large);
+    background: var(--accent-gradient);
     color: var(--text-color-content);
     text-align: center;
     margin-top: auto;
+    position: relative;
 }
 
 footer a {
@@ -207,7 +236,27 @@ footer a {
 }
 
 footer a:hover {
-    color: var(--accent-color-alt);
+    color: var(--bg-color-content);
+}
+
+/* Mood Section */
+.mood {
+    position: absolute;
+    bottom: var(--margin-small);
+    right: var(--margin-small);
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-caption);
+}
+
+.mood::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-right: var(--margin-small);
+    background: url('path/to/mood-icon.png') no-repeat center center;
+    background-size: contain;
 }
 
 /* Figure Styles */
@@ -225,7 +274,7 @@ figure img {
 }
 
 figure img:hover {
-    transform: scale(1.02);
+    transform: scale(1.05); /* Slightly increased zoom */
 }
 
 figcaption {
@@ -243,35 +292,35 @@ custom-fool,
 custom-bonk,
 custom-puzzle {
     display: block;
-    padding: var(--padding-main);
+    padding: var(--padding-large);
     border-radius: var(--border-radius-main);
     margin-bottom: var(--margin-large);
 }
 
 /* Specific styles for each component */
 custom-boof {
-    background: rgba(0, 0, 255, 0.1);
+    background: rgba(173, 216, 230, 0.2); /* Light blue */
 }
 
 custom-boonberry {
-    background: rgba(255, 0, 0, 0.1);
+    background: rgba(240, 128, 128, 0.2); /* Light coral */
 }
 
 custom-fool {
-    background: rgba(0, 255, 0, 0.1);
+    background: rgba(144, 238, 144, 0.2); /* Light green */
     font-weight: var(--font-weight-bold);
 }
 
 custom-puzzle {
-    background: rgba(255, 200, 100, 0.2);
+    background: rgba(255, 228, 181, 0.3); /* Moccasin */
     font-style: var(--font-style-italic);
-    border: 1px dashed rgba(255, 150, 50, 0.5);
+    border: 1px dashed rgba(255, 215, 0, 0.5);
 }
 
 custom-bonk {
-    background: rgba(255, 100, 100, 0.2);
+    background: rgba(255, 182, 193, 0.3); /* Light pink */
     font-style: var(--font-style-italic);
-    border: 1px solid rgba(255, 50, 50, 0.5);
+    border: 1px solid rgba(255, 105, 180, 0.5);
 }
 
 /* Inline components */
@@ -284,33 +333,34 @@ custom-bonk {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     body {
-        padding: var(--padding-extra-small);
+        padding: var(--padding-medium);
     }
 
     main h1 {
         font-size: var(--font-size-h1-mobile);
-        margin-bottom: var(--margin-bottom-large);
+        margin-bottom: var(--margin-medium);
     }
 
     article#book h2 {
         font-size: var(--font-size-h2-mobile);
     }
 
-    aside select {
-        width: 100%;
-        margin-top: var(--margin-small);
-    }
-
     article#book nav ul {
         flex-direction: column;
         align-items: center;
     }
+
+    article#book nav ul li a {
+        width: 100%;
+        text-align: center;
+    }
 }
 
-@media (min-width: 601px) {
+@media (min-width: 769px) {
     article#book nav ul {
         flex-direction: row;
+        flex-wrap: wrap;
     }
 }
