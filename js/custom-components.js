@@ -46,7 +46,7 @@ class CustomBoof extends HTMLElement {
             </style>
             <div class="header">
                 <span class="toggle-icon">+</span>
-                <slot name="title">Boof Title</slot>
+                <slot name="title">[ Boof ]</slot>
             </div>
             <div class="content">
                 <slot></slot>
