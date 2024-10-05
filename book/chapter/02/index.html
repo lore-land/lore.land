@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Chapter 02: Boof and the Grove of Echoes</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script defer src="/js/custom-components.js"></script>
+
+    <link rel="stylesheet" href="/css/fixtures/fonts.css">
+    <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/02/styles.css">
+
+    <link id="period-styles" rel="stylesheet">
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="grove"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-echo {
+            display: inline-block;
+            background: rgba(255, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body data-mood="grove">
+<main>
+    <h1>Chapter 02: Boof and the Grove of Echoes</h1>
+
+    <custom-boof>
+        <p>
+            Boof's journey led them deeper into the <custom-boonberry>grove</custom-boonberry>, where every step seemed to stir the whispers of the past. The <custom-echo>echoes</custom-echo> lingered, repeating fragments of lost stories.
+        </p>
+    </custom-boof>
+
+    <custom-boonberry>
+        <p data-content_id="grove">
+            "The Fool was here," the grove seemed to say, though no voice spoke it directly. The boonberries reflected strange patterns, hinting at the Fool’s games.
+        </p>
+    </custom-boonberry>
+
+    <custom-echo>
+        <p>
+            "Follow me," the echo beckoned, though it was not clear if it belonged to the Fool, or something else entirely.
+        </p>
+    </custom-echo>
+
+    <figure>
+        <img src="/book/chapter/02/images/grove_of_echoes.png" alt="The Grove of Echoes">
+        <figcaption>The Grove of Echoes, where time repeats itself.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Echoes of the Grove</h2>
+        <p>
+            In the grove, time did not pass in a linear fashion. Boof felt as if they had already walked this path—yet it was new. The boonberries glowed brighter, as if the Fool's presence had just passed.
+        </p>
+    </section>
+
+    <custom-fool>
+        <p>
+            "Are you lost, Boof?" the Fool’s voice echoed, though it felt distant—almost playful. "Or perhaps, you’re right where you need to be."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Decipher the echoes</button>
+</aside>
+
+</body>
+</html>
