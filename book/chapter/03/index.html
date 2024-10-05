@@ -3,22 +3,113 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 03: Boof and the Fool's Paradox</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/03/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="paradox"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-paradox {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-style: italic;
+            border: 1px dashed;
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="paradox">
+<main>
+    <h1>Chapter 03: Boof and the Fool's Paradox</h1>
+
+    <custom-boof>
+        <p>
+            Boof stood at the edge of the <custom-paradox>Fool's Paradox</custom-paradox>, a place where truth and jest twisted together, impossible to untangle.
+        </p>
+    </custom-boof>
+
+    <custom-paradox>
+        <p data-content_id="paradox-intro">
+            "To move forward, you must go back," the paradox whispered, echoing the Fool’s riddles.
+            "To catch the Fool, you must first be caught."
+        </p>
+    </custom-paradox>
+
+    <custom-fool>
+        <p>
+            "You see, Boof, you are always moving, but never arriving," the Fool's voice teased. "The closer you get, the further away I am."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/03/images/fools_paradox.png" alt="The Fool's Paradox">
+        <figcaption>The Fool's Paradox: where movement is illusion, and reality folds upon itself.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Enigma of the Paradox</h2>
+        <p>
+            The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed.
+            The boonberries glowed with a mischievous light, flickering between reality and mirage.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. "To chase is to never catch," Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove.
+        </p>
+    </custom-boof>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Navigate the Paradox</button>
+</aside>
+
 </body>
 </html>
