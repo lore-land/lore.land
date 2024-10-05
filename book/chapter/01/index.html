@@ -3,22 +3,102 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 01: Boof and the Boonberry Fool</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/01/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="boon"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="boon">
+<main>
+    <h1>Chapter 1: Boof and the Boonberry Fool</h1>
+
+    <custom-boof data-mood="boon">
+        <p>
+            Boof wandered through the <custom-boonberry>fields</custom-boonberry> in search of the elusive <custom-fool>Boonberry Fool</custom-fool>.
+            "Where could it be?" Boof whispered to the wind, but only the trees answered with rustling leaves.
+        </p>
+    </custom-boof>
+
+    <custom-boonberry>
+        <p data-content_id="berry">
+            The boonberries shimmered in the morning light, each one more dazzling than the last. But the Fool was nowhere in sight.
+        </p>
+    </custom-boonberry>
+
+    <custom-boof>
+        <p>
+            Just then, a shadow danced between the trees—a hint, perhaps? Or merely the folly of a fruitless quest?
+        </p>
+    </custom-boof>
+
+    <figure>
+        <img src="/book/chapter/01/images/boonberry_fool.png" alt="Boof in search of the Boonberry Fool">
+        <figcaption>Boof in pursuit of the Boonberry Fool</figcaption>
+    </figure>
+
+    <custom-fool>
+        "Catch me if you can," the Fool’s voice echoed from the distance, teasing Boof onward.
+    </custom-fool>
+
+    <section>
+        <h2>The Elusive Boonberry Fool</h2>
+        <p>
+            The Boonberry Fool was more than just a figure—it was a challenge, an idea, a riddle wrapped in a fool's grin.
+            Boof continued, driven by the mystery and the promise of something more at the heart of the boonberry grove.
+        </p>
+    </section>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Uncover the Fool’s secret</button>
+</aside>
+
 </body>
 </html>
