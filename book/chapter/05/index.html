@@ -3,22 +3,112 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 05: Boof and the Fool’s Song</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/05/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="song"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-song {
+            display: inline-block;
+            background: rgba(255, 255, 100, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px solid rgba(200, 200, 100, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="song">
+<main>
+    <h1>Chapter 05: Boof and the Fool’s Song</h1>
+
+    <custom-boof>
+        <p>
+            Boof followed the faint notes of a melody, drifting on the air, as if the forest itself were singing. It was the <custom-song>Fool’s Song</custom-song>, a tune both haunting and playful.
+        </p>
+    </custom-boof>
+
+    <custom-song>
+        <p data-content_id="song-verse">
+            The song whispered, "Come, come closer... Let your heart follow the rhythm, and your steps follow the sound. There is no end, only the journey."
+        </p>
+    </custom-song>
+
+    <custom-fool>
+        <p>
+            "You hear it, don’t you, Boof?" The Fool’s voice sang in harmony with the forest. "This is my song. But it is also yours."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/05/images/fools_song.png" alt="The Fool's Song">
+        <figcaption>The Fool’s Song: a melody that leads the way through mystery.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Melody of the Fool</h2>
+        <p>
+            The notes of the song twisted through the trees, carrying Boof deeper into the grove. Every step seemed to harmonize with the melody, as if the very ground beneath their feet pulsed with the same rhythm.
+            The boonberries swayed gently in time with the tune, reflecting the light in soft waves.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            Boof hummed along, their voice merging with the Fool’s melody. "Why does this song feel so familiar?" Boof wondered aloud. But no answer came, only the continuation of the tune, drawing them onward.
+        </p>
+    </custom-boof>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Follow the melody</button>
+</aside>
+
 </body>
 </html>
