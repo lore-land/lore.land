@@ -3,22 +3,117 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 10: Boof and the Fool’s Bonk</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/10/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="bonk"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-bonk {
+            display: inline-block;
+            background: rgba(255, 100, 100, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px solid rgba(255, 50, 50, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="bonk">
+<main>
+    <h1>Chapter 10: Boof and the Fool’s Bonk</h1>
+
+    <custom-boof>
+        <p>
+            Boof wandered further into the maze of games and puzzles, unsure if there was even a way out anymore. And then, with a sudden thud—a loud <custom-bonk>BONK</custom-bonk> echoed through the clearing.
+        </p>
+    </custom-boof>
+
+    <custom-bonk>
+        <p data-content_id="bonk-intro">
+            The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused.
+        </p>
+    </custom-bonk>
+
+    <custom-fool>
+        <p>
+            "Ah, Boof," the Fool’s voice was closer now, almost tangible. "You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/10/images/fools_bonk.png" alt="The Fool's Bonk">
+        <figcaption>The Fool’s Bonk: an unexpected end, or just another beginning?</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Bonk</h2>
+        <p>
+            Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in the air, as if waiting for something more.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            "Is this how it ends?" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "You’ve reached this part of the game, Boof, but the bonk is not the end," the Fool’s voice teased. "It’s just the sound of one door closing... and maybe, another opening."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Embrace the Bonk</button>
+</aside>
+
 </body>
 </html>
