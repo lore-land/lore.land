@@ -3,22 +3,118 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 09: Boof and the Fool’s Puzzle</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/09/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="puzzle"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-puzzle {
+            display: inline-block;
+            background: rgba(255, 200, 100, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px dashed rgba(255, 150, 50, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="puzzle">
+<main>
+    <h1>Chapter 09: Boof and the Fool’s Puzzle</h1>
+
+    <custom-boof>
+        <p>
+            As Boof stepped off the game board, they noticed the ground beneath them shifting once again—this time into a <custom-puzzle>puzzle</custom-puzzle>. The pieces rearranged themselves with every step Boof took.
+        </p>
+    </custom-boof>
+
+    <custom-puzzle>
+        <p data-content_id="puzzle-intro">
+            The puzzle was incomplete, missing key pieces, yet Boof had no way of knowing what the full picture should look like. "Solve this," a voice whispered, "if you can."
+        </p>
+    </custom-puzzle>
+
+    <custom-fool>
+        <p>
+            "Ah, Boof," the Fool’s voice echoed from above, "you see, this puzzle is like life itself. You won’t always have all the pieces, but you still have to play the game."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/09/images/fools_puzzle.png" alt="The Fool's Puzzle">
+        <figcaption>The Fool’s Puzzle: an ever-shifting challenge, never quite complete.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Pieces Shift</h2>
+        <p>
+            Boof knelt down, studying the scattered pieces. Each one was strange, carrying shapes and symbols Boof didn’t fully understand. Some pieces fit together, while others refused to align, as if the puzzle itself resisted completion.
+            The boonberries in the trees above flickered as if they too watched Boof struggle.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            "How can I solve this if I don’t know what it is?" Boof murmured, frustration growing. The Fool’s laughter was distant, but Boof could sense the challenge was less about solving the puzzle and more about finding the patience to endure it.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "It’s not about solving, Boof," the Fool’s voice whispered again, "it’s about seeing."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Piece it together</button>
+</aside>
+
 </body>
 </html>

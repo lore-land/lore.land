@@ -3,22 +3,117 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 11: Boof and the Fool’s Awakening</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/11/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="awakening"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-awakening {
+            display: inline-block;
+            background: rgba(100, 255, 200, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px solid rgba(50, 150, 100, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="awakening">
+<main>
+    <h1>Chapter 11: Boof and the Fool’s Awakening</h1>
+
+    <custom-boof>
+        <p>
+            Boof blinked, feeling a strange calmness settle over them after the bonk. The world around them had shifted—it was clearer now, sharper. "Where am I?" Boof whispered, realizing they weren’t just in a maze, but in the heart of something far larger—a moment of <custom-awakening>awakening</custom-awakening>.
+        </p>
+    </custom-boof>
+
+    <custom-awakening>
+        <p data-content_id="awakening-intro">
+            The air hummed softly, the trees no longer whispered but stood still, as though waiting. Boof felt an understanding they hadn’t reached before. This wasn’t just a game, and the Fool wasn’t just an enigma. Everything had led to this moment.
+        </p>
+    </custom-awakening>
+
+    <custom-fool>
+        <p>
+            "Ah, Boof," the Fool’s voice was softer now, almost kind. "You’ve begun to see it, haven’t you? This journey isn’t about me at all... it’s about you."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/11/images/fools_awakening.png" alt="The Fool's Awakening">
+        <figcaption>The Fool’s Awakening: a moment of clarity where the game unravels, revealing its purpose.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Moment of Clarity</h2>
+        <p>
+            As Boof stood in silence, they realized they weren’t chasing the Fool anymore. They were chasing something inside themselves. The puzzles, the games, the bonks—they had all been distractions leading to this one simple truth: Boof had to let go of the chase.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            "It was never about winning," Boof said aloud, feeling lighter, as though a great weight had been lifted. The Fool’s laughter, once distant and mocking, now sounded close—friendly, even.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "You’ve found it, Boof. The end of the journey is always an awakening. But remember, every awakening is also the beginning of something new."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Step into the Awakening</button>
+</aside>
+
 </body>
 </html>

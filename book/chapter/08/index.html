@@ -3,22 +3,118 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 08: Boof and the Fool’s Game</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/08/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="game"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-game {
+            display: inline-block;
+            background: rgba(100, 200, 255, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px solid rgba(100, 150, 255, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="game">
+<main>
+    <h1>Chapter 08: Boof and the Fool’s Game</h1>
+
+    <custom-boof>
+        <p>
+            Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: "Shall we play?"
+        </p>
+    </custom-boof>
+
+    <custom-game>
+        <p data-content_id="game-intro">
+            The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play.
+        </p>
+    </custom-game>
+
+    <custom-fool>
+        <p>
+            "The rules are simple, Boof," the Fool’s voice echoed from the trees, "but understanding them, now that’s the tricky part."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/08/images/fools_game.png" alt="The Fool's Game">
+        <figcaption>The Fool's Game: a challenge where rules bend as much as reality.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Game Begins</h2>
+        <p>
+            Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive.
+            The boonberries surrounding the clearing swayed, as though they too were watching the unfolding game.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            "What’s the objective?" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "The objective, Boof, is whatever you make of it," the Fool whispered. "But remember, not every game can be won."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Join the game</button>
+</aside>
+
 </body>
 </html>

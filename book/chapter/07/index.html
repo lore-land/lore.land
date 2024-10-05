@@ -3,22 +3,118 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 07: Boof and the Fool’s Shadow</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/07/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="shadow"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-shadow {
+            display: inline-block;
+            background: rgba(100, 100, 100, 0.1);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px dashed rgba(50, 50, 50, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="shadow">
+<main>
+    <h1>Chapter 07: Boof and the Fool’s Shadow</h1>
+
+    <custom-boof>
+        <p>
+            The deeper Boof ventured into the labyrinth, the more they noticed something was following them—a <custom-shadow>shadow</custom-shadow>, just beyond their reach.
+        </p>
+    </custom-boof>
+
+    <custom-shadow>
+        <p data-content_id="shadow-intro">
+            The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely.
+        </p>
+    </custom-shadow>
+
+    <custom-fool>
+        <p>
+            "Ah, you’ve found it, haven’t you, Boof?" the Fool's voice whispered from the shadows. "This is my shadow, or perhaps... it is yours?"
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/07/images/fools_shadow.png" alt="The Fool's Shadow">
+        <figcaption>The Fool’s Shadow: a reflection of more than just light, a reflection of truth.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Shadow’s Reflection</h2>
+        <p>
+            The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward.
+            The boonberries above them dimmed, casting the world into a soft twilight.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            Boof reached out, hoping to touch the shadow, to understand it. "Is this what the Fool wanted me to see?" Boof wondered. The shadow flickered and danced, evading their grasp.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "The shadow will always be with you, Boof," the Fool’s voice echoed from the darkness. "But the real question is: whose shadow is it?"
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Chase the shadow</button>
+</aside>
+
 </body>
 </html>

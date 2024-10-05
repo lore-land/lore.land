@@ -3,22 +3,112 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 06: Boof and the Fool’s Labyrinth</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/06/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="labyrinth"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-labyrinth {
+            display: inline-block;
+            background: rgba(200, 200, 255, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            border: 1px dashed rgba(100, 100, 255, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="labyrinth">
+<main>
+    <h1>Chapter 06: Boof and the Fool’s Labyrinth</h1>
+
+    <custom-boof>
+        <p>
+            Boof stepped into the <custom-labyrinth>Fool’s Labyrinth</custom-labyrinth>, where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step.
+        </p>
+    </custom-boof>
+
+    <custom-labyrinth>
+        <p data-content_id="labyrinth-intro">
+            "In the labyrinth, the way forward is always behind you, and the way out is through," a voice echoed from within the twisting paths.
+        </p>
+    </custom-labyrinth>
+
+    <custom-fool>
+        <p>
+            "You’ve found my maze, Boof," the Fool’s voice teased from all directions, "but the real question is—can you find yourself?"
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/06/images/fools_labyrinth.png" alt="The Fool's Labyrinth">
+        <figcaption>The Fool’s Labyrinth: a place where direction is an illusion.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Shifting Maze</h2>
+        <p>
+            The labyrinth was alive, its walls shifting like liquid, bending and twisting the space.
+            No matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they started, yet with a slight change.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            Boof paused. "Is this part of the game?" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared.
+            "Perhaps the only way out," Boof mused, "is to stop trying to escape."
+        </p>
+    </custom-boof>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Navigate the Labyrinth</button>
+</aside>
+
 </body>
 </html>

@@ -3,22 +3,118 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Page</title>
+    <title>Chapter 12: Boof and the Fool’s Path</title>
 
-    <script defer data-domain="lore.land" src="https://plausible.io/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="/js/custom-components.js"></script>
 
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/root.css">
+    <link rel="stylesheet" href="/book/chapter/12/styles.css">
+
     <link id="period-styles" rel="stylesheet">
-    <script src="/js/script.js"></script>
-    <script defer src="/js/page.js"></script>
+    <link id="mood-styles" rel="stylesheet">
+
+    <style>
+        span[data-content_id] {
+            cursor: pointer;
+        }
+
+        span[data-content_id]:not(.played) {
+            opacity: .5;
+        }
+
+        body[data-mood="path"] span[data-text=""] {
+            display: none;
+        }
+
+        custom-boof {
+            display: block;
+            background: rgba(0, 0, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-boonberry {
+            display: block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        custom-fool {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        custom-path {
+            display: inline-block;
+            background: rgba(255, 200, 100, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+            font-style: italic;
+            border: 1px solid rgba(255, 150, 50, 0.5);
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Page</h1>
-        <button id="lore-button">collect lore</button>
-    </main>
+<body data-mood="path">
+<main>
+    <h1>Chapter 12: Boof and the Fool’s Path</h1>
+
+    <custom-boof>
+        <p>
+            Boof stood at the edge of the clearing, the last echoes of their awakening still resonating within. Before them, a new <custom-path>path</custom-path> opened, stretching out into the unknown. It was not a maze, nor a game—it was something else, something simpler.
+        </p>
+    </custom-boof>
+
+    <custom-path>
+        <p data-content_id="path-intro">
+            The path was quiet, unassuming, but full of promise. Boof knew that the journey had changed—no longer about solving puzzles or chasing the Fool. This was about walking forward, with no end in sight, but with a newfound sense of purpose.
+        </p>
+    </custom-path>
+
+    <custom-fool>
+        <p>
+            "You’ve come far, Boof," the Fool’s voice echoed softly. "But the path ahead is yours to choose. It’s no longer about games, but about what you make of it."
+        </p>
+    </custom-fool>
+
+    <figure>
+        <img src="/book/chapter/12/images/fools_path.png" alt="The Fool's Path">
+        <figcaption>The Fool’s Path: an open journey where every step is a choice.</figcaption>
+    </figure>
+
+    <section>
+        <h2>The Open Road</h2>
+        <p>
+            Boof looked down the path, feeling a calmness that hadn’t been there before. This was a different kind of journey—one without tricks or hidden challenges. The boonberries swayed gently in the trees, as if urging Boof forward.
+            The Fool was no longer a distant figure. Boof realized they had been walking this path together all along.
+        </p>
+    </section>
+
+    <custom-boof>
+        <p>
+            "Where does it lead?" Boof asked aloud. The Fool didn’t answer, but Boof felt no frustration, only curiosity. It didn’t matter where the path led—it mattered that they were walking it.
+        </p>
+    </custom-boof>
+
+    <custom-fool>
+        <p>
+            "You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. "The path is yours to create."
+        </p>
+    </custom-fool>
+</main>
+
+<aside>
+    <ul id="lore-collector"></ul>
+    <button id="lore-button">Step onto the Path</button>
+</aside>
+
 </body>
 </html>
