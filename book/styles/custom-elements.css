@@ -1,0 +1,244 @@
+/* styles/custom-elements.css */
+
+/* Custom Boof Styles */
+custom-boof {
+    display: block;
+    background: rgba(173, 216, 230, 0.2); /* Light blue */
+    padding: var(--padding-large);
+    border-radius: var(--border-radius-main);
+    margin-bottom: var(--margin-large);
+    cursor: pointer;
+}
+
+/* Custom Boonberry Styles */
+custom-boonberry {
+    display: block;
+    background: rgba(240, 128, 128, 0.2); /* Light coral */
+    padding: var(--padding-large);
+    border-radius: var(--border-radius-main);
+    margin-bottom: var(--margin-large);
+    transition: background-color var(--transition-duration) var(--transition-function);
+}
+
+custom-boonberry:hover {
+    background-color: rgba(240, 128, 128, 0.4); /* Darker coral on hover */
+}
+
+/* Custom Fool Styles */
+custom-fool {
+    display: inline-block;
+    background: rgba(144, 238, 144, 0.2); /* Light green */
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-weight: var(--font-weight-bold);
+    cursor: help;
+    position: relative;
+}
+
+custom-fool::after {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    white-space: nowrap;
+    font-size: var(--font-size-caption);
+    margin-bottom: var(--margin-small);
+    z-index: 10;
+}
+
+custom-fool:hover::after,
+custom-fool:focus::after {
+    display: block;
+}
+
+/* Custom Echo Styles */
+custom-echo {
+    display: inline-block;
+    background: rgba(255, 255, 0, 0.1);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+}
+
+/* Custom Paradox Styles */
+custom-paradox {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px dashed;
+}
+
+/* Custom Mirror Styles */
+custom-mirror {
+    display: inline-block;
+    background: rgba(200, 200, 255, 0.1);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    border: 1px solid rgba(100, 100, 255, 0.5);
+}
+
+/* Custom Song Styles */
+custom-song {
+    display: inline-block;
+    background: rgba(255, 255, 100, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(200, 200, 100, 0.5);
+}
+
+/* Custom Labyrinth Styles */
+custom-labyrinth {
+    display: inline-block;
+    background: rgba(200, 200, 255, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px dashed rgba(100, 100, 255, 0.5);
+}
+
+/* Custom Shadow Styles */
+custom-shadow {
+    display: inline-block;
+    background: rgba(100, 100, 100, 0.1);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px dashed rgba(50, 50, 50, 0.5);
+}
+
+/* Custom Game Styles */
+custom-game {
+    display: inline-block;
+    background: rgba(100, 200, 255, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(100, 150, 255, 0.5);
+}
+
+/* Custom Puzzle Styles */
+custom-puzzle {
+    display: inline-block;
+    background: rgba(255, 200, 100, 0.1);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px dashed rgba(255, 150, 50, 0.5);
+}
+
+/* Custom Bonk Styles */
+custom-bonk {
+    display: inline-block;
+    background: rgba(255, 100, 100, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(255, 50, 50, 0.5);
+}
+
+/* Custom Awakening Styles */
+custom-awakening {
+    display: inline-block;
+    background: rgba(100, 255, 200, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(50, 150, 100, 0.5);
+}
+
+/* Custom Path Styles */
+custom-path {
+    display: inline-block;
+    background: rgba(255, 200, 100, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(255, 150, 50, 0.5);
+}
+
+/* Custom Reflection Styles */
+custom-reflection {
+    display: inline-block;
+    background: rgba(150, 150, 255, 0.2);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-style: italic;
+    border: 1px solid rgba(100, 100, 255, 0.5);
+}
+
+/* styles/custom-elements.css */
+
+/* Custom Boof Styles */
+custom-boof {
+    display: block;
+    background: rgba(173, 216, 230, 0.2); /* Light blue */
+    padding: var(--padding-large);
+    border-radius: var(--border-radius-main);
+    margin-bottom: var(--margin-large);
+    cursor: pointer;
+}
+
+/* Custom Boonberry Styles */
+custom-boonberry {
+    display: block;
+    background: rgba(240, 128, 128, 0.2); /* Light coral */
+    padding: var(--padding-large);
+    border-radius: var(--border-radius-main);
+    margin-bottom: var(--margin-large);
+    transition: background-color var(--transition-duration) var(--transition-function);
+}
+
+custom-boonberry:hover {
+    background-color: rgba(240, 128, 128, 0.4); /* Darker coral on hover */
+}
+
+/* Custom Fool Styles */
+custom-fool {
+    display: inline-block;
+    background: rgba(144, 238, 144, 0.2); /* Light green */
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    font-weight: var(--font-weight-bold);
+    cursor: help;
+    position: relative;
+}
+
+custom-fool::after {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    white-space: nowrap;
+    font-size: var(--font-size-caption);
+    margin-bottom: var(--margin-small);
+    z-index: 10;
+}
+
+custom-fool:hover::after,
+custom-fool:focus::after {
+    display: block;
+}
+
+/* Custom Labyrinth Styles */
+custom-labyrinth {
+    display: inline-block;
+    background: rgba(200, 200, 255, 0.2); /* Light lavender */
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    border: 1px dashed rgba(100, 100, 255, 0.5);
+}

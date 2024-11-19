@@ -3,75 +3,37 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Chapter 09: Boof and the Fool’s Puzzle</title>
+    <title>[Lore.Land] Chapter 09: Boof and the Fool’s Puzzle</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <!-- Include your custom components script if needed -->
-    <script defer src="/js/custom-components.js?v=2024_10_04.I"></script>
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 9 of Lore.Land: Boof and the Fool’s Puzzle. Join Boof as they navigate the enigmatic puzzle set by the Fool, where every piece reveals deeper truths.">
 
-    <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
+    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/09/styles.css">
 
+    <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <style>
-        /* Existing styles */
-        span[data-content_id] {
-            cursor: pointer;
-        }
-
-        span[data-content_id]:not(.played) {
-            opacity: 0.5;
-        }
-
-        body[data-mood="puzzle"] span[data-text=""] {
-            display: none;
-        }
-
-        /* Custom Component Styles */
-        custom-boof {
-            display: block;
-            background: rgba(0, 0, 255, 0.05);
-            padding: 1rem;
-            border-left: 4px solid var(--accent-color-main);
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-
-        custom-boonberry {
-            display: block;
-            background: rgba(255, 0, 0, 0.05);
-            padding: 1rem;
-            border-left: 4px solid var(--accent-color-alt);
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-
-        custom-fool {
-            display: block;
-            background: rgba(0, 255, 0, 0.05);
-            padding: 1rem;
-            border-left: 4px solid #32CD32;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-        }
-
-        custom-puzzle {
-            display: inline-block;
-            background: rgba(255, 200, 100, 0.1);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-style: italic;
-            border: 1px dashed rgba(255, 150, 50, 0.5);
-        }
-    </style>
+    <!-- External JavaScript Files -->
+    <script defer src="/book/scripts/custom-elements.js?v=2024_10_04.I"></script>
 </head>
 <body data-mood="puzzle">
-<main>
+<!-- Navigation Controls -->
+<nav aria-label="Chapter navigation">
+    <ul class="navigation">
+        <li><a href="/book/chapter/08/index.html" class="prev-chapter">Previous Chapter</a></li>
+        <li><a href="/book/chapter/09/index.html" class="current-chapter" aria-current="page">Chapter 9</a></li>
+        <li><a href="/book/chapter/10/index.html" class="next-chapter">Next Chapter</a></li>
+    </ul>
+</nav>
+
+<main class="chapter">
     <h1>Chapter 09: Boof and the Fool’s Puzzle</h1>
 
     <custom-boof>
@@ -88,12 +50,12 @@
 
     <custom-fool>
         <p>
-            "Ah, Boof," the Fool’s voice echoed from above, "you see, this puzzle is like life itself. You won’t always have all the pieces, but you still have to play the game."
+            "It’s not about solving, Boof," the Fool’s voice whispered again, "it’s about seeing."
         </p>
     </custom-fool>
 
     <figure>
-        <img src="/book/chapter/09/09.png" alt="The Fool's Puzzle">
+        <img src="/book/images/09.png" alt="The Fool's Puzzle" loading="lazy">
         <figcaption>The Fool’s Puzzle: an ever-shifting challenge, never quite complete.</figcaption>
     </figure>
 
@@ -113,14 +75,29 @@
 
     <custom-fool>
         <p>
-            "It’s not about solving, Boof," the Fool’s voice whispered again, "it’s about seeing."
+            "The objective, Boof, is whatever you make of it," the Fool’s voice whispered. "But remember, not every game can be won."
         </p>
     </custom-fool>
+
+    <!-- Section Navigation -->
+    <div class="section-navigation">
+        <button class="prev-section">Previous Section</button>
+        <button class="next-section">Next Section</button>
+    </div>
 </main>
 
+<!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button">Piece it together</button>
+    <ul id="lore-collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector">Piece it together</button>
+
+    <div class="additional-links">
+        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+
+    <!-- Primary Action Button -->
+    <button class="primary-action">Advance Story</button>
 </aside>
 </body>
 </html>

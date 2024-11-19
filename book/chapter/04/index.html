@@ -1,69 +1,37 @@
+<!-- chapter/04/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <title>Chapter 04: Boof and the Fool’s Mirror</title>
-
+    <title>[Lore.Land] Chapter 04: Boof and the Fool’s Mirror</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 4 of Lore.Land: Boof and the Fool’s Mirror. Discover the world through the Fool’s reflective surface.">
 
-    <script defer src="/js/custom-components.js?v=2024_10_04.I"></script>
-
-    <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
     <link rel="stylesheet" href="/book/chapter/04/styles.css">
+    <link rel="stylesheet" href="/book/styles/custom-elements.css">
 
+    <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <style>
-        span[data-content_id] {
-            cursor: pointer;
-        }
-
-        span[data-content_id]:not(.played) {
-            opacity: .5;
-        }
-
-        body[data-mood="mirror"] span[data-text=""] {
-            display: none;
-        }
-
-        custom-boof {
-            display: block;
-            background: rgba(0, 0, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-boonberry {
-            display: block;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-fool {
-            display: inline-block;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 5px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        custom-mirror {
-            display: inline-block;
-            background: rgba(200, 200, 255, 0.1);
-            padding: 5px;
-            border-radius: 8px;
-            border: 1px solid rgba(100, 100, 255, 0.5);
-        }
-    </style>
+    <!-- External JavaScript Files -->
+    <script defer src="/book/scripts/custom-elements.js?v=2024_10_04.I"></script>
 </head>
 <body data-mood="mirror">
-<main>
+<!-- Navigation Controls -->
+<nav aria-label="Chapter navigation">
+    <ul class="navigation">
+        <li><a href="/book/chapter/03/index.html" class="prev-chapter">Previous Chapter</a></li>
+        <li><a href="/book/chapter/04/index.html" class="current-chapter" aria-current="page">Chapter 4</a></li>
+        <li><a href="/book/chapter/05/index.html" class="next-chapter">Next Chapter</a></li>
+    </ul>
+</nav>
+
+<main class="chapter">
     <h1>Chapter 04: Boof and the Fool’s Mirror</h1>
 
     <custom-boof>
@@ -85,7 +53,7 @@
     </custom-fool>
 
     <figure>
-        <img src="/book/chapter/04/04.png" alt="The Fool's Mirror">
+        <img src="/book/images/04.png" alt="The Fool's Mirror" loading="lazy">
         <figcaption>The Fool's Mirror: a window into perception, where reality bends.</figcaption>
     </figure>
 
@@ -103,12 +71,26 @@
             "What is this?" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze across the glass.
         </p>
     </custom-boof>
+
+    <!-- Section Navigation -->
+    <div class="section-navigation">
+        <button class="prev-section">Previous Section</button>
+        <button class="next-section">Next Section</button>
+    </div>
 </main>
 
+<!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button">Peer deeper into the mirror</button>
-</aside>
+    <ul id="lore-collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector">Peer deeper into the mirror</button>
 
+    <div class="additional-links">
+        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+
+    <!-- Primary Action Button -->
+    <button class="primary-action">Advance Story</button>
+</aside>
 </body>
 </html>

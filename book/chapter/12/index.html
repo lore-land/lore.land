@@ -3,68 +3,37 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Chapter 12: Boof and the Fool’s Path</title>
+    <title>[Lore.Land] Chapter 12: Boof and the Fool’s Path</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script defer src="/js/custom-components.js?v=2024_10_04.I"></script>
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 12 of Lore.Land: Boof and the Fool’s Path. Embark on a new journey as Boof chooses their own way forward with the Fool.">
 
-    <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/chapter/12/styles.css">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
+    <link rel="stylesheet" href="/book/styles/custom-elements.css">
+    <link rel="stylesheet" href="/book/chapter/12/style.css">
 
+    <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <style>
-        span[data-content_id] {
-            cursor: pointer;
-        }
-
-        span[data-content_id]:not(.played) {
-            opacity: .5;
-        }
-
-        body[data-mood="path"] span[data-text=""] {
-            display: none;
-        }
-
-        custom-boof {
-            display: block;
-            background: rgba(0, 0, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-boonberry {
-            display: block;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-fool {
-            display: inline-block;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 5px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        custom-path {
-            display: inline-block;
-            background: rgba(255, 200, 100, 0.2);
-            padding: 5px;
-            border-radius: 8px;
-            font-style: italic;
-            border: 1px solid rgba(255, 150, 50, 0.5);
-        }
-    </style>
+    <!-- External JavaScript Files -->
+    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="path">
-<main>
+<!-- Navigation Controls -->
+<nav aria-label="Chapter navigation">
+    <ul class="navigation">
+        <li><a href="/book/chapter/11/index.html" class="prev-chapter">Previous Chapter</a></li>
+        <li><a href="/book/chapter/12/index.html" class="current-chapter" aria-current="page">Chapter 12</a></li>
+        <li><a href="/book/chapter/13/index.html" class="next-chapter">Next Chapter</a></li>
+    </ul>
+</nav>
+
+<main class="chapter">
     <h1>Chapter 12: Boof and the Fool’s Path</h1>
 
     <custom-boof>
@@ -86,7 +55,7 @@
     </custom-fool>
 
     <figure>
-        <img src="/book/chapter/12/12.png" alt="The Fool's Path">
+        <img src="/book/images/12.png" alt="The Fool's Path" loading="lazy">
         <figcaption>The Fool’s Path: an open journey where every step is a choice.</figcaption>
     </figure>
 
@@ -106,15 +75,29 @@
 
     <custom-fool>
         <p>
-            "You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. "The path is yours to create."
+            "You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. 'The path is yours to create.'"
         </p>
     </custom-fool>
+
+    <!-- Section Navigation -->
+    <div class="section-navigation">
+        <button class="prev-section">Previous Section</button>
+        <button class="next-section">Next Section</button>
+    </div>
 </main>
 
+<!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button">Step onto the Path</button>
-</aside>
+    <ul id="lore-collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector">Step onto the Path</button>
 
+    <div class="additional-links">
+        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+
+    <!-- Primary Action Button -->
+    <button class="primary-action">Advance Story</button>
+</aside>
 </body>
 </html>

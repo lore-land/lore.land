@@ -1,7 +1,7 @@
 label[for="mood-select"] {
-    position: absolute;
-    bottom: 0;
     right: 0;
+    bottom: 0;
+    position: absolute;
 }
 
 #mood-select {
