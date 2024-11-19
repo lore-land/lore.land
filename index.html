@@ -1,65 +1,73 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome to Lore.Land</title>
+
+    <!-- Structured Data for SEO -->
     <script type="application/ld+json">
         {
-            "@context" : "https://schema.org",
-            "@type" : "WebSite",
-            "name" : "Lore.Land",
-            "alternateName" : ["Lore.Land", "Lore.Land Homepage"],
-            "url" : "https://lore.land/"
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Lore.Land",
+            "alternateName": ["Lore.Land", "Lore.Land Homepage"],
+            "url": "https://lore.land/"
         }
     </script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
     <link rel="stylesheet" href="/css/fixtures/fonts.css">
     <link rel="stylesheet" href="/css/fixtures/identities.css">
-
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
+    <!-- JavaScript -->
     <script defer src="/js/script.js?v=2024_10_04.G"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const chaptersList = document.getElementById('chapters-list');
+        for (let i = 1; i <= 13; i++) {
+          const chapterItem = document.createElement('li');
+          const chapterLink = document.createElement('a');
+          chapterLink.href = `/book/chapter/${String(i).padStart(2, '0')}`;
+          chapterLink.textContent = `Chapter ${i}`;
+          chapterItem.appendChild(chapterLink);
+          chaptersList.appendChild(chapterItem);
+        }
+      });
+    </script>
 </head>
 <body data-mood="">
-    <main>
-        <h1><span>Welcome to</span>&nbsp;<a href="/#">Lore.Land</a></h1>
-        <aside>
-            <label for="mood-select">
-                <span>mood:</span>
-                <select id="mood-select">
-                    <option selected value=""></option>
-                    <option value="tldr">tl;dr</option>
-                </select>
-            </label>
-        </aside>
-    </main>
-    <article id="book">
-        <h2>The Tale of Lore.Land</h2>
-        <h3>Chapters</h3>
-        <nav>
-            <ul>
-                <li><a href="/book/chapter/01">Chapter 1</a></li>
-                <li><a href="/book/chapter/02">Chapter 2</a></li>
-                <li><a href="/book/chapter/03">Chapter 3</a></li>
-                <li><a href="/book/chapter/04">Chapter 4</a></li>
-                <li><a href="/book/chapter/05">Chapter 5</a></li>
-                <li><a href="/book/chapter/06">Chapter 6</a></li>
-                <li><a href="/book/chapter/07">Chapter 7</a></li>
-                <li><a href="/book/chapter/08">Chapter 8</a></li>
-                <li><a href="/book/chapter/09">Chapter 9</a></li>
-                <li><a href="/book/chapter/10">Chapter 10</a></li>
-                <li><a href="/book/chapter/11">Chapter 11</a></li>
-                <li><a href="/book/chapter/12">Chapter 12</a></li>
-                <li><a href="/book/chapter/13">Chapter 13</a></li>
-            </ul>
-        </nav>
-    </article>
-    <footer>
-        this site was crafted by&nbsp;<a href="https://spwashi.com/?from=lore.land">spwashi</a>
-    </footer>
+<main>
+    <h1>
+        <span>Welcome to</span>&nbsp;
+        <a href="/#" aria-label="Home page of Lore.Land">Lore.Land</a>
+    </h1>
+
+    <aside>
+        <label for="mood-select">
+            <span>Mood:</span>
+            <select id="mood-select" aria-label="Select mood">
+                <option selected value=""></option>
+                <option value="tldr">tl;dr</option>
+            </select>
+        </label>
+    </aside>
+</main>
+
+<article id="book">
+    <h2>The Tale of Lore.Land</h2>
+    <h3>Chapters</h3>
+    <nav aria-label="Table of contents">
+        <ul id="chapters-list"></ul>
+    </nav>
+</article>
+
+<footer>
+    This site was crafted by&nbsp;
+    <a href="https://spwashi.com/?from=lore.land" aria-label="Visit spwashi's personal site">spwashi</a>
+</footer>
 </body>
 </html>
