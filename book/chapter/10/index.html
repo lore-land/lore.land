@@ -3,68 +3,37 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Chapter 10: Boof and the Fool’s Bonk</title>
+    <title>[Lore.Land] Chapter 10: Boof and the Fool’s Bonk</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script defer src="/js/custom-components.js?v=2024_10_04.I"></script>
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge.">
 
-    <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/chapter/10/styles.css">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
+    <link rel="stylesheet" href="/book/styles/custom-elements.css">
+    <link rel="stylesheet" href="/book/chapter/10/style.css">
 
+    <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <style>
-        span[data-content_id] {
-            cursor: pointer;
-        }
-
-        span[data-content_id]:not(.played) {
-            opacity: .5;
-        }
-
-        body[data-mood="bonk"] span[data-text=""] {
-            display: none;
-        }
-
-        custom-boof {
-            display: block;
-            background: rgba(0, 0, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-boonberry {
-            display: block;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-fool {
-            display: inline-block;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 5px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        custom-bonk {
-            display: inline-block;
-            background: rgba(255, 100, 100, 0.2);
-            padding: 5px;
-            border-radius: 8px;
-            font-style: italic;
-            border: 1px solid rgba(255, 50, 50, 0.5);
-        }
-    </style>
+    <!-- External JavaScript Files -->
+    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="bonk">
-<main>
+<!-- Navigation Controls -->
+<nav aria-label="Chapter navigation">
+    <ul class="navigation">
+        <li><a href="/book/chapter/09/index.html" class="prev-chapter">Previous Chapter</a></li>
+        <li><a href="/book/chapter/10/index.html" class="current-chapter" aria-current="page">Chapter 10</a></li>
+        <li><a href="/book/chapter/11/index.html" class="next-chapter">Next Chapter</a></li>
+    </ul>
+</nav>
+
+<main class="chapter">
     <h1>Chapter 10: Boof and the Fool’s Bonk</h1>
 
     <custom-boof>
@@ -81,12 +50,12 @@
 
     <custom-fool>
         <p>
-            "Ah, Boof," the Fool’s voice was closer now, almost tangible. "You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked."
+            "Ah, Boof," the Fool's voice was closer now, almost tangible. "You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked."
         </p>
     </custom-fool>
 
     <figure>
-        <img src="/book/chapter/10/10.png" alt="The Fool's Bonk">
+        <img src="/book/images/10.png" alt="The Fool's Bonk" loading="lazy">
         <figcaption>The Fool’s Bonk: an unexpected end, or just another beginning?</figcaption>
     </figure>
 
@@ -108,12 +77,26 @@
             "You’ve reached this part of the game, Boof, but the bonk is not the end," the Fool’s voice teased. "It’s just the sound of one door closing... and maybe, another opening."
         </p>
     </custom-fool>
+
+    <!-- Section Navigation -->
+    <div class="section-navigation">
+        <button class="prev-section">Previous Section</button>
+        <button class="next-section">Next Section</button>
+    </div>
 </main>
 
+<!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button">Embrace the Bonk</button>
-</aside>
+    <ul id="lore-collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector">Embrace the Bonk</button>
 
+    <div class="additional-links">
+        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+
+    <!-- Primary Action Button -->
+    <button class="primary-action">Advance Story</button>
+</aside>
 </body>
 </html>

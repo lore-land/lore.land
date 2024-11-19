@@ -1,0 +1,32 @@
+/* chapter/03/styles.css */
+
+/* Example of chapter-specific styles */
+
+.section-navigation button {
+    background-color: var(--accent-color-main);
+    color: var(--text-color-content);
+    border: none;
+    padding: var(--padding-small) var(--padding-medium);
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    transition: background-color var(--transition-duration) var(--transition-function);
+}
+
+.section-navigation button:hover {
+    background-color: var(--accent-color-alt);
+}
+
+.primary-action {
+    background: var(--accent-gradient);
+    color: var(--text-color-content);
+    padding: var(--padding-small) var(--padding-medium);
+    border: none;
+    border-radius: var(--border-radius-main);
+    cursor: pointer;
+    transition: transform var(--transition-duration) var(--transition-function), box-shadow var(--transition-duration) var(--transition-function);
+}
+
+.primary-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

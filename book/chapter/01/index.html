@@ -7,115 +7,28 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 1 of Lore.Land: Boof and the Boonberry Fool. Join Boof on his quest to find the elusive Boonberry Fool.">
+
     <!-- External Stylesheets -->
-    <link rel="stylesheet" href="/css/fixtures/fonts.css">
-    <link rel="stylesheet" href="/css/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/chapter/01/styles.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
+    <link rel="stylesheet" href="/book/styles/custom-elements.css">
+    <link rel="stylesheet" href="/book/chapter/01/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <!-- Custom Elements Styles -->
-    <link rel="stylesheet" href="/css/custom-elements.css">
-
-    <!-- Accessibility Enhancements -->
-    <meta name="description" content="Chapter 1 of Lore.Land: Boof and the Boonberry Fool. Join Boof on his quest to find the elusive Boonberry Fool.">
-
-    <!-- Script to define custom elements and dynamic functionalities -->
-    <script>
-      // Custom Element Definitions
-      class CustomBoof extends HTMLElement {
-        constructor() {
-          super();
-          const shadow = this.attachShadow({ mode: 'open' });
-          const wrapper = document.createElement('div');
-          wrapper.classList.add('custom-boof-wrapper');
-          wrapper.innerHTML = `<slot></slot>`;
-          shadow.appendChild(wrapper);
-        }
-      }
-
-      class CustomBoonberry extends HTMLElement {
-        constructor() {
-          super();
-          const shadow = this.attachShadow({ mode: 'open' });
-          const wrapper = document.createElement('div');
-          wrapper.classList.add('custom-boonberry-wrapper');
-          wrapper.innerHTML = `<slot></slot>`;
-          shadow.appendChild(wrapper);
-        }
-      }
-
-      class CustomFool extends HTMLElement {
-        constructor() {
-          super();
-          const shadow = this.attachShadow({ mode: 'open' });
-          const wrapper = document.createElement('span');
-          wrapper.classList.add('custom-fool-wrapper');
-          wrapper.innerHTML = `<slot></slot>`;
-          shadow.appendChild(wrapper);
-        }
-      }
-
-      customElements.define('custom-boof', CustomBoof);
-      customElements.define('custom-boonberry', CustomBoonberry);
-      customElements.define('custom-fool', CustomFool);
-
-      // Dynamic Mood Stylesheet Loading
-      document.addEventListener('DOMContentLoaded', () => {
-        const mood = document.body.getAttribute('data-mood') || 'default';
-        const moodStylesheet = document.getElementById('mood-styles');
-        moodStylesheet.href = `/css/moods/${mood}.css`;
-      });
-
-      // Static Lore Data
-      const staticLoreItems = [
-        "The Fool is a master of disguise.",
-        "Boonberries are said to grant wishes.",
-        "Boof's journey is just beginning."
-      ];
-
-      // Event Handling for Lore Button
-      document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('lore-button').addEventListener('click', () => {
-          const loreCollector = document.getElementById('lore-collector');
-          loreCollector.innerHTML = ''; // Clear existing items
-          staticLoreItems.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = item;
-            loreCollector.appendChild(listItem);
-          });
-        });
-      });
-
-      // Accessibility Enhancements for data-content_id spans
-      document.addEventListener('DOMContentLoaded', () => {
-        const interactiveSpans = document.querySelectorAll('span[data-content_id]');
-        interactiveSpans.forEach(span => {
-          span.setAttribute('tabindex', '0');
-          span.addEventListener('click', () => {
-            // Handle click event
-          });
-          span.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-              event.preventDefault();
-              // Handle activation on Enter or Space key
-            }
-          });
-        });
-      });
-    </script>
-
     <!-- External JavaScript Files -->
-    <!-- <script defer src="/js/custom-components.js?v=2024_10_04.I"></script> -->
+    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="boon">
 <!-- Navigation Controls -->
-<nav>
+<nav aria-label="Chapter navigation">
     <ul class="navigation">
         <li><a href="/book/chapter/00/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/01/index.html" class="current-chapter">Chapter 1</a></li>
+        <li><a href="/book/chapter/01/index.html" class="current-chapter" aria-current="page">Chapter 1</a></li>
         <li><a href="/book/chapter/02/index.html" class="next-chapter">Next Chapter</a></li>
     </ul>
 </nav>
@@ -143,12 +56,14 @@
     </custom-boof>
 
     <figure>
-        <img src="/book/chapter/01/01.png" alt="Boof in search of the Boonberry Fool">
+        <img src="/book/images/01.png" alt="Boof in search of the Boonberry Fool" loading="lazy">
         <figcaption>Boof in pursuit of the Boonberry Fool</figcaption>
     </figure>
 
     <custom-fool>
-        "Catch me if you can," the Fool’s voice echoed from the distance, teasing Boof onward.
+        <p>
+            "Catch me if you can," the Fool’s voice echoed from the distance, teasing Boof onward.
+        </p>
     </custom-fool>
 
     <section>
@@ -169,7 +84,7 @@
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
+    <ul id="lore-collector"></ul>
     <button id="lore-button" aria-controls="lore-collector">Uncover the Fool’s secret</button>
 
     <div class="additional-links">
@@ -180,6 +95,5 @@
     <!-- Primary Action Button -->
     <button class="primary-action">Advance Story</button>
 </aside>
-
 </body>
 </html>

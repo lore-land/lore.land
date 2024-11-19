@@ -85,14 +85,24 @@ body {
 
 /* Keyframe Animations */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes breathAnimation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Main Content Area */
@@ -105,7 +115,7 @@ main {
     border-radius: var(--border-radius-main);
     box-shadow: var(--box-shadow-main);
     animation: fadeIn var(--transition-duration) var(--transition-function);
-    background-image: url('path/to/your/background-image.png'); /* Add subtle background image */
+    background-image: url('../../images/bg/background.png'); /* Add subtle background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -164,7 +174,7 @@ article#book {
     border-radius: var(--border-radius-main);
     box-shadow: var(--box-shadow-main);
     animation: fadeIn var(--transition-duration) var(--transition-function);
-    background-image: url('path/to/your/section-background.png'); /* Subtle imagery */
+    background-image: url('../../images/bg/article-background.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -255,7 +265,7 @@ footer a:hover {
     width: 20px;
     height: 20px;
     margin-right: var(--margin-small);
-    background: url('path/to/mood-icon.png') no-repeat center center;
+    background: url('../../images/bg/mood.png') no-repeat center center;
     background-size: contain;
 }
 
