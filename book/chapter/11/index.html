@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 11: Boof and the Fool’s Awakening</title>
+    <title id="page-title">[Lore.Land] Chapter 11: Boof and the Fool’s Awakening</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 11 of Lore.Land: Boof and the Fool’s Awakening. Experience the moment of clarity as Boof discovers the true purpose of their journey with the Fool.">
+    <meta name="description" content="Chapter 11 of Lore.Land: Boof and the Fool’s Awakening. Experience the moment of clarity as Boof discovers the true purpose of their journey with the Fool." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/11/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -21,74 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="awakening">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/10/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/11/index.html" class="current-chapter" aria-current="page">Chapter 11</a></li>
-        <li><a href="/book/chapter/12/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 11: Boof and the Fool’s Awakening</h1>
-
-    <custom-boof>
-        <p>
-            Boof blinked, feeling a strange calmness settle over them after the bonk. The world around them had shifted—it was clearer now, sharper. "Where am I?" Boof whispered, realizing they weren’t just in a maze, but in the heart of something far larger—a moment of <custom-awakening>awakening</custom-awakening>.
-        </p>
-    </custom-boof>
-
-    <custom-awakening>
-        <p data-content_id="awakening-intro">
-            The air hummed softly, the trees no longer whispered but stood still, as though waiting. Boof felt an understanding they hadn’t reached before. This wasn’t just a game, and the Fool wasn’t just an enigma. Everything had led to this moment.
-        </p>
-    </custom-awakening>
-
-    <custom-fool>
-        <p>
-            "You’ve begun to see it, haven’t you, Boof?" the Fool’s voice was softer now, almost kind. "This journey isn’t about me at all... it’s about you."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/11.png" alt="The Fool's Awakening" loading="lazy">
-        <figcaption>The Fool’s Awakening: a moment of clarity where the game unravels, revealing its purpose.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Moment of Clarity</h2>
-        <p>
-            As Boof stood in silence, they realized they weren’t chasing the Fool anymore. They were chasing something inside themselves. The puzzles, the games, the bonks—they had all been distractions leading to this one simple truth: Boof had to let go of the chase.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "It was never about winning," Boof said aloud, feeling lighter, as though a great weight had been lifted. The Fool’s laughter, once distant and mocking, now sounded close—friendly, even.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "You’ve found it, Boof. The end of the journey is always an awakening. But remember, every awakening is also the beginning of something new."
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Step into the Awakening</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Step into the Awakening</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -96,7 +51,106 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 11,
+        "title": "Boof and the Fool’s Awakening",
+        "description": "Chapter 11 of Lore.Land: Boof and the Fool’s Awakening. Experience the moment of clarity as Boof discovers the true purpose of their journey with the Fool.",
+        "mood": "awakening",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "awakening",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof blinked, feeling a strange calmness settle over them after the bonk. The world around them had shifted—it was clearer now, sharper. \"Where am I?\" Boof whispered, realizing they weren’t just in a maze, but in the heart of something far larger—a moment of ",
+                        "children": [
+                            {
+                                "type": "custom-awakening",
+                                "content": "awakening"
+                            },
+                            {
+                                "type": "text",
+                                "text": "."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-awakening",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "awakening-intro",
+                        "text": "The air hummed softly, the trees no longer whispered but stood still, as though waiting. Boof felt an understanding they hadn’t reached before. This wasn’t just a game, and the Fool wasn’t just an enigma. Everything had led to this moment."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’ve begun to see it, haven’t you, Boof?\" the Fool’s voice was softer now, almost kind. \"This journey isn’t about me at all... it’s about you.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/11.png",
+                    "alt": "The Fool's Awakening",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Awakening: a moment of clarity where the game unravels, revealing its purpose."
+            },
+            {
+                "type": "section",
+                "title": "The Moment of Clarity",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "As Boof stood in silence, they realized they weren’t chasing the Fool anymore. They were chasing something inside themselves. The puzzles, the games, the bonks—they had all been distractions leading to this one simple truth: Boof had to let go of the chase."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"It was never about winning,\" Boof said aloud, feeling lighter, as though a great weight had been lifted. The Fool’s laughter, once distant and mocking, now sounded close—friendly, even."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’ve found it, Boof. The end of the journey is always an awakening. But remember, every awakening is also the beginning of something new.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The significance of the Fool’s Awakening within the overarching narrative."
+                },
+                {
+                    "description": "Boof's emotional and psychological transformation as they reach a moment of clarity."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

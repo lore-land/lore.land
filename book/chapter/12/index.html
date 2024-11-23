@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 12: Boof and the Fool’s Path</title>
+    <title id="page-title">[Lore.Land] Chapter 12: Boof and the Fool’s Path</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 12 of Lore.Land: Boof and the Fool’s Path. Embark on a new journey as Boof chooses their own way forward with the Fool.">
+    <meta name="description" content="Chapter 12 of Lore.Land: Boof and the Fool’s Path. Embark on a new journey as Boof chooses their own way forward with the Fool." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/12/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -21,75 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="path">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/11/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/12/index.html" class="current-chapter" aria-current="page">Chapter 12</a></li>
-        <li><a href="/book/chapter/13/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 12: Boof and the Fool’s Path</h1>
-
-    <custom-boof>
-        <p>
-            Boof stood at the edge of the clearing, the last echoes of their awakening still resonating within. Before them, a new <custom-path>path</custom-path> opened, stretching out into the unknown. It was not a maze, nor a game—it was something else, something simpler.
-        </p>
-    </custom-boof>
-
-    <custom-path>
-        <p data-content_id="path-intro">
-            The path was quiet, unassuming, but full of promise. Boof knew that the journey had changed—no longer about solving puzzles or chasing the Fool. This was about walking forward, with no end in sight, but with a newfound sense of purpose.
-        </p>
-    </custom-path>
-
-    <custom-fool>
-        <p>
-            "You’ve come far, Boof," the Fool’s voice echoed softly. "But the path ahead is yours to choose. It’s no longer about games, but about what you make of it."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/12.png" alt="The Fool's Path" loading="lazy">
-        <figcaption>The Fool’s Path: an open journey where every step is a choice.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Open Road</h2>
-        <p>
-            Boof looked down the path, feeling a calmness that hadn’t been there before. This was a different kind of journey—one without tricks or hidden challenges. The boonberries swayed gently in the trees, as if urging Boof forward.
-            The Fool was no longer a distant figure. Boof realized they had been walking this path together all along.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "Where does it lead?" Boof asked aloud. The Fool didn’t answer, but Boof felt no frustration, only curiosity. It didn’t matter where the path led—it mattered that they were walking it.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. 'The path is yours to create.'"
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Step onto the Path</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Step onto the Path</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -97,7 +51,106 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 12,
+        "title": "Boof and the Fool’s Path",
+        "description": "Chapter 12 of Lore.Land: Boof and the Fool’s Path. Embark on a new journey as Boof chooses their own way forward with the Fool.",
+        "mood": "path",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "path",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof stood at the edge of the clearing, the last echoes of their awakening still resonating within. Before them, a new ",
+                        "children": [
+                            {
+                                "type": "custom-path",
+                                "content": "path"
+                            },
+                            {
+                                "type": "text",
+                                "text": " opened, stretching out into the unknown. It was not a maze, nor a game—it was something else, something simpler."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-path",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "path-intro",
+                        "text": "The path was quiet, unassuming, but full of promise. Boof knew that the journey had changed—no longer about solving puzzles or chasing the Fool. This was about walking forward, with no end in sight, but with a newfound sense of purpose."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’ve come far, Boof,\" the Fool’s voice echoed softly. \"But the path ahead is yours to choose. It’s no longer about games, but about what you make of it.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/12.png",
+                    "alt": "The Fool's Path",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Path: an open journey where every step is a choice."
+            },
+            {
+                "type": "section",
+                "title": "The Open Road",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof looked down the path, feeling a calmness that hadn’t been there before. This was a different kind of journey—one without tricks or hidden challenges. The boonberries swayed gently in the trees, as if urging Boof forward.\nThe Fool was no longer a distant figure. Boof realized they had been walking this path together all along."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Where does it lead?\" Boof asked aloud. The Fool didn’t answer, but Boof felt no frustration, only curiosity. It didn’t matter where the path led—it mattered that they were walking it."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. 'The path is yours to create.'\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The significance of the Fool’s Path within the overarching narrative."
+                },
+                {
+                    "description": "Boof's emotional and psychological transformation as they embrace a new journey."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

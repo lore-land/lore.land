@@ -1,88 +1,49 @@
-<!-- chapter/04/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>[Lore.Land] Chapter 04: Boof and the Fool’s Mirror</title>
+
+    <title id="page-title">[Lore.Land] Chapter 04: Boof and the Fool’s Mirror</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 4 of Lore.Land: Boof and the Fool’s Mirror. Discover the world through the Fool’s reflective surface.">
+    <meta name="description" content="Chapter 4 of Lore.Land: Boof and the Fool’s Mirror. Discover the world through the Fool’s reflective surface." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/chapter/04/styles.css">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
+    <link rel="stylesheet" href="/book/chapter/04/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/custom-elements.js?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="mirror">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/03/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/04/index.html" class="current-chapter" aria-current="page">Chapter 4</a></li>
-        <li><a href="/book/chapter/05/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 04: Boof and the Fool’s Mirror</h1>
-
-    <custom-boof>
-        <p>
-            Boof stumbled upon the <custom-mirror>Fool’s Mirror</custom-mirror>, a reflective surface that showed not just a reflection, but a world inverted, where the familiar became strange.
-        </p>
-    </custom-boof>
-
-    <custom-mirror>
-        <p data-content_id="mirror-intro">
-            The Fool’s Mirror shimmered, revealing truths that danced between reflection and distortion. It whispered, "What you see is not what is, but what you believe."
-        </p>
-    </custom-mirror>
-
-    <custom-fool>
-        <p>
-            "Look into the mirror, Boof," the Fool’s voice echoed. "In it, you will see not me, but yourself. And in yourself, you will find what you seek."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/04.png" alt="The Fool's Mirror" loading="lazy">
-        <figcaption>The Fool's Mirror: a window into perception, where reality bends.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Reflections of the Fool’s Mirror</h2>
-        <p>
-            As Boof gazed into the mirror, their reflection shifted. It became both them and not them, a version that was twisted by perception, altered by the gaze of the Fool.
-            The boonberries glowed faintly in the reflection, yet they did not exist in the world outside the glass.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            Boof touched the mirror, and for a moment, felt their hand sink into its surface, as if reality had become liquid.
-            "What is this?" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze across the glass.
-        </p>
-    </custom-boof>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Peer deeper into the mirror</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Peer deeper into the mirror</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -90,7 +51,97 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 4,
+        "title": "Boof and the Fool’s Mirror",
+        "description": "Chapter 4 of Lore.Land: Boof and the Fool’s Mirror. Discover the world through the Fool’s reflective surface.",
+        "mood": "mirror",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "mirror",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof stumbled upon the ",
+                        "children": [
+                            {
+                                "type": "custom-mirror",
+                                "content": "Fool’s Mirror"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", a reflective surface that showed not just a reflection, but a world inverted, where the familiar became strange."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-mirror",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "mirror-intro",
+                        "text": "The Fool’s Mirror shimmered, revealing truths that danced between reflection and distortion. It whispered, \"What you see is not what is, but what you believe.\""
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Look into the mirror, Boof,\" the Fool’s voice echoed. \"In it, you will see not me, but yourself. And in yourself, you will find what you seek.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/04.png",
+                    "alt": "The Fool's Mirror",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool's Mirror: a window into perception, where reality bends."
+            },
+            {
+                "type": "section",
+                "title": "The Reflections of the Fool’s Mirror",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "As Boof gazed into the mirror, their reflection shifted. It became both them and not them, a version that was twisted by perception, altered by the gaze of the Fool.\nThe boonberries glowed faintly in the reflection, yet they did not exist in the world outside the glass."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof touched the mirror, and for a moment, felt their hand sink into its surface, as if reality had become liquid.\n\"What is this?\" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze across the glass."
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "Explanation of the Fool’s Mirror and its role in revealing hidden truths."
+                },
+                {
+                    "description": "Boof's introspection and the challenges faced when confronting one's own reflection."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

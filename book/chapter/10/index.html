@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 10: Boof and the Fool’s Bonk</title>
+    <title id="page-title">[Lore.Land] Chapter 10: Boof and the Fool’s Bonk</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge.">
+    <meta name="description" content="Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/10/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -21,74 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="bonk">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/09/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/10/index.html" class="current-chapter" aria-current="page">Chapter 10</a></li>
-        <li><a href="/book/chapter/11/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 10: Boof and the Fool’s Bonk</h1>
-
-    <custom-boof>
-        <p>
-            Boof wandered further into the maze of games and puzzles, unsure if there was even a way out anymore. And then, with a sudden thud—a loud <custom-bonk>BONK</custom-bonk> echoed through the clearing.
-        </p>
-    </custom-boof>
-
-    <custom-bonk>
-        <p data-content_id="bonk-intro">
-            The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused.
-        </p>
-    </custom-bonk>
-
-    <custom-fool>
-        <p>
-            "Ah, Boof," the Fool's voice was closer now, almost tangible. "You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/10.png" alt="The Fool's Bonk" loading="lazy">
-        <figcaption>The Fool’s Bonk: an unexpected end, or just another beginning?</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Bonk</h2>
-        <p>
-            Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in the air, as if waiting for something more.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "Is this how it ends?" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "You’ve reached this part of the game, Boof, but the bonk is not the end," the Fool’s voice teased. "It’s just the sound of one door closing... and maybe, another opening."
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Embrace the Bonk</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Embrace the Bonk</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -96,7 +51,106 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 10,
+        "title": "Boof and the Fool’s Bonk",
+        "description": "Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge.",
+        "mood": "bonk",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "bonk",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof wandered further into the maze of games and puzzles, unsure if there was even a way out anymore. And then, with a sudden thud—a loud ",
+                        "children": [
+                            {
+                                "type": "custom-bonk",
+                                "content": "BONK"
+                            },
+                            {
+                                "type": "text",
+                                "text": " echoed through the clearing."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-bonk",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "bonk-intro",
+                        "text": "The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/10.png",
+                    "alt": "The Fool's Bonk",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Bonk: an unexpected end, or just another beginning?"
+            },
+            {
+                "type": "section",
+                "title": "The Bonk",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in the air, as if waiting for something more."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Is this how it ends?\" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’ve reached this part of the game, Boof, but the bonk is not the end,\" the Fool’s voice teased. \"It’s just the sound of one door closing... and maybe, another opening.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The significance of the Fool’s Bonk within the overarching narrative."
+                },
+                {
+                    "description": "Boof's emotional and psychological journey as they confront unexpected challenges."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

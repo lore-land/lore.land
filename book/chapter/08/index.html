@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 08: Boof and the Fool’s Game</title>
+    <title id="page-title">[Lore.Land] Chapter 08: Boof and the Fool’s Game</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 8 of Lore.Land: Boof and the Fool’s Game. Join Boof as they engage in the enigmatic game set by the Fool, where reality and rules intertwine.">
+    <meta name="description" content="Chapter 8 of Lore.Land: Boof and the Fool’s Game. Join Boof as they engage in the enigmatic game set by the Fool, where reality and rules intertwine." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/08/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -21,75 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="game">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/07/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/08/index.html" class="current-chapter" aria-current="page">Chapter 8</a></li>
-        <li><a href="/book/chapter/09/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 08: Boof and the Fool’s Game</h1>
-
-    <custom-boof>
-        <p>
-            Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: "Shall we play?"
-        </p>
-    </custom-boof>
-
-    <custom-game>
-        <p data-content_id="game-intro">
-            The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play.
-        </p>
-    </custom-game>
-
-    <custom-fool>
-        <p>
-            "The rules are simple, Boof," the Fool’s voice echoed from the trees, "but understanding them, now that’s the tricky part."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/08.png" alt="The Fool's Game" loading="lazy">
-        <figcaption>The Fool's Game: a challenge where rules bend as much as reality.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Game Begins</h2>
-        <p>
-            Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive.
-            The boonberries surrounding the clearing swayed, as though they too were watching the unfolding game.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "What’s the objective?" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "The objective, Boof, is whatever you make of it," the Fool whispered. "But remember, not every game can be won."
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Join the game</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Join the game</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -97,7 +51,96 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 8,
+        "title": "Boof and the Fool’s Game",
+        "description": "Chapter 8 of Lore.Land: Boof and the Fool’s Game. Join Boof as they engage in the enigmatic game set by the Fool, where reality and rules intertwine.",
+        "mood": "game",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "game",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: \"Shall we play?\""
+                    }
+                ]
+            },
+            {
+                "type": "custom-game",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "game-intro",
+                        "text": "The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"The rules are simple, Boof,\" the Fool’s voice echoed from the trees, \"but understanding them, now that’s the tricky part.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/08.png",
+                    "alt": "The Fool's Game",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool's Game: a challenge where rules bend as much as reality."
+            },
+            {
+                "type": "section",
+                "title": "The Game Begins",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive.\nThe boonberries surrounding the clearing swayed, as though they too were watching the unfolding game."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"What’s the objective?\" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"The objective, Boof, is whatever you make of it,\" the Fool whispered. \"But remember, not every game can be won.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The origins and significance of the Fool’s Game within the labyrinth."
+                },
+                {
+                    "description": "Boof's strategic thinking and emotional responses while engaging in the Fool’s Game."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

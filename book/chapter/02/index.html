@@ -3,78 +3,47 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 02: Boof and the Grove of Echoes</title>
+    <title id="page-title">[Lore.Land] Chapter 02: Boof and the Grove of Echoes</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 2 of Lore.Land: Boof and the Grove of Echoes. Follow Boof deeper into the mysterious grove filled with echoes of the past.">
+    <meta name="description" content="Chapter 2 of Lore.Land: Boof and the Grove of Echoes. Follow Boof deeper into the mysterious grove filled with echoes of the past." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
     <link rel="stylesheet" href="/book/chapter/02/style.css">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="grove">
-<main class="chapter">
-    <h1>Chapter 02: Boof and the Grove of Echoes</h1>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
+</nav>
 
-    <custom-boof>
-        <p>
-            Boof's journey led them deeper into the <custom-boonberry>grove</custom-boonberry>, where every step seemed to stir the whispers of the past. The <custom-echo>echoes</custom-echo> lingered, repeating fragments of lost stories.
-        </p>
-    </custom-boof>
-
-    <custom-boonberry>
-        <p data-content_id="grove">
-            "The Fool was here," the grove seemed to say, though no voice spoke it directly. The boonberries reflected strange patterns, hinting at the Fool’s games.
-        </p>
-    </custom-boonberry>
-
-    <custom-echo>
-        <p>
-            "Follow me," the echo beckoned, though it was not clear if it belonged to the Fool, or something else entirely.
-        </p>
-    </custom-echo>
-
-    <figure>
-        <img src="/book/images/02.png" alt="The Grove of Echoes">
-        <figcaption>The Grove of Echoes, where time repeats itself.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Echoes of the Grove</h2>
-        <p>
-            In the grove, time did not pass in a linear fashion. Boof felt as if they had already walked this path—yet it was new. The boonberries glowed brighter, as if the Fool's presence had just passed.
-        </p>
-    </section>
-
-    <custom-fool>
-        <p>
-            "Are you lost, Boof?" the Fool’s voice echoed, though it felt distant—almost playful. "Or perhaps, you’re right where you need to be."
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
-
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Decipher the echoes</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Decipher the echoes</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -82,7 +51,105 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 2,
+        "title": "Boof and the Grove of Echoes",
+        "description": "Chapter 2 of Lore.Land: Boof and the Grove of Echoes. Follow Boof deeper into the mysterious grove filled with echoes of the past.",
+        "mood": "grove",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "grove",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof's journey led them deeper into the ",
+                        "children": [
+                            {
+                                "type": "custom-boonberry",
+                                "content": "grove"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", where every step seemed to stir the whispers of the past. The "
+                            },
+                            {
+                                "type": "custom-echo",
+                                "content": "echoes"
+                            },
+                            {
+                                "type": "text",
+                                "text": " lingered, repeating fragments of lost stories."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-boonberry",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "grove",
+                        "text": "\"The Fool was here,\" the grove seemed to say, though no voice spoke it directly. The boonberries reflected strange patterns, hinting at the Fool’s games."
+                    }
+                ]
+            },
+            {
+                "type": "custom-echo",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Follow me,\" the echo beckoned, though it was not clear if it belonged to the Fool, or something else entirely."
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/02.png",
+                    "alt": "The Grove of Echoes",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Grove of Echoes, where time repeats itself."
+            },
+            {
+                "type": "section",
+                "title": "The Echoes of the Grove",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "In the grove, time did not pass in a linear fashion. Boof felt as if they had already walked this path—yet it was new. The boonberries glowed brighter, as if the Fool's presence had just passed."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Are you lost, Boof?\" the Fool’s voice echoed, though it felt distant—almost playful. \"Or perhaps, you’re right where you need to be.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "Detail about the Grove of Echoes and its connection to the past."
+                },
+                {
+                    "description": "Insights into Boof's feelings and motivations within the grove."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

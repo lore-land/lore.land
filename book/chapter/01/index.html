@@ -3,89 +3,46 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 01: Boof and the Boonberry Fool</title>
+    <title id="page-title">[Lore.Land]</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 1 of Lore.Land: Boof and the Boonberry Fool. Join Boof on his quest to find the elusive Boonberry Fool.">
+    <meta name="description" content="" id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
-    <link rel="stylesheet" href="/book/chapter/01/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="boon">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/00/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/01/index.html" class="current-chapter" aria-current="page">Chapter 1</a></li>
-        <li><a href="/book/chapter/02/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Section">Previous Section</button>
+    <button class="next" aria-label="Next Section">Next Section</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 1: Boof and the Boonberry Fool</h1>
-
-    <custom-boof data-mood="boon">
-        <p>
-            Boof wandered through the <custom-boonberry>fields</custom-boonberry> in search of the elusive <custom-fool>Boonberry Fool</custom-fool>.
-            "Where could it be?" Boof whispered to the wind, but only the trees answered with rustling leaves.
-        </p>
-    </custom-boof>
-
-    <custom-boonberry>
-        <p data-content_id="berry">
-            The boonberries shimmered in the morning light, each one more dazzling than the last. But the Fool was nowhere in sight.
-        </p>
-    </custom-boonberry>
-
-    <custom-boof>
-        <p>
-            Just then, a shadow danced between the trees—a hint, perhaps? Or merely the folly of a fruitless quest?
-        </p>
-    </custom-boof>
-
-    <figure>
-        <img src="/book/images/01.png" alt="Boof in search of the Boonberry Fool" loading="lazy">
-        <figcaption>Boof in pursuit of the Boonberry Fool</figcaption>
-    </figure>
-
-    <custom-fool>
-        <p>
-            "Catch me if you can," the Fool’s voice echoed from the distance, teasing Boof onward.
-        </p>
-    </custom-fool>
-
-    <section>
-        <h2>The Elusive Boonberry Fool</h2>
-        <p>
-            The Boonberry Fool was more than just a figure—it was a challenge, an idea, a riddle wrapped in a fool's grin.
-            Boof continued, driven by the mystery and the promise of something more at the heart of the boonberry grove.
-        </p>
-    </section>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
-
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev" aria-label="Previous Section">Previous Section</button>
+    <button class="next" aria-label="Next Section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Uncover the Fool’s secret</button>
+    <ul id="lore-collector" aria-label="Lore Collector"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Uncover the Fool’s Secret</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -93,7 +50,105 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 1,
+        "title": "Boof and the Boonberry Fool",
+        "description": "Chapter 1 of Lore.Land: Boof and the Boonberry Fool. Join Boof on his quest to find the elusive Boonberry Fool.",
+        "mood": "boon",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "boon",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof wandered through the ",
+                        "children": [
+                            {
+                                "type": "custom-boonberry",
+                                "content": "fields"
+                            },
+                            {
+                                "type": "text",
+                                "text": " in search of the elusive "
+                            },
+                            {
+                                "type": "custom-fool",
+                                "content": "Boonberry Fool"
+                            },
+                            {
+                                "type": "text",
+                                "text": ". \"Where could it be?\" Boof whispered to the wind, but only the trees answered with rustling leaves."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-boonberry",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "berry",
+                        "text": "The boonberries shimmered in the morning light, each one more dazzling than the last. But the Fool was nowhere in sight."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Just then, a shadow danced between the trees—a hint, perhaps? Or merely the folly of a fruitless quest?"
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/01.png",
+                    "alt": "Boof in search of the Boonberry Fool",
+                    "loading": "lazy"
+                },
+                "figcaption": "Boof in pursuit of the Boonberry Fool"
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Catch me if you can,\" the Fool’s voice echoed from the distance, teasing Boof onward."
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "title": "The Elusive Boonberry Fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "The Boonberry Fool was more than just a figure—it was a challenge, an idea, a riddle wrapped in a fool's grin. Boof continued, driven by the mystery and the promise of something more at the heart of the boonberry grove."
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "Detail about the Boonberry Fool's origin."
+                },
+                {
+                    "description": "Boof's background and motivations."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>
