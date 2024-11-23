@@ -1,20 +1,18 @@
-<!-- chapter/06/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 06: Boof and the Fool’s Labyrinth</title>
+    <title id="page-title">[Lore.Land] Chapter 06: Boof and the Fool’s Labyrinth</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 6 of Lore.Land: Boof and the Fool’s Labyrinth. Navigate through the shifting maze as Boof confronts deeper mysteries.">
+    <meta name="description" content="Chapter 6 of Lore.Land: Boof and the Fool’s Labyrinth. Navigate through the shifting maze as Boof confronts deeper mysteries." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/06/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -22,70 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="labyrinth">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/05/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/06/index.html" class="current-chapter" aria-current="page">Chapter 6</a></li>
-        <li><a href="/book/chapter/07/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 06: Boof and the Fool’s Labyrinth</h1>
-
-    <custom-boof>
-        <p>
-            Boof stepped into the <custom-labyrinth>Fool’s Labyrinth</custom-labyrinth>, where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step.
-        </p>
-    </custom-boof>
-
-    <custom-labyrinth>
-        <p data-content_id="labyrinth-intro">
-            "In the labyrinth, the way forward is always behind you, and the way out is through," a voice echoed from within the twisting paths.
-        </p>
-    </custom-labyrinth>
-
-    <custom-fool>
-        <p>
-            "You’ve found my maze, Boof," the Fool’s voice teased from all directions, "but the real question is—can you find yourself?"
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/06.png" alt="The Fool's Labyrinth" loading="lazy">
-        <figcaption>The Fool’s Labyrinth: a place where direction is an illusion.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Shifting Maze</h2>
-        <p>
-            The labyrinth was alive, its walls shifting like liquid, bending and twisting the space.
-            No matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they started, yet with a slight change.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            Boof paused. "Is this part of the game?" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared.
-            "Perhaps the only way out," Boof mused, "is to stop trying to escape."
-        </p>
-    </custom-boof>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Navigate the Labyrinth</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Navigate the Labyrinth</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -93,7 +51,97 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 6,
+        "title": "Boof and the Fool’s Labyrinth",
+        "description": "Chapter 6 of Lore.Land: Boof and the Fool’s Labyrinth. Navigate through the shifting maze as Boof confronts deeper mysteries.",
+        "mood": "labyrinth",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "labyrinth",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof stepped into the ",
+                        "children": [
+                            {
+                                "type": "custom-labyrinth",
+                                "content": "Fool’s Labyrinth"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-labyrinth",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "labyrinth-intro",
+                        "text": "\"In the labyrinth, the way forward is always behind you, and the way out is through,\" a voice echoed from within the twisting paths."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is—can you find yourself?\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/06.png",
+                    "alt": "The Fool's Labyrinth",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Labyrinth: a place where direction is an illusion."
+            },
+            {
+                "type": "section",
+                "title": "The Shifting Maze",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "The labyrinth was alive, its walls shifting like liquid, bending and twisting the space.\nNo matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they started, yet with a slight change."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof paused. \"Is this part of the game?\" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared.\n\"Perhaps the only way out,\" Boof mused, \"is to stop trying to escape.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The nature and purpose of the Fool’s Labyrinth within the grove."
+                },
+                {
+                    "description": "Boof's internal struggles and discoveries while navigating the ever-changing maze."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

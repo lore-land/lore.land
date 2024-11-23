@@ -3,118 +3,154 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Chapter 13: Boof and the Fool’s Reflection</title>
+    <title id="page-title">Chapter 13: Boof and the Fool’s Reflection</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <!-- SEO and Accessibility Enhancements -->
+    <meta name="description" content="Chapter 13 of Lore.Land: Boof and the Fool’s Reflection. Embark on a new journey as Boof chooses their own way forward with the Fool." id="page-description">
 
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
     <link rel="stylesheet" href="/book/chapter/13/style.css">
 
+    <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
-    <style>
-        span[data-content_id] {
-            cursor: pointer;
-        }
-
-        span[data-content_id]:not(.played) {
-            opacity: .5;
-        }
-
-        body[data-mood="reflection"] span[data-text=""] {
-            display: none;
-        }
-
-        custom-boof {
-            display: block;
-            background: rgba(0, 0, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-boonberry {
-            display: block;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        custom-fool {
-            display: inline-block;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 5px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        custom-reflection {
-            display: inline-block;
-            background: rgba(150, 150, 255, 0.2);
-            padding: 5px;
-            border-radius: 8px;
-            font-style: italic;
-            border: 1px solid rgba(100, 100, 255, 0.5);
-        }
-    </style>
+    <!-- External JavaScript Files -->
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="reflection">
-<main>
-    <h1>Chapter 13: Boof and the Fool’s Reflection</h1>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
+</nav>
 
-    <custom-boof>
-        <p>
-            Boof paused on the path, feeling the weight of the journey behind them. The bonks, the puzzles, the Fool’s laughter—it all seemed so distant now. They gazed into a still pond by the side of the path, seeing their reflection and something more: a <custom-reflection>deeper truth</custom-reflection>.
-        </p>
-    </custom-boof>
-
-    <custom-reflection>
-        <p data-content_id="reflection-intro">
-            The water rippled gently, distorting Boof’s face, but it also showed something beyond the surface—an image of their journey, everything they had been through, everything they had learned.
-        </p>
-    </custom-reflection>
-
-    <custom-fool>
-        <p>
-            "This is where it all leads, Boof," the Fool’s voice came, soft and reflective. "You’ve seen me in every step of your journey, but now it’s time to see yourself."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/13.png" alt="The Fool's Reflection">
-        <figcaption>The Fool’s Reflection: a mirror of not just the past, but the future Boof will create.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Mirror of Time</h2>
-        <p>
-            Boof stared into the water, watching as the images flickered—of the path, the maze, the Fool, and finally, themselves. Every piece of the puzzle had brought them here, but now the journey was theirs alone.
-            The boonberries in the trees seemed to reflect in the water as well, merging with Boof’s reflection.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "I see now," Boof whispered, feeling both humbled and empowered. "I was chasing the Fool, but I was really chasing myself."
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "Exactly, Boof," the Fool chuckled lightly. "The reflection you see is just the beginning. The real journey lies ahead, and it’s one you’ll walk without me. But I’ll always be part of you, in every step."
-        </p>
-    </custom-fool>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
 
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
+
+<!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector"></ul>
-    <button id="lore-button">Reflect and Move Forward</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Reflect and Move Forward</button>
+
+    <div class="additional-links">
+        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+
+    <!-- Primary Action Button -->
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
 
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 13,
+        "title": "Boof and the Fool’s Reflection",
+        "description": "Chapter 13 of Lore.Land: Boof and the Fool’s Reflection. Embark on a new journey as Boof chooses their own way forward with the Fool.",
+        "mood": "reflection",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "reflection",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof paused on the path, feeling the weight of the journey behind them. The bonks, the puzzles, the Fool’s laughter—it all seemed so distant now. They gazed into a still pond by the side of the path, seeing their reflection and something more: a ",
+                        "children": [
+                            {
+                                "type": "custom-reflection",
+                                "content": "deeper truth"
+                            },
+                            {
+                                "type": "text",
+                                "text": "."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-reflection",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "reflection-intro",
+                        "text": "The water rippled gently, distorting Boof’s face, but it also showed something beyond the surface—an image of their journey, everything they had been through, everything they had learned."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"This is where it all leads, Boof,\" the Fool’s voice came, soft and reflective. \"You’ve seen me in every step of your journey, but now it’s time to see yourself.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/13.png",
+                    "alt": "The Fool's Reflection",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Reflection: a mirror of not just the past, but the future Boof will create."
+            },
+            {
+                "type": "section",
+                "title": "The Mirror of Time",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof stared into the water, watching as the images flickered—of the path, the maze, the Fool, and finally, themselves. Every piece of the puzzle had brought them here, but now the journey was theirs alone.\nThe boonberries in the trees seemed to reflect in the water as well, merging with Boof’s reflection."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"I see now,\" Boof whispered, feeling both humbled and empowered. \"I was chasing the Fool, but I was really chasing myself.\""
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Exactly, Boof,\" the Fool chuckled lightly. \"The reflection you see is just the beginning. The real journey lies ahead, and it’s one you’ll walk without me. But I’ll always be part of you, in every step.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The significance of the Fool’s Reflection within the overarching narrative."
+                },
+                {
+                    "description": "Boof's emotional and psychological transformation as they reach a moment of clarity."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

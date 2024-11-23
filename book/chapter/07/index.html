@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 07: Boof and the Fool’s Shadow</title>
+    <title id="page-title">[Lore.Land] Chapter 07: Boof and the Fool’s Shadow</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 7 of Lore.Land: Boof and the Fool’s Shadow. Explore the mysteries as Boof encounters the enigmatic shadow in the Fool’s world.">
+    <meta name="description" content="Chapter 7 of Lore.Land: Boof and the Fool’s Shadow. Explore the mysteries as Boof encounters the enigmatic shadow in the Fool’s world." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
     <link rel="stylesheet" href="/book/chapter/07/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
@@ -21,75 +20,30 @@
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="shadow">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/06/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/07/index.html" class="current-chapter" aria-current="page">Chapter 7</a></li>
-        <li><a href="/book/chapter/08/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 07: Boof and the Fool’s Shadow</h1>
-
-    <custom-boof>
-        <p>
-            The deeper Boof ventured into the labyrinth, the more they noticed something was following them—a <custom-shadow>shadow</custom-shadow>, just beyond their reach.
-        </p>
-    </custom-boof>
-
-    <custom-shadow>
-        <p data-content_id="shadow-intro">
-            The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely.
-        </p>
-    </custom-shadow>
-
-    <custom-fool>
-        <p>
-            "Ah, you’ve found it, haven’t you, Boof?" the Fool's voice whispered from the shadows. "This is my shadow, or perhaps... it is yours?"
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/07.png" alt="The Fool's Shadow" loading="lazy">
-        <figcaption>The Fool’s Shadow: a reflection of more than just light, a reflection of truth.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Shadow’s Reflection</h2>
-        <p>
-            The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward.
-            The boonberries above them dimmed, casting the world into a soft twilight.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            Boof reached out, hoping to touch the shadow, to understand it. "Is this what the Fool wanted me to see?" Boof wondered. The shadow flickered and danced, evading their grasp.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "The shadow will always be with you, Boof," the Fool’s voice echoed from the darkness. "But the real question is: whose shadow is it?"
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Chase the shadow</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Chase the shadow</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -97,7 +51,106 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 7,
+        "title": "Boof and the Fool’s Shadow",
+        "description": "Chapter 7 of Lore.Land: Boof and the Fool’s Shadow. Explore the mysteries as Boof encounters the enigmatic shadow in the Fool’s world.",
+        "mood": "shadow",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "shadow",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "The deeper Boof ventured into the labyrinth, the more they noticed something was following them—a ",
+                        "children": [
+                            {
+                                "type": "custom-shadow",
+                                "content": "shadow"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", just beyond their reach."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-shadow",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "shadow-intro",
+                        "text": "The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the shadows. \"This is my shadow, or perhaps... it is yours?\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/07.png",
+                    "alt": "The Fool's Shadow",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Shadow: a reflection of more than just light, a reflection of truth."
+            },
+            {
+                "type": "section",
+                "title": "The Shadow’s Reflection",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward.\nThe boonberries above them dimmed, casting the world into a soft twilight."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof reached out, hoping to touch the shadow, to understand it. \"Is this what the Fool wanted me to see?\" Boof wondered. The shadow flickered and danced, evading their grasp."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed from the darkness. \"But the real question is: whose shadow is it?\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The nature and purpose of the Fool’s Shadow within the labyrinth."
+                },
+                {
+                    "description": "Boof's internal struggles and discoveries while confronting the enigmatic shadow."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

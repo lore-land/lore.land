@@ -3,93 +3,47 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 09: Boof and the Fool’s Puzzle</title>
+    <title id="page-title">[Lore.Land] Chapter 09: Boof and the Fool’s Puzzle</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 9 of Lore.Land: Boof and the Fool’s Puzzle. Join Boof as they navigate the enigmatic puzzle set by the Fool, where every piece reveals deeper truths.">
+    <meta name="description" content="Chapter 9 of Lore.Land: Boof and the Fool’s Puzzle. Join Boof as they navigate the enigmatic puzzle set by the Fool, where every piece reveals deeper truths." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
-    <link rel="stylesheet" href="/book/chapter/09/styles.css">
+    <link rel="stylesheet" href="/book/chapter/09/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/custom-elements.js?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="puzzle">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/08/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/09/index.html" class="current-chapter" aria-current="page">Chapter 9</a></li>
-        <li><a href="/book/chapter/10/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 09: Boof and the Fool’s Puzzle</h1>
-
-    <custom-boof>
-        <p>
-            As Boof stepped off the game board, they noticed the ground beneath them shifting once again—this time into a <custom-puzzle>puzzle</custom-puzzle>. The pieces rearranged themselves with every step Boof took.
-        </p>
-    </custom-boof>
-
-    <custom-puzzle>
-        <p data-content_id="puzzle-intro">
-            The puzzle was incomplete, missing key pieces, yet Boof had no way of knowing what the full picture should look like. "Solve this," a voice whispered, "if you can."
-        </p>
-    </custom-puzzle>
-
-    <custom-fool>
-        <p>
-            "It’s not about solving, Boof," the Fool’s voice whispered again, "it’s about seeing."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/09.png" alt="The Fool's Puzzle" loading="lazy">
-        <figcaption>The Fool’s Puzzle: an ever-shifting challenge, never quite complete.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Pieces Shift</h2>
-        <p>
-            Boof knelt down, studying the scattered pieces. Each one was strange, carrying shapes and symbols Boof didn’t fully understand. Some pieces fit together, while others refused to align, as if the puzzle itself resisted completion.
-            The boonberries in the trees above flickered as if they too watched Boof struggle.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            "How can I solve this if I don’t know what it is?" Boof murmured, frustration growing. The Fool’s laughter was distant, but Boof could sense the challenge was less about solving the puzzle and more about finding the patience to endure it.
-        </p>
-    </custom-boof>
-
-    <custom-fool>
-        <p>
-            "The objective, Boof, is whatever you make of it," the Fool’s voice whispered. "But remember, not every game can be won."
-        </p>
-    </custom-fool>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Piece it together</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Piece it together</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -97,7 +51,106 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 9,
+        "title": "Boof and the Fool’s Puzzle",
+        "description": "Chapter 9 of Lore.Land: Boof and the Fool’s Puzzle. Join Boof as they navigate the enigmatic puzzle set by the Fool, where every piece reveals deeper truths.",
+        "mood": "puzzle",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "puzzle",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "As Boof stepped off the game board, they noticed the ground beneath them shifting once again—this time into a ",
+                        "children": [
+                            {
+                                "type": "custom-puzzle",
+                                "content": "puzzle"
+                            },
+                            {
+                                "type": "text",
+                                "text": ". The pieces rearranged themselves with every step Boof took."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-puzzle",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "puzzle-intro",
+                        "text": "The puzzle was incomplete, missing key pieces, yet Boof had no way of knowing what the full picture should look like. \"Solve this,\" a voice whispered, \"if you can.\""
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"It’s not about solving, Boof,\" the Fool’s voice whispered again, \"it’s about seeing.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/09.png",
+                    "alt": "The Fool's Puzzle",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool’s Puzzle: an ever-shifting challenge, never quite complete."
+            },
+            {
+                "type": "section",
+                "title": "The Pieces Shift",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof knelt down, studying the scattered pieces. Each one was strange, carrying shapes and symbols Boof didn’t fully understand. Some pieces fit together, while others refused to align, as if the puzzle itself resisted completion.\nThe boonberries in the trees above them flickered as if they too watched Boof struggle."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"How can I solve this if I don’t know what it is?\" Boof murmured, frustration growing. The Fool’s laughter was distant, but Boof could sense the challenge was less about solving the puzzle and more about finding the patience to endure it."
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"The objective, Boof, is whatever you make of it,\" the Fool’s voice whispered. \"But remember, not every game can be won.\""
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "The origins and significance of the Fool’s Puzzle within the labyrinth."
+                },
+                {
+                    "description": "Boof's strategic thinking and emotional responses while engaging in the Fool’s Puzzle."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>

@@ -1,93 +1,49 @@
-<!-- chapter/03/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 
-    <title>[Lore.Land] Chapter 03: Boof and the Fool's Paradox</title>
+    <title id="page-title">[Lore.Land] Chapter 03: Boof and the Fool's Paradox</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO and Accessibility Enhancements -->
-    <meta name="description" content="Chapter 3 of Lore.Land: Boof and the Fool's Paradox. Discover the twists and turns of the paradoxical path.">
+    <meta name="description" content="Chapter 3 of Lore.Land: Boof and the Fool's Paradox. Discover the twists and turns of the paradoxical path." id="page-description">
 
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
     <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/chapter/03/styles.css">
-    <link rel="stylesheet" href="/book/styles/custom-elements.css">
+    <link rel="stylesheet" href="/book/chapter/03/style.css">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
     <link id="mood-styles" rel="stylesheet">
 
     <!-- External JavaScript Files -->
-    <script defer src="/book/scripts/custom-elements.js"></script>
-    <script defer src="/book/scripts/index.mjs?v=2024_10_04.I"></script>
+    <script defer type="module" src="/book/scripts/script.mjs?v=2024_10_04.I"></script>
 </head>
 <body data-mood="paradox">
-<!-- Navigation Controls -->
-<nav aria-label="Chapter navigation">
-    <ul class="navigation">
-        <li><a href="/book/chapter/02/index.html" class="prev-chapter">Previous Chapter</a></li>
-        <li><a href="/book/chapter/03/index.html" class="current-chapter" aria-current="page">Chapter 3</a></li>
-        <li><a href="/book/chapter/04/index.html" class="next-chapter">Next Chapter</a></li>
-    </ul>
+<!-- Chapter Navigation -->
+<nav class="chapter-navigation" aria-label="Chapter navigation">
+    <button class="prev" aria-label="Previous Chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next Chapter">Next Chapter</button>
 </nav>
 
-<main class="chapter">
-    <h1>Chapter 03: Boof and the Fool's Paradox</h1>
-
-    <custom-boof>
-        <p>
-            Boof stood at the edge of the <custom-paradox>Fool's Paradox</custom-paradox>, a place where truth and jest twisted together, impossible to untangle.
-        </p>
-    </custom-boof>
-
-    <custom-paradox>
-        <p data-content_id="paradox-intro">
-            "To move forward, you must go back," the paradox whispered, echoing the Fool’s riddles.
-            "To catch the Fool, you must first be caught."
-        </p>
-    </custom-paradox>
-
-    <custom-fool>
-        <p>
-            "You see, Boof, you are always moving, but never arriving," the Fool's voice teased. "The closer you get, the further away I am."
-        </p>
-    </custom-fool>
-
-    <figure>
-        <img src="/book/images/03.png" alt="The Fool's Paradox" loading="lazy">
-        <figcaption>The Fool's Paradox: where movement is illusion, and reality folds upon itself.</figcaption>
-    </figure>
-
-    <section>
-        <h2>The Enigma of the Paradox</h2>
-        <p>
-            The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed.
-            The boonberries glowed with a mischievous light, flickering between reality and mirage.
-        </p>
-    </section>
-
-    <custom-boof>
-        <p>
-            Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. "To chase is to never catch," Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove.
-        </p>
-    </custom-boof>
-
-    <!-- Section Navigation -->
-    <div class="section-navigation">
-        <button class="prev-section">Previous Section</button>
-        <button class="next-section">Next Section</button>
-    </div>
-
+<!-- Main Content -->
+<main class="chapter" id="chapter-content" tabindex="-1">
+    <!-- Content will be dynamically populated here by script.mjs -->
 </main>
+
+<!-- Section Navigation -->
+<div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+</div>
 
 <!-- Character Profile and Timeline Links -->
 <aside>
-    <ul id="lore-collector" aria-live="polite"></ul>
-    <button id="lore-button" aria-controls="lore-collector">Navigate the Paradox</button>
+    <ul id="lore-collector" aria-label="Lore Collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Navigate the Paradox</button>
 
     <div class="additional-links">
         <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
@@ -95,7 +51,97 @@
     </div>
 
     <!-- Primary Action Button -->
-    <button class="primary-action">Advance Story</button>
+    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
 </aside>
+
+<!-- JSON Data for the Chapter -->
+<script type="application/json" id="chapter-data">
+    {
+        "chapterNumber": 3,
+        "title": "Boof and the Fool's Paradox",
+        "description": "Chapter 3 of Lore.Land: Boof and the Fool's Paradox. Discover the twists and turns of the paradoxical path.",
+        "mood": "paradox",
+        "period": "spring",
+        "sections": [
+            {
+                "type": "custom-boof",
+                "data-mood": "paradox",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof stood at the edge of the ",
+                        "children": [
+                            {
+                                "type": "custom-paradox",
+                                "content": "Fool's Paradox"
+                            },
+                            {
+                                "type": "text",
+                                "text": ", a place where truth and jest twisted together, impossible to untangle."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "custom-paradox",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data-content_id": "paradox-intro",
+                        "text": "\"To move forward, you must go back,\" the paradox whispered, echoing the Fool’s riddles.\n\"To catch the Fool, you must first be caught.\""
+                    }
+                ]
+            },
+            {
+                "type": "custom-fool",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"The closer you get, the further away I am.\""
+                    }
+                ]
+            },
+            {
+                "type": "figure",
+                "img": {
+                    "src": "/book/images/03.png",
+                    "alt": "The Fool's Paradox",
+                    "loading": "lazy"
+                },
+                "figcaption": "The Fool's Paradox: where movement is illusion, and reality folds upon itself."
+            },
+            {
+                "type": "section",
+                "title": "The Enigma of the Paradox",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed.\nThe boonberries glowed with a mischievous light, flickering between reality and mirage."
+                    }
+                ]
+            },
+            {
+                "type": "custom-boof",
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "text": "Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. \"To chase is to never catch,\" Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove."
+                    }
+                ]
+            }
+        ],
+        "lore": {
+            "loreItems": [
+                {
+                    "description": "Explanation of the Fool's Paradox and its impact on the grove."
+                },
+                {
+                    "description": "Boof's reflections on the nature of pursuit and illusion within the paradox."
+                }
+            ]
+        }
+    }
+</script>
 </body>
 </html>
