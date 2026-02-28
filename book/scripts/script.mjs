@@ -1,9 +1,23 @@
 // scripts/script.mjs
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.C';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.C';
+import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.C';
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', () => {
+  const lifecycle = createLoadLifecycle({
+    id: 'chapter',
+    shellSelector: '#chapter-content',
+    spinnerDelayMs: 320,
+    skeletonLines: 6
+  });
+
+  lifecycle.boon('preloader engaged');
+  lifecycle.armBane('spinner + fallback');
+
   const chapterDataElement = document.getElementById('chapter-data');
   if (!chapterDataElement) {
+    lifecycle.bane('missing chapter data');
     console.error('Chapter data not found.');
     return;
   }
@@ -12,17 +26,29 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     chapterData = JSON.parse(chapterDataElement.textContent);
   } catch (error) {
+    lifecycle.bane('chapter data parse fallback');
     console.error('Error parsing chapter data:', error);
     return;
   }
 
-  initializeStyles(chapterData);
-  populateMetadata(chapterData);
-  populateContent(chapterData);
-  setupNavigation(chapterData);
-  setupLoreCollector(chapterData);
-  setupPrimaryAction(chapterData);
-  setupCustomElementsInteractions(chapterData);
+  lifecycle.bone('skeletons loaded');
+
+  try {
+    initializeStyles(chapterData);
+    populateMetadata(chapterData);
+    populateContent(chapterData);
+    setupNavigation(chapterData);
+    setupLoreCollector(chapterData);
+    setupPrimaryAction(chapterData);
+    setupCustomElementsInteractions(chapterData);
+
+    const chapterContent = document.getElementById('chapter-content');
+    const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
+    lifecycle.honk(`resolution + harmony (${acoustics.label})`);
+  } catch (error) {
+    lifecycle.bane('runtime fallback path');
+    console.error('Chapter lifecycle failed:', error);
+  }
 });
 
 /**
@@ -38,14 +64,18 @@ function initializeStyles(data) {
   const mood = data.mood;
 
   if (period) {
-    periodStylesLink.href = `/book/styles/periods/${period}.css`;
+    periodStylesLink.href = withCacheContext(`/book/styles/periods/${period}.css`, {
+      channel: `period-${period}`
+    });
     body.setAttribute('data-period', period);
   } else {
     periodStylesLink.disabled = true; // Disable if no period is set
   }
 
   if (mood) {
-    moodStylesLink.href = `/book/styles/moods/${mood}.css`;
+    moodStylesLink.href = withCacheContext(`/book/styles/moods/${mood}.css`, {
+      channel: `mood-${mood}`
+    });
     body.setAttribute('data-mood', mood);
   } else {
     moodStylesLink.disabled = true; // Disable if no mood is set
@@ -116,6 +146,10 @@ function padChapterNumber(number) {
  * @returns {HTMLElement|null} - The created DOM element or null if type is unrecognized.
  */
 function createSectionElement(section) {
+  if (!section || !section.type) {
+    return null;
+  }
+
   switch (section.type) {
     case 'paragraph':
       return createParagraph(section);
@@ -123,13 +157,10 @@ function createSectionElement(section) {
       return createFigure(section);
     case 'section':
       return createSection(section);
-    case 'custom-boof':
-    case 'custom-puzzle':
-    case 'custom-fool':
-    case 'custom-reflection':
-    case 'custom-path':
-      return createCustomElement(section);
     default:
+      if (isCustomElementType(section.type)) {
+        return createCustomElement(section);
+      }
       console.warn(`Unrecognized section type: ${section.type}`);
       return null;
   }
@@ -149,9 +180,11 @@ function createParagraph(section) {
 
   if (section.children && Array.isArray(section.children)) {
     section.children.forEach(child => {
-      if (child.type.startsWith('custom-')) {
+      if (isCustomElementType(child.type)) {
         const customElement = document.createElement(child.type);
         customElement.textContent = child.content;
+        customElement.dataset.spwComponent = child.type;
+        customElement.dataset.spwActionable = 'true';
         p.appendChild(customElement);
       } else if (child.type === 'text') {
         const textNode = document.createTextNode(child.text);
@@ -221,6 +254,18 @@ function createSection(section) {
  */
 function createCustomElement(section) {
   const customElem = document.createElement(section.type);
+  customElem.dataset.spwComponent = section.type;
+  customElem.dataset.spwActionable = 'true';
+
+  if (section.valence) {
+    customElem.dataset.spwValence = section.valence;
+  }
+
+  Object.entries(section).forEach(([key, value]) => {
+    if (key.startsWith('data-') && typeof value === 'string') {
+      customElem.setAttribute(key, value);
+    }
+  });
 
   if (section.content && Array.isArray(section.content)) {
     section.content.forEach(contentItem => {
@@ -315,8 +360,13 @@ function setupPrimaryAction(data) {
  * @param {Object} data - The chapter data object.
  */
 function setupCustomElementsInteractions(data) {
+  const chapterContent = document.getElementById('chapter-content');
+  if (!chapterContent) {
+    return;
+  }
+
   // Example: Add event listeners to all custom elements for interactivity
-  const customElements = chapterContent.querySelectorAll('custom-boof, custom-puzzle, custom-fool, custom-reflection, custom-path');
+  const customElements = chapterContent.querySelectorAll(CUSTOM_ELEMENTS_SELECTOR);
 
   customElements.forEach(elem => {
     // Make custom elements focusable
