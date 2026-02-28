@@ -28,6 +28,9 @@ const RAW_SEED_PATHS = {
     '/seeds/2026-28-02/Midjourney/01/spwashi_value_24dbce91-567c-481f-95c4-27e79f6d54a6.png',
     '/seeds/2026-28-02/Midjourney/01/spwashi_vibration_822e30bd-79e5-4673-abcc-e0d219f9ea9d.png',
     '/seeds/2026-28-02/Midjourney/01/spwashi_wonder_c824259f-9029-4382-8d97-2f0a766f0a47.png'
+  ],
+  'motif': [
+    '/seeds/2026-28-02/Midjourney/spwashi_a_simple_web_page_design_with_an_illustration_of_the_th_cd4f7120-3967-4cf2-a746-0b01b2f57a25.png'
   ]
 };
 
@@ -40,8 +43,12 @@ function humanizeDimension(dimension) {
 
 function toSeedItem(path, setId, order) {
   const filename = path.split('/').pop() || '';
-  const match = filename.match(/^spwashi_([a-z-]+)_[a-f0-9-]+\.png$/i);
-  const dimension = match ? match[1] : 'unknown';
+  const match = filename.match(/^spwashi_([a-z0-9_-]+)_[a-f0-9-]+\.png$/i);
+  let dimension = match ? match[1] : 'unknown';
+
+  if (dimension.length > 28 || dimension.split('_').length > 5) {
+    dimension = setId === 'motif' ? 'story-motif' : 'unknown';
+  }
 
   return {
     id: `set-${setId}-${dimension}-${order}`,
@@ -68,17 +75,27 @@ export const seedManifest = seedSets.flatMap((set) => set.items);
 export const seedDimensions = [...new Set(seedManifest.map((item) => item.dimension))].sort();
 
 export function chapterSeedMap(chapterCount, preferredSet = '01') {
-  const set = seedSets.find((item) => item.id === preferredSet) || seedSets[0];
-  const source = set ? [...set.items] : [];
+  const primarySet = seedSets.find((item) => item.id === preferredSet) || seedSets[0];
+  const motifSet = seedSets.find((item) => item.id === 'motif');
+  const source = primarySet ? [...primarySet.items] : [];
+  const motifs = motifSet ? [...motifSet.items] : [];
+  const blended = source.length
+    ? source.map((item, index) => {
+      if (!motifs.length) {
+        return item;
+      }
+      return index % 4 === 3 ? motifs[index % motifs.length] : item;
+    })
+    : motifs;
 
-  if (!source.length) {
+  if (!blended.length) {
     return new Map();
   }
 
   return new Map(
     Array.from({ length: chapterCount }, (_, index) => {
       const chapter = index + 1;
-      const item = source[index % source.length];
+      const item = blended[index % blended.length];
       return [chapter, item];
     })
   );
