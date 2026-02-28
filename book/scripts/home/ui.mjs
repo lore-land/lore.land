@@ -5,6 +5,14 @@ function humanizeSetLabel(setId) {
   return `Set ${setId}`;
 }
 
+function padChapter(number) {
+  return String(number).padStart(2, '0');
+}
+
+function chapterImagePath(number) {
+  return `/book/images/${padChapter(number)}.png`;
+}
+
 export function renderHero(root, chapterCount) {
   const panel = document.createElement('section');
   panel.className = 'hero-panel';
@@ -35,13 +43,13 @@ export function renderHero(root, chapterCount) {
 
   const startLink = document.createElement('a');
   startLink.href = chapterHref(1);
-  startLink.textContent = 'Begin Chapter 01';
+  startLink.textContent = '^[route/01]{begin-story}';
   startLink.className = 'hero-action';
   startLink.setAttribute('aria-label', 'Begin story at chapter 01');
 
   const atlasLink = document.createElement('a');
   atlasLink.href = '/seeds/2026-28-02/';
-  atlasLink.textContent = 'Open Seed Atlas';
+  atlasLink.textContent = '~[seed-atlas]{discover-motifs}';
   atlasLink.className = 'hero-action';
   atlasLink.setAttribute('aria-label', 'Open Midjourney seed atlas');
 
@@ -77,6 +85,7 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
   grid.setAttribute('aria-label', 'Thirteen chapter story flow');
 
   chapters.forEach((chapter) => {
+    const chapterId = padChapter(chapter.number);
     const card = document.createElement('article');
     card.className = 'chapter-card';
     card.setAttribute('role', 'listitem');
@@ -95,33 +104,64 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
     snippet.className = 'spw-snippet';
     snippet.textContent = chapter.spw;
 
+    const genericFigure = document.createElement('figure');
+    genericFigure.className = 'chapter-default-preview';
+    genericFigure.dataset.visualDefault = 'colloquial';
+
+    const genericImage = document.createElement('img');
+    genericImage.src = chapterImagePath(chapter.number);
+    genericImage.alt = `Colloquial default scene for chapter ${chapter.number}`;
+    genericImage.loading = 'lazy';
+    genericImage.decoding = 'async';
+
+    const genericCaption = document.createElement('figcaption');
+    genericCaption.textContent = 'Colloquial default scene';
+
+    genericFigure.append(genericImage, genericCaption);
+
     const seed = chapterSeeds.get(chapter.number);
-    let figure = null;
+    let motifToggle = null;
+    let motifFigure = null;
     if (seed) {
-      figure = document.createElement('figure');
-      figure.className = 'chapter-seed-preview';
+      motifToggle = document.createElement('button');
+      motifToggle.type = 'button';
+      motifToggle.className = 'chapter-motif-toggle';
+      motifToggle.textContent = 'Reveal optional motif';
+      motifToggle.setAttribute('aria-expanded', 'false');
+
+      motifFigure = document.createElement('figure');
+      motifFigure.className = 'chapter-seed-preview';
+      motifFigure.hidden = true;
 
       const image = document.createElement('img');
       image.src = seed.src;
-      image.alt = `${seed.label} visual seed for chapter ${chapter.number}`;
+      image.alt = `${seed.label} optional Midjourney motif for chapter ${chapter.number}`;
       image.loading = 'lazy';
       image.decoding = 'async';
 
       const caption = document.createElement('figcaption');
-      caption.textContent = `${seed.label} • ${humanizeSetLabel(seed.setId)}`;
+      caption.textContent = `${seed.label} • ${humanizeSetLabel(seed.setId)} • optional`;
 
-      figure.append(image, caption);
+      motifFigure.append(image, caption);
+
+      motifToggle.addEventListener('click', () => {
+        const revealed = motifFigure.hidden;
+        motifFigure.hidden = !revealed;
+        motifToggle.setAttribute('aria-expanded', revealed ? 'true' : 'false');
+        motifToggle.textContent = revealed ? 'Hide optional motif' : 'Reveal optional motif';
+        card.dataset.motifState = revealed ? 'revealed' : 'hidden';
+      });
     }
 
     const link = document.createElement('a');
     link.href = chapterHref(chapter.number);
-    link.textContent = 'Open chapter';
+    link.textContent = `^[chapter/${chapterId}]{open}`;
     link.setAttribute('aria-label', `Open chapter ${chapter.number}: ${chapter.title}`);
 
-    if (figure) {
-      card.append(marker, heading, figure, snippet, link);
+    if (motifToggle && motifFigure) {
+      card.append(marker, heading, genericFigure, motifToggle, motifFigure, snippet, link);
     } else {
-      card.append(marker, heading, snippet, link);
+      card.append(marker, heading, genericFigure, snippet, link);
     }
     grid.append(card);
   });

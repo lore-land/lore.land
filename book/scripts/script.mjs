@@ -1,17 +1,21 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.D';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.D';
-import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.D';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.E';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.E';
+import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.E';
 import {
   bootstrapExperience,
   enhanceLazyImages,
+  initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_02_28.D';
-import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.D';
+} from './modules/experience-core.mjs?v=2026_02_28.E';
+import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.E';
+import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.E';
+
+const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
 // Wait for the DOM to fully load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
 
@@ -47,10 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeStyles(chapterData);
     populateMetadata(chapterData);
     populateContent(chapterData);
-    setupNavigation(chapterData);
+    setupNavigation(chapterData, announce);
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
+    setupSpwHypertextRoutes(chapterData, announce);
+    setupTuningControls(announce);
+    setupMotifDiscovery(chapterData, announce);
+    await mountChapterSigil(chapterData, announce);
     initChapterProgression(chapterData, { announce });
     initProgressiveReveal({ root: document });
 
@@ -63,6 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Chapter lifecycle failed:', error);
   }
 });
+
+function chapterPath(number) {
+  return `/book/chapter/${String(number).padStart(2, '0')}/`;
+}
+
+function deriveChapterLinks(data) {
+  const total = 13;
+  const current = Number(data.chapterNumber) || 1;
+  const previous = current > 1 ? current - 1 : total;
+  const next = current < total ? current + 1 : 1;
+
+  return {
+    current,
+    previous,
+    next,
+    previousHref: data.previousChapter || chapterPath(previous),
+    nextHref: data.nextChapter || chapterPath(next)
+  };
+}
 
 /**
  * Initializes the period and mood stylesheets based on chapter data.
@@ -216,12 +243,17 @@ function createParagraph(section) {
  */
 function createFigure(section) {
   const figure = document.createElement('figure');
+  figure.className = 'chapter-figure';
 
   if (section.img) {
     const img = document.createElement('img');
     img.src = section.img.src;
     img.alt = section.img.alt || '';
     img.loading = section.img.loading || 'lazy';
+    img.decoding = 'async';
+    if (/\/book\/images\//.test(section.img.src)) {
+      figure.dataset.visualDefault = 'colloquial';
+    }
     figure.appendChild(img);
   }
 
@@ -296,23 +328,384 @@ function createCustomElement(section) {
  * Sets up the navigation buttons for previous and next chapters.
  * @param {Object} data - The chapter data object.
  */
-function setupNavigation(data) {
-  const prevButton = document.querySelector('.chapter-navigation .prev');
-  const nextButton = document.querySelector('.chapter-navigation .next');
+function setupNavigation(data, announce) {
+  const links = deriveChapterLinks(data);
+  const previousLabel = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
+  const nextLabel = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
 
-  if (prevButton && data.previousChapter) {
-    prevButton.textContent = 'Previous Chapter';
-    prevButton.addEventListener('click', () => {
-      window.location.href = data.previousChapter;
-    });
+  const prevControls = document.querySelectorAll('.chapter-navigation .prev, .section-navigation .prev');
+  const nextControls = document.querySelectorAll('.chapter-navigation .next, .section-navigation .next');
+
+  prevControls.forEach((control) => {
+    bindRouteControl(control, {
+      href: links.previousHref,
+      label: previousLabel,
+      routeName: 'prev',
+      ariaLabel: `Open chapter ${links.previous}`
+    }, announce);
+  });
+
+  nextControls.forEach((control) => {
+    bindRouteControl(control, {
+      href: links.nextHref,
+      label: nextLabel,
+      routeName: 'next',
+      ariaLabel: `Open chapter ${links.next}`
+    }, announce);
+  });
+
+  setupKeyboardRoutes(links, announce);
+}
+
+function setupSpwHypertextRoutes(data, announce) {
+  const aside = document.querySelector('aside');
+  if (!aside) {
+    return;
   }
 
-  if (nextButton && data.nextChapter) {
-    nextButton.textContent = 'Next Chapter';
-    nextButton.addEventListener('click', () => {
-      window.location.href = data.nextChapter;
-    });
+  const existing = aside.querySelector('.spw-hypertext-routes');
+  if (existing) {
+    existing.remove();
   }
+
+  const links = deriveChapterLinks(data);
+
+  const section = document.createElement('section');
+  section.className = 'spw-hypertext-routes';
+  section.dataset.component = 'spw-hypertext-routes';
+  section.setAttribute('aria-label', 'Spw hypertext routes');
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Spw Routes';
+
+  const lead = document.createElement('p');
+  lead.textContent = 'Hypertext routes in Spw form for learnable, composable navigation.';
+
+  const shortcutHint = document.createElement('p');
+  shortcutHint.className = 'spw-shortcut-hint';
+  shortcutHint.textContent = 'Shortcuts: Alt+Left = prev, Alt+Right = next, Alt+H = home, Alt+T = timeline.';
+
+  const list = document.createElement('ul');
+
+  const routeItems = [
+    {
+      label: `^[route/${String(links.previous).padStart(2, '0')}]{prev}`,
+      href: links.previousHref,
+      aria: `Open chapter ${links.previous}`
+    },
+    {
+      label: `^[route/${String(links.next).padStart(2, '0')}]{next}`,
+      href: links.nextHref,
+      aria: `Open chapter ${links.next}`
+    },
+    {
+      label: '&[timeline]{canon-sequence}',
+      href: '/book/timeline.html',
+      aria: 'Open canonical timeline'
+    },
+    {
+      label: '~[seed-atlas]{visual motifs}',
+      href: '/seeds/2026-28-02/',
+      aria: 'Open seed atlas'
+    },
+    {
+      label: '^[home]{lore.land}',
+      href: '/',
+      aria: 'Return to home'
+    }
+  ];
+
+  routeItems.forEach((item) => {
+    const li = document.createElement('li');
+    const anchor = document.createElement('a');
+    anchor.href = item.href;
+    anchor.textContent = item.label;
+    anchor.setAttribute('aria-label', item.aria);
+    anchor.dataset.spwRoute = item.label;
+    anchor.addEventListener('focus', () => {
+      if (announce) {
+        announce(`Route focused: ${item.label}`);
+      }
+    });
+    li.append(anchor);
+    list.append(li);
+  });
+
+  section.append(heading, lead, shortcutHint, list);
+  aside.append(section);
+}
+
+function setupTuningControls(announce) {
+  const aside = document.querySelector('aside');
+  if (!aside) {
+    return;
+  }
+
+  let form = aside.querySelector('.chapter-tuning-controls');
+  if (!form) {
+    form = document.createElement('form');
+    form.className = 'chapter-tuning-controls';
+    form.dataset.component = 'chapter-tuning-controls';
+    form.setAttribute('aria-label', 'Chapter tuning controls');
+    form.setAttribute('action', '#');
+
+    const label = document.createElement('label');
+    label.setAttribute('for', 'chapter-tuning-select');
+
+    const span = document.createElement('span');
+    span.textContent = 'Tuning';
+    label.append(span);
+
+    const select = document.createElement('select');
+    select.id = 'chapter-tuning-select';
+    select.setAttribute('aria-label', 'Select tuning profile');
+
+    [
+      ['calm', 'calm'],
+      ['focus', 'focus'],
+      ['explore', 'explore']
+    ].forEach(([value, text]) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      select.append(option);
+    });
+
+    label.append(select);
+
+    const guide = document.createElement('p');
+    guide.className = 'chapter-tuning-guide';
+    guide.textContent = 'Calm expands space. Focus balances contrast. Explore increases texture.';
+
+    form.append(label, guide);
+    aside.append(form);
+  }
+
+  initSelectPreference({
+    select: form.querySelector('#chapter-tuning-select'),
+    root: document.documentElement,
+    datasetKey: 'tuning',
+    preferenceName: 'tuning',
+    defaultValue: 'focus',
+    announce,
+    announceLabel: 'Tuning'
+  });
+}
+
+function resolveChapterMotif(chapterNumber) {
+  return CHAPTER_SEED_LOOKUP.get(Number(chapterNumber)) || null;
+}
+
+function setChapterMotifOverlay(seed, enabled) {
+  const chapterContent = document.getElementById('chapter-content');
+  if (!chapterContent || !seed) {
+    return;
+  }
+
+  if (enabled) {
+    chapterContent.style.setProperty('--chapter-motif-url', `url("${seed.src}")`);
+    document.body.dataset.motifOverlay = 'on';
+  } else {
+    chapterContent.style.removeProperty('--chapter-motif-url');
+    document.body.dataset.motifOverlay = 'off';
+  }
+}
+
+function setupMotifDiscovery(data, announce) {
+  const aside = document.querySelector('aside');
+  const chapterId = String(data.chapterNumber || '').padStart(2, '0');
+  const seed = resolveChapterMotif(data.chapterNumber);
+
+  if (!aside || !chapterId || !seed) {
+    return;
+  }
+
+  const existing = aside.querySelector('.chapter-motif-discovery');
+  if (existing) {
+    existing.remove();
+  }
+
+  const panel = document.createElement('section');
+  panel.className = 'chapter-motif-discovery';
+  panel.dataset.component = 'chapter-motif-discovery';
+  panel.dataset.seedDimension = seed.dimension;
+  panel.setAttribute('aria-label', `Optional motif discovery for chapter ${chapterId}`);
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Optional Motif Vault';
+
+  const intro = document.createElement('p');
+  intro.textContent = 'Colloquial chapter art remains default. Reveal a Midjourney motif when you want extra texture.';
+
+  const phrase = document.createElement('pre');
+  phrase.className = 'motif-spw';
+  phrase.textContent = `~[motif/${seed.dimension}]{chapter/${chapterId}::discover}`;
+
+  const controls = document.createElement('div');
+  controls.className = 'motif-controls';
+
+  const revealButton = document.createElement('button');
+  revealButton.type = 'button';
+  revealButton.className = 'motif-reveal';
+  revealButton.setAttribute('aria-expanded', 'false');
+  revealButton.textContent = 'Reveal motif';
+
+  const ambientButton = document.createElement('button');
+  ambientButton.type = 'button';
+  ambientButton.className = 'motif-ambient';
+  ambientButton.textContent = 'Use as ambient texture';
+  ambientButton.disabled = true;
+  ambientButton.setAttribute('aria-pressed', 'false');
+
+  controls.append(revealButton, ambientButton);
+
+  const figure = document.createElement('figure');
+  figure.className = 'motif-preview';
+  figure.hidden = true;
+
+  const image = document.createElement('img');
+  image.src = seed.src;
+  image.alt = `${seed.label} optional Midjourney motif for chapter ${chapterId}`;
+  image.loading = 'lazy';
+  image.decoding = 'async';
+
+  const caption = document.createElement('figcaption');
+  caption.textContent = `${seed.label} • Set ${seed.setId} • optional discovery layer`;
+
+  figure.append(image, caption);
+  panel.append(heading, intro, phrase, controls, figure);
+  aside.append(panel);
+
+  let revealed = false;
+  let ambient = false;
+
+  revealButton.addEventListener('click', () => {
+    revealed = !revealed;
+    figure.hidden = !revealed;
+    panel.dataset.discovered = revealed ? 'true' : 'false';
+    revealButton.setAttribute('aria-expanded', revealed ? 'true' : 'false');
+    revealButton.textContent = revealed ? 'Hide motif' : 'Reveal motif';
+    ambientButton.disabled = !revealed;
+
+    if (!revealed && ambient) {
+      ambient = false;
+      ambientButton.setAttribute('aria-pressed', 'false');
+      ambientButton.textContent = 'Use as ambient texture';
+      setChapterMotifOverlay(seed, false);
+    }
+
+    if (announce) {
+      announce(
+        revealed
+          ? `${seed.label} motif revealed for chapter ${chapterId}.`
+          : `Motif hidden. Default chapter art remains primary.`
+      );
+    }
+  });
+
+  ambientButton.addEventListener('click', () => {
+    if (!revealed) {
+      return;
+    }
+
+    ambient = !ambient;
+    ambientButton.setAttribute('aria-pressed', ambient ? 'true' : 'false');
+    ambientButton.textContent = ambient ? 'Ambient texture active' : 'Use as ambient texture';
+    setChapterMotifOverlay(seed, ambient);
+
+    if (announce) {
+      announce(
+        ambient
+          ? `Ambient motif texture enabled: ${seed.label}.`
+          : 'Ambient motif texture disabled.'
+      );
+    }
+  });
+}
+
+async function mountChapterSigil(data, announce) {
+  const aside = document.querySelector('aside');
+  if (!aside || !data.chapterNumber) {
+    return;
+  }
+
+  const chapterId = String(data.chapterNumber).padStart(2, '0');
+  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.E`;
+
+  try {
+    const module = await import(path);
+    if (module && typeof module.registerChapterSigil === 'function') {
+      module.registerChapterSigil(aside);
+      if (announce) {
+        announce(`Chapter ${chapterId} sigil loaded.`);
+      }
+    }
+  } catch (error) {
+    console.warn(`Unable to load chapter sigil module for chapter ${chapterId}:`, error);
+  }
+}
+
+function bindRouteControl(control, route, announce) {
+  if (!control || !route) {
+    return;
+  }
+
+  control.textContent = route.label;
+  control.setAttribute('data-spw-route', route.routeName);
+  control.setAttribute('data-spw-route-label', route.label);
+  control.setAttribute('aria-label', route.ariaLabel);
+
+  control.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.href = route.href;
+    if (announce) {
+      announce(`Route activated: ${route.label}`);
+    }
+  });
+}
+
+function setupKeyboardRoutes(links, announce) {
+  if (document.body.dataset.spwShortcuts === 'ready') {
+    return;
+  }
+
+  document.body.dataset.spwShortcuts = 'ready';
+  document.addEventListener('keydown', (event) => {
+    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.defaultPrevented) {
+      return;
+    }
+
+    const focused = document.activeElement;
+    const tagName = focused ? focused.tagName : '';
+    if (focused?.isContentEditable || tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT') {
+      return;
+    }
+
+    let destination = '';
+    let label = '';
+
+    if (event.key === 'ArrowLeft') {
+      destination = links.previousHref;
+      label = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
+    } else if (event.key === 'ArrowRight') {
+      destination = links.nextHref;
+      label = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
+    } else if (event.key === 'Home' || event.key.toLowerCase() === 'h') {
+      destination = '/';
+      label = '^[home]{lore.land}';
+    } else if (event.key.toLowerCase() === 't') {
+      destination = '/book/timeline.html';
+      label = '&[timeline]{canon-sequence}';
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    if (announce) {
+      announce(`Shortcut route: ${label}`);
+    }
+    window.location.href = destination;
+  });
 }
 
 /**
@@ -351,20 +744,18 @@ function setupLoreCollector(data) {
  */
 function setupPrimaryAction(data) {
   const primaryActionButton = document.querySelector('.primary-action');
+  const links = deriveChapterLinks(data);
 
   if (!primaryActionButton) {
     console.warn('Primary action button not found.');
     return;
   }
 
+  primaryActionButton.textContent = `^[route/${String(links.next).padStart(2, '0')}]{advance}`;
+  primaryActionButton.setAttribute('aria-label', `Advance to chapter ${links.next}`);
+
   primaryActionButton.addEventListener('click', () => {
-    // Define the primary action behavior here
-    // For example, navigate to the next chapter or trigger an event
-    if (data.nextChapter) {
-      window.location.href = data.nextChapter;
-    } else {
-      console.warn('No next chapter defined.');
-    }
+    window.location.href = data.nextChapter || links.nextHref;
   });
 }
 
