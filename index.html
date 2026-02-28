@@ -1,73 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Lore.Land</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lore.Land • 13 Chapter Spw Storytelling Flow</title>
+  <meta name="description" content="Lore.Land is a 13 chapter storytelling site with a modular Spw storytelling architecture and abstract reading frame.">
 
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Lore.Land",
-            "alternateName": ["Lore.Land", "Lore.Land Homepage"],
-            "url": "https://lore.land/"
-        }
-    </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Lore.Land",
+      "url": "https://lore.land/"
+    }
+  </script>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/book/styles/fixtures/root.css?v=2024_10_04.G">
-    <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
-    <link rel="stylesheet" href="/book/styles/fixtures/identities.css">
-    <link id="period-styles" rel="stylesheet">
-    <link id="mood-styles" rel="stylesheet">
-
-    <!-- JavaScript -->
-    <script defer type="module" src="/book/scripts/modules/ebook.mjs?v=2024_10_04.G"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const chaptersList = document.getElementById('chapters-list');
-        for (let i = 1; i <= 13; i++) {
-          const chapterItem = document.createElement('li');
-          const chapterLink = document.createElement('a');
-          chapterLink.href = `/book/chapter/${String(i).padStart(2, '0')}`;
-          chapterLink.textContent = `Chapter ${i}`;
-          chapterItem.appendChild(chapterLink);
-          chaptersList.appendChild(chapterItem);
-        }
-      });
-    </script>
+  <link rel="stylesheet" href="/book/styles/fixtures/fonts.css">
+  <link rel="stylesheet" href="/book/styles/fixtures/home.css?v=2026_02_28.A">
+  <link id="mood-styles" rel="stylesheet">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_02_28.A"></script>
 </head>
 <body data-mood="">
-<main>
-    <h1>
-        <span>Welcome to</span>&nbsp;
-        <a href="/#" aria-label="Home page of Lore.Land">Lore.Land</a>
-    </h1>
+  <div class="site-shell">
+    <header class="site-topbar">
+      <a href="/#" aria-label="Lore.Land homepage">Lore.Land</a>
+      <label for="mood-select">
+        <span>Mood:</span>
+        <select id="mood-select" aria-label="Select reading mood">
+          <option selected value="">default</option>
+          <option value="tldr">tl;dr</option>
+        </select>
+      </label>
+    </header>
 
-    <aside>
-        <label for="mood-select">
-            <span>Mood:</span>
-            <select id="mood-select" aria-label="Select mood">
-                <option selected value=""></option>
-                <option value="tldr">tl;dr</option>
-            </select>
-        </label>
-    </aside>
-</main>
+    <main id="home-app" aria-live="polite"></main>
 
-<article id="book">
-    <h2>The Tale of Lore.Land</h2>
-    <h3>Chapters</h3>
-    <nav aria-label="Table of contents">
-        <ul id="chapters-list"></ul>
-    </nav>
-</article>
-
-<footer>
-    This site was crafted by&nbsp;
-    <a href="https://spwashi.com/?from=lore.land" aria-label="Visit spwashi's personal site">spwashi</a>
-</footer>
+    <footer class="site-footer">
+      Crafted by <a href="https://spwashi.com/?from=lore.land" aria-label="Visit spwashi site">spwashi</a>
+    </footer>
+  </div>
 </body>
 </html>
