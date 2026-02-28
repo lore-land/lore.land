@@ -16,6 +16,7 @@ The baseline is "software as literature":
 - serif-forward body text for long-form reading
 - monospace headings and controls for technical clarity
 - shared spacing, color, and panel primitives for predictable composition
+- dimensional theming via `data-theme` + `data-dimension` for component swapping
 
 ## Load Lifecycle (Boon/Bane/Bone/Bonk/Honk)
 
@@ -28,12 +29,18 @@ The runtime now exposes a five-stage loading grammar through `data-load-stage`:
 
 Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 
+## Progressive Experience Hooks
+
+- `book/scripts/modules/experience-core.mjs`: ARIA live status, preference persistence, progressive reveal, lazy-image enhancement, and service worker registration.
+- `book/scripts/modules/chapter-progression.mjs`: deterministic chapter rewards and unique chapter mode states (no streak loops / no addictive mechanics).
+- `book/scripts/home/seeds.mjs`: Midjourney seed manifest and chapter visual mapping.
+
 ## Cache Context Model
 
 Use `book/scripts/modules/cache-context.mjs` to build stylesheet URLs with expressive invalidation keys.
 
 It emits query params:
-- `v` release (for example `2026_02_28.C`)
+- `v` release (for example `2026_02_28.D`)
 - `ctx` context channel (for example `chapter:mood-tldr`)
 - optional `b` ad-hoc bust key
 

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-cache-release="2026_02_28.C" data-cache-context="home">
+<html lang="en" data-cache-release="2026_02_28.D" data-cache-context="home">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lore.Land • 13 Chapter Spw Storytelling Flow</title>
   <meta name="description" content="Lore.Land is a 13 chapter storytelling site with a modular Spw storytelling architecture and abstract reading frame.">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/icon-192.png">
 
   <script type="application/ld+json">
     {
@@ -15,26 +19,59 @@
     }
   </script>
 
-  <link rel="stylesheet" href="/book/styles/fixtures/fonts.css?v=2026_02_28.C&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/fixtures/baseline.css?v=2026_02_28.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/fixtures/home.css?v=2026_02_28.C&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/fixtures/fonts.css?v=2026_02_28.D&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/fixtures/baseline.css?v=2026_02_28.D&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/fixtures/home.css?v=2026_02_28.D&ctx=home:scene">
   <link id="mood-styles" rel="stylesheet">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_02_28.C"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_02_28.D"></script>
 </head>
 <body data-mood="">
   <div class="site-shell">
     <header class="site-topbar">
       <a href="/#" aria-label="Lore.Land homepage">Lore.Land</a>
-      <label for="mood-select">
-        <span>Mood:</span>
-        <select id="mood-select" aria-label="Select reading mood">
-          <option selected value="">default</option>
-          <option value="tldr">tl;dr</option>
-        </select>
-      </label>
+      <form class="experience-controls" aria-label="Experience controls" action="#">
+        <label for="mood-select">
+          <span>Mood</span>
+          <select id="mood-select" aria-label="Select reading mood">
+            <option selected value="">default</option>
+            <option value="tldr">tl;dr</option>
+          </select>
+        </label>
+
+        <label for="theme-select">
+          <span>Theme</span>
+          <select id="theme-select" aria-label="Select visual theme">
+            <option selected value="paper">paper</option>
+            <option value="ember">ember</option>
+            <option value="cosmos">cosmos</option>
+          </select>
+        </label>
+
+        <label for="dimension-select">
+          <span>Dimension</span>
+          <select id="dimension-select" aria-label="Select dimensional theme">
+            <option value="flat">flat</option>
+            <option selected value="stage">stage</option>
+            <option value="immersive">immersive</option>
+          </select>
+        </label>
+
+        <label for="layout-select">
+          <span>Layout</span>
+          <select id="layout-select" aria-label="Select component layout">
+            <option selected value="grid">grid</option>
+            <option value="stream">stream</option>
+            <option value="cinema">cinema</option>
+          </select>
+        </label>
+      </form>
     </header>
 
     <main id="home-app" aria-live="polite"></main>
+    <noscript class="page-panel noscript-panel">
+      <p>JavaScript is disabled. You can still read chapters and browse seed archives.</p>
+      <p><a href="/book/chapter/01/">Open Chapter 01</a> · <a href="/seeds/2026-28-02/">Open Seed Atlas</a></p>
+    </noscript>
 
     <footer class="site-footer">
       Crafted by <a href="https://spwashi.com/?from=lore.land" aria-label="Visit spwashi site">spwashi</a>

@@ -3,7 +3,7 @@
  * Keeps cache keys expressive (release + story context + optional bust token)
  * while staying readable for future contributors.
  */
-export const DEFAULT_CACHE_RELEASE = '2026_02_28.C';
+export const DEFAULT_CACHE_RELEASE = '2026_02_28.D';
 export const DEFAULT_CACHE_CONTEXT = 'canon';
 
 export function getCacheProfile(overrides = {}) {

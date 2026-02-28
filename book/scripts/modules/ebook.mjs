@@ -1,9 +1,18 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.C';
-import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.C';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.C';
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.D';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.D';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.D';
+import {
+  bootstrapExperience,
+  enhanceLazyImages,
+  initProgressiveReveal,
+  registerStoryServiceWorker
+} from './experience-core.mjs?v=2026_02_28.D';
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  const { root } = bootstrapExperience();
+  registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+
   const lifecycle = createLoadLifecycle({
     id: 'charm',
     shellSelector: 'main',
@@ -21,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLoreCollector();
     setupPrimaryAction();
     setupCustomElementsInteractions();
+    initProgressiveReveal({ root: document });
+    enhanceLazyImages({ root: document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', document.querySelector('main'));
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
   } catch (error) {
