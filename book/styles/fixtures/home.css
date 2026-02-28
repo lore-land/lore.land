@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1d2442 0%, #0a0e1f 52%, #090b16 100%);
+  color: #e7ebff;
+  padding: 2rem;
+}
+
+.site-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.site-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-topbar a {
+  color: #f4f7ff;
+}
+
+.hero-panel {
+  position: relative;
+  padding: 2rem;
+  border: 1px solid rgba(184, 205, 255, 0.3);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(138, 159, 255, 0.16), rgba(107, 188, 220, 0.08));
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: #9cd7ff;
+}
+
+.hero-subtitle,
+.hero-stats {
+  max-width: 65ch;
+  color: #c8d4ff;
+}
+
+.hero-stats {
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.spw-block,
+.spw-snippet {
+  font-family: JetBrainsMono, ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre-wrap;
+  border: 1px solid rgba(153, 255, 247, 0.28);
+  background: rgba(3, 7, 24, 0.62);
+  border-radius: 10px;
+}
+
+.spw-block {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  color: #b5fff5;
+}
+
+.spw-snippet {
+  margin: 0;
+  padding: 0.65rem;
+  color: #9fe6ff;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.hero-frame-svg {
+  display: block;
+  width: 100%;
+  height: 180px;
+  margin-top: 1rem;
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.chapter-card {
+  border: 1px solid rgba(156, 215, 255, 0.3);
+  border-radius: 14px;
+  background: rgba(10, 15, 38, 0.75);
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.chapter-marker {
+  width: fit-content;
+  border-radius: 999px;
+  border: 1px solid rgba(153, 255, 247, 0.5);
+  color: #99fff7;
+  font-size: 0.82rem;
+  padding: 0.1rem 0.5rem;
+}
+
+.chapter-card h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #f7f9ff;
+}
+
+.chapter-card a {
+  color: #9cd7ff;
+  font-weight: 600;
+}
+
+.site-footer {
+  padding: 1rem 0 0.5rem;
+  color: #b3bee5;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 1rem;
+  }
+
+  .hero-panel {
+    padding: 1.25rem;
+  }
+}
