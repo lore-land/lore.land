@@ -139,6 +139,11 @@
   line-height: 1.5;
 }
 
+.hero-panel .spw-language-controls,
+.chapter-card .spw-language-controls {
+  margin-top: 0.22rem;
+}
+
 .hero-frame-svg {
   display: block;
   width: 100%;
