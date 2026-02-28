@@ -1,12 +1,12 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.D';
-import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.D';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.D';
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.E';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.E';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.E';
 import {
   bootstrapExperience,
   enhanceLazyImages,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './experience-core.mjs?v=2026_02_28.D';
+} from './experience-core.mjs?v=2026_02_28.E';
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {

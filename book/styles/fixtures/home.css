@@ -184,6 +184,33 @@
   font-size: 1.04rem;
 }
 
+.chapter-default-preview {
+  display: grid;
+  gap: 0.3rem;
+  border: var(--border-width) var(--border-style) rgba(46, 91, 129, 0.25);
+  border-radius: var(--border-radius-small);
+  overflow: clip;
+  background: rgba(255, 255, 255, 0.86);
+  margin: 0;
+}
+
+.chapter-default-preview img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.chapter-default-preview figcaption {
+  color: var(--color-text-alt);
+  font-size: 0.78rem;
+  padding: 0.32rem 0.5rem 0.46rem;
+}
+
+.chapter-motif-toggle {
+  width: fit-content;
+  font-size: 0.8rem;
+}
+
 .chapter-card a {
   width: fit-content;
   font-family: var(--font-family-heading);
@@ -202,6 +229,7 @@
   border-radius: var(--border-radius-small);
   overflow: clip;
   background: rgba(20, 32, 54, 0.88);
+  margin: 0;
 }
 
 .chapter-seed-preview img {
@@ -214,6 +242,10 @@
   color: #cde4ff;
   font-size: 0.76rem;
   padding: 0.3rem 0.5rem 0.45rem;
+}
+
+.chapter-card[data-motif-state="revealed"] {
+  border-color: rgba(42, 111, 127, 0.5);
 }
 
 .seed-controls {

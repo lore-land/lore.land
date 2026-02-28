@@ -127,6 +127,24 @@ html[data-dimension="immersive"] {
   --panel-blur: 7px;
 }
 
+html[data-tuning="calm"] {
+  --line-height-main: 1.82;
+  --spacing-medium: 1.24rem;
+  --spacing-large: 1.9rem;
+}
+
+html[data-tuning="focus"] {
+  --line-height-main: 1.7;
+  --spacing-medium: 1.1rem;
+  --spacing-large: 1.7rem;
+}
+
+html[data-tuning="explore"] {
+  --line-height-main: 1.64;
+  --spacing-medium: 1rem;
+  --spacing-large: 1.52rem;
+}
+
 html[data-online="offline"] {
   --accent-color-main: #8b7662;
   --accent-color-alt: #6d5f55;

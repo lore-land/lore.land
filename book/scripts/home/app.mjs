@@ -1,15 +1,15 @@
 import { chapterManifest } from './data.mjs';
 import { seedManifest, seedSets, seedDimensions, chapterSeedMap } from './seeds.mjs';
 import { renderHero, renderTimeline, renderSeedAtlas } from './ui.mjs';
-import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.D';
-import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.D';
+import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.E';
+import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.E';
 import {
   bootstrapExperience,
   initSelectPreference,
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.D';
+} from '../modules/experience-core.mjs?v=2026_02_28.E';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -96,6 +96,31 @@ function setupExperienceControls(homeRoot, announce) {
     announceLabel: 'Layout',
     onChange: (value) => {
       document.documentElement.dataset.layout = value;
+    }
+  });
+}
+
+function setupTimelineMotifAnnouncements(homeRoot, announce) {
+  if (!homeRoot) {
+    return;
+  }
+
+  homeRoot.addEventListener('click', (event) => {
+    const button = event.target.closest('.chapter-motif-toggle');
+    if (!button) {
+      return;
+    }
+
+    const card = button.closest('.chapter-card');
+    const chapter = card ? String(card.dataset.chapter || '').padStart(2, '0') : '';
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+
+    if (announce) {
+      announce(
+        expanded
+          ? `Optional motif revealed for chapter ${chapter}.`
+          : `Optional motif hidden for chapter ${chapter}.`
+      );
     }
   });
 }
@@ -249,6 +274,7 @@ function initHomepage() {
 
     setMoodStylesheet(announce);
     setupExperienceControls(homeRoot, announce);
+    setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
 
     initProgressiveReveal({ root: document });

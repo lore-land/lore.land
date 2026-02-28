@@ -69,6 +69,7 @@ main.chapter::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
@@ -77,8 +78,33 @@ main.chapter::after {
   );
 }
 
+main.chapter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image: var(--chapter-motif-url, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  filter: saturate(0.92) contrast(1.04);
+  transition: opacity var(--transition-duration) var(--transition-function);
+}
+
+body[data-motif-overlay="on"] main.chapter::before {
+  opacity: 0.2;
+}
+
 main.chapter > * + * {
   margin-top: var(--spacing-medium);
+}
+
+main.chapter > * {
+  position: relative;
+  z-index: 1;
 }
 
 main.chapter h1 {
@@ -99,6 +125,18 @@ main.chapter figure {
   overflow: clip;
   background: rgba(255, 255, 255, 0.7);
   border: var(--border-width) var(--border-style) var(--border-color-main);
+}
+
+main.chapter figure[data-visual-default="colloquial"] figcaption::before {
+  content: "default";
+  display: inline-flex;
+  margin-right: 0.35rem;
+  border-radius: var(--border-radius-pill);
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.32);
+  padding: 0 0.4rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
 }
 
 main.chapter figure img {
@@ -182,6 +220,116 @@ aside {
 .chapter-progress-panel .chapter-mode {
   font-size: 0.86rem;
   color: var(--color-text-alt);
+}
+
+.spw-hypertext-routes,
+.chapter-tuning-controls,
+.chapter-motif-discovery {
+  display: grid;
+  gap: 0.46rem;
+  border: var(--border-width) var(--border-style) rgba(29, 49, 78, 0.22);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.74);
+  padding: 0.7rem;
+}
+
+.spw-hypertext-routes h2,
+.chapter-motif-discovery h2 {
+  font-size: 0.95rem;
+}
+
+.spw-hypertext-routes p,
+.chapter-motif-discovery p,
+.chapter-tuning-guide {
+  margin: 0;
+  color: var(--color-text-alt);
+  font-size: 0.83rem;
+}
+
+.spw-shortcut-hint {
+  font-family: var(--font-family-heading);
+}
+
+.spw-hypertext-routes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.36rem;
+}
+
+.spw-hypertext-routes a {
+  display: inline-flex;
+  width: fit-content;
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.28);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.2rem 0.58rem;
+  text-decoration: none;
+  font-family: var(--font-family-heading);
+  font-size: 0.76rem;
+}
+
+.chapter-tuning-controls label {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.chapter-tuning-controls label > span {
+  font-family: var(--font-family-heading);
+  font-size: 0.8rem;
+  color: var(--color-text-alt);
+}
+
+.chapter-tuning-controls select {
+  width: 100%;
+}
+
+.motif-spw {
+  margin: 0;
+  border: var(--border-width) var(--border-style) rgba(41, 116, 131, 0.34);
+  border-radius: var(--border-radius-small);
+  background: #142036;
+  color: #95dbff;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.motif-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.motif-controls button {
+  font-size: 0.82rem;
+}
+
+.motif-ambient[aria-pressed="true"] {
+  background: linear-gradient(130deg, #3f7a61 0%, #2c5f47 100%);
+}
+
+.motif-preview {
+  margin: 0;
+  display: grid;
+  gap: 0.3rem;
+  border: var(--border-width) var(--border-style) rgba(36, 66, 102, 0.3);
+}
+
+.motif-preview img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.motif-preview figcaption {
+  padding: 0.38rem 0.5rem 0.5rem;
+  font-size: 0.78rem;
+}
+
+.chapter-motif-discovery[data-discovered="true"] {
+  box-shadow: inset 0 0 0 1px rgba(42, 111, 127, 0.25);
 }
 
 aside ul#lore-collector {
