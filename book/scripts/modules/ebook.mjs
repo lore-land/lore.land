@@ -1,10 +1,32 @@
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.C';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.C';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.C';
+
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  initializeStyles();
-  setupNavigation();
-  setupLoreCollector();
-  setupPrimaryAction();
-  setupCustomElementsInteractions();
+  const lifecycle = createLoadLifecycle({
+    id: 'charm',
+    shellSelector: 'main',
+    spinnerDelayMs: 320,
+    skeletonLines: 4
+  });
+
+  lifecycle.boon('preloader engaged');
+  lifecycle.armBane('spinner + fallback');
+  lifecycle.bone('skeletons loaded');
+
+  try {
+    initializeStyles();
+    setupNavigation();
+    setupLoreCollector();
+    setupPrimaryAction();
+    setupCustomElementsInteractions();
+    const acoustics = lifecycle.bonk('acoustics + spacing check', document.querySelector('main'));
+    lifecycle.honk(`resolution + harmony (${acoustics.label})`);
+  } catch (error) {
+    lifecycle.bane('runtime fallback path');
+    console.error('Charm lifecycle failed:', error);
+  }
 });
 
 /**
@@ -19,11 +41,15 @@ function initializeStyles() {
   const mood = body.getAttribute('data-mood');
 
   if (period) {
-    periodStylesLink.href = `/book/styles/periods/${period}.css`;
+    periodStylesLink.href = withCacheContext(`/book/styles/periods/${period}.css`, {
+      channel: `period-${period}`
+    });
   }
 
   if (mood) {
-    moodStylesLink.href = `/book/styles/moods/${mood}.css`;
+    moodStylesLink.href = withCacheContext(`/book/styles/moods/${mood}.css`, {
+      channel: `mood-${mood}`
+    });
   }
 }
 
@@ -62,7 +88,7 @@ function setupNavigation() {
 function navigateSection(direction) {
   // Placeholder: Implement section navigation logic
   // This could involve scrolling to the previous/next section smoothly
-  const sections = document.querySelectorAll('.chapter > section, .chapter > custom-boof, .chapter > custom-boonberry, .chapter > custom-fool');
+  const sections = document.querySelectorAll(CHAPTER_FLOW_SELECTOR);
   const activeSection = document.activeElement || document.querySelector('.chapter :focus') || sections[0];
   let index = Array.from(sections).indexOf(activeSection);
 
@@ -140,25 +166,12 @@ function setupPrimaryAction() {
  * Sets up interactions with custom elements.
  */
 function setupCustomElementsInteractions() {
-  // Example: Enhance <custom-boof> interactions
-  const customBoofs = document.querySelectorAll('custom-boof');
-  customBoofs.forEach(boof => {
-    boof.addEventListener('click', () => {
-      // Define what happens when a custom-boof is clicked
-      boof.classList.toggle('active');
-      // Possibly reveal more content or trigger animations
-    });
-  });
-
-  // Example: Enhance <custom-fool> interactions
-  const customFools = document.querySelectorAll('custom-fool');
-  customFools.forEach(fool => {
-    fool.addEventListener('mouseenter', () => {
-      // Maybe play a sound or highlight the element
-      fool.classList.add('highlight');
-    });
-    fool.addEventListener('mouseleave', () => {
-      fool.classList.remove('highlight');
+  const customElements = document.querySelectorAll(CUSTOM_ELEMENTS_SELECTOR);
+  customElements.forEach((element) => {
+    element.dataset.spwComponent = element.tagName.toLowerCase();
+    element.dataset.spwActionable = 'true';
+    element.addEventListener('click', () => {
+      element.classList.toggle('active');
     });
   });
 
@@ -228,9 +241,7 @@ export class EBook {
       mainContent.dataset[this.options.chapterDataset] = chapterNumber;
 
       // Assign section numbers to sections and custom elements
-      const sections = mainContent.querySelectorAll(
-        'section, custom-boof, custom-boonberry, custom-fool, custom-echo, custom-puzzle, custom-bonk, custom-paradox, custom-mirror, custom-song, custom-labyrinth, custom-shadow, custom-game, custom-awakening, custom-path, custom-reflection'
-      );
+      const sections = mainContent.querySelectorAll(`section, ${CUSTOM_ELEMENTS_SELECTOR}`);
       let sectionNumber = 1;
       sections.forEach(section => {
         section.dataset[this.options.sectionDataset] = sectionNumber++;
