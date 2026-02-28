@@ -1,3 +1,5 @@
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.F';
+
 function createTemplate(config) {
   const wrapper = document.createElement('article');
   wrapper.className = 'sigil-panel';
@@ -104,6 +106,74 @@ function createTemplate(config) {
       font-family: var(--font-family-heading, monospace);
       cursor: pointer;
     }
+
+    .spw-token {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0.68em;
+      border-radius: 4px;
+      transition: background-color 140ms ease, color 140ms ease;
+    }
+
+    .spw-token:focus-visible {
+      outline: 2px solid rgba(112, 70, 161, 0.72);
+      outline-offset: 1px;
+    }
+
+    .spw-brace,
+    .spw-operator {
+      cursor: pointer;
+    }
+
+    .spw-brace.is-active {
+      background: rgba(157, 228, 255, 0.3);
+      color: #e6f8ff;
+    }
+
+    .spw-operator {
+      color: #e7a4ff;
+    }
+
+    .spw-operator:hover,
+    .spw-operator:focus-visible {
+      background: rgba(231, 164, 255, 0.22);
+    }
+
+    .spw-language-controls {
+      display: grid;
+      gap: 0.34rem;
+    }
+
+    .spw-operator-controls,
+    .spw-geometry-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .spw-operator-controls button,
+    .spw-geometry-nav button {
+      border: 1px solid rgba(42, 111, 127, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      font-size: 0.7rem;
+      line-height: 1;
+      padding: 0.2rem 0.54rem;
+      color: var(--color-accent-alt, #1c4f63);
+      font-family: var(--font-family-heading, monospace);
+      cursor: pointer;
+    }
+
+    .spw-geometry-label,
+    .spw-operator-label,
+    .spw-geometry-status {
+      margin: 0;
+      color: var(--color-text-alt, #45506b);
+      font-size: 0.72rem;
+      font-family: var(--font-family-heading, monospace);
+    }
   `;
 
   return { style, wrapper, cycleButton, prompt };
@@ -135,6 +205,7 @@ export function registerChapterSigil(config, target = document.querySelector('as
         });
 
         shadow.append(style, wrapper);
+        initSpwLanguageRuntime({ root: shadow });
       }
     }
 

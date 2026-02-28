@@ -296,6 +296,11 @@ aside {
   white-space: pre-wrap;
 }
 
+.chapter-motif-discovery .spw-language-controls,
+.spw-hypertext-routes .spw-language-controls {
+  margin-top: 0.15rem;
+}
+
 .motif-controls {
   display: flex;
   flex-wrap: wrap;

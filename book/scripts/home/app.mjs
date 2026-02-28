@@ -1,15 +1,16 @@
 import { chapterManifest } from './data.mjs';
 import { seedManifest, seedSets, seedDimensions, chapterSeedMap } from './seeds.mjs';
 import { renderHero, renderTimeline, renderSeedAtlas } from './ui.mjs';
-import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.E';
-import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.E';
+import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.F';
+import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.F';
 import {
   bootstrapExperience,
   initSelectPreference,
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.E';
+} from '../modules/experience-core.mjs?v=2026_02_28.F';
+import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.F';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -276,6 +277,7 @@ function initHomepage() {
     setupExperienceControls(homeRoot, announce);
     setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
+    initSpwLanguageRuntime({ root: homeRoot, announce });
 
     initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: homeRoot });

@@ -1,12 +1,13 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.E';
-import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.E';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.E';
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.F';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.F';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.F';
 import {
   bootstrapExperience,
   enhanceLazyImages,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './experience-core.mjs?v=2026_02_28.E';
+} from './experience-core.mjs?v=2026_02_28.F';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.F';
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLoreCollector();
     setupPrimaryAction();
     setupCustomElementsInteractions();
+    initSpwLanguageRuntime({ root: document });
     initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', document.querySelector('main'));

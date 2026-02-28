@@ -1,16 +1,17 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.E';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.E';
-import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.E';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.F';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.F';
+import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.F';
 import {
   bootstrapExperience,
   enhanceLazyImages,
   initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_02_28.E';
-import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.E';
-import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.E';
+} from './modules/experience-core.mjs?v=2026_02_28.F';
+import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.F';
+import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.F';
+import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.F';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupTuningControls(announce);
     setupMotifDiscovery(chapterData, announce);
     await mountChapterSigil(chapterData, announce);
+    initSpwLanguageRuntime({ root: document, announce });
     initChapterProgression(chapterData, { announce });
     initProgressiveReveal({ root: document });
 
@@ -630,7 +632,7 @@ async function mountChapterSigil(data, announce) {
   }
 
   const chapterId = String(data.chapterNumber).padStart(2, '0');
-  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.E`;
+  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.F`;
 
   try {
     const module = await import(path);

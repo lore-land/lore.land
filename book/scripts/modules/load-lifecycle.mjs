@@ -1,4 +1,4 @@
-import { VALENCE_PENTAD, mapLoadStageToLifecycleState } from './story-lexicon.mjs?v=2026_02_28.E';
+import { VALENCE_PENTAD, mapLoadStageToLifecycleState } from './story-lexicon.mjs?v=2026_02_28.F';
 
 export const LOAD_STAGES = Object.freeze([...VALENCE_PENTAD]);
 
