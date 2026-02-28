@@ -1,10 +1,20 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.C';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.C';
-import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.C';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.D';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.D';
+import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.D';
+import {
+  bootstrapExperience,
+  enhanceLazyImages,
+  initProgressiveReveal,
+  registerStoryServiceWorker
+} from './modules/experience-core.mjs?v=2026_02_28.D';
+import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.D';
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', () => {
+  const { root, announce } = bootstrapExperience();
+  registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+
   const lifecycle = createLoadLifecycle({
     id: 'chapter',
     shellSelector: '#chapter-content',
@@ -41,8 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
+    initChapterProgression(chapterData, { announce });
+    initProgressiveReveal({ root: document });
 
     const chapterContent = document.getElementById('chapter-content');
+    enhanceLazyImages({ root: chapterContent || document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
   } catch (error) {

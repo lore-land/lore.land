@@ -1,0 +1,26 @@
+{
+  "name": "Lore.Land",
+  "short_name": "Lore",
+  "description": "Software-as-literature storytelling with modular Spw chapters and visual seed atlas.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f3ede1",
+  "theme_color": "#2a6f7f",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/book/pwa/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/book/pwa/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

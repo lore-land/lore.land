@@ -42,6 +42,29 @@ main.chapter {
   overflow: hidden;
 }
 
+body[data-chapter-mode="dawn"] main.chapter,
+body[data-chapter-mode="signal"] main.chapter,
+body[data-chapter-mode="song"] main.chapter {
+  background:
+    linear-gradient(160deg, rgba(168, 210, 255, 0.2), rgba(255, 255, 255, 0.62)),
+    var(--color-bg-content);
+}
+
+body[data-chapter-mode="rift"] main.chapter,
+body[data-chapter-mode="paradox"] main.chapter,
+body[data-chapter-mode="canon"] main.chapter {
+  background:
+    linear-gradient(160deg, rgba(226, 186, 255, 0.18), rgba(255, 255, 255, 0.62)),
+    var(--color-bg-content);
+}
+
+body[data-chapter-mode="resonance"] main.chapter,
+body[data-chapter-mode="confluence"] main.chapter {
+  background:
+    linear-gradient(160deg, rgba(164, 239, 220, 0.2), rgba(255, 255, 255, 0.62)),
+    var(--color-bg-content);
+}
+
 main.chapter::after {
   content: "";
   position: absolute;
@@ -137,6 +160,30 @@ aside {
   gap: var(--spacing-small);
 }
 
+.chapter-progress-panel {
+  display: grid;
+  gap: 0.42rem;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.72rem;
+}
+
+.chapter-progress-panel h2 {
+  font-size: 0.96rem;
+}
+
+.chapter-progress-panel progress {
+  width: 100%;
+  accent-color: var(--color-accent-main);
+}
+
+.chapter-progress-panel .chapter-reward,
+.chapter-progress-panel .chapter-mode {
+  font-size: 0.86rem;
+  color: var(--color-text-alt);
+}
+
 aside ul#lore-collector {
   list-style: none;
   margin: 0;
@@ -207,6 +254,26 @@ custom-reflection {
   border-radius: var(--border-radius-small);
   border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.3);
   background: rgba(255, 255, 255, 0.54);
+}
+
+[data-spw-component] {
+  position: relative;
+}
+
+[data-spw-component]::before {
+  content: attr(data-spw-component);
+  display: block;
+  width: fit-content;
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.35);
+  border-radius: var(--border-radius-pill);
+  font-size: 0.67rem;
+  line-height: 1;
+  padding: 0.18rem 0.42rem;
+  color: var(--color-accent-alt);
+  margin-bottom: 0.45rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.04em;
+  opacity: 0.8;
 }
 
 custom-boof {
