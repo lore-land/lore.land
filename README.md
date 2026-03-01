@@ -20,6 +20,15 @@ This project integrates Spw kernel ideas from:
 - `lore:spw-selection` event
   Shared runtime signal used by page-level UX to react to Spw handle/payload selections.
 
+### Model Ebook Navigation
+
+- `book/scripts/modules/ebook-navigation.mjs`
+  Chapter-level ebook architecture with section mapping, TOC handles, concept routes, persisted resume state, keyboard navigation (`PageUp/PageDown`), and reader/engineer register modes.
+- `book/scripts/script.mjs`
+  Composes chapter runtime: content mount -> chapter routes -> ebook navigation -> Spw runtime enhancement -> progression/effects.
+- `book/styles/fixtures/root.css`
+  Styles hierarchy and navigation surfaces for both software-heavy and book-heavy reading modes.
+
 ### Cache + Release Coupling
 
 Spw runtime assets are released through the shared cache profile:

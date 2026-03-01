@@ -12,11 +12,28 @@ import {
   registerStoryServiceWorker
 } from './experience-core.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
+import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_02_28.I';
+import { deriveChapterLinks } from './chapter-links.mjs?v=2026_02_28.I';
+
+function readChapterData() {
+  const source = document.getElementById('chapter-data');
+  if (!source || !source.textContent) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(source.textContent);
+  } catch (error) {
+    console.warn('Legacy ebook scaffold: unable to parse chapter data.', error);
+    return null;
+  }
+}
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const { root } = bootstrapExperience();
+  const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+  const chapterData = readChapterData();
 
   const lifecycle = createLoadLifecycle({
     id: 'charm',
@@ -30,12 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
   lifecycle.bone('skeletons loaded');
 
   try {
-    initializeStyles();
-    setupNavigation();
-    setupLoreCollector();
-    setupPrimaryAction();
+    initializeStyles(chapterData);
+    setupNavigation(chapterData, announce);
+    setupLoreCollector(chapterData);
+    setupPrimaryAction(chapterData, announce);
     setupCustomElementsInteractions();
-    initSpwLanguageRuntime({ root: document });
+    if (chapterData) {
+      initEbookNavigation(chapterData, { announce });
+    }
+    initSpwLanguageRuntime({ root: document, announce });
     initAttentionDetails({ root });
     initSemanticShader({ root });
     initSpatialPerspective({ root });
@@ -53,52 +73,77 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Dynamically loads period and mood stylesheets based on data attributes.
  */
-function initializeStyles() {
+function initializeStyles(data) {
   const periodStylesLink = document.getElementById('period-styles');
   const moodStylesLink = document.getElementById('mood-styles');
   const body = document.body;
 
-  const period = body.getAttribute('data-period'); // Assuming you have data-period
-  const mood = body.getAttribute('data-mood');
+  const period = data?.period || body.getAttribute('data-period');
+  const mood = data?.mood || body.getAttribute('data-mood');
 
-  if (period) {
+  if (period && periodStylesLink) {
     periodStylesLink.href = withCacheContext(`/book/styles/periods/${period}.css`, {
       channel: `period-${period}`
     });
+    body.setAttribute('data-period', period);
   }
 
-  if (mood) {
+  if (mood && moodStylesLink) {
     moodStylesLink.href = withCacheContext(`/book/styles/moods/${mood}.css`, {
       channel: `mood-${mood}`
     });
+    body.setAttribute('data-mood', mood);
   }
 }
 
 /**
  * Sets up chapter and section navigation controls.
  */
-function setupNavigation() {
-  // Chapter Navigation
-  const chapterNav = document.querySelector('nav[aria-label="Chapter navigation"]');
-  if (chapterNav) {
-    chapterNav.addEventListener('click', (event) => {
-      if (event.target.tagName === 'A') {
-        event.preventDefault();
-        const href = event.target.getAttribute('href');
-        // Implement smooth navigation or fetch content dynamically
-        window.location.href = href;
+function setupNavigation(data, announce) {
+  const links = deriveChapterLinks(data);
+  const chapterPrev = document.querySelector('nav[aria-label="Chapter navigation"] .prev');
+  const chapterNext = document.querySelector('nav[aria-label="Chapter navigation"] .next');
+
+  if (chapterPrev) {
+    chapterPrev.textContent = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
+    chapterPrev.dataset.spwExpression = 'true';
+    chapterPrev.setAttribute('aria-label', `Open chapter ${links.previous}`);
+    chapterPrev.addEventListener('click', () => {
+      window.location.href = links.previousHref;
+      if (announce) {
+        announce(`Route activated: chapter ${links.previous}.`);
       }
     });
   }
 
-  // Section Navigation
+  if (chapterNext) {
+    chapterNext.textContent = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
+    chapterNext.dataset.spwExpression = 'true';
+    chapterNext.setAttribute('aria-label', `Open chapter ${links.next}`);
+    chapterNext.addEventListener('click', () => {
+      window.location.href = links.nextHref;
+      if (announce) {
+        announce(`Route activated: chapter ${links.next}.`);
+      }
+    });
+  }
+
   const sectionNav = document.querySelector('.section-navigation');
   if (sectionNav) {
-    const prevSectionBtn = sectionNav.querySelector('.prev-section');
-    const nextSectionBtn = sectionNav.querySelector('.next-section');
+    const prevSectionBtn = sectionNav.querySelector('.prev');
+    const nextSectionBtn = sectionNav.querySelector('.next');
 
-    prevSectionBtn.addEventListener('click', () => navigateSection('prev'));
-    nextSectionBtn.addEventListener('click', () => navigateSection('next'));
+    if (prevSectionBtn) {
+      prevSectionBtn.textContent = '?[section]{prev}';
+      prevSectionBtn.dataset.spwExpression = 'true';
+      prevSectionBtn.addEventListener('click', () => navigateSection('prev'));
+    }
+
+    if (nextSectionBtn) {
+      nextSectionBtn.textContent = '?[section]{next}';
+      nextSectionBtn.dataset.spwExpression = 'true';
+      nextSectionBtn.addEventListener('click', () => navigateSection('next'));
+    }
   }
 }
 
@@ -107,36 +152,57 @@ function setupNavigation() {
  * @param {string} direction - 'prev' or 'next'
  */
 function navigateSection(direction) {
-  // Placeholder: Implement section navigation logic
-  // This could involve scrolling to the previous/next section smoothly
-  const sections = document.querySelectorAll(CHAPTER_FLOW_SELECTOR);
-  const activeSection = document.activeElement || document.querySelector('.chapter :focus') || sections[0];
-  let index = Array.from(sections).indexOf(activeSection);
-
-  if (direction === 'prev' && index > 0) {
-    sections[index - 1].scrollIntoView({ behavior: 'smooth' });
-    sections[index - 1].focus();
-  } else if (direction === 'next' && index < sections.length - 1) {
-    sections[index + 1].scrollIntoView({ behavior: 'smooth' });
-    sections[index + 1].focus();
+  const sections = [...document.querySelectorAll(CHAPTER_FLOW_SELECTOR)];
+  if (!sections.length) {
+    return;
   }
+
+  const focused = document.activeElement;
+  const activeSection = focused ? focused.closest(CHAPTER_FLOW_SELECTOR) : null;
+  let index = activeSection ? sections.indexOf(activeSection) : -1;
+
+  if (index < 0) {
+    let closest = 0;
+    let bestDistance = Number.POSITIVE_INFINITY;
+    sections.forEach((section, sectionIndex) => {
+      const distance = Math.abs(section.getBoundingClientRect().top - 130);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        closest = sectionIndex;
+      }
+    });
+    index = closest;
+  }
+
+  const nextIndex =
+    direction === 'prev'
+      ? Math.max(0, index - 1)
+      : Math.min(sections.length - 1, index + 1);
+
+  const target = sections[nextIndex];
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  target.focus({ preventScroll: true });
 }
 
 /**
  * Sets up the lore collector functionality.
  */
-function setupLoreCollector() {
+function setupLoreCollector(data) {
   const loreButton = document.getElementById('lore-button');
   const loreCollector = document.getElementById('lore-collector');
 
   if (loreButton && loreCollector) {
+    if (data?.lore?.loreItems?.length) {
+      populateLoreCollector(data.lore.loreItems);
+    }
+
     loreButton.addEventListener('click', () => {
       // Toggle visibility of lore collector
       const isExpanded = loreButton.getAttribute('aria-expanded') === 'true';
       loreButton.setAttribute('aria-expanded', String(!isExpanded));
       loreCollector.hidden = isExpanded;
 
-      if (!isExpanded) {
+      if (!isExpanded && !loreCollector.children.length) {
         populateLoreCollector();
       }
     });
@@ -146,22 +212,34 @@ function setupLoreCollector() {
 /**
  * Populates the lore collector with relevant lore items.
  */
-function populateLoreCollector() {
+function populateLoreCollector(seedItems = null) {
   const loreCollector = document.getElementById('lore-collector');
-  if (!loreCollector) return;
+  if (!loreCollector) {
+    return;
+  }
 
-  // Example: Fetch lore data from a JSON file or API
+  const writeItems = (items) => {
+    loreCollector.innerHTML = '';
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      li.textContent = item.description;
+      loreCollector.appendChild(li);
+    });
+  };
+
+  if (Array.isArray(seedItems) && seedItems.length) {
+    writeItems(seedItems);
+    return;
+  }
+
   fetch('/book/data/lore.json')
-    .then(response => response.json())
-    .then(data => {
-      loreCollector.innerHTML = ''; // Clear existing content
-      data.loreItems.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item.description;
-        loreCollector.appendChild(li);
-      });
+    .then((response) => response.json())
+    .then((fetched) => {
+      if (Array.isArray(fetched?.loreItems) && fetched.loreItems.length) {
+        writeItems(fetched.loreItems);
+      }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error fetching lore data:', error);
       loreCollector.innerHTML = '<li>Failed to load lore.</li>';
     });
@@ -170,17 +248,22 @@ function populateLoreCollector() {
 /**
  * Sets up the primary action button functionality.
  */
-function setupPrimaryAction() {
+function setupPrimaryAction(data, announce) {
   const primaryActionBtn = document.querySelector('.primary-action');
-  if (primaryActionBtn) {
-    primaryActionBtn.addEventListener('click', () => {
-      // Define the action to advance the story
-      // This could navigate to the next chapter, reveal hidden content, etc.
-      alert('Advancing the story...');
-      // Example: Navigate to the next chapter
-      window.location.href = '../../chapter/02/index.html';
-    });
+  if (!primaryActionBtn) {
+    return;
   }
+
+  const links = deriveChapterLinks(data);
+  primaryActionBtn.textContent = `^[route/${String(links.next).padStart(2, '0')}]{advance}`;
+  primaryActionBtn.dataset.spwExpression = 'true';
+  primaryActionBtn.setAttribute('aria-label', `Advance to chapter ${links.next}`);
+  primaryActionBtn.addEventListener('click', () => {
+    window.location.href = links.nextHref;
+    if (announce) {
+      announce(`Route activated: chapter ${links.next}.`);
+    }
+  });
 }
 
 /**
@@ -191,8 +274,19 @@ function setupCustomElementsInteractions() {
   customElements.forEach((element) => {
     element.dataset.spwComponent = element.tagName.toLowerCase();
     element.dataset.spwActionable = 'true';
-    element.addEventListener('click', () => {
+    element.tabIndex = element.tabIndex >= 0 ? element.tabIndex : 0;
+
+    const togglePlayed = () => {
       element.classList.toggle('active');
+      element.classList.toggle('played');
+    };
+
+    element.addEventListener('click', togglePlayed);
+    element.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        togglePlayed();
+      }
     });
   });
 
@@ -253,7 +347,9 @@ export class EBook {
     // Wait for the DOM to fully load
     document.addEventListener('DOMContentLoaded', () => {
       const mainContent = document.querySelector(this.options.mainSelector);
-      if (!mainContent) return; // Exit if main content is not found
+      if (!mainContent || mainContent.dataset.ebookWordsReady === 'true') {
+        return;
+      }
 
       // Extract chapter number from URL using regex
       const urlPath = window.location.pathname;
@@ -262,9 +358,9 @@ export class EBook {
       mainContent.dataset[this.options.chapterDataset] = chapterNumber;
 
       // Assign section numbers to sections and custom elements
-      const sections = mainContent.querySelectorAll(`section, ${CUSTOM_ELEMENTS_SELECTOR}`);
+      const sections = mainContent.querySelectorAll(CHAPTER_FLOW_SELECTOR);
       let sectionNumber = 1;
-      sections.forEach(section => {
+      sections.forEach((section) => {
         section.dataset[this.options.sectionDataset] = sectionNumber++;
       });
 
@@ -273,6 +369,7 @@ export class EBook {
 
       // Add event listeners to handle interactions
       this.addWordEventListeners(mainContent);
+      mainContent.dataset.ebookWordsReady = 'true';
     });
   }
 
@@ -281,8 +378,25 @@ export class EBook {
    * @param {HTMLElement} element - The element containing the text to transform.
    */
   wrapWords(element) {
-    // Create a TreeWalker to traverse text nodes
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node) => {
+          const parent = node.parentElement;
+          if (!parent) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (parent.closest('script, style, noscript')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (parent.classList.contains(this.options.wordClass)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
     const textNodes = [];
 
     // Collect all text nodes within the main content
@@ -291,19 +405,29 @@ export class EBook {
     }
 
     // Iterate through each text node to wrap words
-    textNodes.forEach(textNode => {
+    textNodes.forEach((textNode) => {
       const parent = textNode.parentNode;
-      const text = textNode.textContent.trim();
+      const text = textNode.textContent;
 
-      if (text.length === 0) return; // Skip empty text nodes
+      if (!parent || !text || !text.trim().length) {
+        return;
+      }
 
-      // Split text into words and delimiters (spaces, punctuation)
-      const words = text.split(/(\s+|\b)/);
+      // Split text into words and delimiters while preserving spacing.
+      const words = text.split(/(\s+)/);
 
       const fragment = document.createDocumentFragment();
+      const chapterId = element.dataset[this.options.chapterDataset] || 'unknown';
+      const sectionHost = parent.closest(`[${this.options.dataAttributes.wordIndex}], [data-${this.options.sectionDataset}]`);
+      const sectionId = sectionHost?.dataset?.[this.options.sectionDataset] || '0';
+      let tokenCount = 0;
 
       words.forEach((word, index) => {
-        if (/\s+/.test(word) || /^\b$/.test(word)) {
+        if (!word) {
+          return;
+        }
+
+        if (/^\s+$/.test(word)) {
           // Append whitespace or boundary as text node
           fragment.appendChild(document.createTextNode(word));
         } else {
@@ -311,10 +435,12 @@ export class EBook {
           const span = document.createElement(this.options.wordWrapper);
           span.setAttribute('tabindex', this.options.wordTabIndex);
           span.classList.add(this.options.wordClass);
+          span.dataset.spwExpression = 'true';
           span.textContent = word;
 
           // Assign a unique word index for tracking
-          const wordIndex = `${parent.dataset[this.options.chapterDataset]}-${parent.dataset[this.options.sectionDataset]}-${index}`;
+          tokenCount += 1;
+          const wordIndex = `${chapterId}-${sectionId}-${tokenCount}-${index}`;
           span.setAttribute(this.options.dataAttributes.wordIndex, wordIndex);
 
           fragment.appendChild(span);
@@ -333,7 +459,7 @@ export class EBook {
   addWordEventListeners(mainContent) {
     // Select all word spans within the main content
     const wordSpans = mainContent.querySelectorAll(`.${this.options.wordClass}[tabindex="${this.options.wordTabIndex}"]`);
-    wordSpans.forEach(span => {
+    wordSpans.forEach((span) => {
       // Bind event handlers to maintain correct 'this' context
       span.addEventListener('focus', this.handleWordFocus.bind(this));
       span.addEventListener('blur', this.handleWordBlur.bind(this));

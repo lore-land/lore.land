@@ -280,6 +280,14 @@ function deriveConcepts(...values) {
   return [...concepts].slice(0, 16);
 }
 
+function sanitizeHandleToken(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_./-]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'selection';
+}
+
 function uniqueOrdered(values) {
   const seen = new Set();
   const ordered = [];
@@ -597,6 +605,10 @@ function createRegisterControls(context) {
   inspector.textContent = 'Select part of the expression to open structured handle/payload.';
 
   const registerView = document.createElement('spw-registers');
+  const modeWrap = document.createElement('div');
+  modeWrap.className = 'spw-handle-mode';
+  modeWrap.setAttribute('role', 'group');
+  modeWrap.setAttribute('aria-label', 'Spw handle mode');
   const cubeWrap = document.createElement('div');
   cubeWrap.className = 'spw-cube-controls';
   cubeWrap.setAttribute('role', 'group');
@@ -620,7 +632,35 @@ function createRegisterControls(context) {
   cubeStatus.setAttribute('role', 'status');
   cubeStatus.setAttribute('aria-live', 'polite');
 
+  const registerMode = document.createElement('button');
+  registerMode.type = 'button';
+  registerMode.className = 'spw-handle-mode-button';
+  registerMode.dataset.spwHandleMode = 'register';
+  registerMode.textContent = 'Register mode';
+
+  const mathMode = document.createElement('button');
+  mathMode.type = 'button';
+  mathMode.className = 'spw-handle-mode-button';
+  mathMode.dataset.spwHandleMode = 'math';
+  mathMode.textContent = 'Math mode';
+
+  modeWrap.append(registerMode, mathMode);
+
+  let handleMode = node.dataset.spwHandleMode === 'math' ? 'math' : 'register';
   let cubeFaceIndex = 0;
+
+  const applyHandleMode = (mode, spoken = false) => {
+    handleMode = mode === 'math' ? 'math' : 'register';
+    node.dataset.spwHandleMode = handleMode;
+    controls.dataset.spwHandleMode = handleMode;
+    [registerMode, mathMode].forEach((button) => {
+      const active = button.dataset.spwHandleMode === handleMode;
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    if (spoken && announce) {
+      announce(`Spw handle mode: ${handleMode}.`);
+    }
+  };
 
   const commitSelection = (selectionText, association = null, atIndex = null, contextMeta = null) => {
     const text = (selectionText || '').trim();
@@ -632,9 +672,15 @@ function createRegisterControls(context) {
     const parsedExpression = tryParseSelector(source.trim());
     const inferredAssociation = association || findAssociationByIndex(associations, atIndex) || parseInlineAssociation(text);
 
-    const handle = inferredAssociation
+    let handle = inferredAssociation
       ? `${inferredAssociation.sigil}[${inferredAssociation.handle}]`
       : `^[selection/${hashId(`${expressionId}:${text}`)}]{payload}`;
+
+    if (handleMode === 'math') {
+      const basis = sanitizeHandleToken(inferredAssociation?.handle || `selection/${hashId(text)}`);
+      const payloadText = String(inferredAssociation?.payload || text).replace(/[{}]/g, '');
+      handle = `%[math/${basis}]{${payloadText}}`;
+    }
 
     const payloadId = `${expressionId}:${hashId(`${handle}:${text}`)}`;
     const concepts = deriveConcepts(
@@ -643,6 +689,11 @@ function createRegisterControls(context) {
       inferredAssociation?.payload,
       expressionId
     );
+
+    const payloadContext = {
+      ...(contextMeta && typeof contextMeta === 'object' ? contextMeta : {}),
+      handleMode
+    };
 
     const payload = {
       expressionId,
@@ -659,7 +710,7 @@ function createRegisterControls(context) {
         selectionSelector: parsedSelection,
         expressionSelector: parsedExpression
       },
-      context: contextMeta || null,
+      context: payloadContext,
       concepts
     };
 
@@ -751,7 +802,7 @@ function createRegisterControls(context) {
     button.textContent = `${association.sigil}[${association.handle}]`;
     button.setAttribute('aria-label', `Select handle ${association.handle}`);
     button.addEventListener('click', () => {
-      commitSelection(association.text, association, association.start);
+      commitSelection(association.text, association, association.start, { origin: 'handle-grid' });
     });
     button.style.setProperty('--spw-handle-order', String(index + 1));
     handleRow.append(button);
@@ -771,9 +822,13 @@ function createRegisterControls(context) {
     }
   });
 
+  registerMode.addEventListener('click', () => applyHandleMode('register', true));
+  mathMode.addEventListener('click', () => applyHandleMode('math', true));
+
   cubeWrap.append(cubeLabel, cubeAxes, cubeFaceLabel, cubeFace, cubeStatus);
-  controls.append(title, handleRow, cubeWrap, registerView, inspector);
+  controls.append(title, modeWrap, handleRow, cubeWrap, registerView, inspector);
   registerView.data = { snapshot: bank.snapshot() };
+  applyHandleMode(handleMode, false);
   renderCubeFace();
   return { controls, commitSelection };
 }

@@ -16,6 +16,8 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.I';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
+import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -57,6 +59,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateMetadata(chapterData);
     populateContent(chapterData);
     setupNavigation(chapterData, announce);
+    const ebookNav = initEbookNavigation(chapterData, { announce });
+    setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
@@ -72,6 +76,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     initChapterProgression(chapterData, { announce });
     initProgressiveReveal({ root: document });
 
+    if (ebookNav && announce) {
+      announce(`Model ebook navigation ready: ${ebookNav.sectionCount} sections.`);
+    }
+
     const chapterContent = document.getElementById('chapter-content');
     enhanceLazyImages({ root: chapterContent || document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
@@ -81,25 +89,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Chapter lifecycle failed:', error);
   }
 });
-
-function chapterPath(number) {
-  return `/book/chapter/${String(number).padStart(2, '0')}/`;
-}
-
-function deriveChapterLinks(data) {
-  const total = 13;
-  const current = Number(data.chapterNumber) || 1;
-  const previous = current > 1 ? current - 1 : total;
-  const next = current < total ? current + 1 : 1;
-
-  return {
-    current,
-    previous,
-    next,
-    previousHref: data.previousChapter || chapterPath(previous),
-    nextHref: data.nextChapter || chapterPath(next)
-  };
-}
 
 /**
  * Initializes the period and mood stylesheets based on chapter data.
@@ -167,6 +156,29 @@ function populateContent(data) {
   const chapterHeading = document.createElement('h1');
   chapterHeading.textContent = `Chapter ${padChapterNumber(data.chapterNumber)}: ${data.title}`;
   chapterContent.appendChild(chapterHeading);
+
+  const byline = document.createElement('p');
+  byline.className = 'chapter-byline';
+  byline.dataset.component = 'chapter-byline';
+
+  const authorLink = document.createElement('a');
+  authorLink.href = 'https://spwashi.com';
+  authorLink.target = '_blank';
+  authorLink.rel = 'noopener noreferrer';
+  authorLink.dataset.spwExpression = 'true';
+  authorLink.textContent = '^[author]{spwashi.com}';
+  authorLink.setAttribute('aria-label', 'Open author site spwashi.com');
+
+  const brandLink = document.createElement('a');
+  brandLink.href = 'https://spwashi.click';
+  brandLink.target = '_blank';
+  brandLink.rel = 'noopener noreferrer';
+  brandLink.dataset.spwExpression = 'true';
+  brandLink.textContent = '~[toy-links]{spwashi.click}';
+  brandLink.setAttribute('aria-label', 'Open Spwashi toy links page');
+
+  byline.append('Stories written by ', authorLink, '. Brand toy links: ', brandLink, '.');
+  chapterContent.appendChild(byline);
 
   // Iterate over each section and append to chapter content
   if (Array.isArray(data.sections)) {
@@ -343,8 +355,8 @@ function setupNavigation(data, announce) {
   const previousLabel = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
   const nextLabel = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
 
-  const prevControls = document.querySelectorAll('.chapter-navigation .prev, .section-navigation .prev');
-  const nextControls = document.querySelectorAll('.chapter-navigation .next, .section-navigation .next');
+  const prevControls = document.querySelectorAll('.chapter-navigation .prev');
+  const nextControls = document.querySelectorAll('.chapter-navigation .next');
 
   prevControls.forEach((control) => {
     bindRouteControl(control, {
@@ -393,7 +405,8 @@ function setupSpwHypertextRoutes(data, announce) {
 
   const shortcutHint = document.createElement('p');
   shortcutHint.className = 'spw-shortcut-hint';
-  shortcutHint.textContent = 'Shortcuts: Alt+Left = prev, Alt+Right = next, Alt+H = home, Alt+T = timeline.';
+  shortcutHint.textContent =
+    'Shortcuts: Alt+Left = prev chapter, Alt+Right = next chapter, PageUp/PageDown = section, Alt+H = home, Alt+T = timeline.';
 
   const list = document.createElement('ul');
 
@@ -422,6 +435,16 @@ function setupSpwHypertextRoutes(data, announce) {
       label: '^[home]{lore.land}',
       href: '/',
       aria: 'Return to home'
+    },
+    {
+      label: '^[author]{spwashi.com}',
+      href: 'https://spwashi.com',
+      aria: 'Open story author site'
+    },
+    {
+      label: '~[toy-links]{spwashi.click}',
+      href: 'https://spwashi.click',
+      aria: 'Open Spwashi toy links page'
     }
   ];
 
@@ -432,6 +455,11 @@ function setupSpwHypertextRoutes(data, announce) {
     anchor.textContent = item.label;
     anchor.setAttribute('aria-label', item.aria);
     anchor.dataset.spwRoute = item.label;
+    anchor.dataset.spwExpression = 'true';
+    if (/^https?:\/\//.test(item.href)) {
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+    }
     anchor.addEventListener('focus', () => {
       if (announce) {
         announce(`Route focused: ${item.label}`);
@@ -500,6 +528,57 @@ function setupTuningControls(announce) {
     announce,
     announceLabel: 'Tuning'
   });
+}
+
+function setupAuthorAttribution(announce) {
+  const aside = document.querySelector('aside');
+  if (!aside) {
+    return;
+  }
+
+  const existing = aside.querySelector('.story-attribution-panel');
+  if (existing) {
+    existing.remove();
+  }
+
+  const panel = document.createElement('section');
+  panel.className = 'story-attribution-panel';
+  panel.dataset.component = 'story-attribution';
+  panel.setAttribute('aria-label', 'Story authorship and brand links');
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Authorship';
+
+  const summary = document.createElement('p');
+  summary.textContent =
+    'Lore.Land stories are written by spwashi.com. spwashi.click is the brand toy-links page.';
+
+  const links = document.createElement('div');
+  links.className = 'story-attribution-links';
+
+  const author = document.createElement('a');
+  author.href = 'https://spwashi.com';
+  author.target = '_blank';
+  author.rel = 'noopener noreferrer';
+  author.dataset.spwExpression = 'true';
+  author.textContent = '^[author]{spwashi.com}';
+  author.setAttribute('aria-label', 'Open spwashi.com');
+
+  const toys = document.createElement('a');
+  toys.href = 'https://spwashi.click';
+  toys.target = '_blank';
+  toys.rel = 'noopener noreferrer';
+  toys.dataset.spwExpression = 'true';
+  toys.textContent = '~[toy-links]{spwashi.click}';
+  toys.setAttribute('aria-label', 'Open spwashi.click');
+
+  links.append(author, toys);
+  panel.append(heading, summary, links);
+  aside.append(panel);
+
+  if (announce) {
+    announce('Authorship links synced: spwashi.com and spwashi.click.');
+  }
 }
 
 function resolveChapterMotif(chapterNumber) {
@@ -663,6 +742,7 @@ function bindRouteControl(control, route, announce) {
   control.textContent = route.label;
   control.setAttribute('data-spw-route', route.routeName);
   control.setAttribute('data-spw-route-label', route.label);
+  control.setAttribute('data-spw-expression', 'true');
   control.setAttribute('aria-label', route.ariaLabel);
 
   control.addEventListener('click', (event) => {

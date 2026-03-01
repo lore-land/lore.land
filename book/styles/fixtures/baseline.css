@@ -607,6 +607,29 @@ samp {
   text-transform: uppercase;
 }
 
+.spw-handle-mode {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.spw-handle-mode-button {
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--color-accent-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0.22rem 0.52rem;
+}
+
+.spw-handle-mode-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.14);
+  border-color: rgba(38, 88, 124, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(38, 88, 124, 0.16);
+}
+
 .spw-handle-grid {
   display: flex;
   flex-wrap: wrap;

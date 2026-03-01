@@ -562,14 +562,6 @@ aside .additional-links a:focus-visible {
   box-shadow: var(--interactive-shadow-hover);
 }
 
-  display: block;
-  padding: 0.9rem 1rem;
-  border-radius: var(--interactive-radius);
-  border: var(--interactive-border);
-  background: var(--interactive-bg);
-  transition: var(--interactive-transition);
-}
-
 [data-spw-component] {
   position: relative;
 }
@@ -617,6 +609,269 @@ footer {
   box-shadow: 0 -2px 12px var(--theme-shadow-main);
   background-image: var(--theme-grain);
   background-blend-mode: multiply;
+}
+
+main.chapter {
+  counter-reset: ebook-section;
+}
+
+main.chapter > [data-ebook-section="true"] {
+  counter-increment: ebook-section;
+  scroll-margin-top: 4.5rem;
+  border-radius: var(--border-radius-small);
+}
+
+main.chapter > [data-ebook-section="true"] > h2::before {
+  content: "§" counter(ebook-section, decimal-leading-zero) " ";
+  color: var(--theme-accent-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.84em;
+  letter-spacing: 0.05em;
+}
+
+main.chapter > [data-ebook-section="true"].is-ebook-active {
+  box-shadow: inset 3px 0 0 rgba(42, 111, 127, 0.44);
+  background: color-mix(in srgb, var(--theme-paper) 88%, rgba(42, 111, 127, 0.12) 12%);
+}
+
+.chapter-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--theme-text-alt);
+}
+
+.chapter-byline a {
+  font-family: var(--font-family-heading);
+}
+
+.ebook-nav-panel {
+  display: grid;
+  gap: 0.46rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.72rem;
+}
+
+.ebook-nav-panel h2 {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.ebook-nav-bridge,
+.ebook-nav-status {
+  margin: 0;
+  color: var(--theme-text-alt);
+  font-size: 0.82rem;
+}
+
+.ebook-payload-status {
+  margin: 0;
+  color: var(--theme-accent-alt);
+  font-size: 0.74rem;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ebook-nav-progress {
+  width: 100%;
+  accent-color: var(--theme-accent-main);
+}
+
+.ebook-register-switch,
+.ebook-perspective-switch,
+.ebook-syntax-switch,
+.ebook-payload-switch,
+.ebook-nav-controls,
+.ebook-concept-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.ebook-register-button,
+.ebook-perspective-button,
+.ebook-syntax-button,
+.ebook-payload-button,
+.ebook-nav-controls button,
+.ebook-toc-link,
+.ebook-concept-link,
+.ebook-lsp-link {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--theme-accent-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.74rem;
+  line-height: 1.2;
+  padding: 0.22rem 0.56rem;
+  text-decoration: none;
+  transition: var(--interactive-transition);
+}
+
+.ebook-register-button[aria-pressed="true"],
+.ebook-perspective-button[aria-pressed="true"],
+.ebook-syntax-button[aria-pressed="true"],
+.ebook-payload-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.14);
+  border-color: rgba(38, 88, 124, 0.46);
+}
+
+.ebook-nav-panel[data-empty-filter="true"] .ebook-nav-status {
+  color: color-mix(in srgb, var(--theme-accent-alt) 55%, #7a4820 45%);
+}
+
+.ebook-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.26rem;
+}
+
+.ebook-toc li {
+  margin: 0;
+}
+
+.ebook-toc-link {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.ebook-toc-link[data-filter-match="false"] {
+  opacity: 0.58;
+  border-style: dashed;
+}
+
+.ebook-toc-link[aria-current="true"],
+.ebook-concept-link[aria-current="true"] {
+  background: rgba(38, 88, 124, 0.16);
+  border-color: rgba(38, 88, 124, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(38, 88, 124, 0.2);
+}
+
+main.chapter > [data-ebook-section="true"][data-ebook-filter-match="false"] {
+  opacity: 0.62;
+  filter: saturate(0.88);
+}
+
+main.chapter > [data-ebook-section="true"][data-ebook-filter-match="true"] {
+  opacity: 1;
+}
+
+main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
+  border-left: 2px dashed color-mix(in srgb, var(--theme-accent-alt) 46%, transparent 54%);
+  padding-left: 0.45rem;
+}
+
+.ebook-concept-heading {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: var(--theme-accent-main);
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ebook-lsp-panel {
+  display: grid;
+  gap: 0.24rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 0.44rem;
+}
+
+.ebook-lsp-summary {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--theme-text-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ebook-lsp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.26rem;
+}
+
+.ebook-lsp-item {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+}
+
+.ebook-lsp-link {
+  flex: 1;
+  text-align: left;
+}
+
+.ebook-lsp-link[disabled] {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.ebook-lsp-state {
+  font-size: 0.67rem;
+  color: var(--theme-text-alt);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.section-navigation [data-ebook-nav="true"] {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.story-attribution-panel {
+  display: grid;
+  gap: 0.4rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.72rem;
+}
+
+.story-attribution-panel h2 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.story-attribution-panel p {
+  margin: 0;
+  color: var(--theme-text-alt);
+  font-size: 0.83rem;
+}
+
+.story-attribution-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.story-attribution-links a {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  padding: 0.2rem 0.58rem;
+  background: rgba(255, 255, 255, 0.82);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.74rem;
+  text-decoration: none;
+}
+
+html[data-ebook-register="reader"] .chapter-byline {
+  line-height: 1.8;
+}
+
+html[data-ebook-register="engineer"] main.chapter p,
+html[data-ebook-register="engineer"] .ebook-nav-panel {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  line-height: 1.55;
 }
 
 @media (max-width: 768px) {

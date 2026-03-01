@@ -211,6 +211,29 @@ function createTemplate(config) {
       letter-spacing: 0.04em;
     }
 
+    .spw-handle-mode {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.28rem;
+    }
+
+    .spw-handle-mode-button {
+      border: 1px solid rgba(42, 111, 127, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      font-size: 0.66rem;
+      line-height: 1;
+      padding: 0.18rem 0.48rem;
+      color: var(--color-accent-alt, #1c4f63);
+      font-family: var(--font-family-heading, monospace);
+      cursor: pointer;
+    }
+
+    .spw-handle-mode-button[aria-pressed="true"] {
+      background: rgba(38, 88, 124, 0.16);
+      border-color: rgba(38, 88, 124, 0.48);
+    }
+
     .spw-handle-grid,
     .spw-cube-axis {
       display: flex;
