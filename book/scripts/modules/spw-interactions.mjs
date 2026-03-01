@@ -294,10 +294,25 @@ function uniqueOrdered(values) {
   return ordered;
 }
 
-function buildStoryCube(associations, source, expressionId) {
-  const handles = uniqueOrdered(associations.map((item) => `${item.sigil}[${item.handle}]`));
-  const payloads = uniqueOrdered(associations.map((item) => item.payload).filter(Boolean));
-  const concepts = deriveConcepts(source, ...handles, ...payloads);
+function buildStoryCube(associations, source, expressionId, registerSnapshot = null) {
+  const snapshot = registerSnapshot || {};
+  const active = snapshot.active || null;
+  const bankHandles = Array.isArray(snapshot.handles) ? snapshot.handles : [];
+  const bankConcepts = Array.isArray(snapshot.concepts) ? snapshot.concepts.map((item) => item.concept) : [];
+  const handles = uniqueOrdered([
+    active?.handle,
+    ...bankHandles,
+    ...associations.map((item) => `${item.sigil}[${item.handle}]`)
+  ]);
+  const associationPayloads = associations.map((item) => item.payload).filter(Boolean);
+  const activePayloadText = active?.payload?.selection
+    || active?.payload?.association?.payload
+    || (active?.payloadId ? String(active.payloadId) : '');
+  const payloads = uniqueOrdered([
+    activePayloadText,
+    ...associationPayloads
+  ]);
+  const concepts = deriveConcepts(source, ...handles, ...payloads, ...bankConcepts);
   const operators = uniqueOrdered((source.match(/[!~@^#.?=&*$%]/g) || []));
 
   const front = handles.slice(0, 6);
@@ -308,13 +323,13 @@ function buildStoryCube(associations, source, expressionId) {
   const left = concepts.slice(0, 6).map((concept) => `@[concept/${concept}]`);
   const top = [
     `#[expression/${expressionId}]{focus}`,
-    `^[registers]{active-handle}`,
-    '&[story]{association-space}'
+    `^[registers]{${active?.handle || 'active-handle'}}`,
+    snapshot.historySize ? `&[history]{${snapshot.historySize}-steps}` : '&[story]{association-space}'
   ];
   const bottom = [
     '?[parser]{selection-lens}',
-    '%[llm]{structured-payload}',
-    '*[boonhonk]{combinatoric-genre}'
+    active?.payloadId ? `%[payload/${active.payloadId}]{structured}` : '%[llm]{structured-payload}',
+    `*[concepts]{${concepts.length}-facets}`
   ];
 
   return {
@@ -577,7 +592,7 @@ function dispatchSelection(detail) {
 function createRegisterControls(context) {
   const { node, source, associations, expressionId, announce } = context;
   const bank = getSpwRegisterBank();
-  const storyCube = buildStoryCube(associations, source, expressionId);
+  let storyCube = buildStoryCube(associations, source, expressionId, bank.snapshot());
 
   const controls = document.createElement('div');
   controls.className = 'spw-register-controls';
@@ -621,6 +636,10 @@ function createRegisterControls(context) {
   cubeStatus.setAttribute('aria-live', 'polite');
 
   let cubeFaceIndex = 0;
+  const refreshCube = () => {
+    storyCube = buildStoryCube(associations, source, expressionId, bank.snapshot());
+    renderCubeFace();
+  };
 
   const commitSelection = (selectionText, association = null, atIndex = null, contextMeta = null) => {
     const text = (selectionText || '').trim();
@@ -677,6 +696,7 @@ function createRegisterControls(context) {
     node.dataset.spwHandle = handle;
     node.dataset.spwPayloadId = payloadId;
     dispatchSelection(entry);
+    refreshCube();
 
     if (announce) {
       announce(`Spw handle selected: ${handle}`);
