@@ -1,5 +1,168 @@
+/*
+ * Layer stack for chapter and charm pages.
+ * Appends to the global stack declared in baseline.css.
+ *
+ *   root.layout     — page-level structure (main, aside, nav)
+ *   root.components — per-component rules (progress panel, motif controls)
+ *   root.states     — data-attribute and aria state selectors
+ */
+@layer root.layout, root.components, root.states;
+
+/*
+ * Registered custom properties for the motif/trope/foreshadow system.
+ * Typed <color> registration enables smooth interpolation between theme values.
+ */
+@property --motif-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #2a6f7f;
+}
+
+@property --trope-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #b07cff;
+}
+
+@property --foreshadow-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffb347;
+}
+
+@property --component-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #2a6f7f;
+}
+
+@property --component-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 252, 246, 0.86);
+}
+
+:root {
+    /* Motif/trope/foreshadowing component-level variables */
+    --motif-color: var(--theme-accent-main);
+    --motif-bg: var(--theme-bg-content-strong);
+    --motif-shadow: 0 2px 12px var(--theme-accent-main);
+    --motif-shadow-strong: 0 4px 24px var(--theme-accent-alt);
+    --motif-gradient: linear-gradient(120deg, var(--motif-color) 0%, var(--theme-accent-alt) 100%);
+    --motif-foreshadow: 0 0 0 3px var(--theme-accent-alt);
+
+    --trope-color: #b07cff;
+    --trope-bg: #f6f0ff;
+    --trope-shadow: 0 2px 12px #b07cff44;
+    --trope-gradient: linear-gradient(120deg, #b07cff 0%, #6e4cff 100%);
+
+    --foreshadow-color: #ffb347;
+    --foreshadow-bg: #fff7e6;
+    --foreshadow-shadow: 0 0 0 3px #ffb34799;
+    --foreshadow-gradient: linear-gradient(120deg, #ffb347 0%, #ff7f50 100%);
+  /* Ergonomic component-level styling for motifs, tropes, foreshadowing */
+  [data-motif] {
+    --component-color: var(--motif-color);
+    --component-bg: var(--motif-bg);
+    --component-shadow: var(--motif-shadow);
+    --component-gradient: var(--motif-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-motif][data-foreshadow] {
+    --component-shadow: var(--motif-foreshadow);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-trope] {
+    --component-color: var(--trope-color);
+    --component-bg: var(--trope-bg);
+    --component-shadow: var(--trope-shadow);
+    --component-gradient: var(--trope-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-foreshadow]:not([data-motif]) {
+    --component-color: var(--foreshadow-color);
+    --component-bg: var(--foreshadow-bg);
+    --component-shadow: var(--foreshadow-shadow);
+    --component-gradient: var(--foreshadow-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+  /* Theme generalizability */
+  --theme-mode: light;
+  --theme-bg-main: var(--color-bg-main);
+  --theme-bg-content: var(--color-bg-content);
+  --theme-bg-content-strong: var(--color-bg-content-strong);
+  --theme-accent-main: var(--color-accent-main);
+  --theme-accent-alt: var(--color-accent-alt);
+  --theme-text-main: var(--color-text-main);
+  --theme-text-alt: var(--color-text-alt);
+  --theme-shadow-main: var(--shadow-main);
+  --theme-shadow-hover: var(--shadow-hover);
+  --theme-border-main: var(--border-color-main);
+  --theme-glass-bg: var(--glass-bg);
+  --theme-glass-bg-strong: var(--glass-bg-strong);
+  --theme-glass-border: var(--glass-border);
+  --theme-paper-fiber: var(--paper-fiber);
+  --theme-paper-fiber-strong: var(--paper-fiber-strong);
+  --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px), repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
+  --theme-glassmorphism: linear-gradient(165deg, var(--theme-glass-bg-strong), var(--theme-glass-bg));
+  --theme-paper: var(--theme-bg-content);
+  --theme-shadow: var(--theme-shadow-main);
+  --theme-shadow-strong: 0 24px 44px rgba(2, 8, 24, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-mode: dark;
+    --theme-bg-main: #181c24;
+    --theme-bg-content: #232a36;
+    --theme-bg-content-strong: #2a3240;
+    --theme-accent-main: #76cbff;
+    --theme-accent-alt: #b1dcff;
+    --theme-text-main: #e6eeff;
+    --theme-text-alt: #b7c6ed;
+    --theme-shadow-main: 0 16px 36px rgba(2, 8, 24, 0.42);
+    --theme-shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.55);
+    --theme-border-main: rgba(142, 179, 235, 0.3);
+    --theme-glass-bg: rgba(28, 42, 73, 0.54);
+    --theme-glass-bg-strong: rgba(28, 42, 73, 0.72);
+    --theme-glass-border: rgba(255, 255, 255, 0.22);
+    --theme-paper-fiber: rgba(111, 92, 58, 0.08);
+    --theme-paper-fiber-strong: rgba(111, 92, 58, 0.14);
+    --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px), repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
+    --theme-glassmorphism: linear-gradient(165deg, var(--theme-glass-bg-strong), var(--theme-glass-bg));
+    --theme-paper: var(--theme-bg-content);
+    --theme-shadow: var(--theme-shadow-main);
+    --theme-shadow-strong: 0 32px 64px rgba(2, 8, 24, 0.32);
+  }
+}
+
 /* styles/fixtures/root.css */
 /* Chapter + charm page styles layered on top of fixtures/baseline.css. */
+
+:root {
+  /* Composable variables for interaction states */
+  --interactive-bg: var(--color-bg-content);
+  --interactive-bg-hover: var(--color-hover-bg);
+  --interactive-bg-active: color-mix(in srgb, var(--color-hover-bg) 80%, var(--color-bg-content) 20%);
+  --interactive-outline: var(--color-focus-outline);
+  --interactive-shadow: var(--shadow-main);
+  --interactive-shadow-hover: var(--shadow-hover);
+  --interactive-border: var(--border-width) var(--border-style) var(--border-color-main);
+  --interactive-radius: var(--border-radius-small);
+  --interactive-transition: box-shadow var(--transition-duration) var(--transition-function),
+    background-color var(--transition-duration) var(--transition-function),
+    color var(--transition-duration) var(--transition-function),
+    outline var(--transition-duration) var(--transition-function);
+}
 
 body > nav.chapter-navigation,
 body > .section-navigation,
@@ -27,20 +190,28 @@ body > footer {
   min-width: 11rem;
 }
 
+
 main.chapter,
 main:not(.chapter),
 aside {
-  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-main);
-  background: var(--color-bg-content);
-  box-shadow: var(--shadow-main);
+  background: var(--theme-paper);
+  box-shadow: var(--theme-shadow);
   padding: clamp(1rem, 2.4vw, 1.9rem);
+  transition: var(--interactive-transition);
+  background-image: var(--theme-grain), var(--theme-glassmorphism);
+  background-blend-mode: multiply, lighten;
 }
 
 main.chapter {
   position: relative;
   overflow: hidden;
+  container-type: inline-size;
+  container-name: chapter-main;
 }
+
+@layer root.states {
 
 body[data-chapter-mode="dawn"] main.chapter,
 body[data-chapter-mode="signal"] main.chapter,
@@ -64,6 +235,8 @@ body[data-chapter-mode="confluence"] main.chapter {
     linear-gradient(160deg, rgba(164, 239, 220, 0.2), rgba(255, 255, 255, 0.62)),
     var(--color-bg-content);
 }
+
+} /* @layer root.states */
 
 main.chapter::after {
   content: "";
@@ -123,8 +296,8 @@ main.chapter p {
 main.chapter figure {
   border-radius: var(--border-radius-main);
   overflow: clip;
-  background: rgba(255, 255, 255, 0.7);
-  border: var(--border-width) var(--border-style) var(--border-color-main);
+  background: var(--theme-paper);
+  border: var(--interactive-border);
 }
 
 main.chapter figure[data-visual-default="colloquial"] figcaption::before {
@@ -145,9 +318,9 @@ main.chapter figure img {
 
 main.chapter figcaption {
   padding: 0.72rem 0.9rem;
-  color: var(--color-text-alt);
+  color: var(--theme-text-alt);
   font-size: var(--font-size-caption);
-  border-top: var(--border-width) var(--border-style) var(--border-color-main);
+  border-top: var(--interactive-border);
 }
 
 main:not(.chapter) {
@@ -222,14 +395,12 @@ aside {
   color: var(--color-text-alt);
 }
 
-.spw-hypertext-routes,
-.chapter-tuning-controls,
-.chapter-motif-discovery {
+.spw-hypertext-routes {
   display: grid;
   gap: 0.46rem;
-  border: var(--border-width) var(--border-style) rgba(29, 49, 78, 0.22);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-small);
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--theme-paper);
   padding: 0.7rem;
 }
 
@@ -287,10 +458,10 @@ aside {
 
 .motif-spw {
   margin: 0;
-  border: var(--border-width) var(--border-style) rgba(41, 116, 131, 0.34);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-small);
-  background: #142036;
-  color: #95dbff;
+  background: var(--theme-bg-content-strong);
+  color: var(--theme-accent-main);
   padding: 0.5rem;
   font-size: 0.75rem;
   white-space: pre-wrap;
@@ -319,7 +490,7 @@ aside {
   margin: 0;
   display: grid;
   gap: 0.3rem;
-  border: var(--border-width) var(--border-style) rgba(36, 66, 102, 0.3);
+  border: var(--interactive-border);
 }
 
 .motif-preview img {
@@ -334,7 +505,7 @@ aside {
 }
 
 .chapter-motif-discovery[data-discovered="true"] {
-  box-shadow: inset 0 0 0 1px rgba(42, 111, 127, 0.25);
+  box-shadow: inset 0 0 0 1px var(--theme-border-main);
 }
 
 aside ul#lore-collector {
@@ -347,9 +518,9 @@ aside ul#lore-collector {
 
 aside ul#lore-collector li {
   padding: 0.46rem 0.62rem;
-  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-small);
-  background: rgba(255, 255, 255, 0.68);
+  background: var(--theme-paper);
 }
 
 aside ul#lore-collector li + li {
@@ -372,41 +543,31 @@ aside .additional-links a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-pill);
-  background: rgba(255, 255, 255, 0.65);
+  background: var(--interactive-bg);
   color: var(--color-accent-alt);
   text-decoration: none;
   padding: 0.42rem 0.86rem;
   font-family: var(--font-family-heading);
   font-size: 0.9rem;
+  transition: var(--interactive-transition);
 }
 
 aside .additional-links a:hover,
 aside .additional-links a:focus-visible {
-  background: rgba(41, 116, 131, 0.13);
+  background: var(--interactive-bg-hover);
+  outline: 2px solid var(--interactive-outline);
+  outline-offset: 2px;
+  box-shadow: var(--interactive-shadow-hover);
 }
 
-custom-boof,
-custom-boonberry,
-custom-fool,
-custom-bonk,
-custom-puzzle,
-custom-echo,
-custom-paradox,
-custom-mirror,
-custom-song,
-custom-labyrinth,
-custom-shadow,
-custom-game,
-custom-awakening,
-custom-path,
-custom-reflection {
   display: block;
   padding: 0.9rem 1rem;
-  border-radius: var(--border-radius-small);
-  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.3);
-  background: rgba(255, 255, 255, 0.54);
+  border-radius: var(--interactive-radius);
+  border: var(--interactive-border);
+  background: var(--interactive-bg);
+  transition: var(--interactive-transition);
 }
 
 [data-spw-component] {
@@ -417,12 +578,12 @@ custom-reflection {
   content: attr(data-spw-component);
   display: block;
   width: fit-content;
-  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.35);
+  border: var(--interactive-border);
   border-radius: var(--border-radius-pill);
   font-size: 0.67rem;
   line-height: 1;
   padding: 0.18rem 0.42rem;
-  color: var(--color-accent-alt);
+  color: var(--theme-accent-alt);
   margin-bottom: 0.45rem;
   font-family: var(--font-family-heading);
   letter-spacing: 0.04em;
@@ -442,48 +603,20 @@ custom-shadow {
 custom-boonberry,
 custom-song,
 custom-awakening {
-  background: linear-gradient(150deg, rgba(182, 229, 199, 0.25), rgba(255, 255, 255, 0.55));
-}
-
-custom-boof:hover,
-custom-boof:focus-visible,
-custom-boonberry:hover,
-custom-boonberry:focus-visible,
-custom-fool:hover,
-custom-fool:focus-visible,
-custom-bonk:hover,
-custom-bonk:focus-visible,
-custom-puzzle:hover,
-custom-puzzle:focus-visible,
-custom-echo:hover,
-custom-echo:focus-visible,
-custom-paradox:hover,
-custom-paradox:focus-visible,
-custom-mirror:hover,
-custom-mirror:focus-visible,
-custom-song:hover,
-custom-song:focus-visible,
-custom-labyrinth:hover,
-custom-labyrinth:focus-visible,
-custom-shadow:hover,
-custom-shadow:focus-visible,
-custom-game:hover,
-custom-game:focus-visible,
-custom-awakening:hover,
-custom-awakening:focus-visible,
-custom-path:hover,
-custom-path:focus-visible,
-custom-reflection:hover,
-custom-reflection:focus-visible {
-  background-color: var(--color-hover-bg);
-  outline: 2px solid var(--color-focus-outline);
+  background: var(--interactive-bg-hover);
+  outline: 2px solid var(--interactive-outline);
   outline-offset: 2px;
+  box-shadow: var(--interactive-shadow-hover);
 }
 
 footer {
   text-align: center;
   font-size: 0.95rem;
   padding-bottom: 0.3rem;
+  background: var(--theme-paper);
+  box-shadow: 0 -2px 12px var(--theme-shadow-main);
+  background-image: var(--theme-grain);
+  background-blend-mode: multiply;
 }
 
 @media (max-width: 768px) {
