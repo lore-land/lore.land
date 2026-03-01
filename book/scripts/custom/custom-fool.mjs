@@ -1,8 +1,11 @@
 // scripts/custom-fool.mjs
+import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+
 export class CustomFool extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.releaseSpwBinding = null;
     this.showTooltip = this.showTooltip.bind(this);
     this.hideTooltip = this.hideTooltip.bind(this);
     this.render();
@@ -15,6 +18,10 @@ export class CustomFool extends HTMLElement {
     this.addEventListener('blur', this.hideTooltip);
     this.setAttribute('tabindex', '0');
     this.setAttribute('aria-describedby', 'tooltip');
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+    }
+    this.releaseSpwBinding = attachSpwBinding(this);
   }
 
   disconnectedCallback() {
@@ -22,6 +29,10 @@ export class CustomFool extends HTMLElement {
     this.removeEventListener('mouseleave', this.hideTooltip);
     this.removeEventListener('focus', this.showTooltip);
     this.removeEventListener('blur', this.hideTooltip);
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+      this.releaseSpwBinding = null;
+    }
   }
 
   showTooltip() {

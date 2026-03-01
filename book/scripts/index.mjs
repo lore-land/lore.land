@@ -316,11 +316,17 @@ class CustomPuzzle extends BaseCustomElement {
 }
 
 // Register All Custom Elements
-customElements.define('custom-boof', CustomBoof);
-customElements.define('custom-fool', CustomFool);
-customElements.define('custom-bonk', CustomBonk);
-customElements.define('custom-awakening', CustomAwakening);
-customElements.define('custom-path', CustomPath);
-customElements.define('custom-reflection', CustomReflection);
-customElements.define('custom-boonberry', CustomBoonberry);
-customElements.define('custom-puzzle', CustomPuzzle);
+function defineIfMissing(tagName, constructor) {
+  if (!customElements.get(tagName)) {
+    customElements.define(tagName, constructor);
+  }
+}
+
+defineIfMissing('custom-boof', CustomBoof);
+defineIfMissing('custom-fool', CustomFool);
+defineIfMissing('custom-bonk', CustomBonk);
+defineIfMissing('custom-awakening', CustomAwakening);
+defineIfMissing('custom-path', CustomPath);
+defineIfMissing('custom-reflection', CustomReflection);
+defineIfMissing('custom-boonberry', CustomBoonberry);
+defineIfMissing('custom-puzzle', CustomPuzzle);

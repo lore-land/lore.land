@@ -1,9 +1,12 @@
 // scripts/custom-boof.mjs
+import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+
 export class CustomBoof extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.isCollapsed = true;
+    this.releaseSpwBinding = null;
     this.handleToggle = this.handleToggle.bind(this);
     this.render();
   }
@@ -12,10 +15,18 @@ export class CustomBoof extends HTMLElement {
     this.shadowRoot.querySelector('.header').addEventListener('click', this.handleToggle);
     this.setAttribute('tabindex', '0');
     this.setAttribute('role', 'button');
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+    }
+    this.releaseSpwBinding = attachSpwBinding(this);
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector('.header').removeEventListener('click', this.handleToggle);
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+      this.releaseSpwBinding = null;
+    }
   }
 
   handleToggle() {

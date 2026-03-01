@@ -1,13 +1,26 @@
 // scripts/custom-echo.mjs
+import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+
 export class CustomEcho extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.releaseSpwBinding = null;
     this.render();
   }
 
   connectedCallback() {
-    // Additional interactivity can be implemented here
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+    }
+    this.releaseSpwBinding = attachSpwBinding(this);
+  }
+
+  disconnectedCallback() {
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+      this.releaseSpwBinding = null;
+    }
   }
 
   render() {

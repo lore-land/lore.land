@@ -15,6 +15,7 @@ import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './spw-ethos.mjs?v=2026_02_28.I';
+import { registerCustomElements } from '../custom/register.mjs?v=2026_02_28.I';
 
 function readChapterData() {
   const source = document.getElementById('chapter-data');
@@ -32,6 +33,8 @@ function readChapterData() {
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  registerCustomElements();
+
   const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
   const chapterData = readChapterData();

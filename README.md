@@ -24,6 +24,9 @@ This project integrates Spw kernel ideas from:
   Shared ethos bridge for chapter + home surfaces. Encodes operator-phase roles, claim layers (`grammar`, `semantics`, `pragmatics`), and claim-chain UI (`claim -> spec -> impl -> probe`) inspired by `spw-workbench/.spw/harness/claim-protocol.spw`.
 - `book/scripts/modules/load-lifecycle.mjs` + `book/scripts/modules/story-lexicon.mjs`
   Lifecycle bridge now emits `valence -> pipeline -> precipitant` mappings (for example `boon -> select -> desugar`) from `.spw/surfaces/index.spw` and `.spw/runtime/precipitants.spw`.
+- `book/scripts/custom/spw-component-binding.mjs`
+  Custom elements can fetch/apply `.spw` sources with declarative attributes:
+  `data-spw-fetch`, `data-spw-select`, `data-spw-apply`, `data-spw-target`, and optional `data-spw-inline` fallback.
 
 ### Operator Semantics (v0.2.0-alpha)
 

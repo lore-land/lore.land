@@ -1,9 +1,12 @@
 // scripts/custom-bonk.mjs
+import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+
 export class CustomBonk extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.clicked = false;
+    this.releaseSpwBinding = null;
     this.handleClick = this.handleClick.bind(this);
     this.render();
   }
@@ -12,10 +15,18 @@ export class CustomBonk extends HTMLElement {
     this.addEventListener('click', this.handleClick);
     this.setAttribute('role', 'button');
     this.setAttribute('tabindex', '0');
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+    }
+    this.releaseSpwBinding = attachSpwBinding(this);
   }
 
   disconnectedCallback() {
     this.removeEventListener('click', this.handleClick);
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+      this.releaseSpwBinding = null;
+    }
   }
 
   handleClick() {

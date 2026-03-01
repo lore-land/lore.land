@@ -1,24 +1,39 @@
 // scripts/custom-puzzle.mjs
+import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+
 export class CustomPuzzle extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.answer = (this.getAttribute('answer') || '').toLowerCase();
+    this.releaseSpwBinding = null;
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputKeydown = this.handleInputKeydown.bind(this);
     this.render();
   }
 
   connectedCallback() {
     this.shadowRoot.querySelector('button').addEventListener('click', this.handleSubmit);
-    this.shadowRoot.querySelector('input').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        this.handleSubmit();
-      }
-    });
+    this.shadowRoot.querySelector('input').addEventListener('keydown', this.handleInputKeydown);
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+    }
+    this.releaseSpwBinding = attachSpwBinding(this);
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector('button').removeEventListener('click', this.handleSubmit);
+    this.shadowRoot.querySelector('input').removeEventListener('keydown', this.handleInputKeydown);
+    if (this.releaseSpwBinding) {
+      this.releaseSpwBinding();
+      this.releaseSpwBinding = null;
+    }
+  }
+
+  handleInputKeydown(event) {
+    if (event.key === 'Enter') {
+      this.handleSubmit();
+    }
   }
 
   handleSubmit() {

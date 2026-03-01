@@ -19,11 +19,14 @@ import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_02_28.I';
+import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', async () => {
+  registerCustomElements();
+
   const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
 
