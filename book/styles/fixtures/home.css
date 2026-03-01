@@ -52,12 +52,15 @@
 .seed-atlas {
   position: relative;
   padding: clamp(1.2rem, 3vw, 2rem);
-  border: var(--border-width) var(--border-style) rgba(37, 70, 107, 0.24);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(37, 70, 107, 0.24) 62%, var(--glass-border) 38%);
   border-radius: calc(var(--border-radius-main) + 4px);
   background:
-    linear-gradient(155deg, rgba(83, 125, 200, 0.14), rgba(54, 130, 136, 0.08)),
-    var(--color-bg-content);
+    linear-gradient(155deg, rgba(83, 125, 200, 0.16), rgba(54, 130, 136, 0.11)),
+    linear-gradient(170deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.32)),
+    var(--glass-bg);
   box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
   overflow: clip;
 }
 
@@ -164,11 +167,15 @@
 }
 
 .chapter-card {
-  border: var(--border-width) var(--border-style) rgba(35, 60, 93, 0.28);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.28) 66%, var(--glass-border) 34%);
   border-radius: var(--border-radius-main);
-  background: var(--color-bg-content-strong);
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.42)),
+    var(--glass-bg-strong);
   padding: 0.9rem;
   box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
   display: grid;
   gap: 0.58rem;
 }
@@ -292,13 +299,17 @@
 }
 
 .seed-card {
-  border: var(--border-width) var(--border-style) rgba(35, 60, 93, 0.24);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.24) 68%, var(--glass-border) 32%);
   border-radius: var(--border-radius-main);
-  background: rgba(255, 255, 255, 0.82);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.42)),
+    var(--glass-bg-strong);
   padding: 0.62rem;
   display: grid;
   gap: 0.48rem;
   box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
 }
 
 .seed-figure {

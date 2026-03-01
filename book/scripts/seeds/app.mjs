@@ -3,10 +3,12 @@ import { renderSeedAtlas } from '../home/ui.mjs';
 import {
   bootstrapExperience,
   initSelectPreference,
+  initAttentionDetails,
+  initSemanticShader,
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.F';
+} from '../modules/experience-core.mjs?v=2026_02_28.G';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -177,6 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderSeedAtlas(appRoot, seedSets, seedManifest, seedDimensions);
   setupSeedAtlasInteractions(announce);
+  initAttentionDetails({ root });
+  initSemanticShader({ root });
   initProgressiveReveal({ root: document });
   enhanceLazyImages({ root: appRoot });
 });

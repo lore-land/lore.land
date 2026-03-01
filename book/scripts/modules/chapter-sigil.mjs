@@ -1,4 +1,4 @@
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.F';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.G';
 
 function createTemplate(config) {
   const wrapper = document.createElement('article');
