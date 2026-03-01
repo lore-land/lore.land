@@ -372,6 +372,158 @@ export function initSemanticShader(options = {}) {
   updateScroll();
 }
 
+export function initSpatialPerspective(options = {}) {
+  const root = options.root || document.documentElement;
+  const reducedMotion = root.dataset.reducedMotion === 'reduce';
+  const layerSelector = options.layerSelector || '[data-scroll-layer]';
+  const layers = [...document.querySelectorAll(layerSelector)];
+
+  root.style.setProperty('--focal-x', '50');
+  root.style.setProperty('--focal-y', '50');
+  root.style.setProperty('--tap-shadow-x', '50');
+  root.style.setProperty('--tap-shadow-y', '50');
+  root.style.setProperty('--tap-shadow-strength', reducedMotion ? '0' : '0');
+  root.style.setProperty('--perspective-depth', reducedMotion ? '0px' : '920px');
+
+  if (reducedMotion) {
+    return;
+  }
+
+  const state = {
+    x: 50,
+    y: 50,
+    tapX: 50,
+    tapY: 50,
+    tapStrength: 0
+  };
+
+  const sync = () => {
+    root.style.setProperty('--focal-x', state.x.toFixed(2));
+    root.style.setProperty('--focal-y', state.y.toFixed(2));
+    root.style.setProperty('--tap-shadow-x', state.tapX.toFixed(2));
+    root.style.setProperty('--tap-shadow-y', state.tapY.toFixed(2));
+    root.style.setProperty('--tap-shadow-strength', state.tapStrength.toFixed(3));
+  };
+
+  const syncLayerTilt = () => {
+    const xDelta = (state.x - 50) / 50;
+    const yDelta = (state.y - 50) / 50;
+    layers.forEach((layer) => {
+      const depth = Number(layer.dataset.scrollLayerDepth || '0.2');
+      const tiltX = (yDelta * -1.8 * depth).toFixed(3);
+      const tiltY = (xDelta * 1.8 * depth).toFixed(3);
+      layer.style.setProperty('--scroll-layer-tilt-x', `${tiltX}deg`);
+      layer.style.setProperty('--scroll-layer-tilt-y', `${tiltY}deg`);
+    });
+  };
+
+  const updatePoint = (clientX, clientY) => {
+    const width = Math.max(window.innerWidth, 1);
+    const height = Math.max(window.innerHeight, 1);
+    state.x = Math.min(Math.max((clientX / width) * 100, 0), 100);
+    state.y = Math.min(Math.max((clientY / height) * 100, 0), 100);
+    sync();
+    syncLayerTilt();
+  };
+
+  const pulseTapShadow = (clientX, clientY) => {
+    const width = Math.max(window.innerWidth, 1);
+    const height = Math.max(window.innerHeight, 1);
+    state.tapX = Math.min(Math.max((clientX / width) * 100, 0), 100);
+    state.tapY = Math.min(Math.max((clientY / height) * 100, 0), 100);
+    state.tapStrength = 0.9;
+    sync();
+
+    const started = performance.now();
+    const decay = (now) => {
+      const progress = Math.min((now - started) / 700, 1);
+      state.tapStrength = Math.max(0, 0.9 * (1 - progress));
+      sync();
+      if (progress < 1) {
+        window.requestAnimationFrame(decay);
+      }
+    };
+    window.requestAnimationFrame(decay);
+  };
+
+  const updatePerspectiveDepth = () => {
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const scroll = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+    const depth = 940 - (scroll * 200);
+    root.style.setProperty('--perspective-depth', `${depth.toFixed(1)}px`);
+  };
+
+  window.addEventListener('pointermove', (event) => {
+    updatePoint(event.clientX, event.clientY);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (event) => {
+    const touch = event.touches && event.touches[0];
+    if (!touch) {
+      return;
+    }
+    updatePoint(touch.clientX, touch.clientY);
+  }, { passive: true });
+
+  window.addEventListener('pointerdown', (event) => {
+    pulseTapShadow(event.clientX, event.clientY);
+  }, { passive: true });
+
+  window.addEventListener('touchstart', (event) => {
+    const touch = event.touches && event.touches[0];
+    if (!touch) {
+      return;
+    }
+    pulseTapShadow(touch.clientX, touch.clientY);
+  }, { passive: true });
+
+  window.addEventListener('scroll', updatePerspectiveDepth, { passive: true });
+  window.addEventListener('resize', updatePerspectiveDepth, { passive: true });
+
+  sync();
+  syncLayerTilt();
+  updatePerspectiveDepth();
+}
+
+export function initGenreCombinatorics(options = {}) {
+  const root = options.root || document.documentElement;
+  const body = document.body;
+  let lastCore = '';
+
+  const applyGenre = () => {
+    const mood = (body.dataset.mood || root.dataset.mood || 'neutral').toLowerCase();
+    const stage = (body.dataset.loadStage || root.dataset.loadStage || 'flow').toLowerCase();
+    const mode = (body.dataset.chapterMode || root.dataset.chapterMode || '').toLowerCase();
+
+    const core = mood === 'boon' && stage === 'honk'
+      ? 'boonhonk'
+      : `${mood}${stage}`;
+
+    const tags = [core];
+    if (mode) {
+      tags.push(mode);
+    }
+
+    const genre = tags.join(' ');
+    root.setAttribute('data-genre', genre);
+    body.setAttribute('data-genre', genre);
+
+    if (core === 'boonhonk' && lastCore !== 'boonhonk' && options.announce) {
+      options.announce('boonhonk combinatoric genre engaged.');
+    }
+    lastCore = core;
+  };
+
+  applyGenre();
+  window.addEventListener('lore:load-stage', applyGenre);
+
+  const observer = new MutationObserver(applyGenre);
+  observer.observe(body, {
+    attributes: true,
+    attributeFilter: ['data-mood', 'data-load-stage', 'data-chapter-mode']
+  });
+}
+
 export function enhanceLazyImages(options = {}) {
   const root = options.root || document;
   const selector = options.selector || 'img[loading="lazy"]';
