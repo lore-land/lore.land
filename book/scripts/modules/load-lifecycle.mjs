@@ -132,6 +132,8 @@ export function createLoadLifecycle(options = {}) {
     const lifecycleState = descriptor.lifecycleState;
     const pipelineStage = descriptor.pipelineStage;
     const precipitateStages = descriptor.precipitates || descriptor.precipitants || [];
+    const substrateEvents = descriptor.substrateEvents || [];
+    const resonanceTypes = descriptor.resonances || [];
     const stageRole = descriptor.role;
 
     root.dataset.loadStage = stage;
@@ -140,6 +142,8 @@ export function createLoadLifecycle(options = {}) {
     root.dataset.pipelineStage = pipelineStage || '';
     root.dataset.precipitateStages = precipitateStages.join(',');
     root.dataset.precipitantStages = precipitateStages.join(',');
+    root.dataset.substrateEvents = substrateEvents.join(',');
+    root.dataset.resonanceTypes = resonanceTypes.join(',');
     root.dataset.stageRole = stageRole || '';
 
     if (status) {
@@ -156,6 +160,8 @@ export function createLoadLifecycle(options = {}) {
           pipelineStage,
           precipitateStages,
           precipitantStages: precipitateStages,
+          substrateEvents,
+          resonanceTypes,
           role: stageRole,
           detail
         }
@@ -235,6 +241,8 @@ export function createLoadLifecycle(options = {}) {
     delete root.dataset.pipelineStage;
     delete root.dataset.precipitateStages;
     delete root.dataset.precipitantStages;
+    delete root.dataset.substrateEvents;
+    delete root.dataset.resonanceTypes;
     delete root.dataset.stageRole;
     root.removeAttribute('aria-busy');
   }

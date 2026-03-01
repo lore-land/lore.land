@@ -1,3 +1,8 @@
+import {
+  parseSpwExpressions,
+  selectSpwExpressionBySelector
+} from '../modules/spw-expression-index.mjs?v=2026_03_01.A';
+
 const SPW_BINDING_ATTRS = Object.freeze({
   fetch: ['data-spw-fetch', 'spw-fetch', 'data-spw-src', 'spw-src'],
   select: ['data-spw-select', 'spw-select'],
@@ -147,6 +152,12 @@ export function selectSpwExpression(source, selector) {
     return '';
   }
 
+  const trimmedSelector = String(selector || '').trim();
+  const selectorTarget = selectSpwExpressionBySelector(text, trimmedSelector);
+  if (selectorTarget) {
+    return selectorTarget;
+  }
+
   const candidates = buildSelectorCandidates(selector);
   if (!candidates.length) {
     return text.trim();
@@ -273,7 +284,11 @@ function markAsSpwExpression(component, source) {
   if (!component.hasAttribute('data-spw-expression')) {
     component.setAttribute('data-spw-expression', 'true');
   }
-  component.dataset.spwSource = String(source ?? '');
+  const text = String(source ?? '');
+  const parseInfo = parseSpwExpressions(text);
+  component.dataset.spwSource = text;
+  component.dataset.spwParseExpressions = String(parseInfo.expressions.length);
+  component.dataset.spwParseDiagnostics = String(parseInfo.diagnostics.length);
 }
 
 export function attachSpwBinding(component) {

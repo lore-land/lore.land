@@ -274,19 +274,26 @@ export function initSpwEthosIntegration(options = {}) {
     const descriptor = describeLoadStage(token);
     const pipelineStage = descriptor.pipelineStage || 'fallback';
     const precipitateStages = descriptor.precipitates || descriptor.precipitants || [];
+    const substrateEvents = descriptor.substrateEvents || [];
+    const resonanceTypes = descriptor.resonances || [];
     const precipitateText = precipitateStages.length
       ? precipitateStages.join(' + ')
       : 'none';
+    const substrateText = substrateEvents.length ? substrateEvents.join(' + ') : 'none';
+    const resonanceText = resonanceTypes.length ? resonanceTypes.join(' + ') : 'none';
 
     panel.dataset.loadStage = token;
     panel.dataset.pipelineStage = pipelineStage;
     panel.dataset.precipitateStages = precipitateStages.join(',');
     panel.dataset.precipitantStages = precipitateStages.join(',');
+    panel.dataset.substrateEvents = substrateEvents.join(',');
+    panel.dataset.resonanceTypes = resonanceTypes.join(',');
 
     const detailSuffix = detail ? ` (${detail})` : '';
     status.textContent =
       `Lifecycle probe: ${formatExpression('%', 'stage', `${token}->${pipelineStage}`)} • ` +
-      `${precipitateText}${detailSuffix}`;
+      `${precipitateText} • ${formatExpression('$', 'substrate', substrateText)} • ` +
+      `${formatExpression('#', 'resonance', resonanceText)}${detailSuffix}`;
   };
 
   const onSelection = (event) => {

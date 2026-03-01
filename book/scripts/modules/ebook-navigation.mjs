@@ -1,8 +1,8 @@
 import { CHAPTER_FLOW_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.I';
+import { parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
 
 const STORAGE_KEY = 'lore.ebook.navigation.v1';
 const REGISTER_KEY = 'lore.ebook.register.v1';
-const HANDLE_EXPR_REGEX = /([!~@^#.?=&*$%])\[([^\]\n]+)\](?:\{([^}\n]*)\})?/g;
 const PERSPECTIVE_MODES = Object.freeze([
   { id: 'composite', sigil: '&', label: 'composite' },
   { id: 'wonder', sigil: '?', label: 'wonder' },
@@ -154,19 +154,14 @@ function payloadKindForSection(node) {
 }
 
 function extractAssociations(source) {
-  const found = [];
-  const regex = new RegExp(HANDLE_EXPR_REGEX.source, 'g');
-  let match = regex.exec(source);
-  while (match) {
-    const sigil = match[1];
-    const handle = sanitizeHandle(match[2]);
-    const payload = sanitizeHandle(match[3]);
-    if (handle) {
-      found.push({ sigil, handle, payload });
-    }
-    match = regex.exec(source);
-  }
-  return found;
+  const parsed = parseSpwExpressions(source);
+  return parsed.expressions
+    .map((expression) => ({
+      sigil: expression.sigil,
+      handle: sanitizeHandle(expression.handle),
+      payload: sanitizeHandle(expression.payload)
+    }))
+    .filter((expression) => Boolean(expression.handle));
 }
 
 function extractReferenceHandles(node, source) {
@@ -214,12 +209,14 @@ function extractReferenceHandles(node, source) {
   return handles;
 }
 
-function classifySection(node, label) {
+function classifySection(node, label, parseInfo = null) {
   const text = `${label} ${node.textContent || ''}`;
   const hasHeading = Boolean(node.querySelector('h2, h3, h4'));
   const hasQuestion = /\?/.test(text);
   const hasReference = Boolean(node.querySelector('[data-content_id], a[href^="#"]')) || /#>|@\[/.test(text);
   const isBound = Boolean(node.dataset.spwComponent) || node.tagName.includes('-');
+  const parseExpressions = Number(parseInfo?.expressions?.length || 0);
+  const parseDiagnostics = Number(parseInfo?.diagnostics?.length || 0);
 
   return {
     hasHeading,
@@ -229,7 +226,9 @@ function classifySection(node, label) {
     payloadKind: payloadKindForSection(node),
     region: 'narrative',
     boundCount: 0,
-    danglingCount: 0
+    danglingCount: 0,
+    parseExpressions,
+    parseDiagnostics
   };
 }
 
@@ -358,7 +357,8 @@ export function initEbookNavigation(chapterData, options = {}) {
 
     const label = labelFromSection(node, index);
     const source = node.textContent || '';
-    const classification = classifySection(node, label);
+    const parseInfo = parseSpwExpressions(source);
+    const classification = classifySection(node, label, parseInfo);
     const primaryHandle = sanitizeHandle(
       `${chapterId}/${slugify(label) || `section-${String(sectionIndex).padStart(2, '0')}`}`
     );
@@ -387,7 +387,8 @@ export function initEbookNavigation(chapterData, options = {}) {
       definitionHandles,
       referenceHandles,
       boundHandles: [],
-      danglingHandles: []
+      danglingHandles: [],
+      parseInfo
     };
   });
 
@@ -411,6 +412,8 @@ export function initEbookNavigation(chapterData, options = {}) {
     section.node.dataset.spwDefinitions = [...section.definitionHandles].join('|');
     section.node.dataset.spwReferences = [...section.referenceHandles].join('|');
     section.node.dataset.spwDangling = section.danglingHandles.length ? section.danglingHandles.join('|') : '';
+    section.node.dataset.spwParseExpressions = String(section.classification.parseExpressions || 0);
+    section.node.dataset.spwParseDiagnostics = String(section.classification.parseDiagnostics || 0);
   });
 
   document.body.dataset.ebookExperience = 'model';
@@ -868,7 +871,7 @@ export function initEbookNavigation(chapterData, options = {}) {
 
     progress.value = activeIndex;
     status.textContent = `Section ${activeIndex} of ${sections.length} • ${activeSection.label} • ${viewLabel}`;
-    payloadStatus.textContent = `Payload ${activeSection.classification.payloadKind} • Region ${activeSection.classification.region} • Bound ${activeSection.classification.boundCount} • Dangling ${activeSection.classification.danglingCount}`;
+    payloadStatus.textContent = `Payload ${activeSection.classification.payloadKind} • Region ${activeSection.classification.region} • Bound ${activeSection.classification.boundCount} • Dangling ${activeSection.classification.danglingCount} • Parsed ${activeSection.classification.parseExpressions} • Diagnostics ${activeSection.classification.parseDiagnostics}`;
   };
 
   const pickAlternateSection = (candidates) => {

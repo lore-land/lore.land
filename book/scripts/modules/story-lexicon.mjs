@@ -18,6 +18,20 @@ export const PIPELINE_STAGES = Object.freeze([
   'emit'
 ]);
 
+export const SUBSTRATE_EVENT_KINDS = Object.freeze([
+  'write',
+  'couple',
+  'phase-advance',
+  'mark'
+]);
+
+export const RESONANCE_TYPES = Object.freeze([
+  'value-echo',
+  'phase-sync',
+  'frequency-lock',
+  'implicit-couple'
+]);
+
 export const LIFECYCLE_STAGE_ALIASES = Object.freeze({
   boon: 'select',
   bone: 'transform',
@@ -45,6 +59,22 @@ export const LIFECYCLE_BRIDGE = Object.freeze({
   bone: Object.freeze({ role: 'skeleton and shape certainty', mapsTo: Object.freeze(['parse', 'normalize']) }),
   bonk: Object.freeze({ role: 'spacing and acoustics checks', mapsTo: Object.freeze(['normalize', 'interpret']) }),
   honk: Object.freeze({ role: 'resolved harmony', mapsTo: Object.freeze(['interpret']) })
+});
+
+export const LIFECYCLE_SUBSTRATE_BRIDGE = Object.freeze({
+  boon: Object.freeze(['write']),
+  bane: Object.freeze(['write', 'phase-advance']),
+  bone: Object.freeze(['phase-advance', 'mark']),
+  bonk: Object.freeze(['couple', 'mark']),
+  honk: Object.freeze(['couple'])
+});
+
+export const LIFECYCLE_RESONANCE_BRIDGE = Object.freeze({
+  boon: Object.freeze([]),
+  bane: Object.freeze(['value-echo']),
+  bone: Object.freeze(['phase-sync']),
+  bonk: Object.freeze(['frequency-lock']),
+  honk: Object.freeze(['implicit-couple'])
 });
 
 export const CUSTOM_ELEMENT_TYPES = Object.freeze([
@@ -102,6 +132,16 @@ export function lifecycleRoleForLoadStage(stage) {
   return bridge?.role || '';
 }
 
+export function substrateEventsForLoadStage(stage) {
+  const events = LIFECYCLE_SUBSTRATE_BRIDGE[stage];
+  return events ? [...events] : [];
+}
+
+export function resonancesForLoadStage(stage) {
+  const resonances = LIFECYCLE_RESONANCE_BRIDGE[stage];
+  return resonances ? [...resonances] : [];
+}
+
 export function describeLoadStage(stage) {
   const normalized = String(stage || '').toLowerCase().trim();
   return {
@@ -110,6 +150,8 @@ export function describeLoadStage(stage) {
     pipelineStage: pipelineStageForLoadStage(normalized),
     precipitates: precipitatesForLoadStage(normalized),
     precipitants: precipitatesForLoadStage(normalized),
+    substrateEvents: substrateEventsForLoadStage(normalized),
+    resonances: resonancesForLoadStage(normalized),
     role: lifecycleRoleForLoadStage(normalized)
   };
 }

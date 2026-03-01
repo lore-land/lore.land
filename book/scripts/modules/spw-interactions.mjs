@@ -1,5 +1,6 @@
 import { tryParseSelector } from './spw-selector-parser.mjs?v=2026_02_28.I';
 import { getSpwRegisterBank } from './spw-register-bank.mjs?v=2026_02_28.I';
+import { findSpwExpressionByIndex, parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
 
 const OPERATOR_SEQUENCE = Object.freeze(['^', '&', '~', '?', '!', '#', '*']);
 
@@ -49,7 +50,6 @@ const CLOSE_TO_OPEN = Object.freeze({
   '>': '<'
 });
 
-const HANDLE_PAYLOAD_REGEX = /([!~@^#.?=&*$%])\[([^\]\n]+)\](?:\{([^}\n]*)\})?/g;
 const PATH_REF_REGEX = /@([a-z0-9_-]+(?:\/[a-z0-9._-]+)+)/gi;
 const ANNOTATION_REGEX = /#([:!>]?)([a-z0-9._-]+)/gi;
 
@@ -142,6 +142,8 @@ function ensureNativeSpwComponents() {
         const active = snapshot.active || null;
         const handles = Array.isArray(snapshot.handles) ? snapshot.handles : [];
         const concepts = Array.isArray(snapshot.concepts) ? snapshot.concepts : [];
+        const focusKey = snapshot.focusKey || snapshot.activeKey || '"';
+        const registerCount = snapshot.entries ? Object.keys(snapshot.entries).length : 0;
 
         this.shadowRoot.innerHTML = `
           <style>
@@ -196,7 +198,7 @@ function ensureNativeSpwComponents() {
           <div class="register-shell">
             <p class="register-title">Spw Registers</p>
             <p class="register-handle">${active ? active.handle : 'No handle selected'}</p>
-            <p class="register-meta">History: ${snapshot.historySize || 0} • Handles: ${handles.length}</p>
+            <p class="register-meta">History: ${snapshot.historySize || 0} • Handles: ${handles.length} • Focus: ${focusKey} • Cells: ${registerCount}</p>
             <div class="register-list">
               ${concepts.slice(0, 6).map((item) => `<span class="register-chip">${item.concept}:${item.count}</span>`).join('')}
             </div>
@@ -249,67 +251,43 @@ function updateSourceFromTokens(node, tokens) {
   writeSource(node, base.join(''));
 }
 
-function extractAssociations(source) {
-  const associations = [];
-  const regex = new RegExp(HANDLE_PAYLOAD_REGEX.source, 'g');
-  let match = regex.exec(source);
-  while (match) {
-    const sigil = match[1];
-    const handle = match[2];
-    const payload = match[3] || '';
-    const text = match[0];
-    const start = match.index;
-    const end = start + text.length;
-
-    associations.push({
-      sigil,
-      handle,
-      payload,
-      text,
-      start,
-      end
-    });
-    match = regex.exec(source);
-  }
-  return associations;
+function extractAssociations(sourceOrParsed) {
+  const parsed =
+    typeof sourceOrParsed === 'string'
+      ? parseSpwExpressions(sourceOrParsed)
+      : sourceOrParsed || { expressions: [] };
+  return parsed.expressions.map((expression) => ({
+    sigil: expression.sigil,
+    handle: expression.handle,
+    payload: expression.payload || '',
+    text: expression.text,
+    start: expression.start,
+    end: expression.end,
+    depth: expression.depth,
+    line: expression.line,
+    column: expression.column
+  }));
 }
 
 function findAssociationByIndex(associations, index) {
   if (!associations.length || typeof index !== 'number') {
     return null;
   }
-
-  const direct = associations.find((association) => index >= association.start && index < association.end);
-  if (direct) {
-    return direct;
-  }
-
-  let closest = associations[0];
-  let minDistance = Math.abs(index - closest.start);
-  for (let i = 1; i < associations.length; i += 1) {
-    const distance = Math.abs(index - associations[i].start);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closest = associations[i];
-    }
-  }
-  return closest;
+  return findSpwExpressionByIndex(associations, index);
 }
 
 function parseInlineAssociation(text) {
-  const pattern = /^([!~@^#.?=&*$%])\[([^\]\n]+)\](?:\{([^}\n]*)\})?$/;
-  const parsed = pattern.exec(String(text || '').trim());
-  if (!parsed) {
+  const parsed = parseSpwExpressions(String(text || '').trim()).expressions[0];
+  if (!parsed || parsed.start !== 0 || parsed.end !== String(text || '').trim().length) {
     return null;
   }
-  const literal = parsed[0];
   return {
-    sigil: parsed[1],
-    handle: parsed[2],
-    payload: parsed[3] || '',
-    text: literal,
+    sigil: parsed.sigil,
+    handle: parsed.handle,
+    payload: parsed.payload || '',
+    text: parsed.text,
     start: 0,
-    end: literal.length
+    end: parsed.text.length
   };
 }
 
@@ -1129,7 +1107,10 @@ function enhanceExpressionNode(node, announce) {
     return false;
   }
 
-  const associations = extractAssociations(source);
+  const parseInfo = parseSpwExpressions(source);
+  const associations = extractAssociations(parseInfo);
+  node.dataset.spwParseExpressions = String(parseInfo.expressions.length);
+  node.dataset.spwParseDiagnostics = String(parseInfo.diagnostics.length);
 
   node.dataset.spwInteractive = 'true';
   node.classList.add('spw-language');
