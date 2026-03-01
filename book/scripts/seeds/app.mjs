@@ -4,11 +4,13 @@ import {
   bootstrapExperience,
   initSelectPreference,
   initAttentionDetails,
+  initGenreCombinatorics,
   initSemanticShader,
+  initSpatialPerspective,
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.G';
+} from '../modules/experience-core.mjs?v=2026_02_28.H';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -181,6 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSeedAtlasInteractions(announce);
   initAttentionDetails({ root });
   initSemanticShader({ root });
+  initSpatialPerspective({ root });
+  initGenreCombinatorics({ root, announce });
   initProgressiveReveal({ root: document });
   enhanceLazyImages({ root: appRoot });
 });

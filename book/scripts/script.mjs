@@ -1,19 +1,21 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.G';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.G';
-import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.G';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.H';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.H';
+import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.H';
 import {
   bootstrapExperience,
   enhanceLazyImages,
   initAttentionDetails,
+  initGenreCombinatorics,
   initSemanticShader,
+  initSpatialPerspective,
   initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_02_28.G';
-import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.G';
-import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.G';
-import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.G';
+} from './modules/experience-core.mjs?v=2026_02_28.H';
+import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.H';
+import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.H';
+import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.H';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -65,6 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSpwLanguageRuntime({ root: document, announce });
     initAttentionDetails({ root });
     initSemanticShader({ root });
+    initSpatialPerspective({ root });
+    initGenreCombinatorics({ root, announce });
     initChapterProgression(chapterData, { announce });
     initProgressiveReveal({ root: document });
 
@@ -636,7 +640,7 @@ async function mountChapterSigil(data, announce) {
   }
 
   const chapterId = String(data.chapterNumber).padStart(2, '0');
-  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.G`;
+  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.H`;
 
   try {
     const module = await import(path);

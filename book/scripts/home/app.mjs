@@ -1,18 +1,20 @@
 import { chapterManifest } from './data.mjs';
 import { seedManifest, seedSets, seedDimensions, chapterSeedMap } from './seeds.mjs';
 import { renderHero, renderTimeline, renderSeedAtlas } from './ui.mjs';
-import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.G';
-import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.G';
+import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.H';
+import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.H';
 import {
   bootstrapExperience,
   initAttentionDetails,
+  initGenreCombinatorics,
   initSemanticShader,
+  initSpatialPerspective,
   initSelectPreference,
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.G';
-import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.G';
+} from '../modules/experience-core.mjs?v=2026_02_28.H';
+import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.H';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -282,6 +284,8 @@ function initHomepage() {
     initSpwLanguageRuntime({ root: homeRoot, announce });
     initAttentionDetails({ root });
     initSemanticShader({ root });
+    initSpatialPerspective({ root });
+    initGenreCombinatorics({ root, announce });
 
     initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: homeRoot });

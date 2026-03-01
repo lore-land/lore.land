@@ -1,15 +1,17 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.G';
-import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.G';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.G';
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.H';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.H';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.H';
 import {
   bootstrapExperience,
   enhanceLazyImages,
   initAttentionDetails,
+  initGenreCombinatorics,
   initSemanticShader,
+  initSpatialPerspective,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './experience-core.mjs?v=2026_02_28.G';
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.G';
+} from './experience-core.mjs?v=2026_02_28.H';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.H';
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initSpwLanguageRuntime({ root: document });
     initAttentionDetails({ root });
     initSemanticShader({ root });
+    initSpatialPerspective({ root });
+    initGenreCombinatorics({ root });
     initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', document.querySelector('main'));

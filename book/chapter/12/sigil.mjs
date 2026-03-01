@@ -1,4 +1,4 @@
-import { registerChapterSigil as register } from '../../scripts/modules/chapter-sigil.mjs?v=2026_02_28.G';
+import { registerChapterSigil as register } from '../../scripts/modules/chapter-sigil.mjs?v=2026_02_28.H';
 
 const CONFIG = {
   tagName: 'chapter-12-sigil',
