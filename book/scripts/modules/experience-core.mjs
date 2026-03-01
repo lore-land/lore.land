@@ -189,6 +189,189 @@ export function initProgressiveReveal(options = {}) {
   });
 }
 
+export function initAttentionDetails(options = {}) {
+  const root = options.root || document.documentElement;
+  const revealSelector = options.revealSelector || '[data-reveal]';
+  const layerSelector = options.layerSelector || '[data-component], [data-reveal]';
+  const maxRevealDelay = Number(options.maxRevealDelayMs || 680);
+  const stepDelay = Number(options.stepDelayMs || 70);
+  const reducedMotion = root.dataset.reducedMotion === 'reduce';
+
+  const revealNodes = [...document.querySelectorAll(revealSelector)];
+  revealNodes.forEach((node, index) => {
+    const delay = Math.min(index * stepDelay, maxRevealDelay);
+    node.dataset.revealOrder = String(index + 1);
+    node.style.setProperty('--reveal-delay', `${delay}ms`);
+  });
+
+  const layerNodes = [...document.querySelectorAll(layerSelector)];
+  layerNodes.forEach((node, index) => {
+    if (node.dataset.scrollLayerDepth) {
+      return;
+    }
+    const cycleDepth = [0.28, 0.16, 0.36, 0.22][index % 4];
+    node.dataset.scrollLayerDepth = String(cycleDepth);
+    node.setAttribute('data-scroll-layer', 'auto');
+  });
+
+  if (reducedMotion) {
+    root.style.setProperty('--attention-scroll-progress', '0');
+    root.style.setProperty('--attention-hue-shift', '0');
+    return;
+  }
+
+  const doc = document.documentElement;
+  let ticking = false;
+
+  const updateAttention = () => {
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const raw = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+    const progress = Number(raw.toFixed(4));
+    const hueShift = Math.round(progress * 30 - 15);
+
+    root.style.setProperty('--attention-scroll-progress', String(progress));
+    root.style.setProperty('--attention-hue-shift', String(hueShift));
+
+    layerNodes.forEach((node) => {
+      const depth = Number(node.dataset.scrollLayerDepth || '0');
+      const offset = (progress - 0.5) * depth * 18;
+      node.style.setProperty('--scroll-layer-offset', `${offset.toFixed(2)}px`);
+    });
+
+    ticking = false;
+  };
+
+  const onScroll = () => {
+    if (ticking) {
+      return;
+    }
+    ticking = true;
+    window.requestAnimationFrame(updateAttention);
+  };
+
+  updateAttention();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+}
+
+function hashHue(input) {
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash * 31 + input.charCodeAt(i)) % 360;
+  }
+  return (hash + 360) % 360;
+}
+
+function semanticKeyFromNode(node) {
+  if (!node) {
+    return '';
+  }
+
+  const data = node.dataset || {};
+  return data.spwComponent
+    || data.component
+    || data.seedDimension
+    || data.spwRoute
+    || data.spwExpression
+    || node.getAttribute('aria-label')
+    || node.tagName
+    || '';
+}
+
+export function initSemanticShader(options = {}) {
+  const root = options.root || document.documentElement;
+  const reducedMotion = root.dataset.reducedMotion === 'reduce';
+  const semanticSelector = options.semanticSelector
+    || '[data-component], [data-spw-component], [data-seed-dimension], [data-spw-expression], [data-spw-route]';
+
+  root.dataset.semanticShader = reducedMotion ? 'minimal' : 'active';
+  root.style.setProperty('--shader-x', '50');
+  root.style.setProperty('--shader-y', '18');
+  root.style.setProperty('--shader-hue', '204');
+  root.style.setProperty('--shader-strength', reducedMotion ? '0.2' : '0.56');
+  root.style.setProperty('--shader-scroll', '0');
+
+  if (reducedMotion) {
+    return;
+  }
+
+  const doc = document.documentElement;
+  const state = {
+    x: 50,
+    y: 18,
+    hue: 204,
+    strength: 0.56,
+    scroll: 0
+  };
+
+  const sync = () => {
+    root.style.setProperty('--shader-x', state.x.toFixed(2));
+    root.style.setProperty('--shader-y', state.y.toFixed(2));
+    root.style.setProperty('--shader-hue', String(Math.round(state.hue)));
+    root.style.setProperty('--shader-strength', state.strength.toFixed(2));
+    root.style.setProperty('--shader-scroll', state.scroll.toFixed(4));
+  };
+
+  const updateScroll = () => {
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    state.scroll = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+    sync();
+  };
+
+  const updatePoint = (clientX, clientY) => {
+    const width = Math.max(window.innerWidth, 1);
+    const height = Math.max(window.innerHeight, 1);
+    state.x = Math.min(Math.max((clientX / width) * 100, 0), 100);
+    state.y = Math.min(Math.max((clientY / height) * 100, 0), 100);
+    sync();
+  };
+
+  const updateSemantic = (target, strength = 0.72) => {
+    const semanticNode = target ? target.closest(semanticSelector) : null;
+    const key = semanticKeyFromNode(semanticNode);
+    if (!key) {
+      state.strength = 0.56;
+      sync();
+      return;
+    }
+    state.hue = hashHue(key);
+    state.strength = strength;
+    sync();
+  };
+
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  window.addEventListener('resize', updateScroll, { passive: true });
+
+  window.addEventListener('pointermove', (event) => {
+    updatePoint(event.clientX, event.clientY);
+    updateSemantic(event.target, 0.68);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (event) => {
+    const touch = event.touches && event.touches[0];
+    if (!touch) {
+      return;
+    }
+    updatePoint(touch.clientX, touch.clientY);
+    updateSemantic(event.target, 0.66);
+  }, { passive: true });
+
+  document.addEventListener('focusin', (event) => {
+    updateSemantic(event.target, 0.76);
+  });
+
+  document.addEventListener('mouseover', (event) => {
+    updateSemantic(event.target, 0.64);
+  }, { passive: true });
+
+  document.addEventListener('focusout', () => {
+    state.strength = 0.56;
+    sync();
+  });
+
+  updateScroll();
+}
+
 export function enhanceLazyImages(options = {}) {
   const root = options.root || document;
   const selector = options.selector || 'img[loading="lazy"]';
