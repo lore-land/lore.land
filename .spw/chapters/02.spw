@@ -1,0 +1,79 @@
+# Chapter 02 Canon Reference
+# Generated from /book/chapter/02/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_02
+#:chapter-canon #!reference
+
+^[chapter/02]{
+  title: "Boof and the Grove of Echoes"
+  description: "Chapter 2 of Lore.Land: Boof and the Grove of Echoes. Follow Boof deeper into the mysterious grove filled with echoes of the past."
+  mood: "grove"
+  period: "spring"
+  chapter_path: "/book/chapter/02/"
+}
+
+&[chapter/02/routes]{
+  web: "/book/chapter/02/"
+  timeline: "/book/timeline.html#chapter-02"
+  motif: "~[motif/chapter-02]{optional}"
+}
+
+^[chapter/02/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof's journey led them deeper into the grove , where every step seemed to stir the whispers of the past. The echoes lingered, repeating fragments of lost stories."
+    route: "^[chapter/02/s01]{open}"
+  }
+  s02: {
+    handle: "custom-boonberry/02"
+    type: "custom-boonberry"
+    payload: "<>"
+    excerpt: "\"The Fool was here,\" the grove seemed to say, though no voice spoke it directly. The boonberries reflected strange patterns, hinting at the Fool’s games."
+    handles: ["grove"]
+    route: "^[chapter/02/s02]{open}"
+  }
+  s03: {
+    handle: "custom-echo/03"
+    type: "custom-echo"
+    payload: "<>"
+    excerpt: "\"Follow me,\" the echo beckoned, though it was not clear if it belonged to the Fool, or something else entirely."
+    route: "^[chapter/02/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/02.png"
+    route: "^[chapter/02/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Echoes of the Grove"
+    excerpt: "In the grove, time did not pass in a linear fashion. Boof felt as if they had already walked this path—yet it was new. The boonberries glowed brighter, as if the Fool's presence had just passed."
+    route: "^[chapter/02/s05]{open}"
+  }
+  s06: {
+    handle: "custom-fool/06"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"Are you lost, Boof?\" the Fool’s voice echoed, though it felt distant—almost playful. \"Or perhaps, you’re right where you need to be.\""
+    route: "^[chapter/02/s06]{open}"
+  }
+}
+
+#[chapter/02/lore]{
+  notes: [
+    "Detail about the Grove of Echoes and its connection to the past."
+    "Insights into Boof's feelings and motivations within the grove."
+  ]
+}
+
+~[chapter/02/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

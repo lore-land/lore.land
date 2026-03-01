@@ -1,0 +1,88 @@
+# Chapter Canon Index
+#>chapter_canon_index
+#:chapter-canon #!index
+
+&[chapters]{
+  c01: {
+    title: "Boof and the Boonberry Fool"
+    file: "@spw/chapters/01.spw"
+    sections: 6
+  }
+  c02: {
+    title: "Boof and the Grove of Echoes"
+    file: "@spw/chapters/02.spw"
+    sections: 6
+  }
+  c03: {
+    title: "Boof and the Fool's Paradox"
+    file: "@spw/chapters/03.spw"
+    sections: 6
+  }
+  c04: {
+    title: "Boof and the Fool’s Mirror"
+    file: "@spw/chapters/04.spw"
+    sections: 6
+  }
+  c05: {
+    title: "Boof and the Fool’s Song"
+    file: "@spw/chapters/05.spw"
+    sections: 6
+  }
+  c06: {
+    title: "Boof and the Fool’s Labyrinth"
+    file: "@spw/chapters/06.spw"
+    sections: 6
+  }
+  c07: {
+    title: "Boof and the Fool’s Shadow"
+    file: "@spw/chapters/07.spw"
+    sections: 7
+  }
+  c08: {
+    title: "Boof and the Fool’s Game"
+    file: "@spw/chapters/08.spw"
+    sections: 7
+  }
+  c09: {
+    title: "Boof and the Fool’s Puzzle"
+    file: "@spw/chapters/09.spw"
+    sections: 7
+  }
+  c10: {
+    title: "Boof and the Fool’s Bonk"
+    file: "@spw/chapters/10.spw"
+    sections: 7
+  }
+  c11: {
+    title: "Boof and the Fool’s Awakening"
+    file: "@spw/chapters/11.spw"
+    sections: 7
+  }
+  c12: {
+    title: "Boof and the Fool’s Path"
+    file: "@spw/chapters/12.spw"
+    sections: 7
+  }
+  c13: {
+    title: "Boof and the Fool’s Reflection"
+    file: "@spw/chapters/13.spw"
+    sections: 7
+  }
+}
+
+^[routes]{
+  "chapter-01": "#>chapter_01"
+  "chapter-02": "#>chapter_02"
+  "chapter-03": "#>chapter_03"
+  "chapter-04": "#>chapter_04"
+  "chapter-05": "#>chapter_05"
+  "chapter-06": "#>chapter_06"
+  "chapter-07": "#>chapter_07"
+  "chapter-08": "#>chapter_08"
+  "chapter-09": "#>chapter_09"
+  "chapter-10": "#>chapter_10"
+  "chapter-11": "#>chapter_11"
+  "chapter-12": "#>chapter_12"
+  "chapter-13": "#>chapter_13"
+}
+

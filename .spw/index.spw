@@ -1,0 +1,21 @@
+# Lore.Land Spw Canon Mount
+#>lore_land_spw_index
+#:canon #!mount
+
+^workspace{
+  root: ".spw/"
+  purpose: "Long-form Spw references for chapter extension and storytelling semantics."
+  ethos_bridge: "book/scripts/modules/spw-ethos.mjs"
+}
+
+&surfaces{
+  chapters: "@spw/chapters/index.spw"
+  claims: "@spw/claims/chapter-claims.spw"
+  process: "@spw/workspace.spw"
+}
+
+~navigation{
+  chapter_chain: "^[chapter/*]{open}"
+  section_chain: "^[chapter/*/s*]{open}"
+  probe_chain: "^[claim-chain]{claim -> spec -> impl -> probe}"
+}

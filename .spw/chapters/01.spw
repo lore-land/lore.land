@@ -1,0 +1,79 @@
+# Chapter 01 Canon Reference
+# Generated from /book/chapter/01/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_01
+#:chapter-canon #!reference
+
+^[chapter/01]{
+  title: "Boof and the Boonberry Fool"
+  description: "Chapter 1 of Lore.Land: Boof and the Boonberry Fool. Join Boof on his quest to find the elusive Boonberry Fool."
+  mood: "boon"
+  period: "spring"
+  chapter_path: "/book/chapter/01/"
+}
+
+&[chapter/01/routes]{
+  web: "/book/chapter/01/"
+  timeline: "/book/timeline.html#chapter-01"
+  motif: "~[motif/chapter-01]{optional}"
+}
+
+^[chapter/01/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof wandered through the fields in search of the elusive Boonberry Fool . \"Where could it be?\" Boof whispered to the wind, but only the trees answered with rustling leaves."
+    route: "^[chapter/01/s01]{open}"
+  }
+  s02: {
+    handle: "custom-boonberry/02"
+    type: "custom-boonberry"
+    payload: "<>"
+    excerpt: "The boonberries shimmered in the morning light, each one more dazzling than the last. But the Fool was nowhere in sight."
+    handles: ["berry"]
+    route: "^[chapter/01/s02]{open}"
+  }
+  s03: {
+    handle: "custom-boof/03"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Just then, a shadow danced between the trees—a hint, perhaps? Or merely the folly of a fruitless quest?"
+    route: "^[chapter/01/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/01.png"
+    route: "^[chapter/01/s04]{open}"
+  }
+  s05: {
+    handle: "custom-fool/05"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"Catch me if you can,\" the Fool’s voice echoed from the distance, teasing Boof onward."
+    route: "^[chapter/01/s05]{open}"
+  }
+  s06: {
+    handle: "section/06"
+    type: "section"
+    payload: "{}"
+    title: "The Elusive Boonberry Fool"
+    excerpt: "The Boonberry Fool was more than just a figure—it was a challenge, an idea, a riddle wrapped in a fool's grin. Boof continued, driven by the mystery and the promise of something more at the heart of the boonberry grove."
+    route: "^[chapter/01/s06]{open}"
+  }
+}
+
+#[chapter/01/lore]{
+  notes: [
+    "Detail about the Boonberry Fool's origin."
+    "Boof's background and motivations."
+  ]
+}
+
+~[chapter/01/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

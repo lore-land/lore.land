@@ -1,0 +1,79 @@
+# Chapter 05 Canon Reference
+# Generated from /book/chapter/05/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_05
+#:chapter-canon #!reference
+
+^[chapter/05]{
+  title: "Boof and the Fool’s Song"
+  description: "Chapter 5 of Lore.Land: Boof and the Fool’s Song. Follow Boof as they navigate through the melodies and mysteries of the Fool’s latest tune."
+  mood: "song"
+  period: "spring"
+  chapter_path: "/book/chapter/05/"
+}
+
+&[chapter/05/routes]{
+  web: "/book/chapter/05/"
+  timeline: "/book/timeline.html#chapter-05"
+  motif: "~[motif/chapter-05]{optional}"
+}
+
+^[chapter/05/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof followed the faint notes of a melody, drifting on the air, as if the forest itself were singing. It was the Fool’s Song , a tune both haunting and playful."
+    route: "^[chapter/05/s01]{open}"
+  }
+  s02: {
+    handle: "custom-song/02"
+    type: "custom-song"
+    payload: "<>"
+    excerpt: "The song whispered, \"Come, come closer... Let your heart follow the rhythm, and your steps follow the sound. There is no end, only the journey.\""
+    handles: ["song-verse"]
+    route: "^[chapter/05/s02]{open}"
+  }
+  s03: {
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"You hear it, don’t you, Boof?\" The Fool’s voice sang in harmony with the forest. \"This is my song. But it is also yours.\""
+    route: "^[chapter/05/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/05.png"
+    route: "^[chapter/05/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Melody of the Fool"
+    excerpt: "The notes of the song twisted through the trees, carrying Boof deeper into the grove. Every step seemed to harmonize with the melody, as if the very ground beneath their feet pulsed with the same rhythm. The boonberri..."
+    route: "^[chapter/05/s05]{open}"
+  }
+  s06: {
+    handle: "custom-boof/06"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof hummed along, their voice merging with the Fool’s melody. \"Why does this song feel so familiar?\" Boof wondered aloud. But no answer came, only the continuation of the tune, drawing them onward."
+    route: "^[chapter/05/s06]{open}"
+  }
+}
+
+#[chapter/05/lore]{
+  notes: [
+    "The origins and significance of the Fool’s Song within the grove."
+    "Boof's emotional journey and connection to the melody."
+  ]
+}
+
+~[chapter/05/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

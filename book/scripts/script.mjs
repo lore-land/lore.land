@@ -408,7 +408,7 @@ function setupSpwHypertextRoutes(data, announce) {
   const shortcutHint = document.createElement('p');
   shortcutHint.className = 'spw-shortcut-hint';
   shortcutHint.textContent =
-    'Shortcuts: Alt+Left/Right = chapter, PageUp/Down or [/] = section, hold { = breadth, hold } = depth, Alt+H = home, Alt+T = timeline.';
+    'Shortcuts: Alt+Left/Right = chapter, PageUp/Down or [/] = section, hold { = breadth, hold } = depth, Alt+H = home, Alt+T = timeline, Alt+P = .spw canon.';
 
   const list = document.createElement('ul');
 
@@ -427,6 +427,16 @@ function setupSpwHypertextRoutes(data, announce) {
       label: '&[timeline]{canon-sequence}',
       href: '/book/timeline.html',
       aria: 'Open canonical timeline'
+    },
+    {
+      label: '@[path]{@spw/index.spw}',
+      href: '/.spw/index.spw',
+      aria: 'Open Spw canon root for lore.land'
+    },
+    {
+      label: '@[path]{@spw/chapters/index.spw}',
+      href: '/.spw/chapters/index.spw',
+      aria: 'Open Spw chapter reference index'
     },
     {
       label: '~[seed-atlas]{visual motifs}',
@@ -788,6 +798,9 @@ function setupKeyboardRoutes(links, announce) {
     } else if (event.key.toLowerCase() === 't') {
       destination = '/book/timeline.html';
       label = '&[timeline]{canon-sequence}';
+    } else if (event.key.toLowerCase() === 'p') {
+      destination = '/.spw/index.spw';
+      label = '@[path]{@spw/index.spw}';
     } else {
       return;
     }

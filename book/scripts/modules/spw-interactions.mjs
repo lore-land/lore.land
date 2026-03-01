@@ -50,6 +50,8 @@ const CLOSE_TO_OPEN = Object.freeze({
 });
 
 const HANDLE_PAYLOAD_REGEX = /([!~@^#.?=&*$%])\[([^\]\n]+)\](?:\{([^}\n]*)\})?/g;
+const PATH_REF_REGEX = /@([a-z0-9_-]+(?:\/[a-z0-9._-]+)+)/gi;
+const ANNOTATION_REGEX = /#([:!>]?)([a-z0-9._-]+)/gi;
 
 const SPW_SELECTOR = [
   '.spw-block',
@@ -393,6 +395,204 @@ function buildStoryCube(associations, source, expressionId) {
   };
 }
 
+function collectPathRefs(source) {
+  const refs = [];
+  const regex = new RegExp(PATH_REF_REGEX.source, 'gi');
+  let match = regex.exec(source);
+  while (match) {
+    refs.push(`@${match[1]}`);
+    match = regex.exec(source);
+  }
+  return uniqueOrdered(refs);
+}
+
+function collectAnnotationKinds(source) {
+  const summary = {
+    topic: 0,
+    lens: 0,
+    intent: 0,
+    anchor: 0
+  };
+
+  const regex = new RegExp(ANNOTATION_REGEX.source, 'gi');
+  let match = regex.exec(source);
+  while (match) {
+    const marker = match[1];
+    if (marker === ':') {
+      summary.lens += 1;
+    } else if (marker === '!') {
+      summary.intent += 1;
+    } else if (marker === '>') {
+      summary.anchor += 1;
+    } else {
+      summary.topic += 1;
+    }
+    match = regex.exec(source);
+  }
+  return summary;
+}
+
+function resolvePathRefHref(pathRef) {
+  const normalized = String(pathRef || '').replace(/^@/, '').trim();
+  if (!normalized) {
+    return '/';
+  }
+
+  if (normalized.startsWith('spw/')) {
+    let local = `/.spw/${normalized.slice(4)}`;
+    if (!/\.spw$/i.test(local)) {
+      local = `${local.replace(/\/$/, '')}/index.spw`;
+    }
+    return local;
+  }
+
+  if (normalized.startsWith('book/')) {
+    return `/${normalized}`;
+  }
+
+  if (normalized.startsWith('chapter/')) {
+    return `/book/${normalized.replace(/\/$/, '')}/`;
+  }
+
+  return `/${normalized}`;
+}
+
+function currentCanonFileHref() {
+  const pathname = window.location.pathname || '/';
+  const chapterMatch = pathname.match(/\/book\/chapter\/(\d{2})\//);
+  if (chapterMatch) {
+    return `/.spw/chapters/${chapterMatch[1]}.spw`;
+  }
+  if (pathname === '/' || pathname.endsWith('/index.html')) {
+    return '/.spw/chapters/index.spw';
+  }
+  return '/.spw/index.spw';
+}
+
+function previewValue(value, max = 220) {
+  const text = String(value || '').trim();
+  if (!text) {
+    return '';
+  }
+  return text.length <= max ? text : `${text.slice(0, max - 3)}...`;
+}
+
+function createInspectionControls(context) {
+  const { source, associations, expressionId, announce } = context;
+  const pathRefs = collectPathRefs(source);
+  const annotationSummary = collectAnnotationKinds(source);
+  const lineCount = Math.max(1, source.split(/\r?\n/).length);
+  const charCount = source.length;
+  const frameCount = associations.length;
+  const fileHref = currentCanonFileHref();
+
+  const controls = document.createElement('div');
+  controls.className = 'spw-inspection-controls';
+  controls.setAttribute('role', 'group');
+  controls.setAttribute('aria-label', 'Spw inspection insights');
+
+  const label = document.createElement('span');
+  label.className = 'spw-inspection-label';
+  label.textContent = 'Inspection';
+
+  const codelensRow = document.createElement('div');
+  codelensRow.className = 'spw-codelens-row';
+
+  const lineLens = document.createElement('button');
+  lineLens.type = 'button';
+  lineLens.className = 'spw-codelens-link';
+  lineLens.dataset.spwExpression = 'true';
+  lineLens.textContent = `%[line]{${lineCount}}`;
+  lineLens.setAttribute('aria-label', `Expression has ${lineCount} lines and ${charCount} characters`);
+  lineLens.addEventListener('click', () => {
+    if (announce) {
+      announce(`Inspection: ${lineCount} lines, ${charCount} characters.`);
+    }
+  });
+
+  const frameLens = document.createElement('button');
+  frameLens.type = 'button';
+  frameLens.className = 'spw-codelens-link';
+  frameLens.dataset.spwExpression = 'true';
+  frameLens.textContent = `%[frames]{${frameCount}}`;
+  frameLens.setAttribute('aria-label', `Expression has ${frameCount} parsed handle frames`);
+  frameLens.addEventListener('click', () => {
+    if (announce) {
+      announce(`Inspection: ${frameCount} handle frames.`);
+    }
+  });
+
+  const fileLens = document.createElement('a');
+  fileLens.className = 'spw-codelens-link';
+  fileLens.dataset.spwExpression = 'true';
+  fileLens.href = fileHref;
+  fileLens.textContent = `@[file]{${fileHref}}`;
+  fileLens.setAttribute('aria-label', `Open canonical Spw file ${fileHref}`);
+
+  codelensRow.append(lineLens, frameLens, fileLens);
+
+  pathRefs.slice(0, 3).forEach((ref) => {
+    const pathLink = document.createElement('a');
+    pathLink.className = 'spw-codelens-link';
+    pathLink.dataset.spwExpression = 'true';
+    pathLink.href = resolvePathRefHref(ref);
+    pathLink.textContent = `@[path]{${ref}}`;
+    pathLink.setAttribute('aria-label', `Open path reference ${ref}`);
+    codelensRow.append(pathLink);
+  });
+
+  const hints = document.createElement('ul');
+  hints.className = 'spw-inlay-hints';
+
+  [
+    `%[chars]{${charCount}}`,
+    `%[paths]{${pathRefs.length}}`,
+    `#[annotations]{lens:${annotationSummary.lens} intent:${annotationSummary.intent} anchor:${annotationSummary.anchor} topic:${annotationSummary.topic}}`,
+    `^[expression]{${expressionId}}`
+  ].forEach((text) => {
+    const item = document.createElement('li');
+    item.className = 'spw-inlay-hint';
+    item.dataset.spwExpression = 'true';
+    item.textContent = text;
+    hints.append(item);
+  });
+
+  const hover = document.createElement('pre');
+  hover.className = 'spw-hover-inspector';
+  hover.setAttribute('aria-live', 'polite');
+  hover.textContent = 'Select any token to inspect inferred handle, context, and parser projection.';
+
+  controls.append(label, codelensRow, hints, hover);
+
+  const updateSelection = (entry) => {
+    const handle = previewValue(entry?.handle || '');
+    const selection = previewValue(entry?.payload?.selection || '');
+    const origin = previewValue(entry?.payload?.context?.origin || 'selection');
+    const assoc = entry?.payload?.association
+      ? `${entry.payload.association.sigil}[${entry.payload.association.handle}]`
+      : 'none';
+    const parserSelection = previewValue(
+      JSON.stringify(entry?.payload?.parser?.selectionSelector || null),
+      160
+    );
+    const parserExpression = previewValue(
+      JSON.stringify(entry?.payload?.parser?.expressionSelector || null),
+      160
+    );
+
+    hover.textContent = [
+      `handle: ${handle || 'n/a'}`,
+      `selection: ${selection || 'n/a'}`,
+      `origin: ${origin || 'n/a'}`,
+      `association: ${assoc}`,
+      `parser.selection: ${parserSelection || 'n/a'}`,
+      `parser.expression: ${parserExpression || 'n/a'}`
+    ].join('\n');
+  };
+
+  return { controls, updateSelection };
+}
+
 function rotateFaceIndex(current, axis) {
   const normalized = String(axis || '').toLowerCase();
   const steps = {
@@ -668,6 +868,7 @@ function createRegisterControls(context) {
   const { node, source, associations, expressionId, announce } = context;
   const bank = getSpwRegisterBank();
   const storyCube = buildStoryCube(associations, source, expressionId);
+  const inspectionControl = createInspectionControls(context);
 
   const controls = document.createElement('div');
   controls.className = 'spw-register-controls';
@@ -807,6 +1008,9 @@ function createRegisterControls(context) {
     bank.setActive(entry);
     registerView.data = { snapshot: bank.snapshot() };
     inspector.textContent = JSON.stringify(payload, null, 2);
+    if (inspectionControl) {
+      inspectionControl.updateSelection(entry);
+    }
     node.dataset.spwHandle = handle;
     node.dataset.spwPayloadId = payloadId;
     dispatchSelection(entry);
@@ -908,7 +1112,7 @@ function createRegisterControls(context) {
   mathMode.addEventListener('click', () => applyHandleMode('math', true));
 
   cubeWrap.append(cubeLabel, cubeAxes, cubeFaceLabel, cubeFace, cubeStatus);
-  controls.append(title, modeWrap, handleRow, cubeWrap, registerView, inspector);
+  controls.append(title, modeWrap, handleRow, cubeWrap, registerView, inspectionControl.controls, inspector);
   registerView.data = { snapshot: bank.snapshot() };
   applyHandleMode(handleMode, false);
   renderCubeFace();

@@ -16,7 +16,7 @@ This project integrates Spw kernel ideas from:
 - `book/scripts/modules/spw-register-bank.mjs`
   Register and handle bank for structured Spw selection payloads.
 - `book/scripts/modules/spw-interactions.mjs`
-  Interactive Spw runtime (clickable braces/operators/chunks, geometry controls, Rubik's Cube semantic faces, register controls).
+  Interactive Spw runtime (clickable braces/operators/chunks, geometry controls, Rubik's Cube semantic faces, register controls, plus LSP-inspired inspection controls: line/file code lens and inlay-style hints).
 - `lore:spw-selection` event
   Shared runtime signal used by page-level UX to react to Spw handle/payload selections.
 - `book/scripts/modules/spw-ethos.mjs`

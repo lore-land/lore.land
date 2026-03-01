@@ -1,0 +1,86 @@
+# Chapter 10 Canon Reference
+# Generated from /book/chapter/10/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_10
+#:chapter-canon #!reference
+
+^[chapter/10]{
+  title: "Boof and the Fool’s Bonk"
+  description: "Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge."
+  mood: "bonk"
+  period: "spring"
+  chapter_path: "/book/chapter/10/"
+}
+
+&[chapter/10/routes]{
+  web: "/book/chapter/10/"
+  timeline: "/book/timeline.html#chapter-10"
+  motif: "~[motif/chapter-10]{optional}"
+}
+
+^[chapter/10/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof wandered further into the maze of games and puzzles, unsure if there was even a way out anymore. And then, with a sudden thud—a loud BONK echoed through the clearing."
+    route: "^[chapter/10/s01]{open}"
+  }
+  s02: {
+    handle: "custom-bonk/02"
+    type: "custom-bonk"
+    payload: "<>"
+    excerpt: "The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused."
+    handles: ["bonk-intro"]
+    route: "^[chapter/10/s02]{open}"
+  }
+  s03: {
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked.\""
+    route: "^[chapter/10/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/10.png"
+    route: "^[chapter/10/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Bonk"
+    excerpt: "Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in th..."
+    route: "^[chapter/10/s05]{open}"
+  }
+  s06: {
+    handle: "custom-boof/06"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "\"Is this how it ends?\" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle."
+    route: "^[chapter/10/s06]{open}"
+  }
+  s07: {
+    handle: "custom-fool/07"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"You’ve reached this part of the game, Boof, but the bonk is not the end,\" the Fool’s voice teased. \"It’s just the sound of one door closing... and maybe, another opening.\""
+    route: "^[chapter/10/s07]{open}"
+  }
+}
+
+#[chapter/10/lore]{
+  notes: [
+    "The significance of the Fool’s Bonk within the overarching narrative."
+    "Boof's emotional and psychological journey as they confront unexpected challenges."
+  ]
+}
+
+~[chapter/10/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

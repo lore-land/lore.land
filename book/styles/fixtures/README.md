@@ -35,6 +35,7 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 - `book/scripts/modules/chapter-progression.mjs`: deterministic chapter rewards and unique chapter mode states (no streak loops / no addictive mechanics).
 - `book/scripts/home/seeds.mjs`: Midjourney seed manifest and chapter visual mapping.
 - `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions.
+- `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions, plus in-page inspection affordances (code-lens style links and inlay hints).
 - `book/scripts/modules/ebook-navigation.mjs`: model ebook layer (section hierarchy, concept handles, resume state, reader/engineer register mode).
 - `book/scripts/modules/spw-ethos.mjs`: claim-protocol bridge (layered claims + operator-phase ethos + probe status tied to runtime events).
 

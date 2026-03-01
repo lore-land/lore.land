@@ -59,7 +59,13 @@ export function renderHero(root, chapterCount) {
   atlasLink.className = 'hero-action';
   atlasLink.setAttribute('aria-label', 'Open Midjourney seed atlas');
 
-  actionRow.append(startLink, atlasLink);
+  const canonLink = document.createElement('a');
+  canonLink.href = '/.spw/index.spw';
+  canonLink.textContent = '@[path]{@spw/index.spw}';
+  canonLink.className = 'hero-action';
+  canonLink.setAttribute('aria-label', 'Open Spw canon index for lore.land');
+
+  actionRow.append(startLink, atlasLink, canonLink);
 
   const prelude = document.createElement('pre');
   prelude.className = 'spw-block';

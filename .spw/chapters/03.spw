@@ -1,0 +1,79 @@
+# Chapter 03 Canon Reference
+# Generated from /book/chapter/03/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_03
+#:chapter-canon #!reference
+
+^[chapter/03]{
+  title: "Boof and the Fool's Paradox"
+  description: "Chapter 3 of Lore.Land: Boof and the Fool's Paradox. Discover the twists and turns of the paradoxical path."
+  mood: "paradox"
+  period: "spring"
+  chapter_path: "/book/chapter/03/"
+}
+
+&[chapter/03/routes]{
+  web: "/book/chapter/03/"
+  timeline: "/book/timeline.html#chapter-03"
+  motif: "~[motif/chapter-03]{optional}"
+}
+
+^[chapter/03/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof stood at the edge of the Fool's Paradox , a place where truth and jest twisted together, impossible to untangle."
+    route: "^[chapter/03/s01]{open}"
+  }
+  s02: {
+    handle: "custom-paradox/02"
+    type: "custom-paradox"
+    payload: "<>"
+    excerpt: "\"To move forward, you must go back,\" the paradox whispered, echoing the Fool’s riddles. \"To catch the Fool, you must first be caught.\""
+    handles: ["paradox-intro"]
+    route: "^[chapter/03/s02]{open}"
+  }
+  s03: {
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"The closer you get, the further away I am.\""
+    route: "^[chapter/03/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/03.png"
+    route: "^[chapter/03/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Enigma of the Paradox"
+    excerpt: "The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed. The boonberries glowed with a mischievous light, flickering between reality and mirage."
+    route: "^[chapter/03/s05]{open}"
+  }
+  s06: {
+    handle: "custom-boof/06"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. \"To chase is to never catch,\" Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove."
+    route: "^[chapter/03/s06]{open}"
+  }
+}
+
+#[chapter/03/lore]{
+  notes: [
+    "Explanation of the Fool's Paradox and its impact on the grove."
+    "Boof's reflections on the nature of pursuit and illusion within the paradox."
+  ]
+}
+
+~[chapter/03/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

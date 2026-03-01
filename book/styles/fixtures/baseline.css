@@ -711,6 +711,74 @@ samp {
   font-style: italic;
 }
 
+.spw-inspection-controls {
+  display: grid;
+  gap: 0.32rem;
+  border: 1px solid color-mix(in srgb, var(--border-color-main) 68%, hsla(var(--shader-hue), 72%, 58%, 0.5) 32%);
+  border-radius: var(--border-radius-small);
+  padding: 0.42rem;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.spw-inspection-label {
+  margin: 0;
+  color: var(--color-text-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spw-codelens-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.spw-codelens-link {
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--color-accent-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.68rem;
+  line-height: 1.2;
+  padding: 0.18rem 0.5rem;
+  text-decoration: none;
+}
+
+.spw-inlay-hints {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.24rem;
+}
+
+.spw-inlay-hint {
+  border: 1px dashed rgba(42, 111, 127, 0.36);
+  border-radius: var(--border-radius-pill);
+  padding: 0.14rem 0.46rem;
+  color: var(--color-text-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.spw-hover-inspector {
+  margin: 0;
+  max-height: 9.5rem;
+  overflow: auto;
+  border: 1px solid rgba(42, 111, 127, 0.24);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.86);
+  color: #dffcf0;
+  font-size: 0.66rem;
+  line-height: 1.34;
+  padding: 0.44rem;
+}
+
 .spw-payload-inspector {
   margin: 0;
   max-height: 14rem;

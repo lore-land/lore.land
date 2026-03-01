@@ -1,0 +1,86 @@
+# Chapter 11 Canon Reference
+# Generated from /book/chapter/11/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_11
+#:chapter-canon #!reference
+
+^[chapter/11]{
+  title: "Boof and the Fool’s Awakening"
+  description: "Chapter 11 of Lore.Land: Boof and the Fool’s Awakening. Experience the moment of clarity as Boof discovers the true purpose of their journey with the Fool."
+  mood: "awakening"
+  period: "spring"
+  chapter_path: "/book/chapter/11/"
+}
+
+&[chapter/11/routes]{
+  web: "/book/chapter/11/"
+  timeline: "/book/timeline.html#chapter-11"
+  motif: "~[motif/chapter-11]{optional}"
+}
+
+^[chapter/11/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof blinked, feeling a strange calmness settle over them after the bonk. The world around them had shifted—it was clearer now, sharper. \"Where am I?\" Boof whispered, realizing they weren’t just in a maze, but in the ..."
+    route: "^[chapter/11/s01]{open}"
+  }
+  s02: {
+    handle: "custom-awakening/02"
+    type: "custom-awakening"
+    payload: "<>"
+    excerpt: "The air hummed softly, the trees no longer whispered but stood still, as though waiting. Boof felt an understanding they hadn’t reached before. This wasn’t just a game, and the Fool wasn’t just an enigma. Everything h..."
+    handles: ["awakening-intro"]
+    route: "^[chapter/11/s02]{open}"
+  }
+  s03: {
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"You’ve begun to see it, haven’t you, Boof?\" the Fool’s voice was softer now, almost kind. \"This journey isn’t about me at all... it’s about you.\""
+    route: "^[chapter/11/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/11.png"
+    route: "^[chapter/11/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Moment of Clarity"
+    excerpt: "As Boof stood in silence, they realized they weren’t chasing the Fool anymore. They were chasing something inside themselves. The puzzles, the games, the bonks—they had all been distractions leading to this one simple..."
+    route: "^[chapter/11/s05]{open}"
+  }
+  s06: {
+    handle: "custom-boof/06"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "\"It was never about winning,\" Boof said aloud, feeling lighter, as though a great weight had been lifted. The Fool’s laughter, once distant and mocking, now sounded close—friendly, even."
+    route: "^[chapter/11/s06]{open}"
+  }
+  s07: {
+    handle: "custom-fool/07"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"You’ve found it, Boof. The end of the journey is always an awakening. But remember, every awakening is also the beginning of something new.\""
+    route: "^[chapter/11/s07]{open}"
+  }
+}
+
+#[chapter/11/lore]{
+  notes: [
+    "The significance of the Fool’s Awakening within the overarching narrative."
+    "Boof's emotional and psychological transformation as they reach a moment of clarity."
+  ]
+}
+
+~[chapter/11/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

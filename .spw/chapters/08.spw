@@ -1,0 +1,86 @@
+# Chapter 08 Canon Reference
+# Generated from /book/chapter/08/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_08
+#:chapter-canon #!reference
+
+^[chapter/08]{
+  title: "Boof and the Fool’s Game"
+  description: "Chapter 8 of Lore.Land: Boof and the Fool’s Game. Join Boof as they engage in the enigmatic game set by the Fool, where reality and rules intertwine."
+  mood: "game"
+  period: "spring"
+  chapter_path: "/book/chapter/08/"
+}
+
+&[chapter/08/routes]{
+  web: "/book/chapter/08/"
+  timeline: "/book/timeline.html#chapter-08"
+  motif: "~[motif/chapter-08]{optional}"
+}
+
+^[chapter/08/sections]{
+  s01: {
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: \"Shall we play?\""
+    route: "^[chapter/08/s01]{open}"
+  }
+  s02: {
+    handle: "custom-game/02"
+    type: "custom-game"
+    payload: "<>"
+    excerpt: "The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play."
+    handles: ["game-intro"]
+    route: "^[chapter/08/s02]{open}"
+  }
+  s03: {
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"The rules are simple, Boof,\" the Fool’s voice echoed from the trees, \"but understanding them, now that’s the tricky part.\""
+    route: "^[chapter/08/s03]{open}"
+  }
+  s04: {
+    handle: "figure/04"
+    type: "figure"
+    payload: "[]"
+    image: "/book/images/08.png"
+    route: "^[chapter/08/s04]{open}"
+  }
+  s05: {
+    handle: "section/05"
+    type: "section"
+    payload: "{}"
+    title: "The Game Begins"
+    excerpt: "Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive. The boonberries surrounding the c..."
+    route: "^[chapter/08/s05]{open}"
+  }
+  s06: {
+    handle: "custom-boof/06"
+    type: "custom-boof"
+    payload: "<>"
+    excerpt: "\"What’s the objective?\" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper."
+    route: "^[chapter/08/s06]{open}"
+  }
+  s07: {
+    handle: "custom-fool/07"
+    type: "custom-fool"
+    payload: "<>"
+    excerpt: "\"The objective, Boof, is whatever you make of it,\" the Fool whispered. \"But remember, not every game can be won.\""
+    route: "^[chapter/08/s07]{open}"
+  }
+}
+
+#[chapter/08/lore]{
+  notes: [
+    "The origins and significance of the Fool’s Game within the labyrinth."
+    "Boof's strategic thinking and emotional responses while engaging in the Fool’s Game."
+  ]
+}
+
+~[chapter/08/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

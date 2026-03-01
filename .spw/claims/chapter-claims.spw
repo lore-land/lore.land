@@ -1,0 +1,29 @@
+# Lore.Land Chapter Claims
+#>lore_land_claims
+#:harness #!protocol
+
+^claim_chain{
+  grammar: {
+    claim_id: "lore-c001-brace-legibility"
+    hypothesis: "Section handles remain understandable in prefix and postfix form."
+    spec_ref: "spw-workbench/lib/spw-v0.2.0-alpha/core/CONTAINERS.md"
+    impl_ref: "book/scripts/modules/ebook-navigation.mjs"
+    probe_ref: "lore:ebook-section-change"
+  }
+
+  semantics: {
+    claim_id: "lore-c002-route-polarity"
+    hypothesis: "Route and register sigils preserve perspective semantics across chapter/home surfaces."
+    spec_ref: "spw-workbench/lib/spw-v0.2.0-alpha/core/OPERATORS.md"
+    impl_ref: "book/scripts/modules/spw-ethos.mjs"
+    probe_ref: "lore:spw-selection"
+  }
+
+  pragmatics: {
+    claim_id: "lore-c003-plain-text-story"
+    hypothesis: "A chapter can be extended by reading only raw chapter .spw files."
+    spec_ref: ".spw/chapters/index.spw"
+    impl_ref: "book/chapter/*/index.html"
+    probe_ref: "manual extension review"
+  }
+}
