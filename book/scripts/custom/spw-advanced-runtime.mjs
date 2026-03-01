@@ -1,6 +1,7 @@
 import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
 import { applySpwStyleLibrary } from './spw-style-library.mjs?v=2026_02_28.I';
 import { attachSpwBehaviorLibrary } from './spw-behavior-library.mjs?v=2026_02_28.I';
+import { parseSpwExpressions } from '../modules/spw-expression-index.mjs?v=2026_03_01.A';
 
 const RUNTIME_ATTRS = Object.freeze({
   style: ['data-spw-style', 'spw-style'],
@@ -42,6 +43,58 @@ function dispatchRuntimeEvent(component, phase, detail = {}) {
   }));
 }
 
+function deriveRuntimeDepth(source) {
+  const text = String(source || '').trim();
+  if (!text) {
+    return {
+      level: 0,
+      score: 0,
+      expressions: 0,
+      diagnostics: 0,
+      maxDepth: 0
+    };
+  }
+
+  const parsed = parseSpwExpressions(text);
+  const expressionCount = parsed.expressions.length;
+  const diagnosticsCount = parsed.diagnostics.length;
+  const maxDepth = parsed.expressions.reduce(
+    (max, expression) => Math.max(max, expression.depth + (expression.payload ? 1 : 0)),
+    0
+  );
+  const payloadWeight = parsed.expressions.reduce(
+    (sum, expression) => sum + Math.min(180, (expression.payload || '').length),
+    0
+  );
+
+  const lengthWeight = Math.min(4, text.length / 180);
+  const score =
+    expressionCount * 1.25 +
+    maxDepth * 2.2 +
+    diagnosticsCount * 2.8 +
+    lengthWeight +
+    payloadWeight / 220;
+
+  let level = 0;
+  if (score >= 4.5) {
+    level = 1;
+  }
+  if (score >= 8.5) {
+    level = 2;
+  }
+  if (score >= 13) {
+    level = 3;
+  }
+
+  return {
+    level,
+    score: Number(score.toFixed(2)),
+    expressions: expressionCount,
+    diagnostics: diagnosticsCount,
+    maxDepth
+  };
+}
+
 export function attachAdvancedSpwRuntime(component, options = {}) {
   if (!(component instanceof HTMLElement)) {
     return () => {};
@@ -78,18 +131,26 @@ export function attachAdvancedSpwRuntime(component, options = {}) {
     const source = component.dataset.spwSource || component.textContent || '';
     const signal = `${source.length}:${hashSignal(source)}`;
     const changed = signal !== lastSignal;
+    const depth = deriveRuntimeDepth(source);
     lastSignal = signal;
 
     component.dataset.spwRuntimeState = 'resolved';
     component.dataset.spwRuntimeCycle = String(cycleCount);
     component.dataset.spwRuntimeResolution = reason;
     component.dataset.spwRuntimeSignal = signal;
+    component.dataset.spwRuntimeDepth = String(depth.level);
+    component.dataset.spwRuntimeDepthScore = String(depth.score);
+    component.dataset.spwRuntimeExpressions = String(depth.expressions);
+    component.dataset.spwRuntimeDiagnostics = String(depth.diagnostics);
+    component.dataset.spwRuntimeMaxDepth = String(depth.maxDepth);
+    component.style.setProperty('--spw-runtime-depth-level', String(depth.level));
 
     dispatchRuntimeEvent(component, 'resolve', {
       cycle: cycleCount,
       reason,
       changed,
-      signal
+      signal,
+      depth
     });
   };
 
@@ -173,5 +234,11 @@ export function attachAdvancedSpwRuntime(component, options = {}) {
     delete component.dataset.spwRuntimeResolution;
     delete component.dataset.spwRuntimeSignal;
     delete component.dataset.spwRuntimeError;
+    delete component.dataset.spwRuntimeDepth;
+    delete component.dataset.spwRuntimeDepthScore;
+    delete component.dataset.spwRuntimeExpressions;
+    delete component.dataset.spwRuntimeDiagnostics;
+    delete component.dataset.spwRuntimeMaxDepth;
+    component.style.removeProperty('--spw-runtime-depth-level');
   };
 }

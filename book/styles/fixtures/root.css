@@ -162,6 +162,12 @@
     background-color var(--transition-duration) var(--transition-function),
     color var(--transition-duration) var(--transition-function),
     outline var(--transition-duration) var(--transition-function);
+  --spw-panel-surface: color-mix(in srgb, var(--theme-paper) 84%, rgba(255, 255, 255, 0.16) 16%);
+  --spw-panel-surface-strong: color-mix(in srgb, var(--theme-paper) 72%, rgba(255, 255, 255, 0.28) 28%);
+  --spw-panel-border: color-mix(in srgb, var(--theme-accent-main) 24%, var(--theme-border-main) 76%);
+  --spw-panel-shadow: 0 14px 26px color-mix(in srgb, var(--theme-accent-main) 14%, transparent 86%);
+  --spw-control-height: 2rem;
+  --spw-focus-ring: color-mix(in srgb, var(--theme-accent-main) 60%, transparent 40%);
 }
 
 body > nav.chapter-navigation,
@@ -171,6 +177,75 @@ body > aside,
 body > footer {
   width: min(100%, var(--max-width-content));
   margin: 0 auto;
+}
+
+@media (min-width: 70rem) {
+  body:has(> main.chapter):has(> aside) {
+    display: grid;
+    grid-template-columns:
+      minmax(var(--spacing-main), 1fr)
+      minmax(0, 4.3fr)
+      minmax(17rem, 1.65fr)
+      minmax(var(--spacing-main), 1fr);
+    grid-template-areas:
+      ". chapter-nav chapter-nav ."
+      ". chapter aside ."
+      ". section-nav aside ."
+      ". footer footer .";
+    align-items: start;
+    column-gap: clamp(0.9rem, 1.6vw, 1.35rem);
+    row-gap: var(--spacing-medium);
+  }
+
+  body:has(> main.chapter):has(> aside) > nav.chapter-navigation,
+  body:has(> main.chapter):has(> aside) > main.chapter,
+  body:has(> main.chapter):has(> aside) > .section-navigation,
+  body:has(> main.chapter):has(> aside) > aside,
+  body:has(> main.chapter):has(> aside) > footer {
+    width: 100%;
+    margin: 0;
+  }
+
+  body:has(> main.chapter):has(> aside) > nav.chapter-navigation {
+    grid-area: chapter-nav;
+    position: sticky;
+    top: 0.25rem;
+    z-index: 24;
+    padding: 0.42rem 0.5rem;
+    border: var(--interactive-border);
+    border-radius: var(--border-radius-small);
+    background: var(--spw-panel-surface);
+    backdrop-filter: blur(3px) saturate(1.05);
+    -webkit-backdrop-filter: blur(3px) saturate(1.05);
+  }
+
+  body:has(> main.chapter):has(> aside) > main.chapter {
+    grid-area: chapter;
+    min-width: 0;
+  }
+
+  body:has(> main.chapter):has(> aside) > .section-navigation {
+    grid-area: section-nav;
+    min-width: 0;
+    position: sticky;
+    bottom: 0.65rem;
+    z-index: 16;
+  }
+
+  body:has(> main.chapter):has(> aside) > aside {
+    grid-area: aside;
+    min-width: 0;
+    position: sticky;
+    top: 4.25rem;
+    max-height: calc(100dvh - 5.1rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  body:has(> main.chapter):has(> aside) > footer {
+    grid-area: footer;
+  }
 }
 
 .chapter-navigation,
@@ -564,27 +639,69 @@ aside .additional-links a:focus-visible {
 
 [data-spw-component] {
   position: relative;
-  --spw-runtime-surface: rgba(255, 255, 255, 0.72);
-  --spw-runtime-surface-strong: rgba(255, 255, 255, 0.9);
-  --spw-runtime-accent: rgba(38, 88, 124, 0.72);
-  --spw-runtime-outline: rgba(38, 88, 124, 0.36);
-  --spw-runtime-glow: rgba(38, 88, 124, 0.22);
+  --spw-runtime-surface: color-mix(in srgb, var(--theme-paper) 80%, transparent 20%);
+  --spw-runtime-surface-strong: color-mix(in srgb, var(--theme-paper) 92%, transparent 8%);
+  --spw-runtime-accent: color-mix(in srgb, var(--theme-accent-main) 74%, #163848 26%);
+  --spw-runtime-outline: color-mix(in srgb, var(--theme-accent-main) 36%, transparent 64%);
+  --spw-runtime-glow: color-mix(in srgb, var(--theme-accent-main) 24%, transparent 76%);
+  --spw-runtime-ink: var(--theme-accent-alt);
+  --spw-runtime-chip: color-mix(in srgb, var(--theme-paper) 72%, var(--theme-accent-main) 28%);
+  --spw-runtime-chip-strong: color-mix(in srgb, var(--theme-paper) 58%, var(--theme-accent-main) 42%);
+  --spw-runtime-depth-level: 0;
+  --spw-runtime-style-depth: 0;
+  --spw-runtime-depth-score: calc(var(--spw-runtime-depth-level) + var(--spw-runtime-style-depth));
+  border: var(--interactive-border);
+  border-color: color-mix(in srgb, var(--spw-runtime-outline) 84%, transparent 16%);
+  border-radius: var(--border-radius-small);
+  padding: clamp(0.5rem, 1.1vw, 0.78rem);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--spw-runtime-surface-strong) 86%, transparent 14%),
+      color-mix(in srgb, var(--spw-runtime-surface) 92%, transparent 8%)
+    );
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--spw-runtime-surface-strong) 72%, transparent 28%),
+    0 calc(8px + (var(--spw-runtime-depth-score) * 2px))
+      calc(18px + (var(--spw-runtime-depth-score) * 5px))
+      color-mix(in srgb, var(--spw-runtime-glow) 62%, transparent 38%);
+  transform: translateZ(calc(var(--spw-runtime-depth-score) * 0.8px));
+  transition:
+    box-shadow var(--transition-duration) var(--transition-function),
+    border-color var(--transition-duration) var(--transition-function),
+    transform var(--transition-duration) var(--transition-function),
+    background-color var(--transition-duration) var(--transition-function);
+}
+
+[data-spw-component][data-spw-runtime-depth="1"] {
+  --spw-runtime-depth-level: 1;
+}
+
+[data-spw-component][data-spw-runtime-depth="2"] {
+  --spw-runtime-depth-level: 2;
+}
+
+[data-spw-component][data-spw-runtime-depth="3"] {
+  --spw-runtime-depth-level: 3;
 }
 
 [data-spw-component]::before {
   content: attr(data-spw-component);
-  display: block;
+  display: inline-flex;
+  align-items: center;
   width: fit-content;
-  border: var(--interactive-border);
+  border: var(--border-width) var(--border-style)
+    color-mix(in srgb, var(--spw-runtime-accent) 42%, transparent 58%);
   border-radius: var(--border-radius-pill);
   font-size: 0.67rem;
   line-height: 1;
-  padding: 0.18rem 0.42rem;
-  color: var(--theme-accent-alt);
+  padding: 0.2rem 0.44rem;
+  color: var(--spw-runtime-ink, var(--theme-accent-alt));
+  background: color-mix(in srgb, var(--spw-runtime-chip) 86%, transparent 14%);
   margin-bottom: 0.45rem;
   font-family: var(--font-family-heading);
   letter-spacing: 0.04em;
-  opacity: 0.8;
+  opacity: 0.92;
 }
 
 [data-spw-component][data-spw-fetch-state]::before {
@@ -592,15 +709,38 @@ aside .additional-links a:focus-visible {
 }
 
 [data-spw-component][data-spw-runtime-state="priming"] {
-  box-shadow: 0 0 0 1px var(--spw-runtime-outline), var(--shadow-hover);
+  border-color: color-mix(in srgb, var(--spw-runtime-accent) 56%, transparent 44%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-runtime-accent) 34%, transparent 66%),
+    0 calc(10px + (var(--spw-runtime-depth-score) * 2px))
+      calc(24px + (var(--spw-runtime-depth-score) * 5px))
+      color-mix(in srgb, var(--spw-runtime-glow) 72%, transparent 28%);
 }
 
 [data-spw-component][data-spw-runtime-state="resolved"] {
-  box-shadow: 0 0 0 1px rgba(38, 88, 124, 0.2);
+  border-color: color-mix(in srgb, var(--spw-runtime-outline) 74%, transparent 26%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-runtime-outline) 54%, transparent 46%),
+    0 calc(9px + (var(--spw-runtime-depth-score) * 2px))
+      calc(20px + (var(--spw-runtime-depth-score) * 5px))
+      color-mix(in srgb, var(--spw-runtime-glow) 60%, transparent 40%);
 }
 
 [data-spw-component][data-spw-runtime-state="error"] {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--spw-pipeline-fallback, #ff8a8a) 52%, transparent 48%);
+  border-color: color-mix(in srgb, var(--spw-pipeline-fallback, #ff8a8a) 58%, transparent 42%);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--spw-pipeline-fallback, #ff8a8a) 48%, transparent 52%),
+    0 16px 28px color-mix(in srgb, var(--spw-pipeline-fallback, #ff8a8a) 26%, transparent 74%);
+}
+
+[data-spw-component]:hover,
+[data-spw-component]:focus-within {
+  transform: translateY(-1px) translateZ(calc((var(--spw-runtime-depth-score) + 1) * 1px));
+}
+
+[data-spw-component]:focus-visible {
+  outline: 2px solid var(--spw-focus-ring);
+  outline-offset: 2px;
 }
 
 [data-spw-component][data-spw-runtime-selection="hit"] {
@@ -618,6 +758,7 @@ aside .additional-links a:focus-visible {
 
 [data-spw-component][data-spw-fetch-state="error"]::before {
   color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
+  background: color-mix(in srgb, var(--spw-runtime-chip-strong) 84%, transparent 16%);
 }
 
 custom-boof {
@@ -1049,6 +1190,77 @@ main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
   text-decoration: none;
 }
 
+.chapter-progress-panel,
+.spw-hypertext-routes,
+.ebook-nav-panel,
+.spw-ethos-panel,
+.story-attribution-panel,
+.ebook-lsp-panel {
+  background: var(--spw-panel-surface);
+  border-color: var(--spw-panel-border);
+  box-shadow: var(--spw-panel-shadow);
+  backdrop-filter: blur(3px) saturate(1.06);
+  -webkit-backdrop-filter: blur(3px) saturate(1.06);
+}
+
+.ebook-register-button,
+.ebook-perspective-button,
+.ebook-syntax-button,
+.ebook-payload-button,
+.ebook-nav-controls button,
+.ebook-toc-link,
+.ebook-concept-link,
+.ebook-lsp-link,
+.ethos-layer-button,
+.ethos-claim-handle,
+.story-attribution-links a {
+  min-height: var(--spw-control-height);
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  background: color-mix(in srgb, var(--spw-panel-surface-strong) 82%, transparent 18%);
+}
+
+.ebook-register-button:hover,
+.ebook-perspective-button:hover,
+.ebook-syntax-button:hover,
+.ebook-payload-button:hover,
+.ebook-nav-controls button:hover,
+.ebook-toc-link:hover,
+.ebook-concept-link:hover,
+.ebook-lsp-link:hover,
+.ethos-layer-button:hover,
+.ethos-claim-handle:hover,
+.story-attribution-links a:hover {
+  border-color: color-mix(in srgb, var(--theme-accent-main) 46%, transparent 54%);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--theme-accent-main) 18%, transparent 82%);
+}
+
+.ebook-register-button:focus-visible,
+.ebook-perspective-button:focus-visible,
+.ebook-syntax-button:focus-visible,
+.ebook-payload-button:focus-visible,
+.ebook-nav-controls button:focus-visible,
+.ebook-toc-link:focus-visible,
+.ebook-concept-link:focus-visible,
+.ebook-lsp-link:focus-visible,
+.ethos-layer-button:focus-visible,
+.ethos-claim-handle:focus-visible,
+.story-attribution-links a:focus-visible {
+  outline: 2px solid var(--spw-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spw-focus-ring) 32%, transparent 68%);
+}
+
+.ebook-toc,
+.ethos-claim-list,
+.ebook-lsp-list {
+  max-height: min(41vh, 24rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+}
+
 /* ─── Operator role colors in ethos panel (v0.2.0 names) ────────────────── */
 .ethos-operator-token[data-spw-role="ground"]      { color: var(--spw-color-ground,      #7cb87e); }
 .ethos-operator-token[data-spw-role="annotation"]  { color: var(--spw-color-annotation,  #f0a0c8); }
@@ -1122,5 +1334,54 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
   main:not(.chapter),
   aside {
     padding: 1rem;
+  }
+
+  .chapter-navigation,
+  .section-navigation {
+    gap: 0.44rem;
+  }
+
+  .chapter-progress-panel,
+  .spw-hypertext-routes,
+  .ebook-nav-panel,
+  .spw-ethos-panel,
+  .story-attribution-panel,
+  .ebook-lsp-panel {
+    padding: 0.62rem;
+  }
+
+  .ebook-register-switch,
+  .ebook-perspective-switch,
+  .ebook-syntax-switch,
+  .ebook-payload-switch,
+  .ebook-nav-controls,
+  .ebook-concept-rail,
+  .ethos-layer-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ebook-register-button,
+  .ebook-perspective-button,
+  .ebook-syntax-button,
+  .ebook-payload-button,
+  .ebook-nav-controls button,
+  .ebook-toc-link,
+  .ebook-concept-link,
+  .ebook-lsp-link,
+  .ethos-layer-button,
+  .ethos-claim-handle {
+    width: 100%;
+    min-height: 2.2rem;
+  }
+
+  .ethos-operator-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ebook-toc,
+  .ethos-claim-list,
+  .ebook-lsp-list {
+    max-height: none;
   }
 }
