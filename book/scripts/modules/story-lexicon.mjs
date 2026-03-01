@@ -26,12 +26,15 @@ export const LIFECYCLE_STAGE_ALIASES = Object.freeze({
   bane: 'fallback'
 });
 
-export const RUNTIME_PRECIPITANTS = Object.freeze([
+export const RUNTIME_PRECIPITATES = Object.freeze([
   Object.freeze({ id: 'desugar', input: 'string', output: 'string', delta: 'rewrite sugar' }),
   Object.freeze({ id: 'parse', input: 'string', output: 'AST', delta: 'token to tree' }),
   Object.freeze({ id: 'normalize', input: 'AST', output: 'ONF', delta: 'tree to canonical sigils' }),
   Object.freeze({ id: 'interpret', input: 'ONF', output: 'Value', delta: 'register writes and result' })
 ]);
+
+// Backward-compatible alias for integrations that still reference legacy terminology.
+export const RUNTIME_PRECIPITANTS = RUNTIME_PRECIPITATES;
 
 export const LIFECYCLE_BRIDGE = Object.freeze({
   boon: Object.freeze({ role: 'prime assets and preloader', mapsTo: Object.freeze(['desugar']) }),
@@ -84,9 +87,14 @@ export function pipelineStageForLoadStage(stage) {
   return LIFECYCLE_STAGE_ALIASES[stage] || '';
 }
 
-export function precipitantsForLoadStage(stage) {
+export function precipitatesForLoadStage(stage) {
   const bridge = LIFECYCLE_BRIDGE[stage];
   return bridge?.mapsTo ? [...bridge.mapsTo] : [];
+}
+
+// Backward-compatible alias for integrations that still reference legacy terminology.
+export function precipitantsForLoadStage(stage) {
+  return precipitatesForLoadStage(stage);
 }
 
 export function lifecycleRoleForLoadStage(stage) {
@@ -100,7 +108,8 @@ export function describeLoadStage(stage) {
     stage: normalized,
     lifecycleState: mapLoadStageToLifecycleState(normalized),
     pipelineStage: pipelineStageForLoadStage(normalized),
-    precipitants: precipitantsForLoadStage(normalized),
+    precipitates: precipitatesForLoadStage(normalized),
+    precipitants: precipitatesForLoadStage(normalized),
     role: lifecycleRoleForLoadStage(normalized)
   };
 }

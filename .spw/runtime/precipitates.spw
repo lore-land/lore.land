@@ -1,5 +1,5 @@
-# Lore.Land Runtime Precipitants
-#>lore_land_runtime_precipitants
+# Lore.Land Runtime Precipitates
+#>lore_land_runtime_precipitates
 #:manifest #!pipeline
 #:layer #!semantics
 
@@ -9,6 +9,14 @@
   normalize: { input: "AST",    output: "ONF",    delta: "tree to canonical sigils" }
   interpret: { input: "ONF",    output: "Value",  delta: "register writes and result" }
 ]
+
+^"precipitate"{
+  stage: "StageName — pass that produced this artifact"
+  at: "ISO timestamp of completion"
+  input: "what entered the stage"
+  output: "what fell out"
+  delta: "human-readable summary of transformation"
+}
 
 ^"lifecycle_bridge"{
   boon: { role: "prime assets and preloader", maps_to: ["desugar"] }

@@ -28,6 +28,6 @@
   regenerate: "node .spw/tools/export-chapters.mjs"
   source_of_truth: "book/chapter/*/index.html#chapter-data"
   surfaces_registry: ".spw/surfaces/index.spw"
-  runtime_manifest: ".spw/runtime/precipitants.spw"
+  runtime_manifest: ".spw/runtime/precipitates.spw"
   observable_state: ".spw/state/observable.spw"
 }

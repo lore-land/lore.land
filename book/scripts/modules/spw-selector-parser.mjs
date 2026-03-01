@@ -3,8 +3,8 @@
  *
  * Ported from spw-workbench query parser for browser-native runtime use.
  * Source lineage:
- * /Development/active/spw-workbench/src/seed/query/selector-expr.ts
- * /Development/active/spw-workbench/src/seed/query/types.ts
+ * magic/spw/workbench/src/seed/query/selector-expr.ts
+ * magic/spw/workbench/src/seed/query/types.ts
  */
 
 export function and(a, b) {

@@ -13,7 +13,7 @@
   claims: "@spw/claims/chapter-claims.spw"
   process: "@spw/workspace.spw"
   surfaces: "@spw/surfaces/index.spw"
-  runtime: "@spw/runtime/precipitants.spw"
+  runtime: "@spw/runtime/precipitates.spw"
   observable: "@spw/state/observable.spw"
 }
 

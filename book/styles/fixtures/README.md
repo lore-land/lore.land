@@ -31,7 +31,8 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 
 The lifecycle bridge also exposes:
 - `data-pipeline-stage` (`select`, `transform`, `validate`, `emit`)
-- `data-precipitant-stages` (comma list from runtime precipitants)
+- `data-precipitate-stages` (comma list from runtime precipitates)
+- `data-precipitant-stages` (legacy alias for compatibility)
 - `data-stage-role` (human-readable stage role)
 
 ## Progressive Experience Hooks

@@ -7,8 +7,8 @@ The official canon for lore.land.
 This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
-- Local submodule in this workspace: `./spw-workbench`
-- Current submodule pin: `61d2b70`
+- Local submodule in this workspace: `./magic/spw/workbench`
+- Current submodule pin: `5552cec`
 
 ### Runtime Bridge In lore.land
 
@@ -23,7 +23,7 @@ This project integrates Spw kernel ideas from:
 - `book/scripts/modules/spw-ethos.mjs`
   Shared ethos bridge for chapter + home surfaces. Encodes operator-phase roles, claim layers (`grammar`, `semantics`, `pragmatics`), and claim-chain UI (`claim -> spec -> impl -> probe`) inspired by `spw-workbench/.spw/harness/claim-protocol.spw`.
 - `book/scripts/modules/load-lifecycle.mjs` + `book/scripts/modules/story-lexicon.mjs`
-  Lifecycle bridge now emits `valence -> pipeline -> precipitant` mappings (for example `boon -> select -> desugar`) from `.spw/surfaces/index.spw` and `.spw/runtime/precipitants.spw`.
+  Lifecycle bridge now emits `valence -> pipeline -> precipitate` mappings (for example `boon -> select -> desugar`) from `.spw/surfaces/index.spw` and `.spw/runtime/precipitates.spw`.
 - `book/scripts/custom/spw-component-binding.mjs`
   Custom elements can fetch/apply `.spw` sources with declarative attributes:
   `data-spw-fetch`, `data-spw-select`, `data-spw-apply`, `data-spw-target`, and optional `data-spw-inline` fallback.
@@ -135,7 +135,7 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
   - `.spw/chapters/index.spw`
   - `.spw/claims/chapter-claims.spw`
 - Runtime, surfaces, and observability:
-  - `.spw/runtime/precipitants.spw`
+  - `.spw/runtime/precipitates.spw`
   - `.spw/state/observable.spw`
   - `.spw/surfaces/index.spw`
   - `.spw/surfaces/publish.spw`

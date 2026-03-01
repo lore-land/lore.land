@@ -240,16 +240,18 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
 
     const descriptor = describeLoadStage(token);
     const pipelineStage = descriptor.pipelineStage || 'fallback';
-    const precipitantText = descriptor.precipitants.length
-      ? descriptor.precipitants.join(' + ')
+    const precipitateStages = descriptor.precipitates || descriptor.precipitants || [];
+    const precipitateText = precipitateStages.length
+      ? precipitateStages.join(' + ')
       : 'none';
 
     observatory.dataset.loadStage = token;
     observatory.dataset.pipelineStage = pipelineStage;
-    observatory.dataset.precipitantStages = descriptor.precipitants.join(',');
+    observatory.dataset.precipitateStages = precipitateStages.join(',');
+    observatory.dataset.precipitantStages = precipitateStages.join(',');
 
     const detailSuffix = detail ? ` (${detail})` : '';
-    stageStatus = `Lifecycle: ${token} -> ${pipelineStage} -> ${precipitantText}${detailSuffix}.`;
+    stageStatus = `Lifecycle: ${token} -> ${pipelineStage} -> ${precipitateText}${detailSuffix}.`;
     renderRuntimeStatus();
   };
 

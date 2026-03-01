@@ -14,7 +14,7 @@
   semantics: {
     claim_id: "lore-c002-route-polarity"
     hypothesis: "Route and register sigils preserve perspective semantics across chapter/home surfaces."
-    spec_ref: "spw-workbench/.spw/runtime/precipitants.spw#stages"
+    spec_ref: "spw-workbench/.spw/runtime/precipitates.spw#stages"
     impl_ref: "book/scripts/modules/spw-ethos.mjs"
     probe_ref: "lore:spw-selection"
   }

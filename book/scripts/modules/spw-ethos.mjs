@@ -42,7 +42,7 @@ const CLAIMS = Object.freeze([
     hypothesis: '# and . should keep readable projection/ground polarity.',
     measure: 'Interpretability of route and register handles by layer.',
     falsification: 'Less than 70% role clarity in mixed route contexts.',
-    specRef: 'spw-workbench: .spw/runtime/precipitants.spw#stages',
+    specRef: 'spw-workbench: .spw/runtime/precipitates.spw#stages',
     implRef: 'lore.land: book/scripts/modules/ebook-navigation.mjs',
     probeRef: 'lore.land: concept routes + payload readout'
   },
@@ -273,18 +273,20 @@ export function initSpwEthosIntegration(options = {}) {
 
     const descriptor = describeLoadStage(token);
     const pipelineStage = descriptor.pipelineStage || 'fallback';
-    const precipitantText = descriptor.precipitants.length
-      ? descriptor.precipitants.join(' + ')
+    const precipitateStages = descriptor.precipitates || descriptor.precipitants || [];
+    const precipitateText = precipitateStages.length
+      ? precipitateStages.join(' + ')
       : 'none';
 
     panel.dataset.loadStage = token;
     panel.dataset.pipelineStage = pipelineStage;
-    panel.dataset.precipitantStages = descriptor.precipitants.join(',');
+    panel.dataset.precipitateStages = precipitateStages.join(',');
+    panel.dataset.precipitantStages = precipitateStages.join(',');
 
     const detailSuffix = detail ? ` (${detail})` : '';
     status.textContent =
       `Lifecycle probe: ${formatExpression('%', 'stage', `${token}->${pipelineStage}`)} • ` +
-      `${precipitantText}${detailSuffix}`;
+      `${precipitateText}${detailSuffix}`;
   };
 
   const onSelection = (event) => {
