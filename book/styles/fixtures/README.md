@@ -29,6 +29,11 @@ The runtime now exposes a five-stage loading grammar through `data-load-stage`:
 
 Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 
+The lifecycle bridge also exposes:
+- `data-pipeline-stage` (`select`, `transform`, `validate`, `emit`)
+- `data-precipitant-stages` (comma list from runtime precipitants)
+- `data-stage-role` (human-readable stage role)
+
 ## Progressive Experience Hooks
 
 - `book/scripts/modules/experience-core.mjs`: ARIA live status, preference persistence, progressive reveal, lazy-image enhancement, and service worker registration.
@@ -38,6 +43,9 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 - `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions, plus in-page inspection affordances (code-lens style links and inlay hints).
 - `book/scripts/modules/ebook-navigation.mjs`: model ebook layer (section hierarchy, concept handles, resume state, reader/engineer register mode).
 - `book/scripts/modules/spw-ethos.mjs`: claim-protocol bridge (layered claims + operator-phase ethos + probe status tied to runtime events).
+- `book/scripts/custom/spw-advanced-runtime.mjs`: custom-component orchestration with `priming -> resolution` cycles.
+- `book/scripts/custom/spw-style-library.mjs`: semantic style presets for component host surfaces.
+- `book/scripts/custom/spw-behavior-library.mjs`: reusable runtime behaviors (interactive/load-reactive/selection-reactive).
 
 ## Cache Context Model
 

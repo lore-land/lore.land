@@ -27,6 +27,10 @@ This project integrates Spw kernel ideas from:
 - `book/scripts/custom/spw-component-binding.mjs`
   Custom elements can fetch/apply `.spw` sources with declarative attributes:
   `data-spw-fetch`, `data-spw-select`, `data-spw-apply`, `data-spw-target`, and optional `data-spw-inline` fallback.
+- `book/scripts/custom/spw-style-library.mjs` + `book/scripts/custom/spw-behavior-library.mjs`
+  Reusable style/behavior libraries for semantic component tuning (load-reactive, selection-reactive, interactive key handling).
+- `book/scripts/custom/spw-advanced-runtime.mjs`
+  Advanced custom-component runtime with explicit `priming -> resolution` cycles, event emission (`lore:spw-runtime-cycle`), and re-priming on runtime attribute changes.
 
 ### Operator Semantics (v0.2.0-alpha)
 

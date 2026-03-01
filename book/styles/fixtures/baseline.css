@@ -912,6 +912,47 @@ body[data-load-stage="honk"] .lifecycle-hud {
   opacity: 0.66;
 }
 
+/* Lifecycle valence tinting + pipeline semantics */
+body[data-load-stage="boon"] .lifecycle-hud {
+  border-color: color-mix(in srgb, var(--spw-color-probe, #9fd8ff) 46%, var(--border-color-main) 54%);
+}
+
+body[data-load-stage="bane"] .lifecycle-hud {
+  border-color: color-mix(in srgb, var(--spw-color-action, #ff8a8a) 54%, var(--border-color-main) 46%);
+  box-shadow:
+    0 calc(14px * var(--depth-shadow-strength)) calc(28px * var(--depth-shadow-strength)) rgba(16, 23, 42, 0.13),
+    0 0 0 1px rgba(255, 138, 138, 0.22);
+}
+
+body[data-load-stage="bone"] .lifecycle-hud {
+  border-color: color-mix(in srgb, var(--spw-color-potential, #ffb07a) 44%, var(--border-color-main) 56%);
+}
+
+body[data-load-stage="bonk"] .lifecycle-hud {
+  border-color: color-mix(in srgb, var(--spw-color-measure, #a8c8e8) 48%, var(--border-color-main) 52%);
+}
+
+body[data-load-stage="honk"] .lifecycle-hud {
+  border-color: color-mix(in srgb, var(--spw-color-integration, #e5a7ff) 46%, var(--border-color-main) 54%);
+  opacity: 0.66;
+}
+
+body[data-pipeline-stage="select"] .lifecycle-chip {
+  color: var(--spw-pipeline-select, var(--spw-color-probe, #9fd8ff));
+}
+
+body[data-pipeline-stage="transform"] .lifecycle-chip {
+  color: var(--spw-pipeline-transform, var(--spw-color-potential, #ffb07a));
+}
+
+body[data-pipeline-stage="validate"] .lifecycle-chip {
+  color: var(--spw-pipeline-validate, var(--spw-color-measure, #a8c8e8));
+}
+
+body[data-pipeline-stage="emit"] .lifecycle-chip {
+  color: var(--spw-pipeline-emit, var(--spw-color-integration, #e5a7ff));
+}
+
 @layer motion {
 
 html[data-enhanced="true"] [data-reveal] {
@@ -1052,6 +1093,12 @@ html[data-genre~="boonhonk"] .spw-brace.is-active {
   /* container charge colors */
   --spw-color-charge-pos: rgba(134, 212, 245, 0.18);  /* accumulate / open     */
   --spw-color-charge-neg: rgba(245, 208, 122, 0.16);  /* discharge / close     */
+  /* pipeline stage accents */
+  --spw-pipeline-select: var(--spw-color-probe);
+  --spw-pipeline-transform: var(--spw-color-potential);
+  --spw-pipeline-validate: var(--spw-color-measure);
+  --spw-pipeline-emit: var(--spw-color-integration);
+  --spw-pipeline-fallback: var(--spw-color-action);
 }
 
 /* Token role colors via data-spw-role */

@@ -1,12 +1,12 @@
 // scripts/custom-puzzle.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomPuzzle extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.answer = (this.getAttribute('answer') || '').toLowerCase();
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputKeydown = this.handleInputKeydown.bind(this);
     this.render();
@@ -15,18 +15,18 @@ export class CustomPuzzle extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.querySelector('button').addEventListener('click', this.handleSubmit);
     this.shadowRoot.querySelector('input').addEventListener('keydown', this.handleInputKeydown);
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector('button').removeEventListener('click', this.handleSubmit);
     this.shadowRoot.querySelector('input').removeEventListener('keydown', this.handleInputKeydown);
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -60,13 +60,16 @@ export class CustomPuzzle extends HTMLElement {
           border-radius: var(--border-radius-main);
           margin-bottom: var(--margin-large);
           background: rgba(255, 228, 181, 0.3); /* Moccasin */
+          background: var(--spw-runtime-surface-strong, rgba(255, 228, 181, 0.3));
           font-style: var(--font-style-italic);
           border: 1px dashed rgba(255, 215, 0, 0.5);
+          border-color: var(--spw-runtime-outline, rgba(255, 215, 0, 0.5));
           transition: background-color var(--transition-duration) var(--transition-function), border-color var(--transition-duration) var(--transition-function);
         }
         :host(:hover), :host(:focus-within) {
           background: rgba(255, 228, 181, 0.5);
-          border-color: var(--accent-color-alt);
+          background: var(--spw-runtime-surface, rgba(255, 228, 181, 0.5));
+          border-color: var(--spw-runtime-accent, var(--accent-color-alt));
         }
         .puzzle-content {
           margin-bottom: var(--margin-small);
@@ -87,14 +90,14 @@ export class CustomPuzzle extends HTMLElement {
           padding: var(--padding-small) var(--padding-medium);
           border: none;
           border-radius: var(--border-radius-small);
-          background: var(--accent-color-main);
+          background: var(--spw-runtime-accent, var(--accent-color-main));
           color: var(--text-color-content);
           cursor: pointer;
           transition: background-color var(--transition-duration) var(--transition-function);
           font-size: 1rem;
         }
         button:hover, button:focus {
-          background: var(--accent-color-alt);
+          background: var(--spw-runtime-outline, var(--accent-color-alt));
         }
         .result {
           margin-top: var(--margin-small);

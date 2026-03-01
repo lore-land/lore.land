@@ -7,27 +7,27 @@ import { CustomGame } from './custom-game.mjs?v=2026_02_28.I';
 import { CustomParadox } from './custom-paradox.mjs?v=2026_02_28.I';
 import { CustomPuzzle } from './custom-puzzle.mjs?v=2026_02_28.I';
 import { CustomSong } from './custom-song.mjs?v=2026_02_28.I';
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 class GenericSpwElement extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.render();
   }
 
   connectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -39,8 +39,8 @@ class GenericSpwElement extends HTMLElement {
           padding: var(--padding-large);
           border-radius: var(--border-radius-main);
           margin-bottom: var(--margin-large);
-          background: rgba(120, 150, 190, 0.14);
-          border: 1px solid rgba(120, 150, 190, 0.35);
+          background: var(--spw-runtime-surface-strong, rgba(120, 150, 190, 0.14));
+          border: 1px solid var(--spw-runtime-outline, rgba(120, 150, 190, 0.35));
         }
       </style>
       <slot></slot>

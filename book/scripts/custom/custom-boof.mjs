@@ -1,12 +1,12 @@
 // scripts/custom-boof.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomBoof extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.isCollapsed = true;
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.handleToggle = this.handleToggle.bind(this);
     this.render();
   }
@@ -15,17 +15,17 @@ export class CustomBoof extends HTMLElement {
     this.shadowRoot.querySelector('.header').addEventListener('click', this.handleToggle);
     this.setAttribute('tabindex', '0');
     this.setAttribute('role', 'button');
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
     this.shadowRoot.querySelector('.header').removeEventListener('click', this.handleToggle);
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -51,12 +51,13 @@ export class CustomBoof extends HTMLElement {
           border-radius: var(--border-radius-main);
           margin-bottom: var(--margin-large);
           background: rgba(173, 216, 230, 0.2); /* Light blue */
+          background: var(--spw-runtime-surface-strong, rgba(173, 216, 230, 0.2));
           cursor: pointer;
           outline: none;
           transition: background-color var(--transition-duration) var(--transition-function);
         }
         :host(:focus) {
-          box-shadow: 0 0 0 3px rgba(173, 216, 230, 0.5);
+          box-shadow: 0 0 0 3px var(--spw-runtime-glow, rgba(173, 216, 230, 0.5));
         }
         .header {
           font-weight: var(--font-weight-bold);

@@ -1,12 +1,12 @@
 // scripts/custom-bonk.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomBonk extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.clicked = false;
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.handleClick = this.handleClick.bind(this);
     this.render();
   }
@@ -15,17 +15,17 @@ export class CustomBonk extends HTMLElement {
     this.addEventListener('click', this.handleClick);
     this.setAttribute('role', 'button');
     this.setAttribute('tabindex', '0');
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
     this.removeEventListener('click', this.handleClick);
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -52,14 +52,16 @@ export class CustomBonk extends HTMLElement {
           padding: var(--padding-small);
           border-radius: var(--border-radius-small);
           background: rgba(255, 182, 193, 0.3); /* Light pink */
+          background: var(--spw-runtime-surface-strong, rgba(255, 182, 193, 0.3));
           font-style: var(--font-style-italic);
           border: 1px solid rgba(255, 105, 180, 0.5);
+          border-color: var(--spw-runtime-outline, rgba(255, 105, 180, 0.5));
           cursor: pointer;
           transition: transform var(--transition-duration) var(--transition-function), background-color var(--transition-duration) var(--transition-function);
           outline: none;
         }
         :host(:focus) {
-          box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.5);
+          box-shadow: 0 0 0 3px var(--spw-runtime-glow, rgba(255, 105, 180, 0.5));
         }
         :host(:active) {
           transform: scale(0.95);

@@ -1,25 +1,25 @@
 // scripts/custom-boonberry.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomBoonberry extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.render();
   }
 
   connectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -32,10 +32,12 @@ export class CustomBoonberry extends HTMLElement {
           border-radius: var(--border-radius-main);
           margin-bottom: var(--margin-large);
           background: rgba(240, 128, 128, 0.2); /* Light coral */
+          background: var(--spw-runtime-surface-strong, rgba(240, 128, 128, 0.2));
           transition: background-color var(--transition-duration) var(--transition-function);
         }
         :host(:hover), :host(:focus-within) {
           background-color: rgba(240, 128, 128, 0.4); /* Darker coral on hover/focus */
+          background-color: var(--spw-runtime-surface, rgba(240, 128, 128, 0.4));
         }
         ::slotted(*) {
           margin: 0;

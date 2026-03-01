@@ -1,25 +1,25 @@
 // scripts/custom-echo.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomEcho extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.render();
   }
 
   connectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -32,11 +32,13 @@ export class CustomEcho extends HTMLElement {
           border-radius: var(--border-radius-main);
           margin-bottom: var(--margin-large);
           background: rgba(255, 255, 0, 0.1);
+          background: var(--spw-runtime-surface-strong, rgba(255, 255, 0, 0.1));
           font-style: italic;
           transition: background-color var(--transition-duration) var(--transition-function);
         }
         :host(:hover), :host(:focus-within) {
           background: rgba(255, 255, 0, 0.2);
+          background: var(--spw-runtime-surface, rgba(255, 255, 0, 0.2));
         }
         ::slotted(*) {
           margin: 0;

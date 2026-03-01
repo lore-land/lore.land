@@ -1,11 +1,11 @@
 // scripts/custom-fool.mjs
-import { attachSpwBinding } from './spw-component-binding.mjs?v=2026_02_28.I';
+import { attachAdvancedSpwRuntime } from './spw-advanced-runtime.mjs?v=2026_02_28.I';
 
 export class CustomFool extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.releaseSpwBinding = null;
+    this.releaseSpwRuntime = null;
     this.showTooltip = this.showTooltip.bind(this);
     this.hideTooltip = this.hideTooltip.bind(this);
     this.render();
@@ -18,10 +18,10 @@ export class CustomFool extends HTMLElement {
     this.addEventListener('blur', this.hideTooltip);
     this.setAttribute('tabindex', '0');
     this.setAttribute('aria-describedby', 'tooltip');
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
     }
-    this.releaseSpwBinding = attachSpwBinding(this);
+    this.releaseSpwRuntime = attachAdvancedSpwRuntime(this);
   }
 
   disconnectedCallback() {
@@ -29,9 +29,9 @@ export class CustomFool extends HTMLElement {
     this.removeEventListener('mouseleave', this.hideTooltip);
     this.removeEventListener('focus', this.showTooltip);
     this.removeEventListener('blur', this.hideTooltip);
-    if (this.releaseSpwBinding) {
-      this.releaseSpwBinding();
-      this.releaseSpwBinding = null;
+    if (this.releaseSpwRuntime) {
+      this.releaseSpwRuntime();
+      this.releaseSpwRuntime = null;
     }
   }
 
@@ -53,13 +53,14 @@ export class CustomFool extends HTMLElement {
           padding: var(--padding-small);
           border-radius: var(--border-radius-small);
           background: rgba(144, 238, 144, 0.2); /* Light green */
+          background: var(--spw-runtime-surface-strong, rgba(144, 238, 144, 0.2));
           font-weight: var(--font-weight-bold);
           position: relative;
           cursor: help;
           outline: none;
         }
         :host(:focus) {
-          box-shadow: 0 0 0 3px rgba(144, 238, 144, 0.5);
+          box-shadow: 0 0 0 3px var(--spw-runtime-glow, rgba(144, 238, 144, 0.5));
         }
         .tooltip {
           display: none;
