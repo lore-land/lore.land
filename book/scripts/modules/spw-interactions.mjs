@@ -3,6 +3,20 @@ import { getSpwRegisterBank } from './spw-register-bank.mjs?v=2026_02_28.I';
 
 const OPERATOR_SEQUENCE = Object.freeze(['^', '&', '~', '?', '!', '#', '*']);
 
+/* Semantic role for each operator — ground (.), vibration (#), handle (&),
+   perspective (@) and the standard swap-cycle operators above. */
+const OPERATOR_ROLES = Object.freeze({
+  '.': { role: 'ground',       label: 'ground',       description: 'property definition or access along an optimized path' },
+  '#': { role: 'vibration',    label: 'vibration',    description: 'anchor across resonance or aggregate sense' },
+  '&': { role: 'handle',       label: 'handle',       description: 'prefix / postfix handle or reference' },
+  '@': { role: 'perspective',  label: 'perspective',  description: 'left@ = flashlight context, @right = instantiation' },
+  '^': { role: 'bind',         label: 'bound',        description: 'bind operator' },
+  '~': { role: 'dangle',       label: 'dangling',     description: 'dangling / loose reference' },
+  '?': { role: 'wonder',       label: 'wonder',       description: 'question or open inquiry' },
+  '!': { role: 'exclaim',      label: 'assertion',    description: 'assertion or exclamation' },
+  '*': { role: 'wildcard',     label: 'wildcard',     description: 'combinatoric or wildcard' }
+});
+
 const OPEN_TO_CLOSE = Object.freeze({
   '(': ')',
   '[': ']',
@@ -34,6 +48,32 @@ const CUBE_FACE_ORDER = Object.freeze(['front', 'right', 'back', 'left', 'top', 
 
 function isOperator(char) {
   return OPERATOR_SEQUENCE.includes(char);
+}
+
+/* '.' is ground only when immediately before '[' (e.g. .[property]).
+   '@' is always a perspective token — direction is determined by context. */
+function isExtendedOperator(char, nextChar, prevChar) {
+  if (char === '.') {
+    return nextChar === '[';
+  }
+  if (char === '@') {
+    return true;
+  }
+  return false;
+}
+
+/* Derive perspective direction for '@':
+   left@ (postfix) when preceded by word char  →  'postfix'  (flashlight)
+   @right (prefix) when followed by '['        →  'prefix'   (instantiation)
+   Otherwise 'neutral'. */
+function perspectiveDirection(prevChar, nextChar) {
+  if (nextChar === '[') {
+    return 'prefix';
+  }
+  if (prevChar && /[a-zA-Z0-9_]/.test(prevChar)) {
+    return 'postfix';
+  }
+  return 'neutral';
 }
 
 function isBrace(char) {
@@ -377,7 +417,11 @@ function buildTokenizedFragment(source, hostInteractive) {
 
   for (let i = 0; i < source.length; i += 1) {
     const char = source[i];
-    if (!isOperator(char) && !isBrace(char)) {
+    const nextChar = source[i + 1] || '';
+    const prevChar = source[i - 1] || '';
+    const extended = !isOperator(char) && !isBrace(char) && isExtendedOperator(char, nextChar, prevChar);
+
+    if (!isOperator(char) && !isBrace(char) && !extended) {
       if (!buffer) {
         bufferStart = i;
       }
@@ -393,16 +437,29 @@ function buildTokenizedFragment(source, hostInteractive) {
     span.dataset.spwIndex = String(i);
     span.tabIndex = hostInteractive ? -1 : 0;
 
+    const role = OPERATOR_ROLES[char];
+    if (role) {
+      span.dataset.spwRole = role.role;
+    }
+
     const token = { el: span, sourceIndex: i, char };
     tokens.push(token);
 
-    if (isOperator(char)) {
+    if (isOperator(char) || extended) {
       span.classList.add('spw-operator');
-      if (!hostInteractive) {
-        span.setAttribute('role', 'button');
-        span.setAttribute('aria-label', `Swap operator ${char}`);
+      if (char === '@') {
+        const dir = perspectiveDirection(prevChar, nextChar);
+        span.dataset.spwDirection = dir;
+        span.classList.add(`spw-perspective-${dir}`);
       }
-      operators.push(token);
+      if (!hostInteractive) {
+        const roleLabel = role ? role.label : char;
+        span.setAttribute('role', 'button');
+        span.setAttribute('aria-label', isOperator(char) ? `Swap operator ${char} (${roleLabel})` : `${roleLabel} operator ${char}`);
+      }
+      if (isOperator(char)) {
+        operators.push(token);
+      }
     }
 
     if (isBrace(char)) {
@@ -967,10 +1024,50 @@ function enhanceExpressionNode(node, announce) {
     if (controlWrap.childElementCount) {
       node.insertAdjacentElement('afterend', controlWrap);
     }
+
+    /* Drag-to-scope: click-drag across the expression creates a ( ) scope span.
+       A small scope chip appears after release and is committed to the register. */
+    let dragStarted = false;
+    node.addEventListener('mousedown', () => {
+      dragStarted = false;
+    });
+    node.addEventListener('mousemove', () => {
+      dragStarted = true;
+    });
+    node.addEventListener('mouseup', () => {
+      if (!dragStarted) {
+        return;
+      }
+      dragStarted = false;
+      const selected = selectionFromNode(node);
+      if (!selected || selected.split(/\s+/).length < 2) {
+        return;
+      }
+      const scopeText = `(${selected})`;
+      node.dataset.spwScope = scopeText;
+      node.classList.add('has-spw-scope');
+      const chip = document.createElement('span');
+      chip.className = 'spw-scope-chip';
+      chip.textContent = scopeText;
+      chip.setAttribute('role', 'status');
+      chip.setAttribute('aria-label', `Scope: ${scopeText}`);
+      node.insertAdjacentElement('afterend', chip);
+      registerControl.commitSelection(selected, null, null, { origin: 'drag-scope', scopeText });
+      setTimeout(() => {
+        chip.remove();
+        node.classList.remove('has-spw-scope');
+        delete node.dataset.spwScope;
+      }, 2800);
+      if (announce) {
+        announce(`Scope created: ${scopeText}`);
+      }
+    });
   }
 
   return true;
 }
+
+export { OPERATOR_ROLES };
 
 export function initSpwLanguageRuntime(options = {}) {
   ensureNativeSpwComponents();

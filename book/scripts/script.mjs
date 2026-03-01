@@ -408,7 +408,7 @@ function setupSpwHypertextRoutes(data, announce) {
   const shortcutHint = document.createElement('p');
   shortcutHint.className = 'spw-shortcut-hint';
   shortcutHint.textContent =
-    'Shortcuts: Alt+Left = prev chapter, Alt+Right = next chapter, PageUp/PageDown = section, Alt+H = home, Alt+T = timeline.';
+    'Shortcuts: Alt+Left/Right = chapter, PageUp/Down or [/] = section, hold { = breadth, hold } = depth, Alt+H = home, Alt+T = timeline.';
 
   const list = document.createElement('ul');
 

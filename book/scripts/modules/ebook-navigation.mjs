@@ -1119,6 +1119,54 @@ export function initEbookNavigation(chapterData, options = {}) {
     } else if (event.key === 'PageUp' || (event.altKey && event.key === 'ArrowUp')) {
       event.preventDefault();
       jumpRelative(-1, 'keyboard');
+    } else if (event.key === ']') {
+      /* ] click → next section (bracket navigation) */
+      event.preventDefault();
+      jumpRelative(1, 'bracket');
+    } else if (event.key === '[') {
+      /* [ click → previous section (bracket navigation) */
+      event.preventDefault();
+      jumpRelative(-1, 'bracket');
+    }
+  });
+
+  /* { / } hold — different navigation shape.
+     { (Shift+[) held → breadth mode: see all concept routes and perspectives.
+     } (Shift+]) held → depth mode: focus region / structural zoom.
+     These use separate listeners to bypass the shiftKey guard above. */
+  const NAV_HOLD_SHAPES = Object.freeze({ '{': 'breadth', '}': 'depth' });
+  const holdKeys = new Set();
+
+  const applyNavShape = () => {
+    const shape = holdKeys.has('{') ? 'breadth' : holdKeys.has('}') ? 'depth' : null;
+    if (shape) {
+      panel.dataset.navShape = shape;
+      document.body.dataset.ebookNavShape = shape;
+    } else {
+      delete panel.dataset.navShape;
+      delete document.body.dataset.ebookNavShape;
+    }
+  };
+
+  document.addEventListener('keydown', (event) => {
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
+      return;
+    }
+    const focused = document.activeElement;
+    const tagName = focused ? focused.tagName : '';
+    if (focused?.isContentEditable || tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT') {
+      return;
+    }
+    if (NAV_HOLD_SHAPES[event.key]) {
+      holdKeys.add(event.key);
+      applyNavShape();
+    }
+  });
+
+  document.addEventListener('keyup', (event) => {
+    if (NAV_HOLD_SHAPES[event.key]) {
+      holdKeys.delete(event.key);
+      applyNavShape();
     }
   });
 

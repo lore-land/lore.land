@@ -986,6 +986,42 @@ main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
   text-decoration: none;
 }
 
+/* ─── Operator role colors in ethos panel ────────────────────────────────── */
+.ethos-operator-token[data-spw-role="ground"]      { color: var(--spw-color-ground,      #7cb87e); }
+.ethos-operator-token[data-spw-role="vibration"]   { color: var(--spw-color-vibration,   #f0a0c8); }
+.ethos-operator-token[data-spw-role="handle"]      { color: var(--spw-color-handle,      #86d4f5); }
+.ethos-operator-token[data-spw-role="perspective"] { color: var(--spw-color-perspective, #f5d07a); }
+
+/* ─── Nav-shape panel visual state ──────────────────────────────────────── */
+.ebook-nav-panel[data-nav-shape="breadth"] {
+  border-color: rgba(134, 212, 245, 0.44);
+  box-shadow: 0 0 0 2px rgba(134, 212, 245, 0.14);
+}
+
+.ebook-nav-panel[data-nav-shape="depth"] {
+  border-color: rgba(240, 160, 200, 0.44);
+  box-shadow: 0 0 0 2px rgba(240, 160, 200, 0.14);
+}
+
+/* breadth: expand the concept rail into a more visible strip */
+.ebook-nav-panel[data-nav-shape="breadth"] .ebook-concept-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+/* depth: foreground the TOC and mute switches */
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-perspective-switch,
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-payload-switch,
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-syntax-switch {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-toc {
+  display: grid;
+}
+
 html[data-ebook-register="reader"] .chapter-byline {
   line-height: 1.8;
 }

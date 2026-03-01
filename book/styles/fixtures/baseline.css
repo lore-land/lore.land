@@ -964,6 +964,120 @@ html[data-genre~="boonhonk"] .spw-brace.is-active {
   }
 }
 
+/* ─── Spw operator role colors ───────────────────────────────────────────── */
+:root {
+  --spw-color-ground:      #7cb87e;  /* .  ground / property access            */
+  --spw-color-vibration:   #f0a0c8;  /* #  anchor / resonance                  */
+  --spw-color-handle:      #86d4f5;  /* &  handle / reference                  */
+  --spw-color-perspective: #f5d07a;  /* @  perspective / flashlight             */
+  --spw-color-bind:        #e5a7ff;  /* ^  bind (existing operator color)       */
+  --spw-color-dangle:      #ffb07a;  /* ~  dangling                             */
+  --spw-color-wonder:      #9fd8ff;  /* ?  wonder / inquiry                     */
+  --spw-color-exclaim:     #ff8a8a;  /* !  assertion                            */
+  --spw-color-wildcard:    #c8e6a0;  /* *  wildcard / combinatoric              */
+}
+
+/* Token role colors via data-spw-role attribute */
+.spw-operator[data-spw-role="ground"]      { color: var(--spw-color-ground); }
+.spw-operator[data-spw-role="vibration"]   { color: var(--spw-color-vibration); }
+.spw-operator[data-spw-role="handle"]      { color: var(--spw-color-handle); }
+.spw-operator[data-spw-role="perspective"] { color: var(--spw-color-perspective); }
+.spw-operator[data-spw-role="bind"]        { color: var(--spw-color-bind); }
+.spw-operator[data-spw-role="dangle"]      { color: var(--spw-color-dangle); }
+.spw-operator[data-spw-role="wonder"]      { color: var(--spw-color-wonder); }
+.spw-operator[data-spw-role="exclaim"]     { color: var(--spw-color-exclaim); }
+.spw-operator[data-spw-role="wildcard"]    { color: var(--spw-color-wildcard); }
+
+/* @ direction — left@ (flashlight) vs @right (instantiation) */
+.spw-operator[data-spw-direction="postfix"] {
+  color: var(--spw-color-perspective);
+  text-shadow: 0 0 0.55rem rgba(245, 208, 122, 0.45);
+  font-style: italic;
+}
+.spw-operator[data-spw-direction="prefix"] {
+  color: var(--spw-color-perspective);
+  text-shadow: 0 0 0.55rem rgba(245, 208, 122, 0.6);
+  font-weight: bold;
+}
+
+/* Hover glow per role */
+.spw-operator[data-spw-role="ground"]:hover,
+.spw-operator[data-spw-role="ground"]:focus-visible      { background: rgba(124, 184, 126, 0.18); }
+.spw-operator[data-spw-role="vibration"]:hover,
+.spw-operator[data-spw-role="vibration"]:focus-visible   { background: rgba(240, 160, 200, 0.2); }
+.spw-operator[data-spw-role="handle"]:hover,
+.spw-operator[data-spw-role="handle"]:focus-visible      { background: rgba(134, 212, 245, 0.2); }
+.spw-operator[data-spw-role="perspective"]:hover,
+.spw-operator[data-spw-role="perspective"]:focus-visible { background: rgba(245, 208, 122, 0.2); }
+
+/* ─── Drag-to-scope chip ─────────────────────────────────────────────────── */
+.spw-scope-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(124, 184, 126, 0.5);
+  border-radius: 999px;
+  background: rgba(124, 184, 126, 0.14);
+  color: var(--spw-color-ground);
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  padding: 0.16rem 0.5rem;
+  margin-inline-start: 0.32rem;
+  vertical-align: middle;
+  animation: spw-scope-appear 180ms ease both, spw-scope-fade 2.8s ease forwards;
+}
+
+.has-spw-scope {
+  outline: 1.5px dashed rgba(124, 184, 126, 0.44);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes spw-scope-appear {
+  from { opacity: 0; transform: translateY(3px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes spw-scope-fade {
+  0%, 72% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+
+/* ─── Navigation shape hold modes ───────────────────────────────────────── */
+/* breadth ({): expand concept rail, soften section filter opacity */
+body[data-ebook-nav-shape="breadth"] .ebook-concept-rail {
+  outline: 1.5px solid rgba(134, 212, 245, 0.5);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-small);
+}
+
+body[data-ebook-nav-shape="breadth"] .ebook-perspective-switch,
+body[data-ebook-nav-shape="breadth"] .ebook-concept-rail {
+  box-shadow: 0 0 0 2px rgba(134, 212, 245, 0.22);
+}
+
+body[data-ebook-nav-shape="breadth"] main.chapter > [data-ebook-section="true"] {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* depth (}): highlight active section, mute others */
+body[data-ebook-nav-shape="depth"] main.chapter > [data-ebook-section="true"]:not(.is-ebook-active) {
+  opacity: 0.38;
+  filter: saturate(0.7) blur(0.4px);
+  transition: opacity 200ms ease, filter 200ms ease;
+}
+
+body[data-ebook-nav-shape="depth"] main.chapter > [data-ebook-section="true"].is-ebook-active {
+  box-shadow: inset 3px 0 0 rgba(42, 111, 127, 0.66), var(--shadow-hover);
+  transition: box-shadow 200ms ease;
+}
+
+body[data-ebook-nav-shape="depth"] .ebook-toc {
+  outline: 1.5px solid rgba(240, 160, 200, 0.5);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-small);
+}
+
 @media (max-width: 700px) {
   body {
     padding: var(--spacing-medium);
