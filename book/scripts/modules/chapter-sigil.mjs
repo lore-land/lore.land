@@ -1,4 +1,4 @@
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.H';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
 
 function createTemplate(config) {
   const wrapper = document.createElement('article');
@@ -121,6 +121,21 @@ function createTemplate(config) {
       outline-offset: 1px;
     }
 
+    .spw-chunk {
+      border-radius: 4px;
+      transition: background-color 140ms ease, color 140ms ease;
+    }
+
+    .spw-chunk:hover,
+    .spw-chunk:focus-visible {
+      background: rgba(157, 228, 255, 0.16);
+    }
+
+    .spw-chunk:focus-visible {
+      outline: 2px solid rgba(112, 70, 161, 0.72);
+      outline-offset: 1px;
+    }
+
     .spw-brace,
     .spw-operator {
       cursor: pointer;
@@ -173,6 +188,74 @@ function createTemplate(config) {
       color: var(--color-text-alt, #45506b);
       font-size: 0.72rem;
       font-family: var(--font-family-heading, monospace);
+    }
+
+    .spw-register-controls {
+      display: grid;
+      gap: 0.32rem;
+      border: 1px solid rgba(42, 111, 127, 0.28);
+      border-radius: 9px;
+      padding: 0.4rem;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .spw-register-label,
+    .spw-cube-label,
+    .spw-cube-face-label,
+    .spw-cube-status {
+      margin: 0;
+      color: var(--color-text-alt, #45506b);
+      font-size: 0.7rem;
+      font-family: var(--font-family-heading, monospace);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .spw-handle-grid,
+    .spw-cube-axis {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .spw-handle-button,
+    .spw-cube-rotate,
+    .spw-cube-entry {
+      border: 1px solid rgba(42, 111, 127, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      font-size: 0.68rem;
+      line-height: 1;
+      padding: 0.2rem 0.52rem;
+      color: var(--color-accent-alt, #1c4f63);
+      font-family: var(--font-family-heading, monospace);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .spw-cube-face {
+      display: grid;
+      gap: 0.24rem;
+      grid-template-columns: repeat(auto-fit, minmax(8.2rem, 1fr));
+    }
+
+    .spw-cube-empty {
+      color: var(--color-text-alt, #45506b);
+      font-size: 0.7rem;
+      font-style: italic;
+    }
+
+    .spw-payload-inspector {
+      margin: 0;
+      border: 1px solid rgba(42, 111, 127, 0.24);
+      border-radius: 8px;
+      background: #142036;
+      color: #9de4ff;
+      font-size: 0.66rem;
+      line-height: 1.36;
+      padding: 0.4rem;
+      max-height: 12rem;
+      overflow: auto;
     }
   `;
 

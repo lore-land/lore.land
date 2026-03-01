@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_02_28.H';
+const CACHE_VERSION = 'lore-pwa-v2026_02_28.I';
 const OFFLINE_URL = '/book/pwa/offline.html';
 
 self.addEventListener('install', (event) => {
@@ -6,9 +6,9 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_VERSION).then(async (cache) => {
       await cache.addAll([
         OFFLINE_URL,
-        '/book/styles/fixtures/fonts.css?v=2026_02_28.H&ctx=canon:fonts',
-        '/book/styles/fixtures/baseline.css?v=2026_02_28.H&ctx=canon:baseline',
-        '/book/styles/fixtures/home.css?v=2026_02_28.H&ctx=home:scene'
+        '/book/styles/fixtures/fonts.css?v=2026_02_28.I&ctx=canon:fonts',
+        '/book/styles/fixtures/baseline.css?v=2026_02_28.I&ctx=canon:baseline',
+        '/book/styles/fixtures/home.css?v=2026_02_28.I&ctx=home:scene'
       ]);
     }).then(() => self.skipWaiting())
   );
