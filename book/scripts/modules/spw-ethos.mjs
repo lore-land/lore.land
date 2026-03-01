@@ -1,11 +1,19 @@
+/* Full v0.2.0-alpha operator table.
+   spirit_sequence phases: ! (0), ? (1), ~ (2), @ (3), & (4), * (5), ^ (6)
+   accessor polarity:  # = extrinsic/projection,  . = intrinsic/reduction */
 const OPERATOR_ETHOS = Object.freeze([
-  { sigil: '?', role: 'probe', phase: '1' },
-  { sigil: '~', role: 'potential', phase: '2' },
-  { sigil: '@', role: 'perspective', phase: '3' },
-  { sigil: '&', role: 'confluence', phase: '4' },
-  { sigil: '*', role: 'value', phase: '5' },
-  { sigil: '^', role: 'integration', phase: '6' },
-  { sigil: '!', role: 'action', phase: '0' }
+  { sigil: '?', role: 'probe',       phase: '1',    polarity: null },
+  { sigil: '~', role: 'potential',   phase: '2',    polarity: null },
+  { sigil: '@', role: 'perspective', phase: '3',    polarity: null },
+  { sigil: '&', role: 'confluence',  phase: '4',    polarity: null },
+  { sigil: '*', role: 'value',       phase: '5',    polarity: null },
+  { sigil: '^', role: 'integration', phase: '6',    polarity: null },
+  { sigil: '!', role: 'action',      phase: '0',    polarity: null },
+  { sigil: '#', role: 'annotation',  phase: 'meta', polarity: 'extrinsic' },
+  { sigil: '.', role: 'ground',      phase: 'meta', polarity: 'intrinsic' },
+  { sigil: '=', role: 'config',      phase: 'bind', polarity: null },
+  { sigil: '%', role: 'measure',     phase: 'obs',  polarity: null },
+  { sigil: '$', role: 'substrate',   phase: 'meta', polarity: null }
 ]);
 
 const CLAIM_LAYERS = Object.freeze([
@@ -116,14 +124,22 @@ function createOperatorItem(entry) {
   const row = document.createElement('li');
   row.className = 'ethos-operator-item';
   row.dataset.sigil = entry.sigil;
+  if (entry.polarity) {
+    row.dataset.polarity = entry.polarity;
+  }
 
   const token = document.createElement('span');
   token.className = 'ethos-operator-token';
+  token.dataset.spwRole = entry.role;
+  if (entry.polarity) {
+    token.dataset.spwPolarity = entry.polarity;
+  }
   token.textContent = entry.sigil;
 
   const meta = document.createElement('span');
   meta.className = 'ethos-operator-meta';
-  meta.textContent = `${entry.role} • phase ${entry.phase}`;
+  const polarityNote = entry.polarity ? ` • ${entry.polarity}` : '';
+  meta.textContent = `${entry.role} • ${entry.phase}${polarityNote}`;
 
   row.append(token, meta);
   return row;

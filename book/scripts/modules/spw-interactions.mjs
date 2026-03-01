@@ -3,18 +3,36 @@ import { getSpwRegisterBank } from './spw-register-bank.mjs?v=2026_02_28.I';
 
 const OPERATOR_SEQUENCE = Object.freeze(['^', '&', '~', '?', '!', '#', '*']);
 
-/* Semantic role for each operator — ground (.), vibration (#), handle (&),
-   perspective (@) and the standard swap-cycle operators above. */
+/* Canonical Spw v0.2.0-alpha operator table.
+   spirit_sequence = ?~<#.>@(#.)&[#.]*{#.}^   (phase 0 = !, phases 1-6 = sequence above)
+   Accessor polarity: # = extrinsic/projection (surface-outward), . = intrinsic/reduction (structure-inward) */
 const OPERATOR_ROLES = Object.freeze({
-  '.': { role: 'ground',       label: 'ground',       description: 'property definition or access along an optimized path' },
-  '#': { role: 'vibration',    label: 'vibration',    description: 'anchor across resonance or aggregate sense' },
-  '&': { role: 'handle',       label: 'handle',       description: 'prefix / postfix handle or reference' },
-  '@': { role: 'perspective',  label: 'perspective',  description: 'left@ = flashlight context, @right = instantiation' },
-  '^': { role: 'bind',         label: 'bound',        description: 'bind operator' },
-  '~': { role: 'dangle',       label: 'dangling',     description: 'dangling / loose reference' },
-  '?': { role: 'wonder',       label: 'wonder',       description: 'question or open inquiry' },
-  '!': { role: 'exclaim',      label: 'assertion',    description: 'assertion or exclamation' },
-  '*': { role: 'wildcard',     label: 'wildcard',     description: 'combinatoric or wildcard' }
+  '?': { role: 'probe',       label: 'probe',       phase: 1, description: 'inspect, select, evaluate' },
+  '~': { role: 'potential',   label: 'potential',   phase: 2, description: 'defer, name, superpose' },
+  '@': { role: 'perspective', label: 'perspective', phase: 3, description: 'root scope / observer point — @path resolves from this anchor' },
+  '&': { role: 'confluence',  label: 'confluence',  phase: 4, description: 'merge, combine frames' },
+  '*': { role: 'value',       label: 'value',       phase: 5, description: 'collapse to concrete' },
+  '^': { role: 'integration', label: 'integration', phase: 6, description: 'bind upward, emit' },
+  '!': { role: 'action',      label: 'action',      phase: 0, description: 'fire effect, inject' },
+  '#': { role: 'annotation',  label: 'annotation',  phase: null, polarity: 'extrinsic', description: 'self-reference, resonance — extrinsic / projection accessor' },
+  '.': { role: 'ground',      label: 'ground',      phase: null, polarity: 'intrinsic', description: 'access, intrinsic state — intrinsic / reduction accessor' },
+  '=': { role: 'config',      label: 'config',      phase: null, description: 'constrain, bias state' },
+  '%': { role: 'measure',     label: 'measure',     phase: null, description: 'quantify, observe depth' },
+  '$': { role: 'substrate',   label: 'substrate',   phase: null, description: 'introspection, meta-access' }
+});
+
+/* Brace-first container model (Spw v0.2.0-alpha).
+   Left brace = accumulate charge; right brace = discharge.
+   spirit roles: <#.> capsule, (#.) scope, [#.] frame, {#.} body */
+const CONTAINER_ROLES = Object.freeze({
+  '[': { name: 'frame',   role: 'selection',  charge: '+selection',   spirit: '[#.]', description: 'selection, ordered, indexable' },
+  ']': { name: 'frame',   role: 'selection',  charge: '-release',     spirit: '[#.]', description: 'release selection' },
+  '{': { name: 'body',    role: 'scope',      charge: '+tension',     spirit: '{#.}', description: 'scope, fundamental container — accumulates semantic mass' },
+  '}': { name: 'body',    role: 'scope',      charge: '-discharge',   spirit: '{#.}', description: 'discharge body — collapses field into unit' },
+  '(': { name: 'scope',   role: 'grouping',   charge: '+containment', spirit: '(#.)', description: 'grouping, parenthetical — captures flow' },
+  ')': { name: 'scope',   role: 'grouping',   charge: '-emission',    spirit: '(#.)', description: 'emit — releases captured flow' },
+  '<': { name: 'capsule', role: 'channel',    charge: '+channel',     spirit: '<#.>', description: 'directed channel — names the coupling' },
+  '>': { name: 'capsule', role: 'channel',    charge: '-delivery',    spirit: '<#.>', description: 'delivery — completes the conduit' }
 });
 
 const OPEN_TO_CLOSE = Object.freeze({
@@ -464,9 +482,16 @@ function buildTokenizedFragment(source, hostInteractive) {
 
     if (isBrace(char)) {
       span.classList.add('spw-brace');
+      const container = CONTAINER_ROLES[char];
+      if (container) {
+        span.dataset.spwContainerRole = container.name;
+        span.dataset.spwCharge = container.charge;
+        span.classList.add(`spw-brace-${container.name}`);
+      }
       if (!hostInteractive) {
+        const containerLabel = container ? `${container.name} ${container.charge}` : char;
         span.setAttribute('role', 'button');
-        span.setAttribute('aria-label', `Trace brace ${char}`);
+        span.setAttribute('aria-label', `Trace brace ${char} (${containerLabel})`);
       }
       const brace = {
         ...token,
@@ -1067,7 +1092,7 @@ function enhanceExpressionNode(node, announce) {
   return true;
 }
 
-export { OPERATOR_ROLES };
+export { OPERATOR_ROLES, CONTAINER_ROLES };
 
 export function initSpwLanguageRuntime(options = {}) {
   ensureNativeSpwComponents();

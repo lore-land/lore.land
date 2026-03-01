@@ -22,24 +22,55 @@ This project integrates Spw kernel ideas from:
 - `book/scripts/modules/spw-ethos.mjs`
   Shared ethos bridge for chapter + home surfaces. Encodes operator-phase roles, claim layers (`grammar`, `semantics`, `pragmatics`), and claim-chain UI (`claim -> spec -> impl -> probe`) inspired by `spw-workbench/.spw/harness/claim-protocol.spw`.
 
-### Operator Semantics
+### Operator Semantics (v0.2.0-alpha)
 
-Each Spw operator carries a semantic role. Roles are declared in `OPERATOR_ROLES` (exported from `spw-interactions.mjs`) and annotated on every rendered token via `data-spw-role`.
+12 sigils — each with one semantic role. Declared in `OPERATOR_ROLES` (exported from `spw-interactions.mjs`); every rendered token carries `data-spw-role`.
 
-| Operator | Role        | Meaning                                                      |
-|----------|-------------|--------------------------------------------------------------|
-| `.`      | ground      | Property definition or access along an optimized path        |
-| `#`      | vibration   | Anchor across resonance or aggregate sense                   |
-| `&`      | handle      | Prefix or postfix handle / reference                         |
-| `@`      | perspective | Directional context: `left@` = flashlight, `@right` = instantiation |
-| `^`      | bind        | Bound operator — explicit linkage                            |
-| `~`      | dangle      | Dangling / loose reference                                   |
-| `?`      | wonder      | Open inquiry or question                                     |
-| `!`      | exclaim     | Assertion or exclamation                                     |
-| `*`      | wildcard    | Combinatoric or wildcard                                     |
+**Spirit sequence:** `?~<#.>@(#.)&[#.]*{#.}^`
 
+| Sigil | Role        | Phase | Polarity   | Meaning                                               |
+|:-----:|-------------|------:|------------|-------------------------------------------------------|
+| `!`   | action      | 0     |            | fire effect, inject                                   |
+| `?`   | probe       | 1     |            | inspect, select, evaluate                             |
+| `~`   | potential   | 2     |            | defer, name, superpose                                |
+| `@`   | perspective | 3     |            | root scope / observer point — `@path` resolves from anchor |
+| `&`   | confluence  | 4     |            | merge, combine frames                                 |
+| `*`   | value       | 5     |            | collapse to concrete                                  |
+| `^`   | integration | 6     |            | bind upward, emit                                     |
+| `#`   | annotation  | meta  | extrinsic  | self-reference, resonance — projection / outward      |
+| `.`   | ground      | meta  | intrinsic  | access, intrinsic state — reduction / inward          |
+| `=`   | config      | bind  |            | constrain, bias state                                 |
+| `%`   | measure     | obs   |            | quantify, observe depth                               |
+| `$`   | substrate   | meta  |            | introspection, meta-access                            |
+
+Accessor polarity: `#` → extrinsic/projection (outward-facing), `.` → intrinsic/reduction (inward-facing).
 `.` is tokenized only when immediately before `[` (e.g. `.[property]`), preserving normal prose dots.
-`@` carries a `data-spw-direction` attribute: `prefix` (`@right`, instantiation) or `postfix` (`left@`, flashlight/perspective).
+`@` carries `data-spw-direction`: `prefix` (path target right) or `postfix` (observer anchored left).
+
+### Container Semantics (Brace-First)
+
+Braces are primordial semantic constructs, not punctuation. Left brace = accumulate charge; right brace = discharge.
+
+| Brace  | Name    | Role       | Spirit  | Left charge      | Right charge  |
+|:------:|---------|------------|---------|------------------|---------------|
+| `[ ]`  | frame   | selection  | `[#.]`  | +selection       | −release      |
+| `{ }`  | body    | scope      | `{#.}`  | +tension         | −discharge    |
+| `( )`  | scope   | grouping   | `(#.)`  | +containment     | −emission     |
+| `< >`  | capsule | channel    | `<#.>`  | +channel         | −delivery     |
+
+Container roles are exported from `spw-interactions.mjs` as `CONTAINER_ROLES`; every brace token carries `data-spw-container-role` and `data-spw-charge`.
+
+### 3-Layer Kernel
+
+Dependency flows inward: `pragmatics → semantics → grammar` (never reversed).
+
+| Layer        | Owns                                | Surfaces                  |
+|--------------|-------------------------------------|---------------------------|
+| **Grammar**  | operators, containers, seeds, tokens | `src/seed/`, `core/*.md`  |
+| **Semantics**| planes, axes, polarity, spirit seq  | `registries/`, `applications/` |
+| **Pragmatics**| shelves, editing, biome, process   | `conventions/`, `patterns/`|
+
+Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantics` → `^`, `pragmatics` → `!`.
 
 ### Model Ebook Navigation
 

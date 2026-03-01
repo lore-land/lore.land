@@ -986,11 +986,22 @@ main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
   text-decoration: none;
 }
 
-/* ─── Operator role colors in ethos panel ────────────────────────────────── */
+/* ─── Operator role colors in ethos panel (v0.2.0 names) ────────────────── */
 .ethos-operator-token[data-spw-role="ground"]      { color: var(--spw-color-ground,      #7cb87e); }
-.ethos-operator-token[data-spw-role="vibration"]   { color: var(--spw-color-vibration,   #f0a0c8); }
-.ethos-operator-token[data-spw-role="handle"]      { color: var(--spw-color-handle,      #86d4f5); }
+.ethos-operator-token[data-spw-role="annotation"]  { color: var(--spw-color-annotation,  #f0a0c8); }
+.ethos-operator-token[data-spw-role="confluence"]  { color: var(--spw-color-confluence,  #86d4f5); }
 .ethos-operator-token[data-spw-role="perspective"] { color: var(--spw-color-perspective, #f5d07a); }
+.ethos-operator-token[data-spw-role="integration"] { color: var(--spw-color-integration, #e5a7ff); }
+.ethos-operator-token[data-spw-role="potential"]   { color: var(--spw-color-potential,   #ffb07a); }
+.ethos-operator-token[data-spw-role="probe"]       { color: var(--spw-color-probe,       #9fd8ff); }
+.ethos-operator-token[data-spw-role="action"]      { color: var(--spw-color-action,      #ff8a8a); }
+.ethos-operator-token[data-spw-role="value"]       { color: var(--spw-color-value,       #c8e6a0); }
+.ethos-operator-token[data-spw-role="config"]      { color: var(--spw-color-config,      #b8d4a8); }
+.ethos-operator-token[data-spw-role="measure"]     { color: var(--spw-color-measure,     #a8c8e8); }
+.ethos-operator-token[data-spw-role="substrate"]   { color: var(--spw-color-substrate,   #d4b8f0); }
+/* polarity tints on ethos tokens */
+.ethos-operator-token[data-spw-polarity="extrinsic"] { font-style: italic; }
+.ethos-operator-token[data-spw-polarity="intrinsic"] { font-weight: bold; }
 
 /* ─── Nav-shape panel visual state ──────────────────────────────────────── */
 .ebook-nav-panel[data-nav-shape="breadth"] {

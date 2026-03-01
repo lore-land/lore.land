@@ -964,31 +964,52 @@ html[data-genre~="boonhonk"] .spw-brace.is-active {
   }
 }
 
-/* ─── Spw operator role colors ───────────────────────────────────────────── */
+/* ─── Spw v0.2.0-alpha operator role colors ─────────────────────────────── */
+/* spirit_sequence = ?~<#.>@(#.)&[#.]*{#.}^  (phase 0 = !) */
 :root {
-  --spw-color-ground:      #7cb87e;  /* .  ground / property access            */
-  --spw-color-vibration:   #f0a0c8;  /* #  anchor / resonance                  */
-  --spw-color-handle:      #86d4f5;  /* &  handle / reference                  */
-  --spw-color-perspective: #f5d07a;  /* @  perspective / flashlight             */
-  --spw-color-bind:        #e5a7ff;  /* ^  bind (existing operator color)       */
-  --spw-color-dangle:      #ffb07a;  /* ~  dangling                             */
-  --spw-color-wonder:      #9fd8ff;  /* ?  wonder / inquiry                     */
-  --spw-color-exclaim:     #ff8a8a;  /* !  assertion                            */
-  --spw-color-wildcard:    #c8e6a0;  /* *  wildcard / combinatoric              */
+  /* spirit-sequence phases 0-6 */
+  --spw-color-action:      #ff8a8a;  /* !  phase 0 — fire effect, inject        */
+  --spw-color-probe:       #9fd8ff;  /* ?  phase 1 — inspect, select, evaluate  */
+  --spw-color-potential:   #ffb07a;  /* ~  phase 2 — defer, name, superpose     */
+  --spw-color-perspective: #f5d07a;  /* @  phase 3 — root scope, observer point */
+  --spw-color-confluence:  #86d4f5;  /* &  phase 4 — merge, combine frames      */
+  --spw-color-value:       #c8e6a0;  /* *  phase 5 — collapse to concrete       */
+  --spw-color-integration: #e5a7ff;  /* ^  phase 6 — bind upward, emit          */
+  /* accessor / grammar operators */
+  --spw-color-annotation:  #f0a0c8;  /* #  extrinsic / projection accessor      */
+  --spw-color-ground:      #7cb87e;  /* .  intrinsic / reduction accessor       */
+  --spw-color-config:      #b8d4a8;  /* =  constrain, bias state                */
+  --spw-color-measure:     #a8c8e8;  /* %  quantify, observe depth              */
+  --spw-color-substrate:   #d4b8f0;  /* $  introspection, meta-access           */
+  /* container charge colors */
+  --spw-color-charge-pos: rgba(134, 212, 245, 0.18);  /* accumulate / open     */
+  --spw-color-charge-neg: rgba(245, 208, 122, 0.16);  /* discharge / close     */
 }
 
-/* Token role colors via data-spw-role attribute */
-.spw-operator[data-spw-role="ground"]      { color: var(--spw-color-ground); }
-.spw-operator[data-spw-role="vibration"]   { color: var(--spw-color-vibration); }
-.spw-operator[data-spw-role="handle"]      { color: var(--spw-color-handle); }
+/* Token role colors via data-spw-role */
+.spw-operator[data-spw-role="action"]      { color: var(--spw-color-action); }
+.spw-operator[data-spw-role="probe"]       { color: var(--spw-color-probe); }
+.spw-operator[data-spw-role="potential"]   { color: var(--spw-color-potential); }
 .spw-operator[data-spw-role="perspective"] { color: var(--spw-color-perspective); }
-.spw-operator[data-spw-role="bind"]        { color: var(--spw-color-bind); }
-.spw-operator[data-spw-role="dangle"]      { color: var(--spw-color-dangle); }
-.spw-operator[data-spw-role="wonder"]      { color: var(--spw-color-wonder); }
-.spw-operator[data-spw-role="exclaim"]     { color: var(--spw-color-exclaim); }
-.spw-operator[data-spw-role="wildcard"]    { color: var(--spw-color-wildcard); }
+.spw-operator[data-spw-role="confluence"]  { color: var(--spw-color-confluence); }
+.spw-operator[data-spw-role="value"]       { color: var(--spw-color-value); }
+.spw-operator[data-spw-role="integration"] { color: var(--spw-color-integration); }
+.spw-operator[data-spw-role="annotation"]  { color: var(--spw-color-annotation); }
+.spw-operator[data-spw-role="ground"]      { color: var(--spw-color-ground); }
+.spw-operator[data-spw-role="config"]      { color: var(--spw-color-config); }
+.spw-operator[data-spw-role="measure"]     { color: var(--spw-color-measure); }
+.spw-operator[data-spw-role="substrate"]   { color: var(--spw-color-substrate); }
 
-/* @ direction — left@ (flashlight) vs @right (instantiation) */
+/* Accessor polarity — # extrinsic (projection), . intrinsic (reduction) */
+.spw-operator[data-spw-role="annotation"] {
+  font-style: normal;
+  text-shadow: 0 0 0.42rem rgba(240, 160, 200, 0.4);
+}
+.spw-operator[data-spw-role="ground"] {
+  text-shadow: 0 0 0.36rem rgba(124, 184, 126, 0.38);
+}
+
+/* @ direction — postfix (observer anchored left) vs prefix (path target right) */
 .spw-operator[data-spw-direction="postfix"] {
   color: var(--spw-color-perspective);
   text-shadow: 0 0 0.55rem rgba(245, 208, 122, 0.45);
@@ -1002,13 +1023,36 @@ html[data-genre~="boonhonk"] .spw-brace.is-active {
 
 /* Hover glow per role */
 .spw-operator[data-spw-role="ground"]:hover,
-.spw-operator[data-spw-role="ground"]:focus-visible      { background: rgba(124, 184, 126, 0.18); }
-.spw-operator[data-spw-role="vibration"]:hover,
-.spw-operator[data-spw-role="vibration"]:focus-visible   { background: rgba(240, 160, 200, 0.2); }
-.spw-operator[data-spw-role="handle"]:hover,
-.spw-operator[data-spw-role="handle"]:focus-visible      { background: rgba(134, 212, 245, 0.2); }
+.spw-operator[data-spw-role="ground"]:focus-visible       { background: rgba(124, 184, 126, 0.18); }
+.spw-operator[data-spw-role="annotation"]:hover,
+.spw-operator[data-spw-role="annotation"]:focus-visible   { background: rgba(240, 160, 200, 0.2); }
+.spw-operator[data-spw-role="confluence"]:hover,
+.spw-operator[data-spw-role="confluence"]:focus-visible   { background: rgba(134, 212, 245, 0.2); }
 .spw-operator[data-spw-role="perspective"]:hover,
-.spw-operator[data-spw-role="perspective"]:focus-visible { background: rgba(245, 208, 122, 0.2); }
+.spw-operator[data-spw-role="perspective"]:focus-visible  { background: rgba(245, 208, 122, 0.2); }
+.spw-operator[data-spw-role="integration"]:hover,
+.spw-operator[data-spw-role="integration"]:focus-visible  { background: rgba(229, 167, 255, 0.2); }
+.spw-operator[data-spw-role="probe"]:hover,
+.spw-operator[data-spw-role="probe"]:focus-visible        { background: rgba(159, 216, 255, 0.2); }
+.spw-operator[data-spw-role="action"]:hover,
+.spw-operator[data-spw-role="action"]:focus-visible       { background: rgba(255, 138, 138, 0.2); }
+
+/* ─── Brace charge model ─────────────────────────────────────────────────── */
+/* Left braces accumulate (+charge); right braces discharge (−charge) */
+.spw-brace[data-spw-charge^="+"] {
+  background: var(--spw-color-charge-pos);
+}
+.spw-brace[data-spw-charge^="-"] {
+  background: var(--spw-color-charge-neg);
+}
+.spw-brace[data-spw-charge^="+"]:hover { background: rgba(134, 212, 245, 0.28); }
+.spw-brace[data-spw-charge^="-"]:hover { background: rgba(245, 208, 122, 0.24); }
+
+/* Active brace pair — enhance with container name */
+.spw-brace-frame.is-active   { background: rgba(159, 216, 255, 0.22); color: #dff9ff; }
+.spw-brace-body.is-active    { background: rgba(229, 167, 255, 0.22); color: #f5e8ff; }
+.spw-brace-scope.is-active   { background: rgba(124, 184, 126, 0.22); color: #dffce8; }
+.spw-brace-capsule.is-active { background: rgba(245, 208, 122, 0.22); color: #fff8d8; }
 
 /* ─── Drag-to-scope chip ─────────────────────────────────────────────────── */
 .spw-scope-chip {
