@@ -1,0 +1,40 @@
+# Lore.Land Domain Architecture
+#>lore_land_domain_architecture
+#:registry #!domains
+#:layer #!pragmatics
+
+^"producer_position"{
+  producer: "Spwashi"
+  medium: "generative ebooks and interactive publication"
+  thesis: "Human creativity scales when structure remains legible."
+}
+
+^"capacity"{
+  total_slots: 40
+  policy: "Use structural slots first. Map literal identities by context."
+}
+
+^"literal_valence_realms"{
+  boon: "boon.land"
+  bane: "bane.land"
+  bone: "bone.land"
+  bonk: "bonk.land"
+  honk: "honk.land"
+}
+
+^"clusters"{
+  valence_realms: { capacity: 8, role: "world-state semantics" }
+  spw_core_network: { capacity: 12, role: "kernel, parser, routing, runtime" }
+  mindful_social_play: { capacity: 8, role: "non-compulsive progression" }
+  absurd_earnest_labs: { capacity: 6, role: "prompt engines for wonder" }
+  trope_knowledge_commons: { capacity: 6, role: "pattern and reference commons" }
+}
+
+^"routing"{
+  lore_land: { pipeline: "default", selector: "$^[\"_\"]@spw/chapters" }
+  boon_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+  bane_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+  bone_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+  bonk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+  honk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+}

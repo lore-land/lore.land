@@ -1,0 +1,32 @@
+# Lore.Land Runtime Precipitants
+#>lore_land_runtime_precipitants
+#:manifest #!pipeline
+#:layer #!semantics
+
+^"stages"[
+  desugar:   { input: "string", output: "string", delta: "rewrite sugar" }
+  parse:     { input: "string", output: "AST",    delta: "token to tree" }
+  normalize: { input: "AST",    output: "ONF",    delta: "tree to canonical sigils" }
+  interpret: { input: "ONF",    output: "Value",  delta: "register writes and result" }
+]
+
+^"lifecycle_bridge"{
+  boon: { role: "prime assets and preloader", maps_to: ["desugar"] }
+  bane: { role: "fallback and spinner path", maps_to: ["parse", "normalize", "interpret"] }
+  bone: { role: "skeleton and shape certainty", maps_to: ["parse", "normalize"] }
+  bonk: { role: "spacing and acoustics checks", maps_to: ["normalize", "interpret"] }
+  honk: { role: "resolved harmony", maps_to: ["interpret"] }
+}
+
+^"invariants"{
+  i01: "Each stage can be rendered to inspectable Spw text."
+  i02: "Chapter and home surfaces expose the same stage vocabulary."
+  i03: "Fallback does not hide parse and normalize diagnostics."
+}
+
+^"bindings"{
+  runtime_ui: "book/scripts/modules/spw-interactions.mjs"
+  ethos_ui: "book/scripts/modules/spw-ethos.mjs"
+  home_lifecycle: "book/scripts/home/app.mjs"
+  chapter_lifecycle: "book/scripts/script.mjs"
+}

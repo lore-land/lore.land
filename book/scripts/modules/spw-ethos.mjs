@@ -1,3 +1,5 @@
+import { describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
+
 /* Full v0.2.0-alpha operator table.
    spirit_sequence phases: ! (0), ? (1), ~ (2), @ (3), & (4), * (5), ^ (6)
    accessor polarity:  # = extrinsic/projection,  . = intrinsic/reduction */
@@ -30,7 +32,7 @@ const CLAIMS = Object.freeze([
     hypothesis: 'L/R brace anchors should remain symmetrically explorable.',
     measure: 'Handle traversal and selection parity in chapter controls.',
     falsification: 'Asymmetry drift over 15% between left and right traversals.',
-    specRef: 'spw-workbench: lib/spw-v0.2.0-alpha/core/CONTAINERS.md',
+    specRef: 'spw-workbench: .spw/surfaces/publish.spw#projection_rules',
     implRef: 'lore.land: book/scripts/modules/spw-interactions.mjs',
     probeRef: 'lore.land: lore:spw-selection + ebook handle inspector'
   },
@@ -40,7 +42,7 @@ const CLAIMS = Object.freeze([
     hypothesis: '# and . should keep readable projection/ground polarity.',
     measure: 'Interpretability of route and register handles by layer.',
     falsification: 'Less than 70% role clarity in mixed route contexts.',
-    specRef: 'spw-workbench: lib/spw-v0.2.0-alpha/core/OPERATORS.md',
+    specRef: 'spw-workbench: .spw/runtime/precipitants.spw#stages',
     implRef: 'lore.land: book/scripts/modules/ebook-navigation.mjs',
     probeRef: 'lore.land: concept routes + payload readout'
   },
@@ -50,9 +52,19 @@ const CLAIMS = Object.freeze([
     hypothesis: 'Raw Spw expressions should stay legible without custom renderers.',
     measure: 'Reader can infer intent from visible route/claim expressions.',
     falsification: 'More than 20% of chapter expressions require hidden UI context.',
-    specRef: 'spw-workbench: .spw/workspace.spw#process',
+    specRef: 'spw-workbench: .spw/state/observable.spw',
     implRef: 'lore.land: README + chapter/home runtime panels',
     probeRef: 'lore.land: section navigation + grammar observatory'
+  },
+  {
+    id: 'c004-pipeline-alignment',
+    layer: 'semantics',
+    hypothesis: 'Load lifecycle labels should map clearly to pipeline stage semantics.',
+    measure: 'Status text keeps a stable mapping between load and runtime stages.',
+    falsification: 'Readers cannot infer stage intent from on-screen stage labels.',
+    specRef: 'spw-workbench: .spw/surfaces/index.spw#pipeline_stages',
+    implRef: 'lore.land: book/scripts/home/app.mjs',
+    probeRef: 'lore.land: data-load-stage and runtime status chips'
   }
 ]);
 
@@ -253,6 +265,28 @@ export function initSpwEthosIntegration(options = {}) {
     });
   });
 
+  const applyLoadStage = (stage, detail = '') => {
+    const token = String(stage || '').trim();
+    if (!token) {
+      return;
+    }
+
+    const descriptor = describeLoadStage(token);
+    const pipelineStage = descriptor.pipelineStage || 'fallback';
+    const precipitantText = descriptor.precipitants.length
+      ? descriptor.precipitants.join(' + ')
+      : 'none';
+
+    panel.dataset.loadStage = token;
+    panel.dataset.pipelineStage = pipelineStage;
+    panel.dataset.precipitantStages = descriptor.precipitants.join(',');
+
+    const detailSuffix = detail ? ` (${detail})` : '';
+    status.textContent =
+      `Lifecycle probe: ${formatExpression('%', 'stage', `${token}->${pipelineStage}`)} • ` +
+      `${precipitantText}${detailSuffix}`;
+  };
+
   const onSelection = (event) => {
     const detail = event.detail || {};
     const handle = String(detail.handle || '').trim();
@@ -272,16 +306,20 @@ export function initSpwEthosIntegration(options = {}) {
     status.textContent = `Chapter probe: ${formatExpression('&', 'section', `s${String(index).padStart(2, '0')}`)}`;
   };
 
+  const onLoadStage = (event) => {
+    const detail = event.detail || {};
+    applyLoadStage(detail.stage || '', detail.detail || '');
+  };
+
   window.addEventListener('lore:spw-selection', onSelection);
   window.addEventListener('lore:ebook-section-change', onSectionChange);
+  window.addEventListener('lore:load-stage', onLoadStage);
 
   const stageSource = root?.body || document.body;
   const observer = stageSource
     ? new MutationObserver(() => {
         const stage = stageSource.dataset.loadStage || '';
-        if (stage) {
-          panel.dataset.loadStage = stage;
-        }
+        applyLoadStage(stage);
       })
     : null;
 
@@ -290,7 +328,7 @@ export function initSpwEthosIntegration(options = {}) {
       attributes: true,
       attributeFilter: ['data-load-stage']
     });
-    panel.dataset.loadStage = stageSource.dataset.loadStage || '';
+    applyLoadStage(stageSource.dataset.loadStage || '');
   }
 
   applyLayer('all', false);
@@ -300,6 +338,7 @@ export function initSpwEthosIntegration(options = {}) {
     destroy: () => {
       window.removeEventListener('lore:spw-selection', onSelection);
       window.removeEventListener('lore:ebook-section-change', onSectionChange);
+      window.removeEventListener('lore:load-stage', onLoadStage);
       if (observer) {
         observer.disconnect();
       }

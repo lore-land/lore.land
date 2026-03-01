@@ -12,6 +12,9 @@
   chapters: "@spw/chapters/index.spw"
   claims: "@spw/claims/chapter-claims.spw"
   process: "@spw/workspace.spw"
+  surfaces: "@spw/surfaces/index.spw"
+  runtime: "@spw/runtime/precipitants.spw"
+  observable: "@spw/state/observable.spw"
 }
 
 ~navigation{

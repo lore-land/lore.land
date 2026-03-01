@@ -6,7 +6,7 @@
   grammar: {
     claim_id: "lore-c001-brace-legibility"
     hypothesis: "Section handles remain understandable in prefix and postfix form."
-    spec_ref: "spw-workbench/lib/spw-v0.2.0-alpha/core/CONTAINERS.md"
+    spec_ref: "spw-workbench/.spw/surfaces/publish.spw#projection_rules"
     impl_ref: "book/scripts/modules/ebook-navigation.mjs"
     probe_ref: "lore:ebook-section-change"
   }
@@ -14,7 +14,7 @@
   semantics: {
     claim_id: "lore-c002-route-polarity"
     hypothesis: "Route and register sigils preserve perspective semantics across chapter/home surfaces."
-    spec_ref: "spw-workbench/lib/spw-v0.2.0-alpha/core/OPERATORS.md"
+    spec_ref: "spw-workbench/.spw/runtime/precipitants.spw#stages"
     impl_ref: "book/scripts/modules/spw-ethos.mjs"
     probe_ref: "lore:spw-selection"
   }
@@ -22,8 +22,16 @@
   pragmatics: {
     claim_id: "lore-c003-plain-text-story"
     hypothesis: "A chapter can be extended by reading only raw chapter .spw files."
-    spec_ref: ".spw/chapters/index.spw"
+    spec_ref: "spw-workbench/.spw/state/observable.spw"
     impl_ref: "book/chapter/*/index.html"
     probe_ref: "manual extension review"
+  }
+
+  pipeline: {
+    claim_id: "lore-c004-pipeline-alignment"
+    hypothesis: "Lore load lifecycle stays mappable to select-transform-validate-emit semantics."
+    spec_ref: "spw-workbench/.spw/surfaces/index.spw#pipeline_stages"
+    impl_ref: "book/scripts/home/app.mjs"
+    probe_ref: "data-load-stage + runtime stage status"
   }
 }

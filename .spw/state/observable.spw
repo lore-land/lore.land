@@ -1,0 +1,47 @@
+# Lore.Land Observable State
+#>lore_land_observable_state
+#:manifest #!metrics
+#:layer #!pragmatics
+
+^"cache"{
+  .. %[hit_ratio]      null
+  .. %[tier]           "warm"
+  .. %[context_token]  "2026_02_28.I"
+}
+
+^"runtime"{
+  .. %[stage]            "idle"
+  .. %[selection_count]  0
+  .. %[active_handle]    null
+}
+
+^"file"{
+  .. %[frame_count]          null
+  .. %[annotation_density]   null
+  .. %[brace_depth_max]      null
+}
+
+^"lifecycle"{
+  .. %[boon_count]  0
+  .. %[bane_count]  0
+  .. %[bone_count]  0
+  .. %[bonk_count]  0
+  .. %[honk_count]  0
+}
+
+^"chapter"{
+  .. %[current]        null
+  .. %[section_index]  0
+}
+
+^"wonder"{
+  .. %[total]         null
+  .. %[unique_ratio]  null
+}
+
+^"_meta"{
+  schema: "lore.observable.v1"
+  refresh_policy: "on-navigation-and-selection"
+  updated_at: null
+  updated_by: null
+}

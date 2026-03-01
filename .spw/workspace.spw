@@ -5,12 +5,15 @@
 ^intent{
   hypothesis: "Story pages are readable as prose and inspectable as Spw runtime systems."
   architecture: "chapter-json -> DOM runtime -> Spw handles -> ebook navigation -> ethos probes"
+  publish_surface: "select -> transform -> validate -> emit"
 }
 
 ^contracts{
   c001: "Keep chapter .spw references synced with chapter-data JSON."
   c002: "All navigation handles remain legible in plain text."
   c003: "Claim panels map interaction events to falsifiable status updates."
+  c004: "Runtime stage vocabulary remains consistent across chapter and home surfaces."
+  c005: "Observable metrics stay structurally stable for tools and LSP consumers."
 }
 
 &lifecycle{
@@ -24,4 +27,7 @@
 ~maintenance{
   regenerate: "node .spw/tools/export-chapters.mjs"
   source_of_truth: "book/chapter/*/index.html#chapter-data"
+  surfaces_registry: ".spw/surfaces/index.spw"
+  runtime_manifest: ".spw/runtime/precipitants.spw"
+  observable_state: ".spw/state/observable.spw"
 }

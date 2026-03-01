@@ -1,0 +1,49 @@
+# Lore.Land Plugin Protocol
+#>lore_land_plugin_protocol
+#:protocol #!extensibility
+#:layer #!pragmatics
+
+^"registration"{
+  template: {
+    name: "kebab-case plugin id"
+    version: "semver"
+    selectors: ["$-query patterns"]
+    output: "html | markdown | json | rss"
+    transform: "@spw/surfaces/plugins/<name>.spw"
+    hooks: {
+      before_select: "optional"
+      after_select: "optional"
+      before_transform: "optional"
+      after_transform: "optional"
+      before_emit: "optional"
+      after_emit: "optional"
+      on_error: "optional"
+    }
+  }
+}
+
+^"lifecycle"{
+  discovery: "scan .spw/surfaces/plugins/*.spw"
+  validation: "verify selectors and output format"
+  execution: "select -> transform -> emit"
+  composition: "explicit chaining only"
+}
+
+^"invariants"{
+  p01: "A workspace with zero plugins still publishes with default pipelines."
+  p02: "Plugin composition is explicit."
+  p03: "Backward compatibility of chapter references is required."
+}
+
+^"seed_plugins"{
+  "spw-wonder-rss": {
+    selectors: ["$?[\"_\"]@spw/chapters"]
+    output: "rss"
+    status: "planned"
+  }
+  "spw-chapter-diff": {
+    selectors: ["$^[\"chapter\"]@spw/chapters"]
+    output: "markdown"
+    status: "planned"
+  }
+}

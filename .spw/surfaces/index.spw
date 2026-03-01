@@ -1,0 +1,32 @@
+# Lore.Land Surfaces Registry
+#>lore_land_surfaces_index
+#:registry #!surfaces
+#:layer #!pragmatics
+
+^"surfaces"{
+  publish: "@spw/surfaces/publish.spw"
+  plugin_protocol: "@spw/surfaces/plugin-protocol.spw"
+  domains: "@spw/surfaces/domains.spw"
+}
+
+^"output_formats"{
+  html: { mime: "text/html", extension: ".html", use_case: "chapter and home reading surfaces" }
+  markdown: { mime: "text/markdown", extension: ".md", use_case: "long-form reference exports" }
+  json: { mime: "application/json", extension: ".json", use_case: "selector and metrics sidecars" }
+  rss: { mime: "application/rss+xml", extension: ".xml", use_case: "chapter progression feed" }
+}
+
+^"pipeline_stages"{
+  select: { input: "selector", output: "matched frames" }
+  transform: { input: "frames", output: "rendered artifacts" }
+  validate: { input: "artifacts", output: "validated artifacts" }
+  emit: { input: "validated artifacts", output: "publish targets" }
+}
+
+^"lifecycle_stage_aliases"{
+  boon: "select"
+  bone: "transform"
+  bonk: "validate"
+  honk: "emit"
+  bane: "fallback"
+}

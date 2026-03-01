@@ -8,6 +8,7 @@ This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
 - Local submodule in this workspace: `./spw-workbench`
+- Current submodule pin: `61d2b70`
 
 ### Runtime Bridge In lore.land
 
@@ -21,6 +22,8 @@ This project integrates Spw kernel ideas from:
   Shared runtime signal used by page-level UX to react to Spw handle/payload selections.
 - `book/scripts/modules/spw-ethos.mjs`
   Shared ethos bridge for chapter + home surfaces. Encodes operator-phase roles, claim layers (`grammar`, `semantics`, `pragmatics`), and claim-chain UI (`claim -> spec -> impl -> probe`) inspired by `spw-workbench/.spw/harness/claim-protocol.spw`.
+- `book/scripts/modules/load-lifecycle.mjs` + `book/scripts/modules/story-lexicon.mjs`
+  Lifecycle bridge now emits `valence -> pipeline -> precipitant` mappings (for example `boon -> select -> desugar`) from `.spw/surfaces/index.spw` and `.spw/runtime/precipitants.spw`.
 
 ### Operator Semantics (v0.2.0-alpha)
 
@@ -124,6 +127,13 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
   - `.spw/workspace.spw`
   - `.spw/chapters/index.spw`
   - `.spw/claims/chapter-claims.spw`
+- Runtime, surfaces, and observability:
+  - `.spw/runtime/precipitants.spw`
+  - `.spw/state/observable.spw`
+  - `.spw/surfaces/index.spw`
+  - `.spw/surfaces/publish.spw`
+  - `.spw/surfaces/plugin-protocol.spw`
+  - `.spw/surfaces/domains.spw`
 - Regeneration command:
   - `node .spw/tools/export-chapters.mjs`
 

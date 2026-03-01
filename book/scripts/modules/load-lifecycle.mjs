@@ -1,4 +1,4 @@
-import { VALENCE_PENTAD, mapLoadStageToLifecycleState } from './story-lexicon.mjs?v=2026_02_28.I';
+import { VALENCE_PENTAD, describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
 
 export const LOAD_STAGES = Object.freeze([...VALENCE_PENTAD]);
 
@@ -128,13 +128,22 @@ export function createLoadLifecycle(options = {}) {
       return;
     }
 
-    const lifecycleState = mapLoadStageToLifecycleState(stage);
+    const descriptor = describeLoadStage(stage);
+    const lifecycleState = descriptor.lifecycleState;
+    const pipelineStage = descriptor.pipelineStage;
+    const precipitantStages = descriptor.precipitants;
+    const stageRole = descriptor.role;
+
     root.dataset.loadStage = stage;
     root.dataset.lifecycleState = lifecycleState;
     root.dataset.spwValence = stage;
+    root.dataset.pipelineStage = pipelineStage || '';
+    root.dataset.precipitantStages = precipitantStages.join(',');
+    root.dataset.stageRole = stageRole || '';
 
     if (status) {
-      status.textContent = detail ? `${stage}: ${detail}` : stage;
+      const pipelineToken = pipelineStage ? ` -> ${pipelineStage}` : '';
+      status.textContent = detail ? `${stage}${pipelineToken}: ${detail}` : `${stage}${pipelineToken}`;
     }
 
     window.dispatchEvent(
@@ -143,6 +152,9 @@ export function createLoadLifecycle(options = {}) {
           stage,
           lifecycleState,
           valence: stage,
+          pipelineStage,
+          precipitantStages,
+          role: stageRole,
           detail
         }
       })
@@ -218,6 +230,9 @@ export function createLoadLifecycle(options = {}) {
     delete root.dataset.loadStage;
     delete root.dataset.lifecycleState;
     delete root.dataset.spwValence;
+    delete root.dataset.pipelineStage;
+    delete root.dataset.precipitantStages;
+    delete root.dataset.stageRole;
     root.removeAttribute('aria-busy');
   }
 

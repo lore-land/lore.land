@@ -1,6 +1,7 @@
 import { chapterManifest } from './data.mjs';
 import { seedManifest, seedSets, seedDimensions, chapterSeedMap } from './seeds.mjs';
-import { renderHero, renderTimeline, renderSeedAtlas, renderGrammarObservatory } from './ui.mjs';
+import { producerStructure } from './producer-structure.mjs';
+import { renderHero, renderTimeline, renderSeedAtlas, renderGrammarObservatory, renderProducerConstellation } from './ui.mjs';
 import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.I';
 import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.I';
 import {
@@ -16,6 +17,7 @@ import {
 } from '../modules/experience-core.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from '../modules/spw-ethos.mjs?v=2026_02_28.I';
+import { describeLoadStage } from '../modules/story-lexicon.mjs?v=2026_02_28.I';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -193,14 +195,26 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
     return;
   }
 
+  const DEFAULT_SELECTION_STATUS =
+    'Runtime bridge: select any Spw token or chapter grammar chip to sync focus.';
   const runtimeStatus = observatory.querySelector('#grammar-runtime-status');
   const chips = [...observatory.querySelectorAll('.grammar-chip[data-chapter]')];
   const cards = [...homeRoot.querySelectorAll('.chapter-card[data-chapter]')];
+  let selectionStatus = DEFAULT_SELECTION_STATUS;
+  let stageStatus = '';
 
   const updateRuntimeStatus = (text) => {
     if (runtimeStatus) {
       runtimeStatus.textContent = text;
     }
+  };
+
+  const renderRuntimeStatus = () => {
+    if (selectionStatus && stageStatus) {
+      updateRuntimeStatus(`${selectionStatus} | ${stageStatus}`);
+      return;
+    }
+    updateRuntimeStatus(selectionStatus || stageStatus || DEFAULT_SELECTION_STATUS);
   };
 
   const syncActiveHandle = (handle) => {
@@ -216,6 +230,27 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
       const active = token && source.includes(token);
       card.dataset.runtimeActive = active ? 'true' : 'false';
     });
+  };
+
+  const applyLoadStage = (stage, detail = '') => {
+    const token = String(stage || '').trim();
+    if (!token) {
+      return;
+    }
+
+    const descriptor = describeLoadStage(token);
+    const pipelineStage = descriptor.pipelineStage || 'fallback';
+    const precipitantText = descriptor.precipitants.length
+      ? descriptor.precipitants.join(' + ')
+      : 'none';
+
+    observatory.dataset.loadStage = token;
+    observatory.dataset.pipelineStage = pipelineStage;
+    observatory.dataset.precipitantStages = descriptor.precipitants.join(',');
+
+    const detailSuffix = detail ? ` (${detail})` : '';
+    stageStatus = `Lifecycle: ${token} -> ${pipelineStage} -> ${precipitantText}${detailSuffix}.`;
+    renderRuntimeStatus();
   };
 
   observatory.addEventListener('click', (event) => {
@@ -257,10 +292,23 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
     const handle = detail.handle || '';
     const contextOrigin = detail.payload?.context?.origin || 'selection';
     if (handle) {
-      updateRuntimeStatus(`Runtime bridge: ${handle} selected via ${contextOrigin}.`);
+      selectionStatus = `Runtime bridge: ${handle} selected via ${contextOrigin}.`;
+      renderRuntimeStatus();
       syncActiveHandle(handle);
     }
   });
+
+  window.addEventListener('lore:load-stage', (event) => {
+    const detail = event.detail || {};
+    applyLoadStage(detail.stage || '', detail.detail || '');
+  });
+
+  const initialStage = document.body.dataset.loadStage || document.documentElement.dataset.loadStage || '';
+  if (initialStage) {
+    applyLoadStage(initialStage);
+  } else {
+    renderRuntimeStatus();
+  }
 }
 
 function setupTimelineMotifAnnouncements(homeRoot, announce) {
@@ -410,6 +458,116 @@ function setupSeedAtlasInteractions(announce) {
   updateReward();
 }
 
+function setupProducerConstellation(homeRoot, announce) {
+  const section = homeRoot.querySelector('#producer-constellation');
+  if (!section) {
+    return;
+  }
+
+  const clusterSelect = section.querySelector('#producer-cluster-select');
+  const suggestButton = section.querySelector('#producer-slot-suggest');
+  const statusOutput = section.querySelector('#producer-slot-status');
+  const slotButtons = [...section.querySelectorAll('.producer-slot-button')];
+  const clusterCards = [...section.querySelectorAll('.producer-cluster-card[data-cluster]')];
+  const clusterLabelById = new Map(clusterCards.map((card) => {
+    const clusterId = card.dataset.cluster || '';
+    const clusterLabel = card.querySelector('h4')?.textContent || clusterId || 'cluster';
+    return [clusterId, clusterLabel];
+  }));
+
+  const setStatus = (text) => {
+    if (statusOutput) {
+      statusOutput.textContent = text;
+    }
+  };
+
+  const applyClusterFilter = (clusterId, spoken = false) => {
+    const selected = clusterId || 'all';
+    const clusterLabel = selected === 'all' ? 'all clusters' : (clusterLabelById.get(selected) || selected);
+    section.dataset.clusterFilter = selected;
+
+    slotButtons.forEach((slot) => {
+      const visible = selected === 'all' || slot.dataset.cluster === selected;
+      slot.hidden = !visible;
+      slot.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    });
+
+    clusterCards.forEach((card) => {
+      const active = selected === 'all' || card.dataset.cluster === selected;
+      card.dataset.active = active ? 'true' : 'false';
+      card.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    setStatus(
+      selected === 'all'
+        ? 'Structure view: all domain slots available.'
+        : `Structure view: ${clusterLabel} slots filtered.`
+    );
+
+    if (spoken && announce) {
+      announce(
+        selected === 'all'
+          ? 'Producer structure filter cleared.'
+          : `Producer structure filtered to ${clusterLabel}.`
+      );
+    }
+  };
+
+  if (clusterSelect) {
+    clusterSelect.addEventListener('change', () => {
+      applyClusterFilter(clusterSelect.value || 'all', true);
+    });
+  }
+
+  clusterCards.forEach((card) => {
+    const selectCard = () => {
+      const clusterId = card.dataset.cluster || 'all';
+      if (clusterSelect) {
+        clusterSelect.value = clusterId;
+      }
+      applyClusterFilter(clusterId, true);
+    };
+
+    card.addEventListener('click', selectCard);
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectCard();
+      }
+    });
+  });
+
+  slotButtons.forEach((slot) => {
+    slot.addEventListener('click', () => {
+      const slotId = slot.dataset.slotId || '';
+      const clusterId = slot.dataset.cluster || '';
+      section.dataset.activeSlot = slotId;
+      const clusterLabel = clusterLabelById.get(clusterId) || clusterId;
+      slotButtons.forEach((item) => item.setAttribute('aria-pressed', item === slot ? 'true' : 'false'));
+      setStatus(`Slot selected: ${slotId} in ${clusterLabel}. Map concrete naming by context.`);
+      if (announce) {
+        announce(`Producer slot selected: ${slotId}.`);
+      }
+    });
+  });
+
+  if (suggestButton) {
+    suggestButton.addEventListener('click', () => {
+      const visible = slotButtons.filter((slot) => !slot.hidden);
+      if (!visible.length) {
+        setStatus('No slots visible for this filter.');
+        return;
+      }
+      const pick = visible[Math.floor(Math.random() * visible.length)];
+      pick.focus({ preventScroll: true });
+      pick.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      pick.click();
+    });
+  }
+
+  applyClusterFilter('all', false);
+}
+
 function initHomepage() {
   const homeRoot = document.getElementById('home-app');
   if (!homeRoot) {
@@ -433,6 +591,7 @@ function initHomepage() {
     lifecycle.bone('skeletons loaded');
     renderHero(homeRoot, chapterManifest.length);
     renderTimeline(homeRoot, chapterManifest, chapterSeedMap(chapterManifest.length, '01'));
+    renderProducerConstellation(homeRoot, producerStructure);
     renderSeedAtlas(homeRoot, seedSets, seedManifest, seedDimensions);
     renderGrammarObservatory(homeRoot, chapterManifest);
     initSpwEthosIntegration({ context: 'home', container: homeRoot, root: document, announce });
@@ -440,6 +599,7 @@ function initHomepage() {
     setMoodStylesheet(announce);
     setupExperienceControls(homeRoot, announce);
     setupGrammarObservatory(homeRoot, announce);
+    setupProducerConstellation(homeRoot, announce);
     setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
     initSpwLanguageRuntime({ root: homeRoot, announce });

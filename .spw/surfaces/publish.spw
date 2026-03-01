@@ -1,0 +1,59 @@
+# Lore.Land Publish Surface
+#>lore_land_surfaces_publish
+#:surface #!publishing
+#:layer #!pragmatics
+
+^"projection_rules"{
+  chapter_html: {
+    source: "$^[\"chapter\"]@spw/chapters"
+    output: "html"
+    mapping: {
+      "^[\"chapter\"]{}": "<article data-spw-frame='chapter'>"
+      "~[\"section\"]{}": "<section data-spw-frame='section'>"
+      "?[\"...\"]{}": "<details class='spw-wonder'>"
+      "$%[metric]": "<data class='spw-metric' data-key='{metric}'>"
+    }
+  }
+
+  canon_markdown: {
+    source: "$^[\"_\"]@spw"
+    output: "markdown"
+    mapping: {
+      "^[\"name\"]{}": "## {name}"
+      "~#text": "{text}"
+      "!probe{}": "> Probe: {text}"
+    }
+  }
+
+  runtime_json: {
+    source: "$^[\"runtime\"]@spw/runtime"
+    output: "json"
+    mapping: {
+      "^[\"stages\"][]": "{ \"stages\": [...] }"
+      "^[\"lifecycle_bridge\"]{}": "{ \"lifecycle\": {...} }"
+    }
+  }
+}
+
+^"publishing_pipeline"{
+  default: {
+    select: { query: "$^[\"_\"]@spw/chapters" }
+    transform: { surface: "chapter_html" }
+    validate: { checks: ["no-broken-refs", "no-empty-frames"] }
+    emit: { target: "dist/publish/chapters/", format: "html" }
+  }
+
+  canon: {
+    select: { query: "$^[\"_\"]@spw" }
+    transform: { surface: "canon_markdown" }
+    validate: { checks: ["well-formed-markdown"] }
+    emit: { target: "dist/publish/canon/", format: "markdown" }
+  }
+
+  runtime: {
+    select: { query: "$^[\"runtime\"]@spw/runtime" }
+    transform: { surface: "runtime_json" }
+    validate: { checks: ["valid-json"] }
+    emit: { target: "dist/publish/runtime/", format: "json" }
+  }
+}

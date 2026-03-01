@@ -289,7 +289,8 @@ export function renderGrammarObservatory(root, chapters) {
   runtimeStatus.className = 'grammar-runtime-status';
   runtimeStatus.setAttribute('role', 'status');
   runtimeStatus.setAttribute('aria-live', 'polite');
-  runtimeStatus.textContent = 'Runtime bridge: select any Spw token or chapter grammar chip to sync focus.';
+  runtimeStatus.textContent =
+    'Runtime bridge: select any Spw token or chapter grammar chip to sync focus. Lifecycle mapping appears here.';
 
   section.append(heading, lead, switcher, ledger, sample, matrix, runtimeStatus);
   root.append(section);
@@ -418,4 +419,200 @@ export function renderSeedAtlas(root, seedSets, seedManifest, seedDimensions) {
 
   section.append(heading, lead, controls, reward, grid, atlasLink);
   root.append(section);
+}
+
+export function renderProducerConstellation(root, producerNetwork) {
+  if (!root || !producerNetwork) {
+    return;
+  }
+
+  const totalCapacity = Number(producerNetwork.totalDomainCapacity || 0);
+  const literalReferences = Array.isArray(producerNetwork.literalReferences)
+    ? producerNetwork.literalReferences
+    : [];
+  const literalReferenceText = literalReferences.length
+    ? literalReferences.join(',')
+    : 'mapped-literals';
+
+  const constellationSection = document.createElement('section');
+  constellationSection.id = 'producer-constellation';
+  constellationSection.className = 'producer-constellation';
+  constellationSection.dataset.component = 'producer-constellation';
+  constellationSection.dataset.reveal = 'enter';
+  constellationSection.dataset.totalCapacity = String(totalCapacity);
+  constellationSection.setAttribute('role', 'region');
+  constellationSection.setAttribute('aria-labelledby', 'producer-constellation-title');
+
+  const title = document.createElement('h2');
+  title.id = 'producer-constellation-title';
+  title.textContent = 'Producer Constellation';
+
+  const subtitle = document.createElement('p');
+  subtitle.className = 'producer-constellation-subtitle';
+  subtitle.textContent = 'Structure first. Literal domains by context.';
+
+  const intentText = document.createElement('p');
+  intentText.className = 'producer-intent';
+  intentText.textContent = producerNetwork.intent || '';
+
+  const guidanceText = document.createElement('p');
+  guidanceText.className = 'producer-guidance';
+  guidanceText.textContent = producerNetwork.guidance || '';
+
+  const skeletonExpression = document.createElement('pre');
+  skeletonExpression.className = 'motif-spw producer-skeleton';
+  skeletonExpression.dataset.spwExpression = 'true';
+  skeletonExpression.textContent = `^[producer/network]{
+  &[capacity]{domains:${totalCapacity}}
+  ^[literal]{${literalReferenceText}}
+  ~[policy]{structure first, selective literals}
+}`;
+
+  const principlesTitle = document.createElement('h3');
+  principlesTitle.className = 'producer-heading';
+  principlesTitle.textContent = 'Principles';
+
+  const principlesList = document.createElement('ul');
+  principlesList.className = 'producer-principles';
+  (producerNetwork.principles || []).forEach((principle) => {
+    const principleItem = document.createElement('li');
+    principleItem.textContent = principle;
+    principlesList.append(principleItem);
+  });
+
+  const clustersTitle = document.createElement('h3');
+  clustersTitle.className = 'producer-heading';
+  clustersTitle.textContent = 'Clusters';
+
+  const clusterList = document.createElement('div');
+  clusterList.className = 'producer-cluster-grid';
+  clusterList.setAttribute('role', 'group');
+  clusterList.setAttribute('aria-label', 'Producer clusters');
+
+  (producerNetwork.clusters || []).forEach((cluster) => {
+    const clusterCard = document.createElement('article');
+    clusterCard.className = 'producer-cluster-card';
+    clusterCard.setAttribute('role', 'button');
+    clusterCard.dataset.cluster = cluster.id;
+    clusterCard.setAttribute('aria-pressed', 'false');
+    clusterCard.setAttribute('tabindex', '0');
+    clusterCard.setAttribute('aria-label', `${cluster.label}. Capacity ${cluster.capacity}.`);
+
+    const clusterChip = document.createElement('p');
+    clusterChip.className = 'producer-cluster-chip';
+    clusterChip.dataset.spwExpression = 'true';
+    clusterChip.textContent = `^[cluster/${cluster.id}]{${cluster.capacity}}`;
+
+    const clusterName = document.createElement('h4');
+    clusterName.textContent = cluster.label;
+
+    const clusterMedium = document.createElement('p');
+    clusterMedium.className = 'producer-cluster-medium';
+    clusterMedium.textContent = cluster.medium;
+
+    const clusterExpression = document.createElement('pre');
+    clusterExpression.className = 'spw-snippet producer-cluster-snippet';
+    clusterExpression.textContent = cluster.spw;
+
+    clusterCard.append(clusterChip, clusterName, clusterMedium, clusterExpression);
+
+    if (Array.isArray(cluster.literalDomains) && cluster.literalDomains.length) {
+      const literalDomainRow = document.createElement('div');
+      literalDomainRow.className = 'producer-literal-domains';
+      literalDomainRow.setAttribute('aria-label', 'Literal domain references');
+      cluster.literalDomains.forEach((domain) => {
+        const domainToken = document.createElement('span');
+        domainToken.className = 'producer-literal-domain';
+        domainToken.dataset.spwExpression = 'true';
+        domainToken.textContent = `@[domain]{${domain}}`;
+        literalDomainRow.append(domainToken);
+      });
+      clusterCard.append(literalDomainRow);
+    }
+
+    clusterList.append(clusterCard);
+  });
+
+  const slotsTitle = document.createElement('h3');
+  slotsTitle.className = 'producer-heading';
+  slotsTitle.textContent = 'Domain Slots';
+
+  const slotControls = document.createElement('form');
+  slotControls.className = 'producer-slot-controls';
+  slotControls.setAttribute('aria-label', 'Producer domain slot controls');
+  slotControls.setAttribute('action', '#');
+
+  const clusterSelectLabel = document.createElement('label');
+  clusterSelectLabel.setAttribute('for', 'producer-cluster-select');
+  clusterSelectLabel.innerHTML = '<span>Cluster</span>';
+
+  const clusterSelect = document.createElement('select');
+  clusterSelect.id = 'producer-cluster-select';
+  clusterSelect.name = 'producer-cluster';
+
+  const allClustersOption = document.createElement('option');
+  allClustersOption.value = 'all';
+  allClustersOption.textContent = 'all clusters';
+  clusterSelect.append(allClustersOption);
+
+  (producerNetwork.clusters || []).forEach((cluster) => {
+    const clusterOption = document.createElement('option');
+    clusterOption.value = cluster.id;
+    clusterOption.textContent = cluster.label;
+    clusterSelect.append(clusterOption);
+  });
+
+  clusterSelectLabel.append(clusterSelect);
+
+  const suggestSlotButton = document.createElement('button');
+  suggestSlotButton.type = 'button';
+  suggestSlotButton.id = 'producer-slot-suggest';
+  suggestSlotButton.className = 'producer-slot-suggest';
+  suggestSlotButton.textContent = 'Suggest Slot';
+
+  slotControls.append(clusterSelectLabel, suggestSlotButton);
+
+  const slotStatus = document.createElement('p');
+  slotStatus.id = 'producer-slot-status';
+  slotStatus.className = 'producer-slot-status';
+  slotStatus.setAttribute('role', 'status');
+  slotStatus.setAttribute('aria-live', 'polite');
+  slotStatus.textContent = `${totalCapacity} slots ready. Map names by context.`;
+
+  const slotList = document.createElement('div');
+  slotList.className = 'producer-slot-grid';
+  slotList.setAttribute('role', 'list');
+  slotList.setAttribute('aria-label', 'Producer domain slots');
+
+  (producerNetwork.slots || []).forEach((slot) => {
+    const slotButton = document.createElement('button');
+    slotButton.type = 'button';
+    slotButton.className = 'producer-slot-button';
+    slotButton.setAttribute('role', 'listitem');
+    slotButton.dataset.slotId = slot.id;
+    slotButton.dataset.cluster = slot.clusterId;
+    slotButton.dataset.spwExpression = 'true';
+    slotButton.setAttribute('aria-pressed', 'false');
+    slotButton.setAttribute('aria-label', `${slot.id} in ${slot.clusterLabel}`);
+    slotButton.textContent = slot.spw;
+    slotList.append(slotButton);
+  });
+
+  constellationSection.append(
+    title,
+    subtitle,
+    intentText,
+    guidanceText,
+    skeletonExpression,
+    principlesTitle,
+    principlesList,
+    clustersTitle,
+    clusterList,
+    slotsTitle,
+    slotControls,
+    slotStatus,
+    slotList
+  );
+
+  root.append(constellationSection);
 }
