@@ -1,0 +1,3 @@
+[submodule "spw-workbench"]
+	path = spw-workbench
+	url = git@github.com:spwashi/spw-workbench.git
