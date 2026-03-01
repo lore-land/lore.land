@@ -111,18 +111,28 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
 
     const logline = document.createElement('p');
     logline.className = 'chapter-logline';
+    logline.dataset.spwLens = 'logline';
+    logline.setAttribute('role', 'button');
+    logline.tabIndex = 0;
     logline.textContent = buildChapterLogline(chapter, profile);
 
     const register = document.createElement('p');
     register.className = 'chapter-register';
+    register.dataset.spwLens = 'register';
+    register.setAttribute('role', 'button');
+    register.tabIndex = 0;
     register.textContent = `${profile.register} register • ${profile.id} syntax`;
 
     const verse = document.createElement('blockquote');
     verse.className = 'chapter-verse';
+    verse.dataset.spwLens = 'verse';
+    verse.setAttribute('role', 'button');
+    verse.tabIndex = 0;
     verse.textContent = buildChapterVerse(chapter, profile);
 
     const snippet = document.createElement('pre');
     snippet.className = 'spw-snippet';
+    snippet.tabIndex = 0;
     snippet.textContent = chapter.spw;
 
     const genericFigure = document.createElement('figure');
@@ -254,18 +264,28 @@ export function renderGrammarObservatory(root, chapters) {
 
   chapters.slice(0, 9).forEach((chapter, index) => {
     const profile = grammarProfileForChapter(chapter.number);
-    const chip = document.createElement('span');
+    const chip = document.createElement('button');
+    chip.type = 'button';
     chip.className = 'grammar-chip';
     chip.setAttribute('role', 'listitem');
     chip.dataset.grammarProfile = profile.id;
     chip.dataset.cadence = profile.cadence;
+    chip.dataset.chapter = String(chapter.number);
+    chip.dataset.spwHandle = chapter.spw;
     chip.dataset.reveal = 'enter';
     chip.style.setProperty('--reveal-delay', `${index * 55}ms`);
     chip.textContent = `${padChapter(chapter.number)} • ${profile.register}`;
     matrix.append(chip);
   });
 
-  section.append(heading, lead, switcher, ledger, sample, matrix);
+  const runtimeStatus = document.createElement('p');
+  runtimeStatus.id = 'grammar-runtime-status';
+  runtimeStatus.className = 'grammar-runtime-status';
+  runtimeStatus.setAttribute('role', 'status');
+  runtimeStatus.setAttribute('aria-live', 'polite');
+  runtimeStatus.textContent = 'Runtime bridge: select any Spw token or chapter grammar chip to sync focus.';
+
+  section.append(heading, lead, switcher, ledger, sample, matrix, runtimeStatus);
   root.append(section);
 }
 

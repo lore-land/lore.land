@@ -34,6 +34,7 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 - `book/scripts/modules/experience-core.mjs`: ARIA live status, preference persistence, progressive reveal, lazy-image enhancement, and service worker registration.
 - `book/scripts/modules/chapter-progression.mjs`: deterministic chapter rewards and unique chapter mode states (no streak loops / no addictive mechanics).
 - `book/scripts/home/seeds.mjs`: Midjourney seed manifest and chapter visual mapping.
+- `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions.
 
 ## Cache Context Model
 

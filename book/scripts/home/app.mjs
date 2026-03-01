@@ -161,6 +161,107 @@ function setupGrammarObservatory(homeRoot, announce) {
   applyMode(safeReadGrammarMode(), false);
 }
 
+function focusChapterSpw(card, announce, sourceLabel = 'runtime') {
+  if (!card) {
+    return;
+  }
+
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const snippet = card.querySelector('.spw-snippet');
+  if (!snippet) {
+    return;
+  }
+
+  const interactive = snippet.querySelector('.spw-chunk, .spw-token');
+  if (interactive instanceof HTMLElement) {
+    interactive.click();
+    interactive.focus({ preventScroll: true });
+  } else if (snippet instanceof HTMLElement) {
+    snippet.focus({ preventScroll: true });
+  }
+
+  if (announce) {
+    const chapterId = String(card.dataset.chapter || '').padStart(2, '0');
+    announce(`Spw runtime focus synced to chapter ${chapterId} via ${sourceLabel}.`);
+  }
+}
+
+function setupSpwRuntimeIntegration(homeRoot, announce) {
+  const observatory = homeRoot.querySelector('#grammar-observatory');
+  if (!observatory) {
+    return;
+  }
+
+  const runtimeStatus = observatory.querySelector('#grammar-runtime-status');
+  const chips = [...observatory.querySelectorAll('.grammar-chip[data-chapter]')];
+  const cards = [...homeRoot.querySelectorAll('.chapter-card[data-chapter]')];
+
+  const updateRuntimeStatus = (text) => {
+    if (runtimeStatus) {
+      runtimeStatus.textContent = text;
+    }
+  };
+
+  const syncActiveHandle = (handle) => {
+    const token = String(handle || '').trim();
+    chips.forEach((chip) => {
+      const active = token && (chip.dataset.spwHandle || '').includes(token);
+      chip.dataset.runtimeActive = active ? 'true' : 'false';
+    });
+
+    cards.forEach((card) => {
+      const snippet = card.querySelector('.spw-snippet');
+      const source = snippet?.dataset.spwSource || snippet?.textContent || '';
+      const active = token && source.includes(token);
+      card.dataset.runtimeActive = active ? 'true' : 'false';
+    });
+  };
+
+  observatory.addEventListener('click', (event) => {
+    const chip = event.target.closest('.grammar-chip[data-chapter]');
+    if (!chip) {
+      return;
+    }
+    const chapter = Number(chip.dataset.chapter || '0');
+    if (!chapter) {
+      return;
+    }
+    const card = homeRoot.querySelector(`.chapter-card[data-chapter="${chapter}"]`);
+    focusChapterSpw(card, announce, 'grammar-chip');
+  });
+
+  homeRoot.addEventListener('click', (event) => {
+    const lens = event.target.closest('[data-spw-lens]');
+    if (!lens) {
+      return;
+    }
+    const card = lens.closest('.chapter-card[data-chapter]');
+    focusChapterSpw(card, announce, lens.dataset.spwLens || 'chapter-lens');
+  });
+
+  homeRoot.addEventListener('keydown', (event) => {
+    const lens = event.target.closest('[data-spw-lens]');
+    if (!lens) {
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const card = lens.closest('.chapter-card[data-chapter]');
+      focusChapterSpw(card, announce, lens.dataset.spwLens || 'chapter-lens');
+    }
+  });
+
+  window.addEventListener('lore:spw-selection', (event) => {
+    const detail = event.detail || {};
+    const handle = detail.handle || '';
+    const contextOrigin = detail.payload?.context?.origin || 'selection';
+    if (handle) {
+      updateRuntimeStatus(`Runtime bridge: ${handle} selected via ${contextOrigin}.`);
+      syncActiveHandle(handle);
+    }
+  });
+}
+
 function setupTimelineMotifAnnouncements(homeRoot, announce) {
   if (!homeRoot) {
     return;
@@ -340,6 +441,7 @@ function initHomepage() {
     setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
     initSpwLanguageRuntime({ root: homeRoot, announce });
+    setupSpwRuntimeIntegration(homeRoot, announce);
     initAttentionDetails({ root });
     initSemanticShader({ root });
     initSpatialPerspective({ root });
