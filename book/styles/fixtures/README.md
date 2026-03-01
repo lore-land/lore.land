@@ -36,6 +36,7 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 - `book/scripts/home/seeds.mjs`: Midjourney seed manifest and chapter visual mapping.
 - `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions.
 - `book/scripts/modules/ebook-navigation.mjs`: model ebook layer (section hierarchy, concept handles, resume state, reader/engineer register mode).
+- `book/scripts/modules/spw-ethos.mjs`: claim-protocol bridge (layered claims + operator-phase ethos + probe status tied to runtime events).
 
 ## Cache Context Model
 

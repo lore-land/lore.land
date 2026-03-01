@@ -15,6 +15,7 @@ import {
   registerStoryServiceWorker
 } from '../modules/experience-core.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.I';
+import { initSpwEthosIntegration } from '../modules/spw-ethos.mjs?v=2026_02_28.I';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -434,6 +435,7 @@ function initHomepage() {
     renderTimeline(homeRoot, chapterManifest, chapterSeedMap(chapterManifest.length, '01'));
     renderSeedAtlas(homeRoot, seedSets, seedManifest, seedDimensions);
     renderGrammarObservatory(homeRoot, chapterManifest);
+    initSpwEthosIntegration({ context: 'home', container: homeRoot, root: document, announce });
 
     setMoodStylesheet(announce);
     setupExperienceControls(homeRoot, announce);

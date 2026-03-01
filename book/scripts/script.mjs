@@ -18,6 +18,7 @@ import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_02_28.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
     setupSpwHypertextRoutes(chapterData, announce);
+    initSpwEthosIntegration({ context: 'chapter', container: document.querySelector('aside'), announce });
     setupTuningControls(announce);
     setupMotifDiscovery(chapterData, announce);
     await mountChapterSigil(chapterData, announce);

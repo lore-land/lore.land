@@ -14,6 +14,7 @@ import {
 import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './chapter-links.mjs?v=2026_02_28.I';
+import { initSpwEthosIntegration } from './spw-ethos.mjs?v=2026_02_28.I';
 
 function readChapterData() {
   const source = document.getElementById('chapter-data');
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chapterData) {
       initEbookNavigation(chapterData, { announce });
     }
+    initSpwEthosIntegration({ context: 'chapter', container: document.querySelector('aside'), announce });
     initSpwLanguageRuntime({ root: document, announce });
     initAttentionDetails({ root });
     initSemanticShader({ root });

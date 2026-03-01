@@ -7,7 +7,7 @@ The official canon for lore.land.
 This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
-- Local mirror in this workspace: `src/extern/spw-workbench`
+- Local submodule in this workspace: `./spw-workbench`
 
 ### Runtime Bridge In lore.land
 
@@ -19,6 +19,8 @@ This project integrates Spw kernel ideas from:
   Interactive Spw runtime (clickable braces/operators/chunks, geometry controls, Rubik's Cube semantic faces, register controls).
 - `lore:spw-selection` event
   Shared runtime signal used by page-level UX to react to Spw handle/payload selections.
+- `book/scripts/modules/spw-ethos.mjs`
+  Shared ethos bridge for chapter + home surfaces. Encodes operator-phase roles, claim layers (`grammar`, `semantics`, `pragmatics`), and claim-chain UI (`claim -> spec -> impl -> probe`) inspired by `spw-workbench/.spw/harness/claim-protocol.spw`.
 
 ### Model Ebook Navigation
 
@@ -28,6 +30,12 @@ This project integrates Spw kernel ideas from:
   Composes chapter runtime: content mount -> chapter routes -> ebook navigation -> Spw runtime enhancement -> progression/effects.
 - `book/styles/fixtures/root.css`
   Styles hierarchy and navigation surfaces for both software-heavy and book-heavy reading modes.
+
+### Ethos Integration
+
+- Claim protocol ethos from `spw-workbench` is surfaced in-runtime as selectable claim layers and testable claim cards.
+- Chapter surfaces include an ethos panel in `aside` and home includes an ethos atlas near the grammar observatory.
+- Runtime events (`lore:spw-selection`, `lore:ebook-section-change`) update ethos probe status so claims stay tied to observable interaction.
 
 ### Cache + Release Coupling
 

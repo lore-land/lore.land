@@ -1,0 +1,293 @@
+const OPERATOR_ETHOS = Object.freeze([
+  { sigil: '?', role: 'probe', phase: '1' },
+  { sigil: '~', role: 'potential', phase: '2' },
+  { sigil: '@', role: 'perspective', phase: '3' },
+  { sigil: '&', role: 'confluence', phase: '4' },
+  { sigil: '*', role: 'value', phase: '5' },
+  { sigil: '^', role: 'integration', phase: '6' },
+  { sigil: '!', role: 'action', phase: '0' }
+]);
+
+const CLAIM_LAYERS = Object.freeze([
+  { id: 'all', label: 'all', sigil: '&' },
+  { id: 'grammar', label: 'grammar', sigil: '.' },
+  { id: 'semantics', label: 'semantics', sigil: '^' },
+  { id: 'pragmatics', label: 'pragmatics', sigil: '!' }
+]);
+
+const CLAIMS = Object.freeze([
+  {
+    id: 'c001-brace-symmetry',
+    layer: 'grammar',
+    hypothesis: 'L/R brace anchors should remain symmetrically explorable.',
+    measure: 'Handle traversal and selection parity in chapter controls.',
+    falsification: 'Asymmetry drift over 15% between left and right traversals.',
+    specRef: 'spw-workbench: lib/spw-v0.2.0-alpha/core/CONTAINERS.md',
+    implRef: 'lore.land: book/scripts/modules/spw-interactions.mjs',
+    probeRef: 'lore.land: lore:spw-selection + ebook handle inspector'
+  },
+  {
+    id: 'c002-accessor-polarity',
+    layer: 'semantics',
+    hypothesis: '# and . should keep readable projection/ground polarity.',
+    measure: 'Interpretability of route and register handles by layer.',
+    falsification: 'Less than 70% role clarity in mixed route contexts.',
+    specRef: 'spw-workbench: lib/spw-v0.2.0-alpha/core/OPERATORS.md',
+    implRef: 'lore.land: book/scripts/modules/ebook-navigation.mjs',
+    probeRef: 'lore.land: concept routes + payload readout'
+  },
+  {
+    id: 'c003-plain-text-legibility',
+    layer: 'pragmatics',
+    hypothesis: 'Raw Spw expressions should stay legible without custom renderers.',
+    measure: 'Reader can infer intent from visible route/claim expressions.',
+    falsification: 'More than 20% of chapter expressions require hidden UI context.',
+    specRef: 'spw-workbench: .spw/workspace.spw#process',
+    implRef: 'lore.land: README + chapter/home runtime panels',
+    probeRef: 'lore.land: section navigation + grammar observatory'
+  }
+]);
+
+function formatExpression(sigil, handle, payload) {
+  if (!payload) {
+    return `${sigil}[${handle}]`;
+  }
+  return `${sigil}[${handle}]{${payload}}`;
+}
+
+function classNameForContext(context) {
+  return context === 'home' ? 'spw-ethos-atlas' : 'spw-ethos-panel';
+}
+
+function titleForContext(context) {
+  return context === 'home' ? 'Spw Ethos Atlas' : 'Spw Ethos';
+}
+
+function subtitleForContext(context) {
+  if (context === 'home') {
+    return 'Architectural claims become visible probes: claim -> spec -> impl -> probe.';
+  }
+  return 'Live chapter contract: every language claim should map to a testable probe chain.';
+}
+
+function layerMatches(claim, layer) {
+  return layer === 'all' || claim.layer === layer;
+}
+
+function createClaimItem(claim, announce) {
+  const item = document.createElement('li');
+  item.className = 'ethos-claim-item';
+  item.dataset.layer = claim.layer;
+  item.dataset.claimId = claim.id;
+
+  const handle = document.createElement('button');
+  handle.type = 'button';
+  handle.className = 'ethos-claim-handle';
+  handle.dataset.spwExpression = 'true';
+  handle.textContent = formatExpression('^', `claim/${claim.layer}`, claim.id);
+  handle.setAttribute('aria-label', `Inspect claim ${claim.id}`);
+  handle.addEventListener('click', () => {
+    if (announce) {
+      announce(`Claim focus: ${claim.id}.`);
+    }
+  });
+
+  const hypothesis = document.createElement('p');
+  hypothesis.className = 'ethos-claim-line';
+  hypothesis.textContent = `Hypothesis: ${claim.hypothesis}`;
+
+  const measure = document.createElement('p');
+  measure.className = 'ethos-claim-line';
+  measure.textContent = `Measure: ${claim.measure}`;
+
+  const falsification = document.createElement('p');
+  falsification.className = 'ethos-claim-line';
+  falsification.textContent = `Falsification: ${claim.falsification}`;
+
+  const refs = document.createElement('p');
+  refs.className = 'ethos-claim-ref';
+  refs.textContent = `${claim.specRef} • ${claim.implRef} • ${claim.probeRef}`;
+
+  item.append(handle, hypothesis, measure, falsification, refs);
+  return item;
+}
+
+function createOperatorItem(entry) {
+  const row = document.createElement('li');
+  row.className = 'ethos-operator-item';
+  row.dataset.sigil = entry.sigil;
+
+  const token = document.createElement('span');
+  token.className = 'ethos-operator-token';
+  token.textContent = entry.sigil;
+
+  const meta = document.createElement('span');
+  meta.className = 'ethos-operator-meta';
+  meta.textContent = `${entry.role} • phase ${entry.phase}`;
+
+  row.append(token, meta);
+  return row;
+}
+
+export function initSpwEthosIntegration(options = {}) {
+  const context = options.context === 'home' ? 'home' : 'chapter';
+  const root = options.root || document;
+  const announce = options.announce;
+  const container =
+    options.container ||
+    (context === 'home' ? document.getElementById('home-app') : document.querySelector('aside'));
+
+  if (!container) {
+    return null;
+  }
+
+  const className = classNameForContext(context);
+  const existing = container.querySelector(`.${className}`);
+  if (existing) {
+    existing.remove();
+  }
+
+  const panel = document.createElement('section');
+  panel.className = className;
+  panel.dataset.component = 'spw-ethos';
+  panel.dataset.spwComponent = 'spw-ethos';
+  panel.dataset.claimLayer = 'all';
+  panel.setAttribute('aria-label', titleForContext(context));
+
+  const heading = document.createElement('h2');
+  heading.textContent = titleForContext(context);
+
+  const subtitle = document.createElement('p');
+  subtitle.className = 'ethos-subtitle';
+  subtitle.textContent = subtitleForContext(context);
+
+  const chain = document.createElement('pre');
+  chain.className = 'motif-spw ethos-chain';
+  chain.dataset.spwExpression = 'true';
+  chain.textContent = '^[claim-chain]{ claim -> spec -> impl -> probe }';
+
+  const layerControls = document.createElement('div');
+  layerControls.className = 'ethos-layer-switch';
+  layerControls.setAttribute('role', 'group');
+  layerControls.setAttribute('aria-label', 'Claim layer filter');
+
+  const layerButtons = CLAIM_LAYERS.map((layer) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'ethos-layer-button';
+    button.dataset.claimLayer = layer.id;
+    button.dataset.spwExpression = 'true';
+    button.textContent = formatExpression(layer.sigil, 'layer', layer.label);
+    button.setAttribute('aria-pressed', layer.id === 'all' ? 'true' : 'false');
+    layerControls.append(button);
+    return button;
+  });
+
+  const claimList = document.createElement('ul');
+  claimList.className = 'ethos-claim-list';
+  const claimItems = CLAIMS.map((claim) => createClaimItem(claim, announce));
+  claimItems.forEach((item) => claimList.append(item));
+
+  const operatorsHeading = document.createElement('h3');
+  operatorsHeading.className = 'ethos-operators-heading';
+  operatorsHeading.textContent = 'Operator ethos';
+
+  const operatorList = document.createElement('ul');
+  operatorList.className = 'ethos-operator-list';
+  OPERATOR_ETHOS.forEach((entry) => operatorList.append(createOperatorItem(entry)));
+
+  const status = document.createElement('p');
+  status.className = 'ethos-status';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  status.textContent = 'Ethos ready: waiting for runtime selection.';
+
+  panel.append(heading, subtitle, chain, layerControls, claimList, operatorsHeading, operatorList, status);
+
+  if (context === 'home') {
+    const anchor = container.querySelector('#grammar-observatory');
+    if (anchor) {
+      anchor.insertAdjacentElement('afterend', panel);
+    } else {
+      container.append(panel);
+    }
+  } else {
+    container.append(panel);
+  }
+
+  const applyLayer = (layer, spoken = false) => {
+    const nextLayer = CLAIM_LAYERS.some((entry) => entry.id === layer) ? layer : 'all';
+    panel.dataset.claimLayer = nextLayer;
+    layerButtons.forEach((button) => {
+      const active = button.dataset.claimLayer === nextLayer;
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    claimItems.forEach((item) => {
+      item.hidden = !layerMatches({ layer: item.dataset.layer || '' }, nextLayer);
+    });
+    status.textContent = `Claim layer: ${nextLayer}.`;
+    if (spoken && announce) {
+      announce(`Ethos layer set to ${nextLayer}.`);
+    }
+  };
+
+  layerButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applyLayer(button.dataset.claimLayer || 'all', true);
+    });
+  });
+
+  const onSelection = (event) => {
+    const detail = event.detail || {};
+    const handle = String(detail.handle || '').trim();
+    if (!handle) {
+      return;
+    }
+    panel.dataset.lastHandle = handle;
+    status.textContent = `Probe update: ${formatExpression('?', 'selection', handle)}`;
+  };
+
+  const onSectionChange = (event) => {
+    const detail = event.detail || {};
+    const index = Number(detail.sectionIndex || 0);
+    if (!index) {
+      return;
+    }
+    status.textContent = `Chapter probe: ${formatExpression('&', 'section', `s${String(index).padStart(2, '0')}`)}`;
+  };
+
+  window.addEventListener('lore:spw-selection', onSelection);
+  window.addEventListener('lore:ebook-section-change', onSectionChange);
+
+  const stageSource = root?.body || document.body;
+  const observer = stageSource
+    ? new MutationObserver(() => {
+        const stage = stageSource.dataset.loadStage || '';
+        if (stage) {
+          panel.dataset.loadStage = stage;
+        }
+      })
+    : null;
+
+  if (observer && stageSource) {
+    observer.observe(stageSource, {
+      attributes: true,
+      attributeFilter: ['data-load-stage']
+    });
+    panel.dataset.loadStage = stageSource.dataset.loadStage || '';
+  }
+
+  applyLayer('all', false);
+
+  return {
+    setLayer: (layer) => applyLayer(layer, false),
+    destroy: () => {
+      window.removeEventListener('lore:spw-selection', onSelection);
+      window.removeEventListener('lore:ebook-section-change', onSectionChange);
+      if (observer) {
+        observer.disconnect();
+      }
+      panel.remove();
+    }
+  };
+}

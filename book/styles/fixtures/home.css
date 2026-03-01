@@ -81,6 +81,7 @@
 .hero-panel,
 .chapter-timeline,
 .grammar-observatory,
+.spw-ethos-atlas,
 .seed-atlas {
   position: relative;
   padding: clamp(1.2rem, 3vw, 2rem);
@@ -188,6 +189,7 @@
 
 .chapter-timeline h2,
 .grammar-observatory h2,
+.spw-ethos-atlas h2,
 .seed-atlas h2 {
   margin-bottom: 0.42rem;
 }
@@ -592,6 +594,111 @@
   padding: 0.36rem 0.56rem;
 }
 
+.spw-ethos-atlas .ethos-subtitle {
+  margin: 0;
+  color: var(--color-text-alt);
+  font-size: 0.9rem;
+}
+
+.spw-ethos-atlas .ethos-chain {
+  margin-top: 0.78rem;
+}
+
+.spw-ethos-atlas .ethos-layer-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.82rem;
+}
+
+.spw-ethos-atlas .ethos-layer-button,
+.spw-ethos-atlas .ethos-claim-handle {
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(24, 54, 84, 0.92);
+  font-size: 0.78rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.62rem;
+  text-align: left;
+}
+
+.spw-ethos-atlas .ethos-layer-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.16);
+  border-color: rgba(38, 88, 124, 0.52);
+}
+
+.spw-ethos-atlas .ethos-claim-list {
+  list-style: none;
+  margin: 0.82rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.52rem;
+}
+
+.spw-ethos-atlas .ethos-claim-item {
+  display: grid;
+  gap: 0.2rem;
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.24) 68%, var(--glass-border) 32%);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 0.5rem;
+}
+
+.spw-ethos-atlas .ethos-claim-line,
+.spw-ethos-atlas .ethos-claim-ref {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-alt);
+}
+
+.spw-ethos-atlas .ethos-claim-ref {
+  font-family: var(--font-family-heading);
+}
+
+.spw-ethos-atlas .ethos-operators-heading {
+  margin: 0.62rem 0 0;
+  font-size: 0.84rem;
+  color: var(--color-accent-main);
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.spw-ethos-atlas .ethos-operator-list {
+  list-style: none;
+  margin: 0.48rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.36rem;
+}
+
+.spw-ethos-atlas .ethos-operator-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: var(--border-width) var(--border-style) rgba(42, 88, 130, 0.28);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.16rem 0.5rem;
+}
+
+.spw-ethos-atlas .ethos-operator-token {
+  font-size: 0.8rem;
+  color: var(--color-accent-main);
+  font-family: var(--font-family-heading);
+}
+
+.spw-ethos-atlas .ethos-operator-meta,
+.spw-ethos-atlas .ethos-status {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--color-text-alt);
+  font-family: var(--font-family-heading);
+}
+
 .grammar-chip[data-grammar-profile="declarative"]  { border-color: rgba(80,  130, 180, 0.44); }
 .grammar-chip[data-grammar-profile="interrogative"]{ border-color: rgba(100, 160, 130, 0.44); }
 .grammar-chip[data-grammar-profile="imperative"]   { border-color: rgba(170, 110,  80, 0.44); }
@@ -629,6 +736,10 @@ html[data-grammar-mode="orbital"] .chapter-verse {
   background: rgba(38, 88, 124, 0.16);
   border-color: rgba(38, 88, 124, 0.54);
   color: rgba(18, 44, 74, 0.95);
+}
+
+.spw-ethos-atlas[data-load-stage="honk"] .ethos-status {
+  color: rgba(30, 84, 66, 0.92);
 }
 
 } /* @layer home.states */
