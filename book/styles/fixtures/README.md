@@ -40,7 +40,7 @@ Implementation lives in `book/scripts/modules/load-lifecycle.mjs`.
 Use `book/scripts/modules/cache-context.mjs` to build stylesheet URLs with expressive invalidation keys.
 
 It emits query params:
-- `v` release (for example `2026_02_28.H`)
+- `v` release (for example `2026_02_28.I`)
 - `ctx` context channel (for example `chapter:mood-tldr`)
 - optional `b` ad-hoc bust key
 

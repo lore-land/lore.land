@@ -1,6 +1,6 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.H';
-import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.H';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.H';
+import { withCacheContext } from './cache-context.mjs?v=2026_02_28.I';
+import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_02_28.I';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.I';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -10,8 +10,8 @@ import {
   initSpatialPerspective,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './experience-core.mjs?v=2026_02_28.H';
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.H';
+} from './experience-core.mjs?v=2026_02_28.I';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
 
 // Ensure the script runs after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
