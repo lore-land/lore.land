@@ -1,6 +1,6 @@
 import { chapterManifest } from './data.mjs';
 import { seedManifest, seedSets, seedDimensions, chapterSeedMap } from './seeds.mjs';
-import { renderHero, renderTimeline, renderSeedAtlas } from './ui.mjs';
+import { renderHero, renderTimeline, renderSeedAtlas, renderGrammarObservatory } from './ui.mjs';
 import { withCacheContext } from '../modules/cache-context.mjs?v=2026_02_28.I';
 import { createLoadLifecycle } from '../modules/load-lifecycle.mjs?v=2026_02_28.I';
 import {
@@ -18,6 +18,7 @@ import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_0
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
+const GRAMMAR_MODE_KEY = 'lore.experience.grammar-mode';
 
 function safeReadAdoptedSeeds() {
   try {
@@ -34,6 +35,27 @@ function safeWriteAdoptedSeeds(ids) {
     window.localStorage.setItem(SEED_STORAGE_KEY, JSON.stringify(ids));
   } catch (error) {
     console.warn('Failed to write seed adoption state:', error);
+  }
+}
+
+function safeReadGrammarMode() {
+  try {
+    const mode = window.localStorage.getItem(GRAMMAR_MODE_KEY) || '';
+    if (mode === 'plain' || mode === 'lyric' || mode === 'orbital') {
+      return mode;
+    }
+    return 'lyric';
+  } catch (error) {
+    console.warn('Failed to read grammar mode:', error);
+    return 'lyric';
+  }
+}
+
+function safeWriteGrammarMode(mode) {
+  try {
+    window.localStorage.setItem(GRAMMAR_MODE_KEY, mode);
+  } catch (error) {
+    console.warn('Failed to write grammar mode:', error);
   }
 }
 
@@ -103,6 +125,40 @@ function setupExperienceControls(homeRoot, announce) {
       document.documentElement.dataset.layout = value;
     }
   });
+}
+
+function setupGrammarObservatory(homeRoot, announce) {
+  const section = homeRoot.querySelector('#grammar-observatory');
+  if (!section) {
+    return;
+  }
+
+  const buttons = [...section.querySelectorAll('.grammar-mode-button[data-grammar-mode]')];
+  if (!buttons.length) {
+    return;
+  }
+
+  const applyMode = (mode, spoken = false) => {
+    const targetMode = buttons.some((button) => button.dataset.grammarMode === mode) ? mode : 'lyric';
+    document.documentElement.dataset.grammarMode = targetMode;
+    section.dataset.grammarMode = targetMode;
+    buttons.forEach((button) => {
+      const active = button.dataset.grammarMode === targetMode;
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    safeWriteGrammarMode(targetMode);
+    if (spoken && announce) {
+      announce(`Grammar mode set to ${targetMode}.`);
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applyMode(button.dataset.grammarMode || 'lyric', true);
+    });
+  });
+
+  applyMode(safeReadGrammarMode(), false);
 }
 
 function setupTimelineMotifAnnouncements(homeRoot, announce) {
@@ -276,9 +332,11 @@ function initHomepage() {
     renderHero(homeRoot, chapterManifest.length);
     renderTimeline(homeRoot, chapterManifest, chapterSeedMap(chapterManifest.length, '01'));
     renderSeedAtlas(homeRoot, seedSets, seedManifest, seedDimensions);
+    renderGrammarObservatory(homeRoot, chapterManifest);
 
     setMoodStylesheet(announce);
     setupExperienceControls(homeRoot, announce);
+    setupGrammarObservatory(homeRoot, announce);
     setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
     initSpwLanguageRuntime({ root: homeRoot, announce });

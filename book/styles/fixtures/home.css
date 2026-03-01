@@ -1,3 +1,34 @@
+/*
+ * Layer stack — lowest → highest priority.
+ * Existing unlayered rules (below) win over anything in a named layer.
+ * Migration: wrap each confirmed-stable block in its layer progressively.
+ *
+ *   home.base       — panel shells, surfaces, resets
+ *   home.layout     — grid/flex composition
+ *   home.components — per-component rules
+ *   home.states     — data-attribute and aria state selectors
+ *   home.motion     — @keyframes and animation declarations
+ *   home.theme      — variant overrides (cinema / stream / mood)
+ */
+@layer home.base, home.layout, home.components, home.states, home.motion, home.theme;
+
+/*
+ * Registered custom properties.
+ * Typed registration enables CSS-native interpolation and animation.
+ * @property declarations live outside any layer (they are global).
+ */
+@property --reveal-delay {
+  syntax: '<time>';
+  inherits: true;
+  initial-value: 0ms;
+}
+
+@property --scroll-layer-offset {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
 .site-shell {
   width: min(100%, var(--max-width-content));
   margin: 0 auto;
@@ -49,6 +80,7 @@
 
 .hero-panel,
 .chapter-timeline,
+.grammar-observatory,
 .seed-atlas {
   position: relative;
   padding: clamp(1.2rem, 3vw, 2rem);
@@ -155,6 +187,7 @@
 }
 
 .chapter-timeline h2,
+.grammar-observatory h2,
 .seed-atlas h2 {
   margin-bottom: 0.42rem;
 }
@@ -401,5 +434,244 @@
   .chapter-card,
   .seed-card {
     padding: 0.72rem;
+  }
+}
+
+@layer home.components {
+
+/* ─── chapter card: new semantic elements ─────────────────────────────────── */
+
+.chapter-logline {
+  font-size: 0.84rem;
+  color: var(--color-text-alt);
+  line-height: 1.52;
+  margin: 0;
+}
+
+.chapter-register {
+  font-size: 0.74rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.05em;
+  color: rgba(60, 90, 120, 0.68);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.chapter-verse {
+  margin: 0;
+  padding: 0.5rem 0.72rem;
+  border-left: 2px solid rgba(42, 111, 127, 0.34);
+  font-size: 0.82rem;
+  font-family: var(--font-family-heading);
+  color: rgba(30, 55, 82, 0.74);
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+/* ─── grammar observatory ─────────────────────────────────────────────────── */
+
+.grammar-observatory {
+  container-type: inline-size;
+  container-name: grammar-observatory;
+}
+
+.grammar-observatory-subtitle {
+  color: var(--color-text-alt);
+  font-size: 0.92rem;
+}
+
+.grammar-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.88rem;
+}
+
+.grammar-mode-button {
+  font-size: 0.82rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.03em;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 0.22rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.14s ease;
+}
+
+.grammar-mode-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.14);
+  border-color: rgba(38, 88, 124, 0.46);
+  color: rgba(20, 52, 82, 1);
+}
+
+.grammar-ledger {
+  list-style: none;
+  margin: 0.88rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.32rem;
+}
+
+.grammar-ledger li {
+  font-size: 0.82rem;
+  color: var(--color-text-alt);
+  padding: 0.22rem 0.5rem;
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.grammar-ledger li[data-grammar-profile="declarative"]  { border-color: rgba(80,  130, 180, 0.36); }
+.grammar-ledger li[data-grammar-profile="interrogative"]{ border-color: rgba(100, 160, 130, 0.36); }
+.grammar-ledger li[data-grammar-profile="imperative"]   { border-color: rgba(170, 110,  80, 0.36); }
+.grammar-ledger li[data-grammar-profile="exclamatory"]  { border-color: rgba(190, 160,  50, 0.36); }
+.grammar-ledger li[data-grammar-profile="conditional"]  { border-color: rgba(120,  90, 170, 0.36); }
+
+.grammar-sample {
+  margin-top: 0.88rem;
+}
+
+.grammar-matrix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.88rem;
+}
+
+.grammar-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--border-radius-pill);
+  border: var(--border-width) var(--border-style) rgba(42, 88, 130, 0.28);
+  background: rgba(255, 255, 255, 0.68);
+  font-size: 0.78rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.03em;
+  color: rgba(28, 52, 80, 0.82);
+}
+
+.grammar-chip[data-grammar-profile="declarative"]  { border-color: rgba(80,  130, 180, 0.44); }
+.grammar-chip[data-grammar-profile="interrogative"]{ border-color: rgba(100, 160, 130, 0.44); }
+.grammar-chip[data-grammar-profile="imperative"]   { border-color: rgba(170, 110,  80, 0.44); }
+.grammar-chip[data-grammar-profile="exclamatory"]  { border-color: rgba(190, 160,  50, 0.44); }
+.grammar-chip[data-grammar-profile="conditional"]  { border-color: rgba(120,  90, 170, 0.44); }
+
+} /* @layer home.components */
+
+@layer home.states {
+
+/* ─── grammar mode: document-level selectors ─────────────────────────────── */
+
+html[data-grammar-mode="plain"] .chapter-verse,
+html[data-grammar-mode="plain"] .chapter-register {
+  display: none;
+}
+
+html[data-grammar-mode="orbital"] .chapter-logline,
+html[data-grammar-mode="orbital"] .chapter-register {
+  display: none;
+}
+
+html[data-grammar-mode="orbital"] .chapter-verse {
+  border-left-width: 3px;
+  color: rgba(22, 44, 72, 0.88);
+  font-size: 0.86rem;
+}
+
+} /* @layer home.states */
+
+@layer home.motion {
+
+/* ─── cadence animations ─────────────────────────────────────────────────── */
+
+@keyframes cadence-measured {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.88; }
+}
+
+@keyframes cadence-searching {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-2px); }
+  60%      { transform: translateY(1px); }
+}
+
+@keyframes cadence-radiant {
+  0%, 100% { box-shadow: var(--shadow-main); }
+  50%      { box-shadow: var(--shadow-main), 0 0 14px rgba(180, 148, 52, 0.18); }
+}
+
+@keyframes cadence-spiral-marker {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes cadence-percussive-pulse {
+  0%, 100% { transform: scale(1); }
+  8%       { transform: scale(1.012); }
+  16%      { transform: scale(1); }
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="measured"].is-visible {
+  animation: cadence-measured 5.2s ease-in-out infinite;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="searching"].is-visible {
+  animation: cadence-searching 4s ease-in-out infinite;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="radiant"].is-visible {
+  animation: cadence-radiant 4.4s ease-in-out infinite;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="percussive"].is-visible {
+  animation: cadence-percussive-pulse 3.2s ease-in-out infinite;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="spiral"] .chapter-marker {
+  display: inline-block;
+  animation: cadence-spiral-marker 18s linear infinite;
+}
+
+} /* @layer home.motion */
+
+/*
+ * Progressive enhancement: native CSS entry transitions.
+ * @starting-style provides a pre-JS paint state for grammar chips.
+ * Guards on transition-behavior (Chromium 117+, Firefox 129+, Safari 17.5+).
+ * Chips that arrive before JS fires still animate gracefully.
+ */
+@supports (transition-behavior: allow-discrete) {
+  .grammar-chip {
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  @starting-style {
+    .grammar-chip {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+  }
+}
+
+/*
+ * Container query: grammar matrix responds to observatory width.
+ * Compact spacing on narrow containers (e.g. sidebar layout).
+ */
+@container grammar-observatory (max-width: 440px) {
+  .grammar-matrix {
+    gap: 0.28rem;
+  }
+
+  .grammar-chip {
+    font-size: 0.72rem;
+    padding: 0.14rem 0.46rem;
   }
 }

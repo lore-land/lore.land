@@ -1,5 +1,11 @@
 import { chapterHref, spwPrelude } from './data.mjs';
 import { createFrameSvg } from './svg.mjs';
+import {
+  GRAMMAR_PROFILES,
+  grammarProfileForChapter,
+  buildChapterLogline,
+  buildChapterVerse
+} from './grammar-profiles.mjs';
 
 function humanizeSetLabel(setId) {
   return `Set ${setId}`;
@@ -85,12 +91,15 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
   grid.setAttribute('aria-label', 'Thirteen chapter story flow');
 
   chapters.forEach((chapter) => {
+    const profile = grammarProfileForChapter(chapter.number);
     const chapterId = padChapter(chapter.number);
     const card = document.createElement('article');
     card.className = 'chapter-card';
     card.setAttribute('role', 'listitem');
     card.dataset.component = 'chapter-card';
     card.dataset.chapter = String(chapter.number);
+    card.dataset.grammarProfile = profile.id;
+    card.dataset.cadence = profile.cadence;
     card.dataset.reveal = 'enter';
 
     const marker = document.createElement('span');
@@ -99,6 +108,18 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
 
     const heading = document.createElement('h3');
     heading.textContent = chapter.title;
+
+    const logline = document.createElement('p');
+    logline.className = 'chapter-logline';
+    logline.textContent = buildChapterLogline(chapter, profile);
+
+    const register = document.createElement('p');
+    register.className = 'chapter-register';
+    register.textContent = `${profile.register} register • ${profile.id} syntax`;
+
+    const verse = document.createElement('blockquote');
+    verse.className = 'chapter-verse';
+    verse.textContent = buildChapterVerse(chapter, profile);
 
     const snippet = document.createElement('pre');
     snippet.className = 'spw-snippet';
@@ -159,14 +180,92 @@ export function renderTimeline(root, chapters, chapterSeeds = new Map()) {
     link.setAttribute('aria-label', `Open chapter ${chapter.number}: ${chapter.title}`);
 
     if (motifToggle && motifFigure) {
-      card.append(marker, heading, genericFigure, motifToggle, motifFigure, snippet, link);
+      card.append(marker, heading, logline, register, verse, genericFigure, motifToggle, motifFigure, snippet, link);
     } else {
-      card.append(marker, heading, genericFigure, snippet, link);
+      card.append(marker, heading, logline, register, verse, genericFigure, snippet, link);
     }
     grid.append(card);
   });
 
   section.append(heading, lead, grid);
+  root.append(section);
+}
+
+export function renderGrammarObservatory(root, chapters) {
+  const section = document.createElement('section');
+  section.id = 'grammar-observatory';
+  section.className = 'grammar-observatory';
+  section.dataset.component = 'grammar-observatory';
+  section.dataset.reveal = 'enter';
+  section.setAttribute('role', 'region');
+  section.setAttribute('aria-labelledby', 'grammar-observatory-title');
+
+  const heading = document.createElement('h2');
+  heading.id = 'grammar-observatory-title';
+  heading.textContent = 'Grammar Observatory';
+
+  const lead = document.createElement('p');
+  lead.className = 'grammar-observatory-subtitle';
+  lead.textContent =
+    'Each chapter carries a grammar register that shapes how a reader experiences time, agency, and resolution. Your display preference is stored locally only.';
+
+  const switcher = document.createElement('div');
+  switcher.className = 'grammar-switch';
+  switcher.setAttribute('role', 'group');
+  switcher.setAttribute('aria-label', 'Narrative grammar mode');
+
+  [
+    { mode: 'lyric',   label: 'Lyric',   hint: 'logline, verse, and register visible' },
+    { mode: 'plain',   label: 'Plain',   hint: 'logline only' },
+    { mode: 'orbital', label: 'Orbital', hint: 'verse only, enlarged' }
+  ].forEach(({ mode, label, hint }) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'grammar-mode-button';
+    button.dataset.grammarMode = mode;
+    button.setAttribute('aria-pressed', mode === 'lyric' ? 'true' : 'false');
+    button.title = hint;
+    button.textContent = label;
+    switcher.append(button);
+  });
+
+  const ledger = document.createElement('ul');
+  ledger.className = 'grammar-ledger';
+  ledger.setAttribute('role', 'list');
+  GRAMMAR_PROFILES.forEach((profile) => {
+    const item = document.createElement('li');
+    item.dataset.grammarProfile = profile.id;
+    item.textContent = `${profile.register} — ${profile.description}`;
+    ledger.append(item);
+  });
+
+  const sample = document.createElement('pre');
+  sample.className = 'motif-spw grammar-sample';
+  sample.textContent = `^[grammar]{ 
+  &[register]{ declarative | interrogative | imperative | exclamatory | conditional }
+  ?[mode]{ plain | lyric | orbital }
+  ~[cadence]{ measured, searching, percussive, radiant, spiral }
+}`;
+
+  const matrix = document.createElement('div');
+  matrix.className = 'grammar-matrix';
+  matrix.setAttribute('role', 'list');
+  matrix.setAttribute('aria-label', 'Chapter grammar facets');
+
+  chapters.slice(0, 9).forEach((chapter, index) => {
+    const profile = grammarProfileForChapter(chapter.number);
+    const chip = document.createElement('span');
+    chip.className = 'grammar-chip';
+    chip.setAttribute('role', 'listitem');
+    chip.dataset.grammarProfile = profile.id;
+    chip.dataset.cadence = profile.cadence;
+    chip.dataset.reveal = 'enter';
+    chip.style.setProperty('--reveal-delay', `${index * 55}ms`);
+    chip.textContent = `${padChapter(chapter.number)} • ${profile.register}`;
+    matrix.append(chip);
+  });
+
+  section.append(heading, lead, switcher, ledger, sample, matrix);
   root.append(section);
 }
 
