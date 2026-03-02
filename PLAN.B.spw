@@ -14,7 +14,7 @@
 }
 
 ^phase_packet_contract{
-  required: { phase_goal: required, steps: required, verify: required }
+  required: { phase_goal: required, steps: required, ?verify: required }
   optional: { events: optional, api_delta: optional, outputs: optional }
 }
 
@@ -49,14 +49,14 @@
   ^phase["Canon Claim Hydration"]{
     phase_goal: hydrate_claims_from_spw_canon_with_fallback
     module: book_scripts_modules_ethos_claims
-    steps: {
-      fetch: fetch_normalize_spw_source_claims_chapter_claims
-      parse: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
-      normalize: normalize_to_runtime_claim_shape
-      metadata: attach_source_metadata_remote_or_fallback_reason
-      fallback: fallback_to_local_constants_on_fetch_or_parse_failure
+    ^steps{
+      @fetch: fetch_normalize_spw_source_claims_chapter_claims
+      @parse: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
+      @normalize: normalize_to_runtime_claim_shape
+      @metadata: attach_source_metadata_remote_or_fallback_reason
+      @fallback: fallback_to_local_constants_on_fetch_or_parse_failure
     }
-    verify: {
+    ?verify{
       remote_success: remote_claims_parse_success_path
       fallback_fetch: fallback_fetch_failed_path
       fallback_parse: fallback_parse_failed_path
@@ -74,18 +74,18 @@
       preferences: lore_preference_change
       runtime_cycle: lore_spw_runtime_cycle
     }
-    steps: {
-      normalize: normalize_signal_packets
-      buffer: maintain_ring_buffer_limit_24_default
-      counters: maintain_per_claim_evidence_and_error_counters
-      transitions: transition_status_untested_active_confirmed_refuted
-      observability: emit_observability_events
+    ^steps{
+      @normalize: normalize_signal_packets
+      @buffer: maintain_ring_buffer_limit_24_default
+      @counters: maintain_per_claim_evidence_and_error_counters
+      @transitions: transition_status_untested_active_confirmed_refuted
+      @observability: emit_observability_events
     }
     api_delta: {
       ethos_diagnostic_event: lore_ethos_diagnostic
       claim_status_event: lore_ethos_claim_status
     }
-    verify: {
+    ?verify{
       deterministic: deterministic_status_transitions
       refutation: refutation_path_on_error_cycle
       scope: session_scope_non_persistent_status
@@ -95,19 +95,19 @@
   ^phase["Integrate Into Ethos Panel"]{
     phase_goal: wire_hydration_and_diagnostics_into_panel_without_interaction_changes
     module: book_scripts_modules_spw_ethos
-    steps: {
-      hydration: async_claim_hydration_integration
-      diagnostics: diagnostics_engine_attachment
-      status: render_per_claim_status_and_evidence
-      readout: render_compact_recent_signal_readout
-      filtering: preserve_layer_filtering_and_setLayer_contract
-      callsites: preserve_entrypoint_callsites
+    ^steps{
+      @hydration: async_claim_hydration_integration
+      @diagnostics: diagnostics_engine_attachment
+      @status: render_per_claim_status_and_evidence
+      @readout: render_compact_recent_signal_readout
+      @filtering: preserve_layer_filtering_and_setLayer_contract
+      @callsites: preserve_entrypoint_callsites
     }
     state_hooks: {
       panel: { source: data_ethos_source, mode: data_ethos_diagnostic_mode, last_signal: data_ethos_last_signal, signal_count: data_ethos_signal_count }
       claim: { status: data_claim_status, evidence: data_claim_evidence, errors: data_claim_errors }
     }
-    verify: {
+    ?verify{
       click_behavior: click_behavior_regression_none
       parity: home_chapter_status_parity
       cleanup: destroy_cleans_listeners_and_state
@@ -123,12 +123,12 @@
       spw_workspace: spw_workspace
       claims_schema: optional_claim_schema_enrichment
     }
-    steps: {
-      states: add_visual_states_untested_active_confirmed_refuted
-      responsiveness: validate_mobile_and_wide_breakpoint_legibility
-      schema: align_claim_schema_fields_with_claim_protocol
+    ^steps{
+      @states: add_visual_states_untested_active_confirmed_refuted
+      @responsiveness: validate_mobile_and_wide_breakpoint_legibility
+      @schema: align_claim_schema_fields_with_claim_protocol
     }
-    verify: {
+    ?verify{
       visuals: visual_regression_grid_stream_book_variants_clear
       docs_runtime: docs_and_runtime_contracts_in_sync
     }
