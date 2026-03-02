@@ -96,7 +96,15 @@
   backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
   -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
   overflow: clip;
+  /* override [data-component] { container-type: inline-size } from reset —
+     size containment + overflow:clip causes height explosion on these panels */
+  container-type: normal;
 }
+
+.chapter-timeline  { container-name: chapter-timeline; }
+.producer-constellation { container-name: producer-constellation; }
+.seed-atlas        { container-name: seed-atlas; }
+.grammar-observatory { container-name: grammar-observatory; }
 
 .hero-panel::before {
   content: "";

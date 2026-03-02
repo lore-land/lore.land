@@ -1,0 +1,37 @@
+/* ═══════════════════════════════════════════════════════════════
+ * EXPERIMENTAL: Layered SVG Filter Decorations
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* Apply torn paper edge to component shells */
+.hero-panel,
+.chapter-timeline,
+.seed-atlas,
+.producer-constellation,
+.grammar-observatory,
+.spw-ethos-atlas {
+
+    /* Only apply tearing if the viewport is large enough to handle the complex paint */
+    @media (min-width: 768px) {
+        filter: url('#spw-paper-edge');
+    }
+}
+
+/* Add celestial glow to primary actions and interactive lenses on hover */
+.chapter-card a:focus-visible,
+.primary-action:focus-visible,
+button:focus-visible {
+    filter: url('#spw-celestial-glow');
+}
+
+.spw-lens:focus-visible,
+[data-spw-actionable="true"]:focus-visible,
+.hero-action:focus-visible {
+    filter: url('#spw-celestial-glow');
+}
+
+/* We want to glow the border/shadow on hover but not necessarily deform paper.
+   For chapter/seed cards, let's keep it subtle so the text remains readable. */
+.chapter-card:focus-visible,
+.seed-card:focus-visible {
+    filter: url('#spw-celestial-glow');
+}

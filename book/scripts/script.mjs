@@ -26,6 +26,7 @@ import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=202
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
+import { injectSvgFilters } from './modules/svg-filters.mjs';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+  injectSvgFilters(document);
 
   const lifecycle = createLoadLifecycle({
     id: 'chapter',

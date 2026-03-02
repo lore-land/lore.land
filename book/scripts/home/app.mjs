@@ -18,6 +18,7 @@ import {
 import { initSpwLanguageRuntime } from '../modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from '../modules/spw-ethos.mjs?v=2026_02_28.I';
 import { describeLoadStage } from '../modules/story-lexicon.mjs?v=2026_02_28.I';
+import { injectSvgFilters } from '../modules/svg-filters.mjs';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -578,6 +579,7 @@ function initHomepage() {
 
   const { root, announce } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+  injectSvgFilters(document);
 
   const lifecycle = createLoadLifecycle({
     id: 'home',

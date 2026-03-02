@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" data-cache-release="2026_02_28.I" data-cache-context="chapter">
+
 <head>
     <meta charset="UTF-8">
 
     <title id="page-title">[Lore.Land]</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f3ede1">
     <link rel="manifest" href="/manifest.webmanifest">
 
@@ -15,21 +16,22 @@
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_02_28.I&ctx=canon:fonts">
     <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_02_28.I&ctx=canon:baseline">
+    <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_02_28.I&ctx=canon:baseline">
+    <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_02_28.I&ctx=canon:baseline">
+    <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_02_28.I&ctx=canon:baseline">
+    <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_02_28.I&ctx=canon:baseline">
+    <link rel="stylesheet" href="/book/styles/components/decorations.css?v=2026_03_02.A&ctx=canon:baseline">
     <link rel="stylesheet" href="/book/styles/chapter/typography.css?v=2026_03_02.A&ctx=canon:typography">
     <link rel="stylesheet" href="/book/styles/chapter/layout.css?v=2026_03_02.A&ctx=canon:layout-responsive">
     <link rel="stylesheet" href="/book/styles/chapter/motion.css?v=2026_03_02.A&ctx=canon:motion">
     <link rel="stylesheet" href="/book/styles/components/motifs.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/chapter/panels.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/components/controls.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/chapter/aside.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/components/spw.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/components/characters.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/chapter/sections.css?v=2026_02_28.I&ctx=chapter:layout">
-  <link rel="stylesheet" href="/book/styles/components/cards.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/chapter/panels.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/components/controls.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/chapter/aside.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/components/spw.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/components/characters.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/chapter/sections.css?v=2026_02_28.I&ctx=chapter:layout">
+    <link rel="stylesheet" href="/book/styles/components/cards.css?v=2026_02_28.I&ctx=chapter:layout">
 
     <!-- Mood and Period Stylesheets (to be set dynamically) -->
     <link id="period-styles" rel="stylesheet">
@@ -38,42 +40,43 @@
     <!-- External JavaScript Files -->
     <script defer type="module" src="/book/scripts/script.mjs?v=2026_02_28.I"></script>
 </head>
+
 <body data-mood="boon">
-<!-- Chapter Navigation -->
-<nav class="chapter-navigation" aria-label="Chapter navigation">
-    <button class="prev" aria-label="Previous Section">Previous Section</button>
-    <button class="next" aria-label="Next Section">Next Section</button>
-</nav>
-<div class="reading-progress" aria-hidden="true"></div>
-<div class="lifecycle-breadcrumb" aria-hidden="true"></div>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-navigation" aria-label="Chapter navigation">
+        <button class="prev" aria-label="Previous Section">Previous Section</button>
+        <button class="next" aria-label="Next Section">Next Section</button>
+    </nav>
+    <div class="reading-progress" aria-hidden="true"></div>
+    <div class="lifecycle-breadcrumb" aria-hidden="true"></div>
 
-<!-- Main Content -->
-<main class="chapter" id="chapter-content" tabindex="-1">
-    <!-- Content will be dynamically populated here -->
-</main>
+    <!-- Main Content -->
+    <main class="chapter" id="chapter-content" tabindex="-1">
+        <!-- Content will be dynamically populated here -->
+    </main>
 
-<!-- Section Navigation -->
-<div class="section-navigation" aria-label="Section navigation">
-    <button class="prev" aria-label="Previous Section">Previous Section</button>
-    <button class="next" aria-label="Next Section">Next Section</button>
-</div>
-
-<!-- Character Profile and Timeline Links -->
-<aside>
-    <ul id="lore-collector" aria-label="Lore Collector"></ul>
-    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Uncover the Fool’s Secret</button>
-
-    <div class="additional-links">
-        <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
-        <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    <!-- Section Navigation -->
+    <div class="section-navigation" aria-label="Section navigation">
+        <button class="prev" aria-label="Previous Section">Previous Section</button>
+        <button class="next" aria-label="Next Section">Next Section</button>
     </div>
 
-    <!-- Primary Action Button -->
-    <button class="primary-action" aria-label="Advance Story">Advance Story</button>
-</aside>
+    <!-- Character Profile and Timeline Links -->
+    <aside>
+        <ul id="lore-collector" aria-label="Lore Collector"></ul>
+        <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Uncover the Fool’s Secret</button>
 
-<!-- JSON Data for the Chapter -->
-<script type="application/json" id="chapter-data">
+        <div class="additional-links">
+            <a href="/characters/boof.html" class="character-profile">Boof's Profile</a>
+            <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+        </div>
+
+        <!-- Primary Action Button -->
+        <button class="primary-action" aria-label="Advance Story">Advance Story</button>
+    </aside>
+
+    <!-- JSON Data for the Chapter -->
+    <script type="application/json" id="chapter-data">
     {
         "chapterNumber": 1,
         "title": "Boof and the Boonberry Fool",
@@ -170,4 +173,5 @@
     }
 </script>
 </body>
+
 </html>

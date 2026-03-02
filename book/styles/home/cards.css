@@ -291,39 +291,39 @@
   }
 }
 
-/* ─── Container queries — chapter timeline ────────────────────── */
+/* ─── Responsive refinements — chapter timeline ───────────────── */
 
-@container chapter-timeline (max-width: 520px) {
+@media (max-width: 580px) {
   .chapter-grid {
     grid-template-columns: 1fr;
     gap: 0.62rem;
   }
 }
 
-@container chapter-timeline (min-width: 860px) {
+@media (min-width: 920px) {
   .chapter-grid {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
 }
 
-/* ─── Container queries — seed atlas ─────────────────────────── */
+/* ─── Responsive refinements — seed atlas ─────────────────────── */
 
-@container seed-atlas (max-width: 480px) {
+@media (max-width: 540px) {
   .seed-grid {
     grid-template-columns: 1fr;
     gap: 0.58rem;
   }
 }
 
-@container seed-atlas (min-width: 820px) {
+@media (min-width: 880px) {
   .seed-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
 }
 
-/* ─── Container queries — producer constellation ─────────────── */
+/* ─── Responsive refinements — producer constellation ─────────── */
 
-@container producer-constellation (max-width: 480px) {
+@media (max-width: 540px) {
   .producer-cluster-grid {
     grid-template-columns: 1fr;
   }
@@ -333,7 +333,7 @@
   }
 }
 
-@container producer-constellation (min-width: 700px) {
+@media (min-width: 760px) {
   .producer-cluster-grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }

@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "font": "node book/scripts/tools/font/build.mjs"
+    "font": "node book/scripts/tools/font/build.mjs",
+    "assets:optimize": "node book/scripts/tools/assets/optimize-assets.mjs",
+    "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run"
   },
   "keywords": [],
   "author": "Sam Washington",

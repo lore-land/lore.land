@@ -163,3 +163,22 @@ Use this when introducing new Spw routing/interactions/effects so chapters and h
 
 - Date-based seed folders under `seeds/` use canonical ISO ordering: `yyyy-mm-dd`.
 - Example: `seeds/2026-03-01/`
+
+### Asset Optimization Pipeline
+
+- Pipeline entrypoint: `book/scripts/tools/assets/optimize-assets.mjs`
+- NPM scripts:
+  - `npm run assets:optimize`
+  - `npm run assets:optimize:dry`
+- Default source roots:
+  - `book/images`
+  - `book/media`
+  - `book/pwa/icons`
+  - `seeds`
+- Output root: `dist/assets/microbundles/` (ignored by git)
+- Generated microbundle artifacts:
+  - `bundles/*.json` per-asset bundle records
+  - `images/**` responsive WebP variants (+ preview)
+  - `svg/**` minified SVG outputs
+  - `index.json` bundle index + size report
+  - `palette-fallbacks.css` fallback background colors per asset key

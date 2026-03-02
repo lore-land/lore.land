@@ -83,7 +83,9 @@ export function renderTimeline(root, chapters, chapterSeeds) {
           src: seed.src,
           alt: `${seed.label} optional Midjourney motif for chapter ${chapter.number}`,
           loading: 'lazy',
-          decoding: 'async'
+          decoding: 'async',
+          width: 640,
+          height: 360
         }),
         el('figcaption', { textContent: `${seed.label} • ${humanizeSetLabel(seed.setId)} • optional` })
       );
@@ -96,7 +98,7 @@ export function renderTimeline(root, chapters, chapterSeeds) {
       el('p', { className: 'chapter-register-label', textContent: `Register: ${profile.register} (${profile.cadence})` }),
       el('p', { className: 'chapter-verse-text', dataset: { grammarProfile: profile.id }, innerHTML: buildChapterVerse(chapter, profile).replace(/\n/g, '<br>') }),
       el('figure', { className: 'chapter-default-preview', dataset: { visualDefault: 'colloquial' } },
-        el('img', { src: chapterImagePath(chapter.number), alt: `Colloquial default scene for chapter ${chapter.number}`, loading: 'lazy', decoding: 'async' }),
+        el('img', { src: chapterImagePath(chapter.number), alt: `Colloquial default scene for chapter ${chapter.number}`, loading: 'lazy', decoding: 'async', width: 640, height: 360 }),
         el('figcaption', { textContent: 'Colloquial default scene' })
       ),
       ...(motifToggle && motifFigure ? [motifToggle, motifFigure] : []),
@@ -184,7 +186,7 @@ export function renderSeedAtlas(root, seedSets, seedManifest, seedDimensions) {
           dataset: { seedId: seed.id, seedSet: seed.setId, seedDimension: seed.dimension, component: 'seed-card', reveal: 'enter' }
         },
           el('figure', { className: 'seed-figure' },
-            el('img', { src: seed.src, alt: seed.alt, loading: 'lazy', decoding: 'async' }),
+            el('img', { src: seed.src, alt: seed.alt, loading: 'lazy', decoding: 'async', width: 480, height: 360 }),
             el('figcaption', { textContent: `${seed.label} • ${humanizeSetLabel(seed.setId)}` })
           ),
           el('button', { type: 'button', className: 'seed-adopt-button', textContent: 'Adopt motif', 'aria-pressed': 'false', dataset: { seedId: seed.id } })
