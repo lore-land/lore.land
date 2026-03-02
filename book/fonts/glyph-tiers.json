@@ -1,0 +1,156 @@
+{
+  "0": {
+    "name": "whisper",
+    "description": "Boof can only whisper",
+    "chapters": [
+      0
+    ],
+    "chars": [
+      "a",
+      "e",
+      "i",
+      "o",
+      "u",
+      " ",
+      "."
+    ]
+  },
+  "1": {
+    "name": "speak",
+    "description": "Boof finds their voice",
+    "chapters": [
+      1,
+      2,
+      3
+    ],
+    "chars": [
+      "b",
+      "c",
+      "d",
+      "f",
+      "g",
+      "h",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z"
+    ]
+  },
+  "2": {
+    "name": "shape",
+    "description": "The world takes shape",
+    "chapters": [
+      4,
+      5,
+      6
+    ],
+    "chars": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ]
+  },
+  "3": {
+    "name": "structure",
+    "description": "Structure emerges",
+    "chapters": [
+      7,
+      8,
+      9
+    ],
+    "chars": [
+      "{",
+      "}",
+      "[",
+      "]",
+      "(",
+      ")",
+      "<",
+      ">",
+      ":",
+      ";",
+      ",",
+      "'",
+      "\"",
+      "-",
+      "–",
+      "—",
+      "/"
+    ]
+  },
+  "4": {
+    "name": "awakening",
+    "description": "Spw operators awaken",
+    "chapters": [
+      10,
+      11
+    ],
+    "chars": [
+      "!",
+      "?",
+      "~",
+      "@",
+      "&",
+      "*",
+      "^"
+    ]
+  },
+  "5": {
+    "name": "mastery",
+    "description": "Meta-sigils — full mastery",
+    "chapters": [
+      12,
+      13
+    ],
+    "chars": [
+      "#",
+      "=",
+      "%",
+      "$"
+    ]
+  }
+}

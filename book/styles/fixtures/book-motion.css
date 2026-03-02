@@ -1,0 +1,146 @@
+/* book-motion.css
+ * Semantic entrance animations for lore.land chapters.
+ *
+ * Animations carry narrative meaning — narrator text enters differently
+ * from dialogue, environment descriptions differently from bonk events.
+ * All motion is gated behind prefers-reduced-motion.
+ */
+
+@layer motion.book {
+
+    /* ─── Default: elements start hidden, await scroll reveal ─── */
+
+    @media (prefers-reduced-motion: no-preference) {
+
+        .chapter section,
+        .chapter custom-boof,
+        .chapter custom-fool,
+        .chapter custom-boonberry,
+        .chapter custom-echo,
+        .chapter custom-song,
+        .chapter custom-paradox,
+        .chapter custom-bonk,
+        .chapter custom-game,
+        .chapter custom-puzzle,
+        .chapter custom-awakening,
+        .chapter custom-path,
+        .chapter custom-reflection,
+        .chapter figure {
+            opacity: 0;
+            translate: 0 0.8rem;
+            transition:
+                opacity 600ms ease,
+                translate 600ms ease;
+            transition-delay: calc(var(--entrance-delay, 0) * 1ms);
+        }
+
+        /* ─── Revealed state ─────────────────────────────────────── */
+
+        [data-spw-visible="true"] {
+            opacity: 1 !important;
+            translate: 0 0 !important;
+        }
+
+        /* ─── Role-specific entrance timing ──────────────────────── */
+
+        /* Narrator: gentle, unhurried — the story unfolds */
+        [data-spw-voice="boof"][data-spw-visible="true"] {
+            transition-duration: 700ms;
+            transition-timing-function: ease-out;
+        }
+
+        /* Interlocutor (Fool): slightly faster, with horizontal motion */
+        [data-spw-voice="fool"] {
+            translate: -0.6rem 0.4rem;
+        }
+
+        [data-spw-voice="fool"][data-spw-visible="true"] {
+            transition-duration: 500ms;
+            transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        /* Environment: slow dissolve */
+        [data-spw-voice="environment"] {
+            translate: 0 0.5rem;
+        }
+
+        [data-spw-voice="environment"][data-spw-visible="true"] {
+            transition-duration: 900ms;
+            transition-timing-function: ease;
+        }
+
+        /* Bonk: quick percussive snap */
+        [data-spw-grammar="bonk"] {
+            translate: 0 -0.4rem;
+        }
+
+        [data-spw-grammar="bonk"][data-spw-visible="true"] {
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        /* Awakening: scale up from center */
+        [data-spw-grammar="awakening"] {
+            scale: 0.96;
+            translate: 0 0;
+        }
+
+        [data-spw-grammar="awakening"][data-spw-visible="true"] {
+            scale: 1;
+            transition-duration: 800ms;
+        }
+
+        /* Reflection: mirror-like horizontal flip hint */
+        [data-spw-grammar="reflection"] {
+            translate: 0 0;
+            opacity: 0;
+            filter: blur(2px);
+        }
+
+        [data-spw-grammar="reflection"][data-spw-visible="true"] {
+            filter: none;
+            transition-duration: 1000ms;
+        }
+
+        /* ─── Chapter transition ─────────────────────────────────── */
+
+        @keyframes page-forward {
+            from {
+                opacity: 0;
+                translate: 0 1.2rem;
+            }
+
+            to {
+                opacity: 1;
+                translate: 0 0;
+            }
+        }
+
+        #chapter-content[data-chapter-entering="true"] {
+            animation: page-forward 500ms ease-out;
+        }
+    }
+
+    /* ─── Reduced motion: show everything immediately ──────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .chapter section,
+        .chapter custom-boof,
+        .chapter custom-fool,
+        .chapter custom-boonberry,
+        .chapter custom-echo,
+        .chapter custom-song,
+        .chapter custom-paradox,
+        .chapter custom-bonk,
+        .chapter custom-game,
+        .chapter custom-puzzle,
+        .chapter custom-awakening,
+        .chapter custom-path,
+        .chapter custom-reflection,
+        .chapter figure {
+            opacity: 1;
+            translate: 0 0;
+        }
+    }
+}

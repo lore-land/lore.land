@@ -21,6 +21,9 @@ import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_02_28.I';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
+import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
+import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_03_02.A';
+import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -63,6 +66,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeStyles(chapterData);
     populateMetadata(chapterData);
     populateContent(chapterData);
+
+    // Book experience: grammar roles, scroll reveal, glyph discovery, print context
+    const chapterContent = document.getElementById('chapter-content');
+    if (chapterContent) {
+      chapterContent.classList.add('chapter');
+      chapterContent.dataset.chapterLabel = `Chapter ${padChapterNumber(chapterData.chapterNumber)} — ${chapterData.title}`;
+      assignGrammarRoles(chapterContent);
+      initBookScrollObserver(chapterContent);
+    }
+    // Set glyph discovery tier based on chapter progression
+    const chapterNum = Number(chapterData.chapterNumber) || 1;
+    const glyphTier = chapterNum >= 12 ? 5 : chapterNum >= 10 ? 4 : chapterNum >= 7 ? 3 : chapterNum >= 4 ? 2 : chapterNum >= 1 ? 1 : 0;
+    document.documentElement.dataset.glyphTier = String(glyphTier);
+    setupPrintContext(chapterContent);
+
     setupNavigation(chapterData, announce);
     const ebookNav = initEbookNavigation(chapterData, { announce });
     setupAuthorAttribution(announce);
@@ -86,7 +104,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       announce(`Model ebook navigation ready: ${ebookNav.sectionCount} sections.`);
     }
 
-    const chapterContent = document.getElementById('chapter-content');
     enhanceLazyImages({ root: chapterContent || document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
