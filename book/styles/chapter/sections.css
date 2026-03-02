@@ -1,0 +1,47 @@
+main.chapter {
+  counter-reset: ebook-section;
+}
+
+main.chapter>[data-ebook-section="true"] {
+  counter-increment: ebook-section;
+  scroll-margin-top: 4.5rem;
+  border-radius: var(--border-radius-small);
+  position: relative;
+  padding: clamp(0.25rem, 0.85vw, 0.6rem);
+  background: color-mix(in srgb, var(--theme-paper) 94%, rgba(42, 111, 127, 0.06) 6%);
+  transition:
+    background-color var(--transition-duration) var(--transition-function),
+    box-shadow var(--transition-duration) var(--transition-function);
+}
+
+main.chapter>[data-ebook-section="true"]::before {
+  content: "";
+  position: absolute;
+  left: -0.34rem;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  width: 2px;
+  border-radius: var(--border-radius-pill);
+  background: linear-gradient(to bottom,
+      color-mix(in srgb, var(--theme-accent-main) 62%, transparent 38%),
+      color-mix(in srgb, var(--theme-accent-alt) 34%, transparent 66%));
+  opacity: 0.42;
+}
+
+main.chapter>[data-ebook-section="true"]>h2::before {
+  content: "§" counter(ebook-section, decimal-leading-zero) " ";
+  color: var(--theme-accent-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.84em;
+  letter-spacing: 0.05em;
+}
+
+main.chapter>[data-ebook-section="true"].is-ebook-active {
+  box-shadow: inset 3px 0 0 rgba(42, 111, 127, 0.44);
+  background: color-mix(in srgb, var(--theme-paper) 88%, rgba(42, 111, 127, 0.12) 12%);
+}
+
+main.chapter>[data-ebook-section="true"].is-ebook-active::before {
+  opacity: 0.84;
+}
+

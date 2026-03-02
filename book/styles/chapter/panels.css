@@ -1,0 +1,375 @@
+/*
+ * Layer stack for chapter and charm pages.
+ * Appends to the global stack declared in baseline.css.
+ *
+ *   root.layout     — page-level structure (main, aside, nav)
+ *   root.components — per-component rules (progress panel, motif controls)
+ *   root.states     — data-attribute and aria state selectors
+ */
+@layer root.layout, root.components, root.states;
+
+/* styles/fixtures/root.css */
+/* Chapter + charm page styles layered on top of fixtures/baseline.css. */
+
+:root {
+  /* Composable variables for interaction states */
+  --interactive-bg: var(--color-bg-content);
+  --interactive-bg-hover: var(--color-hover-bg);
+  --interactive-bg-active: color-mix(in srgb, var(--color-hover-bg) 80%, var(--color-bg-content) 20%);
+  --interactive-outline: var(--color-focus-outline);
+  --interactive-shadow: var(--shadow-main);
+  --interactive-shadow-hover: var(--shadow-hover);
+  --interactive-border: var(--border-width) var(--border-style) var(--border-color-main);
+  --interactive-radius: var(--border-radius-small);
+  --interactive-transition: box-shadow var(--transition-duration) var(--transition-function),
+    background-color var(--transition-duration) var(--transition-function),
+    color var(--transition-duration) var(--transition-function),
+    outline var(--transition-duration) var(--transition-function);
+  --spw-panel-surface: color-mix(in srgb, var(--theme-paper) 84%, rgba(255, 255, 255, 0.16) 16%);
+  --spw-panel-surface-strong: color-mix(in srgb, var(--theme-paper) 72%, rgba(255, 255, 255, 0.28) 28%);
+  --spw-panel-border: color-mix(in srgb, var(--theme-accent-main) 24%, var(--theme-border-main) 76%);
+  --spw-panel-shadow: 0 14px 26px color-mix(in srgb, var(--theme-accent-main) 14%, transparent 86%);
+  --spw-control-height: 2rem;
+  --spw-focus-ring: color-mix(in srgb, var(--theme-accent-main) 60%, transparent 40%);
+  --chapter-reading-measure: 66ch;
+  --chapter-reading-line-height: 1.82;
+  --chapter-reading-gap: 0.84rem;
+  --chapter-reading-accent: color-mix(in srgb, var(--theme-accent-main) 52%, var(--theme-paper) 48%);
+  --chapter-reading-ink: color-mix(in srgb, var(--theme-text-main) 88%, #0b1627 12%);
+}
+
+body>nav.chapter-navigation,
+body>.section-navigation,
+body>main,
+body>aside,
+body>footer {
+  width: min(100%, var(--max-width-content));
+  margin: 0 auto;
+}
+
+@media (min-width: 70rem) {
+  body:has(> main.chapter):has(> aside) {
+    display: grid;
+    grid-template-columns:
+      minmax(var(--spacing-main), 1fr) minmax(0, 4.3fr) minmax(17rem, 1.65fr) minmax(var(--spacing-main), 1fr);
+    grid-template-areas:
+      ". chapter-nav chapter-nav ."
+      ". chapter aside ."
+      ". section-nav aside ."
+      ". footer footer .";
+    align-items: start;
+    column-gap: clamp(0.9rem, 1.6vw, 1.35rem);
+    row-gap: var(--spacing-medium);
+  }
+
+  body:has(> main.chapter):has(> aside)>nav.chapter-navigation,
+  body:has(> main.chapter):has(> aside)>main.chapter,
+  body:has(> main.chapter):has(> aside)>.section-navigation,
+  body:has(> main.chapter):has(> aside)>aside,
+  body:has(> main.chapter):has(> aside)>footer {
+    width: 100%;
+    margin: 0;
+  }
+
+  body:has(> main.chapter):has(> aside)>nav.chapter-navigation {
+    grid-area: chapter-nav;
+    position: sticky;
+    top: 0.25rem;
+    z-index: 24;
+    padding: 0.42rem 0.5rem;
+    border: var(--interactive-border);
+    border-radius: var(--border-radius-small);
+    background: var(--spw-panel-surface);
+    backdrop-filter: blur(3px) saturate(1.05);
+    -webkit-backdrop-filter: blur(3px) saturate(1.05);
+  }
+
+  body:has(> main.chapter):has(> aside)>main.chapter {
+    grid-area: chapter;
+    min-width: 0;
+  }
+
+  body:has(> main.chapter):has(> aside)>.section-navigation {
+    grid-area: section-nav;
+    min-width: 0;
+    position: sticky;
+    bottom: 0.65rem;
+    z-index: 16;
+  }
+
+  body:has(> main.chapter):has(> aside)>aside {
+    grid-area: aside;
+    min-width: 0;
+    position: sticky;
+    top: 4.25rem;
+    max-height: calc(100dvh - 5.1rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  body:has(> main.chapter):has(> aside)>footer {
+    grid-area: footer;
+  }
+}
+
+.chapter-navigation,
+.section-navigation {
+  display: flex;
+  gap: var(--spacing-small);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chapter-navigation {
+  margin-top: var(--spacing-small);
+}
+
+.chapter-navigation button,
+.section-navigation button {
+  min-width: 11rem;
+}
+
+
+main.chapter,
+main:not(.chapter),
+aside {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-main);
+  background: var(--theme-paper);
+  box-shadow: var(--theme-shadow);
+  padding: clamp(1rem, 2.4vw, 1.9rem);
+  transition: var(--interactive-transition);
+  background-image: var(--theme-grain), var(--theme-glassmorphism);
+  background-blend-mode: multiply, lighten;
+}
+
+main.chapter {
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+  container-name: chapter-main;
+}
+
+@layer root.states {
+
+  body[data-chapter-mode="dawn"] main.chapter,
+  body[data-chapter-mode="signal"] main.chapter,
+  body[data-chapter-mode="song"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(168, 210, 255, 0.2), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
+  body[data-chapter-mode="rift"] main.chapter,
+  body[data-chapter-mode="paradox"] main.chapter,
+  body[data-chapter-mode="canon"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(226, 186, 255, 0.18), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
+  body[data-chapter-mode="resonance"] main.chapter,
+  body[data-chapter-mode="confluence"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(164, 239, 220, 0.2), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
+}
+
+/* @layer root.states */
+
+main.chapter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0));
+}
+
+main.chapter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image: var(--chapter-motif-url, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  filter: saturate(0.92) contrast(1.04);
+  transition: opacity var(--transition-duration) var(--transition-function);
+}
+
+body[data-motif-overlay="on"] main.chapter::before {
+  opacity: 0.2;
+}
+
+main.chapter>*+* {
+  margin-top: var(--spacing-medium);
+}
+
+main.chapter>* {
+  position: relative;
+  z-index: 1;
+}
+
+main.chapter h1 {
+  color: var(--color-accent-alt);
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 6ch));
+  line-height: 1.14;
+  letter-spacing: 0.012em;
+  text-wrap: balance;
+}
+
+main.chapter section>h2 {
+  margin-bottom: 0.35rem;
+  color: var(--color-accent-main);
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 3ch));
+  line-height: 1.28;
+  text-wrap: balance;
+}
+
+main.chapter {
+  --chapter-measure: var(--chapter-reading-measure);
+  --chapter-line-height: var(--chapter-reading-line-height);
+  --chapter-flow-gap: var(--chapter-reading-gap);
+  --chapter-letter-spacing: 0.004em;
+}
+
+main.chapter p,
+main.chapter li,
+main.chapter blockquote {
+  color: var(--chapter-reading-ink);
+  max-width: var(--chapter-measure);
+  line-height: var(--chapter-line-height);
+  letter-spacing: var(--chapter-letter-spacing);
+  text-wrap: pretty;
+  hanging-punctuation: first last;
+  hyphens: auto;
+}
+
+main.chapter p+p {
+  margin-top: var(--chapter-flow-gap);
+}
+
+main.chapter ul,
+main.chapter ol {
+  max-width: var(--chapter-measure);
+  padding-inline-start: 1.3em;
+}
+
+main.chapter blockquote {
+  margin-left: 0;
+  border-left: 2px solid color-mix(in srgb, var(--chapter-reading-accent) 58%, transparent 42%);
+  padding: 0.2rem 0 0.2rem 0.82rem;
+  font-style: italic;
+}
+
+main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+main.chapter>p:first-of-type::first-letter {
+  float: left;
+  font-size: 3em;
+  line-height: 0.82;
+  padding-right: 0.14em;
+  color: color-mix(in srgb, var(--theme-accent-main) 62%, var(--theme-text-main) 38%);
+  font-family: var(--font-family-heading);
+}
+
+main.chapter figure {
+  border-radius: var(--border-radius-main);
+  overflow: clip;
+  background: var(--theme-paper);
+  border: var(--interactive-border);
+}
+
+main.chapter figure[data-visual-default="colloquial"] figcaption::before {
+  content: "default";
+  display: inline-flex;
+  margin-right: 0.35rem;
+  border-radius: var(--border-radius-pill);
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.32);
+  padding: 0 0.4rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+main.chapter figure img {
+  width: 100%;
+}
+
+main.chapter figcaption {
+  padding: 0.72rem 0.9rem;
+  color: var(--theme-text-alt);
+  font-size: var(--font-size-caption);
+  border-top: var(--interactive-border);
+}
+
+main:not(.chapter) {
+  display: grid;
+  gap: var(--spacing-medium);
+}
+
+main:not(.chapter) h1 {
+  margin-bottom: 0.35rem;
+}
+
+main:not(.chapter) h1 span {
+  color: var(--color-text-alt);
+  font-size: 0.85em;
+  font-family: var(--font-family-body);
+  font-style: italic;
+  margin-right: 0.2rem;
+}
+
+main:not(.chapter) form {
+  display: grid;
+  gap: var(--spacing-small);
+}
+
+main:not(.chapter) form label {
+  display: grid;
+  gap: 0.3rem;
+  align-items: start;
+}
+
+main:not(.chapter) form label>span {
+  color: var(--color-text-alt);
+  font-size: 0.95rem;
+  font-family: var(--font-family-heading);
+}
+
+main:not(.chapter) textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.section-navigation {
+  margin-top: calc(var(--spacing-small) * -0.3);
+}
+
+aside {
+  display: grid;
+  gap: var(--spacing-small);
+}
+
+
+
+footer {
+  text-align: center;
+  font-size: 0.95rem;
+  padding-bottom: 0.3rem;
+  background: var(--theme-paper);
+  box-shadow: 0 -2px 12px var(--theme-shadow-main);
+  background-image: var(--theme-grain);
+  background-blend-mode: multiply;
+}
+
+

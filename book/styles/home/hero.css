@@ -1,0 +1,171 @@
+/*
+ * Layer stack — lowest → highest priority.
+ * Existing unlayered rules (below) win over anything in a named layer.
+ * Migration: wrap each confirmed-stable block in its layer progressively.
+ *
+ *   home.base       — panel shells, surfaces, resets
+ *   home.layout     — grid/flex composition
+ *   home.components — per-component rules
+ *   home.states     — data-attribute and aria state selectors
+ *   home.motion     — @keyframes and animation declarations
+ *   home.theme      — variant overrides (cinema / stream / mood)
+ */
+@layer home.base, home.layout, home.components, home.states, home.motion, home.theme;
+
+/*
+ * Registered custom properties.
+ * Typed registration enables CSS-native interpolation and animation.
+ * @property declarations live outside any layer (they are global).
+ */
+@property --reveal-delay {
+  syntax: '<time>';
+  inherits: true;
+  initial-value: 0ms;
+}
+
+@property --scroll-layer-offset {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.site-shell {
+  width: min(100%, var(--max-width-content));
+  margin: 0 auto;
+  display: grid;
+  gap: var(--spacing-large);
+}
+
+.site-topbar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-small);
+  align-items: center;
+}
+
+.site-topbar>a {
+  color: var(--color-accent-alt);
+  font-family: var(--font-family-heading);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  font-size: 1.02rem;
+}
+
+.experience-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.42rem;
+}
+
+.experience-controls label {
+  margin: 0;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.2rem 0.4rem 0.2rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--color-text-alt);
+}
+
+.experience-controls span {
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.03em;
+}
+
+#home-app {
+  display: grid;
+  gap: var(--spacing-large);
+}
+
+.hero-panel,
+.chapter-timeline,
+.producer-constellation,
+.grammar-observatory,
+.spw-ethos-atlas,
+.seed-atlas {
+  position: relative;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(37, 70, 107, 0.24) 62%, var(--glass-border) 38%);
+  border-radius: calc(var(--border-radius-main) + 4px);
+  background:
+    linear-gradient(155deg, rgba(83, 125, 200, 0.16), rgba(54, 130, 136, 0.11)),
+    linear-gradient(170deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.32)),
+    var(--glass-bg);
+  box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
+  overflow: clip;
+}
+
+.hero-panel::before {
+  content: "#[canon]  ^[intent]  &[flow]";
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.74rem;
+  color: rgba(68, 80, 107, 0.62);
+  letter-spacing: 0.08em;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  margin-bottom: 0.45rem;
+  color: var(--color-accent-main);
+  font-family: var(--font-family-heading);
+}
+
+.hero-panel h1 {
+  margin-bottom: 0.55rem;
+}
+
+.hero-subtitle,
+.hero-stats,
+.timeline-subtitle,
+.producer-constellation-subtitle,
+.seed-atlas-subtitle {
+  color: var(--color-text-alt);
+}
+
+.hero-stats {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.52rem;
+  margin-top: 0.92rem;
+}
+
+.hero-action {
+  display: inline-flex;
+  align-items: center;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.25rem 0.72rem;
+  text-decoration: none;
+  font-family: var(--font-family-heading);
+  font-size: 0.85rem;
+}
+
+.spw-block,
+.spw-snippet {
+  white-space: pre-wrap;
+  border: var(--border-width) var(--border-style) rgba(41, 116, 131, 0.34);
+  border-radius: var(--border-radius-small);
+  background: #142036;
+  color: #a6ebff;
+}
+
+.spw-block {
+  margin-top: var(--spacing-medium);
+  padding: 0.8rem;
+  font-size: 0.92rem;
+}
+

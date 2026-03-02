@@ -1,0 +1,230 @@
+/*
+ * Registered custom properties.
+ * Typed registration enables CSS-native interpolation, animation,
+ * and prevents invalid-at-computed-value from cascading silently.
+ * @property lives outside any layer — it is globally scoped.
+ */
+@property --shader-x {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 50;
+}
+
+@property --shader-y {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 18;
+}
+
+@property --shader-hue {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 204;
+}
+
+@property --shader-strength {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.56;
+}
+
+@property --shader-scroll {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --attention-scroll-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --attention-hue-shift {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --tap-shadow-strength {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-handle-order {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 1;
+}
+
+:root {
+  /* Legacy-compatible base tokens (older mood files can override these). */
+  --bg-color-main: #f3ede1;
+  --bg-color-content: rgba(255, 252, 246, 0.86);
+  --bg-color-content-strong: rgba(255, 255, 255, 0.92);
+  --accent-color-main: #2a6f7f;
+  --accent-color-alt: #1c4f63;
+  --accent-gradient: linear-gradient(130deg, #2f8191 0%, #26456f 100%);
+  --text-color-main: #1a2233;
+  --text-color-alt: #45506b;
+  --text-color-content: #f6fbff;
+  --focus-outline-color: #b0602a;
+  --hover-bg-color: rgba(46, 126, 142, 0.13);
+  --active-bg-color: color-mix(in srgb, var(--hover-bg-color) 80%, var(--bg-color-content) 20%);
+  --bg-gradient-top: rgba(255, 255, 255, 0.7);
+  --bg-gradient-edge: rgba(146, 170, 214, 0.34);
+  --bg-gradient-bottom: #e2eaf7;
+
+  /* Current token names used by the normalized stylesheet stack. */
+  --color-bg-main: var(--bg-color-main);
+  --color-bg-content: var(--bg-color-content);
+  --color-bg-content-strong: var(--bg-color-content-strong);
+  --color-accent-main: var(--accent-color-main);
+  --color-accent-alt: var(--accent-color-alt);
+  --color-accent-gradient: var(--accent-gradient);
+  --color-text-main: var(--text-color-main);
+  --color-text-alt: var(--text-color-alt);
+  --color-text-content: var(--text-color-content);
+  --color-focus-outline: var(--focus-outline-color);
+  --color-hover-bg: var(--hover-bg-color);
+
+  --font-family-heading: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  --font-family-body: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-family-mono: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  --font-size-body: 1.08rem;
+  --font-size-h1: clamp(2rem, 4vw, 2.8rem);
+  --font-size-h2: clamp(1.45rem, 2.5vw, 2rem);
+  --font-size-h3: clamp(1.2rem, 2vw, 1.4rem);
+  --font-size-h1-mobile: 1.8rem;
+  --font-size-h2-mobile: 1.35rem;
+  --font-size-caption: 0.96rem;
+  --font-size-button: 1rem;
+  --line-height-main: 1.7;
+
+  --spacing-extra-small: 0.5rem;
+  --spacing-small: 0.8rem;
+  --spacing-medium: 1.1rem;
+  --spacing-large: 1.7rem;
+  --spacing-main: clamp(1rem, 3vw, 2.25rem);
+  --spacing-gap-main: 1rem;
+  --max-width-content: 72rem;
+
+  --border-radius-main: 14px;
+  --border-radius-small: 9px;
+  --border-radius-pill: 999px;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color-main: rgba(29, 49, 78, 0.2);
+
+  --shadow-main: 0 14px 28px rgba(16, 23, 42, 0.13);
+  --shadow-hover: 0 20px 38px rgba(16, 23, 42, 0.18);
+
+  --transition-duration: 160ms;
+  --transition-function: ease;
+  --depth-shadow-strength: 1;
+  --dimensional-scale: 1;
+  --panel-blur: 5px;
+  --glass-bg: rgba(255, 255, 255, 0.54);
+  --glass-bg-strong: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.42);
+  --paper-fiber: rgba(111, 92, 58, 0.04);
+  --paper-fiber-strong: rgba(111, 92, 58, 0.08);
+  --attention-hue-base: 198;
+  --attention-hue-shift: 0;
+  --attention-scroll-progress: 0;
+  --shader-x: 50;
+  --shader-y: 18;
+  --shader-hue: 204;
+  --shader-strength: 0.56;
+  --shader-scroll: 0;
+  --focal-x: 50;
+  --focal-y: 50;
+  --perspective-depth: 920px;
+  --tap-shadow-x: 50;
+  --tap-shadow-y: 50;
+  --tap-shadow-strength: 0;
+
+  /* Spacing aliases retained for older chapter CSS tokens. */
+  --padding-small: var(--spacing-small);
+  --padding-medium: var(--spacing-medium);
+}
+
+html[data-theme="ember"] {
+  --bg-color-main: #f5ece2;
+  --bg-color-content: rgba(255, 247, 240, 0.9);
+  --bg-color-content-strong: rgba(255, 252, 248, 0.95);
+  --accent-color-main: #8a4f2f;
+  --accent-color-alt: #683722;
+  --accent-gradient: linear-gradient(130deg, #ab6535 0%, #7d3a26 100%);
+  --text-color-main: #2b1c14;
+  --text-color-alt: #694d3f;
+  --focus-outline-color: #7046a1;
+  --hover-bg-color: rgba(138, 79, 47, 0.14);
+  --bg-gradient-top: rgba(255, 245, 236, 0.82);
+  --bg-gradient-edge: rgba(235, 161, 116, 0.22);
+  --bg-gradient-bottom: #f1e3d4;
+}
+
+html[data-theme="cosmos"] {
+  --bg-color-main: #11182a;
+  --bg-color-content: rgba(22, 33, 57, 0.86);
+  --bg-color-content-strong: rgba(28, 42, 73, 0.92);
+  --accent-color-main: #76cbff;
+  --accent-color-alt: #b1dcff;
+  --accent-gradient: linear-gradient(130deg, #3f88c5 0%, #6a4fbf 100%);
+  --text-color-main: #e6eeff;
+  --text-color-alt: #b7c6ed;
+  --text-color-content: #f5fbff;
+  --focus-outline-color: #f4c96f;
+  --hover-bg-color: rgba(117, 203, 255, 0.14);
+  --border-color-main: rgba(142, 179, 235, 0.3);
+  --shadow-main: 0 16px 36px rgba(2, 8, 24, 0.42);
+  --shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.55);
+  --bg-gradient-top: rgba(77, 113, 177, 0.45);
+  --bg-gradient-edge: rgba(79, 113, 194, 0.34);
+  --bg-gradient-bottom: #090f1f;
+}
+
+html[data-dimension="flat"] {
+  --depth-shadow-strength: 0;
+  --dimensional-scale: 0.995;
+  --panel-blur: 0;
+}
+
+html[data-dimension="stage"] {
+  --depth-shadow-strength: 1;
+  --dimensional-scale: 1;
+  --panel-blur: 5px;
+}
+
+html[data-dimension="immersive"] {
+  --depth-shadow-strength: 1.28;
+  --dimensional-scale: 1.01;
+  --panel-blur: 7px;
+}
+
+html[data-tuning="calm"] {
+  --line-height-main: 1.82;
+  --spacing-medium: 1.24rem;
+  --spacing-large: 1.9rem;
+}
+
+html[data-tuning="focus"] {
+  --line-height-main: 1.7;
+  --spacing-medium: 1.1rem;
+  --spacing-large: 1.7rem;
+}
+
+html[data-tuning="explore"] {
+  --line-height-main: 1.64;
+  --spacing-medium: 1rem;
+  --spacing-large: 1.52rem;
+}
+
+html[data-online="offline"] {
+  --accent-color-main: #8b7662;
+  --accent-color-alt: #6d5f55;
+  --accent-gradient: linear-gradient(130deg, #8b7662 0%, #6d5f55 100%);
+}
+

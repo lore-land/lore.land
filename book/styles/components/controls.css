@@ -1,0 +1,102 @@
+.chapter-progress-panel {
+  display: grid;
+  gap: 0.42rem;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.72rem;
+}
+
+.chapter-progress-panel h2 {
+  font-size: 0.96rem;
+}
+
+.chapter-progress-panel progress {
+  width: 100%;
+  accent-color: var(--color-accent-main);
+}
+
+.chapter-progress-panel .chapter-reward,
+.chapter-progress-panel .chapter-mode {
+  font-size: 0.86rem;
+  color: var(--color-text-alt);
+}
+
+.spw-hypertext-routes {
+  display: grid;
+  gap: 0.46rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.7rem;
+}
+
+.spw-hypertext-routes h2,
+.chapter-motif-discovery h2 {
+  font-size: 0.95rem;
+}
+
+.spw-hypertext-routes p,
+.chapter-motif-discovery p,
+.chapter-tuning-guide {
+  margin: 0;
+  color: var(--color-text-alt);
+  font-size: 0.83rem;
+}
+
+.spw-shortcut-hint {
+  font-family: var(--font-family-heading);
+}
+
+.spw-hypertext-routes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.36rem;
+}
+
+.spw-hypertext-routes a {
+  display: inline-flex;
+  width: fit-content;
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.28);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.2rem 0.58rem;
+  text-decoration: none;
+  font-family: var(--font-family-heading);
+  font-size: 0.76rem;
+}
+
+.chapter-tuning-controls label {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.chapter-tuning-controls label>span {
+  font-family: var(--font-family-heading);
+  font-size: 0.8rem;
+  color: var(--color-text-alt);
+}
+
+.chapter-tuning-controls select {
+  width: 100%;
+}
+
+.motif-spw {
+  margin: 0;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-bg-content-strong);
+  color: var(--theme-accent-main);
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.chapter-motif-discovery .spw-language-controls,
+.spw-hypertext-routes .spw-language-controls {
+  margin-top: 0.15rem;
+}
+
+

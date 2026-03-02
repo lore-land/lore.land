@@ -561,3 +561,46 @@
     border: 1px solid #ddd;
   }
 }
+
+main.chapter[data-acoustics="dense"],
+body[data-acoustics="dense"] main.chapter {
+  --chapter-measure: 61ch;
+  --chapter-line-height: 1.93;
+  --chapter-flow-gap: 1.02rem;
+}
+
+main.chapter[data-acoustics="balanced"],
+body[data-acoustics="balanced"] main.chapter {
+  --chapter-measure: 66ch;
+  --chapter-line-height: 1.84;
+  --chapter-flow-gap: 0.86rem;
+}
+
+main.chapter[data-acoustics="airy"],
+body[data-acoustics="airy"] main.chapter {
+  --chapter-measure: 69ch;
+  --chapter-line-height: 1.74;
+  --chapter-flow-gap: 0.72rem;
+}
+
+body[data-acoustic-texture="epic"] main.chapter h1 {
+  letter-spacing: 0.016em;
+}
+
+body[data-acoustic-texture="staccato"] main.chapter {
+  --chapter-letter-spacing: 0.002em;
+}
+
+body[data-readability-band="tight"] main.chapter {
+  --chapter-measure: 60ch;
+  --chapter-line-height: 1.95;
+  --chapter-flow-gap: 1.06rem;
+}
+
+body[data-readability-band="open"] main.chapter {
+  --chapter-measure: 71ch;
+  --chapter-line-height: 1.72;
+  --chapter-flow-gap: 0.7rem;
+}
+
+

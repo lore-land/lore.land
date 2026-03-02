@@ -1,0 +1,241 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: var(--spacing-main);
+  color: var(--color-text-main);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-main);
+  font-family: var(--font-family-body);
+  text-rendering: optimizeLegibility;
+  background:
+    radial-gradient(
+      circle at calc(var(--shader-x) * 1%) calc(var(--shader-y) * 1%),
+      hsla(var(--shader-hue), 90%, 70%, calc(0.05 * var(--shader-strength))) 0%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at calc(100% - (var(--shader-x) * 0.6%)) calc(100% - (var(--shader-y) * 0.4%)),
+      hsla(calc(var(--shader-hue) + 50), 84%, 72%, calc(0.04 + (var(--shader-scroll) * 0.05))) 0%,
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at calc(12% + (var(--attention-scroll-progress) * 76%)) 10%,
+      hsla(
+        calc(var(--attention-hue-base) + var(--attention-hue-shift)),
+        76%,
+        66%,
+        calc(0.08 + (var(--attention-scroll-progress) * 0.12))
+      ) 0%,
+      transparent 42%
+    ),
+    radial-gradient(circle at 0% 0%, var(--bg-gradient-top) 0%, transparent 52%),
+    radial-gradient(circle at 100% 0%, var(--bg-gradient-edge) 0%, transparent 56%),
+    linear-gradient(180deg, var(--bg-color-main) 0%, var(--bg-gradient-bottom) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-large);
+  transition: background 320ms var(--transition-function);
+  perspective: var(--perspective-depth);
+  transform-style: preserve-3d;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at calc(78% - (var(--attention-scroll-progress) * 52%)) 18%,
+      hsla(calc(var(--attention-hue-base) + var(--attention-hue-shift) + 18), 88%, 74%, 0.14) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at calc(22% + (var(--attention-scroll-progress) * 38%)) 80%,
+      hsla(calc(var(--attention-hue-base) + var(--attention-hue-shift) - 26), 80%, 70%, 0.12) 0%,
+      transparent 45%
+    ),
+    repeating-linear-gradient(
+      102deg,
+      var(--paper-fiber) 0 2px,
+      transparent 2px 9px
+    ),
+    repeating-linear-gradient(
+      14deg,
+      var(--paper-fiber-strong) 0 1px,
+      transparent 1px 6px
+    );
+  mix-blend-mode: multiply;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at calc(var(--tap-shadow-x) * 1%) calc(var(--tap-shadow-y) * 1%),
+      hsla(var(--shader-hue), 76%, 56%, calc(var(--tap-shadow-strength) * 0.24)) 0%,
+      hsla(calc(var(--shader-hue) + 38), 82%, 64%, calc(var(--tap-shadow-strength) * 0.15)) 16%,
+      transparent 42%
+    );
+  transition: background 220ms var(--transition-function);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--color-text-main);
+  font-family: var(--font-family-heading);
+  line-height: 1.24;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+p,
+ul,
+ol,
+pre,
+figure,
+blockquote {
+  margin: 0;
+}
+
+p,
+li {
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-accent-main);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+  transition:
+    color var(--transition-duration) var(--transition-function),
+    opacity var(--transition-duration) var(--transition-function);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--color-accent-alt);
+}
+
+[data-component] {
+  container-type: inline-size;
+}
+
+button,
+.primary-action {
+  border: var(--interactive-border);
+  border-radius: var(--interactive-radius);
+  background: var(--color-accent-gradient);
+  color: var(--color-text-content);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-button);
+  padding: 0.56rem 0.95rem;
+  cursor: pointer;
+  transition: var(--interactive-transition);
+}
+
+button:hover,
+button:focus-visible,
+.primary-action:hover,
+.primary-action:focus-visible {
+  background: var(--interactive-bg-hover);
+  outline: 2px solid var(--interactive-outline);
+  outline-offset: 2px;
+  box-shadow: var(--interactive-shadow-hover);
+  transform: translateY(-1px);
+  filter: saturate(1.1);
+}
+
+button:active,
+.primary-action:active {
+  background: var(--active-bg-color);
+  transform: translateY(0);
+}
+
+input,
+select,
+textarea {
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-small);
+  padding: 0.55rem 0.68rem;
+  color: var(--color-text-main);
+  background: var(--color-bg-content-strong);
+  font-size: 0.98rem;
+  font-family: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+button:focus-visible,
+.primary-action:focus-visible {
+  outline: 2px solid var(--interactive-outline);
+  outline-offset: 2px;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: var(--font-family-mono);
+}
+

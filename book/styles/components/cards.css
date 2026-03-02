@@ -1,0 +1,551 @@
+.chapter-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--theme-text-alt);
+  border-top: 1px dashed color-mix(in srgb, var(--theme-accent-main) 28%, transparent 72%);
+  padding-top: 0.48rem;
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 5ch));
+}
+
+.chapter-byline a {
+  font-family: var(--font-family-heading);
+}
+
+.ebook-nav-panel {
+  display: grid;
+  gap: 0.46rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.72rem;
+}
+
+.ebook-nav-panel h2 {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.ebook-nav-bridge,
+.ebook-nav-status {
+  margin: 0;
+  color: var(--theme-text-alt);
+  font-size: 0.82rem;
+}
+
+.ebook-payload-status {
+  margin: 0;
+  color: var(--theme-accent-alt);
+  font-size: 0.74rem;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ebook-nav-progress {
+  width: 100%;
+  accent-color: var(--theme-accent-main);
+}
+
+.ebook-register-switch,
+.ebook-perspective-switch,
+.ebook-syntax-switch,
+.ebook-payload-switch,
+.ebook-nav-controls,
+.ebook-concept-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.ebook-register-button,
+.ebook-perspective-button,
+.ebook-syntax-button,
+.ebook-payload-button,
+.ebook-nav-controls button,
+.ebook-toc-link,
+.ebook-concept-link,
+.ebook-lsp-link {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--theme-accent-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.74rem;
+  line-height: 1.2;
+  padding: 0.22rem 0.56rem;
+  text-decoration: none;
+  transition: var(--interactive-transition);
+}
+
+.ebook-register-button[aria-pressed="true"],
+.ebook-perspective-button[aria-pressed="true"],
+.ebook-syntax-button[aria-pressed="true"],
+.ebook-payload-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.14);
+  border-color: rgba(38, 88, 124, 0.46);
+}
+
+.ebook-nav-panel[data-empty-filter="true"] .ebook-nav-status {
+  color: color-mix(in srgb, var(--theme-accent-alt) 55%, #7a4820 45%);
+}
+
+.ebook-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.26rem;
+}
+
+.ebook-toc li {
+  margin: 0;
+}
+
+.ebook-toc-link {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.ebook-toc-link[data-filter-match="false"] {
+  opacity: 0.58;
+  border-style: dashed;
+}
+
+.ebook-toc-link[aria-current="true"],
+.ebook-concept-link[aria-current="true"] {
+  background: rgba(38, 88, 124, 0.16);
+  border-color: rgba(38, 88, 124, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(38, 88, 124, 0.2);
+}
+
+main.chapter>[data-ebook-section="true"][data-ebook-filter-match="false"] {
+  opacity: 0.62;
+  filter: saturate(0.88);
+}
+
+main.chapter>[data-ebook-section="true"][data-ebook-filter-match="true"] {
+  opacity: 1;
+}
+
+main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
+  border-left: 2px dashed color-mix(in srgb, var(--theme-accent-alt) 46%, transparent 54%);
+  padding-left: 0.45rem;
+}
+
+.ebook-concept-heading {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: var(--theme-accent-main);
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ebook-lsp-panel {
+  display: grid;
+  gap: 0.24rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 0.44rem;
+}
+
+.ebook-lsp-summary {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--theme-text-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ebook-lsp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.26rem;
+}
+
+.ebook-lsp-item {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+}
+
+.ebook-lsp-link {
+  flex: 1;
+  text-align: left;
+}
+
+.ebook-lsp-link[disabled] {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.ebook-lsp-state {
+  font-size: 0.67rem;
+  color: var(--theme-text-alt);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.section-navigation [data-ebook-nav="true"] {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.spw-ethos-panel {
+  display: grid;
+  gap: 0.44rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.72rem;
+}
+
+.spw-ethos-panel h2 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.ethos-subtitle {
+  margin: 0;
+  color: var(--theme-text-alt);
+  font-size: 0.81rem;
+}
+
+.ethos-chain {
+  margin: 0;
+}
+
+.ethos-layer-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+.ethos-layer-button,
+.ethos-claim-handle {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--theme-accent-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  padding: 0.2rem 0.54rem;
+  text-align: left;
+}
+
+.ethos-layer-button[aria-pressed="true"] {
+  background: rgba(38, 88, 124, 0.14);
+  border-color: rgba(38, 88, 124, 0.46);
+}
+
+.ethos-claim-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.36rem;
+}
+
+.ethos-claim-item {
+  display: grid;
+  gap: 0.2rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 0.42rem;
+}
+
+.ethos-claim-line,
+.ethos-claim-ref {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--theme-text-alt);
+}
+
+.ethos-claim-ref {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ethos-operators-heading {
+  margin: 0.24rem 0 0;
+  font-size: 0.8rem;
+  color: var(--theme-accent-main);
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ethos-operator-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.26rem;
+}
+
+.ethos-operator-item {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.14rem 0.46rem;
+}
+
+.ethos-operator-token {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.72rem;
+  color: var(--theme-accent-main);
+}
+
+.ethos-operator-meta,
+.ethos-status {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--theme-text-alt);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.spw-ethos-panel[data-load-stage="honk"] .ethos-status {
+  color: color-mix(in srgb, var(--theme-accent-main) 72%, #1f4f3e 28%);
+}
+
+.spw-ethos-panel[data-pipeline-stage] .ethos-status {
+  border-left: 2px solid currentColor;
+  padding-left: 0.46rem;
+}
+
+.spw-ethos-panel[data-pipeline-stage="select"] .ethos-status {
+  color: var(--spw-pipeline-select, var(--spw-color-probe, #9fd8ff));
+}
+
+.spw-ethos-panel[data-pipeline-stage="transform"] .ethos-status {
+  color: var(--spw-pipeline-transform, var(--spw-color-potential, #ffb07a));
+}
+
+.spw-ethos-panel[data-pipeline-stage="validate"] .ethos-status {
+  color: var(--spw-pipeline-validate, var(--spw-color-measure, #a8c8e8));
+}
+
+.spw-ethos-panel[data-pipeline-stage="emit"] .ethos-status {
+  color: var(--spw-pipeline-emit, var(--spw-color-integration, #e5a7ff));
+}
+
+.spw-ethos-panel[data-load-stage="bane"] .ethos-status {
+  color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
+}
+
+.story-attribution-panel {
+  display: grid;
+  gap: 0.4rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.72rem;
+}
+
+.story-attribution-panel h2 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.story-attribution-panel p {
+  margin: 0;
+  color: var(--theme-text-alt);
+  font-size: 0.83rem;
+}
+
+.story-attribution-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.story-attribution-links a {
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  padding: 0.2rem 0.58rem;
+  background: rgba(255, 255, 255, 0.82);
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.74rem;
+  text-decoration: none;
+}
+
+.chapter-progress-panel,
+.spw-hypertext-routes,
+.ebook-nav-panel,
+.spw-ethos-panel,
+.story-attribution-panel,
+.ebook-lsp-panel {
+  background: var(--spw-panel-surface);
+  border-color: var(--spw-panel-border);
+  box-shadow: var(--spw-panel-shadow);
+  backdrop-filter: blur(3px) saturate(1.06);
+  -webkit-backdrop-filter: blur(3px) saturate(1.06);
+}
+
+.ebook-register-button,
+.ebook-perspective-button,
+.ebook-syntax-button,
+.ebook-payload-button,
+.ebook-nav-controls button,
+.ebook-toc-link,
+.ebook-concept-link,
+.ebook-lsp-link,
+.ethos-layer-button,
+.ethos-claim-handle,
+.story-attribution-links a {
+  min-height: var(--spw-control-height);
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  background: color-mix(in srgb, var(--spw-panel-surface-strong) 82%, transparent 18%);
+}
+
+.ebook-register-button:hover,
+.ebook-perspective-button:hover,
+.ebook-syntax-button:hover,
+.ebook-payload-button:hover,
+.ebook-nav-controls button:hover,
+.ebook-toc-link:hover,
+.ebook-concept-link:hover,
+.ebook-lsp-link:hover,
+.ethos-layer-button:hover,
+.ethos-claim-handle:hover,
+.story-attribution-links a:hover {
+  border-color: color-mix(in srgb, var(--theme-accent-main) 46%, transparent 54%);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--theme-accent-main) 18%, transparent 82%);
+}
+
+.ebook-register-button:focus-visible,
+.ebook-perspective-button:focus-visible,
+.ebook-syntax-button:focus-visible,
+.ebook-payload-button:focus-visible,
+.ebook-nav-controls button:focus-visible,
+.ebook-toc-link:focus-visible,
+.ebook-concept-link:focus-visible,
+.ebook-lsp-link:focus-visible,
+.ethos-layer-button:focus-visible,
+.ethos-claim-handle:focus-visible,
+.story-attribution-links a:focus-visible {
+  outline: 2px solid var(--spw-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spw-focus-ring) 32%, transparent 68%);
+}
+
+.ebook-toc,
+.ethos-claim-list,
+.ebook-lsp-list {
+  max-height: min(41vh, 24rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+}
+
+/* ─── Operator role colors in ethos panel (v0.2.0 names) ────────────────── */
+.ethos-operator-token[data-spw-role="ground"] {
+  color: var(--spw-color-ground, #7cb87e);
+}
+
+.ethos-operator-token[data-spw-role="annotation"] {
+  color: var(--spw-color-annotation, #f0a0c8);
+}
+
+.ethos-operator-token[data-spw-role="confluence"] {
+  color: var(--spw-color-confluence, #86d4f5);
+}
+
+.ethos-operator-token[data-spw-role="perspective"] {
+  color: var(--spw-color-perspective, #f5d07a);
+}
+
+.ethos-operator-token[data-spw-role="integration"] {
+  color: var(--spw-color-integration, #e5a7ff);
+}
+
+.ethos-operator-token[data-spw-role="potential"] {
+  color: var(--spw-color-potential, #ffb07a);
+}
+
+.ethos-operator-token[data-spw-role="probe"] {
+  color: var(--spw-color-probe, #9fd8ff);
+}
+
+.ethos-operator-token[data-spw-role="action"] {
+  color: var(--spw-color-action, #ff8a8a);
+}
+
+.ethos-operator-token[data-spw-role="value"] {
+  color: var(--spw-color-value, #c8e6a0);
+}
+
+.ethos-operator-token[data-spw-role="config"] {
+  color: var(--spw-color-config, #b8d4a8);
+}
+
+.ethos-operator-token[data-spw-role="measure"] {
+  color: var(--spw-color-measure, #a8c8e8);
+}
+
+.ethos-operator-token[data-spw-role="substrate"] {
+  color: var(--spw-color-substrate, #d4b8f0);
+}
+
+/* polarity tints on ethos tokens */
+.ethos-operator-token[data-spw-polarity="extrinsic"] {
+  font-style: italic;
+}
+
+.ethos-operator-token[data-spw-polarity="intrinsic"] {
+  font-weight: bold;
+}
+
+/* ─── Nav-shape panel visual state ──────────────────────────────────────── */
+.ebook-nav-panel[data-nav-shape="breadth"] {
+  border-color: rgba(134, 212, 245, 0.44);
+  box-shadow: 0 0 0 2px rgba(134, 212, 245, 0.14);
+}
+
+.ebook-nav-panel[data-nav-shape="depth"] {
+  border-color: rgba(240, 160, 200, 0.44);
+  box-shadow: 0 0 0 2px rgba(240, 160, 200, 0.14);
+}
+
+/* breadth: expand the concept rail into a more visible strip */
+.ebook-nav-panel[data-nav-shape="breadth"] .ebook-concept-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+/* depth: foreground the TOC and mute switches */
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-perspective-switch,
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-payload-switch,
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-syntax-switch {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.ebook-nav-panel[data-nav-shape="depth"] .ebook-toc {
+  display: grid;
+}
+
+html[data-ebook-register="reader"] .chapter-byline {
+  line-height: 1.8;
+}
+
+html[data-ebook-register="engineer"] main.chapter p,
+html[data-ebook-register="engineer"] .ebook-nav-panel {
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  line-height: 1.55;
+}
+
+/* Responsive chapter rules moved to book-layout.css */
+

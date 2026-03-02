@@ -1,0 +1,152 @@
+
+/*
+ * Registered custom properties for the motif/trope/foreshadow system.
+ * Typed <color> registration enables smooth interpolation between theme values.
+ */
+@property --motif-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #2a6f7f;
+}
+
+@property --trope-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #b07cff;
+}
+
+@property --foreshadow-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffb347;
+}
+
+@property --component-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #2a6f7f;
+}
+
+@property --component-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 252, 246, 0.86);
+}
+
+:root {
+  /* Motif/trope/foreshadowing component-level variables */
+  --motif-color: var(--theme-accent-main);
+  --motif-bg: var(--theme-bg-content-strong);
+  --motif-shadow: 0 2px 12px var(--theme-accent-main);
+  --motif-shadow-strong: 0 4px 24px var(--theme-accent-alt);
+  --motif-gradient: linear-gradient(120deg, var(--motif-color) 0%, var(--theme-accent-alt) 100%);
+  --motif-foreshadow: 0 0 0 3px var(--theme-accent-alt);
+
+  --trope-color: #b07cff;
+  --trope-bg: #f6f0ff;
+  --trope-shadow: 0 2px 12px #b07cff44;
+  --trope-gradient: linear-gradient(120deg, #b07cff 0%, #6e4cff 100%);
+
+  --foreshadow-color: #ffb347;
+  --foreshadow-bg: #fff7e6;
+  --foreshadow-shadow: 0 0 0 3px #ffb34799;
+  --foreshadow-gradient: linear-gradient(120deg, #ffb347 0%, #ff7f50 100%);
+
+  /* Ergonomic component-level styling for motifs, tropes, foreshadowing */
+  [data-motif] {
+    --component-color: var(--motif-color);
+    --component-bg: var(--motif-bg);
+    --component-shadow: var(--motif-shadow);
+    --component-gradient: var(--motif-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-motif][data-foreshadow] {
+    --component-shadow: var(--motif-foreshadow);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-trope] {
+    --component-color: var(--trope-color);
+    --component-bg: var(--trope-bg);
+    --component-shadow: var(--trope-shadow);
+    --component-gradient: var(--trope-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+
+  [data-foreshadow]:not([data-motif]) {
+    --component-color: var(--foreshadow-color);
+    --component-bg: var(--foreshadow-bg);
+    --component-shadow: var(--foreshadow-shadow);
+    --component-gradient: var(--foreshadow-gradient);
+    color: var(--component-color);
+    background: var(--component-bg);
+    box-shadow: var(--component-shadow);
+  }
+
+  /* Theme generalizability */
+  --theme-mode: light;
+  --theme-bg-main: var(--color-bg-main);
+  --theme-bg-content: var(--color-bg-content);
+  --theme-bg-content-strong: var(--color-bg-content-strong);
+  --theme-accent-main: var(--color-accent-main);
+  --theme-accent-alt: var(--color-accent-alt);
+  --theme-text-main: var(--color-text-main);
+  --theme-text-alt: var(--color-text-alt);
+  --theme-shadow-main: var(--shadow-main);
+  --theme-shadow-hover: var(--shadow-hover);
+  --theme-border-main: var(--border-color-main);
+  --theme-glass-bg: var(--glass-bg);
+  --theme-glass-bg-strong: var(--glass-bg-strong);
+  --theme-glass-border: var(--glass-border);
+  --theme-paper-fiber: var(--paper-fiber);
+  --theme-paper-fiber-strong: var(--paper-fiber-strong);
+  --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px),
+  repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
+  --theme-glassmorphism: linear-gradient(165deg, var(--theme-glass-bg-strong), var(--theme-glass-bg));
+  --theme-paper: var(--theme-bg-content);
+  --theme-shadow: var(--theme-shadow-main);
+  --theme-shadow-strong: 0 24px 44px rgba(2, 8, 24, 0.22);
+}
+
+.motif-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.motif-controls button {
+  font-size: 0.82rem;
+}
+
+.motif-ambient[aria-pressed="true"] {
+  background: linear-gradient(130deg, #3f7a61 0%, #2c5f47 100%);
+}
+
+.motif-preview {
+  margin: 0;
+  display: grid;
+  gap: 0.3rem;
+  border: var(--interactive-border);
+}
+
+.motif-preview img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.motif-preview figcaption {
+  padding: 0.38rem 0.5rem 0.5rem;
+  font-size: 0.78rem;
+}
+
+.chapter-motif-discovery[data-discovered="true"] {
+  box-shadow: inset 0 0 0 1px var(--theme-border-main);
+}
+
+

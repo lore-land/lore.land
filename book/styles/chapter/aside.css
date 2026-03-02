@@ -1,0 +1,55 @@
+aside ul#lore-collector {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  gap: 0.35rem;
+}
+
+aside ul#lore-collector li {
+  padding: 0.46rem 0.62rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+}
+
+aside ul#lore-collector li+li {
+  margin-top: 0.35rem;
+}
+
+aside #lore-button,
+aside .primary-action {
+  justify-self: center;
+}
+
+aside .additional-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+aside .additional-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: var(--interactive-bg);
+  color: var(--color-accent-alt);
+  text-decoration: none;
+  padding: 0.42rem 0.86rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.9rem;
+  transition: var(--interactive-transition);
+}
+
+aside .additional-links a:hover,
+aside .additional-links a:focus-visible {
+  background: var(--interactive-bg-hover);
+  outline: 2px solid var(--interactive-outline);
+  outline-offset: 2px;
+  box-shadow: var(--interactive-shadow-hover);
+}
+
+

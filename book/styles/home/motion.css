@@ -1,0 +1,138 @@
+@layer home.motion {
+
+  /* ─── cadence animations ─────────────────────────────────────────────────── */
+
+  @keyframes cadence-measured {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.88;
+    }
+  }
+
+  @keyframes cadence-searching {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    40% {
+      transform: translateY(-2px);
+    }
+
+    60% {
+      transform: translateY(1px);
+    }
+  }
+
+  @keyframes cadence-radiant {
+
+    0%,
+    100% {
+      box-shadow: var(--shadow-main);
+    }
+
+    50% {
+      box-shadow: var(--shadow-main), 0 0 14px rgba(180, 148, 52, 0.18);
+    }
+  }
+
+  @keyframes cadence-spiral-marker {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes cadence-percussive-pulse {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    8% {
+      transform: scale(1.012);
+    }
+
+    16% {
+      transform: scale(1);
+    }
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="measured"].is-visible {
+    animation: cadence-measured 5.2s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="searching"].is-visible {
+    animation: cadence-searching 4s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="radiant"].is-visible {
+    animation: cadence-radiant 4.4s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="percussive"].is-visible {
+    animation: cadence-percussive-pulse 3.2s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="spiral"] .chapter-marker {
+    display: inline-block;
+    animation: cadence-spiral-marker 18s linear infinite;
+  }
+
+}
+
+/* @layer home.motion */
+
+/*
+ * Progressive enhancement: native CSS entry transitions.
+ * @starting-style provides a pre-JS paint state for grammar chips.
+ * Guards on transition-behavior (Chromium 117+, Firefox 129+, Safari 17.5+).
+ * Chips that arrive before JS fires still animate gracefully.
+ */
+@supports (transition-behavior: allow-discrete) {
+  .grammar-chip {
+    transition-property: opacity, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  @starting-style {
+    .grammar-chip {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+  }
+}
+
+/*
+ * Container query: grammar matrix responds to observatory width.
+ * Compact spacing on narrow containers (e.g. sidebar layout).
+ */
+@container grammar-observatory (max-width: 440px) {
+  .grammar-matrix {
+    gap: 0.28rem;
+  }
+
+  .grammar-chip {
+    font-size: 0.72rem;
+    padding: 0.14rem 0.46rem;
+  }
+}
+
+
+

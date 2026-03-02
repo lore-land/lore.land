@@ -1,0 +1,90 @@
+@layer home.states {
+
+  /* ─── grammar mode: document-level selectors ─────────────────────────────── */
+
+  html[data-grammar-mode="plain"] .chapter-verse,
+  html[data-grammar-mode="plain"] .chapter-register {
+    display: none;
+  }
+
+  html[data-grammar-mode="orbital"] .chapter-logline,
+  html[data-grammar-mode="orbital"] .chapter-register {
+    display: none;
+  }
+
+  html[data-grammar-mode="orbital"] .chapter-verse {
+    border-left-width: 3px;
+    color: rgba(22, 44, 72, 0.88);
+    font-size: 0.86rem;
+  }
+
+  .chapter-card[data-runtime-active="true"] {
+    border-color: rgba(38, 88, 124, 0.48);
+    box-shadow: var(--shadow-main), 0 0 0 2px rgba(38, 88, 124, 0.2);
+  }
+
+  .grammar-chip[data-runtime-active="true"] {
+    background: rgba(38, 88, 124, 0.16);
+    border-color: rgba(38, 88, 124, 0.54);
+    color: rgba(18, 44, 74, 0.95);
+  }
+
+  .grammar-observatory[data-pipeline-stage] .grammar-runtime-status {
+    border-left: 2px solid currentColor;
+    padding-left: 0.68rem;
+  }
+
+  .grammar-observatory[data-pipeline-stage="select"] .grammar-runtime-status {
+    color: var(--spw-pipeline-select, var(--spw-color-probe, #9fd8ff));
+  }
+
+  .grammar-observatory[data-pipeline-stage="transform"] .grammar-runtime-status {
+    color: var(--spw-pipeline-transform, var(--spw-color-potential, #ffb07a));
+  }
+
+  .grammar-observatory[data-pipeline-stage="validate"] .grammar-runtime-status {
+    color: var(--spw-pipeline-validate, var(--spw-color-measure, #a8c8e8));
+  }
+
+  .grammar-observatory[data-pipeline-stage="emit"] .grammar-runtime-status {
+    color: var(--spw-pipeline-emit, var(--spw-color-integration, #e5a7ff));
+  }
+
+  .grammar-observatory[data-load-stage="bane"] .grammar-runtime-status {
+    color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
+  }
+
+  .spw-ethos-atlas[data-pipeline-stage] .ethos-status {
+    border-left: 2px solid currentColor;
+    padding-left: 0.5rem;
+  }
+
+  .spw-ethos-atlas[data-pipeline-stage="select"] .ethos-status {
+    color: var(--spw-pipeline-select, var(--spw-color-probe, #9fd8ff));
+  }
+
+  .spw-ethos-atlas[data-pipeline-stage="transform"] .ethos-status {
+    color: var(--spw-pipeline-transform, var(--spw-color-potential, #ffb07a));
+  }
+
+  .spw-ethos-atlas[data-pipeline-stage="validate"] .ethos-status {
+    color: var(--spw-pipeline-validate, var(--spw-color-measure, #a8c8e8));
+  }
+
+  .spw-ethos-atlas[data-pipeline-stage="emit"] .ethos-status {
+    color: var(--spw-pipeline-emit, var(--spw-color-integration, #e5a7ff));
+  }
+
+  .spw-ethos-atlas[data-load-stage="honk"] .ethos-status {
+    color: rgba(30, 84, 66, 0.92);
+  }
+
+  .spw-ethos-atlas[data-load-stage="bane"] .ethos-status {
+    color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
+  }
+
+}
+
+/* @layer home.states */
+
+

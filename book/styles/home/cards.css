@@ -1,0 +1,275 @@
+
+.spw-snippet {
+  margin: 0;
+  padding: 0.62rem;
+  color: #8de4ff;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.hero-panel .spw-language-controls,
+.chapter-card .spw-language-controls {
+  margin-top: 0.22rem;
+}
+
+.hero-frame-svg {
+  display: block;
+  width: 100%;
+  height: 170px;
+  margin-top: var(--spacing-medium);
+}
+
+.chapter-timeline h2,
+.producer-constellation h2,
+.grammar-observatory h2,
+.spw-ethos-atlas h2,
+.seed-atlas h2 {
+  margin-bottom: 0.42rem;
+}
+
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.chapter-card {
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.28) 66%, var(--glass-border) 34%);
+  border-radius: var(--border-radius-main);
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.42)),
+    var(--glass-bg-strong);
+  padding: 0.9rem;
+  box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
+  display: grid;
+  gap: 0.58rem;
+}
+
+.chapter-marker {
+  width: fit-content;
+  border-radius: var(--border-radius-pill);
+  border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.52);
+  color: var(--color-accent-main);
+  font-family: var(--font-family-heading);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  padding: 0.12rem 0.56rem;
+}
+
+.chapter-card h3 {
+  margin: 0;
+  font-size: 1.04rem;
+}
+
+.chapter-default-preview {
+  display: grid;
+  gap: 0.3rem;
+  border: var(--border-width) var(--border-style) rgba(46, 91, 129, 0.25);
+  border-radius: var(--border-radius-small);
+  overflow: clip;
+  background: rgba(255, 255, 255, 0.86);
+  margin: 0;
+}
+
+.chapter-default-preview img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.chapter-default-preview figcaption {
+  color: var(--color-text-alt);
+  font-size: 0.78rem;
+  padding: 0.32rem 0.5rem 0.46rem;
+}
+
+.chapter-motif-toggle {
+  width: fit-content;
+  font-size: 0.8rem;
+}
+
+.chapter-card a {
+  width: fit-content;
+  font-family: var(--font-family-heading);
+  font-size: 0.88rem;
+  text-decoration: none;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.25rem 0.58rem;
+}
+
+.chapter-seed-preview {
+  display: grid;
+  gap: 0.3rem;
+  border: var(--border-width) var(--border-style) rgba(46, 91, 129, 0.25);
+  border-radius: var(--border-radius-small);
+  overflow: clip;
+  background: rgba(20, 32, 54, 0.88);
+  margin: 0;
+}
+
+.chapter-seed-preview img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.chapter-seed-preview figcaption {
+  color: #cde4ff;
+  font-size: 0.76rem;
+  padding: 0.3rem 0.5rem 0.45rem;
+}
+
+.chapter-card[data-motif-state="revealed"] {
+  border-color: rgba(42, 111, 127, 0.5);
+}
+
+.seed-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  margin-top: 0.9rem;
+}
+
+.seed-controls label {
+  margin: 0;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.2rem 0.4rem 0.2rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--color-text-alt);
+}
+
+.seed-controls span {
+  font-family: var(--font-family-heading);
+}
+
+.seed-randomize {
+  font-size: 0.86rem;
+}
+
+.seed-reward-output {
+  margin-top: 0.72rem;
+  color: var(--color-text-alt);
+  font-size: 0.92rem;
+}
+
+.seed-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.72rem;
+}
+
+.seed-card {
+  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.24) 68%, var(--glass-border) 32%);
+  border-radius: var(--border-radius-main);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.42)),
+    var(--glass-bg-strong);
+  padding: 0.62rem;
+  display: grid;
+  gap: 0.48rem;
+  box-shadow: var(--shadow-main);
+  backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
+  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
+}
+
+.seed-figure {
+  margin: 0;
+  display: grid;
+  gap: 0.28rem;
+}
+
+.seed-figure img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--border-radius-small);
+  border: var(--border-width) var(--border-style) rgba(36, 66, 102, 0.24);
+}
+
+.seed-figure figcaption {
+  font-size: 0.8rem;
+  color: var(--color-text-alt);
+}
+
+.seed-adopt-button {
+  font-size: 0.84rem;
+  width: fit-content;
+}
+
+.seed-adopt-button[aria-pressed="true"] {
+  background: linear-gradient(130deg, #3f7a61 0%, #2c5f47 100%);
+}
+
+.seed-atlas-link {
+  margin-top: 0.95rem;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-radius: var(--border-radius-pill);
+  padding: 0.3rem 0.82rem;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-family-heading);
+  font-size: 0.86rem;
+}
+
+#home-app[data-component-variant="stream"] .chapter-grid,
+#home-app[data-component-variant="stream"] .seed-grid {
+  grid-template-columns: 1fr;
+}
+
+#home-app[data-component-variant="cinema"] .chapter-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+#home-app[data-component-variant="cinema"] .seed-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+#home-app[data-component-variant="cinema"] .seed-card {
+  padding: 0.8rem;
+}
+
+.site-footer {
+  color: var(--color-text-alt);
+  font-size: 0.92rem;
+}
+
+.noscript-panel {
+  margin-top: -0.4rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 800px) {
+  .site-topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-controls {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-panel::before {
+    position: static;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .chapter-card,
+  .seed-card {
+    padding: 0.72rem;
+  }
+}
+
+

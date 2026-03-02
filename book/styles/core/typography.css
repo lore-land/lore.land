@@ -1,0 +1,164 @@
+/* ═══════════════════════════════════════════════════════════════
+ * GLOBAL: LoreLand font + contrast + interactivity (all modes)
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* ─── LoreLand font on headings and markers ──────────────────── */
+
+.hero-panel h1 {
+  font-family: 'LoreLand', var(--font-family-heading);
+  letter-spacing: 0.05em;
+  background: var(--color-accent-gradient, linear-gradient(135deg, var(--color-accent-main), var(--color-accent-alt)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.08;
+}
+
+.chapter-timeline h2,
+.producer-constellation h2,
+.grammar-observatory h2,
+.spw-ethos-atlas h2,
+.seed-atlas h2 {
+  font-family: 'LoreLand', var(--font-family-heading);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+}
+
+.hero-panel::before {
+  font-family: 'LoreLand', var(--font-family-heading);
+  letter-spacing: 0.1em;
+}
+
+.hero-eyebrow {
+  font-family: 'LoreLand', var(--font-family-heading);
+}
+
+.chapter-marker {
+  font-family: 'LoreLand', var(--font-family-heading);
+}
+
+.site-topbar>a {
+  font-family: 'LoreLand', var(--font-family-heading);
+  letter-spacing: 0.06em;
+  font-size: 1.1rem;
+}
+
+/* ─── Contrast upgrades ──────────────────────────────────────── */
+
+.hero-subtitle {
+  color: var(--color-text-main);
+  opacity: 0.85;
+}
+
+.hero-stats {
+  color: var(--color-text-main);
+  opacity: 0.7;
+}
+
+.chapter-logline {
+  color: var(--color-text-main);
+  opacity: 0.82;
+}
+
+.chapter-card h3 {
+  color: var(--color-text-main);
+  font-weight: 600;
+}
+
+/* ─── Clickable hero actions ─────────────────────────────────── */
+
+.hero-action {
+  font-family: 'LoreLand', var(--font-family-heading);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 150ms ease,
+    color 200ms ease;
+  color: var(--color-accent-main);
+  border-color: color-mix(in srgb, var(--color-accent-main) 40%, transparent 60%);
+}
+
+.hero-action:hover,
+.hero-action:focus-visible {
+  background: color-mix(in srgb, var(--color-accent-main) 12%, transparent 88%);
+  border-color: var(--color-accent-main);
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--color-accent-main) 20%, transparent 80%),
+    0 0 0 1px color-mix(in srgb, var(--color-accent-main) 30%, transparent 70%);
+  transform: translateY(-2px);
+  color: var(--color-accent-alt);
+  outline: none;
+}
+
+.hero-action:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--color-accent-main) 15%, transparent 85%);
+}
+
+/* ─── Clickable chapter cards ────────────────────────────────── */
+
+.chapter-card {
+  cursor: pointer;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.chapter-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    var(--shadow-hover),
+    0 0 0 1px color-mix(in srgb, var(--color-accent-main) 25%, transparent 75%);
+  border-color: color-mix(in srgb, var(--color-accent-main) 45%, transparent 55%);
+}
+
+.chapter-card a {
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.chapter-card a:hover {
+  background: color-mix(in srgb, var(--color-accent-main) 10%, rgba(255, 255, 255, 0.8) 90%);
+  border-color: var(--color-accent-main);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent-main) 18%, transparent 82%);
+}
+
+/* ─── Clickable Spw lens elements ────────────────────────────── */
+
+[data-spw-lens] {
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, box-shadow 200ms ease, transform 150ms ease;
+}
+
+[data-spw-lens]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(38, 88, 124, 0.15);
+}
+
+/* ─── Dark mode for home-global elements ─────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  .hero-action {
+    border-color: color-mix(in srgb, var(--color-accent-main) 50%, transparent 50%);
+    color: var(--color-accent-main);
+  }
+
+  .hero-action:hover {
+    background: color-mix(in srgb, var(--color-accent-main) 18%, transparent 82%);
+  }
+
+  .chapter-card h3 {
+    color: var(--theme-text-main);
+  }
+
+  .chapter-logline {
+    color: var(--theme-text-main);
+    opacity: 0.78;
+  }
+}
+

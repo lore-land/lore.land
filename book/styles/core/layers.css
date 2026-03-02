@@ -1,0 +1,14 @@
+/* styles/fixtures/baseline.css */
+/* Shared baseline for a "software as literature" look across all pages. */
+
+/*
+ * Global layer stack — page CSS files extend this order by appending
+ * their own namespaced layers (e.g. @layer home.components, root.states).
+ *
+ *   tokens      — :root custom property declarations
+ *   base        — element resets, defaults, typography
+ *   interactive — component interaction patterns (buttons, links, focus)
+ *   motion      — @keyframes and transition/animation rules
+ */
+@layer tokens, base, interactive, motion;
+
