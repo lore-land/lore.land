@@ -25,6 +25,7 @@ import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
 import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_03_02.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
+import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       chapterContent.dataset.chapterLabel = `Chapter ${padChapterNumber(chapterData.chapterNumber)} — ${chapterData.title}`;
       assignGrammarRoles(chapterContent);
       initBookScrollObserver(chapterContent);
+      initLayoutObserver(chapterContent);
     }
     // Set glyph discovery tier based on chapter progression
     const chapterNum = Number(chapterData.chapterNumber) || 1;
