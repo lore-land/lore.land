@@ -1,0 +1,238 @@
+#>plan_a
+#:layer #!pragmatics
+
+^meta{
+  source: "PLAN.A.md"
+  dialect: spw_native
+  style: expression_first
+}
+
+^intricacy_profile{
+  synthesis: phase_packets
+  output_mode: spw_only
+}
+
+&plan_a_contracts{
+  c001: preserve_phase_order_1_to_26
+  c002: preserve_audit_paths
+  c003: prefer_structured_fields_over_long_strings
+}
+
+&phase_groups{
+  foundation: { span: "1..6", focus: baseline_audits }
+  vite_enhancement: { span: "7..9", focus: build_pipeline }
+  core_adapters: { span: "10..13", focus: runtime_shape_adapters }
+  parser_selector_migration: { span: "14..15", focus: parser_query_alignment }
+  register_bank_migration: { span: "16..18", focus: state_runtime_alignment }
+  module_moves: { span: "19..21", focus: spw_colocation }
+  css_colocation: { span: "22..23", focus: component_style_colocation }
+  entry_updates: { span: "24..24", focus: import_path_cleanup }
+  cleanup_mastery: { span: "25..26", focus: debt_cleanup_and_mastery }
+}
+
+^phase_packet_contract{
+  required: { r1: role, r2: task, r3: emit }
+  optional: { o1: read, o2: verify, o3: deps, o4: notes }
+}
+
+?["plan_a_integrity_gate"]{
+  require: phase_count_26
+  require: audit_emit_paths_stable
+  on_fail: emit_repair_packet
+}
+
+!probe{
+  id: plan_a.syntax_probe
+  ask: phase_blocks_use_expression_fields
+}
+
+^phase_01_html_baseline{
+  role: explore_agent
+  read: { r1: index_html, r2: chapter_html_surfaces }
+  task: { t1: catalog_html_elements, t2: map_heading_landmark_form_graph, t3: flag_nonsemantic_wrappers }
+  emit: "book/audits/01-html-baseline.spw"
+  verify: { v1: element_inventory_complete, v2: heading_tree_per_page, v3: severity_ranked_semantic_issues }
+}
+
+^phase_02_css_layers_baseline{
+  role: explore_agent
+  read: { r1: book_styles_core, r2: book_styles_home }
+  task: { t1: map_layer_declared_vs_used, t2: detect_unlayered_rules, t3: catalog_custom_property_orphans }
+  emit: "book/audits/02-css-layers-baseline.spw"
+}
+
+^phase_03_css_responsive_baseline{
+  role: explore_agent
+  read: { r1: all_css_media_container_animation_rules }
+  task: { t1: map_breakpoints_and_containers, t2: detect_breakpoint_conflicts, t3: flag_gpu_trigger_hotspots }
+  emit: "book/audits/03-css-responsive-baseline.spw"
+}
+
+^phase_04_aria_baseline{
+  role: explore_agent
+  read: { r1: html_surfaces, r2: ui_dom_custom_element_js }
+  task: { t1: audit_accessible_names, t2: audit_live_regions_and_roles, t3: audit_keyboard_operability }
+  emit: "book/audits/04-aria-baseline.spw"
+}
+
+^phase_05_spw_dependency_map{
+  role: explore_agent
+  read: { r1: modules_spw, r2: custom_spw }
+  task: { t1: build_export_import_graph, t2: detect_circular_dependencies, t3: rate_single_responsibility, t4: size_modules }
+  emit: "book/audits/05-spw-dependency-map.spw"
+}
+
+^phase_06_workbench_api_surface{
+  role: explore_agent
+  read: { r1: workbench_runtime_index, r2: workbench_register_bank, r3: workbench_parser_query }
+  task: { t1: inventory_exports, t2: compare_register_bank_api, t3: compare_operator_affinity_shapes, t4: identify_adapter_gaps }
+  emit: "book/audits/06-workbench-api-surface.spw"
+}
+
+^phase_07_vite_aliases{
+  role: edit_agent
+  deps: { d1: vite_config_js }
+  task: { t1: add_spw_and_book_aliases, t2: keep_aliases_nonbreaking }
+  verify: { v1: npm_run_dev_boots, v2: pages_load_14 }
+}
+
+^phase_08_typescript_support{
+  role: edit_agent
+  deps: { d1: package_json }
+  task: { t1: add_dev_dependency_typescript, t2: install_lock_sync, t3: validate_ts_resolution_for_workbench_aliases }
+  verify: { v1: temporary_runtime_import_resolves, v2: cleanup_temp_artifacts }
+}
+
+^phase_09_build_pipeline_checkpoint{
+  role: run_agent
+  task: { t1: run_build, t2: inspect_dist_assets, t3: compare_regression_surface, t4: verify_hashing }
+  emit: "book/audits/09-build-pipeline.spw"
+}
+
+^phase_10_spw_scaffold{
+  role: edit_agent
+  task: { t1: create_scripts_spw_tree, t2: add_barrel_index }
+  verify: { v1: directory_scaffold_exists, v2: no_import_errors }
+}
+
+^phase_11_operator_roles_adapter{
+  role: edit_agent
+  deps: { d1: workbench_operator_affinities }
+  task: { t1: map_affinities_to_operator_roles_shape, t2: export_roles_and_sequence, t3: keep_adapter_pure }
+  verify: { v1: operator_count_12, v2: mapped_fields_complete }
+}
+
+^phase_12_container_roles_adapter{
+  role: edit_agent
+  deps: { d1: workbench_brace_affinities }
+  task: { t1: map_affinities_to_container_roles_shape, t2: export_container_roles }
+  verify: { v1: container_count_8 }
+}
+
+^phase_13_adapter_quality_checkpoint{
+  role: audit_agent
+  task: { t1: confirm_adapter_purity, t2: detect_logic_creep, t3: capture_edge_case_coverage }
+  emit: "book/audits/13-adapter-quality.spw"
+}
+
+^phase_14_selector_parser_swap{
+  role: edit_agent
+  task: { t1: reexport_query_helpers_from_workbench, t2: add_named_adapters_if_exports_missing }
+  verify: { v1: selector_parse_smoke_on_known_selectors }
+}
+
+^phase_15_expression_index_migration{
+  role: move_agent
+  task: { t1: move_expression_index_to_spw_parser, t2: update_import_paths, t3: keep_behavior_stable }
+  verify: { v1: chapter_spw_expression_parsing_works }
+}
+
+^phase_16_register_bank_api_audit{
+  role: explore_agent
+  task: { t1: compare_register_bank_method_surface, t2: classify_lore_only_vs_workbench_only, t3: rate_migration_risk }
+  emit: "book/audits/16-register-bank-comparison.spw"
+}
+
+^phase_17_register_bank_adapter{
+  role: edit_agent
+  task: { t1: wrap_workbench_register_bank_singleton, t2: extend_missing_methods_if_required, t3: export_getter_and_class }
+  verify: { v1: set_get_focus_extract_snapshot_behaviors_match }
+}
+
+^phase_18_register_bank_integration_checkpoint{
+  role: audit_agent
+  task: { t1: enumerate_get_spw_register_bank_call_sites, t2: validate_consumer_behavior, t3: record_behavioral_deltas }
+  emit: "book/audits/18-register-bank-integration.spw"
+}
+
+^phase_19_move_interactions_module{
+  role: move_agent
+  task: { t1: move_interactions_module_into_spw_tree, t2: switch_to_core_parser_imports, t3: remove_duplicated_role_definitions }
+  verify: { v1: tooltip_trace_drag_scope_interactions_work }
+}
+
+^phase_20_move_ethos_module{
+  role: move_agent
+  task: { t1: move_ethos_module_into_spw_tree, t2: derive_operator_ethos_from_affinities, t3: rewire_imports }
+  verify: { v1: ethos_panel_renders_home_and_chapter }
+}
+
+^phase_21_move_binding_modules{
+  role: move_agent
+  task: { t1: relocate_advanced_runtime_component_style_behavior_modules, t2: update_cross_imports, t3: rewire_custom_register }
+  verify: { v1: runtime_attach_style_behavior_integration_works }
+}
+
+^phase_22_colocate_component_css{
+  role: move_agent
+  task: { t1: move_component_css_into_binding, t2: wrap_rules_in_interactive_layer, t3: import_css_from_runtime_module, t4: remove_html_link_tags }
+  verify: { v1: spw_component_render_parity_14_pages, v2: no_duplicate_style_injection }
+}
+
+^phase_23_css_colocation_checkpoint{
+  role: audit_agent
+  task: { t1: rerun_layer_audit, t2: verify_layer_integrity, t3: verify_dev_injection_order, t4: verify_build_extraction_order }
+  emit: "book/audits/23-css-colocation.spw"
+}
+
+^phase_24_entry_point_updates{
+  role: edit_agent
+  deps: { d1: script_entrypoints, d2: home_entrypoints, d3: custom_register }
+  task: { t1: repoint_imports_to_spw_tree, t2: remove_cache_busting_query_params, t3: create_spw_barrel_index }
+  verify: { v1: pages_load_14, v2: no_console_errors, v3: spw_feature_surface_intact }
+}
+
+^phase_25_cleanup_dead_files{
+  role: edit_agent
+  task: { t1: remove_orphaned_legacy_modules, t2: purge_old_import_paths, t3: evaluate_cache_context_deprecation }
+  verify: { v1: npm_run_build_passes, v2: dist_import_integrity_clean }
+}
+
+^phase_26_mastery_report{
+  role: audit_agent
+  task: { t1: score_spec_compliance, t2: score_architecture_quality, t3: compute_improvement_delta, t4: map_component_dependencies, t5: prioritize_remaining_debt }
+  emit: "book/audits/26-mastery.spw"
+}
+
+^verification_matrix{
+  runtime: { v1: dev_boot_all_pages, v2: build_passes, v3: no_console_errors }
+  interactions: { v1: operator_tooltips, v2: brace_tracing, v3: drag_to_scope }
+  ethos: { v1: panel_home, v2: panel_chapter }
+  state: { v1: register_bank_set_get_snapshot }
+  styles: { v1: no_duplicate_css, v2: layer_integrity }
+}
+
+^audit_artifacts{
+  a01: "book/audits/01-html-baseline.spw"
+  a02: "book/audits/02-css-layers-baseline.spw"
+  a03: "book/audits/03-css-responsive-baseline.spw"
+  a04: "book/audits/04-aria-baseline.spw"
+  a05: "book/audits/05-spw-dependency-map.spw"
+  a06: "book/audits/06-workbench-api-surface.spw"
+  a09: "book/audits/09-build-pipeline.spw"
+  a13: "book/audits/13-adapter-quality.spw"
+  a16: "book/audits/16-register-bank-comparison.spw"
+  a18: "book/audits/18-register-bank-integration.spw"
+  a23: "book/audits/23-css-colocation.spw"
+  a26: "book/audits/26-mastery.spw"
+}

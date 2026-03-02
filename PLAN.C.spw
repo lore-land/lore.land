@@ -1,0 +1,127 @@
+#>plan_c
+#:layer #!pragmatics
+
+^meta{
+  source: "PLAN.C.md"
+  dialect: spw_native
+  style: expression_first
+}
+
+^intricacy_profile{
+  sequencing: shadow_13_then_chrome_52
+  packet_flow: { s1: baseline, s2: phase_registry, s3: synthesis, s4: governance }
+}
+
+&plan_c_contracts{
+  c001: preserve_total_phase_count_65
+  c002: preserve_shadow_phase_count_13
+  c003: preserve_chrome_phase_count_52
+  c004: preserve_milestone_contiguity_145_to_94
+}
+
+?["plan_c_integrity_gate"]{
+  require: phase_count_exact_65
+  require: milestone_mapping_formula_valid
+  require: output_templates_emit_expected_paths
+  on_fail: emit_range_repair_packet
+}
+
+!probe{
+  id: plan_c.shadow_chrome_split_probe
+  ask: tracks_are_isolated_and_phase_math_is_sound
+}
+
+^verified_context{
+  baseline_date: "March 2, 2026"
+  latest_chrome_stable_major: 145
+  chrome_145_stable_date: "February 10, 2026"
+}
+
+&verified_sources{
+  s1: "https://developer.chrome.com/release-notes/145"
+  s2: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_10.html"
+  s3: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_13.html"
+}
+
+^output_contract{
+  phase_packet_shape: { p1: scope, p2: findings, p3: evidence, p4: decision }
+  canonical_artifacts: spw_only
+}
+
+^shadow_track{
+  phase_span: { from: 1, to: 13, count: 13 }
+  emit_rule: "book/audits/shadow-dom/{phase2d}-{slug}.spw"
+}
+
+&shadow_phase_registry{
+  p01: { slug: inventory, task: inventory_shadow_usage_and_leakage }
+  p02: { slug: encapsulation, task: audit_public_contract_vs_internal_boundary }
+  p03: { slug: slotting, task: audit_slot_distribution_and_flattening_edges }
+  p04: { slug: styling_surface, task: audit_host_slotted_part_exportparts_contracts }
+  p05: { slug: events, task: audit_retargeting_bubbles_composed_paths }
+  p06: { slug: focus_keyboard, task: audit_delegates_focus_tab_and_keyboard_model }
+  p07: { slug: a11y, task: audit_accessibility_tree_and_aria_mapping }
+  p08: { slug: form_internals, task: audit_element_internals_and_form_association_need }
+  p09: { slug: declarative_shadow_dom, task: evaluate_ssr_hydration_feasibility }
+  p10: { slug: performance, task: measure_shadow_creation_style_calc_mutation_cost }
+  p11: { slug: test_strategy, task: define_unit_integration_visual_shadow_tests }
+  p12: { slug: refactor_blueprint, task: produce_component_refactor_matrix_and_order }
+  p13: { slug: master_report, task: synthesize_priority_and_acceptance_criteria }
+}
+
+^chrome_track{
+  phase_span: { from: 14, to: 65, count: 52 }
+  milestone_span: { from: 145, to: 94, step: -1, count: 52 }
+  mapping_rule: milestone_equals_159_minus_phase
+  emit_rule: "book/audits/chrome-updates/M{milestone}.spw"
+  task_template: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+  scoring_scale: { s0: none, s1: monitor, s2: adopt, s3: adopt_now }
+  ingest_pipeline: {
+    i1: read_release_notes
+    i2: read_new_in_chrome_when_available
+    i3: read_new_in_devtools_when_available
+    i4: extract_shadow_dom_deltas
+    i5: score_relevance_for_repo
+    i6: emit_phase_artifact
+  }
+}
+
+^chrome_formula_examples{
+  e1: { phase: 14, milestone: 145 }
+  e2: { phase: 39, milestone: 120 }
+  e3: { phase: 65, milestone: 94 }
+}
+
+^synthesis_and_governance{
+  summary_emit: "book/audits/chrome-updates/summary-52.spw"
+  risk_emit: "book/audits/chrome-updates/risk-register.spw"
+  summary_columns: {
+    c1: feature
+    c2: first_appeared
+    c3: stable_support
+    c4: shadow_dom_relevance
+    c5: implementation_cost
+    c6: risk
+    c7: adoption_decision
+  }
+  adoption_buckets: {
+    b1: adopt_now
+    b2: adopt_with_guardrails
+    b3: monitor
+    b4: reject
+  }
+}
+
+^acceptance_criteria{
+  a1: documented_phases_equal_65
+  a2: shadow_track_explicit_1_to_13
+  a3: chrome_track_formula_14_to_65_maps_to_145_to_94
+  a4: each_phase_has_deterministic_emit_path
+  a5: implementation_code_excluded_from_plan_file
+}
+
+^assumptions{
+  a1: latest_52_updates_interpreted_as_latest_52_major_stable_milestones
+  a2: official_chrome_release_channels_are_source_of_truth
+  a3: exploration_outputs_written_as_spw_artifacts
+}
