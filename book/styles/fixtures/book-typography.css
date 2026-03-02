@@ -1,7 +1,7 @@
 /* book-typography.css
  * Literary typography layer for lore.land — makes the story read like a book.
  *
- * Uses @layer typography to slot cleanly beneath existing tokens/base/interactive/motion layers.
+ * Uses @layer typography to slot cleanly beneath existing layers.
  * The LoreLand Display font is used for chapter titles, drop caps, and Spw expressions.
  * Prose body text uses the existing serif stack (Iowan Old Style / Palatino / Georgia).
  *
@@ -9,29 +9,70 @@
  * according to their narrative function.
  */
 
+@property --glyph-shimmer {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
 @layer typography {
 
-  /* ─── LoreLand Display for headings and drop caps ──────────── */
+  /* ─── Page-level prose environment ─────────────────────────── */
+
+  .chapter {
+    --chapter-prose-max: 68ch;
+    position: relative;
+  }
+
+  /* ─── LoreLand Display for headings ────────────────────────── */
 
   .chapter h1,
   .chapter h2,
   .chapter h3 {
     font-family: 'LoreLand', var(--font-family-heading);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+    color: var(--color-text-main);
   }
 
   .chapter h1 {
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    line-height: 1.1;
+    font-size: clamp(2.6rem, 5.5vw, 4rem);
+    line-height: 1.05;
     margin-bottom: var(--spacing-large);
     text-wrap: balance;
+    background: var(--color-accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(42, 111, 127, 0.15));
   }
 
   .chapter h2 {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    margin-top: var(--spacing-large);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-top: calc(var(--spacing-large) * 1.6);
     margin-bottom: var(--spacing-medium);
+    padding-bottom: var(--spacing-extra-small);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 50%, transparent 50%);
+    position: relative;
+  }
+
+  .chapter h2::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 3em;
+    height: 2px;
+    background: var(--color-accent-gradient);
+    border-radius: 1px;
+  }
+
+  .chapter h3 {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    margin-top: var(--spacing-large);
+    margin-bottom: var(--spacing-small);
+    letter-spacing: 0.08em;
+    opacity: 0.85;
   }
 
   /* ─── Chapter running header ───────────────────────────────── */
@@ -40,27 +81,34 @@
     content: attr(data-chapter-label);
     display: block;
     font-family: 'LoreLand', var(--font-family-heading);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-text-alt);
-    opacity: 0.6;
-    margin-bottom: var(--spacing-large);
+    opacity: 0.5;
+    margin-bottom: calc(var(--spacing-large) * 1.2);
     padding-bottom: var(--spacing-small);
-    border-bottom: 1px solid var(--border-color-main);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
+    transition: opacity 300ms ease;
+  }
+
+  .chapter:hover::before {
+    opacity: 0.75;
   }
 
   /* ─── Drop caps ────────────────────────────────────────────── */
 
-  .chapter section:first-of-type > p:first-of-type::first-letter,
+  .chapter section:first-of-type>p:first-of-type::first-letter,
   .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter {
     font-family: 'LoreLand', var(--font-family-heading);
-    font-size: 3.6em;
+    font-size: 3.8em;
     float: left;
-    line-height: 0.8;
-    padding-right: 0.08em;
-    padding-top: 0.06em;
+    line-height: 0.78;
+    padding-right: 0.1em;
+    padding-top: 0.04em;
     color: var(--color-accent-main);
+    filter: drop-shadow(0 1px 4px rgba(42, 111, 127, 0.2));
+    transition: color 300ms ease;
   }
 
   /* ─── Prose typography ─────────────────────────────────────── */
@@ -70,89 +118,272 @@
     margin-bottom: 0;
     hyphens: auto;
     -webkit-hyphens: auto;
+    max-width: var(--chapter-prose-max);
   }
 
-  .chapter p + p {
-    text-indent: 1.5em;
+  .chapter p+p {
+    text-indent: 1.6em;
+    margin-top: 0.1em;
   }
 
   .chapter section {
-    margin-bottom: var(--spacing-large);
+    margin-bottom: calc(var(--spacing-large) * 1.4);
+    padding-bottom: var(--spacing-medium);
+    position: relative;
+  }
+
+  .chapter section+section {
+    border-top: 1px solid color-mix(in srgb, var(--border-color-main) 20%, transparent 80%);
+    padding-top: var(--spacing-large);
+  }
+
+  /* Section ornament — subtle diamond between sections */
+  .chapter section+section::before {
+    content: '◆';
+    display: block;
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--color-text-alt);
+    opacity: 0.3;
+    margin: calc(-1 * var(--spacing-large) - 0.3rem) auto var(--spacing-medium);
+    letter-spacing: 0.5em;
   }
 
   /* ─── Grammar role: narrator ───────────────────────────────── */
 
   [data-spw-grammar="narrator"] {
     font-weight: normal;
+    position: relative;
   }
 
   [data-spw-grammar="narrator"] p {
-    max-width: 65ch;
+    max-width: var(--chapter-prose-max);
   }
 
   /* ─── Grammar role: interlocutor (Fool's dialogue) ─────────── */
 
   [data-spw-grammar="interlocutor"] {
     font-style: italic;
-    border-left: 3px solid var(--spw-runtime-accent, var(--color-accent-main));
+    border-left: 2px solid color-mix(in srgb, var(--spw-runtime-accent, var(--color-accent-main)) 60%, transparent 40%);
     padding-left: var(--spacing-medium);
     margin-left: var(--spacing-small);
+    margin-top: var(--spacing-small);
+    margin-bottom: var(--spacing-small);
     position: relative;
+    transition: border-color 300ms ease, background-color 300ms ease;
+    border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+    padding: var(--spacing-small) var(--spacing-medium);
+    background: color-mix(in srgb, var(--spw-runtime-accent, var(--color-accent-main)) 4%, transparent 96%);
+  }
+
+  [data-spw-grammar="interlocutor"]:hover {
+    border-left-width: 3px;
+    background: color-mix(in srgb, var(--spw-runtime-accent, var(--color-accent-main)) 8%, transparent 92%);
   }
 
   [data-spw-grammar="interlocutor"]::before {
     content: '~';
     font-family: 'LoreLand', var(--font-family-heading);
     position: absolute;
-    left: calc(-1 * var(--spacing-medium));
-    top: 0;
-    font-size: 1.2em;
-    color: var(--color-accent-main);
-    opacity: 0.4;
+    left: calc(-0.6em);
+    top: var(--spacing-small);
+    font-size: 1.1em;
+    color: var(--spw-runtime-accent, var(--color-accent-main));
+    opacity: 0.35;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  [data-spw-grammar="interlocutor"]:hover::before {
+    opacity: 0.65;
+    transform: scale(1.1);
   }
 
   /* ─── Grammar role: modifier (environment/boonberry) ────────── */
 
   [data-spw-grammar="modifier"] {
-    font-size: 0.96em;
+    font-size: 0.95em;
     color: var(--color-text-alt);
+    padding: var(--spacing-extra-small) 0;
+    position: relative;
+  }
+
+  /* ─── Grammar role: echo ────────────────────────────────────── */
+
+  [data-spw-grammar="echo"] {
+    position: relative;
+    overflow: hidden;
+  }
+
+  [data-spw-grammar="echo"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(180deg,
+        transparent 0 3px,
+        color-mix(in srgb, var(--color-accent-main) 3%, transparent 97%) 3px 4px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* ─── Grammar role: melody ──────────────────────────────────── */
+
+  [data-spw-grammar="melody"] {
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── Grammar role: paradox ─────────────────────────────────── */
+
+  [data-spw-grammar="paradox"] {
+    position: relative;
+  }
+
+  [data-spw-grammar="paradox"]::before {
+    content: '?';
+    font-family: 'LoreLand', var(--font-family-heading);
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.8em;
+    opacity: 0.15;
+    transform: rotate(12deg);
   }
 
   /* ─── Grammar role: bonk (percussive/disruptive) ────────────── */
 
   [data-spw-grammar="bonk"] {
     font-weight: bold;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    text-shadow: 0 0 0.5px currentColor;
+  }
+
+  /* ─── Grammar role: awakening ───────────────────────────────── */
+
+  [data-spw-grammar="awakening"] {
+    position: relative;
+    padding: var(--spacing-small) var(--spacing-medium);
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--color-accent-main) 3%, transparent 97%) 0%,
+        transparent 70%);
+    border-radius: var(--border-radius-small);
+  }
+
+  /* ─── Grammar role: path ────────────────────────────────────── */
+
+  [data-spw-grammar="path"] {
+    position: relative;
+    padding-left: var(--spacing-medium);
+  }
+
+  [data-spw-grammar="path"]::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    font-size: 0.85em;
+    color: var(--color-accent-main);
+    opacity: 0.4;
+  }
+
+  /* ─── Grammar role: reflection ──────────────────────────────── */
+
+  [data-spw-grammar="reflection"] {
+    position: relative;
+    border-left: 1px dashed color-mix(in srgb, var(--color-accent-main) 25%, transparent 75%);
+    padding-left: var(--spacing-medium);
+    opacity: 0.92;
+    font-style: italic;
   }
 
   /* ─── Grammar role: illustration ────────────────────────────── */
 
   [data-spw-grammar="illustration"] {
-    margin: var(--spacing-large) 0;
+    margin: calc(var(--spacing-large) * 1.5) 0;
+    text-align: center;
+  }
+
+  [data-spw-grammar="illustration"] img {
+    border-radius: var(--border-radius-main);
+    box-shadow: var(--shadow-main);
+    transition: box-shadow 300ms ease, transform 300ms ease;
+  }
+
+  [data-spw-grammar="illustration"] img:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
   }
 
   [data-spw-grammar="illustration"] figcaption {
     font-family: 'LoreLand', var(--font-family-heading);
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-alt);
     margin-top: var(--spacing-small);
-    text-align: center;
+    opacity: 0.7;
+  }
+
+  /* ─── Grammar hover label — shows role on hover ─────────────── */
+
+  [data-spw-grammar]:not(section):not(figure)::after {
+    content: attr(data-spw-grammar);
+    position: absolute;
+    top: -1.6em;
+    right: 0;
+    font-family: 'LoreLand', var(--font-family-heading);
+    font-size: 0.56rem;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-main);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms ease;
+    white-space: nowrap;
+  }
+
+  [data-spw-grammar]:not(section):not(figure):hover::after {
+    opacity: 0.5;
   }
 
   /* ─── Spw expression typography ─────────────────────────────── */
 
   [data-spw-expression] {
     font-family: 'LoreLand', var(--font-family-mono);
+    letter-spacing: 0.03em;
   }
 
-  /* ─── Glyph discovery — hide undiscovered characters ────────── */
-  /* The runtime sets data-glyph-tier on <html> based on chapter. */
-  /* Characters from higher tiers use the fallback font until unlocked. */
+  /* ─── Glyph discovery shimmer ──────────────────────────────── */
+  /* Undiscovered Spw sigils get a shimmer effect hinting at hidden glyphs */
 
-  html:not([data-glyph-tier]) .loreland-glyph[data-tier] {
-    font-family: var(--font-family-heading);
+  @keyframes glyph-shimmer {
+    from {
+      --glyph-shimmer: 0;
+    }
+
+    to {
+      --glyph-shimmer: 1;
+    }
+  }
+
+  .spw-token[data-glyph-locked="true"] {
+    position: relative;
+    cursor: help;
+  }
+
+  .spw-token[data-glyph-locked="true"]::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 3px;
+    background: linear-gradient(110deg,
+        transparent 30%,
+        color-mix(in srgb, var(--color-accent-main) 15%, transparent 85%) 48%,
+        transparent 70%);
+    background-size: 200% 100%;
+    animation: glyph-shimmer 2.4s ease-in-out infinite alternate;
+    pointer-events: none;
+    opacity: 0.6;
   }
 
   /* ─── Reading progress bar ─────────────────────────────────── */
@@ -164,8 +395,9 @@
     right: 0;
     height: 3px;
     z-index: 100;
-    background: transparent;
+    background: color-mix(in srgb, var(--border-color-main) 15%, transparent 85%);
     pointer-events: none;
+    backdrop-filter: blur(2px);
   }
 
   .reading-progress::after {
@@ -174,39 +406,81 @@
     height: 100%;
     width: calc(var(--reading-progress, 0) * 100%);
     background: var(--color-accent-gradient);
-    transition: width 120ms linear;
+    box-shadow:
+      0 0 8px color-mix(in srgb, var(--color-accent-main) 40%, transparent 60%),
+      0 0 2px var(--color-accent-main);
+    transition: width 100ms linear;
+    border-radius: 0 2px 2px 0;
   }
 
   /* ─── Lifecycle stage breadcrumb ────────────────────────────── */
 
   .lifecycle-breadcrumb {
     position: fixed;
-    top: 6px;
+    top: 7px;
     right: var(--spacing-medium);
     font-family: 'LoreLand', var(--font-family-heading);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text-alt);
-    opacity: 0.5;
+    opacity: 0;
     z-index: 101;
     pointer-events: none;
-    transition: opacity 200ms ease;
+    transition: opacity 400ms ease;
   }
 
-  /* ─── Print context ────────────────────────────────────────── */
+  .lifecycle-breadcrumb[data-stage] {
+    opacity: 0.4;
+  }
+
+  /* ─── Print context button ─────────────────────────────────── */
 
   .print-context-button {
     font-family: 'LoreLand', var(--font-family-heading);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--border-color-main) 50%, transparent 50%);
+    border-radius: var(--border-radius-pill);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--panel-blur));
+    cursor: pointer;
+    transition: all 200ms ease;
+    margin-top: var(--spacing-small);
+  }
+
+  .print-context-button:hover {
+    background: var(--glass-bg-strong);
+    border-color: var(--color-accent-main);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--color-accent-main) 15%, transparent 85%);
+  }
+
+  /* ─── Chapter byline ───────────────────────────────────────── */
+
+  .chapter-byline {
+    font-size: 0.88rem;
+    color: var(--color-text-alt);
+    margin-bottom: var(--spacing-large) !important;
+    padding-bottom: var(--spacing-medium);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 20%, transparent 80%);
+    font-style: italic;
+    max-width: var(--chapter-prose-max);
+  }
+
+  .chapter-byline a {
+    font-family: 'LoreLand', var(--font-family-heading);
+    font-style: normal;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
   }
 }
 
 /* ─── Print stylesheet ───────────────────────────────────────── */
 
 @media print {
+
   .chapter-navigation,
   .section-navigation,
   aside,
@@ -218,31 +492,72 @@
   .site-topbar,
   .site-footer,
   .experience-controls,
-  button {
+  button:not(.print-context-button) {
     display: none !important;
   }
 
   body {
     background: white !important;
-    color: black !important;
-    padding: 1in !important;
+    color: #1a1a1a !important;
+    padding: 0.75in 1in !important;
     font-size: 11pt !important;
+    line-height: 1.65 !important;
+  }
+
+  body::before,
+  body::after {
+    display: none !important;
   }
 
   .chapter {
     max-width: none !important;
   }
 
+  .chapter::before {
+    border-bottom-color: #ccc !important;
+    color: #888 !important;
+    opacity: 1 !important;
+  }
+
   .chapter h1 {
-    font-size: 24pt !important;
+    font-size: 22pt !important;
     page-break-after: avoid;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: none !important;
+    filter: none !important;
+  }
+
+  .chapter h2 {
+    font-size: 14pt !important;
+    page-break-after: avoid;
+    border-bottom-color: #ddd !important;
+  }
+
+  .chapter h2::after {
+    display: none !important;
   }
 
   .chapter section {
     page-break-inside: avoid;
   }
 
+  .chapter section+section::before {
+    color: #aaa !important;
+    opacity: 1 !important;
+  }
+
   [data-spw-grammar="interlocutor"] {
-    border-left-color: #666 !important;
+    border-left-color: #999 !important;
+    background: transparent !important;
+  }
+
+  [data-spw-grammar]:not(section):not(figure)::after {
+    display: none !important;
+  }
+
+  [data-spw-grammar="illustration"] img {
+    box-shadow: none !important;
+    border: 1px solid #ddd;
   }
 }

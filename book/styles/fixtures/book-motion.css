@@ -3,7 +3,7 @@
  *
  * Animations carry narrative meaning — narrator text enters differently
  * from dialogue, environment descriptions differently from bonk events.
- * All motion is gated behind prefers-reduced-motion.
+ * All motion gated behind prefers-reduced-motion.
  */
 
 @layer motion.book {
@@ -27,11 +27,13 @@
         .chapter custom-reflection,
         .chapter figure {
             opacity: 0;
-            translate: 0 0.8rem;
+            translate: 0 1rem;
             transition:
-                opacity 600ms ease,
-                translate 600ms ease;
+                opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                translate 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 600ms ease;
             transition-delay: calc(var(--entrance-delay, 0) * 1ms);
+            will-change: opacity, translate;
         }
 
         /* ─── Revealed state ─────────────────────────────────────── */
@@ -39,89 +41,154 @@
         [data-spw-visible="true"] {
             opacity: 1 !important;
             translate: 0 0 !important;
+            filter: none !important;
         }
 
-        /* ─── Role-specific entrance timing ──────────────────────── */
+        /* ─── Narrator: unhurried, breathing pace ────────────────── */
 
-        /* Narrator: gentle, unhurried — the story unfolds */
+        [data-spw-voice="boof"] {
+            translate: 0 0.8rem;
+        }
+
         [data-spw-voice="boof"][data-spw-visible="true"] {
-            transition-duration: 700ms;
-            transition-timing-function: ease-out;
-        }
-
-        /* Interlocutor (Fool): slightly faster, with horizontal motion */
-        [data-spw-voice="fool"] {
-            translate: -0.6rem 0.4rem;
-        }
-
-        [data-spw-voice="fool"][data-spw-visible="true"] {
-            transition-duration: 500ms;
+            transition-duration: 800ms;
             transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
-        /* Environment: slow dissolve */
+        /* ─── Fool / interlocutor: slides in from the side ───────── */
+
+        [data-spw-voice="fool"] {
+            translate: -1rem 0.4rem;
+            opacity: 0;
+        }
+
+        [data-spw-voice="fool"][data-spw-visible="true"] {
+            transition-duration: 600ms;
+            transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        /* ─── Environment: slow dissolve from beneath ────────────── */
+
         [data-spw-voice="environment"] {
-            translate: 0 0.5rem;
+            translate: 0 0.6rem;
+            filter: blur(1px);
         }
 
         [data-spw-voice="environment"][data-spw-visible="true"] {
-            transition-duration: 900ms;
+            transition-duration: 1000ms;
             transition-timing-function: ease;
         }
 
-        /* Bonk: quick percussive snap */
+        /* ─── Bonk: percussive snap ───────────────────────────────── */
+
         [data-spw-grammar="bonk"] {
-            translate: 0 -0.4rem;
+            translate: 0 -0.5rem;
+            scale: 1.01;
         }
 
         [data-spw-grammar="bonk"][data-spw-visible="true"] {
-            transition-duration: 200ms;
+            scale: 1;
+            transition-duration: 250ms;
             transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        /* Awakening: scale up from center */
+        /* ─── Awakening: gentle scale-up + brightness ────────────── */
+
         [data-spw-grammar="awakening"] {
-            scale: 0.96;
+            scale: 0.97;
             translate: 0 0;
+            filter: brightness(0.95);
         }
 
         [data-spw-grammar="awakening"][data-spw-visible="true"] {
             scale: 1;
-            transition-duration: 800ms;
+            filter: brightness(1);
+            transition-duration: 900ms;
+            transition-timing-function: ease-out;
         }
 
-        /* Reflection: mirror-like horizontal flip hint */
+        /* ─── Reflection: mirror dissolve ────────────────────────── */
+
         [data-spw-grammar="reflection"] {
             translate: 0 0;
+            filter: blur(3px);
             opacity: 0;
-            filter: blur(2px);
         }
 
         [data-spw-grammar="reflection"][data-spw-visible="true"] {
             filter: none;
-            transition-duration: 1000ms;
+            transition-duration: 1200ms;
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ─── Chapter transition ─────────────────────────────────── */
+        /* ─── Path: slides in from the left, forward motion ──────── */
+
+        [data-spw-grammar="path"] {
+            translate: -1.5rem 0;
+        }
+
+        [data-spw-grammar="path"][data-spw-visible="true"] {
+            transition-duration: 700ms;
+            transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        /* ─── Paradox: slight rotation hint ──────────────────────── */
+
+        [data-spw-grammar="paradox"] {
+            translate: 0 0.5rem;
+            rotate: -0.5deg;
+        }
+
+        [data-spw-grammar="paradox"][data-spw-visible="true"] {
+            rotate: 0deg;
+            transition-duration: 800ms;
+        }
+
+        /* ─── Chapter content entrance ────────────────────────────── */
 
         @keyframes page-forward {
-            from {
+            0% {
                 opacity: 0;
-                translate: 0 1.2rem;
+                translate: 0 1.5rem;
+                filter: blur(2px);
             }
 
-            to {
+            100% {
                 opacity: 1;
                 translate: 0 0;
+                filter: none;
             }
         }
 
         #chapter-content[data-chapter-entering="true"] {
-            animation: page-forward 500ms ease-out;
+            animation: page-forward 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        /* ─── Glyph discovery unlock flash ───────────────────────── */
+
+        @keyframes glyph-unlock {
+            0% {
+                background: color-mix(in srgb, var(--color-accent-main) 30%, transparent 70%);
+                scale: 1.15;
+            }
+
+            50% {
+                background: color-mix(in srgb, var(--color-accent-main) 10%, transparent 90%);
+            }
+
+            100% {
+                background: transparent;
+                scale: 1;
+            }
+        }
+
+        .spw-token[data-glyph-just-unlocked] {
+            animation: glyph-unlock 800ms ease-out;
+            border-radius: 3px;
         }
     }
 
-    /* ─── Reduced motion: show everything immediately ──────────── */
+    /* ─── Reduced motion: immediate display ────────────────────── */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -141,6 +208,9 @@
         .chapter figure {
             opacity: 1;
             translate: 0 0;
+            filter: none;
+            scale: 1;
+            rotate: 0deg;
         }
     }
 }

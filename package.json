@@ -1,0 +1,19 @@
+{
+  "name": "lore.land",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The official canon for lore.land.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "font": "node book/scripts/tools/font/build.mjs"
+  },
+  "keywords": [],
+  "author": "Sam Washington",
+  "license": "ISC",
+  "devDependencies": {
+    "opentype.js": "^1.3.4",
+    "vite": "^7.3.1"
+  }
+}

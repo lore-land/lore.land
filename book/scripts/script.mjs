@@ -24,6 +24,7 @@ import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
 import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_03_02.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
+import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -80,6 +81,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const glyphTier = chapterNum >= 12 ? 5 : chapterNum >= 10 ? 4 : chapterNum >= 7 ? 3 : chapterNum >= 4 ? 2 : chapterNum >= 1 ? 1 : 0;
     document.documentElement.dataset.glyphTier = String(glyphTier);
     setupPrintContext(chapterContent);
+    // Glyph discovery runs after Spw runtime, deferred to let tokens render
+    requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
 
     setupNavigation(chapterData, announce);
     const ebookNav = initEbookNavigation(chapterData, { announce });
