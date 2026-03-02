@@ -13,7 +13,7 @@ const TOP_LEVEL_CONTENT_ROOTS = new Set([
 ]);
 
 const SPW_PREFIX = 'spw/';
-const WORKBENCH_ROOT = '/magic/spw/workbench';
+const WORKBENCH_ROOT = '/.spw/_workbench';
 
 let cachedBasePath = null;
 

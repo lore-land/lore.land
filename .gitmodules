@@ -1,3 +1,3 @@
 [submodule "spw-workbench"]
-	path = magic/spw/workbench
+	path = .spw/_workbench
 	url = git@github.com:spwashi/spw-workbench.git

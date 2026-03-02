@@ -7,7 +7,7 @@ The official canon for lore.land.
 This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
-- Local submodule in this workspace: `./magic/spw/workbench`
+- Local submodule in this workspace: `./.spw/_workbench`
 - Current submodule pin: `5552cec`
 
 ### Runtime Bridge In lore.land
