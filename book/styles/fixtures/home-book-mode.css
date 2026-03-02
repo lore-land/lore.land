@@ -195,13 +195,12 @@ html:has(#home-app[data-component-variant="book"]) .site-topbar {
     gap: 0;
 }
 
-/* ─── Hero: full-bleed, tall, dramatic ───────────────────────── */
+/* ─── Hero: full-bleed, compact ──────────────────────────────── */
 
 #home-app[data-component-variant="book"] .hero-panel {
     border: none;
     border-radius: 0;
-    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
-    min-height: 50vh;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 6vw, 5rem) clamp(1.2rem, 3vw, 2rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -213,36 +212,43 @@ html:has(#home-app[data-component-variant="book"]) .site-topbar {
 }
 
 #home-app[data-component-variant="book"] .hero-panel h1 {
-    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
     max-width: 18ch;
+    margin-bottom: 0.3rem;
 }
 
 #home-app[data-component-variant="book"] .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     max-width: 55ch;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 #home-app[data-component-variant="book"] .hero-actions {
-    gap: 0.7rem;
-    margin-top: 1.5rem;
+    gap: 0.6rem;
+    margin-top: 1rem;
 }
 
 #home-app[data-component-variant="book"] .hero-action {
-    padding: 0.4rem 1rem;
-    font-size: 0.92rem;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.88rem;
+}
+
+/* ─── Hide decorative SVG in book mode ───────────────────────── */
+
+#home-app[data-component-variant="book"] .hero-frame-svg {
+    display: none;
 }
 
 /* ─── Spw block in hero ──────────────────────────────────────── */
 
 #home-app[data-component-variant="book"] .spw-block {
     max-width: 60ch;
-    font-size: 1rem;
-    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
     border-radius: var(--border-radius-main);
 }
 
-/* ─── Full-bleed section panels ──────────────────────────────── */
+/* ─── Full-bleed section panels: compact ─────────────────────── */
 
 #home-app[data-component-variant="book"] .chapter-timeline,
 #home-app[data-component-variant="book"] .producer-constellation,
@@ -251,11 +257,11 @@ html:has(#home-app[data-component-variant="book"]) .site-topbar {
 #home-app[data-component-variant="book"] .seed-atlas {
     border: none;
     border-radius: 0;
-    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 6vw, 5rem);
+    padding: clamp(1rem, 2.5vw, 1.8rem) clamp(1.5rem, 6vw, 5rem);
     border-top: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
 }
 
-/* Alternating backgrounds for visual rhythm */
+/* Alternating backgrounds */
 #home-app[data-component-variant="book"] .chapter-timeline {
     background: var(--color-bg-content);
 }
@@ -279,36 +285,78 @@ html:has(#home-app[data-component-variant="book"]) .site-topbar {
 /* ─── Chapter timeline ───────────────────────────────────────── */
 
 #home-app[data-component-variant="book"] .chapter-timeline h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
 }
 
 #home-app[data-component-variant="book"] .chapter-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.2rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.8rem;
+    margin-top: 0.8rem;
 }
 
 #home-app[data-component-variant="book"] .chapter-card {
-    padding: 1.1rem;
+    padding: 0.8rem;
     border-radius: calc(var(--border-radius-main) + 2px);
 }
 
 #home-app[data-component-variant="book"] .chapter-card h3 {
-    font-size: 1.12rem;
+    font-size: 1rem;
     font-family: 'LoreLand', var(--font-family-heading);
     letter-spacing: 0.03em;
 }
 
 #home-app[data-component-variant="book"] .chapter-marker {
-    font-size: 0.82rem;
-    padding: 0.16rem 0.7rem;
+    font-size: 0.76rem;
+    padding: 0.12rem 0.56rem;
+}
+
+/* ─── Two-column layout for lower panels on wide screens ─────── */
+
+@media (min-width: 900px) {
+
+    #home-app[data-component-variant="book"] .producer-constellation,
+    #home-app[data-component-variant="book"] .grammar-observatory,
+    #home-app[data-component-variant="book"] .spw-ethos-atlas,
+    #home-app[data-component-variant="book"] .seed-atlas {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem 2rem;
+        align-items: start;
+    }
+
+    /* Headings and subtitles span full width */
+    #home-app[data-component-variant="book"] .producer-constellation h2,
+    #home-app[data-component-variant="book"] .grammar-observatory h2,
+    #home-app[data-component-variant="book"] .spw-ethos-atlas h2,
+    #home-app[data-component-variant="book"] .seed-atlas h2,
+    #home-app[data-component-variant="book"] .producer-constellation>p,
+    #home-app[data-component-variant="book"] .grammar-observatory>p,
+    #home-app[data-component-variant="book"] .grammar-observatory-subtitle,
+    #home-app[data-component-variant="book"] .producer-intent,
+    #home-app[data-component-variant="book"] .producer-guidance,
+    #home-app[data-component-variant="book"] .seed-atlas-subtitle,
+    #home-app[data-component-variant="book"] .timeline-subtitle,
+    #home-app[data-component-variant="book"] .seed-controls,
+    #home-app[data-component-variant="book"] .producer-constellation-subtitle {
+        grid-column: 1 / -1;
+    }
+
+    /* Grids within panels also span full width */
+    #home-app[data-component-variant="book"] .producer-cluster-grid,
+    #home-app[data-component-variant="book"] .grammar-matrix,
+    #home-app[data-component-variant="book"] .grammar-ledger,
+    #home-app[data-component-variant="book"] .seed-grid,
+    #home-app[data-component-variant="book"] .ethos-claim-list,
+    #home-app[data-component-variant="book"] .ethos-operator-list {
+        grid-column: 1 / -1;
+    }
 }
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 
 html:has(#home-app[data-component-variant="book"]) .site-footer {
-    padding: 1.5rem clamp(1.5rem, 6vw, 5rem);
+    padding: 1rem clamp(1.5rem, 6vw, 5rem);
     border-top: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
 }
 
@@ -319,16 +367,16 @@ html:has(#home-app[data-component-variant="book"]) .site-footer {
 
 @media (max-width: 640px) {
     #home-app[data-component-variant="book"] .hero-panel {
-        min-height: 40vh;
-        padding: 2rem 1.2rem 1.5rem;
+        padding: 1.5rem 1rem 1rem;
     }
 
     #home-app[data-component-variant="book"] .hero-panel h1 {
-        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        font-size: clamp(1.6rem, 7vw, 2.4rem);
     }
 
     #home-app[data-component-variant="book"] .chapter-grid {
         grid-template-columns: 1fr;
+        gap: 0.6rem;
     }
 
     #home-app[data-component-variant="book"] .chapter-timeline,
@@ -336,18 +384,18 @@ html:has(#home-app[data-component-variant="book"]) .site-footer {
     #home-app[data-component-variant="book"] .grammar-observatory,
     #home-app[data-component-variant="book"] .spw-ethos-atlas,
     #home-app[data-component-variant="book"] .seed-atlas {
-        padding: 1.5rem 1.2rem;
+        padding: 1rem;
     }
 }
 
 @media (min-width: 1200px) {
     #home-app[data-component-variant="book"] .hero-panel {
-        padding-left: 8vw;
-        padding-right: 8vw;
+        padding-left: 6vw;
+        padding-right: 6vw;
     }
 
     #home-app[data-component-variant="book"] .chapter-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     }
 }
 
