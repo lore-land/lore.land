@@ -466,7 +466,7 @@ function setupSpwHypertextRoutes(data, announce) {
     },
     {
       label: '~[seed-atlas]{visual motifs}',
-      href: withSiteBase('/seeds/2026-28-02/'),
+      href: withSiteBase('/seeds/2026-02-28/'),
       aria: 'Open seed atlas'
     },
     {

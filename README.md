@@ -158,3 +158,8 @@ Spw runtime assets are released through the shared cache profile:
 - implementation: `book/scripts/modules/cache-context.mjs`
 
 Use this when introducing new Spw routing/interactions/effects so chapters and home surfaces load coherent runtime behavior after deploy.
+
+### Seed Folder Convention
+
+- Date-based seed folders under `seeds/` use canonical ISO ordering: `yyyy-mm-dd`.
+- Example: `seeds/2026-03-01/`

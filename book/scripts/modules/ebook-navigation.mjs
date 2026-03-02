@@ -1,5 +1,6 @@
 import { CHAPTER_FLOW_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.I';
 import { parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
+import { el } from './dom.mjs';
 
 const STORAGE_KEY = 'lore.ebook.navigation.v1';
 const REGISTER_KEY = 'lore.ebook.register.v1';
@@ -424,204 +425,103 @@ export function initEbookNavigation(chapterData, options = {}) {
     existing.remove();
   }
 
-  const panel = document.createElement('section');
-  panel.className = 'ebook-nav-panel';
-  panel.dataset.component = 'ebook-navigation';
-  panel.dataset.spwComponent = 'ebook-navigation';
-  panel.setAttribute('aria-label', 'Ebook navigation');
-
-  const heading = document.createElement('h2');
-  heading.textContent = 'Ebook Navigator';
-
-  const bridge = document.createElement('p');
-  bridge.className = 'ebook-nav-bridge';
-  bridge.textContent = 'Reader register favors cadence and continuity. Engineer register favors handles, routes, and conceptual hops.';
-
-  const legend = document.createElement('p');
-  legend.className = 'ebook-nav-legend';
-  legend.textContent = 'Perspectives: ? wonder, . ground, & composite, ~ dangling, ^ bound.';
-
-  const registerSwitch = document.createElement('div');
-  registerSwitch.className = 'ebook-register-switch';
-  registerSwitch.setAttribute('role', 'group');
-  registerSwitch.setAttribute('aria-label', 'Ebook register mode');
-
-  const readerButton = document.createElement('button');
-  readerButton.type = 'button';
-  readerButton.className = 'ebook-register-button';
-  readerButton.dataset.ebookRegister = 'reader';
-  readerButton.dataset.spwExpression = 'true';
-  readerButton.textContent = '^[register]{reader}';
-  readerButton.setAttribute('aria-label', 'Switch to reader register');
-
-  const engineerButton = document.createElement('button');
-  engineerButton.type = 'button';
-  engineerButton.className = 'ebook-register-button';
-  engineerButton.dataset.ebookRegister = 'engineer';
-  engineerButton.dataset.spwExpression = 'true';
-  engineerButton.textContent = '^[register]{engineer}';
-  engineerButton.setAttribute('aria-label', 'Switch to engineer register');
-
-  registerSwitch.append(readerButton, engineerButton);
-
-  const perspectiveSwitch = document.createElement('div');
-  perspectiveSwitch.className = 'ebook-perspective-switch';
-  perspectiveSwitch.setAttribute('role', 'group');
-  perspectiveSwitch.setAttribute('aria-label', 'Section perspective');
-
-  const perspectiveButtons = PERSPECTIVE_MODES.map((mode) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ebook-perspective-button';
-    button.dataset.perspective = mode.id;
-    button.dataset.spwExpression = 'true';
-    button.textContent = `${mode.sigil}[view]{${mode.label}}`;
-    button.setAttribute('aria-label', `Apply ${mode.label} perspective`);
-    perspectiveSwitch.append(button);
-    return button;
+  const readerButton = el('button', {
+    type: 'button', className: 'ebook-register-button',
+    dataset: { ebookRegister: 'reader', spwExpression: 'true' },
+    textContent: '^[register]{reader}', 'aria-label': 'Switch to reader register'
   });
 
-  const syntaxSwitch = document.createElement('div');
-  syntaxSwitch.className = 'ebook-syntax-switch';
-  syntaxSwitch.setAttribute('role', 'group');
-  syntaxSwitch.setAttribute('aria-label', 'Spw handle syntax');
-
-  const prefixButton = document.createElement('button');
-  prefixButton.type = 'button';
-  prefixButton.className = 'ebook-syntax-button';
-  prefixButton.dataset.syntax = 'prefix';
-  prefixButton.dataset.spwExpression = 'true';
-  prefixButton.textContent = '^[handle]{prefix}';
-  prefixButton.setAttribute('aria-label', 'Use prefix handle syntax');
-
-  const postfixButton = document.createElement('button');
-  postfixButton.type = 'button';
-  postfixButton.className = 'ebook-syntax-button';
-  postfixButton.dataset.syntax = 'postfix';
-  postfixButton.dataset.spwExpression = 'true';
-  postfixButton.textContent = '^[handle]{postfix}';
-  postfixButton.setAttribute('aria-label', 'Use postfix handle syntax');
-
-  syntaxSwitch.append(prefixButton, postfixButton);
-
-  const payloadSwitch = document.createElement('div');
-  payloadSwitch.className = 'ebook-payload-switch';
-  payloadSwitch.setAttribute('role', 'group');
-  payloadSwitch.setAttribute('aria-label', 'Container payload mode');
-
-  const payloadButtons = PAYLOAD_MODES.map((mode) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ebook-payload-button';
-    button.dataset.payloadMode = mode.id;
-    button.dataset.spwExpression = 'true';
-    button.setAttribute('aria-label', `Filter sections by ${mode.label} payload containers`);
-    payloadSwitch.append(button);
-    return button;
+  const engineerButton = el('button', {
+    type: 'button', className: 'ebook-register-button',
+    dataset: { ebookRegister: 'engineer', spwExpression: 'true' },
+    textContent: '^[register]{engineer}', 'aria-label': 'Switch to engineer register'
   });
 
-  const status = document.createElement('p');
-  status.className = 'ebook-nav-status';
-  status.setAttribute('role', 'status');
-  status.setAttribute('aria-live', 'polite');
+  const registerSwitch = el('div', { className: 'ebook-register-switch', role: 'group', 'aria-label': 'Ebook register mode' }, readerButton, engineerButton);
 
-  const payloadStatus = document.createElement('p');
-  payloadStatus.className = 'ebook-payload-status';
-  payloadStatus.setAttribute('role', 'status');
-  payloadStatus.setAttribute('aria-live', 'polite');
+  const perspectiveButtons = PERSPECTIVE_MODES.map((mode) => el('button', {
+    type: 'button', className: 'ebook-perspective-button',
+    dataset: { perspective: mode.id, spwExpression: 'true' },
+    textContent: `${mode.sigil}[view]{${mode.label}}`, 'aria-label': `Apply ${mode.label} perspective`
+  }));
 
-  const progress = document.createElement('progress');
-  progress.className = 'ebook-nav-progress';
-  progress.max = sections.length;
-  progress.value = 1;
-  progress.setAttribute('aria-label', 'Section reading progress');
+  const perspectiveSwitch = el('div', { className: 'ebook-perspective-switch', role: 'group', 'aria-label': 'Section perspective' }, ...perspectiveButtons);
 
-  const controls = document.createElement('div');
-  controls.className = 'ebook-nav-controls';
-
-  const prevButton = document.createElement('button');
-  prevButton.type = 'button';
-  prevButton.className = 'ebook-prev';
-  prevButton.dataset.spwExpression = 'true';
-  prevButton.textContent = '?[section]{prev}';
-  prevButton.setAttribute('aria-label', 'Go to previous section');
-
-  const resumeButton = document.createElement('button');
-  resumeButton.type = 'button';
-  resumeButton.className = 'ebook-resume';
-  resumeButton.dataset.spwExpression = 'true';
-  resumeButton.textContent = '#[resume]{section}';
-  resumeButton.setAttribute('aria-label', 'Resume reading at saved section');
-  resumeButton.hidden = true;
-
-  const nextButton = document.createElement('button');
-  nextButton.type = 'button';
-  nextButton.className = 'ebook-next';
-  nextButton.dataset.spwExpression = 'true';
-  nextButton.textContent = '?[section]{next}';
-  nextButton.setAttribute('aria-label', 'Go to next section');
-
-  controls.append(prevButton, resumeButton, nextButton);
-
-  const toc = document.createElement('ol');
-  toc.className = 'ebook-toc';
-
-  const tocLinks = sections.map((section) => {
-    const item = document.createElement('li');
-    const link = document.createElement('button');
-    link.type = 'button';
-    link.className = 'ebook-toc-link';
-    link.dataset.sectionId = section.id;
-    link.dataset.sectionIndex = String(section.index);
-    link.dataset.spwExpression = 'true';
-    link.dataset.spwAnchor = `#>${section.id}`;
-    link.textContent = formatSectionHandle(section, 'prefix');
-    link.setAttribute('aria-label', `Jump to section ${section.index}: ${section.label}`);
-    item.append(link);
-    toc.append(item);
-    return link;
+  const prefixButton = el('button', {
+    type: 'button', className: 'ebook-syntax-button',
+    dataset: { syntax: 'prefix', spwExpression: 'true' },
+    textContent: '^[handle]{prefix}', 'aria-label': 'Use prefix handle syntax'
   });
 
-  const conceptHeading = document.createElement('h3');
-  conceptHeading.className = 'ebook-concept-heading';
-  conceptHeading.textContent = 'Concept routes';
-
-  const conceptRail = document.createElement('div');
-  conceptRail.className = 'ebook-concept-rail';
-  conceptRail.setAttribute('role', 'list');
-
-  const conceptButtons = deriveConceptsFromSections(sections).map((concept) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ebook-concept-link';
-    button.dataset.concept = concept;
-    button.dataset.spwExpression = 'true';
-    button.setAttribute('role', 'listitem');
-    button.textContent = `@[concept/${concept}]`;
-    conceptRail.append(button);
-    return button;
+  const postfixButton = el('button', {
+    type: 'button', className: 'ebook-syntax-button',
+    dataset: { syntax: 'postfix', spwExpression: 'true' },
+    textContent: '^[handle]{postfix}', 'aria-label': 'Use postfix handle syntax'
   });
 
-  const lspHeading = document.createElement('h3');
-  lspHeading.className = 'ebook-concept-heading';
-  lspHeading.textContent = 'Handle inspector';
+  const syntaxSwitch = el('div', { className: 'ebook-syntax-switch', role: 'group', 'aria-label': 'Spw handle syntax' }, prefixButton, postfixButton);
 
-  const lspPanel = document.createElement('div');
-  lspPanel.className = 'ebook-lsp-panel';
-  lspPanel.setAttribute('aria-label', 'Spw LSP handle inspector');
+  const payloadButtons = PAYLOAD_MODES.map((mode) => el('button', {
+    type: 'button', className: 'ebook-payload-button',
+    dataset: { payloadMode: mode.id, spwExpression: 'true' },
+    'aria-label': `Filter sections by ${mode.label} payload containers`
+  }));
 
-  const lspSummary = document.createElement('p');
-  lspSummary.className = 'ebook-lsp-summary';
+  const payloadSwitch = el('div', { className: 'ebook-payload-switch', role: 'group', 'aria-label': 'Container payload mode' }, ...payloadButtons);
 
-  const lspList = document.createElement('ul');
-  lspList.className = 'ebook-lsp-list';
+  const status = el('p', { className: 'ebook-nav-status', role: 'status', 'aria-live': 'polite' });
+  const payloadStatus = el('p', { className: 'ebook-payload-status', role: 'status', 'aria-live': 'polite' });
+  const progress = el('progress', { className: 'ebook-nav-progress', max: sections.length, value: 1, 'aria-label': 'Section reading progress' });
 
-  lspPanel.append(lspSummary, lspList);
+  const prevButton = el('button', {
+    type: 'button', className: 'ebook-prev',
+    dataset: { spwExpression: 'true' },
+    textContent: '?[section]{prev}', 'aria-label': 'Go to previous section'
+  });
 
-  panel.append(
-    heading,
-    bridge,
-    legend,
+  const resumeButton = el('button', {
+    type: 'button', className: 'ebook-resume',
+    dataset: { spwExpression: 'true' },
+    textContent: '#[resume]{section}', 'aria-label': 'Resume reading at saved section',
+    hidden: true
+  });
+
+  const nextButton = el('button', {
+    type: 'button', className: 'ebook-next',
+    dataset: { spwExpression: 'true' },
+    textContent: '?[section]{next}', 'aria-label': 'Go to next section'
+  });
+
+  const controls = el('div', { className: 'ebook-nav-controls' }, prevButton, resumeButton, nextButton);
+
+  const tocLinks = sections.map((section) => el('button', {
+    type: 'button', className: 'ebook-toc-link',
+    dataset: { sectionId: section.id, sectionIndex: String(section.index), spwExpression: 'true', spwAnchor: `#>${section.id}` },
+    textContent: formatSectionHandle(section, 'prefix'), 'aria-label': `Jump to section ${section.index}: ${section.label}`
+  }));
+
+  const toc = el('ol', { className: 'ebook-toc' }, ...tocLinks.map(link => el('li', {}, link)));
+
+  const conceptButtons = deriveConceptsFromSections(sections).map((concept) => el('button', {
+    type: 'button', className: 'ebook-concept-link',
+    dataset: { concept, spwExpression: 'true' },
+    role: 'listitem', textContent: `@[concept/${concept}]`
+  }));
+
+  const conceptRail = el('div', { className: 'ebook-concept-rail', role: 'list' }, ...conceptButtons);
+
+  const lspSummary = el('p', { className: 'ebook-lsp-summary' });
+  const lspList = el('ul', { className: 'ebook-lsp-list' });
+  const lspPanel = el('div', { className: 'ebook-lsp-panel', 'aria-label': 'Spw LSP handle inspector' }, lspSummary, lspList);
+
+  const panel = el('section', {
+    className: 'ebook-nav-panel',
+    dataset: { component: 'ebook-navigation', spwComponent: 'ebook-navigation' },
+    'aria-label': 'Ebook navigation'
+  },
+    el('h2', { textContent: 'Ebook Navigator' }),
+    el('p', { className: 'ebook-nav-bridge', textContent: 'Reader register favors cadence and continuity. Engineer register favors handles, routes, and conceptual hops.' }),
+    el('p', { className: 'ebook-nav-legend', textContent: 'Perspectives: ? wonder, . ground, & composite, ~ dangling, ^ bound.' }),
     registerSwitch,
     perspectiveSwitch,
     payloadSwitch,
@@ -631,9 +531,9 @@ export function initEbookNavigation(chapterData, options = {}) {
     progress,
     controls,
     toc,
-    lspHeading,
+    el('h3', { className: 'ebook-concept-heading', textContent: 'Handle inspector' }),
     lspPanel,
-    conceptHeading,
+    el('h3', { className: 'ebook-concept-heading', textContent: 'Concept routes' }),
     conceptRail
   );
   const progressPanel = aside.querySelector('.chapter-progress-panel');

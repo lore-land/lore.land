@@ -1,21 +1,22 @@
 import { describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
+import { el } from './dom.mjs';
 
 /* Full v0.2.0-alpha operator table.
    spirit_sequence phases: ! (0), ? (1), ~ (2), @ (3), & (4), * (5), ^ (6)
    accessor polarity:  # = extrinsic/projection,  . = intrinsic/reduction */
 const OPERATOR_ETHOS = Object.freeze([
-  { sigil: '?', role: 'probe',       phase: '1',    polarity: null },
-  { sigil: '~', role: 'potential',   phase: '2',    polarity: null },
-  { sigil: '@', role: 'perspective', phase: '3',    polarity: null },
-  { sigil: '&', role: 'confluence',  phase: '4',    polarity: null },
-  { sigil: '*', role: 'value',       phase: '5',    polarity: null },
-  { sigil: '^', role: 'integration', phase: '6',    polarity: null },
-  { sigil: '!', role: 'action',      phase: '0',    polarity: null },
-  { sigil: '#', role: 'annotation',  phase: 'meta', polarity: 'extrinsic' },
-  { sigil: '.', role: 'ground',      phase: 'meta', polarity: 'intrinsic' },
-  { sigil: '=', role: 'config',      phase: 'bind', polarity: null },
-  { sigil: '%', role: 'measure',     phase: 'obs',  polarity: null },
-  { sigil: '$', role: 'substrate',   phase: 'meta', polarity: null }
+  { sigil: '?', role: 'probe', phase: '1', polarity: null },
+  { sigil: '~', role: 'potential', phase: '2', polarity: null },
+  { sigil: '@', role: 'perspective', phase: '3', polarity: null },
+  { sigil: '&', role: 'confluence', phase: '4', polarity: null },
+  { sigil: '*', role: 'value', phase: '5', polarity: null },
+  { sigil: '^', role: 'integration', phase: '6', polarity: null },
+  { sigil: '!', role: 'action', phase: '0', polarity: null },
+  { sigil: '#', role: 'annotation', phase: 'meta', polarity: 'extrinsic' },
+  { sigil: '.', role: 'ground', phase: 'meta', polarity: 'intrinsic' },
+  { sigil: '=', role: 'config', phase: 'bind', polarity: null },
+  { sigil: '%', role: 'measure', phase: 'obs', polarity: null },
+  { sigil: '$', role: 'substrate', phase: 'meta', polarity: null }
 ]);
 
 const CLAIM_LAYERS = Object.freeze([
@@ -95,66 +96,30 @@ function layerMatches(claim, layer) {
 }
 
 function createClaimItem(claim, announce) {
-  const item = document.createElement('li');
-  item.className = 'ethos-claim-item';
-  item.dataset.layer = claim.layer;
-  item.dataset.claimId = claim.id;
-
-  const handle = document.createElement('button');
-  handle.type = 'button';
-  handle.className = 'ethos-claim-handle';
-  handle.dataset.spwExpression = 'true';
-  handle.textContent = formatExpression('^', `claim/${claim.layer}`, claim.id);
-  handle.setAttribute('aria-label', `Inspect claim ${claim.id}`);
-  handle.addEventListener('click', () => {
-    if (announce) {
-      announce(`Claim focus: ${claim.id}.`);
-    }
-  });
-
-  const hypothesis = document.createElement('p');
-  hypothesis.className = 'ethos-claim-line';
-  hypothesis.textContent = `Hypothesis: ${claim.hypothesis}`;
-
-  const measure = document.createElement('p');
-  measure.className = 'ethos-claim-line';
-  measure.textContent = `Measure: ${claim.measure}`;
-
-  const falsification = document.createElement('p');
-  falsification.className = 'ethos-claim-line';
-  falsification.textContent = `Falsification: ${claim.falsification}`;
-
-  const refs = document.createElement('p');
-  refs.className = 'ethos-claim-ref';
-  refs.textContent = `${claim.specRef} • ${claim.implRef} • ${claim.probeRef}`;
-
-  item.append(handle, hypothesis, measure, falsification, refs);
-  return item;
+  return el('li', { className: 'ethos-claim-item', dataset: { layer: claim.layer, claimId: claim.id } },
+    el('button', {
+      type: 'button',
+      className: 'ethos-claim-handle',
+      dataset: { spwExpression: 'true' },
+      textContent: formatExpression('^', `claim/${claim.layer}`, claim.id),
+      'aria-label': `Inspect claim ${claim.id}`,
+      onClick: () => {
+        if (announce) announce(`Claim focus: ${claim.id}.`);
+      }
+    }),
+    el('p', { className: 'ethos-claim-line', textContent: `Hypothesis: ${claim.hypothesis}` }),
+    el('p', { className: 'ethos-claim-line', textContent: `Measure: ${claim.measure}` }),
+    el('p', { className: 'ethos-claim-line', textContent: `Falsification: ${claim.falsification}` }),
+    el('p', { className: 'ethos-claim-ref', textContent: `${claim.specRef} • ${claim.implRef} • ${claim.probeRef}` })
+  );
 }
 
 function createOperatorItem(entry) {
-  const row = document.createElement('li');
-  row.className = 'ethos-operator-item';
-  row.dataset.sigil = entry.sigil;
-  if (entry.polarity) {
-    row.dataset.polarity = entry.polarity;
-  }
-
-  const token = document.createElement('span');
-  token.className = 'ethos-operator-token';
-  token.dataset.spwRole = entry.role;
-  if (entry.polarity) {
-    token.dataset.spwPolarity = entry.polarity;
-  }
-  token.textContent = entry.sigil;
-
-  const meta = document.createElement('span');
-  meta.className = 'ethos-operator-meta';
   const polarityNote = entry.polarity ? ` • ${entry.polarity}` : '';
-  meta.textContent = `${entry.role} • ${entry.phase}${polarityNote}`;
-
-  row.append(token, meta);
-  return row;
+  return el('li', { className: 'ethos-operator-item', dataset: { sigil: entry.sigil, polarity: entry.polarity } },
+    el('span', { className: 'ethos-operator-token', dataset: { spwRole: entry.role, spwPolarity: entry.polarity }, textContent: entry.sigil }),
+    el('span', { className: 'ethos-operator-meta', textContent: `${entry.role} • ${entry.phase}${polarityNote}` })
+  );
 }
 
 export function initSpwEthosIntegration(options = {}) {
@@ -175,62 +140,33 @@ export function initSpwEthosIntegration(options = {}) {
     existing.remove();
   }
 
-  const panel = document.createElement('section');
-  panel.className = className;
-  panel.dataset.component = 'spw-ethos';
-  panel.dataset.spwComponent = 'spw-ethos';
-  panel.dataset.claimLayer = 'all';
-  panel.setAttribute('aria-label', titleForContext(context));
-
-  const heading = document.createElement('h2');
-  heading.textContent = titleForContext(context);
-
-  const subtitle = document.createElement('p');
-  subtitle.className = 'ethos-subtitle';
-  subtitle.textContent = subtitleForContext(context);
-
-  const chain = document.createElement('pre');
-  chain.className = 'motif-spw ethos-chain';
-  chain.dataset.spwExpression = 'true';
-  chain.textContent = '^[claim-chain]{ claim -> spec -> impl -> probe }';
-
-  const layerControls = document.createElement('div');
-  layerControls.className = 'ethos-layer-switch';
-  layerControls.setAttribute('role', 'group');
-  layerControls.setAttribute('aria-label', 'Claim layer filter');
-
   const layerButtons = CLAIM_LAYERS.map((layer) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ethos-layer-button';
-    button.dataset.claimLayer = layer.id;
-    button.dataset.spwExpression = 'true';
-    button.textContent = formatExpression(layer.sigil, 'layer', layer.label);
-    button.setAttribute('aria-pressed', layer.id === 'all' ? 'true' : 'false');
-    layerControls.append(button);
-    return button;
+    return el('button', {
+      type: 'button',
+      className: 'ethos-layer-button',
+      dataset: { claimLayer: layer.id, spwExpression: 'true' },
+      textContent: formatExpression(layer.sigil, 'layer', layer.label),
+      'aria-pressed': layer.id === 'all' ? 'true' : 'false'
+    });
   });
 
-  const claimList = document.createElement('ul');
-  claimList.className = 'ethos-claim-list';
   const claimItems = CLAIMS.map((claim) => createClaimItem(claim, announce));
-  claimItems.forEach((item) => claimList.append(item));
+  const status = el('p', { className: 'ethos-status', role: 'status', 'aria-live': 'polite', textContent: 'Ethos ready: waiting for runtime selection.' });
 
-  const operatorsHeading = document.createElement('h3');
-  operatorsHeading.className = 'ethos-operators-heading';
-  operatorsHeading.textContent = 'Operator ethos';
-
-  const operatorList = document.createElement('ul');
-  operatorList.className = 'ethos-operator-list';
-  OPERATOR_ETHOS.forEach((entry) => operatorList.append(createOperatorItem(entry)));
-
-  const status = document.createElement('p');
-  status.className = 'ethos-status';
-  status.setAttribute('role', 'status');
-  status.setAttribute('aria-live', 'polite');
-  status.textContent = 'Ethos ready: waiting for runtime selection.';
-
-  panel.append(heading, subtitle, chain, layerControls, claimList, operatorsHeading, operatorList, status);
+  const panel = el('section', {
+    className,
+    dataset: { component: 'spw-ethos', spwComponent: 'spw-ethos', claimLayer: 'all' },
+    'aria-label': titleForContext(context)
+  },
+    el('h2', { textContent: titleForContext(context) }),
+    el('p', { className: 'ethos-subtitle', textContent: subtitleForContext(context) }),
+    el('pre', { className: 'motif-spw ethos-chain', dataset: { spwExpression: 'true' }, textContent: '^[claim-chain]{ claim -> spec -> impl -> probe }' }),
+    el('div', { className: 'ethos-layer-switch', role: 'group', 'aria-label': 'Claim layer filter' }, ...layerButtons),
+    el('ul', { className: 'ethos-claim-list' }, ...claimItems),
+    el('h3', { className: 'ethos-operators-heading', textContent: 'Operator ethos' }),
+    el('ul', { className: 'ethos-operator-list' }, ...OPERATOR_ETHOS.map(createOperatorItem)),
+    status
+  );
 
   if (context === 'home') {
     const anchor = container.querySelector('#grammar-observatory');
@@ -327,9 +263,9 @@ export function initSpwEthosIntegration(options = {}) {
   const stageSource = root?.body || document.body;
   const observer = stageSource
     ? new MutationObserver(() => {
-        const stage = stageSource.dataset.loadStage || '';
-        applyLoadStage(stage);
-      })
+      const stage = stageSource.dataset.loadStage || '';
+      applyLoadStage(stage);
+    })
     : null;
 
   if (observer && stageSource) {

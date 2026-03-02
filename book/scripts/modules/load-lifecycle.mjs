@@ -1,4 +1,5 @@
 import { VALENCE_PENTAD, describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
+import { el } from './dom.mjs';
 
 export const LOAD_STAGES = Object.freeze([...VALENCE_PENTAD]);
 
@@ -9,41 +10,19 @@ function ensureLifecycleHud(id, skeletonLines) {
     return existing;
   }
 
-  const hud = document.createElement('aside');
-  hud.id = domId;
-  hud.className = 'lifecycle-hud';
-  hud.setAttribute('aria-live', 'polite');
-  hud.setAttribute('aria-atomic', 'true');
-
-  const title = document.createElement('p');
-  title.className = 'lifecycle-title';
-  title.textContent = 'loading lifecycle';
-
-  const status = document.createElement('p');
-  status.className = 'lifecycle-status';
-  status.textContent = 'boon: preloader';
-
-  const preloader = document.createElement('div');
-  preloader.className = 'lifecycle-preloader';
-  preloader.innerHTML = '<span class="lifecycle-chip">boon</span><span>preloader primed</span>';
-
-  const spinnerWrap = document.createElement('div');
-  spinnerWrap.className = 'lifecycle-spinner-wrap';
-  spinnerWrap.hidden = true;
-  spinnerWrap.innerHTML = '<span class="lifecycle-spinner" aria-hidden="true"></span><span>bane fallback spinner</span>';
-
-  const skeleton = document.createElement('div');
-  skeleton.className = 'lifecycle-skeleton';
-  skeleton.hidden = true;
-
   const lines = Math.max(2, skeletonLines);
-  for (let i = 0; i < lines; i += 1) {
-    const line = document.createElement('span');
-    line.style.width = `${90 - (i % 3) * 15}%`;
-    skeleton.appendChild(line);
-  }
+  const skeletonChildren = Array.from({ length: lines }).map((_, i) =>
+    el('span', { style: { width: `${90 - (i % 3) * 15}%` } })
+  );
 
-  hud.append(title, status, preloader, spinnerWrap, skeleton);
+  const hud = el('aside', { id: domId, className: 'lifecycle-hud', 'aria-live': 'polite', 'aria-atomic': 'true' },
+    el('p', { className: 'lifecycle-title', textContent: 'loading lifecycle' }),
+    el('p', { className: 'lifecycle-status', textContent: 'boon: preloader' }),
+    el('div', { className: 'lifecycle-preloader', innerHTML: '<span class="lifecycle-chip">boon</span><span>preloader primed</span>' }),
+    el('div', { className: 'lifecycle-spinner-wrap', hidden: true, innerHTML: '<span class="lifecycle-spinner" aria-hidden="true"></span><span>bane fallback spinner</span>' }),
+    el('div', { className: 'lifecycle-skeleton', hidden: true }, ...skeletonChildren)
+  );
+
   document.body.appendChild(hud);
   return hud;
 }

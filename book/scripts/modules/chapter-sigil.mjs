@@ -1,45 +1,20 @@
 import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_02_28.I';
+import { el } from './dom.mjs';
 
 function createTemplate(config) {
-  const wrapper = document.createElement('article');
-  wrapper.className = 'sigil-panel';
-  wrapper.setAttribute('role', 'group');
-  wrapper.setAttribute('aria-label', `${config.title} interpretation panel`);
+  const prompt = el('p', { id: 'sigil-prompt', className: 'sigil-prompt', role: 'status', 'aria-live': 'polite', textContent: config.prompts[0] || 'Trace meaning through structure.' });
+  const cycleButton = el('button', { type: 'button', className: 'sigil-cycle', textContent: 'reinterpret' });
 
-  const heading = document.createElement('h3');
-  heading.textContent = config.title;
-
-  const phrase = document.createElement('pre');
-  phrase.className = 'sigil-phrase';
-  phrase.textContent = config.phrase;
-
-  const meaning = document.createElement('p');
-  meaning.className = 'sigil-meaning';
-  meaning.textContent = config.meaning;
-
-  const prompt = document.createElement('p');
-  prompt.id = 'sigil-prompt';
-  prompt.className = 'sigil-prompt';
-  prompt.setAttribute('role', 'status');
-  prompt.setAttribute('aria-live', 'polite');
-  prompt.textContent = config.prompts[0] || 'Trace meaning through structure.';
-
-  const controls = document.createElement('div');
-  controls.className = 'sigil-controls';
-
-  const cycleButton = document.createElement('button');
-  cycleButton.type = 'button';
-  cycleButton.className = 'sigil-cycle';
-  cycleButton.textContent = 'reinterpret';
-
-  const route = document.createElement('a');
-  route.className = 'sigil-route';
-  route.href = config.route.href;
-  route.textContent = config.route.label;
-  route.setAttribute('aria-label', config.route.ariaLabel || config.route.label);
-
-  controls.append(cycleButton, route);
-  wrapper.append(heading, phrase, meaning, prompt, controls);
+  const wrapper = el('article', { className: 'sigil-panel', role: 'group', 'aria-label': `${config.title} interpretation panel` },
+    el('h3', { textContent: config.title }),
+    el('pre', { className: 'sigil-phrase', textContent: config.phrase }),
+    el('p', { className: 'sigil-meaning', textContent: config.meaning }),
+    prompt,
+    el('div', { className: 'sigil-controls' },
+      cycleButton,
+      el('a', { className: 'sigil-route', href: config.route.href, textContent: config.route.label, 'aria-label': config.route.ariaLabel || config.route.label })
+    )
+  );
 
   const style = document.createElement('style');
   style.textContent = `
@@ -327,9 +302,7 @@ export function registerChapterSigil(config, target = document.querySelector('as
     return existing;
   }
 
-  const element = document.createElement(config.tagName);
-  element.dataset.spwComponent = config.tagName;
-  element.dataset.spwActionable = 'true';
+  const element = el(config.tagName, { dataset: { spwComponent: config.tagName, spwActionable: 'true' } });
   target.append(element);
   return element;
 }
