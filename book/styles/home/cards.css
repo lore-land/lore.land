@@ -1,10 +1,13 @@
-
 .spw-snippet {
   margin: 0;
   padding: 0.62rem;
   color: #8de4ff;
   font-size: 0.82rem;
   line-height: 1.5;
+  max-height: min(25vh, 14rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .hero-panel .spw-language-controls,
@@ -225,6 +228,8 @@
 #home-app[data-component-variant="stream"] .chapter-grid,
 #home-app[data-component-variant="stream"] .seed-grid {
   grid-template-columns: 1fr;
+  max-width: var(--chapter-reading-measure, 65ch);
+  margin-inline: auto;
 }
 
 #home-app[data-component-variant="cinema"] .chapter-grid {
@@ -271,5 +276,3 @@
     padding: 0.72rem;
   }
 }
-
-
