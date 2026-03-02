@@ -1,0 +1,44 @@
+@layer home.components {
+  @media (min-width: 72rem) {
+    .experience-controls {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 45;
+      margin: 0;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      gap: 0.36rem;
+      padding: 0.6rem 0.8rem;
+      border: var(--border-width) var(--border-style) color-mix(in srgb, var(--color-stone-shadow) 18%, var(--theme-glass-border) 82%);
+      border-radius: calc(var(--border-radius-main) + 2px);
+      background: color-mix(in srgb, var(--color-bg-main) 82%, transparent 18%);
+      backdrop-filter: blur(14px) saturate(1.2);
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      box-shadow: 0 8px 24px rgba(16, 23, 42, 0.14);
+    }
+
+    .grammar-runtime-status {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 44;
+      margin: 0;
+      max-width: 22rem;
+      padding: 0.42rem 0.62rem;
+      border-radius: var(--border-radius-main);
+      background: color-mix(in srgb, var(--color-bg-main) 85%, transparent 15%);
+      backdrop-filter: blur(12px) saturate(1.1);
+      -webkit-backdrop-filter: blur(12px) saturate(1.1);
+      box-shadow: 0 6px 18px rgba(16, 23, 42, 0.1);
+      font-size: 0.76rem;
+      opacity: 0.92;
+      transition: opacity 200ms ease;
+    }
+
+    .grammar-runtime-status:hover {
+      opacity: 1;
+    }
+  }
+}

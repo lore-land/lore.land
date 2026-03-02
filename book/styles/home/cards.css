@@ -246,6 +246,11 @@
   margin-inline: auto;
 }
 
+html:has(#home-app[data-component-variant="stream"]) .site-shell {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
 #home-app[data-component-variant="cinema"] .chapter-grid {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }

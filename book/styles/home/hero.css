@@ -30,17 +30,38 @@
 }
 
 .site-shell {
-  width: min(100%, var(--max-width-content));
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   display: grid;
   gap: var(--spacing-large);
+  padding-inline: var(--home-gutter, clamp(1rem, 3vw, 2.5rem));
+}
+
+@media (min-width: 72rem) {
+  .site-shell {
+    --home-gutter: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+@media (min-width: 100rem) {
+  .site-shell {
+    --home-gutter: clamp(3rem, 5vw, 6rem);
+  }
 }
 
 .site-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: var(--spacing-small);
   align-items: center;
+  padding: 0.5rem var(--home-gutter, clamp(1rem, 3vw, 2.5rem));
+  background: color-mix(in srgb, var(--color-bg-main) 88%, transparent 12%);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
 }
 
 .site-topbar>a {
@@ -106,6 +127,18 @@
 .seed-atlas        { container-name: seed-atlas; }
 .grammar-observatory { container-name: grammar-observatory; }
 
+@media (min-width: 72rem) {
+  .hero-panel,
+  .chapter-timeline,
+  .producer-constellation,
+  .grammar-observatory,
+  .spw-ethos-atlas,
+  .seed-atlas {
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 4rem);
+    border-radius: calc(var(--border-radius-main) + 6px);
+  }
+}
+
 .hero-panel::before {
   content: "";
   position: absolute;
@@ -160,6 +193,17 @@
 .producer-constellation-subtitle,
 .seed-atlas-subtitle {
   color: var(--color-text-alt);
+}
+
+.hero-subtitle,
+.hero-stats,
+.timeline-subtitle,
+.producer-constellation-subtitle,
+.seed-atlas-subtitle,
+.producer-intent,
+.producer-guidance,
+.ethos-subtitle {
+  max-width: 72rem;
 }
 
 .hero-stats {
