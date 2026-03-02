@@ -35,3 +35,20 @@ button:focus-visible {
 .seed-card:focus-visible {
     filter: url('#spw-celestial-glow');
 }
+
+/* Apply deep ripples to active Spw grammar tokens/lenses */
+[data-spw-lens]:active,
+[data-spw-actionable="true"]:active,
+.grammar-chip[data-runtime-active="true"] {
+    filter: url('#spw-active-ripple');
+    transform: translateY(1px);
+    /* physical press */
+}
+
+/* Apply heavy celestial halo to focused narrative elements or explicit highlights */
+.chapter-card[data-runtime-active="true"],
+.seed-card[data-highlight="true"] {
+    filter: url('#spw-atmospheric-halo');
+    z-index: 10;
+    /* elevate glowing element */
+}

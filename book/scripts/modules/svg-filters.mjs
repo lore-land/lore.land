@@ -56,8 +56,107 @@ export function injectSvgFilters(document) {
     filterGlow.appendChild(colorMatrix);
     filterGlow.appendChild(merge);
 
+    // Filter 3: Textured Typography Grain (spw-text-grain)
+    const filterTextGrain = document.createElementNS(svgNS, "filter");
+    filterTextGrain.id = "spw-text-grain";
+
+    const textTurbulence = document.createElementNS(svgNS, "feTurbulence");
+    textTurbulence.setAttribute("type", "fractalNoise");
+    textTurbulence.setAttribute("baseFrequency", "0.75");
+    textTurbulence.setAttribute("numOctaves", "3");
+    textTurbulence.setAttribute("result", "noise");
+
+    const colorNoise = document.createElementNS(svgNS, "feColorMatrix");
+    colorNoise.setAttribute("type", "matrix");
+    // Grayscale noise, very dark
+    colorNoise.setAttribute("values", "0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   1 0 0 0 0");
+    colorNoise.setAttribute("in", "noise");
+    colorNoise.setAttribute("result", "coloredNoise");
+
+    const compositeAtop = document.createElementNS(svgNS, "feComposite");
+    compositeAtop.setAttribute("operator", "in");
+    compositeAtop.setAttribute("in", "coloredNoise");
+    compositeAtop.setAttribute("in2", "SourceGraphic");
+    compositeAtop.setAttribute("result", "texturedAlpha");
+
+    const blendScreen = document.createElementNS(svgNS, "feBlend");
+    blendScreen.setAttribute("mode", "multiply");
+    blendScreen.setAttribute("in", "texturedAlpha");
+    blendScreen.setAttribute("in2", "SourceGraphic");
+
+    filterTextGrain.appendChild(textTurbulence);
+    filterTextGrain.appendChild(colorNoise);
+    filterTextGrain.appendChild(compositeAtop);
+    filterTextGrain.appendChild(blendScreen);
+
+    // Filter 4: Active Ripple (spw-active-ripple)
+    const filterRipple = document.createElementNS(svgNS, "filter");
+    filterRipple.id = "spw-active-ripple";
+
+    const rippleTurbulence = document.createElementNS(svgNS, "feTurbulence");
+    rippleTurbulence.setAttribute("type", "fractalNoise");
+    rippleTurbulence.setAttribute("baseFrequency", "0.1");
+    rippleTurbulence.setAttribute("numOctaves", "2");
+    rippleTurbulence.setAttribute("result", "noise");
+
+    const rippleDisplacement = document.createElementNS(svgNS, "feDisplacementMap");
+    rippleDisplacement.setAttribute("in", "SourceGraphic");
+    rippleDisplacement.setAttribute("in2", "noise");
+    rippleDisplacement.setAttribute("scale", "2");
+    rippleDisplacement.setAttribute("xChannelSelector", "R");
+    rippleDisplacement.setAttribute("yChannelSelector", "G");
+    rippleDisplacement.setAttribute("result", "displaced");
+
+    // Create an inner shadow effect for indentation
+    const dropShadow = document.createElementNS(svgNS, "feDropShadow");
+    dropShadow.setAttribute("in", "displaced");
+    dropShadow.setAttribute("dx", "0");
+    dropShadow.setAttribute("dy", "1");
+    dropShadow.setAttribute("stdDeviation", "2");
+    dropShadow.setAttribute("flood-color", "#142036");
+    dropShadow.setAttribute("flood-opacity", "0.6");
+
+    filterRipple.appendChild(rippleTurbulence);
+    filterRipple.appendChild(rippleDisplacement);
+    filterRipple.appendChild(dropShadow);
+
+    // Filter 5: Atmospheric Halo (spw-atmospheric-halo)
+    const filterHalo = document.createElementNS(svgNS, "filter");
+    filterHalo.id = "spw-atmospheric-halo";
+    // Increase filter bounds to allow large glow
+    filterHalo.setAttribute("x", "-20%");
+    filterHalo.setAttribute("y", "-20%");
+    filterHalo.setAttribute("width", "140%");
+    filterHalo.setAttribute("height", "140%");
+
+    const haloBlur = document.createElementNS(svgNS, "feGaussianBlur");
+    haloBlur.setAttribute("in", "SourceAlpha");
+    haloBlur.setAttribute("stdDeviation", "8");
+    haloBlur.setAttribute("result", "blur");
+
+    const haloColorMatrix = document.createElementNS(svgNS, "feColorMatrix");
+    haloColorMatrix.setAttribute("type", "matrix");
+    // Burnt orange / rustic red aura
+    haloColorMatrix.setAttribute("values", "0 0 0 0 0.75   0 0 0 0 0.37   0 0 0 0 0.08   0 0 0 0.8 0");
+    haloColorMatrix.setAttribute("result", "coloredBlur");
+
+    const haloMerge = document.createElementNS(svgNS, "feMerge");
+    const haloMergeNode1 = document.createElementNS(svgNS, "feMergeNode");
+    haloMergeNode1.setAttribute("in", "coloredBlur");
+    const haloMergeNode2 = document.createElementNS(svgNS, "feMergeNode");
+    haloMergeNode2.setAttribute("in", "SourceGraphic");
+    haloMerge.appendChild(haloMergeNode1);
+    haloMerge.appendChild(haloMergeNode2);
+
+    filterHalo.appendChild(haloBlur);
+    filterHalo.appendChild(haloColorMatrix);
+    filterHalo.appendChild(haloMerge);
+
     svg.appendChild(filterPaper);
     svg.appendChild(filterGlow);
+    svg.appendChild(filterTextGrain);
+    svg.appendChild(filterRipple);
+    svg.appendChild(filterHalo);
 
     document.body.prepend(svg);
 }

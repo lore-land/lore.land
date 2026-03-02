@@ -70,25 +70,36 @@ export function bootstrapExperience(options = {}) {
   root.dataset.dimension = dimension;
   root.dataset.layout = layout;
 
+  const onConnectionChange = () => {
+    root.dataset.connection = navigator.connection.effectiveType;
+  };
   const connection = navigator.connection;
   if (connection && connection.effectiveType) {
     root.dataset.connection = connection.effectiveType;
-    connection.addEventListener('change', () => {
-      root.dataset.connection = connection.effectiveType;
-    });
+    connection.addEventListener('change', onConnectionChange);
   }
 
-  window.addEventListener('online', () => {
+  const onOnline = () => {
     root.dataset.online = 'online';
     announce('Connection restored.');
-  });
-
-  window.addEventListener('offline', () => {
+  };
+  const onOffline = () => {
     root.dataset.online = 'offline';
     announce('You are offline. Cached content remains available.');
-  });
+  };
 
-  return { root, announce };
+  window.addEventListener('online', onOnline);
+  window.addEventListener('offline', onOffline);
+
+  const destroy = () => {
+    window.removeEventListener('online', onOnline);
+    window.removeEventListener('offline', onOffline);
+    if (connection) {
+      connection.removeEventListener('change', onConnectionChange);
+    }
+  };
+
+  return { root, announce, destroy };
 }
 
 export function initSelectPreference(options = {}) {
@@ -157,7 +168,7 @@ export function initProgressiveReveal(options = {}) {
   const nodes = [...root.querySelectorAll(selector)];
 
   if (!nodes.length) {
-    return;
+    return () => {};
   }
 
   if (!('IntersectionObserver' in window)) {
@@ -165,7 +176,7 @@ export function initProgressiveReveal(options = {}) {
       node.classList.add('is-visible');
       node.dataset.revealState = 'visible';
     });
-    return;
+    return () => {};
   }
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -187,6 +198,10 @@ export function initProgressiveReveal(options = {}) {
     node.dataset.revealState = 'pending';
     observer.observe(node);
   });
+
+  return () => {
+    observer.disconnect();
+  };
 }
 
 export function initAttentionDetails(options = {}) {

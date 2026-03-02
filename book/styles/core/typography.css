@@ -13,7 +13,7 @@
   -webkit-text-fill-color: transparent;
   font-size: clamp(2rem, 5vw, 3.2rem);
   line-height: 1.08;
-  filter: drop-shadow(2px 2px 0px var(--color-stone-shadow));
+  filter: drop-shadow(2px 2px 0px var(--color-stone-shadow)) url('#spw-text-grain');
 }
 
 .chapter-timeline h2,
