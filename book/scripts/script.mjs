@@ -34,7 +34,7 @@ const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 document.addEventListener('DOMContentLoaded', async () => {
   registerCustomElements();
 
-  const { root, announce } = bootstrapExperience();
+  const { root, announce, destroy: destroyBootstrap } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
   injectSvgFilters(document);
 
@@ -100,12 +100,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMotifDiscovery(chapterData, announce);
     await mountChapterSigil(chapterData, announce);
     initSpwLanguageRuntime({ root: document, announce });
-    initAttentionDetails({ root });
-    initSemanticShader({ root });
-    initSpatialPerspective({ root });
-    initGenreCombinatorics({ root, announce });
+    const destroyAttention = initAttentionDetails({ root });
+    const destroyShader = initSemanticShader({ root });
+    const destroySpatial = initSpatialPerspective({ root });
+    const destroyGenre = initGenreCombinatorics({ root, announce });
     initChapterProgression(chapterData, { announce });
-    initProgressiveReveal({ root: document });
+    const destroyReveal = initProgressiveReveal({ root: document });
 
     if (ebookNav && announce) {
       announce(`Model ebook navigation ready: ${ebookNav.sectionCount} sections.`);
@@ -114,6 +114,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     enhanceLazyImages({ root: chapterContent || document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
+
+    window.__loreCleanup = () => {
+      destroyBootstrap();
+      if (ebookNav?.destroy) ebookNav.destroy();
+      if (destroyAttention) destroyAttention();
+      if (destroyShader) destroyShader();
+      if (destroySpatial) destroySpatial();
+      if (destroyGenre) destroyGenre();
+      if (destroyReveal) destroyReveal();
+    };
   } catch (error) {
     lifecycle.bane('runtime fallback path');
     console.error('Chapter lifecycle failed:', error);
@@ -796,11 +806,12 @@ function bindRouteControl(control, route, announce) {
 
 function setupKeyboardRoutes(links, announce) {
   if (document.body.dataset.spwShortcuts === 'ready') {
-    return;
+    return null;
   }
 
   document.body.dataset.spwShortcuts = 'ready';
-  document.addEventListener('keydown', (event) => {
+
+  const onKeydown = (event) => {
     if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.defaultPrevented) {
       return;
     }
@@ -838,7 +849,14 @@ function setupKeyboardRoutes(links, announce) {
       announce(`Shortcut route: ${label}`);
     }
     window.location.href = destination;
-  });
+  };
+
+  document.addEventListener('keydown', onKeydown);
+
+  return () => {
+    document.removeEventListener('keydown', onKeydown);
+    delete document.body.dataset.spwShortcuts;
+  };
 }
 
 /**

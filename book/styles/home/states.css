@@ -83,6 +83,49 @@
     color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
   }
 
+  /* ─── dimension: section visibility ──────────────────────────────────────── */
+  /* flat  = hero + timeline only (minimal)
+     stage = hero + timeline + grammar observatory (default)
+     immersive = everything visible */
+
+  html[data-dimension="flat"] .seed-atlas,
+  html[data-dimension="flat"] .producer-constellation,
+  html[data-dimension="flat"] .grammar-observatory,
+  html[data-dimension="flat"] .spw-ethos-atlas {
+    display: none;
+  }
+
+  html[data-dimension="stage"] .seed-atlas,
+  html[data-dimension="stage"] .producer-constellation,
+  html[data-dimension="stage"] .spw-ethos-atlas {
+    display: none;
+  }
+
+  /* ─── dimension: card content density ──────────────────────────────────── */
+  /* flat hides images, verses, and spw blocks to keep cards compact */
+
+  html[data-dimension="flat"] .chapter-default-preview,
+  html[data-dimension="flat"] .chapter-seed-preview,
+  html[data-dimension="flat"] .chapter-motif-toggle,
+  html[data-dimension="flat"] .chapter-verse-text,
+  html[data-dimension="flat"] .chapter-card .spw-snippet {
+    display: none;
+  }
+
+  /* stage hides seed previews and motif toggles but shows default images */
+
+  html[data-dimension="stage"] .chapter-seed-preview,
+  html[data-dimension="stage"] .chapter-motif-toggle {
+    display: none;
+  }
+
+  /* ─── layout variant: book mode section focus ──────────────────────────── */
+
+  #home-app[data-component-variant="book"] .seed-atlas,
+  #home-app[data-component-variant="book"] .producer-constellation {
+    display: none;
+  }
+
 }
 
 /* @layer home.states */

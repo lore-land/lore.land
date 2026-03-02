@@ -108,14 +108,17 @@ export async function initGlyphDiscovery(root, chapterTier) {
     }
 
     // Stagger the unlock flash for newly discovered glyphs
+    const pendingTimers = [];
     if (justUnlocked.length > 0) {
         justUnlocked.forEach((token, i) => {
-            setTimeout(() => {
+            const outerId = setTimeout(() => {
                 token.dataset.glyphJustUnlocked = 'true';
-                setTimeout(() => {
+                const innerId = setTimeout(() => {
                     delete token.dataset.glyphJustUnlocked;
                 }, 1000);
+                pendingTimers.push(innerId);
             }, i * 120);
+            pendingTimers.push(outerId);
         });
     }
 
@@ -131,6 +134,8 @@ export async function initGlyphDiscovery(root, chapterTier) {
     }
 
     return () => {
+        pendingTimers.forEach((id) => clearTimeout(id));
+        pendingTimers.length = 0;
         for (const token of tokens) {
             delete token.dataset.glyphTier;
             delete token.dataset.glyphLocked;

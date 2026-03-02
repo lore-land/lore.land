@@ -1000,9 +1000,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     });
   };
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  document.addEventListener('keydown', (event) => {
+  const onKeydownNav = (event) => {
     if (event.defaultPrevented) {
       return;
     }
@@ -1031,7 +1029,7 @@ export function initEbookNavigation(chapterData, options = {}) {
       event.preventDefault();
       jumpRelative(-1, 'bracket');
     }
-  });
+  };
 
   /* { / } hold — different navigation shape.
      { (Shift+[) held → breadth mode: see all concept routes and perspectives.
@@ -1051,7 +1049,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     }
   };
 
-  document.addEventListener('keydown', (event) => {
+  const onKeydownShape = (event) => {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
       return;
     }
@@ -1064,14 +1062,19 @@ export function initEbookNavigation(chapterData, options = {}) {
       holdKeys.add(event.key);
       applyNavShape();
     }
-  });
+  };
 
-  document.addEventListener('keyup', (event) => {
+  const onKeyup = (event) => {
     if (NAV_HOLD_SHAPES[event.key]) {
       holdKeys.delete(event.key);
       applyNavShape();
     }
-  });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('keydown', onKeydownNav);
+  document.addEventListener('keydown', onKeydownShape);
+  document.addEventListener('keyup', onKeyup);
 
   const startIndex = resumeIndex > 0 && resumeIndex <= sections.length ? resumeIndex : parseSectionIndex(stored?.sectionIndex);
   applyRegister(readRegisterMode(), false);
@@ -1082,6 +1085,18 @@ export function initEbookNavigation(chapterData, options = {}) {
   setActive(startIndex, 'init');
   applyFilters(false);
 
+  const destroy = () => {
+    window.removeEventListener('scroll', onScroll);
+    document.removeEventListener('keydown', onKeydownNav);
+    document.removeEventListener('keydown', onKeydownShape);
+    document.removeEventListener('keyup', onKeyup);
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+    }
+    holdKeys.clear();
+    panel.remove();
+  };
+
   return {
     chapterNumber,
     sectionCount: sections.length,
@@ -1089,6 +1104,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     currentSection: () => activeIndex,
     setPerspective: (mode) => applyPerspective(mode, false),
     setPayloadMode: (mode) => applyPayloadMode(mode, false),
-    setSyntaxMode: (mode) => applySyntaxMode(mode, false)
+    setSyntaxMode: (mode) => applySyntaxMode(mode, false),
+    destroy
   };
 }

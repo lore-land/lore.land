@@ -1227,10 +1227,14 @@ function enhanceExpressionNode(node, announce) {
       chip.setAttribute('aria-label', `Scope: ${scopeText}`);
       node.insertAdjacentElement('afterend', chip);
       registerControl.commitSelection(selected, null, null, { origin: 'drag-scope', scopeText });
-      setTimeout(() => {
-        chip.remove();
-        node.classList.remove('has-spw-scope');
-        delete node.dataset.spwScope;
+      const scopeTimerId = setTimeout(() => {
+        if (chip.parentNode) {
+          chip.remove();
+        }
+        if (node.isConnected) {
+          node.classList.remove('has-spw-scope');
+          delete node.dataset.spwScope;
+        }
       }, 2800);
       if (announce) {
         announce(`Scope created: ${scopeText}`);

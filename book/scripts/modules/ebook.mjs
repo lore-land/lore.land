@@ -35,7 +35,7 @@ function readChapterData() {
 document.addEventListener('DOMContentLoaded', () => {
   registerCustomElements();
 
-  const { root, announce } = bootstrapExperience();
+  const { root, announce, destroy: destroyBootstrap } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
   const chapterData = readChapterData();
 
@@ -56,19 +56,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData, announce);
     setupCustomElementsInteractions();
+    let ebookNav = null;
     if (chapterData) {
-      initEbookNavigation(chapterData, { announce });
+      ebookNav = initEbookNavigation(chapterData, { announce });
     }
     initSpwEthosIntegration({ context: 'chapter', container: document.querySelector('aside'), announce });
     initSpwLanguageRuntime({ root: document, announce });
-    initAttentionDetails({ root });
-    initSemanticShader({ root });
-    initSpatialPerspective({ root });
-    initGenreCombinatorics({ root });
-    initProgressiveReveal({ root: document });
+    const destroyAttention = initAttentionDetails({ root });
+    const destroyShader = initSemanticShader({ root });
+    const destroySpatial = initSpatialPerspective({ root });
+    const destroyGenre = initGenreCombinatorics({ root });
+    const destroyReveal = initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', document.querySelector('main'));
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
+
+    window.__loreCleanup = () => {
+      destroyBootstrap();
+      if (ebookNav?.destroy) ebookNav.destroy();
+      if (destroyAttention) destroyAttention();
+      if (destroyShader) destroyShader();
+      if (destroySpatial) destroySpatial();
+      if (destroyGenre) destroyGenre();
+      if (destroyReveal) destroyReveal();
+    };
   } catch (error) {
     lifecycle.bane('runtime fallback path');
     console.error('Charm lifecycle failed:', error);
@@ -462,17 +473,33 @@ export class EBook {
    * @param {HTMLElement} mainContent - The main content element.
    */
   addWordEventListeners(mainContent) {
+    // Create bound handlers once so they can be removed later
+    if (!this._boundFocus) {
+      this._boundFocus = this.handleWordFocus.bind(this);
+      this._boundBlur = this.handleWordBlur.bind(this);
+    }
+
     // Select all word spans within the main content
     const wordSpans = mainContent.querySelectorAll(`.${this.options.wordClass}[tabindex="${this.options.wordTabIndex}"]`);
     wordSpans.forEach((span) => {
-      // Bind event handlers to maintain correct 'this' context
-      span.addEventListener('focus', this.handleWordFocus.bind(this));
-      span.addEventListener('blur', this.handleWordBlur.bind(this));
+      span.addEventListener('focus', this._boundFocus);
+      span.addEventListener('blur', this._boundBlur);
 
       // Allow words to be focused via mouse click
       span.addEventListener('click', () => {
         span.focus();
       });
+    });
+  }
+
+  removeWordEventListeners(mainContent) {
+    if (!this._boundFocus) {
+      return;
+    }
+    const wordSpans = mainContent.querySelectorAll(`.${this.options.wordClass}[tabindex="${this.options.wordTabIndex}"]`);
+    wordSpans.forEach((span) => {
+      span.removeEventListener('focus', this._boundFocus);
+      span.removeEventListener('blur', this._boundBlur);
     });
   }
 

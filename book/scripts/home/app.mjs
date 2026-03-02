@@ -290,7 +290,7 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
     }
   });
 
-  window.addEventListener('lore:spw-selection', (event) => {
+  const onSpwSelection = (event) => {
     const detail = event.detail || {};
     const handle = detail.handle || '';
     const contextOrigin = detail.payload?.context?.origin || 'selection';
@@ -299,12 +299,15 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
       renderRuntimeStatus();
       syncActiveHandle(handle);
     }
-  });
+  };
 
-  window.addEventListener('lore:load-stage', (event) => {
+  const onLoadStage = (event) => {
     const detail = event.detail || {};
     applyLoadStage(detail.stage || '', detail.detail || '');
-  });
+  };
+
+  window.addEventListener('lore:spw-selection', onSpwSelection);
+  window.addEventListener('lore:load-stage', onLoadStage);
 
   const initialStage = document.body.dataset.loadStage || document.documentElement.dataset.loadStage || '';
   if (initialStage) {
@@ -312,6 +315,11 @@ function setupSpwRuntimeIntegration(homeRoot, announce) {
   } else {
     renderRuntimeStatus();
   }
+
+  return () => {
+    window.removeEventListener('lore:spw-selection', onSpwSelection);
+    window.removeEventListener('lore:load-stage', onLoadStage);
+  };
 }
 
 function setupTimelineMotifAnnouncements(homeRoot, announce) {
@@ -577,7 +585,7 @@ function initHomepage() {
     return;
   }
 
-  const { root, announce } = bootstrapExperience();
+  const { root, announce, destroy: destroyBootstrap } = bootstrapExperience();
   registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
   injectSvgFilters(document);
 
@@ -607,17 +615,27 @@ function initHomepage() {
     setupTimelineMotifAnnouncements(homeRoot, announce);
     setupSeedAtlasInteractions(announce);
     initSpwLanguageRuntime({ root: homeRoot, announce });
-    setupSpwRuntimeIntegration(homeRoot, announce);
-    initAttentionDetails({ root });
-    initSemanticShader({ root });
-    initSpatialPerspective({ root });
-    initGenreCombinatorics({ root, announce });
+    const destroyRuntimeIntegration = setupSpwRuntimeIntegration(homeRoot, announce);
+    const destroyAttention = initAttentionDetails({ root });
+    const destroyShader = initSemanticShader({ root });
+    const destroySpatial = initSpatialPerspective({ root });
+    const destroyGenre = initGenreCombinatorics({ root, announce });
 
-    initProgressiveReveal({ root: document });
+    const destroyReveal = initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: homeRoot });
 
     const acoustics = lifecycle.bonk('acoustics + spacing check', homeRoot);
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
+
+    window.__loreCleanup = () => {
+      destroyBootstrap();
+      if (destroyRuntimeIntegration) destroyRuntimeIntegration();
+      if (destroyAttention) destroyAttention();
+      if (destroyShader) destroyShader();
+      if (destroySpatial) destroySpatial();
+      if (destroyGenre) destroyGenre();
+      if (destroyReveal) destroyReveal();
+    };
   } catch (error) {
     lifecycle.bane('render fallback engaged');
     console.error('Home render lifecycle failed:', error);

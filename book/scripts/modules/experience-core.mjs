@@ -232,13 +232,15 @@ export function initAttentionDetails(options = {}) {
   if (reducedMotion) {
     root.style.setProperty('--attention-scroll-progress', '0');
     root.style.setProperty('--attention-hue-shift', '0');
-    return;
+    return () => {};
   }
 
   const doc = document.documentElement;
   let ticking = false;
+  let rafId = 0;
 
   const updateAttention = () => {
+    rafId = 0;
     const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
     const raw = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
     const progress = Number(raw.toFixed(4));
@@ -261,12 +263,20 @@ export function initAttentionDetails(options = {}) {
       return;
     }
     ticking = true;
-    window.requestAnimationFrame(updateAttention);
+    rafId = window.requestAnimationFrame(updateAttention);
   };
 
   updateAttention();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
+
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onScroll);
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+    }
+  };
 }
 
 function hashHue(input) {
@@ -307,7 +317,7 @@ export function initSemanticShader(options = {}) {
   root.style.setProperty('--shader-scroll', '0');
 
   if (reducedMotion) {
-    return;
+    return () => {};
   }
 
   const doc = document.documentElement;
@@ -354,37 +364,52 @@ export function initSemanticShader(options = {}) {
     sync();
   };
 
-  window.addEventListener('scroll', updateScroll, { passive: true });
-  window.addEventListener('resize', updateScroll, { passive: true });
-
-  window.addEventListener('pointermove', (event) => {
+  const onPointermove = (event) => {
     updatePoint(event.clientX, event.clientY);
     updateSemantic(event.target, 0.68);
-  }, { passive: true });
+  };
 
-  window.addEventListener('touchmove', (event) => {
+  const onTouchmove = (event) => {
     const touch = event.touches && event.touches[0];
     if (!touch) {
       return;
     }
     updatePoint(touch.clientX, touch.clientY);
     updateSemantic(event.target, 0.66);
-  }, { passive: true });
+  };
 
-  document.addEventListener('focusin', (event) => {
+  const onFocusin = (event) => {
     updateSemantic(event.target, 0.76);
-  });
+  };
 
-  document.addEventListener('mouseover', (event) => {
+  const onMouseover = (event) => {
     updateSemantic(event.target, 0.64);
-  }, { passive: true });
+  };
 
-  document.addEventListener('focusout', () => {
+  const onFocusout = () => {
     state.strength = 0.56;
     sync();
-  });
+  };
+
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  window.addEventListener('resize', updateScroll, { passive: true });
+  window.addEventListener('pointermove', onPointermove, { passive: true });
+  window.addEventListener('touchmove', onTouchmove, { passive: true });
+  document.addEventListener('focusin', onFocusin);
+  document.addEventListener('mouseover', onMouseover, { passive: true });
+  document.addEventListener('focusout', onFocusout);
 
   updateScroll();
+
+  return () => {
+    window.removeEventListener('scroll', updateScroll);
+    window.removeEventListener('resize', updateScroll);
+    window.removeEventListener('pointermove', onPointermove);
+    window.removeEventListener('touchmove', onTouchmove);
+    document.removeEventListener('focusin', onFocusin);
+    document.removeEventListener('mouseover', onMouseover);
+    document.removeEventListener('focusout', onFocusout);
+  };
 }
 
 export function initSpatialPerspective(options = {}) {
@@ -401,7 +426,7 @@ export function initSpatialPerspective(options = {}) {
   root.style.setProperty('--perspective-depth', reducedMotion ? '0px' : '920px');
 
   if (reducedMotion) {
-    return;
+    return () => {};
   }
 
   const state = {
@@ -441,6 +466,8 @@ export function initSpatialPerspective(options = {}) {
     syncLayerTilt();
   };
 
+  let tapDecayId = 0;
+
   const pulseTapShadow = (clientX, clientY) => {
     const width = Math.max(window.innerWidth, 1);
     const height = Math.max(window.innerHeight, 1);
@@ -449,16 +476,22 @@ export function initSpatialPerspective(options = {}) {
     state.tapStrength = 0.9;
     sync();
 
+    if (tapDecayId) {
+      cancelAnimationFrame(tapDecayId);
+    }
+
     const started = performance.now();
     const decay = (now) => {
       const progress = Math.min((now - started) / 700, 1);
       state.tapStrength = Math.max(0, 0.9 * (1 - progress));
       sync();
       if (progress < 1) {
-        window.requestAnimationFrame(decay);
+        tapDecayId = window.requestAnimationFrame(decay);
+      } else {
+        tapDecayId = 0;
       }
     };
-    window.requestAnimationFrame(decay);
+    tapDecayId = window.requestAnimationFrame(decay);
   };
 
   const updatePerspectiveDepth = () => {
@@ -468,36 +501,52 @@ export function initSpatialPerspective(options = {}) {
     root.style.setProperty('--perspective-depth', `${depth.toFixed(1)}px`);
   };
 
-  window.addEventListener('pointermove', (event) => {
+  const onPointermove = (event) => {
     updatePoint(event.clientX, event.clientY);
-  }, { passive: true });
+  };
 
-  window.addEventListener('touchmove', (event) => {
+  const onTouchmove = (event) => {
     const touch = event.touches && event.touches[0];
     if (!touch) {
       return;
     }
     updatePoint(touch.clientX, touch.clientY);
-  }, { passive: true });
+  };
 
-  window.addEventListener('pointerdown', (event) => {
+  const onPointerdown = (event) => {
     pulseTapShadow(event.clientX, event.clientY);
-  }, { passive: true });
+  };
 
-  window.addEventListener('touchstart', (event) => {
+  const onTouchstart = (event) => {
     const touch = event.touches && event.touches[0];
     if (!touch) {
       return;
     }
     pulseTapShadow(touch.clientX, touch.clientY);
-  }, { passive: true });
+  };
 
+  window.addEventListener('pointermove', onPointermove, { passive: true });
+  window.addEventListener('touchmove', onTouchmove, { passive: true });
+  window.addEventListener('pointerdown', onPointerdown, { passive: true });
+  window.addEventListener('touchstart', onTouchstart, { passive: true });
   window.addEventListener('scroll', updatePerspectiveDepth, { passive: true });
   window.addEventListener('resize', updatePerspectiveDepth, { passive: true });
 
   sync();
   syncLayerTilt();
   updatePerspectiveDepth();
+
+  return () => {
+    window.removeEventListener('pointermove', onPointermove);
+    window.removeEventListener('touchmove', onTouchmove);
+    window.removeEventListener('pointerdown', onPointerdown);
+    window.removeEventListener('touchstart', onTouchstart);
+    window.removeEventListener('scroll', updatePerspectiveDepth);
+    window.removeEventListener('resize', updatePerspectiveDepth);
+    if (tapDecayId) {
+      cancelAnimationFrame(tapDecayId);
+    }
+  };
 }
 
 export function initGenreCombinatorics(options = {}) {
@@ -537,6 +586,11 @@ export function initGenreCombinatorics(options = {}) {
     attributes: true,
     attributeFilter: ['data-mood', 'data-load-stage', 'data-chapter-mode']
   });
+
+  return () => {
+    window.removeEventListener('lore:load-stage', applyGenre);
+    observer.disconnect();
+  };
 }
 
 export function enhanceLazyImages(options = {}) {
