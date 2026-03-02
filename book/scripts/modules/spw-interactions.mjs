@@ -1,6 +1,7 @@
 import { tryParseSelector } from './spw-selector-parser.mjs?v=2026_02_28.I';
 import { getSpwRegisterBank } from './spw-register-bank.mjs?v=2026_02_28.I';
 import { findSpwExpressionByIndex, parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
+import { currentCanonFileHref, resolvePathRefHref } from './spw-routing.mjs?v=2026_03_02.A';
 
 const OPERATOR_SEQUENCE = Object.freeze(['^', '&', '~', '?', '!', '#', '*']);
 
@@ -408,43 +409,6 @@ function collectAnnotationKinds(source) {
     match = regex.exec(source);
   }
   return summary;
-}
-
-function resolvePathRefHref(pathRef) {
-  const normalized = String(pathRef || '').replace(/^@/, '').trim();
-  if (!normalized) {
-    return '/';
-  }
-
-  if (normalized.startsWith('spw/')) {
-    let local = `/.spw/${normalized.slice(4)}`;
-    if (!/\.spw$/i.test(local)) {
-      local = `${local.replace(/\/$/, '')}/index.spw`;
-    }
-    return local;
-  }
-
-  if (normalized.startsWith('book/')) {
-    return `/${normalized}`;
-  }
-
-  if (normalized.startsWith('chapter/')) {
-    return `/book/${normalized.replace(/\/$/, '')}/`;
-  }
-
-  return `/${normalized}`;
-}
-
-function currentCanonFileHref() {
-  const pathname = window.location.pathname || '/';
-  const chapterMatch = pathname.match(/\/book\/chapter\/(\d{2})\//);
-  if (chapterMatch) {
-    return `/.spw/chapters/${chapterMatch[1]}.spw`;
-  }
-  if (pathname === '/' || pathname.endsWith('/index.html')) {
-    return '/.spw/chapters/index.spw';
-  }
-  return '/.spw/index.spw';
 }
 
 function previewValue(value, max = 220) {

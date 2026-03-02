@@ -1,3 +1,5 @@
+import { withSiteBase } from '../modules/spw-routing.mjs?v=2026_03_02.A';
+
 export const spwPrelude = `#[canon]{
   ~[series]{ title: "Lore.Land" chapters: 13 }
   ^[intent]{ "tell the tale in Spw syntax" }
@@ -20,5 +22,5 @@ export const chapterManifest = [
 ];
 
 export function chapterHref(number) {
-  return `/book/chapter/${String(number).padStart(2, '0')}`;
+  return withSiteBase(`/book/chapter/${String(number).padStart(2, '0')}`);
 }

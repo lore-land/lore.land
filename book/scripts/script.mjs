@@ -19,6 +19,7 @@ import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_02_28.I';
+import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
@@ -428,27 +429,27 @@ function setupSpwHypertextRoutes(data, announce) {
     },
     {
       label: '&[timeline]{canon-sequence}',
-      href: '/book/timeline.html',
+      href: withSiteBase('/book/timeline.html'),
       aria: 'Open canonical timeline'
     },
     {
       label: '@[path]{@spw/index.spw}',
-      href: '/.spw/index.spw',
+      href: normalizeSpwSource('spw/index'),
       aria: 'Open Spw canon root for lore.land'
     },
     {
       label: '@[path]{@spw/chapters/index.spw}',
-      href: '/.spw/chapters/index.spw',
+      href: normalizeSpwSource('spw/chapters/index'),
       aria: 'Open Spw chapter reference index'
     },
     {
       label: '~[seed-atlas]{visual motifs}',
-      href: '/seeds/2026-28-02/',
+      href: withSiteBase('/seeds/2026-28-02/'),
       aria: 'Open seed atlas'
     },
     {
       label: '^[home]{lore.land}',
-      href: '/',
+      href: withSiteBase('/'),
       aria: 'Return to home'
     },
     {
@@ -796,13 +797,13 @@ function setupKeyboardRoutes(links, announce) {
       destination = links.nextHref;
       label = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
     } else if (event.key === 'Home' || event.key.toLowerCase() === 'h') {
-      destination = '/';
+      destination = withSiteBase('/');
       label = '^[home]{lore.land}';
     } else if (event.key.toLowerCase() === 't') {
-      destination = '/book/timeline.html';
+      destination = withSiteBase('/book/timeline.html');
       label = '&[timeline]{canon-sequence}';
     } else if (event.key.toLowerCase() === 'p') {
-      destination = '/.spw/index.spw';
+      destination = normalizeSpwSource('spw/index');
       label = '@[path]{@spw/index.spw}';
     } else {
       return;

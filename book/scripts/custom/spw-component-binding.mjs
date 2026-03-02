@@ -2,6 +2,10 @@ import {
   parseSpwExpressions,
   selectSpwExpressionBySelector
 } from '../modules/spw-expression-index.mjs?v=2026_03_01.A';
+import {
+  normalizeSpwSource,
+  summarizeSpwPath
+} from '../modules/spw-routing.mjs?v=2026_03_02.A';
 
 const SPW_BINDING_ATTRS = Object.freeze({
   fetch: ['data-spw-fetch', 'spw-fetch', 'data-spw-src', 'spw-src'],
@@ -16,7 +20,6 @@ const SPW_BINDING_ATTR_FILTER = Object.freeze([
   ...new Set(Object.values(SPW_BINDING_ATTRS).flat())
 ]);
 
-const SPW_PREFIX = 'spw/';
 const OPEN_TO_CLOSE = Object.freeze({
   '{': '}',
   '[': ']',
@@ -35,61 +38,6 @@ function readFirstAttr(node, names) {
     }
   }
   return '';
-}
-
-function splitPathTokens(path) {
-  const hashIndex = path.indexOf('#');
-  const queryIndex = path.indexOf('?');
-  const splitIndex =
-    hashIndex >= 0 && queryIndex >= 0
-      ? Math.min(hashIndex, queryIndex)
-      : Math.max(hashIndex, queryIndex);
-
-  if (splitIndex < 0) {
-    return { pathname: path, suffix: '' };
-  }
-
-  return {
-    pathname: path.slice(0, splitIndex),
-    suffix: path.slice(splitIndex)
-  };
-}
-
-function ensureSpwSuffix(path) {
-  const { pathname, suffix } = splitPathTokens(path);
-  if (/\.spw$/i.test(pathname)) {
-    return path;
-  }
-
-  const normalizedPath = pathname.endsWith('/')
-    ? `${pathname}index.spw`
-    : `${pathname}.spw`;
-  return `${normalizedPath}${suffix}`;
-}
-
-function normalizeSpwSource(rawSource) {
-  const source = String(rawSource || '').trim();
-  if (!source) {
-    return '';
-  }
-
-  if (/^https?:\/\//i.test(source) || source.startsWith('/')) {
-    return ensureSpwSuffix(source);
-  }
-
-  if (source === 'spw' || source === '.spw' || source === '/.spw') {
-    return '/.spw/index.spw';
-  }
-
-  if (source.startsWith(SPW_PREFIX)) {
-    return ensureSpwSuffix(`/.spw/${source.slice(SPW_PREFIX.length)}`);
-  }
-
-  if (source.startsWith('.spw/')) {
-    return ensureSpwSuffix(`/${source.replace(/^\/+/, '')}`);
-  }
-
-  return ensureSpwSuffix(source);
 }
 
 function stripOuterQuotes(value) {
@@ -267,6 +215,7 @@ function applyValue(component, value, applySpec = 'replace', targetSpec = 'host'
 function setState(component, state, detail = {}) {
   component.dataset.spwFetchState = state;
   component.dataset.spwFetchPath = detail.path || '';
+  component.dataset.spwFetchPathLabel = summarizeSpwPath(detail.path || '');
   component.dataset.spwFetchSelect = detail.selector || '';
   component.dataset.spwFetchLength = detail.length != null ? String(detail.length) : '';
   component.dataset.spwFetchError = detail.error || '';

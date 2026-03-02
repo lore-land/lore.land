@@ -60,29 +60,53 @@ function estimateAcoustics(target) {
   if (!target) {
     return {
       label: 'silent',
+      texture: 'still',
+      readability: 'neutral',
       avgWords: 0,
+      avgSentenceWords: 0,
       avgSpacing: 0,
+      avgChars: 0,
+      sentenceCount: 0,
+      proseCount: 0,
       sampleCount: 0
     };
   }
 
-  const nodes = target.querySelectorAll('h1, h2, h3, p, li, pre, figcaption');
+  const proseNodes = target.querySelectorAll('p, li, blockquote, figcaption, pre');
+  const nodes = proseNodes.length
+    ? proseNodes
+    : target.querySelectorAll('h1, h2, h3, p, li, blockquote, pre, figcaption');
   if (!nodes.length) {
     return {
       label: 'silent',
+      texture: 'still',
+      readability: 'neutral',
       avgWords: 0,
+      avgSentenceWords: 0,
       avgSpacing: 0,
+      avgChars: 0,
+      sentenceCount: 0,
+      proseCount: 0,
       sampleCount: 0
     };
   }
 
   let totalWords = 0;
   let totalSpacing = 0;
+  let totalChars = 0;
+  let totalSentences = 0;
 
   nodes.forEach((node) => {
     const text = node.textContent ? node.textContent.trim() : '';
     if (text) {
-      totalWords += text.split(/\s+/).filter(Boolean).length;
+      const words = text.split(/\s+/).filter(Boolean).length;
+      const sentences = text
+        .split(/[.!?]+/g)
+        .map((fragment) => fragment.trim())
+        .filter(Boolean).length;
+      totalWords += words;
+      totalChars += text.length;
+      totalSentences += sentences || 1;
     }
 
     const computed = window.getComputedStyle(node);
@@ -91,18 +115,40 @@ function estimateAcoustics(target) {
 
   const avgWords = totalWords / nodes.length;
   const avgSpacing = totalSpacing / nodes.length;
+  const avgChars = totalChars / nodes.length;
+  const avgSentenceWords = totalSentences > 0 ? totalWords / totalSentences : avgWords;
 
   let label = 'balanced';
-  if (avgWords > 26 || avgSpacing < 7) {
+  if (avgWords > 30 || avgSpacing < 6.3 || avgSentenceWords > 25 || avgChars > 178) {
     label = 'dense';
-  } else if (avgWords < 11 || avgSpacing > 24) {
+  } else if (avgWords < 9 || avgSpacing > 26 || avgSentenceWords < 7.2 || avgChars < 44) {
     label = 'airy';
+  }
+
+  let texture = 'lyric';
+  if (avgSentenceWords >= 23 || avgChars >= 162) {
+    texture = 'epic';
+  } else if (avgSentenceWords <= 8 || avgChars <= 48) {
+    texture = 'staccato';
+  }
+
+  let readability = 'comfortable';
+  if (label === 'dense' || avgSpacing < 7.2 || avgSentenceWords > 22) {
+    readability = 'tight';
+  } else if (label === 'airy' || avgSpacing > 22 || avgSentenceWords < 9) {
+    readability = 'open';
   }
 
   return {
     label,
+    texture,
+    readability,
     avgWords,
+    avgSentenceWords,
     avgSpacing,
+    avgChars,
+    sentenceCount: totalSentences,
+    proseCount: proseNodes.length,
     sampleCount: nodes.length
   };
 }
@@ -209,12 +255,33 @@ export function createLoadLifecycle(options = {}) {
 
   function bonk(detail = 'acoustics check', target = shell) {
     const acoustics = estimateAcoustics(target);
-    setStage('bonk', `${detail} (${acoustics.label})`);
+    setStage('bonk', `${detail} (${acoustics.label}/${acoustics.texture})`);
 
     if (target) {
       target.dataset.acoustics = acoustics.label;
+      target.dataset.acousticTexture = acoustics.texture;
+      target.dataset.readabilityBand = acoustics.readability;
       target.style.setProperty('--acoustic-spacing', `${acoustics.avgSpacing.toFixed(2)}px`);
+      target.style.setProperty('--acoustic-avg-words', `${acoustics.avgWords.toFixed(2)}`);
+      target.style.setProperty('--acoustic-sentence-words', `${acoustics.avgSentenceWords.toFixed(2)}`);
     }
+
+    root.dataset.acoustics = acoustics.label;
+    root.dataset.acousticTexture = acoustics.texture;
+    root.dataset.readabilityBand = acoustics.readability;
+    root.style.setProperty('--acoustic-spacing', `${acoustics.avgSpacing.toFixed(2)}px`);
+    root.style.setProperty('--acoustic-avg-words', `${acoustics.avgWords.toFixed(2)}`);
+    root.style.setProperty('--acoustic-sentence-words', `${acoustics.avgSentenceWords.toFixed(2)}`);
+
+    document.documentElement.dataset.acoustics = acoustics.label;
+    document.documentElement.dataset.acousticTexture = acoustics.texture;
+    document.documentElement.dataset.readabilityBand = acoustics.readability;
+
+    window.dispatchEvent(
+      new CustomEvent('lore:acoustics-profile', {
+        detail: { ...acoustics }
+      })
+    );
 
     setVisibility(preloader, false);
     setVisibility(spinnerWrap, false);
@@ -244,6 +311,15 @@ export function createLoadLifecycle(options = {}) {
     delete root.dataset.substrateEvents;
     delete root.dataset.resonanceTypes;
     delete root.dataset.stageRole;
+    delete root.dataset.acoustics;
+    delete root.dataset.acousticTexture;
+    delete root.dataset.readabilityBand;
+    root.style.removeProperty('--acoustic-spacing');
+    root.style.removeProperty('--acoustic-avg-words');
+    root.style.removeProperty('--acoustic-sentence-words');
+    delete document.documentElement.dataset.acoustics;
+    delete document.documentElement.dataset.acousticTexture;
+    delete document.documentElement.dataset.readabilityBand;
     root.removeAttribute('aria-busy');
   }
 

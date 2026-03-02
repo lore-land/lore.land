@@ -168,6 +168,11 @@
   --spw-panel-shadow: 0 14px 26px color-mix(in srgb, var(--theme-accent-main) 14%, transparent 86%);
   --spw-control-height: 2rem;
   --spw-focus-ring: color-mix(in srgb, var(--theme-accent-main) 60%, transparent 40%);
+  --chapter-reading-measure: 66ch;
+  --chapter-reading-line-height: 1.82;
+  --chapter-reading-gap: 0.84rem;
+  --chapter-reading-accent: color-mix(in srgb, var(--theme-accent-main) 52%, var(--theme-paper) 48%);
+  --chapter-reading-ink: color-mix(in srgb, var(--theme-text-main) 88%, #0b1627 12%);
 }
 
 body > nav.chapter-navigation,
@@ -357,15 +362,64 @@ main.chapter > * {
 
 main.chapter h1 {
   color: var(--color-accent-alt);
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 6ch));
+  line-height: 1.14;
+  letter-spacing: 0.012em;
+  text-wrap: balance;
 }
 
 main.chapter section > h2 {
   margin-bottom: 0.35rem;
   color: var(--color-accent-main);
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 3ch));
+  line-height: 1.28;
+  text-wrap: balance;
 }
 
-main.chapter p {
-  color: var(--color-text-main);
+main.chapter {
+  --chapter-measure: var(--chapter-reading-measure);
+  --chapter-line-height: var(--chapter-reading-line-height);
+  --chapter-flow-gap: var(--chapter-reading-gap);
+  --chapter-letter-spacing: 0.004em;
+}
+
+main.chapter p,
+main.chapter li,
+main.chapter blockquote {
+  color: var(--chapter-reading-ink);
+  max-width: var(--chapter-measure);
+  line-height: var(--chapter-line-height);
+  letter-spacing: var(--chapter-letter-spacing);
+  text-wrap: pretty;
+  hanging-punctuation: first last;
+  hyphens: auto;
+}
+
+main.chapter p + p {
+  margin-top: var(--chapter-flow-gap);
+}
+
+main.chapter ul,
+main.chapter ol {
+  max-width: var(--chapter-measure);
+  padding-inline-start: 1.3em;
+}
+
+main.chapter blockquote {
+  margin-left: 0;
+  border-left: 2px solid color-mix(in srgb, var(--chapter-reading-accent) 58%, transparent 42%);
+  padding: 0.2rem 0 0.2rem 0.82rem;
+  font-style: italic;
+}
+
+main.chapter > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+main.chapter > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3em;
+  line-height: 0.82;
+  padding-right: 0.14em;
+  color: color-mix(in srgb, var(--theme-accent-main) 62%, var(--theme-text-main) 38%);
+  font-family: var(--font-family-heading);
 }
 
 main.chapter figure {
@@ -708,6 +762,13 @@ aside .additional-links a:focus-visible {
   content: attr(data-spw-component) " • " attr(data-spw-fetch-state);
 }
 
+[data-spw-component][data-spw-fetch-path-label]:not([data-spw-fetch-path-label=""])::before {
+  content:
+    attr(data-spw-component) " • "
+    attr(data-spw-fetch-state) " • "
+    attr(data-spw-fetch-path-label);
+}
+
 [data-spw-component][data-spw-runtime-state="priming"] {
   border-color: color-mix(in srgb, var(--spw-runtime-accent) 56%, transparent 44%);
   box-shadow:
@@ -798,6 +859,28 @@ main.chapter > [data-ebook-section="true"] {
   counter-increment: ebook-section;
   scroll-margin-top: 4.5rem;
   border-radius: var(--border-radius-small);
+  position: relative;
+  padding: clamp(0.25rem, 0.85vw, 0.6rem);
+  background: color-mix(in srgb, var(--theme-paper) 94%, rgba(42, 111, 127, 0.06) 6%);
+  transition:
+    background-color var(--transition-duration) var(--transition-function),
+    box-shadow var(--transition-duration) var(--transition-function);
+}
+
+main.chapter > [data-ebook-section="true"]::before {
+  content: "";
+  position: absolute;
+  left: -0.34rem;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  width: 2px;
+  border-radius: var(--border-radius-pill);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--theme-accent-main) 62%, transparent 38%),
+    color-mix(in srgb, var(--theme-accent-alt) 34%, transparent 66%)
+  );
+  opacity: 0.42;
 }
 
 main.chapter > [data-ebook-section="true"] > h2::before {
@@ -813,6 +896,51 @@ main.chapter > [data-ebook-section="true"].is-ebook-active {
   background: color-mix(in srgb, var(--theme-paper) 88%, rgba(42, 111, 127, 0.12) 12%);
 }
 
+main.chapter > [data-ebook-section="true"].is-ebook-active::before {
+  opacity: 0.84;
+}
+
+main.chapter[data-acoustics="dense"],
+body[data-acoustics="dense"] main.chapter {
+  --chapter-measure: 61ch;
+  --chapter-line-height: 1.93;
+  --chapter-flow-gap: 1.02rem;
+}
+
+main.chapter[data-acoustics="balanced"],
+body[data-acoustics="balanced"] main.chapter {
+  --chapter-measure: 66ch;
+  --chapter-line-height: 1.84;
+  --chapter-flow-gap: 0.86rem;
+}
+
+main.chapter[data-acoustics="airy"],
+body[data-acoustics="airy"] main.chapter {
+  --chapter-measure: 69ch;
+  --chapter-line-height: 1.74;
+  --chapter-flow-gap: 0.72rem;
+}
+
+body[data-acoustic-texture="epic"] main.chapter h1 {
+  letter-spacing: 0.016em;
+}
+
+body[data-acoustic-texture="staccato"] main.chapter {
+  --chapter-letter-spacing: 0.002em;
+}
+
+body[data-readability-band="tight"] main.chapter {
+  --chapter-measure: 60ch;
+  --chapter-line-height: 1.95;
+  --chapter-flow-gap: 1.06rem;
+}
+
+body[data-readability-band="open"] main.chapter {
+  --chapter-measure: 71ch;
+  --chapter-line-height: 1.72;
+  --chapter-flow-gap: 0.7rem;
+}
+
 .chapter-byline {
   display: flex;
   flex-wrap: wrap;
@@ -821,6 +949,9 @@ main.chapter > [data-ebook-section="true"].is-ebook-active {
   margin-top: 0.15rem;
   font-size: 0.84rem;
   color: var(--theme-text-alt);
+  border-top: 1px dashed color-mix(in srgb, var(--theme-accent-main) 28%, transparent 72%);
+  padding-top: 0.48rem;
+  max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 5ch));
 }
 
 .chapter-byline a {
@@ -1318,6 +1449,47 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
   line-height: 1.55;
 }
 
+@media (min-width: 48rem) and (max-width: 69.99rem) {
+  main.chapter {
+    --chapter-measure: 64ch;
+    --chapter-line-height: 1.8;
+    --chapter-flow-gap: 0.8rem;
+    padding: clamp(1.1rem, 2.4vw, 1.55rem);
+  }
+
+  main.chapter h1 {
+    font-size: clamp(2rem, 4.2vw, 2.5rem);
+  }
+
+  main.chapter section > h2 {
+    font-size: clamp(1.36rem, 3.1vw, 1.72rem);
+  }
+
+  main.chapter > [data-ebook-section="true"] {
+    padding: clamp(0.22rem, 0.8vw, 0.46rem);
+  }
+
+  aside {
+    padding: clamp(0.9rem, 2vw, 1.3rem);
+  }
+}
+
+@media (min-width: 90rem) {
+  body:has(> main.chapter):has(> aside) {
+    grid-template-columns:
+      minmax(var(--spacing-main), 1fr)
+      minmax(0, 4.7fr)
+      minmax(18rem, 1.5fr)
+      minmax(var(--spacing-main), 1fr);
+  }
+
+  main.chapter {
+    --chapter-measure: 67ch;
+    --chapter-line-height: 1.86;
+    --chapter-flow-gap: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
   .chapter-navigation,
   .section-navigation {
@@ -1334,6 +1506,23 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
   main:not(.chapter),
   aside {
     padding: 1rem;
+  }
+
+  main.chapter {
+    --chapter-measure: 100%;
+    --chapter-line-height: 1.76;
+    --chapter-flow-gap: 0.72rem;
+  }
+
+  main.chapter p,
+  main.chapter li,
+  main.chapter blockquote,
+  main.chapter ul,
+  main.chapter ol,
+  main.chapter h1,
+  main.chapter section > h2,
+  .chapter-byline {
+    max-width: 100%;
   }
 
   .chapter-navigation,
@@ -1383,5 +1572,32 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
   .ethos-claim-list,
   .ebook-lsp-list {
     max-height: none;
+  }
+
+  main.chapter > [data-ebook-section="true"] {
+    padding: 0.2rem 0.1rem;
+  }
+
+  main.chapter > [data-ebook-section="true"]::before {
+    left: -0.2rem;
+    top: 0.55rem;
+    bottom: 0.55rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  main.chapter {
+    --chapter-line-height: 1.7;
+    --chapter-flow-gap: 0.64rem;
+  }
+
+  main.chapter h1 {
+    letter-spacing: 0.008em;
+  }
+
+  main.chapter > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+  main.chapter > p:first-of-type::first-letter {
+    font-size: 2.35em;
+    line-height: 0.86;
   }
 }

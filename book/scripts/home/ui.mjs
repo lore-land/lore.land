@@ -6,6 +6,7 @@ import {
   buildChapterLogline,
   buildChapterVerse
 } from './grammar-profiles.mjs';
+import { normalizeSpwSource, withSiteBase } from '../modules/spw-routing.mjs?v=2026_03_02.A';
 
 function humanizeSetLabel(setId) {
   return `Set ${setId}`;
@@ -16,7 +17,7 @@ function padChapter(number) {
 }
 
 function chapterImagePath(number) {
-  return `/book/images/${padChapter(number)}.png`;
+  return withSiteBase(`/book/images/${padChapter(number)}.png`);
 }
 
 export function renderHero(root, chapterCount) {
@@ -54,13 +55,13 @@ export function renderHero(root, chapterCount) {
   startLink.setAttribute('aria-label', 'Begin story at chapter 01');
 
   const atlasLink = document.createElement('a');
-  atlasLink.href = '/seeds/2026-28-02/';
+  atlasLink.href = withSiteBase('/seeds/2026-28-02/');
   atlasLink.textContent = '~[seed-atlas]{discover-motifs}';
   atlasLink.className = 'hero-action';
   atlasLink.setAttribute('aria-label', 'Open Midjourney seed atlas');
 
   const canonLink = document.createElement('a');
-  canonLink.href = '/.spw/index.spw';
+  canonLink.href = normalizeSpwSource('spw/index');
   canonLink.textContent = '@[path]{@spw/index.spw}';
   canonLink.className = 'hero-action';
   canonLink.setAttribute('aria-label', 'Open Spw canon index for lore.land');

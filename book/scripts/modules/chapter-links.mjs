@@ -1,7 +1,17 @@
+import { withSiteBase } from './spw-routing.mjs?v=2026_03_02.A';
+
 const DEFAULT_TOTAL_CHAPTERS = 13;
 
 export function chapterPath(number) {
-  return `/book/chapter/${String(number).padStart(2, '0')}/`;
+  return withSiteBase(`/book/chapter/${String(number).padStart(2, '0')}/`);
+}
+
+function normalizeHref(href) {
+  const value = String(href || '').trim();
+  if (!value) {
+    return '';
+  }
+  return withSiteBase(value);
 }
 
 export function deriveChapterLinks(data, options = {}) {
@@ -14,7 +24,7 @@ export function deriveChapterLinks(data, options = {}) {
     current,
     previous,
     next,
-    previousHref: data?.previousChapter || chapterPath(previous),
-    nextHref: data?.nextChapter || chapterPath(next)
+    previousHref: normalizeHref(data?.previousChapter) || chapterPath(previous),
+    nextHref: normalizeHref(data?.nextChapter) || chapterPath(next)
   };
 }

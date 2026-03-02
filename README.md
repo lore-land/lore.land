@@ -27,6 +27,8 @@ This project integrates Spw kernel ideas from:
 - `book/scripts/custom/spw-component-binding.mjs`
   Custom elements can fetch/apply `.spw` sources with declarative attributes:
   `data-spw-fetch`, `data-spw-select`, `data-spw-apply`, `data-spw-target`, and optional `data-spw-inline` fallback.
+- `book/scripts/modules/spw-routing.mjs`
+  Centralized Spw route resolver shared by bindings and interactive inspectors. Normalizes `spw/*`, chapter aliases, and workbench aliases (`workbench/*`, `_workbench/*`), while generating GitHub Pages-safe URLs via base-path detection.
 - `book/scripts/custom/spw-style-library.mjs` + `book/scripts/custom/spw-behavior-library.mjs`
   Reusable style/behavior libraries for semantic component tuning (load-reactive, selection-reactive, interactive key handling).
 - `book/scripts/custom/spw-advanced-runtime.mjs`
