@@ -1,0 +1,383 @@
+/* home-book-mode.css
+ * "Book" layout mode + LoreLand font + contrast upgrades for home page.
+ *
+ * IMPORTANT: These rules are intentionally UNLAYERED so they cascade
+ * above the unlayered rules in home.css. Layer order would cause them
+ * to lose the cascade fight.
+ */
+
+/* ─── Overflow containment ───────────────────────────────────── */
+
+html:has(#home-app[data-component-variant="book"]) {
+    overflow-x: hidden;
+}
+
+html:has(#home-app[data-component-variant="book"]) body {
+    overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * GLOBAL: LoreLand font + contrast upgrades (all modes)
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Hero heading: LoreLand gradient ────────────────────────── */
+
+.hero-panel h1 {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.05em;
+    background: var(--color-accent-gradient, linear-gradient(135deg, var(--color-accent-main), var(--color-accent-alt)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.08;
+}
+
+/* ─── Section headings: LoreLand ─────────────────────────────── */
+
+.chapter-timeline h2,
+.producer-constellation h2,
+.grammar-observatory h2,
+.spw-ethos-atlas h2,
+.seed-atlas h2 {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+/* ─── Spw expressions + markers: LoreLand ────────────────────── */
+
+.hero-panel::before {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.1em;
+}
+
+.hero-eyebrow {
+    font-family: 'LoreLand', var(--font-family-heading);
+}
+
+.chapter-marker {
+    font-family: 'LoreLand', var(--font-family-heading);
+}
+
+.site-topbar>a {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.06em;
+    font-size: 1.1rem;
+}
+
+/* ─── Contrast upgrades ──────────────────────────────────────── */
+
+.hero-subtitle {
+    color: var(--color-text-main);
+    opacity: 0.85;
+}
+
+.hero-stats {
+    color: var(--color-text-main);
+    opacity: 0.7;
+}
+
+.chapter-logline {
+    color: var(--color-text-main);
+    opacity: 0.82;
+}
+
+.chapter-card h3 {
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+
+/* ─── Clickable hero actions ─────────────────────────────────── */
+
+.hero-action {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        background-color 200ms ease,
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        transform 150ms ease,
+        color 200ms ease;
+    color: var(--color-accent-main);
+    border-color: color-mix(in srgb, var(--color-accent-main) 40%, transparent 60%);
+}
+
+.hero-action:hover,
+.hero-action:focus-visible {
+    background: color-mix(in srgb, var(--color-accent-main) 12%, transparent 88%);
+    border-color: var(--color-accent-main);
+    box-shadow:
+        0 4px 16px color-mix(in srgb, var(--color-accent-main) 20%, transparent 80%),
+        0 0 0 1px color-mix(in srgb, var(--color-accent-main) 30%, transparent 70%);
+    transform: translateY(-2px);
+    color: var(--color-accent-alt);
+    outline: none;
+}
+
+.hero-action:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--color-accent-main) 15%, transparent 85%);
+}
+
+/* ─── Clickable chapter cards ────────────────────────────────── */
+
+.chapter-card {
+    cursor: pointer;
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease,
+        border-color 200ms ease;
+}
+
+.chapter-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        var(--shadow-hover),
+        0 0 0 1px color-mix(in srgb, var(--color-accent-main) 25%, transparent 75%);
+    border-color: color-mix(in srgb, var(--color-accent-main) 45%, transparent 55%);
+}
+
+.chapter-card a {
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.chapter-card a:hover {
+    background: color-mix(in srgb, var(--color-accent-main) 10%, rgba(255, 255, 255, 0.8) 90%);
+    border-color: var(--color-accent-main);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent-main) 18%, transparent 82%);
+}
+
+/* ─── Clickable Spw lens elements ────────────────────────────── */
+
+[data-spw-lens] {
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease, box-shadow 200ms ease, transform 150ms ease;
+}
+
+[data-spw-lens]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(38, 88, 124, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+ * BOOK MODE: full-width immersive layout
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Shell: use the full page ───────────────────────────────── */
+
+html:has(#home-app[data-component-variant="book"]) .site-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    gap: 0;
+}
+
+/* ─── Topbar: floating, sticky ───────────────────────────────── */
+
+html:has(#home-app[data-component-variant="book"]) .site-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 0.6rem clamp(1rem, 3vw, 2.5rem);
+    background: color-mix(in srgb, var(--color-bg-main) 85%, transparent 15%);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 40%, transparent 60%);
+}
+
+/* ─── Main app container ─────────────────────────────────────── */
+
+#home-app[data-component-variant="book"] {
+    gap: 0;
+}
+
+/* ─── Hero: full-bleed, tall, dramatic ───────────────────────── */
+
+#home-app[data-component-variant="book"] .hero-panel {
+    border: none;
+    border-radius: 0;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background:
+        linear-gradient(170deg,
+            color-mix(in srgb, var(--color-bg-main) 88%, var(--color-accent-main) 12%) 0%,
+            var(--color-bg-main) 100%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+#home-app[data-component-variant="book"] .hero-panel h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    max-width: 18ch;
+}
+
+#home-app[data-component-variant="book"] .hero-subtitle {
+    font-size: 1.1rem;
+    max-width: 55ch;
+    line-height: 1.6;
+}
+
+#home-app[data-component-variant="book"] .hero-actions {
+    gap: 0.7rem;
+    margin-top: 1.5rem;
+}
+
+#home-app[data-component-variant="book"] .hero-action {
+    padding: 0.4rem 1rem;
+    font-size: 0.92rem;
+}
+
+/* ─── Spw block in hero ──────────────────────────────────────── */
+
+#home-app[data-component-variant="book"] .spw-block {
+    max-width: 60ch;
+    font-size: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: var(--border-radius-main);
+}
+
+/* ─── Full-bleed section panels ──────────────────────────────── */
+
+#home-app[data-component-variant="book"] .chapter-timeline,
+#home-app[data-component-variant="book"] .producer-constellation,
+#home-app[data-component-variant="book"] .grammar-observatory,
+#home-app[data-component-variant="book"] .spw-ethos-atlas,
+#home-app[data-component-variant="book"] .seed-atlas {
+    border: none;
+    border-radius: 0;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 6vw, 5rem);
+    border-top: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
+}
+
+/* Alternating backgrounds for visual rhythm */
+#home-app[data-component-variant="book"] .chapter-timeline {
+    background: var(--color-bg-content);
+}
+
+#home-app[data-component-variant="book"] .producer-constellation {
+    background: var(--color-bg-main);
+}
+
+#home-app[data-component-variant="book"] .grammar-observatory {
+    background: var(--color-bg-content);
+}
+
+#home-app[data-component-variant="book"] .spw-ethos-atlas {
+    background: var(--color-bg-main);
+}
+
+#home-app[data-component-variant="book"] .seed-atlas {
+    background: var(--color-bg-content);
+}
+
+/* ─── Chapter timeline ───────────────────────────────────────── */
+
+#home-app[data-component-variant="book"] .chapter-timeline h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+#home-app[data-component-variant="book"] .chapter-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+#home-app[data-component-variant="book"] .chapter-card {
+    padding: 1.1rem;
+    border-radius: calc(var(--border-radius-main) + 2px);
+}
+
+#home-app[data-component-variant="book"] .chapter-card h3 {
+    font-size: 1.12rem;
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.03em;
+}
+
+#home-app[data-component-variant="book"] .chapter-marker {
+    font-size: 0.82rem;
+    padding: 0.16rem 0.7rem;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+
+html:has(#home-app[data-component-variant="book"]) .site-footer {
+    padding: 1.5rem clamp(1.5rem, 6vw, 5rem);
+    border-top: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+ * BOOK MODE: responsive overrides
+ * ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+    #home-app[data-component-variant="book"] .hero-panel {
+        min-height: 40vh;
+        padding: 2rem 1.2rem 1.5rem;
+    }
+
+    #home-app[data-component-variant="book"] .hero-panel h1 {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+    }
+
+    #home-app[data-component-variant="book"] .chapter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #home-app[data-component-variant="book"] .chapter-timeline,
+    #home-app[data-component-variant="book"] .producer-constellation,
+    #home-app[data-component-variant="book"] .grammar-observatory,
+    #home-app[data-component-variant="book"] .spw-ethos-atlas,
+    #home-app[data-component-variant="book"] .seed-atlas {
+        padding: 1.5rem 1.2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    #home-app[data-component-variant="book"] .hero-panel {
+        padding-left: 8vw;
+        padding-right: 8vw;
+    }
+
+    #home-app[data-component-variant="book"] .chapter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * DARK MODE
+ * ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+    .hero-action {
+        border-color: color-mix(in srgb, var(--color-accent-main) 50%, transparent 50%);
+        color: var(--color-accent-main);
+    }
+
+    .hero-action:hover {
+        background: color-mix(in srgb, var(--color-accent-main) 18%, transparent 82%);
+    }
+
+    .chapter-card h3 {
+        color: var(--theme-text-main);
+    }
+
+    .chapter-logline {
+        color: var(--theme-text-main);
+        opacity: 0.78;
+    }
+
+    #home-app[data-component-variant="book"] .hero-panel {
+        background:
+            linear-gradient(170deg,
+                color-mix(in srgb, var(--theme-bg-main) 82%, var(--theme-accent-main) 18%) 0%,
+                var(--theme-bg-main) 100%);
+    }
+}
