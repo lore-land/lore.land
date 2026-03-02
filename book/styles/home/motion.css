@@ -2,6 +2,46 @@
 
   /* ─── cadence animations ─────────────────────────────────────────────────── */
 
+  @keyframes cadence-resonance {
+    0%, 100% {
+      box-shadow: var(--shadow-main);
+      transform: translateY(0);
+    }
+
+    25% {
+      box-shadow:
+        var(--shadow-main),
+        0 0 32px color-mix(in srgb, var(--color-accent-main) 22%, transparent 78%);
+      transform: translateY(-2px);
+    }
+
+    50% {
+      box-shadow:
+        var(--shadow-main),
+        0 0 14px color-mix(in srgb, var(--color-accent-main) 11%, transparent 89%);
+      transform: translateY(0);
+    }
+
+    75% {
+      box-shadow:
+        var(--shadow-main),
+        0 0 24px color-mix(in srgb, var(--color-accent-main) 17%, transparent 83%);
+      transform: translateY(-1px);
+    }
+  }
+
+  @keyframes cadence-chorus {
+    0%, 100% {
+      border-color: color-mix(in srgb, rgba(35, 60, 93, 0.28) 66%, var(--glass-border) 34%);
+      box-shadow: var(--shadow-main);
+    }
+
+    50% {
+      border-color: color-mix(in srgb, var(--color-accent-main) 38%, rgba(35, 60, 93, 0.28) 62%);
+      box-shadow: var(--shadow-main), 0 0 18px color-mix(in srgb, var(--color-accent-main) 14%, transparent 86%);
+    }
+  }
+
   @keyframes cadence-measured {
 
     0%,
@@ -93,6 +133,16 @@
     animation: cadence-spiral-marker 18s linear infinite;
   }
 
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="resonance"].is-visible {
+    animation: cadence-resonance 7s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html:not([data-reduced-motion="reduce"]) .chapter-card[data-cadence="chorus"].is-visible {
+    animation: cadence-chorus 5.2s ease-in-out infinite;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
 }
 
 /* @layer home.motion */
@@ -120,6 +170,41 @@
 }
 
 /*
+ * Chapter card voice: hover emergence for non-cadenced cards.
+ */
+@keyframes card-voice-hover {
+  0%, 100% { box-shadow: var(--shadow-main); }
+  60% {
+    box-shadow:
+      var(--shadow-hover),
+      0 0 20px color-mix(in srgb, var(--color-accent-main) 12%, transparent 88%);
+  }
+}
+
+html:not([data-reduced-motion="reduce"]) .chapter-card:not([data-cadence]):hover {
+  animation: card-voice-hover 320ms ease-out forwards;
+}
+
+/*
+ * Producer cluster card: entrance stagger via --reveal-delay.
+ */
+@supports (transition-behavior: allow-discrete) {
+  .producer-cluster-card {
+    transition-property: opacity, transform, box-shadow, border-color;
+    transition-duration: 0.44s;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  @starting-style {
+    .producer-cluster-card {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+/*
  * Container query: grammar matrix responds to observatory width.
  * Compact spacing on narrow containers (e.g. sidebar layout).
  */
@@ -131,6 +216,17 @@
   .grammar-chip {
     font-size: 0.72rem;
     padding: 0.14rem 0.46rem;
+  }
+}
+
+@container grammar-observatory (min-width: 560px) {
+  .grammar-matrix {
+    gap: 0.5rem;
+  }
+
+  .grammar-chip {
+    font-size: 0.82rem;
+    padding: 0.22rem 0.72rem;
   }
 }
 

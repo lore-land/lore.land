@@ -37,11 +37,55 @@ main.chapter>[data-ebook-section="true"]>h2::before {
 }
 
 main.chapter>[data-ebook-section="true"].is-ebook-active {
-  box-shadow: inset 3px 0 0 rgba(42, 111, 127, 0.44);
-  background: color-mix(in srgb, var(--theme-paper) 88%, rgba(42, 111, 127, 0.12) 12%);
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--theme-accent-main) 56%, transparent 44%),
+    0 4px 20px color-mix(in srgb, var(--theme-accent-main) 10%, transparent 90%);
+  background: color-mix(in srgb, var(--theme-paper) 86%, rgba(42, 111, 127, 0.14) 14%);
+  transform: translateY(-0.5px);
+  z-index: 2;
+  transition:
+    background-color var(--transition-duration) var(--transition-function),
+    box-shadow var(--transition-duration) var(--transition-function),
+    transform var(--transition-duration) var(--transition-function);
 }
 
 main.chapter>[data-ebook-section="true"].is-ebook-active::before {
-  opacity: 0.84;
+  opacity: 1;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--theme-accent-main),
+    color-mix(in srgb, var(--theme-accent-alt) 60%, transparent 40%)
+  );
+}
+
+/* ─── Nav-shape: breadth — sections breathe with borders ─────────── */
+
+body[data-ebook-nav-shape="breadth"] main.chapter>[data-ebook-section="true"] {
+  border: var(--border-width) var(--border-style)
+    color-mix(in srgb, var(--theme-accent-main) 18%, var(--border-color-main) 82%);
+  padding: clamp(0.44rem, 1.4vw, 0.9rem);
+  box-shadow: 0 3px 14px color-mix(in srgb, var(--theme-accent-main) 7%, transparent 93%);
+}
+
+/* ─── Nav-shape: depth — non-active sections recede ──────────────── */
+
+body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"]:not(.is-ebook-active) {
+  opacity: 0.58;
+  transform: scale(0.997) translateY(1px);
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease,
+    background-color var(--transition-duration) var(--transition-function),
+    box-shadow var(--transition-duration) var(--transition-function);
+}
+
+body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-ebook-active {
+  z-index: 5;
+  transform: translateY(-2px) scale(1.004);
+  box-shadow:
+    inset 4px 0 0 color-mix(in srgb, var(--theme-accent-main) 74%, transparent 26%),
+    0 8px 36px color-mix(in srgb, var(--theme-accent-main) 20%, transparent 80%);
+  background: color-mix(in srgb, var(--theme-paper) 82%, rgba(42, 111, 127, 0.18) 18%);
 }
 

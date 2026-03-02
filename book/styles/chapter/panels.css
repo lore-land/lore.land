@@ -111,6 +111,32 @@ body>footer {
   body:has(> main.chapter):has(> aside)>footer {
     grid-area: footer;
   }
+
+  /* Aside: annotator voice — subtle gradient from right edge inward */
+  body:has(> main.chapter):has(> aside)>aside {
+    background-image:
+      linear-gradient(
+        to left,
+        color-mix(in srgb, var(--theme-accent-main) 5%, transparent 95%) 0%,
+        transparent 45%
+      ),
+      var(--theme-grain),
+      var(--theme-glassmorphism);
+    background-blend-mode: normal, multiply, lighten;
+  }
+}
+
+/* ─── Wide desktop grid refinement (≥ 90rem) ─────────────────────── */
+
+@media (min-width: 90rem) {
+  body:has(> main.chapter):has(> aside) {
+    grid-template-columns:
+      minmax(calc(var(--spacing-main) * 1.5), 1fr)
+      minmax(0, 5fr)
+      minmax(19rem, 1.45fr)
+      minmax(calc(var(--spacing-main) * 1.5), 1fr);
+    column-gap: clamp(1.2rem, 1.8vw, 1.8rem);
+  }
 }
 
 .chapter-navigation,
@@ -149,6 +175,8 @@ main.chapter {
   overflow: hidden;
   container-type: inline-size;
   container-name: chapter-main;
+  perspective: var(--perspective-depth, 920px);
+  perspective-origin: 50% 20%;
 }
 
 @layer root.states {

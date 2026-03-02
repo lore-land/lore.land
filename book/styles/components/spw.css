@@ -1,5 +1,7 @@
 [data-spw-component] {
   position: relative;
+  container-type: inline-size;
+  container-name: spw-component;
   --spw-runtime-surface: color-mix(in srgb, var(--theme-paper) 80%, transparent 20%);
   --spw-runtime-surface-strong: color-mix(in srgb, var(--theme-paper) 92%, transparent 8%);
   --spw-runtime-accent: color-mix(in srgb, var(--theme-accent-main) 74%, #163848 26%);
@@ -32,14 +34,20 @@
 
 [data-spw-component][data-spw-runtime-depth="1"] {
   --spw-runtime-depth-level: 1;
+  z-index: 2;
 }
 
 [data-spw-component][data-spw-runtime-depth="2"] {
   --spw-runtime-depth-level: 2;
+  z-index: 3;
+  border-color: color-mix(in srgb, var(--spw-runtime-outline) 100%, transparent 0%);
 }
 
 [data-spw-component][data-spw-runtime-depth="3"] {
   --spw-runtime-depth-level: 3;
+  z-index: 4;
+  border-color: color-mix(in srgb, var(--spw-runtime-outline) 100%, transparent 0%);
+  border-width: calc(var(--border-width) + 0.5px);
 }
 
 [data-spw-component]::before {
@@ -118,6 +126,21 @@
 [data-spw-component][data-spw-fetch-state="error"]::before {
   color: var(--spw-pipeline-fallback, var(--spw-color-action, #ff8a8a));
   background: color-mix(in srgb, var(--spw-runtime-chip-strong) 84%, transparent 16%);
+}
+
+/* ─── Component container queries — children adapt to component width ─── */
+
+@container spw-component (max-width: 260px) {
+  p, li {
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+}
+
+@container spw-component (min-width: 480px) {
+  p, blockquote {
+    max-width: 60ch;
+  }
 }
 
 

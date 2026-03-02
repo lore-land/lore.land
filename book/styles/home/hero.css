@@ -154,6 +154,23 @@
   font-size: 0.85rem;
 }
 
+/* ─── Container queries on individual home panels ────────────── */
+
+.chapter-timeline {
+  container-type: inline-size;
+  container-name: chapter-timeline;
+}
+
+.producer-constellation {
+  container-type: inline-size;
+  container-name: producer-constellation;
+}
+
+.seed-atlas {
+  container-type: inline-size;
+  container-name: seed-atlas;
+}
+
 .spw-block,
 .spw-snippet {
   white-space: pre-wrap;
