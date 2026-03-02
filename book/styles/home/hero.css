@@ -86,13 +86,13 @@
 .seed-atlas {
   position: relative;
   padding: clamp(1.2rem, 3vw, 2rem);
-  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(37, 70, 107, 0.24) 62%, var(--glass-border) 38%);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, var(--color-stone-shadow) 20%, var(--theme-glass-border) 80%);
   border-radius: calc(var(--border-radius-main) + 4px);
   background:
-    linear-gradient(155deg, rgba(83, 125, 200, 0.16), rgba(54, 130, 136, 0.11)),
-    linear-gradient(170deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.32)),
-    var(--glass-bg);
-  box-shadow: var(--shadow-main);
+    linear-gradient(155deg, color-mix(in srgb, var(--color-celestial-teal) 16%, transparent), color-mix(in srgb, var(--color-burnt-orange) 8%, transparent)),
+    var(--light-raking),
+    var(--theme-glass-bg);
+  box-shadow: var(--shadow-raking), var(--theme-shadow-main);
   backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
   -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.08)) saturate(1.08);
   overflow: clip;
@@ -169,4 +169,3 @@
   padding: 0.8rem;
   font-size: 0.92rem;
 }
-

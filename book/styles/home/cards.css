@@ -38,17 +38,24 @@
 }
 
 .chapter-card {
-  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.28) 66%, var(--glass-border) 34%);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, var(--color-celestial-teal) 25%, var(--theme-glass-border) 75%);
   border-radius: var(--border-radius-main);
   background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.42)),
-    var(--glass-bg-strong);
+    var(--light-raking),
+    var(--theme-glass-bg-strong);
   padding: 0.9rem;
-  box-shadow: var(--shadow-main);
+  box-shadow: var(--shadow-raking), var(--theme-shadow-main);
   backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
   -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.06));
   display: grid;
   gap: 0.58rem;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.chapter-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--theme-shadow-hover), var(--shadow-raking), 0 0 0 1px color-mix(in srgb, var(--color-celestial-teal) 35%, transparent 65%);
+  border-color: color-mix(in srgb, var(--color-burnt-orange) 45%, var(--theme-glass-border) 55%);
 }
 
 .chapter-marker {
@@ -170,17 +177,24 @@
 }
 
 .seed-card {
-  border: var(--border-width) var(--border-style) color-mix(in srgb, rgba(35, 60, 93, 0.24) 68%, var(--glass-border) 32%);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, var(--color-celestial-teal) 20%, var(--theme-glass-border) 80%);
   border-radius: var(--border-radius-main);
   background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.42)),
-    var(--glass-bg-strong);
+    var(--light-raking),
+    var(--theme-glass-bg-strong);
   padding: 0.62rem;
   display: grid;
   gap: 0.48rem;
-  box-shadow: var(--shadow-main);
+  box-shadow: var(--shadow-raking), var(--theme-shadow-main);
   backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
   -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.02));
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.seed-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--theme-shadow-hover), var(--shadow-raking);
+  border-color: color-mix(in srgb, var(--color-burnt-orange) 30%, var(--theme-glass-border) 70%);
 }
 
 .seed-figure {
