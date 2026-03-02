@@ -4,31 +4,27 @@
 ^meta{
   source: "PLAN.D.md"
   dialect: spw_native
-  style: expression_first
+  style: phase_block_titles
 }
 
-^intricacy_profile{
-  sequencing: houdini_52_then_firefox_13
-  packet_flow: { s1: track_registry, s2: phase_registry, s3: synthesis, s4: acceptance }
-}
-
-&plan_d_contracts{
-  c001: preserve_total_phase_count_65
-  c002: preserve_houdini_phase_count_52
-  c003: preserve_firefox_phase_count_13
-  c004: keep_output_paths_deterministic_via_templates
+&plan_contracts{
+  preserve_phase_total: true
+  preserve_houdini_track: true
+  preserve_firefox_track: true
+  use_phase_blocks: true
 }
 
 ?["plan_d_integrity_gate"]{
-  require: phase_partition_52_plus_13
-  require: each_phase_has_slug_and_task_token
-  require: emit_rules_cover_all_phases
+  require: phases_defined_in_blocks
+  require: houdini_phase_total_52
+  require: firefox_phase_total_13
+  require: phase_total_65
   on_fail: emit_partition_repair_packet
 }
 
 !probe{
-  id: plan_d.partition_probe
-  ask: houdini_and_firefox_tracks_remain_isolated
+  id: plan_d.phase_block_probe
+  ask: all_tracks_expressed_via_phase_title_blocks
 }
 
 ^context{
@@ -42,106 +38,422 @@
 }
 
 ^output_contract{
-  phase_packet_shape: { p1: intent, p2: audit, p3: evidence, p4: recommendation }
+  phase_packet_shape: { intent: required, audit: required, evidence: required, recommendation: required }
   artifacts: spw_only
 }
 
-^track_registry{
-  houdini: { phase_span: "1..52", emit_rule: "book/audits/houdini/{phase2d}-{slug}.spw" }
-  firefox: { phase_span: "53..65", emit_rule: "book/audits/firefox-features/{phase2d}-{slug}.spw" }
+^phases["Houdini APIs Exploration"]{
+  ^phase["Scope Constraints"]{
+    slug: scope_constraints
+    task: define_scope_nongoals_risk_tolerance
+    ={ "book/audits/houdini/01-scope_constraints.spw" }
+  }
+
+  ^phase["Support Matrix"]{
+    slug: support_matrix
+    task: build_support_matrix_properties_values_typed_om_painting_worklets
+    ={ "book/audits/houdini/02-support_matrix.spw" }
+  }
+
+  ^phase["Repo Css Baseline"]{
+    slug: repo_css_baseline
+    task: inventory_css_tokens_custom_properties_houdini_insertion_points
+    ={ "book/audits/houdini/03-repo_css_baseline.spw" }
+  }
+
+  ^phase["Custom Property Inventory"]{
+    slug: custom_property_inventory
+    task: classify_property_registration_candidates
+    ={ "book/audits/houdini/04-custom_property_inventory.spw" }
+  }
+
+  ^phase["Paint Usecase Shortlist"]{
+    slug: paint_usecase_shortlist
+    task: prioritize_high_value_paint_usecases
+    ={ "book/audits/houdini/05-paint_usecase_shortlist.spw" }
+  }
+
+  ^phase["Typed Om Usecase Shortlist"]{
+    slug: typed_om_usecase_shortlist
+    task: shortlist_string_cssom_paths_for_typed_om
+    ={ "book/audits/houdini/06-typed_om_usecase_shortlist.spw" }
+  }
+
+  ^phase["Worklet Boundary Model"]{
+    slug: worklet_boundary_model
+    task: define_main_thread_vs_worklet_boundaries
+    ={ "book/audits/houdini/07-worklet_boundary_model.spw" }
+  }
+
+  ^phase["A11y Safety Baseline"]{
+    slug: a11y_safety_baseline
+    task: define_accessibility_and_safety_baselines
+    ={ "book/audits/houdini/08-a11y_safety_baseline.spw" }
+  }
+
+  ^phase["Properties Syntax Taxonomy"]{
+    slug: properties_syntax_taxonomy
+    task: define_property_syntax_taxonomy
+    ={ "book/audits/houdini/09-properties_syntax_taxonomy.spw" }
+  }
+
+  ^phase["Registerproperty Strategy"]{
+    slug: registerproperty_strategy
+    task: choose_js_registration_vs_static_property
+    ={ "book/audits/houdini/10-registerproperty_strategy.spw" }
+  }
+
+  ^phase["Property Authoring Conventions"]{
+    slug: property_authoring_conventions
+    task: define_naming_defaults_inheritance_conventions
+    ={ "book/audits/houdini/11-property_authoring_conventions.spw" }
+  }
+
+  ^phase["Inheritance Initial Policy"]{
+    slug: inheritance_initial_policy
+    task: standardize_inheritance_and_initial_value_policy
+    ={ "book/audits/houdini/12-inheritance_initial_policy.spw" }
+  }
+
+  ^phase["Invalid Value Tests"]{
+    slug: invalid_value_tests
+    task: design_invalid_value_parse_fallback_tests
+    ={ "book/audits/houdini/13-invalid_value_tests.spw" }
+  }
+
+  ^phase["Interpolation Rules"]{
+    slug: interpolation_rules
+    task: define_typed_property_interpolation_expectations
+    ={ "book/audits/houdini/14-interpolation_rules.spw" }
+  }
+
+  ^phase["Theme Token Pilot"]{
+    slug: theme_token_pilot
+    task: run_theme_token_registration_pilot
+    ={ "book/audits/houdini/15-theme_token_pilot.spw" }
+  }
+
+  ^phase["Properties Values Checkpoint"]{
+    slug: properties_values_checkpoint
+    task: checkpoint_properties_values_readiness
+    ={ "book/audits/houdini/16-properties_values_checkpoint.spw" }
+  }
+
+  ^phase["Typed Om Read Audit"]{
+    slug: typed_om_read_audit
+    task: audit_read_paths_for_computedStyleMap
+    ={ "book/audits/houdini/17-typed_om_read_audit.spw" }
+  }
+
+  ^phase["Typed Om Write Audit"]{
+    slug: typed_om_write_audit
+    task: audit_write_paths_for_attributeStyleMap
+    ={ "book/audits/houdini/18-typed_om_write_audit.spw" }
+  }
+
+  ^phase["Unit Conversion Utilities"]{
+    slug: unit_conversion_utilities
+    task: design_cssunitvalue_conversion_utilities
+    ={ "book/audits/houdini/19-unit_conversion_utilities.spw" }
+  }
+
+  ^phase["Transform Typed Values"]{
+    slug: transform_typed_values
+    task: design_typed_transform_and_matrix_workflow
+    ={ "book/audits/houdini/20-transform_typed_values.spw" }
+  }
+
+  ^phase["Color Typed Workflow"]{
+    slug: color_typed_workflow
+    task: define_typed_color_workflow_and_fallbacks
+    ={ "book/audits/houdini/21-color_typed_workflow.spw" }
+  }
+
+  ^phase["Unit Normalization Policy"]{
+    slug: unit_normalization_policy
+    task: standardize_unit_normalization_policy
+    ={ "book/audits/houdini/22-unit_normalization_policy.spw" }
+  }
+
+  ^phase["Typed Om Benchmark Harness"]{
+    slug: typed_om_benchmark_harness
+    task: design_string_cssom_vs_typed_om_benchmarking
+    ={ "book/audits/houdini/23-typed_om_benchmark_harness.spw" }
+  }
+
+  ^phase["Typed Om Checkpoint"]{
+    slug: typed_om_checkpoint
+    task: checkpoint_typed_om_migration_practicality
+    ={ "book/audits/houdini/24-typed_om_checkpoint.spw" }
+  }
+
+  ^phase["Painting Api Architecture"]{
+    slug: painting_api_architecture
+    task: define_paint_worklet_architecture
+    ={ "book/audits/houdini/25-painting_api_architecture.spw" }
+  }
+
+  ^phase["Paint Worklet Scaffold"]{
+    slug: paint_worklet_scaffold
+    task: design_paint_worklet_module_scaffold
+    ={ "book/audits/houdini/26-paint_worklet_scaffold.spw" }
+  }
+
+  ^phase["Input Properties Contract"]{
+    slug: input_properties_contract
+    task: define_input_properties_contract
+    ={ "book/audits/houdini/27-input_properties_contract.spw" }
+  }
+
+  ^phase["Deterministic Rendering Rules"]{
+    slug: deterministic_rendering_rules
+    task: define_deterministic_paint_rules
+    ={ "book/audits/houdini/28-deterministic_rendering_rules.spw" }
+  }
+
+  ^phase["Paint Primitive Library"]{
+    slug: paint_primitive_library
+    task: design_reusable_paint_primitives
+    ={ "book/audits/houdini/29-paint_primitive_library.spw" }
+  }
+
+  ^phase["Dpr Resolution Strategy"]{
+    slug: dpr_resolution_strategy
+    task: define_dpr_and_resolution_strategy
+    ={ "book/audits/houdini/30-dpr_resolution_strategy.spw" }
+  }
+
+  ^phase["No Support Fallback"]{
+    slug: no_support_fallback
+    task: define_painting_api_fallback_path
+    ={ "book/audits/houdini/31-no_support_fallback.spw" }
+  }
+
+  ^phase["Paint Cache Invalidation"]{
+    slug: paint_cache_invalidation
+    task: design_paint_cache_invalidation_rules
+    ={ "book/audits/houdini/32-paint_cache_invalidation.spw" }
+  }
+
+  ^phase["Paint Performance Budgets"]{
+    slug: paint_performance_budgets
+    task: define_paint_performance_budgets
+    ={ "book/audits/houdini/33-paint_performance_budgets.spw" }
+  }
+
+  ^phase["Painting Api Checkpoint"]{
+    slug: painting_api_checkpoint
+    task: checkpoint_painting_api_viability
+    ={ "book/audits/houdini/34-painting_api_checkpoint.spw" }
+  }
+
+  ^phase["Worklet Lifecycle Model"]{
+    slug: worklet_lifecycle_model
+    task: document_worklet_lifecycle_model
+    ={ "book/audits/houdini/35-worklet_lifecycle_model.spw" }
+  }
+
+  ^phase["Worklet Module Loading"]{
+    slug: worklet_module_loading
+    task: define_worklet_loading_and_cache_strategy
+    ={ "book/audits/houdini/36-worklet_module_loading.spw" }
+  }
+
+  ^phase["Worklet Error Handling"]{
+    slug: worklet_error_handling
+    task: define_worklet_error_taxonomy_and_fallbacks
+    ={ "book/audits/houdini/37-worklet_error_handling.spw" }
+  }
+
+  ^phase["Security Privacy Review"]{
+    slug: security_privacy_review
+    task: review_security_privacy_implications
+    ={ "book/audits/houdini/38-security_privacy_review.spw" }
+  }
+
+  ^phase["Memory Behavior Audit"]{
+    slug: memory_behavior_audit
+    task: audit_worklet_memory_behavior
+    ={ "book/audits/houdini/39-memory_behavior_audit.spw" }
+  }
+
+  ^phase["Main Thread Coordination"]{
+    slug: main_thread_coordination
+    task: define_main_thread_coordination_constraints
+    ={ "book/audits/houdini/40-main_thread_coordination.spw" }
+  }
+
+  ^phase["Worklet Ci Smoke"]{
+    slug: worklet_ci_smoke
+    task: design_ci_smoke_tests_for_worklet_feature_detection
+    ={ "book/audits/houdini/41-worklet_ci_smoke.spw" }
+  }
+
+  ^phase["Worklet Debugging Workflow"]{
+    slug: worklet_debugging_workflow
+    task: define_firefox_and_chromium_worklet_debug_workflow
+    ={ "book/audits/houdini/42-worklet_debugging_workflow.spw" }
+  }
+
+  ^phase["A11y Validation Generated Paint"]{
+    slug: a11y_validation_generated_paint
+    task: validate_generated_paint_accessibility
+    ={ "book/audits/houdini/43-a11y_validation_generated_paint.spw" }
+  }
+
+  ^phase["Worklet Track Checkpoint"]{
+    slug: worklet_track_checkpoint
+    task: checkpoint_worklet_track_reliability
+    ={ "book/audits/houdini/44-worklet_track_checkpoint.spw" }
+  }
+
+  ^phase["Integrate Properties Typed Om"]{
+    slug: integrate_properties_typed_om
+    task: plan_properties_values_plus_typed_om_integration
+    ={ "book/audits/houdini/45-integrate_properties_typed_om.spw" }
+  }
+
+  ^phase["Integrate Typed Om Paint"]{
+    slug: integrate_typed_om_paint
+    task: plan_typed_om_driven_paint_updates
+    ={ "book/audits/houdini/46-integrate_typed_om_paint.spw" }
+  }
+
+  ^phase["Endtoend Demos"]{
+    slug: endtoend_demos
+    task: design_product_value_demonstration_components
+    ={ "book/audits/houdini/47-endtoend_demos.spw" }
+  }
+
+  ^phase["Regression Snapshot Plan"]{
+    slug: regression_snapshot_plan
+    task: define_houdini_regression_snapshot_protocol
+    ={ "book/audits/houdini/48-regression_snapshot_plan.spw" }
+  }
+
+  ^phase["Author Documentation Plan"]{
+    slug: author_documentation_plan
+    task: define_author_facing_houdini_documentation
+    ={ "book/audits/houdini/49-author_documentation_plan.spw" }
+  }
+
+  ^phase["Adoption Decision Matrix"]{
+    slug: adoption_decision_matrix
+    task: classify_adopt_guardrail_monitor_reject
+    ={ "book/audits/houdini/50-adoption_decision_matrix.spw" }
+  }
+
+  ^phase["Rollout Feature Flags"]{
+    slug: rollout_feature_flags
+    task: define_rollout_and_kill_switch_strategy
+    ={ "book/audits/houdini/51-rollout_feature_flags.spw" }
+  }
+
+  ^phase["Houdini Master Report"]{
+    slug: houdini_master_report
+    task: synthesize_implementation_ready_recommendations
+    ={ "book/audits/houdini/52-houdini_master_report.spw" }
+  }
+
 }
 
-&houdini_phase_registry{
-  p01: { slug: scope_constraints, task: define_scope_nongoals_risk_tolerance }
-  p02: { slug: support_matrix, task: build_support_matrix_properties_values_typed_om_painting_worklets }
-  p03: { slug: repo_css_baseline, task: inventory_css_tokens_custom_properties_houdini_insertion_points }
-  p04: { slug: custom_property_inventory, task: classify_property_registration_candidates }
-  p05: { slug: paint_usecase_shortlist, task: prioritize_high_value_paint_usecases }
-  p06: { slug: typed_om_usecase_shortlist, task: shortlist_string_cssom_paths_for_typed_om }
-  p07: { slug: worklet_boundary_model, task: define_main_thread_vs_worklet_boundaries }
-  p08: { slug: a11y_safety_baseline, task: define_accessibility_and_safety_baselines }
-  p09: { slug: properties_syntax_taxonomy, task: define_property_syntax_taxonomy }
-  p10: { slug: registerproperty_strategy, task: choose_js_registration_vs_static_property }
-  p11: { slug: property_authoring_conventions, task: define_naming_defaults_inheritance_conventions }
-  p12: { slug: inheritance_initial_policy, task: standardize_inheritance_and_initial_value_policy }
-  p13: { slug: invalid_value_tests, task: design_invalid_value_parse_fallback_tests }
-  p14: { slug: interpolation_rules, task: define_typed_property_interpolation_expectations }
-  p15: { slug: theme_token_pilot, task: run_theme_token_registration_pilot }
-  p16: { slug: properties_values_checkpoint, task: checkpoint_properties_values_readiness }
+^phases["Firefox Feature Exploration"]{
+  ^phase["Devtools Grid Flex"]{
+    slug: devtools_grid_flex
+    task: define_grid_and_flex_inspector_playbooks
+    ={ "book/audits/firefox-features/53-devtools_grid_flex.spw" }
+  }
 
-  p17: { slug: typed_om_read_audit, task: audit_read_paths_for_computedStyleMap }
-  p18: { slug: typed_om_write_audit, task: audit_write_paths_for_attributeStyleMap }
-  p19: { slug: unit_conversion_utilities, task: design_cssunitvalue_conversion_utilities }
-  p20: { slug: transform_typed_values, task: design_typed_transform_and_matrix_workflow }
-  p21: { slug: color_typed_workflow, task: define_typed_color_workflow_and_fallbacks }
-  p22: { slug: unit_normalization_policy, task: standardize_unit_normalization_policy }
-  p23: { slug: typed_om_benchmark_harness, task: design_string_cssom_vs_typed_om_benchmarking }
-  p24: { slug: typed_om_checkpoint, task: checkpoint_typed_om_migration_practicality }
+  ^phase["Firefox Profiler"]{
+    slug: firefox_profiler
+    task: define_profiling_workflow_layout_script_paint
+    ={ "book/audits/firefox-features/54-firefox_profiler.spw" }
+  }
 
-  p25: { slug: painting_api_architecture, task: define_paint_worklet_architecture }
-  p26: { slug: paint_worklet_scaffold, task: design_paint_worklet_module_scaffold }
-  p27: { slug: input_properties_contract, task: define_input_properties_contract }
-  p28: { slug: deterministic_rendering_rules, task: define_deterministic_paint_rules }
-  p29: { slug: paint_primitive_library, task: design_reusable_paint_primitives }
-  p30: { slug: dpr_resolution_strategy, task: define_dpr_and_resolution_strategy }
-  p31: { slug: no_support_fallback, task: define_painting_api_fallback_path }
-  p32: { slug: paint_cache_invalidation, task: design_paint_cache_invalidation_rules }
-  p33: { slug: paint_performance_budgets, task: define_paint_performance_budgets }
-  p34: { slug: painting_api_checkpoint, task: checkpoint_painting_api_viability }
+  ^phase["Fission Site Isolation"]{
+    slug: fission_site_isolation
+    task: assess_fission_embedding_and_debug_implications
+    ={ "book/audits/firefox-features/55-fission_site_isolation.spw" }
+  }
 
-  p35: { slug: worklet_lifecycle_model, task: document_worklet_lifecycle_model }
-  p36: { slug: worklet_module_loading, task: define_worklet_loading_and_cache_strategy }
-  p37: { slug: worklet_error_handling, task: define_worklet_error_taxonomy_and_fallbacks }
-  p38: { slug: security_privacy_review, task: review_security_privacy_implications }
-  p39: { slug: memory_behavior_audit, task: audit_worklet_memory_behavior }
-  p40: { slug: main_thread_coordination, task: define_main_thread_coordination_constraints }
-  p41: { slug: worklet_ci_smoke, task: design_ci_smoke_tests_for_worklet_feature_detection }
-  p42: { slug: worklet_debugging_workflow, task: define_firefox_and_chromium_worklet_debug_workflow }
-  p43: { slug: a11y_validation_generated_paint, task: validate_generated_paint_accessibility }
-  p44: { slug: worklet_track_checkpoint, task: checkpoint_worklet_track_reliability }
+  ^phase["Enhanced Tracking Protection"]{
+    slug: enhanced_tracking_protection
+    task: audit_etp_effects_on_analytics_embeds_loading
+    ={ "book/audits/firefox-features/56-enhanced_tracking_protection.spw" }
+  }
 
-  p45: { slug: integrate_properties_typed_om, task: plan_properties_values_plus_typed_om_integration }
-  p46: { slug: integrate_typed_om_paint, task: plan_typed_om_driven_paint_updates }
-  p47: { slug: endtoend_demos, task: design_product_value_demonstration_components }
-  p48: { slug: regression_snapshot_plan, task: define_houdini_regression_snapshot_protocol }
-  p49: { slug: author_documentation_plan, task: define_author_facing_houdini_documentation }
-  p50: { slug: adoption_decision_matrix, task: classify_adopt_guardrail_monitor_reject }
-  p51: { slug: rollout_feature_flags, task: define_rollout_and_kill_switch_strategy }
-  p52: { slug: houdini_master_report, task: synthesize_implementation_ready_recommendations }
-}
+  ^phase["Total Cookie Protection"]{
+    slug: total_cookie_protection
+    task: assess_storage_partitioning_effects
+    ={ "book/audits/firefox-features/57-total_cookie_protection.spw" }
+  }
 
-&firefox_phase_registry{
-  p53: { slug: devtools_grid_flex, task: define_grid_and_flex_inspector_playbooks }
-  p54: { slug: firefox_profiler, task: define_profiling_workflow_layout_script_paint }
-  p55: { slug: fission_site_isolation, task: assess_fission_embedding_and_debug_implications }
-  p56: { slug: enhanced_tracking_protection, task: audit_etp_effects_on_analytics_embeds_loading }
-  p57: { slug: total_cookie_protection, task: assess_storage_partitioning_effects }
-  p58: { slug: closewatcher_tracking, task: track_closewatcher_support_and_usage }
-  p59: { slug: html_sanitizer_tracking, task: track_html_sanitizer_readiness_and_adoption_strategy }
-  p60: { slug: webgpu_firefox, task: assess_firefox_webgpu_readiness }
-  p61: { slug: atomics_waitasync, task: track_atomics_waitasync_runtime_impact }
-  p62: { slug: webextensions_mv3, task: audit_firefox_mv3_constraints_for_tooling }
-  p63: { slug: picture_in_picture, task: evaluate_picture_in_picture_workflows }
-  p64: { slug: accessibility_inspector, task: define_accessibility_inspector_audit_workflow }
-  p65: { slug: firefox_feature_synthesis, task: synthesize_firefox_feature_recommendations }
+  ^phase["Closewatcher Tracking"]{
+    slug: closewatcher_tracking
+    task: track_closewatcher_support_and_usage
+    ={ "book/audits/firefox-features/58-closewatcher_tracking.spw" }
+  }
+
+  ^phase["Html Sanitizer Tracking"]{
+    slug: html_sanitizer_tracking
+    task: track_html_sanitizer_readiness_and_adoption_strategy
+    ={ "book/audits/firefox-features/59-html_sanitizer_tracking.spw" }
+  }
+
+  ^phase["Webgpu Firefox"]{
+    slug: webgpu_firefox
+    task: assess_firefox_webgpu_readiness
+    ={ "book/audits/firefox-features/60-webgpu_firefox.spw" }
+  }
+
+  ^phase["Atomics Waitasync"]{
+    slug: atomics_waitasync
+    task: track_atomics_waitasync_runtime_impact
+    ={ "book/audits/firefox-features/61-atomics_waitasync.spw" }
+  }
+
+  ^phase["Webextensions Mv3"]{
+    slug: webextensions_mv3
+    task: audit_firefox_mv3_constraints_for_tooling
+    ={ "book/audits/firefox-features/62-webextensions_mv3.spw" }
+  }
+
+  ^phase["Picture In Picture"]{
+    slug: picture_in_picture
+    task: evaluate_picture_in_picture_workflows
+    ={ "book/audits/firefox-features/63-picture_in_picture.spw" }
+  }
+
+  ^phase["Accessibility Inspector"]{
+    slug: accessibility_inspector
+    task: define_accessibility_inspector_audit_workflow
+    ={ "book/audits/firefox-features/64-accessibility_inspector.spw" }
+  }
+
+  ^phase["Firefox Feature Synthesis"]{
+    slug: firefox_feature_synthesis
+    task: synthesize_firefox_feature_recommendations
+    ={ "book/audits/firefox-features/65-firefox_feature_synthesis.spw" }
+  }
+
 }
 
 ^final_synthesis{
-  emit: "book/audits/firefox-features/summary.spw"
-  joins: { j1: houdini_track_findings, j2: firefox_track_findings }
+  ={ "book/audits/firefox-features/summary.spw" }
+  joins: { houdini: houdini_track_findings, firefox: firefox_track_findings }
   output: prioritized_adoption_recommendations
 }
 
 ^acceptance_criteria{
-  a1: phases_total_65
-  a2: phases_1_to_52_are_houdini
-  a3: phases_53_to_65_are_firefox
-  a4: each_phase_has_task_token_and_slug
-  a5: each_phase_emit_path_resolvable_by_template
+  phase_total: equals_65
+  houdini_track: equals_52
+  firefox_track: equals_13
+  phase_blocks: required
+  emit_paths: deterministic_and_complete
 }
 
 ^assumptions{
-  a1: houdini_track_represents_deep_dive_audit_program_not_api_count
-  a2: firefox_track_informs_future_implementation_not_immediate_code_changes
-  a3: plan_file_remains_documentation_artifact_only
+  houdini_scope: deep_dive_audit_program
+  firefox_scope: feature_exploration_for_future_implementation
+  plan_mode: documentation_artifact_only
 }

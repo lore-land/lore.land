@@ -4,235 +4,402 @@
 ^meta{
   source: "PLAN.A.md"
   dialect: spw_native
-  style: expression_first
+  style: phase_block_titles
 }
 
-^intricacy_profile{
-  synthesis: phase_packets
-  output_mode: spw_only
+&plan_contracts{
+  preserve_phase_order: true
+  preserve_audit_paths: true
+  use_phase_blocks: true
 }
 
-&plan_a_contracts{
-  c001: preserve_phase_order_1_to_26
-  c002: preserve_audit_paths
-  c003: prefer_structured_fields_over_long_strings
+^phase_schema{
+  required: { anchor: required, task: required }
+  optional: { role: optional, read: optional, deps: optional, verify: optional, refs: optional, notes: optional }
+  output_operator: "={ artifact_path }"
 }
 
-&phase_groups{
-  foundation: { span: "1..6", focus: baseline_audits }
-  vite_enhancement: { span: "7..9", focus: build_pipeline }
-  core_adapters: { span: "10..13", focus: runtime_shape_adapters }
-  parser_selector_migration: { span: "14..15", focus: parser_query_alignment }
-  register_bank_migration: { span: "16..18", focus: state_runtime_alignment }
-  module_moves: { span: "19..21", focus: spw_colocation }
-  css_colocation: { span: "22..23", focus: component_style_colocation }
-  entry_updates: { span: "24..24", focus: import_path_cleanup }
-  cleanup_mastery: { span: "25..26", focus: debt_cleanup_and_mastery }
+^anchors{
+  root: "plan.a"
+  regions: {
+    foundation: "plan.a.foundation"
+    vite: "plan.a.vite"
+    adapters: "plan.a.adapters"
+    parser_selector: "plan.a.parser_selector"
+    register_bank: "plan.a.register_bank"
+    module_moves: "plan.a.module_moves"
+    css_colocation: "plan.a.css_colocation"
+    entry_updates: "plan.a.entry_updates"
+    mastery: "plan.a.mastery"
+  }
 }
 
-^phase_packet_contract{
-  required: { r1: role, r2: task, r3: emit }
-  optional: { o1: read, o2: verify, o3: deps, o4: notes }
+^references{
+  priming: {
+    semantics: "html + aria + css baseline before runtime movement"
+    runtime_alignment: "adapters + register bank before module moves"
+    integration_stability: "entry update after css and module colocation"
+  }
+  overlaps: {
+    ethos_runtime: "PLAN.B.spw#ethos-integration-rollout"
+    browser_diagnostics: "PLAN.C.spw#chrome-milestone-exploration"
+    platform_rendering: "PLAN.D.spw#houdini-apis-exploration"
+  }
 }
 
 ?["plan_a_integrity_gate"]{
-  require: phase_count_26
-  require: audit_emit_paths_stable
+  require: phases_defined_in_blocks
+  require: phase_total_26
+  require: audit_output_paths_stable
   on_fail: emit_repair_packet
 }
 
 !probe{
-  id: plan_a.syntax_probe
-  ask: phase_blocks_use_expression_fields
+  id: plan_a.phase_block_probe
+  ask: every_phase_uses_phase_title_block
 }
 
-^phase_01_html_baseline{
-  role: explore_agent
-  read: { r1: index_html, r2: chapter_html_surfaces }
-  task: { t1: catalog_html_elements, t2: map_heading_landmark_form_graph, t3: flag_nonsemantic_wrappers }
-  emit: "book/audits/01-html-baseline.spw"
-  verify: { v1: element_inventory_complete, v2: heading_tree_per_page, v3: severity_ranked_semantic_issues }
+^phases["Foundation"]{
+  ^phase[00: "Baseline HTML Audit"]{
+    anchor: plan.a.foundation.baseline_html_audit
+    role: explore_agent
+    read: { html_root: index_html, html_chapters: chapter_html_surfaces }
+    ^task{
+      status: completed
+      inventory: catalog_html_elements
+      structure: map_heading_landmark_form_graph
+      semantics: flag_nonsemantic_wrappers
+    }
+    verify: { inventory: complete, headings: per_page_tree, severity: ranked_semantic_issues }
+    ={ "book/audits/01-html-baseline.spw" }
+  }
+
+  ^phase[01: "Baseline CSS Audit - Layers and Properties"]{
+    anchor: plan.a.foundation.baseline_css_audit_layers_and_properties
+    role: explore_agent
+    read: { core: book_styles_core, home: book_styles_home }
+    ^task{
+      layer_map: declared_vs_used
+      leaks: detect_unlayered_rules
+      properties: catalog_custom_property_orphans
+    }
+    ={ "book/audits/02-css-layers-baseline.spw" }
+  }
+
+  ^phase[02: "Baseline CSS Audit - Responsive and Performance"]{
+    anchor: plan.a.foundation.baseline_css_audit_responsive_and_performance
+    role: explore_agent
+    read: { css: all_css_media_container_animation_rules }
+    ^task{
+      breakpoints: map_breakpoints_and_containers
+      conflicts: detect_breakpoint_conflicts
+      performance: flag_gpu_trigger_hotspots
+    }
+    ={ "book/audits/03-css-responsive-baseline.spw" }
+  }
+
+  ^phase[03: "Baseline ARIA and Accessibility Audit"]{
+    anchor: plan.a.foundation.baseline_aria_and_accessibility_audit
+    role: explore_agent
+    read: { html: html_surfaces, js: ui_dom_custom_element_js }
+    ^task{
+      names: audit_accessible_names
+      live_regions_and_roles: audit_live_regions_and_roles
+      keyboard: audit_keyboard_operability
+    }
+    ={ "book/audits/04-aria-baseline.spw" }
+  }
+
+  ^phase[04: "spw Module Dependency Map"]{
+    anchor: plan.a.foundation.spw_module_dependency_map
+    role: explore_agent
+    read: { modules: modules_spw, custom: custom_spw }
+    ^task{
+      graph: build_export_import_graph
+      cycles: detect_circular_dependencies
+      responsibility: rate_single_responsibility
+      sizing: size_modules
+    }
+    ={ "book/audits/05-spw-dependency-map.spw" }
+  }
+
+  ^phase[05: "Workbench API Surface Audit"]{
+    anchor: plan.a.foundation.workbench_api_surface_audit
+    role: explore_agent
+    read: { runtime: workbench_runtime_index, register_bank: workbench_register_bank, parser_query: workbench_parser_query }
+    ^task{
+      status: uncompleted
+      exports: inventory_exports
+      register_bank: compare_register_bank_api
+      affinities: compare_operator_affinity_shapes
+      gaps: identify_adapter_gaps
+    }
+    ={ "book/audits/06-workbench-api-surface.spw" }
+  }
 }
 
-^phase_02_css_layers_baseline{
-  role: explore_agent
-  read: { r1: book_styles_core, r2: book_styles_home }
-  task: { t1: map_layer_declared_vs_used, t2: detect_unlayered_rules, t3: catalog_custom_property_orphans }
-  emit: "book/audits/02-css-layers-baseline.spw"
+^phases["Vite Enhancement"]{
+  ^phase[06: "Vite Alias Resolution"]{
+    anchor: plan.a.vite_enhancement.vite_alias_resolution
+    role: edit_agent
+    deps: { config: vite_config_js }
+    ^task{
+      aliases: add_spw_and_book_aliases
+      safety: keep_aliases_nonbreaking
+    }
+    verify: { dev: npm_run_dev_boots, pages: pages_load_14 }
+  }
+
+  ^phase[07: "TypeScript Support"]{
+    anchor: plan.a.vite_enhancement.typescript_support
+    role: edit_agent
+    deps: { manifest: package_json }
+    ^task{
+      status: unstarted
+      dependencies: add_dev_dependency_typescript
+      installation: install_lock_sync
+      resolution: validate_ts_resolution_for_workbench_aliases
+    }
+    verify: { resolution: temporary_runtime_import_resolves, cleanup: temp_artifacts_removed }
+  }
+
+  ^phase[08: "Build Pipeline Checkpoint"]{
+    anchor: plan.a.vite_enhancement.build_pipeline_checkpoint
+    role: run_agent
+    ^task{
+      build_execution: run_build
+      distribution_audit: inspect_dist_assets
+      regression_comparison: compare_regression_surface
+      hash_verification: verify_hashing
+    }
+    ={ "book/audits/09-build-pipeline.spw" }
+  }
 }
 
-^phase_03_css_responsive_baseline{
-  role: explore_agent
-  read: { r1: all_css_media_container_animation_rules }
-  task: { t1: map_breakpoints_and_containers, t2: detect_breakpoint_conflicts, t3: flag_gpu_trigger_hotspots }
-  emit: "book/audits/03-css-responsive-baseline.spw"
+^phases["spw Core Adapters"]{
+  ^phase[09: "Create spw Directory Scaffold"]{
+    anchor: plan.a.spw_core_adapters.create_spw_directory_scaffold
+    role: edit_agent
+    ^task{
+      scaffold_structure: create_scripts_spw_tree
+      barrel_index: add_barrel_index
+    }
+    verify: { scaffold: directory_scaffold_exists, imports: no_import_errors }
+  }
+
+  ^phase[10: "Operator Roles Adapter"]{
+    anchor: plan.a.spw_core_adapters.operator_roles_adapter
+    role: edit_agent
+    deps: { affinities: workbench_operator_affinities }
+    ^task{
+      mapping: map_affinities_to_operator_roles_shape
+      exports: export_roles_and_sequence
+      purity: keep_adapter_pure
+    }
+    verify: { count: operator_count_12, shape: mapped_fields_complete }
+  }
+
+  ^phase[11: "Container Roles Adapter"]{
+    anchor: plan.a.spw_core_adapters.container_roles_adapter
+    role: edit_agent
+    deps: { affinities: workbench_brace_affinities }
+    ^task{
+      mapping: map_affinities_to_container_roles_shape
+      exports: export_container_roles
+    }
+    verify: { count: container_count_8 }
+  }
+
+  ^phase[12: "Adapter Quality Checkpoint"]{
+    anchor: plan.a.spw_core_adapters.adapter_quality_checkpoint
+    role: audit_agent
+    ^task{
+      purity: confirm_adapter_purity
+      drift: detect_logic_creep
+      edge_cases: capture_edge_case_coverage
+    }
+    ={ "book/audits/13-adapter-quality.spw" }
+  }
 }
 
-^phase_04_aria_baseline{
-  role: explore_agent
-  read: { r1: html_surfaces, r2: ui_dom_custom_element_js }
-  task: { t1: audit_accessible_names, t2: audit_live_regions_and_roles, t3: audit_keyboard_operability }
-  emit: "book/audits/04-aria-baseline.spw"
+^phases["Parser and Selector Migration"]{
+  ^phase[13: "Selector Parser Swap"]{
+    anchor: plan.a.parser_and_selector_migration.selector_parser_swap
+    role: edit_agent
+    ^task{
+      reexports: reexport_query_helpers_from_workbench
+      compatibility: add_named_adapters_if_exports_missing
+    }
+    verify: { smoke: selector_parse_smoke_on_known_selectors }
+  }
+
+  ^phase[14: "Expression Index Migration"]{
+    anchor: plan.a.parser_and_selector_migration.expression_index_migration
+    role: move_agent
+    ^task{
+      relocation: move_expression_index_to_spw_parser
+      imports: update_import_paths
+      behavior: keep_behavior_stable
+    }
+    verify: { parse: chapter_spw_expression_parsing_works }
+  }
 }
 
-^phase_05_spw_dependency_map{
-  role: explore_agent
-  read: { r1: modules_spw, r2: custom_spw }
-  task: { t1: build_export_import_graph, t2: detect_circular_dependencies, t3: rate_single_responsibility, t4: size_modules }
-  emit: "book/audits/05-spw-dependency-map.spw"
+^phases["RegisterBank Migration"]{
+  ^phase[15: "RegisterBank API Audit"]{
+    anchor: plan.a.registerbank_migration.registerbank_api_audit
+    role: explore_agent
+    ^task{
+      surface: compare_register_bank_method_surface
+      surface_delta: classify_lore_only_vs_workbench_only
+      risk: rate_migration_risk
+    }
+    ={ "book/audits/16-register-bank-comparison.spw" }
+  }
+
+  ^phase[16: "RegisterBank Adapter"]{
+    anchor: plan.a.registerbank_migration.registerbank_adapter
+    role: edit_agent
+    ^task{
+      singleton: wrap_workbench_register_bank_singleton
+      compatibility: extend_missing_methods_if_required
+      exports: export_getter_and_class
+    }
+    verify: { parity: set_get_focus_extract_snapshot_behaviors_match }
+  }
+
+  ^phase[17: "RegisterBank Integration Checkpoint"]{
+    anchor: plan.a.registerbank_migration.registerbank_integration_checkpoint
+    role: audit_agent
+    ^task{
+      callsites: enumerate_get_spw_register_bank_call_sites
+      behavior: validate_consumer_behavior
+      behavioral_deltas: record_behavioral_deltas
+    }
+    ={ "book/audits/18-register-bank-integration.spw" }
+  }
 }
 
-^phase_06_workbench_api_surface{
-  role: explore_agent
-  read: { r1: workbench_runtime_index, r2: workbench_register_bank, r3: workbench_parser_query }
-  task: { t1: inventory_exports, t2: compare_register_bank_api, t3: compare_operator_affinity_shapes, t4: identify_adapter_gaps }
-  emit: "book/audits/06-workbench-api-surface.spw"
+^phases["Module Moves"]{
+  ^phase[18: "Move Interactions Module"]{
+    anchor: plan.a.module_moves.move_interactions_module
+    role: move_agent
+    ^task{
+      relocation: move_interactions_module_into_spw_tree
+      imports: switch_to_core_parser_imports
+      cleanup: remove_duplicated_role_definitions
+    }
+    verify: { interactions: tooltip_trace_drag_scope_interactions_work }
+  }
+
+  ^phase[19: "Move Ethos Module"]{
+    anchor: plan.a.module_moves.move_ethos_module
+    role: move_agent
+    ^task{
+      relocation: move_ethos_module_into_spw_tree
+      ethos_derivation: derive_operator_ethos_from_affinities
+      imports: rewire_imports
+    }
+    verify: { panel: ethos_panel_renders_home_and_chapter }
+  }
+
+  ^phase[20: "Move Binding Modules"]{
+    anchor: plan.a.module_moves.move_binding_modules
+    role: move_agent
+    ^task{
+      relocation: relocate_advanced_runtime_component_style_behavior_modules
+      imports: update_cross_imports
+      register_wiring: rewire_custom_register
+    }
+    verify: { runtime: runtime_attach_style_behavior_integration_works }
+  }
 }
 
-^phase_07_vite_aliases{
-  role: edit_agent
-  deps: { d1: vite_config_js }
-  task: { t1: add_spw_and_book_aliases, t2: keep_aliases_nonbreaking }
-  verify: { v1: npm_run_dev_boots, v2: pages_load_14 }
+^phases["CSS Colocation"]{
+  ^phase[21: "Colocate Component CSS"]{
+    anchor: plan.a.css_colocation.colocate_component_css
+    role: move_agent
+    ^task{
+      relocation: move_component_css_into_binding
+      layer: wrap_rules_in_interactive_layer
+      runtime_integration: import_css_from_runtime_module
+      link_cleanup: remove_html_link_tags
+    }
+    verify: { parity: spw_component_render_parity_14_pages, duplicates: no_duplicate_style_injection }
+  }
+
+  ^phase[22: "CSS Colocation Checkpoint"]{
+    anchor: plan.a.css_colocation.css_colocation_checkpoint
+    role: audit_agent
+    ^task{
+      audit: rerun_layer_audit
+      integrity: verify_layer_integrity
+      dev_order: verify_dev_injection_order
+      build_order: verify_build_extraction_order
+    }
+    ={ "book/audits/23-css-colocation.spw" }
+  }
 }
 
-^phase_08_typescript_support{
-  role: edit_agent
-  deps: { d1: package_json }
-  task: { t1: add_dev_dependency_typescript, t2: install_lock_sync, t3: validate_ts_resolution_for_workbench_aliases }
-  verify: { v1: temporary_runtime_import_resolves, v2: cleanup_temp_artifacts }
+^phases["Entry Updates"]{
+  ^phase[23: "Entry Point Updates"]{
+    anchor: plan.a.entry_updates.entry_point_updates
+    role: edit_agent
+    deps: { script: script_entrypoints, home: home_entrypoints, custom: custom_register }
+    ^task{
+      imports: repoint_imports_to_spw_tree
+      cache_cleanup: remove_cache_busting_query_params
+      barrel_index: create_spw_barrel_index
+    }
+    verify: { pages: pages_load_14, console: no_console_errors, features: spw_feature_surface_intact }
+  }
 }
 
-^phase_09_build_pipeline_checkpoint{
-  role: run_agent
-  task: { t1: run_build, t2: inspect_dist_assets, t3: compare_regression_surface, t4: verify_hashing }
-  emit: "book/audits/09-build-pipeline.spw"
-}
+^phases["Cleanup and Mastery"]{
+  ^phase[24: "Cleanup Dead Files"]{
+    anchor: plan.a.cleanup_and_mastery.cleanup_dead_files
+    role: edit_agent
+    ^task{
+      removal: remove_orphaned_legacy_modules
+      imports: purge_old_import_paths
+      cache_evaluation: evaluate_cache_context_deprecation
+    }
+    verify: { build: npm_run_build_passes, dist: dist_import_integrity_clean }
+  }
 
-^phase_10_spw_scaffold{
-  role: edit_agent
-  task: { t1: create_scripts_spw_tree, t2: add_barrel_index }
-  verify: { v1: directory_scaffold_exists, v2: no_import_errors }
-}
-
-^phase_11_operator_roles_adapter{
-  role: edit_agent
-  deps: { d1: workbench_operator_affinities }
-  task: { t1: map_affinities_to_operator_roles_shape, t2: export_roles_and_sequence, t3: keep_adapter_pure }
-  verify: { v1: operator_count_12, v2: mapped_fields_complete }
-}
-
-^phase_12_container_roles_adapter{
-  role: edit_agent
-  deps: { d1: workbench_brace_affinities }
-  task: { t1: map_affinities_to_container_roles_shape, t2: export_container_roles }
-  verify: { v1: container_count_8 }
-}
-
-^phase_13_adapter_quality_checkpoint{
-  role: audit_agent
-  task: { t1: confirm_adapter_purity, t2: detect_logic_creep, t3: capture_edge_case_coverage }
-  emit: "book/audits/13-adapter-quality.spw"
-}
-
-^phase_14_selector_parser_swap{
-  role: edit_agent
-  task: { t1: reexport_query_helpers_from_workbench, t2: add_named_adapters_if_exports_missing }
-  verify: { v1: selector_parse_smoke_on_known_selectors }
-}
-
-^phase_15_expression_index_migration{
-  role: move_agent
-  task: { t1: move_expression_index_to_spw_parser, t2: update_import_paths, t3: keep_behavior_stable }
-  verify: { v1: chapter_spw_expression_parsing_works }
-}
-
-^phase_16_register_bank_api_audit{
-  role: explore_agent
-  task: { t1: compare_register_bank_method_surface, t2: classify_lore_only_vs_workbench_only, t3: rate_migration_risk }
-  emit: "book/audits/16-register-bank-comparison.spw"
-}
-
-^phase_17_register_bank_adapter{
-  role: edit_agent
-  task: { t1: wrap_workbench_register_bank_singleton, t2: extend_missing_methods_if_required, t3: export_getter_and_class }
-  verify: { v1: set_get_focus_extract_snapshot_behaviors_match }
-}
-
-^phase_18_register_bank_integration_checkpoint{
-  role: audit_agent
-  task: { t1: enumerate_get_spw_register_bank_call_sites, t2: validate_consumer_behavior, t3: record_behavioral_deltas }
-  emit: "book/audits/18-register-bank-integration.spw"
-}
-
-^phase_19_move_interactions_module{
-  role: move_agent
-  task: { t1: move_interactions_module_into_spw_tree, t2: switch_to_core_parser_imports, t3: remove_duplicated_role_definitions }
-  verify: { v1: tooltip_trace_drag_scope_interactions_work }
-}
-
-^phase_20_move_ethos_module{
-  role: move_agent
-  task: { t1: move_ethos_module_into_spw_tree, t2: derive_operator_ethos_from_affinities, t3: rewire_imports }
-  verify: { v1: ethos_panel_renders_home_and_chapter }
-}
-
-^phase_21_move_binding_modules{
-  role: move_agent
-  task: { t1: relocate_advanced_runtime_component_style_behavior_modules, t2: update_cross_imports, t3: rewire_custom_register }
-  verify: { v1: runtime_attach_style_behavior_integration_works }
-}
-
-^phase_22_colocate_component_css{
-  role: move_agent
-  task: { t1: move_component_css_into_binding, t2: wrap_rules_in_interactive_layer, t3: import_css_from_runtime_module, t4: remove_html_link_tags }
-  verify: { v1: spw_component_render_parity_14_pages, v2: no_duplicate_style_injection }
-}
-
-^phase_23_css_colocation_checkpoint{
-  role: audit_agent
-  task: { t1: rerun_layer_audit, t2: verify_layer_integrity, t3: verify_dev_injection_order, t4: verify_build_extraction_order }
-  emit: "book/audits/23-css-colocation.spw"
-}
-
-^phase_24_entry_point_updates{
-  role: edit_agent
-  deps: { d1: script_entrypoints, d2: home_entrypoints, d3: custom_register }
-  task: { t1: repoint_imports_to_spw_tree, t2: remove_cache_busting_query_params, t3: create_spw_barrel_index }
-  verify: { v1: pages_load_14, v2: no_console_errors, v3: spw_feature_surface_intact }
-}
-
-^phase_25_cleanup_dead_files{
-  role: edit_agent
-  task: { t1: remove_orphaned_legacy_modules, t2: purge_old_import_paths, t3: evaluate_cache_context_deprecation }
-  verify: { v1: npm_run_build_passes, v2: dist_import_integrity_clean }
-}
-
-^phase_26_mastery_report{
-  role: audit_agent
-  task: { t1: score_spec_compliance, t2: score_architecture_quality, t3: compute_improvement_delta, t4: map_component_dependencies, t5: prioritize_remaining_debt }
-  emit: "book/audits/26-mastery.spw"
+  ^phase[25: "Mastery Report"]{
+    anchor: plan.a.cleanup_and_mastery.mastery_report
+    role: audit_agent
+    ^task{
+      compliance: score_spec_compliance
+      architecture: score_architecture_quality
+      improvement_delta: compute_improvement_delta
+      dependency_map: map_component_dependencies
+      debt_prioritization: prioritize_remaining_debt
+    }
+    ={ "book/audits/26-mastery.spw" }
+  }
 }
 
 ^verification_matrix{
-  runtime: { v1: dev_boot_all_pages, v2: build_passes, v3: no_console_errors }
-  interactions: { v1: operator_tooltips, v2: brace_tracing, v3: drag_to_scope }
-  ethos: { v1: panel_home, v2: panel_chapter }
-  state: { v1: register_bank_set_get_snapshot }
-  styles: { v1: no_duplicate_css, v2: layer_integrity }
+  runtime: { dev: dev_boot_all_pages, build: build_passes, console: no_console_errors }
+  interactions: { tooltips: operator_tooltips, tracing: brace_tracing, scope: drag_to_scope }
+  ethos: { home: panel_home, chapter: panel_chapter }
+  state: { register_bank: register_bank_set_get_snapshot }
+  styles: { duplicates: no_duplicate_css, layers: layer_integrity }
 }
 
 ^audit_artifacts{
-  a01: "book/audits/01-html-baseline.spw"
-  a02: "book/audits/02-css-layers-baseline.spw"
-  a03: "book/audits/03-css-responsive-baseline.spw"
-  a04: "book/audits/04-aria-baseline.spw"
-  a05: "book/audits/05-spw-dependency-map.spw"
-  a06: "book/audits/06-workbench-api-surface.spw"
-  a09: "book/audits/09-build-pipeline.spw"
-  a13: "book/audits/13-adapter-quality.spw"
-  a16: "book/audits/16-register-bank-comparison.spw"
-  a18: "book/audits/18-register-bank-integration.spw"
-  a23: "book/audits/23-css-colocation.spw"
-  a26: "book/audits/26-mastery.spw"
+  html_baseline: "book/audits/01-html-baseline.spw"
+  css_layers_baseline: "book/audits/02-css-layers-baseline.spw"
+  css_responsive_baseline: "book/audits/03-css-responsive-baseline.spw"
+  aria_baseline: "book/audits/04-aria-baseline.spw"
+  spw_dependency_map: "book/audits/05-spw-dependency-map.spw"
+  workbench_api_surface: "book/audits/06-workbench-api-surface.spw"
+  build_pipeline: "book/audits/09-build-pipeline.spw"
+  adapter_quality: "book/audits/13-adapter-quality.spw"
+  register_bank_comparison: "book/audits/16-register-bank-comparison.spw"
+  register_bank_integration: "book/audits/18-register-bank-integration.spw"
+  css_colocation: "book/audits/23-css-colocation.spw"
+  mastery: "book/audits/26-mastery.spw"
 }

@@ -4,31 +4,27 @@
 ^meta{
   source: "PLAN.C.md"
   dialect: spw_native
-  style: expression_first
+  style: phase_block_titles
 }
 
-^intricacy_profile{
-  sequencing: shadow_13_then_chrome_52
-  packet_flow: { s1: baseline, s2: phase_registry, s3: synthesis, s4: governance }
-}
-
-&plan_c_contracts{
-  c001: preserve_total_phase_count_65
-  c002: preserve_shadow_phase_count_13
-  c003: preserve_chrome_phase_count_52
-  c004: preserve_milestone_contiguity_145_to_94
+&plan_contracts{
+  preserve_phase_total: true
+  preserve_shadow_track: true
+  preserve_chrome_track: true
+  use_phase_blocks: true
 }
 
 ?["plan_c_integrity_gate"]{
-  require: phase_count_exact_65
-  require: milestone_mapping_formula_valid
-  require: output_templates_emit_expected_paths
+  require: phases_defined_in_blocks
+  require: shadow_phase_total_13
+  require: chrome_phase_total_52
+  require: milestone_contiguity_M145_to_M94
   on_fail: emit_range_repair_packet
 }
 
 !probe{
-  id: plan_c.shadow_chrome_split_probe
-  ask: tracks_are_isolated_and_phase_math_is_sound
+  id: plan_c.phase_block_probe
+  ask: all_tracks_expressed_via_phase_title_blocks
 }
 
 ^verified_context{
@@ -38,90 +34,381 @@
 }
 
 &verified_sources{
-  s1: "https://developer.chrome.com/release-notes/145"
-  s2: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_10.html"
-  s3: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_13.html"
+  release_notes_145: "https://developer.chrome.com/release-notes/145"
+  stable_promotion_145: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_10.html"
+  stable_patch_145: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_13.html"
 }
 
 ^output_contract{
-  phase_packet_shape: { p1: scope, p2: findings, p3: evidence, p4: decision }
+  phase_packet_shape: { scope: required, findings: required, evidence: required, decision: required }
   canonical_artifacts: spw_only
 }
 
-^shadow_track{
-  phase_span: { from: 1, to: 13, count: 13 }
-  emit_rule: "book/audits/shadow-dom/{phase2d}-{slug}.spw"
-}
+^phases["Shadow DOM Exploration"]{
+  ^phase["Shadow DOM Baseline Inventory"]{
+    task: inventory_shadow_usage_and_leakage
+    ={ "book/audits/shadow-dom/01-inventory.spw" }
+  }
 
-&shadow_phase_registry{
-  p01: { slug: inventory, task: inventory_shadow_usage_and_leakage }
-  p02: { slug: encapsulation, task: audit_public_contract_vs_internal_boundary }
-  p03: { slug: slotting, task: audit_slot_distribution_and_flattening_edges }
-  p04: { slug: styling_surface, task: audit_host_slotted_part_exportparts_contracts }
-  p05: { slug: events, task: audit_retargeting_bubbles_composed_paths }
-  p06: { slug: focus_keyboard, task: audit_delegates_focus_tab_and_keyboard_model }
-  p07: { slug: a11y, task: audit_accessibility_tree_and_aria_mapping }
-  p08: { slug: form_internals, task: audit_element_internals_and_form_association_need }
-  p09: { slug: declarative_shadow_dom, task: evaluate_ssr_hydration_feasibility }
-  p10: { slug: performance, task: measure_shadow_creation_style_calc_mutation_cost }
-  p11: { slug: test_strategy, task: define_unit_integration_visual_shadow_tests }
-  p12: { slug: refactor_blueprint, task: produce_component_refactor_matrix_and_order }
-  p13: { slug: master_report, task: synthesize_priority_and_acceptance_criteria }
-}
+  ^phase["Encapsulation Model Audit"]{
+    task: audit_public_contract_vs_internal_boundary
+    ={ "book/audits/shadow-dom/02-encapsulation.spw" }
+  }
 
-^chrome_track{
-  phase_span: { from: 14, to: 65, count: 52 }
-  milestone_span: { from: 145, to: 94, step: -1, count: 52 }
-  mapping_rule: milestone_equals_159_minus_phase
-  emit_rule: "book/audits/chrome-updates/M{milestone}.spw"
-  task_template: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
-  scoring_scale: { s0: none, s1: monitor, s2: adopt, s3: adopt_now }
-  ingest_pipeline: {
-    i1: read_release_notes
-    i2: read_new_in_chrome_when_available
-    i3: read_new_in_devtools_when_available
-    i4: extract_shadow_dom_deltas
-    i5: score_relevance_for_repo
-    i6: emit_phase_artifact
+  ^phase["Slotting and Composition Analysis"]{
+    task: audit_slot_distribution_and_flattening_edges
+    ={ "book/audits/shadow-dom/03-slotting.spw" }
+  }
+
+  ^phase["Styling Surface Audit"]{
+    task: audit_host_slotted_part_exportparts_contracts
+    ={ "book/audits/shadow-dom/04-styling-surface.spw" }
+  }
+
+  ^phase["Event Retargeting and Composed Path Audit"]{
+    task: audit_retargeting_bubbles_composed_paths
+    ={ "book/audits/shadow-dom/05-events.spw" }
+  }
+
+  ^phase["Focus and Keyboard Navigation Audit"]{
+    task: audit_delegates_focus_tab_and_keyboard_model
+    ={ "book/audits/shadow-dom/06-focus-keyboard.spw" }
+  }
+
+  ^phase["Accessibility Tree and ARIA Mapping"]{
+    task: audit_accessibility_tree_and_aria_mapping
+    ={ "book/audits/shadow-dom/07-a11y.spw" }
+  }
+
+  ^phase["Form Association and ElementInternals Review"]{
+    task: audit_element_internals_and_form_association_need
+    ={ "book/audits/shadow-dom/08-form-internals.spw" }
+  }
+
+  ^phase["Declarative Shadow DOM Feasibility"]{
+    task: evaluate_ssr_hydration_feasibility
+    ={ "book/audits/shadow-dom/09-declarative-shadow-dom.spw" }
+  }
+
+  ^phase["Performance and Memory Audit"]{
+    task: measure_shadow_creation_style_calc_mutation_cost
+    ={ "book/audits/shadow-dom/10-performance.spw" }
+  }
+
+  ^phase["Shadow DOM Test Strategy"]{
+    task: define_unit_integration_visual_shadow_tests
+    ={ "book/audits/shadow-dom/11-test-strategy.spw" }
+  }
+
+  ^phase["Refactor Blueprint"]{
+    task: produce_component_refactor_matrix_and_order
+    ={ "book/audits/shadow-dom/12-refactor-blueprint.spw" }
+  }
+
+  ^phase["Shadow DOM Master Report"]{
+    task: synthesize_priority_and_acceptance_criteria
+    ={ "book/audits/shadow-dom/13-master-report.spw" }
   }
 }
 
-^chrome_formula_examples{
-  e1: { phase: 14, milestone: 145 }
-  e2: { phase: 39, milestone: 120 }
-  e3: { phase: 65, milestone: 94 }
+^chrome_milestone_template{
+  milestone_range: "M145..M94"
+  phase_total: 52
+  title_template: "Chrome M{milestone} Update Audit"
+  emit_template: "book/audits/chrome-updates/M{milestone}.spw"
+  task_template: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+  scoring_scale: { none: allowed, monitor: allowed, adopt: allowed, adopt_now: allowed }
+  ingest_pipeline: {
+    release_notes: required
+    highlights: read_new_in_chrome_when_available
+    devtools: read_new_in_devtools_when_available
+    extraction: extract_shadow_dom_deltas
+    score: score_relevance_for_repo
+    emit: emit_phase_artifact
+  }
+}
+
+^phases["Chrome Milestone Exploration"]{
+
+  ^phase[01:<94>"Chrome M94 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M94.spw" }
+  }
+
+  ^phase[02:<95>"Chrome M95 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M95.spw" }
+  }
+
+  ^phase[03:<96>"Chrome M96 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M96.spw" }
+  }
+
+  ^phase[04:<97>"Chrome M97 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M97.spw" }
+  }
+
+  ^phase[05:<98>"Chrome M98 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M98.spw" }
+  }
+
+  ^phase[06:<99>"Chrome M99 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M99.spw" }
+  }
+
+  ^phase[07:<100>"Chrome M100 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M100.spw" }
+  }
+
+  ^phase[08:<101>"Chrome M101 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M101.spw" }
+  }
+
+  ^phase[09:<102>"Chrome M102 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M102.spw" }
+  }
+
+  ^phase[10:<103>"Chrome M103 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M103.spw" }
+  }
+
+  ^phase[11:<104>"Chrome M104 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M104.spw" }
+  }
+
+  ^phase[12:<105>"Chrome M105 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M105.spw" }
+  }
+
+  ^phase[13:<106>"Chrome M106 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M106.spw" }
+  }
+
+  ^phase[14:<107>"Chrome M107 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M107.spw" }
+  }
+
+  ^phase[15:<108>"Chrome M108 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M108.spw" }
+  }
+
+  ^phase[16:<109>"Chrome M109 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M109.spw" }
+  }
+
+  ^phase[17:<110>"Chrome M110 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M110.spw" }
+  }
+
+  ^phase[18:<111>"Chrome M111 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M111.spw" }
+  }
+
+  ^phase[19:<112>"Chrome M112 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M112.spw" }
+  }
+
+  ^phase[20:<113>"Chrome M113 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M113.spw" }
+  }
+
+  ^phase[21:<114>"Chrome M114 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M114.spw" }
+  }
+
+  ^phase[22:<115>"Chrome M115 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M115.spw" }
+  }
+
+  ^phase[23:<116>"Chrome M116 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M116.spw" }
+  }
+
+  ^phase[24:<117>"Chrome M117 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M117.spw" }
+  }
+
+  ^phase[25:<118>"Chrome M118 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M118.spw" }
+  }
+
+  ^phase[26:<119>"Chrome M119 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M119.spw" }
+  }
+
+  ^phase[27:<120>"Chrome M120 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M120.spw" }
+  }
+
+  ^phase[28:<121>"Chrome M121 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M121.spw" }
+  }
+
+  ^phase[29:<122>"Chrome M122 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M122.spw" }
+  }
+
+  ^phase[30:<123>"Chrome M123 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M123.spw" }
+  }
+
+  ^phase[31:<124>"Chrome M124 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M124.spw" }
+  }
+
+  ^phase[32:<125>"Chrome M125 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M125.spw" }
+  }
+
+  ^phase[33:<126>"Chrome M126 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M126.spw" }
+  }
+
+  ^phase[34:<127>"Chrome M127 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M127.spw" }
+  }
+
+  ^phase[35:<128>"Chrome M128 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M128.spw" }
+  }
+
+  ^phase[36:<129>"Chrome M129 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M129.spw" }
+  }
+
+  ^phase[37:<130>"Chrome M130 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M130.spw" }
+  }
+
+  ^phase[38:<131>"Chrome M131 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M131.spw" }
+  }
+
+  ^phase[39:<132>"Chrome M132 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M132.spw" }
+  }
+
+  ^phase[40:<133>"Chrome M133 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M133.spw" }
+  }
+
+  ^phase[41:<134>"Chrome M134 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M134.spw" }
+  }
+
+  ^phase[42:<135>"Chrome M135 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M135.spw" }
+  }
+
+  ^phase[43:<136>"Chrome M136 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M136.spw" }
+  }
+
+  ^phase[44:<137>"Chrome M137 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M137.spw" }
+  }
+
+  ^phase[45:<138>"Chrome M138 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M138.spw" }
+  }
+
+  ^phase[46:<139>"Chrome M139 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M139.spw" }
+  }
+
+  ^phase[47:<140>"Chrome M140 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M140.spw" }
+  }
+
+  ^phase[48:<141>"Chrome M141 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M141.spw" }
+  }
+
+  ^phase[49:<142>"Chrome M142 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M142.spw" }
+  }
+
+  ^phase[50:<143>"Chrome M143 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M143.spw" }
+  }
+
+  ^phase[51:<144>"Chrome M144 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M144.spw" }
+  }
+
+  ^phase[52:<145>"Chrome M145 Update Audit"]{
+    task: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
+    ={ "book/audits/chrome-updates/M145.spw" }
+  }
+
 }
 
 ^synthesis_and_governance{
   summary_emit: "book/audits/chrome-updates/summary-52.spw"
   risk_emit: "book/audits/chrome-updates/risk-register.spw"
-  summary_columns: {
-    c1: feature
-    c2: first_appeared
-    c3: stable_support
-    c4: shadow_dom_relevance
-    c5: implementation_cost
-    c6: risk
-    c7: adoption_decision
-  }
-  adoption_buckets: {
-    b1: adopt_now
-    b2: adopt_with_guardrails
-    b3: monitor
-    b4: reject
-  }
+  summary_columns: { feature: required, first_appeared: required, stable_support: required, shadow_dom_relevance: required, implementation_cost: required, risk: required, adoption_decision: required }
+  adoption_buckets: { adopt_now: supported, adopt_with_guardrails: supported, monitor: supported, reject: supported }
 }
 
 ^acceptance_criteria{
-  a1: documented_phases_equal_65
-  a2: shadow_track_explicit_1_to_13
-  a3: chrome_track_formula_14_to_65_maps_to_145_to_94
-  a4: each_phase_has_deterministic_emit_path
-  a5: implementation_code_excluded_from_plan_file
+  phase_total: equals_65
+  shadow_track: equals_13
+  chrome_track: equals_52
+  emit_paths: deterministic_and_complete
+  implementation_code: excluded
 }
 
 ^assumptions{
-  a1: latest_52_updates_interpreted_as_latest_52_major_stable_milestones
-  a2: official_chrome_release_channels_are_source_of_truth
-  a3: exploration_outputs_written_as_spw_artifacts
+  latest_updates_scope: latest_52_major_stable_milestones
+  source_of_truth: official_chrome_release_channels
+  output_mode: spw_artifacts
 }

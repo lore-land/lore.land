@@ -4,35 +4,30 @@
 ^meta{
   source: "PLAN.B.md"
   dialect: spw_native
-  style: expression_first
+  style: phase_block_titles
 }
 
-^intricacy_profile{
-  emphasis: runtime_diagnostics
-  packet_flow: { s1: claim_hydration, s2: diagnostics_engine, s3: panel_integration, s4: hardening }
-}
-
-&plan_b_contracts{
-  c001: preserve_four_phase_rollout
-  c002: preserve_claim_card_interaction_behavior
-  c003: prefer_spw_claim_canon_with_fallback
+&plan_contracts{
+  preserve_rollout_shape: true
+  preserve_claim_interaction_behavior: true
+  use_phase_blocks: true
 }
 
 ^phase_packet_contract{
-  required: { r1: phase_goal, r2: steps, r3: verify }
-  optional: { o1: api_delta, o2: events, o3: outputs }
+  required: { phase_goal: required, steps: required, verify: required }
+  optional: { events: optional, api_delta: optional, outputs: optional }
 }
 
 ?["plan_b_integrity_gate"]{
-  require: phases_1_to_4_present
+  require: phases_defined_in_blocks
+  require: phase_total_4
   require: runtime_signal_mapping_explicit
-  require: no_interaction_regression_scope
   on_fail: emit_repair_packet
 }
 
 !probe{
-  id: plan_b.ethos_diagnostics_probe
-  ask: hydration_diagnostics_ui_layers_are_decoupled
+  id: plan_b.phase_block_probe
+  ask: ethos_plan_uses_titled_phase_blocks
 }
 
 ^summary{
@@ -43,131 +38,129 @@
 }
 
 ^current_gaps{
-  g1: claims_hardcoded_not_hydrated_from_spw
-  g2: status_model_single_string_overwrite
-  g3: runtime_signal_coverage_partial
-  g4: missing_claim_status_state_machine
-  g5: no_custom_runtime_cycle_diagnostics_feed
+  claims_hydration: hardcoded_not_spw_canon
+  status_model: single_string_overwrite
+  signal_coverage: partial_runtime_signals_only
+  claim_states: missing_untested_active_confirmed_refuted_model
+  diagnostics_feed: missing_custom_runtime_cycle_feed
 }
 
-^phase_01_claim_hydration{
-  phase_goal: hydrate_claims_from_spw_canon_with_fallback
-  module: book_scripts_modules_ethos_claims
-  steps: {
-    s1: fetch_normalize_spw_source_claims_chapter_claims
-    s2: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
-    s3: normalize_to_runtime_claim_shape
-    s4: attach_source_metadata_remote_or_fallback_reason
-    s5: fallback_to_local_constants_on_fetch_or_parse_failure
+^phases["Ethos Integration Rollout"]{
+  ^phase["Canon Claim Hydration"]{
+    phase_goal: hydrate_claims_from_spw_canon_with_fallback
+    module: book_scripts_modules_ethos_claims
+    steps: {
+      fetch: fetch_normalize_spw_source_claims_chapter_claims
+      parse: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
+      normalize: normalize_to_runtime_claim_shape
+      metadata: attach_source_metadata_remote_or_fallback_reason
+      fallback: fallback_to_local_constants_on_fetch_or_parse_failure
+    }
+    verify: {
+      remote_success: remote_claims_parse_success_path
+      fallback_fetch: fallback_fetch_failed_path
+      fallback_parse: fallback_parse_failed_path
+    }
   }
-  verify: {
-    v1: remote_claims_parse_success_path
-    v2: fallback_fetch_failed_path
-    v3: fallback_parse_failed_path
-  }
-}
 
-^phase_02_diagnostics_engine{
-  phase_goal: create_runtime_diagnostic_signal_model_and_claim_status_machine
-  module: book_scripts_modules_ethos_diagnostics
-  events: {
-    e1: lore_load_stage
-    e2: lore_spw_selection
-    e3: lore_ebook_section_change
-    e4: lore_acoustics_profile
-    e5: lore_preference_change
-    e6: lore_spw_runtime_cycle
+  ^phase["Ethos Diagnostics Engine"]{
+    phase_goal: create_runtime_diagnostic_signal_model_and_claim_status_machine
+    module: book_scripts_modules_ethos_diagnostics
+    events: {
+      load_stage: lore_load_stage
+      selection: lore_spw_selection
+      section_change: lore_ebook_section_change
+      acoustics: lore_acoustics_profile
+      preferences: lore_preference_change
+      runtime_cycle: lore_spw_runtime_cycle
+    }
+    steps: {
+      normalize: normalize_signal_packets
+      buffer: maintain_ring_buffer_limit_24_default
+      counters: maintain_per_claim_evidence_and_error_counters
+      transitions: transition_status_untested_active_confirmed_refuted
+      observability: emit_observability_events
+    }
+    api_delta: {
+      ethos_diagnostic_event: lore_ethos_diagnostic
+      claim_status_event: lore_ethos_claim_status
+    }
+    verify: {
+      deterministic: deterministic_status_transitions
+      refutation: refutation_path_on_error_cycle
+      scope: session_scope_non_persistent_status
+    }
   }
-  steps: {
-    s1: normalize_signal_packets
-    s2: maintain_ring_buffer_limit_24_default
-    s3: maintain_per_claim_evidence_and_error_counters
-    s4: transition_status_untested_active_confirmed_refuted
-    s5: emit_observability_events
-  }
-  api_delta: {
-    out_event_1: lore_ethos_diagnostic
-    out_event_2: lore_ethos_claim_status
-  }
-  verify: {
-    v1: deterministic_status_transitions
-    v2: refutation_path_on_error_cycle
-    v3: session_scope_non_persistent_status
-  }
-}
 
-^phase_03_ethos_panel_integration{
-  phase_goal: wire_hydration_and_diagnostics_into_panel_without_interaction_changes
-  module: book_scripts_modules_spw_ethos
-  steps: {
-    s1: async_claim_hydration_integration
-    s2: diagnostics_engine_attachment
-    s3: render_per_claim_status_and_evidence
-    s4: render_compact_recent_signal_readout
-    s5: preserve_layer_filtering_and_setLayer_contract
-    s6: preserve_entrypoint_callsites
+  ^phase["Integrate Into Ethos Panel"]{
+    phase_goal: wire_hydration_and_diagnostics_into_panel_without_interaction_changes
+    module: book_scripts_modules_spw_ethos
+    steps: {
+      hydration: async_claim_hydration_integration
+      diagnostics: diagnostics_engine_attachment
+      status: render_per_claim_status_and_evidence
+      readout: render_compact_recent_signal_readout
+      filtering: preserve_layer_filtering_and_setLayer_contract
+      callsites: preserve_entrypoint_callsites
+    }
+    state_hooks: {
+      panel: { source: data_ethos_source, mode: data_ethos_diagnostic_mode, last_signal: data_ethos_last_signal, signal_count: data_ethos_signal_count }
+      claim: { status: data_claim_status, evidence: data_claim_evidence, errors: data_claim_errors }
+    }
+    verify: {
+      click_behavior: click_behavior_regression_none
+      parity: home_chapter_status_parity
+      cleanup: destroy_cleans_listeners_and_state
+    }
   }
-  state_hooks: {
-    panel: { h1: data_ethos_source, h2: data_ethos_diagnostic_mode, h3: data_ethos_last_signal, h4: data_ethos_signal_count }
-    claim: { h1: data_claim_status, h2: data_claim_evidence, h3: data_claim_errors }
-  }
-  verify: {
-    v1: click_behavior_regression_none
-    v2: home_chapter_status_parity
-    v3: destroy_cleans_listeners_and_state
-  }
-}
 
-^phase_04_styling_docs_hardening{
-  phase_goal: ship_readable_status_visuals_and_update_spw_docs
-  targets: {
-    t1: book_styles_components_cards_css
-    t2: book_styles_home_sections_css
-    t3: spw_index
-    t4: spw_workspace
-    t5: optional_claim_schema_enrichment
-  }
-  steps: {
-    s1: add_visual_states_untested_active_confirmed_refuted
-    s2: validate_mobile_and_wide_breakpoint_legibility
-    s3: align_claim_schema_fields_with_claim_protocol
-  }
-  verify: {
-    v1: visual_regression_grid_stream_book_variants_clear
-    v2: docs_and_runtime_contracts_in_sync
+  ^phase["Styling Docs and Hardening"]{
+    phase_goal: ship_readable_status_visuals_and_update_spw_docs
+    targets: {
+      cards_css: book_styles_components_cards_css
+      sections_css: book_styles_home_sections_css
+      spw_index: spw_index
+      spw_workspace: spw_workspace
+      claims_schema: optional_claim_schema_enrichment
+    }
+    steps: {
+      states: add_visual_states_untested_active_confirmed_refuted
+      responsiveness: validate_mobile_and_wide_breakpoint_legibility
+      schema: align_claim_schema_fields_with_claim_protocol
+    }
+    verify: {
+      visuals: visual_regression_grid_stream_book_variants_clear
+      docs_runtime: docs_and_runtime_contracts_in_sync
+    }
   }
 }
 
 ^public_api_additions{
   function: initSpwEthosIntegration
-  options: {
-    claimsUrl: normalizeSpwSource_claims_chapter_claims
-    diagnosticsLimit: 24
-    diagnosticMode: runtime
-  }
-  existing_contract: { c1: setLayer, c2: destroy }
-  emitted_events: { e1: lore_ethos_diagnostic, e2: lore_ethos_claim_status }
-  local_types: { t1: EthosClaim, t2: EthosDiagnostic, t3: EthosClaimStatus }
+  options: { claimsUrl: normalizeSpwSource_claims_chapter_claims, diagnosticsLimit: 24, diagnosticMode: runtime }
+  existing_contract: { setLayer: preserved, destroy: preserved }
+  emitted_events: { ethos_diagnostic: lore_ethos_diagnostic, claim_status: lore_ethos_claim_status }
+  local_types: { claim: EthosClaim, diagnostic: EthosDiagnostic, claim_status: EthosClaimStatus }
 }
 
 ^test_matrix{
-  hydration: { t1: remote_parse_ok, t2: fetch_404_fallback, t3: parse_error_fallback }
-  signal_mapping: { t1: load_stage_pipeline_mapping, t2: selection_mapping, t3: section_change_mapping, t4: runtime_cycle_error_refutation }
-  behavior_regression: { t1: claim_handle_click_flow_unchanged, t2: setLayer_behavior_unchanged, t3: destroy_cleanup_no_leaks }
-  parity: { t1: home_context, t2: chapter_context }
-  visual: { t1: status_chip_legibility, t2: diagnostics_readout_legibility }
+  hydration: { remote: remote_parse_ok, fetch_fallback: fetch_404_fallback, parse_fallback: parse_error_fallback }
+  signal_mapping: { load: load_stage_pipeline_mapping, selection: selection_mapping, section: section_change_mapping, runtime_error: runtime_cycle_error_refutation }
+  behavior_regression: { claim_handle: claim_handle_click_flow_unchanged, set_layer: setLayer_behavior_unchanged, destroy: destroy_cleanup_no_leaks }
+  parity: { home: home_context, chapter: chapter_context }
+  visuals: { status_chip: status_chip_legibility, diagnostics_readout: diagnostics_readout_legibility }
 }
 
 ^rollout_strategy{
-  milestone_a: phase_01_only_with_fallback
-  milestone_b: phase_02_wired_minimal_ui
-  milestone_c: phase_03_home_and_chapter_integration
-  milestone_d: phase_04_styling_docs_acceptance
+  milestone_a: claim_hydration_only_with_fallback
+  milestone_b: diagnostics_engine_wired_minimal_ui
+  milestone_c: panel_integration_home_and_chapter
+  milestone_d: styling_docs_acceptance
 }
 
 ^assumptions{
-  a1: changes_local_to_lore_land_and_local_spw_canon
-  a2: no_workbench_submodule_change_required_for_first_release
-  a3: spw_files_same_origin_when_available
-  a4: claim_status_session_scoped_default
+  scope: changes_local_to_lore_land_and_spw_canon
+  workbench: no_submodule_changes_required_for_first_release
+  hosting: spw_files_same_origin_when_available
+  persistence: claim_status_session_scoped_default
 }
