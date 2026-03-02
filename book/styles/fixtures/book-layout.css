@@ -1,34 +1,33 @@
 /* book-layout.css
  * Size-specific layout and rendering rules for lore.land chapters.
  *
- * Three tiers of viewport-based layout:
- *   phone      (< 40rem)   — single column, compact, thumb-friendly
- *   tablet     (40rem–70rem) — wider measure, optional aside
- *   desktop    (≥ 70rem)    — grid handled by root.css, refinements here
+ * Breakpoint tiers (viewport):
+ *   phone      (< 40rem / ~640px)  — single column, compact, thumb-friendly
+ *   tablet     (40rem–70rem)       — wider measure, optional aside
+ *   desktop    (≥ 70rem / ~1120px) — grid from root.css, refinements here
+ *   wide       (≥ 90rem / ~1440px) — wider grid proportions
+ *   ultra-wide (≥ 100rem / ~1600px)— cinematic spacing
  *
- * Container queries on the chapter-main container (registered in root.css)
- * adapt prose rendering to the actual content width.
+ * Container queries on chapter-main (registered in root.css)
+ * adapt prose to actual content width.
+ *
+ * Also absorbs the responsive rules formerly in root.css lines 1452–1603.
  */
 
 @layer typography {
 
     /* ═══════════════════════════════════════════════════════════════
-   * PHONE: single-column reading pane
-   * Max width ≈ 640px
+   * PHONE: single-column reading pane  (< 40rem ≈ 640px)
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (max-width: 39.99rem) {
 
-        /* ─── Padding ────────────────────────────────────────────── */
+        /* ─── Layout & padding ───────────────────────────────────── */
         main.chapter {
             padding: 0.8rem 0.9rem 1.2rem;
             border-radius: 0;
             border-left: none;
             border-right: none;
-        }
-
-        /* ─── Reading measure: full width, smaller text ──────────── */
-        main.chapter {
             --chapter-measure: 100%;
             --chapter-line-height: 1.72;
             --chapter-flow-gap: 0.7rem;
@@ -36,7 +35,18 @@
             font-size: 0.95rem;
         }
 
-        /* ─── Headings: tighter on phone ─────────────────────────── */
+        main.chapter p,
+        main.chapter li,
+        main.chapter blockquote,
+        main.chapter ul,
+        main.chapter ol,
+        main.chapter h1,
+        main.chapter section>h2,
+        .chapter-byline {
+            max-width: 100%;
+        }
+
+        /* ─── Headings ────────────────────────────────────────────── */
         .chapter h1 {
             font-size: 1.8rem !important;
             line-height: 1.12;
@@ -53,25 +63,26 @@
             font-size: 1rem !important;
         }
 
-        /* ─── Drop cap: smaller on phone ─────────────────────────── */
+        /* ─── Drop cap ───────────────────────────────────────────── */
         .chapter section:first-of-type>p:first-of-type::first-letter,
-        .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter {
+        .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter,
+        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+        main.chapter>p:first-of-type::first-letter {
             font-size: 2.8em !important;
         }
 
-        /* ─── Running header: abbreviated ────────────────────────── */
+        /* ─── Running header ─────────────────────────────────────── */
         .chapter::before {
             font-size: 0.58rem;
             letter-spacing: 0.1em;
             margin-bottom: 0.8rem;
         }
 
-        /* ─── Prose: looser paragraphs on narrow screens ─────────── */
+        /* ─── Prose ───────────────────────────────────────────────── */
         .chapter p+p {
             text-indent: 1.2em;
         }
 
-        /* ─── Section divider: simpler on phone ──────────────────── */
         .chapter section+section::before {
             letter-spacing: 0.3em;
             margin-bottom: 0.7rem;
@@ -82,7 +93,7 @@
             display: none;
         }
 
-        /* ─── Interlocutor: thinner border, tighter padding ──────── */
+        /* ─── Interlocutor ───────────────────────────────────────── */
         [data-spw-grammar="interlocutor"] {
             padding: 0.5rem 0.7rem;
             margin-left: 0;
@@ -93,23 +104,36 @@
             display: none;
         }
 
-        /* ─── Custom components: tighter on phone ────────────────── */
+        /* ─── Components ─────────────────────────────────────────── */
         [data-spw-component] {
             padding: 0.45rem 0.6rem;
         }
 
+        main.chapter>[data-ebook-section="true"] {
+            padding: 0.2rem 0.1rem;
+        }
+
+        main.chapter>[data-ebook-section="true"]::before {
+            left: -0.2rem;
+            top: 0.55rem;
+            bottom: 0.55rem;
+        }
+
         /* ─── Navigation: stack vertically ───────────────────────── */
-        .chapter-navigation {
+        .chapter-navigation,
+        .section-navigation {
             flex-direction: column;
+            flex-wrap: wrap;
             gap: 0.4rem;
         }
 
-        .chapter-navigation button {
-            min-width: auto;
+        .chapter-navigation button,
+        .section-navigation button {
             width: 100%;
+            min-width: 0;
         }
 
-        /* ─── Aside: full width, collapsed ───────────────────────── */
+        /* ─── Aside ──────────────────────────────────────────────── */
         aside {
             border-radius: 0;
             border-left: none;
@@ -117,22 +141,74 @@
             padding: 0.8rem 0.9rem;
         }
 
-        /* ─── Progress bar: slightly taller for touch ────────────── */
+        main.chapter,
+        main:not(.chapter),
+        aside {
+            padding: 1rem;
+        }
+
+        /* ─── Panels: compact on phone ───────────────────────────── */
+        .chapter-progress-panel,
+        .spw-hypertext-routes,
+        .ebook-nav-panel,
+        .spw-ethos-panel,
+        .story-attribution-panel,
+        .ebook-lsp-panel {
+            padding: 0.62rem;
+        }
+
+        /* ─── Switch groups: 2-col grid on phone ─────────────────── */
+        .ebook-register-switch,
+        .ebook-perspective-switch,
+        .ebook-syntax-switch,
+        .ebook-payload-switch,
+        .ebook-nav-controls,
+        .ebook-concept-rail,
+        .ethos-layer-switch {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .ebook-register-button,
+        .ebook-perspective-button,
+        .ebook-syntax-button,
+        .ebook-payload-button,
+        .ebook-nav-controls button,
+        .ebook-toc-link,
+        .ebook-concept-link,
+        .ebook-lsp-link,
+        .ethos-layer-button,
+        .ethos-claim-handle {
+            width: 100%;
+            min-height: 2.2rem;
+        }
+
+        .ethos-operator-list {
+            grid-template-columns: 1fr;
+        }
+
+        .ebook-toc,
+        .ethos-claim-list,
+        .ebook-lsp-list {
+            max-height: none;
+        }
+
+        /* ─── Progress bar ───────────────────────────────────────── */
         .reading-progress {
             height: 4px;
         }
 
-        /* ─── Lifecycle breadcrumb: hidden on phone ──────────────── */
+        /* ─── Lifecycle breadcrumb: hidden ────────────────────────── */
         .lifecycle-breadcrumb {
             display: none;
         }
 
-        /* ─── Print button: full width ───────────────────────────── */
+        /* ─── Print button ───────────────────────────────────────── */
         .print-context-button {
             width: 100%;
         }
 
-        /* ─── Images: bleed to edges ─────────────────────────────── */
+        /* ─── Images: edge bleed ─────────────────────────────────── */
         [data-spw-grammar="illustration"] {
             margin-left: -0.9rem;
             margin-right: -0.9rem;
@@ -143,50 +219,73 @@
         }
     }
 
+    /* Very narrow phone (< 28rem ≈ 448px) */
+    @media (max-width: 28rem) {
+        main.chapter {
+            --chapter-line-height: 1.7;
+            --chapter-flow-gap: 0.64rem;
+        }
+
+        main.chapter h1 {
+            letter-spacing: 0.008em;
+        }
+
+        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+        main.chapter>p:first-of-type::first-letter {
+            font-size: 2.35em;
+            line-height: 0.86;
+        }
+    }
+
+
     /* ═══════════════════════════════════════════════════════════════
-   * TABLET: breathing room, two-column prep
-   * ≈ 640px – 1120px
+   * TABLET  (40rem–70rem ≈ 640px–1120px)
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (min-width: 40rem) and (max-width: 69.99rem) {
 
         main.chapter {
-            --chapter-measure: 60ch;
+            --chapter-measure: 62ch;
             --chapter-line-height: 1.78;
             --chapter-flow-gap: 0.8rem;
             font-size: 1rem;
             padding: 1.2rem 1.4rem 1.6rem;
         }
 
-        .chapter h1 {
-            font-size: clamp(2rem, 4vw, 2.8rem) !important;
+        main.chapter h1 {
+            font-size: clamp(2rem, 4.2vw, 2.5rem) !important;
         }
 
-        .chapter h2 {
-            font-size: clamp(1.3rem, 2.5vw, 1.7rem) !important;
+        main.chapter section>h2 {
+            font-size: clamp(1.3rem, 3.1vw, 1.72rem) !important;
         }
 
-        /* ─── Aside: horizontal card row ─────────────────────────── */
+        main.chapter>[data-ebook-section="true"] {
+            padding: clamp(0.22rem, 0.8vw, 0.46rem);
+        }
+
+        /* ─── Aside: card row ────────────────────────────────────── */
         aside {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
             gap: 0.6rem;
+            padding: clamp(0.9rem, 2vw, 1.3rem);
         }
 
-        /* ─── Navigation: pill-style buttons ──────────────────────── */
+        /* ─── Navigation ─────────────────────────────────────────── */
         .chapter-navigation button {
             min-width: 8rem;
         }
 
-        /* ─── Interlocutor: wider margin for pull-quote effect ────── */
+        /* ─── Interlocutor ───────────────────────────────────────── */
         [data-spw-grammar="interlocutor"] {
             margin-left: var(--spacing-medium);
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * DESKTOP: refinements on the root.css grid
-   * ≥ 1120px
+   * DESKTOP  (≥ 70rem ≈ 1120px)
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (min-width: 70rem) {
@@ -200,26 +299,36 @@
             font-size: 1.05rem;
         }
 
-        /* ─── Interlocutor: larger left margin for drama ─────────── */
         [data-spw-grammar="interlocutor"] {
             margin-left: calc(var(--spacing-medium) * 1.4);
         }
 
-        /* ─── Drop cap: larger on wide screens ───────────────────── */
         .chapter section:first-of-type>p:first-of-type::first-letter,
         .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter {
             font-size: 4.2em !important;
         }
 
-        /* ─── Awakening: more space for breathe room ─────────────── */
         [data-spw-grammar="awakening"] {
             padding: var(--spacing-medium) var(--spacing-large);
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * WIDE DESKTOP: ultra-wide monitor refinements
-   * ≥ 1600px
+   * WIDE DESKTOP  (≥ 90rem ≈ 1440px)
+   * ═══════════════════════════════════════════════════════════════ */
+
+    @media (min-width: 90rem) {
+        main.chapter {
+            --chapter-measure: 67ch;
+            --chapter-line-height: 1.86;
+            --chapter-flow-gap: 0.9rem;
+        }
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+   * ULTRA-WIDE  (≥ 100rem ≈ 1600px)
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (min-width: 100rem) {
@@ -233,21 +342,19 @@
             font-size: 3.8rem !important;
         }
 
-        /* ─── Interlocutor: cinematic left margin ────────────────── */
         [data-spw-grammar="interlocutor"] {
             margin-left: calc(var(--spacing-large) * 2);
             max-width: 55ch;
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * CONTAINER QUERIES — adapt to actual chapter content width
-   * These respond to the chapter-main container (inline-size)
+   * CONTAINER QUERIES — chapter-main inline-size
    * ═══════════════════════════════════════════════════════════════ */
 
-    /* Narrow content pane (< 500px available) */
+    /* Narrow content pane (< 500px) */
     @container chapter-main (max-width: 500px) {
-
         .chapter h1 {
             font-size: 1.6rem;
             letter-spacing: 0.02em;
@@ -277,7 +384,6 @@
 
     /* Medium content pane (500px–800px) */
     @container chapter-main (min-width: 501px) and (max-width: 800px) {
-
         .chapter h1 {
             font-size: clamp(1.8rem, 3.5cqi, 2.4rem);
         }
@@ -289,24 +395,21 @@
 
     /* Wide content pane (> 800px) */
     @container chapter-main (min-width: 801px) {
-
         .chapter h1 {
             font-size: clamp(2.4rem, 4cqi, 3.6rem);
         }
 
-        /* ─── Side notes on wide pane ────────────────────────────── */
         [data-spw-grammar="modifier"] {
             max-width: 50ch;
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * ORIENTATION — landscape phone adjustments
+   * ORIENTATION — landscape phone
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (max-height: 500px) and (orientation: landscape) {
-
-        /* Compact vertical spacing in landscape mode */
         main.chapter {
             --chapter-flow-gap: 0.5rem;
             padding-top: 0.5rem;
@@ -317,7 +420,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Hide fixed elements that waste vertical space */
         .reading-progress {
             height: 2px;
         }
@@ -327,14 +429,13 @@
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * HIGH-DPI — sharper rendering for retina displays
+   * HIGH-DPI — retina rendering
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
-
-        /* Thinner borders on retina — 0.5px optical */
         .chapter section+section {
             border-top-width: 0.5px;
         }
@@ -351,18 +452,17 @@
             border-radius: 0 1px 1px 0;
         }
 
-        /* Crisper interlocutor border */
         [data-spw-grammar="interlocutor"] {
             border-left-width: 1.5px;
         }
     }
 
+
     /* ═══════════════════════════════════════════════════════════════
-   * DARK MODE — adjust book-specific surfaces
+   * DARK MODE — book-specific surface adjustments
    * ═══════════════════════════════════════════════════════════════ */
 
     @media (prefers-color-scheme: dark) {
-
         .chapter h1 {
             filter: drop-shadow(0 2px 12px rgba(118, 203, 255, 0.2));
         }

@@ -43,23 +43,24 @@
 }
 
 :root {
-    /* Motif/trope/foreshadowing component-level variables */
-    --motif-color: var(--theme-accent-main);
-    --motif-bg: var(--theme-bg-content-strong);
-    --motif-shadow: 0 2px 12px var(--theme-accent-main);
-    --motif-shadow-strong: 0 4px 24px var(--theme-accent-alt);
-    --motif-gradient: linear-gradient(120deg, var(--motif-color) 0%, var(--theme-accent-alt) 100%);
-    --motif-foreshadow: 0 0 0 3px var(--theme-accent-alt);
+  /* Motif/trope/foreshadowing component-level variables */
+  --motif-color: var(--theme-accent-main);
+  --motif-bg: var(--theme-bg-content-strong);
+  --motif-shadow: 0 2px 12px var(--theme-accent-main);
+  --motif-shadow-strong: 0 4px 24px var(--theme-accent-alt);
+  --motif-gradient: linear-gradient(120deg, var(--motif-color) 0%, var(--theme-accent-alt) 100%);
+  --motif-foreshadow: 0 0 0 3px var(--theme-accent-alt);
 
-    --trope-color: #b07cff;
-    --trope-bg: #f6f0ff;
-    --trope-shadow: 0 2px 12px #b07cff44;
-    --trope-gradient: linear-gradient(120deg, #b07cff 0%, #6e4cff 100%);
+  --trope-color: #b07cff;
+  --trope-bg: #f6f0ff;
+  --trope-shadow: 0 2px 12px #b07cff44;
+  --trope-gradient: linear-gradient(120deg, #b07cff 0%, #6e4cff 100%);
 
-    --foreshadow-color: #ffb347;
-    --foreshadow-bg: #fff7e6;
-    --foreshadow-shadow: 0 0 0 3px #ffb34799;
-    --foreshadow-gradient: linear-gradient(120deg, #ffb347 0%, #ff7f50 100%);
+  --foreshadow-color: #ffb347;
+  --foreshadow-bg: #fff7e6;
+  --foreshadow-shadow: 0 0 0 3px #ffb34799;
+  --foreshadow-gradient: linear-gradient(120deg, #ffb347 0%, #ff7f50 100%);
+
   /* Ergonomic component-level styling for motifs, tropes, foreshadowing */
   [data-motif] {
     --component-color: var(--motif-color);
@@ -95,6 +96,7 @@
     background: var(--component-bg);
     box-shadow: var(--component-shadow);
   }
+
   /* Theme generalizability */
   --theme-mode: light;
   --theme-bg-main: var(--color-bg-main);
@@ -112,7 +114,8 @@
   --theme-glass-border: var(--glass-border);
   --theme-paper-fiber: var(--paper-fiber);
   --theme-paper-fiber-strong: var(--paper-fiber-strong);
-  --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px), repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
+  --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px),
+  repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
   --theme-glassmorphism: linear-gradient(165deg, var(--theme-glass-bg-strong), var(--theme-glass-bg));
   --theme-paper: var(--theme-bg-content);
   --theme-shadow: var(--theme-shadow-main);
@@ -175,11 +178,11 @@
   --chapter-reading-ink: color-mix(in srgb, var(--theme-text-main) 88%, #0b1627 12%);
 }
 
-body > nav.chapter-navigation,
-body > .section-navigation,
-body > main,
-body > aside,
-body > footer {
+body>nav.chapter-navigation,
+body>.section-navigation,
+body>main,
+body>aside,
+body>footer {
   width: min(100%, var(--max-width-content));
   margin: 0 auto;
 }
@@ -188,10 +191,7 @@ body > footer {
   body:has(> main.chapter):has(> aside) {
     display: grid;
     grid-template-columns:
-      minmax(var(--spacing-main), 1fr)
-      minmax(0, 4.3fr)
-      minmax(17rem, 1.65fr)
-      minmax(var(--spacing-main), 1fr);
+      minmax(var(--spacing-main), 1fr) minmax(0, 4.3fr) minmax(17rem, 1.65fr) minmax(var(--spacing-main), 1fr);
     grid-template-areas:
       ". chapter-nav chapter-nav ."
       ". chapter aside ."
@@ -202,16 +202,16 @@ body > footer {
     row-gap: var(--spacing-medium);
   }
 
-  body:has(> main.chapter):has(> aside) > nav.chapter-navigation,
-  body:has(> main.chapter):has(> aside) > main.chapter,
-  body:has(> main.chapter):has(> aside) > .section-navigation,
-  body:has(> main.chapter):has(> aside) > aside,
-  body:has(> main.chapter):has(> aside) > footer {
+  body:has(> main.chapter):has(> aside)>nav.chapter-navigation,
+  body:has(> main.chapter):has(> aside)>main.chapter,
+  body:has(> main.chapter):has(> aside)>.section-navigation,
+  body:has(> main.chapter):has(> aside)>aside,
+  body:has(> main.chapter):has(> aside)>footer {
     width: 100%;
     margin: 0;
   }
 
-  body:has(> main.chapter):has(> aside) > nav.chapter-navigation {
+  body:has(> main.chapter):has(> aside)>nav.chapter-navigation {
     grid-area: chapter-nav;
     position: sticky;
     top: 0.25rem;
@@ -224,12 +224,12 @@ body > footer {
     -webkit-backdrop-filter: blur(3px) saturate(1.05);
   }
 
-  body:has(> main.chapter):has(> aside) > main.chapter {
+  body:has(> main.chapter):has(> aside)>main.chapter {
     grid-area: chapter;
     min-width: 0;
   }
 
-  body:has(> main.chapter):has(> aside) > .section-navigation {
+  body:has(> main.chapter):has(> aside)>.section-navigation {
     grid-area: section-nav;
     min-width: 0;
     position: sticky;
@@ -237,7 +237,7 @@ body > footer {
     z-index: 16;
   }
 
-  body:has(> main.chapter):has(> aside) > aside {
+  body:has(> main.chapter):has(> aside)>aside {
     grid-area: aside;
     min-width: 0;
     position: sticky;
@@ -248,7 +248,7 @@ body > footer {
     scrollbar-gutter: stable;
   }
 
-  body:has(> main.chapter):has(> aside) > footer {
+  body:has(> main.chapter):has(> aside)>footer {
     grid-area: footer;
   }
 }
@@ -293,30 +293,32 @@ main.chapter {
 
 @layer root.states {
 
-body[data-chapter-mode="dawn"] main.chapter,
-body[data-chapter-mode="signal"] main.chapter,
-body[data-chapter-mode="song"] main.chapter {
-  background:
-    linear-gradient(160deg, rgba(168, 210, 255, 0.2), rgba(255, 255, 255, 0.62)),
-    var(--color-bg-content);
+  body[data-chapter-mode="dawn"] main.chapter,
+  body[data-chapter-mode="signal"] main.chapter,
+  body[data-chapter-mode="song"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(168, 210, 255, 0.2), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
+  body[data-chapter-mode="rift"] main.chapter,
+  body[data-chapter-mode="paradox"] main.chapter,
+  body[data-chapter-mode="canon"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(226, 186, 255, 0.18), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
+  body[data-chapter-mode="resonance"] main.chapter,
+  body[data-chapter-mode="confluence"] main.chapter {
+    background:
+      linear-gradient(160deg, rgba(164, 239, 220, 0.2), rgba(255, 255, 255, 0.62)),
+      var(--color-bg-content);
+  }
+
 }
 
-body[data-chapter-mode="rift"] main.chapter,
-body[data-chapter-mode="paradox"] main.chapter,
-body[data-chapter-mode="canon"] main.chapter {
-  background:
-    linear-gradient(160deg, rgba(226, 186, 255, 0.18), rgba(255, 255, 255, 0.62)),
-    var(--color-bg-content);
-}
-
-body[data-chapter-mode="resonance"] main.chapter,
-body[data-chapter-mode="confluence"] main.chapter {
-  background:
-    linear-gradient(160deg, rgba(164, 239, 220, 0.2), rgba(255, 255, 255, 0.62)),
-    var(--color-bg-content);
-}
-
-} /* @layer root.states */
+/* @layer root.states */
 
 main.chapter::after {
   content: "";
@@ -324,11 +326,9 @@ main.chapter::after {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0)
-  );
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0));
 }
 
 main.chapter::before {
@@ -351,11 +351,11 @@ body[data-motif-overlay="on"] main.chapter::before {
   opacity: 0.2;
 }
 
-main.chapter > * + * {
+main.chapter>*+* {
   margin-top: var(--spacing-medium);
 }
 
-main.chapter > * {
+main.chapter>* {
   position: relative;
   z-index: 1;
 }
@@ -368,7 +368,7 @@ main.chapter h1 {
   text-wrap: balance;
 }
 
-main.chapter section > h2 {
+main.chapter section>h2 {
   margin-bottom: 0.35rem;
   color: var(--color-accent-main);
   max-width: min(100%, calc(var(--chapter-measure, var(--chapter-reading-measure)) + 3ch));
@@ -395,7 +395,7 @@ main.chapter blockquote {
   hyphens: auto;
 }
 
-main.chapter p + p {
+main.chapter p+p {
   margin-top: var(--chapter-flow-gap);
 }
 
@@ -412,8 +412,8 @@ main.chapter blockquote {
   font-style: italic;
 }
 
-main.chapter > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
-main.chapter > p:first-of-type::first-letter {
+main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
+main.chapter>p:first-of-type::first-letter {
   float: left;
   font-size: 3em;
   line-height: 0.82;
@@ -480,7 +480,7 @@ main:not(.chapter) form label {
   align-items: start;
 }
 
-main:not(.chapter) form label > span {
+main:not(.chapter) form label>span {
   color: var(--color-text-alt);
   font-size: 0.95rem;
   font-family: var(--font-family-heading);
@@ -575,7 +575,7 @@ aside {
   gap: 0.3rem;
 }
 
-.chapter-tuning-controls label > span {
+.chapter-tuning-controls label>span {
   font-family: var(--font-family-heading);
   font-size: 0.8rem;
   color: var(--color-text-alt);
@@ -652,7 +652,7 @@ aside ul#lore-collector li {
   background: var(--theme-paper);
 }
 
-aside ul#lore-collector li + li {
+aside ul#lore-collector li+li {
   margin-top: 0.35rem;
 }
 
@@ -709,16 +709,12 @@ aside .additional-links a:focus-visible {
   border-radius: var(--border-radius-small);
   padding: clamp(0.5rem, 1.1vw, 0.78rem);
   background:
-    linear-gradient(
-      165deg,
+    linear-gradient(165deg,
       color-mix(in srgb, var(--spw-runtime-surface-strong) 86%, transparent 14%),
-      color-mix(in srgb, var(--spw-runtime-surface) 92%, transparent 8%)
-    );
+      color-mix(in srgb, var(--spw-runtime-surface) 92%, transparent 8%));
   box-shadow:
     0 1px 0 color-mix(in srgb, var(--spw-runtime-surface-strong) 72%, transparent 28%),
-    0 calc(8px + (var(--spw-runtime-depth-score) * 2px))
-      calc(18px + (var(--spw-runtime-depth-score) * 5px))
-      color-mix(in srgb, var(--spw-runtime-glow) 62%, transparent 38%);
+    0 calc(8px + (var(--spw-runtime-depth-score) * 2px)) calc(18px + (var(--spw-runtime-depth-score) * 5px)) color-mix(in srgb, var(--spw-runtime-glow) 62%, transparent 38%);
   transform: translateZ(calc(var(--spw-runtime-depth-score) * 0.8px));
   transition:
     box-shadow var(--transition-duration) var(--transition-function),
@@ -744,8 +740,7 @@ aside .additional-links a:focus-visible {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  border: var(--border-width) var(--border-style)
-    color-mix(in srgb, var(--spw-runtime-accent) 42%, transparent 58%);
+  border: var(--border-width) var(--border-style) color-mix(in srgb, var(--spw-runtime-accent) 42%, transparent 58%);
   border-radius: var(--border-radius-pill);
   font-size: 0.67rem;
   line-height: 1;
@@ -773,18 +768,14 @@ aside .additional-links a:focus-visible {
   border-color: color-mix(in srgb, var(--spw-runtime-accent) 56%, transparent 44%);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-runtime-accent) 34%, transparent 66%),
-    0 calc(10px + (var(--spw-runtime-depth-score) * 2px))
-      calc(24px + (var(--spw-runtime-depth-score) * 5px))
-      color-mix(in srgb, var(--spw-runtime-glow) 72%, transparent 28%);
+    0 calc(10px + (var(--spw-runtime-depth-score) * 2px)) calc(24px + (var(--spw-runtime-depth-score) * 5px)) color-mix(in srgb, var(--spw-runtime-glow) 72%, transparent 28%);
 }
 
 [data-spw-component][data-spw-runtime-state="resolved"] {
   border-color: color-mix(in srgb, var(--spw-runtime-outline) 74%, transparent 26%);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--spw-runtime-outline) 54%, transparent 46%),
-    0 calc(9px + (var(--spw-runtime-depth-score) * 2px))
-      calc(20px + (var(--spw-runtime-depth-score) * 5px))
-      color-mix(in srgb, var(--spw-runtime-glow) 60%, transparent 40%);
+    0 calc(9px + (var(--spw-runtime-depth-score) * 2px)) calc(20px + (var(--spw-runtime-depth-score) * 5px)) color-mix(in srgb, var(--spw-runtime-glow) 60%, transparent 40%);
 }
 
 [data-spw-component][data-spw-runtime-state="error"] {
@@ -855,7 +846,7 @@ main.chapter {
   counter-reset: ebook-section;
 }
 
-main.chapter > [data-ebook-section="true"] {
+main.chapter>[data-ebook-section="true"] {
   counter-increment: ebook-section;
   scroll-margin-top: 4.5rem;
   border-radius: var(--border-radius-small);
@@ -867,7 +858,7 @@ main.chapter > [data-ebook-section="true"] {
     box-shadow var(--transition-duration) var(--transition-function);
 }
 
-main.chapter > [data-ebook-section="true"]::before {
+main.chapter>[data-ebook-section="true"]::before {
   content: "";
   position: absolute;
   left: -0.34rem;
@@ -875,15 +866,13 @@ main.chapter > [data-ebook-section="true"]::before {
   bottom: 0.7rem;
   width: 2px;
   border-radius: var(--border-radius-pill);
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--theme-accent-main) 62%, transparent 38%),
-    color-mix(in srgb, var(--theme-accent-alt) 34%, transparent 66%)
-  );
+  background: linear-gradient(to bottom,
+      color-mix(in srgb, var(--theme-accent-main) 62%, transparent 38%),
+      color-mix(in srgb, var(--theme-accent-alt) 34%, transparent 66%));
   opacity: 0.42;
 }
 
-main.chapter > [data-ebook-section="true"] > h2::before {
+main.chapter>[data-ebook-section="true"]>h2::before {
   content: "§" counter(ebook-section, decimal-leading-zero) " ";
   color: var(--theme-accent-alt);
   font-family: var(--font-family-heading);
@@ -891,12 +880,12 @@ main.chapter > [data-ebook-section="true"] > h2::before {
   letter-spacing: 0.05em;
 }
 
-main.chapter > [data-ebook-section="true"].is-ebook-active {
+main.chapter>[data-ebook-section="true"].is-ebook-active {
   box-shadow: inset 3px 0 0 rgba(42, 111, 127, 0.44);
   background: color-mix(in srgb, var(--theme-paper) 88%, rgba(42, 111, 127, 0.12) 12%);
 }
 
-main.chapter > [data-ebook-section="true"].is-ebook-active::before {
+main.chapter>[data-ebook-section="true"].is-ebook-active::before {
   opacity: 0.84;
 }
 
@@ -1064,16 +1053,16 @@ body[data-readability-band="open"] main.chapter {
   box-shadow: inset 0 0 0 1px rgba(38, 88, 124, 0.2);
 }
 
-main.chapter > [data-ebook-section="true"][data-ebook-filter-match="false"] {
+main.chapter>[data-ebook-section="true"][data-ebook-filter-match="false"] {
   opacity: 0.62;
   filter: saturate(0.88);
 }
 
-main.chapter > [data-ebook-section="true"][data-ebook-filter-match="true"] {
+main.chapter>[data-ebook-section="true"][data-ebook-filter-match="true"] {
   opacity: 1;
 }
 
-main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
+main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   border-left: 2px dashed color-mix(in srgb, var(--theme-accent-alt) 46%, transparent 54%);
   padding-left: 0.45rem;
 }
@@ -1393,21 +1382,62 @@ main.chapter > [data-ebook-section="true"][data-ebook-region="reference"] {
 }
 
 /* ─── Operator role colors in ethos panel (v0.2.0 names) ────────────────── */
-.ethos-operator-token[data-spw-role="ground"]      { color: var(--spw-color-ground,      #7cb87e); }
-.ethos-operator-token[data-spw-role="annotation"]  { color: var(--spw-color-annotation,  #f0a0c8); }
-.ethos-operator-token[data-spw-role="confluence"]  { color: var(--spw-color-confluence,  #86d4f5); }
-.ethos-operator-token[data-spw-role="perspective"] { color: var(--spw-color-perspective, #f5d07a); }
-.ethos-operator-token[data-spw-role="integration"] { color: var(--spw-color-integration, #e5a7ff); }
-.ethos-operator-token[data-spw-role="potential"]   { color: var(--spw-color-potential,   #ffb07a); }
-.ethos-operator-token[data-spw-role="probe"]       { color: var(--spw-color-probe,       #9fd8ff); }
-.ethos-operator-token[data-spw-role="action"]      { color: var(--spw-color-action,      #ff8a8a); }
-.ethos-operator-token[data-spw-role="value"]       { color: var(--spw-color-value,       #c8e6a0); }
-.ethos-operator-token[data-spw-role="config"]      { color: var(--spw-color-config,      #b8d4a8); }
-.ethos-operator-token[data-spw-role="measure"]     { color: var(--spw-color-measure,     #a8c8e8); }
-.ethos-operator-token[data-spw-role="substrate"]   { color: var(--spw-color-substrate,   #d4b8f0); }
+.ethos-operator-token[data-spw-role="ground"] {
+  color: var(--spw-color-ground, #7cb87e);
+}
+
+.ethos-operator-token[data-spw-role="annotation"] {
+  color: var(--spw-color-annotation, #f0a0c8);
+}
+
+.ethos-operator-token[data-spw-role="confluence"] {
+  color: var(--spw-color-confluence, #86d4f5);
+}
+
+.ethos-operator-token[data-spw-role="perspective"] {
+  color: var(--spw-color-perspective, #f5d07a);
+}
+
+.ethos-operator-token[data-spw-role="integration"] {
+  color: var(--spw-color-integration, #e5a7ff);
+}
+
+.ethos-operator-token[data-spw-role="potential"] {
+  color: var(--spw-color-potential, #ffb07a);
+}
+
+.ethos-operator-token[data-spw-role="probe"] {
+  color: var(--spw-color-probe, #9fd8ff);
+}
+
+.ethos-operator-token[data-spw-role="action"] {
+  color: var(--spw-color-action, #ff8a8a);
+}
+
+.ethos-operator-token[data-spw-role="value"] {
+  color: var(--spw-color-value, #c8e6a0);
+}
+
+.ethos-operator-token[data-spw-role="config"] {
+  color: var(--spw-color-config, #b8d4a8);
+}
+
+.ethos-operator-token[data-spw-role="measure"] {
+  color: var(--spw-color-measure, #a8c8e8);
+}
+
+.ethos-operator-token[data-spw-role="substrate"] {
+  color: var(--spw-color-substrate, #d4b8f0);
+}
+
 /* polarity tints on ethos tokens */
-.ethos-operator-token[data-spw-polarity="extrinsic"] { font-style: italic; }
-.ethos-operator-token[data-spw-polarity="intrinsic"] { font-weight: bold; }
+.ethos-operator-token[data-spw-polarity="extrinsic"] {
+  font-style: italic;
+}
+
+.ethos-operator-token[data-spw-polarity="intrinsic"] {
+  font-weight: bold;
+}
 
 /* ─── Nav-shape panel visual state ──────────────────────────────────────── */
 .ebook-nav-panel[data-nav-shape="breadth"] {
@@ -1449,155 +1479,4 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
   line-height: 1.55;
 }
 
-@media (min-width: 48rem) and (max-width: 69.99rem) {
-  main.chapter {
-    --chapter-measure: 64ch;
-    --chapter-line-height: 1.8;
-    --chapter-flow-gap: 0.8rem;
-    padding: clamp(1.1rem, 2.4vw, 1.55rem);
-  }
-
-  main.chapter h1 {
-    font-size: clamp(2rem, 4.2vw, 2.5rem);
-  }
-
-  main.chapter section > h2 {
-    font-size: clamp(1.36rem, 3.1vw, 1.72rem);
-  }
-
-  main.chapter > [data-ebook-section="true"] {
-    padding: clamp(0.22rem, 0.8vw, 0.46rem);
-  }
-
-  aside {
-    padding: clamp(0.9rem, 2vw, 1.3rem);
-  }
-}
-
-@media (min-width: 90rem) {
-  body:has(> main.chapter):has(> aside) {
-    grid-template-columns:
-      minmax(var(--spacing-main), 1fr)
-      minmax(0, 4.7fr)
-      minmax(18rem, 1.5fr)
-      minmax(var(--spacing-main), 1fr);
-  }
-
-  main.chapter {
-    --chapter-measure: 67ch;
-    --chapter-line-height: 1.86;
-    --chapter-flow-gap: 0.9rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .chapter-navigation,
-  .section-navigation {
-    flex-wrap: wrap;
-  }
-
-  .chapter-navigation button,
-  .section-navigation button {
-    width: 100%;
-    min-width: 0;
-  }
-
-  main.chapter,
-  main:not(.chapter),
-  aside {
-    padding: 1rem;
-  }
-
-  main.chapter {
-    --chapter-measure: 100%;
-    --chapter-line-height: 1.76;
-    --chapter-flow-gap: 0.72rem;
-  }
-
-  main.chapter p,
-  main.chapter li,
-  main.chapter blockquote,
-  main.chapter ul,
-  main.chapter ol,
-  main.chapter h1,
-  main.chapter section > h2,
-  .chapter-byline {
-    max-width: 100%;
-  }
-
-  .chapter-navigation,
-  .section-navigation {
-    gap: 0.44rem;
-  }
-
-  .chapter-progress-panel,
-  .spw-hypertext-routes,
-  .ebook-nav-panel,
-  .spw-ethos-panel,
-  .story-attribution-panel,
-  .ebook-lsp-panel {
-    padding: 0.62rem;
-  }
-
-  .ebook-register-switch,
-  .ebook-perspective-switch,
-  .ebook-syntax-switch,
-  .ebook-payload-switch,
-  .ebook-nav-controls,
-  .ebook-concept-rail,
-  .ethos-layer-switch {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .ebook-register-button,
-  .ebook-perspective-button,
-  .ebook-syntax-button,
-  .ebook-payload-button,
-  .ebook-nav-controls button,
-  .ebook-toc-link,
-  .ebook-concept-link,
-  .ebook-lsp-link,
-  .ethos-layer-button,
-  .ethos-claim-handle {
-    width: 100%;
-    min-height: 2.2rem;
-  }
-
-  .ethos-operator-list {
-    grid-template-columns: 1fr;
-  }
-
-  .ebook-toc,
-  .ethos-claim-list,
-  .ebook-lsp-list {
-    max-height: none;
-  }
-
-  main.chapter > [data-ebook-section="true"] {
-    padding: 0.2rem 0.1rem;
-  }
-
-  main.chapter > [data-ebook-section="true"]::before {
-    left: -0.2rem;
-    top: 0.55rem;
-    bottom: 0.55rem;
-  }
-}
-
-@media (max-width: 28rem) {
-  main.chapter {
-    --chapter-line-height: 1.7;
-    --chapter-flow-gap: 0.64rem;
-  }
-
-  main.chapter h1 {
-    letter-spacing: 0.008em;
-  }
-
-  main.chapter > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
-  main.chapter > p:first-of-type::first-letter {
-    font-size: 2.35em;
-    line-height: 0.86;
-  }
-}
+/* Responsive chapter rules moved to book-layout.css */
