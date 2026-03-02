@@ -99,14 +99,38 @@
 }
 
 .hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('../../media/aesthetics/celestial_sun_motif_1772426750991.png');
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.15;
+  filter: saturate(1.2) contrast(1.1);
+}
+
+.hero-panel::after {
   content: "#[canon]  ^[intent]  &[flow]";
   position: absolute;
   top: 0.85rem;
   right: 1rem;
+  z-index: 1;
   font-family: var(--font-family-heading);
   font-size: 0.74rem;
   color: rgba(68, 80, 107, 0.62);
   letter-spacing: 0.08em;
+}
+
+.hero-eyebrow,
+.hero-panel h1,
+.hero-subtitle,
+.hero-stats,
+.hero-actions {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-eyebrow {
