@@ -7,12 +7,13 @@
 .hero-panel h1 {
   font-family: 'LoreLand', var(--font-family-heading);
   letter-spacing: 0.05em;
-  background: var(--color-accent-gradient, linear-gradient(135deg, var(--color-accent-main), var(--color-accent-alt)));
+  background: var(--color-accent-gradient, linear-gradient(135deg, var(--color-celestial-teal), var(--color-burnt-orange)));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(2rem, 5vw, 3.2rem);
   line-height: 1.08;
+  filter: drop-shadow(2px 2px 0px var(--color-stone-shadow));
 }
 
 .chapter-timeline h2,
@@ -137,7 +138,7 @@
 
 [data-spw-lens]:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(38, 88, 124, 0.15);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-celestial-teal) 15%, transparent 85%);
 }
 
 /* ─── Dark mode for home-global elements ─────────────────────── */
@@ -161,4 +162,3 @@
     opacity: 0.78;
   }
 }
-

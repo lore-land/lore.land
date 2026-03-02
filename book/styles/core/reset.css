@@ -36,20 +36,17 @@ body {
   text-rendering: optimizeLegibility;
   background:
     radial-gradient(circle at calc(var(--shader-x) * 1%) calc(var(--shader-y) * 1%),
-      hsla(var(--shader-hue), 90%, 70%, calc(0.05 * var(--shader-strength))) 0%,
+      color-mix(in srgb, var(--color-celestial-teal) calc(5% * var(--shader-strength)), transparent),
       transparent 32%),
     radial-gradient(circle at calc(100% - (var(--shader-x) * 0.6%)) calc(100% - (var(--shader-y) * 0.4%)),
-      hsla(calc(var(--shader-hue) + 50), 84%, 72%, calc(0.04 + (var(--shader-scroll) * 0.05))) 0%,
+      color-mix(in srgb, var(--color-golden-sand) calc(4% + (var(--shader-scroll) * 5%)), transparent),
       transparent 36%),
     radial-gradient(circle at calc(12% + (var(--attention-scroll-progress) * 76%)) 10%,
-      hsla(calc(var(--attention-hue-base) + var(--attention-hue-shift)),
-        76%,
-        66%,
-        calc(0.08 + (var(--attention-scroll-progress) * 0.12))) 0%,
+      color-mix(in srgb, var(--color-burnt-orange) calc(8% + (var(--attention-scroll-progress) * 12%)), transparent),
       transparent 42%),
-    radial-gradient(circle at 0% 0%, var(--bg-gradient-top) 0%, transparent 52%),
-    radial-gradient(circle at 100% 0%, var(--bg-gradient-edge) 0%, transparent 56%),
-    linear-gradient(180deg, var(--bg-color-main) 0%, var(--bg-gradient-bottom) 100%);
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--color-parchment-base) 70%, transparent 30%), transparent 52%),
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-celestial-teal) 15%, transparent 85%), transparent 56%),
+    linear-gradient(180deg, var(--bg-color-main) 0%, color-mix(in srgb, var(--color-parchment-base) 80%, var(--color-stone-shadow) 20%) 100%);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-large);
