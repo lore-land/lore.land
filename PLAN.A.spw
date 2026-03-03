@@ -1,22 +1,39 @@
 #>plan_a
 #:layer #!pragmatics
 
+~<rationale>{
+  Plan A defines the structural migration arc from ad-hoc module
+  organization to a well-factored spw adapter layer. The phase
+  ordering encodes a dependency lattice: audits produce inventories,
+  inventories inform adapter shapes, adapters stabilize before
+  consumers relocate.
+}
+
 ^meta{
   source: "PLAN.A.md"
   dialect: spw_native
   style: phase_block_titles
+  normative_voice: specification
+  phase_count: 26
+  dependency_model: linear_with_checkpoints
 }
 
 &plan_contracts{
   preserve_phase_order: true
   preserve_audit_paths: true
   use_phase_blocks: true
+  #invariant: no_phase_may_alter_runtime_behavior_without_preceding_checkpoint
+  #invariant: every_audit_phase_emits_a_deterministic_artifact_path
 }
 
 ^phase_schema{
   required: { anchor: required, task: required }
   optional: { role: optional, read: optional, deps: optional, verify: optional, refs: optional, notes: optional }
   output_operator: "={ artifact_path }"
+  %constraints: {
+    completeness: every_phase_either_emits_artifact_or_declares_verify_block
+    orphan_detection: phases_without_emit_or_verify_are_nonconformant
+  }
 }
 
 ^anchors{
@@ -32,6 +49,7 @@
     entry_updates: "plan.a.entry_updates"
     mastery: "plan.a.mastery"
   }
+  .note: "nine regions partition the 26 phases into a topologically ordered refactoring sequence"
 }
 
 ^references{
@@ -39,11 +57,17 @@
     semantics: "html + aria + css baseline before runtime movement"
     runtime_alignment: "adapters + register bank before module moves"
     integration_stability: "entry update after css and module colocation"
+    .note: "ordering invariant — each stratum depends on the completeness of the previous"
   }
   overlaps: {
     ethos_runtime: "PLAN.B.spw#ethos-integration-rollout"
     browser_diagnostics: "PLAN.C.spw#chrome-milestone-exploration"
     platform_rendering: "PLAN.D.spw#houdini-apis-exploration"
+  }
+  <cross_plan_deps>{
+    A_to_B: "§adapters adapter_purity_gate -> §B canon_claim_hydration (shape contract)"
+    A_to_C: "§foundation shadow_dom_inventory -> §C encapsulation_model (component boundary input)"
+    A_to_D: "§foundation css_layers_baseline -> §D custom_property_inventory (token catalog input)"
   }
 }
 
@@ -52,14 +76,26 @@
   require: phase_total_26
   require: audit_output_paths_stable
   on_fail: emit_repair_packet
+  .note: "gate failure implies structural regression — halt and emit diagnostic before proceeding"
 }
 
 !probe{
   id: plan_a.phase_block_probe
   ask: every_phase_uses_phase_title_block
+  !assert: deviation_count == 0
 }
 
+?<open_questions>[
+  "§foundation phases 00-05 produce inventories but do not yet define acceptance thresholds —
+   should minimum coverage ratios be normative at this stage or deferred to §mastery?"
+  "§adapters assumes workbench exports are stable — if submodule updates introduce breaking
+   changes to operator_affinities shape, what is the rollback procedure?"
+]
+
 ^phases["Foundation"]{
+  .note: "phases 00-05 — static analysis producing baseline inventories; no runtime mutations"
+  %region_invariant: all_phases_are_read_only
+
   ^phase[00: "Baseline HTML Audit"]{
     anchor: plan.a.foundation.baseline_html_audit
     role: explore_agent
@@ -69,6 +105,7 @@
       inventory: catalog_html_elements
       structure: map_heading_landmark_form_graph
       semantics: flag_nonsemantic_wrappers
+      .note: "produces element-type frequency map, heading outline per page, semantic violation list"
     }
     verify: { inventory: complete, headings: per_page_tree, severity: ranked_semantic_issues }
     ={ "book/audits/01-html-baseline.spw" }
@@ -82,6 +119,13 @@
       layer_map: declared_vs_used
       leaks: detect_unlayered_rules
       properties: catalog_custom_property_orphans
+      %metrics: {
+        orphan_ratio: "count(orphaned_custom_properties) / count(total_custom_properties)"
+        leak_count: "count(rules_outside_any_declared_layer)"
+        leak_specificity: "max(specificity(unlayered_rules))"
+      }
+      .note: "unlayered rules resolve above all @layer declarations per CSS Cascading §6.1 —
+              even a single high-specificity leak can override the entire layer stack"
     }
     ={ "book/audits/02-css-layers-baseline.spw" }
   }
@@ -94,6 +138,13 @@
       breakpoints: map_breakpoints_and_containers
       conflicts: detect_breakpoint_conflicts
       performance: flag_gpu_trigger_hotspots
+      %metrics: {
+        breakpoint_overlap_count: "count(media_queries with overlapping ranges)"
+        container_query_count: "count(distinct container-name declarations)"
+        gpu_trigger_properties: "count(will-change | transform | opacity on non-composited elements)"
+      }
+      .note: "overlapping media query ranges produce nondeterministic style resolution at boundary widths —
+              see CSS Conditional Rules §5 for range context interaction model"
     }
     ={ "book/audits/03-css-responsive-baseline.spw" }
   }
@@ -106,6 +157,9 @@
       names: audit_accessible_names
       live_regions_and_roles: audit_live_regions_and_roles
       keyboard: audit_keyboard_operability
+      #invariant: every_interactive_element_reachable_via_sequential_focus_navigation
+      .note: "conformance target: WCAG 2.2 Level AA — keyboard operability (§2.1),
+              name/role/value (§4.1.2), status messages (§4.1.3)"
     }
     ={ "book/audits/04-aria-baseline.spw" }
   }
@@ -119,6 +173,13 @@
       cycles: detect_circular_dependencies
       responsibility: rate_single_responsibility
       sizing: size_modules
+      %metrics: {
+        cycle_count: "count(strongly_connected_components with size > 1) — MUST equal 0"
+        max_module_loc: "max(lines_of_code per module) — SHOULD be < 400"
+        fan_in_max: "max(importing_modules per export) — informational"
+      }
+      .note: "circular imports produce TDZ hazards in ES module evaluation order (ECMA-262 §16.2.1.5.2) —
+              detection here prevents runtime initialization failures post-migration"
     }
     ={ "book/audits/05-spw-dependency-map.spw" }
   }
@@ -133,12 +194,22 @@
       register_bank: compare_register_bank_api
       affinities: compare_operator_affinity_shapes
       gaps: identify_adapter_gaps
+      .note: "this audit defines the adapter surface area — gaps identified here become
+              §adapters phase requirements; shape mismatches become compatibility shims"
     }
     ={ "book/audits/06-workbench-api-surface.spw" }
+  }
+
+  *[foundation -> vite]{
+    !precondition: all_foundation_audit_artifacts_emitted
+    .note: "transition gate — §vite phases may read foundation artifacts but not modify them"
   }
 }
 
 ^phases["Vite Enhancement"]{
+  .note: "phases 06-08 — build tooling changes; must not alter runtime semantics"
+  %region_invariant: runtime_behavior_unchanged_after_each_phase
+
   ^phase[06: "Vite Alias Resolution"]{
     anchor: plan.a.vite_enhancement.vite_alias_resolution
     role: edit_agent
@@ -146,6 +217,9 @@
     ^task{
       aliases: add_spw_and_book_aliases
       safety: keep_aliases_nonbreaking
+      #invariant: existing_bare_specifier_resolution_unchanged
+      .note: "alias additions are additive — existing resolve paths must produce identical
+              module graph edges before and after this phase"
     }
     verify: { dev: npm_run_dev_boots, pages: pages_load_14 }
   }
@@ -159,6 +233,9 @@
       dependencies: add_dev_dependency_typescript
       installation: install_lock_sync
       resolution: validate_ts_resolution_for_workbench_aliases
+      .note: "typescript is introduced for resolution and type-checking only —
+              no .ts source files are authored in this phase; see tsconfig paths
+              for alias parity with vite.config.js resolve.alias"
     }
     verify: { resolution: temporary_runtime_import_resolves, cleanup: temp_artifacts_removed }
   }
@@ -171,18 +248,41 @@
       distribution_audit: inspect_dist_assets
       regression_comparison: compare_regression_surface
       hash_verification: verify_hashing
+      %metrics: {
+        dist_size_delta: "abs(new_size - baseline_size) / baseline_size — MUST be < 0.05"
+        asset_count_delta: "new_count - baseline_count — SHOULD equal 0"
+        chunk_hash_stability: "count(changed_hashes) for unchanged source — MUST equal 0"
+      }
     }
     ={ "book/audits/09-build-pipeline.spw" }
+  }
+
+  *[vite -> adapters]{
+    !precondition: build_pipeline_checkpoint_passes
+    .note: "transition gate — adapter authoring requires stable alias resolution"
   }
 }
 
 ^phases["spw Core Adapters"]{
+  .note: "phases 09-12 — pure mapping layer between workbench exports and lore.land consumers"
+  %region_invariant: adapters_are_pure_functions_of_workbench_exports
+  !MUST_NOT: adapter_modules_import_dom_or_browser_apis
+
+  ?<design_note>{
+    "An adapter module MUST satisfy: given identical workbench input shapes,
+     produce identical output shapes regardless of execution environment.
+     This purity constraint enables testing adapters without browser context
+     and guarantees that workbench submodule updates surface as shape
+     mismatches rather than runtime failures."
+  }
+
   ^phase[09: "Create spw Directory Scaffold"]{
     anchor: plan.a.spw_core_adapters.create_spw_directory_scaffold
     role: edit_agent
     ^task{
       scaffold_structure: create_scripts_spw_tree
       barrel_index: add_barrel_index
+      .note: "scaffold must exist before subsequent phases can target import paths within it"
     }
     verify: { scaffold: directory_scaffold_exists, imports: no_import_errors }
   }
@@ -195,6 +295,14 @@
       mapping: map_affinities_to_operator_roles_shape
       exports: export_roles_and_sequence
       purity: keep_adapter_pure
+      !MUST_NOT: introduce_dom_imports_or_side_effects
+      %metrics: {
+        operator_count: "Object.keys(OPERATOR_ROLES).length — MUST equal 12"
+        spirit_sequence_coverage: "sequence tokens mapped / total tokens — MUST equal 1.0"
+      }
+      .note: "the 12 sigils (! ? ~ @ & * ^ # . = % $) and the spirit sequence
+              (?~<#.>@(#.)&[#.]*{#.}^) define the operator grammar —
+              see spw v0.2.0 operator table for canonical ordering"
     }
     verify: { count: operator_count_12, shape: mapped_fields_complete }
   }
@@ -206,6 +314,10 @@
     ^task{
       mapping: map_affinities_to_container_roles_shape
       exports: export_container_roles
+      !invariant: "left_brace.charge === 'accumulate' && right_brace.charge === 'discharge'"
+      .note: "container semantics: [] frame(selection), {} body(scope), () scope(grouping), <> capsule(channel) —
+              left brace accumulates charge, right brace discharges; this asymmetry is structural,
+              not decorative, and must be preserved in the adapter output shape"
     }
     verify: { count: container_count_8 }
   }
@@ -217,18 +329,37 @@
       purity: confirm_adapter_purity
       drift: detect_logic_creep
       edge_cases: capture_edge_case_coverage
+      %metrics: {
+        logic_creep_score: "count(conditional_branches not present in workbench source) — MUST equal 0"
+        edge_case_coverage: "tested_edge_paths / identified_edge_paths — SHOULD exceed 0.9"
+        import_boundary: "count(adapter imports from non-workbench, non-stdlib sources) — MUST equal 0"
+      }
+      .note: "logic creep detection algorithm: diff adapter module AST against a trivial
+              map-and-rename transform of the workbench export shape — any surplus branches
+              indicate adapter is accumulating business logic that belongs elsewhere"
     }
     ={ "book/audits/13-adapter-quality.spw" }
+  }
+
+  *[adapters -> parser]{
+    !precondition: adapter_quality_checkpoint_passes
+    .note: "transition gate — parser swap depends on stable operator and container role shapes"
   }
 }
 
 ^phases["Parser and Selector Migration"]{
+  .note: "phases 13-14 — swap parser implementation while preserving selector resolution behavior"
+  %region_invariant: selector_parse_output_unchanged_for_all_known_inputs
+
   ^phase[13: "Selector Parser Swap"]{
     anchor: plan.a.parser_and_selector_migration.selector_parser_swap
     role: edit_agent
     ^task{
       reexports: reexport_query_helpers_from_workbench
       compatibility: add_named_adapters_if_exports_missing
+      #invariant: "forall selector S in known_selectors: parse_new(S) === parse_old(S)"
+      .note: "behavioral equivalence is verified against the known selector corpus —
+              novel selectors encountered post-swap are not covered by this guarantee"
     }
     verify: { smoke: selector_parse_smoke_on_known_selectors }
   }
@@ -240,12 +371,30 @@
       relocation: move_expression_index_to_spw_parser
       imports: update_import_paths
       behavior: keep_behavior_stable
+      #invariant: zero_runtime_delta_on_chapter_expression_parsing
+      .note: "import path updates must be exhaustive — use the dependency graph from
+              §foundation phase 04 to enumerate all consumer sites"
     }
     verify: { parse: chapter_spw_expression_parsing_works }
+  }
+
+  *[parser -> register_bank]{
+    !precondition: expression_parsing_verified
+    .note: "transition gate — register bank migration may reference parser output types"
   }
 }
 
 ^phases["RegisterBank Migration"]{
+  .note: "phases 15-17 — migrate singleton state store with behavioral parity verification"
+  %region_invariant: "forall method M in {set, get, focus, extract, snapshot}: M_new(args) === M_old(args)"
+
+  ?<design_note>{
+    "The RegisterBank is a singleton coordination point — its identity (reference equality)
+     must be stable across all import sites. Migration wraps the workbench implementation
+     rather than forking it, ensuring that workbench-internal consumers and lore.land consumers
+     share the same instance and observe identical state transitions."
+  }
+
   ^phase[15: "RegisterBank API Audit"]{
     anchor: plan.a.registerbank_migration.registerbank_api_audit
     role: explore_agent
@@ -253,6 +402,11 @@
       surface: compare_register_bank_method_surface
       surface_delta: classify_lore_only_vs_workbench_only
       risk: rate_migration_risk
+      %metrics: {
+        method_parity: "count(lore_methods ∩ workbench_methods) / count(lore_methods ∪ workbench_methods)"
+        lore_only_methods: "lore_methods - workbench_methods — each requires compatibility shim or deprecation"
+        risk_score: "sum(consumer_count(method) * breaking_change_likelihood(method)) for method in delta"
+      }
     }
     ={ "book/audits/16-register-bank-comparison.spw" }
   }
@@ -264,6 +418,9 @@
       singleton: wrap_workbench_register_bank_singleton
       compatibility: extend_missing_methods_if_required
       exports: export_getter_and_class
+      !invariant: "import('./register-bank.mjs').getBank() === import('./register-bank.mjs').getBank()"
+      .note: "singleton identity stability: the getter must return the same object reference
+              across all import sites within a single module graph evaluation"
     }
     verify: { parity: set_get_focus_extract_snapshot_behaviors_match }
   }
@@ -275,12 +432,24 @@
       callsites: enumerate_get_spw_register_bank_call_sites
       behavior: validate_consumer_behavior
       behavioral_deltas: record_behavioral_deltas
+      %metrics: {
+        callsite_coverage: "audited_callsites / total_callsites — MUST equal 1.0"
+        behavioral_delta_count: "count(observed_behavior_changes) — MUST equal 0"
+      }
     }
     ={ "book/audits/18-register-bank-integration.spw" }
+  }
+
+  *[register_bank -> module_moves]{
+    !precondition: register_bank_integration_checkpoint_passes
+    .note: "transition gate — module relocation depends on stable register bank import paths"
   }
 }
 
 ^phases["Module Moves"]{
+  .note: "phases 18-20 — relocate consumer modules into spw tree; update all import edges"
+  %region_invariant: "forall module M in moved_set: behavior(M_new_path) === behavior(M_old_path)"
+
   ^phase[18: "Move Interactions Module"]{
     anchor: plan.a.module_moves.move_interactions_module
     role: move_agent
@@ -288,6 +457,9 @@
       relocation: move_interactions_module_into_spw_tree
       imports: switch_to_core_parser_imports
       cleanup: remove_duplicated_role_definitions
+      .note: "duplicated OPERATOR_ROLES / CONTAINER_ROLES definitions in the interactions module
+              must be replaced with imports from §adapters phases 10-11 — deduplication is the
+              primary motivator for this relocation"
     }
     verify: { interactions: tooltip_trace_drag_scope_interactions_work }
   }
@@ -299,6 +471,8 @@
       relocation: move_ethos_module_into_spw_tree
       ethos_derivation: derive_operator_ethos_from_affinities
       imports: rewire_imports
+      <dep_to_plan_b>: "this relocation is a prerequisite for PLAN.B §ethos_integration_rollout —
+                         the hydration phase expects ethos module at its new path"
     }
     verify: { panel: ethos_panel_renders_home_and_chapter }
   }
@@ -310,12 +484,22 @@
       relocation: relocate_advanced_runtime_component_style_behavior_modules
       imports: update_cross_imports
       register_wiring: rewire_custom_register
+      .note: "binding modules have the highest fan-in of the moved set — cross-import
+              update must be verified against the dependency graph from §foundation phase 04"
     }
     verify: { runtime: runtime_attach_style_behavior_integration_works }
+  }
+
+  *[module_moves -> css_colocation]{
+    !precondition: all_module_move_verifications_pass
+    .note: "transition gate — css colocation targets the relocated module paths"
   }
 }
 
 ^phases["CSS Colocation"]{
+  .note: "phases 21-22 — move component CSS into binding modules; enforce layer containment"
+  %region_invariant: rendered_output_pixel_identical_across_14_pages
+
   ^phase[21: "Colocate Component CSS"]{
     anchor: plan.a.css_colocation.colocate_component_css
     role: move_agent
@@ -324,6 +508,10 @@
       layer: wrap_rules_in_interactive_layer
       runtime_integration: import_css_from_runtime_module
       link_cleanup: remove_html_link_tags
+      #invariant: no_duplicate_style_injection_after_colocation
+      .note: "colocation converts implicit dependencies (<link> in HTML) to explicit dependencies
+              (import in JS) — this makes the style dependency graph statically analyzable and
+              eliminates load-order sensitivity between HTML parse and module evaluation"
     }
     verify: { parity: spw_component_render_parity_14_pages, duplicates: no_duplicate_style_injection }
   }
@@ -336,12 +524,25 @@
       integrity: verify_layer_integrity
       dev_order: verify_dev_injection_order
       build_order: verify_build_extraction_order
+      %metrics: {
+        layer_conformance: "count(rules_outside_declared_layers) — MUST equal 0 (see §foundation phase 01)"
+        dev_build_order_parity: "injection_sequence(dev) === extraction_sequence(build) — MUST be true"
+      }
+      .note: "layer integrity must be re-verified because colocation changes the evaluation
+              order of CSS — rules previously loaded via <link> now arrive via JS-injected
+              <style> elements, which have different cascade timing characteristics"
     }
     ={ "book/audits/23-css-colocation.spw" }
+  }
+
+  *[css_colocation -> entry_updates]{
+    !precondition: css_colocation_checkpoint_passes
   }
 }
 
 ^phases["Entry Updates"]{
+  .note: "phase 23 — final import path reconciliation across all entry points"
+
   ^phase[23: "Entry Point Updates"]{
     anchor: plan.a.entry_updates.entry_point_updates
     role: edit_agent
@@ -350,12 +551,22 @@
       imports: repoint_imports_to_spw_tree
       cache_cleanup: remove_cache_busting_query_params
       barrel_index: create_spw_barrel_index
+      #invariant: all_14_pages_load_without_console_errors
+      .note: "cache-busting query params (?v=...) on import specifiers prevent HTTP cache
+              sharing and are superseded by content-hash filenames in the Vite build output —
+              removing them aligns dev and prod caching behavior"
     }
     verify: { pages: pages_load_14, console: no_console_errors, features: spw_feature_surface_intact }
+  }
+
+  *[entry_updates -> mastery]{
+    !precondition: entry_point_verification_passes
   }
 }
 
 ^phases["Cleanup and Mastery"]{
+  .note: "phases 24-25 — remove dead code; produce final compliance and architecture report"
+
   ^phase[24: "Cleanup Dead Files"]{
     anchor: plan.a.cleanup_and_mastery.cleanup_dead_files
     role: edit_agent
@@ -363,6 +574,10 @@
       removal: remove_orphaned_legacy_modules
       imports: purge_old_import_paths
       cache_evaluation: evaluate_cache_context_deprecation
+      .note: "orphan detection algorithm: starting from entry points, walk the import graph
+              (§foundation phase 04, updated); any module not reachable is a removal candidate.
+              cache-context.mjs (release token 2026_02_28.I) is evaluated for deprecation —
+              if no runtime consumer references the token, the module is dead"
     }
     verify: { build: npm_run_build_passes, dist: dist_import_integrity_clean }
   }
@@ -376,6 +591,15 @@
       improvement_delta: compute_improvement_delta
       dependency_map: map_component_dependencies
       debt_prioritization: prioritize_remaining_debt
+      %metrics: {
+        spec_compliance: "count(phases_fully_verified) / 26"
+        adapter_purity: "1.0 - (logic_creep_score / total_adapter_branches)"
+        module_cohesion: "avg(internal_imports / total_imports) per module"
+        layer_integrity: "1.0 - (unlayered_rule_count / total_rule_count)"
+        debt_ratio: "count(open_findings) / count(total_findings)"
+      }
+      .note: "the mastery report is the terminal artifact — it provides the quantitative
+              basis for accepting or re-entering the Plan A arc"
     }
     ={ "book/audits/26-mastery.spw" }
   }
@@ -387,6 +611,11 @@
   ethos: { home: panel_home, chapter: panel_chapter }
   state: { register_bank: register_bank_set_get_snapshot }
   styles: { duplicates: no_duplicate_css, layers: layer_integrity }
+  %summary: {
+    total_verification_points: 12
+    blocking: "dev_boot, build, console, tooltips, tracing, scope, panel_home, panel_chapter"
+    informational: "register_bank_snapshot, duplicate_css, layer_integrity, drag_to_scope"
+  }
 }
 
 ^audit_artifacts{
@@ -402,4 +631,5 @@
   register_bank_integration: "book/audits/18-register-bank-integration.spw"
   css_colocation: "book/audits/23-css-colocation.spw"
   mastery: "book/audits/26-mastery.spw"
+  %total: 12
 }

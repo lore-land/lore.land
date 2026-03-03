@@ -1,10 +1,21 @@
 #>plan_c
 #:layer #!pragmatics
 
+~<rationale>{
+  Plan C is a two-track exploration: (1) a deep audit of Shadow DOM applicability
+  to the lore.land component model, and (2) a systematic sweep of Chrome stable
+  milestones M94–M145 for shadow-DOM-relevant platform changes. Track 1 produces
+  an adoption recommendation; Track 2 provides the evidentiary basis of browser
+  support data that informs it.
+}
+
 ^meta{
   source: "PLAN.C.md"
   dialect: spw_native
   style: phase_block_titles
+  normative_voice: specification
+  phase_count: 65
+  tracks: { shadow_dom: 13, chrome_milestones: 52 }
 }
 
 &plan_contracts{
@@ -12,6 +23,8 @@
   preserve_shadow_track: true
   preserve_chrome_track: true
   use_phase_blocks: true
+  #invariant: shadow_track_phases_are_domain_specific_not_templated
+  #invariant: chrome_track_phases_emit_per_milestone_artifacts
 }
 
 ?["plan_c_integrity_gate"]{
@@ -25,6 +38,7 @@
 !probe{
   id: plan_c.phase_block_probe
   ask: all_tracks_expressed_via_phase_title_blocks
+  !assert: deviation_count == 0
 }
 
 ^verified_context{
@@ -42,24 +56,40 @@
 ^output_contract{
   phase_packet_shape: { scope: required, findings: required, evidence: required, decision: required }
   canonical_artifacts: spw_only
+  .note: "every shadow DOM phase produces a distinct artifact with domain-specific findings;
+          every chrome milestone phase produces a uniform artifact scored for shadow DOM relevance"
 }
 
+
 ^phases["Shadow DOM Exploration"]{
+  .note: "13 phases — each addresses a distinct facet of the Shadow DOM specification
+          as it relates to the existing lore.land component architecture"
+  %track_invariant: each_phase_scope_is_unique
+
   ^phase["Shadow DOM Baseline Inventory"]{
     ^task{
-      @scope: inventory_shadow_usage_and_leakage
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "inventory current shadow DOM usage across the codebase — distinguish intentional
+               shadow roots from incidental usage (e.g., third-party web components, browser UA shadows)"
+      @findings: "produce frequency table: {component, shadow_mode, slot_count, style_strategy}"
+      @evidence: "cross-reference with DOM Spec §4.8 (shadow trees) and HTML Spec §4.13.6 (custom elements)"
       @decision: classify_adopt_monitor_reject
+    }
+    %metrics: {
+      shadow_root_count: "total across all pages — informational"
+      intentional_vs_incidental: "ratio — informs adoption scope"
     }
     ={ "book/audits/shadow-dom/01-inventory.spw" }
   }
 
   ^phase["Encapsulation Model Audit"]{
     ^task{
-      @scope: audit_public_contract_vs_internal_boundary
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "audit the boundary between component-internal DOM and public API surface —
+               determine whether current [data-spw-component] depth model (0-3) requires
+               encapsulation or whether attribute-based scoping is sufficient"
+      @findings: "classify each component boundary as: hard (needs shadow), soft (attribute scoping adequate),
+                  or porous (currently leaking styles/events across boundary)"
+      @evidence: "DOM Spec §4.8.1 (open vs closed mode), CSS Scoping §3 (shadow host styling),
+                  measured specificity conflicts from PLAN.A §foundation phase 01"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/02-encapsulation.spw" }
@@ -67,9 +97,13 @@
 
   ^phase["Slotting and Composition Analysis"]{
     ^task{
-      @scope: audit_slot_distribution_and_flattening_edges
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "evaluate slot-based content distribution against current composition patterns —
+               lore.land uses nested [data-spw-component] elements; determine whether <slot>
+               distribution improves or complicates the existing nesting model"
+      @findings: "map current composition patterns to slot equivalents; identify cases where
+                  slot flattening would change the effective DOM order (accessibility tree impact)"
+      @evidence: "DOM Spec §4.8.4 (slot assignment), HTML Spec §4.13.6.2 (slotchange event),
+                  measured nesting depths from PLAN.A §foundation phase 04"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/03-slotting.spw" }
@@ -77,9 +111,13 @@
 
   ^phase["Styling Surface Audit"]{
     ^task{
-      @scope: audit_host_slotted_part_exportparts_contracts
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "audit the four shadow styling mechanisms — :host, ::slotted, ::part, exportparts —
+               against the existing @layer + custom property theming system"
+      @findings: "determine whether shadow styling mechanisms can interoperate with the
+                  CSS layer stack (core/tokens.css, core/motifs.css) or require a parallel system;
+                  measure the surface area of ::part exposure needed for theme variables"
+      @evidence: "CSS Scoping §3.2 (:host), §4 (::slotted), CSS Shadow Parts §2 (::part),
+                  CSS Cascading §6.1 (layer ordering with shadow boundaries)"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/04-styling-surface.spw" }
@@ -87,19 +125,33 @@
 
   ^phase["Event Retargeting and Composed Path Audit"]{
     ^task{
-      @scope: audit_retargeting_bubbles_composed_paths
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "audit event retargeting behavior for the interactive spw components —
+               drag-to-scope, tooltip, brace-tracing all rely on event.target identity
+               which shadow DOM retargeting would change"
+      @findings: "enumerate all event.target and event.composedPath() usage sites;
+                  classify each as: compatible (works with retargeting), breaking (requires
+                  composedPath migration), or ambiguous (needs runtime testing)"
+      @evidence: "DOM Spec §2.7 (retargeting algorithm), §2.9 (composed event path),
+                  UI Events §5.4 (mouse event targets), spw-interactions.mjs event handlers"
       @decision: classify_adopt_monitor_reject
+    }
+    %metrics: {
+      breaking_event_sites: "count — primary adoption cost indicator"
+      composedPath_migration_effort: "lines of handler code requiring changes"
     }
     ={ "book/audits/shadow-dom/05-events.spw" }
   }
 
   ^phase["Focus and Keyboard Navigation Audit"]{
     ^task{
-      @scope: audit_delegates_focus_tab_and_keyboard_model
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "audit shadow DOM focus delegation model against current keyboard navigation —
+               ebook-navigation.mjs uses bracket-hold for nav-shape switching; determine
+               whether delegatesFocus alters the focus sequence"
+      @findings: "map current tabindex assignments and focus management code;
+                  simulate sequential focus navigation with and without shadow boundaries;
+                  identify focus traps or unreachable elements"
+      @evidence: "HTML Spec §6.6.3 (sequential focus navigation), §6.6.4 (focusable area),
+                  DOM Spec §4.8 (delegatesFocus option), ebook-navigation.mjs focus handlers"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/06-focus-keyboard.spw" }
@@ -107,9 +159,14 @@
 
   ^phase["Accessibility Tree and ARIA Mapping"]{
     ^task{
-      @scope: audit_accessibility_tree_and_aria_mapping
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "audit accessibility tree construction across shadow boundaries —
+               determine whether shadow DOM introduces name computation failures or
+               role mapping gaps for the spw component set"
+      @findings: "for each component with ARIA attributes: verify that accessible name
+                  computation (AccName §4) produces identical results with and without
+                  shadow encapsulation; flag cross-boundary aria-labelledby references"
+      @evidence: "AccName Spec §4 (name computation steps), ARIA §5.2.8 (role mapping),
+                  PLAN.A §foundation phase 03 aria baseline output"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/07-a11y.spw" }
@@ -117,9 +174,14 @@
 
   ^phase["Form Association and ElementInternals Review"]{
     ^task{
-      @scope: audit_element_internals_and_form_association_need
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "evaluate ElementInternals for form-associated custom elements —
+               determine whether any spw components participate in form submission
+               and whether ElementInternals would simplify or complicate that participation"
+      @findings: "inventory form-participating components (if any); evaluate
+                  ElementInternals.setFormValue / setValidity against current approach;
+                  assess browser support coverage for form-associated custom elements"
+      @evidence: "HTML Spec §4.13.6.1 (ElementInternals), §4.13.6.3 (form-associated),
+                  Can I Use: form-associated custom elements"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/08-form-internals.spw" }
@@ -127,9 +189,16 @@
 
   ^phase["Declarative Shadow DOM Feasibility"]{
     ^task{
-      @scope: evaluate_ssr_hydration_feasibility
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "evaluate declarative shadow DOM (<template shadowrootmode>) for SSR/hydration
+               compatibility — lore.land currently serves static HTML via GitHub Pages;
+               determine whether declarative shadow DOM enables progressive enhancement
+               without requiring a server-side rendering pipeline"
+      @findings: "test declarative shadow DOM parsing in static-file context;
+                  measure hydration cost (time to interactive delta);
+                  evaluate streaming HTML compatibility (relevant for future CDN serving)"
+      @evidence: "HTML Spec §4.12.3 (template element shadowrootmode attribute),
+                  Chrome M111 release notes (declarative shadow DOM shipping),
+                  Web Components CG: declarative shadow DOM explainer"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/09-declarative-shadow-dom.spw" }
@@ -137,19 +206,35 @@
 
   ^phase["Performance and Memory Audit"]{
     ^task{
-      @scope: measure_shadow_creation_style_calc_mutation_cost
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "measure the performance and memory cost of shadow DOM adoption —
+               shadow root creation, style calculation with shadow boundaries,
+               mutation observer cost across shadow trees"
+      @findings: "benchmark: shadow root creation time per component, style recalculation
+                  latency with N shadow boundaries, memory overhead per shadow root;
+                  compare against current attribute-based scoping baseline"
+      @evidence: "Chrome DevTools Performance panel measurements,
+                  memory snapshots (heap snapshot diffing),
+                  CSS containment spec §3 (layout/style/paint containment interaction)"
       @decision: classify_adopt_monitor_reject
+    }
+    %metrics: {
+      shadow_root_creation_p95: "microseconds — comparative against createElement baseline"
+      style_recalc_delta: "milliseconds with vs without shadow boundaries for 14-page set"
+      memory_overhead_per_root: "bytes — measured via heap snapshot differential"
     }
     ={ "book/audits/shadow-dom/10-performance.spw" }
   }
 
   ^phase["Shadow DOM Test Strategy"]{
     ^task{
-      @scope: define_unit_integration_visual_shadow_tests
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "define the testing approach for shadow-DOM-encapsulated components —
+               unit testing (querySelector boundary), integration testing (event flow),
+               and visual regression testing (screenshot diffing across shadow boundaries)"
+      @findings: "evaluate testing framework compatibility: does the current test setup
+                  (if any) support shadow DOM queries? identify gaps in selector-based
+                  testing (e.g., document.querySelector cannot pierce closed shadow roots)"
+      @evidence: "Web Test Runner shadow DOM support, Playwright locator.shadowRoot(),
+                  Testing Library within-shadow queries, current project test infrastructure"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/11-test-strategy.spw" }
@@ -157,9 +242,15 @@
 
   ^phase["Refactor Blueprint"]{
     ^task{
-      @scope: produce_component_refactor_matrix_and_order
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
+      @scope: "produce a prioritized component refactor matrix — which components benefit
+               most from shadow encapsulation, what is the migration order, and what are
+               the mechanical steps for each migration tier"
+      @findings: "rank components by: encapsulation benefit (from phase 02), event risk (from phase 05),
+                  a11y risk (from phase 07), performance cost (from phase 10);
+                  produce migration tiers: tier 1 (high benefit, low risk), tier 2 (moderate),
+                  tier 3 (low benefit or high risk — defer)"
+      @evidence: "synthesized from phases 01-11 findings; cross-referenced with
+                  PLAN.A §foundation component dependency map"
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/shadow-dom/12-refactor-blueprint.spw" }
@@ -167,33 +258,67 @@
 
   ^phase["Shadow DOM Master Report"]{
     ^task{
-      @scope: synthesize_priority_and_acceptance_criteria
-      @findings: extract_high_signal_deltas
-      @evidence: record_primary_source_citations_with_dates
-      @decision: classify_adopt_monitor_reject
+      @scope: "synthesize all shadow DOM track findings into a single adoption recommendation
+               with acceptance criteria, risk register, and implementation timeline"
+      @findings: "aggregate: adoption score (weighted sum across 12 facets), blocking issues,
+                  prerequisite platform support requirements, estimated migration effort"
+      @evidence: "all shadow DOM track artifacts (phases 01-12), chrome milestone track
+                  findings relevant to shadow DOM (cross-reference from track 2)"
+      @decision: "final recommendation: adopt | adopt-with-guardrails | monitor | reject —
+                  with per-facet justification and dissenting considerations"
+    }
+    %metrics: {
+      facets_recommending_adopt: "count out of 12"
+      blocking_issues: "count — if > 0, recommendation cannot be 'adopt'"
+      estimated_migration_effort: "component-days — informational"
     }
     ={ "book/audits/shadow-dom/13-master-report.spw" }
   }
 }
+
 
 ^chrome_milestone_template{
   milestone_range: "M145..M94"
   phase_total: 52
   title_template: "Chrome M{milestone} Update Audit"
   emit_template: "book/audits/chrome-updates/M{milestone}.spw"
-  task_template: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
-  scoring_scale: { none: allowed, monitor: allowed, adopt: allowed, adopt_now: allowed }
-  ingest_pipeline: {
-    release_notes: required
-    highlights: read_new_in_chrome_when_available
-    devtools: read_new_in_devtools_when_available
-    extraction: extract_shadow_dom_deltas
-    score: score_relevance_for_repo
-    emit: emit_phase_artifact
+
+  ^task_protocol{
+    @scope: "ingest release notes, highlights, and devtools changes for the milestone"
+    @findings: "extract features with shadow DOM, custom element, CSS scoping, or
+                event model relevance — classify by specification area"
+    @evidence: "primary source: developer.chrome.com/release-notes/{milestone};
+                secondary: chromestatus.com feature entries with linked specs"
+    @decision: "per-feature relevance score: none | monitor | adopt | adopt-now"
+    .note: "the 'adopt-now' score indicates a feature that is already shipping stable
+            and directly addresses a gap identified in the shadow DOM track"
   }
+
+  ^ingest_pipeline{
+    .step[1]: "fetch release notes for M{milestone}"
+    .step[2]: "fetch 'new in Chrome {milestone}' highlights (when published)"
+    .step[3]: "fetch 'new in DevTools {milestone}' (when published)"
+    .step[4]: "extract shadow-DOM-relevant deltas: new APIs, behavioral changes,
+               deprecations, removals, origin trial promotions"
+    .step[5]: "for each delta: record {feature_name, spec_section, support_status,
+               shadow_dom_relevance, implementation_cost_estimate}"
+    .step[6]: "score per-feature relevance for lore.land component model"
+    .step[7]: "emit phase artifact"
+  }
+
+  scoring_scale: { none: allowed, monitor: allowed, adopt: allowed, adopt_now: allowed }
 }
 
 ^phases["Chrome Milestone Exploration"]{
+  .note: "52 phases — one per Chrome stable milestone from M94 (September 2021) through
+          M145 (February 2026). Phases are grouped into epochs by significant platform
+          changes; epoch annotations identify milestones with outsized shadow DOM relevance."
+
+  ~<epoch["M94-M100: Foundation Era"]>{
+    .note: "early baseline — custom elements v1 stable, declarative shadow DOM not yet shipped,
+            CSS container queries in origin trial. These milestones establish the pre-modern
+            baseline against which later improvements are measured."
+  }
 
   ^phase[01:<94>"Chrome M94 Update Audit"]{
     ^task{
@@ -265,6 +390,12 @@
     ={ "book/audits/chrome-updates/M100.spw" }
   }
 
+  ~<epoch["M101-M110: Container Query and Layer Era"]>{
+    .note: "CSS @layer ships (M99), CSS container queries ship (M105), :has() ships (M105).
+            This epoch marks the transition to modern CSS architecture — the same features
+            that enable lore.land's @layer stack also affect shadow boundary style resolution."
+  }
+
   ^phase[08:<101>"Chrome M101 Update Audit"]{
     ^task{
       @scope: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
@@ -311,6 +442,8 @@
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
+      #signal: "M105 — CSS container queries and :has() ship; high relevance for
+                shadow boundary + container query interaction model"
     }
     ={ "book/audits/chrome-updates/M105.spw" }
   }
@@ -365,12 +498,20 @@
     ={ "book/audits/chrome-updates/M110.spw" }
   }
 
+  ~<epoch["M111-M120: Declarative Shadow DOM and Popover Era"]>{
+    .note: "Declarative shadow DOM ships (M111), popover API ships (M114), CSS nesting ships (M120).
+            This epoch is the inflection point for shadow DOM adoption — declarative mode eliminates
+            the JavaScript-only construction constraint; popover introduces a new top-layer model
+            that interacts with shadow boundaries in non-obvious ways."
+  }
+
   ^phase[18:<111>"Chrome M111 Update Audit"]{
     ^task{
       @scope: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
+      #signal: "M111 — declarative shadow DOM ships; direct relevance to §shadow-dom phase 09"
     }
     ={ "book/audits/chrome-updates/M111.spw" }
   }
@@ -401,6 +542,8 @@
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
+      #signal: "M114 — popover API ships; top-layer interaction with shadow trees
+                requires evaluation for tooltip and ethos panel components"
     }
     ={ "book/audits/chrome-updates/M114.spw" }
   }
@@ -461,8 +604,16 @@
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
+      #signal: "M120 — CSS nesting ships; nesting within shadow-scoped stylesheets
+                changes the authoring model for component-internal styles"
     }
     ={ "book/audits/chrome-updates/M120.spw" }
+  }
+
+  ~<epoch["M121-M130: Scroll-Driven Animations and Anchor Positioning Era"]>{
+    .note: "Scroll-driven animations ship (M115, refined through M125), CSS anchor positioning
+            ships (M125). These features introduce new layout coordination primitives that
+            interact with shadow boundary containment and positioned element stacking."
   }
 
   ^phase[28:<121>"Chrome M121 Update Audit"]{
@@ -511,6 +662,8 @@
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
+      #signal: "M125 — CSS anchor positioning ships; anchor references across shadow
+                boundaries require explicit anchor-name scoping"
     }
     ={ "book/audits/chrome-updates/M125.spw" }
   }
@@ -563,6 +716,14 @@
       @decision: classify_adopt_monitor_reject
     }
     ={ "book/audits/chrome-updates/M130.spw" }
+  }
+
+  ~<epoch["M131-M140: View Transitions and Cross-Document Era"]>{
+    .note: "Cross-document view transitions ship (M126, refined through M135),
+            @starting-style ships (M117, adoption grows here). These features
+            represent the newest CSS coordination primitives — their interaction
+            with shadow DOM encapsulation is still being specified and may
+            contain edge cases not yet documented in stable specs."
   }
 
   ^phase[38:<131>"Chrome M131 Update Audit"]{
@@ -665,6 +826,13 @@
     ={ "book/audits/chrome-updates/M140.spw" }
   }
 
+  ~<epoch["M141-M145: Current Stable Window"]>{
+    .note: "the most recent 5 milestones — features shipping here have the highest
+            likelihood of containing not-yet-documented edge cases. Findings from
+            this epoch should be cross-referenced against Chromium issue tracker
+            for open bugs affecting shadow DOM interaction."
+  }
+
   ^phase[48:<141>"Chrome M141 Update Audit"]{
     ^task{
       @scope: audit_milestone_release_notes_highlights_devtools_for_shadow_dom_relevance
@@ -720,8 +888,19 @@
 ^synthesis_and_governance{
   summary_emit: "book/audits/chrome-updates/summary-52.spw"
   risk_emit: "book/audits/chrome-updates/risk-register.spw"
-  summary_columns: { feature: required, first_appeared: required, stable_support: required, shadow_dom_relevance: required, implementation_cost: required, risk: required, adoption_decision: required }
+  summary_columns: {
+    feature: required
+    first_appeared: required
+    stable_support: required
+    shadow_dom_relevance: required
+    implementation_cost: required
+    risk: required
+    adoption_decision: required
+  }
   adoption_buckets: { adopt_now: supported, adopt_with_guardrails: supported, monitor: supported, reject: supported }
+  .note: "the synthesis artifact joins shadow DOM track findings with chrome milestone track data —
+          features scored 'adopt-now' in the milestone track that address gaps identified in the
+          shadow DOM track are prioritized in the final recommendation"
 }
 
 ^acceptance_criteria{
@@ -730,10 +909,15 @@
   chrome_track: equals_52
   emit_paths: deterministic_and_complete
   implementation_code: excluded
+  .note: "Plan C is audit-only — no implementation code is produced;
+          implementation decisions feed into PLAN.A and PLAN.D"
 }
 
 ^assumptions{
   latest_updates_scope: latest_52_major_stable_milestones
   source_of_truth: official_chrome_release_channels
   output_mode: spw_artifacts
+  .note: "milestone range M94-M145 covers September 2021 through February 2026 —
+          this window captures the full lifecycle of modern shadow DOM features
+          from origin trial through stable shipping"
 }

@@ -1,10 +1,23 @@
 #>plan_d
 #:layer #!pragmatics
 
+~<rationale>{
+  Plan D is a two-track exploration: (1) a 52-phase deep audit of the Houdini APIs
+  (CSS Properties & Values, Typed OM, Paint API, Worklets) for adoption feasibility,
+  and (2) a 13-phase survey of Firefox-specific features and tooling relevant to
+  lore.land cross-browser quality posture. The Houdini track is grouped into
+  five sub-domains reflecting the specification structure; the Firefox track covers
+  devtools, privacy, and emerging platform capabilities.
+}
+
 ^meta{
   source: "PLAN.D.md"
   dialect: spw_native
   style: phase_block_titles
+  normative_voice: specification
+  phase_count: 65
+  tracks: { houdini: 52, firefox: 13 }
+  houdini_sub_domains: [scope, properties_values, typed_om, painting_api, worklets, integration]
 }
 
 &plan_contracts{
@@ -12,6 +25,8 @@
   preserve_houdini_track: true
   preserve_firefox_track: true
   use_phase_blocks: true
+  #invariant: houdini_phases_grouped_by_specification_sub_domain
+  #invariant: firefox_phases_each_address_distinct_feature_area
 }
 
 ?["plan_d_integrity_gate"]{
@@ -25,30 +40,64 @@
 !probe{
   id: plan_d.phase_block_probe
   ask: all_tracks_expressed_via_phase_title_blocks
+  !assert: deviation_count == 0
 }
 
 ^context{
   baseline_date: "March 2, 2026"
   mode: exploration_and_audit_only
+  .note: "Plan D produces no implementation code — all phases emit audit artifacts
+          that inform adoption decisions in PLAN.A and future implementation plans"
 }
 
 &sources{
   houdini_mdn: "https://developer.mozilla.org/en-US/docs/Web/API/Houdini_APIs"
   firefox_features_mdn: "https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Experimental_features"
+  css_properties_values_spec: "https://drafts.css-houdini.org/css-properties-values-api-1/"
+  css_typed_om_spec: "https://drafts.css-houdini.org/css-typed-om-1/"
+  css_painting_api_spec: "https://drafts.css-houdini.org/css-paint-api-1/"
+  worklets_spec: "https://drafts.css-houdini.org/worklets/"
 }
 
 ^output_contract{
   phase_packet_shape: { intent: required, audit: required, evidence: required, recommendation: required }
   artifacts: spw_only
+  .note: "each phase produces a self-contained audit artifact; the final phase per track
+          synthesizes all findings into a prioritized recommendation"
 }
 
+?<open_questions>[
+  "CSS Properties & Values API Level 1 is a W3C Candidate Recommendation —
+   should lore.land treat @property as stable for production use, or maintain
+   a fallback path for browsers without support (primarily Firefox < 128)?"
+  "Paint API has no Firefox implementation and no stated intent to implement —
+   should paint worklet adoption be gated on a polyfill strategy, or should
+   the plan accept Chromium-only as sufficient for the GitHub Pages audience?"
+  "Typed OM write paths (attributeStyleMap.set) have performance characteristics
+   that differ from string-based style assignment — should the benchmark harness
+   (phase 23) establish a performance regression budget before migration begins?"
+]
+
+
 ^phases["Houdini APIs Exploration"]{
+
+  ~<sub_domain["Scope and Constraints — phases 01-02"]>{
+    .note: "establish boundaries: what is in scope for Houdini adoption, what browser
+            support matrix is required, and what risk tolerance applies to features
+            with partial cross-browser implementation"
+  }
+
   ^phase["Scope Constraints"]{
     @slug: scope_constraints
     ^task{
-      @intent: define_scope_nongoals_risk_tolerance
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define scope boundaries, non-goals, and risk tolerance for Houdini adoption —
+                classify features as: production-ready, experimental-acceptable, or out-of-scope
+                based on browser support and specification stability"
+      @audit: "evaluate: which Houdini sub-APIs have reached CR or above? which have
+               multi-engine support? which are Chromium-only with no stated implementation
+               intent from other engines?"
+      @evidence: "W3C process document (maturity levels), Can I Use data for each sub-API,
+                  MDN browser compatibility tables, engine implementation status pages"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/01-scope_constraints.spw" }
@@ -57,21 +106,48 @@
   ^phase["Support Matrix"]{
     @slug: support_matrix
     ^task{
-      @intent: build_support_matrix_properties_values_typed_om_painting_worklets
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "build a cross-browser support matrix for: CSS.registerProperty / @property,
+                CSS Typed OM (computedStyleMap, attributeStyleMap), CSS Painting API (registerPaint,
+                paint()), Worklets API (CSS.paintWorklet.addModule)"
+      @audit: "for each API surface: record {chrome_version, firefox_version|'none', safari_version|'none',
+               spec_maturity, polyfill_available, polyfill_quality}"
+      @evidence: "chromestatus.com, bugzilla.mozilla.org, webkit.org feature status,
+                  caniuse.com, MDN compat data (mdn/browser-compat-data)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
+    %metrics: {
+      multi_engine_apis: "count(APIs with >= 2 engine implementations)"
+      chromium_only_apis: "count(APIs with chromium-only support) — risk factor"
+    }
     ={ "book/audits/houdini/02-support_matrix.spw" }
+  }
+
+
+  ~<sub_domain["CSS Properties & Values — phases 03-16"]>{
+    .note: "the Properties & Values API (CSS.registerProperty, @property) enables typed custom
+            properties with syntax constraints, inheritance control, and initial values.
+            This sub-domain audits the existing custom property inventory, defines registration
+            conventions, and runs a pilot registration on theme tokens.
+            Spec reference: CSS Properties & Values API Level 1 (W3C CR)"
   }
 
   ^phase["Repo Css Baseline"]{
     @slug: repo_css_baseline
     ^task{
-      @intent: inventory_css_tokens_custom_properties_houdini_insertion_points
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "inventory all CSS custom properties in the codebase — group by: theme tokens
+                (--theme-*), component tokens (--spw-*), layout tokens (--chapter-*), animation
+                tokens; identify insertion points where @property registration would add value"
+      @audit: "cross-reference with PLAN.A §foundation phase 01 (css layers baseline) —
+               determine which properties are candidates for typed registration based on
+               usage patterns (interpolated in transitions/animations, used in calc(), theme-switched)"
+      @evidence: "core/tokens.css, core/motifs.css, chapter/motion.css property declarations;
+                  grep results for var(--) usage across all CSS files"
       @recommendation: classify_adopt_guardrail_monitor_reject
+    }
+    %metrics: {
+      total_custom_properties: "count — informational"
+      interpolation_candidates: "count(properties used in transition or @keyframes) — primary registration targets"
+      calc_candidates: "count(properties used in calc()) — typed registration prevents invalid-at-computed-value"
     }
     ={ "book/audits/houdini/03-repo_css_baseline.spw" }
   }
@@ -79,9 +155,13 @@
   ^phase["Custom Property Inventory"]{
     @slug: custom_property_inventory
     ^task{
-      @intent: classify_property_registration_candidates
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "classify each custom property as: register-now (high value, low risk),
+                register-later (moderate value or moderate risk), or skip (no benefit from typing)"
+      @audit: "for each property: determine appropriate syntax string (<color>, <length>,
+               <number>, <percentage>, <length-percentage>, <custom-ident>, *), inheritance
+               behavior (inherits: true|false), and initial value"
+      @evidence: "CSS Properties & Values §3 (syntax string grammar), §4 (registration),
+                  property usage analysis from phase 03"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/04-custom_property_inventory.spw" }
@@ -90,9 +170,13 @@
   ^phase["Paint Usecase Shortlist"]{
     @slug: paint_usecase_shortlist
     ^task{
-      @intent: prioritize_high_value_paint_usecases
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "identify high-value paint() use cases — components where CSS background-image
+                is currently generated via gradient hacks or SVG data URIs that a paint worklet
+                would simplify and make responsive to custom property changes"
+      @audit: "survey: motif/trope/foreshadow color system decorative backgrounds,
+               spw-component depth shadow generation, chapter section dividers"
+      @evidence: "core/motifs.css decorative patterns, components/spw.css depth shadow,
+                  chapter/sections.css divider treatments"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/05-paint_usecase_shortlist.spw" }
@@ -101,10 +185,18 @@
   ^phase["Typed Om Usecase Shortlist"]{
     @slug: typed_om_usecase_shortlist
     ^task{
-      @intent: shortlist_string_cssom_paths_for_typed_om
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "identify JS code paths where string-based CSSOM (getComputedStyle, element.style)
+                could be replaced with Typed OM (computedStyleMap, attributeStyleMap) for
+                type safety and potential performance improvement"
+      @audit: "enumerate all getComputedStyle and element.style.setProperty call sites;
+               classify each as: migration-candidate (simple type, high frequency),
+               migration-deferred (complex type or low frequency), or incompatible"
+      @evidence: "spw-interactions.mjs, ebook-navigation.mjs, spw-ethos.mjs style manipulation code"
       @recommendation: classify_adopt_guardrail_monitor_reject
+    }
+    %metrics: {
+      string_cssom_callsites: "count — baseline"
+      migration_candidates: "count — scope of typed OM work"
     }
     ={ "book/audits/houdini/06-typed_om_usecase_shortlist.spw" }
   }
@@ -112,9 +204,14 @@
   ^phase["Worklet Boundary Model"]{
     @slug: worklet_boundary_model
     ^task{
-      @intent: define_main_thread_vs_worklet_boundaries
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the execution boundary between main thread and paint worklet thread —
+                what data can be passed via input properties, what cannot, and what are the
+                serialization constraints"
+      @audit: "evaluate: paint worklet has no DOM access, no network access, limited global scope;
+               input properties are the sole communication channel; determine whether lore.land's
+               current property set provides sufficient input data for identified paint use cases"
+      @evidence: "CSS Painting API §4 (paint definition), §5 (input properties),
+                  Worklets §2 (global scope restrictions)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/07-worklet_boundary_model.spw" }
@@ -123,20 +220,31 @@
   ^phase["A11y Safety Baseline"]{
     @slug: a11y_safety_baseline
     ^task{
-      @intent: define_accessibility_and_safety_baselines
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define accessibility safety constraints for Houdini usage — paint worklet output
+                is purely decorative (not in the accessibility tree); ensure no informational
+                content is conveyed exclusively through paint worklet rendering"
+      @audit: "review identified paint use cases (phase 05) for information-bearing content;
+               verify that all paint worklet candidates are supplementary to existing
+               text/semantic content rather than replacing it"
+      @evidence: "WCAG 2.2 §1.1.1 (non-text content), §1.4.1 (use of color),
+                  CSS Painting API §7 (accessibility considerations)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
+    #invariant: "no informational content conveyed solely through paint worklet output"
     ={ "book/audits/houdini/08-a11y_safety_baseline.spw" }
   }
 
   ^phase["Properties Syntax Taxonomy"]{
     @slug: properties_syntax_taxonomy
     ^task{
-      @intent: define_property_syntax_taxonomy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the syntax taxonomy for property registration — map each registration
+                candidate to its CSS Values §5 syntax component (e.g., <length>, <color>,
+                <custom-ident>, <transform-function>)"
+      @audit: "for complex properties: determine whether the syntax string grammar supports
+               the required value space (e.g., space-separated lists, comma-separated lists,
+               the '+' and '#' multipliers in syntax definitions)"
+      @evidence: "CSS Properties & Values §3 (supported syntax components),
+                  CSS Values §5 (component value types)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/09-properties_syntax_taxonomy.spw" }
@@ -145,9 +253,15 @@
   ^phase["Registerproperty Strategy"]{
     @slug: registerproperty_strategy
     ^task{
-      @intent: choose_js_registration_vs_static_property
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "choose between CSS.registerProperty() (JavaScript) and @property (CSS) for
+                each registration candidate — determine the trade-offs for lore.land's
+                no-bundler, ES-module-native architecture"
+      @audit: "compare: @property is declarative, loads with CSS, no JS dependency;
+               CSS.registerProperty() allows conditional registration, runtime syntax validation.
+               For lore.land: @property aligns with the no-JS-build-step philosophy;
+               CSS.registerProperty() enables registration only when a feature module loads"
+      @evidence: "CSS Properties & Values §4.1 (@property rule), §4.2 (registerProperty()),
+                  lore.land module loading architecture (PLAN.A §entry_updates)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/10-registerproperty_strategy.spw" }
@@ -156,9 +270,14 @@
   ^phase["Property Authoring Conventions"]{
     @slug: property_authoring_conventions
     ^task{
-      @intent: define_naming_defaults_inheritance_conventions
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define naming, default value, and inheritance conventions for registered
+                properties — establish a style guide that ensures consistency across
+                the theme token, component token, and animation token namespaces"
+      @audit: "evaluate: naming prefix conventions (--lore-* vs --spw-* vs --theme-*),
+               initial value selection strategy (inherit from unregistered behavior vs
+               explicit safe default), inherits policy per namespace"
+      @evidence: "existing property naming from core/tokens.css and core/motifs.css,
+                  CSS Properties & Values §4 (registration descriptor fields)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/11-property_authoring_conventions.spw" }
@@ -167,20 +286,33 @@
   ^phase["Inheritance Initial Policy"]{
     @slug: inheritance_initial_policy
     ^task{
-      @intent: standardize_inheritance_and_initial_value_policy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "standardize the inherits and initialValue policy — determine which properties
+                should inherit (theme colors, typography) and which should not (component-specific
+                dimensions, animation state tokens)"
+      @audit: "cross-reference with CSS Cascading §6.2 (inheritance) — a registered property with
+               inherits:false and no explicit value resolves to its initial value, which changes
+               the cascade behavior compared to an unregistered custom property (which inherits)"
+      @evidence: "CSS Properties & Values §4.3 (inheritance behavior of registered properties),
+                  CSS Cascading §6.2 (inherited vs non-inherited properties)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
+    #invariant: "inheritance change from unregistered to registered must not alter computed values
+            for any existing usage site — verify via before/after computed style comparison"
     ={ "book/audits/houdini/12-inheritance_initial_policy.spw" }
   }
 
   ^phase["Invalid Value Tests"]{
     @slug: invalid_value_tests
     ^task{
-      @intent: design_invalid_value_parse_fallback_tests
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design test cases for invalid value behavior of registered properties —
+                a registered property with an invalid value at computed-value time resolves
+                to its initial value (not the inherited value), which is a behavioral change
+                from unregistered properties"
+      @audit: "identify value expressions that would become invalid under typed syntax
+               (e.g., calc(var(--a) + var(--b)) where --a is <length> and --b is <color>);
+               design test cases for each syntax category"
+      @evidence: "CSS Properties & Values §3.4 (invalid at computed-value time behavior),
+                  CSS Values §10 (invalid values)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/13-invalid_value_tests.spw" }
@@ -189,9 +321,15 @@
   ^phase["Interpolation Rules"]{
     @slug: interpolation_rules
     ^task{
-      @intent: define_typed_property_interpolation_expectations
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define expected interpolation behavior for each registered property syntax —
+                this is the primary motivation for registration: unregistered properties
+                interpolate as discrete (swap at 50%), registered properties interpolate
+                per their syntax type (e.g., <color> interpolates in sRGB by default)"
+      @audit: "for each registration candidate: verify that the desired transition/animation
+               behavior matches the interpolation semantics of the declared syntax type;
+               identify properties where discrete interpolation is actually preferred"
+      @evidence: "CSS Transitions §3 (interpolation), CSS Properties & Values §5 (animation behavior),
+                  chapter/motion.css animation definitions"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/14-interpolation_rules.spw" }
@@ -200,10 +338,20 @@
   ^phase["Theme Token Pilot"]{
     @slug: theme_token_pilot
     ^task{
-      @intent: run_theme_token_registration_pilot
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "execute a pilot registration of 3-5 theme tokens — register using the chosen
+                strategy (phase 10), verify interpolation behavior during theme switching
+                (cosmos <-> ember), and measure any performance impact"
+      @audit: "select tokens that are: used in transitions, have clear syntax types,
+               and are used across multiple components; register, test theme switch animation,
+               compare before/after behavior"
+      @evidence: "core/tokens.css theme token declarations, core/motifs.css theme transition rules,
+                  measured interpolation behavior in Chrome DevTools Animations panel"
       @recommendation: classify_adopt_guardrail_monitor_reject
+    }
+    %metrics: {
+      pilot_token_count: "3-5"
+      interpolation_correctness: "all pilot tokens interpolate smoothly during theme switch — MUST be true"
+      performance_delta: "style recalculation time delta — informational"
     }
     ={ "book/audits/houdini/15-theme_token_pilot.spw" }
   }
@@ -211,20 +359,33 @@
   ^phase["Properties Values Checkpoint"]{
     @slug: properties_values_checkpoint
     ^task{
-      @intent: checkpoint_properties_values_readiness
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "checkpoint: synthesize Properties & Values findings (phases 03-15) into
+                a go/no-go recommendation for full property registration rollout"
+      @audit: "evaluate: pilot results, inheritance policy impact, invalid value risk,
+               interpolation correctness, browser support coverage"
+      @evidence: "all Properties & Values phase artifacts (03-15)"
+      @recommendation: "go (proceed to full registration) | conditional-go (proceed with exclusions) |
+                         no-go (defer registration, document reasons)"
     }
     ={ "book/audits/houdini/16-properties_values_checkpoint.spw" }
+  }
+
+
+  ~<sub_domain["CSS Typed OM — phases 17-24"]>{
+    .note: "the Typed OM API provides structured access to CSS values — CSSStyleValue subclasses
+            replace string parsing with typed objects. This sub-domain evaluates migration
+            feasibility from string CSSOM to Typed OM for runtime style manipulation.
+            Spec reference: CSS Typed OM Level 1 (W3C Working Draft)"
   }
 
   ^phase["Typed Om Read Audit"]{
     @slug: typed_om_read_audit
     ^task{
-      @intent: audit_read_paths_for_computedStyleMap
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "audit read-path opportunities — where getComputedStyle().getPropertyValue()
+                could be replaced with computedStyleMap().get() for typed value access"
+      @audit: "enumerate call sites; for each: determine return type (CSSUnitValue, CSSKeywordValue,
+               CSSTransformValue, etc.); assess whether typed access simplifies downstream logic"
+      @evidence: "CSS Typed OM §4 (StylePropertyMapReadOnly), §5 (CSSStyleValue subclasses)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/17-typed_om_read_audit.spw" }
@@ -233,9 +394,12 @@
   ^phase["Typed Om Write Audit"]{
     @slug: typed_om_write_audit
     ^task{
-      @intent: audit_write_paths_for_attributeStyleMap
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "audit write-path opportunities — where element.style.setProperty()
+                could be replaced with attributeStyleMap.set() for typed value assignment"
+      @audit: "enumerate call sites; for each: determine whether the value is constructed
+               from arithmetic (CSSUnitValue.add/sub/mul benefits) or from string
+               concatenation (migration may not simplify)"
+      @evidence: "CSS Typed OM §4.2 (StylePropertyMap), §5.1 (CSSUnitValue arithmetic)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/18-typed_om_write_audit.spw" }
@@ -244,9 +408,12 @@
   ^phase["Unit Conversion Utilities"]{
     @slug: unit_conversion_utilities
     ^task{
-      @intent: design_cssunitvalue_conversion_utilities
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design CSSUnitValue conversion utilities — standardize how lore.land code
+                converts between px, rem, em, vw, and percentage values"
+      @audit: "identify conversion patterns in existing code; determine which conversions
+               CSSUnitValue.to() supports natively vs which require viewport/font-size context"
+      @evidence: "CSS Typed OM §5.1.1 (CSSUnitValue), §5.1.2 (unit conversion),
+                  CSS Values §6 (distance units)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/19-unit_conversion_utilities.spw" }
@@ -255,9 +422,12 @@
   ^phase["Transform Typed Values"]{
     @slug: transform_typed_values
     ^task{
-      @intent: design_typed_transform_and_matrix_workflow
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "evaluate CSSTransformValue for the transform manipulations in spw-interactions.mjs
+                and ebook-navigation.mjs — determine whether typed transform composition
+                (CSSRotate, CSSScale, CSSTranslate) simplifies the current string-based approach"
+      @audit: "compare: current string concatenation ('translate(Xpx, Ypx) scale(S)') vs
+               new CSSTransformValue([new CSSTranslate(X, Y), new CSSScale(S)])"
+      @evidence: "CSS Typed OM §5.5 (CSSTransformValue), §5.5.1 (CSSTransformComponent subclasses)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/20-transform_typed_values.spw" }
@@ -266,9 +436,12 @@
   ^phase["Color Typed Workflow"]{
     @slug: color_typed_workflow
     ^task{
-      @intent: define_typed_color_workflow_and_fallbacks
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "evaluate typed color handling — CSSColorValue is not yet widely supported;
+                determine fallback strategy for theme color manipulation in the motif system"
+      @audit: "assess: is CSSColorValue available in target browsers? if not, what is the
+               cost of continuing with string-based color manipulation vs waiting for support?"
+      @evidence: "CSS Typed OM §5.4 (CSSColorValue — note: limited implementation),
+                  MDN browser compat for CSSColorValue"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/21-color_typed_workflow.spw" }
@@ -277,9 +450,13 @@
   ^phase["Unit Normalization Policy"]{
     @slug: unit_normalization_policy
     ^task{
-      @intent: standardize_unit_normalization_policy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "standardize when and how unit normalization occurs — define policy for
+                whether values should be stored in canonical units (px) or preserved in
+                authored units (rem, vw)"
+      @audit: "evaluate: computedStyleMap returns resolved values (px for lengths);
+               attributeStyleMap preserves authored values; determine which behavior
+               is appropriate for each usage pattern"
+      @evidence: "CSS Typed OM §3.1 (resolved vs specified values), CSS CSSOM §6.7.2 (resolved value)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/22-unit_normalization_policy.spw" }
@@ -288,9 +465,13 @@
   ^phase["Typed Om Benchmark Harness"]{
     @slug: typed_om_benchmark_harness
     ^task{
-      @intent: design_string_cssom_vs_typed_om_benchmarking
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design a benchmark harness comparing string CSSOM vs Typed OM performance
+                for the specific operations identified in phases 17-18"
+      @audit: "define: benchmark scenarios (single read, single write, batch read, batch write,
+               animation frame loop); measurement methodology (performance.now, requestAnimationFrame
+               timing); statistical rigor (minimum iterations, warm-up, outlier handling)"
+      @evidence: "Web Performance API §4 (high resolution time), Chrome DevTools Performance panel,
+                  Typed OM performance notes from spec editors"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/23-typed_om_benchmark_harness.spw" }
@@ -299,20 +480,35 @@
   ^phase["Typed Om Checkpoint"]{
     @slug: typed_om_checkpoint
     ^task{
-      @intent: checkpoint_typed_om_migration_practicality
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "checkpoint: synthesize Typed OM findings (phases 17-23) into a migration
+                recommendation — full migration, partial migration, or defer"
+      @audit: "evaluate: migration candidate count, benchmark results, browser support gaps,
+               code complexity reduction (or increase)"
+      @evidence: "all Typed OM phase artifacts (17-23)"
+      @recommendation: "full-migration | partial-migration (specify scope) | defer (specify conditions)"
     }
     ={ "book/audits/houdini/24-typed_om_checkpoint.spw" }
+  }
+
+
+  ~<sub_domain["CSS Painting API — phases 25-34"]>{
+    .note: "the Painting API (registerPaint, paint()) enables custom image generation via
+            a JavaScript canvas-like API invoked from CSS background-image. This sub-domain
+            evaluates architecture, implementation constraints, and the critical limitation
+            that Firefox has no implementation.
+            Spec reference: CSS Painting API Level 1 (W3C CR)"
   }
 
   ^phase["Painting Api Architecture"]{
     @slug: painting_api_architecture
     ^task{
-      @intent: define_paint_worklet_architecture
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the architectural model for paint worklets in lore.land — module
+                organization, registration pattern, and CSS integration points"
+      @audit: "evaluate: worklet module location (book/scripts/worklets/ or colocated?),
+               registration timing (eager on page load vs lazy on first paint()),
+               CSS integration (background-image: paint(name) usage pattern)"
+      @evidence: "CSS Painting API §3 (paint() function), §4 (paint class definition),
+                  Worklets §2 (worklet loading model)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/25-painting_api_architecture.spw" }
@@ -321,9 +517,12 @@
   ^phase["Paint Worklet Scaffold"]{
     @slug: paint_worklet_scaffold
     ^task{
-      @intent: design_paint_worklet_module_scaffold
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design the file structure and boilerplate for paint worklet modules —
+                each worklet module must be a standalone file loadable via addModule()"
+      @audit: "define: file naming convention, class structure template, inputProperties
+               declaration pattern, paint() method signature"
+      @evidence: "CSS Painting API §4.1 (registerPaint), §4.2 (PaintRenderingContext2D),
+                  Worklets §3 (addModule)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/26-paint_worklet_scaffold.spw" }
@@ -332,9 +531,14 @@
   ^phase["Input Properties Contract"]{
     @slug: input_properties_contract
     ^task{
-      @intent: define_input_properties_contract
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the input properties contract — which custom properties each paint
+                worklet reads, what types they expect, and how they handle missing or
+                invalid values"
+      @audit: "for each paint use case (phase 05): enumerate required input properties,
+               expected value types, and fallback behavior when a property is unset or
+               resolves to initial value"
+      @evidence: "CSS Painting API §5 (input properties), CSS Properties & Values §3.4
+                  (invalid at computed-value time behavior)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/27-input_properties_contract.spw" }
@@ -343,20 +547,27 @@
   ^phase["Deterministic Rendering Rules"]{
     @slug: deterministic_rendering_rules
     ^task{
-      @intent: define_deterministic_paint_rules
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define determinism requirements for paint worklet output — given identical
+                input properties and geometry, paint() must produce identical pixels"
+      @audit: "evaluate: are any identified paint use cases inherently nondeterministic
+               (e.g., random noise, time-based animation)? if so, define how randomness
+               is seeded from input properties to maintain frame-to-frame stability"
+      @evidence: "CSS Painting API §7 (rendering model), §4.3 (paint timing)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
+    #invariant: "nondeterministic paint output is prohibited unless explicitly seeded via input property"
     ={ "book/audits/houdini/28-deterministic_rendering_rules.spw" }
   }
 
   ^phase["Paint Primitive Library"]{
     @slug: paint_primitive_library
     ^task{
-      @intent: design_reusable_paint_primitives
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design a shared paint primitive library — reusable drawing functions
+                (rounded rectangles, gradient fills, noise patterns) that individual
+                paint worklets can compose"
+      @audit: "evaluate: can paint worklets import shared modules? (yes, via worklet
+               addModule with module specifiers); define the primitive API surface"
+      @evidence: "Worklets §3 (module loading), PaintRenderingContext2D canvas API subset"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/29-paint_primitive_library.spw" }
@@ -365,9 +576,14 @@
   ^phase["Dpr Resolution Strategy"]{
     @slug: dpr_resolution_strategy
     ^task{
-      @intent: define_dpr_and_resolution_strategy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define device pixel ratio handling strategy — paint worklets receive
+                devicePixelRatio via the PaintSize; define how worklets should scale
+                their drawing operations for crisp rendering on high-DPR displays"
+      @audit: "evaluate: canvas scaling pattern (scale context by DPR, draw in CSS pixels)
+               vs size-aware pattern (draw directly in device pixels); recommend one
+               standard approach"
+      @evidence: "CSS Painting API §4.2 (PaintSize), PaintRenderingContext2D §2 (output bitmap),
+                  devicePixelRatio interaction model"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/30-dpr_resolution_strategy.spw" }
@@ -376,10 +592,18 @@
   ^phase["No Support Fallback"]{
     @slug: no_support_fallback
     ^task{
-      @intent: define_painting_api_fallback_path
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the fallback path for browsers without Paint API support (Firefox, older Safari) —
+                determine whether CSS @supports (background: paint(x)) detection is sufficient
+                and what fallback rendering (gradient, SVG, static image) is acceptable"
+      @audit: "for each paint use case: define the fallback CSS; verify that fallback
+               is visually acceptable (not identical, but not broken); measure the code
+               cost of maintaining dual paths"
+      @evidence: "CSS Conditional Rules §6 (@supports), CSS Painting API §8 (feature detection),
+                  caniuse.com paint API support data"
       @recommendation: classify_adopt_guardrail_monitor_reject
+    }
+    %metrics: {
+      fallback_coverage: "count(use_cases_with_defined_fallback) / count(total_use_cases) — MUST equal 1.0"
     }
     ={ "book/audits/houdini/31-no_support_fallback.spw" }
   }
@@ -387,9 +611,12 @@
   ^phase["Paint Cache Invalidation"]{
     @slug: paint_cache_invalidation
     ^task{
-      @intent: design_paint_cache_invalidation_rules
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define cache invalidation rules — paint worklet output is cached by the
+                browser; changes to input properties or geometry trigger repaint"
+      @audit: "identify: which input property changes should trigger repaint? are there
+               properties that change frequently (e.g., scroll position) that would cause
+               excessive repaint? define throttling or debouncing strategies if needed"
+      @evidence: "CSS Painting API §4.3 (paint invalidation), §7 (rendering lifecycle)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/32-paint_cache_invalidation.spw" }
@@ -398,10 +625,20 @@
   ^phase["Paint Performance Budgets"]{
     @slug: paint_performance_budgets
     ^task{
-      @intent: define_paint_performance_budgets
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define performance budgets for paint worklet execution — maximum time per
+                paint() call, maximum repaints per frame, total paint worklet time budget
+                per animation frame"
+      @audit: "establish: paint() must complete within 2ms at p95; no more than 4 paint
+               worklet invocations per frame; total worklet time < 4ms per frame (leaving
+               headroom within the 16ms frame budget)"
+      @evidence: "RAIL performance model, Chrome DevTools paint profiling,
+                  CSS Painting API §7 (performance considerations)"
       @recommendation: classify_adopt_guardrail_monitor_reject
+    }
+    %metrics: {
+      paint_p95_budget: "2ms per invocation"
+      frame_paint_budget: "4ms total across all worklets"
+      max_paints_per_frame: 4
     }
     ={ "book/audits/houdini/33-paint_performance_budgets.spw" }
   }
@@ -409,20 +646,33 @@
   ^phase["Painting Api Checkpoint"]{
     @slug: painting_api_checkpoint
     ^task{
-      @intent: checkpoint_painting_api_viability
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "checkpoint: synthesize Painting API findings (phases 25-33) into an
+                adoption recommendation — adopt with fallbacks, Chromium-only experimental,
+                or defer pending Firefox support"
+      @audit: "evaluate: use case value, fallback quality, performance budget feasibility,
+               cross-browser support gap (Firefox)"
+      @evidence: "all Painting API phase artifacts (25-33)"
+      @recommendation: "adopt-with-fallbacks | chromium-experimental | defer"
     }
     ={ "book/audits/houdini/34-painting_api_checkpoint.spw" }
+  }
+
+
+  ~<sub_domain["Worklets Infrastructure — phases 35-44"]>{
+    .note: "the Worklets API is the shared infrastructure underneath paint worklets
+            (and future layout/animation worklets). This sub-domain audits lifecycle,
+            loading, error handling, debugging, and operational concerns.
+            Spec reference: Worklets Level 1 (W3C Working Draft)"
   }
 
   ^phase["Worklet Lifecycle Model"]{
     @slug: worklet_lifecycle_model
     ^task{
-      @intent: document_worklet_lifecycle_model
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "document the worklet lifecycle: creation, module loading, class registration,
+                paint invocation, and potential termination/restart by the browser"
+      @audit: "evaluate: can lore.land rely on worklet persistence within a page session?
+               what happens if the browser terminates and restarts the worklet global scope?"
+      @evidence: "Worklets §2 (lifecycle), §3 (global scope), §4 (worklet termination)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/35-worklet_lifecycle_model.spw" }
@@ -431,9 +681,14 @@
   ^phase["Worklet Module Loading"]{
     @slug: worklet_module_loading
     ^task{
-      @intent: define_worklet_loading_and_cache_strategy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the module loading strategy — addModule() accepts a URL;
+               determine: relative vs absolute URLs, caching headers, loading timing
+               (document load vs lazy), error handling for 404/network failures"
+      @audit: "evaluate: GitHub Pages serving characteristics (cache-control, CORS),
+               module loading order (does addModule block paint?), multiple addModule
+               call behavior (sequential registration)"
+      @evidence: "Worklets §3 (addModule), Fetch API §4 (request handling),
+                  GitHub Pages CDN caching behavior"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/36-worklet_module_loading.spw" }
@@ -442,9 +697,12 @@
   ^phase["Worklet Error Handling"]{
     @slug: worklet_error_handling
     ^task{
-      @intent: define_worklet_error_taxonomy_and_fallbacks
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define error taxonomy and fallback behavior for worklet failures —
+               addModule() rejection, class registration errors, paint() runtime exceptions"
+      @audit: "for each failure mode: define detection mechanism, user-visible behavior
+               (fallback CSS applies?), and diagnostic output (console, custom event)"
+      @evidence: "Worklets §3.2 (error handling), CSS Painting API §4.4 (error behavior),
+                  Chrome DevTools console output for worklet errors"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/37-worklet_error_handling.spw" }
@@ -453,9 +711,14 @@
   ^phase["Security Privacy Review"]{
     @slug: security_privacy_review
     ^task{
-      @intent: review_security_privacy_implications
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "review security and privacy implications of worklet adoption —
+               paint worklets execute in a restricted global scope; verify that no
+               information leakage vectors exist in the proposed usage"
+      @audit: "evaluate: timing side-channels (paint duration observable?),
+               fingerprinting surface (registered properties reveal capabilities?),
+               same-origin restrictions on addModule URLs"
+      @evidence: "CSS Painting API §9 (security considerations), §10 (privacy considerations),
+                  Worklets §6 (security model)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/38-security_privacy_review.spw" }
@@ -464,9 +727,13 @@
   ^phase["Memory Behavior Audit"]{
     @slug: memory_behavior_audit
     ^task{
-      @intent: audit_worklet_memory_behavior
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "audit memory behavior of worklet instances — determine whether registered
+               paint classes accumulate memory over the page session and whether the
+               browser garbage-collects unused worklet scopes"
+      @audit: "measure: heap snapshot before/after worklet registration, during sustained
+               paint activity, and after CSS changes remove all paint() references"
+      @evidence: "Chrome DevTools Memory panel, Worklets §4 (scope lifecycle),
+                  measured heap deltas"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/39-memory_behavior_audit.spw" }
@@ -475,9 +742,14 @@
   ^phase["Main Thread Coordination"]{
     @slug: main_thread_coordination
     ^task{
-      @intent: define_main_thread_coordination_constraints
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define coordination constraints between main thread JS and worklet execution —
+               paint worklets run on a separate thread; input property changes on the main
+               thread trigger worklet repaint asynchronously"
+      @audit: "evaluate: what is the latency between main-thread property change and worklet
+               repaint? can this latency cause visible flicker during rapid property changes
+               (e.g., drag interactions)?"
+      @evidence: "CSS Painting API §7 (paint timing model), compositor thread scheduling,
+                  measured latency via Performance Observer"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/40-main_thread_coordination.spw" }
@@ -486,9 +758,13 @@
   ^phase["Worklet Ci Smoke"]{
     @slug: worklet_ci_smoke
     ^task{
-      @intent: design_ci_smoke_tests_for_worklet_feature_detection
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design CI smoke tests for worklet feature detection — ensure that test
+               environments without Paint API support (e.g., headless Firefox) produce
+               graceful degradation rather than test failures"
+      @audit: "define: feature detection predicate (typeof CSS !== 'undefined' && 'paintWorklet' in CSS),
+               test environment matrix, smoke test assertions (paint class registered,
+               fallback CSS applied when unsupported)"
+      @evidence: "CSS Painting API §8 (feature detection), CI runner capabilities"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/41-worklet_ci_smoke.spw" }
@@ -497,9 +773,14 @@
   ^phase["Worklet Debugging Workflow"]{
     @slug: worklet_debugging_workflow
     ^task{
-      @intent: define_firefox_and_chromium_worklet_debug_workflow
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define debugging workflows for worklet development — Chrome DevTools worklet
+               source panel, console.log from worklet scope, and Firefox's non-support
+               debugging strategy"
+      @audit: "document: how to set breakpoints in worklet code, how to inspect input
+               properties at paint time, how to profile worklet execution cost,
+               and how to debug fallback behavior in Firefox"
+      @evidence: "Chrome DevTools §(Worklet debugging), Chrome DevTools Paint profiler,
+                  Firefox DevTools (no worklet support — document the gap)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/42-worklet_debugging_workflow.spw" }
@@ -508,9 +789,14 @@
   ^phase["A11y Validation Generated Paint"]{
     @slug: a11y_validation_generated_paint
     ^task{
-      @intent: validate_generated_paint_accessibility
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "validate that paint worklet output does not convey information that is
+               absent from the DOM — paint output is invisible to assistive technology
+               and must be purely decorative"
+      @audit: "for each paint use case: verify that removing background-image: paint()
+               does not remove any informational content; verify that color contrast
+               requirements are met by the underlying DOM content alone"
+      @evidence: "WCAG 2.2 §1.1.1 (non-text content), §1.4.11 (non-text contrast),
+                  phase 08 a11y safety baseline"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/43-a11y_validation_generated_paint.spw" }
@@ -519,20 +805,35 @@
   ^phase["Worklet Track Checkpoint"]{
     @slug: worklet_track_checkpoint
     ^task{
-      @intent: checkpoint_worklet_track_reliability
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "checkpoint: synthesize Worklets Infrastructure findings (phases 35-43) —
+               operational readiness assessment for worklet deployment on GitHub Pages"
+      @audit: "evaluate: lifecycle reliability, loading strategy viability, error handling
+               completeness, security posture, memory safety, debugging ergonomics"
+      @evidence: "all Worklets Infrastructure phase artifacts (35-43)"
+      @recommendation: "operationally-ready | conditionally-ready (specify conditions) | not-ready"
     }
     ={ "book/audits/houdini/44-worklet_track_checkpoint.spw" }
+  }
+
+
+  ~<sub_domain["Integration and Synthesis — phases 45-52"]>{
+    .note: "the final sub-domain integrates findings across Properties & Values, Typed OM,
+            Painting API, and Worklets into cross-cutting concerns: API composition,
+            end-to-end demonstrations, regression strategy, documentation, and the
+            final adoption decision matrix"
   }
 
   ^phase["Integrate Properties Typed Om"]{
     @slug: integrate_properties_typed_om
     ^task{
-      @intent: plan_properties_values_plus_typed_om_integration
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "plan the integration of registered properties with Typed OM read/write paths —
+               registered properties return typed CSSStyleValues via computedStyleMap;
+               determine how this changes the migration approach from phase 24"
+      @audit: "evaluate: does property registration change the Typed OM return type?
+               (yes — registered <color> returns CSSColorValue instead of CSSUnparsedValue);
+               update migration plan accordingly"
+      @evidence: "CSS Properties & Values §5 (computed value resolution for registered properties),
+                  CSS Typed OM §4.1 (reification of registered values)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/45-integrate_properties_typed_om.spw" }
@@ -541,9 +842,14 @@
   ^phase["Integrate Typed Om Paint"]{
     @slug: integrate_typed_om_paint
     ^task{
-      @intent: plan_typed_om_driven_paint_updates
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "plan how Typed OM values flow into paint worklet input properties —
+               paint worklets receive input properties as resolved CSSStyleValues;
+               determine how registered property types affect the paint() function"
+      @audit: "evaluate: does registering an input property change the value type
+               received in paint()? (yes — CSSUnitValue instead of CSSUnparsedValue);
+               update paint worklet code patterns accordingly"
+      @evidence: "CSS Painting API §5 (input property resolution),
+                  CSS Typed OM §5 (CSSStyleValue subclasses)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/46-integrate_typed_om_paint.spw" }
@@ -552,9 +858,12 @@
   ^phase["Endtoend Demos"]{
     @slug: endtoend_demos
     ^task{
-      @intent: design_product_value_demonstration_components
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "design end-to-end demonstration components that exercise the full Houdini
+               stack: @property registration -> Typed OM manipulation -> paint worklet rendering"
+      @audit: "select 2-3 demonstration scenarios from the identified use cases;
+               define expected behavior, input property contracts, and visual outcomes"
+      @evidence: "paint use case shortlist (phase 05), typed OM candidates (phase 06),
+                  theme token pilot results (phase 15)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/47-endtoend_demos.spw" }
@@ -563,9 +872,13 @@
   ^phase["Regression Snapshot Plan"]{
     @slug: regression_snapshot_plan
     ^task{
-      @intent: define_houdini_regression_snapshot_protocol
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the visual regression strategy for Houdini features —
+               screenshot comparison before/after property registration, paint worklet
+               adoption, and Typed OM migration"
+      @audit: "evaluate: screenshot tool (Playwright, Percy, manual), comparison threshold,
+               viewport matrix (mobile, desktop, wide), theme matrix (cosmos, ember)"
+      @evidence: "current visual testing infrastructure (if any), Playwright screenshot API,
+                  lore.land breakpoint definitions"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/48-regression_snapshot_plan.spw" }
@@ -574,9 +887,13 @@
   ^phase["Author Documentation Plan"]{
     @slug: author_documentation_plan
     ^task{
-      @intent: define_author_facing_houdini_documentation
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the documentation deliverables for Houdini adoption — authoring
+               guide for property registration, paint worklet development guide,
+               Typed OM migration guide, and troubleshooting reference"
+      @audit: "determine: documentation format (spw artifacts, inline comments, or separate
+               docs site), target audience (future contributors), minimum viable documentation
+               set for safe adoption"
+      @evidence: "existing documentation patterns in the codebase, lore.land README structure"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/49-author_documentation_plan.spw" }
@@ -585,10 +902,17 @@
   ^phase["Adoption Decision Matrix"]{
     @slug: adoption_decision_matrix
     ^task{
-      @intent: classify_adopt_guardrail_monitor_reject
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "produce the final adoption decision matrix — per-API recommendation with
+               supporting evidence, risk assessment, and implementation prerequisites"
+      @audit: "synthesize all checkpoint findings (phases 16, 24, 34, 44) into a unified
+               decision matrix: {api, recommendation, confidence, prerequisites, risks, timeline}"
+      @evidence: "all Houdini track artifacts (01-49)"
+      @recommendation: "per-API: adopt | adopt-with-guardrails | monitor | reject"
+    }
+    %metrics: {
+      apis_recommended_adopt: "count — primary success metric"
+      apis_blocked_by_firefox: "count — cross-browser risk"
+      total_prerequisites: "count — implementation effort indicator"
     }
     ={ "book/audits/houdini/50-adoption_decision_matrix.spw" }
   }
@@ -596,9 +920,12 @@
   ^phase["Rollout Feature Flags"]{
     @slug: rollout_feature_flags
     ^task{
-      @intent: define_rollout_and_kill_switch_strategy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define the rollout and kill-switch strategy — how to enable Houdini features
+               incrementally and how to disable them if issues arise post-deployment"
+      @audit: "evaluate: CSS @supports-based activation, JS feature detection gates,
+               URL parameter overrides for testing, and graceful degradation verification"
+      @evidence: "CSS Conditional Rules §6 (@supports), CSS Painting API §8 (feature detection),
+                  lore.land deployment model (GitHub Pages, no server-side logic)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/houdini/51-rollout_feature_flags.spw" }
@@ -607,23 +934,37 @@
   ^phase["Houdini Master Report"]{
     @slug: houdini_master_report
     ^task{
-      @intent: synthesize_implementation_ready_recommendations
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "synthesize all Houdini track findings into the master report —
+               executive summary, per-sub-domain findings, adoption decision matrix,
+               risk register, implementation roadmap, and open questions"
+      @audit: "aggregate across all 51 preceding phases; produce a document that enables
+               an implementation decision without requiring re-reading individual phase artifacts"
+      @evidence: "all Houdini phase artifacts (01-51)"
+      @recommendation: "final consolidated recommendation with per-API granularity"
     }
     ={ "book/audits/houdini/52-houdini_master_report.spw" }
   }
 
 }
 
+
 ^phases["Firefox Feature Exploration"]{
+  .note: "13 phases — each addresses a distinct Firefox feature or tool relevant to
+          lore.land's cross-browser development posture. Unlike the Houdini track,
+          these phases are not sequential — each is independently evaluable."
+  %track_invariant: each_phase_addresses_distinct_feature_area
+
   ^phase["Devtools Grid Flex"]{
     @slug: devtools_grid_flex
     ^task{
-      @intent: define_grid_and_flex_inspector_playbooks
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define grid and flex inspector playbooks for Firefox DevTools — lore.land
+               uses a complex grid layout (chapter/panels.css) that benefits from
+               Firefox's grid overlay and flex container inspectors"
+      @audit: "document: how to inspect the body grid template, how to debug aside
+               sizing at breakpoints, how to visualize gap and track sizing;
+               compare capabilities with Chrome DevTools grid inspector"
+      @evidence: "Firefox DevTools Grid Inspector documentation, MDN DevTools guides,
+                  chapter/panels.css grid definitions"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/53-devtools_grid_flex.spw" }
@@ -632,9 +973,13 @@
   ^phase["Firefox Profiler"]{
     @slug: firefox_profiler
     ^task{
-      @intent: define_profiling_workflow_layout_script_paint
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define profiling workflows for layout, script, and paint performance
+               using Firefox Profiler — establish baseline measurements for cross-browser
+               performance comparison"
+      @audit: "document: marker-based profiling for spw interactions, layout shift
+               measurement methodology, script execution cost comparison with Chrome;
+               identify Firefox-specific performance characteristics"
+      @evidence: "Firefox Profiler documentation (profiler.firefox.com), MDN Performance API guides"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/54-firefox_profiler.spw" }
@@ -643,9 +988,14 @@
   ^phase["Fission Site Isolation"]{
     @slug: fission_site_isolation
     ^task{
-      @intent: assess_fission_embedding_and_debug_implications
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "assess Fission (site isolation) implications — determine whether lore.land's
+               cross-origin resource loading (submodule assets, CDN fonts) is affected by
+               Fission process boundaries"
+      @audit: "evaluate: are any lore.land resources loaded cross-origin in a way that
+               Fission would isolate? does iframe embedding (if any) trigger process
+               separation? impact on debugging cross-origin resources"
+      @evidence: "Mozilla wiki: Fission architecture, MDN: Cross-Origin-Opener-Policy,
+                  lore.land resource loading audit"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/55-fission_site_isolation.spw" }
@@ -654,9 +1004,13 @@
   ^phase["Enhanced Tracking Protection"]{
     @slug: enhanced_tracking_protection
     ^task{
-      @intent: audit_etp_effects_on_analytics_embeds_loading
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "audit Enhanced Tracking Protection (ETP) effects on lore.land —
+               determine whether any analytics, embedded content, or font loading
+               is blocked or modified by ETP strict mode"
+      @audit: "test: load lore.land in Firefox with ETP strict; enumerate blocked requests;
+               verify that all page functionality remains intact; document any degradation"
+      @evidence: "Mozilla wiki: Enhanced Tracking Protection, Firefox ETP documentation,
+                  lore.land network request waterfall under ETP strict"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/56-enhanced_tracking_protection.spw" }
@@ -665,9 +1019,14 @@
   ^phase["Total Cookie Protection"]{
     @slug: total_cookie_protection
     ^task{
-      @intent: assess_storage_partitioning_effects
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "assess Total Cookie Protection (TCP) storage partitioning effects —
+               determine whether any lore.land state (localStorage, sessionStorage,
+               cache API) is affected by per-site partitioning"
+      @audit: "evaluate: does lore.land use any storage APIs? if so, are they affected
+               by TCP partitioning when loaded in different contexts (direct, embedded)?
+               does cache-context.mjs depend on shared cache behavior?"
+      @evidence: "Mozilla wiki: Total Cookie Protection, MDN: State Partitioning,
+                  lore.land storage API usage audit"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/57-total_cookie_protection.spw" }
@@ -676,9 +1035,13 @@
   ^phase["Closewatcher Tracking"]{
     @slug: closewatcher_tracking
     ^task{
-      @intent: track_closewatcher_support_and_usage
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "track CloseWatcher API support in Firefox — relevant for modal/popover
+               dismissal patterns in the ethos panel and potential future dialog components"
+      @audit: "assess: current Firefox implementation status (behind flag? shipping?),
+               lore.land use cases that would benefit (Escape key handling for panels),
+               polyfill availability and quality"
+      @evidence: "HTML Spec §7.9.3 (CloseWatcher), bugzilla.mozilla.org CloseWatcher tracking bug,
+                  MDN CloseWatcher documentation"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/58-closewatcher_tracking.spw" }
@@ -687,9 +1050,14 @@
   ^phase["Html Sanitizer Tracking"]{
     @slug: html_sanitizer_tracking
     ^task{
-      @intent: track_html_sanitizer_readiness_and_adoption_strategy
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "track HTML Sanitizer API readiness — relevant if lore.land ever processes
+               user-generated or externally-sourced HTML (e.g., spw canon content fetched
+               from remote sources in PLAN.B §hydration)"
+      @audit: "assess: current Firefox implementation status, API stability, comparison
+               with DOMPurify; determine whether adoption should wait for multi-engine
+               shipping or proceed with polyfill"
+      @evidence: "HTML Sanitizer API specification, bugzilla.mozilla.org Sanitizer tracking,
+                  MDN Sanitizer API documentation"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/59-html_sanitizer_tracking.spw" }
@@ -698,9 +1066,13 @@
   ^phase["Webgpu Firefox"]{
     @slug: webgpu_firefox
     ^task{
-      @intent: assess_firefox_webgpu_readiness
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "assess Firefox WebGPU readiness — relevant for potential future GPU-accelerated
+               rendering of spw visualizations or large-scale component graphs"
+      @audit: "evaluate: current Firefox Nightly WebGPU status, API coverage vs Chrome,
+               performance characteristics, and whether any near-term lore.land feature
+               would benefit from WebGPU over Canvas2D or CSS rendering"
+      @evidence: "WebGPU specification, bugzilla.mozilla.org WebGPU tracking,
+                  MDN WebGPU documentation, Firefox Nightly release notes"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/60-webgpu_firefox.spw" }
@@ -709,9 +1081,13 @@
   ^phase["Atomics Waitasync"]{
     @slug: atomics_waitasync
     ^task{
-      @intent: track_atomics_waitasync_runtime_impact
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "track Atomics.waitAsync support — relevant for SharedArrayBuffer-based
+               communication patterns if worklet or worker coordination is adopted"
+      @audit: "assess: Firefox implementation status, cross-origin isolation requirements
+               (COOP/COEP headers needed for SharedArrayBuffer), GitHub Pages header
+               configuration feasibility"
+      @evidence: "ECMA-262 §25.4.11 (Atomics.waitAsync), MDN Atomics.waitAsync documentation,
+                  GitHub Pages custom headers support"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/61-atomics_waitasync.spw" }
@@ -720,9 +1096,13 @@
   ^phase["Webextensions Mv3"]{
     @slug: webextensions_mv3
     ^task{
-      @intent: audit_firefox_mv3_constraints_for_tooling
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "audit Firefox Manifest V3 extension constraints — relevant if lore.land
+               tooling includes browser extensions for spw development or debugging"
+      @audit: "evaluate: MV3 service worker vs MV2 background page model,
+               content script injection changes, declarativeNetRequest limitations;
+               determine impact on any planned or existing development extensions"
+      @evidence: "MDN WebExtensions MV3 documentation, Firefox Add-ons blog MV3 updates,
+                  Chrome MV3 migration guide (for comparison)"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/62-webextensions_mv3.spw" }
@@ -731,9 +1111,13 @@
   ^phase["Picture In Picture"]{
     @slug: picture_in_picture
     ^task{
-      @intent: evaluate_picture_in_picture_workflows
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "evaluate Picture-in-Picture API for potential spw visualization use cases —
+               floating panels, detached component inspectors, or persistent navigation aids"
+      @audit: "assess: current API scope (video-only vs Document PiP), Firefox support status,
+               Document Picture-in-Picture origin trial status in Chrome;
+               determine whether any lore.land workflow benefits from PiP"
+      @evidence: "Picture-in-Picture API specification, Document PiP explainer,
+                  MDN Picture-in-Picture documentation"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/63-picture_in_picture.spw" }
@@ -742,9 +1126,14 @@
   ^phase["Accessibility Inspector"]{
     @slug: accessibility_inspector
     ^task{
-      @intent: define_accessibility_inspector_audit_workflow
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
+      @intent: "define an accessibility audit workflow using Firefox's Accessibility Inspector —
+               establish a repeatable process for verifying WCAG compliance that complements
+               Chrome's Lighthouse accessibility audit"
+      @audit: "document: how to use the Accessibility Inspector to verify name computation,
+               role mapping, and focus order for spw components; compare findings with
+               PLAN.A §foundation phase 03 aria baseline"
+      @evidence: "Firefox DevTools Accessibility Inspector documentation,
+                  MDN Accessibility Inspector guides, PLAN.A §foundation phase 03 output"
       @recommendation: classify_adopt_guardrail_monitor_reject
     }
     ={ "book/audits/firefox-features/64-accessibility_inspector.spw" }
@@ -753,10 +1142,18 @@
   ^phase["Firefox Feature Synthesis"]{
     @slug: firefox_feature_synthesis
     ^task{
-      @intent: synthesize_firefox_feature_recommendations
-      @audit: evaluate_runtime_and_authoring_constraints
-      @evidence: capture_spec_support_and_compat_notes
-      @recommendation: classify_adopt_guardrail_monitor_reject
+      @intent: "synthesize all Firefox track findings into a prioritized recommendation —
+               which Firefox-specific features and tools should be actively adopted into
+               the development workflow, which should be monitored, and which are irrelevant"
+      @audit: "aggregate across phases 53-64; classify by: workflow impact (high/medium/low),
+               implementation effort (none/low/medium), cross-browser benefit"
+      @evidence: "all Firefox feature phase artifacts (53-64)"
+      @recommendation: "prioritized adoption list with per-feature justification"
+    }
+    %metrics: {
+      features_recommended_adopt: "count"
+      features_recommended_monitor: "count"
+      features_recommended_skip: "count"
     }
     ={ "book/audits/firefox-features/65-firefox_feature_synthesis.spw" }
   }
@@ -767,6 +1164,9 @@
   ={ "book/audits/firefox-features/summary.spw" }
   joins: { houdini: houdini_track_findings, firefox: firefox_track_findings }
   output: prioritized_adoption_recommendations
+  .note: "the final synthesis joins both tracks — Houdini adoption recommendations are
+          qualified by Firefox support gaps identified in the Firefox track; Firefox tooling
+          recommendations are prioritized by their relevance to Houdini debugging workflows"
 }
 
 ^acceptance_criteria{
@@ -775,10 +1175,13 @@
   firefox_track: equals_13
   phase_blocks: required
   emit_paths: deterministic_and_complete
+  .note: "all 65 phases must emit artifacts; no phase may produce implementation code"
 }
 
 ^assumptions{
   houdini_scope: deep_dive_audit_program
   firefox_scope: feature_exploration_for_future_implementation
   plan_mode: documentation_artifact_only
+  .note: "Plan D is the most forward-looking of the four plans — its findings inform
+          implementation work that may span multiple release cycles"
 }

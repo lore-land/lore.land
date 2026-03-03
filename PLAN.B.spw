@@ -1,21 +1,35 @@
 #>plan_b
 #:layer #!pragmatics
 
+~<rationale>{
+  Plan B defines the ethos integration rollout — the subsystem responsible for
+  hydrating, diagnosing, and rendering spw claim state across the runtime.
+  The claim lifecycle (untested -> active -> confirmed | refuted) models
+  a falsification protocol: claims are hypotheses about system behavior,
+  and runtime signals provide evidence for or against each hypothesis.
+}
+
 ^meta{
   source: "PLAN.B.md"
   dialect: spw_native
   style: phase_block_titles
+  normative_voice: specification
+  phase_count: 4
+  dependency_model: sequential_rollout
 }
 
 &plan_contracts{
   preserve_rollout_shape: true
   preserve_claim_interaction_behavior: true
   use_phase_blocks: true
+  #invariant: existing_setLayer_and_destroy_contracts_preserved
+  #invariant: claim_handle_click_behavior_unchanged
 }
 
 ^phase_packet_contract{
   required: { phase_goal: required, steps: required, ?verify: required }
   optional: { events: optional, api_delta: optional, outputs: optional }
+  .note: "every phase must declare verification criteria — unverified phases are nonconformant"
 }
 
 ?["plan_b_integrity_gate"]{
@@ -28,6 +42,7 @@
 !probe{
   id: plan_b.phase_block_probe
   ask: ethos_plan_uses_titled_phase_blocks
+  !assert: deviation_count == 0
 }
 
 ^summary{
@@ -35,6 +50,8 @@
   source_of_truth: spw_claim_chain
   priority: diagnostics_first
   interaction_policy: keep_current_claim_handle_behavior
+  .note: "the ethos subsystem is observational — it monitors runtime behavior and
+          maps observations to claim evidence without modifying the observed behavior"
 }
 
 ^current_gaps{
@@ -43,12 +60,30 @@
   signal_coverage: partial_runtime_signals_only
   claim_states: missing_untested_active_confirmed_refuted_model
   diagnostics_feed: missing_custom_runtime_cycle_feed
+  %severity: {
+    claims_hydration: "high — hardcoded claims diverge from canonical spw source over time"
+    status_model: "medium — single-string overwrite loses transition history"
+    claim_states: "high — without a state machine, claims cannot be falsified"
+    diagnostics_feed: "low — runtime cycle events are enhancement, not prerequisite"
+  }
 }
 
+?<open_questions>[
+  "Should claim status transitions be reversible? (e.g., can a 'confirmed' claim
+   revert to 'active' if new contradictory evidence arrives in the same session?)"
+  "What is the minimum evidence threshold for an 'active' -> 'confirmed' transition?
+   Is a single confirming signal sufficient, or should a quorum be required?"
+  "If the remote spw source is unavailable and fallback constants are used, should
+   the diagnostics engine annotate all subsequent claim statuses as 'degraded-source'?"
+]
+
 ^phases["Ethos Integration Rollout"]{
+
   ^phase["Canon Claim Hydration"]{
     phase_goal: hydrate_claims_from_spw_canon_with_fallback
     module: book_scripts_modules_ethos_claims
+    <dep_from_plan_a>: "requires ethos module at relocated path (PLAN.A §module_moves phase 19)"
+
     ^steps{
       @fetch: fetch_normalize_spw_source_claims_chapter_claims
       @parse: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
@@ -56,16 +91,32 @@
       @metadata: attach_source_metadata_remote_or_fallback_reason
       @fallback: fallback_to_local_constants_on_fetch_or_parse_failure
     }
+
+    ^algorithm["fetch_and_parse"]{
+      .step[1]: "fetch(claimsUrl) with timeout — on network error, goto step 5"
+      .step[2]: "parse response as spw claim chain — on parse error, goto step 5"
+      .step[3]: "for each claim in chain: extract {claim_id, layer, hypothesis, measure, falsification, spec, impl, probe, status}"
+      .step[4]: "normalize field names to runtime shape; attach metadata {source: 'remote', url, fetchedAt} — return"
+      .step[5]: "load local constant claims; attach metadata {source: 'fallback', reason: error_type} — return"
+    }
+
+    %metrics: {
+      parse_field_coverage: "count(extracted_fields) / count(schema_fields) per claim — SHOULD equal 1.0"
+      fallback_frequency: "count(fallback_invocations) / count(total_hydrations) — informational"
+    }
+
     ?verify{
       remote_success: remote_claims_parse_success_path
       fallback_fetch: fallback_fetch_failed_path
       fallback_parse: fallback_parse_failed_path
+      .note: "all three code paths (success, fetch-fail, parse-fail) must be exercised in verification"
     }
   }
 
   ^phase["Ethos Diagnostics Engine"]{
     phase_goal: create_runtime_diagnostic_signal_model_and_claim_status_machine
     module: book_scripts_modules_ethos_diagnostics
+
     events: {
       load_stage: lore_load_stage
       selection: lore_spw_selection
@@ -73,7 +124,10 @@
       acoustics: lore_acoustics_profile
       preferences: lore_preference_change
       runtime_cycle: lore_spw_runtime_cycle
+      .note: "six event types constitute the signal vocabulary — each is mapped to
+              zero or more claim evidence updates via the signal normalization pipeline"
     }
+
     ^steps{
       @normalize: normalize_signal_packets
       @buffer: maintain_ring_buffer_limit_24_default
@@ -81,20 +135,60 @@
       @transitions: transition_status_untested_active_confirmed_refuted
       @observability: emit_observability_events
     }
+
+    ^algorithm["signal_processing"]{
+      .step[1]: "receive raw event — extract {type, timestamp, payload}"
+      .step[2]: "normalize to diagnostic packet {signal_type, claim_ids[], evidence_polarity, raw_payload}"
+      .step[3]: "append to ring buffer (capacity: diagnosticsLimit, default 24, FIFO eviction)"
+      .step[4]: "for each affected claim_id: increment evidence_count or error_count based on polarity"
+      .step[5]: "evaluate transition rules:"
+      .step[5a]: "  untested -> active: first evidence or error received"
+      .step[5b]: "  active -> confirmed: evidence_count >= confirmation_threshold AND error_count == 0"
+      .step[5c]: "  active -> refuted: error_count >= refutation_threshold"
+      .step[6]: "emit 'lore:ethos-diagnostic' with normalized packet"
+      .step[7]: "if status changed in step 5: emit 'lore:ethos-claim-status' with {claim_id, old_status, new_status, evidence_count, error_count}"
+    }
+
+    ^state_machine["claim_status"]{
+      states: [untested, active, confirmed, refuted]
+      transitions: {
+        untested -> active: "on first_signal(claim_id)"
+        active -> confirmed: "when evidence_count(claim_id) >= threshold AND error_count(claim_id) == 0"
+        active -> refuted: "when error_count(claim_id) >= refutation_threshold"
+      }
+      !invariant: "confirmed and refuted are absorbing states within a session —
+                    no further transitions permitted once reached"
+      .note: "absorbing-state design prevents oscillation in the presence of noisy signals;
+              if reversibility is desired, it should be modeled as a separate 're-evaluation'
+              action rather than an implicit state transition"
+    }
+
     api_delta: {
       ethos_diagnostic_event: lore_ethos_diagnostic
       claim_status_event: lore_ethos_claim_status
+      .note: "both events use CustomEvent with detail payload — consumers attach via
+              addEventListener on the document node"
     }
+
+    %metrics: {
+      buffer_utilization: "buffer.length / buffer.capacity — informational"
+      transition_determinism: "given identical signal sequence, status outcomes must be identical"
+      signal_to_claim_mapping_coverage: "count(signal_types with >= 1 claim mapping) / 6"
+    }
+
     ?verify{
       deterministic: deterministic_status_transitions
       refutation: refutation_path_on_error_cycle
       scope: session_scope_non_persistent_status
+      .note: "determinism verification: replay a recorded signal sequence twice —
+              final claim statuses must be bitwise identical"
     }
   }
 
   ^phase["Integrate Into Ethos Panel"]{
     phase_goal: wire_hydration_and_diagnostics_into_panel_without_interaction_changes
     module: book_scripts_modules_spw_ethos
+
     ^steps{
       @hydration: async_claim_hydration_integration
       @diagnostics: diagnostics_engine_attachment
@@ -103,10 +197,38 @@
       @filtering: preserve_layer_filtering_and_setLayer_contract
       @callsites: preserve_entrypoint_callsites
     }
-    state_hooks: {
-      panel: { source: data_ethos_source, mode: data_ethos_diagnostic_mode, last_signal: data_ethos_last_signal, signal_count: data_ethos_signal_count }
-      claim: { status: data_claim_status, evidence: data_claim_evidence, errors: data_claim_errors }
+
+    ^wiring_sequence{
+      .step[1]: "on panel init: await claim hydration (§phase 1)"
+      .step[2]: "instantiate diagnostics engine with hydrated claims"
+      .step[3]: "attach engine to runtime event sources (6 event types)"
+      .step[4]: "for each claim element: bind status + evidence counters to DOM attributes"
+      .step[5]: "render signal readout region (last N signals, compact format)"
+      .step[6]: "verify: setLayer() contract unchanged, destroy() removes all listeners"
     }
+
+    state_hooks: {
+      panel: {
+        source: data_ethos_source
+        mode: data_ethos_diagnostic_mode
+        last_signal: data_ethos_last_signal
+        signal_count: data_ethos_signal_count
+        .note: "panel-level data attributes provide CSS hooks for diagnostic mode styling —
+                these are read-only from the CSS perspective"
+      }
+      claim: {
+        status: data_claim_status
+        evidence: data_claim_evidence
+        errors: data_claim_errors
+        .note: "claim-level attributes enable per-claim visual status via attribute selectors:
+                [data-claim-status='confirmed'], [data-claim-status='refuted'], etc."
+      }
+    }
+
+    #invariant: click_behavior_regression_none
+    #invariant: setLayer_contract_preserved
+    #invariant: destroy_removes_all_listeners_and_state
+
     ?verify{
       click_behavior: click_behavior_regression_none
       parity: home_chapter_status_parity
@@ -123,11 +245,27 @@
       spw_workspace: spw_workspace
       claims_schema: optional_claim_schema_enrichment
     }
+
     ^steps{
       @states: add_visual_states_untested_active_confirmed_refuted
       @responsiveness: validate_mobile_and_wide_breakpoint_legibility
       @schema: align_claim_schema_fields_with_claim_protocol
     }
+
+    ^css_status_mapping{
+      "[data-claim-status='untested']": "neutral indicator — no assertion about validity"
+      "[data-claim-status='active']": "evidence accumulating — visual activity cue"
+      "[data-claim-status='confirmed']": "hypothesis supported — affirmative indicator"
+      "[data-claim-status='refuted']": "hypothesis contradicted — warning indicator"
+      .note: "status colors must meet WCAG 2.2 §1.4.3 contrast minimum (4.5:1 for normal text)
+              across both cosmos and ember theme variants"
+    }
+
+    %metrics: {
+      contrast_ratio_min: "min(contrast(status_color, background)) per theme — MUST be >= 4.5"
+      breakpoint_coverage: "status indicators legible at 320px, 768px, 1120px, 1440px+ — MUST be true"
+    }
+
     ?verify{
       visuals: visual_regression_grid_stream_book_variants_clear
       docs_runtime: docs_and_runtime_contracts_in_sync
@@ -141,14 +279,40 @@
   existing_contract: { setLayer: preserved, destroy: preserved }
   emitted_events: { ethos_diagnostic: lore_ethos_diagnostic, claim_status: lore_ethos_claim_status }
   local_types: { claim: EthosClaim, diagnostic: EthosDiagnostic, claim_status: EthosClaimStatus }
+  .note: "initSpwEthosIntegration is the sole public entry point — all internal modules
+          are implementation details and must not be imported directly by consumers"
 }
 
 ^test_matrix{
-  hydration: { remote: remote_parse_ok, fetch_fallback: fetch_404_fallback, parse_fallback: parse_error_fallback }
-  signal_mapping: { load: load_stage_pipeline_mapping, selection: selection_mapping, section: section_change_mapping, runtime_error: runtime_cycle_error_refutation }
-  behavior_regression: { claim_handle: claim_handle_click_flow_unchanged, set_layer: setLayer_behavior_unchanged, destroy: destroy_cleanup_no_leaks }
-  parity: { home: home_context, chapter: chapter_context }
-  visuals: { status_chip: status_chip_legibility, diagnostics_readout: diagnostics_readout_legibility }
+  hydration: {
+    remote: remote_parse_ok
+    fetch_fallback: fetch_404_fallback
+    parse_fallback: parse_error_fallback
+    .note: "three hydration paths must each produce a valid claim set with correct source metadata"
+  }
+  signal_mapping: {
+    load: load_stage_pipeline_mapping
+    selection: selection_mapping
+    section: section_change_mapping
+    runtime_error: runtime_cycle_error_refutation
+    .note: "runtime_cycle_error_refutation verifies the active -> refuted transition path"
+  }
+  behavior_regression: {
+    claim_handle: claim_handle_click_flow_unchanged
+    set_layer: setLayer_behavior_unchanged
+    destroy: destroy_cleanup_no_leaks
+    .note: "regression tests run against the existing test corpus — no new assertions added here"
+  }
+  parity: {
+    home: home_context
+    chapter: chapter_context
+    .note: "ethos panel must produce identical claim structure in both page contexts"
+  }
+  visuals: {
+    status_chip: status_chip_legibility
+    diagnostics_readout: diagnostics_readout_legibility
+    .note: "visual verification at each breakpoint defined in §styling phase"
+  }
 }
 
 ^rollout_strategy{
@@ -156,6 +320,8 @@
   milestone_b: diagnostics_engine_wired_minimal_ui
   milestone_c: panel_integration_home_and_chapter
   milestone_d: styling_docs_acceptance
+  .note: "milestones are incremental deployment gates — each milestone is independently
+          deployable and must not regress behavior established by prior milestones"
 }
 
 ^assumptions{
@@ -163,4 +329,7 @@
   workbench: no_submodule_changes_required_for_first_release
   hosting: spw_files_same_origin_when_available
   persistence: claim_status_session_scoped_default
+  .note: "session-scoped status means all claim states reset on page reload —
+          persistence across sessions would require IndexedDB or localStorage integration,
+          which is explicitly out of scope for this rollout"
 }
