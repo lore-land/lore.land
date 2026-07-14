@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-cache-release="2026_07_13.A" data-cache-context="scriptorium" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_07_14.F" data-cache-context="scriptorium" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,15 +11,16 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
 
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_07_13.A&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_07_13.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_07_13.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_07_13.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_07_13.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_07_13.A&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_07_13.A&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_07_14.F&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_07_14.F&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_07_14.F&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_07_14.F&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_07_14.F&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_07_14.F&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_07_14.F&ctx=home:hub">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_07_14.F"></script>
 </head>
-<body data-surface="monument">
+<body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="hub-shell">
     <header class="hub-topbar">
@@ -34,7 +35,7 @@
     </header>
 
     <main id="main-content" class="hub-main">
-      <section class="hub-hero" aria-labelledby="script-title">
+      <section class="hub-hero scriptorium-hero" aria-labelledby="script-title">
         <p class="hub-eyebrow">Writing office · in fantasy dress</p>
         <h1 id="script-title">Scriptorium</h1>
         <p class="hub-lede">
@@ -116,7 +117,7 @@
         </ol>
       </section>
 
-      <section class="hub-onboard" id="experience-path" aria-labelledby="experience-title">
+      <section class="hub-onboard wonder-path" id="experience-path" aria-labelledby="experience-title">
         <p class="hub-eyebrow">Brand development · carried by experience</p>
         <h2 id="experience-title">The wonder path</h2>
         <p class="hub-section-lede">
@@ -124,7 +125,13 @@
           Lore.Land uses five movements; owners and operators can follow the same path without turning
           the story into a presentation.
         </p>
-        <ol class="hub-steps">
+        <figure class="wonder-path-art">
+          <img src="/book/images/wonder-path-v1.webp" width="1983" height="793"
+            alt="Five connected scenes: a promise sealed, people meeting at a threshold, collaborators studying an honest ledger, glowing seeds held in care, and a shared return toward a solar orchard"
+            loading="eager" decoding="async">
+          <figcaption>Promise becomes encounter, evidence, memory, and a reason to return.</figcaption>
+        </figure>
+        <ol class="hub-steps wonder-path-steps">
           <li><strong>Promise · What is said?</strong> A seal, claim, or invitation sets an expectation people can repeat.</li>
           <li><strong>Encounter · Where is it felt?</strong> A chamber, service moment, or threshold lets the promise meet a real need.</li>
           <li><strong>Evidence · What makes it believable?</strong> Consequences, records, behavior, and material choices show whether the claim survives contact.</li>
@@ -141,7 +148,106 @@
         </details>
       </section>
 
-      <section class="hub-pillars" id="personas" aria-labelledby="personas-title">
+      <section class="artifact-cabinet" id="artifacts" aria-labelledby="artifacts-title">
+        <p class="hub-eyebrow">Material culture · evidence you can touch</p>
+        <h2 id="artifacts-title">Cabinet of working artifacts</h2>
+        <p class="hub-section-lede">
+          Objects let the world carry an idea before anyone has to name it. Each fragment below can
+          move through a chamber as evidence, trouble, or gift—and can help a real team ask what its
+          promises require in practice. They are not trophies. Their meaning changes in use.
+        </p>
+        <div class="artifact-circuit" aria-hidden="true">
+          <svg viewBox="0 0 1000 132" role="presentation" focusable="false">
+            <defs>
+              <linearGradient id="artifact-current" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#704061" />
+                <stop offset="0.28" stop-color="#7865aa" />
+                <stop offset="0.52" stop-color="#b18a5d" />
+                <stop offset="0.76" stop-color="#607249" />
+                <stop offset="1" stop-color="#c6844f" />
+              </linearGradient>
+            </defs>
+            <path class="artifact-circuit-bed" d="M72 70 C155 18 254 113 366 62 S574 16 664 70 S842 112 928 55" />
+            <path class="artifact-circuit-current" pathLength="1" d="M72 70 C155 18 254 113 366 62 S574 16 664 70 S842 112 928 55" />
+            <g class="artifact-node" data-node="seal" transform="translate(72 70)">
+              <circle class="artifact-node-halo" r="27" /><path d="M-11-12 11-9 15 7 0 18-15 7Z M-6-5 7-3 8 6 0 11-8 5Z" />
+            </g>
+            <g class="artifact-node artifact-node--berry" data-node="berry" transform="translate(278 79)">
+              <circle class="artifact-node-halo" r="28" /><circle cx="-7" cy="2" r="8" /><circle cx="7" cy="5" r="7" /><circle cy="-8" r="8" /><path d="M2-17c7-8 15-8 19-6-5 7-11 10-19 6Z" />
+            </g>
+            <g class="artifact-node" data-node="ledger" transform="translate(500 42)">
+              <circle class="artifact-node-halo" r="27" /><path d="M-15-14h24l7 7v22h-31Z M9-14v8h7 M-8-2H8 M-8 5H8 M-8 12H4" />
+            </g>
+            <g class="artifact-node" data-node="soil" transform="translate(714 85)">
+              <circle class="artifact-node-halo" r="27" /><path d="M-18-4c10 5 26 5 36 0 M0-4v20 M0 4-10 12 M0 8 11 8 M-4-7c-8-2-12-8-12-14 8 0 14 4 16 12 M4-8c3-8 10-12 17-11-1 8-7 14-17 15" />
+            </g>
+            <g class="artifact-node" data-node="glass" transform="translate(928 55)">
+              <circle class="artifact-node-halo" r="27" /><path d="M0-18 17-8 13 14-10 18-18-3Z M-7-7 8-11 12 8-8 11Z M-12-15 14 16" />
+            </g>
+          </svg>
+          <p class="artifact-signal"><span>Material signal</span><strong data-artifact-signal>Five objects wait for consequence.</strong></p>
+        </div>
+        <figure class="material-study">
+          <img src="/book/images/material-study-v1.webp" width="2172" height="724"
+            alt="Five close material studies: cracked indigo sealing wax, luminous boonberry skin, a mended ledger cover, living soil with roots, and solar glass edged in copper"
+            loading="lazy" decoding="async">
+          <figcaption>Wax · berry skin · ledger cloth · living soil · solar glass</figcaption>
+        </figure>
+        <div class="artifact-grid">
+          <article class="artifact-card" data-artifact="seal">
+            <span class="artifact-swatch" aria-hidden="true"></span>
+            <p class="topic-kicker">Claim · provenance</p>
+            <h3>Seal shard</h3>
+            <p>A promise remains public even after its perfect surface breaks. The crack becomes part of the record.</p>
+            <details class="lexicon-veil">
+              <summary>Workshop reading</summary>
+              <p>State the brand promise clearly enough to test. Keep its origin visible, then show how the claim behaves under pressure.</p>
+            </details>
+          </article>
+          <article class="artifact-card" data-artifact="berry">
+            <span class="artifact-swatch" aria-hidden="true"></span>
+            <p class="topic-kicker">Attention · relation</p>
+            <h3>Awakened berry</h3>
+            <p>A boonberry sometimes notices the world noticing it. It may answer, refuse, remember, or simply return to being fruit.</p>
+            <details class="lexicon-veil">
+              <summary>Workshop reading</summary>
+              <p>Treat feedback as a relationship, not a command. A living signal may complicate the plan without becoming a product feature.</p>
+            </details>
+          </article>
+          <article class="artifact-card" data-artifact="ledger">
+            <span class="artifact-swatch" aria-hidden="true"></span>
+            <p class="topic-kicker">Evidence · repair</p>
+            <h3>Repair book</h3>
+            <p>Beside the clean ledger sits another volume: spills, injuries, exceptions, mending, and the names of those who returned.</p>
+            <details class="lexicon-veil">
+              <summary>Workshop reading</summary>
+              <p>Measure recovery as seriously as delivery. Operational truth includes the work required when an experience fails.</p>
+            </details>
+          </article>
+          <article class="artifact-card" data-artifact="soil">
+            <span class="artifact-swatch" aria-hidden="true"></span>
+            <p class="topic-kicker">Capacity · succession</p>
+            <h3>Root sample</h3>
+            <p>The field keeps a portion of each harvest below the visible count, where next season can still find it.</p>
+            <details class="lexicon-veil">
+              <summary>Workshop reading</summary>
+              <p>Reserve time, cash, soil, and attention for renewal. Capacity is not waste merely because it has not yet become output.</p>
+            </details>
+          </article>
+          <article class="artifact-card" data-artifact="glass">
+            <span class="artifact-swatch" aria-hidden="true"></span>
+            <p class="topic-kicker">Return · distribution</p>
+            <h3>Solar pane</h3>
+            <p>Shared light gathers at the copper edge and leaves on a rhythm the district can plan around.</p>
+            <details class="lexicon-veil">
+              <summary>Workshop reading</summary>
+              <p>Infrastructure turns wonder into dependable value. Make the return cadence and its distribution legible to everyone affected.</p>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section class="hub-pillars persona-gallery" id="personas" aria-labelledby="personas-title">
         <p class="hub-eyebrow">Persona development · provisional lenses</p>
         <h2 id="personas-title">Four people approaching the same monument</h2>
         <p class="hub-section-lede">
@@ -149,8 +255,8 @@
           until interviews, observation, and use reveal more. The owner-steward is the primary design lens;
           the others keep the experience honest around that center.
         </p>
-        <div class="topic-board">
-          <article class="topic-card">
+        <div class="topic-board persona-board">
+          <article class="topic-card persona-card" data-persona="owner">
             <p class="topic-kicker">Primary · owner-steward</p>
             <h2>Amara · building for continuity</h2>
             <p>Balances cash, reputation, team capacity, and long-term direction. She wants differentiation she can operate—not a story detached from delivery.</p>
@@ -160,7 +266,7 @@
               <li><strong>Leaves with:</strong> language for a promise and the system required to keep it.</li>
             </ul>
           </article>
-          <article class="topic-card">
+          <article class="topic-card persona-card" data-persona="operator">
             <p class="topic-kicker">Operator · delivery steward</p>
             <h2>Luis · protecting the handoff</h2>
             <p>Sees where a public claim meets inventory, labor, tooling, and exceptions. He wants the experience to acknowledge operational truth.</p>
@@ -170,7 +276,7 @@
               <li><strong>Leaves with:</strong> a shared story for aligning message and delivery.</li>
             </ul>
           </article>
-          <article class="topic-card">
+          <article class="topic-card persona-card" data-persona="community">
             <p class="topic-kicker">Community · consequence holder</p>
             <h2>Ren · testing who receives</h2>
             <p>May be a customer, member, neighbor, or partner. They judge the promise by its lived distribution, not by the confidence of its language.</p>
@@ -180,7 +286,7 @@
               <li><strong>Leaves with:</strong> enough agency to trust, question, share, or decline.</li>
             </ul>
           </article>
-          <article class="topic-card">
+          <article class="topic-card persona-card" data-persona="builder">
             <p class="topic-kicker">Builder · curious collaborator</p>
             <h2>Jules · looking for usable patterns</h2>
             <p>Reads for motifs, systems, and ways to contribute. They want craft that can be inspected without draining the world of mystery.</p>
@@ -193,7 +299,7 @@
         </div>
       </section>
 
-      <section class="hub-pillars" id="ux-commitments" aria-labelledby="ux-title">
+      <section class="hub-pillars ux-constellation" id="ux-commitments" aria-labelledby="ux-title">
         <p class="hub-eyebrow">Experience design · first commitments</p>
         <h2 id="ux-title">Keep wonder legible</h2>
         <ul class="hub-pillar-grid">
@@ -251,9 +357,9 @@
 
       <nav class="route-rail" aria-label="Related routes">
         <p class="route-rail-label">Related</p>
-        <a class="route-rail-card" href="/topics/#provenance"><span class="route-rail-kicker">Topic</span><span class="route-rail-title">Provenance</span></a>
+        <a class="route-rail-card" href="#artifacts"><span class="route-rail-kicker">Materials</span><span class="route-rail-title">Artifact cabinet</span></a>
         <a class="route-rail-card" href="/world/civic-magic.html#seals"><span class="route-rail-kicker">Office</span><span class="route-rail-title">Seals</span></a>
-        <a class="route-rail-card" href="/book/chapter/01/"><span class="route-rail-kicker">Read</span><span class="route-rail-title">Chamber 01</span></a>
+        <a class="route-rail-card" href="/book/chapter/01/" data-priority="primary"><span class="route-rail-kicker">Read</span><span class="route-rail-title">Chamber 01</span></a>
         <a class="route-rail-card" href="/"><span class="route-rail-kicker">Entrance</span><span class="route-rail-title">Monument</span></a>
       </nav>
 

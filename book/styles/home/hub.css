@@ -9,12 +9,20 @@
   --hub-measure: 42rem;
   --hub-wide: 56rem;
   --hub-gutter: clamp(1.1rem, 3.5vw, 2.25rem);
-  --hub-ink: var(--color-text-main, #1a2233);
-  --hub-muted: var(--color-text-alt, #45506b);
-  --hub-line: color-mix(in srgb, var(--color-stone-shadow, #5a4a3a) 18%, transparent);
-  --hub-panel: color-mix(in srgb, var(--color-bg-content, #fffaf2) 92%, transparent);
-  --hub-accent: var(--color-accent-main, #2a6f7f);
-  --hub-accent-deep: var(--color-accent-alt, #1c4f63);
+  /* Ladder: ~60% warm paper, ~25% teal, ~15% material accents */
+  --hub-ink: #1c2430;
+  --hub-muted: #3d4a5c;
+  --hub-line: color-mix(in srgb, #5a4a3a 20%, transparent);
+  --hub-panel: color-mix(in srgb, #fffaf2 94%, transparent);
+  --hub-paper: #f4eee3;
+  --hub-paper-deep: #e8dfd0;
+  --hub-accent: #2a6f7f;
+  --hub-accent-deep: #1c4f63;
+  --hub-gold: #c4922e;
+  --hub-berry: #5b3a6e;
+  --hub-hearth: #b0602a;
+  --hub-night: #12394a;
+  --region-accent: var(--hub-accent);
 }
 
 @layer home.base {
@@ -22,11 +30,25 @@
     margin: 0;
     min-height: 100vh;
     color: var(--hub-ink);
-    background:
-      radial-gradient(ellipse 90% 50% at 50% -10%, color-mix(in srgb, var(--hub-accent) 12%, transparent), transparent 60%),
-      var(--color-bg-main, #f3ede1);
+    background-color: var(--hub-paper);
+    background-image:
+      radial-gradient(ellipse 90% 48% at 50% -8%, color-mix(in srgb, var(--hub-accent) 18%, transparent), transparent 58%),
+      radial-gradient(ellipse 52% 40% at 100% 6%, color-mix(in srgb, var(--hub-hearth) 18%, transparent), transparent 52%),
+      radial-gradient(ellipse 42% 34% at 0% 72%, color-mix(in srgb, var(--hub-berry) 11%, transparent), transparent 50%),
+      radial-gradient(ellipse 36% 28% at 70% 100%, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 55%),
+      url('/book/media/aesthetics/celestial_sun_motif_1772426750991.png');
+    background-size: auto, auto, auto, auto, min(92vw, 42rem);
+    background-position: center top, right top, left bottom, center bottom, 108% -8%;
+    background-repeat: no-repeat;
+    background-blend-mode: normal, normal, normal, normal, multiply;
     font-family: var(--font-family-body, Georgia, 'Times New Roman', serif);
     line-height: 1.55;
+  }
+
+  html[data-wonder='quiet'] body[data-surface='monument'] {
+    background-image:
+      radial-gradient(ellipse 90% 50% at 50% -10%, color-mix(in srgb, var(--hub-accent) 10%, transparent), transparent 60%);
+    background-blend-mode: normal;
   }
 
   .skip-link {
@@ -60,13 +82,23 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem 1.25rem;
-    padding: 0.85rem 0;
+    padding: 0.85rem 0 0;
     margin-inline: calc(var(--hub-gutter) * -0.15);
     padding-inline: calc(var(--hub-gutter) * 0.15);
-    background: color-mix(in srgb, var(--color-bg-main, #f3ede1) 90%, transparent);
+    background: color-mix(in srgb, var(--hub-paper) 86%, #fff);
     backdrop-filter: blur(10px) saturate(1.1);
     -webkit-backdrop-filter: blur(10px) saturate(1.1);
-    border-bottom: 1px solid var(--hub-line);
+    border-bottom: 1px solid color-mix(in srgb, var(--hub-accent) 16%, var(--hub-line));
+  }
+
+  .hub-topbar::after {
+    content: '';
+    display: block;
+    flex-basis: 100%;
+    height: 2px;
+    margin-top: 0.65rem;
+    background: linear-gradient(90deg, var(--hub-accent), var(--hub-gold), var(--hub-hearth));
+    opacity: 0.38;
   }
 
   .hub-mark {
@@ -83,6 +115,8 @@
     gap: 0.35rem 1rem;
     font-family: var(--font-family-heading, system-ui, sans-serif);
     font-size: 0.88rem;
+    flex: 1 1 auto;
+    min-width: min(100%, 12rem);
   }
 
   .hub-nav a {
@@ -1011,10 +1045,1815 @@
   min-height: 9.5rem;
 }
 
+/* ─── Region climate · color resonance ─────────────────────── */
+
+.region-head {
+  max-width: var(--hub-measure);
+}
+
+[data-region] {
+  --region-accent: var(--hub-accent);
+}
+
+[data-region='threshold'] {
+  --region-accent: var(--hub-accent);
+}
+
+[data-region='threshold'] .hub-lede {
+  color: var(--hub-muted);
+  max-width: 34rem;
+}
+
+[data-region='threshold'] .hub-meta {
+  color: color-mix(in srgb, var(--hub-muted) 90%, var(--hub-hearth));
+}
+
+[data-region='threshold'] .hub-hero-media img {
+  border-color: color-mix(in srgb, var(--hub-hearth) 28%, var(--hub-line));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--hub-accent) 12%, transparent),
+    0 1rem 2.5rem color-mix(in srgb, var(--hub-hearth) 14%, transparent);
+}
+
+[data-region='threshold'] .hub-hero-media figcaption {
+  color: color-mix(in srgb, var(--hub-hearth) 55%, var(--hub-muted));
+}
+
+[data-region='theme'] {
+  --region-accent: var(--hub-gold);
+  padding: 1.25rem 1.25rem 1.55rem;
+  border-radius: 1.05rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--hub-gold) 9%, transparent), transparent 72%),
+    color-mix(in srgb, #fff 42%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 22%, var(--hub-line));
+  box-shadow: 0 0.6rem 1.8rem color-mix(in srgb, var(--hub-gold) 8%, transparent);
+}
+
+[data-region='theme'] h2 {
+  color: var(--hub-ink);
+}
+
+[data-region='theme'] .hub-section-aside {
+  color: color-mix(in srgb, var(--hub-gold) 40%, var(--hub-accent-deep));
+}
+
+[data-region='seedbed'] {
+  --region-accent: var(--hub-accent-deep);
+}
+
+[data-region='seedbed'] .hub-pillar-grid li {
+  border-top: 2px solid color-mix(in srgb, var(--region-accent) 40%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--hub-accent) 5%, transparent), transparent 40%),
+    var(--hub-panel);
+}
+
+[data-region='rite'] {
+  --region-accent: var(--hub-accent);
+  padding-block: 0.25rem;
+}
+
+[data-region='rite'] .hub-steps strong {
+  color: var(--hub-accent-deep);
+}
+
+[data-region='index'] {
+  --region-accent: #6a5a4a;
+}
+
+[data-region='index'] .hub-chapter-list {
+  border-top-color: color-mix(in srgb, var(--region-accent) 28%, var(--hub-line));
+}
+
+[data-region='routes'] {
+  --region-accent: var(--hub-accent);
+}
+
+[data-region='grain'] {
+  --region-accent: var(--hub-hearth);
+  padding-top: 1.35rem;
+  border-top: 1px solid color-mix(in srgb, var(--hub-hearth) 24%, var(--hub-line));
+}
+
+[data-region='grain'] h2 {
+  color: color-mix(in srgb, var(--hub-hearth) 35%, var(--hub-ink));
+}
+
+[data-region='grain'] .hub-links a {
+  color: color-mix(in srgb, var(--hub-hearth) 25%, var(--hub-accent-deep));
+}
+
+/* Material chips */
+.chip[data-material] {
+  border-color: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 42%, var(--hub-line));
+  color: color-mix(in srgb, var(--material-accent, var(--hub-accent-deep)) 55%, var(--hub-ink));
+  background: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 7%, #fff);
+}
+
+.chip[data-material='wax'] { --material-accent: var(--hub-hearth); }
+.chip[data-material='mask'] { --material-accent: var(--hub-accent); }
+.chip[data-material='hearth'] { --material-accent: #c4783a; }
+.chip[data-material='lantern'] { --material-accent: var(--hub-gold); }
+.chip[data-material='berry'] { --material-accent: var(--hub-berry); }
+.chip[data-material='night'] {
+  --material-accent: #efc568;
+  background: color-mix(in srgb, #12394a 12%, #fff);
+  color: var(--hub-accent-deep);
+}
+.chip[data-material='dog'] { --material-accent: #6b4f3a; }
+
+.hub-cta-quiet {
+  border-color: color-mix(in srgb, var(--hub-hearth) 28%, var(--hub-line));
+  color: var(--hub-accent-deep);
+}
+
+/* Discovery strip: amplify materials (~1.5–2×) */
+.discovery-strip .topic-card[data-material] .topic-kicker {
+  color: var(--material-accent, var(--hub-accent));
+}
+
+.discovery-strip .topic-card[data-material='wax'] {
+  --material-accent: var(--hub-hearth);
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--hub-hearth) 20%, transparent), transparent 52%),
+    var(--hub-panel);
+  border-color: color-mix(in srgb, var(--hub-hearth) 44%, var(--hub-line));
+}
+
+.discovery-strip .topic-card[data-material='mask'] {
+  --material-accent: var(--hub-accent);
+  background:
+    linear-gradient(200deg, color-mix(in srgb, var(--hub-accent) 18%, transparent), transparent 54%),
+    var(--hub-panel);
+  border-color: color-mix(in srgb, var(--hub-accent) 42%, var(--hub-line));
+}
+
+.discovery-strip .topic-card[data-material='hearth'] {
+  --material-accent: #c4783a;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 110%, color-mix(in srgb, #c4783a 24%, transparent), transparent 55%),
+    var(--hub-panel);
+  border-color: color-mix(in srgb, #c4783a 40%, var(--hub-line));
+}
+
+.discovery-strip .topic-card[data-material='lantern'] {
+  --material-accent: var(--hub-gold);
+  background:
+    radial-gradient(circle at 90% 8%, color-mix(in srgb, var(--hub-gold) 40%, transparent), transparent 38%),
+    var(--hub-panel);
+  border-color: color-mix(in srgb, var(--hub-gold) 48%, var(--hub-line));
+  box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--hub-gold) 16%, transparent);
+}
+
+.discovery-strip .topic-card[data-lead='true'] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--hub-hearth) 38%, transparent),
+    0 0.9rem 1.8rem color-mix(in srgb, var(--hub-hearth) 14%, transparent);
+}
+
+.hub-section-aside {
+  color: var(--region-accent, var(--hub-accent));
+}
+
+/* Wonder path — a richer visual register for the workshop layer */
+.scriptorium-hero {
+  position: relative;
+}
+
+.scriptorium-hero::after {
+  content: '';
+  position: absolute;
+  width: clamp(7rem, 18vw, 13rem);
+  aspect-ratio: 1;
+  right: 2%;
+  top: 0;
+  border: 1px solid color-mix(in srgb, var(--hub-accent) 24%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 28%, color-mix(in srgb, #d9a441 20%, transparent) 29% 30%, transparent 31%),
+    conic-gradient(from 18deg, transparent, color-mix(in srgb, var(--hub-accent) 13%, transparent), transparent 42%);
+  opacity: 0.72;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.wonder-path {
+  position: relative;
+  isolation: isolate;
+  max-width: var(--hub-wide);
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2.2rem);
+  border: 1px solid color-mix(in srgb, #d9a441 42%, #173c55);
+  border-radius: 1.2rem;
+  color: #f8f1df;
+  background:
+    radial-gradient(circle at 87% 12%, rgba(213, 86, 158, 0.28), transparent 26%),
+    radial-gradient(circle at 18% 80%, rgba(42, 156, 161, 0.2), transparent 30%),
+    linear-gradient(145deg, #0c2634 0%, #12394a 48%, #331e45 100%);
+  box-shadow:
+    0 1.5rem 4rem rgba(9, 32, 45, 0.22),
+    inset 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.wonder-path::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(115deg, transparent 48%, rgba(239, 197, 104, 0.25) 49%, transparent 50%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.28) 0 1px, transparent 1.5px);
+  background-size: 11rem 11rem, 2.8rem 2.8rem;
+  mask-image: linear-gradient(to bottom, #000, transparent 92%);
+}
+
+.wonder-path .hub-eyebrow,
+.wonder-path .hub-section-lede,
+.wonder-path h2 {
+  color: #f8f1df;
+}
+
+.wonder-path .hub-eyebrow {
+  color: #efc568;
+}
+
+.wonder-path .hub-section-lede {
+  max-width: 48rem;
+  color: rgba(248, 241, 223, 0.78);
+}
+
+.wonder-path-art {
+  margin: 1.4rem 0 0;
+  position: relative;
+}
+
+.wonder-path-art img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(248, 213, 137, 0.4);
+  box-shadow: 0 1rem 2.8rem rgba(0, 0, 0, 0.32);
+  filter: saturate(0.94) contrast(1.04);
+}
+
+.wonder-path-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 0.9rem;
+  box-shadow: inset 0 0 3.5rem rgba(8, 27, 40, 0.4);
+}
+
+.wonder-path-art figcaption {
+  margin-top: 0.5rem;
+  color: rgba(248, 241, 223, 0.66);
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.wonder-path-steps {
+  counter-reset: wonder-step;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.wonder-path-steps li {
+  counter-increment: wonder-step;
+  position: relative;
+  margin: 0;
+  padding: 2.6rem 0.85rem 0.9rem;
+  min-width: 0;
+  border: 1px solid rgba(242, 211, 143, 0.2);
+  border-radius: 0.75rem;
+  color: rgba(248, 241, 223, 0.72);
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(5px);
+}
+
+.wonder-path-steps li::before {
+  content: '0' counter(wonder-step);
+  position: absolute;
+  top: 0.65rem;
+  left: 0.85rem;
+  color: #efc568;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.wonder-path-steps strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #fff8e8;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.9rem;
+}
+
+.wonder-path .lexicon-veil {
+  border-top-color: rgba(242, 211, 143, 0.22);
+}
+
+.wonder-path .lexicon-veil summary {
+  color: #efc568;
+}
+
+.wonder-path .lexicon-veil p {
+  color: rgba(248, 241, 223, 0.74);
+}
+
+@media (min-width: 52rem) {
+  .wonder-path-steps {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.persona-gallery,
+.ux-constellation {
+  max-width: var(--hub-wide);
+}
+
+.persona-board {
+  counter-reset: persona;
+}
+
+.persona-card {
+  counter-increment: persona;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: 4.2rem;
+  min-height: 20rem;
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--persona-color, #28798c) 15%, #fff), var(--hub-panel) 46%);
+  box-shadow: 0 0.65rem 1.6rem color-mix(in srgb, var(--persona-color, #28798c) 11%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.persona-card::before {
+  content: counter(persona, decimal-leading-zero);
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  color: var(--persona-color, var(--hub-accent));
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.persona-card::after {
+  content: '';
+  position: absolute;
+  width: 7rem;
+  aspect-ratio: 1;
+  right: -2.2rem;
+  top: -2.6rem;
+  z-index: -1;
+  border-radius: 44% 56% 58% 42%;
+  border: 1px solid color-mix(in srgb, var(--persona-color, #28798c) 40%, transparent);
+  background:
+    radial-gradient(circle at 36% 62%, color-mix(in srgb, var(--persona-color, #28798c) 42%, transparent), transparent 48%),
+    conic-gradient(from 70deg, transparent, color-mix(in srgb, var(--persona-color, #28798c) 22%, transparent), transparent 72%);
+  transform: rotate(18deg);
+}
+
+.persona-card[data-persona='owner'] { --persona-color: #a4497f; }
+.persona-card[data-persona='operator'] { --persona-color: #28798c; }
+.persona-card[data-persona='community'] { --persona-color: #b7672e; }
+.persona-card[data-persona='builder'] { --persona-color: #667849; }
+
+.persona-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--persona-color) 45%, var(--hub-line));
+  box-shadow: 0 1rem 2.1rem color-mix(in srgb, var(--persona-color) 18%, transparent);
+}
+
+.persona-card .trail-list {
+  font-size: 0.86rem;
+}
+
+.ux-constellation .hub-pillar-grid li {
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid color-mix(in srgb, var(--hub-accent) 60%, #d79a43);
+  box-shadow: 0 0.45rem 1.2rem color-mix(in srgb, var(--hub-accent) 8%, transparent);
+}
+
+/* ─── Material topic cards ───────────────────────────────────── */
+
+.topic-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.topic-card::before {
+  content: '';
+  position: absolute;
+  top: 0.85rem;
+  right: 0.9rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 70%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--material-accent, var(--hub-accent)) 18%, transparent);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.topic-card[data-material='wax'] {
+  --material-accent: var(--hub-hearth);
+  border-color: color-mix(in srgb, var(--hub-hearth) 32%, var(--hub-line));
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--hub-hearth) 10%, transparent), transparent 42%),
+    var(--hub-panel);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 65%, transparent),
+    0 0.7rem 1.4rem color-mix(in srgb, var(--hub-hearth) 10%, transparent);
+}
+
+.topic-card[data-material='mask'] {
+  --material-accent: var(--hub-accent);
+  border-color: color-mix(in srgb, var(--hub-accent) 38%, var(--hub-line));
+  border-radius: 0.85rem 1.35rem 0.85rem 1.15rem;
+  background:
+    linear-gradient(210deg, color-mix(in srgb, var(--hub-accent) 12%, transparent), transparent 48%),
+    var(--hub-panel);
+}
+
+.topic-card[data-material='hearth'] {
+  --material-accent: #c4783a;
+  border-color: color-mix(in srgb, #c4783a 30%, var(--hub-line));
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 100%, color-mix(in srgb, #c4783a 16%, transparent), transparent 55%),
+    var(--hub-panel);
+}
+
+.topic-card[data-material='archive'] {
+  --material-accent: #6a5a4a;
+  background-image:
+    repeating-linear-gradient(
+      transparent 0 1.35rem,
+      color-mix(in srgb, var(--hub-line) 55%, transparent) 1.35rem 1.4rem
+    ),
+    linear-gradient(180deg, var(--hub-panel), color-mix(in srgb, #e8dfd0 80%, var(--hub-panel)));
+  background-position: 0 2.6rem, 0 0;
+}
+
+.topic-card[data-material='polarity'] {
+  --material-accent: #2a6f7f;
+  border-color: color-mix(in srgb, #2a6f7f 28%, #b0602a);
+  background:
+    linear-gradient(125deg, color-mix(in srgb, #2a6f7f 9%, transparent), transparent 40%, color-mix(in srgb, #b0602a 9%, transparent)),
+    var(--hub-panel);
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, #2a6f7f 55%, transparent),
+    inset -3px 0 0 color-mix(in srgb, #b0602a 45%, transparent);
+}
+
+.topic-card[data-material='lantern'] {
+  --material-accent: var(--hub-gold);
+  border-color: color-mix(in srgb, var(--hub-gold) 40%, var(--hub-line));
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--hub-gold) 28%, transparent), transparent 34%),
+    var(--hub-panel);
+  box-shadow: 0 0.8rem 1.6rem color-mix(in srgb, var(--hub-gold) 12%, transparent);
+}
+
+.topic-card[data-material='calendar'] {
+  --material-accent: var(--hub-accent-deep);
+  box-shadow: 0 0.55rem 0 color-mix(in srgb, var(--hub-accent) 14%, transparent);
+}
+
+.topic-card[data-material='seal'] {
+  --material-accent: #8b4518;
+  border-style: double;
+  border-width: 3px;
+  border-color: color-mix(in srgb, #8b4518 35%, var(--hub-line));
+}
+
+.topic-card[data-material='berry'] {
+  --material-accent: var(--hub-berry);
+  border-color: color-mix(in srgb, var(--hub-berry) 35%, var(--hub-line));
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--hub-berry) 12%, transparent), transparent 46%),
+    linear-gradient(320deg, color-mix(in srgb, var(--hub-accent) 8%, transparent), transparent 40%),
+    var(--hub-panel);
+}
+
+.topic-card[data-material='commons'] {
+  --material-accent: #3d7a4a;
+  border-color: color-mix(in srgb, #3d7a4a 32%, var(--hub-line));
+  background:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, #3d7a4a 14%, transparent), transparent 50%),
+    var(--hub-panel);
+}
+
+.topic-card[data-material='dog'] {
+  --material-accent: #6b4f3a;
+  border-radius: 1.1rem;
+  border-color: color-mix(in srgb, #6b4f3a 28%, var(--hub-line));
+  background:
+    radial-gradient(circle at 90% 85%, color-mix(in srgb, #7a9ec4 18%, transparent), transparent 40%),
+    var(--hub-panel);
+}
+
+.topic-card--wonder,
+.topic-card[data-material='night'] {
+  --material-accent: #efc568;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #f8f1df;
+  border-color: rgba(224, 175, 92, 0.55);
+  background:
+    radial-gradient(circle at 92% 8%, rgba(211, 83, 157, 0.35), transparent 32%),
+    linear-gradient(145deg, #10384a, #352044);
+  box-shadow: 0 0.9rem 2rem rgba(16, 56, 74, 0.2);
+}
+
+.topic-card--wonder .topic-kicker,
+.topic-card--wonder h2,
+.topic-card--wonder > p,
+.topic-card--wonder .trail-list a,
+.topic-card[data-material='night'] .topic-kicker,
+.topic-card[data-material='night'] h2,
+.topic-card[data-material='night'] > p,
+.topic-card[data-material='night'] .trail-list a {
+  color: #fff3d5;
+}
+
+.topic-card--wonder > p,
+.topic-card[data-material='night'] > p {
+  opacity: 0.78;
+}
+
+.topic-card--wonder .trail-list,
+.topic-card[data-material='night'] .trail-list {
+  border-top-color: rgba(255, 243, 213, 0.2);
+}
+
+.topic-card--wonder::before,
+.topic-card[data-material='night']::before {
+  background: #efc568;
+  box-shadow: 0 0 0 3px rgba(239, 197, 104, 0.28), 0 0 12px rgba(239, 197, 104, 0.45);
+}
+
+@media (min-width: 64rem) {
+  .topic-card#experience,
+  .topic-card#guide {
+    grid-column: span 2;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .topic-card:hover,
+  .topic-card:focus-within {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem color-mix(in srgb, var(--hub-ink) 12%, transparent);
+  }
+}
+
+/* Wonder threshold banner */
+.wonder-threshold {
+  position: relative;
+  max-width: var(--hub-wide);
+  min-height: clamp(11rem, 26vw, 17rem);
+  border-radius: 1.15rem;
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 35%, var(--hub-line));
+  box-shadow: 0 1.25rem 3rem color-mix(in srgb, var(--hub-night) 18%, transparent);
+}
+
+.wonder-threshold-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(11rem, 26vw, 17rem);
+  object-fit: cover;
+  object-position: center 40%;
+  filter: saturate(1.05) contrast(1.04);
+}
+
+.wonder-threshold-veil {
+  position: absolute;
+  inset: auto 0 0;
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+  background: linear-gradient(
+    transparent,
+    color-mix(in srgb, #0c2634 55%, transparent) 35%,
+    color-mix(in srgb, #0c2634 88%, transparent)
+  );
+  color: #f8f1df;
+}
+
+.wonder-threshold-veil .hub-eyebrow {
+  color: #efc568;
+}
+
+.wonder-threshold-veil h1,
+.wonder-threshold-veil .callout-title {
+  margin: 0 0 0.4rem;
+  color: #fff8e8;
+  font-family: 'LoreLand', var(--font-family-heading, system-ui, sans-serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  letter-spacing: 0.04em;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  filter: none;
+}
+
+.wonder-threshold-veil p {
+  margin: 0;
+  max-width: 36rem;
+  color: rgba(248, 241, 223, 0.82);
+  font-size: 0.98rem;
+}
+
+/* Route rail: primary path emphasis */
+.route-rail-card[data-priority='primary'] {
+  border-color: color-mix(in srgb, var(--hub-accent) 45%, var(--hub-line));
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--hub-accent) 14%, transparent), var(--hub-panel));
+  box-shadow: 0 0.45rem 1rem color-mix(in srgb, var(--hub-accent) 12%, transparent);
+}
+
+.route-rail-card[data-priority='primary'] .route-rail-title {
+  font-size: 1rem;
+}
+
+/* Artifact cabinet: material evidence for story and workshop readings */
+.artifact-cabinet {
+  position: relative;
+  isolation: isolate;
+  max-width: var(--hub-wide);
+  padding: clamp(1.2rem, 3vw, 2rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hub-berry) 24%, var(--hub-line));
+  border-radius: 1.2rem;
+  background:
+    radial-gradient(circle at 98% 2%, color-mix(in srgb, var(--hub-gold) 13%, transparent), transparent 30%),
+    linear-gradient(150deg, color-mix(in srgb, var(--hub-berry) 5%, var(--hub-panel)), var(--hub-panel) 58%, color-mix(in srgb, #b87345 6%, var(--hub-panel)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 72%, transparent),
+    0 1.1rem 2.6rem color-mix(in srgb, var(--hub-night) 11%, transparent);
+}
+
+.material-study {
+  position: relative;
+  margin: 1.25rem 0 1rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 34%, var(--hub-line));
+  border-radius: 0.9rem;
+  background: var(--hub-night);
+  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--hub-night) 18%, transparent);
+}
+
+.artifact-circuit {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 1rem 0 0.85rem;
+  padding: 0.35rem 0.7rem 0.4rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hub-berry) 22%, var(--hub-line));
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--hub-night) 5%, transparent), transparent 35% 68%, color-mix(in srgb, var(--hub-gold) 8%, transparent)),
+    color-mix(in srgb, var(--hub-panel) 88%, transparent);
+}
+
+.artifact-circuit svg {
+  display: block;
+  width: 100%;
+  min-width: 30rem;
+  height: auto;
+  overflow: visible;
+}
+
+.artifact-circuit-bed,
+.artifact-circuit-current {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.artifact-circuit-bed {
+  stroke: color-mix(in srgb, var(--hub-ink) 16%, transparent);
+  stroke-dasharray: 2 8;
+}
+
+.artifact-circuit-current {
+  stroke: url('#artifact-current');
+  stroke-width: 3;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--hub-gold) 32%, transparent));
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.2, 0.75, 0.28, 1);
+}
+
+.artifact-cabinet[data-circuit-drawn='true'] .artifact-circuit-current {
+  stroke-dashoffset: 0;
+}
+
+.artifact-node {
+  color: var(--hub-muted);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: color 200ms ease, filter 200ms ease, scale 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.artifact-node-halo {
+  fill: color-mix(in srgb, var(--hub-panel) 76%, transparent);
+  stroke: color-mix(in srgb, currentColor 28%, transparent);
+  stroke-dasharray: 3 5;
+}
+
+.artifact-circuit [data-node='seal'] { color: #704061; }
+.artifact-circuit [data-node='berry'] { color: var(--hub-berry); }
+.artifact-circuit [data-node='ledger'] { color: #8f6f4c; }
+.artifact-circuit [data-node='soil'] { color: #526638; }
+.artifact-circuit [data-node='glass'] { color: #b87345; }
+
+.artifact-signal {
+  display: grid;
+  gap: 0.15rem;
+  width: clamp(10rem, 19vw, 13rem);
+  margin: 0;
+  padding-left: 0.8rem;
+  border-left: 1px solid color-mix(in srgb, var(--hub-line) 80%, transparent);
+}
+
+.artifact-signal span {
+  color: var(--hub-muted);
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.artifact-signal strong {
+  color: var(--hub-ink);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+body[data-active-artifact] .artifact-card {
+  opacity: 0.62;
+}
+
+body[data-active-artifact='seal'] .artifact-card[data-artifact='seal'],
+body[data-active-artifact='berry'] .artifact-card[data-artifact='berry'],
+body[data-active-artifact='ledger'] .artifact-card[data-artifact='ledger'],
+body[data-active-artifact='soil'] .artifact-card[data-artifact='soil'],
+body[data-active-artifact='glass'] .artifact-card[data-artifact='glass'] {
+  opacity: 1;
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 2rem color-mix(in srgb, var(--artifact-accent) 22%, transparent);
+}
+
+body[data-active-artifact='seal'] .artifact-circuit [data-node='seal'],
+body[data-active-artifact='berry'] .artifact-circuit [data-node='berry'],
+body[data-active-artifact='ledger'] .artifact-circuit [data-node='ledger'],
+body[data-active-artifact='soil'] .artifact-circuit [data-node='soil'],
+body[data-active-artifact='glass'] .artifact-circuit [data-node='glass'] {
+  filter: drop-shadow(0 0 8px currentColor);
+  scale: 1.18;
+}
+
+.artifact-cabinet[data-berry-awake='true'] .artifact-node--berry .artifact-node-halo {
+  animation: berry-listens 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes berry-listens {
+  from { opacity: 0.45; scale: 0.82; rotate: -5deg; }
+  to { opacity: 1; scale: 1.18; rotate: 5deg; }
+}
+
+.reading-compass {
+  position: fixed;
+  top: 50%;
+  right: clamp(0.35rem, 1.5vw, 1rem);
+  z-index: 3;
+  width: 1.65rem;
+  color: color-mix(in srgb, var(--hub-accent) 62%, var(--hub-muted));
+  opacity: 0;
+  pointer-events: none;
+  translate: 0 -50%;
+  transition: opacity 300ms ease;
+}
+
+body[data-presence='awake'] .reading-compass {
+  opacity: 0.42;
+}
+
+body[data-current-scene='artifacts'] .reading-compass {
+  color: var(--hub-berry);
+  opacity: 0.78;
+}
+
+.reading-compass svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.reading-compass circle,
+.reading-compass path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reading-compass-bed {
+  opacity: 0.2;
+  stroke-width: 2;
+  stroke-dasharray: 2 5;
+}
+
+.reading-compass-current {
+  stroke-width: 2.6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--page-progress, 0));
+}
+
+.reading-compass-seed {
+  fill: color-mix(in srgb, currentColor 16%, transparent) !important;
+  stroke-width: 1.5;
+}
+
+@media (max-width: 52rem) {
+  .artifact-circuit {
+    display: block;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .artifact-circuit svg {
+    width: 42rem;
+  }
+
+  .artifact-signal {
+    position: sticky;
+    left: 0;
+    width: auto;
+    margin-top: 0.2rem;
+    padding: 0.45rem 0.2rem 0.15rem;
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--hub-line) 80%, transparent);
+  }
+
+  .reading-compass {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifact-circuit-current,
+  .artifact-node,
+  .artifact-node-halo,
+  .reading-compass {
+    animation: none !important;
+    transition: none;
+  }
+
+  .artifact-circuit-current {
+    stroke-dashoffset: 0;
+  }
+}
+
+.material-study img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  object-fit: cover;
+  filter: saturate(1.04) contrast(1.03);
+}
+
+.material-study figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 1.75rem 0.8rem 0.55rem;
+  color: #fff3d5;
+  background: linear-gradient(transparent, rgba(9, 27, 36, 0.82));
+  font-family: var(--font-family-mono, ui-monospace, monospace);
+  font-size: clamp(0.68rem, 1.5vw, 0.82rem);
+  letter-spacing: 0.09em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.artifact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.8rem;
+}
+
+.artifact-card {
+  --artifact-accent: var(--hub-accent);
+  min-width: 0;
+  padding: 0.65rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--artifact-accent) 35%, var(--hub-line));
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--hub-panel) 94%, var(--artifact-accent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 65%, transparent);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.artifact-card[data-artifact='seal'] { --artifact-accent: #704061; }
+.artifact-card[data-artifact='berry'] { --artifact-accent: var(--hub-berry); }
+.artifact-card[data-artifact='ledger'] { --artifact-accent: #8f6f4c; }
+.artifact-card[data-artifact='soil'] { --artifact-accent: #526638; }
+.artifact-card[data-artifact='glass'] { --artifact-accent: #b87345; }
+
+.artifact-swatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  margin-bottom: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--artifact-accent) 48%, var(--hub-line));
+  border-radius: 0.6rem;
+  background-image: url('/book/images/material-study-v1.webp');
+  background-repeat: no-repeat;
+  background-size: 500% 100%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.artifact-card[data-artifact='seal'] .artifact-swatch { background-position: 0 50%; }
+.artifact-card[data-artifact='berry'] .artifact-swatch { background-position: 25% 50%; }
+.artifact-card[data-artifact='ledger'] .artifact-swatch { background-position: 50% 50%; }
+.artifact-card[data-artifact='soil'] .artifact-swatch { background-position: 75% 50%; }
+.artifact-card[data-artifact='glass'] .artifact-swatch { background-position: 100% 50%; }
+
+.artifact-card .topic-kicker {
+  margin: 0 0 0.25rem;
+  color: var(--artifact-accent);
+  font-size: 0.68rem;
+}
+
+.artifact-card h3 {
+  margin: 0 0 0.45rem;
+  color: var(--hub-ink);
+  font-family: 'LoreLand', var(--font-family-heading, system-ui, sans-serif);
+  font-size: 1.08rem;
+  letter-spacing: 0.025em;
+}
+
+.artifact-card > p:not(.topic-kicker) {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.artifact-card .lexicon-veil {
+  margin-top: 0.7rem;
+}
+
+.artifact-card .lexicon-veil summary {
+  font-size: 0.78rem;
+}
+
+.artifact-card .lexicon-veil p {
+  font-size: 0.82rem;
+  line-height: 1.52;
+}
+
+@media (min-width: 40rem) {
+  .artifact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .artifact-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 70rem) {
+  .artifact-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .artifact-card:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .artifact-card:hover,
+  .artifact-card:focus-within {
+    transform: translateY(-3px);
+    box-shadow: 0 0.9rem 1.8rem color-mix(in srgb, var(--artifact-accent) 16%, transparent);
+  }
+}
+
+.hub-cta-primary {
+  box-shadow:
+    0 0.35rem 0 color-mix(in srgb, #000 12%, transparent),
+    0 0.75rem 1.5rem color-mix(in srgb, var(--hub-accent-deep) 22%, transparent);
+}
+
+.hub-hero-media img {
+  transition: transform 320ms ease, filter 320ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hub-hero:hover .hub-hero-media img {
+    transform: scale(1.02);
+    filter: saturate(1.08) contrast(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .persona-card,
+  .artifact-card,
+  .topic-card,
+  .wonder-path-art img,
+  .hub-hero-media img {
+    transition: none;
+  }
+
+  .persona-card:hover,
+  .topic-card:hover,
+  .topic-card:focus-within {
+    transform: none;
+  }
+
+  .hub-hero:hover .hub-hero-media img {
+    transform: none;
+  }
+}
+
 /* Nav current state */
 .hub-nav a[aria-current='page'] {
   color: var(--hub-accent-deep);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 0.18em;
+}
+
+/* ─── Climate toggle · theme depth · dynamic lighting ───────── */
+
+body[data-surface='monument'] {
+  --light-x: 48;
+  --light-y: 14;
+  --light-strength: 0.58;
+  --scroll-glow: 0;
+  --light-teal: color-mix(in srgb, var(--hub-accent) calc(var(--light-strength) * 42%), transparent);
+  --light-hearth: color-mix(in srgb, var(--hub-hearth) calc(var(--light-strength) * 36%), transparent);
+  --light-gold: color-mix(in srgb, var(--hub-gold) calc(var(--light-strength) * 40%), transparent);
+  --light-berry: color-mix(in srgb, var(--hub-berry) calc(var(--light-strength) * 28%), transparent);
+  transition: background-color 280ms ease, color 280ms ease;
+}
+
+body[data-surface='monument'] {
+  background-image:
+    radial-gradient(
+      ellipse 72% 54% at calc(var(--light-x) * 1%) calc(var(--light-y) * 1%),
+      var(--light-gold),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 58% 46% at calc((var(--light-x) * 0.55 + 30) * 1%) calc((var(--light-y) * 0.4 + 8) * 1%),
+      var(--light-teal),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 48% 40% at calc((100 - var(--light-x) * 0.35) * 1%) calc((70 + var(--scroll-glow) * 20) * 1%),
+      var(--light-hearth),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 40% 34% at calc((20 + var(--scroll-glow) * 30) * 1%) calc((78 - var(--light-y) * 0.2) * 1%),
+      var(--light-berry),
+      transparent 58%
+    ),
+    url('/book/media/aesthetics/celestial_sun_motif_1772426750991.png');
+  background-size: auto, auto, auto, auto, min(92vw, 42rem);
+  background-position:
+    center,
+    center,
+    center,
+    center,
+    calc(90% + (var(--light-x) - 50) * 0.35%) calc(-6% + (var(--light-y) - 20) * 0.2%);
+  background-repeat: no-repeat;
+  background-blend-mode: screen, normal, normal, normal, multiply;
+}
+
+/* Wonder depth */
+html[data-wonder='quiet'] body[data-surface='monument'],
+body[data-surface='monument'][data-wonder='quiet'] {
+  --light-strength: 0.36;
+  background-blend-mode: soft-light, normal, normal, normal, multiply;
+}
+
+html[data-wonder='deep'] body[data-surface='monument'],
+body[data-surface='monument'][data-wonder='deep'] {
+  --light-strength: 0.84;
+  background-blend-mode: screen, soft-light, normal, normal, multiply;
+}
+
+html[data-wonder='deep'] body[data-surface='monument'] .topic-card,
+body[data-surface='monument'][data-wonder='deep'] .topic-card {
+  box-shadow:
+    0 0.85rem 1.8rem color-mix(in srgb, var(--material-accent, var(--hub-accent)) 14%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 50%, transparent);
+}
+
+/* Theme: paper (default tokens already set) */
+
+html[data-theme='ember'] body[data-surface='monument'],
+body[data-surface='monument'][data-theme='ember'] {
+  --hub-ink: #2b1c14;
+  --hub-muted: #694d3f;
+  --hub-paper: #f5ece2;
+  --hub-paper-deep: #ebddd0;
+  --hub-panel: color-mix(in srgb, #fff7f0 94%, transparent);
+  --hub-line: color-mix(in srgb, #8a4f2f 22%, transparent);
+  --hub-accent: #8a4f2f;
+  --hub-accent-deep: #683722;
+  --hub-gold: #c47a2e;
+  --hub-hearth: #a44920;
+  --hub-berry: #7a3d58;
+  --hub-night: #3a2218;
+  color: var(--hub-ink);
+  background-color: var(--hub-paper);
+}
+
+html[data-theme='night'] body[data-surface='monument'],
+body[data-surface='monument'][data-theme='night'] {
+  --hub-ink: #e6eeff;
+  --hub-muted: #b7c6ed;
+  --hub-paper: #11182a;
+  --hub-paper-deep: #0b101c;
+  --hub-panel: color-mix(in srgb, #162139 90%, transparent);
+  --hub-line: color-mix(in srgb, #8eb3eb 28%, transparent);
+  --hub-accent: #76cbff;
+  --hub-accent-deep: #b1dcff;
+  --hub-gold: #f0c45a;
+  --hub-hearth: #e0894a;
+  --hub-berry: #c47bb8;
+  --hub-night: #090f1f;
+  color: var(--hub-ink);
+  background-color: var(--hub-paper);
+  background-blend-mode: screen, soft-light, soft-light, screen, soft-light;
+}
+
+html[data-theme='night'] body[data-surface='monument'] .hub-topbar,
+body[data-surface='monument'][data-theme='night'] .hub-topbar {
+  background: color-mix(in srgb, var(--hub-paper) 88%, #000);
+  border-bottom-color: color-mix(in srgb, var(--hub-accent) 24%, transparent);
+}
+
+html[data-theme='night'] body[data-surface='monument'] .hub-hero h1,
+body[data-surface='monument'][data-theme='night'] .hub-hero h1 {
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--hub-accent) 35%, transparent));
+}
+
+html[data-theme='night'] body[data-surface='monument'] .hub-cta-primary,
+body[data-surface='monument'][data-theme='night'] .hub-cta-primary {
+  background: color-mix(in srgb, var(--hub-accent) 82%, #0a1528);
+  color: #071018 !important;
+  border-color: color-mix(in srgb, var(--hub-accent) 60%, #fff);
+}
+
+html[data-theme='night'] body[data-surface='monument'] .topic-card,
+body[data-surface='monument'][data-theme='night'] .topic-card,
+html[data-theme='night'] body[data-surface='monument'] .hub-pillar-grid li,
+body[data-surface='monument'][data-theme='night'] .hub-pillar-grid li,
+html[data-theme='night'] body[data-surface='monument'] .callout,
+body[data-surface='monument'][data-theme='night'] .callout {
+  background: var(--hub-panel);
+  border-color: var(--hub-line);
+}
+
+html[data-theme='night'] body[data-surface='monument'] .chip,
+body[data-surface='monument'][data-theme='night'] .chip {
+  background: color-mix(in srgb, var(--hub-panel) 80%, transparent);
+  color: var(--hub-accent-deep);
+}
+
+/* Lighting mode cues on panels */
+body[data-surface='monument'][data-lighting='raking'] .hub-hero-media img,
+body[data-surface='monument'][data-lighting='live'] .hub-hero-media img {
+  box-shadow:
+    calc((var(--light-x) - 50) * -0.04px) calc((var(--light-y) - 20) * 0.08px) 1.6rem
+      color-mix(in srgb, var(--hub-hearth) calc(var(--light-strength) * 28%), transparent),
+    0 0 0 1px color-mix(in srgb, var(--hub-accent) 14%, transparent);
+}
+
+body[data-surface='monument'][data-lighting='live'] .topic-card,
+body[data-surface='monument'][data-lighting='raking'] .topic-card {
+  box-shadow:
+    calc((50 - var(--light-x)) * 0.03px) calc((var(--light-y) - 30) * 0.05px) 1.2rem
+      color-mix(in srgb, var(--material-accent, var(--hub-accent)) calc(var(--light-strength) * 22%), transparent);
+}
+
+/* Climate control UI */
+.monument-climate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.65rem;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  max-width: min(100%, 28rem);
+}
+
+.climate-field {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.climate-legend {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+  opacity: 0.9;
+}
+
+.climate-segment {
+  display: inline-flex;
+  border: 1px solid color-mix(in srgb, var(--hub-accent) 22%, var(--hub-line));
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
+}
+
+.climate-option {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0.22rem 0.48rem;
+  background: transparent;
+  color: var(--hub-muted);
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.climate-option + .climate-option {
+  border-left: 1px solid color-mix(in srgb, var(--hub-line) 80%, transparent);
+}
+
+.climate-option[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hub-accent) 18%, transparent);
+  color: var(--hub-accent-deep);
+}
+
+.climate-option:hover,
+.climate-option:focus-visible {
+  color: var(--hub-ink);
+  background: color-mix(in srgb, var(--hub-accent) 10%, transparent);
+}
+
+.climate-option:focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--hub-hearth));
+  outline-offset: 1px;
+  z-index: 1;
+}
+
+@media (max-width: 52rem) {
+  .monument-climate {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    max-width: none;
+    margin: 0.15rem 0 0.35rem;
+  }
+}
+
+/* Scroll-linked vignette depth */
+body[data-surface='monument']::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: calc(0.12 + var(--scroll-glow) * 0.22);
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 50% 120%,
+      color-mix(in srgb, var(--hub-night) 35%, transparent),
+      transparent 55%
+    );
+  transition: opacity 200ms ease;
+}
+
+body[data-surface='monument'] > .hub-shell {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] {
+    transition: none;
+  }
+
+  body[data-surface='monument'][data-lighting='live'] .topic-card,
+  body[data-surface='monument'][data-lighting='raking'] .topic-card,
+  body[data-surface='monument'][data-lighting='raking'] .hub-hero-media img,
+  body[data-surface='monument'][data-lighting='live'] .hub-hero-media img {
+    box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--hub-ink) 10%, transparent);
+  }
+}
+
+/*
+ * ————————————————————————————————————————————————————————————————
+ * Marks stay marked — chamber seals & Boof's trail.
+ * Unlayered on purpose: presentation states that must win the cascade.
+ * Seals are stamped by scripts/modules/chamber-seals.mjs; petal count
+ * equals chapter number, tint sweeps dawn→midnight across the index.
+ * ————————————————————————————————————————————————————————————————
+ */
+
+.hub-ch-thumb-pending.has-seal {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 40%, #fffcf4, var(--hub-paper-deep) 82%);
+}
+
+.hub-chapter-list li .hub-ch-thumb-pending.has-seal {
+  filter: none;
+}
+
+.hub-ch-thumb-pending.has-seal::before {
+  content: none;
+}
+
+.hub-ch-thumb-pending.has-seal::after {
+  color: color-mix(in srgb, var(--hub-ink) 52%, transparent);
+}
+
+.hub-ch-thumb-pending.has-seal .chamber-seal-svg {
+  height: 94%;
+  width: auto;
+  filter: drop-shadow(0 3px 3px color-mix(in srgb, var(--hub-ink) 30%, transparent));
+  transition: transform 240ms cubic-bezier(0.34, 1.45, 0.42, 1), filter 240ms ease;
+}
+
+/* Hovering a chamber presses its seal — wax remembers the hand. */
+.hub-chapter-list a:hover .has-seal .chamber-seal-svg,
+.hub-chapter-list a:focus-visible .has-seal .chamber-seal-svg {
+  transform: scale(0.9) rotate(-3deg);
+  filter: drop-shadow(0 1px 1px color-mix(in srgb, var(--hub-ink) 38%, transparent));
+}
+
+.chamber-seal-mount {
+  display: grid;
+  place-items: center;
+}
+
+.chamber-seal-mount .chamber-seal-svg {
+  width: min(5.5rem, 42%);
+  height: auto;
+  filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--hub-ink) 26%, transparent));
+}
+
+html[data-theme='night'] body[data-surface='monument'] .hub-ch-thumb-pending.has-seal {
+  background: radial-gradient(circle at 50% 40%, #232f47, #131a2b 84%);
+}
+
+html[data-theme='night'] body[data-surface='monument'] .hub-ch-thumb-pending.has-seal::after {
+  color: color-mix(in srgb, #cfdcf2 62%, transparent);
+}
+
+/* Boof's trail — the left margin is common land. */
+body[data-surface='monument'] {
+  position: relative;
+}
+
+.boof-trail {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.boof-paw {
+  position: absolute;
+  left: var(--paw-x, 20px);
+  width: 26px;
+  height: 26px;
+  color: var(--hub-ink);
+  opacity: 0;
+  transform: rotate(var(--paw-rot, 0deg)) scale(0.55);
+  transition: opacity 720ms ease, transform 720ms cubic-bezier(0.22, 0.9, 0.34, 1.18);
+}
+
+.boof-paw.is-placed {
+  opacity: 0.13;
+  transform: rotate(var(--paw-rot, 0deg)) scale(1);
+}
+
+.boof-sprig {
+  width: 32px;
+  height: 32px;
+  color: var(--hub-berry);
+}
+
+.boof-sprig.is-placed {
+  opacity: 0.4;
+}
+
+html[data-theme='night'] body[data-surface='monument'] .boof-paw {
+  color: #cfdcf2;
+}
+
+html[data-theme='night'] body[data-surface='monument'] .boof-paw.is-placed {
+  opacity: 0.17;
+}
+
+html[data-theme='night'] body[data-surface='monument'] .boof-sprig.is-placed {
+  opacity: 0.5;
+}
+
+@media (max-width: 71.99rem) {
+  .boof-trail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boof-paw {
+    transition: none;
+  }
+
+  .hub-ch-thumb-pending.has-seal .chamber-seal-svg {
+    transition: none;
+  }
+}
+
+/* Broadside chip material — zine paper brown. */
+.chip[data-material='zine'] {
+  --material-accent: #8a6b3f;
+}
+
+/* ─── Latent beauty · optical polish ───────────────────────────
+ * Quiet craft: rhythm, type, light, and material — not more chrome.
+ */
+
+@property --beauty-rise {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+body[data-surface='monument'] {
+  --beauty-rise: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  hanging-punctuation: first last;
+}
+
+/* Soft atmospheric grain — visible only on close looking */
+body[data-surface='monument']::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+html[data-theme='night'] body[data-surface='monument']::after {
+  mix-blend-mode: soft-light;
+  opacity: 0.07;
+}
+
+html[data-wonder='quiet'] body[data-surface='monument']::after {
+  opacity: 0.02;
+}
+
+html[data-wonder='deep'] body[data-surface='monument']::after {
+  opacity: 0.05;
+}
+
+/* Vertical rhythm: modular breath between bands */
+body[data-surface='monument'] .hub-main {
+  gap: clamp(2.6rem, 5.5vw, 4rem);
+  padding-block: clamp(2rem, 4.5vw, 3.25rem) 2.5rem;
+}
+
+body[data-surface='monument'] .hub-shell {
+  padding-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* Type: latent precision */
+body[data-surface='monument'] .hub-hero h1 {
+  text-wrap: balance;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  font-size: clamp(2.15rem, 5.8vw, 3.35rem);
+  background-image: linear-gradient(
+    118deg,
+    var(--hub-accent) 0%,
+    color-mix(in srgb, var(--hub-accent) 55%, var(--hub-gold)) 42%,
+    var(--hub-hearth) 100%
+  );
+  background-size: 140% 140%;
+  background-position: calc(var(--light-x, 50) * 0.4%) calc(var(--light-y, 20) * 0.5%);
+  filter: drop-shadow(
+    0 1px 0 color-mix(in srgb, var(--hub-paper) 40%, transparent)
+  );
+}
+
+body[data-surface='monument'] .hub-lede {
+  font-size: clamp(1.02rem, 1.15vw + 0.85rem, 1.12rem);
+  line-height: 1.62;
+  max-width: 34rem;
+  text-wrap: pretty;
+  letter-spacing: 0.005em;
+}
+
+body[data-surface='monument'] .hub-section-lede {
+  line-height: 1.58;
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+
+body[data-surface='monument'] .hub-eyebrow {
+  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  opacity: 0.92;
+}
+
+body[data-surface='monument'] .hub-meta {
+  letter-spacing: 0.01em;
+  font-variant-numeric: oldstyle-nums;
+}
+
+body[data-surface='monument'] .hub-pillars h2,
+body[data-surface='monument'] .hub-onboard h2,
+body[data-surface='monument'] .hub-chapters h2,
+body[data-surface='monument'] .hub-aside-band h2,
+body[data-surface='monument'] .discovery-strip h2 {
+  text-wrap: balance;
+  letter-spacing: 0.035em;
+  line-height: 1.15;
+}
+
+/* Media: quiet depth */
+body[data-surface='monument'] .hub-hero-media {
+  position: relative;
+}
+
+body[data-surface='monument'] .hub-hero-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 0.85rem;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 22%, transparent),
+    inset 0 -2.5rem 2.5rem color-mix(in srgb, var(--hub-ink) 12%, transparent);
+}
+
+body[data-surface='monument'] .hub-hero-media img {
+  border-radius: 0.85rem;
+  border-color: color-mix(in srgb, var(--hub-hearth) 18%, var(--hub-line));
+}
+
+body[data-surface='monument'] .hub-hero-media figcaption {
+  margin-top: 0.55rem;
+  padding-inline: 0.1rem;
+  letter-spacing: 0.05em;
+  font-size: 0.68rem;
+  opacity: 0.88;
+}
+
+/* Cards: paper tooth + optical edge */
+body[data-surface='monument'] .topic-card,
+body[data-surface='monument'] .hub-pillar-grid li,
+body[data-surface='monument'] .callout,
+body[data-surface='monument'] .lexicon-card,
+body[data-surface='monument'] .seal-card,
+body[data-surface='monument'] .route-rail-card {
+  backdrop-filter: blur(6px) saturate(1.04);
+  -webkit-backdrop-filter: blur(6px) saturate(1.04);
+}
+
+body[data-surface='monument'] .topic-card {
+  border-radius: 0.9rem;
+}
+
+body[data-surface='monument'] .topic-card h2 {
+  letter-spacing: 0.015em;
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+body[data-surface='monument'] .topic-card > p {
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+body[data-surface='monument'] .trail-list a {
+  text-underline-offset: 0.2em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+  text-decoration-color: color-mix(in srgb, var(--hub-accent) 25%, transparent);
+}
+
+body[data-surface='monument'] .trail-list a:hover,
+body[data-surface='monument'] .trail-list a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* Chips: thinner, quieter presence */
+body[data-surface='monument'] .chip {
+  padding: 0.26rem 0.68rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.035em;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 180ms ease,
+    color 160ms ease;
+}
+
+body[data-surface='monument'] .chip:hover,
+body[data-surface='monument'] .chip:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--material-accent, var(--hub-accent)) 14%, transparent);
+}
+
+/* CTA: weight without shout */
+body[data-surface='monument'] .hub-cta-primary {
+  letter-spacing: 0.02em;
+  padding: 0.72rem 1.25rem;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 18%, transparent) inset,
+    0 0.4rem 0 color-mix(in srgb, #000 10%, transparent),
+    0 0.85rem 1.6rem color-mix(in srgb, var(--hub-accent-deep) 20%, transparent);
+}
+
+body[data-surface='monument'] .hub-cta-quiet {
+  letter-spacing: 0.02em;
+}
+
+/* Climate controls: recede until needed */
+body[data-surface='monument'] .monument-climate {
+  opacity: 0.72;
+  transition: opacity 200ms ease;
+}
+
+body[data-surface='monument'] .monument-climate:hover,
+body[data-surface='monument'] .monument-climate:focus-within {
+  opacity: 1;
+}
+
+body[data-surface='monument'] .climate-option {
+  padding: 0.2rem 0.44rem;
+  font-size: 0.64rem;
+}
+
+body[data-surface='monument'] .climate-legend {
+  font-size: 0.58rem;
+  opacity: 0.75;
+}
+
+/* Topbar hairline: thinner, softer fade */
+body[data-surface='monument'] .hub-topbar::after {
+  height: 1px;
+  opacity: 0.45;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hub-accent) 12%,
+    var(--hub-gold) 50%,
+    var(--hub-hearth) 88%,
+    transparent 100%
+  );
+}
+
+body[data-surface='monument'] .hub-topbar {
+  backdrop-filter: blur(14px) saturate(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+}
+
+/* Selection + focus: belonging to the palette */
+body[data-surface='monument'] ::selection {
+  background: color-mix(in srgb, var(--hub-accent) 28%, transparent);
+  color: var(--hub-ink);
+}
+
+html[data-theme='night'] body[data-surface='monument'] ::selection {
+  background: color-mix(in srgb, var(--hub-accent) 40%, transparent);
+  color: #fff;
+}
+
+/* Region bands: slight optical separation without boxes everywhere */
+body[data-surface='monument'] [data-region='theme'] {
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 55%, transparent) inset,
+    0 0.7rem 2rem color-mix(in srgb, var(--hub-gold) 10%, transparent);
+}
+
+body[data-surface='monument'] [data-region='grain'] {
+  margin-top: 0.5rem;
+}
+
+/* Route rail: quieter label, stronger primary */
+body[data-surface='monument'] .route-rail-label {
+  letter-spacing: 0.14em;
+  opacity: 0.8;
+}
+
+body[data-surface='monument'] .route-rail-card {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .route-rail-card:hover {
+    transform: translateY(-2px);
+  }
+
+  body[data-surface='monument'] .hub-cta-primary:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Wonder path art: soft frame harmony */
+body[data-surface='monument'] .wonder-path-art img,
+body[data-surface='monument'] .wonder-threshold-art {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 12%, transparent),
+    0 1.1rem 2.4rem color-mix(in srgb, #000 22%, transparent);
+}
+
+body[data-surface='monument'] .wonder-threshold {
+  border-radius: 1.2rem;
+}
+
+/* Footer: last quiet note */
+body[data-surface='monument'] .hub-footer {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 0.01em;
+  opacity: 0.92;
+}
+
+body[data-surface='monument'] .hub-footer-note {
+  letter-spacing: 0.04em;
+  font-size: 0.76rem;
+  text-transform: lowercase;
+}
+
+/* Print: strip atmosphere, keep structure */
+@media print {
+  body[data-surface='monument']::before,
+  body[data-surface='monument']::after,
+  body[data-surface='monument'] .monument-climate {
+    display: none !important;
+  }
+
+  body[data-surface='monument'] {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] .chip,
+  body[data-surface='monument'] .route-rail-card,
+  body[data-surface='monument'] .monument-climate {
+    transition: none;
+  }
 }

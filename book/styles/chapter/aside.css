@@ -74,3 +74,18 @@ aside .additional-links a:focus-visible {
   box-shadow: var(--interactive-shadow-hover);
 }
 
+
+/* Chamber seal — the chapter's wax mark; petals count the chapter number.
+ * It anchors the field-notes zone of the reading rail. */
+aside .chamber-seal-mount {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  margin-top: 0.4rem;
+}
+
+aside .chamber-seal-mount .chamber-seal-svg {
+  width: clamp(3.4rem, 38%, 5.2rem);
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(26, 34, 51, 0.28));
+}

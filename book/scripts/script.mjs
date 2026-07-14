@@ -27,6 +27,7 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.E';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -70,6 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeStyles(chapterData);
     populateMetadata(chapterData);
     populateContent(chapterData);
+    renderChamberSeals(document);
 
     // Book experience: grammar roles, scroll reveal, glyph discovery, print context
     const chapterContent = document.getElementById('chapter-content');

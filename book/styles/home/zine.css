@@ -1,0 +1,315 @@
+/*
+ * The Boonberry Broadside — a zine you fold from one sheet.
+ *
+ * Two lives, one document:
+ *   Screen — the sheet is shown as the curiosity it is (top row upside
+ *   down, because that is how the fold speaks) plus folding instructions.
+ *   Print — everything else steps aside and the sheet claims the page,
+ *   landscape, eight panels, hairline fold guides.
+ *
+ * Voice: press office. Ink, hairlines, and patience.
+ */
+
+.zine-hero .hub-eyebrow {
+  color: #8a6b3f;
+}
+
+/* ————— The sheet ————— */
+
+.broadside-sheet {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
+  aspect-ratio: 11 / 8.5;
+  margin: 0;
+  background: #fffdf6;
+  border: 1px solid var(--hub-line);
+  box-shadow: 0 1.4rem 2.6rem color-mix(in srgb, var(--hub-ink) 16%, transparent);
+  color: #232a35;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.bs-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: clamp(0.45rem, 1.6vw, 1rem);
+  border: 0.5px dashed color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  font-size: clamp(0.42rem, 1.05vw, 0.78rem);
+  line-height: 1.45;
+  overflow: hidden;
+}
+
+.bs-panel[data-flip='true'] {
+  transform: rotate(180deg);
+}
+
+.bs-kicker {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.82em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a6b3f;
+}
+
+.bs-panel p,
+.bs-panel ul {
+  margin: 0;
+}
+
+.bs-panel ul {
+  padding-left: 1.1em;
+  display: grid;
+  gap: 0.3em;
+}
+
+.bs-pagenum {
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.35em;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7em;
+  color: color-mix(in srgb, #232a35 42%, transparent);
+}
+
+/* Cover */
+.bs-cover {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.55em;
+}
+
+.bs-cover .bs-title {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+}
+
+.bs-cover .chamber-seal-mount {
+  width: 34%;
+}
+
+.bs-cover .chamber-seal-mount .chamber-seal-svg,
+.bs-seal-row .chamber-seal-mount .chamber-seal-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1px 1.5px rgba(26, 34, 51, 0.3));
+}
+
+/* Petal lexicon */
+.bs-seal-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0.2em 0;
+}
+
+.bs-seal-row .chamber-seal-mount {
+  width: 26%;
+  text-align: center;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72em;
+  color: color-mix(in srgb, #232a35 60%, transparent);
+}
+
+/* Epigraph panel */
+.bs-quote {
+  justify-content: center;
+  text-align: center;
+  gap: 0.7em;
+}
+
+.bs-quote blockquote {
+  margin: 0;
+  font-size: 1.34em;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.bs-quote blockquote::before {
+  content: '“';
+}
+
+.bs-quote blockquote::after {
+  content: '”';
+}
+
+/* Your panel */
+.bs-yours {
+  gap: 0.5em;
+}
+
+.bs-yours .bs-frame {
+  flex: 1;
+  border: 1px dashed color-mix(in srgb, #232a35 34%, transparent);
+  border-radius: 3px;
+  min-height: 3em;
+}
+
+.bs-yours .bs-fill-line {
+  display: flex;
+  gap: 0.4em;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.bs-yours .bs-fill-line span {
+  flex: 1;
+  border-bottom: 1px solid color-mix(in srgb, #232a35 40%, transparent);
+  min-width: 2em;
+}
+
+/* Back cover */
+.bs-back {
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.bs-back .bs-paw {
+  width: 1.8em;
+  height: 1.8em;
+  color: #5b3a6e;
+  opacity: 0.7;
+}
+
+.bs-back .bs-paw svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sheet-caption {
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted);
+  font-family: var(--font-family-heading, monospace);
+}
+
+/* ————— Fold guide ————— */
+
+.fold-guide ol {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+  counter-reset: fold-step;
+}
+
+.fold-guide li {
+  counter-increment: fold-step;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.55rem;
+  background: var(--hub-panel);
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fold-guide li::before {
+  content: counter(fold-step, decimal-leading-zero);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: #8a6b3f;
+}
+
+.fold-guide svg {
+  width: 100%;
+  height: auto;
+  color: var(--hub-accent-deep);
+}
+
+.fold-guide .fold-cut {
+  stroke: var(--hub-hearth);
+}
+
+.fold-guide p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--hub-muted);
+}
+
+/* ————— Commons note ————— */
+
+.zine-commons {
+  margin-top: 3rem;
+  border-top: 1px solid var(--hub-line);
+  padding-top: 1.6rem;
+}
+
+/* ————— Night theme ————— */
+
+html[data-theme='night'] body[data-surface='monument'] .broadside-sheet {
+  /* Ink stays ink: the sheet is future paper, not an interface. */
+  box-shadow: 0 1.4rem 2.6rem rgba(0, 0, 0, 0.55);
+}
+
+/* ————— Print: the sheet claims the page ————— */
+
+@page {
+  size: letter landscape;
+  margin: 5mm;
+}
+
+@media print {
+  /* One page, no matter what the rest of the document thinks. */
+  html,
+  body[data-surface='monument'] {
+    margin: 0;
+    overflow: hidden;
+    background: none !important;
+  }
+
+  .hub-topbar,
+  .monument-climate,
+  .zine-hero,
+  .hub-section-head,
+  .sheet-caption,
+  .fold-guide,
+  .zine-commons,
+  .hub-footer,
+  .boof-trail,
+  .skip-link {
+    display: none !important;
+  }
+
+  .hub-shell {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Print viewport units measure the paper, not the margin box: the
+   * sheet is one unbreakable grid, so leave the @page margins room or
+   * Chrome exiles it to a second page. Verified single-page at this size. */
+  .broadside-sheet {
+    width: 100%;
+    height: calc(100vh - 20mm);
+    aspect-ratio: auto;
+    border: none;
+    box-shadow: none;
+  }
+
+  .hub-main,
+  .hub-main > section {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bs-panel {
+    font-size: 8.5pt;
+    padding: 4.5mm;
+    border-color: rgba(35, 42, 53, 0.22);
+  }
+}
