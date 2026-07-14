@@ -1,5 +1,16 @@
 import { defineConfig } from 'vite';
+import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+const chapterInputs = Object.fromEntries(
+    readdirSync(resolve(__dirname, 'book/chapter'), { withFileTypes: true })
+        .filter((entry) => entry.isDirectory() && /^\d{2}$/.test(entry.name))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((entry) => [
+            `chapter${entry.name}`,
+            resolve(__dirname, `book/chapter/${entry.name}/index.html`),
+        ])
+);
 
 export default defineConfig({
     // Serve from root — the site is a static MPA
@@ -8,7 +19,7 @@ export default defineConfig({
 
     server: {
         port: 3000,
-        open: '/book/chapter/01/index.html',
+        open: '/',
     },
 
     build: {
@@ -16,19 +27,12 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
-                chapter01: resolve(__dirname, 'book/chapter/01/index.html'),
-                chapter02: resolve(__dirname, 'book/chapter/02/index.html'),
-                chapter03: resolve(__dirname, 'book/chapter/03/index.html'),
-                chapter04: resolve(__dirname, 'book/chapter/04/index.html'),
-                chapter05: resolve(__dirname, 'book/chapter/05/index.html'),
-                chapter06: resolve(__dirname, 'book/chapter/06/index.html'),
-                chapter07: resolve(__dirname, 'book/chapter/07/index.html'),
-                chapter08: resolve(__dirname, 'book/chapter/08/index.html'),
-                chapter09: resolve(__dirname, 'book/chapter/09/index.html'),
-                chapter10: resolve(__dirname, 'book/chapter/10/index.html'),
-                chapter11: resolve(__dirname, 'book/chapter/11/index.html'),
-                chapter12: resolve(__dirname, 'book/chapter/12/index.html'),
-                chapter13: resolve(__dirname, 'book/chapter/13/index.html'),
+                civicMagic: resolve(__dirname, 'world/civic-magic.html'),
+                boonberryCommons: resolve(__dirname, 'world/boonberry-commons.html'),
+                scriptorium: resolve(__dirname, 'scriptorium/index.html'),
+                topics: resolve(__dirname, 'topics/index.html'),
+                boof: resolve(__dirname, 'characters/boof.html'),
+                ...chapterInputs,
             },
         },
         outDir: 'dist',

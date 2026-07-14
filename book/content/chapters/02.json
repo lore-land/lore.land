@@ -1,0 +1,167 @@
+{
+  "chapterNumber": 2,
+  "title": "The First Echo",
+  "logline": "The grove repeats what it cannot keep.",
+  "epigraph": "Repetition is not proof. It is only pressure.",
+  "description": "Chapter 2 of Lore.Land: The First Echo. After the balcony reading, Boof—dog of the weighhouse—follows an incomplete entry into a grove that replays testimony without guaranteeing truth.",
+  "mood": "grove",
+  "period": "spring",
+  "pillars": [
+    "worldbuilding",
+    "intrigue"
+  ],
+  "topics": [
+    {
+      "id": "memory",
+      "label": "Living memory",
+      "href": "/topics/#memory"
+    },
+    {
+      "id": "reward",
+      "label": "Reward currents",
+      "href": "/topics/#reward"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Boof · dog of the land",
+      "href": "/characters/boof.html",
+      "kicker": "Guide"
+    },
+    {
+      "label": "Grove of Echoes",
+      "href": "/world/civic-magic.html#grove",
+      "kicker": "Office"
+    },
+    {
+      "label": "Chamber 01 · Dawn",
+      "href": "/book/chapter/01/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Reward currents",
+      "href": "/topics/#reward",
+      "kicker": "Topic"
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "After the balcony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "By the second morning, the dual reading had become rumor with footnotes. Market criers argued over which total to shout. Council pages called it a clerical excess. The six cold kitchens had already learned the new number by heat."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof carried the repair book under one arm and the three copied pages under the other. The official ledger had been confiscated. That was expected. What unsettled them was the blank line that remained after the last kitchen name—an incomplete entry, as if the archive had started a sentence and then refused to finish it."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "data-mood": "grove",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The incomplete entry led them into the ",
+          "children": [
+            {
+              "type": "custom-boonberry",
+              "content": "grove"
+            },
+            {
+              "type": "text",
+              "text": " beyond the weighhouse road—a place the maps labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leaves: inventory counts, a cough from a stove room, a councilor saying "
+            },
+            {
+              "type": "custom-echo",
+              "content": "acceptable loss"
+            },
+            {
+              "type": "text",
+              "text": " with the confidence of someone who would never meet the cold."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-boonberry",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "grove",
+          "text": "The berries here did not shine for distribution. They shone like storage media under stress—bright when a phrase repeated often enough to become policy. Boof recognized several of their own silences reflected in the fruit. That was the grove’s first cruelty: it kept what the town preferred not to index."
+        }
+      ]
+    },
+    {
+      "type": "custom-echo",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Follow me,\" said an echo that used Boof’s own pitch from years earlier, the careful clerk-voice that had once made disorder sound administrative. The path forked and rejoined. Time did not reverse; it re-litigaged."
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/02.png",
+        "alt": "The Grove of Echoes, where repeated testimony hangs among boonberry branches",
+        "loading": "lazy"
+      },
+      "figcaption": "The Grove of Echoes: retention without guarantee of truth."
+    },
+    {
+      "type": "section",
+      "title": "What the echo keeps",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof understood, pacing the fork, that the grove was not a memory palace. It was a failure mode of the archive—overflow storage for stories that had been published too cleanly. Each echo offered a route: amplify a grievance, bury a name, promote a rumor until it calcified into map legend."
+        },
+        {
+          "type": "paragraph",
+          "text": "Choosing a path was authorship. Leaving without choosing was also authorship, only quieter, and the grove charged interest on quiet."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Are you lost?\" the Fool asked from nowhere particular, no longer playful. \"Or have you finally arrived where the public record cannot pretend to be complete?\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof did not answer with a riddle. She opened the repair book to the blank line and wrote the grove’s first usable note: echo is not evidence; echo is a summons. Then she kept walking, because a summons still requires a response if anyone is to stay warm."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Boof is a dog guide; echoes are old scents re-lit, not automatic proof."
+      },
+      {
+        "description": "The Grove of Echoes retains overflow testimony the polished archive will not index."
+      },
+      {
+        "description": "Repetition in the grove creates pressure, not proof—each path is an authorship choice."
+      },
+      {
+        "description": "Boof records that an echo is a summons, not evidence, and continues the investigation."
+      }
+    ]
+  }
+}

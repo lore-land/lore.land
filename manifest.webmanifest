@@ -1,7 +1,7 @@
 {
   "name": "Lore.Land",
   "short_name": "Lore",
-  "description": "Software-as-literature storytelling with modular Spw chapters and visual seed atlas.",
+  "description": "A worldbuilding monument: seeded chapters, inspectable craft, and a living serial.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",

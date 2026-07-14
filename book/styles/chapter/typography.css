@@ -47,6 +47,159 @@
     filter: drop-shadow(0 2px 8px rgba(42, 111, 127, 0.15));
   }
 
+  /* ─── Publishing template: logline, epigraph, pillars ──────── */
+
+  .chapter-logline {
+    margin: 0 0 var(--spacing-small);
+    max-width: var(--chapter-prose-max);
+    font-family: var(--font-family-heading);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--color-accent-main);
+  }
+
+  .chapter-epigraph {
+    margin: calc(var(--spacing-medium) * -0.35) 0 var(--spacing-medium);
+    max-width: var(--chapter-prose-max);
+    font-style: italic;
+    color: var(--color-text-alt);
+    border-left: 2px solid color-mix(in srgb, var(--color-accent-main) 45%, transparent);
+    padding-left: 0.9rem;
+  }
+
+  .chapter-byline {
+    margin: 0 0 var(--spacing-small);
+    max-width: var(--chapter-prose-max);
+    font-size: 0.9rem;
+    color: var(--color-text-alt);
+  }
+
+  .chapter-byline a {
+    color: var(--color-accent-alt);
+  }
+
+  .chapter-pillars {
+    margin: 0 0 var(--spacing-small);
+    max-width: var(--chapter-prose-max);
+    font-family: var(--font-family-heading);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text-alt) 88%, transparent);
+  }
+
+  .chapter-topic-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 var(--spacing-large);
+    max-width: var(--chapter-prose-max);
+  }
+
+  .chapter-topic-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border-color-main) 70%, transparent);
+    background: color-mix(in srgb, var(--bg-color-content) 80%, transparent);
+    color: var(--color-accent-alt);
+    font-family: var(--font-family-heading);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+  }
+
+  .chapter-topic-chip:hover,
+  .chapter-topic-chip:focus-visible {
+    border-color: color-mix(in srgb, var(--color-accent-main) 45%, transparent);
+  }
+
+  .chapter-topic-chip--quiet {
+    color: var(--color-text-alt);
+    background: transparent;
+  }
+
+  .chapter-route-rail {
+    display: grid;
+    gap: 0.55rem;
+    margin: calc(var(--spacing-large) * 1.4) 0 var(--spacing-large);
+    padding-top: var(--spacing-medium);
+    border-top: 1px solid color-mix(in srgb, var(--border-color-main) 55%, transparent);
+    max-width: min(100%, 42rem);
+  }
+
+  @media (min-width: 40rem) {
+    .chapter-route-rail {
+      grid-template-columns: auto repeat(auto-fit, minmax(7.5rem, 1fr));
+      align-items: stretch;
+    }
+  }
+
+  .chapter-route-rail-label {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-main);
+    align-self: center;
+  }
+
+  .chapter-route-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--border-color-main) 70%, transparent);
+    border-radius: 0.55rem;
+    text-decoration: none;
+    color: inherit;
+    background: color-mix(in srgb, var(--bg-color-content) 70%, transparent);
+  }
+
+  .chapter-route-card:hover,
+  .chapter-route-card:focus-visible {
+    border-color: color-mix(in srgb, var(--color-accent-main) 40%, transparent);
+  }
+
+  .chapter-route-kicker {
+    font-family: var(--font-family-heading);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-main);
+  }
+
+  .chapter-route-title {
+    font-family: var(--font-family-heading);
+    font-size: 0.88rem;
+    color: var(--color-text-main);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0.5rem;
+    z-index: 100;
+    padding: 0.5rem 0.85rem;
+    background: var(--color-text-main);
+    color: #fff;
+    border-radius: 0.25rem;
+  }
+
+  .skip-link:focus {
+    left: 0.5rem;
+  }
+
+  .chapter-navigation .hub-home {
+    font-family: 'LoreLand', var(--font-family-heading);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--color-accent-alt);
+    margin-right: auto;
+  }
+
   .chapter h2 {
     font-size: clamp(1.5rem, 3vw, 2rem);
     margin-top: calc(var(--spacing-large) * 1.6);

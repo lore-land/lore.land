@@ -1,0 +1,101 @@
+{
+  "chapterNumber": 7,
+  "title": "Blueberry Oath",
+  "description": "Chapter 7 of Lore.Land: Blueberry Oath. Boof confronts a shadow that may be the Fool’s—or a debt the reader already carries.",
+  "mood": "shadow",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "shadow",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Deeper in the labyrinth, Boof stopped pretending the pursuit was one-sided. Something kept the same pace—a ",
+          "children": [
+            {
+              "type": "custom-shadow",
+              "content": "shadow"
+            },
+            {
+              "type": "text",
+              "text": ", just beyond their reach."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-shadow",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "shadow-intro",
+          "text": "The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the shadows. \"This is my shadow, or perhaps... it is yours?\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/07.png",
+        "alt": "The Fool's Shadow",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool’s Shadow: a reflection of more than just light, a reflection of truth."
+    },
+    {
+      "type": "section",
+      "title": "The Shadow’s Reflection",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward.\nThe boonberries above them dimmed, casting the world into a soft twilight."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof reached out, hoping to touch the shadow, to understand it. \"Is this what the Fool wanted me to see?\" Boof wondered. The shadow flickered and danced, evading their grasp."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed from the darkness. \"But the real question is: whose shadow is it?\""
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Oaths in the serial bind publicity to private cost—marketing with consequence."
+      },
+      {
+        "description": "The Fool’s shadow is a mirror protocol: it copies motion until it demands ownership."
+      }
+    ]
+  },
+  "logline": "A binding made in public, paid in private.",
+  "epigraph": "An oath is a contract that remembers your face.",
+  "pillars": [
+    "intrigue",
+    "worldbuilding"
+  ]
+}

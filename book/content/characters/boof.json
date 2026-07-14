@@ -1,0 +1,83 @@
+{
+  "id": "boof",
+  "name": "Boof",
+  "species": "dog",
+  "pronouns": "she/her",
+  "role": "Weighhouse nose · pack witness · serial guide",
+  "provenance": {
+    "basedOn": "Spwashi's dog",
+    "irlMotive": "blueberries",
+    "fantasyMotive": "boonberries / measured light"
+  },
+  "motives": [
+    {
+      "id": "scent",
+      "label": "Scent before story",
+      "summary": "Trusts residue, floors, jars, and streets over polished seals."
+    },
+    {
+      "id": "fruit",
+      "label": "Blueberry / boonberry",
+      "summary": "Immediate sensory reward for true work; not a substitute for kitchen delivery."
+    },
+    {
+      "id": "pack",
+      "label": "Pack loyalty",
+      "summary": "Orients to who goes cold when light fails—workers, kitchens, named streets."
+    },
+    {
+      "id": "chase",
+      "label": "Chase with consequence",
+      "summary": "Will pursue a missing measure; refuses chase-as-only-reward when stoves stay dark."
+    }
+  ],
+  "rewardFlows": [
+    {
+      "id": "immediate-fruit",
+      "label": "Immediate fruit",
+      "horizon": "near",
+      "fantasy": "Blueberries after a true count",
+      "modern": "Sensory/intrinsic craft reward; bonuses that land when work is honest"
+    },
+    {
+      "id": "delayed-light",
+      "label": "Delayed light",
+      "horizon": "seasonal",
+      "fantasy": "Bottled measures for winter kitchens",
+      "modern": "Deferred compensation, trust in systems, multi-quarter promises"
+    },
+    {
+      "id": "status-treats",
+      "label": "Status treats",
+      "horizon": "performative",
+      "fantasy": "Council applause, balcony theater",
+      "modern": "Visibility, titles, viral credit—may not feed the pack"
+    },
+    {
+      "id": "pack-warmth",
+      "label": "Pack warmth",
+      "horizon": "relational",
+      "fantasy": "Shared kitchens, repair books, names read aloud",
+      "modern": "Belonging, psychological safety, multi-generation care"
+    }
+  ],
+  "generations": [
+    {
+      "id": "old-nose",
+      "label": "Old nose",
+      "bias": "Delayed light + repair memory; suspicious of varnish seals"
+    },
+    {
+      "id": "working-middle",
+      "label": "Working middle",
+      "bias": "Needs both fruit and kitchen allotment; first to starve when ledgers lie"
+    },
+    {
+      "id": "new-chase",
+      "label": "New chase",
+      "bias": "Energy for signal and theater; power depends on whether fruit is real"
+    }
+  ],
+  "href": "/characters/boof.html",
+  "chambers": [1, 2]
+}

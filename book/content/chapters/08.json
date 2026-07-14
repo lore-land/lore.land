@@ -1,0 +1,91 @@
+{
+  "chapterNumber": 8,
+  "title": "Songs of the Watering Eye",
+  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes harmonic pressure; Boof must listen until the debt has a name.",
+  "mood": "game",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "game",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: \"Shall we play?\""
+        }
+      ]
+    },
+    {
+      "type": "custom-game",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "game-intro",
+          "text": "The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"The rules are simple, Boof,\" the Fool’s voice echoed from the trees, \"but understanding them, now that’s the tricky part.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/08.png",
+        "alt": "The Fool's Game",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool's Game: a challenge where rules bend as much as reality."
+    },
+    {
+      "type": "section",
+      "title": "The Game Begins",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive.\nThe boonberries surrounding the clearing swayed, as though they too were watching the unfolding game."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"What’s the objective?\" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"The objective, Boof, is whatever you make of it,\" the Fool whispered. \"But remember, not every game can be won.\""
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Resonance is the archive’s other sense: what cannot be filed can still be heard."
+      },
+      {
+        "description": "Debts named in song are harder to bury than debts named in ink."
+      }
+    ]
+  },
+  "logline": "Memory resonates until it names a debt.",
+  "epigraph": "Water keeps every face it has ever held, briefly.",
+  "pillars": [
+    "worldbuilding",
+    "intrigue"
+  ]
+}

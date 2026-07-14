@@ -1,0 +1,92 @@
+{
+  "chapterNumber": 5,
+  "title": "The Quiet Rift",
+  "description": "Chapter 5 of Lore.Land: The Quiet Rift. The surface holds while the books of the town begin to disagree with themselves.",
+  "mood": "song",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "song",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof followed the faint notes of a melody, drifting on the air, as if the forest itself were singing. It was the ",
+          "children": [
+            {
+              "type": "custom-song",
+              "content": "Fool’s Song"
+            },
+            {
+              "type": "text",
+              "text": ", a tune both haunting and playful."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-song",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "song-verse",
+          "text": "The song whispered, \"Come, come closer... Let your heart follow the rhythm, and your steps follow the sound. There is no end, only the journey.\""
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"You hear it, don’t you, Boof?\" The Fool’s voice sang in harmony with the forest. \"This is my song. But it is also yours.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/05.png",
+        "alt": "The Fool's Song",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool’s Song: a melody that leads the way through mystery."
+    },
+    {
+      "type": "section",
+      "title": "The Melody of the Fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The notes of the song twisted through the trees, carrying Boof deeper into the grove. Every step seemed to harmonize with the melody, as if the very ground beneath their feet pulsed with the same rhythm.\nThe boonberries swayed gently in time with the tune, reflecting the light in soft waves."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof hummed along, their voice merging with the Fool’s melody. \"Why does this song feel so familiar?\" Boof wondered aloud. But no answer came, only the continuation of the tune, drawing them onward."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "The rift is an audit condition: two truths that cannot both post."
+      },
+      {
+        "description": "Song enters as a diagnostic—melody makes the fracture audible without forcing a false fix."
+      }
+    ]
+  },
+  "logline": "Calm outside. Fracture in the ledger.",
+  "epigraph": "Silence is not empty; it is unreconciled.",
+  "pillars": [
+    "intrigue",
+    "code-craft"
+  ]
+}

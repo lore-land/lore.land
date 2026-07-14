@@ -1,0 +1,92 @@
+{
+  "chapterNumber": 4,
+  "title": "Crosswind Council",
+  "description": "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit at one table while the weather refuses to pick a side.",
+  "mood": "mirror",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "mirror",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof stumbled upon the ",
+          "children": [
+            {
+              "type": "custom-mirror",
+              "content": "Fool’s Mirror"
+            },
+            {
+              "type": "text",
+              "text": ", a reflective surface that showed not just a reflection, but a world inverted, where the familiar became strange."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-mirror",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "mirror-intro",
+          "text": "The Fool’s Mirror shimmered, revealing truths that danced between reflection and distortion. It whispered, \"What you see is not what is, but what you believe.\""
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Look into the mirror, Boof,\" the Fool’s voice echoed. \"In it, you will see not me, but yourself. And in yourself, you will find what you seek.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/04.png",
+        "alt": "The Fool's Mirror",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool's Mirror: a window into perception, where reality bends."
+    },
+    {
+      "type": "section",
+      "title": "The Reflections of the Fool’s Mirror",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "As Boof gazed into the mirror, their reflection shifted. It became both them and not them, a version that was twisted by perception, altered by the gaze of the Fool.\nThe boonberries glowed faintly in the reflection, yet they did not exist in the world outside the glass."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof touched the mirror, and for a moment, felt their hand sink into its surface, as if reality had become liquid.\n\"What is this?\" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze across the glass."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Councils in Lore.Land treat polarity as infrastructure, not morality play."
+      },
+      {
+        "description": "Public negotiation is a marketing surface: claims must survive weather and witness."
+      }
+    ]
+  },
+  "logline": "Boon and bane negotiate under shared weather.",
+  "epigraph": "Benefit without cost is rumor; cost without benefit is ruin.",
+  "pillars": [
+    "worldbuilding",
+    "marketing"
+  ]
+}

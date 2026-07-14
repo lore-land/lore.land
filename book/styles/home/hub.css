@@ -1,0 +1,1020 @@
+/*
+ * Lore.Land monument entrance — minimalist home surface.
+ * Progressive: readable without JS. The page demonstrates a seeded world, not a product label.
+ */
+
+@layer home.base, home.layout, home.components, home.states, home.motion;
+
+:root {
+  --hub-measure: 42rem;
+  --hub-wide: 56rem;
+  --hub-gutter: clamp(1.1rem, 3.5vw, 2.25rem);
+  --hub-ink: var(--color-text-main, #1a2233);
+  --hub-muted: var(--color-text-alt, #45506b);
+  --hub-line: color-mix(in srgb, var(--color-stone-shadow, #5a4a3a) 18%, transparent);
+  --hub-panel: color-mix(in srgb, var(--color-bg-content, #fffaf2) 92%, transparent);
+  --hub-accent: var(--color-accent-main, #2a6f7f);
+  --hub-accent-deep: var(--color-accent-alt, #1c4f63);
+}
+
+@layer home.base {
+  body[data-surface='monument'] {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--hub-ink);
+    background:
+      radial-gradient(ellipse 90% 50% at 50% -10%, color-mix(in srgb, var(--hub-accent) 12%, transparent), transparent 60%),
+      var(--color-bg-main, #f3ede1);
+    font-family: var(--font-family-body, Georgia, 'Times New Roman', serif);
+    line-height: 1.55;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0.5rem;
+    z-index: 100;
+    padding: 0.5rem 0.85rem;
+    background: var(--hub-ink);
+    color: #fff;
+    border-radius: 0.25rem;
+  }
+
+  .skip-link:focus {
+    left: 0.5rem;
+  }
+
+  .hub-shell {
+    width: min(100%, var(--hub-wide));
+    margin-inline: auto;
+    padding-inline: var(--hub-gutter);
+    padding-bottom: 3rem;
+  }
+
+  .hub-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    padding: 0.85rem 0;
+    margin-inline: calc(var(--hub-gutter) * -0.15);
+    padding-inline: calc(var(--hub-gutter) * 0.15);
+    background: color-mix(in srgb, var(--color-bg-main, #f3ede1) 90%, transparent);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    border-bottom: 1px solid var(--hub-line);
+  }
+
+  .hub-mark {
+    font-family: 'LoreLand', var(--font-family-heading, system-ui, sans-serif);
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--hub-accent-deep);
+    font-size: 1.05rem;
+  }
+
+  .hub-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.88rem;
+  }
+
+  .hub-nav a {
+    color: var(--hub-muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .hub-nav a:hover,
+  .hub-nav a:focus-visible {
+    color: var(--hub-accent-deep);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .hub-main {
+    display: grid;
+    gap: clamp(2.25rem, 5vw, 3.5rem);
+    padding-block: clamp(1.75rem, 4vw, 2.75rem) 1rem;
+  }
+
+  .hub-hero,
+  .hub-pillars,
+  .hub-onboard,
+  .hub-chapters,
+  .hub-aside-band {
+    max-width: var(--hub-measure);
+  }
+
+  .hub-hero {
+    display: grid;
+    gap: 1.4rem;
+    align-items: center;
+  }
+
+  .hub-chapters {
+    max-width: var(--hub-wide);
+  }
+
+  .hub-hero-media {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .hub-hero-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border: 1px solid var(--hub-line);
+    border-radius: 0.75rem;
+    background: var(--hub-panel);
+    box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--hub-ink) 10%, transparent);
+  }
+
+  .hub-hero-media figcaption {
+    margin-top: 0.45rem;
+    color: var(--hub-muted);
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 0.035em;
+  }
+
+  @media (min-width: 56rem) {
+    .hub-hero {
+      max-width: var(--hub-wide);
+      grid-template-columns: minmax(0, 1.08fr) minmax(16rem, 0.92fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+    }
+  }
+
+  .hub-eyebrow {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hub-accent);
+  }
+
+  .hub-hero h1,
+  .hub-pillars h2,
+  .hub-onboard h2,
+  .hub-chapters h2,
+  .hub-aside-band h2 {
+    font-family: 'LoreLand', var(--font-family-heading, system-ui, sans-serif);
+    letter-spacing: 0.04em;
+    line-height: 1.12;
+    margin: 0 0 0.75rem;
+  }
+
+  .hub-hero h1 {
+    font-size: clamp(2.05rem, 5.5vw, 3.1rem);
+    background: var(--color-accent-gradient, linear-gradient(135deg, var(--hub-accent), #b0602a));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(1px 1px 0 color-mix(in srgb, var(--color-stone-shadow, #5a4a3a) 25%, transparent));
+  }
+
+  .hub-lede,
+  .hub-section-lede {
+    margin: 0;
+    color: var(--hub-muted);
+    font-size: 1.05rem;
+    max-width: 38rem;
+  }
+
+  .hub-meta {
+    margin: 1.1rem 0 0;
+    font-size: 0.86rem;
+    color: color-mix(in srgb, var(--hub-muted) 88%, transparent);
+  }
+
+  .hub-actions,
+  .hub-onboard-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 0.85rem;
+    margin-top: 1.35rem;
+  }
+
+  .hub-cta {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.12rem;
+    padding: 0.7rem 1.15rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.95rem;
+    line-height: 1.25;
+    border: 1px solid transparent;
+    transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+
+  .hub-cta-primary {
+    background: var(--hub-accent-deep);
+    /* Core typography ships unlayered link colors; this must remain legible on the dark action. */
+    color: #f7fbff !important;
+    border-color: color-mix(in srgb, var(--hub-accent-deep) 80%, #000);
+    box-shadow: 0 1px 0 color-mix(in srgb, #000 12%, transparent);
+  }
+
+  .hub-cta-primary:hover,
+  .hub-cta-primary:focus-visible {
+    background: color-mix(in srgb, var(--hub-accent-deep) 88%, #fff);
+    color: #fff !important;
+    transform: translateY(-1px);
+  }
+
+  .hub-cta-sub {
+    font-size: 0.72rem;
+    font-weight: 400;
+    opacity: 0.82;
+    letter-spacing: 0.02em;
+  }
+
+  .hub-cta-quiet {
+    background: transparent;
+    color: var(--hub-accent-deep);
+    border-color: var(--hub-line);
+    padding-block: 0.55rem;
+  }
+
+  .hub-cta-quiet:hover,
+  .hub-cta-quiet:focus-visible {
+    border-color: color-mix(in srgb, var(--hub-accent) 45%, var(--hub-line));
+    background: color-mix(in srgb, #fff 55%, transparent);
+  }
+
+  .hub-pillar-grid {
+    list-style: none;
+    margin: 1.35rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 40rem) {
+    .hub-pillar-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hub-pillar-grid li {
+    margin: 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--hub-line);
+    border-radius: 0.75rem;
+    background: var(--hub-panel);
+  }
+
+  .hub-pillar-grid h3 {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    color: var(--hub-accent-deep);
+  }
+
+  .hub-pillar-grid p {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--hub-muted);
+  }
+
+  .hub-steps {
+    margin: 1.1rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--hub-muted);
+  }
+
+  .hub-steps li {
+    margin-bottom: 0.75rem;
+    padding-left: 0.25rem;
+  }
+
+  .hub-steps strong {
+    color: var(--hub-ink);
+  }
+
+  .hub-chapters-head {
+    max-width: var(--hub-measure);
+    margin-bottom: 1.1rem;
+  }
+
+  .hub-chapter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--hub-line);
+  }
+
+  .hub-chapter-list li {
+    margin: 0;
+    border-bottom: 1px solid var(--hub-line);
+  }
+
+  .hub-chapter-list a {
+    display: grid;
+    grid-template-columns: 2.15rem 5.25rem minmax(0, 1fr);
+    grid-template-areas:
+      'num thumb title'
+      'num thumb log';
+    column-gap: 0.65rem;
+    row-gap: 0.2rem;
+    align-items: start;
+    padding: 0.7rem 0.15rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @media (min-width: 48rem) {
+    .hub-chapter-list a {
+      grid-template-columns: 2.4rem 7rem minmax(10rem, 13rem) 1fr;
+      grid-template-areas: 'num thumb title log';
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+
+  .hub-ch-thumb {
+    grid-area: thumb;
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--hub-line);
+    border-radius: 0.45rem;
+    background: var(--hub-panel);
+    aspect-ratio: 16 / 9;
+  }
+
+  .hub-ch-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 180ms ease, filter 180ms ease;
+  }
+
+  .hub-ch-thumb-pending {
+    position: relative;
+    background:
+      radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--hub-accent) 34%, transparent) 0 9%, transparent 10%),
+      linear-gradient(145deg, color-mix(in srgb, var(--hub-accent-deep) 90%, #17253a), color-mix(in srgb, #b0602a 42%, var(--hub-accent-deep)));
+  }
+
+  .hub-ch-thumb-pending::before {
+    content: '';
+    position: absolute;
+    inset: 22% 18%;
+    border: 1px solid color-mix(in srgb, #fff 38%, transparent);
+    border-radius: 48% 52% 42% 58%;
+    transform: rotate(-12deg);
+  }
+
+  .hub-ch-thumb-pending::after {
+    content: attr(data-chapter);
+    position: absolute;
+    right: 0.4rem;
+    bottom: 0.25rem;
+    color: color-mix(in srgb, #fff 78%, transparent);
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .hub-chapter-list li:nth-child(3n + 2) .hub-ch-thumb-pending {
+    filter: hue-rotate(22deg);
+  }
+
+  .hub-chapter-list li:nth-child(3n) .hub-ch-thumb-pending {
+    filter: hue-rotate(-24deg);
+  }
+
+  .hub-chapter-list a:hover .hub-ch-thumb img,
+  .hub-chapter-list a:focus-visible .hub-ch-thumb img {
+    transform: scale(1.035);
+    filter: saturate(1.06) contrast(1.02);
+  }
+
+  .hub-chapter-list a:hover,
+  .hub-chapter-list a:focus-visible {
+    background: color-mix(in srgb, var(--hub-accent) 6%, transparent);
+  }
+
+  .hub-chapter-list a[data-resume='true'] {
+    background: color-mix(in srgb, var(--hub-accent) 8%, transparent);
+  }
+
+  .hub-chapter-list a[data-resume='true'] .hub-ch-num::after {
+    content: ' · resume';
+    letter-spacing: 0.04em;
+    font-size: 0.72rem;
+    color: var(--hub-muted);
+  }
+
+  .hub-ch-num {
+    grid-area: num;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: var(--hub-accent);
+    padding-top: 0.15rem;
+  }
+
+  .hub-ch-title {
+    grid-area: title;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 1rem;
+    color: var(--hub-ink);
+    line-height: 1.3;
+  }
+
+  .hub-ch-log {
+    grid-area: log;
+    font-size: 0.9rem;
+    color: var(--hub-muted);
+    line-height: 1.45;
+  }
+
+  .hub-links {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .hub-links a {
+    color: var(--hub-accent-deep);
+    text-decoration: none;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.92rem;
+  }
+
+  .hub-links a:hover,
+  .hub-links a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  .hub-footer {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hub-line);
+    font-size: 0.88rem;
+    color: var(--hub-muted);
+  }
+
+  .hub-footer a {
+    color: var(--hub-accent-deep);
+  }
+
+  .hub-footer-note {
+    margin: 0.35rem 0 0;
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+
+  .hub-footer p {
+    margin: 0;
+  }
+
+  /* ─── Civic lexicon & patron seals ─────────────────────────── */
+
+  .lexicon-card {
+    margin: 0.85rem 0 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--hub-line);
+    border-radius: 0.75rem;
+    background: var(--hub-panel);
+    max-width: var(--hub-measure);
+  }
+
+  .lexicon-card h3 {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    color: var(--hub-accent-deep);
+  }
+
+  .lexicon-surface {
+    margin: 0;
+    color: var(--hub-muted);
+    font-size: 0.98rem;
+  }
+
+  .lexicon-veil {
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--hub-line);
+    padding-top: 0.55rem;
+  }
+
+  .lexicon-veil summary {
+    cursor: pointer;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--hub-accent);
+    list-style-position: outside;
+  }
+
+  .lexicon-veil summary:hover,
+  .lexicon-veil summary:focus-visible {
+    color: var(--hub-accent-deep);
+  }
+
+  .lexicon-veil p,
+  .lexicon-veil ul {
+    margin: 0.55rem 0 0;
+    font-size: 0.92rem;
+    color: var(--hub-muted);
+  }
+
+  .lexicon-veil ul {
+    padding-left: 1.15rem;
+  }
+
+  .lexicon-hook {
+    font-style: italic;
+  }
+
+  .lexicon-veil a {
+    color: var(--hub-accent-deep);
+  }
+
+  .hub-pillar-grid .lexicon-veil {
+    border-top: none;
+    padding-top: 0.35rem;
+    margin-top: 0.45rem;
+  }
+
+  .seal-grid {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 40rem) {
+    .seal-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .seal-card {
+    margin: 0;
+    padding: 1rem 1.05rem;
+    border: 1px dashed color-mix(in srgb, var(--hub-accent) 35%, var(--hub-line));
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
+    min-height: 8rem;
+  }
+
+  .seal-card[data-status='example'] {
+    border-style: solid;
+    background: var(--hub-panel);
+  }
+
+  .seal-status {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hub-accent);
+  }
+
+  .seal-card h3 {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.95rem;
+    color: var(--hub-ink);
+  }
+
+  .seal-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--hub-muted);
+  }
+
+  .seal-card a {
+    display: inline-block;
+    margin-top: 0.55rem;
+    color: var(--hub-accent-deep);
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.88rem;
+  }
+
+  .seal-policy {
+    max-width: var(--hub-measure);
+    margin-top: 1.1rem;
+  }
+}
+
+@layer home.states {
+  .hub-cta:focus-visible,
+  .hub-nav a:focus-visible,
+  .hub-chapter-list a:focus-visible,
+  .hub-links a:focus-visible,
+  .hub-mark:focus-visible,
+  .lexicon-veil summary:focus-visible,
+  .seal-card a:focus-visible {
+    outline: 2px solid var(--focus-outline-color, #b0602a);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-cta {
+    transition: none;
+  }
+}
+
+/* ─── Visual hierarchy · discovery · component diversity ───── */
+
+.hub-hero--compact {
+  max-width: var(--hub-wide);
+}
+
+.hub-hero--compact .hub-hero-copy {
+  max-width: var(--hub-measure);
+}
+
+@media (min-width: 56rem) {
+  .hub-hero--compact {
+    grid-template-columns: minmax(0, 1.2fr) minmax(14rem, 0.8fr);
+  }
+}
+
+.hub-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.hub-section-head h2 {
+  margin-bottom: 0;
+}
+
+.hub-section-aside {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--hub-accent);
+  text-decoration: none;
+}
+
+.hub-section-aside:hover,
+.hub-section-aside:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+/* Chips — topical jump handles */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--hub-line);
+  background: color-mix(in srgb, #fff 55%, transparent);
+  color: var(--hub-accent-deep);
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+}
+
+.chip:hover,
+.chip:focus-visible {
+  border-color: color-mix(in srgb, var(--hub-accent) 45%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-accent) 8%, #fff);
+}
+
+.chip--quiet {
+  color: var(--hub-muted);
+  background: transparent;
+}
+
+/* Callout panel */
+.callout {
+  margin: 0;
+  padding: 1.05rem 1.15rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--hub-line);
+  background: var(--hub-panel);
+  align-self: stretch;
+}
+
+.callout--stone {
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--hub-accent) 8%, transparent), transparent 55%),
+    var(--hub-panel);
+}
+
+.callout-kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+}
+
+.callout-title {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  color: var(--hub-ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  filter: none;
+}
+
+.callout p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--hub-muted);
+}
+
+.callout-links {
+  margin-top: 0.75rem !important;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.85rem !important;
+}
+
+.callout-links a {
+  color: var(--hub-accent-deep);
+}
+
+/* Topic board */
+.topic-board {
+  display: grid;
+  gap: 0.9rem;
+  max-width: var(--hub-wide);
+}
+
+@media (min-width: 40rem) {
+  .topic-board {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 64rem) {
+  .topic-board {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.topic-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 1.05rem 1.1rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.85rem;
+  background: var(--hub-panel);
+  min-height: 11rem;
+  scroll-margin-top: 4.5rem;
+}
+
+.topic-card:nth-child(odd) {
+  box-shadow: 0 0.35rem 0 color-mix(in srgb, var(--hub-accent) 12%, transparent);
+}
+
+.topic-card:nth-child(3n) {
+  border-color: color-mix(in srgb, #b0602a 22%, var(--hub-line));
+}
+
+.topic-kicker {
+  margin: 0;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+}
+
+.topic-card h2 {
+  margin: 0;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  color: var(--hub-ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  filter: none;
+}
+
+.topic-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.topic-card h2 a:hover,
+.topic-card h2 a:focus-visible {
+  color: var(--hub-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.hub-pillar-grid .trail-list {
+  margin-top: 0.55rem;
+  border-top: none;
+  padding-top: 0;
+}
+
+.hub-ch-thumb-pending {
+  background:
+    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--hub-accent) 34%, transparent) 0 9%, transparent 10%),
+    linear-gradient(145deg, color-mix(in srgb, var(--hub-accent-deep) 90%, #17253a), color-mix(in srgb, #b0602a 42%, var(--hub-accent-deep)));
+}
+
+.topic-card > p {
+  margin: 0;
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--hub-muted);
+}
+
+.trail-list {
+  list-style: none;
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0 0;
+  border-top: 1px solid var(--hub-line);
+  display: grid;
+  gap: 0.3rem;
+}
+
+.trail-list a {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.82rem;
+  color: var(--hub-accent-deep);
+  text-decoration: none;
+}
+
+.trail-list a:hover,
+.trail-list a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+/* Route rail — horizontal discovery */
+.route-rail {
+  display: grid;
+  gap: 0.65rem;
+  max-width: var(--hub-wide);
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--hub-line);
+}
+
+.route-rail-label {
+  margin: 0;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+}
+
+.route-rail-cards {
+  display: grid;
+  gap: 0.55rem;
+}
+
+@media (min-width: 40rem) {
+  .route-rail-cards,
+  .route-rail {
+    grid-template-columns: auto repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .route-rail-label {
+    align-self: center;
+  }
+}
+
+.route-rail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, #fff 40%, transparent);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.route-rail-card:hover,
+.route-rail-card:focus-visible {
+  border-color: color-mix(in srgb, var(--hub-accent) 40%, var(--hub-line));
+  background: var(--hub-panel);
+}
+
+.route-rail-kicker {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-accent);
+}
+
+.route-rail-title {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.9rem;
+  color: var(--hub-ink);
+}
+
+/* Office cards with anchor IDs */
+.lexicon-card {
+  scroll-margin-top: 4.5rem;
+}
+
+.lexicon-card .chip-row {
+  margin-top: 0.65rem;
+}
+
+/* Chapter thumb hierarchy (home list) */
+.hub-chapter-list a {
+  grid-template-columns: 2.2rem 4.5rem 1fr;
+  grid-template-areas:
+    'num thumb title'
+    'num thumb log';
+  column-gap: 0.75rem;
+  row-gap: 0.12rem;
+  align-items: center;
+}
+
+@media (min-width: 48rem) {
+  .hub-chapter-list a {
+    grid-template-columns: 2.2rem 5.5rem minmax(10rem, 14rem) 1fr;
+    grid-template-areas: 'num thumb title log';
+  }
+}
+
+.hub-ch-thumb {
+  grid-area: thumb;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.35rem;
+  overflow: hidden;
+  border: 1px solid var(--hub-line);
+  background: var(--hub-panel);
+}
+
+.hub-ch-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Discovery strip on home */
+.discovery-strip {
+  max-width: var(--hub-wide);
+}
+
+.discovery-strip .topic-board {
+  margin-top: 1rem;
+}
+
+.discovery-strip .topic-card {
+  min-height: 9.5rem;
+}
+
+/* Nav current state */
+.hub-nav a[aria-current='page'] {
+  color: var(--hub-accent-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}

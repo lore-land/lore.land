@@ -1,0 +1,92 @@
+{
+  "chapterNumber": 6,
+  "title": "Lanterns of Bonk City",
+  "description": "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes infrastructure as Boof learns how a city turns shocks into shared orientation.",
+  "mood": "labyrinth",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "labyrinth",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof stepped into the ",
+          "children": [
+            {
+              "type": "custom-labyrinth",
+              "content": "Fool’s Labyrinth"
+            },
+            {
+              "type": "text",
+              "text": ", where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-labyrinth",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "labyrinth-intro",
+          "text": "\"In the labyrinth, the way forward is always behind you, and the way out is through,\" a voice echoed from within the twisting paths."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is—can you find yourself?\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/06.png",
+        "alt": "The Fool's Labyrinth",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool’s Labyrinth: a place where direction is an illusion."
+    },
+    {
+      "type": "section",
+      "title": "The Shifting Maze",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The labyrinth was alive, its walls shifting like liquid, bending and twisting the space.\nNo matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they started, yet with a slight change."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof paused. \"Is this part of the game?\" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared.\n\"Perhaps the only way out,\" Boof mused, \"is to stop trying to escape.\""
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bonk City converts event energy into navigable light—spectacle with civic duty."
+      },
+      {
+        "description": "Lanterns are proof: each one claims a place still worth finding after dark."
+      }
+    ]
+  },
+  "logline": "Impact becomes civic light.",
+  "epigraph": "A collision is only noise until someone names what it illuminated.",
+  "pillars": [
+    "worldbuilding",
+    "marketing"
+  ]
+}

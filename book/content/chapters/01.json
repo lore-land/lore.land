@@ -1,0 +1,192 @@
+{
+  "chapterNumber": 1,
+  "title": "Dawn in Boon.land",
+  "logline": "A missing measure. A ledger taught to lie.",
+  "epigraph": "A clean record is not the same as a just one.",
+  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the weighhouse, blueberry-motivated and pack-loyal—discovers the public ledger has learned how to hide a theft.",
+  "mood": "boon",
+  "period": "spring",
+  "pillars": [
+    "worldbuilding",
+    "intrigue",
+    "marketing"
+  ],
+  "topics": [
+    { "id": "promise", "label": "Public promise", "href": "/topics/#promise" },
+    { "id": "audience", "label": "Who receives", "href": "/topics/#audience" },
+    { "id": "reward", "label": "Reward currents", "href": "/topics/#reward" },
+    { "id": "wonder", "label": "Boonberry commons", "href": "/world/boonberry-commons.html" },
+    { "id": "experience", "label": "Wonder path", "href": "/scriptorium/#experience-path" },
+    { "id": "voice", "label": "Fool’s register", "href": "/topics/#voice" }
+  ],
+  "relatedRoutes": [
+    { "label": "Boof · dog of the land", "href": "/characters/boof.html", "kicker": "Guide" },
+    { "label": "Weighhouse", "href": "/world/civic-magic.html#weighhouse", "kicker": "Office" },
+    { "label": "Wonder path", "href": "/scriptorium/#experience-path", "kicker": "Experience" },
+    { "label": "Boonberry commons", "href": "/world/boonberry-commons.html", "kicker": "World" },
+    { "label": "Chamber 02 · Echo", "href": "/book/chapter/02/", "kicker": "Next" }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Missing Measure",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At dawn, every boonberry in the eastern field held a drop of light. By noon the light would be weighed, bottled, and distributed to the districts that had survived winter on promises. Boof’s job—she was a dog of the weighhouse, nose low, ears honest—was to make the promises agree with the scale."
+        },
+        {
+          "type": "paragraph",
+          "text": "The harvest ledger reported six hundred measures. The floor of the weighhouse held five hundred and ninety-four. Boof counted again with her paws and her patience, then checked the seals with a sniff that did not care for ceremony. None were broken. That was worse. A broken seal named a thief; an intact seal meant the record itself had been taught to lie."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "data-mood": "boon",
+      "valence": "boon",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof had spent seven years becoming the sort of clerk nobody noticed: a dog between stool and scale, paid in steady work and the occasional blueberry when a count was true. She knew which councilor rounded a fraction in whose favor, which warehouse roof leaked only on inspection days, and how much hunger could be hidden inside the phrase acceptable loss. Knowledge had kept her employed. Silence had kept the town orderly. Until now, she had treated those facts as the same fact."
+        },
+        {
+          "type": "paragraph",
+          "text": "Her motives were not mysterious. She liked fruit. She liked the pack fed. She liked a chase that ended in delivery, not in applause that smelled like empty bowls."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "When a Berry Listens",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Most boonberries slept through being counted. They were fruit, lantern-fuel, seed, and supper. But now and then a berry noticed the shape of the story around it. This happened when a need had been repeated, a promise had gone unanswered, and someone finally paid attention without trying to own the answer."
+        },
+        {
+          "type": "paragraph",
+          "text": "One berry near the scale opened a thin gold seam. It did not grow a face or announce a prophecy. Its light leaned east, toward the six kitchens missing from the route book. Then the berries beside it turned the same way, a quiet constellation making direction visible."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof lowered her nose. An awakened berry could witness a relationship, but it could not settle an argument. The town still had to choose what the light meant—and what it owed."
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp",
+        "alt": "Painterly studies of a lone traveler—and the fields Boof still watches at dawn",
+        "loading": "eager"
+      },
+      "figcaption": "Studies from the eastern field before the measure was made public."
+    },
+    {
+      "type": "section",
+      "title": "A Fool in the Archive",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The archive door stood open by the width of a fingernail—and the width of a scent. Inside, among shelves built to make every decision look inevitable, someone had pinned six blue stems to the tax map. The stems marked the poorest streets in Bonk City. Each missing measure would have kept one communal stove lit for a month. Boof’s nose found them before her eyes finished the arithmetic."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Boonberry Fool sat on the upper rail with mud on one boot and a council seal turning between two fingers. The Fool was not smiling. That unsettled Boof more than the trespass—because even fools usually offered a joke when a dog entered the room."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"A ledger is a story with permission to punish people,\" the Fool said. \"You can correct the arithmetic and keep the story. Or you can ask who benefits from the error. Those are different jobs.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof held out a paw for the seal. \"If you stole that, you have made every number I publish disputable.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "\"Every number was already disputable. I have only made the dispute visible. And you—\" the Fool tipped the seal toward her \"—still work for fruit and for kitchens. That makes you dangerous to anyone who only pays in applause.\""
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Six Measures, Many Reasons",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Nemi, who tended the eastern roots, wanted the missing light returned—but not by stripping the late vines. She had watched generous harvests become barren seasons when urgency forgot rest. Tavi, the youngest kitchen runner, wanted the jars before sunset; two stoves served children, night workers, and elders who could not wait for next season’s wisdom."
+        },
+        {
+          "type": "paragraph",
+          "text": "Councilor Vale wanted an orderly inquiry. He was afraid that one public accusation would make every district hoard its share before the frost. His fear was not false. It was simply not the only truth in the square."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof wanted a count the kitchens could feel. Nemi wanted soil that would still answer in ten years. Tavi wanted heat tonight. Vale wanted trust to survive the morning. The Fool wanted no motive polished until it hid the others. Beneath them all, the awakened berries kept leaning east."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Publication",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The morning bell rang. In three minutes the harvest total would be read from the council balcony, copied by the market criers, and treated as memory. Boof could replace six hundred with five hundred and ninety-four. The correction would be accurate, quiet, and useless. The missing light would remain missing—and the kitchens would still go cold while someone somewhere kept the status treat of a clean report."
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead, Boof carried both ledgers outside: the official volume and the narrow repair book where workers recorded spills, cracked jars, and the injuries that polished reports preferred not to remember. On the balcony, she read the totals side by side in a voice built for packs, not theaters. Then she read the names of the districts attached to the absent measures."
+        },
+        {
+          "type": "paragraph",
+          "text": "The square did not receive one message. Tavi heard a route to six stoves. Nemi heard a warning against replacing stolen light with an exhausted field. Vale heard the first crack in a system he still hoped to repair. The growers heard risk; the kitchen stewards heard proof; three market children heard Boof say their street names from the balcony and understood that the public count included them. The same reading changed shape according to what each listener had carried into the square."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nobody cheered. The growers went still. Two councilors left before the questions began. Across the square, the Fool returned the seal to a pocket that did not appear to exist and gave Boof a small, grave bow—as one does to a dog who has chosen the pack over the varnish."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "By sunset, Boof no longer had a desk in the weighhouse. She did have three copied pages, a list of six cold kitchens, the memory of blueberries she would not take for a false count, and the uncomfortable attention of everyone who had mistaken a clean record for a just one. It was not a victory. It was a beginning that could survive inspection—and a trail the old noses and the new chases would have to walk together."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Boof is a dog of the weighhouse—based on Spwashi’s dog—motivated by blueberries (boonberries), scent, and pack loyalty."
+      },
+      {
+        "description": "Boonberry light is measured as a civic resource; false seals hide who goes cold."
+      },
+      {
+        "description": "Boonberries sometimes awaken when repeated need, an unanswered promise, and genuine attention meet. They witness relationships but do not decide what people owe."
+      },
+      {
+        "description": "Nemi protects long soil-time, Tavi protects immediate kitchen-time, and Councilor Vale protects civic continuity; none of those motives is sufficient alone."
+      },
+      {
+        "description": "Reward currents in play: immediate fruit, delayed kitchen light, hollow status treats, and pack warmth."
+      },
+      {
+        "description": "Boof loses her post after publishing the official ledger beside the workers’ repair book."
+      },
+      {
+        "description": "The Fool names her danger: she still works for fruit and kitchens, not applause alone."
+      }
+    ]
+  }
+}

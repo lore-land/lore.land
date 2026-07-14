@@ -168,18 +168,40 @@ function initializeStyles(data) {
 function populateMetadata(data) {
   const titleElement = document.getElementById('page-title');
   const descriptionElement = document.getElementById('page-description');
+  const chapterLabel = `Chapter ${padChapterNumber(data.chapterNumber)}: ${data.title}`;
 
   if (titleElement) {
     titleElement.textContent = `${data.title} | Lore.Land`;
   }
 
   if (descriptionElement) {
-    descriptionElement.setAttribute('content', data.description);
+    const description = data.description || data.logline || chapterLabel;
+    descriptionElement.setAttribute('content', description);
+  }
+
+  document.title = `${data.title} | Lore.Land`;
+}
+
+/**
+ * Persist last-read chapter so the entrance can offer a continue path.
+ * @param {Object} data - The chapter data object.
+ */
+function persistReadingResume(data) {
+  const chapterNumber = Number(data?.chapterNumber);
+  if (!Number.isFinite(chapterNumber) || chapterNumber < 1) {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem('lore.reading.resume-chapter', String(chapterNumber));
+  } catch (error) {
+    console.warn('Unable to persist reading resume state:', error);
   }
 }
 
 /**
  * Populates the main content of the chapter based on the sections defined in chapter data.
+ * Template order: logline → title → epigraph → byline → sections.
  * @param {Object} data - The chapter data object.
  */
 function populateContent(data) {
@@ -189,38 +211,75 @@ function populateContent(data) {
     return;
   }
 
-  // Clear any existing content
   chapterContent.innerHTML = '';
 
-  // Create and append the chapter heading
+  if (data.logline) {
+    const logline = document.createElement('p');
+    logline.className = 'chapter-logline';
+    logline.dataset.component = 'chapter-logline';
+    logline.textContent = data.logline;
+    chapterContent.appendChild(logline);
+  }
+
   const chapterHeading = document.createElement('h1');
   chapterHeading.textContent = `Chapter ${padChapterNumber(data.chapterNumber)}: ${data.title}`;
   chapterContent.appendChild(chapterHeading);
+
+  if (data.epigraph) {
+    const epigraph = document.createElement('p');
+    epigraph.className = 'chapter-epigraph';
+    epigraph.dataset.component = 'chapter-epigraph';
+    epigraph.textContent = data.epigraph;
+    chapterContent.appendChild(epigraph);
+  }
 
   const byline = document.createElement('p');
   byline.className = 'chapter-byline';
   byline.dataset.component = 'chapter-byline';
 
   const authorLink = document.createElement('a');
-  authorLink.href = 'https://spwashi.com';
+  authorLink.href = 'https://spwashi.com/?from=lore.land';
   authorLink.target = '_blank';
   authorLink.rel = 'noopener noreferrer';
-  authorLink.dataset.spwExpression = 'true';
-  authorLink.textContent = '^[author]{spwashi.com}';
+  authorLink.textContent = 'Spwashi';
   authorLink.setAttribute('aria-label', 'Open author site spwashi.com');
 
-  const brandLink = document.createElement('a');
-  brandLink.href = 'https://spwashi.click';
-  brandLink.target = '_blank';
-  brandLink.rel = 'noopener noreferrer';
-  brandLink.dataset.spwExpression = 'true';
-  brandLink.textContent = '~[toy-links]{spwashi.click}';
-  brandLink.setAttribute('aria-label', 'Open Spwashi toy links page');
+  const homeLink = document.createElement('a');
+  homeLink.href = withSiteBase('/');
+  homeLink.textContent = 'Lore.Land';
+  homeLink.setAttribute('aria-label', 'Return to Lore.Land');
 
-  byline.append('Stories written by ', authorLink, '. Brand toy links: ', brandLink, '.');
+  byline.append('From the Lore.Land monument · ', authorLink, ' · ', homeLink);
   chapterContent.appendChild(byline);
 
-  // Iterate over each section and append to chapter content
+  if (Array.isArray(data.pillars) && data.pillars.length) {
+    const pillars = document.createElement('p');
+    pillars.className = 'chapter-pillars';
+    pillars.dataset.component = 'chapter-pillars';
+    pillars.textContent = `Seeded with: ${data.pillars.join(' · ')}`;
+    chapterContent.appendChild(pillars);
+  }
+
+  if (Array.isArray(data.topics) && data.topics.length) {
+    const topicNav = document.createElement('nav');
+    topicNav.className = 'chapter-topic-row';
+    topicNav.dataset.component = 'chapter-topics';
+    topicNav.setAttribute('aria-label', 'Related topics');
+    data.topics.forEach((topic) => {
+      const chip = document.createElement('a');
+      chip.className = 'chapter-topic-chip';
+      chip.href = topic.href || `/topics/#${topic.id || ''}`;
+      chip.textContent = topic.label || topic.id || 'topic';
+      topicNav.appendChild(chip);
+    });
+    const allTopics = document.createElement('a');
+    allTopics.className = 'chapter-topic-chip chapter-topic-chip--quiet';
+    allTopics.href = withSiteBase('/topics/');
+    allTopics.textContent = 'All topics';
+    topicNav.appendChild(allTopics);
+    chapterContent.appendChild(topicNav);
+  }
+
   if (Array.isArray(data.sections)) {
     data.sections.forEach(section => {
       const sectionElement = createSectionElement(section);
@@ -231,6 +290,39 @@ function populateContent(data) {
   } else {
     console.warn('No sections found in chapter data.');
   }
+
+  if (Array.isArray(data.relatedRoutes) && data.relatedRoutes.length) {
+    const rail = document.createElement('nav');
+    rail.className = 'chapter-route-rail';
+    rail.dataset.component = 'chapter-related-routes';
+    rail.setAttribute('aria-label', 'Continue exploring');
+
+    const label = document.createElement('p');
+    label.className = 'chapter-route-rail-label';
+    label.textContent = 'Continue';
+    rail.appendChild(label);
+
+    data.relatedRoutes.forEach((route) => {
+      const card = document.createElement('a');
+      card.className = 'chapter-route-card';
+      card.href = route.href || '#';
+      if (route.kicker) {
+        const kicker = document.createElement('span');
+        kicker.className = 'chapter-route-kicker';
+        kicker.textContent = route.kicker;
+        card.appendChild(kicker);
+      }
+      const title = document.createElement('span');
+      title.className = 'chapter-route-title';
+      title.textContent = route.label || 'Route';
+      card.appendChild(title);
+      rail.appendChild(card);
+    });
+
+    chapterContent.appendChild(rail);
+  }
+
+  persistReadingResume(data);
 }
 
 /**
@@ -392,8 +484,8 @@ function createCustomElement(section) {
  */
 function setupNavigation(data, announce) {
   const links = deriveChapterLinks(data);
-  const previousLabel = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
-  const nextLabel = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
+  const previousLabel = `← Chapter ${String(links.previous).padStart(2, '0')}`;
+  const nextLabel = `Chapter ${String(links.next).padStart(2, '0')} →`;
 
   const prevControls = document.querySelectorAll('.chapter-navigation .prev');
   const nextControls = document.querySelectorAll('.chapter-navigation .next');
@@ -902,7 +994,7 @@ function setupPrimaryAction(data) {
     return;
   }
 
-  primaryActionButton.textContent = `^[route/${String(links.next).padStart(2, '0')}]{advance}`;
+  primaryActionButton.textContent = `Continue to Chapter ${String(links.next).padStart(2, '0')}`;
   primaryActionButton.setAttribute('aria-label', `Advance to chapter ${links.next}`);
 
   primaryActionButton.addEventListener('click', () => {

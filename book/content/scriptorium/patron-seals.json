@@ -1,0 +1,36 @@
+{
+  "title": "Patron seals",
+  "preface": "A seal is a sponsored mark that funds a chamber, route, or tool without claiming to own the canon. Empty pedestals remain visible so the affordance is honest.",
+  "policy": [
+    "Seals must remain legible as patronage—never disguised as neutral narration.",
+    "Sponsored routes keep provenance: who funded, what was funded, when the stone was set.",
+    "Editorial judgment stays with the scriptorium; a seal buys presence, not rewrite rights.",
+    "Paid links appear as marked thresholds, not hidden doors."
+  ],
+  "seals": [
+    {
+      "id": "pedestal-open-a",
+      "status": "open",
+      "label": "Open pedestal",
+      "blurb": "A chamber, motif bed, or tool route can carry a patron mark here.",
+      "href": null,
+      "patron": null
+    },
+    {
+      "id": "pedestal-open-b",
+      "status": "open",
+      "label": "Open pedestal",
+      "blurb": "Reserved for a mark that funds work the audience already wants to return to.",
+      "href": null,
+      "patron": null
+    },
+    {
+      "id": "example-atelier",
+      "status": "example",
+      "label": "Example · Atelier mark",
+      "blurb": "Illustrative only: a quiet mark linking to the craftsperson who raises neighboring monuments.",
+      "href": "https://spwashi.com/services/?from=lore.land-seal",
+      "patron": "Spwashi atelier"
+    }
+  ]
+}

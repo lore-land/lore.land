@@ -1,0 +1,92 @@
+{
+  "chapterNumber": 3,
+  "title": "Signals in the Sand",
+  "description": "Chapter 3 of Lore.Land: Signals in the Sand. Old routes answer from the dunes, and Boof must decide which signal is invitation and which is trap.",
+  "mood": "paradox",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "paradox",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof stood at the edge of the ",
+          "children": [
+            {
+              "type": "custom-paradox",
+              "content": "Fool's Paradox"
+            },
+            {
+              "type": "text",
+              "text": ", a place where truth and jest twisted together, impossible to untangle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-paradox",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "paradox-intro",
+          "text": "\"To move forward, you must go back,\" the paradox whispered, echoing the Fool’s riddles.\n\"To catch the Fool, you must first be caught.\""
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"The closer you get, the further away I am.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/03.png",
+        "alt": "The Fool's Paradox",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool's Paradox: where movement is illusion, and reality folds upon itself."
+    },
+    {
+      "type": "section",
+      "title": "The Enigma of the Paradox",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed.\nThe boonberries glowed with a mischievous light, flickering between reality and mirage."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. \"To chase is to never catch,\" Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Desert signals behave like protocol: latency, spoofing, and durable return addresses."
+      },
+      {
+        "description": "The Fool’s paradox appears as routing advice that collapses if followed too literally."
+      }
+    ]
+  },
+  "logline": "Routes older than the map begin to answer.",
+  "epigraph": "A path is a promise with dust on it.",
+  "pillars": [
+    "worldbuilding",
+    "code-craft"
+  ]
+}

@@ -1,6 +1,59 @@
 # lore.land
 
-The official canon for lore.land.
+A **worldbuilding monument**: seeded chapters, inspectable craft, and a serial that can be returned to.
+
+The public face demonstrates capability—developing and seeding a durable world—rather than announcing a product category. Interactive fiction stays elsewhere later ([dregg.net](https://dregg.net)).
+
+**Threshold:** [Enter Chapter One](/book/chapter/01/).
+
+The homepage is a static, minimalist entrance. Progressive enhancement may offer a continue path from the last-read chamber; the full canon remains usable without JavaScript.
+
+### Dual register (story first)
+
+The monument is entertainment. Under the fantasy names sit **civic offices**—weighhouse, kitchens, council, archive—that encode real values and process pressure (audit, delivery, governance, memory). A folded “second reading” on [Civic magic](/world/civic-magic.html) makes the craft analogy available without making the site about business owners.
+
+The [Scriptorium](/scriptorium/) shows the writing team as an in-world order, including **patron seals** (honest sponsorship / paid thresholds) and a quiet atelier door for anyone who wants a neighboring monument raised elsewhere.
+
+### Discovery & identity sediment
+
+[Topics](/topics/) are portable handles—promise, voice, audience, memory, polarity, motif, cadence, provenance, **reward**, **guide**—that resemble stages of public-identity development while staying in fantasy dress. Chambers can declare `topics` and `relatedRoutes` in JSON; the chapter runtime renders chips and a continue rail for internal linking.
+
+### Boof · dog guide
+
+[Boof](/characters/boof.html) is a **dog** (based on Spwashi’s dog; blueberries → boonberries). Her motives stay animal-clear: scent, fruit, pack, chase with consequence. Through her the world models **where motivation and reward flow**—immediate fruit, delayed light, status treats, pack warmth—and how **pack ages** (old nose / working middle / new chase) disagree without collapsing into a single management slogan.
+
+## Monument architecture
+
+Lore.Land separates authored chapter content from the shared reading shell:
+
+| Path | Role |
+|------|------|
+| `book/content/chapters/*.json` | Portable narrative source of truth |
+| `book/templates/chapter.html` | Shared shell: metadata, nav, a11y, assets |
+| `book/scripts/home/data.mjs` | Chamber index (titles + loglines) |
+| `index.html` + `book/styles/home/hub.css` | Monument entrance |
+| `npm run chapters:build` | Validates 13 chapter contracts and regenerates HTML |
+| `npm run build` | Chapters first, then Vite multi-page package |
+
+Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html` files.
+
+### Chapter JSON contract
+
+| Field | Role |
+|-------|------|
+| `title`, `logline`, `epigraph` | Reading frame before prose |
+| `description` | SEO / share text |
+| `pillars` | Seed materials: `worldbuilding` · `code-craft` · `marketing` · `intrigue` |
+| `mood`, `period` | Optional stylesheet hooks |
+| `sections` | Structured prose (paragraphs, figures, custom elements) |
+| `lore.loreItems` | Field notes for the aside collector |
+
+Render order in `book/scripts/script.mjs`: **logline → title → epigraph → byline → pillars → sections**.
+
+### Release cadence
+
+Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
+Current cache release token: `2026_07_13.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -152,7 +205,7 @@ Chapter `.spw` files are generated from `book/chapter/*/index.html#chapter-data`
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_02_28.I`
+- release token: `2026_07_13.A`
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`

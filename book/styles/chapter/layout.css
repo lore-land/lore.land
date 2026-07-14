@@ -29,10 +29,10 @@
             border-left: none;
             border-right: none;
             --chapter-measure: 100%;
-            --chapter-line-height: 1.72;
+            --chapter-line-height: 1.76;
             --chapter-flow-gap: 0.7rem;
             --chapter-letter-spacing: 0.002em;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         main.chapter p,
@@ -66,8 +66,7 @@
         /* ─── Drop cap ───────────────────────────────────────────── */
         .chapter section:first-of-type>p:first-of-type::first-letter,
         .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter,
-        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
-        main.chapter>p:first-of-type::first-letter {
+        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter {
             font-size: 2.8em !important;
         }
 
@@ -230,8 +229,7 @@
             letter-spacing: 0.008em;
         }
 
-        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
-        main.chapter>p:first-of-type::first-letter {
+        main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter {
             font-size: 2.35em;
             line-height: 0.86;
         }

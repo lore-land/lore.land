@@ -41,6 +41,10 @@ export function readSigilPhrase(spw) {
 }
 
 export function buildChapterLogline(chapter, profile) {
+  if (chapter.logline) {
+    return chapter.logline;
+  }
+
   const sigilPhrase = readSigilPhrase(chapter.spw);
   const { title } = chapter;
 

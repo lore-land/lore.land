@@ -76,7 +76,7 @@ export class CustomBoof extends HTMLElement {
       </style>
       <div class="header" aria-expanded="false">
         <span class="toggle-icon" aria-hidden="true">+</span>
-        <span class="title"><slot name="title">[ Boof ]</slot></span>
+        <span class="title"><slot name="title">[ Boof · dog ]</slot></span>
       </div>
       <div class="content">
         <slot></slot>

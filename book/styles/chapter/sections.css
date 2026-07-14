@@ -3,7 +3,6 @@ main.chapter {
 }
 
 main.chapter>[data-ebook-section="true"] {
-  counter-increment: ebook-section;
   scroll-margin-top: 4.5rem;
   border-radius: var(--border-radius-small);
   position: relative;
@@ -12,6 +11,10 @@ main.chapter>[data-ebook-section="true"] {
   transition:
     background-color var(--transition-duration) var(--transition-function),
     box-shadow var(--transition-duration) var(--transition-function);
+}
+
+main.chapter>section[data-ebook-section="true"] {
+  counter-increment: ebook-section;
 }
 
 main.chapter>[data-ebook-section="true"]::before {
@@ -88,4 +91,3 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
     0 8px 36px color-mix(in srgb, var(--theme-accent-main) 20%, transparent 80%);
   background: color-mix(in srgb, var(--theme-paper) 82%, rgba(42, 111, 127, 0.18) 18%);
 }
-

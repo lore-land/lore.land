@@ -5,8 +5,25 @@
 
 ^"producer_position"{
   producer: "Spwashi"
-  medium: "generative ebooks and interactive publication"
-  thesis: "Human creativity scales when structure remains legible."
+  medium: "worldbuilding monument — seeded serial, inspectable craft"
+  thesis: "Demonstrate the capability of developing and seeding a durable world."
+  focus: {
+    world: "districts, ledgers, objects, weather -> sedimented canon"
+    craft: "readable systems, Spw operators, inspectable chapter machinery"
+    signal: "thresholds, public rhythm, release cadence on the 13th and 26th"
+    intrigue: "who keeps the record, who rewrites it, what remains unfiled"
+  }
+  posture: "show the monument; avoid product-category labeling at the entrance"
+  dual_register: {
+    surface: "classic fantasy RPG serial — adventure first"
+    civic: "offices encode functional company dynamics with magic as obfuscation"
+    craft_recognition: "optional second reading for values, process, brand storytelling"
+    patronage: "patron seals = marked sponsorship / paid links; editorial stays with scriptorium"
+    commission: "scriptorium atelier door — hire imagination without B2B homepage"
+  }
+  deferred: {
+    interactive_fiction: "dregg.net — later implementation detail, not this surface"
+  }
 }
 
 ^"capacity"{

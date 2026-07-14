@@ -1,0 +1,101 @@
+{
+  "chapterNumber": 9,
+  "title": "Shards of Nine Honks",
+  "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. Signal fragments across the night; collecting them is both craft and intrigue.",
+  "mood": "puzzle",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "puzzle",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "As Boof stepped off the game board, they noticed the ground beneath them shifting once again—this time into a ",
+          "children": [
+            {
+              "type": "custom-puzzle",
+              "content": "puzzle"
+            },
+            {
+              "type": "text",
+              "text": ". The pieces rearranged themselves with every step Boof took."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-puzzle",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "puzzle-intro",
+          "text": "The puzzle was incomplete, missing key pieces, yet Boof had no way of knowing what the full picture should look like. \"Solve this,\" a voice whispered, \"if you can.\""
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"It’s not about solving, Boof,\" the Fool’s voice whispered again, \"it’s about seeing.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/09.png",
+        "alt": "The Fool's Puzzle",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool’s Puzzle: an ever-shifting challenge, never quite complete."
+    },
+    {
+      "type": "section",
+      "title": "The Pieces Shift",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof knelt down, studying the scattered pieces. Each one was strange, carrying shapes and symbols Boof didn’t fully understand. Some pieces fit together, while others refused to align, as if the puzzle itself resisted completion.\nThe boonberries in the trees above them flickered as if they too watched Boof struggle."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"How can I solve this if I don’t know what it is?\" Boof murmured, frustration growing. The Fool’s laughter was distant, but Boof could sense the challenge was less about solving the puzzle and more about finding the patience to endure it."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"The objective, Boof, is whatever you make of it,\" the Fool’s voice whispered. \"But remember, not every game can be won.\""
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Nine honks are discrete signal relics—collectible without being gamified into compulsion."
+      },
+      {
+        "description": "Scattering forces community: no single keeper can hold the whole call."
+      }
+    ]
+  },
+  "logline": "Signal scatters. Collection begins.",
+  "epigraph": "A broadcast that breaks is still a map of who was listening.",
+  "pillars": [
+    "code-craft",
+    "marketing"
+  ]
+}

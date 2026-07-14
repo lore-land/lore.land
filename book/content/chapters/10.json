@@ -1,0 +1,101 @@
+{
+  "chapterNumber": 10,
+  "title": "Bone.land Resonance",
+  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert—truth transmitted through load-bearing form.",
+  "mood": "bonk",
+  "period": "spring",
+  "sections": [
+    {
+      "type": "custom-boof",
+      "data-mood": "bonk",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The maze had stopped pretending to be entertainment. Puzzles still lined the corridors, but each one felt load-bearing—until, with a sudden thud—a loud ",
+          "children": [
+            {
+              "type": "custom-bonk",
+              "content": "BONK"
+            },
+            {
+              "type": "text",
+              "text": " echoed through the clearing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "custom-bonk",
+      "content": [
+        {
+          "type": "paragraph",
+          "data-content_id": "bonk-intro",
+          "text": "The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked.\""
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/10.png",
+        "alt": "The Fool's Bonk",
+        "loading": "lazy"
+      },
+      "figcaption": "The Fool’s Bonk: an unexpected end, or just another beginning?"
+    },
+    {
+      "type": "section",
+      "title": "The Bonk",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in the air, as if waiting for something more."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"Is this how it ends?\" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle."
+        }
+      ]
+    },
+    {
+      "type": "custom-fool",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"You’ve reached this part of the game, Boof, but the bonk is not the end,\" the Fool’s voice teased. \"It’s just the sound of one door closing... and maybe, another opening.\""
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
+      },
+      {
+        "description": "The bonk at the threshold is not slapstick—it is contact with irreversible structure."
+      }
+    ]
+  },
+  "logline": "Structure shakes the veil and holds.",
+  "epigraph": "Skeleton first; ornament after the load path is honest.",
+  "pillars": [
+    "code-craft",
+    "worldbuilding"
+  ]
+}

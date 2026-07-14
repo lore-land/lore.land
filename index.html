@@ -1,98 +1,289 @@
 <!DOCTYPE html>
-<html lang="en" data-cache-release="2026_02_28.I" data-cache-context="home">
+<html lang="en" data-cache-release="2026_07_13.A" data-cache-context="home" data-theme="paper">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lore.Land • 13 Chapter Spw Storytelling Flow</title>
+  <title>Lore.Land — A Worldbuilding Monument</title>
   <meta name="description"
-    content="Lore.Land is a 13 chapter storytelling site with a modular Spw storytelling architecture and abstract reading frame.">
+    content="Lore.Land is a worldbuilding monument: seeded chapters, inspectable craft, and a living serial that begins at dawn in Boon.land.">
   <meta name="theme-color" content="#f3ede1">
+  <meta name="author" content="Spwashi">
+  <link rel="canonical" href="https://lore.land/">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/book/pwa/icons/icon-192.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lore.Land — A Worldbuilding Monument">
+  <meta property="og:description"
+    content="Enter a seeded world. Chapter One opens at the weighhouse, where a public ledger has learned how to hide a theft.">
+  <meta property="og:url" content="https://lore.land/">
+  <meta property="og:image" content="https://lore.land/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp">
 
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Lore.Land",
-      "url": "https://lore.land/"
+      "url": "https://lore.land/",
+      "description": "A worldbuilding monument for long-form lore and serial narrative.",
+      "author": {
+        "@type": "Person",
+        "name": "Spwashi",
+        "url": "https://spwashi.com"
+      },
+      "potentialAction": {
+        "@type": "ReadAction",
+        "target": "https://lore.land/book/chapter/01/"
+      }
     }
   </script>
 
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_02_28.I&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/components/decorations.css?v=2026_03_02.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/chapter/typography.css?v=2026_03_02.A&ctx=canon:typography">
-  <link rel="stylesheet" href="/book/styles/chapter/layout.css?v=2026_03_02.A&ctx=canon:layout-responsive">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hero.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/cards.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/sections.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/states.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/motion.css?v=2026_02_28.I&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/floating.css?v=2026_03_02.A&ctx=home:floating">
-  <link rel="stylesheet" href="/book/styles/home/book.css?v=2026_03_02.A&ctx=home:book-mode">
-  <link id="mood-styles" rel="stylesheet">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_02_28.I"></script>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_07_13.A&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_07_13.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_07_13.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_07_13.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_07_13.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_07_13.A&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_07_13.A&ctx=home:hub">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_07_13.A"></script>
 </head>
 
-<body data-mood="">
-  <div class="site-shell">
-    <header class="site-topbar">
-      <a href="/#" aria-label="Lore.Land homepage">Lore.Land</a>
-      <form class="experience-controls" aria-label="Experience controls" action="#">
-        <label for="mood-select">
-          <span>Mood</span>
-          <select id="mood-select" aria-label="Select reading mood">
-            <option selected value="">default</option>
-            <option value="tldr">tl;dr</option>
-          </select>
-        </label>
+<body data-surface="monument">
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-        <label for="theme-select">
-          <span>Theme</span>
-          <select id="theme-select" aria-label="Select visual theme">
-            <option selected value="paper">paper</option>
-            <option value="ember">ember</option>
-            <option value="cosmos">cosmos</option>
-          </select>
-        </label>
-
-        <label for="dimension-select">
-          <span>Dimension</span>
-          <select id="dimension-select" aria-label="Select dimensional theme">
-            <option value="flat">flat</option>
-            <option selected value="stage">stage</option>
-            <option value="immersive">immersive</option>
-          </select>
-        </label>
-
-        <label for="layout-select">
-          <span>Layout</span>
-          <select id="layout-select" aria-label="Select component layout">
-            <option selected value="grid">grid</option>
-            <option value="stream">stream</option>
-            <option value="cinema">cinema</option>
-            <option value="book">book</option>
-          </select>
-        </label>
-      </form>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/" aria-current="page">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Enter</a>
+        <a href="#chambers">Chambers</a>
+        <a href="/topics/">Topics</a>
+        <a href="/world/civic-magic.html">Civic magic</a>
+        <a href="/scriptorium/">Scriptorium</a>
+      </nav>
     </header>
 
-    <main id="home-app" aria-live="polite"></main>
-    <noscript class="page-panel noscript-panel">
-      <p>JavaScript is disabled. You can still read chapters and browse seed archives.</p>
-      <p><a href="/book/chapter/01/">Open Chapter 01</a> · <a href="/seeds/2026-02-28/">Open Seed Atlas</a></p>
-    </noscript>
+    <main id="main-content" class="hub-main">
+      <section class="hub-hero" aria-labelledby="hub-title">
+        <div class="hub-hero-copy">
+          <p class="hub-eyebrow">Monument · chamber 01 open</p>
+          <h1 id="hub-title">A public record goes missing.</h1>
+          <p class="hub-lede">
+            At dawn, Boof—a dog of the weighhouse, blueberry-motivated and pack-loyal—finds six measures
+            missing from the harvest ledger. Correcting the number would be easy. Naming who was meant
+            to receive it will cost more. The land keeps the argument.
+          </p>
+          <div class="hub-actions">
+            <a class="hub-cta hub-cta-primary" href="/book/chapter/01/">
+              Enter Chapter One
+              <span class="hub-cta-sub">Dawn in Boon.land</span>
+            </a>
+            <a class="hub-cta hub-cta-quiet" href="#chambers">Walk the chambers</a>
+          </div>
+          <p class="hub-meta">A seven-minute first chamber · stones set on the 13th &amp; 26th</p>
+          <div class="chip-row" aria-label="Quick paths">
+            <a class="chip" href="/topics/#promise">Promise</a>
+            <a class="chip" href="/topics/#voice">Voice</a>
+            <a class="chip" href="/topics/#audience">Who receives</a>
+            <a class="chip" href="/world/civic-magic.html#weighhouse">Weighhouse</a>
+            <a class="chip" href="/world/boonberry-commons.html">Boonberries</a>
+            <a class="chip" href="/scriptorium/#experience-path">Wonder path</a>
+            <a class="chip" href="/characters/boof.html">Boof</a>
+            <a class="chip chip--quiet" href="/topics/">All topics</a>
+          </div>
+        </div>
+        <figure class="hub-hero-media">
+          <img src="/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp" width="1600" height="1600"
+            alt="Four painterly studies of a lone traveler crossing the fields of Lore.Land"
+            fetchpriority="high" decoding="async">
+          <figcaption>Eastern field · before the measure was published</figcaption>
+        </figure>
+      </section>
 
-    <footer class="site-footer">
-      Crafted by <a href="https://spwashi.com/?from=lore.land" aria-label="Visit spwashi site">spwashi</a>
+      <section class="discovery-strip" id="discover" aria-labelledby="discover-title">
+        <div class="hub-section-head">
+          <h2 id="discover-title">Enter by theme</h2>
+          <a class="hub-section-aside" href="/topics/">Full topic board →</a>
+        </div>
+        <p class="hub-section-lede">
+          Same world, different doors. These handles resemble how a public identity sediments—
+          claim, voice, audience, mark—without asking the serial to become a brand deck.
+        </p>
+        <div class="topic-board">
+          <article class="topic-card">
+            <p class="topic-kicker">Public promise</p>
+            <h2><a href="/topics/#promise">Seals &amp; measures</a></h2>
+            <p>What is claimed out loud when the ledger is sealed.</p>
+            <ul class="trail-list">
+              <li><a href="/book/chapter/01/">Chamber 01</a></li>
+              <li><a href="/world/civic-magic.html#weighhouse">Weighhouse</a></li>
+            </ul>
+          </article>
+          <article class="topic-card">
+            <p class="topic-kicker">Who receives</p>
+            <h2><a href="/topics/#audience">Communal kitchens</a></h2>
+            <p>Who stays warm when the measure is true—or goes cold when it is not.</p>
+            <ul class="trail-list">
+              <li><a href="/world/civic-magic.html#kitchens">Kitchens</a></li>
+              <li><a href="/book/chapter/01/">Six streets</a></li>
+            </ul>
+          </article>
+          <article class="topic-card">
+            <p class="topic-kicker">Voice</p>
+            <h2><a href="/topics/#voice">Fool’s register</a></h2>
+            <p>The interruptive tone that keeps a clean story from becoming a lie.</p>
+            <ul class="trail-list">
+              <li><a href="/world/civic-magic.html#fool">The Fool</a></li>
+              <li><a href="/scriptorium/#offices">Fool’s desk</a></li>
+            </ul>
+          </article>
+          <article class="topic-card">
+            <p class="topic-kicker">Motif</p>
+            <h2><a href="/topics/#motif">Marks &amp; lanterns</a></h2>
+            <p>Objects that recur until they become a language the town can read.</p>
+            <ul class="trail-list">
+              <li><a href="/seeds/2026-02-28/">Seed archive</a></li>
+              <li><a href="/book/chapter/06/">Chamber 06</a></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="hub-pillars" id="seedbed" aria-labelledby="seedbed-title">
+        <div class="hub-section-head">
+          <h2 id="seedbed-title">What the monument can hold</h2>
+          <a class="hub-section-aside" href="/world/civic-magic.html">Office map →</a>
+        </div>
+        <p class="hub-section-lede">
+          Four materials that seed a world durable enough to return to.
+          Craft stays visible in the grain—not in a product label.
+        </p>
+        <ul class="hub-pillar-grid">
+          <li>
+            <h3>World</h3>
+            <p>Districts, ledgers, kitchens, and weather that sediment into canon instead of dissolving after one telling.</p>
+            <p class="trail-list"><a href="/world/civic-magic.html">Civic offices</a></p>
+          </li>
+          <li>
+            <h3>Craft</h3>
+            <p>Readable structure—chapters, routes, and seals you can inspect—so the monument stays buildable as it grows.</p>
+            <p class="trail-list"><a href="/scriptorium/">Scriptorium</a></p>
+          </li>
+          <li>
+            <h3>Signal</h3>
+            <p>Clear thresholds and a public rhythm so attention can land, leave a trace, and come back without starting over.</p>
+            <p class="trail-list"><a href="/topics/#cadence">Cadence</a></p>
+          </li>
+          <li>
+            <h3>Intrigue</h3>
+            <p>Who keeps the record, who rewrites it, and what the Fool withholds when a clean story would be easier.</p>
+            <p class="trail-list"><a href="/topics/#voice">Voice &amp; register</a></p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="hub-onboard" aria-labelledby="threshold-title">
+        <h2 id="threshold-title">Cross the threshold</h2>
+        <ol class="hub-steps">
+          <li>
+            <strong>Step into the first chamber.</strong>
+            The eastern weighhouse: an intact seal, six missing measures, a clerk who publishes both ledgers.
+          </li>
+          <li>
+            <strong>Carry what the land keeps.</strong>
+            Names, districts, and debts are meant to travel—into notes, sessions, and later rooms of the same world.
+          </li>
+          <li>
+            <strong>Return by the index.</strong>
+            Thirteen chambers. Each door has a logline. The monument is a route, not a maze.
+          </li>
+        </ol>
+        <p class="hub-onboard-cta">
+          <a class="hub-cta hub-cta-primary" href="/book/chapter/01/">Open the first chamber</a>
+        </p>
+      </section>
+
+      <section class="hub-chapters" id="chambers" aria-labelledby="chambers-title">
+        <div class="hub-chapters-head">
+          <div class="hub-section-head">
+            <h2 id="chambers-title">Chambers</h2>
+            <a class="hub-section-aside" href="/topics/">Browse by topic →</a>
+          </div>
+          <p class="hub-section-lede">
+            Chamber One is fully seeded. Later chambers stand as developmental stone—titles and loglines in place while their interiors deepen.
+          </p>
+        </div>
+        <ol class="hub-chapter-list" id="chapter-list">
+          <li><a href="/book/chapter/01/"><span class="hub-ch-num">01</span><span class="hub-ch-thumb"><img src="/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp" width="224" height="224" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Dawn in Boon.land</span><span class="hub-ch-log">A missing measure. A ledger taught to lie.</span></a></li>
+          <li><a href="/book/chapter/02/"><span class="hub-ch-num">02</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="02" aria-hidden="true"></span><span class="hub-ch-title">The First Echo</span><span class="hub-ch-log">The grove repeats what it cannot keep.</span></a></li>
+          <li><a href="/book/chapter/03/"><span class="hub-ch-num">03</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="03" aria-hidden="true"></span><span class="hub-ch-title">Signals in the Sand</span><span class="hub-ch-log">Routes older than the map begin to answer.</span></a></li>
+          <li><a href="/book/chapter/04/"><span class="hub-ch-num">04</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="04" aria-hidden="true"></span><span class="hub-ch-title">Crosswind Council</span><span class="hub-ch-log">Boon and bane negotiate under shared weather.</span></a></li>
+          <li><a href="/book/chapter/05/"><span class="hub-ch-num">05</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="05" aria-hidden="true"></span><span class="hub-ch-title">The Quiet Rift</span><span class="hub-ch-log">Calm outside. Fracture in the ledger.</span></a></li>
+          <li><a href="/book/chapter/06/"><span class="hub-ch-num">06</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="06" aria-hidden="true"></span><span class="hub-ch-title">Lanterns of Bonk City</span><span class="hub-ch-log">Impact becomes civic light.</span></a></li>
+          <li><a href="/book/chapter/07/"><span class="hub-ch-num">07</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="07" aria-hidden="true"></span><span class="hub-ch-title">Blueberry Oath</span><span class="hub-ch-log">A binding made in public, paid in private.</span></a></li>
+          <li><a href="/book/chapter/08/"><span class="hub-ch-num">08</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="08" aria-hidden="true"></span><span class="hub-ch-title">Songs of the Watering Eye</span><span class="hub-ch-log">Memory resonates until it names a debt.</span></a></li>
+          <li><a href="/book/chapter/09/"><span class="hub-ch-num">09</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="09" aria-hidden="true"></span><span class="hub-ch-title">Shards of Nine Honks</span><span class="hub-ch-log">Signal scatters. Collection begins.</span></a></li>
+          <li><a href="/book/chapter/10/"><span class="hub-ch-num">10</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="10" aria-hidden="true"></span><span class="hub-ch-title">Bone.land Resonance</span><span class="hub-ch-log">Structure shakes the veil and holds.</span></a></li>
+          <li><a href="/book/chapter/11/"><span class="hub-ch-num">11</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="11" aria-hidden="true"></span><span class="hub-ch-title">Paradox Bloom</span><span class="hub-ch-log">Impossible paths flower into usable form.</span></a></li>
+          <li><a href="/book/chapter/12/"><span class="hub-ch-num">12</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="12" aria-hidden="true"></span><span class="hub-ch-title">The Last Confluence</span><span class="hub-ch-log">Threads merge without erasing their sources.</span></a></li>
+          <li><a href="/book/chapter/13/"><span class="hub-ch-num">13</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="13" aria-hidden="true"></span><span class="hub-ch-title">Lore.Land Canon</span><span class="hub-ch-log">The world records itself—and leaves a door open.</span></a></li>
+        </ol>
+      </section>
+
+      <nav class="route-rail" aria-label="Primary routes from the entrance">
+        <p class="route-rail-label">Routes</p>
+        <a class="route-rail-card" href="/book/chapter/01/">
+          <span class="route-rail-kicker">Read</span>
+          <span class="route-rail-title">Chamber 01</span>
+        </a>
+        <a class="route-rail-card" href="/topics/">
+          <span class="route-rail-kicker">Discover</span>
+          <span class="route-rail-title">Topics</span>
+        </a>
+        <a class="route-rail-card" href="/world/civic-magic.html">
+          <span class="route-rail-kicker">Map</span>
+          <span class="route-rail-title">Civic magic</span>
+        </a>
+        <a class="route-rail-card" href="/scriptorium/">
+          <span class="route-rail-kicker">Craft</span>
+          <span class="route-rail-title">Scriptorium</span>
+        </a>
+      </nav>
+
+      <section class="hub-aside-band" aria-labelledby="grain-title">
+        <h2 id="grain-title">Process in the grain</h2>
+        <p class="hub-section-lede">
+          Offices wear fantasy names on purpose. Values and working pressures can live inside adventure
+          without turning the entrance into a pitch. Open a second reading for the civic map;
+          follow the atelier door only if you want a neighboring monument raised elsewhere.
+        </p>
+        <ul class="hub-links">
+          <li><a href="/characters/boof.html">Boof · dog of the land</a></li>
+          <li><a href="/topics/#reward">Reward currents · motivation flow</a></li>
+          <li><a href="/topics/">Topics · portable handles</a></li>
+          <li><a href="/world/civic-magic.html">Civic magic · how the town works</a></li>
+          <li><a href="/world/boonberry-commons.html">Boonberry commons · regenerative operations, time &amp; circulation</a></li>
+          <li><a href="/scriptorium/#experience-path">Wonder path · promise, encounter, evidence, memory &amp; return</a></li>
+          <li><a href="/scriptorium/#personas">Persona lenses · owner, operator, community &amp; builder</a></li>
+          <li><a href="/scriptorium/">Scriptorium · how chambers are raised</a></li>
+          <li><a href="/scriptorium/#patron-seals">Patron seals · marked funding</a></li>
+          <li><a href="/seeds/2026-02-28/">Visual seed archive</a></li>
+          <li><a href="https://spwashi.com/town/" rel="noopener noreferrer">Town Atlas</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="hub-footer">
+      <p>
+        Raised by
+        <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a>
+        · stone set <time datetime="2026-07-13">2026-07-13</time>
+      </p>
+      <p class="hub-footer-note">
+        Story first · process in the grain · marks stay marked
+      </p>
     </footer>
   </div>
 </body>

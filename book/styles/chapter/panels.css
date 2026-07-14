@@ -301,7 +301,7 @@ main.chapter blockquote {
 }
 
 main.chapter>[data-ebook-section="true"]:first-of-type p:first-of-type::first-letter,
-main.chapter>p:first-of-type::first-letter {
+main.chapter>section:first-of-type p:first-of-type::first-letter {
   float: left;
   font-size: 3em;
   line-height: 0.82;
@@ -399,5 +399,4 @@ footer {
   background-image: var(--theme-grain);
   background-blend-mode: multiply;
 }
-
 

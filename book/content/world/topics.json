@@ -1,0 +1,139 @@
+{
+  "title": "Topics of the land",
+  "preface": "Topics are portable handles—places where story, civic work, and craft recognition meet. They resemble the stages of shaping a public identity without requiring that vocabulary at the surface.",
+  "axes": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "fantasy": "Seals & measures",
+      "blurb": "What the land claims out loud—and what breaks when the claim is clean but false.",
+      "links": [
+        { "href": "/book/chapter/01/", "label": "Chamber 01 · Dawn" },
+        { "href": "/world/civic-magic.html#weighhouse", "label": "Weighhouse" },
+        { "href": "/scriptorium/#patron-seals", "label": "Patron seals" }
+      ]
+    },
+    {
+      "id": "voice",
+      "label": "Voice & register",
+      "fantasy": "Fool’s register",
+      "blurb": "How the tale is allowed to sound: grave, playful, administrative, interruptive.",
+      "links": [
+        { "href": "/world/civic-magic.html#fool", "label": "Boonberry Fool" },
+        { "href": "/scriptorium/#offices", "label": "Fool’s desk" },
+        { "href": "/book/chapter/02/", "label": "Chamber 02 · Echo" }
+      ]
+    },
+    {
+      "id": "audience",
+      "label": "Who receives",
+      "fantasy": "Communal kitchens",
+      "blurb": "Who feels warmth when the promise lands—and who goes cold when it fails.",
+      "links": [
+        { "href": "/world/civic-magic.html#kitchens", "label": "Kitchens" },
+        { "href": "/book/chapter/01/", "label": "Six cold kitchens" },
+        { "href": "/#seedbed", "label": "Monument materials" }
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "Living memory",
+      "fantasy": "Archive & grove",
+      "blurb": "What is filed as inevitable versus what returns as echo when the file is too clean.",
+      "links": [
+        { "href": "/world/civic-magic.html#archive", "label": "Town Archive" },
+        { "href": "/world/civic-magic.html#grove", "label": "Grove of Echoes" },
+        { "href": "/book/chapter/02/", "label": "Chamber 02" }
+      ]
+    },
+    {
+      "id": "polarity",
+      "label": "Held polarity",
+      "fantasy": "Boon · bane · bone",
+      "blurb": "Competing goods under one weather—generosity, constraint, and structure that must share a table.",
+      "links": [
+        { "href": "/world/civic-magic.html#council", "label": "Crosswind Council" },
+        { "href": "/book/chapter/04/", "label": "Chamber 04" },
+        { "href": "/scriptorium/", "label": "Scriptorium" }
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Motif system",
+      "fantasy": "Marks, stems, lanterns",
+      "blurb": "Recurring objects that travel across chambers the way a visual language travels across surfaces.",
+      "links": [
+        { "href": "/seeds/2026-02-28/", "label": "Visual seed archive" },
+        { "href": "/scriptorium/#offices", "label": "Motif gardener" },
+        { "href": "/book/chapter/06/", "label": "Chamber 06 · Lanterns" }
+      ]
+    },
+    {
+      "id": "cadence",
+      "label": "Release rhythm",
+      "fantasy": "Stones on the 13th & 26th",
+      "blurb": "Trust through return: a calendar the audience can count on.",
+      "links": [
+        { "href": "/scriptorium/#seed-rite", "label": "How a chamber is seeded" },
+        { "href": "/#chambers", "label": "Chamber index" },
+        { "href": "/book/timeline.html", "label": "Story timeline" }
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Marked funding",
+      "fantasy": "Patron seals",
+      "blurb": "How support appears in public without claiming ownership of the canon.",
+      "links": [
+        { "href": "/scriptorium/#patron-seals", "label": "Open pedestals" },
+        { "href": "/world/civic-magic.html#seals", "label": "Seals office" },
+        { "href": "https://spwashi.com/services/?from=lore.land-topics", "label": "Atelier door" }
+      ]
+    },
+    {
+      "id": "reward",
+      "label": "Motivation & reward",
+      "fantasy": "Fruit · light · applause · pack",
+      "blurb": "Where energy flows: immediate blueberries, delayed kitchen light, status treats, and pack warmth—especially across ages of the pack.",
+      "links": [
+        { "href": "/characters/boof.html#reward", "label": "Boof · reward flow" },
+        { "href": "/characters/boof.html#generations", "label": "Pack ages" },
+        { "href": "/book/chapter/01/", "label": "Chamber 01" },
+        { "href": "/world/civic-magic.html#kitchens", "label": "Kitchens" }
+      ]
+    },
+    {
+      "id": "wonder",
+      "label": "Regenerative value",
+      "fantasy": "Wonder in circulation",
+      "blurb": "How present need, productive reserves, shared resilience, and protected experiment remain visible on one living balance sheet.",
+      "links": [
+        { "href": "/world/boonberry-commons.html", "label": "Boonberry commons · operating model" },
+        { "href": "/book/chapter/01/", "label": "Chamber 01 · six measures" },
+        { "href": "/world/civic-magic.html", "label": "Civic offices · governance map" }
+      ]
+    },
+    {
+      "id": "experience",
+      "label": "Experience path",
+      "fantasy": "Promise · encounter · return",
+      "blurb": "How claims, lived moments, evidence, memory, and continuation remain connected as a public identity develops.",
+      "links": [
+        { "href": "/scriptorium/#experience-path", "label": "Wonder path · five movements" },
+        { "href": "/scriptorium/#personas", "label": "Persona lenses" },
+        { "href": "/scriptorium/#ux-commitments", "label": "UX commitments" }
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Guide figure",
+      "fantasy": "Boof the dog",
+      "blurb": "A canine witness—Spwashi’s dog in fantasy dress—whose motives stay animal-clear: scent, fruit, pack, chase with consequence.",
+      "links": [
+        { "href": "/characters/boof.html", "label": "Boof profile" },
+        { "href": "/book/chapter/01/", "label": "Chamber 01" },
+        { "href": "/book/chapter/02/", "label": "Chamber 02" }
+      ]
+    }
+  ]
+}

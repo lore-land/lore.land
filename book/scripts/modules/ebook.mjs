@@ -121,8 +121,8 @@ function setupNavigation(data, announce) {
   const chapterNext = document.querySelector('nav[aria-label="Chapter navigation"] .next');
 
   if (chapterPrev) {
-    chapterPrev.textContent = `^[route/${String(links.previous).padStart(2, '0')}]{prev}`;
-    chapterPrev.dataset.spwExpression = 'true';
+    chapterPrev.textContent = `← Chapter ${String(links.previous).padStart(2, '0')}`;
+    delete chapterPrev.dataset.spwExpression;
     chapterPrev.setAttribute('aria-label', `Open chapter ${links.previous}`);
     chapterPrev.addEventListener('click', () => {
       window.location.href = links.previousHref;
@@ -133,8 +133,8 @@ function setupNavigation(data, announce) {
   }
 
   if (chapterNext) {
-    chapterNext.textContent = `^[route/${String(links.next).padStart(2, '0')}]{next}`;
-    chapterNext.dataset.spwExpression = 'true';
+    chapterNext.textContent = `Chapter ${String(links.next).padStart(2, '0')} →`;
+    delete chapterNext.dataset.spwExpression;
     chapterNext.setAttribute('aria-label', `Open chapter ${links.next}`);
     chapterNext.addEventListener('click', () => {
       window.location.href = links.nextHref;
@@ -271,8 +271,8 @@ function setupPrimaryAction(data, announce) {
   }
 
   const links = deriveChapterLinks(data);
-  primaryActionBtn.textContent = `^[route/${String(links.next).padStart(2, '0')}]{advance}`;
-  primaryActionBtn.dataset.spwExpression = 'true';
+  primaryActionBtn.textContent = `Continue to Chapter ${String(links.next).padStart(2, '0')}`;
+  delete primaryActionBtn.dataset.spwExpression;
   primaryActionBtn.setAttribute('aria-label', `Advance to chapter ${links.next}`);
   primaryActionBtn.addEventListener('click', () => {
     window.location.href = links.nextHref;

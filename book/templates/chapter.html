@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-cache-release="{{RELEASE}}" data-cache-context="chapter">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="page-title">{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}" id="page-description">
+  <meta name="theme-color" content="#f3ede1">
+  <meta name="author" content="Spwashi">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{PAGE_TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{CANONICAL_URL}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v={{RELEASE}}&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/components/decorations.css?v={{RELEASE}}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/chapter/typography.css?v={{RELEASE}}&ctx=canon:typography">
+  <link rel="stylesheet" href="/book/styles/chapter/layout.css?v={{RELEASE}}&ctx=canon:layout-responsive">
+  <link rel="stylesheet" href="/book/styles/chapter/motion.css?v={{RELEASE}}&ctx=canon:motion">
+  <link rel="stylesheet" href="/book/styles/components/motifs.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/chapter/panels.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/components/controls.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/chapter/aside.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/components/spw.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/components/characters.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/chapter/sections.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/styles/components/cards.css?v={{RELEASE}}&ctx=chapter:layout">
+  <link rel="stylesheet" href="/book/chapter/{{CHAPTER_SLUG}}/style.css?v={{RELEASE}}">
+  <link id="period-styles" rel="stylesheet">
+  <link id="mood-styles" rel="stylesheet">
+  <script defer type="module" src="/book/scripts/script.mjs?v={{RELEASE}}"></script>
+</head>
+<body data-mood="{{MOOD}}" data-chapter="{{CHAPTER_SLUG}}">
+  <a class="skip-link" href="#chapter-content">Skip to chapter</a>
+  <nav class="chapter-navigation" aria-label="Chapter navigation">
+    <a href="/" class="hub-home" aria-label="Return to Lore.Land">Lore.Land</a>
+    <button class="prev" aria-label="Previous chapter">Previous Chapter</button>
+    <button class="next" aria-label="Next chapter">Next Chapter</button>
+  </nav>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <div class="lifecycle-breadcrumb" aria-hidden="true"></div>
+
+  <main class="chapter" id="chapter-content" tabindex="-1">
+    <noscript>
+      <article class="chapter-static">
+        <p class="chapter-logline">{{LOGLINE}}</p>
+        <h1>{{CHAPTER_HEADING}}</h1>
+        <p class="chapter-epigraph">{{EPIGRAPH}}</p>
+        <p>{{DESCRIPTION}}</p>
+        <p>
+          <a href="/">Return to Lore.Land</a>
+          · <a href="/book/chapter/01/">Enter Chapter One</a>
+        </p>
+      </article>
+    </noscript>
+  </main>
+
+  <div class="section-navigation" aria-label="Section navigation">
+    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
+    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+  </div>
+
+  <aside aria-label="Reading tools">
+    <ul id="lore-collector" aria-label="Lore collector" aria-live="polite"></ul>
+    <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Open field notes</button>
+    <div class="additional-links">
+      <a href="/" class="hub-return">Monument entrance</a>
+      <a href="/topics/" class="topics-link">Topics</a>
+      <a href="/world/civic-magic.html" class="civic-magic">Civic magic</a>
+      <a href="/scriptorium/" class="scriptorium-link">Scriptorium</a>
+      <a href="/characters/boof.html" class="character-profile">Boof · dog of the land</a>
+      <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+    </div>
+    <button class="primary-action" aria-label="Advance story">Advance Story</button>
+  </aside>
+
+  <script type="application/json" id="chapter-data">{{CHAPTER_DATA}}</script>
+</body>
+</html>

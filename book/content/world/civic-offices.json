@@ -1,0 +1,103 @@
+{
+  "title": "Civic offices of the land",
+  "preface": "The town runs on visible work wearing older names. Magic is one of the layers that keeps the work speakable in story form without freezing it into a org chart.",
+  "layers": [
+    {
+      "id": "surface",
+      "name": "Surface tale",
+      "role": "What a traveler hears first"
+    },
+    {
+      "id": "civic",
+      "name": "Civic function",
+      "role": "What the town is actually doing"
+    },
+    {
+      "id": "craft",
+      "name": "Craft analogy",
+      "role": "What a workshop or company might recognize"
+    }
+  ],
+  "offices": [
+    {
+      "id": "weighhouse",
+      "fantasy": "Eastern Weighhouse",
+      "sigil": "scale",
+      "surface": "Where boonberry light is measured at dawn and sealed for distribution.",
+      "civic": "Measurement, audit, and the public claim that a total is true.",
+      "craft": "Reporting, accounting, KPIs, and the pressure to publish clean numbers.",
+      "storyHook": "What happens when the seal is intact but the measure is wrong?",
+      "chamber": 1
+    },
+    {
+      "id": "council",
+      "fantasy": "Crosswind Council",
+      "sigil": "table",
+      "surface": "Where boon and bane sit under shared weather and bargain without declaring war.",
+      "civic": "Governance under constraint—competing goods that must share one roof.",
+      "craft": "Product decisions, stakeholder negotiation, brand polarity held in one room.",
+      "storyHook": "Who leaves the table before the questions begin?",
+      "chamber": 4
+    },
+    {
+      "id": "kitchens",
+      "fantasy": "Communal kitchens",
+      "sigil": "hearth",
+      "surface": "Stoves that stay lit only if the harvest measure reaches the right streets.",
+      "civic": "Delivery to those who feel scarcity first when a promise fails.",
+      "craft": "Customers, members, or teams whose lived outcome is the real scoreboard.",
+      "storyHook": "Name who goes cold when a ledger prefers silence.",
+      "chamber": 1
+    },
+    {
+      "id": "archive",
+      "fantasy": "Town Archive",
+      "sigil": "shelf",
+      "surface": "Shelves built to make every decision look inevitable after the fact.",
+      "civic": "Institutional memory, documentation, and the politics of what is filed.",
+      "craft": "Knowledge bases, brand books, process docs—and what they omit.",
+      "storyHook": "Which page is missing on purpose?",
+      "chamber": 1
+    },
+    {
+      "id": "grove",
+      "fantasy": "Grove of Echoes",
+      "sigil": "leaf",
+      "surface": "A thicket that replays testimony until the path chooses what to amplify.",
+      "civic": "Rumor, residual message, and overflow that the polished record will not hold.",
+      "craft": "Brand memory, word of mouth, residual campaigns, unresolved feedback loops.",
+      "storyHook": "Is the echo evidence—or a summons?",
+      "chamber": 2
+    },
+    {
+      "id": "seals",
+      "fantasy": "Council seals & patron marks",
+      "sigil": "wax",
+      "surface": "Wax and sigils that travel with a claim so strangers know whom to trust.",
+      "civic": "Trust marks, authorized statements, and the cost of a forged permission.",
+      "craft": "Sponsorship, affiliate routes, co-branded claims, paid placement that must still feel earned.",
+      "storyHook": "Can a mark fund the work without rewriting the story?",
+      "chamber": null
+    },
+    {
+      "id": "fool",
+      "fantasy": "Boonberry Fool",
+      "sigil": "mask",
+      "surface": "A figure who makes the dispute visible without offering a simpler theft story.",
+      "civic": "The ethical interruption—QA, red team, or conscience that refuses clean fiction.",
+      "craft": "Internal writing and review that inserts real process tension into the tale.",
+      "storyHook": "Who is allowed to break the story so the values stay true?",
+      "chamber": 1
+    },
+    {
+      "id": "scriptorium",
+      "fantasy": "Scriptorium",
+      "sigil": "quill",
+      "surface": "Where chambers are seeded, revised, and set into the monument on a calendar of stones.",
+      "civic": "The writing team as a living office—roles, cadence, and editorial judgment.",
+      "craft": "Content systems, serial production, brand storytelling, and commissioned monuments.",
+      "storyHook": "What would it take to raise a neighboring chamber in your own land?",
+      "chamber": null
+    }
+  ]
+}

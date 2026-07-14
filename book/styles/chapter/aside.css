@@ -1,3 +1,25 @@
+/* Runtime inspectors can contain long, unbroken Spw payloads. Keep them inside
+ * the annotation rail so the reading canvas never acquires a horizontal scroll. */
+body:has(> main.chapter):has(> aside)>aside {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+aside .spw-hover-inspector,
+aside .spw-payload-inspector {
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+aside .ethos-claim-list,
+aside .ethos-claim-item,
+aside .ethos-claim-handle {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 aside ul#lore-collector {
   list-style: none;
   margin: 0;
@@ -51,5 +73,4 @@ aside .additional-links a:focus-visible {
   outline-offset: 2px;
   box-shadow: var(--interactive-shadow-hover);
 }
-
 
