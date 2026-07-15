@@ -9,9 +9,9 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_14.C';
+} from '../modules/experience-core.mjs?v=2026_07_14.G';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_14.E';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_14.G';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_14.G';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_14.G';
 
@@ -532,8 +532,8 @@ function initMonumentEntrance() {
   ensureClimateToggle(state, announce);
   const destroyLighting = initDynamicLighting(state);
   const destroyMenu = initHubMenu({ announce });
-  const destroyScrollChrome = initScrollChrome({ mode: 'hub', announce });
-  const destroyTemporal = initHubTemporalClimate({ announce });
+  const destroyScrollChrome = initScrollChrome({ mode: 'hub' });
+  const destroyTemporal = initHubTemporalClimate();
 
   window.__loreCleanup = () => {
     destroyBootstrap();

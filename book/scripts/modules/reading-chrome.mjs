@@ -281,11 +281,10 @@ export function initHubMenu(options = {}) {
 }
 
 /**
- * Chapter shell polish: sticky bar labels, section dock safe-area, keyboard focus rings.
- * @param {{ announce?: Function }} [options]
+ * Chapter shell polish: sticky bar labels, section dock, keyboard reveal of chrome.
  * @returns {() => void | null}
  */
-export function initChapterChrome(options = {}) {
+export function initChapterChrome() {
   const nav = document.querySelector('nav.chapter-navigation');
   const sectionNav = document.querySelector('.section-navigation');
   if (!nav && !sectionNav) {
@@ -293,17 +292,13 @@ export function initChapterChrome(options = {}) {
   }
 
   document.body.dataset.readingChrome = 'chapter';
-
-  // Mark shell so CSS can target enhanced chrome without breaking no-JS layout.
   nav?.classList.add('chapter-navigation--enhanced');
   sectionNav?.classList.add('section-navigation--enhanced');
 
-  // Ensure section nav has a label for assistive tech if missing
   if (sectionNav && !sectionNav.getAttribute('aria-label')) {
     sectionNav.setAttribute('aria-label', 'Section navigation');
   }
 
-  // When section buttons receive focus, keep chrome visible
   const reveal = () => {
     document.documentElement.dataset.chromeHidden = 'false';
     document.body.dataset.chromeHidden = 'false';

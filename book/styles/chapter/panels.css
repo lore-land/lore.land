@@ -256,19 +256,15 @@ html[data-chrome-hidden='true'] .section-navigation:focus-within {
 .section-navigation button {
   min-width: 0;
   flex: 0 1 auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .chapter-navigation .hub-home {
   flex: 0 0 auto;
   white-space: nowrap;
-}
-
-.chapter-navigation button,
-.section-navigation button {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 100%;
 }
 
 

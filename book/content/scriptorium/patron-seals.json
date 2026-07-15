@@ -5,12 +5,36 @@
     "Seals must remain legible as patronage—never disguised as neutral narration.",
     "Sponsored routes keep provenance: who funded, what was funded, when the stone was set.",
     "Editorial judgment stays with the scriptorium; a seal buys presence, not rewrite rights.",
-    "Paid links appear as marked thresholds, not hidden doors."
+    "Paid links appear as marked thresholds, not hidden doors.",
+    "Snack and recipe seals sit beside Boof’s fruit motive: sensory treat, not a rewrite of the canon."
+  ],
+  "kinds": [
+    {
+      "id": "chamber",
+      "label": "Chamber mark",
+      "blurb": "Funds a seeded chapter or return route."
+    },
+    {
+      "id": "snack",
+      "label": "Snack pediment",
+      "blurb": "A marked treat Boof would approve—dried fruit, chocolate, or a seasonal bite with honest provenance."
+    },
+    {
+      "id": "recipe",
+      "label": "Recipe leaf",
+      "blurb": "A kitchen path: blueberry bread, boonberry glaze, pack-share soup. Food the story can stand next to."
+    },
+    {
+      "id": "atelier",
+      "label": "Atelier door",
+      "blurb": "Commission a neighboring monument elsewhere."
+    }
   ],
   "seals": [
     {
       "id": "pedestal-open-a",
       "status": "open",
+      "kind": "chamber",
       "label": "Open pedestal",
       "blurb": "A chamber, motif bed, or tool route can carry a patron mark here.",
       "href": null,
@@ -19,14 +43,34 @@
     {
       "id": "pedestal-open-b",
       "status": "open",
+      "kind": "chamber",
       "label": "Open pedestal",
       "blurb": "Reserved for a mark that funds work the audience already wants to return to.",
       "href": null,
       "patron": null
     },
     {
+      "id": "snack-open",
+      "status": "open",
+      "kind": "snack",
+      "label": "Open snack pediment",
+      "blurb": "Boof’s treat path: a sponsored snack with a true label—who made it, what it costs the pack, why it belongs near a true count.",
+      "href": null,
+      "patron": null
+    },
+    {
+      "id": "recipe-open",
+      "status": "open",
+      "kind": "recipe",
+      "label": "Open recipe leaf",
+      "blurb": "A kitchen handle for blueberry / boonberry recipes the audience can cook, share, or sponsor without owning the lore.",
+      "href": null,
+      "patron": null
+    },
+    {
       "id": "example-atelier",
       "status": "example",
+      "kind": "atelier",
       "label": "Example · Atelier mark",
       "blurb": "Illustrative only: a quiet mark linking to the craftsperson who raises neighboring monuments.",
       "href": "https://spwashi.com/services/?from=lore.land-seal",

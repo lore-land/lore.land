@@ -277,7 +277,7 @@ function collectTextNodes(root) {
   return nodes;
 }
 
-function markTextNode(textNode, matcher, focusableThemes) {
+function markTextNode(textNode, matcher, focusableThemes = new Set()) {
   const text = textNode.nodeValue;
   matcher.pattern.lastIndex = 0;
   if (!matcher.pattern.test(text)) {
@@ -305,9 +305,7 @@ function markTextNode(textNode, matcher, focusableThemes) {
     if (entry?.href) {
       mark.dataset.themeHref = entry.href;
     }
-    // One keyboard stop per theme is enough to demonstrate resonance.
-    // Making every repeated word focusable turns a prose page into hundreds
-    // of tab stops; the theme chips remain the primary filter controls.
+    // One keyboard stop per theme (not per occurrence) keeps tab order usable.
     const themeId = entry?.id || 'motif';
     if (!focusableThemes.has(themeId)) {
       focusableThemes.add(themeId);

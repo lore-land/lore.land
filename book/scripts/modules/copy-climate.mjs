@@ -105,7 +105,32 @@ export const TINT_PROFILES = Object.freeze({
   paper: Object.freeze({ hue: 40, chroma: 0.18, label: 'paper' })
 });
 
-const THEME_WORD = /\b(dawn|dawnward|sunrise|morning|noon|midday|afternoon|dusk|twilight|sunset|night|midnight|lamplight|lamp|footlight|amber|gold|hearthward|archive)\b/i;
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function clearClimateDatasets(root, body) {
+  if (root) {
+    delete root.dataset.copyClimate;
+    delete root.dataset.tempo;
+    delete root.dataset.copyHook;
+    delete root.dataset.tempoTheme;
+    delete root.dataset.copyTint;
+    delete root.dataset.climateReason;
+    delete root.dataset.climatePulse;
+  }
+  if (body) {
+    delete body.dataset.tempo;
+    delete body.dataset.copyHook;
+  }
+}
+
+function applyTempoCssVars(root, profile) {
+  root.style.setProperty('--tempo-warmth', String(profile.warmth));
+  root.style.setProperty('--tempo-cool', String(profile.cool));
+  root.style.setProperty('--tempo-hue', String(profile.hue));
+  root.style.setProperty('--tempo-paper-mix', String(profile.paperMix));
+}
 
 /**
  * Infer tempo from free text (scene.light, prose snippet, or climate label).
@@ -268,11 +293,8 @@ function setLightVars(root, profile, strengthScale = 1) {
   root.style.setProperty('--light-x', String(profile.lightX));
   root.style.setProperty('--light-y', String(profile.lightY));
   root.style.setProperty('--light-strength', String(Math.round(s * 100) / 100));
-  root.style.setProperty('--tempo-warmth', String(profile.warmth));
-  root.style.setProperty('--tempo-cool', String(profile.cool));
-  root.style.setProperty('--tempo-hue', String(profile.hue));
-  root.style.setProperty('--tempo-paper-mix', String(profile.paperMix));
   root.style.setProperty('--copy-climate-strength', String(Math.round(s * 100) / 100));
+  applyTempoCssVars(root, profile);
 }
 
 function setTintVars(root, tintId) {
@@ -307,20 +329,17 @@ export function activateClimate(climate, options = {}) {
   setTintVars(root, tint);
 
   // Soft paper theme bias without fighting user night/ember prefs.
-  // Only nudge when user has not locked a dark theme preference.
   const userTheme = root.dataset.theme || body.dataset.theme || 'paper';
-  if (userTheme === 'paper' || !userTheme) {
-    if (tempo === 'night' || tempo === 'dusk') {
-      root.dataset.tempoTheme = 'deep';
-    } else if (tempo === 'sunset' || tempo === 'lamplight') {
-      root.dataset.tempoTheme = 'warm';
-    } else if (tempo === 'dawn' || tempo === 'morning') {
-      root.dataset.tempoTheme = 'gold';
-    } else {
-      root.dataset.tempoTheme = 'clear';
-    }
-  } else {
+  if (userTheme !== 'paper' && userTheme) {
     root.dataset.tempoTheme = 'respect-user';
+  } else if (tempo === 'night' || tempo === 'dusk') {
+    root.dataset.tempoTheme = 'deep';
+  } else if (tempo === 'sunset' || tempo === 'lamplight') {
+    root.dataset.tempoTheme = 'warm';
+  } else if (tempo === 'dawn' || tempo === 'morning') {
+    root.dataset.tempoTheme = 'gold';
+  } else {
+    root.dataset.tempoTheme = 'clear';
   }
 
   window.dispatchEvent(
@@ -365,7 +384,7 @@ export function initCopyClimate(options = {}) {
     return null;
   }
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = prefersReducedMotion();
   html.dataset.copyClimate = reduced ? 'static' : 'live';
 
   const hooks = [...root.querySelectorAll('[data-tempo], [data-climate], [data-copy-hook]')];
@@ -378,14 +397,7 @@ export function initCopyClimate(options = {}) {
       { reason: 'chapter-default' }
     );
     return {
-      destroy: () => {
-        delete html.dataset.copyClimate;
-        delete html.dataset.tempo;
-        delete html.dataset.copyHook;
-        delete html.dataset.tempoTheme;
-        delete html.dataset.copyTint;
-        delete html.dataset.climateReason;
-      },
+      destroy: () => clearClimateDatasets(html, document.body),
       activate: (c) => activateClimate(c, { reason: 'manual' })
     };
   }
@@ -402,7 +414,7 @@ export function initCopyClimate(options = {}) {
   });
 
   const promote = (el, reason = 'scroll') => {
-    if (!el || el === activeEl && reason === 'scroll') {
+    if (!el || (el === activeEl && reason === 'scroll')) {
       return;
     }
     if (activeEl) {
@@ -512,18 +524,9 @@ export function initCopyClimate(options = {}) {
   root.addEventListener('focusin', onMark);
   root.addEventListener('pointerover', onMark);
 
-  // External theme filter chips from language explore
-  const onLangFilter = (event) => {
-    if (event.detail?.key !== 'tuning') {
-      return;
-    }
-  };
-  window.addEventListener('lore:preference-change', onLangFilter);
-
   const destroy = () => {
     observer?.disconnect();
     window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('lore:preference-change', onLangFilter);
     root.removeEventListener('toggle', onToggle, true);
     root.removeEventListener('focusin', onMark);
     root.removeEventListener('pointerover', onMark);
@@ -534,15 +537,7 @@ export function initCopyClimate(options = {}) {
     hooks.forEach((el) => {
       delete el.dataset.climateActive;
     });
-    delete html.dataset.copyClimate;
-    delete html.dataset.tempo;
-    delete html.dataset.copyHook;
-    delete html.dataset.tempoTheme;
-    delete html.dataset.copyTint;
-    delete html.dataset.climateReason;
-    delete html.dataset.climatePulse;
-    delete document.body.dataset.tempo;
-    delete document.body.dataset.copyHook;
+    clearClimateDatasets(html, document.body);
   };
 
   return {
@@ -551,71 +546,61 @@ export function initCopyClimate(options = {}) {
   };
 }
 
+const HUB_REGION_TEMPO = Object.freeze({
+  threshold: 'dawn',
+  seedbed: 'morning',
+  chambers: 'day',
+  grain: 'day',
+  theme: 'morning',
+  scriptorium: 'lamplight',
+  dusk: 'dusk',
+  night: 'night'
+});
+
 /**
  * Hub-side: map monument regions + scroll to a soft temporal arc.
- * @param {{ announce?: Function }} [options]
  * @returns {() => void | null}
  */
-export function initHubTemporalClimate(options = {}) {
+export function initHubTemporalClimate() {
   const body = document.body;
   if (!body || body.dataset.surface !== 'monument') {
     return null;
   }
 
   const html = document.documentElement;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = prefersReducedMotion();
   html.dataset.copyClimate = reduced ? 'static' : 'live';
 
   const regions = [...document.querySelectorAll('[data-climate], [data-tempo], [data-region]')];
-  const regionTempo = {
-    threshold: 'dawn',
-    seedbed: 'morning',
-    chambers: 'day',
-    grain: 'day',
-    theme: 'morning',
-    scriptorium: 'lamplight',
-    dusk: 'dusk',
-    night: 'night'
-  };
-
   let frame = 0;
+  let lastTempo = '';
 
   const fromScroll = () => {
     const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = Math.min(1, Math.max(0, window.scrollY / max));
-    // Page descent as day cycle when no region is active
-    if (progress < 0.18) {
-      return 'dawn';
-    }
-    if (progress < 0.4) {
-      return 'morning';
-    }
-    if (progress < 0.62) {
-      return 'day';
-    }
-    if (progress < 0.82) {
-      return 'dusk';
-    }
+    if (progress < 0.18) return 'dawn';
+    if (progress < 0.4) return 'morning';
+    if (progress < 0.62) return 'day';
+    if (progress < 0.82) return 'dusk';
     return 'sunset';
   };
 
   const apply = (tempo, reason) => {
+    if (!tempo || (tempo === lastTempo && reason !== 'hub-init')) {
+      return;
+    }
+    lastTempo = tempo;
     const profile = TEMPO_PROFILES[tempo] || TEMPO_PROFILES.day;
     const lighting = html.dataset.lighting || body.dataset.lighting || 'raking';
-    // When the reader chose live/raking light, only stamp tempo/tint —
-    // pointer/scroll lighting keeps control of --light-x/y.
+    // live/raking: stamp tempo/tint only; pointer/scroll lighting keeps --light-x/y.
     if (lighting === 'live' || lighting === 'raking') {
       html.dataset.tempo = tempo;
       body.dataset.tempo = tempo;
       html.dataset.copyHook = reason;
       body.dataset.copyHook = reason;
       setTintVars(html, profile.accent);
-      html.style.setProperty('--tempo-warmth', String(profile.warmth));
-      html.style.setProperty('--tempo-cool', String(profile.cool));
-      html.style.setProperty('--tempo-hue', String(profile.hue));
-      html.style.setProperty('--tempo-paper-mix', String(profile.paperMix));
+      applyTempoCssVars(html, profile);
       if (lighting === 'raking') {
-        // Soft strength bias only; position stays with raking scroll path
         const base = Number(html.style.getPropertyValue('--light-strength') || profile.strength);
         html.style.setProperty(
           '--light-strength',
@@ -625,12 +610,7 @@ export function initHubTemporalClimate(options = {}) {
       return;
     }
     activateClimate(
-      {
-        tempo,
-        tint: profile.accent,
-        hook: reason,
-        strength: 1
-      },
+      { tempo, tint: profile.accent, hook: reason, strength: 1 },
       { reason }
     );
   };
@@ -648,8 +628,8 @@ export function initHubTemporalClimate(options = {}) {
             const el = hit.target;
             const tempo =
               el.dataset.tempo ||
-              regionTempo[el.dataset.climate] ||
-              regionTempo[el.dataset.region] ||
+              HUB_REGION_TEMPO[el.dataset.climate] ||
+              HUB_REGION_TEMPO[el.dataset.region] ||
               fromScroll();
             apply(tempo, el.id || el.dataset.region || 'region');
           },
@@ -658,10 +638,8 @@ export function initHubTemporalClimate(options = {}) {
       : null;
 
   regions.forEach((el) => {
-    // Ensure regions carry tempo for CSS even before JS paint
     if (!el.dataset.tempo) {
-      const guess =
-        regionTempo[el.dataset.climate] || regionTempo[el.dataset.region] || null;
+      const guess = HUB_REGION_TEMPO[el.dataset.climate] || HUB_REGION_TEMPO[el.dataset.region];
       if (guess) {
         el.dataset.tempo = guess;
       }
@@ -678,7 +656,6 @@ export function initHubTemporalClimate(options = {}) {
       const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       const progress = Math.min(1, Math.max(0, window.scrollY / max));
       html.style.setProperty('--copy-scroll', String(Math.round(progress * 1000) / 1000));
-      // If no region observer fired yet, follow scroll arc
       if (!html.dataset.tempo) {
         apply(fromScroll(), 'scroll-arc');
       }
@@ -695,13 +672,6 @@ export function initHubTemporalClimate(options = {}) {
     if (frame) {
       cancelAnimationFrame(frame);
     }
-    delete html.dataset.copyClimate;
-    delete html.dataset.tempo;
-    delete html.dataset.copyHook;
-    delete html.dataset.tempoTheme;
-    delete html.dataset.copyTint;
-    delete html.dataset.climateReason;
+    clearClimateDatasets(html, body);
   };
 }
-
-export { THEME_WORD };

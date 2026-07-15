@@ -7,7 +7,8 @@
   "provenance": {
     "basedOn": "Spwashi's dog",
     "irlMotive": "blueberries",
-    "fantasyMotive": "boonberries / measured light"
+    "fantasyMotive": "boonberries / measured light",
+    "note": "She likes blueberries. Snack and recipe marks can sit nearby if they stay honest and optional."
   },
   "motives": [
     {
@@ -18,7 +19,7 @@
     {
       "id": "fruit",
       "label": "Blueberry / boonberry",
-      "summary": "Immediate sensory reward for true work; not a substitute for kitchen delivery."
+      "summary": "Immediate reward for true work—not a stand-in for kitchen delivery. Room for marked snacks and recipes if patronage stays visible."
     },
     {
       "id": "pack",
@@ -79,5 +80,27 @@
     }
   ],
   "href": "/characters/boof.html",
-  "chambers": [1, 2]
+  "chambers": [1, 2],
+  "treatPath": {
+    "id": "boof-treats",
+    "label": "Boof’s treat path",
+    "blurb": "Blueberries she can smell, recipes a kitchen can share, snack pediments that fund return without rewriting the chamber.",
+    "links": [
+      {
+        "label": "Snack pediment · open",
+        "href": "/scriptorium/#patron-seals",
+        "kicker": "Patronage"
+      },
+      {
+        "label": "Recipe leaf · open",
+        "href": "/scriptorium/#patron-seals",
+        "kicker": "Kitchen"
+      },
+      {
+        "label": "Boonberry commons",
+        "href": "/world/boonberry-commons.html",
+        "kicker": "World"
+      }
+    ]
+  }
 }

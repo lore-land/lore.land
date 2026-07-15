@@ -14,7 +14,7 @@ export const chapterManifest = [
   {
     number: 1,
     title: 'Dawn in Boon.land',
-    logline: 'A missing measure. A ledger taught to lie.',
+    logline: 'Six kitchens go cold. A dog who works for fruit finds the clean report is the thief.',
     spw: '^[chapter/01]{ ("boon.land") [ <dawn>{ cactus wakes } ] }'
   },
   {

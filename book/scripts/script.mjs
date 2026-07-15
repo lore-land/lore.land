@@ -27,7 +27,7 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.E';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.G';
 import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_14.G';
 import {
   initChapterChrome,
@@ -116,11 +116,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       root: chapterContent || document.getElementById('chapter-content'),
       announce
     });
-    const destroyChapterChrome = initChapterChrome({ announce });
-    const destroyScrollChrome = initScrollChrome({ mode: 'chapter', announce });
+    const destroyChapterChrome = initChapterChrome();
+    const destroyScrollChrome = initScrollChrome({ mode: 'chapter' });
     const copyClimate = initCopyClimate({
       root: chapterContent || document.getElementById('chapter-content'),
-      announce,
       defaultTempo: chapterData.mood === 'boon' ? 'dawn' : undefined
     });
     document.body.classList.add('chapter-climate-ready');
