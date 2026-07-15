@@ -1,8 +1,12 @@
+import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_14.H';
+
 const STORAGE_PREFIX = 'lore.experience';
 
 function storageKey(name) {
   return `${STORAGE_PREFIX}.${name}`;
 }
+
+export { whenIdle };
 
 function ensureLiveRegion() {
   let region = document.getElementById('experience-live-region');
@@ -235,48 +239,30 @@ export function initAttentionDetails(options = {}) {
     return () => {};
   }
 
-  const doc = document.documentElement;
-  let ticking = false;
-  let rafId = 0;
+  // Prefer one CSS variable; only update a capped set of layer nodes to avoid
+  // style thrash on long pages with many [data-component] hosts.
+  const activeLayers = layerNodes.slice(0, 24);
+  let lastProgress = -1;
 
-  const updateAttention = () => {
-    rafId = 0;
-    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const raw = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
-    const progress = Number(raw.toFixed(4));
+  const updateAttention = (snap) => {
+    const progress = Number((snap?.progress ?? 0).toFixed(4));
+    if (Math.abs(progress - lastProgress) < 0.003) {
+      return;
+    }
+    lastProgress = progress;
     const hueShift = Math.round(progress * 30 - 15);
 
     root.style.setProperty('--attention-scroll-progress', String(progress));
     root.style.setProperty('--attention-hue-shift', String(hueShift));
 
-    layerNodes.forEach((node) => {
+    for (const node of activeLayers) {
       const depth = Number(node.dataset.scrollLayerDepth || '0');
       const offset = (progress - 0.5) * depth * 18;
       node.style.setProperty('--scroll-layer-offset', `${offset.toFixed(2)}px`);
-    });
-
-    ticking = false;
-  };
-
-  const onScroll = () => {
-    if (ticking) {
-      return;
-    }
-    ticking = true;
-    rafId = window.requestAnimationFrame(updateAttention);
-  };
-
-  updateAttention();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-
-  return () => {
-    window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onScroll);
-    if (rafId) {
-      cancelAnimationFrame(rafId);
     }
   };
+
+  return onScrollFrame(updateAttention);
 }
 
 function hashHue(input) {

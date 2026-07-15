@@ -9,6 +9,9 @@ main.chapter>[data-ebook-section="true"] {
   position: relative;
   padding: clamp(0.25rem, 0.85vw, 0.6rem);
   background: color-mix(in srgb, var(--theme-paper) 94%, rgba(42, 111, 127, 0.06) 6%);
+  /* Skip layout/paint for far offscreen sections while reading */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 28rem;
   transition:
     background-color var(--transition-duration) var(--transition-function),
     box-shadow var(--transition-duration) var(--transition-function);
@@ -194,6 +197,13 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
 /* Sketch prose keeps flat margins — field notes don't indent. */
 .scene-sketch p {
   text-indent: 0;
+}
+
+@media print {
+  main.chapter > [data-ebook-section="true"] {
+    content-visibility: visible;
+    contain-intrinsic-size: auto;
+  }
 }
 
 /* Sketches never wear drop caps — several layout files declare them with

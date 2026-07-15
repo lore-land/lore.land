@@ -27,16 +27,17 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.G';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_14.G';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.H';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_14.H';
 import {
   initChapterChrome,
   initScrollChrome
-} from './modules/reading-chrome.mjs?v=2026_07_14.G';
+} from './modules/reading-chrome.mjs?v=2026_07_14.H';
 import {
   applySectionClimateAttributes,
   initCopyClimate
-} from './modules/copy-climate.mjs?v=2026_07_14.G';
+} from './modules/copy-climate.mjs?v=2026_07_14.H';
+import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_14.H';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -96,8 +97,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const glyphTier = chapterNum >= 12 ? 5 : chapterNum >= 10 ? 4 : chapterNum >= 7 ? 3 : chapterNum >= 4 ? 2 : chapterNum >= 1 ? 1 : 0;
     document.documentElement.dataset.glyphTier = String(glyphTier);
     setupPrintContext(chapterContent);
-    // Glyph discovery runs after Spw runtime, deferred to let tokens render
-    requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
 
     setupNavigation(chapterData, announce);
     const ebookNav = initEbookNavigation(chapterData, { announce });
@@ -106,16 +105,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
     setupSpwHypertextRoutes(chapterData, announce);
-    initSpwEthosIntegration({ context: 'chapter', container: document.querySelector('aside'), announce });
     setupTuningControls(announce);
-    setupMotifDiscovery(chapterData, announce);
-    await mountChapterSigil(chapterData, announce);
-    initSpwLanguageRuntime({ root: document, announce });
-    // Optional: thematic marks + resonance — prose stands alone without it.
-    const languageExplore = initLanguageExploration(chapterData, {
-      root: chapterContent || document.getElementById('chapter-content'),
-      announce
-    });
+    // Reading chrome + climate: needed early for sticky pad and temporal light.
     const destroyChapterChrome = initChapterChrome();
     const destroyScrollChrome = initScrollChrome({ mode: 'chapter' });
     const copyClimate = initCopyClimate({
@@ -123,22 +114,47 @@ document.addEventListener('DOMContentLoaded', async () => {
       defaultTempo: chapterData.mood === 'boon' ? 'dawn' : undefined
     });
     document.body.classList.add('chapter-climate-ready');
-    const destroyAttention = initAttentionDetails({ root });
-    const destroyShader = initSemanticShader({ root });
-    const destroySpatial = initSpatialPerspective({ root });
-    const destroyGenre = initGenreCombinatorics({ root, announce });
     initChapterProgression(chapterData, { announce });
     const destroyReveal = initProgressiveReveal({ root: document });
+    enhanceLazyImages({ root: chapterContent || document });
+
+    // Secondary enhancement: defer until idle so first paint/input stay free.
+    let languageExplore = null;
+    let destroyAttention = null;
+    let destroyShader = null;
+    let destroySpatial = null;
+    let destroyGenre = null;
+    let cancelIdle = () => {};
+
+    cancelIdle = whenIdle(async () => {
+      initSpwEthosIntegration({
+        context: 'chapter',
+        container: document.querySelector('aside'),
+        announce
+      });
+      setupMotifDiscovery(chapterData, announce);
+      await mountChapterSigil(chapterData, announce);
+      initSpwLanguageRuntime({ root: document, announce });
+      languageExplore = initLanguageExploration(chapterData, {
+        root: chapterContent || document.getElementById('chapter-content'),
+        announce
+      });
+      destroyAttention = initAttentionDetails({ root });
+      destroyShader = initSemanticShader({ root });
+      destroySpatial = initSpatialPerspective({ root });
+      destroyGenre = initGenreCombinatorics({ root, announce });
+      requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
+    }, { timeout: 900 });
 
     if (ebookNav && announce) {
       announce(`Model ebook navigation ready: ${ebookNav.sectionCount} sections.`);
     }
 
-    enhanceLazyImages({ root: chapterContent || document });
     const acoustics = lifecycle.bonk('acoustics + spacing check', chapterContent);
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
 
     window.__loreCleanup = () => {
+      cancelIdle();
       destroyBootstrap();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();

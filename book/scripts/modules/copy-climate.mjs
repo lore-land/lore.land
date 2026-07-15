@@ -11,6 +11,8 @@
  * without attributes, runtime falls back to chapter mood/period defaults.
  */
 
+import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_14.H';
+
 /** Temporal lighting profiles — hour-of-story, not wall clock. */
 export const TEMPO_PROFILES = Object.freeze({
   night: Object.freeze({
@@ -404,7 +406,7 @@ export function initCopyClimate(options = {}) {
 
   let activeEl = null;
   let nudgeTimer = 0;
-  let scrollFrame = 0;
+  let lastScrollWrite = -1;
 
   const readClimate = (el) => ({
     tempo: el.dataset.tempo || 'day',
@@ -426,21 +428,27 @@ export function initCopyClimate(options = {}) {
   };
 
   // Prefer the section nearest the reading band (upper-middle viewport).
+  // Fewer thresholds = less IO callback churn while scrolling.
   const observer =
     'IntersectionObserver' in window
       ? new IntersectionObserver(
           (entries) => {
-            const visible = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-            if (visible[0]) {
-              promote(visible[0].target, 'scroll');
+            let best = null;
+            let bestRatio = -1;
+            for (const entry of entries) {
+              if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
+                best = entry;
+                bestRatio = entry.intersectionRatio;
+              }
+            }
+            if (best) {
+              promote(best.target, 'scroll');
             }
           },
           {
             root: null,
             rootMargin: '-22% 0px -48% 0px',
-            threshold: [0, 0.12, 0.28, 0.45, 0.6]
+            threshold: [0, 0.25, 0.5]
           }
         )
       : null;
@@ -450,34 +458,25 @@ export function initCopyClimate(options = {}) {
     observer?.observe(el);
   });
 
-  // Seed first hook
   promote(hooks[0], 'init');
 
-  // Scroll progress still blends strength slightly (dawn→dusk arc within page).
-  const onScroll = () => {
-    if (scrollFrame) {
+  const unsubScroll = onScrollFrame((snap) => {
+    const progress = snap.progress;
+    if (Math.abs(progress - lastScrollWrite) < 0.01) {
       return;
     }
-    scrollFrame = requestAnimationFrame(() => {
-      scrollFrame = 0;
-      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, window.scrollY / max));
-      html.style.setProperty('--copy-scroll', String(Math.round(progress * 1000) / 1000));
-      // Subtle vertical drift of light as the day of the chapter advances with scroll
-      if (!reduced && activeEl) {
-        const base = TEMPO_PROFILES[activeEl.dataset.tempo] || TEMPO_PROFILES.day;
-        const y = base.lightY + progress * 10;
-        html.style.setProperty('--light-y', String(Math.round(y * 10) / 10));
-        html.style.setProperty(
-          '--light-strength',
-          String(Math.round((base.strength + progress * 0.06) * 100) / 100)
-        );
-      }
-    });
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+    lastScrollWrite = progress;
+    html.style.setProperty('--copy-scroll', String(Math.round(progress * 1000) / 1000));
+    if (!reduced && activeEl) {
+      const base = TEMPO_PROFILES[activeEl.dataset.tempo] || TEMPO_PROFILES.day;
+      const y = base.lightY + progress * 10;
+      html.style.setProperty('--light-y', String(Math.round(y * 10) / 10));
+      html.style.setProperty(
+        '--light-strength',
+        String(Math.round((base.strength + progress * 0.06) * 100) / 100)
+      );
+    }
+  });
 
   // Interaction: opening a scene sketch locks that section's climate briefly.
   const onToggle = (event) => {
@@ -526,14 +525,11 @@ export function initCopyClimate(options = {}) {
 
   const destroy = () => {
     observer?.disconnect();
-    window.removeEventListener('scroll', onScroll);
+    unsubScroll();
     root.removeEventListener('toggle', onToggle, true);
     root.removeEventListener('focusin', onMark);
     root.removeEventListener('pointerover', onMark);
     window.clearTimeout(nudgeTimer);
-    if (scrollFrame) {
-      cancelAnimationFrame(scrollFrame);
-    }
     hooks.forEach((el) => {
       delete el.dataset.climateActive;
     });
@@ -572,12 +568,10 @@ export function initHubTemporalClimate() {
   html.dataset.copyClimate = reduced ? 'static' : 'live';
 
   const regions = [...document.querySelectorAll('[data-climate], [data-tempo], [data-region]')];
-  let frame = 0;
   let lastTempo = '';
+  let lastCopyScroll = -1;
 
-  const fromScroll = () => {
-    const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const progress = Math.min(1, Math.max(0, window.scrollY / max));
+  const fromProgress = (progress) => {
     if (progress < 0.18) return 'dawn';
     if (progress < 0.4) return 'morning';
     if (progress < 0.62) return 'day';
@@ -630,10 +624,10 @@ export function initHubTemporalClimate() {
               el.dataset.tempo ||
               HUB_REGION_TEMPO[el.dataset.climate] ||
               HUB_REGION_TEMPO[el.dataset.region] ||
-              fromScroll();
+              fromProgress(0.3);
             apply(tempo, el.id || el.dataset.region || 'region');
           },
-          { rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.2, 0.4] }
+          { rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.25] }
         )
       : null;
 
@@ -647,31 +641,21 @@ export function initHubTemporalClimate() {
     observer?.observe(el);
   });
 
-  const onScroll = () => {
-    if (frame) {
-      return;
+  const unsubScroll = onScrollFrame((snap) => {
+    if (Math.abs(snap.progress - lastCopyScroll) >= 0.01) {
+      lastCopyScroll = snap.progress;
+      html.style.setProperty('--copy-scroll', String(Math.round(snap.progress * 1000) / 1000));
     }
-    frame = requestAnimationFrame(() => {
-      frame = 0;
-      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, window.scrollY / max));
-      html.style.setProperty('--copy-scroll', String(Math.round(progress * 1000) / 1000));
-      if (!html.dataset.tempo) {
-        apply(fromScroll(), 'scroll-arc');
-      }
-    });
-  };
+    if (!html.dataset.tempo) {
+      apply(fromProgress(snap.progress), 'scroll-arc');
+    }
+  });
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  apply(fromScroll(), 'hub-init');
-  onScroll();
+  apply(fromProgress(0), 'hub-init');
 
   return () => {
     observer?.disconnect();
-    window.removeEventListener('scroll', onScroll);
-    if (frame) {
-      cancelAnimationFrame(frame);
-    }
+    unsubScroll();
     clearClimateDatasets(html, body);
   };
 }

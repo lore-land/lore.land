@@ -9,6 +9,8 @@
  * made visible and no observer is created.
  */
 
+import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_14.H';
+
 const OBSERVE_SELECTORS = [
     'section',
     'custom-boof',
@@ -44,54 +46,44 @@ export function initBookScrollObserver(root) {
         for (const el of elements) {
             el.dataset.spwVisible = 'true';
         }
+        document.documentElement.style.setProperty('--reading-progress', '0');
         return () => { };
     }
 
-    // Assign staggered entrance delays based on DOM order
+    // Cap stagger so late sections do not wait seconds to animate.
     elements.forEach((el, index) => {
-        el.style.setProperty('--entrance-delay', String(index * 80));
+        el.style.setProperty('--entrance-delay', String(Math.min(index * 48, 480)));
     });
 
-    // Create intersection observer
     const observer = new IntersectionObserver(
         (entries) => {
             for (const entry of entries) {
                 if (entry.isIntersecting) {
                     entry.target.dataset.spwVisible = 'true';
-                    observer.unobserve(entry.target); // once revealed, stay revealed
+                    observer.unobserve(entry.target);
                 }
             }
         },
-        { threshold: 0.15 }
+        { threshold: 0.08, rootMargin: '0px 0px -6% 0px' }
     );
 
     for (const el of elements) {
         observer.observe(el);
     }
 
-    // Track reading progress
-    let rafId = null;
-    const updateProgress = () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0;
+    let lastProgress = -1;
+    const unsubScroll = onScrollFrame((snap) => {
+        const progress = snap.progress;
+        // Skip style writes when progress has not moved enough to matter.
+        if (Math.abs(progress - lastProgress) < 0.002) {
+            return;
+        }
+        lastProgress = progress;
         document.documentElement.style.setProperty('--reading-progress', String(progress));
-    };
-
-    const onScroll = () => {
-        if (rafId) return;
-        rafId = requestAnimationFrame(() => {
-            updateProgress();
-            rafId = null;
-        });
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateProgress();
+    });
 
     return () => {
         observer.disconnect();
-        window.removeEventListener('scroll', onScroll);
-        if (rafId) cancelAnimationFrame(rafId);
+        unsubScroll();
     };
 }

@@ -9,11 +9,12 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_14.G';
+} from '../modules/experience-core.mjs?v=2026_07_14.H';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_14.G';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_14.G';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_14.G';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_14.H';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_14.H';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_14.H';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_14.H';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -186,6 +187,11 @@ function ensureClimateToggle(state, announce) {
     } else if (name === 'lighting') {
       state.lighting = value;
       writePref(LIGHTING_KEY, value);
+      if (value === 'live') {
+        state._bindLivePointer?.();
+      } else {
+        state._unbindLivePointer?.();
+      }
     }
 
     applyClimate(state);
@@ -209,6 +215,8 @@ function initDynamicLighting(state) {
   const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let frame = 0;
+  let lastGlow = -1;
+  let pointerBound = false;
 
   const setLight = (x, y, strength) => {
     root.style.setProperty('--light-x', String(Math.round(x * 10) / 10));
@@ -227,19 +235,39 @@ function initDynamicLighting(state) {
     frame = requestAnimationFrame(() => setLight(x, y, depth));
   };
 
-  const onScroll = () => {
-    const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const progress = Math.min(1, Math.max(0, window.scrollY / max));
-    root.style.setProperty('--scroll-glow', String(Math.round(progress * 100) / 100));
+  const bindPointer = () => {
+    if (pointerBound || reduced) {
+      return;
+    }
+    window.addEventListener('pointermove', onPointer, { passive: true });
+    pointerBound = true;
+  };
+
+  const unbindPointer = () => {
+    if (!pointerBound) {
+      return;
+    }
+    window.removeEventListener('pointermove', onPointer);
+    pointerBound = false;
+  };
+
+  if (state.lighting === 'live') {
+    bindPointer();
+  }
+
+  const unsubScroll = onScrollFrame((snap) => {
+    const progress = snap.progress;
+    if (Math.abs(progress - lastGlow) >= 0.01) {
+      lastGlow = progress;
+      root.style.setProperty('--scroll-glow', String(Math.round(progress * 100) / 100));
+    }
 
     if (state.lighting === 'raking' && !reduced) {
-      // Raking light drifts as you descend the page
       const x = 72 + progress * 18;
       const y = 6 + progress * 22;
       const strength = (state.wonder === 'deep' ? 0.78 : 0.58) + progress * 0.12;
       setLight(x, y, strength);
     } else if (state.lighting === 'live' && !reduced) {
-      // Subtle vertical bias while keeping pointer influence
       const currentY = Number(root.style.getPropertyValue('--light-y') || '20');
       setLight(
         Number(root.style.getPropertyValue('--light-x') || '50'),
@@ -247,15 +275,15 @@ function initDynamicLighting(state) {
         Number(root.style.getPropertyValue('--light-strength') || '0.6')
       );
     }
-  };
+  });
 
-  window.addEventListener('pointermove', onPointer, { passive: true });
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  // Expose binder so climate toggle can attach pointer only when live.
+  state._bindLivePointer = bindPointer;
+  state._unbindLivePointer = unbindPointer;
 
   return () => {
-    window.removeEventListener('pointermove', onPointer);
-    window.removeEventListener('scroll', onScroll);
+    unsubScroll();
+    unbindPointer();
     cancelAnimationFrame(frame);
   };
 }

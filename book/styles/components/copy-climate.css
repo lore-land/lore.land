@@ -73,12 +73,19 @@ html[data-copy-climate] body.chapter-climate-ready:not([data-surface='monument']
       var(--climate-deep),
       transparent 55%
     );
-  background-attachment: fixed;
+  /* scroll attachment avoids fixed-bg paint cost on long chapters */
+  background-attachment: scroll;
   background-color: color-mix(
     in srgb,
     var(--bg-color-main, #f3ede1) calc(100% - var(--tempo-paper-mix) * 40%),
     hsl(var(--tempo-hue) 30% 70%) calc(var(--tempo-paper-mix) * 40%)
   );
+}
+
+@media (min-width: 70rem) and (prefers-reduced-motion: no-preference) {
+  html[data-copy-climate] body:has(> main.chapter) {
+    background-attachment: fixed;
+  }
 }
 
 /* Tempo theme biases for paper readers only (respect user night/ember) */

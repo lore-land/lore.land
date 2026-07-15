@@ -7,6 +7,8 @@
  * - Shared CSS vars for scroll padding so anchors clear sticky bars
  */
 
+import { onScrollFrame, onResizeFrame } from './scroll-coordinator.mjs?v=2026_07_14.H';
+
 const COMPACT_AT = 48;
 const HIDE_DELTA = 10;
 const SHOW_NEAR_TOP = 72;
@@ -24,7 +26,7 @@ function smoothScrollBehavior() {
  * data-scroll-compact, data-scroll-dir, data-chrome-hidden
  * --page-scroll, --scroll-pad-top
  *
- * @param {{ mode?: 'hub' | 'chapter', announce?: Function }} [options]
+ * @param {{ mode?: 'hub' | 'chapter' }} [options]
  * @returns {() => void}
  */
 export function initScrollChrome(options = {}) {
@@ -36,7 +38,7 @@ export function initScrollChrome(options = {}) {
   let hidden = false;
   let compact = false;
   let dir = 'idle';
-  let frame = 0;
+  const reduced = prefersReducedMotion();
 
   const measurePad = () => {
     const topbar =
@@ -48,10 +50,9 @@ export function initScrollChrome(options = {}) {
     return pad;
   };
 
-  const apply = () => {
-    const y = window.scrollY;
-    const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const progress = Math.min(1, Math.max(0, y / max));
+  const apply = (snap) => {
+    const y = snap?.y ?? window.scrollY;
+    const progress = snap?.progress ?? 0;
     root.style.setProperty('--page-scroll', String(Math.round(progress * 1000) / 1000));
 
     const nextCompact = y > COMPACT_AT;
@@ -66,10 +67,8 @@ export function initScrollChrome(options = {}) {
       nextDir = delta > 0 ? 'down' : 'up';
     }
 
-    // Hide chrome when scrolling down mid-page; reveal near top or on scroll up.
-    // Reduced-motion readers keep chrome always visible for orientation.
     let nextHidden = hidden;
-    if (prefersReducedMotion()) {
+    if (reduced) {
       nextHidden = false;
     } else if (y < SHOW_NEAR_TOP) {
       nextHidden = false;
@@ -79,7 +78,6 @@ export function initScrollChrome(options = {}) {
       nextHidden = false;
     }
 
-    // Keep chrome visible while a mobile menu is open.
     if (root.dataset.menuOpen === 'true') {
       nextHidden = false;
     }
@@ -98,36 +96,19 @@ export function initScrollChrome(options = {}) {
     lastY = y;
   };
 
-  const onScroll = () => {
-    if (frame) {
-      return;
-    }
-    frame = requestAnimationFrame(() => {
-      frame = 0;
-      apply();
-    });
-  };
-
-  const onResize = () => {
-    measurePad();
-    apply();
-  };
-
   measurePad();
-  apply();
-  root.dataset.scrollCompact = compact ? 'true' : 'false';
+  root.dataset.scrollCompact = 'false';
   root.dataset.chromeHidden = 'false';
   root.dataset.scrollDir = 'idle';
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize, { passive: true });
+  const unsubScroll = onScrollFrame(apply);
+  const unsubResize = onResizeFrame(() => {
+    measurePad();
+  }, { immediate: false });
 
   return () => {
-    window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onResize);
-    if (frame) {
-      cancelAnimationFrame(frame);
-    }
+    unsubScroll();
+    unsubResize();
     delete root.dataset.scrollChrome;
     delete root.dataset.scrollCompact;
     delete root.dataset.scrollDir;

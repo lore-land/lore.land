@@ -58,15 +58,21 @@ nav.chapter-navigation {
   margin-top: 0;
   border: var(--interactive-border);
   border-radius: var(--border-radius-small);
-  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 92%, transparent);
-  backdrop-filter: blur(10px) saturate(1.08);
-  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 94%, transparent);
+  /* Backdrop blur is expensive while sticky + scrolling; keep it for desktop only */
   box-shadow: 0 1px 0 color-mix(in srgb, var(--theme-accent-main) 12%, transparent);
   transition:
     transform 220ms ease,
     opacity 180ms ease,
     box-shadow 200ms ease,
     padding 180ms ease;
+}
+
+@media (min-width: 70rem) {
+  nav.chapter-navigation {
+    backdrop-filter: blur(10px) saturate(1.08);
+    -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  }
 }
 
 html[data-scroll-compact='true'] nav.chapter-navigation {
@@ -99,15 +105,20 @@ html[data-chrome-hidden='true'] nav.chapter-navigation:focus-within {
   margin-bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
   border: var(--interactive-border);
   border-radius: var(--border-radius-pill);
-  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 94%, transparent);
-  backdrop-filter: blur(12px) saturate(1.1);
-  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 96%, transparent);
   box-shadow:
     0 10px 28px color-mix(in srgb, var(--theme-accent-main) 12%, transparent),
     0 1px 0 color-mix(in srgb, #fff 55%, transparent) inset;
   transition:
     transform 220ms ease,
     opacity 180ms ease;
+}
+
+@media (min-width: 70rem) {
+  .section-navigation {
+    backdrop-filter: blur(12px) saturate(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  }
 }
 
 html[data-chrome-hidden='true'] .section-navigation {

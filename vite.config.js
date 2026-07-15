@@ -24,6 +24,11 @@ export default defineConfig({
 
     build: {
         // Multi-page app — each chapter is an entry point
+        target: 'es2020',
+        cssCodeSplit: true,
+        modulePreload: {
+            polyfill: false,
+        },
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
@@ -33,6 +38,21 @@ export default defineConfig({
                 topics: resolve(__dirname, 'topics/index.html'),
                 boof: resolve(__dirname, 'characters/boof.html'),
                 ...chapterInputs,
+            },
+            output: {
+                // Keep heavy Spw tooling out of the critical path when possible.
+                manualChunks(id) {
+                    if (id.includes('spw-interactions') || id.includes('spw-register-bank') || id.includes('spw-selector-parser')) {
+                        return 'spw-runtime';
+                    }
+                    if (id.includes('ebook-navigation') || id.includes('ebook.mjs')) {
+                        return 'ebook';
+                    }
+                    if (id.includes('scroll-coordinator') || id.includes('reading-chrome') || id.includes('copy-climate')) {
+                        return 'reading-enhance';
+                    }
+                    return undefined;
+                },
             },
         },
         outDir: 'dist',
