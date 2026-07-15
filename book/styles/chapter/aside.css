@@ -75,6 +75,44 @@ aside .additional-links a:focus-visible {
 }
 
 
+/*
+ * Aside rail structure: story tools above, optional engineer chrome below.
+ * Keeps load HUD (body-fixed) from competing with the sticky inspector stack.
+ */
+body:has(> main.chapter):has(> aside) > aside {
+  display: grid;
+  gap: var(--spacing-small);
+  align-content: start;
+}
+
+aside .chamber-seal-mount {
+  order: 0;
+}
+
+aside .chapter-progress-panel {
+  order: 1;
+}
+
+aside .ebook-nav-panel {
+  order: 2;
+}
+
+aside .language-explore-panel,
+aside .chapter-motif-discovery,
+aside .chapter-tuning-controls,
+aside .spw-ethos-panel,
+aside .spw-hypertext-routes,
+aside .story-attribution-panel {
+  order: 3;
+}
+
+aside #lore-button,
+aside ul#lore-collector,
+aside .primary-action,
+aside .additional-links {
+  order: 4;
+}
+
 /* Chamber seal — the chapter's wax mark; petals count the chapter number.
  * It anchors the field-notes zone of the reading rail. */
 aside .chamber-seal-mount {

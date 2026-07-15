@@ -353,23 +353,36 @@ footer {
 }
 
 .lifecycle-hud {
+  /* Bottom-left toast: keeps the right rail (ebook + tools) free */
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  width: min(18.5rem, calc(100vw - 2rem));
-  z-index: 40;
+  left: 1rem;
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  right: auto;
+  width: min(16.5rem, calc(100vw - 2rem));
+  z-index: 18;
   display: grid;
   gap: 0.42rem;
   padding: 0.7rem;
   border: var(--border-width) var(--border-style) color-mix(in srgb, var(--border-color-main) 60%, var(--glass-border) 40%);
   border-radius: var(--border-radius-main);
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.4)),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.55)),
     var(--glass-bg-strong);
   box-shadow: 0 calc(14px * var(--depth-shadow-strength)) calc(28px * var(--depth-shadow-strength)) rgba(16, 23, 42, 0.13);
   color: var(--color-text-main);
-  backdrop-filter: blur(calc(var(--panel-blur) * 1.2)) saturate(1.1);
-  -webkit-backdrop-filter: blur(calc(var(--panel-blur) * 1.2)) saturate(1.1);
+  pointer-events: none;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.lifecycle-hud[data-dismissed='true'],
+.lifecycle-hud[hidden] {
+  opacity: 0;
+  transform: translateY(0.4rem);
+  pointer-events: none;
+}
+
+.lifecycle-hud[data-settled='true']:not([data-dismissed='true']) {
+  opacity: 0.72;
 }
 
 .lifecycle-title,
@@ -423,10 +436,6 @@ footer {
   animation: lifecycle-shimmer 1.4s ease-in-out infinite;
 }
 
-body[data-load-stage="honk"] .lifecycle-hud {
-  opacity: 0.66;
-}
-
 /* Lifecycle valence tinting + pipeline semantics */
 body[data-load-stage="boon"] .lifecycle-hud {
   border-color: color-mix(in srgb, var(--spw-color-probe, #9fd8ff) 46%, var(--border-color-main) 54%);
@@ -449,7 +458,6 @@ body[data-load-stage="bonk"] .lifecycle-hud {
 
 body[data-load-stage="honk"] .lifecycle-hud {
   border-color: color-mix(in srgb, var(--spw-color-integration, #e5a7ff) 46%, var(--border-color-main) 54%);
-  opacity: 0.66;
 }
 
 body[data-pipeline-stage="select"] .lifecycle-chip {
@@ -759,8 +767,10 @@ body[data-ebook-nav-shape="depth"] .ebook-toc {
   }
 
   .lifecycle-hud {
-    left: 1rem;
-    right: 1rem;
+    left: 0.75rem;
+    right: 0.75rem;
     width: auto;
+    /* Stay above bottom section dock, below sticky chapter chrome */
+    bottom: max(4.5rem, calc(env(safe-area-inset-bottom, 0px) + 4rem));
   }
 }

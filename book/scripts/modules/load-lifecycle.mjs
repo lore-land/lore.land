@@ -15,8 +15,15 @@ function ensureLifecycleHud(id, skeletonLines) {
     el('span', { style: { width: `${90 - (i % 3) * 15}%` } })
   );
 
-  const hud = el('aside', { id: domId, className: 'lifecycle-hud', 'aria-live': 'polite', 'aria-atomic': 'true' },
-    el('p', { className: 'lifecycle-title', textContent: 'loading lifecycle' }),
+  const hud = el('aside', {
+    id: domId,
+    className: 'lifecycle-hud',
+    dataset: { component: 'load-lifecycle', settled: 'false' },
+    'aria-live': 'polite',
+    'aria-atomic': 'true',
+    'aria-label': 'Chapter load status'
+  },
+    el('p', { className: 'lifecycle-title', textContent: 'Load lifecycle' }),
     el('p', { className: 'lifecycle-status', textContent: 'boon: preloader' }),
     el('div', { className: 'lifecycle-preloader', innerHTML: '<span class="lifecycle-chip">boon</span><span>preloader primed</span>' }),
     el('div', { className: 'lifecycle-spinner-wrap', hidden: true, innerHTML: '<span class="lifecycle-spinner" aria-hidden="true"></span><span>bane fallback spinner</span>' }),
@@ -147,6 +154,15 @@ export function createLoadLifecycle(options = {}) {
   const skeleton = hud.querySelector('.lifecycle-skeleton');
 
   let baneTimer = null;
+  let settleTimer = null;
+  const title = hud.querySelector('.lifecycle-title');
+
+  function clearSettleTimer() {
+    if (settleTimer) {
+      window.clearTimeout(settleTimer);
+      settleTimer = null;
+    }
+  }
 
   function setStage(stage, detail = '') {
     if (!LOAD_STAGES.includes(stage)) {
@@ -160,6 +176,7 @@ export function createLoadLifecycle(options = {}) {
     const substrateEvents = descriptor.substrateEvents || [];
     const resonanceTypes = descriptor.resonances || [];
     const stageRole = descriptor.role;
+    const settled = stage === 'honk';
 
     root.dataset.loadStage = stage;
     root.dataset.lifecycleState = lifecycleState;
@@ -170,9 +187,18 @@ export function createLoadLifecycle(options = {}) {
     root.dataset.substrateEvents = substrateEvents.join(',');
     root.dataset.resonanceTypes = resonanceTypes.join(',');
     root.dataset.stageRole = stageRole || '';
+    root.dataset.loadSettled = settled ? 'true' : 'false';
+    hud.dataset.settled = settled ? 'true' : 'false';
+    hud.dataset.stage = stage;
+    hud.hidden = false;
+    hud.removeAttribute('aria-hidden');
+
+    if (title) {
+      title.textContent = settled ? 'Load ready' : 'Load lifecycle';
+    }
 
     if (status) {
-      const pipelineToken = pipelineStage ? ` -> ${pipelineStage}` : '';
+      const pipelineToken = pipelineStage ? ` → ${pipelineStage}` : '';
       status.textContent = detail ? `${stage}${pipelineToken}: ${detail}` : `${stage}${pipelineToken}`;
     }
 
@@ -188,7 +214,8 @@ export function createLoadLifecycle(options = {}) {
           substrateEvents,
           resonanceTypes,
           role: stageRole,
-          detail
+          detail,
+          settled
         }
       })
     );
@@ -271,15 +298,25 @@ export function createLoadLifecycle(options = {}) {
 
   function honk(detail = 'resolution and harmony') {
     clearBaneTimer();
+    clearSettleTimer();
     setStage('honk', detail);
     setVisibility(preloader, false);
     setVisibility(spinnerWrap, false);
     setVisibility(skeleton, false);
     root.removeAttribute('aria-busy');
+
+    // Leave a brief confirmation, then get out of the reading chrome.
+    settleTimer = window.setTimeout(() => {
+      hud.dataset.settled = 'true';
+      hud.dataset.dismissed = 'true';
+      hud.setAttribute('aria-hidden', 'true');
+      hud.hidden = true;
+    }, 1400);
   }
 
   function teardown() {
     clearBaneTimer();
+    clearSettleTimer();
     hud.remove();
     delete root.dataset.loadStage;
     delete root.dataset.lifecycleState;
@@ -290,6 +327,7 @@ export function createLoadLifecycle(options = {}) {
     delete root.dataset.substrateEvents;
     delete root.dataset.resonanceTypes;
     delete root.dataset.stageRole;
+    delete root.dataset.loadSettled;
     delete root.dataset.acoustics;
     delete root.dataset.acousticTexture;
     delete root.dataset.readabilityBand;

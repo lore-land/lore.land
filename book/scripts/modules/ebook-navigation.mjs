@@ -512,29 +512,55 @@ export function initEbookNavigation(chapterData, options = {}) {
 
   const lspSummary = el('p', { className: 'ebook-lsp-summary' });
   const lspList = el('ul', { className: 'ebook-lsp-list' });
-  const lspPanel = el('div', { className: 'ebook-lsp-panel', 'aria-label': 'Spw LSP handle inspector' }, lspSummary, lspList);
+  const lspPanel = el('div', {
+    className: 'ebook-lsp-panel',
+    'aria-label': 'Spw handle inspector'
+  }, lspSummary, lspList);
+
+  // Reading zone: always present. Engineering tools live in a folded details
+  // so the rail stops competing with the story on first look.
+  const readingZone = el('div', {
+    className: 'ebook-rail-zone ebook-rail-zone--reading',
+    dataset: { railZone: 'reading' }
+  },
+    el('h2', { textContent: 'Sections' }),
+    status,
+    progress,
+    controls,
+    toc
+  );
+
+  const engineerZone = el('details', {
+    className: 'ebook-rail-zone ebook-rail-zone--engineer',
+    dataset: { railZone: 'engineer' }
+  },
+    el('summary', { textContent: 'Handles & filters' }),
+    el('p', {
+      className: 'ebook-nav-bridge',
+      textContent: 'Reader register keeps the path simple. Engineer register surfaces handles, filters, and hops.'
+    }),
+    el('p', {
+      className: 'ebook-nav-legend',
+      textContent: 'Perspectives: ? wonder · . ground · & composite · ~ dangling · ^ bound'
+    }),
+    registerSwitch,
+    perspectiveSwitch,
+    payloadSwitch,
+    syntaxSwitch,
+    payloadStatus,
+    el('h3', { className: 'ebook-concept-heading', textContent: 'Handle inspector' }),
+    lspPanel,
+    el('h3', { className: 'ebook-concept-heading', textContent: 'Concept routes' }),
+    conceptRail
+  );
 
   const panel = el('section', {
     className: 'ebook-nav-panel',
     dataset: { component: 'ebook-navigation', spwComponent: 'ebook-navigation' },
     'aria-label': 'Ebook navigation'
   },
-    el('h2', { textContent: 'Ebook Navigator' }),
-    el('p', { className: 'ebook-nav-bridge', textContent: 'Reader register favors cadence and continuity. Engineer register favors handles, routes, and conceptual hops.' }),
-    el('p', { className: 'ebook-nav-legend', textContent: 'Perspectives: ? wonder, . ground, & composite, ~ dangling, ^ bound.' }),
-    registerSwitch,
-    perspectiveSwitch,
-    payloadSwitch,
-    syntaxSwitch,
-    status,
-    payloadStatus,
-    progress,
-    controls,
-    toc,
-    el('h3', { className: 'ebook-concept-heading', textContent: 'Handle inspector' }),
-    lspPanel,
-    el('h3', { className: 'ebook-concept-heading', textContent: 'Concept routes' }),
-    conceptRail
+    readingZone,
+    engineerZone
   );
   const progressPanel = aside.querySelector('.chapter-progress-panel');
   if (progressPanel) {
@@ -628,6 +654,9 @@ export function initEbookNavigation(chapterData, options = {}) {
     const nextMode = mode === 'engineer' ? 'engineer' : 'reader';
     document.documentElement.dataset.ebookRegister = nextMode;
     panel.dataset.ebookRegister = nextMode;
+    // Engineer tools stay folded in reader mode; open when inspecting structure.
+    engineerZone.open = nextMode === 'engineer';
+    engineerZone.dataset.register = nextMode;
     [readerButton, engineerButton].forEach((button) => {
       const active = button.dataset.ebookRegister === nextMode;
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -788,18 +817,34 @@ export function initEbookNavigation(chapterData, options = {}) {
       return;
     }
 
-    const definitionHandles = [...section.definitionHandles].slice(0, 4);
+    const definitionHandles = [...section.definitionHandles].slice(0, 6);
     const referenceHandles = [...section.referenceHandles].slice(0, 6);
+
+    // Prefer primary + component handles; drop noisy auto-ids unless alone.
+    const preferredDefs = definitionHandles.filter((handle) => {
+      if (handle === section.primaryHandle) return true;
+      if (handle.startsWith('custom-') || handle.includes('/')) return true;
+      if (/^s\d{2}$/.test(handle)) return true;
+      return definitionHandles.length <= 2;
+    });
+    const defsToShow = preferredDefs.length ? preferredDefs.slice(0, 4) : definitionHandles.slice(0, 4);
+
+    const linkedCount = defsToShow.filter((handle) => {
+      const refs = (referencesByHandle.get(handle) || []).filter((idx) => idx !== section.index);
+      return refs.length > 0;
+    }).length;
+
     lspSummary.textContent = formatExpression(
       '&',
       `lsp/${section.primaryHandle}`,
-      `defs:${definitionHandles.length} refs:${referenceHandles.length}`,
+      `local:${defsToShow.length - linkedCount} linked:${linkedCount}`,
       syntaxMode
     );
 
     const appendItem = ({ sigil, handle, payload, target, stateLabel, source }) => {
       const item = document.createElement('li');
       item.className = 'ebook-lsp-item';
+      item.dataset.handleState = stateLabel;
 
       const button = document.createElement('button');
       button.type = 'button';
@@ -820,15 +865,17 @@ export function initEbookNavigation(chapterData, options = {}) {
       lspList.append(item);
     };
 
-    definitionHandles.forEach((handle) => {
-      const refs = referencesByHandle.get(handle) || [];
+    defsToShow.forEach((handle) => {
+      const refs = (referencesByHandle.get(handle) || []).filter((idx) => idx !== section.index);
       const target = pickAlternateSection(refs);
+      // Local = defined here, not yet cited elsewhere (normal for chamber prose).
+      const stateLabel = refs.length ? 'linked' : 'local';
       appendItem({
-        sigil: '@',
+        sigil: refs.length ? '^' : '.',
         handle,
-        payload: refs.length ? `refs:${refs.length}` : 'refs:0',
+        payload: refs.length ? `refs:${refs.length}` : 'local',
         target,
-        stateLabel: refs.length ? 'definition' : 'orphan',
+        stateLabel,
         source: 'lsp-references'
       });
     });
@@ -837,7 +884,7 @@ export function initEbookNavigation(chapterData, options = {}) {
       const defs = definitionsByHandle.get(handle) || [];
       const target = pickAlternateSection(defs);
       appendItem({
-        sigil: defs.length ? '^' : '~',
+        sigil: defs.length ? '@' : '~',
         handle,
         payload: defs.length ? `defs:${defs.length}` : 'dangling',
         target,
@@ -849,10 +896,10 @@ export function initEbookNavigation(chapterData, options = {}) {
     if (!lspList.childElementCount) {
       appendItem({
         sigil: '&',
-        handle: 'lsp/empty',
-        payload: 'no-handles',
+        handle: section.primaryHandle || 'section',
+        payload: 'section',
         target: null,
-        stateLabel: 'idle',
+        stateLabel: 'local',
         source: 'lsp-empty'
       });
     }
