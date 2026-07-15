@@ -6,7 +6,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_07_14.E';
+const RELEASE = '2026_07_14.G';
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')

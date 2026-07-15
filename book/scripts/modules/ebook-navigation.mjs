@@ -916,7 +916,8 @@ export function initEbookNavigation(chapterData, options = {}) {
     }
 
     programmaticUntil = Date.now() + 420;
-    target.node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.node.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     target.node.focus({ preventScroll: true });
     setActive(nextIndex, source);
 

@@ -251,8 +251,8 @@
 
   /* ─── Drop caps ────────────────────────────────────────────── */
 
-  .chapter section:first-of-type>p:first-of-type::first-letter,
-  .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type::first-letter {
+  .chapter section:first-of-type>p:first-of-type:not(.scene-sense)::first-letter,
+  .chapter [data-spw-grammar="narrator"]:first-of-type p:first-of-type:not(.scene-sense)::first-letter {
     font-family: 'LoreLand', var(--font-family-heading);
     font-size: 3.8em;
     float: left;
@@ -551,6 +551,12 @@
     background: color-mix(in srgb, var(--border-color-main) 15%, transparent 85%);
     pointer-events: none;
     backdrop-filter: blur(2px);
+  }
+
+  /* Compact progress when chrome is tucked — still a quiet position cue */
+  html[data-chrome-hidden='true'] .reading-progress {
+    height: 2px;
+    opacity: 0.85;
   }
 
   .reading-progress::after {

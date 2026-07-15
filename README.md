@@ -45,15 +45,33 @@ Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html`
 | `description` | SEO / share text |
 | `pillars` | Seed materials: `worldbuilding` · `code-craft` · `marketing` · `intrigue` |
 | `mood`, `period` | Optional stylesheet hooks |
+| `topics`, `relatedRoutes` | Discovery chips + continue rail |
+| `lexicon` | Optional thematic terms for language exploration (`id`, `label`, `href?`, `terms[]`) |
 | `sections` | Structured prose (paragraphs, figures, custom elements) |
+| `sections[].scene` | Optional sketch: `vantage` · `light` · `scent` · `edges[]` · `hint` |
+| `sections[].climate` | Optional copy hook: `tempo` · `tint` · `hook` · `strength` (drives scroll lighting) |
 | `lore.loreItems` | Field notes for the aside collector |
 
-Render order in `book/scripts/script.mjs`: **logline → title → epigraph → byline → pillars → sections**.
+Render order in `book/scripts/script.mjs`: **logline → title → epigraph → byline → pillars → topics → sections → related routes**.
+
+Optional progressive enhancement (JS on): **scene sketches** (collapsed), **language exploration** (thematic marks + resonance), **copy climate** (tempo/tint lighting from section hooks as you scroll), motif vault, Spw runtime. The full canon remains readable without JavaScript.
+
+**Climate hooks** (chapter JSON → builder attributes → live CSS):
+
+```json
+"climate": { "tempo": "dawn", "tint": "gold", "hook": "missing-measure", "strength": 1 }
+```
+
+Tempos: `night` · `dawn` · `morning` · `day` · `dusk` · `sunset` · `lamplight`.
+Tints: `gold` · `teal` · `ember` · `archive` · `hearth` · `berry` · `night` · `brass` · `paper`.
+If omitted, the builder infers tempo from `scene.light` text.
+
+Editorial surface plan (scriptorium desk, seal checklist, phases): `.spw/surfaces/editorial.spw`.
 
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_07_13.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_07_14.G` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 

@@ -1,0 +1,258 @@
+/*
+ * Copy climate — temporal lighting + tint driven by authored section hooks.
+ * data-tempo / data-tint stamped by the chapter builder; live values on <html>.
+ */
+
+:root {
+  --tempo-warmth: 0.4;
+  --tempo-cool: 0.35;
+  --tempo-hue: 180;
+  --tempo-paper-mix: 0.08;
+  --copy-tint-hue: 188;
+  --copy-tint-chroma: 0.4;
+  --copy-climate-strength: 0.6;
+  --copy-scroll: 0;
+  --copy-tempo-gold: #c4922e;
+  --copy-tempo-teal: #2a6f7f;
+  --copy-tempo-ember: #b0602a;
+  --copy-tempo-archive: #5b3a6e;
+  --copy-tempo-night: #12394a;
+  --copy-tempo-hearth: #a85a28;
+  --copy-tempo-brass: #a67c2d;
+  --copy-tempo-berry: #6b3a72;
+}
+
+/* Soft field light that tracks active tempo (chapter + hub) */
+html[data-copy-climate] body {
+  --climate-gold: color-mix(
+    in srgb,
+    var(--copy-tempo-gold) calc(var(--tempo-warmth) * 55%),
+    transparent
+  );
+  --climate-cool: color-mix(
+    in srgb,
+    var(--copy-tempo-teal) calc(var(--tempo-cool) * 48%),
+    transparent
+  );
+  --climate-ember: color-mix(
+    in srgb,
+    var(--copy-tempo-ember) calc(var(--tempo-warmth) * 40%),
+    transparent
+  );
+  --climate-deep: color-mix(
+    in srgb,
+    var(--copy-tempo-night) calc(var(--tempo-cool) * 36%),
+    transparent
+  );
+  transition:
+    background-color 480ms ease,
+    color 360ms ease;
+}
+
+/* Chapter pages: full temporal wash (hub keeps its own field-light stack). */
+html[data-copy-climate] body:has(> main.chapter),
+html[data-copy-climate] body.chapter-climate-ready:not([data-surface='monument']) {
+  background-image:
+    radial-gradient(
+      ellipse 70% 52% at calc(var(--light-x, 50) * 1%) calc(var(--light-y, 16) * 1%),
+      var(--climate-gold),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 58% 46% at calc((100 - var(--light-x, 50) * 0.4) * 1%) calc((18 + var(--copy-scroll) * 30) * 1%),
+      var(--climate-cool),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 48% 40% at calc((30 + var(--copy-scroll) * 40) * 1%) calc((70 + var(--light-y, 16) * 0.3) * 1%),
+      var(--climate-ember),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 110%,
+      var(--climate-deep),
+      transparent 55%
+    );
+  background-attachment: fixed;
+  background-color: color-mix(
+    in srgb,
+    var(--bg-color-main, #f3ede1) calc(100% - var(--tempo-paper-mix) * 40%),
+    hsl(var(--tempo-hue) 30% 70%) calc(var(--tempo-paper-mix) * 40%)
+  );
+}
+
+/* Tempo theme biases for paper readers only (respect user night/ember) */
+html[data-tempo-theme='gold'] {
+  --accent-color-main: color-mix(in srgb, #2a6f7f 55%, #c4922e 45%);
+  --accent-color-alt: color-mix(in srgb, #1c4f63 70%, #a67c2d 30%);
+  --color-accent-main: var(--accent-color-main);
+  --color-accent-alt: var(--accent-color-alt);
+}
+
+html[data-tempo-theme='warm'] {
+  --accent-color-main: color-mix(in srgb, #8a4f2f 60%, #2a6f7f 40%);
+  --accent-color-alt: color-mix(in srgb, #683722 65%, #1c4f63 35%);
+  --color-accent-main: var(--accent-color-main);
+  --color-accent-alt: var(--accent-color-alt);
+  --bg-color-main: color-mix(in srgb, var(--bg-color-main, #f3ede1) 88%, #f0d9c0 12%);
+}
+
+html[data-tempo-theme='deep'] {
+  --accent-color-main: color-mix(in srgb, #2a6f7f 50%, #4a4390 50%);
+  --accent-color-alt: color-mix(in srgb, #1c4f63 55%, #5b3a6e 45%);
+  --color-accent-main: var(--accent-color-main);
+  --color-accent-alt: var(--accent-color-alt);
+  --bg-color-main: color-mix(in srgb, var(--bg-color-main, #f3ede1) 82%, #d5dce8 18%);
+}
+
+html[data-tempo-theme='clear'] {
+  --accent-color-main: #2a6f7f;
+  --accent-color-alt: #1c4f63;
+  --color-accent-main: var(--accent-color-main);
+  --color-accent-alt: var(--accent-color-alt);
+}
+
+/* Active passage: quiet edge cue that the climate is listening here */
+main.chapter > [data-tempo][data-climate-active='true'],
+main.chapter > [data-copy-hook][data-climate-active='true'] {
+  box-shadow:
+    -3px 0 0 0 color-mix(
+      in srgb,
+      hsl(var(--copy-tint-hue) 48% 42%) calc(var(--copy-tint-chroma) * 70%),
+      transparent
+    ),
+    0 0 0 1px color-mix(
+      in srgb,
+      hsl(var(--copy-tint-hue) 40% 50%) calc(var(--copy-tint-chroma) * 18%),
+      transparent
+    );
+  background: color-mix(
+    in srgb,
+    var(--theme-paper, #fffcf6) 92%,
+    hsl(var(--copy-tint-hue) 40% 70%) 8%
+  );
+  transition:
+    box-shadow 360ms ease,
+    background-color 420ms ease;
+}
+
+/* Tint-specific section accents when author stamps data-tint */
+main.chapter > [data-tint='gold'][data-climate-active='true'] {
+  --copy-tint-hue: 42;
+}
+main.chapter > [data-tint='teal'][data-climate-active='true'] {
+  --copy-tint-hue: 188;
+}
+main.chapter > [data-tint='ember'][data-climate-active='true'] {
+  --copy-tint-hue: 22;
+}
+main.chapter > [data-tint='archive'][data-climate-active='true'] {
+  --copy-tint-hue: 258;
+}
+main.chapter > [data-tint='hearth'][data-climate-active='true'] {
+  --copy-tint-hue: 18;
+}
+main.chapter > [data-tint='berry'][data-climate-active='true'] {
+  --copy-tint-hue: 312;
+}
+main.chapter > [data-tint='night'][data-climate-active='true'] {
+  --copy-tint-hue: 222;
+}
+main.chapter > [data-tint='brass'][data-climate-active='true'] {
+  --copy-tint-hue: 36;
+}
+
+/* Pulse when scene sketch opens or language mark focuses */
+html[data-climate-pulse='scene'] body::after,
+html[data-climate-pulse='lexis'] body::after {
+  opacity: 1;
+}
+
+html[data-climate-pulse] {
+  --copy-climate-strength: calc(var(--copy-climate-strength) + 0.08);
+}
+
+/* Scene sketch inherits host tempo as a quiet frame tint */
+.scene-sketch {
+  border-color: color-mix(
+    in srgb,
+    hsl(var(--copy-tint-hue, 188) 42% 40%) 38%,
+    transparent
+  );
+}
+
+[data-tempo='dawn'] .scene-sketch summary,
+[data-tempo='morning'] .scene-sketch summary {
+  color: color-mix(in srgb, var(--copy-tempo-gold) 70%, var(--theme-accent-alt, #1c4f63));
+}
+
+[data-tempo='dusk'] .scene-sketch summary,
+[data-tempo='night'] .scene-sketch summary {
+  color: color-mix(in srgb, var(--copy-tempo-archive) 65%, var(--theme-accent-alt, #1c4f63));
+}
+
+[data-tempo='sunset'] .scene-sketch summary,
+[data-tempo='lamplight'] .scene-sketch summary {
+  color: color-mix(in srgb, var(--copy-tempo-ember) 70%, var(--theme-accent-alt, #1c4f63));
+}
+
+/* Reading progress bar picks up tempo hue */
+html[data-copy-climate] .reading-progress::after {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--tempo-hue) 55% 48%),
+    hsl(var(--copy-tint-hue) 50% 46%)
+  );
+  box-shadow:
+    0 0 8px hsla(var(--tempo-hue), 60%, 50%, 0.35),
+    0 0 2px hsl(var(--tempo-hue) 50% 45%);
+}
+
+/* Temporal labels for assistive/debug curiosity (sr only by default) */
+.climate-tempo-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Hub regions: soft tempo border when active as current scene */
+body[data-surface='monument'] [data-tempo][data-scene-visible='true'] {
+  box-shadow:
+    0 1px 0 color-mix(in srgb, #fff 50%, transparent) inset,
+    0 0.6rem 1.8rem color-mix(
+      in srgb,
+      hsl(var(--tempo-hue, 180) 40% 40%) 12%,
+      transparent
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-copy-climate] body,
+  main.chapter > [data-tempo],
+  main.chapter > [data-copy-hook] {
+    transition: none;
+  }
+
+  html[data-copy-climate] body:has(> main.chapter),
+  html[data-copy-climate] body[data-surface='monument'] {
+    background-attachment: scroll;
+  }
+}
+
+@media print {
+  html[data-copy-climate] body:has(> main.chapter),
+  html[data-copy-climate] body[data-surface='monument'] {
+    background-image: none !important;
+  }
+
+  main.chapter > [data-tempo][data-climate-active='true'] {
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}

@@ -3,7 +3,8 @@ main.chapter {
 }
 
 main.chapter>[data-ebook-section="true"] {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: var(--scroll-pad-top, 4.75rem);
+  scroll-margin-bottom: var(--scroll-pad-bottom, 5.5rem);
   border-radius: var(--border-radius-small);
   position: relative;
   padding: clamp(0.25rem, 0.85vw, 0.6rem);
@@ -90,4 +91,119 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
     inset 4px 0 0 color-mix(in srgb, var(--theme-accent-main) 74%, transparent 26%),
     0 8px 36px color-mix(in srgb, var(--theme-accent-main) 20%, transparent 80%);
   background: color-mix(in srgb, var(--theme-paper) 82%, rgba(42, 111, 127, 0.18) 18%);
+}
+
+/*
+ * Scene sketches — imagination practice, folded closed by default.
+ * Each titled section may carry a scene (vantage / light / scent / edges);
+ * the reader opens it to furnish the room before or after the prose.
+ * Drawn like a field sketch: hairlines, dashes, no paint.
+ */
+.scene-sketch {
+  margin: 0.5rem 0 0.9rem;
+  border: 1px dashed color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 42%, transparent);
+  border-radius: var(--border-radius-small);
+  background: color-mix(in srgb, var(--theme-paper, #fffcf6) 88%, transparent);
+  font-size: 0.92rem;
+}
+
+.scene-sketch summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.42rem 0.7rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--theme-accent-alt, #1c4f63) 82%, transparent);
+}
+
+.scene-sketch summary::-webkit-details-marker {
+  display: none;
+}
+
+.scene-sketch summary::before {
+  content: '◠ ';
+  letter-spacing: 0;
+}
+
+.scene-sketch[open] summary::before {
+  content: '◡ ';
+}
+
+.scene-sketch summary:hover,
+.scene-sketch summary:focus-visible {
+  color: var(--theme-accent-main, #2a6f7f);
+}
+
+.scene-sketch-body {
+  padding: 0.15rem 0.85rem 0.75rem;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.scene-sense {
+  margin: 0;
+  font-style: italic;
+  color: color-mix(in srgb, var(--theme-ink, #1a2233) 78%, transparent);
+  line-height: 1.55;
+}
+
+.scene-sense-label {
+  font-style: normal;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 78%, transparent);
+  margin-right: 0.25rem;
+}
+
+.scene-edges {
+  list-style: none;
+  margin: 0.1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.scene-edges li {
+  position: relative;
+  padding-left: 1.1rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--theme-ink, #1a2233) 84%, transparent);
+}
+
+.scene-edges li::before {
+  content: '⌐';
+  position: absolute;
+  left: 0.15rem;
+  top: -0.05em;
+  color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 62%, transparent);
+  font-family: var(--font-family-heading, monospace);
+}
+
+@media print {
+  /* Paper readers imagine from the prose alone; a closed <details>
+   * cannot be opened by CSS, so the sketch steps aside. */
+  .scene-sketch {
+    display: none;
+  }
+}
+
+/* Sketch prose keeps flat margins — field notes don't indent. */
+.scene-sketch p {
+  text-indent: 0;
+}
+
+/* Sketches never wear drop caps — several layout files declare them with
+ * deep selectors, so this override is deliberately absolute. */
+.scene-sketch p::first-letter {
+  float: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  line-height: inherit !important;
+  padding: 0 !important;
+  color: inherit !important;
+  filter: none !important;
 }

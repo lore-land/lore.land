@@ -1,0 +1,219 @@
+# Lore.Land Editorial Surface
+# Plan for a writing / sealing desk that serves the monument without
+# turning the public site into a CMS. Story stays first; craft is inspectable.
+#>lore_land_surfaces_editorial
+#:surface #!editorial
+#:layer #!pragmatics
+#:status #!planned
+
+~<rationale>{
+  The scriptorium already names offices (chamberwright, seal-keeper, motif
+  gardener, fool’s desk). An editorial surface is the tool-side of those
+  offices: a place to draft, pressure-test, seal, and publish chambers while
+  preserving dual-register reading (adventure surface · workshop veil).
+  Public readers never need this surface. Patron seals buy presence, not
+  rewrite rights — editorial judgment stays with the scriptorium.
+}
+
+^meta{
+  intent: "plan before build — no runtime mutation in this document"
+  audience: ["chamberwright", "seal-keeper", "motif gardener", "implementer"]
+  related: {
+    publish: ".spw/surfaces/publish.spw"
+    domains: ".spw/surfaces/domains.spw"
+    chapter_contract: "book/content/chapters/*.json"
+    scene_sketches: "book/scripts/script.mjs#createSceneSketch"
+    language_explore: "book/scripts/modules/language-exploration.mjs"
+  }
+  cadence: "public ship windows on the 13th and 26th"
+}
+
+&plan_contracts{
+  #invariant: public_monument_remains_readable_without_editorial_js
+  #invariant: json_canon_is_source_of_truth_for_chambers
+  #invariant: patron_seals_never_grant_rewrite_rights
+  #invariant: dual_register_stays_folded_not_forced
+  #invariant: scene_and_lexicon_blocks_are_optional_additive_fields
+}
+
+^"problem"{
+  today: {
+    authoring: "edit chapter JSON by hand; rebuild HTML via npm run chapters:build"
+    review: "diff + read the chamber page; no shared seal checklist"
+    publish: "git commit + pages deploy; release token in cache-context / build-chapters"
+    language: "optional explore marks exist at read-time; no write-time lexicon editor"
+  }
+  gap: "no single desk that sequences draft → dispute → seal → set stone"
+}
+
+^"surface_shape"{
+  name: "Editorial desk"
+  fantasy_dress: "scriptorium lectern beside the seal press"
+  placement: {
+    public: "never linked from the monument entrance as a product"
+    workshop: "optional /scriptorium/desk/ or local-only tooling behind atelier door"
+    code: "book/scripts/editorial/* + .spw/surfaces/editorial (this plan)"
+  }
+  posture: "field guide for scribes, not a dashboard for clients"
+}
+
+^"reader_layers"[
+  {
+    id: "adventure"
+    who: "public reader"
+    sees: "prose, scene sketches (opt-in), language explore (opt-in), topics, seals"
+    never_sees: "workshop veils forced open, editorial chrome, draft banners"
+  }
+  {
+    id: "workshop"
+    who: "curious craft reader / business conversation guest"
+    sees: "folded lexicon-veils on civic pages, patron seal honesty, atelier door"
+  }
+  {
+    id: "scribe"
+    who: "writing team"
+    sees: "editorial desk: draft state, claim chains, scene hooks, lexicon, release checklist"
+  }
+]
+
+^"chamber_contract_extensions"{
+  .note: "additive fields only — existing chambers remain valid without them"
+  scene: {
+    where: "section | custom-* blocks"
+    fields: ["vantage", "light", "scent", "edges[]", "hint"]
+    reader: "collapsed <details class='scene-sketch'> — imagination practice"
+    machine: "hint + edges feed later image models / motif prompts"
+  }
+  lexicon: {
+    where: "chapter root"
+    shape: "[{ id, label, href?, terms[] }]"
+    reader: "optional language exploration marks + thematic resonance"
+    machine: "theme ids align with topics.json axes"
+  }
+  topics_relatedRoutes_pillars: {
+    status: "already live"
+    role: "discovery sediment + continue rail"
+  }
+}
+
+^"desk_modules"{
+  draft_canvas: {
+    role: "edit portable chapter JSON with section outline"
+    must: ["preserve section order", "validate required title/description/sections"]
+    should: ["preview prose without full site shell", "show pillar + topic chips"]
+  }
+  scene_desk: {
+    role: "author vantage/light/scent/edges/hint per section"
+    must: ["never block publish if scene omitted"]
+    should: ["surface hint as image-prompt candidate", "keep edges as bullet field notes"]
+  }
+  lexicon_desk: {
+    role: "bind theme ids to terms for language exploration"
+    must: ["merge with monument lexicon seeds", "case-insensitive match plan"]
+    should: ["count hits against current prose", "warn on empty themes"]
+  }
+  dual_register_review: {
+    role: "fool’s desk — pressure a clean lie"
+    checks: [
+      "adventure still stands if workshop veil is closed",
+      "civic office analogy is folded not lectured",
+      "reward currents are dog-clear (fruit, light, pack) not management slogans"
+    ]
+  }
+  seal_checklist: {
+    role: "seal-keeper — what may be claimed in public"
+    checks: [
+      "no broken internal routes",
+      "topics ids resolve",
+      "patron copy does not claim canon ownership",
+      "release token bumped when assets change",
+      "chapters:build + vite build green"
+    ]
+  }
+  set_stone: {
+    role: "emit + ship"
+    pipeline: [
+      "validate chapter JSON contract",
+      "npm run chapters:build",
+      "npm run build",
+      "commit with release cadence note (13th / 26th)",
+      "deploy monument"
+    ]
+    refs: [".spw/surfaces/publish.spw#publishing_pipeline"]
+  }
+}
+
+^"phases"{
+  .note: "implementation order — each phase leaves the monument usable"
+
+  ^phase[00: "Contract freeze"]{
+    task: "Document scene + lexicon fields in README chapter contract; keep optional"
+    verify: "chapters without scene/lexicon still build"
+    ={ "README.md#Chapter JSON contract" }
+  }
+
+  ^phase[01: "Read-time language explore (shipped seed)"]{
+    task: "Optional JS marks + thematic resonance; aside panel; no auto-mark without preference"
+    files: [
+      "book/scripts/modules/language-exploration.mjs",
+      "book/styles/components/language.css",
+      "book/scripts/script.mjs"
+    ]
+    verify: "noscript + JS-off reading unchanged; print hides marks chrome"
+  }
+
+  ^phase[02: "Scene sketch maturity"]{
+    task: "Continue scene blocks across chambers where spatial clarity helps; keep details closed"
+    verify: "print CSS still suppresses .scene-sketch"
+  }
+
+  ^phase[03: "Local editorial CLI"]{
+    task: "node tool: validate chapter JSON, lexicon hit counts, relatedRoutes, scene completeness score"
+    output: "book/scripts/tools/editorial-check.mjs"
+    verify: "exit non-zero on contract break; zero on ch01 current"
+  }
+
+  ^phase[04: "Scriptorium desk page (workshop only)"]{
+    task: "Static /scriptorium/desk/ that loads one chapter JSON and renders checklist UI"
+    must_not: "expose write APIs on public host without auth"
+    posture: "read + copy-out; write remains git-side for v1"
+  }
+
+  ^phase[05: "Claim chain bridge"]{
+    task: "Wire ethos claim list (grammar/semantics/pragmatics) to chamber probes"
+    refs: ["book/scripts/modules/spw-ethos.mjs", "spw-workbench claim protocol"]
+  }
+
+  ^phase[06: "Patron seal honesty lane"]{
+    task: "Editorial checklist item for sponsorship copy; never auto-insert patron text into prose"
+    refs: ["book/content/scriptorium/patron-seals.json"]
+  }
+
+  ^phase[07: "Optional write path (later)"]{
+    task: "If needed: authenticated draft store or PR-from-desk — deferred until CLI desk earns trust"
+    deferred: true
+    note: "dregg.net remains interactive fiction later; not this surface"
+  }
+}
+
+^"ux_principles"[
+  "Readable room first — chrome is secondary and dismissible"
+  "Opt-in depth: scene sketches, language marks, workshop veils"
+  "Resonance teaches why a mark matters (family highlight, not rainbow noise)"
+  "Counts and checklists over empty state dashboards"
+  "Fantasy dress on public; plain tools in the desk"
+]
+
+^"success_probes"{
+  reader: "Chamber 01 reads cleanly with JS disabled"
+  explorer: "Opt-in language marks show promise/reward/pack threads; focus resonates family"
+  scribe: "editorial-check reports lexicon hits + missing scene sections without blocking draft"
+  seal_keeper: "publish checklist names patronage boundary explicitly"
+  business_guest: "scriptorium still imagines hiring a neighboring monument — no B2B homepage"
+}
+
+?<open_questions>[
+  "Should the desk live under /scriptorium/desk/ (public, read-only) or only as a local npm script?"
+  "Do multi-word lexicon terms need phrase-level authoring UI, or is JSON enough for v1?"
+  "When should .spw/chapters/*.spw be regenerated from JSON so Spw canon stops lagging the prose?"
+]

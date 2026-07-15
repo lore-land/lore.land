@@ -7,6 +7,7 @@
   publish: "@spw/surfaces/publish.spw"
   plugin_protocol: "@spw/surfaces/plugin-protocol.spw"
   domains: "@spw/surfaces/domains.spw"
+  editorial: "@spw/surfaces/editorial.spw"
 }
 
 ^"output_formats"{

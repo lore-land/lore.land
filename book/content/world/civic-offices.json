@@ -21,7 +21,7 @@
   "offices": [
     {
       "id": "weighhouse",
-      "fantasy": "Eastern Weighhouse",
+      "fantasy": "Dawnward Weighhouse",
       "sigil": "scale",
       "surface": "Where boonberry light is measured at dawn and sealed for distribution.",
       "civic": "Measurement, audit, and the public claim that a total is true.",

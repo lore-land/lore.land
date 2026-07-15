@@ -12,6 +12,8 @@ import {
 } from '../modules/experience-core.mjs?v=2026_07_14.C';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
 import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_14.E';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_14.G';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_14.G';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -529,11 +531,23 @@ function initMonumentEntrance() {
   applyClimate(state);
   ensureClimateToggle(state, announce);
   const destroyLighting = initDynamicLighting(state);
+  const destroyMenu = initHubMenu({ announce });
+  const destroyScrollChrome = initScrollChrome({ mode: 'hub', announce });
+  const destroyTemporal = initHubTemporalClimate({ announce });
 
   window.__loreCleanup = () => {
     destroyBootstrap();
     if (destroyLighting) {
       destroyLighting();
+    }
+    if (destroyMenu) {
+      destroyMenu();
+    }
+    if (destroyScrollChrome) {
+      destroyScrollChrome();
+    }
+    if (destroyTemporal) {
+      destroyTemporal();
     }
     if (destroyTrail) {
       destroyTrail();

@@ -47,6 +47,117 @@ body>footer {
   margin: 0 auto;
 }
 
+/* ─── Chapter reading chrome (all viewports) ─────────────────── */
+
+nav.chapter-navigation {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  gap: 0.45rem;
+  padding: 0.45rem 0.55rem;
+  margin-top: 0;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.08);
+  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--theme-accent-main) 12%, transparent);
+  transition:
+    transform 220ms ease,
+    opacity 180ms ease,
+    box-shadow 200ms ease,
+    padding 180ms ease;
+}
+
+html[data-scroll-compact='true'] nav.chapter-navigation {
+  padding: 0.32rem 0.48rem;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--theme-accent-main) 14%, transparent),
+    0 8px 22px color-mix(in srgb, var(--theme-accent-main) 10%, transparent);
+}
+
+/* Hide top bar when scrolling down mid-chapter; keep focusable via keyboard */
+html[data-chrome-hidden='true'] nav.chapter-navigation {
+  transform: translateY(calc(-100% - 0.5rem));
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-chrome-hidden='true'] nav.chapter-navigation:focus-within {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.section-navigation {
+  position: sticky;
+  bottom: 0.5rem;
+  z-index: 28;
+  gap: 0.4rem;
+  padding: 0.4rem;
+  margin-top: 0.35rem;
+  margin-bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 94%, transparent);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  box-shadow:
+    0 10px 28px color-mix(in srgb, var(--theme-accent-main) 12%, transparent),
+    0 1px 0 color-mix(in srgb, #fff 55%, transparent) inset;
+  transition:
+    transform 220ms ease,
+    opacity 180ms ease;
+}
+
+html[data-chrome-hidden='true'] .section-navigation {
+  transform: translateY(calc(100% + 1.25rem));
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-chrome-hidden='true'] .section-navigation:focus-within {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.section-navigation button {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Progress bar sits above sticky chapter nav */
+.reading-progress {
+  z-index: 40;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav.chapter-navigation,
+  .section-navigation {
+    transition: none;
+  }
+
+  /* Never tuck chrome when motion is reduced — readers keep orientation */
+  html[data-chrome-hidden='true'] nav.chapter-navigation,
+  html[data-chrome-hidden='true'] .section-navigation {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media print {
+  nav.chapter-navigation,
+  .section-navigation {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
 @media (min-width: 70rem) {
   body:has(> main.chapter):has(> aside) {
     display: grid;
@@ -73,15 +184,8 @@ body>footer {
 
   body:has(> main.chapter):has(> aside)>nav.chapter-navigation {
     grid-area: chapter-nav;
-    position: sticky;
-    top: 0.25rem;
-    z-index: 24;
-    padding: 0.42rem 0.5rem;
-    border: var(--interactive-border);
-    border-radius: var(--border-radius-small);
-    background: var(--spw-panel-surface);
-    backdrop-filter: blur(3px) saturate(1.05);
-    -webkit-backdrop-filter: blur(3px) saturate(1.05);
+    top: 0.35rem;
+    z-index: 30;
   }
 
   body:has(> main.chapter):has(> aside)>main.chapter {
@@ -92,20 +196,20 @@ body>footer {
   body:has(> main.chapter):has(> aside)>.section-navigation {
     grid-area: section-nav;
     min-width: 0;
-    position: sticky;
-    bottom: 0.65rem;
-    z-index: 16;
+    bottom: 0.75rem;
+    z-index: 28;
   }
 
   body:has(> main.chapter):has(> aside)>aside {
     grid-area: aside;
     min-width: 0;
     position: sticky;
-    top: 4.25rem;
-    max-height: calc(100dvh - 5.1rem);
+    top: var(--scroll-pad-top, 4.75rem);
+    max-height: calc(100dvh - var(--scroll-pad-top, 4.75rem) - 1rem);
     overflow: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
   }
 
   body:has(> main.chapter):has(> aside)>footer {
@@ -145,15 +249,26 @@ body>footer {
   gap: var(--spacing-small);
   justify-content: space-between;
   align-items: center;
-}
-
-.chapter-navigation {
-  margin-top: var(--spacing-small);
+  flex-wrap: nowrap;
 }
 
 .chapter-navigation button,
 .section-navigation button {
-  min-width: 11rem;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.chapter-navigation .hub-home {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.chapter-navigation button,
+.section-navigation button {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 
@@ -172,7 +287,9 @@ aside {
 
 main.chapter {
   position: relative;
-  overflow: hidden;
+  /* clip only on x so sticky chrome / scroll-margin stay reliable */
+  overflow-x: clip;
+  overflow-y: visible;
   container-type: inline-size;
   container-name: chapter-main;
   perspective: var(--perspective-depth, 920px);
@@ -379,9 +496,7 @@ main:not(.chapter) textarea {
   resize: vertical;
 }
 
-.section-navigation {
-  margin-top: calc(var(--spacing-small) * -0.3);
-}
+/* section dock spacing handled in reading chrome block above */
 
 aside {
   display: grid;

@@ -28,6 +28,15 @@ import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
 import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_14.E';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_14.G';
+import {
+  initChapterChrome,
+  initScrollChrome
+} from './modules/reading-chrome.mjs?v=2026_07_14.G';
+import {
+  applySectionClimateAttributes,
+  initCopyClimate
+} from './modules/copy-climate.mjs?v=2026_07_14.G';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -102,6 +111,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMotifDiscovery(chapterData, announce);
     await mountChapterSigil(chapterData, announce);
     initSpwLanguageRuntime({ root: document, announce });
+    // Optional: thematic marks + resonance — prose stands alone without it.
+    const languageExplore = initLanguageExploration(chapterData, {
+      root: chapterContent || document.getElementById('chapter-content'),
+      announce
+    });
+    const destroyChapterChrome = initChapterChrome({ announce });
+    const destroyScrollChrome = initScrollChrome({ mode: 'chapter', announce });
+    const copyClimate = initCopyClimate({
+      root: chapterContent || document.getElementById('chapter-content'),
+      announce,
+      defaultTempo: chapterData.mood === 'boon' ? 'dawn' : undefined
+    });
+    document.body.classList.add('chapter-climate-ready');
     const destroyAttention = initAttentionDetails({ root });
     const destroyShader = initSemanticShader({ root });
     const destroySpatial = initSpatialPerspective({ root });
@@ -120,6 +142,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.__loreCleanup = () => {
       destroyBootstrap();
       if (ebookNav?.destroy) ebookNav.destroy();
+      if (languageExplore?.destroy) languageExplore.destroy();
+      if (destroyChapterChrome) destroyChapterChrome();
+      if (destroyScrollChrome) destroyScrollChrome();
+      if (copyClimate?.destroy) copyClimate.destroy();
       if (destroyAttention) destroyAttention();
       if (destroyShader) destroyShader();
       if (destroySpatial) destroySpatial();
@@ -423,6 +449,61 @@ function createFigure(section) {
 }
 
 /**
+ * Renders a section's `scene` block as a collapsed sketch — an invitation
+ * to imagine, not an obligation. The structured fields (vantage / light /
+ * scent / edges / hint) also stay machine-readable in #chapter-data so
+ * later image models can pick up the same hooks the reader practices on.
+ * @param {Object} scene - { vantage, light, scent, edges[], hint }
+ * @returns {HTMLElement} - A <details class="scene-sketch"> element.
+ */
+function createSceneSketch(scene) {
+  const details = document.createElement('details');
+  details.className = 'scene-sketch';
+  details.dataset.component = 'scene-sketch';
+  if (scene.hint) {
+    details.dataset.sceneHint = scene.hint;
+  }
+
+  const summary = document.createElement('summary');
+  summary.textContent = 'Step into the scene';
+  details.appendChild(summary);
+
+  const body = document.createElement('div');
+  body.className = 'scene-sketch-body';
+
+  const addSense = (label, text) => {
+    if (!text) {
+      return;
+    }
+    const line = document.createElement('p');
+    line.className = 'scene-sense';
+    const tag = document.createElement('span');
+    tag.className = 'scene-sense-label';
+    tag.textContent = label;
+    line.append(tag, ' ', text);
+    body.appendChild(line);
+  };
+
+  addSense('vantage', scene.vantage);
+  addSense('light', scene.light);
+  addSense('scent', scene.scent);
+
+  if (Array.isArray(scene.edges) && scene.edges.length) {
+    const edges = document.createElement('ul');
+    edges.className = 'scene-edges';
+    scene.edges.forEach((edge) => {
+      const item = document.createElement('li');
+      item.textContent = edge;
+      edges.appendChild(item);
+    });
+    body.appendChild(edges);
+  }
+
+  details.appendChild(body);
+  return details;
+}
+
+/**
  * Creates a section element with a heading and content.
  * @param {Object} section - The section data object.
  * @returns {HTMLElement} - The created section element.
@@ -434,6 +515,21 @@ function createSection(section) {
     const h2 = document.createElement('h2');
     h2.textContent = section.title;
     sec.appendChild(h2);
+  }
+
+  // Copy hooks → data-tempo / data-tint / data-climate (authored or inferred)
+  applySectionClimateAttributes(sec, section);
+
+  // Pass through any remaining data-* keys from JSON (builder attribute surface)
+  Object.entries(section).forEach(([key, value]) => {
+    if (key.startsWith('data-') && typeof value === 'string' && !sec.hasAttribute(key)) {
+      sec.setAttribute(key, value);
+    }
+  });
+
+  if (section.scene) {
+    sec.dataset.scene = 'true';
+    sec.appendChild(createSceneSketch(section.scene));
   }
 
   if (section.content && Array.isArray(section.content)) {
@@ -462,11 +558,18 @@ function createCustomElement(section) {
     customElem.dataset.spwValence = section.valence;
   }
 
+  applySectionClimateAttributes(customElem, section);
+
   Object.entries(section).forEach(([key, value]) => {
-    if (key.startsWith('data-') && typeof value === 'string') {
+    if (key.startsWith('data-') && typeof value === 'string' && !customElem.hasAttribute(key)) {
       customElem.setAttribute(key, value);
     }
   });
+
+  if (section.scene) {
+    customElem.dataset.scene = 'true';
+    customElem.appendChild(createSceneSketch(section.scene));
+  }
 
   if (section.content && Array.isArray(section.content)) {
     section.content.forEach(contentItem => {

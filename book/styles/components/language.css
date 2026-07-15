@@ -1,0 +1,213 @@
+/*
+ * Optional language exploration + thematic resonance.
+ * Marks only appear when the reader opts in (data-language-explore="on").
+ * Drawn like pencil underlines in a field guide — not highlighter yellow.
+ */
+
+.language-explore-panel {
+  display: grid;
+  gap: 0.46rem;
+  border: 1px dashed color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 40%, transparent);
+  border-radius: var(--border-radius-small);
+  background: color-mix(in srgb, var(--theme-paper, #fffcf6) 90%, transparent);
+  padding: 0.72rem;
+}
+
+.language-explore-panel[data-invite='true'] {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 12%, transparent);
+}
+
+.language-explore-panel[data-active='true'] {
+  border-style: solid;
+  background: color-mix(
+    in srgb,
+    var(--theme-paper, #fffcf6) 82%,
+    var(--theme-accent-main, #2a6f7f) 18%
+  );
+}
+
+.language-explore-panel h2 {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.language-explore-intro,
+.language-explore-status,
+.language-resonance-note {
+  margin: 0;
+  color: var(--color-text-alt, #4a5568);
+  font-size: 0.83rem;
+  line-height: 1.45;
+}
+
+.language-explore-spw {
+  margin: 0;
+  font-size: 0.78rem;
+  opacity: 0.86;
+}
+
+.language-explore-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.language-explore-toggle {
+  appearance: none;
+  border: var(--interactive-border, 1px solid color-mix(in srgb, var(--theme-accent-main) 40%, transparent));
+  border-radius: var(--border-radius-pill, 999px);
+  background: var(--interactive-bg, color-mix(in srgb, var(--theme-paper) 88%, transparent));
+  color: var(--color-accent-alt, #1c4f63);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding: 0.42rem 0.86rem;
+  cursor: pointer;
+  transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+}
+
+.language-explore-toggle:hover,
+.language-explore-toggle:focus-visible {
+  background: var(--interactive-bg-hover, color-mix(in srgb, var(--theme-accent-main) 16%, var(--theme-paper)));
+  outline: 2px solid var(--interactive-outline, var(--theme-accent-main));
+  outline-offset: 2px;
+}
+
+.language-explore-toggle[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 22%, var(--theme-paper, #fffcf6));
+  color: var(--theme-accent-alt, #1c4f63);
+}
+
+.language-theme-list {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.language-theme-chip {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 34%, transparent);
+  border-radius: var(--border-radius-pill, 999px);
+  background: color-mix(in srgb, var(--theme-paper, #fffcf6) 92%, transparent);
+  color: color-mix(in srgb, var(--theme-ink, #1a2233) 88%, transparent);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.62rem;
+  cursor: pointer;
+}
+
+.language-theme-chip[aria-pressed='true'],
+.language-theme-chip:hover,
+.language-theme-chip:focus-visible {
+  border-color: var(--theme-accent-main, #2a6f7f);
+  background: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 18%, var(--theme-paper, #fffcf6));
+  outline: none;
+}
+
+/* ─── In-prose marks (only when exploration is on) ─────────── */
+
+mark.lang-mark {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0 0.05em;
+  border-radius: 0.12em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 55%, transparent);
+  transition:
+    background-color 160ms ease,
+    text-decoration-color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+
+mark.lang-mark:hover,
+mark.lang-mark:focus-visible {
+  background: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 14%, transparent);
+  text-decoration-style: solid;
+  text-decoration-color: var(--theme-accent-main, #2a6f7f);
+  outline: none;
+}
+
+/* Theme-tinted underlines for a few well-known civic threads */
+mark.lang-mark[data-theme='promise'] {
+  text-decoration-color: color-mix(in srgb, #c08b2d 70%, var(--theme-accent-main) 30%);
+}
+mark.lang-mark[data-theme='reward'] {
+  text-decoration-color: color-mix(in srgb, #94404c 65%, var(--theme-accent-main) 35%);
+}
+mark.lang-mark[data-theme='audience'] {
+  text-decoration-color: color-mix(in srgb, #4c7f58 70%, var(--theme-accent-main) 30%);
+}
+mark.lang-mark[data-theme='motif'],
+mark.lang-mark[data-theme='wonder'] {
+  text-decoration-color: color-mix(in srgb, #2a6f7f 80%, #c08b2d 20%);
+}
+mark.lang-mark[data-theme='guide'] {
+  text-decoration-color: color-mix(in srgb, #2e5f86 75%, transparent);
+}
+mark.lang-mark[data-theme='voice'] {
+  text-decoration-color: color-mix(in srgb, #78883f 70%, transparent);
+}
+mark.lang-mark[data-theme='memory'] {
+  text-decoration-color: color-mix(in srgb, #5b3a6e 65%, transparent);
+}
+
+/* Thematic resonance: focused family lights; others quiet */
+#chapter-content[data-resonance-theme] mark.lang-mark.is-resonant,
+main.chapter[data-resonance-theme] mark.lang-mark.is-resonant {
+  background: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 18%, transparent);
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 16%, transparent);
+}
+
+#chapter-content[data-resonance-theme] mark.lang-mark.is-quiet,
+main.chapter[data-resonance-theme] mark.lang-mark.is-quiet {
+  opacity: 0.42;
+  text-decoration-color: color-mix(in srgb, var(--theme-ink, #1a2233) 22%, transparent);
+}
+
+mark.lang-mark.is-filtered-out,
+mark.lang-mark[data-dimmed='true'] {
+  opacity: 0.28;
+  text-decoration-color: color-mix(in srgb, var(--theme-ink, #1a2233) 18%, transparent);
+}
+
+/* Explore tuning: slightly denser texture invite, still optional */
+html[data-tuning='explore'] .language-explore-panel:not([data-active='true']) {
+  border-style: solid;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  mark.lang-mark,
+  .language-explore-toggle {
+    transition: none;
+  }
+}
+
+@media print {
+  .language-explore-panel {
+    display: none;
+  }
+
+  mark.lang-mark {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    opacity: 1 !important;
+    color: inherit !important;
+  }
+}

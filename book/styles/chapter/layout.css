@@ -118,18 +118,37 @@
             bottom: 0.55rem;
         }
 
-        /* ─── Navigation: stack vertically ───────────────────────── */
+        /* ─── Navigation: compact horizontal dock on phone ───────── */
         .chapter-navigation,
         .section-navigation {
-            flex-direction: column;
-            flex-wrap: wrap;
-            gap: 0.4rem;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 0.35rem;
         }
 
         .chapter-navigation button,
         .section-navigation button {
-            width: 100%;
+            width: auto;
             min-width: 0;
+            flex: 1 1 0;
+            min-height: 2.4rem;
+            font-size: 0.82rem;
+            padding-inline: 0.55rem;
+        }
+
+        .chapter-navigation .hub-home {
+            flex: 0 0 auto;
+            font-size: 0.82rem;
+            padding-inline: 0.35rem;
+        }
+
+        /* Leave room for sticky section dock at bottom of reading pane */
+        body:has(> main.chapter) {
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+        }
+
+        main.chapter {
+            padding-bottom: 1.4rem;
         }
 
         /* ─── Aside ──────────────────────────────────────────────── */
