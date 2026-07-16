@@ -1,0 +1,261 @@
+# Lore.Land Platform Ship Audit — 2026-07-16
+# Captures webdev, PWA, social intrigue, CSS/API craft, and .spw link health
+# as durable direction for workspace contracts and PLAN.A–D.
+#>lore_land_audit_platform_ship_2026_07_16
+#:audit #!platform
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  The monument already has progressive HTML, modern CSS craft (layers, color-mix,
+  view timelines, reduced motion), and a Spw ethos probe chain. Ship quality is
+  blocked less by design ambition than by platform hygiene: a broken service-worker
+  precache, incomplete Vite entries, thin social packaging, and chapter .spw canon
+  lagging live prose. This audit freezes findings and ranks work so plans can
+  reference stable ids rather than chat history.
+}
+
+^meta{
+  date: "2026-07-16"
+  scope: [
+    "monument HTML surfaces",
+    "chapter MPA + Vite build",
+    "sw.js + manifest.webmanifest",
+    "OG / Twitter packaging",
+    "CSS features + browser APIs",
+    ".spw canon graph"
+  ]
+  release_token_at_audit: "2026_07_15.A"
+  related: {
+    platform_plan: ".spw/surfaces/platform.spw"
+    workspace: ".spw/workspace.spw"
+    publish: ".spw/surfaces/publish.spw"
+    editorial: ".spw/surfaces/editorial.spw"
+    claims: ".spw/claims/chapter-claims.spw"
+    plan_a: "PLAN.A.spw"
+    plan_b: "PLAN.B.spw"
+    plan_c: "PLAN.C.spw"
+    plan_d: "PLAN.D.spw"
+  }
+  grades: {
+    progressive_html_a11y: "B+"
+    pwa: "D"
+    social_intrigue: "C-"
+    modern_css: "A-"
+    browser_apis: "B+"
+    spw_graph: "C"
+  }
+}
+
+^"strengths"[
+  "MPA progressive enhancement: static story first, JS climate/resume/Spw rail second"
+  "Skip links, landmarks, aria-live status, focus-visible paths on interactive chrome"
+  "Modern CSS discipline: @layer, color-mix, :has, view() timelines behind @supports + prefers-reduced-motion"
+  "Vite multi-page + manual chunks (spw-runtime, ebook, reading-enhance)"
+  "Ethos claim UI now shows labeled spec → impl → probe rows with rail overflow containment"
+  "Atmosphere ornament + scroll climate across monument doors (incl. zine link)"
+  "Spw routing normalizes chapter and workbench aliases for same-origin fetch"
+]
+
+^"findings"{
+
+  ^finding[P0: "sw-precache-broken"]{
+    area: pwa
+    evidence: [
+      "sw.js CACHE_VERSION still lore-pwa-v2026_02_28.I",
+      "cache.addAll lists /book/styles/fixtures/baseline.css and home.css",
+      "book/styles/fixtures/ contains only README.md"
+    ]
+    impact: "install precache fails or leaves a hollow offline shell; offline.html CSS versions also stale"
+    direction: "rewrite precache to real shell assets; bump cache version with release token; network-first navigations + offline fallback"
+  }
+
+  ^finding[P0: "chapter-spw-lag"]{
+    area: spw_canon
+    evidence: [
+      ".spw/chapters/01.spw title still Boof and the Boonberry Fool",
+      "book/content/chapters/01.json title is Dawn in Boon.land",
+      "workspace contract c001 requires sync"
+    ]
+    impact: "plain-text extension via .spw chapters teaches a previous draft; claims overstate legibility"
+    direction: "regenerate via node .spw/tools/export-chapters.mjs after every chapters:build; prefer JSON SoT path book/content/chapters/*.json"
+  }
+
+  ^finding[P0: "chapter-og-images-empty"]{
+    area: social
+    evidence: [
+      "book/images/01.png … 13.png are 1600x900 but ~6–28KB near-empty plates",
+      "chapter template og:image points at those PNGs"
+    ]
+    impact: "share cards look blank — loglines are strong, packaging fails"
+    direction: "replace with real 1200x630 intrigue art per chamber or shared series crop; add og:image:alt"
+  }
+
+  ^finding[P0: "vite-entries-incomplete"]{
+    area: webdev_build
+    evidence: [
+      "vite.config.js input omits zine/, charm/, book/timeline.html, book/pwa/offline.html",
+      "dist/ historically lacks zine route"
+    ]
+    impact: "production build may not ship public doors and offline shell"
+    direction: "add public MPA entries to rollup input; keep offline.html in build or public copy step"
+  }
+
+  ^finding[P1: "social-meta-uneven"]{
+    area: social
+    evidence: [
+      "no twitter:card anywhere",
+      "topics, scriptorium, boof, civic-magic, boonberry lack OG block",
+      "zine has OG title/desc but no og:image"
+    ]
+    impact: "monument doors are share-dead; X/Discord/iMessage intrigue uneven"
+    direction: "uniform OG + Twitter summary_large_image on every public URL; zine image required"
+  }
+
+  ^finding[P1: "manifest-icon-purpose"]{
+    area: pwa
+    evidence: "icons declare purpose any maskable on one asset"
+    impact: "install UI quality fails maskable safe-zone expectations"
+    direction: "split purpose any and purpose maskable icons; add shortcuts + screenshots"
+  }
+
+  ^finding[P1: "sw-cache-unbounded"]{
+    area: pwa
+    evidence: "fetch handler cache.put every successful same-origin GET"
+    impact: "storage growth; stale shell risk without versioned keys"
+    direction: "stale-while-revalidate for hashed assets; network-first HTML; size budget"
+  }
+
+  ^finding[P1: "ethos-refs-ornamental"]{
+    area: spw_graph
+    evidence: [
+      "spw-ethos.mjs claim ids c001-brace-symmetry vs claims lore-c001-brace-legibility",
+      "spec/impl/probe are display strings not hrefs"
+    ]
+    impact: "probe chain not walkable; dual SoT confusion with workbench vs lore .spw"
+    direction: "unify claim ids with chapter-claims.spw; link rows to /.spw/… or GitHub blobs"
+  }
+
+  ^finding[P1: "fonts-cdn"]{
+    area: webdev_perf
+    evidence: "JetBrains Mono from jsDelivr without font-display; LoreLand is OTF only"
+    impact: "extra RTT + FOIT/FOUT; heavier display face"
+    direction: "font-display swap + preconnect or self-host mono; WOFF2 display if feasible"
+  }
+
+  ^finding[P1: "no-sitemap-robots"]{
+    area: webdev_discoverability
+    evidence: "no robots.txt or sitemap.xml at site root"
+    impact: "serial discovery weaker than a 13-chamber monument needs"
+    direction: "emit sitemap of monument doors + chapters; allow all public paths"
+  }
+
+  ^finding[P2: "platform-apis-underused"]{
+    area: browser_apis
+    opportunity: [
+      "navigator.share / clipboard for pass-the-chamber",
+      "View Transitions between chambers and doors",
+      "content-visibility on long sections",
+      "container queries for rail density",
+      "SW update toast when waiting worker present"
+    ]
+  }
+
+  ^finding[P2: "readme-release-drift"]{
+    area: docs
+    evidence: "README still cited 2026_07_14.G after 2026_07_15.A ship"
+    direction: "single release token source: cache-context.mjs + build-chapters.mjs only"
+  }
+}
+
+^"css_api_inventory"{
+  in_use: [
+    "@layer",
+    "color-mix(in srgb)",
+    ":has()",
+    "animation-timeline: view()",
+    "overflow: clip",
+    "mask + mask-composite",
+    "aspect-ratio",
+    "clamp()",
+    "grid minmax(0,1fr)",
+    "@media print",
+    "backdrop-filter",
+    "prefers-reduced-motion",
+    "customElements + Shadow DOM (chapter sigils)",
+    "import.meta.glob",
+    "IntersectionObserver / ResizeObserver / MutationObserver",
+    "requestIdleCallback + rAF coordination",
+    "localStorage (resume, theme, wonder, lighting)",
+    "serviceWorker registration",
+    "Image.decode()"
+  ]
+  adopt_next: [
+    "View Transitions API (chamber continuity)",
+    "navigator.share + clipboard.writeText",
+    "@container for rail vs canvas",
+    "text-wrap: balance | pretty on titles",
+    "content-visibility: auto on long chapter sections",
+    "speculation rules / prerender for Enter Chapter One"
+  ]
+  explore_later: [
+    "popover + invokers for inspectors",
+    "CSS anchor positioning for hover inspector",
+    "OKLCH / light-dark() token lane",
+    "BroadcastChannel multi-tab resume sync"
+  ]
+}
+
+^"spw_link_graph"{
+  mount: ".spw/index.spw"
+  prose_sot: "book/content/chapters/*.json"
+  html_emit: "npm run chapters:build → book/chapter/*/index.html"
+  semantic_mirror: ".spw/chapters/*.spw via export-chapters.mjs"
+  claims: ".spw/claims/chapter-claims.spw"
+  runtime_ui: "book/scripts/modules/spw-ethos.mjs"
+  workbench_submodule: ".spw/_workbench"
+  !invariant: "JSON prose is source of truth; .spw chapters are derived mirrors"
+  !invariant: "lore .spw surfaces are first-class for site claims; workbench paths are upstream kernel truth"
+  lag_status: "chapter mirrors and chapters/index.spw titles were stale as of audit date"
+}
+
+^"priority_backlog"{
+  p0: [
+    "sw-precache-broken",
+    "chapter-spw-lag",
+    "chapter-og-images-empty",
+    "vite-entries-incomplete"
+  ]
+  p1: [
+    "social-meta-uneven",
+    "manifest-icon-purpose",
+    "sw-cache-unbounded",
+    "ethos-refs-ornamental",
+    "fonts-cdn",
+    "no-sitemap-robots"
+  ]
+  p2: [
+    "platform-apis-underused",
+    "readme-release-drift"
+  ]
+  implementation_order: [
+    "1 rewrite sw.js + offline shell",
+    "2 regenerate .spw/chapters from live JSON",
+    "3 social meta + OG art",
+    "4 Vite entries + sitemap/robots"
+  ]
+}
+
+^"success_probes"{
+  pwa: "offline install precaches real CSS; offline.html paints; chapter 01 optional seed"
+  canon: "diff title of .spw/chapters/01.spw against book/content/chapters/01.json is empty"
+  social: "Discord/X card for / and /book/chapter/01/ shows non-blank art + logline"
+  build: "vite build emits zine and offline routes"
+  ethos: "each claim row has a resolvable spec href into .spw or GitHub"
+}
+
+?<open_questions>[
+  "Should offline install precache only chapter 01, or the reader's last-resume chapter?"
+  "Are chapter OG images unique art plates, or a shared series template with chapter seal overprint?"
+  "Should /.spw/** be public on the deployed host, or author-only (routing still local)?"
+]

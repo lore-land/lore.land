@@ -37,4 +37,16 @@
   ethos_ui: "book/scripts/modules/spw-ethos.mjs"
   home_lifecycle: "book/scripts/home/app.mjs"
   chapter_lifecycle: "book/scripts/script.mjs"
+  platform_shell: "sw.js + book/scripts/modules/experience-core.mjs#registerStoryServiceWorker"
+  platform_plan: ".spw/surfaces/platform.spw"
+}
+
+^"ship_precipitates"{
+  .note: "artifacts that must fall out of a set-stone ship — complements stage precipitates"
+  chapter_html: "book/chapter/*/index.html"
+  chapter_spw_mirror: ".spw/chapters/*.spw"
+  dist: "dist/"
+  offline_shell: "book/pwa/offline.html (precache + dist)"
+  share_cards: "OG+Twitter meta on every public URL"
+  audit_ref: ".spw/audits/platform-ship-audit-2026-07-16.spw"
 }

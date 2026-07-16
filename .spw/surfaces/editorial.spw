@@ -127,19 +127,31 @@
       "topics ids resolve",
       "patron copy does not claim canon ownership",
       "release token bumped when assets change",
-      "chapters:build + vite build green"
+      "chapters:build + vite build green",
+      "SW precache URLs exist at deploy HEAD",
+      "Vite dist includes every public door linked from hub nav",
+      "OG image non-blank and under 5MB; twitter:card present on shared URL",
+      ".spw/chapters regenerated when chapter JSON changed",
+      "chapter .spw title matches book/content/chapters/*.json"
     ]
+    platform_refs: [".spw/surfaces/platform.spw#seal_checklist_additions"]
   }
   set_stone: {
     role: "emit + ship"
     pipeline: [
       "validate chapter JSON contract",
       "npm run chapters:build",
+      "node .spw/tools/export-chapters.mjs",
       "npm run build",
+      "spot-check offline shell + one share card",
       "commit with release cadence note (13th / 26th)",
       "deploy monument"
     ]
-    refs: [".spw/surfaces/publish.spw#publishing_pipeline"]
+    refs: [
+      ".spw/surfaces/publish.spw#publishing_pipeline",
+      ".spw/surfaces/publish.spw#monument",
+      ".spw/surfaces/platform.spw"
+    ]
   }
 }
 
@@ -180,8 +192,14 @@
   }
 
   ^phase[05: "Claim chain bridge"]{
-    task: "Wire ethos claim list (grammar/semantics/pragmatics) to chamber probes"
-    refs: ["book/scripts/modules/spw-ethos.mjs", "spw-workbench claim protocol"]
+    task: "Wire ethos claim list (grammar/semantics/pragmatics) to chamber probes; unify claim ids with chapter-claims.spw; make spec/impl/probe walkable hrefs"
+    status: "partial — labeled probe-chain UI shipped 2026-07-15; hydration + id parity remain PLAN.B"
+    refs: [
+      "book/scripts/modules/spw-ethos.mjs",
+      ".spw/claims/chapter-claims.spw",
+      "PLAN.B.spw",
+      "spw-workbench claim protocol"
+    ]
   }
 
   ^phase[06: "Patron seal honesty lane"]{
@@ -212,8 +230,17 @@
   business_guest: "scriptorium still imagines hiring a neighboring monument — no B2B homepage"
 }
 
+^"resolved_from_platform_audit"{
+  chapter_spw_regeneration: {
+    answer: "Regenerate on every set-stone when chapter JSON changed — default: after chapters:build, run node .spw/tools/export-chapters.mjs"
+    contract: "workspace c001"
+    audit: ".spw/audits/platform-ship-audit-2026-07-16.spw#chapter-spw-lag"
+    status: "direction fixed; execution still owed"
+  }
+}
+
 ?<open_questions>[
   "Should the desk live under /scriptorium/desk/ (public, read-only) or only as a local npm script?"
   "Do multi-word lexicon terms need phrase-level authoring UI, or is JSON enough for v1?"
-  "When should .spw/chapters/*.spw be regenerated from JSON so Spw canon stops lagging the prose?"
+  "Should editorial-check.mjs fail CI if chapter .spw titles diverge from JSON?"
 ]

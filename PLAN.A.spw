@@ -63,12 +63,32 @@
     ethos_runtime: "PLAN.B.spw#ethos-integration-rollout"
     browser_diagnostics: "PLAN.C.spw#chrome-milestone-exploration"
     platform_rendering: "PLAN.D.spw#houdini-apis-exploration"
+    platform_ship: ".spw/surfaces/platform.spw"
+    platform_audit: ".spw/audits/platform-ship-audit-2026-07-16.spw"
   }
   <cross_plan_deps>{
     A_to_B: "§adapters adapter_purity_gate -> §B canon_claim_hydration (shape contract)"
     A_to_C: "§foundation shadow_dom_inventory -> §C encapsulation_model (component boundary input)"
     A_to_D: "§foundation css_layers_baseline -> §D custom_property_inventory (token catalog input)"
+    A_to_platform: "§vite build entries + dist audit -> platform.spw phases 03/06 (public doors + sitemap)"
   }
+}
+
+^audit_overlay_2026_07_16{
+  source: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+  grade_webdev: "B+ progressive HTML; build completeness lagging"
+  blocking_for_plan_a: [
+    "vite rollup input missing zine/, book/pwa/offline.html (and optionally charm/, timeline)",
+    "dist verification must assert public doors exist, not only chapter count",
+    "release token single source — build-chapters + cache-context only"
+  ]
+  css_already_strong: [
+    "@layer discipline on hub/atmosphere",
+    "color-mix tokens",
+    "view() scroll timelines gated by reduced-motion",
+    "rail overflow containment (minmax 0, overflow-wrap)"
+  ]
+  .note: "Plan A structure migration continues; platform.spw owns ship hygiene phases that do not require adapter purity"
 }
 
 ?["plan_a_integrity_gate"]{
@@ -90,7 +110,21 @@
    should minimum coverage ratios be normative at this stage or deferred to §mastery?"
   "§adapters assumes workbench exports are stable — if submodule updates introduce breaking
    changes to operator_affinities shape, what is the rollback procedure?"
+  "Should charm/ and book/timeline.html remain public Vite entries, or archive out of production dist?"
 ]
+
+^resolved_from_platform_audit{
+  vite_public_entries: {
+    must_include: ["zine/index.html", "book/pwa/offline.html"]
+    should_include_if_linked: ["charm/index.html", "book/timeline.html"]
+    verify: "after npm run build, dist contains those routes"
+    owner_surface: ".spw/surfaces/platform.spw#phase.03"
+  }
+  pages_load_metric: {
+    was: "pages_load_14"
+    direction: "count every public MPA entry in vite input, not a fixed 14"
+  }
+}
 
 ^phases["Foundation"]{
   .note: "phases 00-05 — static analysis producing baseline inventories; no runtime mutations"
@@ -209,6 +243,26 @@
 ^phases["Vite Enhancement"]{
   .note: "phases 06-08 — build tooling changes; must not alter runtime semantics"
   %region_invariant: runtime_behavior_unchanged_after_each_phase
+  %audit_note: "2026-07-16 — complete public rollup input before treating §vite as green; see platform.spw phase 03"
+
+  ^phase[06b: "Vite Public Entry Completeness"]{
+    anchor: plan.a.vite_enhancement.public_entry_completeness
+    role: edit_agent
+    deps: { config: vite_config_js, audit: platform_ship_audit }
+    status: owed_from_audit
+    ^task{
+      add_inputs: ["zine/index.html", "book/pwa/offline.html"]
+      optional_inputs: ["charm/index.html", "book/timeline.html"]
+      safety: "do not drop existing chapter or monument entries"
+      .note: "hub nav links to zine; offline.html is SW fallback — both must ship in dist"
+    }
+    verify: {
+      build: npm_run_build,
+      dist_zine: dist_zine_index_exists,
+      dist_offline: dist_book_pwa_offline_exists
+    }
+    ={ "book/audits/09b-vite-public-entries.spw" }
+  }
 
   ^phase[06: "Vite Alias Resolution"]{
     anchor: plan.a.vite_enhancement.vite_alias_resolution

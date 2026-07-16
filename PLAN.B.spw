@@ -60,12 +60,35 @@
   signal_coverage: partial_runtime_signals_only
   claim_states: missing_untested_active_confirmed_refuted_model
   diagnostics_feed: missing_custom_runtime_cycle_feed
+  claim_id_parity: "spw-ethos.mjs still uses c001-* labels; canon uses lore-c001-* as of 2026-07-16"
+  walkable_refs: "spec/impl/probe rows are text spans, not hrefs into .spw or GitHub"
+  chapter_mirror_lag: "pragmatics claim lore-c003 depends on workspace c001 — currently failing until export-chapters runs"
   %severity: {
     claims_hydration: "high — hardcoded claims diverge from canonical spw source over time"
     status_model: "medium — single-string overwrite loses transition history"
     claim_states: "high — without a state machine, claims cannot be falsified"
     diagnostics_feed: "low — runtime cycle events are enhancement, not prerequisite"
+    claim_id_parity: "high — hydration and UI cannot share one instrument until ids match"
+    walkable_refs: "medium — probe chain reads as ornament without resolvable links"
+    chapter_mirror_lag: "high — plain-text extension claim is false while .spw chapters lag prose"
   }
+}
+
+^audit_overlay_2026_07_16{
+  source: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+  shipped_since_plan_draft: [
+    "labeled ethos claim-ref rows (spec/impl/probe stack)",
+    "rail overflow containment for long expressions",
+    "chapter-claims.spw id policy lore-cNNN + platform/social claims added"
+  ]
+  next: [
+    "align spw-ethos.mjs claim_id with .spw/claims/chapter-claims.spw",
+    "href-ify probe chain rows",
+    "hydrate from /.spw/claims/chapter-claims.spw with fallback constants",
+    "regenerate .spw/chapters so lore-c003 can be honestly probed"
+  ]
+  platform_claims: ["lore-c005-offline-honesty", "lore-c006-share-intrigue"]
+  refs: [".spw/claims/chapter-claims.spw", ".spw/surfaces/platform.spw#phase.07"]
 }
 
 ?<open_questions>[
@@ -75,6 +98,7 @@
    Is a single confirming signal sufficient, or should a quorum be required?"
   "If the remote spw source is unavailable and fallback constants are used, should
    the diagnostics engine annotate all subsequent claim statuses as 'degraded-source'?"
+  "Should platform claims (offline honesty, share intrigue) appear in the chapter rail ethos panel, or only in seal-keeper tooling?"
 ]
 
 ^phases["Ethos Integration Rollout"]{
@@ -83,11 +107,14 @@
     phase_goal: hydrate_claims_from_spw_canon_with_fallback
     module: book_scripts_modules_ethos_claims
     <dep_from_plan_a>: "requires ethos module at relocated path (PLAN.A §module_moves phase 19)"
+    <dep_from_platform>: "prefer same-origin /.spw/claims/chapter-claims.spw; ids lore-cNNN"
 
     ^steps{
+      @id_align: rename_runtime_constants_to_lore_cNNN_matching_chapter_claims
       @fetch: fetch_normalize_spw_source_claims_chapter_claims
       @parse: parse_claim_chain_fields_claim_id_layer_hypothesis_measure_falsification_spec_impl_probe_status
       @normalize: normalize_to_runtime_claim_shape
+      @href: project_spec_impl_probe_to_walkable_hrefs_when_path_like
       @metadata: attach_source_metadata_remote_or_fallback_reason
       @fallback: fallback_to_local_constants_on_fetch_or_parse_failure
     }

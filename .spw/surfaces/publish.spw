@@ -56,4 +56,88 @@
     validate: { checks: ["valid-json"] }
     emit: { target: "dist/publish/runtime/", format: "json" }
   }
+
+  # Monument production ship (GitHub Pages / Vite dist) — platform surface owns details.
+  monument: {
+    select: {
+      sources: [
+        "book/content/chapters/*.json",
+        "index.html",
+        "topics/",
+        "scriptorium/",
+        "world/",
+        "characters/",
+        "zine/",
+        "book/pwa/offline.html"
+      ]
+    }
+    transform: {
+      steps: [
+        "npm run chapters:build",
+        "node .spw/tools/export-chapters.mjs",
+        "npm run build"
+      ]
+    }
+    validate: {
+      checks: [
+        "no-broken-refs",
+        "sw-precache-urls-exist",
+        "vite-emits-public-doors",
+        "og-image-nonblank",
+        "chapter-spw-title-matches-json",
+        "release-token-consistent"
+      ]
+      refs: [".spw/surfaces/platform.spw#seal_checklist_additions"]
+    }
+    emit: {
+      target: "dist/",
+      formats: ["html", "css", "js", "webmanifest"],
+      also: ["sitemap.xml", "robots.txt", "sw.js"]
+    }
+  }
+}
+
+^"social_projection"{
+  .note: "share-card packaging is part of emit, not optional marketing garnish"
+  required_meta: [
+    "description",
+    "og:type",
+    "og:title",
+    "og:description",
+    "og:url",
+    "og:image",
+    "og:image:alt",
+    "twitter:card=summary_large_image",
+    "twitter:title",
+    "twitter:description",
+    "twitter:image"
+  ]
+  image_contract: {
+    preferred: "1200x630",
+    max_bytes: "5MB",
+    forbid: "near-empty placeholder PNGs"
+  }
+  surfaces: [
+    "/",
+    "/book/chapter/01/" .. "/book/chapter/13/",
+    "/topics/",
+    "/scriptorium/",
+    "/zine/",
+    "/characters/boof.html",
+    "/world/civic-magic.html",
+    "/world/boonberry-commons.html"
+  ]
+}
+
+^"pwa_projection"{
+  manifest: "manifest.webmanifest"
+  service_worker: "sw.js"
+  offline: "book/pwa/offline.html"
+  rules: [
+    "CACHE_VERSION tracks release token or content hash",
+    "precache only URLs that resolve 200 at install",
+    "navigate network-first; offline.html fallback",
+    "icon purpose any and maskable as separate assets"
+  ]
+  refs: [".spw/surfaces/platform.spw#domain.pwa", ".spw/audits/platform-ship-audit-2026-07-16.spw"]
 }

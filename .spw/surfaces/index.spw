@@ -8,6 +8,11 @@
   plugin_protocol: "@spw/surfaces/plugin-protocol.spw"
   domains: "@spw/surfaces/domains.spw"
   editorial: "@spw/surfaces/editorial.spw"
+  platform: "@spw/surfaces/platform.spw"
+}
+
+^"audits"{
+  platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
 }
 
 ^"output_formats"{
@@ -15,6 +20,8 @@
   markdown: { mime: "text/markdown", extension: ".md", use_case: "long-form reference exports" }
   json: { mime: "application/json", extension: ".json", use_case: "selector and metrics sidecars" }
   rss: { mime: "application/rss+xml", extension: ".xml", use_case: "chapter progression feed" }
+  webmanifest: { mime: "application/manifest+json", extension: ".webmanifest", use_case: "PWA install surface" }
+  sitemap: { mime: "application/xml", extension: ".xml", use_case: "discoverability of monument doors + chapters" }
 }
 
 ^"pipeline_stages"{
@@ -30,4 +37,16 @@
   bonk: "validate"
   honk: "emit"
   bane: "fallback"
+}
+
+^"ship_gates"{
+  .note: "validate stage checks for public monument — see platform.spw seal checklist"
+  validate_checks: [
+    "no-broken-internal-routes",
+    "sw-precache-urls-exist",
+    "vite-emits-public-doors",
+    "og-image-nonblank",
+    "chapter-spw-title-matches-json",
+    "release-token-consistent"
+  ]
 }

@@ -1,0 +1,249 @@
+# Lore.Land Platform Surface
+# Ship hygiene for the public monument: webdev MPA, PWA shell, social intrigue,
+# progressive CSS/API craft. Complements editorial.spw (scribe desk) and
+# publish.spw (projection pipelines).
+#>lore_land_surfaces_platform
+#:surface #!platform
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  Readers meet Lore.Land as a web app and as a share card long before they
+  meet the Spw rail. Platform work protects progressive prose: offline honesty,
+  install quality, discoverability, and intrigue packaging — without turning
+  the monument into a product dashboard.
+}
+
+^meta{
+  intent: "plan + contracts for platform ship quality after 2026-07-16 audit"
+  audience: ["implementer", "seal-keeper", "chamberwright"]
+  related: {
+    audit: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+    publish: ".spw/surfaces/publish.spw"
+    editorial: ".spw/surfaces/editorial.spw"
+    workspace: ".spw/workspace.spw"
+    plan_a_vite: "PLAN.A.spw#vite"
+    plan_b_ethos: "PLAN.B.spw"
+    plan_c_shadow: "PLAN.C.spw"
+    plan_d_platform_css: "PLAN.D.spw"
+  }
+  release_token: "book/scripts/modules/cache-context.mjs + book/scripts/tools/build-chapters.mjs"
+  cadence: "public ship windows on the 13th and 26th"
+}
+
+&plan_contracts{
+  #invariant: public_monument_readable_without_js
+  #invariant: offline_page_never_promises_uncached_content
+  #invariant: release_token_single_source_of_truth
+  #invariant: every_public_url_has_description_and_share_card
+  #invariant: vite_build_emits_all_public_mpa_entries
+  #invariant: sw_precache_only_lists_existing_assets
+  #invariant: chapter_spw_mirrors_json_prose
+}
+
+^"problem"{
+  today: {
+    pwa: "SW registers; precache targets missing fixtures and stale release"
+    social: "home + chapters have partial OG; doors/zine incomplete; no Twitter cards"
+    build: "Vite inputs miss zine, charm, timeline, offline"
+    canon: "export-chapters exists but chapter .spw lag live titles"
+    fonts: "CDN mono without font-display; display face OTF"
+  }
+  gap: "platform hygiene not yet a first-class surface next to editorial and publish"
+}
+
+^"surface_shape"{
+  name: "Platform shell"
+  fantasy_dress: "weighhouse threshold — seals on the door, honest measure of what is cached"
+  placement: {
+    public: "manifest, sw.js, offline.html, meta tags on every door"
+    workshop: "this plan + audit; seal checklist items in editorial"
+    code: [
+      "sw.js",
+      "manifest.webmanifest",
+      "book/pwa/*",
+      "vite.config.js",
+      "book/scripts/modules/experience-core.mjs#registerStoryServiceWorker",
+      "book/templates/chapter.html",
+      "monument *.html heads"
+    ]
+  }
+}
+
+^"domains"{
+
+  ^domain["webdev_mpa"]{
+    must: [
+      "Vite input includes all public HTML doors intended for production",
+      "chapters:build before vite build",
+      "sitemap.xml + robots.txt at site root",
+      "lazy images + decoding async on non-LCP media"
+    ]
+    should: [
+      "font-display swap on all @font-face",
+      "preconnect only for required origins",
+      "single release token across HTML query strings"
+    ]
+    files: ["vite.config.js", "package.json", "book/scripts/tools/build-chapters.mjs"]
+  }
+
+  ^domain["pwa"]{
+    must: [
+      "CACHE_VERSION tied to release token or content hash",
+      "precache only URLs that 200 at install time",
+      "navigate: network-first with offline.html fallback",
+      "split icon purpose any vs maskable"
+    ]
+    should: [
+      "manifest shortcuts: Enter Ch.1, Chambers, Zine",
+      "manifest screenshots for install UI",
+      "optional seed cache of /book/chapter/01/",
+      "update affordance when registration.waiting"
+    ]
+    must_not: [
+      "unbounded cache.put of every GET forever without eviction",
+      "claim offline chapters that were never visited or seeded"
+    ]
+    files: ["sw.js", "manifest.webmanifest", "book/pwa/offline.html"]
+  }
+
+  ^domain["social_intrigue"]{
+    must: [
+      "og:title, og:description, og:url, og:image, og:type on every public URL",
+      "twitter:card summary_large_image + title/description/image",
+      "og:image:alt on share images",
+      "chapter images are real intrigue plates (not empty 6KB shells)"
+    ]
+    should: [
+      "1200x630 JPG/PNG primary share asset (webp optional secondary)",
+      "Article JSON-LD on chapters",
+      "navigator.share or copy-link at chapter end / zine"
+    ]
+    copy_bank: [
+      "Six kitchens go cold. A dog finds the clean report is the thief.",
+      "Dawn in Boon.land — measures missing, seals intact",
+      "One sheet, one slit, eight panels — the Boonberry Broadside"
+    ]
+    files: [
+      "index.html",
+      "book/templates/chapter.html",
+      "zine/index.html",
+      "topics/index.html",
+      "scriptorium/index.html",
+      "characters/boof.html",
+      "world/*.html"
+    ]
+  }
+
+  ^domain["css_api_craft"]{
+    keep: [
+      "view() timelines gated by prefers-reduced-motion and @supports",
+      "overflow containment on Spw rails (minmax 0, overflow-wrap)",
+      "atmosphere ornaments print-suppressed"
+    ]
+    next: [
+      "View Transitions for chamber continuity",
+      "content-visibility on long sections",
+      "@container for aside density",
+      "text-wrap balance on hero titles"
+    ]
+    explore: "PLAN.C shadow track already partially lived (chapter sigils); PLAN.D houdini remains exploration"
+  }
+
+  ^domain["spw_links"]{
+    must: [
+      "regenerate .spw/chapters after prose changes",
+      "claim ids match between chapter-claims.spw and spw-ethos.mjs",
+      "spec rows prefer lore .spw paths; workbench as upstream kernel"
+    ]
+    should: [
+      "ethos rows are <a href> to walkable canon",
+      "chapters/index.spw titles match JSON"
+    ]
+    regenerate: "node .spw/tools/export-chapters.mjs"
+    prose_sot: "book/content/chapters/*.json"
+  }
+}
+
+^"phases"{
+  .note: "implementation order — each phase leaves the monument usable; maps to audit P0–P2"
+
+  ^phase[00: "Audit freeze"]{
+    task: "Capture findings in .spw/audits/platform-ship-audit-2026-07-16.spw; mount from index"
+    status: done
+    verify: "audit linked from .spw/index.spw and workspace maintenance"
+    ={ ".spw/audits/platform-ship-audit-2026-07-16.spw" }
+  }
+
+  ^phase[01: "Service worker shell"]{
+    task: "Rewrite sw.js precache to real assets; bump CACHE_VERSION; fix offline.html styles to current core paths"
+    verify: "install event succeeds; offline.html readable offline; no fixture 404s"
+    refs: ["sw.js", "book/pwa/offline.html"]
+  }
+
+  ^phase[02: "Chapter .spw regenerate"]{
+    task: "Run export-chapters against live chapter-data; refresh chapters/index.spw titles"
+    verify: "ch01 title equals book/content/chapters/01.json title"
+    refs: [".spw/tools/export-chapters.mjs", ".spw/workspace.spw#c001"]
+  }
+
+  ^phase[03: "Vite public entries"]{
+    task: "Add zine, offline (+ timeline/charm if public) to vite rollup input; confirm dist emits them"
+    verify: "ls dist/zine and dist/book/pwa/offline.html after npm run build"
+    refs: ["vite.config.js", "PLAN.A.spw#vite"]
+  }
+
+  ^phase[04: "Social meta pack"]{
+    task: "Uniform OG+Twitter blocks; zine og:image; replace empty chapter OG plates"
+    verify: "manual share debugger on /, /zine/, /book/chapter/01/, /topics/"
+  }
+
+  ^phase[05: "Manifest quality"]{
+    task: "Split any/maskable icons; shortcuts; optional screenshots"
+    verify: "manifest validates; install icon not clipped on Android mask"
+  }
+
+  ^phase[06: "Discoverability"]{
+    task: "robots.txt + sitemap.xml for doors + 13 chapters"
+    verify: "sitemap urls 200"
+  }
+
+  ^phase[07: "Ethos walkable chain"]{
+    task: "Unify claim ids; href-ify spec/impl/probe; hydrate from chapter-claims.spw when ready"
+    verify: "clicking spec opens resolvable .spw or GitHub resource"
+    refs: ["PLAN.B.spw", ".spw/claims/chapter-claims.spw"]
+  }
+
+  ^phase[08: "Fonts + perf"]{
+    task: "font-display + preconnect or self-host mono; consider WOFF2 display"
+    verify: "no render-blocking third-party font without display policy"
+  }
+
+  ^phase[09: "Share + view transitions (delight)"]{
+    task: "navigator.share/copy-link; optional View Transitions between chambers"
+    deferred: false
+    verify: "reduced-motion still calm; share no-ops gracefully when API absent"
+  }
+}
+
+^"seal_checklist_additions"[
+  "SW precache URLs exist at HEAD of deploy",
+  "Vite dist includes every public door linked from hub nav",
+  "OG image non-blank and < 5MB",
+  "twitter:card present on shared URL",
+  ".spw/chapters regenerated if chapter JSON changed",
+  "release token bumped when shell CSS/JS changed"
+]
+
+^"success_probes"{
+  offline: "Airplane mode after first visit: offline.html and last-viewed chapter if cached"
+  share: "Paste /book/chapter/01/ in a messenger — art + logline visible"
+  canon: "export-chapters is dry-run clean against current HTML"
+  build: "npm run build includes zine and offline"
+}
+
+?<open_questions>[
+  "Charm surface: keep public in Vite, archive, or leave out of production dist?"
+  "Should SW update force skipWaiting or wait for seal-keeper refresh CTA?"
+  "Public expose of /.spw/** on GitHub Pages — intrigue vs noise/size?"
+]

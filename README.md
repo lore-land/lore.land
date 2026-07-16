@@ -66,12 +66,14 @@ Tempos: `night` · `dawn` · `morning` · `day` · `dusk` · `sunset` · `lampli
 Tints: `gold` · `teal` · `ember` · `archive` · `hearth` · `berry` · `night` · `brass` · `paper`.
 If omitted, the builder infers tempo from `scene.light` text.
 
-Editorial surface plan (scriptorium desk, seal checklist, phases): `.spw/surfaces/editorial.spw`.
+Editorial surface plan (scriptorium desk, seal checklist, phases): `.spw/surfaces/editorial.spw`.  
+Platform ship plan (PWA, social meta, Vite entries, canon-sync): `.spw/surfaces/platform.spw`.  
+Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_07_14.G` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_07_15.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -201,34 +203,43 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
 ### `.spw` Canon Surface
 
 - Repository-local canon root: `.spw/`
-- Chapter references: `.spw/chapters/01.spw` ... `.spw/chapters/13.spw`
-- Indexes and claims:
-  - `.spw/index.spw`
-  - `.spw/workspace.spw`
-  - `.spw/chapters/index.spw`
-  - `.spw/claims/chapter-claims.spw`
-- Runtime, surfaces, and observability:
+- Prose source of truth: `book/content/chapters/*.json` (HTML embed via `chapters:build`)
+- Chapter semantic mirrors: `.spw/chapters/01.spw` ... `.spw/chapters/13.spw` (must stay in sync — workspace contract **c001**)
+- Indexes, claims, process:
+  - `.spw/index.spw` — mount + direction
+  - `.spw/workspace.spw` — contracts c001–c010 + maintenance
+  - `.spw/chapters/index.spw` — live titles index
+  - `.spw/claims/chapter-claims.spw` — lore-cNNN probe chain (incl. platform/social claims)
+- Runtime, surfaces, audits:
   - `.spw/runtime/precipitates.spw`
   - `.spw/state/observable.spw`
   - `.spw/surfaces/index.spw`
-  - `.spw/surfaces/publish.spw`
+  - `.spw/surfaces/publish.spw` — projection + monument ship pipeline + social/PWA projection
+  - `.spw/surfaces/editorial.spw` — scribe desk plan
+  - `.spw/surfaces/platform.spw` — webdev / PWA / social / CSS-API ship plan
   - `.spw/surfaces/plugin-protocol.spw`
   - `.spw/surfaces/domains.spw`
-- Regeneration command:
+  - `.spw/audits/platform-ship-audit-2026-07-16.spw` — findings + priority backlog
+- Root long-arc plans (updated with audit overlays):
+  - `PLAN.A.spw` — structure / Vite (public entry completeness owed)
+  - `PLAN.B.spw` — ethos hydration + walkable refs
+  - `PLAN.C.spw` — Shadow DOM / Chrome (sigils already lived)
+  - `PLAN.D.spw` — Houdini / Firefox (P0 platform work outranks)
+- Regeneration command (run after chapter prose changes):
   - `node .spw/tools/export-chapters.mjs`
 
-Chapter `.spw` files are generated from `book/chapter/*/index.html#chapter-data` and intended as long-form, expressive references for story extension and semantic diffing.
+Chapter `.spw` files are generated from chapter-data (HTML embed or JSON SoT path) and intended as long-form, expressive references for story extension and semantic diffing. If titles lag live JSON, regenerate before treating plain-text extension claims as true.
 
 ### Cache + Release Coupling
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_07_13.A`
+- release token: `2026_07_15.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`
 
-Use this when introducing new Spw routing/interactions/effects so chapters and home surfaces load coherent runtime behavior after deploy.
+Use this when introducing new Spw routing/interactions/effects so chapters and home surfaces load coherent runtime behavior after deploy. Bump the same token when shell CSS/JS or SW precache changes.
 
 ### Seed Folder Convention
 

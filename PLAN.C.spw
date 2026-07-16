@@ -45,6 +45,32 @@
   baseline_date: "March 2, 2026"
   latest_chrome_stable_major: 145
   chrome_145_stable_date: "February 10, 2026"
+  platform_audit_refresh: "2026-07-16"
+}
+
+^audit_overlay_2026_07_16{
+  source: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+  shadow_dom_lived: {
+    chapter_sigils: "book/scripts/modules/chapter-sigil.mjs — open shadow roots with mirrored inspector styles"
+    finding: "Shadow track is no longer purely speculative; inventory phase should treat sigils as intentional adoption"
+    style_strategy: "document stylesheets cannot reach shadow; chapter-sigil embeds inspection CSS mirror of interactive.css"
+  }
+  chrome_platform_in_use: [
+    "animation-timeline: view() for atmosphere parallax",
+    ":has() for aside and section-head layout",
+    "color-mix() throughout hub and rail",
+    "import.meta.glob for chapter sigil modules (Vite)"
+  ]
+  prioritize_next_milestones: [
+    "View Transitions API for chamber continuity (also platform.spw phase 09)",
+    "Popover API / invokers for inspectors (optional vs shadow panels)",
+    "content-visibility and container queries for long chambers"
+  ]
+  deprioritize_until_p0: [
+    "broad closed-mode shadow migration of entire rail",
+    "milestone catalog work that does not unblock SW/social/vite"
+  ]
+  refs: [".spw/surfaces/platform.spw", "PLAN.D.spw#audit_overlay_2026_07_16"]
 }
 
 &verified_sources{

@@ -4,8 +4,10 @@
 
 ^workspace{
   root: ".spw/"
-  purpose: "Long-form Spw references for chapter extension and storytelling semantics."
+  purpose: "Long-form Spw references for chapter extension, storytelling semantics, and platform ship direction."
   ethos_bridge: "book/scripts/modules/spw-ethos.mjs"
+  prose_sot: "book/content/chapters/*.json"
+  audit_active: "@spw/audits/platform-ship-audit-2026-07-16.spw"
 }
 
 &surfaces{
@@ -13,12 +15,42 @@
   claims: "@spw/claims/chapter-claims.spw"
   process: "@spw/workspace.spw"
   surfaces: "@spw/surfaces/index.spw"
+  publish: "@spw/surfaces/publish.spw"
+  editorial: "@spw/surfaces/editorial.spw"
+  platform: "@spw/surfaces/platform.spw"
   runtime: "@spw/runtime/precipitates.spw"
   observable: "@spw/state/observable.spw"
+  audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+}
+
+&plans{
+  .note: "Root PLAN.*.spw files are the long-arc specs; surfaces carry ship-facing phases."
+  structure: "PLAN.A.spw"
+  ethos: "PLAN.B.spw"
+  shadow_chrome: "PLAN.C.spw"
+  houdini_firefox: "PLAN.D.spw"
+  platform_ship: "@spw/surfaces/platform.spw"
+  editorial_desk: "@spw/surfaces/editorial.spw"
 }
 
 ~navigation{
   chapter_chain: "^[chapter/*]{open}"
   section_chain: "^[chapter/*/s*]{open}"
   probe_chain: "^[claim-chain]{claim -> spec -> impl -> probe}"
+  platform_chain: "^[platform/*]{sw | social | vite | canon-sync}"
+}
+
+~direction{
+  from_audit: "2026-07-16 platform ship audit"
+  order: [
+    "rewrite service worker shell",
+    "regenerate chapter .spw mirrors from JSON",
+    "social meta + real OG art",
+    "complete Vite public entries + sitemap"
+  ]
+  keep: [
+    "progressive enhancement",
+    "modern CSS behind reduced-motion and @supports",
+    "dual-register reading (adventure surface · workshop veil)"
+  ]
 }

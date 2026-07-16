@@ -2,36 +2,101 @@
 #>lore_land_claims
 #:harness #!protocol
 
+~<rationale>{
+  Claims are falsifiable hypotheses about the monument runtime. Spec refs prefer
+  first-class lore .spw surfaces; workbench paths remain upstream kernel truth.
+  Runtime UI (spw-ethos.mjs) MUST use the same claim_id values so hydration and
+  probe-chain rows stay one instrument (workspace c009).
+}
+
+^meta{
+  id_policy: "lore-cNNN-slug — single namespace for .spw claims and spw-ethos.mjs"
+  walkable_refs: "spec/impl/probe SHOULD be resolvable paths or GitHub blob URLs, not prose-only"
+  related: {
+    ethos_ui: "book/scripts/modules/spw-ethos.mjs"
+    platform: ".spw/surfaces/platform.spw#phase.07"
+    plan_b: "PLAN.B.spw"
+    audit: ".spw/audits/platform-ship-audit-2026-07-16.spw#ethos-refs-ornamental"
+  }
+}
+
 ^claim_chain{
   grammar: {
-    claim_id: "lore-c001-brace-legibility"
-    hypothesis: "Section handles remain understandable in prefix and postfix form."
-    spec_ref: "spw-workbench/.spw/surfaces/publish.spw#projection_rules"
-    impl_ref: "book/scripts/modules/ebook-navigation.mjs"
-    probe_ref: "lore:ebook-section-change"
+    claim_id: "lore-c001-brace-symmetry"
+    layer: "grammar"
+    hypothesis: "L/R brace anchors and section handles remain symmetrically explorable and legible in plain text."
+    measure: "Handle traversal and selection parity in chapter controls; prefix/postfix readability."
+    falsification: "Asymmetry drift over 15% between left and right traversals, or handles require hidden UI context."
+    spec_ref: ".spw/surfaces/publish.spw#projection_rules"
+    impl_ref: "book/scripts/modules/spw-interactions.mjs"
+    probe_ref: "lore:spw-selection + ebook handle inspector"
+    alt_spec: ".spw/_workbench/.spw/surfaces/publish.spw#projection_rules"
   }
 
   semantics: {
-    claim_id: "lore-c002-route-polarity"
-    hypothesis: "Route and register sigils preserve perspective semantics across chapter/home surfaces."
-    spec_ref: "spw-workbench/.spw/runtime/precipitates.spw#stages"
-    impl_ref: "book/scripts/modules/spw-ethos.mjs"
-    probe_ref: "lore:spw-selection"
+    claim_id: "lore-c002-accessor-polarity"
+    layer: "semantics"
+    hypothesis: "# and . keep readable projection/ground polarity; route and register sigils preserve perspective across chapter/home."
+    measure: "Interpretability of route and register handles by layer."
+    falsification: "Less than 70% role clarity in mixed route contexts."
+    spec_ref: ".spw/runtime/precipitates.spw#stages"
+    impl_ref: "book/scripts/modules/ebook-navigation.mjs"
+    probe_ref: "lore:spw-selection + concept routes + payload readout"
+    alt_spec: ".spw/_workbench/.spw/runtime/precipitates.spw#stages"
   }
 
   pragmatics: {
-    claim_id: "lore-c003-plain-text-story"
-    hypothesis: "A chapter can be extended by reading only raw chapter .spw files."
-    spec_ref: "spw-workbench/.spw/state/observable.spw"
-    impl_ref: "book/chapter/*/index.html"
-    probe_ref: "manual extension review"
+    claim_id: "lore-c003-plain-text-legibility"
+    layer: "pragmatics"
+    hypothesis: "Raw Spw expressions and chapter .spw mirrors stay legible enough to extend story without custom renderers — only if mirrors match prose SoT."
+    measure: "Reader can infer intent from visible route/claim expressions; .spw/chapters title matches JSON."
+    falsification: "More than 20% of chapter expressions require hidden UI context, or chapter .spw lag live JSON (workspace c001 fail)."
+    spec_ref: ".spw/state/observable.spw"
+    impl_ref: "book/content/chapters/*.json + .spw/chapters/*.spw + export-chapters.mjs"
+    probe_ref: "title diff JSON vs .spw/chapters + section navigation"
+    depends_on: "workspace c001"
   }
 
   pipeline: {
     claim_id: "lore-c004-pipeline-alignment"
-    hypothesis: "Lore load lifecycle stays mappable to select-transform-validate-emit semantics."
-    spec_ref: "spw-workbench/.spw/surfaces/index.spw#pipeline_stages"
-    impl_ref: "book/scripts/home/app.mjs"
-    probe_ref: "data-load-stage + runtime stage status"
+    layer: "semantics"
+    hypothesis: "Load lifecycle labels map clearly to select-transform-validate-emit semantics."
+    measure: "Status text keeps a stable mapping between load and runtime stages."
+    falsification: "Readers cannot infer stage intent from on-screen stage labels."
+    spec_ref: ".spw/surfaces/index.spw#pipeline_stages"
+    impl_ref: "book/scripts/modules/load-lifecycle.mjs + book/scripts/home/app.mjs"
+    probe_ref: "data-load-stage and runtime status chips"
   }
+
+  platform: {
+    claim_id: "lore-c005-offline-honesty"
+    layer: "pragmatics"
+    hypothesis: "PWA offline surface never promises chapters or assets that were not precached or previously visited."
+    measure: "Offline copy + SW precache list match; install does not 404 fixture paths."
+    falsification: "Install precache fails, or offline.html claims cached chambers without seed."
+    spec_ref: ".spw/surfaces/platform.spw#domain.pwa"
+    impl_ref: "sw.js + book/pwa/offline.html"
+    probe_ref: "airplane mode after install + after visit ch01"
+  }
+
+  social: {
+    claim_id: "lore-c006-share-intrigue"
+    layer: "pragmatics"
+    hypothesis: "Every public monument URL packages a non-blank share card with logline-quality description."
+    measure: "OG + Twitter summary_large_image present; og:image is real art not empty plate."
+    falsification: "Shared chapter or door shows blank/grey card or missing description."
+    spec_ref: ".spw/surfaces/publish.spw#social_projection"
+    impl_ref: "book/templates/chapter.html + monument HTML heads"
+    probe_ref: "manual share debugger on /, /book/chapter/01/, /zine/, /topics/"
+  }
+}
+
+^"runtime_parity"{
+  target_module: "book/scripts/modules/spw-ethos.mjs"
+  must: [
+    "claim_id values identical to this file",
+    "spec_ref prefers lore .spw paths listed above",
+    "UI rows expose walkable href when path is same-origin or https"
+  ]
+  status: "ids aligned in canon 2026-07-16; runtime module still carries legacy c001-* labels until PLAN.B hydration"
 }

@@ -46,8 +46,47 @@
 ^context{
   baseline_date: "March 2, 2026"
   mode: exploration_and_audit_only
+  platform_audit_refresh: "2026-07-16"
   .note: "Plan D produces no implementation code — all phases emit audit artifacts
-          that inform adoption decisions in PLAN.A and future implementation plans"
+          that inform adoption decisions in PLAN.A and future implementation plans.
+          Platform ship hygiene (SW, OG, Vite entries) is owned by .spw/surfaces/platform.spw,
+          not Houdini phases."
+}
+
+^audit_overlay_2026_07_16{
+  source: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+  grade_modern_css: "A-"
+  already_production: [
+    "@layer cascade on monument",
+    "color-mix(in srgb) tokens",
+    "view() scroll-driven animations with reduced-motion gate",
+    "mask-composite ornament",
+    "overflow: clip for timeline-safe art plates"
+  ]
+  adopt_without_houdini: [
+    "View Transitions API",
+    "navigator.share / clipboard.writeText",
+    "@container queries for rail density",
+    "text-wrap: balance | pretty",
+    "content-visibility: auto on long sections",
+    "font-display + self-host or preconnect mono"
+  ]
+  houdini_still_explore: [
+    "@property for typed theme tokens (paper/ember/night)",
+    "Paint API only if Chromium-only atmosphere ornaments are acceptable"
+  ]
+  firefox_posture: [
+    "reduced-motion and print paths must stay first-class",
+    "view() timelines already @supports gated — keep that pattern for all scroll-driven craft",
+    "Paint API remains Chromium-leaning; do not block ship on it"
+  ]
+  blocking_is_not_houdini: [
+    "sw.js broken precache",
+    "empty chapter OG plates",
+    "incomplete Vite public entries",
+    "chapter .spw lag"
+  ]
+  owner_for_blocking: ".spw/surfaces/platform.spw"
 }
 
 &sources{
@@ -76,7 +115,15 @@
   "Typed OM write paths (attributeStyleMap.set) have performance characteristics
    that differ from string-based style assignment — should the benchmark harness
    (phase 23) establish a performance regression budget before migration begins?"
+  "Given 2026-07-16 platform audit P0s, should Houdini exploration pause until
+   platform.spw phases 01–04 are green?"
 ]
+
+^resolved_direction_2026_07_16{
+  houdini_vs_platform: "Platform P0/P1 (SW, OG, Vite, canon-sync) outrank Houdini exploration for ship windows"
+  progressive_pattern: "Keep @supports + prefers-reduced-motion gates for every scroll-driven or optional visual"
+  share_intrigue: "Social packaging is publish surface work, not Paint API work"
+}
 
 
 ^phases["Houdini APIs Exploration"]{

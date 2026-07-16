@@ -3,17 +3,37 @@
 #:process #!reference
 
 ^intent{
-  hypothesis: "Story pages are readable as prose and inspectable as Spw runtime systems."
+  hypothesis: "Story pages are readable as prose, shareable as intrigue, installable as an honest PWA, and inspectable as Spw runtime systems."
   architecture: "chapter-json -> DOM runtime -> Spw handles -> ebook navigation -> ethos probes"
   publish_surface: "select -> transform -> validate -> emit"
+  platform_surface: "shell (sw/manifest) + meta (og/twitter) + build (vite/sitemap) + canon-sync"
 }
 
 ^contracts{
-  c001: "Keep chapter .spw references synced with chapter-data JSON."
+  c001: "Keep chapter .spw references synced with chapter-data JSON (prose SoT: book/content/chapters/*.json)."
   c002: "All navigation handles remain legible in plain text."
   c003: "Claim panels map interaction events to falsifiable status updates."
   c004: "Runtime stage vocabulary remains consistent across chapter and home surfaces."
   c005: "Observable metrics stay structurally stable for tools and LSP consumers."
+  c006: "Service worker precache lists only assets that exist at deploy HEAD; CACHE_VERSION tracks release token."
+  c007: "Every public monument URL carries description + OG + Twitter summary_large_image packaging."
+  c008: "Vite production build emits every public MPA door linked from hub navigation (incl. zine, offline)."
+  c009: "Ethos claim ids match .spw/claims/chapter-claims.spw; spec/impl/probe rows resolve to walkable refs."
+  c010: "Release token has a single source of truth (cache-context.mjs + build-chapters.mjs); README follows, never leads."
+}
+
+^contract_status{
+  .note: "as of platform ship audit 2026-07-16"
+  c001: "failing — chapter .spw titles lag live JSON (regenerate required)"
+  c002: "holding — handles remain plain-text legible in rail"
+  c003: "partial — claim UI present; status state machine still PLAN.B"
+  c004: "holding — lifecycle_bridge vocabulary shared"
+  c005: "holding — observable.spw shape stable"
+  c006: "failing — sw.js precaches missing fixtures, stale version"
+  c007: "partial — home/chapters partial OG; doors/zine/twitter incomplete"
+  c008: "failing — vite input omits zine/offline (and other doors)"
+  c009: "partial — labeled probe chain UI shipped; ids diverge; refs not hrefs"
+  c010: "partial — code token 2026_07_15.A; docs may drift"
 }
 
 &lifecycle{
@@ -25,9 +45,22 @@
 }
 
 ~maintenance{
-  regenerate: "node .spw/tools/export-chapters.mjs"
-  source_of_truth: "book/chapter/*/index.html#chapter-data"
+  regenerate_chapters_spw: "node .spw/tools/export-chapters.mjs"
+  chapters_html: "npm run chapters:build"
+  full_build: "npm run build"
+  source_of_truth_prose: "book/content/chapters/*.json"
+  source_of_truth_html_embed: "book/chapter/*/index.html#chapter-data"
   surfaces_registry: ".spw/surfaces/index.spw"
+  platform_plan: ".spw/surfaces/platform.spw"
+  platform_audit: ".spw/audits/platform-ship-audit-2026-07-16.spw"
   runtime_manifest: ".spw/runtime/precipitates.spw"
   observable_state: ".spw/state/observable.spw"
+  release_token: "book/scripts/modules/cache-context.mjs"
+  seal_checklist: ".spw/surfaces/platform.spw#seal_checklist_additions"
+}
+
+~priority{
+  p0: ["c006 sw shell", "c001 chapter spw sync", "c008 vite entries", "social OG art plates"]
+  p1: ["c007 share meta", "c009 walkable ethos", "manifest icons/shortcuts", "sitemap/robots"]
+  p2: ["share API", "view transitions", "font self-host", "SW update toast"]
 }
