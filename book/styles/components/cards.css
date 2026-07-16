@@ -220,13 +220,18 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
 
 .ebook-lsp-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.32rem;
 }
 
 .ebook-lsp-link {
-  flex: 1;
+  flex: 1 1 8rem;
+  min-width: 0;
+  max-width: 100%;
   text-align: left;
+  justify-content: flex-start;
+  overflow-wrap: anywhere;
 }
 
 .ebook-lsp-link[disabled] {
@@ -333,15 +338,48 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   padding: 0.42rem;
 }
 
-.ethos-claim-line,
-.ethos-claim-ref {
+.ethos-claim-line {
   margin: 0;
   font-size: 0.74rem;
   color: var(--theme-text-alt);
+  overflow-wrap: anywhere;
 }
 
+/* Probe chain: each claim maps to three readable handles so the
+ * "claim → spec → impl → probe" subtitle stays visible as structure. */
 .ethos-claim-ref {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.12rem 0 0;
+  padding-top: 0.34rem;
+  border-top: 1px dashed color-mix(in srgb, var(--theme-accent-main) 22%, transparent);
   font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  color: var(--theme-text-alt);
+}
+
+.ethos-claim-ref-entry {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 0.34rem;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.ethos-claim-ref-kind {
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--theme-accent-main) 78%, var(--theme-text-alt));
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.ethos-claim-ref-path {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  opacity: 0.88;
 }
 
 .ethos-operators-heading {
@@ -358,24 +396,33 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
   gap: 0.26rem;
 }
 
 .ethos-operator-item {
   display: flex;
-  align-items: center;
-  gap: 0.32rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.28rem 0.36rem;
+  min-width: 0;
   border: var(--interactive-border);
   border-radius: var(--border-radius-pill);
   background: rgba(255, 255, 255, 0.78);
-  padding: 0.14rem 0.46rem;
+  padding: 0.16rem 0.48rem;
 }
 
 .ethos-operator-token {
+  flex: 0 0 auto;
   font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
   font-size: 0.72rem;
   color: var(--theme-accent-main);
+}
+
+.ethos-operator-meta {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
 }
 
 .ethos-operator-meta,
@@ -384,6 +431,10 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   font-size: 0.7rem;
   color: var(--theme-text-alt);
   font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+}
+
+.ethos-status {
+  overflow-wrap: anywhere;
 }
 
 .spw-ethos-panel[data-load-stage="honk"] .ethos-status {
@@ -476,10 +527,24 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
 .ethos-claim-handle,
 .story-attribution-links a {
   min-height: var(--spw-control-height);
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   display: inline-flex;
-  justify-content: center;
+  /* Labels are tokenized into spans by the Spw runtime; without wrap those
+   * spans are unwrappable flex items and long expressions blow out the rail. */
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow-wrap: anywhere;
   background: color-mix(in srgb, var(--spw-panel-surface-strong) 82%, transparent 18%);
+}
+
+.ebook-register-button,
+.ebook-perspective-button,
+.ebook-syntax-button,
+.ebook-payload-button,
+.ebook-nav-controls button {
+  justify-content: center;
 }
 
 .ebook-register-button:hover,
@@ -621,4 +686,3 @@ html[data-ebook-register="engineer"] .ebook-nav-panel {
 }
 
 /* Responsive chapter rules moved to book-layout.css */
-

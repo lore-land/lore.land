@@ -228,11 +228,13 @@
 
 .spw-inspection-controls {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.32rem;
   border: 1px solid color-mix(in srgb, var(--border-color-main) 68%, hsla(var(--shader-hue), 72%, 58%, 0.5) 32%);
   border-radius: var(--border-radius-small);
   padding: 0.42rem;
   background: rgba(255, 255, 255, 0.62);
+  min-width: 0;
 }
 
 .spw-inspection-label {
@@ -248,6 +250,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
+  min-width: 0;
 }
 
 .spw-codelens-link {
@@ -260,6 +263,15 @@
   line-height: 1.2;
   padding: 0.18rem 0.5rem;
   text-decoration: none;
+  cursor: pointer;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.spw-codelens-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent-main, #2a6f7f) 72%, transparent);
+  outline-offset: 2px;
 }
 
 .spw-inlay-hints {
@@ -269,6 +281,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.24rem;
+  min-width: 0;
 }
 
 .spw-inlay-hint {
@@ -279,29 +292,34 @@
   font-family: var(--font-family-heading);
   font-size: 0.66rem;
   background: rgba(255, 255, 255, 0.58);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
-.spw-hover-inspector {
+.spw-hover-inspector,
+.spw-payload-inspector {
   margin: 0;
-  max-height: 9.5rem;
+  max-width: 100%;
   overflow: auto;
   border: 1px solid rgba(42, 111, 127, 0.24);
   border-radius: 8px;
   background: rgba(15, 23, 42, 0.86);
   color: #dffcf0;
-  font-size: 0.66rem;
   line-height: 1.34;
   padding: 0.44rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", var(--font-family-mono, monospace);
+}
+
+.spw-hover-inspector {
+  max-height: 9.5rem;
+  font-size: 0.66rem;
 }
 
 .spw-payload-inspector {
-  margin: 0;
   max-height: 14rem;
-  overflow: auto;
-  border: 1px solid rgba(42, 111, 127, 0.24);
-  border-radius: 8px;
   background: rgba(15, 23, 42, 0.9);
-  color: #dffcf0;
   font-size: 0.68rem;
   line-height: 1.38;
   padding: 0.46rem;

@@ -18,7 +18,7 @@ import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_02_28.I';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_15.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
@@ -40,6 +40,7 @@ import {
 import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_14.H';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
+const CHAPTER_SIGIL_MODULES = import.meta.glob('../chapter/*/sigil.mjs');
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', async () => {
@@ -981,10 +982,16 @@ async function mountChapterSigil(data, announce) {
   }
 
   const chapterId = String(data.chapterNumber).padStart(2, '0');
-  const path = `/book/chapter/${chapterId}/sigil.mjs?v=2026_02_28.I`;
+  const modulePath = `../chapter/${chapterId}/sigil.mjs`;
+  const loadModule = CHAPTER_SIGIL_MODULES[modulePath];
+
+  if (!loadModule) {
+    console.warn(`No chapter sigil module is registered for chapter ${chapterId}.`);
+    return;
+  }
 
   try {
-    const module = await import(path);
+    const module = await loadModule();
     if (module && typeof module.registerChapterSigil === 'function') {
       module.registerChapterSigil(aside);
       if (announce) {

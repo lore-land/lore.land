@@ -31,6 +31,7 @@ function createTemplate(config) {
       padding: 0.7rem;
       background: rgba(255, 255, 255, 0.76);
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.45rem;
     }
 
@@ -51,6 +52,7 @@ function createTemplate(config) {
       font-size: 0.76rem;
       line-height: 1.4;
       white-space: pre-wrap;
+      overflow-wrap: anywhere;
       font-family: var(--font-family-mono, monospace);
     }
 
@@ -132,6 +134,7 @@ function createTemplate(config) {
 
     .spw-language-controls {
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.34rem;
     }
 
@@ -167,6 +170,7 @@ function createTemplate(config) {
 
     .spw-register-controls {
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.32rem;
       border: 1px solid rgba(42, 111, 127, 0.28);
       border-radius: 9px;
@@ -223,12 +227,28 @@ function createTemplate(config) {
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.84);
       font-size: 0.68rem;
-      line-height: 1;
+      line-height: 1.2;
       padding: 0.2rem 0.52rem;
       color: var(--color-accent-alt, #1c4f63);
       font-family: var(--font-family-heading, monospace);
       cursor: pointer;
       text-align: left;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .spw-handle-button:focus-visible,
+    .spw-cube-rotate:focus-visible,
+    .spw-cube-entry:focus-visible,
+    .spw-handle-mode-button:focus-visible,
+    .spw-operator-controls button:focus-visible,
+    .spw-geometry-nav button:focus-visible,
+    .spw-codelens-link:focus-visible,
+    .sigil-cycle:focus-visible,
+    .sigil-route:focus-visible {
+      outline: 2px solid rgba(112, 70, 161, 0.72);
+      outline-offset: 2px;
     }
 
     .spw-cube-face {
@@ -254,6 +274,89 @@ function createTemplate(config) {
       padding: 0.4rem;
       max-height: 12rem;
       overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: var(--font-family-mono, monospace);
+    }
+
+    /* The Spw runtime injects inspection UI into this shadow root, where the
+     * document stylesheets cannot reach. Mirror the light-DOM inspector look
+     * (components/interactive.css) so the panel reads as one instrument. */
+    .spw-inspection-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.32rem;
+      border: 1px solid rgba(42, 111, 127, 0.28);
+      border-radius: 9px;
+      padding: 0.42rem;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .spw-inspection-label {
+      margin: 0;
+      color: var(--color-text-alt, #45506b);
+      font-family: var(--font-family-heading, monospace);
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .spw-codelens-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .spw-codelens-link {
+      border: 1px solid rgba(42, 111, 127, 0.34);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--color-accent-alt, #1c4f63);
+      font-family: var(--font-family-heading, monospace);
+      font-size: 0.66rem;
+      line-height: 1.2;
+      padding: 0.18rem 0.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      overflow-wrap: anywhere;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .spw-inlay-hints {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.24rem;
+    }
+
+    .spw-inlay-hint {
+      border: 1px dashed rgba(42, 111, 127, 0.36);
+      border-radius: 999px;
+      padding: 0.14rem 0.46rem;
+      color: var(--color-text-alt, #45506b);
+      font-family: var(--font-family-heading, monospace);
+      font-size: 0.64rem;
+      background: rgba(255, 255, 255, 0.58);
+      overflow-wrap: anywhere;
+    }
+
+    .spw-hover-inspector {
+      margin: 0;
+      max-height: 9.5rem;
+      overflow: auto;
+      border: 1px solid rgba(42, 111, 127, 0.24);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.86);
+      color: #dffcf0;
+      font-size: 0.66rem;
+      line-height: 1.34;
+      padding: 0.44rem;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: var(--font-family-mono, monospace);
     }
   `;
 

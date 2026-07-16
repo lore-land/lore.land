@@ -24,6 +24,7 @@
 
 .spw-hypertext-routes {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.46rem;
   border: var(--interactive-border);
   border-radius: var(--border-radius-small);
@@ -53,11 +54,16 @@
   margin: 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.36rem;
 }
 
 .spw-hypertext-routes a {
   display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
   width: fit-content;
   border: var(--border-width) var(--border-style) rgba(42, 111, 127, 0.28);
   border-radius: var(--border-radius-pill);
@@ -66,6 +72,7 @@
   text-decoration: none;
   font-family: var(--font-family-heading);
   font-size: 0.76rem;
+  overflow-wrap: anywhere;
 }
 
 .chapter-tuning-controls label {
@@ -85,6 +92,7 @@
 
 .motif-spw {
   margin: 0;
+  max-width: 100%;
   border: var(--interactive-border);
   border-radius: var(--border-radius-small);
   background: var(--theme-bg-content-strong);
@@ -92,6 +100,8 @@
   padding: 0.5rem;
   font-size: 0.75rem;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", var(--font-family-mono, monospace);
 }
 
 .chapter-motif-discovery .spw-language-controls,

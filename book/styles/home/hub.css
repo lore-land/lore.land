@@ -593,14 +593,28 @@
   }
 
   .hub-chapter-list a[data-resume='true'] {
-    background: color-mix(in srgb, var(--hub-accent) 8%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--hub-gold, #d9a441) 18%, transparent), transparent 0.28rem),
+      color-mix(in srgb, var(--hub-accent) 8%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hub-gold, #d9a441) 22%, transparent);
   }
 
+  /* Wax-seal resume mark: sits under the chamber number so the eye finds
+     the last-opened door without scanning every log line. */
   .hub-chapter-list a[data-resume='true'] .hub-ch-num::after {
-    content: ' · resume';
-    letter-spacing: 0.04em;
-    font-size: 0.72rem;
-    color: var(--hub-muted);
+    content: 'resume';
+    display: block;
+    width: fit-content;
+    margin-top: 0.22rem;
+    padding: 0.1rem 0.34rem;
+    border: 1px solid color-mix(in srgb, var(--hub-gold, #d9a441) 42%, var(--hub-line, #c9bba8));
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    font-size: 0.52rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--hub-ink, #1c2b33) 72%, var(--hub-gold, #d9a441));
+    background: color-mix(in srgb, var(--hub-gold, #d9a441) 16%, var(--hub-panel, #f7f1e6));
   }
 
   .hub-ch-num {
@@ -845,7 +859,8 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem 1.25rem;
-  margin-bottom: 0.35rem;
+  /* Room for the atmosphere measure-line under h2 */
+  margin-bottom: 0.55rem;
 }
 
 .hub-section-head h2 {

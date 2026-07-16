@@ -1,0 +1,413 @@
+/* ═══════════════════════════════════════════════════════════════
+ * Atmosphere — parallax drift, image climate, and stone ornament
+ * for the monument surfaces (entrance, scriptorium, topics, world).
+ *
+ * Weather over the stone: ornaments are monochrome SVG masks that
+ * borrow currentColor; the large art plates gain linen tooth, a
+ * raking sheen, and a slow scroll-pan. Every motion sits behind
+ * prefers-reduced-motion and @supports (animation-timeline: view()),
+ * and data-wonder scales the depth (quiet ≈ still, deep ≈ vivid).
+ * ═══════════════════════════════════════════════════════════════ */
+
+@layer home.components, home.states, home.motion;
+
+@layer home.components {
+
+  :root {
+    /* Four-point wax-seal star */
+    --atmo-seal-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M8 0 9.8 6.2 16 8 9.8 9.8 8 16 6.2 9.8 0 8 6.2 6.2Z'/></svg>");
+    /* Measure line: solid reach, diamond pivot, dashed remainder */
+    --atmo-rule-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 144 8' preserveAspectRatio='none'><path d='M0 4h54' stroke='black' stroke-width='1.5'/><path d='M64 1 70 4 64 7 58 4Z'/><path d='M78 4h66' stroke='black' stroke-width='1.5' stroke-dasharray='9 5'/></svg>");
+    /* Set-stone corner brackets */
+    --atmo-corner-tl: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M23 1H8Q1 1 1 8V23' fill='none' stroke='black' stroke-width='2'/></svg>");
+    --atmo-corner-tr: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M1 1h15q7 0 7 7v15' fill='none' stroke='black' stroke-width='2'/></svg>");
+    --atmo-corner-bl: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M1 1v15q0 7 7 7h15' fill='none' stroke='black' stroke-width='2'/></svg>");
+    --atmo-corner-br: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M23 1v15q0 7-7 7H1' fill='none' stroke='black' stroke-width='2'/></svg>");
+    /* Scattered constellation tile with two faint sight-lines */
+    --atmo-stars: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><circle cx='12' cy='18' r='1.4'/><circle cx='44' cy='6' r='0.9'/><circle cx='78' cy='26' r='1.1'/><circle cx='104' cy='10' r='0.8'/><circle cx='26' cy='54' r='0.8'/><circle cx='64' cy='64' r='1.5'/><circle cx='98' cy='58' r='0.9'/><circle cx='14' cy='92' r='1.1'/><circle cx='52' cy='104' r='0.8'/><circle cx='88' cy='96' r='1.3'/><path d='M12 18 44 6M64 64 98 58' stroke='black' stroke-width='0.35' opacity='0.45'/></svg>");
+  }
+
+  /* ── Waymarks: a seal tick opens every eyebrow ────────────────── */
+
+  .hub-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 0.82em;
+    height: 0.82em;
+    margin-right: 0.5em;
+    vertical-align: -0.05em;
+    background: currentColor;
+    -webkit-mask: var(--atmo-seal-mask) center / contain no-repeat;
+    mask: var(--atmo-seal-mask) center / contain no-repeat;
+    opacity: 0.9;
+  }
+
+  /* Veiled banners already carry gold type on night; keep the seal soft. */
+  .wonder-threshold-veil .hub-eyebrow::before,
+  .wonder-path .hub-eyebrow::before {
+    opacity: 0.78;
+  }
+
+  /* ── Measure-line flourish beneath section titles ─────────────── */
+
+  .hub-section-head h2 {
+    position: relative;
+    padding-bottom: 0.62rem;
+  }
+
+  .hub-section-head h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: min(10rem, 78%);
+    height: 0.4rem;
+    color: color-mix(in srgb, var(--hub-gold, #d9a441) 82%, var(--hub-ink, #1c2b33));
+    background: currentColor;
+    -webkit-mask: var(--atmo-rule-mask) left center / 100% 100% no-repeat;
+    mask: var(--atmo-rule-mask) left center / 100% 100% no-repeat;
+    opacity: 0.62;
+  }
+
+  .wonder-path .hub-section-head h2::after {
+    color: #efc568;
+    opacity: 0.72;
+  }
+
+  /* When the aside link sits on the same baseline, keep the rule under the
+     title only so the measure does not stretch under the call-to-action. */
+  .hub-section-head:has(.hub-section-aside) h2::after {
+    width: min(9.5rem, 72%);
+  }
+
+  /* ── Corner brackets: framed plates read as set stones ────────── */
+
+  .wonder-path::after,
+  .wonder-threshold::after {
+    content: '';
+    position: absolute;
+    inset: 0.55rem;
+    z-index: 2;
+    pointer-events: none;
+    color: #efc568;
+    background: currentColor;
+    -webkit-mask:
+      var(--atmo-corner-tl) left top / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-tr) right top / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-bl) left bottom / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-br) right bottom / 1.35rem 1.35rem no-repeat;
+    mask:
+      var(--atmo-corner-tl) left top / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-tr) right top / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-bl) left bottom / 1.35rem 1.35rem no-repeat,
+      var(--atmo-corner-br) right bottom / 1.35rem 1.35rem no-repeat;
+    opacity: 0.55;
+  }
+
+  /* Hero plate: ticks at the top corners only — the figcaption
+     lives below the image and should stay unframed. */
+  .hub-hero-media {
+    position: relative;
+  }
+
+  .hub-hero-media::after {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    height: 1.2rem;
+    z-index: 2;
+    pointer-events: none;
+    color: color-mix(in srgb, #fff 78%, var(--hub-gold, #d9a441));
+    background: currentColor;
+    -webkit-mask:
+      var(--atmo-corner-tl) left top / 1.2rem 1.2rem no-repeat,
+      var(--atmo-corner-tr) right top / 1.2rem 1.2rem no-repeat;
+    mask:
+      var(--atmo-corner-tl) left top / 1.2rem 1.2rem no-repeat,
+      var(--atmo-corner-tr) right top / 1.2rem 1.2rem no-repeat;
+    opacity: 0.5;
+  }
+
+  /* ── Star dust: constellations settle over the deep bands ─────── */
+
+  .hub-pillars,
+  .hub-aside-band,
+  .artifact-cabinet {
+    position: relative;
+  }
+
+  .hub-pillars::after,
+  .hub-aside-band::after,
+  .artifact-cabinet::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    color: var(--hub-accent, #7a4c9e);
+    background: currentColor;
+    -webkit-mask: var(--atmo-stars) 0 0 / 7.5rem 7.5rem repeat;
+    mask: var(--atmo-stars) 0 0 / 7.5rem 7.5rem repeat;
+    opacity: 0.14;
+  }
+
+  .artifact-cabinet::after {
+    color: var(--hub-berry, #9b3d5a);
+    opacity: 0.1;
+  }
+
+  /* Where intersect compositing exists, clear the reading column
+     and let the dust gather toward the band's edges. */
+  @supports (mask-composite: intersect) {
+    .hub-pillars::after,
+    .hub-aside-band::after,
+    .artifact-cabinet::after {
+      mask:
+        var(--atmo-stars) 0 0 / 7.5rem 7.5rem repeat,
+        radial-gradient(ellipse 72% 74% at 50% 46%, transparent 32%, #000 88%) center / 100% 100% no-repeat;
+      mask-composite: intersect;
+      opacity: 0.22;
+    }
+
+    .artifact-cabinet::after {
+      opacity: 0.16;
+    }
+  }
+
+  /* ── Art plates: linen tooth and a parked sheen ───────────────── */
+
+  .wonder-path-art {
+    --art-ratio: 5 / 2;
+  }
+
+  .wonder-path-art img {
+    aspect-ratio: var(--art-ratio);
+  }
+
+  /* The ::before tracks the image box exactly (same ratio) so the
+     figcaption below stays clear of the overlay. */
+  .wonder-path-art::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    aspect-ratio: var(--art-ratio);
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 0.9rem;
+    background:
+      linear-gradient(115deg, transparent 40%, rgba(255, 244, 214, 0.2) 50%, transparent 60%) no-repeat -80% 0 / 220% 100%,
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(12, 38, 52, 0.05) 0 1px, transparent 1px 3px);
+  }
+
+  .material-study::before,
+  .wonder-threshold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, transparent 40%, rgba(255, 244, 214, 0.18) 50%, transparent 60%) no-repeat -80% 0 / 220% 100%,
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(12, 38, 52, 0.05) 0 1px, transparent 1px 3px);
+  }
+}
+
+/* ═══ Image climate: raking hover/focus, unlayered so it wins base filters ═══ */
+
+.wonder-path-art img,
+.material-study img,
+.wonder-threshold-art {
+  transition: filter 320ms ease;
+}
+
+.wonder-path-art:hover img,
+.wonder-path-art:focus-within img,
+.material-study:hover img,
+.material-study:focus-within img,
+.wonder-threshold:hover .wonder-threshold-art,
+.wonder-threshold:focus-within .wonder-threshold-art {
+  filter: saturate(1.1) contrast(1.06) brightness(1.05);
+}
+
+/* ═══ Parallax: the monument drifts under scroll ═══ */
+
+/* view() timelines freeze inside overflow:hidden ancestors — the
+   ancestor becomes the timeline's scroll container and never scrolls.
+   clip keeps the same crop without creating a scroll container. */
+.wonder-path,
+.material-study {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Pointer parallax under live lighting — rides the same --light-x/y
+     the climate module already publishes. `translate` composes with
+     the existing hover transform instead of fighting it. */
+  body[data-lighting='live'] .hub-hero-media {
+    translate:
+      calc((var(--light-x, 50) - 50) * -0.09px)
+      calc((var(--light-y, 24) - 30) * -0.06px);
+    transition: translate 240ms ease-out;
+    will-change: translate;
+  }
+
+  @supports (animation-timeline: view()) {
+
+    :root {
+      --atmo-depth: 1;
+    }
+
+    [data-wonder='quiet'] {
+      --atmo-depth: 0.3;
+    }
+
+    [data-wonder='deep'] {
+      --atmo-depth: 1.3;
+    }
+
+    /* Vertical pan for plates cropped tall (hero, threshold) */
+    @keyframes atmo-pan-y {
+      from {
+        object-position: center calc(50% - var(--atmo-pan, 12%) * var(--atmo-depth, 1));
+      }
+
+      to {
+        object-position: center calc(50% + var(--atmo-pan, 12%) * var(--atmo-depth, 1));
+      }
+    }
+
+    /* Horizontal pan for the journey plates cropped wide */
+    @keyframes atmo-pan-x {
+      from {
+        object-position: calc(50% - var(--atmo-pan, 30%) * var(--atmo-depth, 1)) center;
+      }
+
+      to {
+        object-position: calc(50% + var(--atmo-pan, 30%) * var(--atmo-depth, 1)) center;
+      }
+    }
+
+    /* Cards settle into place as they enter the light — keep the from-state
+       readable so mid-viewport cards never flash dim on first paint. */
+    @keyframes atmo-settle {
+      from {
+        translate: 0 calc(0.55rem * var(--atmo-depth, 1));
+        opacity: 0.82;
+      }
+
+      to {
+        translate: 0 0;
+        opacity: 1;
+      }
+    }
+
+    /* The parked sheen sweeps once across an arriving plate */
+    @keyframes atmo-sheen-sweep {
+      from {
+        background-position: -80% 0, 0 0, 0 0;
+      }
+
+      to {
+        background-position: 180% 0, 0 0, 0 0;
+      }
+    }
+
+    /* Wonder-path dust field creeps against the scroll */
+    @keyframes atmo-dust-drift {
+      from {
+        background-position: 0 0, 0 0;
+      }
+
+      to {
+        background-position: -6rem 5rem, 1.5rem -1.2rem;
+      }
+    }
+
+    .hub-hero-media img {
+      --atmo-pan: 11%;
+      animation: atmo-pan-y linear both;
+      animation-timeline: view();
+    }
+
+    .wonder-threshold-art {
+      --atmo-pan: 16%;
+      animation: atmo-pan-y linear both;
+      animation-timeline: view();
+    }
+
+    /* Native ratios match the display crop exactly, so shave the
+       frame slightly shorter to open a horizontal overcrop the pan
+       can walk — the journey plates travel dawnward as you read. */
+    .wonder-path-art {
+      --art-ratio: 23 / 10;
+    }
+
+    /* Unlayered on purpose: hub.css sets these ratios unlayered,
+       so the override has to sit at the same strength. */
+    .wonder-path-art img {
+      aspect-ratio: var(--art-ratio);
+    }
+
+    .material-study img {
+      aspect-ratio: 14 / 5;
+    }
+
+    .wonder-path-art img,
+    .material-study img {
+      --atmo-pan: 30%;
+      animation: atmo-pan-x linear both;
+      animation-timeline: view();
+    }
+
+    .wonder-path-art::before,
+    .material-study::before,
+    .wonder-threshold::before {
+      animation: atmo-sheen-sweep linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 55%;
+    }
+
+    .wonder-path::before {
+      animation: atmo-dust-drift linear both;
+      animation-timeline: view();
+    }
+
+    .topic-card,
+    .hub-pillar-grid > li,
+    .wonder-path-steps li,
+    .artifact-card,
+    .route-rail-card,
+    .hub-chapter-list li,
+    .persona-card {
+      animation: atmo-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+  }
+}
+
+/* ═══ Print: ornament stays on screen; paper gets the plain stone ═══ */
+
+@media print {
+
+  .hub-eyebrow::before,
+  .hub-section-head h2::after,
+  .wonder-path::after,
+  .wonder-threshold::after,
+  .hub-hero-media::after,
+  .hub-pillars::after,
+  .hub-aside-band::after,
+  .artifact-cabinet::after,
+  .wonder-path-art::before,
+  .material-study::before,
+  .wonder-threshold::before {
+    display: none;
+  }
+}

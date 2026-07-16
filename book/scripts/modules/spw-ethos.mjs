@@ -95,6 +95,23 @@ function layerMatches(claim, layer) {
   return layer === 'all' || claim.layer === layer;
 }
 
+const CLAIM_REF_KINDS = Object.freeze([
+  { key: 'specRef', label: 'spec' },
+  { key: 'implRef', label: 'impl' },
+  { key: 'probeRef', label: 'probe' }
+]);
+
+function createClaimRefEntry(kind, ref) {
+  return el('span', {
+    className: 'ethos-claim-ref-entry',
+    dataset: { refKind: kind.label },
+    title: `${kind.label}: ${ref}`
+  },
+    el('span', { className: 'ethos-claim-ref-kind', textContent: kind.label }),
+    el('span', { className: 'ethos-claim-ref-path', textContent: ref })
+  );
+}
+
 function createClaimItem(claim, announce) {
   return el('li', { className: 'ethos-claim-item', dataset: { layer: claim.layer, claimId: claim.id } },
     el('button', {
@@ -110,15 +127,26 @@ function createClaimItem(claim, announce) {
     el('p', { className: 'ethos-claim-line', textContent: `Hypothesis: ${claim.hypothesis}` }),
     el('p', { className: 'ethos-claim-line', textContent: `Measure: ${claim.measure}` }),
     el('p', { className: 'ethos-claim-line', textContent: `Falsification: ${claim.falsification}` }),
-    el('p', { className: 'ethos-claim-ref', textContent: `${claim.specRef} • ${claim.implRef} • ${claim.probeRef}` })
+    el('div', {
+      className: 'ethos-claim-ref',
+      role: 'group',
+      'aria-label': 'Probe chain: specification, implementation, and live probe'
+    },
+      ...CLAIM_REF_KINDS.map((kind) => createClaimRefEntry(kind, claim[kind.key]))
+    )
   );
 }
 
 function createOperatorItem(entry) {
-  const polarityNote = entry.polarity ? ` • ${entry.polarity}` : '';
+  const polarityNote = entry.polarity ? ` · ${entry.polarity}` : '';
   return el('li', { className: 'ethos-operator-item', dataset: { sigil: entry.sigil, polarity: entry.polarity } },
-    el('span', { className: 'ethos-operator-token', dataset: { spwRole: entry.role, spwPolarity: entry.polarity }, textContent: entry.sigil }),
-    el('span', { className: 'ethos-operator-meta', textContent: `${entry.role} • ${entry.phase}${polarityNote}` })
+    el('span', {
+      className: 'ethos-operator-token',
+      dataset: { spwRole: entry.role, spwPolarity: entry.polarity },
+      textContent: entry.sigil,
+      title: `${entry.role} · phase ${entry.phase}${polarityNote}`
+    }),
+    el('span', { className: 'ethos-operator-meta', textContent: `${entry.role} · ${entry.phase}${polarityNote}` })
   );
 }
 

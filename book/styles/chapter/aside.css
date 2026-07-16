@@ -14,9 +14,27 @@ aside .spw-payload-inspector {
 
 aside .ethos-claim-list,
 aside .ethos-claim-item,
-aside .ethos-claim-handle {
+aside .ethos-claim-handle,
+aside .ethos-claim-ref,
+aside .ethos-claim-ref-entry,
+aside .ethos-claim-ref-path,
+aside .ethos-operator-list,
+aside .ethos-operator-item,
+aside .ethos-operator-meta,
+aside .spw-ethos-panel,
+aside .spw-hypertext-routes,
+aside .ebook-lsp-panel,
+aside .ebook-lsp-item,
+aside .ebook-lsp-link {
   min-width: 0;
   max-width: 100%;
+}
+
+aside .ethos-claim-handle,
+aside .ethos-claim-line,
+aside .ethos-claim-ref-path,
+aside .ethos-operator-meta,
+aside .ebook-lsp-link {
   overflow-wrap: anywhere;
 }
 

@@ -405,15 +405,43 @@
     padding: 0.5rem;
   }
 
-  .spw-ethos-atlas .ethos-claim-line,
-  .spw-ethos-atlas .ethos-claim-ref {
+  .spw-ethos-atlas .ethos-claim-line {
     margin: 0;
     font-size: 0.8rem;
     color: var(--color-text-alt);
+    overflow-wrap: anywhere;
   }
 
   .spw-ethos-atlas .ethos-claim-ref {
-    font-family: var(--font-family-heading);
+    display: grid;
+    gap: 0.22rem;
+    margin: 0.18rem 0 0;
+    padding-top: 0.38rem;
+    border-top: 1px dashed color-mix(in srgb, var(--color-accent-main) 24%, transparent);
+    font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--color-text-alt);
+  }
+
+  .spw-ethos-atlas .ethos-claim-ref-entry {
+    display: grid;
+    grid-template-columns: 2.8rem minmax(0, 1fr);
+    gap: 0.4rem;
+    align-items: baseline;
+    min-width: 0;
+  }
+
+  .spw-ethos-atlas .ethos-claim-ref-kind {
+    color: color-mix(in srgb, var(--color-accent-main) 80%, var(--color-text-alt));
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .spw-ethos-atlas .ethos-claim-ref-path {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .spw-ethos-atlas .ethos-operators-heading {
@@ -430,32 +458,44 @@
     margin: 0.48rem 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
     gap: 0.36rem;
   }
 
   .spw-ethos-atlas .ethos-operator-item {
     display: flex;
-    align-items: center;
-    gap: 0.3rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.28rem 0.36rem;
+    min-width: 0;
     border: var(--border-width) var(--border-style) rgba(42, 88, 130, 0.28);
     border-radius: var(--border-radius-pill);
     background: rgba(255, 255, 255, 0.7);
-    padding: 0.16rem 0.5rem;
+    padding: 0.18rem 0.52rem;
   }
 
   .spw-ethos-atlas .ethos-operator-token {
+    flex: 0 0 auto;
     font-size: 0.8rem;
     color: var(--color-accent-main);
-    font-family: var(--font-family-heading);
+    font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
   }
 
   .spw-ethos-atlas .ethos-operator-meta,
   .spw-ethos-atlas .ethos-status {
     margin: 0;
+    min-width: 0;
     font-size: 0.76rem;
     color: var(--color-text-alt);
-    font-family: var(--font-family-heading);
+    font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+    overflow-wrap: anywhere;
+  }
+
+  .spw-ethos-atlas .ethos-claim-handle {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
   }
 
   .grammar-chip[data-grammar-profile="declarative"] {
