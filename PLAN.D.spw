@@ -125,6 +125,18 @@
   share_intrigue: "Social packaging is publish surface work, not Paint API work"
 }
 
+^production_overlay_2026_07_16{
+  source: ".spw/surfaces/atelier.spw"
+  bearing: "Houdini is the stylistic-depth ceiling; typed tokens are refinement-pass precision"
+  couplings: [
+    "@property typed theme tokens make p3 material passes interpolation-safe — theme switching without flash is ledger probe #1 (temporal axis), and typed <color> interpolation is its strongest mechanism",
+    "any Paint API ornament ships with a declared-intentional ledger entry describing its Firefox fallback delta — the cross-engine gap is accounted, never silent (claim lore-c008)",
+    "the noticer browses Firefox too: the Firefox track's parity findings are ledger probes for the atelier, not optional tooling notes",
+    "Typed OM read/write audits (phases 17-18) serve internals honesty — runtime style values the craftsperson inspects should be typed truth where the migration lands (claim lore-c010)"
+  ]
+  refs: [".spw/state/alignment-ledger.spw", ".spw/surfaces/atelier.spw#refinement_model"]
+}
+
 
 ^phases["Houdini APIs Exploration"]{
 

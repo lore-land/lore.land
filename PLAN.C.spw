@@ -73,6 +73,18 @@
   refs: [".spw/surfaces/platform.spw", "PLAN.D.spw#audit_overlay_2026_07_16"]
 }
 
+^production_overlay_2026_07_16{
+  source: ".spw/surfaces/atelier.spw"
+  bearing: "milestone features are scored for wonder-per-seam-risk, not novelty — a signature moment that introduces an unaccounted seam costs more than it earns"
+  couplings: [
+    "View Transitions is the candidate chamber-crossing signature (atelier phase 05); its ledger exposure is temporal (tempo vs room) + geometric (shared-element seams) — both must probe clean before ship",
+    "chapter-sigil style mirror is standing ledger entry AL-005 (intentional, watched) — §shadow-dom phase 02 encapsulation audit owns its retirement decision",
+    "popover / anchor positioning serve inspector chrome for the craftsperson posture (ladder rungs operate/inspect); adopt only with fallback dignity in non-supporting engines"
+  ]
+  scoring_addendum: "milestone relevance scoring gains a wonder column: {seam_risk: geometric|temporal|none, degrade_quality: calm|degraded|broken}"
+  refs: [".spw/state/alignment-ledger.spw#AL-005", ".spw/surfaces/atelier.spw#wonder_budget"]
+}
+
 &verified_sources{
   release_notes_145: "https://developer.chrome.com/release-notes/145"
   stable_promotion_145: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_10.html"

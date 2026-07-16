@@ -91,6 +91,18 @@
   .note: "Plan A structure migration continues; platform.spw owns ship hygiene phases that do not require adapter purity"
 }
 
+^production_overlay_2026_07_16{
+  source: ".spw/surfaces/atelier.spw"
+  bearing: "refinement capacity — Plan A's audit instruments are what make atelier passes p1-p5 cheap to rerun"
+  couplings: [
+    "§foundation phases 01-02 CSS audits detect geometric misalignment (ledger axis: geometric) — layer leaks and breakpoint conflicts are exactly the seams the noticer catches",
+    "§css_colocation pixel-parity invariant is the rerun gate for passes p2 rhythm and p3 material — refinement is only additive if parity holds mechanically",
+    "adapter purity (§adapters) keeps the linguistic internals honest: operator/container role shapes shown to the craftsperson must be workbench truth, not drifted copies (claim lore-c010)"
+  ]
+  ledger_feed: "audit artifacts double as alignment-ledger evidence — a phase 01 leak finding files as an AL entry with axis geometric"
+  .note: "an audience that audits seams is served by the same rigor that gates these phases"
+}
+
 ?["plan_a_integrity_gate"]{
   require: phases_defined_in_blocks
   require: phase_total_26

@@ -18,8 +18,10 @@
   publish: "@spw/surfaces/publish.spw"
   editorial: "@spw/surfaces/editorial.spw"
   platform: "@spw/surfaces/platform.spw"
+  atelier: "@spw/surfaces/atelier.spw"
   runtime: "@spw/runtime/precipitates.spw"
   observable: "@spw/state/observable.spw"
+  alignment_ledger: "@spw/state/alignment-ledger.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
 }
 
@@ -31,6 +33,7 @@
   houdini_firefox: "PLAN.D.spw"
   platform_ship: "@spw/surfaces/platform.spw"
   editorial_desk: "@spw/surfaces/editorial.spw"
+  atelier_production: "@spw/surfaces/atelier.spw"
 }
 
 ~navigation{
@@ -38,6 +41,7 @@
   section_chain: "^[chapter/*/s*]{open}"
   probe_chain: "^[claim-chain]{claim -> spec -> impl -> probe}"
   platform_chain: "^[platform/*]{sw | social | vite | canon-sync}"
+  atelier_chain: "^[atelier/*]{wonder | ledger | ladder | passes}"
 }
 
 ~direction{
@@ -52,5 +56,17 @@
     "progressive enhancement",
     "modern CSS behind reduced-motion and @supports",
     "dual-register reading (adventure surface · workshop veil)"
+  ]
+}
+
+~production{
+  from: "@spw/surfaces/atelier.spw"
+  audience: "seen-the-web — wants wonder, audits seams, complains about unaccounted misalignment"
+  double_account: "every signature moment is paired with alignment accounting (.spw/state/alignment-ledger.spw)"
+  arcs: [
+    "plates for chambers + doors (graduates studies {name}-v{N} → OG art)",
+    "alignment ledger live with complaint → refutation route (lore-c008)",
+    "literacy ladder on-ramps: read → notice → explore → operate → inspect → author",
+    "refinement passes p1-p5 named, probed, and rerunnable"
   ]
 }

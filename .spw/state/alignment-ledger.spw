@@ -1,0 +1,105 @@
+# Lore.Land Alignment Ledger
+# Every noticed misalignment resolves here: defect scheduled, or intention
+# declared with its why. An intentional entry with no why is a defect.
+#>lore_land_alignment_ledger
+#:state #!ledger
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  The audience that can be wowed is the audience that audits seams. This
+  ledger is the double account behind every signature moment: misalignments
+  are filed on five axes (geometric, temporal, material, linguistic,
+  canonical), classified as defect or intention, and either fixed or
+  explained in the open. Complaints are evidence, not noise — they feed the
+  ethos refutation counters for claim lore-c008-accounted-alignment.
+}
+
+^"entry_schema"{
+  id: "AL-NNN — stable, never reused"
+  axis: "geometric | temporal | material | linguistic | canonical"
+  surface: "where the gap shows (route, module, asset)"
+  evidence: "what was observed — measurable where possible"
+  class: "defect | intentional"
+  why: "required when intentional — the recorded reason the deviation stands"
+  watch: "optional condition under which an intentional entry gets revisited"
+  resolution: "fix ref, or open"
+  source: "self-audit | probe | complaint | audit-YYYY-MM-DD"
+}
+
+^"entries"{
+
+  ^entry[AL-001]{
+    axis: material
+    surface: "book/images/01.png … 13.png (chapter og:image)"
+    evidence: "1600x900 plates at ~6–28KB — near-empty shells behind strong loglines"
+    class: defect
+    resolution: "open — atelier phase 02 plate production; platform phase 04"
+    source: "audit-2026-07-16#chapter-og-images-empty"
+  }
+
+  ^entry[AL-002]{
+    axis: linguistic
+    surface: "sw.js + book/pwa/offline.html"
+    evidence: "precache lists fixture CSS that no longer exists; offline copy implies a shell the cache cannot honor"
+    class: defect
+    resolution: "open — platform phase 01 service worker shell"
+    source: "audit-2026-07-16#sw-precache-broken"
+  }
+
+  ^entry[AL-003]{
+    axis: canonical
+    surface: ".spw/chapters/*.spw vs book/content/chapters/*.json"
+    evidence: "ch01 mirror title 'Boof and the Boonberry Fool' vs live 'Dawn in Boon.land'"
+    class: defect
+    resolution: "open — platform phase 02 regenerate; workspace c001"
+    source: "audit-2026-07-16#chapter-spw-lag"
+  }
+
+  ^entry[AL-004]{
+    axis: temporal
+    surface: "JetBrains Mono via jsDelivr, no font-display"
+    evidence: "FOIT/FOUT window on rail chrome; extra RTT before settled type"
+    class: defect
+    resolution: "open — platform phase 08 fonts + perf"
+    source: "audit-2026-07-16#fonts-cdn"
+  }
+
+  ^entry[AL-005]{
+    axis: geometric
+    surface: "book/scripts/modules/chapter-sigil.mjs shadow roots"
+    evidence: "inspector styles are a hand-copied mirror of components/interactive.css — the two can drift"
+    class: intentional
+    why: "document stylesheets cannot reach shadow content; the mirror keeps sigil inspection legible until PLAN.C's encapsulation audit decides a shared strategy (::part, constructable sheets, or retirement)"
+    watch: "any edit to components/interactive.css must touch the sigil mirror in the same change"
+    resolution: "standing — revisit at PLAN.C shadow-dom phase 02"
+    source: "audit-2026-07-16 (css_api_inventory: customElements + Shadow DOM)"
+  }
+
+  ^entry[AL-006]{
+    axis: material
+    surface: "monument doors without OG blocks (topics, scriptorium, boof, civic-magic, boonberry)"
+    evidence: "share renders text-only or blank; intrigue uneven across doors"
+    class: defect
+    resolution: "open — platform phase 04 social meta pack"
+    source: "audit-2026-07-16#social-meta-uneven"
+  }
+}
+
+^"complaint_route"{
+  .note: "reader complaints enter here, then feed diagnostics"
+  flow: [
+    "complaint received → file entry with source: complaint",
+    "if the gap was undeclared → error_count++ on lore-c008 (PLAN.B diagnostics engine)",
+    "if the gap was already intentional with a recorded why → reply with the why; evidence_count++ on lore-c008"
+  ]
+  claim: ".spw/claims/chapter-claims.spw#lore-c008-accounted-alignment"
+}
+
+^"probes"[
+  "theme-switch flash: cosmos ↔ ember with no intermediate frame"
+  "share-card parity: card art/title/logline match the landed page"
+  "reduced-motion parity: signature moments have a calm cut"
+  "print parity: zine + chapter print CSS suppress screen-only chrome"
+  "baseline overlay at 320 / 768 / 1120 / 1440"
+]

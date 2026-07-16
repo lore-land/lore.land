@@ -85,9 +85,13 @@
         "vite-emits-public-doors",
         "og-image-nonblank",
         "chapter-spw-title-matches-json",
-        "release-token-consistent"
+        "release-token-consistent",
+        "no-undeclared-misalignment-on-changed-surfaces"
       ]
-      refs: [".spw/surfaces/platform.spw#seal_checklist_additions"]
+      refs: [
+        ".spw/surfaces/platform.spw#seal_checklist_additions",
+        ".spw/state/alignment-ledger.spw"
+      ]
     }
     emit: {
       target: "dist/",

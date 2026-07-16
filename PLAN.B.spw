@@ -91,6 +91,18 @@
   refs: [".spw/claims/chapter-claims.spw", ".spw/surfaces/platform.spw#phase.07"]
 }
 
+^production_overlay_2026_07_16{
+  source: ".spw/surfaces/atelier.spw"
+  bearing: "the ethos panel is the internals-awareness surface and the complaint intake for the seen-the-web audience"
+  couplings: [
+    "hydration set grows by four atelier claims: lore-c007-earned-wonder, lore-c008-accounted-alignment, lore-c009-literacy-ladder, lore-c010-honest-internals",
+    "complaint channel: a noticed-misalignment report on an undeclared gap increments error_count on lore-c008; a report answered by a recorded why increments evidence_count (ledger complaint_route)",
+    "the claim state machine is itself a literacy device — ladder rung 'inspect' teaches falsification through status chips (untested/active/confirmed/refuted)"
+  ]
+  signal_note: "misalignment reports enter as a seventh signal source or fold into lore:preference-change scope — decide during §diagnostics engine phase"
+  refs: [".spw/state/alignment-ledger.spw#complaint_route", ".spw/claims/chapter-claims.spw"]
+}
+
 ?<open_questions>[
   "Should claim status transitions be reversible? (e.g., can a 'confirmed' claim
    revert to 'active' if new contradictory evidence arrives in the same session?)"

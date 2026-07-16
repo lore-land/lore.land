@@ -89,6 +89,50 @@
     impl_ref: "book/templates/chapter.html + monument HTML heads"
     probe_ref: "manual share debugger on /, /book/chapter/01/, /zine/, /topics/"
   }
+
+  wonder: {
+    claim_id: "lore-c007-earned-wonder"
+    layer: "pragmatics"
+    hypothesis: "Signature moments impress a seen-the-web audience while degrading to calm reading under reduced-motion, no-JS, and print."
+    measure: "Each wonder_budget signature has an @supports + reduced-motion gate and a verified calm cut."
+    falsification: "Any signature moment breaks reading when its gate closes, or ships while carrying an open defect-class ledger entry."
+    spec_ref: ".spw/surfaces/atelier.spw#wonder_budget"
+    impl_ref: "book/styles/home/atmosphere.css + book/styles/chapter/motion.css + ebook-navigation.mjs"
+    probe_ref: "reduced-motion parity + print parity ledger probes"
+  }
+
+  alignment: {
+    claim_id: "lore-c008-accounted-alignment"
+    layer: "pragmatics"
+    hypothesis: "Every noticed misalignment — geometric, temporal, material, linguistic, canonical — resolves to a fix or a declared intention."
+    measure: "Ledger entries carry class + why; complaints route to counters instead of silence."
+    falsification: "A reader-reported gap has no ledger entry, or an intentional entry lacks its recorded why."
+    spec_ref: ".spw/state/alignment-ledger.spw"
+    impl_ref: ".spw/surfaces/atelier.spw#alignment_ledger + PLAN.B diagnostics engine"
+    probe_ref: "complaint_route flow + five ledger probes on changed surfaces"
+  }
+
+  literacy: {
+    claim_id: "lore-c009-literacy-ladder"
+    layer: "semantics"
+    hypothesis: "A reader can climb read → notice → explore → operate → inspect → author, each rung learnable from the one below, none forced."
+    measure: "Every rung has a visible, dismissible on-ramp on the rung below; adventure register unchanged when all invitations are dismissed."
+    falsification: "A rung requires outside documentation to enter, or an on-ramp blocks or lectures the story."
+    spec_ref: ".spw/surfaces/atelier.spw#literacy_ladder"
+    impl_ref: "language-exploration.mjs + spw-interactions.mjs + spw-ethos.mjs + editorial desk (planned)"
+    probe_ref: "rung walk-through with all invitations dismissed vs accepted"
+  }
+
+  internals: {
+    claim_id: "lore-c010-honest-internals"
+    layer: "pragmatics"
+    hypothesis: "Internals shown to the craftsperson — stages, probes, sigil grammar — are the real runtime machinery, walkable back to canon."
+    measure: "Status chips map to live pipeline stages; ethos rows resolve to .spw sources; view-source reads as authored."
+    falsification: "Any displayed internal is simulated, or a probe chain row dead-ends without a resolvable ref."
+    spec_ref: ".spw/surfaces/atelier.spw#internals_awareness"
+    impl_ref: ".spw/runtime/precipitates.spw bindings + spw-ethos.mjs"
+    probe_ref: "skeptical devtools session: stage chips vs load-lifecycle events; ethos href walk"
+  }
 }
 
 ^"runtime_parity"{
@@ -99,4 +143,5 @@
     "UI rows expose walkable href when path is same-origin or https"
   ]
   status: "ids aligned in canon 2026-07-16; runtime module still carries legacy c001-* labels until PLAN.B hydration"
+  hydration_set_note: "atelier claims lore-c007..lore-c010 join the hydration set; lore-c008 additionally receives complaint_route signals (.spw/state/alignment-ledger.spw#complaint_route)"
 }

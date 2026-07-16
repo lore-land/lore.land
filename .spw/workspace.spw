@@ -7,6 +7,7 @@
   architecture: "chapter-json -> DOM runtime -> Spw handles -> ebook navigation -> ethos probes"
   publish_surface: "select -> transform -> validate -> emit"
   platform_surface: "shell (sw/manifest) + meta (og/twitter) + build (vite/sitemap) + canon-sync"
+  atelier_surface: "wonder (signature moments) + alignment ledger + literacy ladder + refinement passes p1-p5"
 }
 
 ^contracts{
@@ -20,6 +21,11 @@
   c008: "Vite production build emits every public MPA door linked from hub navigation (incl. zine, offline)."
   c009: "Ethos claim ids match .spw/claims/chapter-claims.spw; spec/impl/probe rows resolve to walkable refs."
   c010: "Release token has a single source of truth (cache-context.mjs + build-chapters.mjs); README follows, never leads."
+  c011: "Every noticed misalignment resolves to a ledger entry — defect scheduled or intention recorded (.spw/state/alignment-ledger.spw)."
+  c012: "Signature wonder moments degrade to calm reading under reduced-motion, no-JS, and print."
+  c013: "Media plates derive from scene canon; iterative studies use {name}-v{N} naming and graduate through the ledger."
+  c014: "Literacy ladder rungs are opt-in; each rung has a visible, dismissible on-ramp on the rung below."
+  c015: "Refinement passes are additive and leave precipitates; pass N+1 never requires hand re-verifying pass N."
 }
 
 ^contract_status{
@@ -34,6 +40,12 @@
   c008: "failing — vite input omits zine/offline (and other doors)"
   c009: "partial — labeled probe chain UI shipped; ids diverge; refs not hrefs"
   c010: "partial — code token 2026_07_15.A; docs may drift"
+  .note_atelier: "as of atelier surface mount 2026-07-16"
+  c011: "seeded — ledger AL-001..AL-006 carry audit P0/P1; complaint route unwired until PLAN.B engine"
+  c012: "holding — existing signatures gated; must be re-proved per new signature (View Transitions pending)"
+  c013: "starting — material-study-v1 + wonder-path-v1 in flight; no plate has graduated yet"
+  c014: "partial — read/notice/explore rungs live; operate/inspect on-ramps implicit; author rung planned"
+  c015: "new — pass vocabulary declared; probe kit (atelier phase 03) makes reruns cheap"
 }
 
 &lifecycle{
@@ -55,12 +67,14 @@
   platform_audit: ".spw/audits/platform-ship-audit-2026-07-16.spw"
   runtime_manifest: ".spw/runtime/precipitates.spw"
   observable_state: ".spw/state/observable.spw"
+  alignment_ledger: ".spw/state/alignment-ledger.spw"
+  atelier_plan: ".spw/surfaces/atelier.spw"
   release_token: "book/scripts/modules/cache-context.mjs"
   seal_checklist: ".spw/surfaces/platform.spw#seal_checklist_additions"
 }
 
 ~priority{
-  p0: ["c006 sw shell", "c001 chapter spw sync", "c008 vite entries", "social OG art plates"]
-  p1: ["c007 share meta", "c009 walkable ethos", "manifest icons/shortcuts", "sitemap/robots"]
-  p2: ["share API", "view transitions", "font self-host", "SW update toast"]
+  p0: ["c006 sw shell", "c001 chapter spw sync", "c008 vite entries", "social OG art plates (atelier phase 02 feeds this)"]
+  p1: ["c007 share meta", "c009 walkable ethos", "manifest icons/shortcuts", "sitemap/robots", "c011 alignment probe kit"]
+  p2: ["share API", "view transitions (atelier signature phase 05)", "font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps", "complaint → refutation channel"]
 }

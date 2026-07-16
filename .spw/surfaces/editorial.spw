@@ -132,9 +132,11 @@
       "Vite dist includes every public door linked from hub nav",
       "OG image non-blank and under 5MB; twitter:card present on shared URL",
       ".spw/chapters regenerated when chapter JSON changed",
-      "chapter .spw title matches book/content/chapters/*.json"
+      "chapter .spw title matches book/content/chapters/*.json",
+      "changed surfaces carry no undeclared misalignment (alignment ledger reviewed)"
     ]
     platform_refs: [".spw/surfaces/platform.spw#seal_checklist_additions"]
+    atelier_refs: [".spw/state/alignment-ledger.spw", ".spw/surfaces/atelier.spw#alignment_ledger"]
   }
   set_stone: {
     role: "emit + ship"

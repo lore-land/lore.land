@@ -1,0 +1,270 @@
+# Lore.Land Atelier Surface
+# Stylistic depth toward media production: wonder for an audience that has
+# seen the web, alignment accounting for the eye that audits seams, and a
+# literacy ladder from reading the story to reading the machinery.
+#>lore_land_surfaces_atelier
+#:surface #!atelier
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  The next audience has seen the web. Gradients, parallax, and card grids do
+  not impress them; craft depth does — and the same eye that can be wowed
+  will catch a one-pixel seam, a mistimed ease, or copy that promises more
+  than the cache holds, and will complain. Wonder must therefore be earned
+  twice: once by the signature moment, once by the absence of unaccounted
+  misalignment around it. This surface plans that double account — media
+  production with stylistic depth, an alignment ledger where every deliberate
+  deviation is declared, and a literacy ladder so readers who lean in find
+  real linguistic and technological internals rather than chrome.
+}
+
+^meta{
+  intent: "plan + contracts for stylistic depth and media production after the 2026-07-16 platform audit"
+  audience: ["chamberwright", "motif gardener", "plate-wright", "seal-keeper", "implementer"]
+  related: {
+    audit: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+    platform: ".spw/surfaces/platform.spw"
+    editorial: ".spw/surfaces/editorial.spw"
+    publish: ".spw/surfaces/publish.spw"
+    ledger: ".spw/state/alignment-ledger.spw"
+    claims: ".spw/claims/chapter-claims.spw"
+    scene_sketches: "book/scripts/script.mjs#createSceneSketch"
+    plan_a_refinement: "PLAN.A.spw#production_overlay_2026_07_16"
+    plan_b_complaints: "PLAN.B.spw#production_overlay_2026_07_16"
+    plan_c_wonder: "PLAN.C.spw#production_overlay_2026_07_16"
+    plan_d_depth: "PLAN.D.spw#production_overlay_2026_07_16"
+  }
+  cadence: "public ship windows on the 13th and 26th"
+}
+
+&plan_contracts{
+  #invariant: wonder_degrades_to_calm_reading
+  #invariant: every_noticed_misalignment_resolves_to_intention_or_defect
+  #invariant: media_plates_derive_from_scene_canon_not_adhoc_decoration
+  #invariant: literacy_ladder_is_opt_in_and_never_blocks_prose
+  #invariant: internals_shown_are_real_runtime_truth_not_simulated
+  #invariant: refinement_passes_are_additive_and_leave_precipitates
+}
+
+^"audience_model"{
+  .note: "postures, not personas — one visitor may hold all four in a single session"
+
+  the_arrived: {
+    stance: "has seen the web; default state is unimpressed"
+    wowed_by: [
+      "material depth — light, grain, mass in the page itself",
+      "coordinated motion that means something (voice entrances, nav-shape holds)",
+      "a page that behaves like a place, not a template"
+    ]
+    bored_by: ["stock parallax", "gradient hero + card grid", "animation without consequence"]
+    serve_with: "wonder_budget signature moments + fast first paint"
+  }
+
+  the_noticer: {
+    stance: "the same visitor with the adversarial eye — will find the seam and will complain"
+    catches: [
+      "sub-pixel seams, off-grid baselines, optical vs mathematical centering",
+      "easing that fights the room's tempo; staggers that drift",
+      "copy that promises what the cache cannot honor",
+      "theme-switch flashes; share cards that do not match the page",
+      "derived surfaces lagging their source (.spw mirrors, README tokens)"
+    ]
+    serve_with: "alignment_ledger — every deviation is either fixed or declared with its why"
+    failure_mode: "one unaccounted misalignment converts wonder into distrust of the whole monument"
+  }
+
+  the_apprentice: {
+    stance: "wants the reading itself to teach — vocabulary, grammar, sigils"
+    serve_with: "literacy_ladder rungs; resonance families over rainbow noise"
+    failure_mode: "forced pedagogy — a rung that lectures instead of inviting"
+  }
+
+  the_craftsperson: {
+    stance: "developer; will view source, open devtools, read the rail"
+    expects: [
+      "view-source dignity — served HTML reads as an authored document",
+      "internals that are real: probes, stages, and claims wired to live behavior",
+      "a walkable path from any artifact back to its canon"
+    ]
+    serve_with: "internals_awareness lanes + walkable ethos chain (PLAN.B)"
+  }
+}
+
+^"alignment_ledger"{
+  location: ".spw/state/alignment-ledger.spw"
+  premise: "a misalignment is any gap between what a surface implies and what it delivers"
+  axes: {
+    geometric: "grids, baselines, wrap edges, optical vs mathematical centering"
+    temporal: "easing families, stagger rhythm, scroll-timeline tempo, transition flashes"
+    material: "asset weight vs promise (empty OG plates), texture continuity across themes"
+    linguistic: "copy register drift, promise vs behavior (offline claims), voice per region"
+    canonical: "derived mirrors lagging source — chapter .spw vs JSON, docs vs release token"
+  }
+  protocol: [
+    "notice (self-audit, probe, or reader complaint) → file entry with axis + evidence",
+    "classify: defect (schedule the fix) | intentional (record the why; keep it visible)",
+    "an intentional entry with no recorded why is reclassified as a defect",
+    "reader complaints are evidence — they route to ethos refutation counters (PLAN.B state machine, claim lore-c008)"
+  ]
+  probes: [
+    "theme-switch flash check (cosmos ↔ ember, no intermediate frame)",
+    "share-card vs page parity (art, title, logline)",
+    "reduced-motion parity (signature moment vs calm cut)",
+    "print parity (zine + chapter print CSS)",
+    "baseline overlay pass at 320 / 768 / 1120 / 1440"
+  ]
+}
+
+^"wonder_budget"{
+  .note: "wow is budgeted, not sprinkled — one or two signature moments per surface, each fully finished"
+  rules: [
+    "every signature moment is gated (@supports + prefers-reduced-motion) and degrades to calm reading",
+    "no new signature moment starts while an existing one carries an open defect-class ledger entry",
+    "motion means something — entrances express voice (chapter/motion.css), never decoration alone"
+  ]
+  current_signatures: {
+    home: "atmosphere parallax — view() timelines, clip-safe containment"
+    chapter: "nav-shape breadth/depth hold + voice-based entrances"
+    spw_rail: "operator inspection + drag-to-scope"
+    zine: "one-sheet eight-panel print fold"
+  }
+  candidate_next: [
+    "View Transitions chamber crossing (platform.spw phase 09; atelier phase 05)",
+    "seal-press moment on chapter close (petal count = chapter number)",
+    "material-study plates graduating to chapter OG art (media_production.plates)"
+  ]
+}
+
+^"media_production"{
+  .note: "the monument begins producing media, not only pages — plates, captures, print"
+  study_convention: "iterative studies land in book/images/ as {name}-v{N}.png; a study graduates to a plate when it clears the ledger"
+  in_flight_studies: [
+    "book/images/material-study-v1.png",
+    "book/images/wonder-path-v1.png"
+  ]
+  lanes: {
+    plates: {
+      role: "chapter + door share art — resolves audit P0 chapter-og-images-empty"
+      source: "scene blocks (vantage / light / scent / edges / hint) are the prompt canon"
+      contract: "1200x630 primary, og:image:alt required, series identity + chapter seal overprint"
+      refs: [".spw/surfaces/platform.spw#phase.04", ".spw/surfaces/publish.spw#social_projection"]
+    }
+    captures: {
+      role: "motion captures of signature moments (GIF/WebM) for zine, docs, and social"
+      contract: "capture the degrade too — a reduced-motion cut proves calm reading holds"
+    }
+    print: {
+      role: "zine broadside now; chapbook later — print CSS is a production target, not an afterthought"
+      refs: ["zine/"]
+    }
+    sound: {
+      role: "acoustics vocabulary already named (bonk); actual audio production deferred"
+      deferred: true
+    }
+  }
+}
+
+^"literacy_ladder"{
+  .note: "each rung is learnable from the one below; no rung is required to enjoy the one beneath it"
+  rungs: [
+    { read:    "adventure register — prose stands alone, zero chrome" }
+    { notice:  "marks + motifs — opt-in language exploration, resonance families" }
+    { explore: "lexicon + topics — terms bind to themes; scene sketches open" }
+    { operate: "spw rail — sigils, handles, nav-shapes; the grammar becomes muscle" }
+    { inspect: "ethos probes + stages — claims, evidence, falsification in the open" }
+    { author:  "editorial desk — write in the same grammar the site runs on" }
+  ]
+  contract: "every rung has a visible, dismissible on-ramp on the rung below it"
+  anti_pattern: "tutorial overlays, forced tours, badges — the ladder invites, never conscripts"
+}
+
+^"internals_awareness"{
+  premise: "developer respect is earned in devtools — internals shown must be the real machinery"
+  lanes: {
+    view_source: "served HTML reads as an authored document — landmarks intact, no div soup"
+    runtime: "stage vocabulary (boon/bane/bone/bonk/honk) in status chips maps to real pipeline stages"
+    canon: "walkable ethos hrefs (PLAN.B) step from a UI row to its .spw source"
+    linguistics: "operator/container roles teach the actual grammar — 12 sigils, brace charge asymmetry — not lore-flavored tooltips"
+  }
+  open: "public /.spw/** exposure (audit open question) is a literacy decision as much as a size one"
+}
+
+^"refinement_model"{
+  .note: "capacity for iterative depth — passes are named so they can be rerun, not restarted"
+  passes: {
+    p1_structure: "blocking — grid, landmarks, section shapes"
+    p2_rhythm: "spacing, baselines, type scale, wrap behavior"
+    p3_material: "light, texture, color families, plate art"
+    p4_motion: "entrances, transitions, scroll climate, tempo"
+    p5_voice: "copy register, region personality, folded workshop"
+  }
+  rules: [
+    "a pass is additive — later passes never undo earlier verified passes",
+    "each pass leaves a precipitate: a study image, ledger entries, or probe results",
+    "reruns stay cheap — pass probes are scripted or checklist-stable, so a surface absorbs pass N+1 without archaeology"
+  ]
+  precipitate_ref: ".spw/runtime/precipitates.spw#refinement_precipitates"
+}
+
+^"phases"{
+  .note: "implementation order — each phase leaves the monument usable"
+
+  ^phase[00: "Surface mount"]{
+    task: "This plan + ledger seed + claims lore-c007..lore-c010; mount from index and workspace"
+    status: done
+    verify: "atelier linked from .spw/index.spw; ledger resolves; claims parse"
+    ={ ".spw/surfaces/atelier.spw" }
+  }
+
+  ^phase[01: "Ledger seed from audit"]{
+    task: "Carry audit P0/P1 misalignments into the ledger with axes and classifications"
+    status: done
+    verify: "every audit P0 appears as a ledger entry with axis + class"
+    ={ ".spw/state/alignment-ledger.spw" }
+  }
+
+  ^phase[02: "Plate production"]{
+    task: "Material studies → 13 chapter plates + door plates; scene blocks as prompt canon"
+    verify: "no chapter og:image under 100KB; each plate has og:image:alt; series identity holds"
+    refs: [".spw/surfaces/platform.spw#phase.04"]
+    .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run"
+  }
+
+  ^phase[03: "Alignment probe kit"]{
+    task: "Baseline overlay snippet + theme-flash, share-parity, reduced-motion, and print checks; scripted where possible"
+    verify: "one command or checklist runs all five ledger probes against a changed surface"
+  }
+
+  ^phase[04: "Literacy on-ramps"]{
+    task: "Each ladder rung gets its visible, dismissible invitation on the rung below"
+    verify: "adventure register unchanged when every invitation is dismissed"
+  }
+
+  ^phase[05: "Signature: chamber crossing"]{
+    task: "View Transitions between chambers with a reduced-motion cut; capture lane records both"
+    verify: "reduced-motion crossing is a calm swap; ledger carries zero defect entries for the seam"
+    refs: [".spw/surfaces/platform.spw#phase.09"]
+  }
+
+  ^phase[06: "Complaint channel"]{
+    task: "Route noticed-misalignment reports into ethos refutation counters (lore-c008) via the PLAN.B diagnostics engine"
+    verify: "a filed undeclared misalignment increments error_count on lore-c008"
+    refs: ["PLAN.B.spw#production_overlay_2026_07_16"]
+  }
+}
+
+^"success_probes"{
+  arrived: "a jaded web reader lingers on one signature moment and shares a chapter"
+  noticer: "a filed complaint resolves to either a fix or a written why — never silence"
+  apprentice: "a reader who started at read reaches operate without leaving the story"
+  craftsperson: "view-source and the ethos chain survive a skeptical devtools session"
+  atelier: "13 chapter plates shipped; studies graduated through -vN without ledger debt"
+}
+
+?<open_questions>[
+  "Are chapter plates unique art per chamber, or a series template with seal overprint? (carried from audit)"
+  "Does the complaint channel need a public affordance (report-a-seam link), or do ethos probes + issues suffice for v1?"
+  "Which pass owns typography ink-trap/optical-size work — p2 rhythm or p3 material?"
+  "Should captures (GIF/WebM) ship in the repo or in a release asset lane to protect clone weight?"
+]

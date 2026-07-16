@@ -9,6 +9,7 @@
   domains: "@spw/surfaces/domains.spw"
   editorial: "@spw/surfaces/editorial.spw"
   platform: "@spw/surfaces/platform.spw"
+  atelier: "@spw/surfaces/atelier.spw"
 }
 
 ^"audits"{
@@ -22,6 +23,8 @@
   rss: { mime: "application/rss+xml", extension: ".xml", use_case: "chapter progression feed" }
   webmanifest: { mime: "application/manifest+json", extension: ".webmanifest", use_case: "PWA install surface" }
   sitemap: { mime: "application/xml", extension: ".xml", use_case: "discoverability of monument doors + chapters" }
+  plate: { mime: "image/png", extension: ".png", use_case: "share intrigue art + material studies ({name}-v{N} until graduated)" }
+  capture: { mime: "video/webm", extension: ".webm", use_case: "signature-moment motion captures incl. reduced-motion cut" }
 }
 
 ^"pipeline_stages"{
@@ -47,6 +50,7 @@
     "vite-emits-public-doors",
     "og-image-nonblank",
     "chapter-spw-title-matches-json",
-    "release-token-consistent"
+    "release-token-consistent",
+    "no-undeclared-misalignment-on-changed-surfaces"
   ]
 }

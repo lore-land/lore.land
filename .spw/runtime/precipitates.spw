@@ -50,3 +50,12 @@
   share_cards: "OG+Twitter meta on every public URL"
   audit_ref: ".spw/audits/platform-ship-audit-2026-07-16.spw"
 }
+
+^"refinement_precipitates"{
+  .note: "pass-based craft artifacts — see .spw/surfaces/atelier.spw#refinement_model"
+  study: "book/images/{name}-v{N}.png — iterative material/wonder studies"
+  plate: "graduated study serving as OG art (clears alignment ledger first)"
+  ledger_entries: ".spw/state/alignment-ledger.spw entries filed per pass"
+  capture: "signature-moment GIF/WebM including the reduced-motion cut"
+  probe_results: "five ledger probes recorded against each changed surface"
+}
