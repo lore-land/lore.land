@@ -142,6 +142,7 @@
     "spec_ref prefers lore .spw paths listed above",
     "UI rows expose walkable href when path is same-origin or https"
   ]
-  status: "ids aligned in canon 2026-07-16; runtime module still carries legacy c001-* labels until PLAN.B hydration"
+  status: "aligned 2026-07-16 — runtime module carries all ten lore-cNNN claims, hydrates from this file with fallback mirror, and renders path-like refs as walkable hrefs (PLAN.B milestone A)"
   hydration_set_note: "atelier claims lore-c007..lore-c010 join the hydration set; lore-c008 additionally receives complaint_route signals (.spw/state/alignment-ledger.spw#complaint_route)"
+  public_projection: "GitHub Pages / Vite dist must emit this file at /.spw/claims/chapter-claims.spw via npm run spw:project (.spw/tools/project-public-spw.mjs); without it hydration falls back and walkable lore .spw hrefs 404"
 }

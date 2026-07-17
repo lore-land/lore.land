@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/11]{
-  title: "Boof and the Fool’s Awakening"
-  description: "Chapter 11 of Lore.Land: Boof and the Fool’s Awakening. Experience the moment of clarity as Boof discovers the true purpose of their journey with the Fool."
+  title: "Paradox Bloom"
+  description: "Chapter 11 of Lore.Land: Paradox Bloom. Impossible routes open into forms that can be used without being fully resolved."
   mood: "awakening"
   period: "spring"
   chapter_path: "/book/chapter/11/"
@@ -74,8 +74,8 @@
 
 #[chapter/11/lore]{
   notes: [
-    "The significance of the Fool’s Awakening within the overarching narrative."
-    "Boof's emotional and psychological transformation as they reach a moment of clarity."
+    "Paradox is treated as generative constraint, not decorative confusion."
+    "Bloom means multiple viable implementations from one unresolved premise."
   ]
 }
 

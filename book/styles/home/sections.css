@@ -403,6 +403,20 @@
     border-radius: var(--border-radius-small);
     background: rgba(255, 255, 255, 0.66);
     padding: 0.5rem;
+    border-inline-start-width: 3px;
+    border-inline-start-color: color-mix(in srgb, var(--color-text-alt) 28%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-item[data-layer="grammar"] {
+    border-inline-start-color: color-mix(in srgb, #7cb87e 58%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-item[data-layer="semantics"] {
+    border-inline-start-color: color-mix(in srgb, #e5a7ff 58%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-item[data-layer="pragmatics"] {
+    border-inline-start-color: color-mix(in srgb, #ff8a8a 58%, transparent);
   }
 
   .spw-ethos-atlas .ethos-claim-line {
@@ -496,6 +510,80 @@
     max-width: 100%;
     flex-wrap: wrap;
     overflow-wrap: anywhere;
+  }
+
+  .spw-ethos-atlas .ethos-claim-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.24rem 0.44rem;
+  }
+
+  .spw-ethos-atlas .ethos-claim-head .ethos-claim-handle {
+    flex: 1 1 auto;
+  }
+
+  .spw-ethos-atlas .ethos-claim-status {
+    flex: 0 0 auto;
+    border: 1px dashed color-mix(in srgb, var(--color-text-alt) 42%, transparent);
+    border-radius: var(--border-radius-pill);
+    padding: 0.1rem 0.5rem;
+    font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text-alt) 86%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-status[data-claim-status="active"] {
+    border-style: solid;
+    color: color-mix(in srgb, #4f88b0 62%, var(--color-text-alt) 38%);
+    border-color: color-mix(in srgb, #4f88b0 52%, transparent);
+    background: color-mix(in srgb, #9fd8ff 16%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-status[data-claim-status="confirmed"] {
+    border-style: solid;
+    color: color-mix(in srgb, #3f7a52 62%, var(--color-text-alt) 38%);
+    border-color: color-mix(in srgb, #3f7a52 52%, transparent);
+    background: color-mix(in srgb, #7cb87e 16%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-status[data-claim-status="refuted"] {
+    border-style: solid;
+    color: color-mix(in srgb, #a04a4a 66%, var(--color-text-alt) 34%);
+    border-color: color-mix(in srgb, #a04a4a 52%, transparent);
+    background: color-mix(in srgb, #ff8a8a 16%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-claim-ref-link {
+    color: color-mix(in srgb, var(--color-accent-main) 78%, var(--color-text-alt));
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .spw-ethos-atlas .ethos-claim-ref-link:hover {
+    color: var(--color-accent-main);
+    text-decoration-style: solid;
+  }
+
+  .spw-ethos-atlas .ethos-source {
+    margin: 0.4rem 0 0;
+    font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: color-mix(in srgb, var(--color-text-alt) 80%, transparent);
+  }
+
+  .spw-ethos-atlas .ethos-source[data-ethos-source="canon"] {
+    color: color-mix(in srgb, #3f7a52 58%, var(--color-text-alt) 42%);
+  }
+
+  .spw-ethos-atlas .ethos-source[data-ethos-source="fallback"] {
+    color: color-mix(in srgb, #b06a30 58%, var(--color-text-alt) 42%);
   }
 
   .grammar-chip[data-grammar-profile="declarative"] {

@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/13]{
-  title: "Boof and the Fool’s Reflection"
-  description: "Chapter 13 of Lore.Land: Boof and the Fool’s Reflection. Embark on a new journey as Boof chooses their own way forward with the Fool."
+  title: "Lore.Land Canon"
+  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The serial closes its first loop by making the world’s self-record a public, revisitable surface."
   mood: "reflection"
   period: "spring"
   chapter_path: "/book/chapter/13/"
@@ -23,7 +23,7 @@
     handle: "custom-boof/01"
     type: "custom-boof"
     payload: "<>"
-    excerpt: "Boof paused on the path, feeling the weight of the journey behind them. The bonks, the puzzles, the Fool’s laughter—it all seemed so distant now. They gazed into a still pond by the side of the path, seeing their refl..."
+    excerpt: "Boof paused where the path thinned into reflection. Behind them: collisions, oaths, ledgers, the Fool’s laughter—it all seemed so distant now. They gazed into a still pond by the side of the path, seeing their reflect..."
     route: "^[chapter/13/s01]{open}"
   }
   s02: {
@@ -74,8 +74,8 @@
 
 #[chapter/13/lore]{
   notes: [
-    "The significance of the Fool’s Reflection within the overarching narrative."
-    "Boof's emotional and psychological transformation as they reach a moment of clarity."
+    "Canon here means durable return path, not sealed dogma."
+    "The open door is intentional: the next cycle can re-enter without pretending the first never happened."
   ]
 }
 

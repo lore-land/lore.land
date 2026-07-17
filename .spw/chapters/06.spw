@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/06]{
-  title: "Boof and the Fool’s Labyrinth"
-  description: "Chapter 6 of Lore.Land: Boof and the Fool’s Labyrinth. Navigate through the shifting maze as Boof confronts deeper mysteries."
+  title: "Lanterns of Bonk City"
+  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes infrastructure as Boof learns how a city turns shocks into shared orientation."
   mood: "labyrinth"
   period: "spring"
   chapter_path: "/book/chapter/06/"
@@ -67,8 +67,8 @@
 
 #[chapter/06/lore]{
   notes: [
-    "The nature and purpose of the Fool’s Labyrinth within the grove."
-    "Boof's internal struggles and discoveries while navigating the ever-changing maze."
+    "Bonk City converts event energy into navigable light—spectacle with civic duty."
+    "Lanterns are proof: each one claims a place still worth finding after dark."
   ]
 }
 

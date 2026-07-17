@@ -68,15 +68,23 @@
         "world/",
         "characters/",
         "zine/",
-        "book/pwa/offline.html"
+        "book/pwa/offline.html",
+        ".spw/claims/",
+        ".spw/chapters/",
+        ".spw/surfaces/",
+        ".spw/runtime/",
+        ".spw/state/",
+        ".spw/audits/"
       ]
     }
     transform: {
       steps: [
         "npm run chapters:build",
-        "node .spw/tools/export-chapters.mjs",
-        "npm run build"
+        "npm run spw:export",
+        "vite build",
+        "npm run spw:project"
       ]
+      note: "npm run build chains all four steps"
     }
     validate: {
       checks: [
@@ -86,19 +94,88 @@
         "og-image-nonblank",
         "chapter-spw-title-matches-json",
         "release-token-consistent",
-        "no-undeclared-misalignment-on-changed-surfaces"
+        "no-undeclared-misalignment-on-changed-surfaces",
+        "dist-.spw-claims-chapter-claims-exists",
+        "dist-.spw-excludes-workbench-and-tools"
       ]
       refs: [
         ".spw/surfaces/platform.spw#seal_checklist_additions",
-        ".spw/state/alignment-ledger.spw"
+        ".spw/state/alignment-ledger.spw",
+        ".spw/surfaces/publish.spw#spw_public_projection"
       ]
     }
     emit: {
       target: "dist/",
       formats: ["html", "css", "js", "webmanifest"],
-      also: ["sitemap.xml", "robots.txt", "sw.js"]
+      also: ["sitemap.xml", "robots.txt", "sw.js", "dist/.spw/**"]
     }
   }
+
+  # Public Spw projection — make claim hydration + walkable ethos refs honest on Pages.
+  spw_public: {
+    select: {
+      allowlist_trees: [
+        "index.spw",
+        "workspace.spw",
+        "claims/",
+        "chapters/",
+        "runtime/",
+        "state/",
+        "surfaces/",
+        "audits/"
+      ]
+      never: ["_workbench/", "tools/"]
+    }
+    transform: {
+      tool: "node .spw/tools/project-public-spw.mjs"
+      npm: "npm run spw:project"
+      verify: "npm run spw:verify"
+    }
+    validate: {
+      required: [
+        "claims/chapter-claims.spw",
+        "chapters/index.spw",
+        "chapters/01.spw",
+        "runtime/precipitates.spw",
+        "state/observable.spw",
+        "state/alignment-ledger.spw",
+        "surfaces/publish.spw",
+        "surfaces/platform.spw",
+        "surfaces/index.spw",
+        "surfaces/atelier.spw",
+        "index.spw",
+        "workspace.spw"
+      ]
+      probes: [
+        "fetch /.spw/claims/chapter-claims.spw → 200 text",
+        "spw-ethos provenance chip shows $[claims]{canon} not fallback:fetch_404",
+        "ethos spec href opens same-origin /.spw/surfaces/*.spw"
+      ]
+    }
+    emit: {
+      target: "dist/.spw/",
+      also: ["dist/.spw/public-manifest.json", "dist/.spw/README.txt"]
+      public_url_prefix: "/.spw/"
+    }
+  }
+}
+
+^"spw_public_projection"{
+  .note: "resolves platform open question: public /.spw/** is lore-owned allowlist only"
+  rationale: [
+    "PLAN.B hydrates claims from /.spw/claims/chapter-claims.spw",
+    "walkable ethos rows resolve path-like refs via normalizeSpwSource to /.spw/**",
+    "Vite publicDir is false — dist would otherwise omit the whole tree",
+    "branch-root Pages still benefits from committed lore .spw; dist deploy requires project"
+  ]
+  decision: "expose lore-owned canon under /.spw/; never project _workbench or tools"
+  size_posture: "lore tree is small plain text; workbench submodule stays git-side"
+  content_type: "unknown extensions as application/octet-stream are fine for fetch().text()"
+  refs: [
+    ".spw/tools/project-public-spw.mjs",
+    "book/scripts/modules/spw-ethos.mjs",
+    "book/scripts/modules/spw-routing.mjs"
+  ]
 }
 
 ^"social_projection"{

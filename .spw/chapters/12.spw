@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/12]{
-  title: "Boof and the Fool’s Path"
-  description: "Chapter 12 of Lore.Land: Boof and the Fool’s Path. Embark on a new journey as Boof chooses their own way forward with the Fool."
+  title: "The Last Confluence"
+  description: "Chapter 12 of Lore.Land: The Last Confluence. All narrative threads meet; the work is merger without amnesia."
   mood: "path"
   period: "spring"
   chapter_path: "/book/chapter/12/"
@@ -74,8 +74,8 @@
 
 #[chapter/12/lore]{
   notes: [
-    "The significance of the Fool’s Path within the overarching narrative."
-    "Boof's emotional and psychological transformation as they embrace a new journey."
+    "Confluence is a publishing problem: how to ship a whole without flattening provenance."
+    "Sources remain addressable after merge—readers can still walk upstream."
   ]
 }
 

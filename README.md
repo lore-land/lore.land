@@ -73,7 +73,7 @@ Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_07_15.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_07_16.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -225,16 +225,22 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
   - `PLAN.B.spw` — ethos hydration + walkable refs
   - `PLAN.C.spw` — Shadow DOM / Chrome (sigils already lived)
   - `PLAN.D.spw` — Houdini / Firefox (P0 platform work outranks)
-- Regeneration command (run after chapter prose changes):
-  - `node .spw/tools/export-chapters.mjs`
+- After chapter prose changes: `npm run spw:export` (regenerates `.spw/chapters/*` from HTML embeds; workspace **c001**)
+- Public canon for Pages / Vite dist (claim hydration + walkable ethos refs):
+  - `npm run spw:verify` — required lore paths present
+  - `npm run spw:project` — emit allowlist → `dist/.spw/` (never `_workbench/` or `tools/`)
+  - `npm run build` chains `chapters:build → spw:export → vite build → spw:project`
+  - Spec: `.spw/surfaces/publish.spw#spw_public_projection`
 
-Chapter `.spw` files are generated from chapter-data (HTML embed or JSON SoT path) and intended as long-form, expressive references for story extension and semantic diffing. If titles lag live JSON, regenerate before treating plain-text extension claims as true.
+Chapter `.spw` mirrors are long-form references for extension and semantic diffing. Titles must match JSON SoT after export.
+
+**GitHub Pages:** dist deploys need `spw:project` or `fetch /.spw/claims/chapter-claims.spw` falls back and walkable lore refs 404. Branch-root deploys already expose committed lore `.spw`; still export after prose edits.
 
 ### Cache + Release Coupling
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_07_15.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
+- release token: `2026_07_16.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`

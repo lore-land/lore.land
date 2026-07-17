@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/05]{
-  title: "Boof and the Fool’s Song"
-  description: "Chapter 5 of Lore.Land: Boof and the Fool’s Song. Follow Boof as they navigate through the melodies and mysteries of the Fool’s latest tune."
+  title: "The Quiet Rift"
+  description: "Chapter 5 of Lore.Land: The Quiet Rift. The surface holds while the books of the town begin to disagree with themselves."
   mood: "song"
   period: "spring"
   chapter_path: "/book/chapter/05/"
@@ -67,8 +67,8 @@
 
 #[chapter/05/lore]{
   notes: [
-    "The origins and significance of the Fool’s Song within the grove."
-    "Boof's emotional journey and connection to the melody."
+    "The rift is an audit condition: two truths that cannot both post."
+    "Song enters as a diagnostic—melody makes the fracture audible without forcing a false fix."
   ]
 }
 

@@ -154,14 +154,19 @@
     must: [
       "regenerate .spw/chapters after prose changes",
       "claim ids match between chapter-claims.spw and spw-ethos.mjs",
-      "spec rows prefer lore .spw paths; workbench as upstream kernel"
+      "spec rows prefer lore .spw paths; workbench as upstream kernel",
+      "production dist includes public /.spw/** allowlist for hydration + walkable refs"
     ]
     should: [
       "ethos rows are <a href> to walkable canon",
       "chapters/index.spw titles match JSON"
     ]
-    regenerate: "node .spw/tools/export-chapters.mjs"
+    regenerate: "npm run spw:export"
+    project_public: "npm run spw:project"
+    verify_public: "npm run spw:verify"
     prose_sot: "book/content/chapters/*.json"
+    public_tool: ".spw/tools/project-public-spw.mjs"
+    never_public: ["_workbench/", "tools/"]
   }
 }
 
@@ -212,6 +217,14 @@
     task: "Unify claim ids; href-ify spec/impl/probe; hydrate from chapter-claims.spw when ready"
     verify: "clicking spec opens resolvable .spw or GitHub resource"
     refs: ["PLAN.B.spw", ".spw/claims/chapter-claims.spw"]
+    status: "runtime shipped 2026-07-16 pm; public projection tool added so Pages can serve /.spw/**"
+  }
+
+  ^phase[07b: "Public .spw projection"]{
+    task: "Emit lore-owned .spw allowlist into dist/.spw after vite build; exclude _workbench and tools"
+    verify: "test -f dist/.spw/claims/chapter-claims.spw after npm run build; npm run spw:verify"
+    refs: [".spw/tools/project-public-spw.mjs", ".spw/surfaces/publish.spw#spw_public_projection"]
+    status: "tool + npm scripts wired 2026-07-16"
   }
 
   ^phase[08: "Fonts + perf"]{
@@ -232,7 +245,9 @@
   "OG image non-blank and < 5MB",
   "twitter:card present on shared URL",
   ".spw/chapters regenerated if chapter JSON changed",
-  "release token bumped when shell CSS/JS changed"
+  "release token bumped when shell CSS/JS changed",
+  "dist/.spw/claims/chapter-claims.spw exists when shipping a dist deploy",
+  "dist/.spw excludes _workbench and tools"
 ]
 
 ^"success_probes"{
@@ -245,5 +260,14 @@
 ?<open_questions>[
   "Charm surface: keep public in Vite, archive, or leave out of production dist?"
   "Should SW update force skipWaiting or wait for seal-keeper refresh CTA?"
-  "Public expose of /.spw/** on GitHub Pages — intrigue vs noise/size?"
 ]
+
+^"resolved_questions"{
+  public_spw_on_pages: {
+    was: "Public expose of /.spw/** on GitHub Pages — intrigue vs noise/size?"
+    decision: "Yes for lore-owned allowlist only (claims, chapters, surfaces, runtime, state, audits, index, workspace)."
+    never: "_workbench submodule and tools/ stay git-side."
+    mechanism: "npm run spw:project → dist/.spw/ (see publish.spw#spw_public_projection)"
+    honesty: "Without projection, PLAN.B claim hydration and walkable ethos refs 404 on dist-based Pages deploys."
+  }
+}

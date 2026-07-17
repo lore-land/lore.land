@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/07]{
-  title: "Boof and the Fool’s Shadow"
-  description: "Chapter 7 of Lore.Land: Boof and the Fool’s Shadow. Explore the mysteries as Boof encounters the enigmatic shadow in the Fool’s world."
+  title: "Blueberry Oath"
+  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof confronts a shadow that may be the Fool’s—or a debt the reader already carries."
   mood: "shadow"
   period: "spring"
   chapter_path: "/book/chapter/07/"
@@ -23,7 +23,7 @@
     handle: "custom-boof/01"
     type: "custom-boof"
     payload: "<>"
-    excerpt: "The deeper Boof ventured into the labyrinth, the more they noticed something was following them—a shadow , just beyond their reach."
+    excerpt: "Deeper in the labyrinth, Boof stopped pretending the pursuit was one-sided. Something kept the same pace—a shadow , just beyond their reach."
     route: "^[chapter/07/s01]{open}"
   }
   s02: {
@@ -74,8 +74,8 @@
 
 #[chapter/07/lore]{
   notes: [
-    "The nature and purpose of the Fool’s Shadow within the labyrinth."
-    "Boof's internal struggles and discoveries while confronting the enigmatic shadow."
+    "Oaths in the serial bind publicity to private cost—marketing with consequence."
+    "The Fool’s shadow is a mirror protocol: it copies motion until it demands ownership."
   ]
 }
 

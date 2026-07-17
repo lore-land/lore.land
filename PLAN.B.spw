@@ -55,22 +55,25 @@
 }
 
 ^current_gaps{
-  claims_hydration: hardcoded_not_spw_canon
-  status_model: single_string_overwrite
-  signal_coverage: partial_runtime_signals_only
-  claim_states: missing_untested_active_confirmed_refuted_model
-  diagnostics_feed: missing_custom_runtime_cycle_feed
-  claim_id_parity: "spw-ethos.mjs still uses c001-* labels; canon uses lore-c001-* as of 2026-07-16"
-  walkable_refs: "spec/impl/probe rows are text spans, not hrefs into .spw or GitHub"
-  chapter_mirror_lag: "pragmatics claim lore-c003 depends on workspace c001 — currently failing until export-chapters runs"
+  .note: "updated 2026-07-17 after milestone-A ship + public .spw projection"
+  claims_hydration: "shipped — fetch /.spw/claims/chapter-claims.spw with fallback mirror; needs Pages 200 seal"
+  status_model: "partial — untested→active on first signal; no transition history / reverse"
+  signal_coverage: "partial — selection, section-change, load-stage only; atelier claims unlinked"
+  claim_states: "partial — confirmed|refuted wait on diagnostics engine (thresholds + error polarity)"
+  diagnostics_feed: "missing_custom_runtime_cycle_feed"
+  claim_id_parity: "shipped — lore-cNNN in runtime + canon"
+  walkable_refs: "shipped — path-like segments become same-origin hrefs; prose probes stay text"
+  chapter_mirror_lag: "shipped — spw:export regenerated; c001 titles match JSON"
+  public_projection: "shipped tool — seal production host returns 200 for /.spw/claims/chapter-claims.spw"
   %severity: {
-    claims_hydration: "high — hardcoded claims diverge from canonical spw source over time"
-    status_model: "medium — single-string overwrite loses transition history"
-    claim_states: "high — without a state machine, claims cannot be falsified"
-    diagnostics_feed: "low — runtime cycle events are enhancement, not prerequisite"
-    claim_id_parity: "high — hydration and UI cannot share one instrument until ids match"
-    walkable_refs: "medium — probe chain reads as ornament without resolvable links"
-    chapter_mirror_lag: "high — plain-text extension claim is false while .spw chapters lag prose"
+    claims_hydration: "low residual — host seal only"
+    status_model: "medium — full machine still open"
+    claim_states: "high for confirmed/refuted honesty"
+    diagnostics_feed: "low — enhancement"
+    claim_id_parity: "cleared"
+    walkable_refs: "cleared (modulo host serving /.spw/**)"
+    chapter_mirror_lag: "cleared until next prose edit without spw:export"
+    public_projection: "medium until first dist Pages deploy verified"
   }
 }
 
@@ -82,10 +85,17 @@
     "chapter-claims.spw id policy lore-cNNN + platform/social claims added"
   ]
   next: [
-    "align spw-ethos.mjs claim_id with .spw/claims/chapter-claims.spw",
-    "href-ify probe chain rows",
-    "hydrate from /.spw/claims/chapter-claims.spw with fallback constants",
-    "regenerate .spw/chapters so lore-c003 can be honestly probed"
+    "full diagnostics engine: evidence thresholds, error polarity, confirmed/refuted transitions",
+    "wire atelier claims (lore-c007..c010) to runtime signals / complaint_route",
+    "seal: confirm production Pages host returns 200 for /.spw/claims/chapter-claims.spw after deploy"
+  ]
+  shipped_2026_07_16_pm: [
+    "claim_id parity: spw-ethos.mjs carries all ten lore-cNNN claims as fallback mirror",
+    "canon hydration: fetch + parse /.spw/claims/chapter-claims.spw with fallback on fetch/parse failure; $[claims]{canon|fallback:reason} provenance chip",
+    "walkable refs: path-like spec/impl/probe segments resolve via resolvePathRefHref to same-origin hrefs",
+    "milestone-B slice: untested -> active on first mapped signal (lore:spw-selection, lore:ebook-section-change, lore:load-stage); lore:ethos-claim-status emitted on transition",
+    "styling: [data-claim-status] chips + layer resonance borders in cards.css; atlas parity in home/sections.css",
+    "public .spw projection: project-public-spw.mjs + npm run spw:project|verify; build chain emits dist/.spw allowlist (never _workbench/tools)"
   ]
   platform_claims: ["lore-c005-offline-honesty", "lore-c006-share-intrigue"]
   refs: [".spw/claims/chapter-claims.spw", ".spw/surfaces/platform.spw#phase.07"]

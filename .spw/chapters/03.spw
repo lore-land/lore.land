@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/03]{
-  title: "Boof and the Fool's Paradox"
-  description: "Chapter 3 of Lore.Land: Boof and the Fool's Paradox. Discover the twists and turns of the paradoxical path."
+  title: "Signals in the Sand"
+  description: "Chapter 3 of Lore.Land: Signals in the Sand. Old routes answer from the dunes, and Boof must decide which signal is invitation and which is trap."
   mood: "paradox"
   period: "spring"
   chapter_path: "/book/chapter/03/"
@@ -67,8 +67,8 @@
 
 #[chapter/03/lore]{
   notes: [
-    "Explanation of the Fool's Paradox and its impact on the grove."
-    "Boof's reflections on the nature of pursuit and illusion within the paradox."
+    "Desert signals behave like protocol: latency, spoofing, and durable return addresses."
+    "The Fool’s paradox appears as routing advice that collapses if followed too literally."
   ]
 }
 

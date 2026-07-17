@@ -1,93 +1,71 @@
 # Chapter Canon Index
-# Titles mirror book/content/chapters/*.json as of platform audit direction.
-# Full section mirrors: regenerate with node .spw/tools/export-chapters.mjs
 #>chapter_canon_index
 #:chapter-canon #!index
-
-^meta{
-  prose_sot: "book/content/chapters/*.json"
-  regenerate: "node .spw/tools/export-chapters.mjs"
-  lag_note: "Per-file .spw/chapters/NN.spw bodies may still lag until export is run; titles below are live JSON."
-  audit: ".spw/audits/platform-ship-audit-2026-07-16.spw#chapter-spw-lag"
-}
 
 &[chapters]{
   c01: {
     title: "Dawn in Boon.land"
     file: "@spw/chapters/01.spw"
-    path: "/book/chapter/01/"
     sections: 9
   }
   c02: {
     title: "The First Echo"
     file: "@spw/chapters/02.spw"
-    path: "/book/chapter/02/"
     sections: 7
   }
   c03: {
     title: "Signals in the Sand"
     file: "@spw/chapters/03.spw"
-    path: "/book/chapter/03/"
     sections: 6
   }
   c04: {
     title: "Crosswind Council"
     file: "@spw/chapters/04.spw"
-    path: "/book/chapter/04/"
     sections: 6
   }
   c05: {
     title: "The Quiet Rift"
     file: "@spw/chapters/05.spw"
-    path: "/book/chapter/05/"
     sections: 6
   }
   c06: {
     title: "Lanterns of Bonk City"
     file: "@spw/chapters/06.spw"
-    path: "/book/chapter/06/"
     sections: 6
   }
   c07: {
     title: "Blueberry Oath"
     file: "@spw/chapters/07.spw"
-    path: "/book/chapter/07/"
     sections: 7
   }
   c08: {
     title: "Songs of the Watering Eye"
     file: "@spw/chapters/08.spw"
-    path: "/book/chapter/08/"
     sections: 7
   }
   c09: {
     title: "Shards of Nine Honks"
     file: "@spw/chapters/09.spw"
-    path: "/book/chapter/09/"
     sections: 7
   }
   c10: {
     title: "Bone.land Resonance"
     file: "@spw/chapters/10.spw"
-    path: "/book/chapter/10/"
     sections: 7
   }
   c11: {
     title: "Paradox Bloom"
     file: "@spw/chapters/11.spw"
-    path: "/book/chapter/11/"
     sections: 7
   }
   c12: {
     title: "The Last Confluence"
     file: "@spw/chapters/12.spw"
-    path: "/book/chapter/12/"
     sections: 7
   }
   c13: {
     title: "Lore.Land Canon"
     file: "@spw/chapters/13.spw"
-    path: "/book/chapter/13/"
     sections: 7
   }
 }
@@ -107,3 +85,4 @@
   "chapter-12": "#>chapter_12"
   "chapter-13": "#>chapter_13"
 }
+

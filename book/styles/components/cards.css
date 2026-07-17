@@ -336,6 +336,74 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   border-radius: var(--border-radius-small);
   background: rgba(255, 255, 255, 0.66);
   padding: 0.42rem;
+  border-inline-start-width: 3px;
+  border-inline-start-color: color-mix(in srgb, var(--theme-text-alt) 28%, transparent);
+}
+
+/* Layer resonance: claim items carry the color of their layer's sigil —
+ * grammar grounds (.), semantics integrates (^), pragmatics acts (!). */
+.ethos-claim-item[data-layer="grammar"] {
+  border-inline-start-color: color-mix(in srgb, var(--spw-color-ground, #7cb87e) 58%, transparent);
+}
+
+.ethos-claim-item[data-layer="semantics"] {
+  border-inline-start-color: color-mix(in srgb, var(--spw-color-integration, #e5a7ff) 58%, transparent);
+}
+
+.ethos-claim-item[data-layer="pragmatics"] {
+  border-inline-start-color: color-mix(in srgb, var(--spw-color-action, #ff8a8a) 58%, transparent);
+}
+
+.ethos-claim-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.24rem 0.4rem;
+}
+
+.ethos-claim-head .ethos-claim-handle {
+  flex: 1 1 auto;
+}
+
+/* Claim status chips: the falsification protocol made visible.
+ * untested = no assertion; active = evidence accumulating;
+ * confirmed / refuted arrive with the full diagnostics engine (PLAN.B). */
+.ethos-claim-status {
+  flex: 0 0 auto;
+  border: 1px dashed color-mix(in srgb, var(--theme-text-alt) 42%, transparent);
+  border-radius: var(--border-radius-pill);
+  padding: 0.1rem 0.46rem;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--theme-text-alt) 86%, transparent);
+  transition:
+    color var(--transition-duration) var(--transition-function),
+    border-color var(--transition-duration) var(--transition-function),
+    background-color var(--transition-duration) var(--transition-function);
+}
+
+.ethos-claim-status[data-claim-status="active"] {
+  border-style: solid;
+  color: color-mix(in srgb, var(--spw-color-probe, #9fd8ff) 46%, var(--theme-text-alt) 54%);
+  border-color: color-mix(in srgb, var(--spw-color-probe, #9fd8ff) 52%, transparent);
+  background: color-mix(in srgb, var(--spw-color-probe, #9fd8ff) 13%, transparent);
+}
+
+.ethos-claim-status[data-claim-status="confirmed"] {
+  border-style: solid;
+  color: color-mix(in srgb, var(--spw-color-ground, #7cb87e) 44%, var(--theme-text-alt) 56%);
+  border-color: color-mix(in srgb, var(--spw-color-ground, #7cb87e) 54%, transparent);
+  background: color-mix(in srgb, var(--spw-color-ground, #7cb87e) 14%, transparent);
+}
+
+.ethos-claim-status[data-claim-status="refuted"] {
+  border-style: solid;
+  color: color-mix(in srgb, var(--spw-color-action, #ff8a8a) 48%, var(--theme-text-alt) 52%);
+  border-color: color-mix(in srgb, var(--spw-color-action, #ff8a8a) 56%, transparent);
+  background: color-mix(in srgb, var(--spw-color-action, #ff8a8a) 15%, transparent);
 }
 
 .ethos-claim-line {
@@ -380,6 +448,49 @@ main.chapter>[data-ebook-section="true"][data-ebook-region="reference"] {
   min-width: 0;
   overflow-wrap: anywhere;
   opacity: 0.88;
+}
+
+/* Walkable refs: path-like segments resolve back to their canon source. */
+.ethos-claim-ref-link {
+  color: color-mix(in srgb, var(--theme-accent-main) 74%, var(--theme-text-alt));
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  border-radius: 2px;
+  transition: color var(--transition-duration) var(--transition-function);
+}
+
+.ethos-claim-ref-link:hover {
+  color: var(--theme-accent-main);
+  text-decoration-style: solid;
+}
+
+.ethos-claim-ref-link:focus-visible {
+  outline: 2px solid var(--spw-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Claim provenance: canon means the live .spw file answered; fallback means
+ * the bundled mirror is standing in and says why. */
+.ethos-source {
+  margin: 0;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--theme-text-alt) 78%, transparent);
+}
+
+.ethos-source[data-ethos-source="pending"] {
+  color: color-mix(in srgb, var(--theme-text-alt) 72%, transparent);
+}
+
+.ethos-source[data-ethos-source="canon"] {
+  color: color-mix(in srgb, var(--spw-color-ground, #7cb87e) 42%, var(--theme-text-alt) 58%);
+}
+
+.ethos-source[data-ethos-source="fallback"] {
+  color: color-mix(in srgb, var(--spw-color-potential, #ffb07a) 46%, var(--theme-text-alt) 54%);
 }
 
 .ethos-operators-heading {

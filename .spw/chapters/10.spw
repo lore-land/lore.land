@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/10]{
-  title: "Boof and the Fool’s Bonk"
-  description: "Chapter 10 of Lore.Land: Boof and the Fool’s Bonk. Experience the unexpected twists as Boof faces the Fool’s latest challenge."
+  title: "Bone.land Resonance"
+  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert—truth transmitted through load-bearing form."
   mood: "bonk"
   period: "spring"
   chapter_path: "/book/chapter/10/"
@@ -23,7 +23,7 @@
     handle: "custom-boof/01"
     type: "custom-boof"
     payload: "<>"
-    excerpt: "Boof wandered further into the maze of games and puzzles, unsure if there was even a way out anymore. And then, with a sudden thud—a loud BONK echoed through the clearing."
+    excerpt: "The maze had stopped pretending to be entertainment. Puzzles still lined the corridors, but each one felt load-bearing—until, with a sudden thud—a loud BONK echoed through the clearing."
     route: "^[chapter/10/s01]{open}"
   }
   s02: {
@@ -74,8 +74,8 @@
 
 #[chapter/10/lore]{
   notes: [
-    "The significance of the Fool’s Bonk within the overarching narrative."
-    "Boof's emotional and psychological journey as they confront unexpected challenges."
+    "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
+    "The bonk at the threshold is not slapstick—it is contact with irreversible structure."
   ]
 }
 

@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/04]{
-  title: "Boof and the Fool’s Mirror"
-  description: "Chapter 4 of Lore.Land: Boof and the Fool’s Mirror. Discover the world through the Fool’s reflective surface."
+  title: "Crosswind Council"
+  description: "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit at one table while the weather refuses to pick a side."
   mood: "mirror"
   period: "spring"
   chapter_path: "/book/chapter/04/"
@@ -67,8 +67,8 @@
 
 #[chapter/04/lore]{
   notes: [
-    "Explanation of the Fool’s Mirror and its role in revealing hidden truths."
-    "Boof's introspection and the challenges faced when confronting one's own reflection."
+    "Councils in Lore.Land treat polarity as infrastructure, not morality play."
+    "Public negotiation is a marketing surface: claims must survive weather and witness."
   ]
 }
 

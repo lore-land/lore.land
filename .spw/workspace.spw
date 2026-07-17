@@ -30,16 +30,16 @@
 
 ^contract_status{
   .note: "as of platform ship audit 2026-07-16"
-  c001: "failing — chapter .spw titles lag live JSON (regenerate required)"
+  c001: "passing — regenerated 2026-07-17 via spw:export; all 13 titles match JSON"
   c002: "holding — handles remain plain-text legible in rail"
-  c003: "partial — claim UI present; status state machine still PLAN.B"
+  c003: "partial — untested→active on mapped signals; confirmed|refuted + history still PLAN.B"
   c004: "holding — lifecycle_bridge vocabulary shared"
   c005: "holding — observable.spw shape stable"
   c006: "failing — sw.js precaches missing fixtures, stale version"
   c007: "partial — home/chapters partial OG; doors/zine/twitter incomplete"
   c008: "failing — vite input omits zine/offline (and other doors)"
-  c009: "partial — labeled probe chain UI shipped; ids diverge; refs not hrefs"
-  c010: "partial — code token 2026_07_15.A; docs may drift"
+  c009: "passing — lore-cNNN parity; hydration + walkable refs; public projection tool for dist Pages"
+  c010: "partial — code token 2026_07_16.A; README aligned; seal when shell next changes"
   .note_atelier: "as of atelier surface mount 2026-07-16"
   c011: "seeded — ledger AL-001..AL-006 carry audit P0/P1; complaint route unwired until PLAN.B engine"
   c012: "holding — existing signatures gated; must be re-proved per new signature (View Transitions pending)"
@@ -57,9 +57,13 @@
 }
 
 ~maintenance{
-  regenerate_chapters_spw: "node .spw/tools/export-chapters.mjs"
+  regenerate_chapters_spw: "npm run spw:export"
+  project_public_spw: "npm run spw:project"
+  verify_public_spw: "npm run spw:verify"
   chapters_html: "npm run chapters:build"
   full_build: "npm run build"
+  build_pipeline: "chapters:build → spw:export → vite build → spw:project"
+  public_spw_emit: "dist/.spw/ (lore allowlist; never _workbench or tools)"
   source_of_truth_prose: "book/content/chapters/*.json"
   source_of_truth_html_embed: "book/chapter/*/index.html#chapter-data"
   surfaces_registry: ".spw/surfaces/index.spw"
@@ -71,10 +75,11 @@
   atelier_plan: ".spw/surfaces/atelier.spw"
   release_token: "book/scripts/modules/cache-context.mjs"
   seal_checklist: ".spw/surfaces/platform.spw#seal_checklist_additions"
+  public_projection: ".spw/surfaces/publish.spw#spw_public_projection"
 }
 
 ~priority{
-  p0: ["c006 sw shell", "c001 chapter spw sync", "c008 vite entries", "social OG art plates (atelier phase 02 feeds this)"]
-  p1: ["c007 share meta", "c009 walkable ethos", "manifest icons/shortcuts", "sitemap/robots", "c011 alignment probe kit"]
+  p0: ["c006 sw shell", "c008 vite entries", "social OG art plates (atelier phase 02 feeds this)"]
+  p1: ["c007 share meta", "Pages seal for /.spw/** after dist deploy", "manifest icons/shortcuts", "sitemap/robots", "c011 alignment probe kit", "PLAN.B diagnostics engine"]
   p2: ["share API", "view transitions (atelier signature phase 05)", "font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps", "complaint → refutation channel"]
 }

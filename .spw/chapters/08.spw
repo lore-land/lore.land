@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/08]{
-  title: "Boof and the Fool’s Game"
-  description: "Chapter 8 of Lore.Land: Boof and the Fool’s Game. Join Boof as they engage in the enigmatic game set by the Fool, where reality and rules intertwine."
+  title: "Songs of the Watering Eye"
+  description: "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes harmonic pressure; Boof must listen until the debt has a name."
   mood: "game"
   period: "spring"
   chapter_path: "/book/chapter/08/"
@@ -74,8 +74,8 @@
 
 #[chapter/08/lore]{
   notes: [
-    "The origins and significance of the Fool’s Game within the labyrinth."
-    "Boof's strategic thinking and emotional responses while engaging in the Fool’s Game."
+    "Resonance is the archive’s other sense: what cannot be filed can still be heard."
+    "Debts named in song are harder to bury than debts named in ink."
   ]
 }
 

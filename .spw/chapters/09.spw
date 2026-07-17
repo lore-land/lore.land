@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/09]{
-  title: "Boof and the Fool’s Puzzle"
-  description: "Chapter 9 of Lore.Land: Boof and the Fool’s Puzzle. Join Boof as they navigate the enigmatic puzzle set by the Fool, where every piece reveals deeper truths."
+  title: "Shards of Nine Honks"
+  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Signal fragments across the night; collecting them is both craft and intrigue."
   mood: "puzzle"
   period: "spring"
   chapter_path: "/book/chapter/09/"
@@ -74,8 +74,8 @@
 
 #[chapter/09/lore]{
   notes: [
-    "The origins and significance of the Fool’s Puzzle within the labyrinth."
-    "Boof's strategic thinking and emotional responses while engaging in the Fool’s Puzzle."
+    "Nine honks are discrete signal relics—collectible without being gamified into compulsion."
+    "Scattering forces community: no single keeper can hold the whole call."
   ]
 }
 
