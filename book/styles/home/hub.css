@@ -9,19 +9,25 @@
   --hub-measure: 42rem;
   --hub-wide: 56rem;
   --hub-gutter: clamp(1.1rem, 3.5vw, 2.25rem);
-  /* Ladder: ~60% warm paper, ~25% teal, ~15% material accents */
-  --hub-ink: #1c2430;
-  --hub-muted: #3d4a5c;
-  --hub-line: color-mix(in srgb, #5a4a3a 20%, transparent);
+  /*
+   * Ladder: ~60% warm paper, ~25% teal, ~15% material accents.
+   * Gold/hearth stay bright for borders and glows; *-ink clears WCAG AA
+   * as text on --hub-paper (and tracks core tokens when present).
+   */
+  --hub-ink: var(--color-text-main, #161d2b);
+  --hub-muted: var(--color-text-alt, #3a455c);
+  --hub-line: color-mix(in srgb, var(--color-stone-shadow, #5a4a3a) 26%, transparent);
   --hub-panel: color-mix(in srgb, #fffaf2 94%, transparent);
-  --hub-paper: #f4eee3;
-  --hub-paper-deep: #e8dfd0;
-  --hub-accent: #2a6f7f;
-  --hub-accent-deep: #1c4f63;
-  --hub-gold: #c4922e;
-  --hub-berry: #5b3a6e;
-  --hub-hearth: #b0602a;
-  --hub-night: #12394a;
+  --hub-paper: var(--color-parchment-base, #f3ede1);
+  --hub-paper-deep: #e4dac9;
+  --hub-accent: var(--color-accent-main, #246270);
+  --hub-accent-deep: var(--color-accent-alt, #184456);
+  --hub-gold: var(--color-gold, #c4922e);
+  --hub-gold-ink: var(--color-gold-ink, #6b5010);
+  --hub-berry: var(--color-berry, #5b3a6e);
+  --hub-hearth: var(--color-hearth, #b0602a);
+  --hub-hearth-ink: var(--color-hearth-ink, #8a4014);
+  --hub-night: var(--color-night, #12394a);
   --region-accent: var(--hub-accent);
 }
 
@@ -375,7 +381,7 @@
   .hub-meta {
     margin: 1.1rem 0 0;
     font-size: 0.86rem;
-    color: color-mix(in srgb, var(--hub-muted) 88%, transparent);
+    color: color-mix(in srgb, var(--hub-muted) 92%, var(--hub-ink));
   }
 
   .hub-actions,
@@ -613,8 +619,8 @@
     font-size: 0.52rem;
     line-height: 1.2;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--hub-ink, #1c2b33) 72%, var(--hub-gold, #d9a441));
-    background: color-mix(in srgb, var(--hub-gold, #d9a441) 16%, var(--hub-panel, #f7f1e6));
+    color: color-mix(in srgb, var(--hub-ink, #161d2b) 70%, var(--hub-gold-ink, #6b5010));
+    background: color-mix(in srgb, var(--hub-gold, #c4922e) 16%, var(--hub-panel, #f7f1e6));
   }
 
   .hub-ch-num {
@@ -1226,7 +1232,7 @@
 }
 
 [data-region='threshold'] .hub-meta {
-  color: color-mix(in srgb, var(--hub-muted) 90%, var(--hub-hearth));
+  color: color-mix(in srgb, var(--hub-muted) 86%, var(--hub-hearth-ink));
 }
 
 [data-region='threshold'] .hub-hero-media img {
@@ -1237,11 +1243,11 @@
 }
 
 [data-region='threshold'] .hub-hero-media figcaption {
-  color: color-mix(in srgb, var(--hub-hearth) 55%, var(--hub-muted));
+  color: color-mix(in srgb, var(--hub-hearth-ink) 48%, var(--hub-muted));
 }
 
 [data-region='theme'] {
-  --region-accent: var(--hub-gold);
+  --region-accent: var(--hub-gold-ink);
   padding: 1.25rem 1.25rem 1.55rem;
   border-radius: 1.05rem;
   background:
@@ -1256,7 +1262,7 @@
 }
 
 [data-region='theme'] .hub-section-aside {
-  color: color-mix(in srgb, var(--hub-gold) 40%, var(--hub-accent-deep));
+  color: color-mix(in srgb, var(--hub-gold-ink) 42%, var(--hub-accent-deep));
 }
 
 [data-region='seedbed'] {
@@ -1292,31 +1298,46 @@
 }
 
 [data-region='grain'] {
-  --region-accent: var(--hub-hearth);
+  --region-accent: var(--hub-hearth-ink);
   padding-top: 1.35rem;
   border-top: 1px solid color-mix(in srgb, var(--hub-hearth) 24%, var(--hub-line));
 }
 
 [data-region='grain'] h2 {
-  color: color-mix(in srgb, var(--hub-hearth) 35%, var(--hub-ink));
+  color: color-mix(in srgb, var(--hub-hearth-ink) 38%, var(--hub-ink));
 }
 
 [data-region='grain'] .hub-links a {
-  color: color-mix(in srgb, var(--hub-hearth) 25%, var(--hub-accent-deep));
+  color: color-mix(in srgb, var(--hub-hearth-ink) 28%, var(--hub-accent-deep));
 }
 
 /* Material chips */
 .chip[data-material] {
   border-color: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 42%, var(--hub-line));
-  color: color-mix(in srgb, var(--material-accent, var(--hub-accent-deep)) 55%, var(--hub-ink));
+  color: color-mix(in srgb, var(--material-accent-ink, var(--material-accent, var(--hub-accent-deep))) 58%, var(--hub-ink));
   background: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 7%, #fff);
 }
 
-.chip[data-material='wax'] { --material-accent: var(--hub-hearth); }
-.chip[data-material='mask'] { --material-accent: var(--hub-accent); }
-.chip[data-material='hearth'] { --material-accent: #c4783a; }
-.chip[data-material='lantern'] { --material-accent: var(--hub-gold); }
-.chip[data-material='berry'] { --material-accent: var(--hub-berry); }
+.chip[data-material='wax'] {
+  --material-accent: var(--hub-hearth);
+  --material-accent-ink: var(--hub-hearth-ink);
+}
+.chip[data-material='mask'] {
+  --material-accent: var(--hub-accent);
+  --material-accent-ink: var(--hub-accent-deep);
+}
+.chip[data-material='hearth'] {
+  --material-accent: #c4783a;
+  --material-accent-ink: var(--hub-hearth-ink);
+}
+.chip[data-material='lantern'] {
+  --material-accent: var(--hub-gold);
+  --material-accent-ink: var(--hub-gold-ink);
+}
+.chip[data-material='berry'] {
+  --material-accent: var(--hub-berry);
+  --material-accent-ink: var(--hub-berry);
+}
 .chip[data-material='night'] {
   --material-accent: #efc568;
   background: color-mix(in srgb, #12394a 12%, #fff);

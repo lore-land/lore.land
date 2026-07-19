@@ -59,22 +59,44 @@
 }
 
 :root {
+  /*
+   * Contrast contract (paper / ember on light grounds; cosmos on dark):
+   *   body ink + muted  → ≥ 4.5:1 against bg (WCAG AA normal text)
+   *   accent as link    → ≥ 4.5:1 against bg
+   *   focus ring        → ≥ 3:1 against bg (non-text UI)
+   * Decorative gold/hearth stay bright for borders/glows; *ink* variants
+   * are the only forms safe for body/UI text.
+   */
+
+  /* Material palette — used by reset/hero/cards (previously undefined). */
+  --color-parchment-base: #f3ede1;
+  --color-celestial-teal: #246270;
+  --color-golden-sand: #c4922e;
+  --color-burnt-orange: #b0602a;
+  --color-stone-shadow: #5a4a3a;
+  --color-gold: #c4922e;
+  --color-gold-ink: #6b5010;
+  --color-hearth: #b0602a;
+  --color-hearth-ink: #8a4014;
+  --color-berry: #5b3a6e;
+  --color-night: #12394a;
+
   /* Legacy-compatible base tokens (older mood files can override these). */
   --bg-color-main: #f3ede1;
-  --bg-color-content: rgba(255, 252, 246, 0.86);
-  --bg-color-content-strong: rgba(255, 255, 255, 0.92);
-  --accent-color-main: #2a6f7f;
-  --accent-color-alt: #1c4f63;
-  --accent-gradient: linear-gradient(130deg, #2f8191 0%, #26456f 100%);
-  --text-color-main: #1a2233;
-  --text-color-alt: #45506b;
+  --bg-color-content: rgba(255, 252, 246, 0.92);
+  --bg-color-content-strong: rgba(255, 255, 255, 0.96);
+  --accent-color-main: #246270;
+  --accent-color-alt: #184456;
+  --accent-gradient: linear-gradient(130deg, #2a7486 0%, #1f3f66 100%);
+  --text-color-main: #161d2b;
+  --text-color-alt: #3a455c;
   --text-color-content: #f6fbff;
-  --focus-outline-color: #b0602a;
-  --hover-bg-color: rgba(46, 126, 142, 0.13);
+  --focus-outline-color: #8a3f12;
+  --hover-bg-color: rgba(36, 98, 112, 0.14);
   --active-bg-color: color-mix(in srgb, var(--hover-bg-color) 80%, var(--bg-color-content) 20%);
-  --bg-gradient-top: rgba(255, 255, 255, 0.7);
-  --bg-gradient-edge: rgba(146, 170, 214, 0.34);
-  --bg-gradient-bottom: #e2eaf7;
+  --bg-gradient-top: rgba(255, 255, 255, 0.72);
+  --bg-gradient-edge: rgba(120, 150, 196, 0.28);
+  --bg-gradient-bottom: #dfe6f2;
 
   /* Current token names used by the normalized stylesheet stack. */
   --color-bg-main: var(--bg-color-main);
@@ -115,21 +137,21 @@
   --border-radius-pill: 999px;
   --border-width: 1px;
   --border-style: solid;
-  --border-color-main: rgba(29, 49, 78, 0.2);
+  --border-color-main: rgba(29, 49, 78, 0.26);
 
-  --shadow-main: 0 14px 28px rgba(16, 23, 42, 0.13);
-  --shadow-hover: 0 20px 38px rgba(16, 23, 42, 0.18);
+  --shadow-main: 0 14px 28px rgba(16, 23, 42, 0.14);
+  --shadow-hover: 0 20px 38px rgba(16, 23, 42, 0.2);
 
   --transition-duration: 160ms;
   --transition-function: ease;
   --depth-shadow-strength: 1;
   --dimensional-scale: 1;
   --panel-blur: 5px;
-  --glass-bg: rgba(255, 255, 255, 0.54);
-  --glass-bg-strong: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.42);
-  --paper-fiber: rgba(111, 92, 58, 0.04);
-  --paper-fiber-strong: rgba(111, 92, 58, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.46);
+  --paper-fiber: rgba(111, 92, 58, 0.045);
+  --paper-fiber-strong: rgba(111, 92, 58, 0.09);
   --attention-hue-base: 198;
   --attention-hue-shift: 0;
   --attention-scroll-progress: 0;
@@ -152,38 +174,61 @@
 
 html[data-theme="ember"] {
   --bg-color-main: #f5ece2;
-  --bg-color-content: rgba(255, 247, 240, 0.9);
-  --bg-color-content-strong: rgba(255, 252, 248, 0.95);
-  --accent-color-main: #8a4f2f;
-  --accent-color-alt: #683722;
-  --accent-gradient: linear-gradient(130deg, #ab6535 0%, #7d3a26 100%);
-  --text-color-main: #2b1c14;
-  --text-color-alt: #694d3f;
-  --focus-outline-color: #7046a1;
-  --hover-bg-color: rgba(138, 79, 47, 0.14);
-  --bg-gradient-top: rgba(255, 245, 236, 0.82);
-  --bg-gradient-edge: rgba(235, 161, 116, 0.22);
-  --bg-gradient-bottom: #f1e3d4;
+  --bg-color-content: rgba(255, 247, 240, 0.92);
+  --bg-color-content-strong: rgba(255, 252, 248, 0.97);
+  --accent-color-main: #7d4326;
+  --accent-color-alt: #5c301c;
+  --accent-gradient: linear-gradient(130deg, #a35a2e 0%, #6f3420 100%);
+  --text-color-main: #241610;
+  --text-color-alt: #5c4034;
+  --text-color-content: #fff8f2;
+  --focus-outline-color: #5c3485;
+  --hover-bg-color: rgba(125, 67, 38, 0.15);
+  --border-color-main: rgba(75, 42, 24, 0.24);
+  --shadow-main: 0 14px 28px rgba(42, 22, 12, 0.14);
+  --shadow-hover: 0 20px 38px rgba(42, 22, 12, 0.2);
+  --bg-gradient-top: rgba(255, 245, 236, 0.86);
+  --bg-gradient-edge: rgba(220, 140, 96, 0.2);
+  --bg-gradient-bottom: #efdfd0;
+  --color-celestial-teal: #7d4326;
+  --color-gold-ink: #6a4810;
+  --color-hearth-ink: #7a3812;
+  --glass-bg: rgba(255, 248, 240, 0.62);
+  --glass-bg-strong: rgba(255, 250, 244, 0.82);
+  --paper-fiber: rgba(120, 72, 40, 0.05);
+  --paper-fiber-strong: rgba(120, 72, 40, 0.1);
 }
 
 html[data-theme="cosmos"] {
-  --bg-color-main: #11182a;
-  --bg-color-content: rgba(22, 33, 57, 0.86);
-  --bg-color-content-strong: rgba(28, 42, 73, 0.92);
-  --accent-color-main: #76cbff;
-  --accent-color-alt: #b1dcff;
+  --bg-color-main: #0e1526;
+  --bg-color-content: rgba(20, 30, 52, 0.9);
+  --bg-color-content-strong: rgba(26, 38, 66, 0.95);
+  --accent-color-main: #7ed0ff;
+  --accent-color-alt: #c4e4ff;
   --accent-gradient: linear-gradient(130deg, #3f88c5 0%, #6a4fbf 100%);
-  --text-color-main: #e6eeff;
-  --text-color-alt: #b7c6ed;
-  --text-color-content: #f5fbff;
-  --focus-outline-color: #f4c96f;
-  --hover-bg-color: rgba(117, 203, 255, 0.14);
-  --border-color-main: rgba(142, 179, 235, 0.3);
-  --shadow-main: 0 16px 36px rgba(2, 8, 24, 0.42);
-  --shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.55);
-  --bg-gradient-top: rgba(77, 113, 177, 0.45);
-  --bg-gradient-edge: rgba(79, 113, 194, 0.34);
-  --bg-gradient-bottom: #090f1f;
+  --text-color-main: #eef3ff;
+  --text-color-alt: #c5d2f0;
+  --text-color-content: #f7fbff;
+  --focus-outline-color: #f0c66a;
+  --hover-bg-color: rgba(126, 208, 255, 0.16);
+  --border-color-main: rgba(150, 185, 235, 0.36);
+  --shadow-main: 0 16px 36px rgba(2, 8, 24, 0.48);
+  --shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.6);
+  --bg-gradient-top: rgba(70, 105, 168, 0.42);
+  --bg-gradient-edge: rgba(72, 105, 185, 0.32);
+  --bg-gradient-bottom: #080d1a;
+  --color-celestial-teal: #7ed0ff;
+  --color-golden-sand: #e0b24a;
+  --color-burnt-orange: #e08a4a;
+  --color-gold-ink: #f0c66a;
+  --color-hearth-ink: #f0a46a;
+  --color-parchment-base: #0e1526;
+  --color-stone-shadow: #8aa0c8;
+  --glass-bg: rgba(22, 34, 58, 0.62);
+  --glass-bg-strong: rgba(28, 42, 73, 0.8);
+  --glass-border: rgba(180, 205, 255, 0.22);
+  --paper-fiber: rgba(140, 165, 220, 0.06);
+  --paper-fiber-strong: rgba(140, 165, 220, 0.12);
 }
 
 html[data-dimension="flat"] {
@@ -223,8 +268,10 @@ html[data-tuning="explore"] {
 }
 
 html[data-online="offline"] {
-  --accent-color-main: #8b7662;
-  --accent-color-alt: #6d5f55;
-  --accent-gradient: linear-gradient(130deg, #8b7662 0%, #6d5f55 100%);
+  /* Deeper taupe so offline accent still clears AA on paper. */
+  --accent-color-main: #6a5848;
+  --accent-color-alt: #524438;
+  --accent-gradient: linear-gradient(130deg, #6a5848 0%, #524438 100%);
+  --color-celestial-teal: #6a5848;
 }
 

@@ -98,12 +98,21 @@
   ^entry[AL-008]{
     axis: material
     surface: "book/styles/core/tokens.css theme blocks"
-    evidence: "cosmos defines --text-color-content, --border-color-main, --shadow-main, --shadow-hover; ember inherits base values for the same keys — asymmetric key sets are a theme-switch seam candidate"
+    evidence: "cosmos defined --text-color-content, --border-color-main, --shadow-main, --shadow-hover; ember inherited base values for the same keys — asymmetric key sets were a theme-switch seam candidate"
     class: intentional
-    why: "ember reads correctly on the light base values; cosmos must override them for dark contrast. The asymmetry is a fallback design, not drift — but it is exactly where a future edit to base tokens could silently degrade ember."
+    why: "ember reads correctly on the light base values; cosmos must override them for dark contrast."
     watch: "any edit to the base values of those four keys must re-check ember rendering"
-    resolution: "standing — revisit if theme count grows past two"
+    resolution: "closed 2026-07-18 — contrast pass gives ember explicit text-content/border/shadow parity; probe theme_parity remains review when keys diverge again"
     source: "probe-2026-07-17#theme_parity"
+  }
+
+  ^entry[AL-011]{
+    axis: material
+    surface: "tokens.css + hub.css gold/hearth + focus"
+    evidence: "decorative gold (#c4922e) and hearth (#b0602a) failed AA as text on paper; focus #b0602a and offline accent #8b7662 also under 4.5:1"
+    class: defect
+    resolution: "fixed 2026-07-18 — gold-ink/hearth-ink tokens for text; focus #8a3f12; offline #6a5848; accent deepened to #246270; material palette defined"
+    source: "contrast-pass-2026-07-18"
   }
 
   ^entry[AL-009]{

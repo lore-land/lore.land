@@ -9,12 +9,12 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_18.A';
+} from '../modules/experience-core.mjs?v=2026_07_18.B';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_18.A';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_18.A';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_18.A';
-import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_18.A';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_18.B';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_18.B';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_18.B';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_18.B';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';

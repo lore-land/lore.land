@@ -1,27 +1,31 @@
-
+/*
+ * System-preference bridge only. Explicit html[data-theme] in tokens.css
+ * outranks this when the reader picks paper / ember / cosmos.
+ * Values stay aligned with cosmos contrast targets.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --theme-mode: dark;
-    --theme-bg-main: #181c24;
-    --theme-bg-content: #232a36;
-    --theme-bg-content-strong: #2a3240;
-    --theme-accent-main: #76cbff;
-    --theme-accent-alt: #b1dcff;
-    --theme-text-main: #e6eeff;
-    --theme-text-alt: #b7c6ed;
-    --theme-shadow-main: 0 16px 36px rgba(2, 8, 24, 0.42);
-    --theme-shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.55);
-    --theme-border-main: rgba(142, 179, 235, 0.3);
-    --theme-glass-bg: rgba(28, 42, 73, 0.54);
-    --theme-glass-bg-strong: rgba(28, 42, 73, 0.72);
-    --theme-glass-border: rgba(255, 255, 255, 0.22);
-    --theme-paper-fiber: rgba(111, 92, 58, 0.08);
-    --theme-paper-fiber-strong: rgba(111, 92, 58, 0.14);
+    --theme-bg-main: #0e1526;
+    --theme-bg-content: #141e34;
+    --theme-bg-content-strong: #1a2642;
+    --theme-accent-main: #7ed0ff;
+    --theme-accent-alt: #c4e4ff;
+    --theme-text-main: #eef3ff;
+    --theme-text-alt: #c5d2f0;
+    --theme-shadow-main: 0 16px 36px rgba(2, 8, 24, 0.48);
+    --theme-shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.6);
+    --theme-border-main: rgba(150, 185, 235, 0.36);
+    --theme-glass-bg: rgba(22, 34, 58, 0.62);
+    --theme-glass-bg-strong: rgba(28, 42, 73, 0.8);
+    --theme-glass-border: rgba(180, 205, 255, 0.22);
+    --theme-paper-fiber: rgba(140, 165, 220, 0.06);
+    --theme-paper-fiber-strong: rgba(140, 165, 220, 0.12);
     --theme-grain: repeating-linear-gradient(102deg, var(--theme-paper-fiber) 0 2px, transparent 2px 9px), repeating-linear-gradient(14deg, var(--theme-paper-fiber-strong) 0 1px, transparent 1px 6px);
     --theme-glassmorphism: linear-gradient(165deg, var(--theme-glass-bg-strong), var(--theme-glass-bg));
     --theme-paper: var(--theme-bg-content);
     --theme-shadow: var(--theme-shadow-main);
-    --theme-shadow-strong: 0 32px 64px rgba(2, 8, 24, 0.32);
+    --theme-shadow-strong: 0 32px 64px rgba(2, 8, 24, 0.36);
   }
 }
 

@@ -12,13 +12,13 @@ import {
   initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_07_18.A';
+} from './modules/experience-core.mjs?v=2026_07_18.B';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_18.A';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_18.B';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
@@ -27,17 +27,17 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_18.A';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_18.A';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_18.B';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_18.B';
 import {
   initChapterChrome,
   initScrollChrome
-} from './modules/reading-chrome.mjs?v=2026_07_18.A';
+} from './modules/reading-chrome.mjs?v=2026_07_18.B';
 import {
   applySectionClimateAttributes,
   initCopyClimate
-} from './modules/copy-climate.mjs?v=2026_07_18.A';
-import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_18.A';
+} from './modules/copy-climate.mjs?v=2026_07_18.B';
+import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_18.B';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 const CHAPTER_SIGIL_MODULES = import.meta.glob('../chapter/*/sigil.mjs');

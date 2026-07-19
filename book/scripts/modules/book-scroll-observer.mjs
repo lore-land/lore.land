@@ -9,7 +9,7 @@
  * made visible and no observer is created.
  */
 
-import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_18.A';
+import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_18.B';
 
 const OBSERVE_SELECTORS = [
     'section',
