@@ -1,4 +1,4 @@
-import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_14.H';
+import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_18.A';
 
 const STORAGE_PREFIX = 'lore.experience';
 
@@ -61,9 +61,12 @@ export function bootstrapExperience(options = {}) {
   root.dataset.enhanced = 'true';
   root.dataset.jsReady = 'true';
   root.dataset.webComponents = 'customElements' in window ? 'available' : 'none';
-  root.dataset.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ? 'reduce'
-    : 'full';
+  const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const onReducedMotionChange = () => {
+    root.dataset.reducedMotion = reducedMotionQuery.matches ? 'reduce' : 'full';
+  };
+  onReducedMotionChange();
+  reducedMotionQuery.addEventListener('change', onReducedMotionChange);
   root.dataset.online = navigator.onLine ? 'online' : 'offline';
 
   const theme = readPreference('theme', root.dataset.theme || 'paper');
@@ -98,6 +101,7 @@ export function bootstrapExperience(options = {}) {
   const destroy = () => {
     window.removeEventListener('online', onOnline);
     window.removeEventListener('offline', onOffline);
+    reducedMotionQuery.removeEventListener('change', onReducedMotionChange);
     if (connection) {
       connection.removeEventListener('change', onConnectionChange);
     }
@@ -611,6 +615,15 @@ export function enhanceLazyImages(options = {}) {
 
 export async function registerStoryServiceWorker(options = {}) {
   if (!('serviceWorker' in navigator)) {
+    return null;
+  }
+
+  // In dev the SW's stale-while-revalidate fights Vite's fresh modules —
+  // skip registration on dev hosts unless ?sw=force asks for a PWA test.
+  const isDevHost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+  if (isDevHost && !new URLSearchParams(window.location.search).has('sw')) {
+    const existing = await navigator.serviceWorker.getRegistrations();
+    existing.forEach((registration) => registration.unregister());
     return null;
   }
 

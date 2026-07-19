@@ -10,11 +10,14 @@
     "spw:export": "node .spw/tools/export-chapters.mjs",
     "spw:project": "node .spw/tools/project-public-spw.mjs",
     "spw:verify": "node .spw/tools/project-public-spw.mjs --verify",
-    "build": "npm run chapters:build && npm run spw:export && vite build && npm run spw:project",
+    "dist:static": "node book/scripts/tools/project-dist-static.mjs",
+    "dist:verify": "node book/scripts/tools/project-dist-static.mjs --verify && npm run spw:verify",
+    "build": "npm run chapters:build && npm run spw:export && vite build && npm run spw:project && npm run dist:static",
     "preview": "vite preview",
     "font": "node book/scripts/tools/font/build.mjs",
     "assets:optimize": "node book/scripts/tools/assets/optimize-assets.mjs",
-    "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run"
+    "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run",
+    "spw:probes": "node .spw/tools/alignment-probes.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",

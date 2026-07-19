@@ -1,0 +1,12 @@
+# Lore.Land — public monument crawlers
+User-agent: *
+Allow: /
+
+# Authoring / kernel paths stay private even if a host exposes them
+Disallow: /.spw/_workbench/
+Disallow: /.spw/tools/
+Disallow: /node_modules/
+Disallow: /book/scripts/tools/
+Disallow: /book/content/
+
+Sitemap: https://lore.land/sitemap.xml

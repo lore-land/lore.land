@@ -35,17 +35,17 @@
   c003: "partial — untested→active on mapped signals; confirmed|refuted + history still PLAN.B"
   c004: "holding — lifecycle_bridge vocabulary shared"
   c005: "holding — observable.spw shape stable"
-  c006: "failing — sw.js precaches missing fixtures, stale version"
-  c007: "partial — home/chapters partial OG; doors/zine/twitter incomplete"
-  c008: "failing — vite input omits zine/offline (and other doors)"
+  c006: "passing — precache = offline.html only (self-contained inline styles); CACHE_VERSION tracks 2026_07_18.A"
+  c007: "meta passing — full OG + twitter summary_large_image on every public door (2026-07-18); art half waits on plates (AL-001)"
+  c008: "passing — zine + offline in vite input; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
   c009: "passing — lore-cNNN parity; hydration + walkable refs; public projection tool for dist Pages"
-  c010: "partial — code token 2026_07_16.A; README aligned; seal when shell next changes"
+  c010: "passing — code + README + SW share 2026_07_18.A (cache-context + build-chapters SoT)"
   .note_atelier: "as of atelier surface mount 2026-07-16"
-  c011: "seeded — ledger AL-001..AL-006 carry audit P0/P1; complaint route unwired until PLAN.B engine"
-  c012: "holding — existing signatures gated; must be re-proved per new signature (View Transitions pending)"
-  c013: "starting — material-study-v1 + wonder-path-v1 in flight; no plate has graduated yet"
+  c011: "instrumented — probe kit live (spw:probes); complaint route unwired until PLAN.B engine"
+  c012: "holding — AL-007 closed: real media gates on cadence/shimmer; View Transitions pending"
+  c013: "starting — plates.spw drafted; material-study-v1 + wonder-path-v1 in flight; no plate graduated"
   c014: "partial — read/notice/explore rungs live; operate/inspect on-ramps implicit; author rung planned"
-  c015: "new — pass vocabulary declared; probe kit (atelier phase 03) makes reruns cheap"
+  c015: "holding — probe kit shipped (atelier phase 03); pass reruns are one command with .spw precipitates"
 }
 
 &lifecycle{
@@ -61,8 +61,11 @@
   project_public_spw: "npm run spw:project"
   verify_public_spw: "npm run spw:verify"
   chapters_html: "npm run chapters:build"
+  alignment_probes: "npm run spw:probes (--strict for CI) → .spw/audits/alignment-probes-*.spw"
   full_build: "npm run build"
-  build_pipeline: "chapters:build → spw:export → vite build → spw:project"
+  build_pipeline: "chapters:build → spw:export → vite build → spw:project → dist:static"
+  dist_static: "npm run dist:static — sw.js, manifest, robots, sitemap, seeds, book/images, icons"
+  dist_verify: "npm run dist:verify"
   public_spw_emit: "dist/.spw/ (lore allowlist; never _workbench or tools)"
   source_of_truth_prose: "book/content/chapters/*.json"
   source_of_truth_html_embed: "book/chapter/*/index.html#chapter-data"
@@ -79,7 +82,7 @@
 }
 
 ~priority{
-  p0: ["c006 sw shell", "c008 vite entries", "social OG art plates (atelier phase 02 feeds this)"]
-  p1: ["c007 share meta", "Pages seal for /.spw/** after dist deploy", "manifest icons/shortcuts", "sitemap/robots", "c011 alignment probe kit", "PLAN.B diagnostics engine"]
+  p0: ["social OG art plates (atelier phase 02 — ground plates.spw seeds first)"]
+  p1: ["Pages seal for /.spw/** after dist deploy", "manifest any/maskable split + shortcuts", "PLAN.B diagnostics engine"]
   p2: ["share API", "view transitions (atelier signature phase 05)", "font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps", "complaint → refutation channel"]
 }

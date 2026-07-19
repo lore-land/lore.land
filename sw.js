@@ -1,16 +1,15 @@
-const CACHE_VERSION = 'lore-pwa-v2026_02_28.I';
+const CACHE_VERSION = 'lore-pwa-v2026_07_18.A';
 const OFFLINE_URL = '/book/pwa/offline.html';
 
+/* Precache is exactly one file: the offline shell, which is self-contained
+ * (inline styles) so it renders whole with zero network and never drifts
+ * against hashed build assets. Nothing else is promised up front
+ * (lore-c005-offline-honesty); visited pages accumulate via the fetch
+ * handler below. */
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(async (cache) => {
-      await cache.addAll([
-        OFFLINE_URL,
-        '/book/styles/core/fonts.css?v=2026_02_28.I&ctx=canon:fonts',
-        '/book/styles/fixtures/baseline.css?v=2026_02_28.I&ctx=canon:baseline',
-        '/book/styles/fixtures/home.css?v=2026_02_28.I&ctx=home:scene'
-      ]);
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_VERSION).then((cache) => cache.addAll([OFFLINE_URL]))
+      .then(() => self.skipWaiting())
   );
 });
 

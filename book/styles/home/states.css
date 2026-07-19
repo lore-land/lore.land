@@ -2,17 +2,17 @@
 
   /* ─── grammar mode: document-level selectors ─────────────────────────────── */
 
-  html[data-grammar-mode="plain"] .chapter-verse,
-  html[data-grammar-mode="plain"] .chapter-register {
+  html[data-grammar-mode="plain"] .chapter-verse-text,
+  html[data-grammar-mode="plain"] .chapter-register-label {
     display: none;
   }
 
   html[data-grammar-mode="orbital"] .chapter-logline,
-  html[data-grammar-mode="orbital"] .chapter-register {
+  html[data-grammar-mode="orbital"] .chapter-register-label {
     display: none;
   }
 
-  html[data-grammar-mode="orbital"] .chapter-verse {
+  html[data-grammar-mode="orbital"] .chapter-verse-text {
     border-left-width: 3px;
     color: rgba(22, 44, 72, 0.88);
     font-size: 0.86rem;

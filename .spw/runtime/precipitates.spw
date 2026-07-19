@@ -57,5 +57,5 @@
   plate: "graduated study serving as OG art (clears alignment ledger first)"
   ledger_entries: ".spw/state/alignment-ledger.spw entries filed per pass"
   capture: "signature-moment GIF/WebM including the reduced-motion cut"
-  probe_results: "five ledger probes recorded against each changed surface"
+  probe_results: "five ledger probes recorded against each changed surface — scriptable half via npm run spw:probes → .spw/audits/alignment-probes-*.spw"
 }

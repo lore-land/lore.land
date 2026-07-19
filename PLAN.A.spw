@@ -261,7 +261,7 @@
     anchor: plan.a.vite_enhancement.public_entry_completeness
     role: edit_agent
     deps: { config: vite_config_js, audit: platform_ship_audit }
-    status: owed_from_audit
+    status: done_2026_07_18
     ^task{
       add_inputs: ["zine/index.html", "book/pwa/offline.html"]
       optional_inputs: ["charm/index.html", "book/timeline.html"]

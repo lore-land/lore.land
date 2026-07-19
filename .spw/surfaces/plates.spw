@@ -1,0 +1,370 @@
+# Lore.Land Plate Canon
+# Scene-derived share art for thirteen chambers — series identity, one grounded
+# plate direction, and twelve scene-seed drafts awaiting creative grounding.
+#>lore_land_surfaces_plates
+#:surface #!plates
+#:layer #!pragmatics
+#:status #!draft_for_review
+
+~<rationale>{
+  Atelier phase 02 requires plates derived from scene canon, not ad-hoc
+  decoration — but only chamber 01 carries scene blocks. This surface closes
+  that gap in two moves: it distills the series identity already latent in
+  chapter 01's six scenes (everything is seen from Boof's height; gold work
+  cutting teal dark; instruments of honest count in the foreground), and it
+  drafts one scene-seed per remaining chamber in the same voice, staked to
+  that chamber's logline and epigraph. The seeds are proposals. Each one is
+  written to be accepted, reworked, or refused — and only after grounding
+  does a seed migrate into its chapter JSON as a real scene block and become
+  promptable canon for a plate.
+}
+
+^meta{
+  intent: "prompt canon + review packet for the thirteen chapter plates (atelier phase 02)"
+  audience: ["plate-wright", "chamberwright", "seal-keeper"]
+  probe_evidence: ".spw/audits/alignment-probes-2026-07-17.spw#probe.plate_weight — all 13 plates under threshold"
+  related: {
+    atelier: ".spw/surfaces/atelier.spw#media_production"
+    platform: ".spw/surfaces/platform.spw#phase.04"
+    ledger: ".spw/state/alignment-ledger.spw#AL-001"
+    scene_schema: "book/scripts/script.mjs#createSceneSketch"
+    prose_sot: "book/content/chapters/*.json"
+  }
+  review_protocol: [
+    "accept a seed → copy its scene block into the chamber's JSON section (scene key), rerun spw:export",
+    "rework a seed → edit here first; this file is the drafting table, JSON is canon",
+    "refuse a seed → delete it here and note why in the chamber's open question",
+    "a plate may only be prompted from a scene that has landed in JSON (media_plates_derive_from_scene_canon invariant)"
+  ]
+}
+
+^"series_identity"{
+  .note: "what makes thirteen different images one shelf — distilled from ch01's lived scenes"
+
+  vantage_law: "every plate is seen from Boof's height — dog-eye, nose-level, or the low
+                step; the world is large and the instruments of honest count are near.
+                No aerial views, no eye-level establishing shots. Wonder at knee height."
+
+  light_law: "one warm working light against a cool held dark — gold seam, brass lamp,
+              lantern, amber sunset — never flat illumination. The warm source is always
+              the thing that counts, tells, or opens."
+
+  orientation: "compass canon holds inside plates: light arrives dawnward, safety and
+                stoves sit hearthward. No plate implies north."
+
+  palette_core: {
+    gold: "first-sun / brass / seam-light — the working warmth"
+    teal: "held shadow, night-cold metal, dusk aisles — the patient dark"
+    berry: "deep blue-purple accents at charge points"
+    paper: "warm off-white for ledgers, pages, chalk"
+  }
+
+  format: {
+    dimensions: "1200x630 og primary; crop-safe center 1000x524"
+    text: "no words in the art — the title lives in og:title; the plate speaks scene"
+    seal: "chamber seal overprint, lower hearthward corner; petal count = chapter number"
+    alt: "og:image:alt required — one sentence, the scene's hint compressed, no lore jargon"
+  }
+
+  finish: "painterly-graphic hybrid; visible grain; edges soften into dark rather than
+           crop — a plate is a held moment, not a screenshot"
+}
+
+^"plate"[01: "Dawn in Boon.land"]{
+  status: grounded
+  source_scenes: "book/content/chapters/01.json — six scene blocks, all live"
+  chosen_scene: "The Missing Measure (weighhouse dawn)"
+  .why: "the door image should be the chamber's first breath, not its climax —
+         Publication is the stronger drama but belongs inside; the door smells of
+         cold brass and absence, which is the mystery's true shape"
+  prompt_canon: {
+    vantage: "dog-height, just inside the weighhouse doors, looking down the rows"
+    light: "first sun through the door slats; brass pans still night-cold; the field beyond hazed gold"
+    key_edges: [
+      "hanging balance scale at center beam, both pans at a dog's eye level",
+      "open harvest ledger on a lectern, hearthward of the doors",
+      "counted crate rows between chalk lines worn soft",
+      "berry rows running downhill dawnward until the mist takes them"
+    ]
+    hint: "interior of a timber weighhouse at dawn, low viewpoint from the doorway; hanging
+           balance scale at center, open ledger on a lectern, rows of faintly glowing berry
+           crates receding; gold slat-light cutting teal shadow"
+  }
+  alt_draft: "Inside a wooden weighhouse at dawn: a hanging balance scale and an open
+              ledger, rows of faintly glowing berry crates, low to the ground as a dog sees it."
+  study_path: "book/images/plate-01-weighhouse-v1.png"
+}
+
+^"scene_seeds"{
+  .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per
+          ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
+
+  ^seed[02: "The First Echo"]{
+    status: draft
+    stakes: { logline: "The grove repeats what it cannot keep.", epigraph: "Repetition is not proof. It is only pressure." }
+    proposed_scene: {
+      vantage: "belly-low in old leaves at the clearing's rim, ears up, one paw lifted mid-step"
+      light: "green noon strained through canopy; brighter rings where the air itself is repeating"
+      scent: "wet bark, crushed fern, and the same trace of woodsmoke arriving twice"
+      edges: [
+        "the grove's trunks stand in near-circles, like sound drawn slow",
+        "pollen hangs in ring after ring around a bare center stone",
+        "a spoken word's shape shivers the hanging dust without wind",
+        "hearthward, one path out — the only line the circles do not close"
+      ]
+      hint: "forest clearing at green noon seen from ground level; concentric rings of hanging
+             pollen and light around a bare center stone; trunks curved in echo arcs; one dark
+             path breaking the circles; deep green cut by pale gold rings"
+    }
+    resonance: "the rings are pressure made visible — repetition without keeping"
+    open: "does the grove echo sound only, or scent and light too? The seed assumes all three; prose may want it narrower."
+  }
+
+  ^seed[03: "Signals in the Sand"]{
+    status: draft
+    stakes: { logline: "Routes older than the map begin to answer.", epigraph: "A path is a promise with dust on it." }
+    proposed_scene: {
+      vantage: "nose an inch off the ground where the flats begin, one print deep in the crust"
+      light: "last level amber; every ridge of sand throws a mile of shadow; under the grains, a faint answering glow tracing lines the map never held"
+      scent: "hot dust cooling, salt pan, old rope — and rain that fell somewhere else"
+      edges: [
+        "the glowing routes fork and rejoin like a sentence being remembered",
+        "a wooden route-marker leans, its painted arrow long faded, its shadow pointing truer",
+        "dawnward, the routes run toward a horizon notch shaped like a gate",
+        "one line bends deliberately around nothing visible — and the dust respects the curve"
+      ]
+      hint: "desert flat at low amber sunset from ground level; faint gold route-lines glowing
+             beneath the sand crust, forking toward a notched horizon; a leaning faded signpost;
+             long teal shadows, warm light skimming every ripple"
+    }
+    resonance: "the promise under the dust answers before anyone asks — paths keep their own ledger"
+    open: "should the routes' glow be berry-blue instead of gold, tying old ways to the boonberry charge? Gold reads as sun; blue reads as canon."
+  }
+
+  ^seed[04: "Crosswind Council"]{
+    status: draft
+    stakes: { logline: "Boon and bane negotiate under shared weather.", epigraph: "Benefit without cost is rumor; cost without benefit is ruin." }
+    proposed_scene: {
+      vantage: "under the council table on the hill, between planted boots and a set-down staff, looking out at the sky both parties share"
+      light: "split weather — warm break in the cloud dawnward, cold squall walling in from the far side; the table sits exactly on the seam"
+      scent: "rain about to happen on one side, dust about to settle on the other, wet wool, beeswax on the treaty box"
+      edges: [
+        "two banners strain toward each other, blown by opposite winds",
+        "the treaty box open at table center, its two clasps thrown in opposite directions",
+        "cups weighted on the papers, trembling",
+        "below the hill, the town's roofs catch both weathers at once"
+      ]
+      hint: "hilltop council table seen from beneath, framed by boots and a staff; sky split
+             between warm gold break and cold teal squall meeting overhead; two banners blowing
+             toward each other; an open box at the table's center"
+    }
+    resonance: "shared weather is the cost and the benefit in one sky — neither side owns the seam"
+    open: "is the council standing or seated? Standing reads urgent; seated reads durable. The chamber's prose should decide the plate."
+  }
+
+  ^seed[05: "The Quiet Rift"]{
+    status: draft
+    stakes: { logline: "Calm outside. Fracture in the ledger.", epigraph: "Silence is not empty; it is unreconciled." }
+    proposed_scene: {
+      vantage: "on a counting-room stool's crossbar, chin at desk height, where the page fills the world"
+      light: "wide calm afternoon through a clean window; on the sunlit page, one hairline of dark that the light does not cross"
+      scent: "ink dust, floor wax, cold tea gone glassy, stone kept too quiet"
+      edges: [
+        "the ledger open to a spread balanced beautifully — except the hairline",
+        "the crack runs off the page, across the desk grain, and into the wall's shadow",
+        "beyond the window, the square in perfect order: carts, awnings, unhurried figures",
+        "a second, closed ledger under the first, one ribbon pinched at the fracture line"
+      ]
+      hint: "sunlit counting room from low at the desk edge; an open ledger with a single
+             hairline crack of darkness running across page, desk, and wall; a serene town
+             square through the window behind; warm paper tones split by one thin dark seam"
+    }
+    resonance: "the rift is a line item — silence carried forward, unreconciled"
+    open: "does the crack glow berry-dark or read as pure absence? Absence is quieter and maybe truer to 'song' mood inverted."
+  }
+
+  ^seed[06: "Lanterns of Bonk City"]{
+    status: draft
+    stakes: { logline: "Impact becomes civic light.", epigraph: "A collision is only noise until someone names what it illuminated." }
+    proposed_scene: {
+      vantage: "at the curb of a maze-turn, shoulder against a lamp post that is warm where it was once dented"
+      light: "blue dusk; every lantern in the city glows from a mend — brightest where the dent was deepest — strung down streets that turn and turn"
+      scent: "warm metal, supper smoke hearthward, wet cobbles, lamp oil with a burr of ozone"
+      edges: [
+        "each lamp post carries its dent like a signature, light pooling in the crease",
+        "a lamplighter reaches not with flame but with a small brass bell — one ring, one light",
+        "the maze of streets glows in a traced line of past collisions",
+        "one unlit post stands straight and undented, dark, waiting for its story"
+      ]
+      hint: "dusk city street at dog height, lamp posts each dented and glowing from the dent;
+             a lamplighter ringing a small bell at one; lit maze-streets receding; one straight
+             dark post in the foreground; deep teal night, warm gold pools"
+    }
+    resonance: "the undented post is the epigraph inverted — no noise yet, so no name, so no light"
+    open: "is the bell-lighting real Bonk City mechanics or plate poetry? If real, it belongs in prose before the plate ships."
+  }
+
+  ^seed[07: "Blueberry Oath"]{
+    status: draft
+    stakes: { logline: "A binding made in public, paid in private.", epigraph: "An oath is a contract that remembers your face." }
+    proposed_scene: {
+      vantage: "pressed in among market-day knees and baskets, eye level with the oath stone's worn top"
+      light: "full honest noon on the square; the sworn hand and the crushed berry in hard bright focus — but the oath-taker's long shadow runs off the stone into an alley that keeps its own hours"
+      scent: "sun-warm stone, berry juice sharp and sweet, crowd wool, cold air moving out of the alley alone"
+      edges: [
+        "a hand flat on the oath stone, one berry crushed beneath the palm, juice in the stone's old grooves",
+        "the grooves hold juice from oaths before this one, dried to different ages of blue",
+        "witnesses lean in a ring, faces bright, none looking at the alley",
+        "in the alley dark, the shadow's head turns a degree the body doesn't"
+      ]
+      hint: "sunlit market square at crowd-knee height; a hand pressing a blueberry to a worn
+             oath stone, juice tracing old grooves; ringed witnesses in noon light; the oath-taker's
+             shadow stretching into a dark alley, subtly misaligned; bright noon against one cold dark"
+    }
+    resonance: "the stone's grooves are the public ledger; the misaligned shadow is the private account"
+    open: "how overt is the shadow's misalignment? A degree reads as dread; more reads as horror. The chamber's shadow-mood should calibrate it."
+  }
+
+  ^seed[08: "Songs of the Watering Eye"]{
+    status: draft
+    stakes: { logline: "Memory resonates until it names a debt.", epigraph: "Water keeps every face it has ever held, briefly." }
+    proposed_scene: {
+      vantage: "paws on the well coping, head over the edge, the water an arm's length down and utterly still"
+      light: "one lantern hung from the well arm; the water returns not this lantern but earlier ones — faces layered like slow rings, each a little older"
+      scent: "wet stone, rope fiber, lantern oil, and rain that fell in someone else's year"
+      edges: [
+        "the reflected faces are not the faces leaning in — they are who leaned in before",
+        "one ring of water holds a face mid-word, mouth open on a name",
+        "coins glint on the well floor, each blurred under a different face",
+        "the rope descends out of lantern reach, taut, though no bucket was lowered tonight"
+      ]
+      hint: "looking down a stone well by lantern light from the coping; still water layered
+             with faint overlapping faces older than the viewers; coins deep below; a taut rope
+             running into the dark; gold lantern ring against black-teal water"
+    }
+    resonance: "the well keeps the faces briefly — but the debt one of them is naming keeps itself"
+    open: "does Boof's own reflection appear among the kept faces? If yes, the plate quietly claims the dog has been here before the story says so."
+  }
+
+  ^seed[09: "Shards of Nine Honks"]{
+    status: draft
+    stakes: { logline: "Signal scatters. Collection begins.", epigraph: "A broadcast that breaks is still a map of who was listening." }
+    proposed_scene: {
+      vantage: "up on a roof-ridge beside a cold chimney, the town's slopes falling away in every direction"
+      light: "deep blue evening; nine falling shards streak the sky in different arcs, and under each arc, one window comes alight"
+      scent: "chimney smoke banked for night, cold slate, ozone where the sky broke"
+      edges: [
+        "each shard trails a different curve — no two houses hear the same fall",
+        "figures already climbing out to collect: a ladder here, a lifted lantern there",
+        "the ninth shard's arc bends hearthward, toward the one house still dark",
+        "on the slate beside the chimney, a first shard fragment, still humming faintly gold"
+      ]
+      hint: "rooftop vantage at deep blue dusk; nine gold shard-trails arcing across the sky,
+             each above a newly lit window; small figures beginning to climb and collect;
+             one arc bending toward a dark house; a glowing fragment on the near slate"
+    }
+    resonance: "the arcs draw the listening map — the dark house is on it precisely by staying dark"
+    open: "are the honks sound-made-solid (canon-forward) or falling signal-glass (image-forward)? The prose should own this before the plate does."
+  }
+
+  ^seed[10: "Bone.land Resonance"]{
+    status: draft
+    stakes: { logline: "Structure shakes the veil and holds.", epigraph: "Skeleton first; ornament after the load path is honest." }
+    proposed_scene: {
+      vantage: "at the foot of the great frame between two anchor stones, looking up along a rising chord"
+      light: "white-gold morning behind the structure; a veil of dust and cloth shivering off the beams in sheets, backlit; the bones themselves matte and calm"
+      scent: "cut timber, quarry chalk, rope oil, the mineral smell of a thing that will outlast its scaffold"
+      edges: [
+        "the frame's every joint is visible, pegged and honest — nothing hidden, nothing clad",
+        "the falling veil catches light like water; the frame does not move",
+        "builders stand back in a loose ring, tools down, heads up",
+        "one small ornament — a carved berry boss — waits on a workbench, not yet earned its beam"
+      ]
+      hint: "monumental timber-and-bone frame from ground level looking up; sheets of backlit
+             veil-cloth and dust shivering off it in morning light; still, honest joinery; builders
+             watching from below; one carved ornament waiting on a bench; white-gold on deep teal"
+    }
+    resonance: "the bench-bound ornament is the epigraph in one object — after the load path is honest"
+    open: "is Bone.land's frame timber, bone, or both? The plate leans timber-with-bone-tones; canon should commit."
+  }
+
+  ^seed[11: "Paradox Bloom"]{
+    status: draft
+    stakes: { logline: "Impossible paths flower into usable form.", epigraph: "A contradiction that feeds you is still a tool." }
+    proposed_scene: {
+      vantage: "three steps up a stone stair that has already returned you to its own foot twice, nose level with a blossom growing from the riser's crack"
+      light: "clean early morning; the stair's geometry does not quite resolve, and the light bends politely around the part that can't be true"
+      scent: "dew on stone, green sap, honey — and bread baking somewhere that is both ahead and behind"
+      edges: [
+        "the stair climbs, turns, and rejoins itself lower than it rose — visibly, calmly",
+        "flowering vines run the impossible seam, thickest exactly where the geometry lies",
+        "at the bloom in the near crack, a bee works, unbothered by topology",
+        "hearthward through the stair's arch, a table is set as if the shortcut were ordinary"
+      ]
+      hint: "an Escher-quiet stone stair in morning light, rejoining itself where it shouldn't,
+             its impossible seam traced in flowering vines; a bee at a near blossom; a set
+             breakfast table visible through the arch; soft gold, living green, calm teal"
+    }
+    resonance: "the bee and the breakfast table refuse the paradox any drama — contradiction, fed from, becomes furniture"
+    open: "how loud is the impossibility? The seed keeps it quiet (you notice on the second look); the awakening mood might want it quieter still."
+  }
+
+  ^seed[12: "The Last Confluence"]{
+    status: draft
+    stakes: { logline: "Threads merge without erasing their sources.", epigraph: "Unity that forgets its tributaries becomes empire, not river." }
+    proposed_scene: {
+      vantage: "on the low plank bridge at the meeting of waters, muzzle over the rail, both currents readable below"
+      light: "late gold; the joined river runs two-toned past the bridge — berry-dark water and pale chalk water sharing one bed, the seam alive but unblended"
+      scent: "cold sweet water and warm mineral water arriving together; tar on the planks; reeds"
+      edges: [
+        "upstream, the two sources visible to their bends — neither larger, neither first",
+        "the seam between currents wanders but never dissolves, all the way to the horizon",
+        "cargo rafts ride the join deliberately, one hull in each water",
+        "on the rail, two mooring ropes spliced into one line — every original strand still traceable"
+      ]
+      hint: "low bridge over a two-toned river confluence at late gold hour; berry-dark and
+             pale chalk currents sharing one bed with a living unblended seam; rafts riding the
+             join; a spliced rope on the rail in near focus; warm light, patient water"
+    }
+    resonance: "the splice is the treaty the river signs every hour — union with sources intact"
+    open: "do the two waters need names in prose before the plate ships, or is the image allowed to precede the naming?"
+  }
+
+  ^seed[13: "Lore.Land Canon"]{
+    status: draft
+    stakes: { logline: "The world records itself—and leaves a door open.", epigraph: "Canon is a promise to remain inspectable." }
+    proposed_scene: {
+      vantage: "on the rotunda's cool floor at the center of the shelf-rings, where the door's light lies in a long bright lane"
+      light: "the archive keeps its dusk, but the great door stands open dawnward and the berry fields send their morning all the way in to the center desk"
+      scent: "old paper by the mile, fresh ink at the desk, cut grass and berries riding in on the door's draft"
+      edges: [
+        "shelf rings rise like the grove's circles, but each ring has its gap — no closed circle in the whole house",
+        "on the center desk one ledger lies open, its page showing this same rotunda, door open, light lane and all",
+        "a reading stool worn low, sized for anyone; beside it a water bowl, sized for someone",
+        "dust motes turn in the light lane like the pollen rings of the first grove, going the other way"
+      ]
+      hint: "circular archive interior from floor level; ringed shelves with deliberate gaps;
+             a long lane of morning light from an open door reaching a center desk where a ledger's
+             page mirrors the room itself; a low stool and a water bowl; warm gold lane through
+             held teal dusk"
+    }
+    resonance: "the water bowl is the whole promise — the record-house expects the witness back;
+                the self-showing page is inspectability made literal; the grove's rings return open"
+    open: "does the ledger page truly render the room (recursive, bold) or hold only the room's floor plan (quieter)? This is the series' last note — it should rhyme with how loud chamber 11 chose to be."
+  }
+}
+
+^"production_order"{
+  .note: "graduate studies in narrative order but unblock the door first"
+  first: "plate 01 (grounded) — proves the series identity against real scene canon"
+  then: "13 (the door open), 07 (strongest single image), 06 (city identity)"
+  rule: "no plate prompts from a seed still marked draft — grounding first, art second"
+  studies: "book/images/plate-NN-{slug}-v{N}.png; graduation clears ledger AL-001 per chapter"
+}
+
+?<open_questions>[
+  "Series: does the seal overprint sit on the art or in a reserved margin band? The plates assume on-art, lower hearthward corner."
+  "Palette: chapters whose mood runs cold (05, 07, 08) still get one warm working light under the light_law — confirm no chamber wants full cold."
+  "Boof's presence: the vantage law implies the dog without showing her. Do any plates earn her actual silhouette, or is implied-witness the stronger series rule?"
+  "Alt text voice: scene-hint compression (sensory) vs logline reuse (narrative) — the seeds assume sensory."
+]

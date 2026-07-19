@@ -539,6 +539,14 @@
     opacity: 0.6;
   }
 
+  /* Calm cut: locked glyphs keep their hint sheen as a static veil */
+  @media (prefers-reduced-motion: reduce) {
+    .spw-token[data-glyph-locked="true"]::after {
+      animation: none;
+      background-position: 50% 0;
+    }
+  }
+
   /* ─── Reading progress bar ─────────────────────────────────── */
 
   .reading-progress {

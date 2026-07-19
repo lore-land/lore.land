@@ -1,5 +1,5 @@
 import { seedManifest, seedSets, seedDimensions } from '../home/seeds.mjs';
-import { renderSeedAtlas } from '../home/ui.mjs';
+import { renderSeedAtlas, initGrammarLensInteractions } from '../home/ui.mjs';
 import {
   bootstrapExperience,
   initSelectPreference,
@@ -10,7 +10,7 @@ import {
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_02_28.I';
+} from '../modules/experience-core.mjs?v=2026_07_18.A';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
@@ -123,6 +123,10 @@ function setupSeedAtlasInteractions(announce) {
     }
 
     const candidate = visibleCards[Math.floor(Math.random() * visibleCards.length)];
+    cards.forEach((card) => {
+      delete card.dataset.highlight;
+    });
+    candidate.dataset.highlight = 'true';
     candidate.scrollIntoView({ behavior: 'smooth', block: 'center' });
     candidate.focus({ preventScroll: true });
 
@@ -181,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderSeedAtlas(appRoot, seedSets, seedManifest, seedDimensions);
   setupSeedAtlasInteractions(announce);
+  initGrammarLensInteractions({ root: document, announce });
   initAttentionDetails({ root });
   initSemanticShader({ root });
   initSpatialPerspective({ root });

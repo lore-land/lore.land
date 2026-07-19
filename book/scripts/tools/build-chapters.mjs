@@ -6,7 +6,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_07_16.A';
+const RELEASE = '2026_07_18.A';
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -40,6 +40,7 @@ for (const filename of filenames) {
 
   const pageTitle = `${data.title} | Lore.Land`;
   const canonicalUrl = `https://lore.land/book/chapter/${slug}/`;
+  const logline = data.logline || data.description;
   const chapterDir = resolve(ROOT, `book/chapter/${slug}`);
   await mkdir(chapterDir, { recursive: true });
 
@@ -47,10 +48,11 @@ for (const filename of filenames) {
     RELEASE,
     PAGE_TITLE: escapeAttribute(pageTitle),
     DESCRIPTION: escapeAttribute(data.description),
-    LOGLINE: escapeAttribute(data.logline || data.description),
+    LOGLINE: escapeAttribute(logline),
     EPIGRAPH: escapeAttribute(data.epigraph || ''),
     CANONICAL_URL: canonicalUrl,
     OG_IMAGE: `https://lore.land/book/images/${slug}.png`,
+    OG_IMAGE_ALT: escapeAttribute(`${data.title} — ${logline}`),
     CHAPTER_SLUG: slug,
     CHAPTER_HEADING: escapeAttribute(`Chapter ${slug}: ${data.title}`),
     MOOD: escapeAttribute(data.mood || 'boon'),

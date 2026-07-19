@@ -13,7 +13,7 @@
     transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
   }
 
-  .chapter-register {
+  .chapter-register-label {
     font-size: 0.74rem;
     font-family: var(--font-family-heading);
     letter-spacing: 0.05em;
@@ -26,7 +26,7 @@
     transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
   }
 
-  .chapter-verse {
+  .chapter-verse-text {
     margin: 0;
     padding: 0.5rem 0.72rem;
     border-left: 2px solid rgba(42, 111, 127, 0.34);

@@ -1,29 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lore.Land Offline</title>
   <meta name="theme-color" content="#2a6f7f">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_02_28.I&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_02_28.I&ctx=canon:baseline">
+  <!-- Self-contained by design: this page is the service worker's network-loss
+       fallback, so it carries its own styles and promises nothing it cannot
+       render from cache alone (lore-c005-offline-honesty). -->
+  <style>
+    :root {
+      --paper: #f5efe3;
+      --ink: #23303f;
+      --ink-soft: #5b6a76;
+      --teal: #2a6f7f;
+      --gold: #b8862f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background:
+        radial-gradient(120% 90% at 50% 0%, rgba(184, 134, 47, 0.10), transparent 60%),
+        var(--paper);
+      color: var(--ink);
+      font-family: Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 34rem;
+      border: 1px solid rgba(42, 111, 127, 0.28);
+      border-radius: 14px;
+      background: rgba(255, 252, 246, 0.92);
+      box-shadow: 0 14px 28px rgba(35, 48, 63, 0.12);
+      padding: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .offline-meta {
+      margin: 0 0 0.4rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+      line-height: 1.25;
+    }
+
+    p { margin: 0 0 0.75rem; color: var(--ink-soft); }
+
+    .offline-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.1rem;
+    }
+
+    .offline-links a {
+      border: 1px solid rgba(42, 111, 127, 0.4);
+      border-radius: 999px;
+      padding: 0.42rem 0.95rem;
+      color: var(--teal);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .offline-links a:hover,
+    .offline-links a:focus-visible {
+      background: rgba(42, 111, 127, 0.1);
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
-  <main class="page-shell">
-    <section class="page-panel" aria-labelledby="offline-title">
-      <p class="page-meta">Offline Mode</p>
-      <h1 id="offline-title">Lore.Land is temporarily offline</h1>
-      <p>Your cached chapters and assets remain readable. Reconnect to fetch new seeds and chapter updates.</p>
-      <div class="page-links">
-        <a href="/">Return Home</a>
-        <a href="/book/chapter/01/">Open Chapter 01</a>
-      </div>
-    </section>
+  <main aria-labelledby="offline-title">
+    <p class="offline-meta">Offline · the lantern is banked</p>
+    <h1 id="offline-title">Lore.Land can't reach the network</h1>
+    <p>Chambers you have already visited remain readable from cache. Anything new waits, hearthward and patient, until you reconnect.</p>
+    <div class="offline-links">
+      <a href="/">Return to the monument</a>
+      <a href="/book/chapter/01/">Chamber 01, if visited</a>
+    </div>
   </main>
 </body>
 </html>

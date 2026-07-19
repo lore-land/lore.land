@@ -228,6 +228,18 @@ html:not([data-reduced-motion="reduce"]) .chapter-card:not([data-cadence]):hover
     font-size: 0.82rem;
     padding: 0.22rem 0.72rem;
   }
+
+  /* Calm cut. The html[data-reduced-motion] gates above are set by
+   * experience-core bootstrapExperience (live-updated on preference change);
+   * this media gate is the no-JS / belt-and-braces half (ledger AL-007). */
+  @media (prefers-reduced-motion: reduce) {
+
+    .chapter-card,
+    .chapter-card .chapter-marker,
+    .chapter-card::after {
+      animation: none !important;
+    }
+  }
 }
 
 

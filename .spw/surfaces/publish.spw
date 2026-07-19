@@ -82,9 +82,10 @@
         "npm run chapters:build",
         "npm run spw:export",
         "vite build",
-        "npm run spw:project"
+        "npm run spw:project",
+        "npm run dist:static"
       ]
-      note: "npm run build chains all four steps"
+      note: "npm run build chains all five steps; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
     }
     validate: {
       checks: [

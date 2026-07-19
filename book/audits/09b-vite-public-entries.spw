@@ -1,0 +1,36 @@
+# Vite Public Entry Completeness — PLAN.A phase 06b
+#>plan_a_vite_public_entries
+#:audit #!phase_artifact
+#:layer #!pragmatics
+
+^meta{
+  phase: "PLAN.A.spw §vite_enhancement phase 06b (owed_from_audit)"
+  completed: "2026-07-18"
+  config: "vite.config.js rollupOptions.input"
+}
+
+^changes{
+  added_inputs: ["zine/index.html", "book/pwa/offline.html"]
+  preserved: "all monument doors + 13 chapter entries (import.meta chapter glob untouched)"
+  deferred: {
+    optional_inputs: ["charm/index.html", "book/timeline.html"]
+    .note: "carried by PLAN.A open question — archive-or-ship decision not yet made"
+  }
+}
+
+^verify{
+  build: "npm run build passes"
+  dist_zine: "dist/zine/index.html emitted (14.4KB + hashed css/js)"
+  dist_offline: "dist/book/pwa/offline.html emitted (2.7KB, self-contained)"
+  probe: "spw:probes precache_existence clean against new sw.js"
+}
+
+^coupled_fix{
+  .note: "phase exposed a deploy-shape hazard beyond its own scope"
+  finding: "offline.html linked six raw /book/styles paths that exist in dev but are
+            hashed away in dist — any sw precache of raw asset paths breaks on the
+            deployed build even when the files exist in the repo"
+  resolution: "offline.html made self-contained (inline styles); sw.js precaches
+               exactly [offline.html]; visited pages accumulate via fetch handler"
+  refs: [".spw/state/alignment-ledger.spw#AL-002", "sw.js", "book/pwa/offline.html"]
+}

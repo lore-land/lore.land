@@ -73,7 +73,7 @@ Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_07_16.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_07_18.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -229,7 +229,8 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
 - Public canon for Pages / Vite dist (claim hydration + walkable ethos refs):
   - `npm run spw:verify` — required lore paths present
   - `npm run spw:project` — emit allowlist → `dist/.spw/` (never `_workbench/` or `tools/`)
-  - `npm run build` chains `chapters:build → spw:export → vite build → spw:project`
+  - `npm run build` chains `chapters:build → spw:export → vite build → spw:project → dist:static`
+  - `npm run dist:verify` checks shell assets + public `.spw` allowlist under `dist/`
   - Spec: `.spw/surfaces/publish.spw#spw_public_projection`
 
 Chapter `.spw` mirrors are long-form references for extension and semantic diffing. Titles must match JSON SoT after export.
@@ -240,7 +241,7 @@ Chapter `.spw` mirrors are long-form references for extension and semantic diffi
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_07_16.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
+- release token: `2026_07_18.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`

@@ -94,9 +94,9 @@ export function renderTimeline(root, chapters, chapterSeeds) {
     card.append(
       el('p', { className: 'chapter-marker', textContent: `^[route/${chapterId}]` }),
       el('h3', { textContent: chapter.title }),
-      el('p', { className: 'chapter-logline', textContent: buildChapterLogline(chapter, profile) }),
-      el('p', { className: 'chapter-register-label', textContent: `Register: ${profile.register} (${profile.cadence})` }),
-      el('p', { className: 'chapter-verse-text', dataset: { grammarProfile: profile.id }, innerHTML: buildChapterVerse(chapter, profile).replace(/\n/g, '<br>') }),
+      el('p', { className: 'chapter-logline', dataset: { spwLens: `chapter/${chapterId}/logline` }, tabIndex: 0, textContent: buildChapterLogline(chapter, profile) }),
+      el('p', { className: 'chapter-register-label', dataset: { spwLens: `chapter/${chapterId}/register` }, tabIndex: 0, textContent: `Register: ${profile.register} (${profile.cadence})` }),
+      el('p', { className: 'chapter-verse-text', dataset: { grammarProfile: profile.id, spwLens: `chapter/${chapterId}/verse` }, tabIndex: 0, innerHTML: buildChapterVerse(chapter, profile).replace(/\n/g, '<br>') }),
       el('figure', { className: 'chapter-default-preview', dataset: { visualDefault: 'colloquial' } },
         el('img', { src: chapterImagePath(chapter.number), alt: `Colloquial default scene for chapter ${chapter.number}`, loading: 'lazy', decoding: 'async', width: 640, height: 360 }),
         el('figcaption', { textContent: 'Colloquial default scene' })
@@ -248,4 +248,56 @@ export function renderProducerConstellation(root, producerNetwork) {
       )
     )
   );
+}
+
+/* Delegated behavior for the timeline + observatory renderers above.
+ * Colocated so any page that mounts them gets working lenses, grammar modes,
+ * and chip sync by calling this once — selectors here must stay in lockstep
+ * with the markup the renderers emit (probe: attribute_parity). */
+export function initGrammarLensInteractions(options = {}) {
+  const root = options.root || document;
+  const announce = options.announce;
+
+  const onClick = (event) => {
+    const lens = event.target.closest('[data-spw-lens]');
+    if (lens) {
+      const handle = lens.dataset.spwLens || 'lens';
+      window.dispatchEvent(new CustomEvent('lore:spw-selection', { detail: { handle, source: 'spw-lens' } }));
+      if (announce) announce(`Lens: ${handle}.`);
+      return;
+    }
+
+    const modeButton = event.target.closest('.grammar-mode-button');
+    if (modeButton) {
+      const mode = modeButton.dataset.grammarMode || 'lyric';
+      document.documentElement.dataset.grammarMode = mode;
+      root.querySelectorAll('.grammar-mode-button').forEach((button) => {
+        button.setAttribute('aria-pressed', button === modeButton ? 'true' : 'false');
+      });
+      if (announce) announce(`Grammar mode: ${mode}.`);
+      return;
+    }
+
+    const chip = event.target.closest('.grammar-chip');
+    if (chip) {
+      const chapterNumber = chip.dataset.chapter || '';
+      root.querySelectorAll('.grammar-chip[data-runtime-active], .chapter-card[data-runtime-active]').forEach((node) => {
+        delete node.dataset.runtimeActive;
+      });
+      chip.dataset.runtimeActive = 'true';
+      const card = root.querySelector(`.chapter-card[data-chapter-id="${chapterNumber}"]`);
+      if (card) card.dataset.runtimeActive = 'true';
+      const status = root.querySelector('#grammar-runtime-status');
+      if (status) {
+        status.textContent = `Runtime bridge: chapter ${padChapter(Number(chapterNumber) || 0)} grammar in focus (${chip.dataset.grammarProfile || 'profile'}).`;
+      }
+      if (chip.dataset.spwHandle) {
+        window.dispatchEvent(new CustomEvent('lore:spw-selection', { detail: { handle: chip.dataset.spwHandle, source: 'grammar-chip' } }));
+      }
+    }
+  };
+
+  const target = root === document ? document : root;
+  target.addEventListener('click', onClick);
+  return { destroy: () => target.removeEventListener('click', onClick) };
 }

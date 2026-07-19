@@ -43,7 +43,7 @@
     surface: "sw.js + book/pwa/offline.html"
     evidence: "precache lists fixture CSS that no longer exists; offline copy implies a shell the cache cannot honor"
     class: defect
-    resolution: "open — platform phase 01 service worker shell"
+    resolution: "fixed 2026-07-18 — precache is exactly offline.html (self-contained inline styles); CACHE_VERSION tracks release token 2026_07_18.A"
     source: "audit-2026-07-16#sw-precache-broken"
   }
 
@@ -52,7 +52,7 @@
     surface: ".spw/chapters/*.spw vs book/content/chapters/*.json"
     evidence: "ch01 mirror title 'Boof and the Boonberry Fool' vs live 'Dawn in Boon.land'"
     class: defect
-    resolution: "open — platform phase 02 regenerate; workspace c001"
+    resolution: "fixed 2026-07-17 — spw:export regenerated in build chain; probe canonical_mirror holds it (13/13 titles match)"
     source: "audit-2026-07-16#chapter-spw-lag"
   }
 
@@ -81,8 +81,49 @@
     surface: "monument doors without OG blocks (topics, scriptorium, boof, civic-magic, boonberry)"
     evidence: "share renders text-only or blank; intrigue uneven across doors"
     class: defect
-    resolution: "open — platform phase 04 social meta pack"
+    resolution: "meta fixed 2026-07-18 — full OG + twitter:card on all doors, zine, hub, chapters; interim card art is the monument hero until plates graduate (.spw/surfaces/plates.spw); unique-art half stays open under AL-001"
     source: "audit-2026-07-16#social-meta-uneven"
+  }
+
+  ^entry[AL-007]{
+    axis: temporal
+    surface: "chapter/typography.css, core/layers.css, frames/0.css, frames/1.css, home/hero.css, home/motion.css"
+    evidence: "six CSS files declare @keyframes or animation-timeline with no prefers-reduced-motion gate in-file — the calm cut for those motions is unverifiable (lore-c007)"
+    class: defect
+    resolution: "fixed 2026-07-18 — media gates added to typography.css, frames/0-1.css, home/motion.css; layers.css + hero.css were probe false positives (comment text), probe now strips comments"
+    correction: "first write-up here claimed html[data-reduced-motion] was never set — wrong; bootstrapExperience sets it at boot. Real gaps were narrower: no change listener (stale after an OS preference flip) and no coverage before JS. Fixed by a live matchMedia listener in experience-core plus the in-file media gates."
+    source: "probe-2026-07-17#reduced_motion_gates"
+  }
+
+  ^entry[AL-008]{
+    axis: material
+    surface: "book/styles/core/tokens.css theme blocks"
+    evidence: "cosmos defines --text-color-content, --border-color-main, --shadow-main, --shadow-hover; ember inherits base values for the same keys — asymmetric key sets are a theme-switch seam candidate"
+    class: intentional
+    why: "ember reads correctly on the light base values; cosmos must override them for dark contrast. The asymmetry is a fallback design, not drift — but it is exactly where a future edit to base tokens could silently degrade ember."
+    watch: "any edit to the base values of those four keys must re-check ember rendering"
+    resolution: "standing — revisit if theme count grows past two"
+    source: "probe-2026-07-17#theme_parity"
+  }
+
+  ^entry[AL-009]{
+    axis: canonical
+    surface: "book/styles/frames/0.css, book/styles/frames/1.css"
+    evidence: "stylesheets linked by no page and imported by nowhere; their body[data-frame|data-motif|data-trope|data-foreshadow] selectors were orphans"
+    class: defect
+    resolution: "removed 2026-07-18 — legacy pre-monument book frames; probe attribute_parity now guards this class of drift"
+    source: "probe-2026-07-18#attribute_parity"
+  }
+
+  ^entry[AL-010]{
+    axis: canonical
+    surface: "book/styles/components/motifs.css [data-motif]/[data-trope]/[data-foreshadow]"
+    evidence: "attribute styling with no setter — live marking uses mark[data-theme] via language-exploration.mjs"
+    class: intentional
+    why: "these are the authoring vocabulary for hand-marked prose spans (motif/trope/foreshadow are core narrative concepts); kept as a declared content-annotation hook until chapter JSON either adopts or formally retires them"
+    watch: "if two more probe runs pass with no content using them, retire the selectors"
+    resolution: "standing — allowlisted in attribute_parity with a pointer here"
+    source: "probe-2026-07-18#attribute_parity"
   }
 }
 
@@ -103,3 +144,12 @@
   "print parity: zine + chapter print CSS suppress screen-only chrome"
   "baseline overlay at 320 / 768 / 1120 / 1440"
 ]
+
+^"probe_kit"{
+  .note: "the scriptable half of the probes runs as one command (atelier phase 03)"
+  command: "npm run spw:probes (--strict exits 1 on defects)"
+  tool: ".spw/tools/alignment-probes.mjs"
+  precipitate: ".spw/audits/alignment-probes-YYYY-MM-DD.spw — findings are ledger-ready"
+  covers: ["canonical_mirror", "share_parity", "plate_weight", "precache_existence", "reduced_motion_gates", "theme_parity", "attribute_parity"]
+  manual_remainder: ["baseline overlay", "live theme-switch flash", "print fold parity"]
+}

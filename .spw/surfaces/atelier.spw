@@ -228,12 +228,20 @@
     task: "Material studies → 13 chapter plates + door plates; scene blocks as prompt canon"
     verify: "no chapter og:image under 100KB; each plate has og:image:alt; series identity holds"
     refs: [".spw/surfaces/platform.spw#phase.04"]
-    .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run"
+    status: canon_drafted
+    canon: ".spw/surfaces/plates.spw — series identity + plate 01 grounded + seeds 02-13 awaiting creative grounding"
+    .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run;
+            only chamber 01 had scene blocks, so plates.spw drafts the missing scene canon for review"
   }
 
   ^phase[03: "Alignment probe kit"]{
     task: "Baseline overlay snippet + theme-flash, share-parity, reduced-motion, and print checks; scripted where possible"
     verify: "one command or checklist runs all five ledger probes against a changed surface"
+    status: done_scripted_half
+    kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes, --strict for CI)"
+    first_run: ".spw/audits/alignment-probes-2026-07-17.spw — 59 defects, 1 review across five probes"
+    remaining_manual: ["baseline overlay", "live theme-switch flash", "print fold parity"]
+    ={ ".spw/audits/alignment-probes-2026-07-17.spw" }
   }
 
   ^phase[04: "Literacy on-ramps"]{

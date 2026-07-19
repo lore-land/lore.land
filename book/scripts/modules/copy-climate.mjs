@@ -11,7 +11,7 @@
  * without attributes, runtime falls back to chapter mood/period defaults.
  */
 
-import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_14.H';
+import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_07_18.A';
 
 /** Temporal lighting profiles — hour-of-story, not wall clock. */
 export const TEMPO_PROFILES = Object.freeze({

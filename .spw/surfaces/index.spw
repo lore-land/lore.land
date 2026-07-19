@@ -10,10 +10,12 @@
   editorial: "@spw/surfaces/editorial.spw"
   platform: "@spw/surfaces/platform.spw"
   atelier: "@spw/surfaces/atelier.spw"
+  plates: "@spw/surfaces/plates.spw"
 }
 
 ^"audits"{
   platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+  alignment_probes: "@spw/audits/alignment-probes-2026-07-17.spw (rerunnable: npm run spw:probes)"
 }
 
 ^"output_formats"{

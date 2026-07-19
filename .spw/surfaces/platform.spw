@@ -184,23 +184,27 @@
     task: "Rewrite sw.js precache to real assets; bump CACHE_VERSION; fix offline.html styles to current core paths"
     verify: "install event succeeds; offline.html readable offline; no fixture 404s"
     refs: ["sw.js", "book/pwa/offline.html"]
+    status: "done 2026-07-18 — precache is offline.html only (self-contained); CACHE_VERSION tracks release token"
   }
 
   ^phase[02: "Chapter .spw regenerate"]{
     task: "Run export-chapters against live chapter-data; refresh chapters/index.spw titles"
     verify: "ch01 title equals book/content/chapters/01.json title"
     refs: [".spw/tools/export-chapters.mjs", ".spw/workspace.spw#c001"]
+    status: "done 2026-07-17 — wired into npm run build via spw:export"
   }
 
   ^phase[03: "Vite public entries"]{
     task: "Add zine, offline (+ timeline/charm if public) to vite rollup input; confirm dist emits them"
     verify: "ls dist/zine and dist/book/pwa/offline.html after npm run build"
     refs: ["vite.config.js", "PLAN.A.spw#vite"]
+    status: "done 2026-07-18 — zine + offline in rollup; dist:static copies sw/manifest/seeds/images"
   }
 
   ^phase[04: "Social meta pack"]{
     task: "Uniform OG+Twitter blocks; zine og:image; replace empty chapter OG plates"
     verify: "manual share debugger on /, /zine/, /book/chapter/01/, /topics/"
+    status: "meta done 2026-07-18 — full OG+Twitter on doors/chapters; plate art still AL-001 / atelier phase 02"
   }
 
   ^phase[05: "Manifest quality"]{
@@ -211,6 +215,7 @@
   ^phase[06: "Discoverability"]{
     task: "robots.txt + sitemap.xml for doors + 13 chapters"
     verify: "sitemap urls 200"
+    status: "done 2026-07-18 — robots.txt + sitemap.xml at site root; dist:static projects them"
   }
 
   ^phase[07: "Ethos walkable chain"]{
