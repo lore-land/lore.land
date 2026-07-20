@@ -40,7 +40,16 @@ import {
 import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_18.B';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
-const CHAPTER_SIGIL_MODULES = import.meta.glob('../chapter/*/sigil.mjs');
+
+/* import.meta.glob is a Vite build-time construct; the deployed site serves
+ * these modules raw, where calling it throws before anything renders. Under
+ * raw ESM we fall back to a plain dynamic import in mountChapterSigil. */
+let CHAPTER_SIGIL_MODULES = null;
+try {
+  CHAPTER_SIGIL_MODULES = import.meta.glob('../chapter/*/sigil.mjs');
+} catch {
+  CHAPTER_SIGIL_MODULES = null;
+}
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', async () => {
@@ -995,7 +1004,9 @@ async function mountChapterSigil(data, announce) {
 
   const chapterId = String(data.chapterNumber).padStart(2, '0');
   const modulePath = `../chapter/${chapterId}/sigil.mjs`;
-  const loadModule = CHAPTER_SIGIL_MODULES[modulePath];
+  const loadModule = CHAPTER_SIGIL_MODULES
+    ? CHAPTER_SIGIL_MODULES[modulePath]
+    : () => import(withCacheContext(withSiteBase(`/book/chapter/${chapterId}/sigil.mjs`), { channel: 'sigil' }));
 
   if (!loadModule) {
     console.warn(`No chapter sigil module is registered for chapter ${chapterId}.`);

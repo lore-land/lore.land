@@ -66,7 +66,20 @@ aside .additional-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
+  border-top: 1px dashed color-mix(in srgb, var(--color-accent-main, #2a6f7f) 26%, transparent);
+  padding-top: 0.62rem;
+}
+
+aside .additional-links-label {
+  flex: 1 0 100%;
+  margin: 0 0 0.12rem;
+  text-align: center;
+  font-family: 'LoreLand', var(--font-family-heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-accent-main, #2a6f7f) 72%, var(--color-text-alt, #5b6a76));
 }
 
 aside .additional-links a {
@@ -90,6 +103,16 @@ aside .additional-links a:focus-visible {
   outline: 2px solid var(--interactive-outline);
   outline-offset: 2px;
   box-shadow: var(--interactive-shadow-hover);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, #b8862f 65%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* An unhydrated chamber keeps its shape instead of collapsing to a sliver —
+ * the paper waits calmly for the story to land. */
+main.chapter {
+  min-height: 14rem;
 }
 
 
