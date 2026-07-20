@@ -9,12 +9,17 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_18.B';
+} from '../modules/experience-core.mjs?v=2026_07_19.A';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_18.B';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_18.B';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_18.B';
-import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_18.B';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_19.A';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_19.A';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_19.A';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_19.A';
+import {
+  initPassAlong,
+  initServiceWorkerUpdate,
+  initSegmentKeyboard
+} from '../modules/interaction-surface.mjs?v=2026_07_19.A';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -540,7 +545,14 @@ function initMonumentEntrance() {
   }
 
   const { announce, destroy: destroyBootstrap } = bootstrapExperience();
-  registerStoryServiceWorker({ swPath: '/sw.js', scope: '/' });
+  let destroySwUpdate = null;
+  registerStoryServiceWorker({
+    swPath: '/sw.js',
+    scope: '/',
+    onRegistered: (registration) => {
+      destroySwUpdate = initServiceWorkerUpdate(registration, { announce });
+    }
+  });
   injectSvgFilters(document);
   enhanceLazyImages({ root: document });
   markCurrentChapterInIndex();
@@ -562,6 +574,15 @@ function initMonumentEntrance() {
   const destroyMenu = initHubMenu({ announce });
   const destroyScrollChrome = initScrollChrome({ mode: 'hub' });
   const destroyTemporal = initHubTemporalClimate();
+  const destroySegmentKeys = initSegmentKeyboard(document);
+  const destroyPassAlong = initPassAlong({
+    title: 'Lore.Land — A Worldbuilding Monument',
+    text: 'Enter a seeded world. Chapter One opens at the weighhouse.',
+    url: typeof location !== 'undefined' ? `${location.origin}/` : 'https://lore.land/',
+    mount: document.querySelector('.hub-hero .hub-actions'),
+    label: 'Pass the monument',
+    announce
+  });
 
   window.__loreCleanup = () => {
     destroyBootstrap();
@@ -585,6 +606,15 @@ function initMonumentEntrance() {
     }
     if (destroyArtifactCircuit) {
       destroyArtifactCircuit();
+    }
+    if (destroySegmentKeys) {
+      destroySegmentKeys();
+    }
+    if (destroyPassAlong) {
+      destroyPassAlong();
+    }
+    if (destroySwUpdate) {
+      destroySwUpdate();
     }
   };
 }

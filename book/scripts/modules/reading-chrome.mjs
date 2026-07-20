@@ -7,7 +7,7 @@
  * - Shared CSS vars for scroll padding so anchors clear sticky bars
  */
 
-import { onScrollFrame, onResizeFrame } from './scroll-coordinator.mjs?v=2026_07_18.B';
+import { onScrollFrame, onResizeFrame } from './scroll-coordinator.mjs?v=2026_07_19.A';
 
 const COMPACT_AT = 48;
 const HIDE_DELTA = 10;
@@ -163,6 +163,11 @@ export function initHubMenu(options = {}) {
   let open = false;
   const mq = window.matchMedia('(max-width: 52rem)');
 
+  const focusablesInMenu = () =>
+    [toggle, ...nav.querySelectorAll('a[href], button:not([disabled])')].filter(
+      (node) => node && node.offsetParent !== null
+    );
+
   const setOpen = (next, { quiet = false } = {}) => {
     open = Boolean(next) && mq.matches;
     topbar.dataset.menuOpen = open ? 'true' : 'false';
@@ -172,7 +177,7 @@ export function initHubMenu(options = {}) {
     toggle.querySelector('.hub-menu-toggle-label').textContent = open ? 'Close' : 'Menu';
 
     if (open) {
-      // Trap focus lightly: focus first link
+      // Focus first link; Tab cycles inside the menu while open.
       const first = nav.querySelector('a');
       first?.focus({ preventScroll: true });
     }
@@ -196,9 +201,34 @@ export function initHubMenu(options = {}) {
   };
 
   const onKey = (event) => {
-    if (event.key === 'Escape' && open) {
+    if (!open) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
       setOpen(false);
       toggle.focus();
+      return;
+    }
+
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const items = focusablesInMenu();
+    if (items.length < 2) {
+      return;
+    }
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+
+    if (event.shiftKey && active === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      first.focus();
     }
   };
 

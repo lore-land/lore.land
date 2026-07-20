@@ -319,18 +319,23 @@
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border: 1px solid var(--hub-line);
-    border-radius: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--hub-accent) 18%, var(--hub-line));
+    border-radius: 0.8rem;
     background: var(--hub-panel);
-    box-shadow: 0 0.8rem 2rem color-mix(in srgb, var(--hub-ink) 10%, transparent);
+    box-shadow:
+      0 0.9rem 2.2rem color-mix(in srgb, var(--hub-ink) 12%, transparent),
+      0 0 0 1px color-mix(in srgb, #fff 40%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--hub-gold) 12%, transparent);
   }
 
   .hub-hero-media figcaption {
-    margin-top: 0.45rem;
+    margin-top: 0.5rem;
     color: var(--hub-muted);
     font-family: var(--font-family-heading, system-ui, sans-serif);
     font-size: 0.72rem;
-    letter-spacing: 0.035em;
+    letter-spacing: 0.04em;
+    border-left: 2px solid color-mix(in srgb, var(--hub-gold-ink, #6b5010) 55%, transparent);
+    padding-left: 0.55rem;
   }
 
   @media (min-width: 56rem) {
@@ -409,18 +414,29 @@
   }
 
   .hub-cta-primary {
-    background: var(--hub-accent-deep);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, #fff 16%, transparent), transparent 48%),
+      var(--hub-accent-deep);
     /* Core typography ships unlayered link colors; this must remain legible on the dark action. */
     color: #f7fbff !important;
     border-color: color-mix(in srgb, var(--hub-accent-deep) 80%, #000);
-    box-shadow: 0 1px 0 color-mix(in srgb, #000 12%, transparent);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, #000 14%, transparent),
+      0 10px 22px color-mix(in srgb, var(--hub-accent-deep) 22%, transparent),
+      inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent);
   }
 
   .hub-cta-primary:hover,
   .hub-cta-primary:focus-visible {
-    background: color-mix(in srgb, var(--hub-accent-deep) 88%, #fff);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, #fff 22%, transparent), transparent 50%),
+      color-mix(in srgb, var(--hub-accent-deep) 88%, #fff);
     color: #fff !important;
     transform: translateY(-1px);
+    box-shadow:
+      0 2px 0 color-mix(in srgb, #000 10%, transparent),
+      0 14px 28px color-mix(in srgb, var(--hub-accent-deep) 28%, transparent),
+      inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent);
   }
 
   .hub-cta-sub {
@@ -462,7 +478,13 @@
     padding: 1rem 1.05rem;
     border: 1px solid var(--hub-line);
     border-radius: 0.75rem;
-    background: var(--hub-panel);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, #fff 42%, transparent), transparent 40%),
+      var(--hub-panel);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, #fff 55%, transparent),
+      0 8px 18px color-mix(in srgb, var(--hub-ink) 5%, transparent);
+    border-top: 2px solid color-mix(in srgb, var(--hub-accent) 42%, var(--hub-line));
   }
 
   .hub-pillar-grid h3 {
@@ -595,7 +617,14 @@
 
   .hub-chapter-list a:hover,
   .hub-chapter-list a:focus-visible {
-    background: color-mix(in srgb, var(--hub-accent) 6%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--hub-gold) 28%, transparent), transparent 0.22rem),
+      color-mix(in srgb, var(--hub-accent) 7%, transparent);
+  }
+
+  .hub-chapter-list a:hover .hub-ch-title,
+  .hub-chapter-list a:focus-visible .hub-ch-title {
+    color: color-mix(in srgb, var(--hub-ink) 82%, var(--hub-accent-deep));
   }
 
   .hub-chapter-list a[data-resume='true'] {
@@ -838,8 +867,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hub-cta {
+  .hub-cta,
+  .chip[data-material],
+  .hub-chapter-list a .hub-ch-thumb img {
     transition: none;
+  }
+
+  .hub-cta-primary:hover,
+  .hub-cta-primary:focus-visible,
+  .chip[data-material]:hover,
+  .chip[data-material]:focus-visible {
+    transform: none;
   }
 }
 
@@ -1315,7 +1353,17 @@
 .chip[data-material] {
   border-color: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 42%, var(--hub-line));
   color: color-mix(in srgb, var(--material-accent-ink, var(--material-accent, var(--hub-accent-deep))) 58%, var(--hub-ink));
-  background: color-mix(in srgb, var(--material-accent, var(--hub-accent)) 7%, #fff);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 55%, transparent), transparent),
+    color-mix(in srgb, var(--material-accent, var(--hub-accent)) 8%, #fff);
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 65%, transparent);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.chip[data-material]:hover,
+.chip[data-material]:focus-visible {
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--material-accent, var(--hub-accent)) 16%, transparent);
+  transform: translateY(-1px);
 }
 
 .chip[data-material='wax'] {
@@ -2504,20 +2552,27 @@ body[data-surface='monument'][data-lighting='raking'] .topic-card {
 }
 
 .climate-option[aria-pressed='true'] {
-  background: color-mix(in srgb, var(--hub-accent) 18%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 35%, transparent), transparent),
+    color-mix(in srgb, var(--hub-accent) 20%, transparent);
   color: var(--hub-accent-deep);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hub-accent) 28%, transparent);
 }
 
 .climate-option:hover,
 .climate-option:focus-visible {
   color: var(--hub-ink);
-  background: color-mix(in srgb, var(--hub-accent) 10%, transparent);
+  background: color-mix(in srgb, var(--hub-accent) 12%, transparent);
 }
 
 .climate-option:focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--hub-hearth));
+  outline: 2px solid var(--focus-outline-color, var(--hub-hearth-ink, var(--hub-hearth)));
   outline-offset: 1px;
   z-index: 1;
+}
+
+.climate-option:active {
+  background: color-mix(in srgb, var(--hub-accent) 24%, transparent);
 }
 
 @media (max-width: 52rem) {

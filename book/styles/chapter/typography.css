@@ -56,15 +56,22 @@
     font-size: 0.95rem;
     letter-spacing: 0.04em;
     color: var(--color-accent-main);
+    padding: 0.55rem 0.75rem 0.55rem 0.85rem;
+    border-radius: 0 0.55rem 0.55rem 0;
+    border-left: 3px solid color-mix(in srgb, var(--color-gold, #c4922e) 72%, var(--color-accent-main));
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--color-accent-main) 8%, transparent), transparent 72%),
+      color-mix(in srgb, var(--bg-color-content-strong, #fff) 55%, transparent);
   }
 
   .chapter-epigraph {
-    margin: calc(var(--spacing-medium) * -0.35) 0 var(--spacing-medium);
+    margin: calc(var(--spacing-medium) * -0.2) 0 var(--spacing-medium);
     max-width: var(--chapter-prose-max);
     font-style: italic;
     color: var(--color-text-alt);
     border-left: 2px solid color-mix(in srgb, var(--color-accent-main) 45%, transparent);
-    padding-left: 0.9rem;
+    padding: 0.35rem 0 0.35rem 0.95rem;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent-main) 5%, transparent), transparent 88%);
   }
 
   .chapter-byline {
@@ -85,7 +92,7 @@
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-text-alt) 88%, transparent);
+    color: var(--color-text-alt);
   }
 
   .chapter-topic-row {
@@ -99,20 +106,26 @@
   .chapter-topic-chip {
     display: inline-flex;
     align-items: center;
-    padding: 0.22rem 0.65rem;
+    padding: 0.24rem 0.7rem;
     border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--border-color-main) 70%, transparent);
-    background: color-mix(in srgb, var(--bg-color-content) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border-color-main) 70%, var(--color-accent-main) 12%);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, #fff 55%, transparent), transparent),
+      color-mix(in srgb, var(--bg-color-content) 88%, var(--color-accent-main) 4%);
     color: var(--color-accent-alt);
     font-family: var(--font-family-heading);
     font-size: 0.78rem;
     letter-spacing: 0.03em;
     text-decoration: none;
+    box-shadow: 0 1px 0 color-mix(in srgb, #fff 70%, transparent);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
   }
 
   .chapter-topic-chip:hover,
   .chapter-topic-chip:focus-visible {
-    border-color: color-mix(in srgb, var(--color-accent-main) 45%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent-main) 48%, transparent);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent-main) 12%, transparent);
+    transform: translateY(-1px);
   }
 
   .chapter-topic-chip--quiet {
@@ -150,17 +163,23 @@
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
-    padding: 0.65rem 0.75rem;
+    padding: 0.7rem 0.8rem;
     border: 1px solid color-mix(in srgb, var(--border-color-main) 70%, transparent);
-    border-radius: 0.55rem;
+    border-radius: 0.6rem;
     text-decoration: none;
     color: inherit;
-    background: color-mix(in srgb, var(--bg-color-content) 70%, transparent);
+    background:
+      linear-gradient(165deg, color-mix(in srgb, #fff 42%, transparent), transparent 55%),
+      color-mix(in srgb, var(--bg-color-content) 82%, transparent);
+    box-shadow: 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+    transition: border-color 160ms ease, box-shadow 180ms ease, transform 160ms ease;
   }
 
   .chapter-route-card:hover,
   .chapter-route-card:focus-visible {
-    border-color: color-mix(in srgb, var(--color-accent-main) 40%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent-main) 42%, transparent);
+    box-shadow: 0 10px 22px color-mix(in srgb, var(--color-accent-main) 12%, transparent);
+    transform: translateY(-1px);
   }
 
   .chapter-route-kicker {
@@ -238,15 +257,16 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-text-alt);
-    opacity: 0.5;
+    opacity: 0.62;
     margin-bottom: calc(var(--spacing-large) * 1.2);
     padding-bottom: var(--spacing-small);
-    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 30%, transparent 70%);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color-main) 34%, transparent 66%);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent-main) 7%, transparent), transparent 42%);
     transition: opacity 300ms ease;
   }
 
   .chapter:hover::before {
-    opacity: 0.75;
+    opacity: 0.88;
   }
 
   /* ─── Drop caps ────────────────────────────────────────────── */
@@ -257,11 +277,15 @@
     font-size: 3.8em;
     float: left;
     line-height: 0.78;
-    padding-right: 0.1em;
+    padding-right: 0.12em;
     padding-top: 0.04em;
     color: var(--color-accent-main);
-    filter: drop-shadow(0 1px 4px rgba(42, 111, 127, 0.2));
-    transition: color 300ms ease;
+    background: linear-gradient(165deg, var(--color-accent-main), color-mix(in srgb, var(--color-hearth-ink, #8a4014) 55%, var(--color-accent-main)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 3px color-mix(in srgb, var(--color-accent-main) 28%, transparent));
+    transition: filter 300ms ease;
   }
 
   /* ─── Prose typography ─────────────────────────────────────── */
@@ -290,16 +314,16 @@
     padding-top: var(--spacing-large);
   }
 
-  /* Section ornament — subtle diamond between sections */
+  /* Section ornament — measure tick between chambers of prose */
   .chapter section+section::before {
-    content: '◆';
+    content: '· ◆ ·';
     display: block;
     text-align: center;
-    font-size: 0.6rem;
-    color: var(--color-text-alt);
-    opacity: 0.3;
+    font-size: 0.58rem;
+    color: color-mix(in srgb, var(--color-accent-main) 55%, var(--color-text-alt));
+    opacity: 0.55;
     margin: calc(-1 * var(--spacing-large) - 0.3rem) auto var(--spacing-medium);
-    letter-spacing: 0.5em;
+    letter-spacing: 0.35em;
   }
 
   /* ─── Grammar role: narrator ───────────────────────────────── */
@@ -556,7 +580,9 @@
     right: 0;
     height: 3px;
     z-index: 100;
-    background: color-mix(in srgb, var(--border-color-main) 15%, transparent 85%);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, #fff 35%, transparent), transparent),
+      color-mix(in srgb, var(--border-color-main) 18%, transparent 82%);
     pointer-events: none;
     backdrop-filter: blur(2px);
   }
@@ -564,7 +590,7 @@
   /* Compact progress when chrome is tucked — still a quiet position cue */
   html[data-chrome-hidden='true'] .reading-progress {
     height: 2px;
-    opacity: 0.85;
+    opacity: 0.88;
   }
 
   .reading-progress::after {
@@ -574,8 +600,9 @@
     width: calc(var(--reading-progress, 0) * 100%);
     background: var(--color-accent-gradient);
     box-shadow:
-      0 0 8px color-mix(in srgb, var(--color-accent-main) 40%, transparent 60%),
-      0 0 2px var(--color-accent-main);
+      0 0 10px color-mix(in srgb, var(--color-accent-main) 42%, transparent 58%),
+      0 0 2px var(--color-accent-main),
+      inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
     transition: width 100ms linear;
     border-radius: 0 2px 2px 0;
   }
@@ -641,6 +668,20 @@
     font-style: normal;
     font-size: 0.82rem;
     letter-spacing: 0.04em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chapter-topic-chip,
+    .chapter-route-card {
+      transition: none;
+    }
+
+    .chapter-topic-chip:hover,
+    .chapter-topic-chip:focus-visible,
+    .chapter-route-card:hover,
+    .chapter-route-card:focus-visible {
+      transform: none;
+    }
   }
 }
 

@@ -12,13 +12,13 @@ import {
   initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_07_18.B';
+} from './modules/experience-core.mjs?v=2026_07_19.A';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_02_28.I';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_18.B';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_19.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
@@ -27,17 +27,22 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_18.B';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_18.B';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_07_19.A';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_07_19.A';
 import {
   initChapterChrome,
   initScrollChrome
-} from './modules/reading-chrome.mjs?v=2026_07_18.B';
+} from './modules/reading-chrome.mjs?v=2026_07_19.A';
 import {
   applySectionClimateAttributes,
   initCopyClimate
-} from './modules/copy-climate.mjs?v=2026_07_18.B';
-import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_18.B';
+} from './modules/copy-climate.mjs?v=2026_07_19.A';
+import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_07_19.A';
+import {
+  initPassAlong,
+  initServiceWorkerUpdate,
+  initSegmentKeyboard
+} from './modules/interaction-surface.mjs?v=2026_07_19.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -56,7 +61,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   registerCustomElements();
 
   const { root, announce, destroy: destroyBootstrap } = bootstrapExperience();
-  registerStoryServiceWorker({ root, swPath: '/sw.js', scope: '/' });
+  let destroySwUpdate = null;
+  registerStoryServiceWorker({
+    root,
+    swPath: '/sw.js',
+    scope: '/',
+    onRegistered: (registration) => {
+      destroySwUpdate = initServiceWorkerUpdate(registration, { announce });
+    }
+  });
   injectSvgFilters(document);
 
   // Page-forward entrance (chapter/motion.css) — attribute cleared once the
@@ -139,6 +152,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     initChapterProgression(chapterData, { announce });
     const destroyReveal = initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: chapterContent || document });
+    const destroyPassAlong = initPassAlong({
+      title: `${chapterData.title} | Lore.Land`,
+      text: chapterData.logline || chapterData.description || chapterData.title,
+      url: typeof location !== 'undefined' ? location.href : '',
+      announce
+    });
+    const destroySegmentKeys = initSegmentKeyboard(document);
 
     // Secondary enhancement: defer until idle so first paint/input stay free.
     let languageExplore = null;
@@ -183,6 +203,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyChapterChrome) destroyChapterChrome();
       if (destroyScrollChrome) destroyScrollChrome();
       if (copyClimate?.destroy) copyClimate.destroy();
+      if (destroyPassAlong) destroyPassAlong();
+      if (destroySegmentKeys) destroySegmentKeys();
+      if (destroySwUpdate) destroySwUpdate();
       if (destroyAttention) destroyAttention();
       if (destroyShader) destroyShader();
       if (destroySpatial) destroySpatial();

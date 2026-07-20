@@ -1,4 +1,4 @@
-import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_18.B';
+import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_19.A';
 
 const STORAGE_PREFIX = 'lore.experience';
 
@@ -641,6 +641,15 @@ export async function registerStoryServiceWorker(options = {}) {
       root.dataset.pwaState = 'installing';
     } else {
       root.dataset.pwaState = 'active';
+    }
+
+    // Optional update UI (toasts / reload) — progressive; never blocks install.
+    if (options.onRegistered) {
+      try {
+        options.onRegistered(registration);
+      } catch (hookError) {
+        console.warn('Service worker onRegistered hook failed:', hookError);
+      }
     }
 
     return registration;

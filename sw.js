@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_07_18.B';
+const CACHE_VERSION = 'lore-pwa-v2026_07_19.A';
 const OFFLINE_URL = '/book/pwa/offline.html';
 
 /* Precache is exactly one file: the offline shell, which is self-contained
@@ -21,6 +21,13 @@ self.addEventListener('activate', (event) => {
         .map((key) => caches.delete(key))
     )).then(() => self.clients.claim())
   );
+});
+
+/* Optional skipWaiting from the update toast (interaction-surface.mjs). */
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', (event) => {

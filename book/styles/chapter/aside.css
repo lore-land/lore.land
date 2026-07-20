@@ -67,46 +67,71 @@ aside .additional-links {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.45rem;
-  border-top: 1px dashed color-mix(in srgb, var(--color-accent-main, #2a6f7f) 26%, transparent);
-  padding-top: 0.62rem;
+  border-top: 1px dashed color-mix(in srgb, var(--color-accent-main, #246270) 28%, transparent);
+  padding: 0.7rem 0.15rem 0.2rem;
+  margin-top: 0.15rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent-main) 4%, transparent), transparent 70%);
 }
 
 aside .additional-links-label {
   flex: 1 0 100%;
-  margin: 0 0 0.12rem;
+  margin: 0 0 0.2rem;
   text-align: center;
   font-family: 'LoreLand', var(--font-family-heading);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-accent-main, #2a6f7f) 72%, var(--color-text-alt, #5b6a76));
+  color: color-mix(in srgb, var(--color-accent-main, #246270) 72%, var(--color-text-alt, #3a455c));
 }
 
 aside .additional-links a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: var(--interactive-border);
+  border: 1px solid color-mix(in srgb, var(--border-color-main) 78%, var(--color-accent-main) 14%);
   border-radius: var(--border-radius-pill);
-  background: var(--interactive-bg);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 50%, transparent), transparent),
+    var(--interactive-bg);
   color: var(--color-accent-alt);
   text-decoration: none;
   padding: 0.42rem 0.86rem;
   font-family: var(--font-family-heading);
-  font-size: 0.9rem;
-  transition: var(--interactive-transition);
+  font-size: 0.88rem;
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 60%, transparent);
+  transition: var(--interactive-transition), transform 160ms ease;
 }
 
 aside .additional-links a:hover,
 aside .additional-links a:focus-visible {
-  background: var(--interactive-bg-hover);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 40%, transparent), transparent),
+    var(--interactive-bg-hover);
   outline: 2px solid var(--interactive-outline);
   outline-offset: 2px;
   box-shadow: var(--interactive-shadow-hover);
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, #b8862f 65%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--color-gold, #c4922e) 70%, transparent);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
+  transform: translateY(-1px);
+}
+
+aside #lore-button,
+aside .primary-action {
+  border-radius: var(--border-radius-pill);
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 45%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  aside .additional-links a {
+    transition: none;
+  }
+
+  aside .additional-links a:hover,
+  aside .additional-links a:focus-visible {
+    transform: none;
+  }
 }
 
 /* An unhydrated chamber keeps its shape instead of collapsing to a sliver —

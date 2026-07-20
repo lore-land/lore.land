@@ -58,9 +58,13 @@ nav.chapter-navigation {
   margin-top: 0;
   border: var(--interactive-border);
   border-radius: var(--border-radius-small);
-  background: color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 94%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 38%, transparent), transparent 55%),
+    color-mix(in srgb, var(--spw-panel-surface, var(--theme-paper)) 94%, transparent);
   /* Backdrop blur is expensive while sticky + scrolling; keep it for desktop only */
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--theme-accent-main) 12%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--theme-accent-main) 12%, transparent),
+    inset 0 2px 0 color-mix(in srgb, var(--color-gold, #c4922e) 42%, transparent);
   transition:
     transform 220ms ease,
     opacity 180ms ease,
@@ -285,7 +289,9 @@ aside {
   border: var(--interactive-border);
   border-radius: var(--border-radius-main);
   background: var(--theme-paper);
-  box-shadow: var(--theme-shadow);
+  box-shadow:
+    var(--theme-shadow, var(--shadow-main)),
+    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
   padding: clamp(1rem, 2.4vw, 1.9rem);
   transition: var(--interactive-transition);
   background-image: var(--theme-grain), var(--theme-glassmorphism);
@@ -301,6 +307,10 @@ main.chapter {
   container-name: chapter-main;
   perspective: var(--perspective-depth, 920px);
   perspective-origin: 50% 20%;
+  box-shadow:
+    var(--theme-shadow, var(--shadow-main)),
+    inset 0 1px 0 color-mix(in srgb, #fff 62%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-accent-main) 6%, transparent);
 }
 
 @layer root.states {
