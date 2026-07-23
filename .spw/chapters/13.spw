@@ -15,62 +15,55 @@
 &[chapter/13/routes]{
   web: "/book/chapter/13/"
   timeline: "/book/timeline.html#chapter-13"
-  motif: "~[motif/chapter-13]{optional}"
+  motif: ~[motif/chapter-13]{optional}
 }
 
-^[chapter/13/sections]{
-  s01: {
+^[chapter/13/sections][
+  s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof paused where the path thinned into reflection. Behind them: collisions, oaths, ledgers, the Fool’s laughter—it all seemed so distant now. They gazed into a still pond by the side of the path, seeing their reflect..."
-    route: "^[chapter/13/s01]{open}"
-  }
-  s02: {
+    route: ^[chapter/13/s01]{open}
+  >
+  s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    payload: "<>"
     excerpt: "The water rippled gently, distorting Boof’s face, but it also showed something beyond the surface—an image of their journey, everything they had been through, everything they had learned."
     handles: ["reflection-intro"]
-    route: "^[chapter/13/s02]{open}"
-  }
-  s03: {
+    route: ^[chapter/13/s02]{open}
+  >
+  s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"This is where it all leads, Boof,\" the Fool’s voice came, soft and reflective. \"You’ve seen me in every step of your journey, but now it’s time to see yourself.\""
-    route: "^[chapter/13/s03]{open}"
-  }
-  s04: {
+    route: ^[chapter/13/s03]{open}
+  >
+  s04: [
     handle: "figure/04"
     type: "figure"
-    payload: "[]"
     image: "/book/images/13.png"
-    route: "^[chapter/13/s04]{open}"
-  }
+    route: ^[chapter/13/s04]{open}
+  ]
   s05: {
     handle: "section/05"
     type: "section"
-    payload: "{}"
     title: "The Mirror of Time"
     excerpt: "Boof stared into the water, watching as the images flickered—of the path, the maze, the Fool, and finally, themselves. Every piece of the puzzle had brought them here, but now the journey was theirs alone. The boonber..."
-    route: "^[chapter/13/s05]{open}"
+    route: ^[chapter/13/s05]{open}
   }
-  s06: {
+  s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "\"I see now,\" Boof whispered, feeling both humbled and empowered. \"I was chasing the Fool, but I was really chasing myself.\""
-    route: "^[chapter/13/s06]{open}"
-  }
-  s07: {
+    route: ^[chapter/13/s06]{open}
+  >
+  s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"Exactly, Boof,\" the Fool chuckled lightly. \"The reflection you see is just the beginning. The real journey lies ahead, and it’s one you’ll walk without me. But I’ll always be part of you, in every step.\""
-    route: "^[chapter/13/s07]{open}"
-  }
-}
+    route: ^[chapter/13/s07]{open}
+  >
+]
 
 #[chapter/13/lore]{
   notes: [

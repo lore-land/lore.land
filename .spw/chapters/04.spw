@@ -15,55 +15,49 @@
 &[chapter/04/routes]{
   web: "/book/chapter/04/"
   timeline: "/book/timeline.html#chapter-04"
-  motif: "~[motif/chapter-04]{optional}"
+  motif: ~[motif/chapter-04]{optional}
 }
 
-^[chapter/04/sections]{
-  s01: {
+^[chapter/04/sections][
+  s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof stumbled upon the Fool’s Mirror , a reflective surface that showed not just a reflection, but a world inverted, where the familiar became strange."
-    route: "^[chapter/04/s01]{open}"
-  }
-  s02: {
+    route: ^[chapter/04/s01]{open}
+  >
+  s02: <
     handle: "custom-mirror/02"
     type: "custom-mirror"
-    payload: "<>"
     excerpt: "The Fool’s Mirror shimmered, revealing truths that danced between reflection and distortion. It whispered, \"What you see is not what is, but what you believe.\""
     handles: ["mirror-intro"]
-    route: "^[chapter/04/s02]{open}"
-  }
-  s03: {
+    route: ^[chapter/04/s02]{open}
+  >
+  s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"Look into the mirror, Boof,\" the Fool’s voice echoed. \"In it, you will see not me, but yourself. And in yourself, you will find what you seek.\""
-    route: "^[chapter/04/s03]{open}"
-  }
-  s04: {
+    route: ^[chapter/04/s03]{open}
+  >
+  s04: [
     handle: "figure/04"
     type: "figure"
-    payload: "[]"
     image: "/book/images/04.png"
-    route: "^[chapter/04/s04]{open}"
-  }
+    route: ^[chapter/04/s04]{open}
+  ]
   s05: {
     handle: "section/05"
     type: "section"
-    payload: "{}"
     title: "The Reflections of the Fool’s Mirror"
     excerpt: "As Boof gazed into the mirror, their reflection shifted. It became both them and not them, a version that was twisted by perception, altered by the gaze of the Fool. The boonberries glowed faintly in the reflection, y..."
-    route: "^[chapter/04/s05]{open}"
+    route: ^[chapter/04/s05]{open}
   }
-  s06: {
+  s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof touched the mirror, and for a moment, felt their hand sink into its surface, as if reality had become liquid. \"What is this?\" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze acr..."
-    route: "^[chapter/04/s06]{open}"
-  }
-}
+    route: ^[chapter/04/s06]{open}
+  >
+]
 
 #[chapter/04/lore]{
   notes: [

@@ -15,55 +15,49 @@
 &[chapter/06/routes]{
   web: "/book/chapter/06/"
   timeline: "/book/timeline.html#chapter-06"
-  motif: "~[motif/chapter-06]{optional}"
+  motif: ~[motif/chapter-06]{optional}
 }
 
-^[chapter/06/sections]{
-  s01: {
+^[chapter/06/sections][
+  s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof stepped into the Fool’s Labyrinth , where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step."
-    route: "^[chapter/06/s01]{open}"
-  }
-  s02: {
+    route: ^[chapter/06/s01]{open}
+  >
+  s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    payload: "<>"
     excerpt: "\"In the labyrinth, the way forward is always behind you, and the way out is through,\" a voice echoed from within the twisting paths."
     handles: ["labyrinth-intro"]
-    route: "^[chapter/06/s02]{open}"
-  }
-  s03: {
+    route: ^[chapter/06/s02]{open}
+  >
+  s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is—can you find yourself?\""
-    route: "^[chapter/06/s03]{open}"
-  }
-  s04: {
+    route: ^[chapter/06/s03]{open}
+  >
+  s04: [
     handle: "figure/04"
     type: "figure"
-    payload: "[]"
     image: "/book/images/06.png"
-    route: "^[chapter/06/s04]{open}"
-  }
+    route: ^[chapter/06/s04]{open}
+  ]
   s05: {
     handle: "section/05"
     type: "section"
-    payload: "{}"
     title: "The Shifting Maze"
     excerpt: "The labyrinth was alive, its walls shifting like liquid, bending and twisting the space. No matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they star..."
-    route: "^[chapter/06/s05]{open}"
+    route: ^[chapter/06/s05]{open}
   }
-  s06: {
+  s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof paused. \"Is this part of the game?\" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared. \"Perhaps the only way out,\" Boof mused, \"is to stop trying to escape.\""
-    route: "^[chapter/06/s06]{open}"
-  }
-}
+    route: ^[chapter/06/s06]{open}
+  >
+]
 
 #[chapter/06/lore]{
   notes: [

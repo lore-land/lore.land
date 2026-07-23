@@ -15,62 +15,55 @@
 &[chapter/12/routes]{
   web: "/book/chapter/12/"
   timeline: "/book/timeline.html#chapter-12"
-  motif: "~[motif/chapter-12]{optional}"
+  motif: ~[motif/chapter-12]{optional}
 }
 
-^[chapter/12/sections]{
-  s01: {
+^[chapter/12/sections][
+  s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "Boof stood at the edge of the clearing, the last echoes of their awakening still resonating within. Before them, a new path opened, stretching out into the unknown. It was not a maze, nor a game—it was something else,..."
-    route: "^[chapter/12/s01]{open}"
-  }
-  s02: {
+    route: ^[chapter/12/s01]{open}
+  >
+  s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    payload: "<>"
     excerpt: "The path was quiet, unassuming, but full of promise. Boof knew that the journey had changed—no longer about solving puzzles or chasing the Fool. This was about walking forward, with no end in sight, but with a newfoun..."
     handles: ["path-intro"]
-    route: "^[chapter/12/s02]{open}"
-  }
-  s03: {
+    route: ^[chapter/12/s02]{open}
+  >
+  s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"You’ve come far, Boof,\" the Fool’s voice echoed softly. \"But the path ahead is yours to choose. It’s no longer about games, but about what you make of it.\""
-    route: "^[chapter/12/s03]{open}"
-  }
-  s04: {
+    route: ^[chapter/12/s03]{open}
+  >
+  s04: [
     handle: "figure/04"
     type: "figure"
-    payload: "[]"
     image: "/book/images/12.png"
-    route: "^[chapter/12/s04]{open}"
-  }
+    route: ^[chapter/12/s04]{open}
+  ]
   s05: {
     handle: "section/05"
     type: "section"
-    payload: "{}"
     title: "The Open Road"
     excerpt: "Boof looked down the path, feeling a calmness that hadn’t been there before. This was a different kind of journey—one without tricks or hidden challenges. The boonberries swayed gently in the trees, as if urging Boof ..."
-    route: "^[chapter/12/s05]{open}"
+    route: ^[chapter/12/s05]{open}
   }
-  s06: {
+  s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "\"Where does it lead?\" Boof asked aloud. The Fool didn’t answer, but Boof felt no frustration, only curiosity. It didn’t matter where the path led—it mattered that they were walking it."
-    route: "^[chapter/12/s06]{open}"
-  }
-  s07: {
+    route: ^[chapter/12/s06]{open}
+  >
+  s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. 'The path is yours to create.'\""
-    route: "^[chapter/12/s07]{open}"
-  }
-}
+    route: ^[chapter/12/s07]{open}
+  >
+]
 
 #[chapter/12/lore]{
   notes: [

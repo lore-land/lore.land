@@ -2,73 +2,73 @@
 #>chapter_canon_index
 #:chapter-canon #!index
 
-&[chapters]{
+&[chapters][
   c01: {
     title: "Dawn in Boon.land"
-    file: "@spw/chapters/01.spw"
+    &file: @spw/chapters/01.spw
     sections: 9
   }
   c02: {
     title: "The First Echo"
-    file: "@spw/chapters/02.spw"
+    &file: @spw/chapters/02.spw
     sections: 7
   }
   c03: {
     title: "Signals in the Sand"
-    file: "@spw/chapters/03.spw"
+    &file: @spw/chapters/03.spw
     sections: 6
   }
   c04: {
     title: "Crosswind Council"
-    file: "@spw/chapters/04.spw"
+    &file: @spw/chapters/04.spw
     sections: 6
   }
   c05: {
     title: "The Quiet Rift"
-    file: "@spw/chapters/05.spw"
+    &file: @spw/chapters/05.spw
     sections: 6
   }
   c06: {
     title: "Lanterns of Bonk City"
-    file: "@spw/chapters/06.spw"
+    &file: @spw/chapters/06.spw
     sections: 6
   }
   c07: {
     title: "Blueberry Oath"
-    file: "@spw/chapters/07.spw"
+    &file: @spw/chapters/07.spw
     sections: 7
   }
   c08: {
     title: "Songs of the Watering Eye"
-    file: "@spw/chapters/08.spw"
+    &file: @spw/chapters/08.spw
     sections: 7
   }
   c09: {
     title: "Shards of Nine Honks"
-    file: "@spw/chapters/09.spw"
+    &file: @spw/chapters/09.spw
     sections: 7
   }
   c10: {
     title: "Bone.land Resonance"
-    file: "@spw/chapters/10.spw"
+    &file: @spw/chapters/10.spw
     sections: 7
   }
   c11: {
     title: "Paradox Bloom"
-    file: "@spw/chapters/11.spw"
+    &file: @spw/chapters/11.spw
     sections: 7
   }
   c12: {
     title: "The Last Confluence"
-    file: "@spw/chapters/12.spw"
+    &file: @spw/chapters/12.spw
     sections: 7
   }
   c13: {
     title: "Lore.Land Canon"
-    file: "@spw/chapters/13.spw"
+    &file: @spw/chapters/13.spw
     sections: 7
   }
-}
+]
 
 ^[routes]{
   "chapter-01": "#>chapter_01"

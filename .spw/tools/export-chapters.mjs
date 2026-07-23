@@ -80,21 +80,27 @@ function collectHandles(section, sink) {
   }
 }
 
-function sectionPayload(section) {
+/* The container itself carries the section's structural role instead of a
+   redundant string label — frame [] for a selectable figure, capsule <>
+   for a directed custom-character insert, body {} for ordinary prose scope,
+   scope () for anything else. See CONTAINER_ROLES (spw-interactions.mjs) /
+   core/CONTAINERS.md for the same four roles used the same way elsewhere
+   in this canon. */
+function sectionContainer(section) {
   if (section?.type === 'figure') {
-    return '[]';
+    return ['[', ']'];
   }
   if (typeof section?.type === 'string' && section.type.startsWith('custom-')) {
-    return '<>';
+    return ['<', '>'];
   }
   if (section?.type === 'section') {
-    return '{}';
+    return ['{', '}'];
   }
-  return '()';
+  return ['(', ')'];
 }
 
 function emitSection(section, chapterNumber, index) {
-  const payload = sectionPayload(section);
+  const [open, close] = sectionContainer(section);
   const handle = sectionHandle(section, index);
   const kind = String(section?.type || 'section');
   const chapterId = pad(chapterNumber);
@@ -107,10 +113,9 @@ function emitSection(section, chapterNumber, index) {
   collectHandles(section, handles);
 
   const lines = [];
-  lines.push(`  s${pad(index + 1)}: {`);
+  lines.push(`  s${pad(index + 1)}: ${open}`);
   lines.push(`    handle: "${handle}"`);
   lines.push(`    type: "${kind}"`);
-  lines.push(`    payload: "${payload}"`);
 
   if (typeof section?.title === 'string') {
     lines.push(`    title: "${section.title.replace(/"/g, '\\"')}"`);
@@ -132,8 +137,10 @@ function emitSection(section, chapterNumber, index) {
     lines.push(`    handles: [${[...handles].map((h) => `"${h.replace(/"/g, '\\"')}"`).join(', ')}]`);
   }
 
-  lines.push(`    route: "^[chapter/${chapterId}/s${pad(index + 1)}]{open}"`);
-  lines.push('  }');
+  /* Unquoted — a real embedded ^[...]{...} sub-expression, not a string
+     that merely looks like one. */
+  lines.push(`    route: ^[chapter/${chapterId}/s${pad(index + 1)}]{open}`);
+  lines.push(`  ${close}`);
 
   return lines.join('\n');
 }
@@ -189,11 +196,13 @@ function emitChapterSpw(data) {
   lines.push(`&[chapter/${chapterId}/routes]{`);
   lines.push(`  web: "/book/chapter/${chapterId}/"`);
   lines.push(`  timeline: "/book/timeline.html#chapter-${chapterId}"`);
-  lines.push(`  motif: "~[motif/chapter-${chapterId}]{optional}"`);
+  lines.push(`  motif: ~[motif/chapter-${chapterId}]{optional}`);
   lines.push('}');
   lines.push('');
 
-  lines.push(`^[chapter/${chapterId}/sections]{`);
+  /* Ordered, indexable, homogeneous — a frame, not a body (matches the
+     ^"stages"[...] precedent in .spw/runtime/precipitates.spw). */
+  lines.push(`^[chapter/${chapterId}/sections][`);
   if (!sections.length) {
     lines.push('  empty: true');
   } else {
@@ -201,7 +210,7 @@ function emitChapterSpw(data) {
       lines.push(emitSection(section, chapterNumber, index));
     });
   }
-  lines.push('}');
+  lines.push(']');
   lines.push('');
 
   lines.push(`#[chapter/${chapterId}/lore]{`);
@@ -247,15 +256,17 @@ function main() {
   lines.push('#>chapter_canon_index');
   lines.push('#:chapter-canon #!index');
   lines.push('');
-  lines.push('&[chapters]{');
+  /* Ordered, indexable, homogeneous — a frame, matching the sections list
+     above and the ^"stages"[...] precedent in precipitates.spw. */
+  lines.push('&[chapters][');
   summary.forEach((item) => {
     lines.push(`  c${item.id}: {`);
     lines.push(`    title: "${String(item.title).replace(/"/g, '\\"')}"`);
-    lines.push(`    file: "@spw/chapters/${item.id}.spw"`);
+    lines.push(`    &file: @spw/chapters/${item.id}.spw`);
     lines.push(`    sections: ${item.sections}`);
     lines.push('  }');
   });
-  lines.push('}');
+  lines.push(']');
   lines.push('');
   lines.push('^[routes]{');
   summary.forEach((item) => {

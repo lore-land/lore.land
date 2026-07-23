@@ -15,80 +15,71 @@
 &[chapter/01/routes]{
   web: "/book/chapter/01/"
   timeline: "/book/timeline.html#chapter-01"
-  motif: "~[motif/chapter-01]{optional}"
+  motif: ~[motif/chapter-01]{optional}
 }
 
-^[chapter/01/sections]{
+^[chapter/01/sections][
   s01: {
     handle: "section/01"
     type: "section"
-    payload: "{}"
     title: "The Missing Measure"
     excerpt: "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the weighhouse porch down into the mist like ..."
-    route: "^[chapter/01/s01]{open}"
+    route: ^[chapter/01/s01]{open}
   }
-  s02: {
+  s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
-    payload: "<>"
     valence: "boon"
     excerpt: "For seven years Boof had practiced being the sort of clerk nobody watched twice: a dog between stool and scale, useful as a broom and about as celebrated. She knew which councilor rounded a fraction toward their frien..."
-    route: "^[chapter/01/s02]{open}"
-  }
+    route: ^[chapter/01/s02]{open}
+  >
   s03: {
     handle: "section/03"
     type: "section"
-    payload: "{}"
     title: "When a Berry Listens"
     excerpt: "Most boonberries slept through being counted. They were fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town uses without naming. But sometimes a berry notices the shape of the story around it. That h..."
-    route: "^[chapter/01/s03]{open}"
+    route: ^[chapter/01/s03]{open}
   }
-  s04: {
+  s04: [
     handle: "figure/04"
     type: "figure"
-    payload: "[]"
     image: "/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp"
-    route: "^[chapter/01/s04]{open}"
-  }
+    route: ^[chapter/01/s04]{open}
+  ]
   s05: {
     handle: "section/05"
     type: "section"
-    payload: "{}"
     title: "A Fool in the Archive"
     excerpt: "The archive door stood open by the width of a fingernail—and the width of a scent. Inside, the shelves rose in aisles built to make every decision look inevitable. At the far end, under a little brass lamp, hung the t..."
-    route: "^[chapter/01/s05]{open}"
+    route: ^[chapter/01/s05]{open}
   }
-  s06: {
+  s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    payload: "<>"
     excerpt: "\"A ledger is a story with permission to punish people,\" the Fool said, soft as a market rhyme. \"You can fix the arithmetic and keep the same story. Or you can ask who benefits from the error. Those are different jobs...."
-    route: "^[chapter/01/s06]{open}"
-  }
+    route: ^[chapter/01/s06]{open}
+  >
   s07: {
     handle: "section/07"
     type: "section"
-    payload: "{}"
     title: "Six Measures, Many Reasons"
     excerpt: "Nemi, who tended the dawnward roots with dirt under every nail, wanted the missing light returned—but not by stripping the late vines bare. She had watched generous harvests become barren seasons when urgency forgot r..."
-    route: "^[chapter/01/s07]{open}"
+    route: ^[chapter/01/s07]{open}
   }
   s08: {
     handle: "section/08"
     type: "section"
-    payload: "{}"
     title: "Publication"
     excerpt: "The morning bell rang. In three minutes the harvest total would be read from the council balcony, copied by the criers at the square’s four corners, and treated as memory—the kind people quote when they want an argume..."
-    route: "^[chapter/01/s08]{open}"
+    route: ^[chapter/01/s08]{open}
   }
-  s09: {
+  s09: <
     handle: "custom-boof/09"
     type: "custom-boof"
-    payload: "<>"
     excerpt: "By sunset, Boof no longer had a desk in the weighhouse. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries sh..."
-    route: "^[chapter/01/s09]{open}"
-  }
-}
+    route: ^[chapter/01/s09]{open}
+  >
+]
 
 #[chapter/01/lore]{
   notes: [
