@@ -3,7 +3,13 @@ import { getSpwRegisterBank } from './spw-register-bank.mjs?v=2026_02_28.I';
 import { findSpwExpressionByIndex, parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
 import { currentCanonFileHref, resolvePathRefHref } from './spw-routing.mjs?v=2026_03_02.A';
 
-const OPERATOR_SEQUENCE = Object.freeze(['^', '&', '~', '?', '!', '#', '*']);
+/* Click-to-swap cycle order follows the spirit-sequence phase pipeline
+   (0-6: ! ? ~ @ & * ^) so cycling an operator walks the actual phase
+   progression rather than an arbitrary rotation. @ is excluded — its
+   meaning is positional (prefix/postfix relative to a following '['),
+   not swappable in place. # is appended: it has no phase (meta/annotation)
+   but is still a valid single-role operator worth cycling into. */
+const OPERATOR_SEQUENCE = Object.freeze(['!', '?', '~', '&', '*', '^', '#']);
 
 /* Canonical Spw v0.2.0-alpha operator table.
    spirit_sequence = ?~<#.>@(#.)&[#.]*{#.}^   (phase 0 = !, phases 1-6 = sequence above)
@@ -769,8 +775,13 @@ function createOperatorControl(node, operators, tokens, announce) {
   swapAll.addEventListener('click', () => {
     operators.forEach((operator) => {
       const next = nextOperator(operator.el.textContent || operator.char);
+      const nextRole = OPERATOR_ROLES[next];
       operator.el.textContent = next;
       operator.el.dataset.spwToken = next;
+      if (nextRole) {
+        operator.el.dataset.spwRole = nextRole.role;
+        operator.el.setAttribute('aria-label', `Swap operator ${next} (${nextRole.label})`);
+      }
     });
     updateSourceFromTokens(node, tokens);
     if (announce) {
@@ -1113,8 +1124,13 @@ function enhanceExpressionNode(node, announce) {
     operators.forEach((operator) => {
       const swapOperator = () => {
         const next = nextOperator(operator.el.textContent || operator.char);
+        const nextRole = OPERATOR_ROLES[next];
         operator.el.textContent = next;
         operator.el.dataset.spwToken = next;
+        if (nextRole) {
+          operator.el.dataset.spwRole = nextRole.role;
+          operator.el.setAttribute('aria-label', `Swap operator ${next} (${nextRole.label})`);
+        }
         updateSourceFromTokens(node, tokens);
         if (announce) {
           announce(`Operator swapped to ${next}.`);
