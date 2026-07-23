@@ -70,7 +70,7 @@
   }
 }
 
-^"domains"{
+^"domains"[
 
   ^domain["webdev_mpa"]{
     must: [
@@ -168,16 +168,16 @@
     public_tool: ".spw/tools/project-public-spw.mjs"
     never_public: ["_workbench/", "tools/"]
   }
-}
+]
 
-^"phases"{
+^"phases"[
   .note: "implementation order — each phase leaves the monument usable; maps to audit P0–P2"
 
   ^phase[00: "Audit freeze"]{
     task: "Capture findings in .spw/audits/platform-ship-audit-2026-07-16.spw; mount from index"
     status: done
     verify: "audit linked from .spw/index.spw and workspace maintenance"
-    ={ ".spw/audits/platform-ship-audit-2026-07-16.spw" }
+    ={ ~".spw/audits/platform-ship-audit-2026-07-16.spw" }
   }
 
   ^phase[01: "Service worker shell"]{
@@ -242,7 +242,7 @@
     deferred: false
     verify: "reduced-motion still calm; share no-ops gracefully when API absent"
   }
-}
+]
 
 ^"seal_checklist_additions"[
   "SW precache URLs exist at HEAD of deploy",
@@ -255,7 +255,7 @@
   "dist/.spw excludes _workbench and tools"
 ]
 
-^"success_probes"{
+?"success_probes"{
   offline: "Airplane mode after first visit: offline.html and last-viewed chapter if cached"
   share: "Paste /book/chapter/01/ in a messenger — art + logline visible"
   canon: "export-chapters is dry-run clean against current HTML"

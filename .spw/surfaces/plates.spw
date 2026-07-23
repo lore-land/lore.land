@@ -22,7 +22,7 @@
 ^meta{
   intent: "prompt canon + review packet for the thirteen chapter plates (atelier phase 02)"
   audience: ["plate-wright", "chamberwright", "seal-keeper"]
-  probe_evidence: ".spw/audits/alignment-probes-2026-07-17.spw#probe.plate_weight — all 13 plates under threshold"
+  probe_evidence: ".spw/audits/alignment-probes-2026-07-22.spw#probe.plate_weight — all 13 plates under threshold, review-class per .spw/state/plates-manifest.spw gate"
   related: {
     atelier: ".spw/surfaces/atelier.spw#media_production"
     platform: ".spw/surfaces/platform.spw#phase.04"
@@ -37,6 +37,337 @@
     "a plate may only be prompted from a scene that has landed in JSON (media_plates_derive_from_scene_canon invariant)"
   ]
 }
+
+&"reading_compass"{
+  .note: "this is a field document, not a queue — enter by appetite, follow a relation,
+          and return with one changed question; the constructs advertise how to move"
+
+  @stand: "a situated overlook — begin here when you want a place, scale, or point of view"
+  ~drift: "a zone of possibility — linger without promoting an image into canon"
+  &crossing: "a confluence — two or more domains illuminate the same plate"
+  ?clearing: "an unresolved choice — attention can gather here without forcing closure"
+  !gate: "a consequential passage — crossing it changes JSON, art, metadata, or ledger state"
+  ^shelf: "a durable body of canon or a collection intended to be returned to"
+
+  movement_law: [
+    "breadth first: scan the shelf of thirteen from a distance",
+    "then choose one scent-trail, domain crossing, or recurring object",
+    "descend into a seed only when its neighboring ideas have begun to hum",
+    "leave production gates alone until the scene feels inevitable rather than merely attractive"
+  ]
+}
+
+@"trailhead"{
+  .note: "four ways into the same country; none is the official beginning"
+
+  @by_chamber: "walk 01 → 13 when narrative recurrence matters"
+  @by_sense: "follow scent, light, texture, sound, or bodily height across distant chambers"
+  @by_instrument: "follow scales, ledgers, maps, treaty boxes, wells, frames, ropes, and shelves"
+  @by_question: "start in a decision clearing and walk outward until another domain supplies language"
+
+  quick_paths: {
+    mystery: [01, 05, 08, 09, 13]
+    civic_craft: [01, 04, 06, 07, 10, 12, 13]
+    impossible_nature: [02, 03, 08, 11, 12]
+    signals_and_memory: [02, 03, 06, 08, 09, 13]
+    honest_structure: [01, 05, 07, 10, 12, 13]
+  }
+}
+
+^"plate_shelf"[
+  { 01: "measure / absence / accounting"        status: grounded  anchor: "weighhouse" }
+  { 02: "echo / recurrence / ecology"            status: draft     anchor: "grove" }
+  { 03: "route / promise / cartography"          status: draft     anchor: "sand flats" }
+  { 04: "tradeoff / weather / governance"        status: draft     anchor: "council hill" }
+  { 05: "fracture / silence / bookkeeping"       status: draft     anchor: "counting room" }
+  { 06: "impact / naming / civic illumination"   status: draft     anchor: "Bonk City" }
+  { 07: "oath / witness / public-private cost"   status: draft     anchor: "market stone" }
+  { 08: "reflection / debt / hydrologic memory"  status: draft     anchor: "watering eye" }
+  { 09: "broadcast / breakage / listening"       status: draft     anchor: "roof ridge" }
+  { 10: "load / honesty / architecture"          status: draft     anchor: "great frame" }
+  { 11: "paradox / nourishment / topology"       status: draft     anchor: "returning stair" }
+  { 12: "union / provenance / confluence"        status: draft     anchor: "low bridge" }
+  { 13: "record / recursion / inspectability"     status: draft     anchor: "open archive" }
+]
+
+&"domain_constellations"{
+  .note: "the plates are not illustrations of isolated chapters; they are apertures into
+          neighboring disciplines — use these crossings to complicate, test, or ground a seed"
+
+  &counting{
+    domains: [accounting, metrology, audit, provenance]
+    chambers: [01, 05, 07, 13]
+    recurring_forms: [scale, ledger, groove, open_record]
+    ask: "when does an instrument reveal truth, and when does its neatness conceal a fracture?"
+  }
+
+  &signal{
+    domains: [acoustics, semiotics, radio, distributed_systems, oral_memory]
+    chambers: [02, 03, 06, 08, 09]
+    recurring_forms: [echo, route, bell, resonance, shard]
+    ask: "what survives transmission: the message, the path, the listener, or the damage?"
+  }
+
+  &civic_weather{
+    domains: [governance, negotiation, externalities, infrastructure, public_ritual]
+    chambers: [04, 06, 07, 12]
+    recurring_forms: [shared_sky, streetlight, oath_stone, joined_water]
+    ask: "how does a private force become a public condition without losing its cost?"
+  }
+
+  &living_geometry{
+    domains: [ecology, topology, architecture, hydrology, wayfinding]
+    chambers: [02, 03, 10, 11, 12]
+    recurring_forms: [ring, fork, joint, impossible_seam, tributary]
+    ask: "which structures hold because they resist change, and which hold because they keep changing legibly?"
+  }
+
+  &memory_house{
+    domains: [archives, historiography, recursion, interface_design, epistemology]
+    chambers: [05, 08, 09, 13]
+    recurring_forms: [unreconciled_line, reflected_face, listening_map, gapped_shelf]
+    ask: "what must a record omit, expose, or leave open in order to remain trustworthy?"
+  }
+
+  &animal_scale{
+    domains: [animal_perception, phenomenology, accessibility, cinematography, scent_landscape]
+    chambers: [01, 02, 03, 04, 06, 08, 11, 12, 13]
+    recurring_forms: [nose_height, knees, paws, curb, coping, low_bridge, floor]
+    ask: "what becomes important when authority is viewed below its usual eye line?"
+  }
+}
+
+~<"peripheral_field">{
+  .note: "motifs permitted to remain peripheral — notice recurrence before assigning meaning"
+
+  warm_sources: [sun_slats, pollen_ring, sunset_route, weather_seam, page_light,
+                 dent_lantern, noon_oath, well_lantern, falling_shard, backlit_frame,
+                 bent_morning, late_river, archive_door]
+  held_darks: [night_brass, broken_path, long_shadow, squall, hairline_rift,
+               unlit_post, alley, deep_well, dark_house, calm_bones,
+               impossible_joint, unblended_seam, shelf_dusk]
+  witnesses: [Boof_implied, path, town, crowd, water, listeners, builders, bee, river, reader]
+  honest_objects: [scale, ledger, marker, treaty_box, lamp_post, oath_stone,
+                   rope, shard, joint, breakfast_table, splice, open_door]
+
+  invitation: "choose any two lists, notice where they cross, and ask whether that crossing
+               belongs to the chamber, the series, or only this afternoon's imagination"
+}
+
+^"idiomarium"[
+  .note: "repeatable Spw phrases for thinking with the plates — each phrase has a mouth-feel,
+          a construct topology, and a practical use; variation is welcome if polarity holds"
+
+  ^idiom["nose before name"]{
+    phrase: "?scent ~<trace> @(Boof) &[place, memory] *{scene} ^"
+    read: "probe sensation before naming lore; let the low observer merge place with memory;
+           only then collapse a scene and integrate it upward"
+    use: [02, 03, 08, 13]
+  }
+
+  ^idiom["count the light, not the gold"]{
+    phrase: "%[source, reach, witness] @light &[instrument, consequence] *{working_warmth}"
+    read: "measure what illumination does rather than treating gold as palette decoration"
+    use: [01, 04, 05, 06, 07, 13]
+  }
+
+  ^idiom["a line remembers both sides"]{
+    phrase: "~<line> @[before, after] &[division, relation] *{traceable_seam} ^"
+    read: "hold the line in potential; observe its temporal faces; preserve separation and joining together"
+    use: [01, 05, 07, 10, 12]
+  }
+
+  ^idiom["leave the circle a door"]{
+    phrase: "?[ring] ~<return> @(witness) &[recurrence, escape] *{open_circle} ^"
+    read: "repetition becomes canon only when the witness can still depart and return differently"
+    use: [02, 08, 11, 13]
+  }
+
+  ^idiom["ground before glow"]{
+    phrase: "$^[_]@here ?[scene] =canon:true !ground *{promptable} ^"
+    read: "inspect the present shelf; probe for a real scene; bind canon before producing luminous art"
+    use: "every production gate"
+  }
+
+  ^idiom["merge without milk"]{
+    phrase: "&[source_a#, source_b#] @confluence *{joined: true, blended: false} ^provenance"
+    read: "confluence may make a third condition without whitening away either source"
+    use: [04, 12, 13]
+  }
+
+  ^idiom["the dark is holding, not empty"]{
+    phrase: "?absence ~<held_dark> @(patient_eye) &[concealment, incubation] *{pressure}"
+    read: "darkness carries unresolved structure; it is neither blank background nor automatic threat"
+    use: [01, 05, 07, 08, 09, 13]
+  }
+]
+
+^"spirit_walks"[
+  .note: "the six-phase spirit sequence nested at several scales — the same metabolism
+          should be recognizable in a motif, a plate, the series, and its public projection"
+  =sequence: "?~<#.>@(#.)&[#.]*{#.}^"
+
+  ^walk["scene"]{
+    ?probe: "what sensory pressure is actually present?"
+    ~<potential>{ name: "scene germ before explanation" }
+    @perspective: "whose body and height make the pressure legible?"
+    &frame: [vantage, light, scent, edges]
+    *value: { precipitate: hint, status: draft }
+    ^integrate: "accepted scene → chapter JSON"
+  }
+
+  ^walk["plate"]{
+    ?probe: "which grounded scene bears the chamber's threshold?"
+    ~<potential>{ name: "crop-safe visual possibility" }
+    @perspective: "Boof-height under the series laws"
+    &frame: [scene_canon, series_identity, social_crop, alt_voice]
+    *value: { precipitate: "plate-NN-slug-vN.png", status: study }
+    ^integrate: "graduated plate → OG surface + ledger evidence"
+  }
+
+  ^walk["series"]{
+    ?probe: "what recurs strongly enough to become grammar?"
+    ~<potential>{ name: "motif not yet law" }
+    @perspective: "thirteen thresholds viewed as one shelf"
+    &frame: [warm_working_light, held_dark, low_witness, honest_object, open_exit]
+    *value: { precipitate: series_identity, status: revisable_canon }
+    ^integrate: "series law → future chamber and door art"
+  }
+
+  ^walk["projection"]{
+    ?probe: "what survives when a scene leaves its chamber?"
+    ~<potential>{ name: "public intrigue without synopsis" }
+    @perspective: "a stranger encountering a social card out of context"
+    &frame: [image, alt, title, delivery_weight, provenance]
+    *value: { precipitate: share_card, status: public }
+    ^integrate: "public encounter → invitation back into canon"
+  }
+]
+
+^"projected_sheaves"[
+  .note: "each sheaf gathers local chamber-sections around a shared germ; overlaps are
+          explicit, and gluing is allowed only where local meanings agree without flattening"
+
+  ^sheaf["honest_line"]{
+    ~<germ>"a visible line carries an account of what lies on both sides"
+
+    @section[01]{ local: "balance beam / ledger rule"       domain: metrology }
+    @section[05]{ local: "unreconciled hairline"            domain: accounting }
+    @section[07]{ local: "oath groove / private shadow"     domain: contract }
+    @section[10]{ local: "load path / exposed joint"        domain: architecture }
+    @section[12]{ local: "current seam / rope splice"       domain: provenance }
+    @section[13]{ local: "light lane / shelf gap"           domain: archives }
+
+    &overlaps[
+      "01 ∩ 05: a correct-looking account can still carry absence",
+      "07 ∩ 10: a binding is trustworthy when its load remains inspectable",
+      "12 ∩ 13: integration preserves origin by leaving the joining seam readable"
+    ]
+    =glue_condition: "the line never becomes mere ornament"
+    *projection{ image: "traceable seam", story: "accountability", interface: "inspectable boundary" }
+    ^emit: [@the_honest_line, @ledger, @chapter_canon]
+  }
+
+  ^sheaf["listening_world"]{
+    ~<germ>"a signal is partly made by whatever can receive it"
+
+    @section[02]{ local: "echoing pollen rings"       domain: ecology }
+    @section[03]{ local: "routes answering under sand" domain: cartography }
+    @section[06]{ local: "bell naming a dent into light" domain: civic_ritual }
+    @section[08]{ local: "water holding a face mid-name" domain: memory }
+    @section[09]{ local: "shard arcs mapping listeners" domain: broadcast }
+
+    &overlaps[
+      "02 ∩ 03: repetition makes a path before it makes proof",
+      "06 ∩ 08: naming changes what a public medium can hold",
+      "08 ∩ 09: debt and broadcast both reveal the receiver by what persists"
+    ]
+    =glue_condition: "reception remains active, situated, and consequential"
+    *projection{ image: "answering medium", story: "distributed witness", interface: "feedback" }
+    ^emit: [@what_listens, @scene_runtime, @publish]
+  }
+
+  ^sheaf["open_return"]{
+    ~<germ>"a recurring structure stays hospitable by preserving a gap"
+
+    @section[02]{ local: "grove circles broken hearthward" domain: ecology }
+    @section[08]{ local: "water rings that release a face" domain: memory }
+    @section[11]{ local: "stair returning without imprisonment" domain: topology }
+    @section[13]{ local: "shelf rings with deliberate doors" domain: canon }
+
+    &overlaps[
+      "02 ∩ 08: a repetition may keep a trace without owning its source",
+      "11 ∩ 13: recursion becomes usable when an exit remains visible"
+    ]
+    =glue_condition: "return is possible; closure is never total"
+    *projection{ image: "gapped ring", story: "revisitable canon", interface: "dismissible on-ramp" }
+    ^emit: [@circles_that_open, @atelier, @chapter_canon]
+  }
+
+  ^sheaf["low_witness"]{
+    ~<germ>"lowering the observer changes which parts of authority become real"
+
+    @section["body"]{ local: [nose, paw, muzzle, shoulder] domain: animal_perception }
+    @section["institution"]{ local: [scale, council_table, oath_stone, archive] domain: civics }
+    @section["image"]{ local: [foreground_instrument, enlarged_threshold, partial_face] domain: cinematography }
+    @section["interface"]{ local: [reachable_control, visible_exit, progressive_disclosure] domain: accessibility }
+
+    &overlaps[
+      "body ∩ institution: systems become touchable objects with smells and temperatures",
+      "image ∩ interface: low perspective redistributes attention, not merely camera position"
+    ]
+    =glue_condition: "the lowered view changes meaning rather than supplying cuteness"
+    *projection{ image: "dog-height plate", story: "unofficial witness", interface: "authority decentered" }
+    ^emit: [@at_dog_height, @series_identity, @literacy_ladder]
+  }
+]
+
+^"fractal_motifs"[
+  .note: "motifs repeat with difference across nested scales; each level contains the seed
+          of the next, while reduction back inward still recovers the local sensory ground"
+
+  ^motif["gap"]{
+    .[object]{ "empty scale pan | ledger crack | unlit post | shelf opening" }
+    .[scene]{ "the absence that organizes nearby attention" }
+    #[chapter]{ "a chamber's unresolved account" }
+    #[series]{ "the open place through which a reader may enter" }
+    #[world]{ "canon as a promise to remain revisable and inspectable" }
+    %depth: 5
+  }
+
+  ^motif["seam"]{
+    .[object]{ "chalk line | oath groove | timber joint | rope splice" }
+    .[scene]{ "a boundary that bears material consequence" }
+    #[chapter]{ "difference made legible instead of resolved away" }
+    #[series]{ "warm light meeting held dark" }
+    #[world]{ "confluence without amnesia" }
+    %depth: 5
+  }
+
+  ^motif["answer"]{
+    .[object]{ "pollen ring | glowing route | bell-lit dent | falling shard" }
+    .[scene]{ "a medium returning pressure in altered form" }
+    #[chapter]{ "evidence that someone or something listened" }
+    #[series]{ "the image calling back toward prose" }
+    #[world]{ "Lore.Land recording itself through its witnesses" }
+    %depth: 5
+  }
+
+  ^motif["return"]{
+    .[object]{ "circle | reflection | recursive stair | mirrored ledger" }
+    .[scene]{ "recognition arriving with one detail changed" }
+    #[chapter]{ "memory tested by another passage" }
+    #[series]{ "chapter 13 rhyming with chapter 02 without closing it" }
+    #[world]{ "a monument made for revisitation rather than completion" }
+    %depth: 5
+  }
+
+  !probe{
+    ask: "can each extrinsic series claim #[_] be reduced to an intrinsic sensory ground .[_]?"
+    pass_when: "every world-scale reading points back to an object that could be seen, smelled, touched, or heard"
+    on_fail: "remove abstraction or grow a local scene section before projecting the motif outward"
+  }
+]
 
 ^"series_identity"{
   .note: "what makes thirteen different images one shelf — distilled from ch01's lived scenes"
@@ -95,7 +426,7 @@
   study_path: "book/images/plate-01-weighhouse-v1.png"
 }
 
-^"scene_seeds"{
+^"scene_seeds"[
   .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per
           ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
 
@@ -352,19 +683,131 @@
                 the self-showing page is inspectability made literal; the grove's rings return open"
     open: "does the ledger page truly render the room (recursive, bold) or hold only the room's floor plan (quieter)? This is the series' last note — it should rhyme with how loud chamber 11 chose to be."
   }
-}
-
-^"production_order"{
-  .note: "graduate studies in narrative order but unblock the door first"
-  first: "plate 01 (grounded) — proves the series identity against real scene canon"
-  then: "13 (the door open), 07 (strongest single image), 06 (city identity)"
-  rule: "no plate prompts from a seed still marked draft — grounding first, art second"
-  studies: "book/images/plate-NN-{slug}-v{N}.png; graduation clears ledger AL-001 per chapter"
-}
-
-?<open_questions>[
-  "Series: does the seal overprint sit on the art or in a reserved margin band? The plates assume on-art, lower hearthward corner."
-  "Palette: chapters whose mood runs cold (05, 07, 08) still get one warm working light under the light_law — confirm no chamber wants full cold."
-  "Boof's presence: the vantage law implies the dog without showing her. Do any plates earn her actual silhouette, or is implied-witness the stronger series rule?"
-  "Alt text voice: scene-hint compression (sensory) vs logline reuse (narrative) — the seeds assume sensory."
 ]
+
+?"decision_clearings"{
+  .note: "questions arranged by the scale of world they alter; mosey from weather to object
+          before answering — a local choice may reveal itself as a series law"
+
+  ?series_weather[
+    { seal: "overprint on the lower hearthward art, or reserve a margin band?" }
+    { warmth: "does every chamber keep one warm working light, even 05 / 07 / 08?" }
+    { witness: "is Boof always implied by height, or does one plate earn her silhouette?" }
+    { alt_voice: "sensory scene compression, narrative logline, or a deliberate braid?" }
+  ]
+
+  ?material_physics[
+    { 02: "does the grove repeat sound alone, or also scent and light?" }
+    { 03: "are old routes sun-gold, boonberry-blue, or visible only at their crossings?" }
+    { 05: "is the rift pigment, glow, crack, or pure absence?" }
+    { 06: "does a bell truly light civic lamps, or is that only plate-poetry?" }
+    { 09: "are Honks sound made solid, signal-glass, or a third local material?" }
+    { 10: "is the great frame timber, bone, or a construction that confuses the distinction?" }
+  ]
+
+  ?social_choreography[
+    { 04: "does council stand in urgency or sit in duration?" }
+    { 07: "how far may the private shadow depart from the public body before dread becomes horror?" }
+    { 08: "does the Watering Eye remember Boof before the prose admits she has visited?" }
+    { 12: "may waters enter the image before their cultures have named them?" }
+  ]
+
+  ?impossible_volume[
+    { 11: "is the stair impossible at first glance or only after trust has formed?" }
+    { 13: "does the ledger contain the room as image, plan, index, or recursive aperture?" }
+    { rhyme: "how should 11's impossible seam teach the eye to read 13's inspectable recursion?" }
+  ]
+}
+
+@"mosey_routes"{
+  .note: "suggested walks; stop wherever a relation becomes more interesting than the destination"
+
+  @"the_honest_line"{
+    path: "01 scale → 05 fracture → 07 groove → 10 joint → 12 splice → 13 open ledger"
+    domains: [measurement, accounting, contract, structural_engineering, provenance, archives]
+    carry: "a line can divide, bear load, bind parties, preserve origins, or invite inspection"
+  }
+
+  @"what_listens"{
+    path: "02 echo → 03 answering route → 06 bell → 08 named debt → 09 receiver map"
+    domains: [ecology, cartography, acoustics, memory, networks]
+    carry: "treat reception as an active force rather than the passive end of a signal"
+  }
+
+  @"public_light"{
+    path: "01 count-light → 04 weather seam → 06 dent-light → 07 hard noon → 13 open door"
+    domains: [audit, governance, repair, ritual, transparency]
+    carry: "illumination is never neutral here; ask who maintains it and what it makes payable"
+  }
+
+  @"circles_that_open"{
+    path: "02 grove rings → 08 water rings → 11 returning stair → 13 shelf rings with gaps"
+    domains: [recurrence, memory, topology, canon]
+    carry: "repetition becomes hospitable when it preserves an exit"
+  }
+
+  @"at_dog_height"{
+    path: "choose any chamber; lower the observer until institutions become objects, scents, and thresholds"
+    domains: [phenomenology, accessibility, animal_studies, camera_language]
+    carry: "Boof's height is not a gimmick; it is the series' critique of official perspective"
+  }
+}
+
+!"canon_gates"[
+  .note: "the only linear portion of the terrain — gates protect imaginative draft from
+          becoming accidental fact, and protect finished art from becoming detached decoration"
+  .state_tracking: "gate state per chamber is machine-checkable in @spw/state/plates-manifest.spw
+                     (!state field: draft|grounded|study|public) — fire a gate here, then update
+                     the matching ^chamber[NN] record; verify with npm run spw:plates -- --check"
+
+  !ground_scene{
+    enter_when: "a seed's decision clearing has enough language to commit"
+    action: "copy the accepted scene into an appropriate section of book/content/chapters/NN.json"
+    mark: "change that seed status from draft to grounded"
+    verify: "rerun spw:export; chapter JSON remains prose source of truth"
+  }
+
+  !make_study{
+    enter_when: "status is grounded — never prompt directly from a draft seed"
+    action: "render 1200x630, center 1000x524 crop-safe, without words in the art"
+    naming: "book/images/plate-NN-{slug}-v{N}.png"
+    order: [01, 13, 07, 06, "02-05", "08-12"]
+  }
+
+  !graduate_plate{
+    enter_when: "series identity holds and the image survives social crop"
+    action: "replace interim OG art; write sensory alt; preserve the versioned study"
+    verify: ["og:image:alt present", "image weight over current 100KB quality floor", "alignment probes pass"]
+    precipitate: "clear the chapter's share of alignment-ledger AL-001"
+  }
+]
+
+&"neighboring_surfaces"{
+  .note: "paths out of this document — plates are where prose, interface, publishing,
+          and world law briefly occupy the same rectangle"
+
+  &atelier{
+    href: ".spw/surfaces/atelier.spw#media_production"
+    relation: "owns refinement passes, study graduation, and material quality"
+  }
+  &chapter_canon{
+    href: "book/content/chapters/*.json"
+    relation: "owns what truly happened; this surface may propose but cannot legislate alone"
+  }
+  &platform{
+    href: ".spw/surfaces/platform.spw#phase.04"
+    relation: "carries plates into OG/Twitter metadata, crop behavior, weight, and delivery"
+  }
+  &ledger{
+    href: ".spw/state/alignment-ledger.spw#AL-001"
+    relation: "records the material gap between narrative promise and current share art"
+  }
+  &publish{
+    href: ".spw/surfaces/publish.spw#social_projection"
+    relation: "asks how a held scene becomes public intrigue without becoming advertisement"
+  }
+  &scene_runtime{
+    href: "book/scripts/script.mjs#createSceneSketch"
+    relation: "turns vantage / light / scent / edges / hint into inspectable reading affordance"
+  }
+}

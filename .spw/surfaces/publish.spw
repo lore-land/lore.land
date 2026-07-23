@@ -36,29 +36,29 @@
 }
 
 ^"publishing_pipeline"{
-  default: {
+  default: [
     select: { query: "$^[\"_\"]@spw/chapters" }
     transform: { surface: "chapter_html" }
     validate: { checks: ["no-broken-refs", "no-empty-frames"] }
     emit: { target: "dist/publish/chapters/", format: "html" }
-  }
+  ]
 
-  canon: {
+  canon: [
     select: { query: "$^[\"_\"]@spw" }
     transform: { surface: "canon_markdown" }
     validate: { checks: ["well-formed-markdown"] }
     emit: { target: "dist/publish/canon/", format: "markdown" }
-  }
+  ]
 
-  runtime: {
+  runtime: [
     select: { query: "$^[\"runtime\"]@spw/runtime" }
     transform: { surface: "runtime_json" }
     validate: { checks: ["valid-json"] }
     emit: { target: "dist/publish/runtime/", format: "json" }
-  }
+  ]
 
   # Monument production ship (GitHub Pages / Vite dist) — platform surface owns details.
-  monument: {
+  monument: [
     select: {
       sources: [
         "book/content/chapters/*.json",
@@ -110,10 +110,10 @@
       formats: ["html", "css", "js", "webmanifest"],
       also: ["sitemap.xml", "robots.txt", "sw.js", "dist/.spw/**"]
     }
-  }
+  ]
 
   # Public Spw projection — make claim hydration + walkable ethos refs honest on Pages.
-  spw_public: {
+  spw_public: [
     select: {
       allowlist_trees: [
         "index.spw",
@@ -158,7 +158,7 @@
       also: ["dist/.spw/public-manifest.json", "dist/.spw/README.txt"]
       public_url_prefix: "/.spw/"
     }
-  }
+  ]
 }
 
 ^"spw_public_projection"{

@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: build (chapters:build -> spw:export -> vite build -> spw:project -> dist:static)
+        run: npm run build
+
+      - name: dist:verify (shell assets + public .spw allowlist)
+        run: npm run dist:verify
+
+      - name: spw:probes (report only — known-open findings stay review-class, see .spw/state/plates-manifest.spw)
+        run: npm run spw:probes

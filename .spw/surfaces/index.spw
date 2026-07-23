@@ -4,18 +4,18 @@
 #:layer #!pragmatics
 
 ^"surfaces"{
-  publish: "@spw/surfaces/publish.spw"
-  plugin_protocol: "@spw/surfaces/plugin-protocol.spw"
-  domains: "@spw/surfaces/domains.spw"
-  editorial: "@spw/surfaces/editorial.spw"
-  platform: "@spw/surfaces/platform.spw"
-  atelier: "@spw/surfaces/atelier.spw"
-  plates: "@spw/surfaces/plates.spw"
+  &publish: "@spw/surfaces/publish.spw"
+  &plugin_protocol: "@spw/surfaces/plugin-protocol.spw"
+  &domains: "@spw/surfaces/domains.spw"
+  &editorial: "@spw/surfaces/editorial.spw"
+  &platform: "@spw/surfaces/platform.spw"
+  &atelier: "@spw/surfaces/atelier.spw"
+  &plates: "@spw/surfaces/plates.spw"
 }
 
 ^"audits"{
-  platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
-  alignment_probes: "@spw/audits/alignment-probes-2026-07-17.spw (rerunnable: npm run spw:probes)"
+  &platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+  &alignment_probes: "@spw/audits/alignment-probes-2026-07-22.spw (rerunnable: npm run spw:probes)"
 }
 
 ^"output_formats"{
@@ -29,12 +29,12 @@
   capture: { mime: "video/webm", extension: ".webm", use_case: "signature-moment motion captures incl. reduced-motion cut" }
 }
 
-^"pipeline_stages"{
-  select: { input: "selector", output: "matched frames" }
-  transform: { input: "frames", output: "rendered artifacts" }
-  validate: { input: "artifacts", output: "validated artifacts" }
-  emit: { input: "validated artifacts", output: "publish targets" }
-}
+^"pipeline_stages"[
+  select:    { input: "selector",           output: "matched frames" }
+  transform: { input: "frames",             output: "rendered artifacts" }
+  validate:  { input: "artifacts",          output: "validated artifacts" }
+  emit:      { input: "validated artifacts", output: "publish targets" }
+]
 
 ^"lifecycle_stage_aliases"{
   boon: "select"

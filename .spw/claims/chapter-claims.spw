@@ -22,116 +22,116 @@
 
 ^claim_chain{
   grammar: {
-    claim_id: "lore-c001-brace-symmetry"
-    layer: "grammar"
+    #claim_id: "lore-c001-brace-symmetry"
+    #layer: "grammar"
     hypothesis: "L/R brace anchors and section handles remain symmetrically explorable and legible in plain text."
     measure: "Handle traversal and selection parity in chapter controls; prefix/postfix readability."
     falsification: "Asymmetry drift over 15% between left and right traversals, or handles require hidden UI context."
-    spec_ref: ".spw/surfaces/publish.spw#projection_rules"
-    impl_ref: "book/scripts/modules/spw-interactions.mjs"
-    probe_ref: "lore:spw-selection + ebook handle inspector"
-    alt_spec: ".spw/_workbench/.spw/surfaces/publish.spw#projection_rules"
+    &spec_ref: ".spw/surfaces/publish.spw#projection_rules"
+    &impl_ref: "book/scripts/modules/spw-interactions.mjs"
+    &probe_ref: "lore:spw-selection + ebook handle inspector"
+    &alt_spec: ".spw/_workbench/.spw/surfaces/publish.spw#projection_rules"
   }
 
   semantics: {
-    claim_id: "lore-c002-accessor-polarity"
-    layer: "semantics"
+    #claim_id: "lore-c002-accessor-polarity"
+    #layer: "semantics"
     hypothesis: "# and . keep readable projection/ground polarity; route and register sigils preserve perspective across chapter/home."
     measure: "Interpretability of route and register handles by layer."
     falsification: "Less than 70% role clarity in mixed route contexts."
-    spec_ref: ".spw/runtime/precipitates.spw#stages"
-    impl_ref: "book/scripts/modules/ebook-navigation.mjs"
-    probe_ref: "lore:spw-selection + concept routes + payload readout"
-    alt_spec: ".spw/_workbench/.spw/runtime/precipitates.spw#stages"
+    &spec_ref: ".spw/runtime/precipitates.spw#stages"
+    &impl_ref: "book/scripts/modules/ebook-navigation.mjs"
+    &probe_ref: "lore:spw-selection + concept routes + payload readout"
+    &alt_spec: ".spw/_workbench/.spw/runtime/precipitates.spw#stages"
   }
 
   pragmatics: {
-    claim_id: "lore-c003-plain-text-legibility"
-    layer: "pragmatics"
+    #claim_id: "lore-c003-plain-text-legibility"
+    #layer: "pragmatics"
     hypothesis: "Raw Spw expressions and chapter .spw mirrors stay legible enough to extend story without custom renderers — only if mirrors match prose SoT."
     measure: "Reader can infer intent from visible route/claim expressions; .spw/chapters title matches JSON."
     falsification: "More than 20% of chapter expressions require hidden UI context, or chapter .spw lag live JSON (workspace c001 fail)."
-    spec_ref: ".spw/state/observable.spw"
-    impl_ref: "book/content/chapters/*.json + .spw/chapters/*.spw + export-chapters.mjs"
-    probe_ref: "title diff JSON vs .spw/chapters + section navigation"
-    depends_on: "workspace c001"
+    &spec_ref: ".spw/state/observable.spw"
+    &impl_ref: "book/content/chapters/*.json + .spw/chapters/*.spw + export-chapters.mjs"
+    &probe_ref: "title diff JSON vs .spw/chapters + section navigation"
+    &depends_on: "workspace c001"
   }
 
   pipeline: {
-    claim_id: "lore-c004-pipeline-alignment"
-    layer: "semantics"
+    #claim_id: "lore-c004-pipeline-alignment"
+    #layer: "semantics"
     hypothesis: "Load lifecycle labels map clearly to select-transform-validate-emit semantics."
     measure: "Status text keeps a stable mapping between load and runtime stages."
     falsification: "Readers cannot infer stage intent from on-screen stage labels."
-    spec_ref: ".spw/surfaces/index.spw#pipeline_stages"
-    impl_ref: "book/scripts/modules/load-lifecycle.mjs + book/scripts/home/app.mjs"
-    probe_ref: "data-load-stage and runtime status chips"
+    &spec_ref: ".spw/surfaces/index.spw#pipeline_stages"
+    &impl_ref: "book/scripts/modules/load-lifecycle.mjs + book/scripts/home/app.mjs"
+    &probe_ref: "data-load-stage and runtime status chips"
   }
 
   platform: {
-    claim_id: "lore-c005-offline-honesty"
-    layer: "pragmatics"
+    #claim_id: "lore-c005-offline-honesty"
+    #layer: "pragmatics"
     hypothesis: "PWA offline surface never promises chapters or assets that were not precached or previously visited."
     measure: "Offline copy + SW precache list match; install does not 404 fixture paths."
     falsification: "Install precache fails, or offline.html claims cached chambers without seed."
-    spec_ref: ".spw/surfaces/platform.spw#domain.pwa"
-    impl_ref: "sw.js + book/pwa/offline.html"
-    probe_ref: "airplane mode after install + after visit ch01"
+    &spec_ref: ".spw/surfaces/platform.spw#domain.pwa"
+    &impl_ref: "sw.js + book/pwa/offline.html"
+    &probe_ref: "airplane mode after install + after visit ch01"
   }
 
   social: {
-    claim_id: "lore-c006-share-intrigue"
-    layer: "pragmatics"
+    #claim_id: "lore-c006-share-intrigue"
+    #layer: "pragmatics"
     hypothesis: "Every public monument URL packages a non-blank share card with logline-quality description."
     measure: "OG + Twitter summary_large_image present; og:image is real art not empty plate."
     falsification: "Shared chapter or door shows blank/grey card or missing description."
-    spec_ref: ".spw/surfaces/publish.spw#social_projection"
-    impl_ref: "book/templates/chapter.html + monument HTML heads"
-    probe_ref: "manual share debugger on /, /book/chapter/01/, /zine/, /topics/"
+    &spec_ref: ".spw/surfaces/publish.spw#social_projection"
+    &impl_ref: "book/templates/chapter.html + monument HTML heads"
+    &probe_ref: "manual share debugger on /, /book/chapter/01/, /zine/, /topics/"
   }
 
   wonder: {
-    claim_id: "lore-c007-earned-wonder"
-    layer: "pragmatics"
+    #claim_id: "lore-c007-earned-wonder"
+    #layer: "pragmatics"
     hypothesis: "Signature moments impress a seen-the-web audience while degrading to calm reading under reduced-motion, no-JS, and print."
     measure: "Each wonder_budget signature has an @supports + reduced-motion gate and a verified calm cut."
     falsification: "Any signature moment breaks reading when its gate closes, or ships while carrying an open defect-class ledger entry."
-    spec_ref: ".spw/surfaces/atelier.spw#wonder_budget"
-    impl_ref: "book/styles/home/atmosphere.css + book/styles/chapter/motion.css + ebook-navigation.mjs"
-    probe_ref: "reduced-motion parity + print parity ledger probes"
+    &spec_ref: ".spw/surfaces/atelier.spw#wonder_budget"
+    &impl_ref: "book/styles/home/atmosphere.css + book/styles/chapter/motion.css + ebook-navigation.mjs"
+    &probe_ref: "reduced-motion parity + print parity ledger probes"
   }
 
   alignment: {
-    claim_id: "lore-c008-accounted-alignment"
-    layer: "pragmatics"
+    #claim_id: "lore-c008-accounted-alignment"
+    #layer: "pragmatics"
     hypothesis: "Every noticed misalignment — geometric, temporal, material, linguistic, canonical — resolves to a fix or a declared intention."
     measure: "Ledger entries carry class + why; complaints route to counters instead of silence."
     falsification: "A reader-reported gap has no ledger entry, or an intentional entry lacks its recorded why."
-    spec_ref: ".spw/state/alignment-ledger.spw"
-    impl_ref: ".spw/surfaces/atelier.spw#alignment_ledger + PLAN.B diagnostics engine"
-    probe_ref: "complaint_route flow + five ledger probes on changed surfaces"
+    &spec_ref: ".spw/state/alignment-ledger.spw"
+    &impl_ref: ".spw/surfaces/atelier.spw#alignment_ledger + PLAN.B diagnostics engine"
+    &probe_ref: "complaint_route flow + five ledger probes on changed surfaces"
   }
 
   literacy: {
-    claim_id: "lore-c009-literacy-ladder"
-    layer: "semantics"
+    #claim_id: "lore-c009-literacy-ladder"
+    #layer: "semantics"
     hypothesis: "A reader can climb read → notice → explore → operate → inspect → author, each rung learnable from the one below, none forced."
     measure: "Every rung has a visible, dismissible on-ramp on the rung below; adventure register unchanged when all invitations are dismissed."
     falsification: "A rung requires outside documentation to enter, or an on-ramp blocks or lectures the story."
-    spec_ref: ".spw/surfaces/atelier.spw#literacy_ladder"
-    impl_ref: "language-exploration.mjs + spw-interactions.mjs + spw-ethos.mjs + editorial desk (planned)"
-    probe_ref: "rung walk-through with all invitations dismissed vs accepted"
+    &spec_ref: ".spw/surfaces/atelier.spw#literacy_ladder"
+    &impl_ref: "language-exploration.mjs + spw-interactions.mjs + spw-ethos.mjs + editorial desk (planned)"
+    &probe_ref: "rung walk-through with all invitations dismissed vs accepted"
   }
 
   internals: {
-    claim_id: "lore-c010-honest-internals"
-    layer: "pragmatics"
+    #claim_id: "lore-c010-honest-internals"
+    #layer: "pragmatics"
     hypothesis: "Internals shown to the craftsperson — stages, probes, sigil grammar — are the real runtime machinery, walkable back to canon."
     measure: "Status chips map to live pipeline stages; ethos rows resolve to .spw sources; view-source reads as authored."
     falsification: "Any displayed internal is simulated, or a probe chain row dead-ends without a resolvable ref."
-    spec_ref: ".spw/surfaces/atelier.spw#internals_awareness"
-    impl_ref: ".spw/runtime/precipitates.spw bindings + spw-ethos.mjs"
-    probe_ref: "skeptical devtools session: stage chips vs load-lifecycle events; ethos href walk"
+    &spec_ref: ".spw/surfaces/atelier.spw#internals_awareness"
+    &impl_ref: ".spw/runtime/precipitates.spw bindings + spw-ethos.mjs"
+    &probe_ref: "skeptical devtools session: stage chips vs load-lifecycle events; ethos href walk"
   }
 }
 

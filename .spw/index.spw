@@ -7,7 +7,7 @@
   purpose: "Long-form Spw references for chapter extension, storytelling semantics, and platform ship direction."
   ethos_bridge: "book/scripts/modules/spw-ethos.mjs"
   prose_sot: "book/content/chapters/*.json"
-  audit_active: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+  audit_active: "@spw/audits/alignment-probes-2026-07-22.spw"
 }
 
 &surfaces{
@@ -45,12 +45,10 @@
 }
 
 ~direction{
-  from_audit: "2026-07-16 platform ship audit"
+  from_audit: "2026-07-22 alignment probes (supersedes 2026-07-16 platform ship audit — all four prior order items shipped: 8e8dd8e, 29f8045, 76dec8e)"
   order: [
-    "rewrite service worker shell",
-    "regenerate chapter .spw mirrors from JSON",
-    "social meta + real OG art",
-    "complete Vite public entries + sitemap"
+    "raise plate (og:image) weight above the 100KB atelier-phase-02 floor — all 13 chapter plates currently 6-27KB (AL-001, plate_weight)",
+    "resolve theme_parity review: cosmos-only tokens in core/tokens.css — confirm intentional or backfill ember equivalents"
   ]
   keep: [
     "progressive enhancement",

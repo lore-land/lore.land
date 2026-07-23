@@ -33,29 +33,29 @@
 }
 
 ^"bindings"{
-  runtime_ui: "book/scripts/modules/spw-interactions.mjs"
-  ethos_ui: "book/scripts/modules/spw-ethos.mjs"
-  home_lifecycle: "book/scripts/home/app.mjs"
-  chapter_lifecycle: "book/scripts/script.mjs"
-  platform_shell: "sw.js + book/scripts/modules/experience-core.mjs#registerStoryServiceWorker"
-  platform_plan: ".spw/surfaces/platform.spw"
+  &runtime_ui: "book/scripts/modules/spw-interactions.mjs"
+  &ethos_ui: "book/scripts/modules/spw-ethos.mjs"
+  &home_lifecycle: "book/scripts/home/app.mjs"
+  &chapter_lifecycle: "book/scripts/script.mjs"
+  &platform_shell: "sw.js + book/scripts/modules/experience-core.mjs#registerStoryServiceWorker"
+  &platform_plan: ".spw/surfaces/platform.spw"
 }
 
 ^"ship_precipitates"{
   .note: "artifacts that must fall out of a set-stone ship — complements stage precipitates"
-  chapter_html: "book/chapter/*/index.html"
-  chapter_spw_mirror: ".spw/chapters/*.spw"
-  dist: "dist/"
-  offline_shell: "book/pwa/offline.html (precache + dist)"
-  share_cards: "OG+Twitter meta on every public URL"
-  audit_ref: ".spw/audits/platform-ship-audit-2026-07-16.spw"
+  &chapter_html: "book/chapter/*/index.html"
+  &chapter_spw_mirror: ".spw/chapters/*.spw"
+  &dist: "dist/"
+  &offline_shell: "book/pwa/offline.html (precache + dist)"
+  &share_cards: "OG+Twitter meta on every public URL"
+  &audit_ref: ".spw/audits/platform-ship-audit-2026-07-16.spw"
 }
 
 ^"refinement_precipitates"{
   .note: "pass-based craft artifacts — see .spw/surfaces/atelier.spw#refinement_model"
-  study: "book/images/{name}-v{N}.png — iterative material/wonder studies"
-  plate: "graduated study serving as OG art (clears alignment ledger first)"
-  ledger_entries: ".spw/state/alignment-ledger.spw entries filed per pass"
-  capture: "signature-moment GIF/WebM including the reduced-motion cut"
-  probe_results: "five ledger probes recorded against each changed surface — scriptable half via npm run spw:probes → .spw/audits/alignment-probes-*.spw"
+  &study: "book/images/{name}-v{N}.png — iterative material/wonder studies"
+  &plate: "graduated study serving as OG art (clears alignment ledger first)"
+  &ledger_entries: ".spw/state/alignment-ledger.spw entries filed per pass"
+  &capture: "signature-moment GIF/WebM including the reduced-motion cut"
+  &probe_results: "five ledger probes recorded against each changed surface — scriptable half via npm run spw:probes → .spw/audits/alignment-probes-*.spw"
 }

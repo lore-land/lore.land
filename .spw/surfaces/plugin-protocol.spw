@@ -25,7 +25,7 @@
 ^"lifecycle"{
   discovery: "scan .spw/surfaces/plugins/*.spw"
   validation: "verify selectors and output format"
-  execution: "select -> transform -> emit"
+  execution: ["select", "transform", "emit"]
   composition: "explicit chaining only"
 }
 
@@ -35,7 +35,7 @@
   p03: "Backward compatibility of chapter references is required."
 }
 
-^"seed_plugins"{
+^"seed_plugins"[
   "spw-wonder-rss": {
     selectors: ["$?[\"_\"]@spw/chapters"]
     output: "rss"
@@ -46,4 +46,4 @@
     output: "markdown"
     status: "planned"
   }
-}
+]

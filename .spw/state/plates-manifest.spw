@@ -1,0 +1,31 @@
+# Lore.Land Plate Production Manifest
+# Machine-checkable gate state for the thirteen chapter plates — companion to
+# .spw/surfaces/plates.spw (the drafting table, prose) and
+# .spw/state/alignment-ledger.spw#AL-001 (the complaint this closes).
+# Read by .spw/tools/plates-manifest.mjs and .spw/tools/alignment-probes.mjs;
+# written by hand as gates fire (!ground_scene, !make_study, !graduate_plate).
+#>lore_land_plates_manifest
+#:state #!ledger
+
+~"gate_vocabulary"{
+  draft: "scene-seed drafted in plates.spw; not yet copied into chapter JSON"
+  grounded: "scene landed in chapter JSON (!ground_scene fired); plate not yet re-rendered from it"
+  study: "rendered per !make_study naming (plate-NN-slug-vN.png); not yet graduated"
+  public: "graduated (!graduate_plate fired) — replaces interim OG art, clears its AL-001 share"
+}
+
+^"plates_manifest"[
+  ^chamber[01]{ #slug:"dawn-in-boonland"           !state:grounded %version:0 .file:"book/images/01.png" &ledger:"AL-001" }
+  ^chamber[02]{ #slug:"the-first-echo"             !state:draft    %version:0 .file:"book/images/02.png" &ledger:"AL-001" }
+  ^chamber[03]{ #slug:"signals-in-the-sand"        !state:draft    %version:0 .file:"book/images/03.png" &ledger:"AL-001" }
+  ^chamber[04]{ #slug:"crosswind-council"          !state:draft    %version:0 .file:"book/images/04.png" &ledger:"AL-001" }
+  ^chamber[05]{ #slug:"the-quiet-rift"             !state:draft    %version:0 .file:"book/images/05.png" &ledger:"AL-001" }
+  ^chamber[06]{ #slug:"lanterns-of-bonk-city"      !state:draft    %version:0 .file:"book/images/06.png" &ledger:"AL-001" }
+  ^chamber[07]{ #slug:"blueberry-oath"             !state:draft    %version:0 .file:"book/images/07.png" &ledger:"AL-001" }
+  ^chamber[08]{ #slug:"songs-of-the-watering-eye"  !state:draft    %version:0 .file:"book/images/08.png" &ledger:"AL-001" }
+  ^chamber[09]{ #slug:"shards-of-nine-honks"       !state:draft    %version:0 .file:"book/images/09.png" &ledger:"AL-001" }
+  ^chamber[10]{ #slug:"boneland-resonance"         !state:draft    %version:0 .file:"book/images/10.png" &ledger:"AL-001" }
+  ^chamber[11]{ #slug:"paradox-bloom"              !state:draft    %version:0 .file:"book/images/11.png" &ledger:"AL-001" }
+  ^chamber[12]{ #slug:"the-last-confluence"        !state:draft    %version:0 .file:"book/images/12.png" &ledger:"AL-001" }
+  ^chamber[13]{ #slug:"loreland-canon"             !state:draft    %version:0 .file:"book/images/13.png" &ledger:"AL-001" }
+]

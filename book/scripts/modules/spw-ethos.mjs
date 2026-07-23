@@ -191,14 +191,17 @@ function extractClaimChainBody(source) {
 }
 
 /* Parses the ^claim_chain block of chapter-claims.spw: flat named blocks of
-   single-line `key: "value"` pairs, one claim per claim_id encountered. */
+   single-line `key: "value"` pairs, one claim per claim_id encountered.
+   A leading operator sigil on the key (e.g. `&spec_ref: "..."`) is accepted
+   and ignored for parsing — it's a legibility annotation on the canon source
+   (per OPERATOR_ROLES), not a distinct field name. */
 export function parseClaimChain(text) {
   const body = extractClaimChainBody(text);
   const claims = [];
   let current = null;
 
   for (const line of body.split('\n')) {
-    const pair = line.match(/^\s*([a-z_]+):\s*"([^"]*)"\s*$/i);
+    const pair = line.match(/^\s*[!#.%&^~@*=$]?([a-z_]+):\s*"([^"]*)"\s*$/i);
     if (!pair) {
       continue;
     }

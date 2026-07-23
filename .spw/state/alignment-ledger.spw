@@ -17,136 +17,139 @@
 
 ^"entry_schema"{
   id: "AL-NNN — stable, never reused"
-  axis: "geometric | temporal | material | linguistic | canonical"
+  #axis: "geometric | temporal | material | linguistic | canonical"
   surface: "where the gap shows (route, module, asset)"
   evidence: "what was observed — measurable where possible"
-  class: "defect | intentional"
+  !class: "defect | intentional"
   why: "required when intentional — the recorded reason the deviation stands"
   watch: "optional condition under which an intentional entry gets revisited"
   resolution: "fix ref, or open"
-  source: "self-audit | probe | complaint | audit-YYYY-MM-DD"
+  &source: "self-audit | probe | complaint | audit-YYYY-MM-DD"
 }
 
 ^"entries"{
 
   ^entry[AL-001]{
-    axis: material
+    #axis: material
     surface: "book/images/01.png … 13.png (chapter og:image)"
     evidence: "1600x900 plates at ~6–28KB — near-empty shells behind strong loglines"
-    class: defect
-    resolution: "open — atelier phase 02 plate production; platform phase 04"
-    source: "audit-2026-07-16#chapter-og-images-empty"
+    !class: defect
+    resolution: "open — atelier phase 02 plate production; platform phase 04.
+                 gate state now tracked per chamber in @spw/state/plates-manifest.spw;
+                 clears per-chamber as !graduate_plate fires (state -> public) and
+                 npm run spw:plates -- --check passes at the 100KB floor"
+    &source: "audit-2026-07-16#chapter-og-images-empty; spw:probes plate_weight (now review-class per chamber pending manifest state)"
   }
 
   ^entry[AL-002]{
-    axis: linguistic
+    #axis: linguistic
     surface: "sw.js + book/pwa/offline.html"
     evidence: "precache lists fixture CSS that no longer exists; offline copy implies a shell the cache cannot honor"
-    class: defect
+    !class: defect
     resolution: "fixed 2026-07-18 — precache is exactly offline.html (self-contained inline styles); CACHE_VERSION tracks release token 2026_07_18.A"
-    source: "audit-2026-07-16#sw-precache-broken"
+    &source: "audit-2026-07-16#sw-precache-broken"
   }
 
   ^entry[AL-003]{
-    axis: canonical
+    #axis: canonical
     surface: ".spw/chapters/*.spw vs book/content/chapters/*.json"
     evidence: "ch01 mirror title 'Boof and the Boonberry Fool' vs live 'Dawn in Boon.land'"
-    class: defect
+    !class: defect
     resolution: "fixed 2026-07-17 — spw:export regenerated in build chain; probe canonical_mirror holds it (13/13 titles match)"
-    source: "audit-2026-07-16#chapter-spw-lag"
+    &source: "audit-2026-07-16#chapter-spw-lag"
   }
 
   ^entry[AL-004]{
-    axis: temporal
+    #axis: temporal
     surface: "JetBrains Mono via jsDelivr, no font-display"
     evidence: "FOIT/FOUT window on rail chrome; extra RTT before settled type"
-    class: defect
+    !class: defect
     resolution: "open — platform phase 08 fonts + perf"
-    source: "audit-2026-07-16#fonts-cdn"
+    &source: "audit-2026-07-16#fonts-cdn"
   }
 
   ^entry[AL-005]{
-    axis: geometric
+    #axis: geometric
     surface: "book/scripts/modules/chapter-sigil.mjs shadow roots"
     evidence: "inspector styles are a hand-copied mirror of components/interactive.css — the two can drift"
-    class: intentional
+    !class: intentional
     why: "document stylesheets cannot reach shadow content; the mirror keeps sigil inspection legible until PLAN.C's encapsulation audit decides a shared strategy (::part, constructable sheets, or retirement)"
     watch: "any edit to components/interactive.css must touch the sigil mirror in the same change"
     resolution: "standing — revisit at PLAN.C shadow-dom phase 02"
-    source: "audit-2026-07-16 (css_api_inventory: customElements + Shadow DOM)"
+    &source: "audit-2026-07-16 (css_api_inventory: customElements + Shadow DOM)"
   }
 
   ^entry[AL-006]{
-    axis: material
+    #axis: material
     surface: "monument doors without OG blocks (topics, scriptorium, boof, civic-magic, boonberry)"
     evidence: "share renders text-only or blank; intrigue uneven across doors"
-    class: defect
+    !class: defect
     resolution: "meta fixed 2026-07-18 — full OG + twitter:card on all doors, zine, hub, chapters; interim card art is the monument hero until plates graduate (.spw/surfaces/plates.spw); unique-art half stays open under AL-001"
-    source: "audit-2026-07-16#social-meta-uneven"
+    &source: "audit-2026-07-16#social-meta-uneven"
   }
 
   ^entry[AL-007]{
-    axis: temporal
+    #axis: temporal
     surface: "chapter/typography.css, core/layers.css, frames/0.css, frames/1.css, home/hero.css, home/motion.css"
     evidence: "six CSS files declare @keyframes or animation-timeline with no prefers-reduced-motion gate in-file — the calm cut for those motions is unverifiable (lore-c007)"
-    class: defect
+    !class: defect
     resolution: "fixed 2026-07-18 — media gates added to typography.css, frames/0-1.css, home/motion.css; layers.css + hero.css were probe false positives (comment text), probe now strips comments"
     correction: "first write-up here claimed html[data-reduced-motion] was never set — wrong; bootstrapExperience sets it at boot. Real gaps were narrower: no change listener (stale after an OS preference flip) and no coverage before JS. Fixed by a live matchMedia listener in experience-core plus the in-file media gates."
-    source: "probe-2026-07-17#reduced_motion_gates"
+    &source: "probe-2026-07-17#reduced_motion_gates"
   }
 
   ^entry[AL-008]{
-    axis: material
+    #axis: material
     surface: "book/styles/core/tokens.css theme blocks"
     evidence: "cosmos defined --text-color-content, --border-color-main, --shadow-main, --shadow-hover; ember inherited base values for the same keys — asymmetric key sets were a theme-switch seam candidate"
-    class: intentional
+    !class: intentional
     why: "ember reads correctly on the light base values; cosmos must override them for dark contrast."
     watch: "any edit to the base values of those four keys must re-check ember rendering"
     resolution: "closed 2026-07-18 — contrast pass gives ember explicit text-content/border/shadow parity; probe theme_parity remains review when keys diverge again"
-    source: "probe-2026-07-17#theme_parity"
+    &source: "probe-2026-07-17#theme_parity"
   }
 
   ^entry[AL-011]{
-    axis: material
+    #axis: material
     surface: "tokens.css + hub.css gold/hearth + focus"
     evidence: "decorative gold (#c4922e) and hearth (#b0602a) failed AA as text on paper; focus #b0602a and offline accent #8b7662 also under 4.5:1"
-    class: defect
+    !class: defect
     resolution: "fixed 2026-07-18 — gold-ink/hearth-ink tokens for text; focus #8a3f12; offline #6a5848; accent deepened to #246270; material palette defined"
-    source: "contrast-pass-2026-07-18"
+    &source: "contrast-pass-2026-07-18"
   }
 
   ^entry[AL-009]{
-    axis: canonical
+    #axis: canonical
     surface: "book/styles/frames/0.css, book/styles/frames/1.css"
     evidence: "stylesheets linked by no page and imported by nowhere; their body[data-frame|data-motif|data-trope|data-foreshadow] selectors were orphans"
-    class: defect
+    !class: defect
     resolution: "removed 2026-07-18 — legacy pre-monument book frames; probe attribute_parity now guards this class of drift"
-    source: "probe-2026-07-18#attribute_parity"
+    &source: "probe-2026-07-18#attribute_parity"
   }
 
   ^entry[AL-010]{
-    axis: canonical
+    #axis: canonical
     surface: "book/styles/components/motifs.css [data-motif]/[data-trope]/[data-foreshadow]"
     evidence: "attribute styling with no setter — live marking uses mark[data-theme] via language-exploration.mjs"
-    class: intentional
+    !class: intentional
     why: "these are the authoring vocabulary for hand-marked prose spans (motif/trope/foreshadow are core narrative concepts); kept as a declared content-annotation hook until chapter JSON either adopts or formally retires them"
     watch: "if two more probe runs pass with no content using them, retire the selectors"
     resolution: "standing — allowlisted in attribute_parity with a pointer here"
-    source: "probe-2026-07-18#attribute_parity"
+    &source: "probe-2026-07-18#attribute_parity"
   }
 }
 
-^"complaint_route"{
-  .note: "reader complaints enter here, then feed diagnostics"
+^<complaint_route>{
+  .note: "reader complaints enter here, then feed diagnostics — a directed channel from complaint to claim counter"
   flow: [
     "complaint received → file entry with source: complaint",
     "if the gap was undeclared → error_count++ on lore-c008 (PLAN.B diagnostics engine)",
     "if the gap was already intentional with a recorded why → reply with the why; evidence_count++ on lore-c008"
   ]
-  claim: ".spw/claims/chapter-claims.spw#lore-c008-accounted-alignment"
+  &claim: ".spw/claims/chapter-claims.spw#lore-c008-accounted-alignment"
 }
 
-^"probes"[
+?"probes"[
   "theme-switch flash: cosmos ↔ ember with no intermediate frame"
   "share-card parity: card art/title/logline match the landed page"
   "reduced-motion parity: signature moments have a calm cut"
@@ -156,9 +159,9 @@
 
 ^"probe_kit"{
   .note: "the scriptable half of the probes runs as one command (atelier phase 03)"
-  command: "npm run spw:probes (--strict exits 1 on defects)"
-  tool: ".spw/tools/alignment-probes.mjs"
-  precipitate: ".spw/audits/alignment-probes-YYYY-MM-DD.spw — findings are ledger-ready"
+  !command: "npm run spw:probes (--strict exits 1 on defects)"
+  &tool: ".spw/tools/alignment-probes.mjs"
+  &precipitate: ".spw/audits/alignment-probes-YYYY-MM-DD.spw — findings are ledger-ready"
   covers: ["canonical_mirror", "share_parity", "plate_weight", "precache_existence", "reduced_motion_gates", "theme_parity", "attribute_parity"]
   manual_remainder: ["baseline overlay", "live theme-switch flash", "print fold parity"]
 }

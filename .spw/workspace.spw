@@ -4,8 +4,8 @@
 
 ^intent{
   hypothesis: "Story pages are readable as prose, shareable as intrigue, installable as an honest PWA, and inspectable as Spw runtime systems."
-  architecture: "chapter-json -> DOM runtime -> Spw handles -> ebook navigation -> ethos probes"
-  publish_surface: "select -> transform -> validate -> emit"
+  architecture: ["chapter-json", "DOM runtime", "Spw handles", "ebook navigation", "ethos probes"]
+  publish_surface: ["select", "transform", "validate", "emit"]
   platform_surface: "shell (sw/manifest) + meta (og/twitter) + build (vite/sitemap) + canon-sync"
   atelier_surface: "wonder (signature moments) + alignment ledger + literacy ladder + refinement passes p1-p5"
 }
@@ -56,7 +56,7 @@
   honk: "resolution and harmony"
 }
 
-~maintenance{
+&maintenance{
   regenerate_chapters_spw: "npm run spw:export"
   project_public_spw: "npm run spw:project"
   verify_public_spw: "npm run spw:verify"

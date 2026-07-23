@@ -96,7 +96,7 @@
   }
 }
 
-^"desk_modules"{
+^"desk_modules"[
   draft_canvas: {
     role: "edit portable chapter JSON with section outline"
     must: ["preserve section order", "validate required title/description/sections"]
@@ -155,15 +155,15 @@
       ".spw/surfaces/platform.spw"
     ]
   }
-}
+]
 
-^"phases"{
+^"phases"[
   .note: "implementation order — each phase leaves the monument usable"
 
   ^phase[00: "Contract freeze"]{
     task: "Document scene + lexicon fields in README chapter contract; keep optional"
     verify: "chapters without scene/lexicon still build"
-    ={ "README.md#Chapter JSON contract" }
+    ={ ~"README.md#Chapter JSON contract" }
   }
 
   ^phase[01: "Read-time language explore (shipped seed)"]{
@@ -214,7 +214,7 @@
     deferred: true
     note: "dregg.net remains interactive fiction later; not this surface"
   }
-}
+]
 
 ^"ux_principles"[
   "Readable room first — chrome is secondary and dismissible"
@@ -224,7 +224,7 @@
   "Fantasy dress on public; plain tools in the desk"
 ]
 
-^"success_probes"{
+?"success_probes"{
   reader: "Chamber 01 reads cleanly with JS disabled"
   explorer: "Opt-in language marks show promise/reward/pack threads; focus resonates family"
   scribe: "editorial-check reports lexicon hits + missing scene sections without blocking draft"

@@ -17,7 +17,8 @@
     "font": "node book/scripts/tools/font/build.mjs",
     "assets:optimize": "node book/scripts/tools/assets/optimize-assets.mjs",
     "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run",
-    "spw:probes": "node .spw/tools/alignment-probes.mjs"
+    "spw:probes": "node .spw/tools/alignment-probes.mjs",
+    "spw:plates": "node .spw/tools/plates-manifest.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",

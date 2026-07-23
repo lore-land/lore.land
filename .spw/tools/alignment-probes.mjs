@@ -22,6 +22,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { stateForFile } from './plates-manifest.mjs';
 
 const ROOT = process.cwd();
 const STRICT = process.argv.includes('--strict');
@@ -129,8 +130,11 @@ function probeShareParity() {
       if (exists(local)) {
         const bytes = fs.statSync(path.join(ROOT, local)).size;
         if (bytes < PLATE_MIN_BYTES) {
-          file('plate_weight', 'material', 'defect', local,
-            `${(bytes / 1024).toFixed(1)}KB plate behind "${titleStem}" — under ${PLATE_MIN_BYTES / 1024}KB threshold (atelier phase 02)`);
+          const state = stateForFile(local);
+          const cls = state === 'public' ? 'defect' : 'review';
+          file('plate_weight', 'material', cls, local,
+            `${(bytes / 1024).toFixed(1)}KB plate behind "${titleStem}" — under ${PLATE_MIN_BYTES / 1024}KB threshold ` +
+            `(atelier phase 02; plates-manifest state: ${state || 'unmanifested'})`);
         }
       } else if (!/^https?:/.test(ogImage) || ogImage.includes('lore.land')) {
         file('plate_weight', 'material', 'defect', page, `og:image points at missing file ${local}`);

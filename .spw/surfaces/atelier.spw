@@ -192,13 +192,13 @@
 
 ^"refinement_model"{
   .note: "capacity for iterative depth — passes are named so they can be rerun, not restarted"
-  passes: {
+  passes: [
     p1_structure: "blocking — grid, landmarks, section shapes"
     p2_rhythm: "spacing, baselines, type scale, wrap behavior"
     p3_material: "light, texture, color families, plate art"
     p4_motion: "entrances, transitions, scroll climate, tempo"
     p5_voice: "copy register, region personality, folded workshop"
-  }
+  ]
   rules: [
     "a pass is additive — later passes never undo earlier verified passes",
     "each pass leaves a precipitate: a study image, ledger entries, or probe results",
@@ -207,21 +207,21 @@
   precipitate_ref: ".spw/runtime/precipitates.spw#refinement_precipitates"
 }
 
-^"phases"{
+^"phases"[
   .note: "implementation order — each phase leaves the monument usable"
 
   ^phase[00: "Surface mount"]{
     task: "This plan + ledger seed + claims lore-c007..lore-c010; mount from index and workspace"
     status: done
     verify: "atelier linked from .spw/index.spw; ledger resolves; claims parse"
-    ={ ".spw/surfaces/atelier.spw" }
+    ={ ~".spw/surfaces/atelier.spw" }
   }
 
   ^phase[01: "Ledger seed from audit"]{
     task: "Carry audit P0/P1 misalignments into the ledger with axes and classifications"
     status: done
     verify: "every audit P0 appears as a ledger entry with axis + class"
-    ={ ".spw/state/alignment-ledger.spw" }
+    ={ ~".spw/state/alignment-ledger.spw" }
   }
 
   ^phase[02: "Plate production"]{
@@ -238,10 +238,9 @@
     task: "Baseline overlay snippet + theme-flash, share-parity, reduced-motion, and print checks; scripted where possible"
     verify: "one command or checklist runs all five ledger probes against a changed surface"
     status: done_scripted_half
-    kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes, --strict for CI)"
-    first_run: ".spw/audits/alignment-probes-2026-07-17.spw — 59 defects, 1 review across five probes"
+    &kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes, --strict for CI)"
+    &first_run: ".spw/audits/alignment-probes-2026-07-17.spw — 59 defects, 1 review across five probes"
     remaining_manual: ["baseline overlay", "live theme-switch flash", "print fold parity"]
-    ={ ".spw/audits/alignment-probes-2026-07-17.spw" }
   }
 
   ^phase[04: "Literacy on-ramps"]{
@@ -260,9 +259,9 @@
     verify: "a filed undeclared misalignment increments error_count on lore-c008"
     refs: ["PLAN.B.spw#production_overlay_2026_07_16"]
   }
-}
+]
 
-^"success_probes"{
+?"success_probes"{
   arrived: "a jaded web reader lingers on one signature moment and shares a chapter"
   noticer: "a filed complaint resolves to either a fix or a written why — never silence"
   apprentice: "a reader who started at read reaches operate without leaving the story"
