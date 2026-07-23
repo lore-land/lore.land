@@ -1,6 +1,6 @@
 // scripts/script.mjs
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.I';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_02_28.I';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.I';
 import {
   bootstrapExperience,
@@ -16,7 +16,7 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.A';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_02_28.I';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_07_23.B';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_19.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';

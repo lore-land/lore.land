@@ -237,6 +237,7 @@ export function createLoadLifecycle(options = {}) {
   }
 
   function bane(detail = 'spinner fallback') {
+    clearBaneTimer();
     setStage('bane', detail);
     setVisibility(preloader, true);
     setVisibility(spinnerWrap, true);

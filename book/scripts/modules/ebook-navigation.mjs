@@ -683,6 +683,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     if (spoken && announce) {
       announce(`Handle syntax: ${syntaxMode}.`);
     }
+    persist(activeIndex);
   };
 
   const applyPerspective = (mode, spoken = false) => {
@@ -693,6 +694,7 @@ export function initEbookNavigation(chapterData, options = {}) {
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
     applyFilters(spoken);
+    persist(activeIndex);
   };
 
   const applyPayloadMode = (mode, spoken = false) => {
@@ -703,6 +705,7 @@ export function initEbookNavigation(chapterData, options = {}) {
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
     applyFilters(spoken);
+    persist(activeIndex);
   };
 
   const applyFilters = (spoken = false) => {
@@ -1119,10 +1122,27 @@ export function initEbookNavigation(chapterData, options = {}) {
     }
   };
 
+  /* A held { or } never sees its keyup if focus leaves the window first
+     (alt-tab, devtools, a native dialog) — release every held shape key
+     whenever that happens, so nav-shape can't get stuck "on". */
+  const releaseAllHoldKeys = () => {
+    if (!holdKeys.size) {
+      return;
+    }
+    holdKeys.clear();
+    applyNavShape();
+  };
+
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('keydown', onKeydownNav);
   document.addEventListener('keydown', onKeydownShape);
   document.addEventListener('keyup', onKeyup);
+  window.addEventListener('blur', releaseAllHoldKeys);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      releaseAllHoldKeys();
+    }
+  });
 
   const startIndex = resumeIndex > 0 && resumeIndex <= sections.length ? resumeIndex : parseSectionIndex(stored?.sectionIndex);
   applyRegister(readRegisterMode(), false);
