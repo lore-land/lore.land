@@ -24,8 +24,8 @@
   audience: ["plate-wright", "chamberwright", "seal-keeper"]
   probe_evidence: ".spw/audits/alignment-probes-2026-07-22.spw#probe.plate_weight — all 13 plates under threshold, review-class per .spw/state/plates-manifest.spw gate"
   related: {
-    atelier: ".spw/surfaces/atelier.spw#media_production"
-    platform: ".spw/surfaces/platform.spw#phase.04"
+    atelier: ~".spw/surfaces/atelier.spw#media_production"
+    platform: ~".spw/surfaces/platform.spw#phase.04"
     ledger: ".spw/state/alignment-ledger.spw#AL-001"
     scene_schema: "book/scripts/script.mjs#createSceneSketch"
     prose_sot: "book/content/chapters/*.json"
@@ -787,7 +787,7 @@
           and world law briefly occupy the same rectangle"
 
   &atelier{
-    href: ".spw/surfaces/atelier.spw#media_production"
+    href: ~".spw/surfaces/atelier.spw#media_production"
     relation: "owns refinement passes, study graduation, and material quality"
   }
   &chapter_canon{
@@ -795,7 +795,7 @@
     relation: "owns what truly happened; this surface may propose but cannot legislate alone"
   }
   &platform{
-    href: ".spw/surfaces/platform.spw#phase.04"
+    href: ~".spw/surfaces/platform.spw#phase.04"
     relation: "carries plates into OG/Twitter metadata, crop behavior, weight, and delivery"
   }
   &ledger{
@@ -803,7 +803,7 @@
     relation: "records the material gap between narrative promise and current share art"
   }
   &publish{
-    href: ".spw/surfaces/publish.spw#social_projection"
+    href: ~".spw/surfaces/publish.spw#social_projection"
     relation: "asks how a held scene becomes public intrigue without becoming advertisement"
   }
   &scene_runtime{

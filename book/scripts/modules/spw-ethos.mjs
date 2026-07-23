@@ -194,14 +194,17 @@ function extractClaimChainBody(source) {
    single-line `key: "value"` pairs, one claim per claim_id encountered.
    A leading operator sigil on the key (e.g. `&spec_ref: "..."`) is accepted
    and ignored for parsing — it's a legibility annotation on the canon source
-   (per OPERATOR_ROLES), not a distinct field name. */
+   (per OPERATOR_ROLES), not a distinct field name. A leading `~` on the value
+   (e.g. `&spec_ref: ~"path#anchor"`) is likewise accepted and stripped — it
+   marks the string as a deferred file reference (spw-workbench's reference
+   grammar), not a change to the parsed value. */
 export function parseClaimChain(text) {
   const body = extractClaimChainBody(text);
   const claims = [];
   let current = null;
 
   for (const line of body.split('\n')) {
-    const pair = line.match(/^\s*[!#.%&^~@*=$]?([a-z_]+):\s*"([^"]*)"\s*$/i);
+    const pair = line.match(/^\s*[!#.%&^~@*=$]?([a-z_]+):\s*~?"([^"]*)"\s*$/i);
     if (!pair) {
       continue;
     }

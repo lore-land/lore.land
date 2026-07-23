@@ -100,9 +100,9 @@
         "dist-.spw-excludes-workbench-and-tools"
       ]
       refs: [
-        ".spw/surfaces/platform.spw#seal_checklist_additions",
+        ~".spw/surfaces/platform.spw#seal_checklist_additions",
         ".spw/state/alignment-ledger.spw",
-        ".spw/surfaces/publish.spw#spw_public_projection"
+        ~".spw/surfaces/publish.spw#spw_public_projection"
       ]
     }
     emit: {
@@ -221,5 +221,5 @@
     "navigate network-first; offline.html fallback",
     "icon purpose any and maskable as separate assets"
   ]
-  refs: [".spw/surfaces/platform.spw#domain.pwa", ".spw/audits/platform-ship-audit-2026-07-16.spw"]
+  refs: [~".spw/surfaces/platform.spw#domain.pwa", ".spw/audits/platform-ship-audit-2026-07-16.spw"]
 }

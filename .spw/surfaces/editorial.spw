@@ -135,8 +135,8 @@
       "chapter .spw title matches book/content/chapters/*.json",
       "changed surfaces carry no undeclared misalignment (alignment ledger reviewed)"
     ]
-    platform_refs: [".spw/surfaces/platform.spw#seal_checklist_additions"]
-    atelier_refs: [".spw/state/alignment-ledger.spw", ".spw/surfaces/atelier.spw#alignment_ledger"]
+    platform_refs: [~".spw/surfaces/platform.spw#seal_checklist_additions"]
+    atelier_refs: [".spw/state/alignment-ledger.spw", ~".spw/surfaces/atelier.spw#alignment_ledger"]
   }
   set_stone: {
     role: "emit + ship"
@@ -150,8 +150,8 @@
       "deploy monument"
     ]
     refs: [
-      ".spw/surfaces/publish.spw#publishing_pipeline",
-      ".spw/surfaces/publish.spw#monument",
+      ~".spw/surfaces/publish.spw#publishing_pipeline",
+      ~".spw/surfaces/publish.spw#monument",
       ".spw/surfaces/platform.spw"
     ]
   }

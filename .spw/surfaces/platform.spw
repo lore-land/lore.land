@@ -190,7 +190,7 @@
   ^phase[02: "Chapter .spw regenerate"]{
     task: "Run export-chapters against live chapter-data; refresh chapters/index.spw titles"
     verify: "ch01 title equals book/content/chapters/01.json title"
-    refs: [".spw/tools/export-chapters.mjs", ".spw/workspace.spw#c001"]
+    refs: [".spw/tools/export-chapters.mjs", ~".spw/workspace.spw#c001"]
     status: "done 2026-07-17 — wired into npm run build via spw:export"
   }
 
@@ -228,7 +228,7 @@
   ^phase[07b: "Public .spw projection"]{
     task: "Emit lore-owned .spw allowlist into dist/.spw after vite build; exclude _workbench and tools"
     verify: "test -f dist/.spw/claims/chapter-claims.spw after npm run build; npm run spw:verify"
-    refs: [".spw/tools/project-public-spw.mjs", ".spw/surfaces/publish.spw#spw_public_projection"]
+    refs: [".spw/tools/project-public-spw.mjs", ~".spw/surfaces/publish.spw#spw_public_projection"]
     status: "tool + npm scripts wired 2026-07-16"
   }
 

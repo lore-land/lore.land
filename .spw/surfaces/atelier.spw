@@ -148,7 +148,7 @@
       role: "chapter + door share art — resolves audit P0 chapter-og-images-empty"
       source: "scene blocks (vantage / light / scent / edges / hint) are the prompt canon"
       contract: "1200x630 primary, og:image:alt required, series identity + chapter seal overprint"
-      refs: [".spw/surfaces/platform.spw#phase.04", ".spw/surfaces/publish.spw#social_projection"]
+      refs: [~".spw/surfaces/platform.spw#phase.04", ~".spw/surfaces/publish.spw#social_projection"]
     }
     captures: {
       role: "motion captures of signature moments (GIF/WebM) for zine, docs, and social"
@@ -204,7 +204,7 @@
     "each pass leaves a precipitate: a study image, ledger entries, or probe results",
     "reruns stay cheap — pass probes are scripted or checklist-stable, so a surface absorbs pass N+1 without archaeology"
   ]
-  precipitate_ref: ".spw/runtime/precipitates.spw#refinement_precipitates"
+  precipitate_ref: ~".spw/runtime/precipitates.spw#refinement_precipitates"
 }
 
 ^"phases"[
@@ -227,7 +227,7 @@
   ^phase[02: "Plate production"]{
     task: "Material studies → 13 chapter plates + door plates; scene blocks as prompt canon"
     verify: "no chapter og:image under 100KB; each plate has og:image:alt; series identity holds"
-    refs: [".spw/surfaces/platform.spw#phase.04"]
+    refs: [~".spw/surfaces/platform.spw#phase.04"]
     status: canon_drafted
     canon: ".spw/surfaces/plates.spw — series identity + plate 01 grounded + seeds 02-13 awaiting creative grounding"
     .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run;
@@ -251,7 +251,7 @@
   ^phase[05: "Signature: chamber crossing"]{
     task: "View Transitions between chambers with a reduced-motion cut; capture lane records both"
     verify: "reduced-motion crossing is a calm swap; ledger carries zero defect entries for the seam"
-    refs: [".spw/surfaces/platform.spw#phase.09"]
+    refs: [~".spw/surfaces/platform.spw#phase.09"]
   }
 
   ^phase[06: "Complaint channel"]{

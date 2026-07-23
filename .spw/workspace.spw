@@ -77,8 +77,8 @@
   alignment_ledger: ".spw/state/alignment-ledger.spw"
   atelier_plan: ".spw/surfaces/atelier.spw"
   release_token: "book/scripts/modules/cache-context.mjs"
-  seal_checklist: ".spw/surfaces/platform.spw#seal_checklist_additions"
-  public_projection: ".spw/surfaces/publish.spw#spw_public_projection"
+  seal_checklist: ~".spw/surfaces/platform.spw#seal_checklist_additions"
+  public_projection: ~".spw/surfaces/publish.spw#spw_public_projection"
 }
 
 ~priority{
