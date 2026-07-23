@@ -15,7 +15,7 @@ import {
 } from './modules/experience-core.mjs?v=2026_07_19.A';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
-import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.A';
+import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.C';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_07_23.B';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_07_19.A';

@@ -11,7 +11,7 @@ import {
   initProgressiveReveal,
   registerStoryServiceWorker
 } from './experience-core.mjs?v=2026_07_19.A';
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.A';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.C';
 import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_07_23.B';
 import { deriveChapterLinks } from './chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './spw-ethos.mjs?v=2026_07_19.A';

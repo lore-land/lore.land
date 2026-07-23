@@ -23,6 +23,9 @@ jobs:
       - name: spw:lint (parse every .spw file with the real spw-workbench grammar)
         run: npm run spw:lint -- --strict
 
+      - name: spw:seed-bundle:verify (vendored browser parser matches the current submodule pin)
+        run: npm run spw:seed-bundle:verify
+
       - name: build (chapters:build -> spw:export -> vite build -> spw:project -> dist:static)
         run: npm run build
 

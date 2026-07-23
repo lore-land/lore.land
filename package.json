@@ -19,7 +19,9 @@
     "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run",
     "spw:probes": "node .spw/tools/alignment-probes.mjs",
     "spw:plates": "node .spw/tools/plates-manifest.mjs",
-    "spw:lint": "tsx .spw/tools/spw-lint.mjs"
+    "spw:lint": "tsx .spw/tools/spw-lint.mjs",
+    "spw:seed-bundle": "node book/scripts/tools/bundle-spw-seed.mjs",
+    "spw:seed-bundle:verify": "node book/scripts/tools/bundle-spw-seed.mjs --verify"
   },
   "keywords": [],
   "author": "Sam Washington",

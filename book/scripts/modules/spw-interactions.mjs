@@ -127,6 +127,78 @@ function hashId(input) {
   return Math.abs(hash).toString(36);
 }
 
+/* Selection anchors: a committed Spw handle becomes a shareable URL
+   fragment (#spw=<expressionId>:<handle>) and a matching fragment on
+   load/hashchange restores that exact selection. expressionId is a
+   content hash of the block's own source text, so it's stable across
+   reloads without needing DOM ids. The registry is module-global (not
+   per-node) because chapter-sigil.mjs's shadow-root instances each call
+   initSpwLanguageRuntime separately, but a selection anchor should
+   resolve regardless of which host initialized first. */
+const expressionRegistry = new Map();
+let lastRestoredHash = null;
+let hashRestoreListenerBound = false;
+
+function encodeSelectionHash(expressionId, handle) {
+  return `spw=${encodeURIComponent(expressionId)}:${encodeURIComponent(handle)}`;
+}
+
+function decodeSelectionHash(hash) {
+  const raw = (hash || '').replace(/^#/, '');
+  const match = raw.match(/^spw=([^:]+):(.+)$/);
+  if (!match) {
+    return null;
+  }
+  try {
+    return { expressionId: decodeURIComponent(match[1]), handle: decodeURIComponent(match[2]) };
+  } catch {
+    return null;
+  }
+}
+
+function updateSelectionHash(expressionId, handle) {
+  if (typeof history === 'undefined' || typeof location === 'undefined') {
+    return;
+  }
+  const next = `#${encodeSelectionHash(expressionId, handle)}`;
+  if (location.hash === next) {
+    return;
+  }
+  history.replaceState(history.state, '', next);
+  lastRestoredHash = next;
+}
+
+/* Restore a committed selection from location.hash, if the registry
+   already has the target expression registered. Safe to call after
+   every initSpwLanguageRuntime pass — a no-op until the right block has
+   registered, and idempotent once the hash has already been restored. */
+export function restoreSpwSelectionFromLocation() {
+  if (typeof location === 'undefined') {
+    return false;
+  }
+  const hash = location.hash;
+  if (!hash || hash === lastRestoredHash) {
+    return false;
+  }
+  const decoded = decodeSelectionHash(hash);
+  if (!decoded) {
+    return false;
+  }
+  const entry = expressionRegistry.get(decoded.expressionId);
+  if (!entry) {
+    return false;
+  }
+  const association = entry.associations.find(
+    (item) => `${item.sigil}[${item.handle}]` === decoded.handle
+  );
+  entry.commitSelection(association ? association.text : decoded.handle, association, association?.start ?? null, {
+    origin: 'anchor-restore'
+  });
+  entry.node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  lastRestoredHash = hash;
+  return true;
+}
+
 function ensureNativeSpwComponents() {
   if (!customElements.get('spw-registers')) {
     class SpwRegistersElement extends HTMLElement {
@@ -967,6 +1039,7 @@ function createRegisterControls(context) {
     node.dataset.spwHandle = handle;
     node.dataset.spwPayloadId = payloadId;
     dispatchSelection(entry);
+    updateSelectionHash(expressionId, handle);
 
     if (announce) {
       announce(`Spw handle selected: ${handle}`);
@@ -1167,6 +1240,10 @@ function enhanceExpressionNode(node, announce) {
       announce
     });
 
+    if (registerControl?.commitSelection) {
+      expressionRegistry.set(expressionId, { node, associations, commitSelection: registerControl.commitSelection });
+    }
+
     if (operatorControl) {
       controlWrap.append(operatorControl);
     }
@@ -1276,6 +1353,15 @@ export function initSpwLanguageRuntime(options = {}) {
       enhancedCount += 1;
     }
   });
+
+  if (!hashRestoreListenerBound && typeof window !== 'undefined') {
+    hashRestoreListenerBound = true;
+    window.addEventListener('hashchange', () => {
+      lastRestoredHash = null;
+      restoreSpwSelectionFromLocation();
+    });
+  }
+  restoreSpwSelectionFromLocation();
 
   return enhancedCount;
 }
