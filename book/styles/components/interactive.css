@@ -264,6 +264,23 @@ aside .pass-along-button {
   text-transform: uppercase;
 }
 
+.spw-spell-reading {
+  margin: 0;
+  padding: 0.4rem 0.55rem;
+  border: var(--border-width) var(--border-style) var(--border-color-main);
+  border-left: 3px solid var(--spw-color-integration, currentColor);
+  border-radius: 6px;
+  background: var(--panel-bg-subtle, transparent);
+  color: var(--color-text-alt);
+  font-family: var(--font-family-body);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.spw-spell-reading:empty {
+  display: none;
+}
+
 .spw-handle-mode {
   display: inline-flex;
   flex-wrap: wrap;

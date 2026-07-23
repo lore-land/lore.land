@@ -1,4 +1,4 @@
-import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.C';
+import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.D';
 import { el } from './dom.mjs';
 
 function createTemplate(config) {

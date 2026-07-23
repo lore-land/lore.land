@@ -77,6 +77,45 @@ function isOperator(char) {
   return OPERATOR_SEQUENCE.includes(char);
 }
 
+/* The "spell reading" — a Spw sigil's meaning is context-sensitive, not a
+   fixed label. The same operator reads differently depending on what
+   container channels it and what chapter it's spoken in. Swapping the
+   sigil, changing the enclosing container, or moving to a different
+   chapter's mood are all supposed to change this line, not just the
+   glyph or its color. */
+function outermostContainerChar(source) {
+  for (const char of String(source || '')) {
+    if (CONTAINER_ROLES[char]) {
+      return char;
+    }
+  }
+  return null;
+}
+
+function currentMood() {
+  if (typeof document === 'undefined') {
+    return 'unmarked';
+  }
+  return document.body?.dataset?.mood || document.documentElement?.dataset?.mood || 'unmarked';
+}
+
+function interpretHandle(sigil, source) {
+  const op = OPERATOR_ROLES[sigil];
+  if (!op) {
+    return '';
+  }
+  const containerChar = outermostContainerChar(source);
+  const container = containerChar ? CONTAINER_ROLES[containerChar] : null;
+  const mood = currentMood();
+
+  const clauses = [`${op.role} (${sigil}) — ${op.description}`];
+  if (container) {
+    clauses.push(`channeled through a ${container.name} (${container.role}) — ${container.description}`);
+  }
+  clauses.push(`read in a "${mood}"-toned chapter`);
+  return clauses.join('; ');
+}
+
 /* '.' is ground only when immediately before '[' (e.g. .[property]).
    '@' is always a perspective token — direction is determined by context. */
 function isExtendedOperator(char, nextChar, prevChar) {
@@ -856,6 +895,7 @@ function createOperatorControl(node, operators, tokens, announce) {
       }
     });
     updateSourceFromTokens(node, tokens);
+    node.__spwRefreshSpellReading?.();
     if (announce) {
       announce('All Spw operators swapped.');
     }
@@ -906,6 +946,21 @@ function createRegisterControls(context) {
 
   const handleRow = document.createElement('div');
   handleRow.className = 'spw-handle-grid';
+
+  const spellReading = document.createElement('p');
+  spellReading.className = 'spw-spell-reading';
+  spellReading.setAttribute('aria-live', 'polite');
+
+  const refreshSpellReading = () => {
+    const live = readSource(node);
+    const outerOperator = [...live].find((char) => OPERATOR_ROLES[char]);
+    spellReading.textContent = outerOperator ? interpretHandle(outerOperator, live) : '';
+  };
+  refreshSpellReading();
+  /* Swapping happens in two other places (the direct per-token click
+     handler and the operator control's "Swap all" button) that don't
+     share this closure — expose the refresh so either can trigger it. */
+  node.__spwRefreshSpellReading = refreshSpellReading;
 
   const inspector = document.createElement('pre');
   inspector.className = 'spw-payload-inspector';
@@ -1138,7 +1193,7 @@ function createRegisterControls(context) {
   mathMode.addEventListener('click', () => applyHandleMode('math', true));
 
   cubeWrap.append(cubeLabel, cubeAxes, cubeFaceLabel, cubeFace, cubeStatus);
-  controls.append(title, modeWrap, handleRow, cubeWrap, registerView, inspectionControl.controls, inspector);
+  controls.append(title, spellReading, modeWrap, handleRow, cubeWrap, registerView, inspectionControl.controls, inspector);
   registerView.data = { snapshot: bank.snapshot() };
   applyHandleMode(handleMode, false);
   renderCubeFace();
@@ -1205,6 +1260,7 @@ function enhanceExpressionNode(node, announce) {
           operator.el.setAttribute('aria-label', `Swap operator ${next} (${nextRole.label})`);
         }
         updateSourceFromTokens(node, tokens);
+        node.__spwRefreshSpellReading?.();
         if (announce) {
           announce(`Operator swapped to ${next}.`);
         }
