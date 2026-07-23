@@ -15,6 +15,7 @@ import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_19.A'
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_19.A';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_19.A';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_19.A';
+import { initStorySpark } from '../modules/story-spark.mjs?v=2026_07_23.A';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
@@ -555,6 +556,7 @@ function initMonumentEntrance() {
   });
   injectSvgFilters(document);
   enhanceLazyImages({ root: document });
+  initStorySpark();
   markCurrentChapterInIndex();
   enhancePrimaryCta();
   renderChamberSeals(document);
