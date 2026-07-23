@@ -9413,6 +9413,28 @@ function particleBindings(root) {
   }
   return out;
 }
+var ASPECT_MARK = /~#[A-Za-z_]/g;
+function particleMix(root, source = "") {
+  const mix = { deixis: 0, case: 0, mood: 0, aspect: 0 };
+  mix.aspect = (source.match(ASPECT_MARK) ?? []).length;
+  if (!root) return mix;
+  for (const binding of particleBindings(root)) {
+    switch (binding.particle.aim) {
+      case ">":
+        mix.deixis += 1;
+        break;
+      case ":":
+        mix.case += 1;
+        break;
+      default:
+        mix.mood += 1;
+    }
+  }
+  return mix;
+}
+function particleMixTotal(mix) {
+  return mix.deixis + mix.case + mix.mood + mix.aspect;
+}
 function deixisTable(root) {
   const table = /* @__PURE__ */ new Map();
   for (const binding of particleBindings(root)) {
@@ -12119,6 +12141,8 @@ export {
   parseWithLog,
   parseWorkspaceRootDeclarations,
   particleBindings,
+  particleMix,
+  particleMixTotal,
   planMutation,
   planSpanTransform,
   previewAST,
