@@ -23,9 +23,12 @@ npm run spw:project  # .spw/tools/project-public-spw.mjs — project public .spw
 npm run spw:verify   # same tool, --verify — check dist/.spw matches source without writing
 npm run spw:probes   # .spw/tools/alignment-probes.mjs — regenerate .spw/audits/alignment-probes-<date>.spw
 npm run spw:plates   # .spw/tools/plates-manifest.mjs — print plate gate-status table; -- --check verifies vs disk
+npm run spw:lint     # .spw/tools/spw-lint.mjs — parse every hand-authored .spw file with the REAL spw-workbench grammar
 ```
 
-CI (`.github/workflows/ci.yml`) runs `build`, `dist:verify`, and `spw:probes` on every push/PR — verification only, no deploy step (Pages serves `main` branch root directly; there's no `dist`-based or `gh-pages` deploy to trigger).
+**`spw:lint` is a real parser, not a heuristic.** It runs via `tsx` (a devDependency) so it can import `.spw/_workbench/packages/spw-seed/src/index.ts` directly — no build step, no vendored copy, straight from the submodule's TypeScript source. Requires the submodule checked out. Pass `parse(text, { lexProfile: 'prose' })` — the `prose` lex profile (`unknownAsText: true`) is required for lore.land's content-heavy canon; the `default` profile rejects almost everything (em dashes, semicolons, smart quotes outside strings) because it's tuned for pure-grammar files, not prose-mixed ones. **Known real constraint found this way, not by static reading**: the lexer treats a raw newline inside a `"..."` literal as an unterminated-string error — multi-line quoted strings (wrapping long prose across indented lines) are not valid Spw syntax, full stop. Keep long string values on one physical line, however long. `npm run spw:lint -- --strict` exits 1 on any parse failure; CI runs it that way. If you add prose fields with unusual punctuation and lint start failing, check whether it's a genuine syntax issue (multi-line string) before assuming a lexer bug.
+
+CI (`.github/workflows/ci.yml`) runs `spw:lint --strict`, `build`, `dist:verify`, and `spw:probes` on every push/PR — verification only, no deploy step (Pages serves `main` branch root directly; there's no `dist`-based or `gh-pages` deploy to trigger).
 
 `npm run build` runs `chapters:build` → `spw:export` → `vite build` → `spw:project` → `dist:static` in that order — the chapter JSON is upstream of both the Vite build and the `.spw` projection.
 

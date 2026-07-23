@@ -39,8 +39,7 @@
 }
 
 &"reading_compass"{
-  .note: "this is a field document, not a queue — enter by appetite, follow a relation,
-          and return with one changed question; the constructs advertise how to move"
+  .note: "this is a field document, not a queue — enter by appetite, follow a relation, and return with one changed question; the constructs advertise how to move"
 
   @stand: "a situated overlook — begin here when you want a place, scale, or point of view"
   ~drift: "a zone of possibility — linger without promoting an image into canon"
@@ -91,8 +90,7 @@
 ]
 
 &"domain_constellations"{
-  .note: "the plates are not illustrations of isolated chapters; they are apertures into
-          neighboring disciplines — use these crossings to complicate, test, or ground a seed"
+  .note: "the plates are not illustrations of isolated chapters; they are apertures into neighboring disciplines — use these crossings to complicate, test, or ground a seed"
 
   &counting{
     domains: [accounting, metrology, audit, provenance]
@@ -150,18 +148,15 @@
   honest_objects: [scale, ledger, marker, treaty_box, lamp_post, oath_stone,
                    rope, shard, joint, breakfast_table, splice, open_door]
 
-  invitation: "choose any two lists, notice where they cross, and ask whether that crossing
-               belongs to the chamber, the series, or only this afternoon's imagination"
+  invitation: "choose any two lists, notice where they cross, and ask whether that crossing belongs to the chamber, the series, or only this afternoon's imagination"
 }
 
 ^"idiomarium"[
-  .note: "repeatable Spw phrases for thinking with the plates — each phrase has a mouth-feel,
-          a construct topology, and a practical use; variation is welcome if polarity holds"
+  .note: "repeatable Spw phrases for thinking with the plates — each phrase has a mouth-feel, a construct topology, and a practical use; variation is welcome if polarity holds"
 
   ^idiom["nose before name"]{
     phrase: "?scent ~<trace> @(Boof) &[place, memory] *{scene} ^"
-    read: "probe sensation before naming lore; let the low observer merge place with memory;
-           only then collapse a scene and integrate it upward"
+    read: "probe sensation before naming lore; let the low observer merge place with memory; only then collapse a scene and integrate it upward"
     use: [02, 03, 08, 13]
   }
 
@@ -203,8 +198,7 @@
 ]
 
 ^"spirit_walks"[
-  .note: "the six-phase spirit sequence nested at several scales — the same metabolism
-          should be recognizable in a motif, a plate, the series, and its public projection"
+  .note: "the six-phase spirit sequence nested at several scales — the same metabolism should be recognizable in a motif, a plate, the series, and its public projection"
   =sequence: "?~<#.>@(#.)&[#.]*{#.}^"
 
   ^walk["scene"]{
@@ -245,8 +239,7 @@
 ]
 
 ^"projected_sheaves"[
-  .note: "each sheaf gathers local chamber-sections around a shared germ; overlaps are
-          explicit, and gluing is allowed only where local meanings agree without flattening"
+  .note: "each sheaf gathers local chamber-sections around a shared germ; overlaps are explicit, and gluing is allowed only where local meanings agree without flattening"
 
   ^sheaf["honest_line"]{
     ~<germ>"a visible line carries an account of what lies on both sides"
@@ -323,8 +316,7 @@
 ]
 
 ^"fractal_motifs"[
-  .note: "motifs repeat with difference across nested scales; each level contains the seed
-          of the next, while reduction back inward still recovers the local sensory ground"
+  .note: "motifs repeat with difference across nested scales; each level contains the seed of the next, while reduction back inward still recovers the local sensory ground"
 
   ^motif["gap"]{
     .[object]{ "empty scale pan | ledger crack | unlit post | shelf opening" }
@@ -372,16 +364,11 @@
 ^"series_identity"{
   .note: "what makes thirteen different images one shelf — distilled from ch01's lived scenes"
 
-  vantage_law: "every plate is seen from Boof's height — dog-eye, nose-level, or the low
-                step; the world is large and the instruments of honest count are near.
-                No aerial views, no eye-level establishing shots. Wonder at knee height."
+  vantage_law: "every plate is seen from Boof's height — dog-eye, nose-level, or the low step; the world is large and the instruments of honest count are near. No aerial views, no eye-level establishing shots. Wonder at knee height."
 
-  light_law: "one warm working light against a cool held dark — gold seam, brass lamp,
-              lantern, amber sunset — never flat illumination. The warm source is always
-              the thing that counts, tells, or opens."
+  light_law: "one warm working light against a cool held dark — gold seam, brass lamp, lantern, amber sunset — never flat illumination. The warm source is always the thing that counts, tells, or opens."
 
-  orientation: "compass canon holds inside plates: light arrives dawnward, safety and
-                stoves sit hearthward. No plate implies north."
+  orientation: "compass canon holds inside plates: light arrives dawnward, safety and stoves sit hearthward. No plate implies north."
 
   palette_core: {
     gold: "first-sun / brass / seam-light — the working warmth"
@@ -397,17 +384,14 @@
     alt: "og:image:alt required — one sentence, the scene's hint compressed, no lore jargon"
   }
 
-  finish: "painterly-graphic hybrid; visible grain; edges soften into dark rather than
-           crop — a plate is a held moment, not a screenshot"
+  finish: "painterly-graphic hybrid; visible grain; edges soften into dark rather than crop — a plate is a held moment, not a screenshot"
 }
 
 ^"plate"[01: "Dawn in Boon.land"]{
   status: grounded
   source_scenes: "book/content/chapters/01.json — six scene blocks, all live"
   chosen_scene: "The Missing Measure (weighhouse dawn)"
-  .why: "the door image should be the chamber's first breath, not its climax —
-         Publication is the stronger drama but belongs inside; the door smells of
-         cold brass and absence, which is the mystery's true shape"
+  .why: "the door image should be the chamber's first breath, not its climax — Publication is the stronger drama but belongs inside; the door smells of cold brass and absence, which is the mystery's true shape"
   prompt_canon: {
     vantage: "dog-height, just inside the weighhouse doors, looking down the rows"
     light: "first sun through the door slats; brass pans still night-cold; the field beyond hazed gold"
@@ -417,18 +401,14 @@
       "counted crate rows between chalk lines worn soft",
       "berry rows running downhill dawnward until the mist takes them"
     ]
-    hint: "interior of a timber weighhouse at dawn, low viewpoint from the doorway; hanging
-           balance scale at center, open ledger on a lectern, rows of faintly glowing berry
-           crates receding; gold slat-light cutting teal shadow"
+    hint: "interior of a timber weighhouse at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
   }
-  alt_draft: "Inside a wooden weighhouse at dawn: a hanging balance scale and an open
-              ledger, rows of faintly glowing berry crates, low to the ground as a dog sees it."
+  alt_draft: "Inside a wooden weighhouse at dawn: a hanging balance scale and an open ledger, rows of faintly glowing berry crates, low to the ground as a dog sees it."
   study_path: "book/images/plate-01-weighhouse-v1.png"
 }
 
 ^"scene_seeds"[
-  .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per
-          ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
+  .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
 
   ^seed[02: "The First Echo"]{
     status: draft
@@ -443,9 +423,7 @@
         "a spoken word's shape shivers the hanging dust without wind",
         "hearthward, one path out — the only line the circles do not close"
       ]
-      hint: "forest clearing at green noon seen from ground level; concentric rings of hanging
-             pollen and light around a bare center stone; trunks curved in echo arcs; one dark
-             path breaking the circles; deep green cut by pale gold rings"
+      hint: "forest clearing at green noon seen from ground level; concentric rings of hanging pollen and light around a bare center stone; trunks curved in echo arcs; one dark path breaking the circles; deep green cut by pale gold rings"
     }
     resonance: "the rings are pressure made visible — repetition without keeping"
     open: "does the grove echo sound only, or scent and light too? The seed assumes all three; prose may want it narrower."
@@ -464,9 +442,7 @@
         "dawnward, the routes run toward a horizon notch shaped like a gate",
         "one line bends deliberately around nothing visible — and the dust respects the curve"
       ]
-      hint: "desert flat at low amber sunset from ground level; faint gold route-lines glowing
-             beneath the sand crust, forking toward a notched horizon; a leaning faded signpost;
-             long teal shadows, warm light skimming every ripple"
+      hint: "desert flat at low amber sunset from ground level; faint gold route-lines glowing beneath the sand crust, forking toward a notched horizon; a leaning faded signpost; long teal shadows, warm light skimming every ripple"
     }
     resonance: "the promise under the dust answers before anyone asks — paths keep their own ledger"
     open: "should the routes' glow be berry-blue instead of gold, tying old ways to the boonberry charge? Gold reads as sun; blue reads as canon."
@@ -485,9 +461,7 @@
         "cups weighted on the papers, trembling",
         "below the hill, the town's roofs catch both weathers at once"
       ]
-      hint: "hilltop council table seen from beneath, framed by boots and a staff; sky split
-             between warm gold break and cold teal squall meeting overhead; two banners blowing
-             toward each other; an open box at the table's center"
+      hint: "hilltop council table seen from beneath, framed by boots and a staff; sky split between warm gold break and cold teal squall meeting overhead; two banners blowing toward each other; an open box at the table's center"
     }
     resonance: "shared weather is the cost and the benefit in one sky — neither side owns the seam"
     open: "is the council standing or seated? Standing reads urgent; seated reads durable. The chamber's prose should decide the plate."
@@ -506,9 +480,7 @@
         "beyond the window, the square in perfect order: carts, awnings, unhurried figures",
         "a second, closed ledger under the first, one ribbon pinched at the fracture line"
       ]
-      hint: "sunlit counting room from low at the desk edge; an open ledger with a single
-             hairline crack of darkness running across page, desk, and wall; a serene town
-             square through the window behind; warm paper tones split by one thin dark seam"
+      hint: "sunlit counting room from low at the desk edge; an open ledger with a single hairline crack of darkness running across page, desk, and wall; a serene town square through the window behind; warm paper tones split by one thin dark seam"
     }
     resonance: "the rift is a line item — silence carried forward, unreconciled"
     open: "does the crack glow berry-dark or read as pure absence? Absence is quieter and maybe truer to 'song' mood inverted."
@@ -527,9 +499,7 @@
         "the maze of streets glows in a traced line of past collisions",
         "one unlit post stands straight and undented, dark, waiting for its story"
       ]
-      hint: "dusk city street at dog height, lamp posts each dented and glowing from the dent;
-             a lamplighter ringing a small bell at one; lit maze-streets receding; one straight
-             dark post in the foreground; deep teal night, warm gold pools"
+      hint: "dusk city street at dog height, lamp posts each dented and glowing from the dent; a lamplighter ringing a small bell at one; lit maze-streets receding; one straight dark post in the foreground; deep teal night, warm gold pools"
     }
     resonance: "the undented post is the epigraph inverted — no noise yet, so no name, so no light"
     open: "is the bell-lighting real Bonk City mechanics or plate poetry? If real, it belongs in prose before the plate ships."
@@ -548,9 +518,7 @@
         "witnesses lean in a ring, faces bright, none looking at the alley",
         "in the alley dark, the shadow's head turns a degree the body doesn't"
       ]
-      hint: "sunlit market square at crowd-knee height; a hand pressing a blueberry to a worn
-             oath stone, juice tracing old grooves; ringed witnesses in noon light; the oath-taker's
-             shadow stretching into a dark alley, subtly misaligned; bright noon against one cold dark"
+      hint: "sunlit market square at crowd-knee height; a hand pressing a blueberry to a worn oath stone, juice tracing old grooves; ringed witnesses in noon light; the oath-taker's shadow stretching into a dark alley, subtly misaligned; bright noon against one cold dark"
     }
     resonance: "the stone's grooves are the public ledger; the misaligned shadow is the private account"
     open: "how overt is the shadow's misalignment? A degree reads as dread; more reads as horror. The chamber's shadow-mood should calibrate it."
@@ -569,9 +537,7 @@
         "coins glint on the well floor, each blurred under a different face",
         "the rope descends out of lantern reach, taut, though no bucket was lowered tonight"
       ]
-      hint: "looking down a stone well by lantern light from the coping; still water layered
-             with faint overlapping faces older than the viewers; coins deep below; a taut rope
-             running into the dark; gold lantern ring against black-teal water"
+      hint: "looking down a stone well by lantern light from the coping; still water layered with faint overlapping faces older than the viewers; coins deep below; a taut rope running into the dark; gold lantern ring against black-teal water"
     }
     resonance: "the well keeps the faces briefly — but the debt one of them is naming keeps itself"
     open: "does Boof's own reflection appear among the kept faces? If yes, the plate quietly claims the dog has been here before the story says so."
@@ -590,9 +556,7 @@
         "the ninth shard's arc bends hearthward, toward the one house still dark",
         "on the slate beside the chimney, a first shard fragment, still humming faintly gold"
       ]
-      hint: "rooftop vantage at deep blue dusk; nine gold shard-trails arcing across the sky,
-             each above a newly lit window; small figures beginning to climb and collect;
-             one arc bending toward a dark house; a glowing fragment on the near slate"
+      hint: "rooftop vantage at deep blue dusk; nine gold shard-trails arcing across the sky, each above a newly lit window; small figures beginning to climb and collect; one arc bending toward a dark house; a glowing fragment on the near slate"
     }
     resonance: "the arcs draw the listening map — the dark house is on it precisely by staying dark"
     open: "are the honks sound-made-solid (canon-forward) or falling signal-glass (image-forward)? The prose should own this before the plate does."
@@ -611,9 +575,7 @@
         "builders stand back in a loose ring, tools down, heads up",
         "one small ornament — a carved berry boss — waits on a workbench, not yet earned its beam"
       ]
-      hint: "monumental timber-and-bone frame from ground level looking up; sheets of backlit
-             veil-cloth and dust shivering off it in morning light; still, honest joinery; builders
-             watching from below; one carved ornament waiting on a bench; white-gold on deep teal"
+      hint: "monumental timber-and-bone frame from ground level looking up; sheets of backlit veil-cloth and dust shivering off it in morning light; still, honest joinery; builders watching from below; one carved ornament waiting on a bench; white-gold on deep teal"
     }
     resonance: "the bench-bound ornament is the epigraph in one object — after the load path is honest"
     open: "is Bone.land's frame timber, bone, or both? The plate leans timber-with-bone-tones; canon should commit."
@@ -632,9 +594,7 @@
         "at the bloom in the near crack, a bee works, unbothered by topology",
         "hearthward through the stair's arch, a table is set as if the shortcut were ordinary"
       ]
-      hint: "an Escher-quiet stone stair in morning light, rejoining itself where it shouldn't,
-             its impossible seam traced in flowering vines; a bee at a near blossom; a set
-             breakfast table visible through the arch; soft gold, living green, calm teal"
+      hint: "an Escher-quiet stone stair in morning light, rejoining itself where it shouldn't, its impossible seam traced in flowering vines; a bee at a near blossom; a set breakfast table visible through the arch; soft gold, living green, calm teal"
     }
     resonance: "the bee and the breakfast table refuse the paradox any drama — contradiction, fed from, becomes furniture"
     open: "how loud is the impossibility? The seed keeps it quiet (you notice on the second look); the awakening mood might want it quieter still."
@@ -653,9 +613,7 @@
         "cargo rafts ride the join deliberately, one hull in each water",
         "on the rail, two mooring ropes spliced into one line — every original strand still traceable"
       ]
-      hint: "low bridge over a two-toned river confluence at late gold hour; berry-dark and
-             pale chalk currents sharing one bed with a living unblended seam; rafts riding the
-             join; a spliced rope on the rail in near focus; warm light, patient water"
+      hint: "low bridge over a two-toned river confluence at late gold hour; berry-dark and pale chalk currents sharing one bed with a living unblended seam; rafts riding the join; a spliced rope on the rail in near focus; warm light, patient water"
     }
     resonance: "the splice is the treaty the river signs every hour — union with sources intact"
     open: "do the two waters need names in prose before the plate ships, or is the image allowed to precede the naming?"
@@ -674,20 +632,15 @@
         "a reading stool worn low, sized for anyone; beside it a water bowl, sized for someone",
         "dust motes turn in the light lane like the pollen rings of the first grove, going the other way"
       ]
-      hint: "circular archive interior from floor level; ringed shelves with deliberate gaps;
-             a long lane of morning light from an open door reaching a center desk where a ledger's
-             page mirrors the room itself; a low stool and a water bowl; warm gold lane through
-             held teal dusk"
+      hint: "circular archive interior from floor level; ringed shelves with deliberate gaps; a long lane of morning light from an open door reaching a center desk where a ledger's page mirrors the room itself; a low stool and a water bowl; warm gold lane through held teal dusk"
     }
-    resonance: "the water bowl is the whole promise — the record-house expects the witness back;
-                the self-showing page is inspectability made literal; the grove's rings return open"
+    resonance: "the water bowl is the whole promise — the record-house expects the witness back; the self-showing page is inspectability made literal; the grove's rings return open"
     open: "does the ledger page truly render the room (recursive, bold) or hold only the room's floor plan (quieter)? This is the series' last note — it should rhyme with how loud chamber 11 chose to be."
   }
 ]
 
 ?"decision_clearings"{
-  .note: "questions arranged by the scale of world they alter; mosey from weather to object
-          before answering — a local choice may reveal itself as a series law"
+  .note: "questions arranged by the scale of world they alter; mosey from weather to object before answering — a local choice may reveal itself as a series law"
 
   ?series_weather[
     { seal: "overprint on the lower hearthward art, or reserve a margin band?" }
@@ -754,11 +707,8 @@
 }
 
 !"canon_gates"[
-  .note: "the only linear portion of the terrain — gates protect imaginative draft from
-          becoming accidental fact, and protect finished art from becoming detached decoration"
-  .state_tracking: "gate state per chamber is machine-checkable in @spw/state/plates-manifest.spw
-                     (!state field: draft|grounded|study|public) — fire a gate here, then update
-                     the matching ^chamber[NN] record; verify with npm run spw:plates -- --check"
+  .note: "the only linear portion of the terrain — gates protect imaginative draft from becoming accidental fact, and protect finished art from becoming detached decoration"
+  .state_tracking: "gate state per chamber is machine-checkable in @spw/state/plates-manifest.spw (!state field: draft|grounded|study|public) — fire a gate here, then update the matching ^chamber[NN] record; verify with npm run spw:plates -- --check"
 
   !ground_scene{
     enter_when: "a seed's decision clearing has enough language to commit"
@@ -783,8 +733,7 @@
 ]
 
 &"neighboring_surfaces"{
-  .note: "paths out of this document — plates are where prose, interface, publishing,
-          and world law briefly occupy the same rectangle"
+  .note: "paths out of this document — plates are where prose, interface, publishing, and world law briefly occupy the same rectangle"
 
   &atelier{
     href: ~".spw/surfaces/atelier.spw#media_production"

@@ -20,6 +20,9 @@ jobs:
 
       - run: npm ci
 
+      - name: spw:lint (parse every .spw file with the real spw-workbench grammar)
+        run: npm run spw:lint -- --strict
+
       - name: build (chapters:build -> spw:export -> vite build -> spw:project -> dist:static)
         run: npm run build
 

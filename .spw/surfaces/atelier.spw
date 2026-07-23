@@ -230,8 +230,7 @@
     refs: [~".spw/surfaces/platform.spw#phase.04"]
     status: canon_drafted
     canon: ".spw/surfaces/plates.spw — series identity + plate 01 grounded + seeds 02-13 awaiting creative grounding"
-    .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run;
-            only chamber 01 had scene blocks, so plates.spw drafts the missing scene canon for review"
+    .note: "unblocks audit P0 chapter-og-images-empty — this is the atelier's first production run; only chamber 01 had scene blocks, so plates.spw drafts the missing scene canon for review"
   }
 
   ^phase[03: "Alignment probe kit"]{

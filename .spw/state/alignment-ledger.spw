@@ -34,10 +34,7 @@
     surface: "book/images/01.png … 13.png (chapter og:image)"
     evidence: "1600x900 plates at ~6–28KB — near-empty shells behind strong loglines"
     !class: defect
-    resolution: "open — atelier phase 02 plate production; platform phase 04.
-                 gate state now tracked per chamber in @spw/state/plates-manifest.spw;
-                 clears per-chamber as !graduate_plate fires (state -> public) and
-                 npm run spw:plates -- --check passes at the 100KB floor"
+    resolution: "open — atelier phase 02 plate production; platform phase 04. gate state now tracked per chamber in @spw/state/plates-manifest.spw; clears per-chamber as !graduate_plate fires (state -> public) and npm run spw:plates -- --check passes at the 100KB floor"
     &source: "audit-2026-07-16#chapter-og-images-empty; spw:probes plate_weight (now review-class per chamber pending manifest state)"
   }
 
