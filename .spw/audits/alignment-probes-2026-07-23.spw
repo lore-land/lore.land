@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 ^meta{
-  ran: "2026-07-23T10:46:46.732Z"
+  ran: "2026-07-23T20:31:36.517Z"
   kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes)"
   ledger: ".spw/state/alignment-ledger.spw"
   scope: "static half of the five ledger probes — visual probes remain manual"
@@ -40,7 +40,7 @@
     axis: material
     class: review
     surface: "book/images/02.png"
-    evidence: "26.6KB plate behind 'The First Echo' — under 100KB threshold (atelier phase 02; plates-manifest state: draft)"
+    evidence: "26.6KB plate behind 'The First Echo' — under 100KB threshold (atelier phase 02; plates-manifest state: grounded)"
   }
   ^finding[03]{
     axis: material

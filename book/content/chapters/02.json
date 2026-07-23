@@ -104,6 +104,18 @@
     },
     {
       "type": "custom-echo",
+      "scene": {
+        "vantage": "belly-low in old leaves at the clearing's rim, ears up, one paw lifted mid-step",
+        "light": "green noon strained through canopy; brighter rings where the air itself is repeating",
+        "scent": "wet bark, crushed fern, and the same trace of woodsmoke arriving twice",
+        "edges": [
+          "the grove's trunks stand in near-circles, like sound drawn slow",
+          "pollen hangs in ring after ring around a bare center stone",
+          "a spoken word's shape shivers the hanging dust without wind",
+          "hearthward, one path out — the only line the circles do not close"
+        ],
+        "hint": "forest clearing at green noon seen from ground level; concentric rings of hanging pollen and light around a bare center stone; trunks curved in echo arcs; one dark path breaking the circles; deep green cut by pale gold rings"
+      },
       "content": [
         {
           "type": "paragraph",

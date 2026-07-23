@@ -16,7 +16,7 @@
 
 ^"plates_manifest"[
   ^chamber[01]{ #slug:"dawn-in-boonland"           !state:grounded %version:0 .file:"book/images/01.png" &ledger:"AL-001" }
-  ^chamber[02]{ #slug:"the-first-echo"             !state:draft    %version:0 .file:"book/images/02.png" &ledger:"AL-001" }
+  ^chamber[02]{ #slug:"the-first-echo"             !state:grounded %version:0 .file:"book/images/02.png" &ledger:"AL-001" }
   ^chamber[03]{ #slug:"signals-in-the-sand"        !state:draft    %version:0 .file:"book/images/03.png" &ledger:"AL-001" }
   ^chamber[04]{ #slug:"crosswind-council"          !state:draft    %version:0 .file:"book/images/04.png" &ledger:"AL-001" }
   ^chamber[05]{ #slug:"the-quiet-rift"             !state:draft    %version:0 .file:"book/images/05.png" &ledger:"AL-001" }

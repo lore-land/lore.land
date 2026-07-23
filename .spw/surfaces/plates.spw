@@ -74,8 +74,8 @@
 }
 
 ^"plate_shelf"[
-  { 01: "measure / absence / accounting"        status: grounded  anchor: "weighhouse" }
-  { 02: "echo / recurrence / ecology"            status: draft     anchor: "grove" }
+  { 01: "measure / absence / accounting"         status: grounded  anchor: "weighhouse" }
+  { 02: "echo / recurrence / ecology"            status: grounded  anchor: "grove" }
   { 03: "route / promise / cartography"          status: draft     anchor: "sand flats" }
   { 04: "tradeoff / weather / governance"        status: draft     anchor: "council hill" }
   { 05: "fracture / silence / bookkeeping"       status: draft     anchor: "counting room" }
@@ -86,7 +86,7 @@
   { 10: "load / honesty / architecture"          status: draft     anchor: "great frame" }
   { 11: "paradox / nourishment / topology"       status: draft     anchor: "returning stair" }
   { 12: "union / provenance / confluence"        status: draft     anchor: "low bridge" }
-  { 13: "record / recursion / inspectability"     status: draft     anchor: "open archive" }
+  { 13: "record / recursion / inspectability"    status: draft     anchor: "open archive" }
 ]
 
 &"domain_constellations"{
@@ -411,7 +411,12 @@
   .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
 
   ^seed[02: "The First Echo"]{
-    status: draft
+    status: grounded
+    <grounded>{
+      &projection: { json: ~"book/content/chapters/02.json#sections.3" mirror: ~".spw/chapters/02.spw" }
+      %facets:     [vantage, light, scent, edges, hint]
+      when:        "2026-07-23"
+    }
     stakes: { logline: "The grove repeats what it cannot keep.", epigraph: "Repetition is not proof. It is only pressure." }
     proposed_scene: {
       vantage: "belly-low in old leaves at the clearing's rim, ears up, one paw lifted mid-step"
