@@ -21,7 +21,8 @@
     "spw:plates": "node .spw/tools/plates-manifest.mjs",
     "spw:lint": "tsx .spw/tools/spw-lint.mjs",
     "spw:seed-bundle": "node book/scripts/tools/bundle-spw-seed.mjs",
-    "spw:seed-bundle:verify": "node book/scripts/tools/bundle-spw-seed.mjs --verify"
+    "spw:seed-bundle:verify": "node book/scripts/tools/bundle-spw-seed.mjs --verify",
+    "spw:trope-prompt": "node .spw/tools/trope-prompt.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",
