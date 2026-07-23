@@ -3,7 +3,7 @@
   "title": "Dawn in Boon.land",
   "logline": "Six kitchens go cold. A dog who works for fruit finds the clean report is the thief.",
   "epigraph": "What the pack cannot smell does not count as delivered.",
-  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the weighhouse who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for.",
+  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the Commons Scale who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for.",
   "mood": "boon",
   "period": "spring",
   "pillars": [
@@ -50,8 +50,8 @@
       "kicker": "Guide"
     },
     {
-      "label": "Weighhouse",
-      "href": "/world/civic-magic.html#weighhouse",
+      "label": "Commons Scale",
+      "href": "/world/civic-magic.html#commons-scale",
       "kicker": "Office"
     },
     {
@@ -140,7 +140,7 @@
       "href": "/characters/boof.html",
       "terms": [
         "Boof",
-        "weighhouse",
+        "Commons Scale",
         "paws",
         "sniff"
       ]
@@ -175,7 +175,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the weighhouse porch down into the mist like a long table set for a town that had not yet woken. By noon the light would be weighed, bottled, and carried to the kitchens that had burned winter on promises. Boof’s job was simple if you said it out loud: make the promises agree with the scale. She was a dog of the weighhouse. Nose low. Ears honest. Paid, when the count was true, in blueberries."
+          "text": "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the Commons Scale porch down into the mist like a long table set for a town that had not yet woken. By noon the light would be weighed, bottled, and carried to the kitchens that had burned winter on promises. Boof’s job was simple if you said it out loud: make the promises agree with the scale. She was a dog of the Commons Scale. Nose low. Ears honest. Paid, when the count was true, in blueberries."
         },
         {
           "type": "paragraph",
@@ -188,7 +188,7 @@
         "hook": "missing-measure"
       },
       "scene": {
-        "vantage": "dog-height, just inside the weighhouse doors, looking down the rows",
+        "vantage": "dog-height, just inside the Commons Scale doors, looking down the rows",
         "light": "first sun through the door slats; brass pans still night-cold; the field beyond hazed gold",
         "scent": "wet fur, cold brass, chalk dust, wax seals—and under it all, six absences shaped like blueberries",
         "edges": [
@@ -197,7 +197,7 @@
           "crates stand in counted rows between chalk lines worn soft by cart wheels",
           "beyond the porch, berry rows run downhill until the mist takes them"
         ],
-        "hint": "interior of a timber weighhouse at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern at left, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
+        "hint": "interior of the timber Commons Scale at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern at left, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
       }
     },
     {
@@ -402,11 +402,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "By sunset, Boof no longer had a desk in the weighhouse. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries she would not take for a false count, and the awkward attention of everyone who had mistaken a clean record for a just one. It was not a victory parade. It was something better for a pack: a beginning that could survive inspection. Old noses would argue with new chases about what to do next. That was fine. The trail was open. The berries still leaned hearthward. And somewhere downhill, six streets waited for light that now had names."
+          "text": "By sunset, Boof no longer had a desk in the Commons Scale. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries she would not take for a false count, and the awkward attention of everyone who had mistaken a clean record for a just one. It was not a victory parade. It was something better for a pack: a beginning that could survive inspection. Old noses would argue with new chases about what to do next. That was fine. The trail was open. The berries still leaned hearthward. And somewhere downhill, six streets waited for light that now had names."
         }
       ],
       "scene": {
-        "vantage": "the weighhouse steps at sunset, on the side the sun kept warm",
+        "vantage": "the Commons Scale steps at sunset, on the side the sun kept warm",
         "light": "level amber; the berry rows lit from behind, the square emptying to blue",
         "scent": "warm stone, paper carried all day, the first cold drifting up from six streets",
         "edges": [

@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 ^meta{
-  ran: "2026-07-23T20:31:36.517Z"
+  ran: "2026-07-23T21:38:47.010Z"
   kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes)"
   ledger: ".spw/state/alignment-ledger.spw"
   scope: "static half of the five ledger probes — visual probes remain manual"

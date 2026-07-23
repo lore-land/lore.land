@@ -74,7 +74,7 @@
 }
 
 ^"plate_shelf"[
-  { 01: "measure / absence / accounting"         status: grounded  anchor: "weighhouse" }
+  { 01: "measure / absence / accounting"         status: grounded  anchor: "commons scale" }
   { 02: "echo / recurrence / ecology"            status: grounded  anchor: "grove" }
   { 03: "route / promise / cartography"          status: draft     anchor: "sand flats" }
   { 04: "tradeoff / weather / governance"        status: draft     anchor: "council hill" }
@@ -390,10 +390,10 @@
 ^"plate"[01: "Dawn in Boon.land"]{
   status: grounded
   source_scenes: "book/content/chapters/01.json — six scene blocks, all live"
-  chosen_scene: "The Missing Measure (weighhouse dawn)"
+  chosen_scene: "The Missing Measure (Commons Scale dawn)"
   .why: "the door image should be the chamber's first breath, not its climax — Publication is the stronger drama but belongs inside; the door smells of cold brass and absence, which is the mystery's true shape"
   prompt_canon: {
-    vantage: "dog-height, just inside the weighhouse doors, looking down the rows"
+    vantage: "dog-height, just inside the Commons Scale doors, looking down the rows"
     light: "first sun through the door slats; brass pans still night-cold; the field beyond hazed gold"
     key_edges: [
       "hanging balance scale at center beam, both pans at a dog's eye level",
@@ -401,10 +401,10 @@
       "counted crate rows between chalk lines worn soft",
       "berry rows running downhill dawnward until the mist takes them"
     ]
-    hint: "interior of a timber weighhouse at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
+    hint: "interior of the timber Commons Scale at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
   }
-  alt_draft: "Inside a wooden weighhouse at dawn: a hanging balance scale and an open ledger, rows of faintly glowing berry crates, low to the ground as a dog sees it."
-  study_path: "book/images/plate-01-weighhouse-v1.png"
+  alt_draft: "Inside the Commons Scale at dawn: a hanging balance scale and an open ledger, rows of faintly glowing berry crates, low to the ground as a dog sees it."
+  study_path: "book/images/plate-01-commons-scale-v1.png"
 }
 
 ^"scene_seeds"[

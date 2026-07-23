@@ -20,11 +20,11 @@
   ],
   "offices": [
     {
-      "id": "weighhouse",
-      "fantasy": "Dawnward Weighhouse",
+      "id": "commons-scale",
+      "fantasy": "The Commons Scale",
       "sigil": "scale",
-      "surface": "Where boonberry light is measured at dawn and sealed for distribution.",
-      "civic": "Measurement, audit, and the public claim that a total is true.",
+      "surface": "Where the Boonberry Commons measures its own dawn harvest and seals it for distribution.",
+      "civic": "Measurement, audit, and the public claim that a total is true — owned by the Commons, not a landlord.",
       "craft": "Reporting, accounting, KPIs, and the pressure to publish clean numbers.",
       "storyHook": "What happens when the seal is intact but the measure is wrong?",
       "chamber": 1

@@ -6,7 +6,7 @@
 
 ^[chapter/02]{
   title: "The First Echo"
-  description: "Chapter 2 of Lore.Land: The First Echo. After the balcony reading, Boof—dog of the weighhouse—follows an incomplete entry into a grove that replays testimony without guaranteeing truth."
+  description: "Chapter 2 of Lore.Land: The First Echo. After the balcony reading, Boof—dog of the Commons Scale—follows an incomplete entry into a grove that replays testimony without guaranteeing truth."
   mood: "grove"
   period: "spring"
   chapter_path: "/book/chapter/02/"
@@ -29,7 +29,7 @@
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
-    excerpt: "The incomplete entry led them into the grove beyond the weighhouse road—a place the maps labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leaves:..."
+    excerpt: "The incomplete entry led them into the grove beyond the Commons Scale road—a place the maps labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leav..."
     route: ^[chapter/02/s02]{open}
   >
   s03: <

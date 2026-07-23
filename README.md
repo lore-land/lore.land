@@ -10,7 +10,7 @@ The homepage is a static, minimalist entrance. Progressive enhancement may offer
 
 ### Dual register (story first)
 
-The monument is entertainment. Under the fantasy names sit **civic offices**—weighhouse, kitchens, council, archive—that encode real values and process pressure (audit, delivery, governance, memory). A folded “second reading” on [Civic magic](/world/civic-magic.html) makes the craft analogy available without making the site about business owners.
+The monument is entertainment. Under the fantasy names sit **civic offices**—the Commons Scale, kitchens, council, archive—that encode real values and process pressure (audit, delivery, governance, memory). A folded “second reading” on [Civic magic](/world/civic-magic.html) makes the craft analogy available without making the site about business owners.
 
 The [Scriptorium](/scriptorium/) shows the writing team as an in-world order, including **patron seals** (honest sponsorship / paid thresholds) and a quiet atelier door for anyone who wants a neighboring monument raised elsewhere.
 

@@ -579,7 +579,7 @@ function initMonumentEntrance() {
   const destroySegmentKeys = initSegmentKeyboard(document);
   const destroyPassAlong = initPassAlong({
     title: 'Lore.Land — A Worldbuilding Monument',
-    text: 'Enter a seeded world. Chapter One opens at the weighhouse.',
+    text: 'Enter a seeded world. Chapter One opens at the Commons Scale.',
     url: typeof location !== 'undefined' ? `${location.origin}/` : 'https://lore.land/',
     mount: document.querySelector('.hub-hero .hub-actions'),
     label: 'Pass the monument',

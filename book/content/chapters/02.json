@@ -3,7 +3,7 @@
   "title": "The First Echo",
   "logline": "The grove repeats what it cannot keep.",
   "epigraph": "Repetition is not proof. It is only pressure.",
-  "description": "Chapter 2 of Lore.Land: The First Echo. After the balcony reading, Boof—dog of the weighhouse—follows an incomplete entry into a grove that replays testimony without guaranteeing truth.",
+  "description": "Chapter 2 of Lore.Land: The First Echo. After the balcony reading, Boof—dog of the Commons Scale—follows an incomplete entry into a grove that replays testimony without guaranteeing truth.",
   "mood": "grove",
   "period": "spring",
   "pillars": [
@@ -78,7 +78,7 @@
             },
             {
               "type": "text",
-              "text": " beyond the weighhouse road—a place the maps labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leaves: inventory counts, a cough from a stove room, a councilor saying "
+              "text": " beyond the Commons Scale road—a place the maps labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leaves: inventory counts, a cough from a stove room, a councilor saying "
             },
             {
               "type": "custom-echo",

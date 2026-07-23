@@ -108,7 +108,7 @@ export const MONUMENT_LEXICON = Object.freeze({
     id: 'guide',
     label: 'Guide',
     href: '/characters/boof.html',
-    terms: Object.freeze(['boof', 'dog', 'weighhouse', 'clerk', 'paw', 'paws'])
+    terms: Object.freeze(['boof', 'dog', 'clerk', 'paw', 'paws'])
   }),
   cadence: Object.freeze({
     id: 'cadence',

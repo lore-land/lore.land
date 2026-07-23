@@ -6,7 +6,7 @@
 
 ^[chapter/01]{
   title: "Dawn in Boon.land"
-  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the weighhouse who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for."
+  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the Commons Scale who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for."
   mood: "boon"
   period: "spring"
   chapter_path: "/book/chapter/01/"
@@ -23,7 +23,7 @@
     handle: "section/01"
     type: "section"
     title: "The Missing Measure"
-    excerpt: "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the weighhouse porch down into the mist like ..."
+    excerpt: "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the Commons Scale porch down into the mist li..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
@@ -76,7 +76,7 @@
   s09: <
     handle: "custom-boof/09"
     type: "custom-boof"
-    excerpt: "By sunset, Boof no longer had a desk in the weighhouse. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries sh..."
+    excerpt: "By sunset, Boof no longer had a desk in the Commons Scale. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries..."
     route: ^[chapter/01/s09]{open}
   >
 ]
