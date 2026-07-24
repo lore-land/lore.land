@@ -1,0 +1,75 @@
+# Apocrypha — an uncollected companion volume
+# HAND-AUTHORED — spw:export regenerates every neighbor in this directory, never this file.
+# Canon-adjacent whispers, filed outside the bound edition: one per chapter, overflow
+# testimony the polished archive declined to set in type.
+# Chapter 02 names the failure mode ("overflow storage for stories published too cleanly");
+# this volume is where that overflow condenses into canon-adjacent record.
+#>chapter_apocrypha
+#:chapter-canon #!apocrypha
+
+^[apocrypha]{
+  premise: "Canon-adjacent testimony the bound edition declined to set in type — filed outside the volume, catalogued by moonlight."
+  =boon@polish{ @overflow }
+  rule: "A whisper is a summons, not evidence — chapter 02's echo-rule binds the apocrypha itself."
+}
+
+#[apocrypha/unindexed][
+  a01: <
+    &chapter: ~".spw/chapters/01.spw#chapter_01"
+    whisper: "The first dawn rose twice; the uncounted hour between the two is where the dew keeps its silver."
+  >
+  a02: <
+    &chapter: ~".spw/chapters/02.spw#chapter_02"
+    whisper: "One echo in the grove speaks in a voice that has not been born yet, and it is practicing."
+  >
+  a03: <
+    &chapter: ~".spw/chapters/03.spw#chapter_03"
+    whisper: "The sand kept both signals; the wind, a loyal courier, delivered only the louder one."
+  >
+  a04: <
+    &chapter: ~".spw/chapters/04.spw#chapter_04"
+    whisper: "The council's mirror still holds the vote that was almost taken, and polishes it nightly."
+  >
+  a05: <
+    &chapter: ~".spw/chapters/05.spw#chapter_05"
+    whisper: "The rift is quiet because the song fits it exactly, like a blade returned to its sheath."
+  >
+  a06: <
+    &chapter: ~".spw/chapters/06.spw#chapter_06"
+    whisper: "One lantern in Bonk City burns on the inside of the wall, lighting rooms that were bricked over."
+  >
+  a07: <
+    &chapter: ~".spw/chapters/07.spw#chapter_07"
+    whisper: "The oath keeps a second clause, sworn in shadow, that binds only at noon when shadows are smallest."
+  >
+  a08: <
+    &chapter: ~".spw/chapters/08.spw#chapter_08"
+    whisper: "The Watering Eye blinks once per verse; something patient beneath the water is keeping score."
+  >
+  a09: <
+    &chapter: ~".spw/chapters/09.spw#chapter_09"
+    whisper: "The ninth honk was never sounded; its shard is the one that fits every gap in the other eight."
+  >
+  a10: <
+    &chapter: ~".spw/chapters/10.spw#chapter_10"
+    whisper: "Bone.land hums at the pitch of a ledger being closed gently, which is also the pitch of forgiveness."
+  >
+  a11: <
+    &chapter: ~".spw/chapters/11.spw#chapter_11"
+    whisper: "The bloom opened before its seed was planted; both dates are true, and the garden declines to apologize."
+  >
+  a12: <
+    &chapter: ~".spw/chapters/12.spw#chapter_12"
+    whisper: "The last confluence keeps a tributary that flows upstream, carrying letters back to their senders."
+  >
+  a13: <
+    &chapter: ~".spw/chapters/13.spw#chapter_13"
+    whisper: "The canon's final page lists everything it left out, alphabetized by regret and shelved in moonlight."
+  >
+]
+
+~[apocrypha/adaptation]{
+  intent: "Whispers are seeds for chapter prose, foreshadow marks, or trope-prompt cards — never load-bearing plot."
+  extension_rule: "A whisper may graduate into chapter prose; when it does, retire it here and note which chamber took it."
+  graduation_probe: "Grep the whisper's key phrase under book/chapter/ before deleting an entry."
+}

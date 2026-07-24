@@ -1,0 +1,106 @@
+# Dragon's Egg — a mysterious world-seed (dregg)
+# HAND-AUTHORED surface. Deliberately underspecified: the Egg's meaning is not fixed,
+# so chambers can build on it without contradicting a definition that does not exist yet.
+# Prompt-rich by design — its blocks seed image generation (scene schema + data-* marks).
+# Wordplay lineage: Dragon's Egg -> dregg -> the dregs that settle to the bottom and keep their heat.
+#>dragons_egg
+#:worldseed #!mystery
+
+^"dragon_egg"{
+  .premise: "A dragon's egg surfaces in Boon.land, warm and unminted — Boof is the first to find it and the last to dare name it."
+  !state: "unhatched"
+  #gloss: "dregg — the residue that settles to the bottom and is still warm to the touch."
+  &settles_into: ~".spw/chapters/apocrypha.spw#chapter_apocrypha"
+  =drift{ ~".spw/chapters/02.spw#chapter_02" }
+}
+
+?"unknowns"[
+  "Whose clutch is it, and did they mean to leave it?"
+  "Does it warm the finder or mark them?"
+  "Is the heat a countdown, an invitation, or a debt?"
+  "What hatches — a creature, a place, or a price?"
+]
+
+$"worth"{
+  .note: "Worth here is diegetic and unfixed — an in-world mystery, never a real instrument to be priced or promoted."
+  reads_as: "heat, not coin"
+  =leans{ ~".spw/surfaces/dragon-egg.spw#dragons_egg" }
+}
+
+&"reader_registers"{
+  @boof: "tracks the Egg by heat-scent and refuses to name what it is until it moves."
+  @grove: "echoes the Egg back a beat late, so there always seems to be a second one just out of sight."
+}
+
+^<egg_flow>{
+  .physics: "The Egg gathers charge chamber by chamber (left brace holds) and discharges where the shell cracks (right brace)."
+  =rises{ ~".spw/chapters/09.spw#chapter_09" }
+  =breaks{ ~".spw/chapters/11.spw#chapter_11" }
+}
+
+%"dials"{
+  %heat: "unknown; warm to the cold-blooded and the warm-blooded alike."
+  %cracks: "counted differently by every witness."
+  %clutch: "one, unless the grove of echoes is repeating it."
+}
+
+!"prompt_seeds"[
+  seed_01: {
+    scene: "a warm ovoid stone half-buried in scorched boonberry loam, a faint scale-pattern surfacing under the ash"
+    vantage: "low and kneeling, a hand's breadth from the shell"
+    light: "pre-dawn coal-glow leaking through hairline cracks"
+    scent: "hot iron over crushed berries"
+    edges: "unmelted frost ringing the rim of the burn"
+    hint: "one crack is shaped like a door"
+    "data-motif": "egg"
+    "data-foreshadow": "hatch"
+  }
+  seed_02: {
+    scene: "Boof circling the Egg at dusk, hackles low, casting a shadow that points the wrong way"
+    vantage: "over the dog's shoulder, the Egg small and bright in the middle distance"
+    light: "last ember-red raking across the flats"
+    scent: "wet fur and warm stone"
+    edges: "the grass nearest the Egg has grown, everywhere else it is winter"
+    hint: "the shadow points toward the reader"
+    "data-motif": "egg"
+    "data-trope": "the-guardian-who-does-not-understand"
+  }
+  seed_03: {
+    scene: "the Egg alone on a night-market stall of unlit lanterns, every lantern leaning toward it"
+    vantage: "eye level across the stall, Boof's silhouette keeping watch at the edge of frame"
+    light: "the Egg is the only source, throat-warm and gold"
+    scent: "smoke that has not caught yet"
+    edges: "the unlit lanterns lean toward the Egg as if waiting to be lit"
+    hint: "the Egg's reflection shows a market that is not this one"
+    "data-motif": "lantern"
+    "data-foreshadow": "hatch"
+  }
+]
+
+*"variations"{
+  ember: "cracks glow orange, ash still settling, heat rising."
+  cold: "shell gone grey, heat withdrawn inward — more ominous than the fire."
+  waking: "a slit pupil of light widening behind the shell."
+}
+
+^"placements"[
+  p09: {
+    chamber: ~".spw/chapters/09.spw#chapter_09"
+    role: "the ninth honk that was never sounded — its shard is the Egg, and it warms."
+  }
+  p11: {
+    chamber: ~".spw/chapters/11.spw#chapter_11"
+    role: "bloom before seed — the Egg is the seed that arrives late and is right anyway."
+  }
+  p13: {
+    chamber: ~".spw/chapters/13.spw#chapter_13"
+    role: "the door the canon leaves open is shell-shaped."
+  }
+]
+
+~"adaptation"{
+  intent: "A mystery to build on, not a definition to enforce — leave the Egg's meaning open on purpose."
+  image_hook: "Feed a prompt_seed's scene/light/scent/edges/hint to an image model; the data-* marks tag the resulting plate for motif tracking."
+  extension_rule: "Add unknowns and prompt_seeds freely; resolve one only by writing the chamber that answers it, then retire it here."
+  guard: "The Egg is diegetic worldbuilding. It must not be wired to promote, price, or drive demand for any real token."
+}

@@ -6,7 +6,7 @@
   c01: {
     title: "Dawn in Boon.land"
     &file: @spw/chapters/01.spw
-    sections: 9
+    sections: 7
   }
   c02: {
     title: "The First Echo"
@@ -84,5 +84,10 @@
   "chapter-11": "#>chapter_11"
   "chapter-12": "#>chapter_12"
   "chapter-13": "#>chapter_13"
+}
+
+~[apocrypha]{
+  ={ ~".spw/chapters/apocrypha.spw#chapter_apocrypha" }
+  note: "Hand-authored companion shelf; spw:export leaves it untouched."
 }
 

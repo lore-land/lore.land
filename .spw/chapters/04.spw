@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-04]{optional}
 }
 
+^[chapter/04/spine]{
+  =prev{ ~".spw/chapters/03.spw#chapter_03" }
+  =next{ ~".spw/chapters/05.spw#chapter_05" }
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; the mirror turns its silver; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
+}
+
 ^[chapter/04/sections][
   s01: <
     handle: "custom-boof/01"
@@ -58,6 +65,28 @@
     route: ^[chapter/04/s06]{open}
   >
 ]
+
+&[chapter/04/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  mirror: <
+    register: "a glass that returns the council’s procedure with the spell reversed"
+    .enters: "custom-mirror/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/04/measures]{
+  %sections: 6
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/04/lore]{
   notes: [

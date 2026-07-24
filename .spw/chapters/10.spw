@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-10]{optional}
 }
 
+^[chapter/10/spine]{
+  =prev{ ~".spw/chapters/09.spw#chapter_09" }
+  =next{ ~".spw/chapters/11.spw#chapter_11" }
+  weave: "<> <> <> [] {} <> <>"
+  reading: "Boof pads in on a thread of scent; a bonk rings like a struck bell; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+}
+
 ^[chapter/10/sections][
   s01: <
     handle: "custom-boof/01"
@@ -64,6 +71,28 @@
     route: ^[chapter/10/s07]{open}
   >
 ]
+
+&[chapter/10/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  bonk: <
+    register: "a blunt bell-note that shakes stray magic out of the meter"
+    .enters: "custom-bonk/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/10/measures]{
+  %sections: 7
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/10/lore]{
   notes: [

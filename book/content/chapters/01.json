@@ -1,26 +1,21 @@
 {
   "chapterNumber": 1,
   "title": "Dawn in Boon.land",
-  "logline": "Six kitchens go cold. A dog who works for fruit finds the clean report is the thief.",
-  "epigraph": "What the pack cannot smell does not count as delivered.",
-  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the Commons Scale who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for.",
+  "logline": "At dawn, Boof digs a warm egg out of a frozen furrow — and every map in Boon.land pretends it was never there.",
+  "epigraph": "Some warmth arrives before anyone agrees to have ordered it.",
+  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for fruit and honest scents—unearths a warm, unclaimed egg in a field still white with frost, and follows its heat toward a mystery the maps refuse to hold.",
   "mood": "boon",
   "period": "spring",
   "pillars": [
     "worldbuilding",
     "intrigue",
-    "marketing"
+    "wonder"
   ],
   "topics": [
     {
-      "id": "promise",
-      "label": "Public promise",
-      "href": "/topics/#promise"
-    },
-    {
-      "id": "audience",
-      "label": "Who receives",
-      "href": "/topics/#audience"
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html"
     },
     {
       "id": "reward",
@@ -28,19 +23,19 @@
       "href": "/topics/#reward"
     },
     {
-      "id": "wonder",
-      "label": "Boonberry commons",
-      "href": "/world/boonberry-commons.html"
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
     },
     {
-      "id": "experience",
-      "label": "Wonder path",
-      "href": "/scriptorium/#experience-path"
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
     },
     {
-      "id": "voice",
-      "label": "Fool’s register",
-      "href": "/topics/#voice"
+      "id": "memory",
+      "label": "Living memory",
+      "href": "/topics/#memory"
     }
   ],
   "relatedRoutes": [
@@ -50,19 +45,14 @@
       "kicker": "Guide"
     },
     {
-      "label": "Commons Scale",
-      "href": "/world/civic-magic.html#commons-scale",
-      "kicker": "Office"
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html",
+      "kicker": "World"
     },
     {
       "label": "Wonder path",
       "href": "/scriptorium/#experience-path",
       "kicker": "Experience"
-    },
-    {
-      "label": "Boonberry commons",
-      "href": "/world/boonberry-commons.html",
-      "kicker": "World"
     },
     {
       "label": "Chamber 02 · Echo",
@@ -71,41 +61,6 @@
     }
   ],
   "lexicon": [
-    {
-      "id": "promise",
-      "label": "Public promise",
-      "href": "/topics/#promise",
-      "terms": [
-        "promise",
-        "promises",
-        "ledger",
-        "ledgers",
-        "seal",
-        "seals",
-        "measure",
-        "measures",
-        "scale",
-        "record",
-        "repair book",
-        "official volume"
-      ]
-    },
-    {
-      "id": "audience",
-      "label": "Who receives",
-      "href": "/topics/#audience",
-      "terms": [
-        "kitchen",
-        "kitchens",
-        "stove",
-        "stoves",
-        "district",
-        "districts",
-        "hearthward",
-        "children",
-        "elders"
-      ]
-    },
     {
       "id": "reward",
       "label": "Reward currents",
@@ -116,8 +71,9 @@
         "fruit",
         "pack",
         "nose",
-        "applause",
-        "status"
+        "scent",
+        "trail",
+        "wage"
       ]
     },
     {
@@ -128,32 +84,41 @@
         "boonberry",
         "boonberries",
         "dawnward",
-        "awakened",
-        "constellation",
+        "hearthward",
         "gold seam",
-        "light"
+        "light",
+        "constellation"
       ]
     },
     {
       "id": "guide",
-      "label": "Guide",
+      "label": "Boof",
       "href": "/characters/boof.html",
       "terms": [
         "Boof",
-        "Commons Scale",
         "paws",
-        "sniff"
+        "sniff",
+        "furrow"
       ]
     },
     {
-      "id": "voice",
-      "label": "Fool’s register",
-      "href": "/topics/#voice",
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
       "terms": [
-        "Fool",
-        "joke",
-        "bow",
-        "council seal"
+        "egg",
+        "shell",
+        "heat",
+        "warm",
+        "dragon",
+        "dregg",
+        "hatch",
+        "clutch",
+        "ember",
+        "coal",
+        "scales",
+        "door",
+        "crack"
       ]
     },
     {
@@ -161,43 +126,50 @@
       "label": "Living memory",
       "href": "/topics/#memory",
       "terms": [
+        "grove",
+        "echo",
+        "echoes",
+        "route book",
+        "map",
+        "maps",
         "archive",
-        "tax map",
-        "stems",
-        "census"
+        "record",
+        "census",
+        "treeline"
       ]
     }
   ],
   "sections": [
     {
       "type": "section",
-      "title": "The Missing Measure",
+      "title": "The Warm Furrow",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the Commons Scale porch down into the mist like a long table set for a town that had not yet woken. By noon the light would be weighed, bottled, and carried to the kitchens that had burned winter on promises. Boof’s job was simple if you said it out loud: make the promises agree with the scale. She was a dog of the Commons Scale. Nose low. Ears honest. Paid, when the count was true, in blueberries."
+          "text": "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like hot iron. In the dawnward field the boonberries slept under a skin of ice, each one holding its drop of light banked low against the cold. Boof worked the rows the way she always did: nose down, ears honest, reading the ground for what the night had changed. She had never been paid in coin and never wanted to be. She was paid, when a scent turned out true, in blueberries and in the small clean pride of a thing correctly known. This morning the ground told her a lie no field should be able to tell. One furrow was warm."
         },
         {
           "type": "paragraph",
-          "text": "The harvest ledger on its lectern said six hundred measures. On the floor, between chalk lines worn soft by cart wheels, Boof found five hundred and ninety-four. She counted again with her paws, crate by crate, the way she counted when a child watched her and needed the answer to feel fair. Then she checked the seals. None were broken. That was the part that made her fur rise. A broken seal names a thief. An intact seal means the story on paper has learned how to smile while six bowls go empty."
+          "text": "She dug. Frost gave way to thawed loam, then to loam that steamed, and at the bottom of it, cupped in melt where everything around it was still white, lay an egg. It was the size of a curled cat and the color of a coal that has decided not to go out. Faint scales surfaced under the shell when she breathed on it, the way a name surfaces when you almost remember it. No nest. No mother-scent. No track in and none out. It hummed against her paw with a heat no dawn Boof knew had lit—warmth that nobody in Boon.land had agreed to have ordered, arriving anyway."
         }
       ],
       "climate": {
         "tempo": "dawn",
         "tint": "gold",
-        "hook": "missing-measure"
+        "hook": "warm-furrow"
       },
       "scene": {
-        "vantage": "dog-height, just inside the Commons Scale doors, looking down the rows",
-        "light": "first sun through the door slats; brass pans still night-cold; the field beyond hazed gold",
-        "scent": "wet fur, cold brass, chalk dust, wax seals—and under it all, six absences shaped like blueberries",
+        "vantage": "dog-height at the bottom of a dug furrow, nose a breath from the shell",
+        "light": "first grey dawn over a frost-white field; the only warm light leaks up out of the hole",
+        "scent": "frost, wet fur, thawed loam—and under it hot iron where there should be none",
         "edges": [
-          "the great scale hangs from the center beam, both pans at a dog's eye level",
-          "the harvest ledger lies open on a lectern to the left of the doors",
-          "crates stand in counted rows between chalk lines worn soft by cart wheels",
-          "beyond the porch, berry rows run downhill until the mist takes them"
+          "a single furrow steams in a field otherwise skinned with ice",
+          "the egg lies in a cup of melt, coal-dark, faint scales surfacing under the shell",
+          "boonberries along the row lie banked and cold, waiting",
+          "no nest, no track, no mother-scent—only the heat"
         ],
-        "hint": "interior of the timber Commons Scale at dawn, low viewpoint from the doorway; hanging balance scale at center, open ledger on a lectern at left, rows of faintly glowing berry crates receding; gold slat-light cutting teal shadow"
+        "hint": "a dark coal-colored egg the size of a curled cat, half-unearthed in steaming loam at the bottom of a dug furrow; a frost-white glowing-berry field all around under grey dawn; hairline cracks in the shell leaking warm gold light, faint dragon-scale texture; teal cold, one warm source"
       }
     },
     {
@@ -207,34 +179,35 @@
       "climate": {
         "tempo": "dawn",
         "tint": "teal",
-        "hook": "clerk-between"
+        "hook": "who-boof-is"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "For seven years Boof had practiced being the sort of clerk nobody watched twice: a dog between stool and scale, useful as a broom and about as celebrated. She knew which councilor rounded a fraction toward their friends, which warehouse roof leaked only when inspectors came, and how much hunger could hide inside a polite phrase like acceptable loss. Knowing those things had kept her employed. Pretending not to know them had kept market day calm. Until this morning, she had let those two facts wear the same collar."
+          "text": "For as long as she had carried a name, Boof had worked for the land and not for anyone who owned a piece of it. She knew the dawnward field by scent the way other creatures knew it by map: which vine had been generous, which had been asked too much, where the frost sat late and where the ground kept a secret warm. Her wantings were short and she was not ashamed of them. She liked fruit—blueberries when a person offered, boonberries when the land was speaking in story. She liked a trail that ended with something real, not applause that smelled of nothing. A true scent, followed to its end, was the only wage she trusted."
         },
         {
           "type": "paragraph",
-          "text": "Her wants were simple. She liked fruit—blueberries when someone offered them, boonberries when the land was speaking in story. She liked the pack fed: old noses, working middles, new chases, kitchens that kept night workers and school mornings alive. She liked a chase that ended with something warm on a table, not applause that smelled like empty bowls. A true count earned a treat she could smell. That was plenty."
+          "text": "So she trusted this: the egg belonged on no route she carried. She had walked every honest path off this field—to the kitchens, to the mill, to the grove the workers would not name after dark—and not one of them ran through a warm furrow. Whatever this was, it had come by a road that did not exist yet. Boof set her chin on the cold rim of the hole and watched the shell breathe, and understood that her simple morning had grown a door she could not smell the far side of."
         }
       ]
     },
     {
       "type": "section",
       "title": "When a Berry Listens",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Most boonberries slept through being counted. They were fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town uses without naming. But sometimes a berry notices the shape of the story around it. That happens when a need has been asked more than once, a promise has gone quiet, and someone finally pays attention without trying to own the answer."
+          "text": "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But now and then a berry notices the shape of the story it is sitting inside. It happens when something arrives that the world has no word for yet, and something nearby decides to pay attention without trying to own the answer."
         },
         {
           "type": "paragraph",
-          "text": "In the basket nearest the scale—third from the rim, half in the shadow of the pan—one berry opened a thin gold seam. It did not grow a face. It did not preach. Its light leaned hearthward: over the basket lip, across the sill, down the long slope of streets toward six kitchens missing from the route book. Berry by berry, the ones beside it turned the same way, like grass under one wind. A quiet constellation. Direction you could follow with your nose."
+          "text": "The berry nearest the egg—third along the row, rimed white a heartbeat ago—melted its own frost and opened a thin gold seam. It did not grow a face. It did not preach. Its light leaned toward the egg, and then past the egg, hearthward and dawnward at once, down the long slope of the field toward the treeline where the grove keeps its echoes. Berry by berry the row turned the same way, ice sliding off them like sleep, until a quiet constellation pointed off the edge of every map. Direction you could follow with your nose."
         },
         {
           "type": "paragraph",
-          "text": "Boof lowered her face until the juice-scent fogged her whiskers. An awakened berry can witness a relationship. It cannot settle an argument for you. The town still had to choose what the light meant—and who it owed warmth to first."
+          "text": "Boof lowered her face until the juice-scent fogged her whiskers. An awakened berry can witness a thing. It cannot tell you what the thing is, or whose, or what it will cost to carry. The field had chosen a direction. It was leaving the naming to her."
         }
       ],
       "climate": {
@@ -244,152 +217,90 @@
         "strength": 1.1
       },
       "scene": {
-        "vantage": "nose-level with the basket rim, close enough to fog the berries",
-        "light": "one thin gold seam opening, brighter than the dawn behind it; every other berry a banked coal",
-        "scent": "sweet skin, cold juice, and the ozone of attention being paid",
+        "vantage": "nose-level along the berry row, the egg glowing just behind",
+        "light": "one thin gold seam in a single berry, brighter than the grey dawn; frost sliding off the row",
+        "scent": "cold juice, sweet skin, thawed iron, and the ozone of attention being paid",
         "edges": [
-          "the awakened berry sits third from the rim, half in the shadow of the scale's pan",
-          "its light spills over the basket lip, across the sill, down the slope of streets",
-          "berry by berry the lean spreads outward, like grass under one wind"
+          "the awakened berry sits third along the row, its frost freshly melted",
+          "its light leans past the egg, downhill toward a dark treeline",
+          "berry by berry the row turns the same way, ice sliding off like sleep",
+          "the constellation of light points off the edge of any route Boof knows"
         ],
-        "hint": "macro view of a woven basket of dark glowing berries beside a brass scale pan; one berry split by a hairline gold seam, its light streaming toward a doorway; shallow depth, gold on deep blue"
+        "hint": "macro row of dark berries skinned in frost, one split by a hairline gold seam, its light streaming past a coal-dark egg toward a distant dark treeline; shallow depth, gold on deep frozen blue"
       }
     },
     {
       "type": "figure",
       "img": {
         "src": "/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp",
-        "alt": "Painterly studies of a lone traveler—and the fields Boof still watches at dawn",
+        "alt": "Studies from the dawnward field—frost, berry-light, and the warm furrow Boof will not leave alone.",
         "loading": "eager"
       },
-      "figcaption": "Studies from the dawnward field before the measure was made public."
+      "figcaption": "Dawnward field studies, the morning the warm furrow opened."
     },
     {
       "type": "section",
-      "title": "A Fool in the Archive",
+      "title": "The Maps That Look Away",
+      "data-foreshadow": "hatch",
       "content": [
         {
           "type": "paragraph",
-          "text": "The archive door stood open by the width of a fingernail—and the width of a scent. Inside, the shelves rose in aisles built to make every decision look inevitable. At the far end, under a little brass lamp, hung the tax map of Bonk City. Someone had pinned six blue stems to it, low on the paper, where the poorest streets crowd the bottom edge. Each missing measure would have kept one communal stove lit for a month: soup for night workers, tea for elders, a warm corner for children who came home to a dark room. Boof’s nose found the stems before her eyes finished the arithmetic."
+          "text": "By full morning Boof had carried the egg—warm as a loaf, heavier than a loaf, and getting warmer—up the slope to the map-house, where Boon.land keeps its record of everything it has agreed to say exists. She had thought, in the plain way a working dog thinks, that a thing this strange would already be written somewhere: a lost clutch, a warden's note, a line in the census of the odd. She set the egg on the reading table and waited for the record to know it."
         },
         {
           "type": "paragraph",
-          "text": "The Boonberry Fool sat on the ladder rail above the map, heels hooked on a rung, mud drying on one boot, a council seal turning between two fingers. The lamp lit the Fool from below, the way footlights do. The Fool was not smiling. That unsettled Boof more than the trespass. The Fool was a spirit of wonder—the kind of presence that kept a neat room from closing in on itself. Even wonder usually offered something when a dog walked in: a joke, a tilt of the head, a reason to believe the shelves had not swallowed the last surprise."
+          "text": "It would not. The route book had no road for a warm furrow. The field map drew her rows and simply stopped, as if the ground ended where the heat began. When the archivist tried to add a line—egg, one, dawnward field, unclaimed—the ink beaded and would not take the page, ran off the paper like water off a banked coal. Every map in the house was suddenly very interested in somewhere else. Boof had spent her life trusting the record to hold what was true. Now she stood in a room built to remember, holding a warmth the whole room had agreed to forget, and felt her fur rise the way it does when a quiet thing turns out to be the loudest one present."
         }
       ],
       "climate": {
-        "tempo": "dusk",
+        "tempo": "morning",
         "tint": "archive",
-        "hook": "fool-in-archive"
+        "hook": "maps-look-away"
       },
       "scene": {
-        "vantage": "first the doorway crack, one eye wide—then inside, among the aisles",
-        "light": "one small brass lamp over the tax map; footlight glow on the Fool from below; the aisles keep their dusk",
-        "scent": "old paper, mud drying on one boot, six blue stems still green at the cut",
+        "vantage": "front paws up on a reading table, the egg between open books that will not hold its name",
+        "light": "high dusty window-light; the egg the warmest thing in a cool grey room",
+        "scent": "old paper, cold stone, beeswax—and hot iron that does not belong in a library",
         "edges": [
-          "shelves rise in straight aisles toward the census desk at the far end",
-          "the tax map hangs behind the desk, six blue stems pinned low along its bottom edge",
-          "above the map, the Fool sits on the ladder rail, heels hooked on a rung",
-          "the council seal turns between two fingers, catching the lamp on every rotation"
+          "the egg sits on an open route book that shows no road to where it was found",
+          "ink beads and runs off the page wherever the archivist tries to write it",
+          "the field map ends at the berry rows as if the ground stopped there",
+          "every shelf in the house leans its attention politely away"
         ],
-        "hint": "narrow archive interior at dusk; tall shelf aisles converging on a lamplit wall map pinned with blue stems; a jester figure perched on a ladder rail above it, underlit like a stage actor; teal darkness, single brass accent"
+        "hint": "a coal-warm cracked egg on a reading table in a tall dim archive; open maps and ledgers around it with ink beading and running off the paper; dust-lit air, a working dog's paws on the table edge; cool grey stone, one warm ember source"
       }
     },
     {
-      "type": "custom-fool",
-      "climate": {
-        "tempo": "lamplight",
-        "tint": "brass",
-        "hook": "ledger-story"
-      },
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "\"A ledger is a story with permission to punish people,\" the Fool said, soft as a market rhyme. \"You can fix the arithmetic and keep the same story. Or you can ask who benefits from the error. Those are different jobs.\""
-        },
-        {
-          "type": "paragraph",
-          "text": "Boof held out a paw for the seal. \"If you stole that, you have made every number I publish look like a joke.\""
-        },
-        {
-          "type": "paragraph",
-          "text": "\"Every number was already a joke to someone cold,\" the Fool said, and tipped the seal toward her. \"I only made it loud enough to hear. And you—\" a small tilt of the head \"—still work for fruit and kitchens. That makes you dangerous to anyone who only pays in applause. Keep eating what is real.\""
-        }
-      ]
-    },
-    {
       "type": "section",
-      "title": "Six Measures, Many Reasons",
+      "title": "Following the Heat",
+      "data-foreshadow": "hatch",
       "content": [
         {
           "type": "paragraph",
-          "text": "Nemi, who tended the dawnward roots with dirt under every nail, wanted the missing light returned—but not by stripping the late vines bare. She had watched generous harvests become barren seasons when urgency forgot rest. \"If we empty the field to look generous once,\" she said, \"the children of the next frost will pay.\" Tavi, the youngest kitchen runner, had two jars roped to a carrying pole and mud on both knees. \"Two stoves,\" Tavi said. \"Children. Night bakers. Elders who cannot wait for next season’s wisdom. Heat tonight, or the argument is only poetry.\""
+          "text": "There is a kind of problem a map cannot help you with, and Boof had just met the largest one of her life. If no record would hold the egg, then the egg was not a thing to be filed. It was a thing to be followed. She thought of the berries leaning downhill, off the edge of every route she carried, toward the treeline the workers would not name after dark. The field had already pointed. She had only been arguing with it."
         },
         {
           "type": "paragraph",
-          "text": "Councilor Vale wanted an orderly inquiry. He was afraid that one public accusation would make every district hide its share before frost—and his fear was not false. It was simply not the only truth standing in the square with the morning coming on."
-        },
-        {
-          "type": "paragraph",
-          "text": "Boof wanted a count the kitchens could feel in their hands. Nemi wanted soil that would still answer in ten years. Tavi wanted heat before dark. Vale wanted trust to survive the morning. The Fool wanted no motive polished until it hid the others. Beneath them all, under the stones of the argument, the awakened berries kept leaning hearthward—as if the land itself were choosing a direction and waiting for people to catch up."
+          "text": "She took the egg up carefully in the sling of an old feed-sack, against her chest where a pup would ride, and stepped off the map. The shell was warmer now than it had been in the furrow—warm enough that a hairline of gold had opened along its crown, a crack shaped, if you were the sort to notice, like a door. Something inside was keeping time. Boof did not know whether the heat was a countdown, an invitation, or a debt. She knew only the direction, and that a true scent followed to its end was the one wage she trusted. Downhill the grove waited, already whispering. She went to meet it."
         }
       ],
       "climate": {
         "tempo": "morning",
         "tint": "hearth",
-        "hook": "six-measures"
-      },
-      "scene": {
-        "vantage": "turning in place at the center of the argument—field, kitchens, council door, and archive all pulling",
-        "light": "mid-morning, shadowless and fair; the light of nobody winning yet",
-        "scent": "turned soil on Nemi, stove-ash on Tavi, clean paper on Vale",
-        "edges": [
-          "Nemi stands at the field edge with her hand flat to the ground",
-          "Tavi waits at the bottom of the balcony stair, two jars roped to a carrying pole",
-          "Vale keeps to the council doorway, half in the building's shadow",
-          "beneath the paving, the berries lean hearthward like a needle under glass"
-        ],
-        "hint": "four figures arranged around a small town square—gardener at the field edge, young runner with a carrying pole, councilor in a doorway, dog at the center; even overhead light; a faint gold underglow beneath the stones"
-      }
-    },
-    {
-      "type": "section",
-      "title": "Publication",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "The morning bell rang. In three minutes the harvest total would be read from the council balcony, copied by the criers at the square’s four corners, and treated as memory—the kind people quote when they want an argument to end. The square was already filling: growers by their seed carts, kitchen stewards under the arcade, three market children up on the fountain rim for the view, an old man with a thermos who always came to hear the numbers the way other people hear weather. Boof could replace six hundred with five hundred and ninety-four. The correction would be accurate, quiet, and useless. The missing light would stay missing. The kitchens would still go cold. Somewhere, someone would keep the soft status treat of a report that looked clean."
-        },
-        {
-          "type": "paragraph",
-          "text": "Instead, Boof carried both ledgers through the tall doors and up the balcony stair: the official volume, fat with ceremony, and the narrow repair book where workers wrote spills, cracked jars, and the small injuries polished reports prefer not to remember. At the rail, with the square below her and the dawnward field at her back, she laid the two books open side by side. She read the totals in a voice built for packs, not theaters. Then—because a number without a face is how a town learns to forget—she read the names of the districts attached to the absent measures. Street by street. Kitchen by kitchen."
-        },
-        {
-          "type": "paragraph",
-          "text": "The square did not receive one message. Tavi heard a route to six stoves. Nemi heard a warning against replacing stolen light with an exhausted field. Vale heard the first crack in a system he still hoped to mend. The growers heard risk; the stewards heard proof; three market children heard their own street names spoken from the balcony and understood, with the sudden seriousness of kids who know when the adult world is telling the truth, that the public count included them. The same reading changed shape according to what each listener had carried into the square—which is how every shared story works, when it works."
-        },
-        {
-          "type": "paragraph",
-          "text": "Nobody cheered. The growers went still. Two councilors left before the questions began. Across the square, the Fool returned the seal to a pocket that did not appear to exist and gave Boof a small, grave bow—as one does to a dog who has chosen the pack over the varnish."
-        }
-      ],
-      "climate": {
-        "tempo": "morning",
-        "tint": "brass",
-        "hook": "publication",
+        "hook": "following-heat",
         "strength": 1.05
       },
       "scene": {
-        "vantage": "the balcony rail, square below, dawnward field at your back",
-        "light": "full morning; the square bright at its center, arcade shade around the rim",
-        "scent": "crowd-warmth, cart grease, fountain water, ink on two open books",
+        "vantage": "low behind Boof as she leaves the map-house steps, the treeline dark at the bottom of the slope",
+        "light": "clear cold morning; the egg glowing gold against her chest, the grove in shadow ahead",
+        "scent": "warm shell, cold air, and the green breath of the grove rising uphill to meet her",
         "edges": [
-          "two ledgers lie open side by side on the rail—the official volume fat, the repair book narrow",
-          "criers wait at the square's four corners",
-          "growers by their seed carts, stewards under the arcade, three children up on the fountain rim",
-          "across the square, the Fool watches from the shade, the seal already gone from view"
+          "the egg rides in a feed-sack sling against Boof's chest",
+          "a hairline of gold has opened along the shell's crown, shaped like a door",
+          "the berry rows behind her still lean downhill, pointing the way she now walks",
+          "the treeline at the bottom of the slope is already whispering"
         ],
-        "hint": "view from a stone balcony over a filling market square, two open books on the rail in the foreground; crowd grouped at carts, arcade, and fountain; long morning shadows, civic and tense"
+        "hint": "a working dog descending a frosted slope with a glowing coal-warm cracked egg slung against her chest, a line of gold light opening on the shell; a dark whispering treeline below, berry rows leaning the same way; cold morning blue, one warm carried light"
       }
     },
     {
@@ -397,52 +308,53 @@
       "climate": {
         "tempo": "sunset",
         "tint": "ember",
-        "hook": "steps-after"
+        "hook": "on-the-trail"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "By sunset, Boof no longer had a desk in the Commons Scale. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries she would not take for a false count, and the awkward attention of everyone who had mistaken a clean record for a just one. It was not a victory parade. It was something better for a pack: a beginning that could survive inspection. Old noses would argue with new chases about what to do next. That was fine. The trail was open. The berries still leaned hearthward. And somewhere downhill, six streets waited for light that now had names."
+          "text": "By the time the light went level and amber, Boof was a long way from any desk she had ever been offered and did not miss a single one of them. She had a warm egg no map would name, a direction the field had chosen for her, and a treeline ahead that answered questions with older questions. It was not a victory. Victories are things you can file. This was better and more dangerous than a victory: a beginning no record could close. Behind her the berry rows still leaned, banked coals in the dusk, pointing the way she was already going. Ahead, in the dark under the first trees, the egg's small gold door caught the last of the sun and, very faintly, grew warmer. Whatever was keeping time inside it had decided the night was worth waking for. So had Boof."
         }
       ],
       "scene": {
-        "vantage": "the Commons Scale steps at sunset, on the side the sun kept warm",
-        "light": "level amber; the berry rows lit from behind, the square emptying to blue",
-        "scent": "warm stone, paper carried all day, the first cold drifting up from six streets",
+        "vantage": "the mouth of the grove at sunset, Boof a dark shape against amber, the treeline swallowing the light ahead",
+        "light": "level amber behind, deep teal shadow under the trees ahead; the egg the one steady warm point",
+        "scent": "warm stone of the shell, cold coming up from the grove, the sun leaving the field",
         "edges": [
-          "three copied pages weighted under one paw",
-          "the tall doors closed behind her, the whole town open in front of her",
-          "downhill, six streets she can name without looking"
+          "the berry rows behind glow like banked coals, all leaning one way",
+          "the egg's crown-crack shows a thin line of gold in the dusk",
+          "the first trees of the grove stand dark and close",
+          "the trail ahead is open and unwritten"
         ],
-        "hint": "a dog seated on worn stone steps at sunset, papers under one paw, amber backlight across berry fields, town sloping away below; elegiac warm palette"
+        "hint": "a dog silhouetted at the mouth of a dark grove at sunset, a glowing cracked egg slung against her chest, amber berry field behind, teal shadow ahead; elegiac and mysterious, a warm point of light entering darkness"
       }
     }
   ],
   "lore": {
     "loreItems": [
       {
-        "description": "Boof is a dog based on Spwashi’s dog. She works for true counts, pack warmth, and blueberries. Marked snacks or recipes can sit nearby if they stay optional and honest."
+        "description": "Boof is a dog based on Spwashi's dog. She works for the land, not an owner—paid in blueberries, honest scents, and trails that end in something real."
       },
       {
-        "description": "Boonberry light is shared heat: stoves, lanterns, winter kitchens. A clean seal can still hide who goes cold."
+        "description": "Boonberry light is shared warmth: stoves, lanterns, winter kitchens. It sleeps until something the world has no word for asks it to pay attention."
       },
       {
-        "description": "Berries sometimes wake when need has been repeated, a promise has gone quiet, and someone pays attention without trying to own the answer."
+        "description": "The egg—warm, unclaimed, unhatched—arrives on a road that does not exist yet. Its heat may be a countdown, an invitation, or a debt. The story does not yet say which."
       },
       {
-        "description": "Nemi wants the field to last. Tavi wants heat tonight. Vale wants the system not to panic. None of those goods replaces the others."
+        "description": "Boon.land's records hold only what the world has agreed exists. Ink will not take the egg's name; the maps end where its heat begins."
       },
       {
-        "description": "Reward can be fruit you taste, light that arrives later, applause that smells empty, or pack warmth that actually feeds someone."
+        "description": "The field chooses a direction before the people do—the berries lean toward the grove, off the edge of every known route."
       },
       {
-        "description": "Boof publishes the official ledger beside the workers’ repair book, loses her desk, and leaves a trail the town can inspect."
+        "description": "A hairline crack shaped like a door opens along the egg's crown as it warms. Something inside is keeping time."
       },
       {
-        "description": "The Boonberry Fool is a spirit of wonder. When the town grows too neat, the Fool keeps room for surprise."
+        "description": "The grove downhill keeps echoes and will not be named after dark; Boof carries the egg toward it. (Chamber 02.)"
       },
       {
-        "description": "The Fool’s counsel: work for fruit and kitchens, not applause alone."
+        "description": "Dregg: dragon's egg—the dregs that settle to the bottom of a season and are still warm to the touch."
       }
     ]
   }

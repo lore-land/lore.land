@@ -6,7 +6,7 @@
 
 ^[chapter/01]{
   title: "Dawn in Boon.land"
-  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog of the Commons Scale who likes blueberries and true counts—finds six measures missing while every seal stays intact. The town must choose who the harvest was for."
+  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for fruit and honest scents—unearths a warm, unclaimed egg in a field still white with frost, and follows its heat toward a mystery the maps refuse to hold."
   mood: "boon"
   period: "spring"
   chapter_path: "/book/chapter/01/"
@@ -18,26 +18,32 @@
   motif: ~[motif/chapter-01]{optional}
 }
 
+^[chapter/01/spine]{
+  =next{ ~".spw/chapters/02.spw#chapter_02" }
+  weave: "{} <> {} [] {} {} <>"
+  reading: "the telling opens; Boof pads in on a thread of scent; the telling gathers; the plate catches the light; the telling gathers; the telling gathers; Boof closes the day with the trail still warm"
+}
+
 ^[chapter/01/sections][
   s01: {
     handle: "section/01"
     type: "section"
-    title: "The Missing Measure"
-    excerpt: "Dawn smelled like wet fur and cold brass. In the dawnward field, every boonberry held a drop of light—small as a seed, bright enough to warm a fingertip. The rows ran from the Commons Scale porch down into the mist li..."
+    title: "The Warm Furrow"
+    excerpt: "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like hot iron. In the dawnward field the boonberries slept under a skin of ice, each one holding its drop of light banked low against the..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
     valence: "boon"
-    excerpt: "For seven years Boof had practiced being the sort of clerk nobody watched twice: a dog between stool and scale, useful as a broom and about as celebrated. She knew which councilor rounded a fraction toward their frien..."
+    excerpt: "For as long as she had carried a name, Boof had worked for the land and not for anyone who owned a piece of it. She knew the dawnward field by scent the way other creatures knew it by map: which vine had been generous..."
     route: ^[chapter/01/s02]{open}
   >
   s03: {
     handle: "section/03"
     type: "section"
     title: "When a Berry Listens"
-    excerpt: "Most boonberries slept through being counted. They were fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town uses without naming. But sometimes a berry notices the shape of the story around it. That h..."
+    excerpt: "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But now and then a berry notices the shape of the story it is sitting in..."
     route: ^[chapter/01/s03]{open}
   }
   s04: [
@@ -49,48 +55,49 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "A Fool in the Archive"
-    excerpt: "The archive door stood open by the width of a fingernail—and the width of a scent. Inside, the shelves rose in aisles built to make every decision look inevitable. At the far end, under a little brass lamp, hung the t..."
+    title: "The Maps That Look Away"
+    excerpt: "By full morning Boof had carried the egg—warm as a loaf, heavier than a loaf, and getting warmer—up the slope to the map-house, where Boon.land keeps its record of everything it has agreed to say exists. She had thoug..."
     route: ^[chapter/01/s05]{open}
   }
-  s06: <
-    handle: "custom-fool/06"
-    type: "custom-fool"
-    excerpt: "\"A ledger is a story with permission to punish people,\" the Fool said, soft as a market rhyme. \"You can fix the arithmetic and keep the same story. Or you can ask who benefits from the error. Those are different jobs...."
+  s06: {
+    handle: "section/06"
+    type: "section"
+    title: "Following the Heat"
+    excerpt: "There is a kind of problem a map cannot help you with, and Boof had just met the largest one of her life. If no record would hold the egg, then the egg was not a thing to be filed. It was a thing to be followed. She t..."
     route: ^[chapter/01/s06]{open}
-  >
-  s07: {
-    handle: "section/07"
-    type: "section"
-    title: "Six Measures, Many Reasons"
-    excerpt: "Nemi, who tended the dawnward roots with dirt under every nail, wanted the missing light returned—but not by stripping the late vines bare. She had watched generous harvests become barren seasons when urgency forgot r..."
-    route: ^[chapter/01/s07]{open}
   }
-  s08: {
-    handle: "section/08"
-    type: "section"
-    title: "Publication"
-    excerpt: "The morning bell rang. In three minutes the harvest total would be read from the council balcony, copied by the criers at the square’s four corners, and treated as memory—the kind people quote when they want an argume..."
-    route: ^[chapter/01/s08]{open}
-  }
-  s09: <
-    handle: "custom-boof/09"
+  s07: <
+    handle: "custom-boof/07"
     type: "custom-boof"
-    excerpt: "By sunset, Boof no longer had a desk in the Commons Scale. She had the steps outside it instead—warm on the side the sun had kept—and on them: three copied pages, a list of six cold kitchens, the memory of blueberries..."
-    route: ^[chapter/01/s09]{open}
+    excerpt: "By the time the light went level and amber, Boof was a long way from any desk she had ever been offered and did not miss a single one of them. She had a warm egg no map would name, a direction the field had chosen for..."
+    route: ^[chapter/01/s07]{open}
   >
 ]
 
+&[chapter/01/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/02"
+  >
+}
+
+%[chapter/01/measures]{
+  %sections: 7
+  %prose: 4
+  %plates: 1
+  %voices: 1
+}
+
 #[chapter/01/lore]{
   notes: [
-    "Boof is a dog based on Spwashi’s dog. She works for true counts, pack warmth, and blueberries. Marked snacks or recipes can sit nearby if they stay optional and honest."
-    "Boonberry light is shared heat: stoves, lanterns, winter kitchens. A clean seal can still hide who goes cold."
-    "Berries sometimes wake when need has been repeated, a promise has gone quiet, and someone pays attention without trying to own the answer."
-    "Nemi wants the field to last. Tavi wants heat tonight. Vale wants the system not to panic. None of those goods replaces the others."
-    "Reward can be fruit you taste, light that arrives later, applause that smells empty, or pack warmth that actually feeds someone."
-    "Boof publishes the official ledger beside the workers’ repair book, loses her desk, and leaves a trail the town can inspect."
-    "The Boonberry Fool is a spirit of wonder. When the town grows too neat, the Fool keeps room for surprise."
-    "The Fool’s counsel: work for fruit and kitchens, not applause alone."
+    "Boof is a dog based on Spwashi's dog. She works for the land, not an owner—paid in blueberries, honest scents, and trails that end in something real."
+    "Boonberry light is shared warmth: stoves, lanterns, winter kitchens. It sleeps until something the world has no word for asks it to pay attention."
+    "The egg—warm, unclaimed, unhatched—arrives on a road that does not exist yet. Its heat may be a countdown, an invitation, or a debt. The story does not yet say which."
+    "Boon.land's records hold only what the world has agreed exists. Ink will not take the egg's name; the maps end where its heat begins."
+    "The field chooses a direction before the people do—the berries lean toward the grove, off the edge of every known route."
+    "A hairline crack shaped like a door opens along the egg's crown as it warms. Something inside is keeping time."
+    "The grove downhill keeps echoes and will not be named after dark; Boof carries the egg toward it. (Chamber 02.)"
+    "Dregg: dragon's egg—the dregs that settle to the bottom of a season and are still warm to the touch."
   ]
 }
 

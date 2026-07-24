@@ -9,6 +9,62 @@ function pad(num) {
   return String(num).padStart(2, '0');
 }
 
+/* One-line registers for the cast confluence. Boof and the Fool are fixed
+   characters (established across media — characterization is not flexible);
+   guest voices take their register from the chamber that summons them. */
+const VOICE_REGISTERS = {
+  boof: 'dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended',
+  fool: 'tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer',
+  boonberry: 'lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law',
+  echo: 'an old scent re-lit; a summons wearing a borrowed voice, never proof',
+  paradox: 'twin truths braided into one rope, pulling opposite ways',
+  mirror: 'a glass that returns the council’s procedure with the spell reversed',
+  song: 'a melody that pockets what the minutes leave out and hums it elsewhere',
+  labyrinth: 'a maze that grows a corridor for every wrong turn, and remembers each one',
+  shadow: 'the oath’s unspoken clause, given legs and a long noon stride',
+  game: 'rules that enchant only the players who notice them',
+  puzzle: 'nine shards, ten edges; assembles into a question instead of a picture',
+  bonk: 'a blunt bell-note that shakes stray magic out of the meter',
+  awakening: 'the hour the archive opens one eye and finds itself being read',
+  path: 'a road conjured by walking; it unwalks itself behind you',
+  reflection: 'the book reading itself back by candlelight, tallying its own spells'
+};
+
+/* One step of the weave reading per voice; closers override when the voice
+   has the chapter's last word. */
+const VOICE_STEPS = {
+  boof: 'Boof pads in on a thread of scent',
+  fool: 'the Fool sidles in through a painted door',
+  boonberry: 'the boonberries kindle',
+  echo: 'an echo answers in a borrowed voice',
+  paradox: 'a paradox braids the path',
+  mirror: 'the mirror turns its silver',
+  song: 'a song slips through the wards',
+  labyrinth: 'the labyrinth grows a new corridor',
+  shadow: 'a shadow lengthens to keep pace',
+  game: 'the game declares its enchanted rules',
+  puzzle: 'the puzzle offers a charmed corner',
+  bonk: 'a bonk rings like a struck bell',
+  awakening: 'something old stirs awake',
+  path: 'the path unrolls itself, listening',
+  reflection: 'the reflection reads back by candlelight'
+};
+
+const VOICE_CLOSERS = {
+  boof: 'Boof closes the day with the trail still warm',
+  fool: 'the Fool takes the last word and vanishes with it'
+};
+
+/* Second and later appearances — a return reads differently than an entrance. */
+const VOICE_RETURNS = {
+  boof: 'Boof doubles back along the scent-thread',
+  fool: 'the Fool reappears where no door was'
+};
+
+function voiceName(type) {
+  return String(type || '').replace(/^custom-/, '');
+}
+
 function readChapterJson(indexHtmlPath) {
   const source = fs.readFileSync(indexHtmlPath, 'utf8');
   const match = source.match(/<script type="application\/json" id="chapter-data">([\s\S]*?)<\/script>/i);
@@ -161,7 +217,120 @@ function emitLoreItems(items = []) {
   return lines.join('\n');
 }
 
-function emitChapterSpw(data) {
+/* The chapter's container rhythm, read straight off sectionContainer():
+   {} prose, <> voice, [] plate, () aside — a glyph score of the weave. */
+function weaveGlyphs(sections) {
+  return sections.map((section) => sectionContainer(section).join('')).join(' ');
+}
+
+function weaveReading(sections) {
+  const last = sections.length - 1;
+  const seen = new Set();
+  return sections
+    .map((section, index) => {
+      const type = String(section?.type || 'section');
+      if (type === 'figure') {
+        return 'the plate catches the light';
+      }
+      if (type.startsWith('custom-')) {
+        const name = voiceName(type);
+        const returning = seen.has(name);
+        seen.add(name);
+        if (index === last && VOICE_CLOSERS[name]) {
+          return VOICE_CLOSERS[name];
+        }
+        if (returning) {
+          return VOICE_RETURNS[name] || `the ${name} returns`;
+        }
+        return VOICE_STEPS[name] || `${name} speaks`;
+      }
+      if (index === 0) {
+        return 'the telling opens';
+      }
+      return index === last ? 'the telling settles' : 'the telling gathers';
+    })
+    .join('; ');
+}
+
+/* =prev / =next are labeled bias edges (bias-product registry, workbench
+   bb1ffe6) — the serial's directed lean along its own spine, read in the
+   mount sense: the neighbor chapter's canon lives at that path. First
+   adoption of the labeled form in this repo. */
+function emitSpine(sections, chapterNumber, chapterCount) {
+  const chapterId = pad(chapterNumber);
+  const lines = [`^[chapter/${chapterId}/spine]{`];
+  if (chapterNumber > 1) {
+    const prev = pad(chapterNumber - 1);
+    lines.push(`  =prev{ ~".spw/chapters/${prev}.spw#chapter_${prev}" }`);
+  }
+  if (chapterNumber < chapterCount) {
+    const next = pad(chapterNumber + 1);
+    lines.push(`  =next{ ~".spw/chapters/${next}.spw#chapter_${next}" }`);
+  }
+  lines.push(`  weave: "${weaveGlyphs(sections)}"`);
+  lines.push(`  reading: "${weaveReading(sections)}"`);
+  lines.push('}');
+  return lines.join('\n');
+}
+
+/* Cast entries are capsules, like the sections that summon them — each
+   voice is a directed insert into the chapter, not part of its prose body.
+   .enters is ground (intrinsic structural fact: first appearance). */
+function emitCast(sections, chapterId) {
+  const seen = new Map();
+  sections.forEach((section, index) => {
+    const type = String(section?.type || '');
+    if (!type.startsWith('custom-')) {
+      return;
+    }
+    const name = voiceName(type);
+    if (!seen.has(name)) {
+      seen.set(name, sectionHandle(section, index));
+    }
+  });
+
+  if (!seen.size) {
+    return null;
+  }
+
+  const lines = [`&[chapter/${chapterId}/cast]{`];
+  seen.forEach((handle, name) => {
+    const register = VOICE_REGISTERS[name] || 'uncatalogued voice; listen before indexing';
+    lines.push(`  ${name}: <`);
+    lines.push(`    register: "${register.replace(/"/g, '\\"')}"`);
+    lines.push(`    .enters: "${handle}"`);
+    lines.push('  >');
+  });
+  lines.push('}');
+  return lines.join('\n');
+}
+
+function emitMeasures(sections, chapterId) {
+  const voices = new Set();
+  let prose = 0;
+  let plates = 0;
+  sections.forEach((section) => {
+    const type = String(section?.type || 'section');
+    if (type.startsWith('custom-')) {
+      voices.add(voiceName(type));
+    } else if (type === 'figure') {
+      plates += 1;
+    } else {
+      prose += 1;
+    }
+  });
+
+  return [
+    `%[chapter/${chapterId}/measures]{`,
+    `  %sections: ${sections.length}`,
+    `  %prose: ${prose}`,
+    `  %plates: ${plates}`,
+    `  %voices: ${voices.size}`,
+    '}'
+  ].join('\n');
+}
+
+function emitChapterSpw(data, chapterCount) {
   const chapterNumber = Number(data?.chapterNumber || 0);
   const chapterId = pad(chapterNumber);
   const title = String(data?.title || `Chapter ${chapterId}`).replace(/"/g, '\\"');
@@ -200,6 +369,9 @@ function emitChapterSpw(data) {
   lines.push('}');
   lines.push('');
 
+  lines.push(emitSpine(sections, chapterNumber, chapterCount));
+  lines.push('');
+
   /* Ordered, indexable, homogeneous — a frame, not a body (matches the
      ^"stages"[...] precedent in .spw/runtime/precipitates.spw). */
   lines.push(`^[chapter/${chapterId}/sections][`);
@@ -211,6 +383,15 @@ function emitChapterSpw(data) {
     });
   }
   lines.push(']');
+  lines.push('');
+
+  const cast = emitCast(sections, chapterId);
+  if (cast) {
+    lines.push(cast);
+    lines.push('');
+  }
+
+  lines.push(emitMeasures(sections, chapterId));
   lines.push('');
 
   lines.push(`#[chapter/${chapterId}/lore]{`);
@@ -242,7 +423,7 @@ function main() {
   chapterDirs.forEach((chapterId) => {
     const data = readChapterJson(path.join(CHAPTER_ROOT, chapterId, 'index.html'));
     const outputPath = path.join(OUTPUT_ROOT, `${chapterId}.spw`);
-    fs.writeFileSync(outputPath, emitChapterSpw(data), 'utf8');
+    fs.writeFileSync(outputPath, emitChapterSpw(data, chapterDirs.length), 'utf8');
 
     summary.push({
       id: chapterId,
@@ -272,6 +453,15 @@ function main() {
   summary.forEach((item) => {
     lines.push(`  "chapter-${item.id}": "#>chapter_${item.id}"`);
   });
+  lines.push('}');
+  lines.push('');
+
+  /* Hand-authored neighbor — this exporter regenerates every NN.spw and
+     this index, never the apocrypha shelf. The reflexive bias reads in the
+     mount sense: the shelf's canon lives there. */
+  lines.push('~[apocrypha]{');
+  lines.push('  ={ ~".spw/chapters/apocrypha.spw#chapter_apocrypha" }');
+  lines.push('  note: "Hand-authored companion shelf; spw:export leaves it untouched."');
   lines.push('}');
   lines.push('');
 

@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-11]{optional}
 }
 
+^[chapter/11/spine]{
+  =prev{ ~".spw/chapters/10.spw#chapter_10" }
+  =next{ ~".spw/chapters/12.spw#chapter_12" }
+  weave: "<> <> <> [] {} <> <>"
+  reading: "Boof pads in on a thread of scent; something old stirs awake; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+}
+
 ^[chapter/11/sections][
   s01: <
     handle: "custom-boof/01"
@@ -64,6 +71,28 @@
     route: ^[chapter/11/s07]{open}
   >
 ]
+
+&[chapter/11/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  awakening: <
+    register: "the hour the archive opens one eye and finds itself being read"
+    .enters: "custom-awakening/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/11/measures]{
+  %sections: 7
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/11/lore]{
   notes: [

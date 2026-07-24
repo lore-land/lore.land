@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-03]{optional}
 }
 
+^[chapter/03/spine]{
+  =prev{ ~".spw/chapters/02.spw#chapter_02" }
+  =next{ ~".spw/chapters/04.spw#chapter_04" }
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; a paradox braids the path; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
+}
+
 ^[chapter/03/sections][
   s01: <
     handle: "custom-boof/01"
@@ -58,6 +65,28 @@
     route: ^[chapter/03/s06]{open}
   >
 ]
+
+&[chapter/03/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  paradox: <
+    register: "twin truths braided into one rope, pulling opposite ways"
+    .enters: "custom-paradox/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/03/measures]{
+  %sections: 6
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/03/lore]{
   notes: [

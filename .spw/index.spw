@@ -12,6 +12,7 @@
 
 &surfaces{
   chapters: "@spw/chapters/index.spw"
+  apocrypha: "@spw/chapters/apocrypha.spw"
   claims: "@spw/claims/chapter-claims.spw"
   process: "@spw/workspace.spw"
   surfaces: "@spw/surfaces/index.spw"

@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-07]{optional}
 }
 
+^[chapter/07/spine]{
+  =prev{ ~".spw/chapters/06.spw#chapter_06" }
+  =next{ ~".spw/chapters/08.spw#chapter_08" }
+  weave: "<> <> <> [] {} <> <>"
+  reading: "Boof pads in on a thread of scent; a shadow lengthens to keep pace; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+}
+
 ^[chapter/07/sections][
   s01: <
     handle: "custom-boof/01"
@@ -64,6 +71,28 @@
     route: ^[chapter/07/s07]{open}
   >
 ]
+
+&[chapter/07/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  shadow: <
+    register: "the oath’s unspoken clause, given legs and a long noon stride"
+    .enters: "custom-shadow/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/07/measures]{
+  %sections: 7
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/07/lore]{
   notes: [

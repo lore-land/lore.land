@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-06]{optional}
 }
 
+^[chapter/06/spine]{
+  =prev{ ~".spw/chapters/05.spw#chapter_05" }
+  =next{ ~".spw/chapters/07.spw#chapter_07" }
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; the labyrinth grows a new corridor; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
+}
+
 ^[chapter/06/sections][
   s01: <
     handle: "custom-boof/01"
@@ -58,6 +65,28 @@
     route: ^[chapter/06/s06]{open}
   >
 ]
+
+&[chapter/06/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  labyrinth: <
+    register: "a maze that grows a corridor for every wrong turn, and remembers each one"
+    .enters: "custom-labyrinth/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/06/measures]{
+  %sections: 6
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/06/lore]{
   notes: [

@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-05]{optional}
 }
 
+^[chapter/05/spine]{
+  =prev{ ~".spw/chapters/04.spw#chapter_04" }
+  =next{ ~".spw/chapters/06.spw#chapter_06" }
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; a song slips through the wards; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
+}
+
 ^[chapter/05/sections][
   s01: <
     handle: "custom-boof/01"
@@ -58,6 +65,28 @@
     route: ^[chapter/05/s06]{open}
   >
 ]
+
+&[chapter/05/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  song: <
+    register: "a melody that pockets what the minutes leave out and hums it elsewhere"
+    .enters: "custom-song/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/05/measures]{
+  %sections: 6
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/05/lore]{
   notes: [

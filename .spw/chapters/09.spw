@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-09]{optional}
 }
 
+^[chapter/09/spine]{
+  =prev{ ~".spw/chapters/08.spw#chapter_08" }
+  =next{ ~".spw/chapters/10.spw#chapter_10" }
+  weave: "<> <> <> [] {} <> <>"
+  reading: "Boof pads in on a thread of scent; the puzzle offers a charmed corner; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+}
+
 ^[chapter/09/sections][
   s01: <
     handle: "custom-boof/01"
@@ -64,6 +71,28 @@
     route: ^[chapter/09/s07]{open}
   >
 ]
+
+&[chapter/09/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/01"
+  >
+  puzzle: <
+    register: "nine shards, ten edges; assembles into a question instead of a picture"
+    .enters: "custom-puzzle/02"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/03"
+  >
+}
+
+%[chapter/09/measures]{
+  %sections: 7
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
 
 #[chapter/09/lore]{
   notes: [

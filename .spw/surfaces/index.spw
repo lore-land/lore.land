@@ -11,6 +11,7 @@
   &platform: "@spw/surfaces/platform.spw"
   &atelier: "@spw/surfaces/atelier.spw"
   &plates: "@spw/surfaces/plates.spw"
+  &dragon_egg: "@spw/surfaces/dragon-egg.spw"
 }
 
 ^"audits"{

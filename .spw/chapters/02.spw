@@ -18,6 +18,13 @@
   motif: ~[motif/chapter-02]{optional}
 }
 
+^[chapter/02/spine]{
+  =prev{ ~".spw/chapters/01.spw#chapter_01" }
+  =next{ ~".spw/chapters/03.spw#chapter_03" }
+  weave: "{} <> <> <> [] {} <>"
+  reading: "the telling opens; Boof pads in on a thread of scent; the boonberries kindle; an echo answers in a borrowed voice; the plate catches the light; the telling gathers; the Fool takes the last word and vanishes with it"
+}
+
 ^[chapter/02/sections][
   s01: {
     handle: "section/01"
@@ -65,6 +72,32 @@
     route: ^[chapter/02/s07]{open}
   >
 ]
+
+&[chapter/02/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/02"
+  >
+  boonberry: <
+    register: "lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law"
+    .enters: "custom-boonberry/03"
+  >
+  echo: <
+    register: "an old scent re-lit; a summons wearing a borrowed voice, never proof"
+    .enters: "custom-echo/04"
+  >
+  fool: <
+    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    .enters: "custom-fool/07"
+  >
+}
+
+%[chapter/02/measures]{
+  %sections: 7
+  %prose: 2
+  %plates: 1
+  %voices: 4
+}
 
 #[chapter/02/lore]{
   notes: [
