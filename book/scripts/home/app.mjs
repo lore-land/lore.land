@@ -9,18 +9,20 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_08_26.A';
+} from '../modules/experience-core.mjs?v=2026_08_26.B';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_26.A';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_26.A';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_26.A';
-import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_26.A';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_26.B';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_26.B';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_26.B';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_26.B';
 import { initStorySpark } from '../modules/story-spark.mjs?v=2026_07_23.A';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
-  initSegmentKeyboard
-} from '../modules/interaction-surface.mjs?v=2026_08_26.A';
+  initSegmentKeyboard,
+  initPointerCraft,
+  withViewTransition
+} from '../modules/interaction-surface.mjs?v=2026_08_26.B';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -200,7 +202,7 @@ function ensureClimateToggle(state, announce) {
       }
     }
 
-    applyClimate(state);
+    withViewTransition(() => applyClimate(state));
     if (announce) {
       announce(`Climate: ${state.theme} theme, ${state.wonder} depth, ${state.lighting} light.`);
     }
@@ -577,9 +579,10 @@ function initMonumentEntrance() {
   const destroyScrollChrome = initScrollChrome({ mode: 'hub' });
   const destroyTemporal = initHubTemporalClimate();
   const destroySegmentKeys = initSegmentKeyboard(document);
+  const destroyPointerCraft = initPointerCraft(document);
   const destroyPassAlong = initPassAlong({
     title: 'Lore.Land — A Worldbuilding Monument',
-    text: 'Enter a seeded world. Chapter One opens at the Commons Scale.',
+    text: 'Enter a seeded world. Chapter One opens at dawn, when Boof unearths a warm egg no map will hold.',
     url: typeof location !== 'undefined' ? `${location.origin}/` : 'https://lore.land/',
     mount: document.querySelector('.hub-hero .hub-actions'),
     label: 'Pass the monument',
@@ -611,6 +614,9 @@ function initMonumentEntrance() {
     }
     if (destroySegmentKeys) {
       destroySegmentKeys();
+    }
+    if (destroyPointerCraft) {
+      destroyPointerCraft();
     }
     if (destroyPassAlong) {
       destroyPassAlong();

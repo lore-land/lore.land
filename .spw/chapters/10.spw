@@ -6,7 +6,7 @@
 
 ^[chapter/10]{
   title: "Bone.land Resonance"
-  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert. The four laws — cell, key, turn, receipt — are load-bearing here. The egg nests in the crossing of two beams like a kernel."
+  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Structural honesty becomes the concert. The four civic laws—cell, key, turn, receipt—are load-bearing here. The egg nests into the crossing of two colossal timbers, and the hall settles with ..."
   mood: "bonk"
   period: "spring"
   chapter_path: "/book/chapter/10/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The great frame did not pretend to be entertainment. Joints were exposed on purpose. Each beam felt load-bearing — until, with a sudden thud, a loud BONK ran through the hall. Not slapstick. Contact with irreversible ..."
+    excerpt: "The great timber chassis of Bone.land did not pretend to be theater. Its massive square-hewn oak beams soared into the morning sky like the ribcage of an ancient leviathan, every mortise, tenon, and wooden peg left co..."
     route: ^[chapter/10/s01]{open}
   >
   s02: <
     handle: "custom-bonk/02"
     type: "custom-bonk"
-    excerpt: "The sound was jarring, a shockwave through honest timber. It was as if the world itself had hit a wall and the wall had held. Boof was dazed and, for the first time since the furrow, unsurprised. Structure that tells ..."
+    excerpt: "The sound of the bonk was staggering—a seismic resonance that traveled straight through the timber, down through the limestone footings, and deep into the bedrock of the world. It was the sound of a universe meeting a..."
     handles: ["bonk-intro"]
     route: ^[chapter/10/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the chassis. Not all endings are the ones we expect. Sometimes you just get bonked by a law that will not yield.\""
+    excerpt: "\"Ah, Boof!\" the Fool called down, hanging upside down by his heels from the collar-beam like a great colorful bat. He rapped his knuckles against the oak with a sharp, hollow knock. \"You have finally reached the chass..."
     route: ^[chapter/10/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Bonk"
-    excerpt: "Boof sat a moment in the hum of the frame. The bonk was sudden and inevitable. What a cell holds, if you ask the beams, is four substances dressed as town-words: worth, weather, keys, and proof — value, state, authori..."
+    title: "The Four Load-Bearing Truths"
+    excerpt: "Boof sat quietly upon the chalky floorboards while the structural hum of the frame settled into her bones. What a cell holds, if you interrogate the beams, is four elemental forces translated into plain town vocabular..."
     route: ^[chapter/10/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Is this how it ends?\" Boof asked. The Fool answered with a quieter bonk — a door closing on ornament, another opening on a stair that bloomed before it was planted."
+    excerpt: "\"Is this where the trail terminates?\" Boof asked, looking up at the soaring king-post. The Fool answered with a softer, resonant knock against the wood—a door closing on empty ornament, and another swinging open upon ..."
     route: ^[chapter/10/s06]{open}
   >
 ]

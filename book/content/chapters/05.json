@@ -3,49 +3,182 @@
   "title": "The Quiet Rift",
   "logline": "Two receipts cannot both post. The rift is the song of that disagreement.",
   "epigraph": "Silence is not empty; it is unreconciled.",
-  "description": "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the counting room holds while two receipts refuse to post together. The egg warms the fracture from below; song makes the disagreement audible.",
+  "description": "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the town counting room appears serene while two conflicting receipts refuse to post together. The egg warms the fracture from below; the Fool's melody makes the disagreement audible without forcing a false balance.",
   "mood": "song",
   "period": "spring",
   "pillars": [
     "intrigue",
-    "code-craft"
+    "code-craft",
+    "worldbuilding"
+  ],
+  "topics": [
+    {
+      "id": "memory",
+      "label": "Living memory",
+      "href": "/topics/#memory"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "voice",
+      "label": "Voice & register",
+      "href": "/world/civic-magic.html#fool"
+    }
   ],
   "relatedRoutes": [
-    { "label": "Chamber 04 · Council", "href": "/book/chapter/04/", "kicker": "Prev" },
-    { "label": "Chamber 06 · Lanterns", "href": "/book/chapter/06/", "kicker": "Next" }
+    {
+      "label": "Chamber 04 · Council",
+      "href": "/book/chapter/04/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Town Archive",
+      "href": "/world/civic-magic.html#archive",
+      "kicker": "Office"
+    },
+    {
+      "label": "Chamber 06 · Lanterns",
+      "href": "/book/chapter/06/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "counting room",
+        "ledger",
+        "receipt",
+        "receipts",
+        "slip",
+        "slips",
+        "post",
+        "unreconciled",
+        "balance"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "rift",
+        "crack",
+        "fracture",
+        "hairline",
+        "egg",
+        "cell",
+        "stone"
+      ]
+    },
+    {
+      "id": "voice",
+      "label": "Voice & register",
+      "href": "/world/civic-magic.html#fool",
+      "terms": [
+        "song",
+        "melody",
+        "diagnostic",
+        "harmony",
+        "hum"
+      ]
+    }
   ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "song",
-      "climate": { "tempo": "lamplight", "tint": "archive", "hook": "two-receipts" },
+      "climate": {
+        "tempo": "lamplight",
+        "tint": "archive",
+        "hook": "two-receipts"
+      },
+      "scene": {
+        "vantage": "on a counting-room stool's crossbar, chin at cedar desk height, where the vellum spread fills the field of view",
+        "light": "wide calm afternoon sunlight through clean arched windows; on the sunlit page, one hairline of pure dark that light refuses to cross",
+        "scent": "ink dust, linseed floor wax, cold tea gone glassy in a porcelain cup, stone kept excessively quiet",
+        "edges": [
+          "the master ledger lies open to a spread balanced to the penny, except for the hairline fracture",
+          "the crack runs off the vellum, across the desk grain, down the carved leg, and into the slate floor",
+          "beyond the window, the town square moves in peaceful order with carts, awnings, and unhurried crowds",
+          "two conflicting harvest slips hang pinned above the split, fluttering without wind"
+        ],
+        "hint": "sunlit counting room from low at the desk edge; an open ledger with a single hairline crack of darkness running across page, desk, and wall; a serene town square through the window behind; warm paper tones split by one thin dark seam"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "The counting room was calm the way a held breath is calm. Boof followed a faint melody along the floor-crack — the ",
+          "text": "The town counting room was calm the way a held breath is calm. Sunlight poured through tall stone arches, illuminating rows of immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the central desk. Boof padded in on quiet paws, following a faint, crystalline vibration running along the slate floor-crack—the ",
           "children": [
-            { "type": "custom-song", "content": "Fool’s Song" },
-            { "type": "text", "text": " — not a lure this time, a diagnostic. Two slips hung over the open ledger. Each was a receipt for the same turn. Conservation said they could not both be true. The egg, set beneath the stone, warmed the hairline where the book had begun to split." }
+            {
+              "type": "custom-song",
+              "content": "Fool’s Song"
+            },
+            {
+              "type": "text",
+              "text": "—not a musical performance, but an acoustic diagnostic. Pinned above the ledger with silver bodkins hung two conflicting slips, each claiming to be the authentic receipt for the exact same harvest turn. Conservation of goods meant both could not exist in the same world. Below the desk, the egg in Boof's sling warmed the hairline where the stone floor had begun to part."
+            }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The silence in the room was not peaceful. It was the silence of an unreconciled lie, held together only because nobody had dared to turn the page."
         }
       ]
     },
     {
       "type": "custom-song",
+      "scene": {
+        "vantage": "inches from the open ledger, watching the silver bodkins vibrate",
+        "light": "amber lamplight casting long dual shadows from the two pinned slips",
+        "scent": "iron gall ink, old dried sheepskin, brass filings",
+        "edges": [
+          "one slip is stamped with the seal of the communal winter kitchens",
+          "the second slip is stamped with the seal of a private cellar storehouse",
+          "the vellum fibers around the crack shiver in harmonic resonance"
+        ],
+        "hint": "macro close-up of two parchment receipt slips pinned over an open ledger split by a thin black hairline; vibrating silver pins catching gold lamplight"
+      },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "song-verse",
-          "text": "The song did not say come closer. It named the fracture: one receipt for a harvest that arrived, one receipt for a harvest that was only sealed. Melody made the disagreement audible without forcing a false fix."
+          "text": "The song did not invite anyone to dance. It named the fracture with mathematical cruelty: one receipt for a harvest of boonberries that had actually filled the kitchen kettles; one receipt for a harvest that existed only as a stamped promise to inflate a balance sheet. The melody made the disagreement audible in the room’s high rafters without forcing a fraudulent total."
         }
       ]
     },
     {
       "type": "custom-fool",
+      "scene": {
+        "vantage": "looking up at the tall clerk's high-backed chair where the Fool sits cross-legged",
+        "light": "afternoon dust motes swirling around the Fool's raised silver tuning fork",
+        "scent": "cinnamon, old ledger glue, dry paper shavings",
+        "edges": [
+          "the Fool holds a tuning fork against the edge of the split desk",
+          "his patchwork boots rest on the bottom shelf of tax rolls",
+          "his smile is solemn, listening to the pitch of the wood"
+        ],
+        "hint": "a jester figure sitting cross-legged in a tall leather counting-house chair, holding a humming tuning fork to a split wooden desk"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"You hear it, don’t you, Boof?\" The Fool’s voice sang with the crack. \"This is my song. It is also the ledger's. A quiet rift is still a rift.\""
+          "text": "\"You hear the pitch, don’t you, Boof?\" the Fool murmured from the high clerk's chair, resting a silver tuning fork against the edge of the desk. \"This is not my tune. It is the ledger's own wood crying out under the tension. When you publish a lie cleanly enough, the paper doesn't tear right away—it hums until the rafters shake. A quiet rift is still a rift.\""
         }
       ]
     },
@@ -60,14 +193,23 @@
     },
     {
       "type": "section",
-      "title": "The Melody of the Fool",
+      "title": "The Diagnostic Hum",
       "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "The notes twisted through the room the way a true count twists a clerk. Every step Boof took along the crack seemed to harmonize with the disagreement. The egg did not choose a slip. A cell keeps its own law; it does not reconcile other people's books. Boof left both receipts unposted and carried the heat toward the city that turns shocks into glass."
+          "text": "The acoustic frequency twisted through the tall room the way a true count twists a dishonest clerk. Every step Boof took along the stone split harmonized with the disagreement. The egg did not pick a side between the two receipts. A cell keeps its own law; it does not exist to reconcile other people's cooked books."
+        },
+        {
+          "type": "paragraph",
+          "text": "Instead, the egg's subterranean heat kept the hairline open and honest. It prevented the room's tidy silence from smoothing over the seam with gum arabic and fresh ink. Boof left both receipts unposted, pinned in their mutual contradiction, and turned toward the western gate where the great city converts its sudden shocks into lanterns of glass."
         }
       ],
+      "climate": {
+        "tempo": "afternoon",
+        "tint": "song",
+        "hook": "diagnostic-hum"
+      },
       "scene": {
         "vantage": "floor-level at the ledger crack, egg below the stone",
         "light": "lamplight on paper; gold rift; warm shell under the table",
@@ -83,10 +225,25 @@
     },
     {
       "type": "custom-boof",
+      "scene": {
+        "vantage": "trotting through the counting house archway into the cobblestone avenue leading toward Bonk City",
+        "light": "late afternoon shadows lengthening across the cobbles; the egg glowing warm gold in the sling",
+        "scent": "fresh air, distant street food, rain on bronze roofs ahead",
+        "edges": [
+          "the counting house door remains ajar behind her",
+          "the sound of the humming ledger fades into the busy noise of the avenue",
+          "ahead, the jagged skyline of Bonk City glints with glass lantern towers"
+        ],
+        "hint": "a working dog carrying a glowing egg emerging from an old stone doorway onto a wide paved road leading toward a city of gleaming glass lantern spires"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Why does this song feel so familiar?\" Boof wondered. Because she had smelled unreconciled books before. Because a dog who works for fruit knows when a total is a performance. The tune drew her onward, toward lanterns that would claim to be the light."
+          "text": "Boof knew that scent all too well. A dog who works for honest blueberries knows immediately when a bowl is empty despite what the master shouts from the porch. A total is only as real as the fruit that lands in the dish."
+        },
+        {
+          "type": "paragraph",
+          "text": "The diagnostic tune faded behind her as she stepped out into the avenue. Ahead, the towers of Bonk City leaned into the dusk, ready to claim that their glass was the source of all illumination."
         }
       ]
     }

@@ -6,7 +6,7 @@
 
 ^[chapter/05]{
   title: "The Quiet Rift"
-  description: "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the counting room holds while two receipts refuse to post together. The egg warms the fracture from below; song makes the disagreement audible."
+  description: "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the town counting room appears serene while two conflicting receipts refuse to post together. The egg warms the fracture from below; the Fool's melody makes the disagreement audible ..."
   mood: "song"
   period: "spring"
   chapter_path: "/book/chapter/05/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The counting room was calm the way a held breath is calm. Boof followed a faint melody along the floor-crack — the Fool’s Song — not a lure this time, a diagnostic. Two slips hung over the open ledger. Each was a rece..."
+    excerpt: "The town counting room was calm the way a held breath is calm. Sunlight poured through tall stone arches, illuminating rows of immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the cen..."
     route: ^[chapter/05/s01]{open}
   >
   s02: <
     handle: "custom-song/02"
     type: "custom-song"
-    excerpt: "The song did not say come closer. It named the fracture: one receipt for a harvest that arrived, one receipt for a harvest that was only sealed. Melody made the disagreement audible without forcing a false fix."
+    excerpt: "The song did not invite anyone to dance. It named the fracture with mathematical cruelty: one receipt for a harvest of boonberries that had actually filled the kitchen kettles; one receipt for a harvest that existed o..."
     handles: ["song-verse"]
     route: ^[chapter/05/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You hear it, don’t you, Boof?\" The Fool’s voice sang with the crack. \"This is my song. It is also the ledger's. A quiet rift is still a rift.\""
+    excerpt: "\"You hear the pitch, don’t you, Boof?\" the Fool murmured from the high clerk's chair, resting a silver tuning fork against the edge of the desk. \"This is not my tune. It is the ledger's own wood crying out under the t..."
     route: ^[chapter/05/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Melody of the Fool"
-    excerpt: "The notes twisted through the room the way a true count twists a clerk. Every step Boof took along the crack seemed to harmonize with the disagreement. The egg did not choose a slip. A cell keeps its own law; it does ..."
+    title: "The Diagnostic Hum"
+    excerpt: "The acoustic frequency twisted through the tall room the way a true count twists a dishonest clerk. Every step Boof took along the stone split harmonized with the disagreement. The egg did not pick a side between the ..."
     route: ^[chapter/05/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Why does this song feel so familiar?\" Boof wondered. Because she had smelled unreconciled books before. Because a dog who works for fruit knows when a total is a performance. The tune drew her onward, toward lanterns..."
+    excerpt: "Boof knew that scent all too well. A dog who works for honest blueberries knows immediately when a bowl is empty despite what the master shouts from the porch. A total is only as real as the fruit that lands in the di..."
     route: ^[chapter/05/s06]{open}
   >
 ]

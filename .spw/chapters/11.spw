@@ -6,7 +6,7 @@
 
 ^[chapter/11]{
   title: "Paradox Bloom"
-  description: "Chapter 11 of Lore.Land: Paradox Bloom. Impossible routes open into forms that can be used without being fully resolved. Flowers open before any seed is visible; the egg is the late seed, a leaf that kept its native form."
+  description: "Chapter 11 of Lore.Land: Paradox Bloom. Impossible routes open into serene, usable forms without needing complete theoretical resolution. Golden flowers blossom from stone before any seed is sown; the egg rests as the late seed, and the ..."
   mood: "awakening"
   period: "spring"
   chapter_path: "/book/chapter/11/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "After the bonk the stair returned on itself and flowered. Boof blinked into a strange calm. \"Where am I?\" she whispered, realizing this was not a maze but a moment of awakening — bloom before seed. Gold flowers opened..."
+    excerpt: "Beyond the threshold of Bone.land, the stone staircase wound through a sunlit mountain terrace and looped peacefully back upon itself. Boof paused on the third riser, blinking into an atmosphere of astonishing calm. T..."
     route: ^[chapter/11/s01]{open}
   >
   s02: <
     handle: "custom-awakening/02"
     type: "custom-awakening"
-    excerpt: "The air hummed. The trees no longer whispered; they waited. Boof felt an understanding she had been walking toward since the furrow: the offering is the form you can use. You do not have to finish the paradox to eat f..."
+    excerpt: "The garden hummed with serene productivity. The surrounding pines no longer whispered cautionary rumors; they stood as patient witnesses to an impossible harvest. Boof understood what her paws had been learning since ..."
     handles: ["awakening-intro"]
     route: ^[chapter/11/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You’ve begun to see it, haven’t you, Boof?\" the Fool’s voice was softer now, almost kind. \"This journey isn’t about me at all. The seed is allowed to be late.\""
+    excerpt: "\"You have begun to see it clearly, haven’t you, Boof?\" the Fool said softly, setting down a steaming bowl of tea upon the terrace table. His voice had lost its barbed edge, carrying the gentle warmth of an old friend...."
     route: ^[chapter/11/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Moment of Clarity"
-    excerpt: "Boof was not chasing the Fool anymore. The puzzles, the glass, the bonks had been constraints that generated more than they confused. Bloom means several usable implementations from one unresolved premise. She picked ..."
+    title: "The Widening Door"
+    excerpt: "Boof was not chasing an elusive jester anymore. The desert flats, the mirrored council, the humming counting room, and the bonk of Bone.land had not been obstacles; they were generative constraints that gave the narra..."
     route: ^[chapter/11/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "\"You’ve found it, Boof. Every awakening is also a beginning. The confluence is downstream. Bring the cell. Do not flatten the tributaries.\""
+    excerpt: "\"Take the cell down to the confluence, Boof,\" the Fool smiled, pointing downhill where two great rivers met beneath a low wooden bridge. \"Every awakening is also a beginning. When you reach the joined water, share thr..."
     route: ^[chapter/11/s06]{open}
   >
 ]

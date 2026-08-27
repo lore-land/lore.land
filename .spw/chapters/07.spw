@@ -6,7 +6,7 @@
 
 ^[chapter/07]{
   title: "Blueberry Oath"
-  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof swears at the market stone. The oath is a key that can be filed smaller, never grown in secret; the private price is blueberries; the egg witnesses. A shadow copies the motion and not the heat."
+  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof swears a covenant at the ancient market stone. The oath is a key handed over in public; the private price is honest fruit; the egg is the warm, incorruptible witness. Meanwhile, an unauthorize..."
   mood: "shadow"
   period: "spring"
   chapter_path: "/book/chapter/07/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The market stone had a groove worn by other mouths. Boof stopped pretending the pursuit was one-sided. Something kept the same pace — a shadow that copied her steps and not the egg's heat. She set the egg beside the s..."
+    excerpt: "The great market stone stood at the center of the square, its granite top worn smooth and dished by centuries of pressing palms. Boof stopped pretending she was walking alone. For the last three blocks, something had ..."
     route: ^[chapter/07/s01]{open}
   >
   s02: <
     handle: "custom-shadow/02"
     type: "custom-shadow"
-    excerpt: "The shadow stretched across the cobbles, mirroring Boof's every move, but it would not warm. It was an unauthorized copy of a key — motion without permission, shape without receipt. If you forfeit a bond, the shadow i..."
+    excerpt: "The shadow stretched across the sunny cobbles, mimicking Boof's every twitch of ear and lift of paw, but it remained ice-cold to the touch. It was an unauthorized duplicate of a key—motion without permission, outer sh..."
     handles: ["shadow-intro"]
     route: ^[chapter/07/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the long shade. \"This is my shadow, or perhaps it is the oath's. Whose key is it if it can be copied without heat?\""
+    excerpt: "\"Ah, you’ve noticed your silent companion, haven’t you, Boof?\" the Fool whispered from the rafters of an awning. \"That is the oath’s shadow—or perhaps the shadow of every promise made with crossed fingers. Anyone can ..."
     route: ^[chapter/07/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Shadow’s Reflection"
-    excerpt: "The shadow twisted and sometimes led. It seemed to know the path Boof sought and refused to show the heat. She did not touch it. A key that can be copied without a receipt is not a key you should grow. She left the bl..."
+    title: "The Integrity of the Bond"
+    excerpt: "The shadow twisted along the curb, occasionally leaping ahead as if trying to lead the dog astray. It seemed to know the exact path Boof sought toward the deep wells in the south, but it stubbornly refused to radiate ..."
     route: ^[chapter/07/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed. \"But the real question is: whose key is it, and what do you forfeit if you lie?\""
+    excerpt: "\"The shadow will walk beside you until the journey ends, Boof,\" the Fool’s voice called out, fading like church chimes across the square. \"Because whenever you carry genuine fire, the cold world will try to counterfei..."
     route: ^[chapter/07/s06]{open}
   >
 ]

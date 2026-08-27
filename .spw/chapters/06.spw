@@ -6,7 +6,7 @@
 
 ^[chapter/06]{
   title: "Lanterns of Bonk City"
-  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic light. Boof learns that a lantern is only glass — it shows the egg's heat, it is not the heat — while grains of the city sleep in the walls and wake when something strikes."
+  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic illumination. Boof navigates a maze of leaning bronze posts and rain-slick glass, learning that a lantern only transmits the egg's true heat without claiming ownership o..."
   mood: "labyrinth"
   period: "spring"
   chapter_path: "/book/chapter/06/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof stepped into Bonk City the way you step into a struck bell. The streets were a Fool’s Labyrinth of leaning glass. Every lantern turned toward the egg. The lanterns were not the light. They were glass: they showed..."
+    excerpt: "Boof trotted into Bonk City the way you step into the acoustic chamber of a struck bell. The streets did not follow straight surveyor lines; they formed a Fool’s Labyrinth of curving bronze posts, rain-slick stone arc..."
     route: ^[chapter/06/s01]{open}
   >
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    excerpt: "\"In the labyrinth, the way forward is always through the glass,\" a voice said from the twisting paths. \"Do not confuse the pane with the flame. The city offers light. The offering is not the cell.\""
+    excerpt: "\"In the labyrinth, the way forward is always through the glass,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame. The city offers illumination for the public highway. But..."
     handles: ["labyrinth-intro"]
     route: ^[chapter/06/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is whether you can tell glass from heat when every street is leaning.\""
+    excerpt: "\"You’ve found my city of dents, Boof!\" the Fool’s voice called down from a lamplighter’s ladder. He gave his brass bell a crisp tap against a dented bronze post, and the crease blossomed into warm amber brilliance. \"E..."
     route: ^[chapter/06/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Shifting Maze"
-    excerpt: "The city was alive in the way glass is alive when it holds a flame. No matter how far Boof walked, the lanterns rearranged around the egg. Each impact named a dent into light — spectacle with civic duty. She understoo..."
+    title: "The Economy of Impact"
+    excerpt: "The city was alive in the exact way glass is alive when it catches an honest flame. As Boof walked down the spiraling avenue, the surrounding lanterns rearranged their angles to mirror the coal-dark egg in her sling. ..."
     route: ^[chapter/06/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof paused. \"Is this part of the game?\" The Fool's laughter came from behind a pane. \"Perhaps the only way out,\" she mused, \"is to stop asking the glass to be the fire.\" Ahead, a market stone waited with a groove for..."
+    excerpt: "Boof paused at the curb of the final alley. \"The only way through the maze,\" she thought, shaking rainwater from her ears, \"is to stop asking the glass to be the fire.\" She knew the difference between real heat that c..."
     route: ^[chapter/06/s06]{open}
   >
 ]

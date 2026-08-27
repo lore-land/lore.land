@@ -222,8 +222,20 @@
 
 .wonder-path-art img,
 .material-study img,
-.wonder-threshold-art {
-  transition: filter 320ms ease;
+.wonder-threshold-art,
+.hub-hero-media img {
+  transition: filter 320ms ease, transform 320ms ease;
+}
+
+.hub-hero-media::before {
+  background:
+    linear-gradient(
+      118deg,
+      transparent 36%,
+      color-mix(in srgb, #fff 28%, var(--hub-gold, #d9a441) 12%) 50%,
+      transparent 64%
+    ) no-repeat calc(var(--craft-x, var(--light-x, 50)) * 1% - 40%) 0 / 220% 100%,
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 3px);
 }
 
 .wonder-path-art:hover img,
@@ -252,10 +264,17 @@
      the existing hover transform instead of fighting it. */
   body[data-lighting='live'] .hub-hero-media {
     translate:
-      calc((var(--light-x, 50) - 50) * -0.09px)
-      calc((var(--light-y, 24) - 30) * -0.06px);
+      calc((var(--light-x, 50) - 50) * -0.12px)
+      calc((var(--light-y, 24) - 30) * -0.08px);
     transition: translate 240ms ease-out;
     will-change: translate;
+  }
+
+  body[data-lighting='live'] .hub-hero-media img {
+    filter:
+      saturate(calc(1 + var(--page-heat, 0) * 0.12))
+      contrast(calc(1.02 + var(--page-heat, 0) * 0.04))
+      brightness(calc(1 + var(--page-heat, 0) * 0.04));
   }
 
   @supports (animation-timeline: view()) {

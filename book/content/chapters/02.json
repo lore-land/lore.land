@@ -3,12 +3,13 @@
   "title": "The First Echo",
   "logline": "The grove repeats the egg a beat late — so there always seems to be a second one just out of sight.",
   "epigraph": "Repetition is not proof. It is only pressure.",
-  "description": "Chapter 2 of Lore.Land: The First Echo. Boof carries the unnamed egg into the grove that answers a beat late, where pollen grains sleep and wake, and an echo is not a receipt.",
+  "description": "Chapter 2 of Lore.Land: The First Echo. Boof carries the unnamed egg into the grove that answers a beat late, where pollen grains sleep and wake, and an echo is a summons, never a receipt.",
   "mood": "grove",
   "period": "spring",
   "pillars": [
     "worldbuilding",
-    "intrigue"
+    "intrigue",
+    "wonder"
   ],
   "topics": [
     {
@@ -30,6 +31,11 @@
       "id": "motif",
       "label": "Marks & lanterns",
       "href": "/topics/#motif"
+    },
+    {
+      "id": "voice",
+      "label": "Voice & register",
+      "href": "/world/civic-magic.html#fool"
     }
   ],
   "relatedRoutes": [
@@ -59,28 +65,61 @@
       "id": "memory",
       "label": "Living memory",
       "href": "/topics/#memory",
-      "terms": ["grove", "echo", "echoes", "grain", "grains", "pollen", "witness"]
+      "terms": [
+        "grove",
+        "echo",
+        "echoes",
+        "grain",
+        "grains",
+        "pollen",
+        "witness",
+        "archive",
+        "reserve",
+        "thicket"
+      ]
     },
     {
       "id": "motif",
       "label": "Marks & lanterns",
       "href": "/topics/#motif",
-      "terms": ["egg", "shell", "heat", "receipt", "membrane", "second"]
+      "terms": [
+        "egg",
+        "shell",
+        "heat",
+        "receipt",
+        "membrane",
+        "second",
+        "summons",
+        "door"
+      ]
+    },
+    {
+      "id": "reward",
+      "label": "Reward currents",
+      "href": "/topics/#reward",
+      "terms": [
+        "blueberry",
+        "fruit",
+        "scent",
+        "trail",
+        "wage",
+        "pack"
+      ]
     }
   ],
   "sections": [
     {
       "type": "section",
-      "title": "A beat late",
+      "title": "A Beat Late",
       "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "By the second morning the egg was warmer than the sling, and the sling was warmer than Boof, and the maps were still pretending none of this was a fact. She had walked downhill the way the berries pointed, off the edge of every route she carried, into the treeline the workers would not name after dark. The grove smelled of wet bark and of something arriving twice."
+          "text": "By the second morning the egg was warmer than the feed-sack sling, the sling was warmer than Boof's ribs, and the maps in the town archive were still pretending none of this was a fact. She had walked downhill the way the waking berries pointed, off the edge of every charted furrow, into the dark treeline the field-hands would not name after sundown. The grove did not smell like an ordinary forest of loam and rotting leaves. It smelled of wet birch bark, crushed fern, and of something arriving twice."
         },
         {
           "type": "paragraph",
-          "text": "She set the egg on a stone at the clearing's rim and watched the air around it thicken. Pollen hung in ring after ring. A spoken breath left her muzzle and came back a heartbeat later, wearing her own pitch, as if the thicket had kept a grain of the sound asleep and then woken it. The egg did not echo. The grove echoed the egg."
+          "text": "She set the egg upon a flat mossy stone at the clearing's rim and watched the air around it thicken. The trunks stood in near-circles, curved like punctuation marks around an unsaid sentence. Pollen hung in the still green air in ring after concentric ring, gilded where canopy-light sliced through. A soft breath left her muzzle and came back a heartbeat later, wearing her own pitch, as if the thicket had caught a grain of sound asleep, held it in its throat, and then woke it up. The egg itself did not echo. The entire grove echoed the egg."
         }
       ],
       "climate": {
@@ -115,7 +154,7 @@
             },
             {
               "type": "text",
-              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different fragment from the leaves: a kitchen cough, a clerk saying "
+              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different forgotten fragment from the leaf-mold: an old kitchen cough, a distant axe-stroke, a clerk saying "
             },
             {
               "type": "custom-echo",
@@ -123,11 +162,26 @@
             },
             {
               "type": "text",
-              "text": " with the confidence of someone who had never held a warm shell."
+              "text": " with the hollow confidence of someone who had never felt a warm shell."
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof knew how towns worked. When a record-house is too clean, the dirt does not vanish; it drains downhill into the wild growth where no ledgers are audited. This thicket was where Boon.land dumped every phrase it refused to file."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "nose to the damp humus beneath curved birch roots",
+        "light": "faint gold light filtered through damp spiderwebs",
+        "scent": "tallow, old ink on discarded rags, rotting elderberry, dog-paw pad on cold stone",
+        "edges": [
+          "underfoot, the soil is layered with dried pulp from old rejected parchment",
+          "the sound of a town cough repeats every seven paces",
+          "the egg's heat radiates against Boof's chest like an unquenched coal"
+        ],
+        "hint": "a dog's muzzle sniffing mossy forest floor where scraps of uninked paper dissolve into loam; faint glowing spore-lights circling"
+      }
     },
     {
       "type": "custom-boonberry",
@@ -135,9 +189,20 @@
         {
           "type": "paragraph",
           "data-content_id": "grove",
-          "text": "The berries here did not shine for distribution. They shone like grains under stress—bright when a phrase repeated often enough to become policy, dim when the thicket put them back to sleep. Boof recognized several of her own silences reflected in the fruit. That was the grove’s first cruelty: it kept what the town preferred not to receipt."
+          "text": "The berries here did not shine for harvest distribution. They shone like grains under stress—bright when a phrase repeated often enough to become policy, dim when the thicket put them back to sleep. Boof recognized several of her own past silences reflected in the dark skins of the fruit. That was the grove’s first cruelty: it kept what the town preferred not to receipt."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "eye-level with wild tangled vines clinging to curved granite",
+        "light": "deep indigo berry glow flickering in rhythm with distant murmured echoes",
+        "scent": "fermenting juice, ozone, resin, cold iron",
+        "edges": [
+          "wild boonberries cluster on thorned runners",
+          "each berry pulses with a trapped whisper",
+          "frost from the open fields clings to the underside of the leaves"
+        ],
+        "hint": "close-up of dark indigo berries on thorny vines, each berry pulsing with inner golden light like a trapped firefly; green moss background"
+      }
     },
     {
       "type": "custom-echo",
@@ -156,7 +221,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Follow me,\" said an echo that used Boof’s own pitch from years earlier, the careful clerk-voice that had once made disorder sound administrative. The path forked and rejoined. Time did not reverse; it re-litigated. In the hanging dust there was always a second egg, a breath behind the first, as if the grove were practicing a clutch it did not yet have the right to keep."
+          "text": "\"Follow me,\" said an echo that used Boof’s own pitch from years earlier—the careful, rhythmic clerk-voice she had used back when she thought order was a matter of correct filing. The path forked around an ancient hollow cedar and rejoined on the other side. Time here did not reverse; it re-litigated. In the suspended dust of the pollen rings, there was always a second egg, a breath behind the first, shivering in gold spores as if the grove were practicing a clutch it did not yet have the right to hatch."
         }
       ]
     },
@@ -171,31 +236,58 @@
     },
     {
       "type": "section",
-      "title": "What the echo keeps",
+      "title": "What the Echo Keeps",
       "data-foreshadow": "hatch",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof understood, pacing the fork, that the grove was not a memory palace. It was a failure mode of the archive—overflow storage for stories that had been published too cleanly. Each echo offered a route: amplify a grievance, bury a name, promote a rumor until it calcified into map legend. None of those routes would issue a receipt for the egg. The grove could repeat it. It could not file it."
+          "text": "Boof understood, pacing the mossy fork, that the grove was not a memory palace. It was a failure mode of the archive—overflow storage for stories that had been published too cleanly. Each echo offered a false fork: amplify a grievance, bury a name, promote an unverified rumor until it calcified into map legend. None of those routes would issue a receipt for the egg. The grove could repeat the heat; it could never file it."
         },
         {
           "type": "paragraph",
-          "text": "Choosing a path was authorship. Leaving without choosing was also authorship, only quieter, and the grove charged interest on quiet. Boof took the egg back into the sling. The second egg in the pollen stayed where it was, a witness the thicket would not swear to. Down-sand, older routes had begun to answer. She went to hear which of them would admit a turn."
+          "text": "Choosing a path was authorship. Leaving without choosing was also authorship, only quieter, and the grove charged compounding interest on quiet. Boof took the egg back into the sling. The phantom egg in the pollen dust remained where it hovered—a witness the thicket would never swear to in daylight. Downward, where the trees thinned into dry salt-breeze, older routes across the sand had begun to answer. She went to hear which of them would admit a turn."
         }
-      ]
+      ],
+      "climate": {
+        "tempo": "day",
+        "tint": "archive",
+        "hook": "what-echo-keeps"
+      },
+      "scene": {
+        "vantage": "looking through the gap in the outer ring of trunks toward bright sand flats",
+        "light": "green forest shade breaking into harsh amber sunlight beyond",
+        "scent": "pine needle resin meeting dry dust and distant salt",
+        "edges": [
+          "the last tree of the grove stands dead, split by ancient lightning",
+          "the phantom pollen egg fades as Boof lifts the real weight",
+          "the sand dunes begin immediately where the shade ends"
+        ],
+        "hint": "view from dim green woods looking out toward sun-bleached golden sand dunes; a dog silhouette carrying a glowing bundle"
+      }
     },
     {
       "type": "custom-fool",
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Are you lost?\" the Fool asked from nowhere particular, no longer playful. \"Or have you finally arrived where the public record cannot pretend to be complete?\""
+          "text": "\"Are you lost?\" the Fool asked, leaning out from behind the hollow cedar where no door had been cut. He brushed pollen from his mismatched sleeves, no longer entirely playful. \"Or have you finally arrived where the public record cannot pretend to be complete?\""
         },
         {
           "type": "paragraph",
-          "text": "Boof did not answer with a riddle. She opened no book. She wrote the grove’s first usable note on the air with her nose: echo is not evidence; echo is a summons; a summons is not a receipt. Then she kept walking, because a summons still requires a response if anyone is to stay warm."
+          "text": "Boof did not answer with a riddle, and she opened no book. She wrote the grove’s first usable note on the air with her nose: an echo is not evidence; an echo is a summons; a summons is not a receipt. Then she trotted past him into the sand, because a summons still requires a response if anyone is to stay warm."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "looking up at the Fool perched in the fork of the hollow cedar",
+        "light": "dappled gold on checkered sleeves; eyes catching the egg's warm glow",
+        "scent": "dried orange peel, beeswax, old cedar heartwood, cold dog breath",
+        "edges": [
+          "the Fool balances on one foot on a bending branch",
+          "behind him, the tree hollow opens into empty air with no back",
+          "Boof's tracks lead straight out of the ring toward the sand"
+        ],
+        "hint": "a whimsical, sharp-eyed figure in patchwork robes sitting in a hollow tree in an echo grove, peering down at a stout working dog with a glowing egg sling"
+      }
     }
   ],
   "lore": {

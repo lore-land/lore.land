@@ -46,14 +46,28 @@ main.chapter>[data-ebook-section="true"]>h2::before {
 main.chapter>[data-ebook-section="true"].is-ebook-active {
   box-shadow:
     inset 3px 0 0 color-mix(in srgb, var(--theme-accent-main) 56%, transparent 44%),
-    0 4px 20px color-mix(in srgb, var(--theme-accent-main) 10%, transparent 90%);
-  background: color-mix(in srgb, var(--theme-paper) 86%, rgba(42, 111, 127, 0.14) 14%);
+    0 4px 20px color-mix(in srgb, var(--theme-accent-main) 10%, transparent 90%),
+    0 0 2.2rem color-mix(in srgb, var(--color-gold, #c4922e) calc(var(--heat, 0) * 18%), transparent);
+  background:
+    radial-gradient(
+      28rem circle at calc(var(--craft-x, 18) * 1%) calc(var(--craft-y, 12) * 1%),
+      color-mix(in srgb, var(--color-gold, #c4922e) calc(8% + var(--heat, 0) * 14%), transparent),
+      transparent 62%
+    ),
+    color-mix(in srgb, var(--theme-paper) 86%, rgba(42, 111, 127, 0.14) 14%);
   transform: translateY(-0.5px);
   z-index: 2;
   transition:
     background-color var(--transition-duration) var(--transition-function),
     box-shadow var(--transition-duration) var(--transition-function),
     transform var(--transition-duration) var(--transition-function);
+}
+
+main.chapter>[data-ebook-section="true"][data-motif='egg'].is-ebook-active {
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--color-gold, #c4922e) 78%, var(--theme-accent-main) 22%),
+    0 8px 28px color-mix(in srgb, var(--color-gold, #c4922e) 16%, transparent),
+    0 0 2.6rem color-mix(in srgb, var(--color-hearth, #b0602a) calc(10% + var(--heat, 0) * 20%), transparent);
 }
 
 main.chapter>[data-ebook-section="true"].is-ebook-active::before {

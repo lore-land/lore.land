@@ -6,7 +6,7 @@
 
 ^[chapter/09]{
   title: "Shards of Nine Honks"
-  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Signal fragments across the night. Collecting them is craft, not compulsion. The missing ninth is the egg — the kernel of a call that was never blown."
+  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Signal fragments arc across the violet night. Collecting them is community craft, not individual compulsion. The missing ninth shard is the egg—the unblown kernel of a call that chose furnace..."
   mood: "puzzle"
   period: "spring"
   chapter_path: "/book/chapter/09/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The ridge was a puzzle before it was a skyline. Eight shards of a broken honk lay in an arc, each one a relic of a call that had reached someone. The pieces rearranged with every step Boof took. The ninth place in the..."
+    excerpt: "The mountain ridge was a puzzle of slate and singing metal long before it was a skyline. Eight curved shards of an ancient shattered signal-horn lay in a wide crescent along the chimney-stack, each one a glowing relic..."
     route: ^[chapter/09/s01]{open}
   >
   s02: <
     handle: "custom-puzzle/02"
     type: "custom-puzzle"
-    excerpt: "The puzzle was incomplete on purpose. No single keeper can hold the whole call. \"Solve this,\" a voice whispered, \"if you can.\" Solving was the wrong verb. Seeing the kernel was enough: eight receipts of listening, one..."
+    excerpt: "The puzzle was incomplete by deliberate architectural design. No single clerk was meant to hold the entirety of the broadcast in their hand. \"Solve this if you have the pride for it,\" the mountain wind seemed to chall..."
     handles: ["puzzle-intro"]
     route: ^[chapter/09/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"It’s not about solving, Boof,\" the Fool’s voice whispered, \"it’s about seeing which shard was never a horn.\""
+    excerpt: "\"It is never about assembling a trophy for your mantel, Boof,\" the Fool whispered, leaning down from the chimney rim with an appreciative grin. \"If you weld all nine shards back together into one big trumpet, you get ..."
     route: ^[chapter/09/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Pieces Shift"
-    excerpt: "Boof knelt among the shards. Some fitted. Others refused, as if the call itself resisted a single owner. Scattering forces community: no one clerk can hold the whole broadcast. The egg in the ninth place was the kerne..."
+    title: "The Network of the Listeners"
+    excerpt: "Boof knelt upon the cold slates among the humming relics. A few shards leaned toward one another in mutual sympathy, but they refused to fuse into a single horn. The scattering of the signal was the very engine of com..."
     route: ^[chapter/09/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"How can I solve this if I don’t know what it is?\" Boof murmured. She did not need the full picture. She needed the kernel, and she was already carrying it."
+    excerpt: "\"How do you complete a song without singing the last bar?\" Boof thought as she trotted down the ridge path. You don't. You let the last bar live as a seed instead of a memory. She did not need to carry all nine horns ..."
     route: ^[chapter/09/s06]{open}
   >
 ]

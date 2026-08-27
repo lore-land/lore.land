@@ -6,7 +6,7 @@
 
 ^[chapter/08]{
   title: "Songs of the Watering Eye"
-  description: "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes a well. Receipts fold under the surface; a face in the water still belongs to its source. The egg names a debt the archive could not file."
+  description: "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes a hydrologic well. Unposted receipts fold under the ink-black surface; a face in the water still belongs to its source. The egg's heat names a debt that the town archives ..."
   mood: "game"
   period: "spring"
   chapter_path: "/book/chapter/08/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The Watering Eye was a well before it was a song. Boof reached the rim and saw a face held mid-name in the black water, and under it a gold fold of slips stacked like receipts that had learned to stay wet. The Fool’s ..."
+    excerpt: "The Watering Eye had been an ancient civic well long before anyone set its history to music. Boof trotted into the misty glen and propped her front paws against the mossy granite coping. In the still, ink-black water ..."
     route: ^[chapter/08/s01]{open}
   >
   s02: <
     handle: "custom-game/02"
     type: "custom-game"
-    excerpt: "The board was the water. Symbols rose and sank. The rules were unclear, but one thing was certain: a quote the well kept still belonged to its source. The water did not steal the face. It folded it. Boof had no choice..."
+    excerpt: "The game board was the surface of the well itself. Luminous symbols of bushels, measures, and forgotten names rose and sank with every ripple of air. The rules were never written on placards, but the fundamental law o..."
     handles: ["game-intro"]
     route: ^[chapter/08/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"The rules are simple, Boof,\" the Fool’s voice echoed from the stones, \"but understanding them, now that’s the tricky part. The well will hold what you put in. It will not call it yours.\""
+    excerpt: "\"The rules are child's play, Boof,\" the Fool whispered, leaning down from the windlass crossbeam with an arched brow. \"The well will hold whatever grief or tally you pour into it. But it will never allow you to sign y..."
     route: ^[chapter/08/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Game Begins"
-    excerpt: "Boof set the egg on the rim. With each breath the gold fold under the water shifted, a history that could be checked without being owned. Resonance is the archive’s other sense: what cannot be filed can still be heard..."
+    title: "The Resonance of the Unpaid"
+    excerpt: "Boof lifted the egg from its feed-sack sling and set its dark, coal-textured base onto the wet granite rim. As the shell touched the stone, its internal furnace sent deep pulses of golden light coursing through the ma..."
     route: ^[chapter/08/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"What’s the objective?\" Boof called. The Fool’s laughter came from the deep. The objective was whatever you made of it, and not every game can be won. She took the egg and left the face in the water, still belonging t..."
+    excerpt: "\"What is the winning move?\" Boof wondered, stepping back from the rim. The Fool's laughter drifted up like spray. The winning move was not taking the well's water home in a jar; it was letting the face in the pool rem..."
     route: ^[chapter/08/s06]{open}
   >
 ]

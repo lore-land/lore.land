@@ -58,6 +58,30 @@
   initial-value: 1;
 }
 
+@property --craft-x {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 50;
+}
+
+@property --craft-y {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 50;
+}
+
+@property --heat {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --page-heat {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 :root {
   /*
    * Contrast contract (paper / ember on light grounds; cosmos on dark):
@@ -166,6 +190,10 @@
   --tap-shadow-x: 50;
   --tap-shadow-y: 50;
   --tap-shadow-strength: 0;
+  --craft-x: 50;
+  --craft-y: 50;
+  --heat: 0;
+  --page-heat: 0;
 
   /* Spacing aliases retained for older chapter CSS tokens. */
   --padding-small: var(--spacing-small);

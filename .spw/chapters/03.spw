@@ -6,7 +6,7 @@
 
 ^[chapter/03]{
   title: "Signals in the Sand"
-  description: "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the egg onto the flats, where two buried routes try to be admitted as a single turn, and conservation of direction is the only honest count."
+  description: "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the egg onto the wind-cut flats, where two buried routes try to be admitted as a single turn, and conservation of direction is the only honest count."
   mood: "paradox"
   period: "spring"
   chapter_path: "/book/chapter/03/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The grove fell away into sand. Boof stood at the edge of the Fool's Paradox — not a riddle this time, but a fork that refused to be two places. Under the dunes two older routes glowed like buried slips, both claiming ..."
+    excerpt: "The grove fell away behind her into a vast, wind-scoured plain of dry salt and baked earth. Boof stood at the edge of the Fool's Paradox —not a riddle in a book this time, but a physical fork in the crust that refused..."
     route: ^[chapter/03/s01]{open}
   >
   s02: <
     handle: "custom-paradox/02"
     type: "custom-paradox"
-    excerpt: "\"To move forward, you must go back,\" the paradox whispered, which was only half a lie. The two routes were the same turn seen from different years. One had a receipt the wind had kept. The other had a receipt the sand..."
+    excerpt: "\"To move forward, you must go back,\" the paradox whispered through the dry wind, which was only half a lie. The two routes were not competing destinations; they were the same turn seen from different years. One had a ..."
     handles: ["paradox-intro"]
     route: ^[chapter/03/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"That is what a turn looks like before the world agrees to it.\""
+    excerpt: "\"You see, Boof, you are always moving, but never arriving,\" the Fool called out, trotting backward down the slope with effortless balance. \"That is what a turn looks like before the world agrees to write it down. You ..."
     route: ^[chapter/03/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Enigma of the Paradox"
-    excerpt: "The Fool's Paradox bent the map without bending the ground. Boof’s every step felt like progress, yet the dunes returned her to the same seam. The egg was the witness: it heated only when both routes were true at once..."
+    title: "The Seam in the Sand"
+    excerpt: "The Fool's Paradox bent the map without bending an inch of the actual ground. Boof’s every stride across the crunchy salt crust felt like honest travel, yet the drifting dunes returned her repeatedly to the exact same..."
     route: ^[chapter/03/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof laughed, which is a dog's way of filing a true scent. The paradox was no puzzle to solve. She walked the seam as one turn and let the two receipts become a single slip the wind could keep. Ahead, council hill lif..."
+    excerpt: "Boof let out a low huff of satisfaction—a dog's way of filing a true scent when the trail finally speaks clear. The paradox was not a trap to be solved by clever argument; it was an intersection to be walked with hone..."
     route: ^[chapter/03/s06]{open}
   >
 ]

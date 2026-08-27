@@ -192,4 +192,6 @@ aside .chamber-seal-mount .chamber-seal-svg {
   width: clamp(3.4rem, 38%, 5.2rem);
   height: auto;
   filter: drop-shadow(0 2px 3px rgba(26, 34, 51, 0.28));
+  transform-origin: 50% 58%;
+  transition: transform 220ms cubic-bezier(0.34, 1.45, 0.42, 1), filter 200ms ease;
 }

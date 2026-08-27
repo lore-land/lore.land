@@ -3,49 +3,185 @@
   "title": "Lanterns of Bonk City",
   "logline": "Bonk City turns impact into glass: lanterns that show light without claiming to be it.",
   "epigraph": "A collision is only noise until someone names what it illuminated.",
-  "description": "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic light. Boof learns that a lantern is only glass — it shows the egg's heat, it is not the heat — while grains of the city sleep in the walls and wake when something strikes.",
+  "description": "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic illumination. Boof navigates a maze of leaning bronze posts and rain-slick glass, learning that a lantern only transmits the egg's true heat without claiming ownership of the fire.",
   "mood": "labyrinth",
   "period": "spring",
   "pillars": [
     "worldbuilding",
-    "marketing"
+    "wonder",
+    "intrigue"
+  ],
+  "topics": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "voice",
+      "label": "Voice & register",
+      "href": "/world/civic-magic.html#fool"
+    },
+    {
+      "id": "experience",
+      "label": "Experience path",
+      "href": "/scriptorium/#experience-path"
+    }
   ],
   "relatedRoutes": [
-    { "label": "Chamber 05 · Rift", "href": "/book/chapter/05/", "kicker": "Prev" },
-    { "label": "Chamber 07 · Oath", "href": "/book/chapter/07/", "kicker": "Next" }
+    {
+      "label": "Chamber 05 · Rift",
+      "href": "/book/chapter/05/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "kicker": "Topic"
+    },
+    {
+      "label": "Chamber 07 · Oath",
+      "href": "/book/chapter/07/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "lantern",
+        "lanterns",
+        "glass",
+        "post",
+        "posts",
+        "dent",
+        "dented",
+        "lamp",
+        "lamplighter",
+        "bell"
+      ]
+    },
+    {
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html",
+      "terms": [
+        "Bonk City",
+        "impact",
+        "collision",
+        "cobbles",
+        "maze",
+        "streets",
+        "civic",
+        "flame"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "paws",
+        "curb",
+        "shoulder",
+        "scent",
+        "egg",
+        "heat"
+      ]
+    }
   ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "labyrinth",
-      "climate": { "tempo": "night", "tint": "ember", "hook": "glass-not-light" },
+      "climate": {
+        "tempo": "night",
+        "tint": "ember",
+        "hook": "glass-not-light"
+      },
+      "scene": {
+        "vantage": "at the curb of a crooked street-corner, shoulder leaning against a bronze lamp post that is warm where it was once dented",
+        "light": "deep blue dusk; every lantern along the winding alleys glows from a past collision, brightest in the metal's crease; long gold reflections across wet stones",
+        "scent": "warm bronze, supper smoke drifting from chimneys hearthward, wet cobbles, lamp oil with a sharp tang of ozone",
+        "edges": [
+          "each lamp post carries its collision-dent like a civic signature, light pooling in the crease",
+          "a municipal lamplighter taps not with a flame but with a small brass bell — one sharp ring, one golden flare",
+          "the maze of streets glows in a traced network of past impacts",
+          "one unlit post stands perfectly straight and undented in an alley, dark, waiting for its story"
+        ],
+        "hint": "dusk city street at dog height, lamp posts each dented and glowing from the dent; a lamplighter ringing a small bell at one; lit maze-streets receding; one straight dark post in the foreground; deep teal night, warm gold pools"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof stepped into Bonk City the way you step into a struck bell. The streets were a ",
+          "text": "Boof trotted into Bonk City the way you step into the acoustic chamber of a struck bell. The streets did not follow straight surveyor lines; they formed a ",
           "children": [
-            { "type": "custom-labyrinth", "content": "Fool’s Labyrinth" },
-            { "type": "text", "text": " of leaning glass. Every lantern turned toward the egg. The lanterns were not the light. They were glass: they showed the heat, they did not own it. In the walls, grains of the city slept — workers, watchers, names that could be woken, metered, shared, and put back to sleep. A collision somewhere upridge had just woken a streetful." }
+            {
+              "type": "custom-labyrinth",
+              "content": "Fool’s Labyrinth"
+            },
+            {
+              "type": "text",
+              "text": " of curving bronze posts, rain-slick stone arches, and leaning glass panes. Every lantern turned its faceted face toward the egg in her sling. The lanterns were not themselves the origin of the light. They were thick Bohemian glass: they captured the egg's subterranean heat, split it into diamond rays, and cast it across the cobbles, but they owned not a single ember of the flame."
+            }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "In the stone walls of the tenements, the living memories of the city slept—names of masons, old market debts, and street-cries that woke only when something struck the masonry with enough force to demand notice."
         }
       ]
     },
     {
       "type": "custom-labyrinth",
+      "scene": {
+        "vantage": "standing in a narrow alley between two mirrored bay windows reflecting endless corridors of light",
+        "light": "endless recursive golden reflections bouncing between glass panes",
+        "scent": "rainwater, tallow candles, damp mortar",
+        "edges": [
+          "windows lean outward over the alleyway, nearly touching at the eaves",
+          "each pane multiplies the egg's warm silhouette into a hundred false guides",
+          "the true path is paved with cobblestones worn smooth by working paws"
+        ],
+        "hint": "night alley lined with tall leaning glass bay windows reflecting infinite glowing corridors of gold light; a small stout dog pausing at a fork"
+      },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "labyrinth-intro",
-          "text": "\"In the labyrinth, the way forward is always through the glass,\" a voice said from the twisting paths. \"Do not confuse the pane with the flame. The city offers light. The offering is not the cell.\""
+          "text": "\"In the labyrinth, the way forward is always through the glass,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame. The city offers illumination for the public highway. But the offering is not the cell that generated it.\""
         }
       ]
     },
     {
       "type": "custom-fool",
+      "scene": {
+        "vantage": "looking up at a lamplighter's ladder propped against a glowing bronze post",
+        "light": "golden light pouring down from the lamp crease onto the Fool's face",
+        "scent": "hot glass, brass polish, rain on woolen sleeves",
+        "edges": [
+          "the Fool balances on the top rung with a small brass bell suspended by a cord",
+          "he taps the bell against the post, sending ripples of amber light down the shaft",
+          "below him, water swirls down an iron drain-grate"
+        ],
+        "hint": "a jester perched on a wooden ladder beside a glowing dented lamppost at night, tapping a small brass bell to ignite the light, rain falling"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is whether you can tell glass from heat when every street is leaning.\""
+          "text": "\"You’ve found my city of dents, Boof!\" the Fool’s voice called down from a lamplighter’s ladder. He gave his brass bell a crisp tap against a dented bronze post, and the crease blossomed into warm amber brilliance. \"Every shock in this town becomes a streetlight once someone is brave enough to name the collision. But can you tell glass from furnace-heat when every mirror in the ward is begging for your attention?\""
         }
       ]
     },
@@ -60,16 +196,25 @@
     },
     {
       "type": "section",
-      "title": "The Shifting Maze",
+      "title": "The Economy of Impact",
       "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "The city was alive in the way glass is alive when it holds a flame. No matter how far Boof walked, the lanterns rearranged around the egg. Each impact named a dent into light — spectacle with civic duty. She understood the offering: a place still worth finding after dark, proved by a pane that does not lie about being a pane."
+          "text": "The city was alive in the exact way glass is alive when it catches an honest flame. As Boof walked down the spiraling avenue, the surrounding lanterns rearranged their angles to mirror the coal-dark egg in her sling. A collision somewhere upridge had just dented a lamppost, and a whole block of shuttered shops flickered awake in response."
+        },
+        {
+          "type": "paragraph",
+          "text": "This was the true covenant of Bonk City: impact was not treated as a tragedy to be hidden behind plaster; it was forged into civic duty. A dent became a source of shared navigation for anyone walking home after dark, provided the glass never lied about being mere glass."
         }
       ],
+      "climate": {
+        "tempo": "night",
+        "tint": "ember",
+        "hook": "economy-impact"
+      },
       "scene": {
-        "vantage": "street-level, egg on a stall, lanterns leaning in",
+        "vantage": "street-level, egg on a market stall, lanterns leaning in",
         "light": "the egg the only true source; glass showing it",
         "scent": "rain on cobble, warm shell, lamp-oil that has not caught",
         "edges": [
@@ -83,10 +228,25 @@
     },
     {
       "type": "custom-boof",
+      "scene": {
+        "vantage": "leaving the lantern maze through an iron gate opening onto the open market square",
+        "light": "the glare of a hundred lanterns falls away; ahead, a single ancient stone rests under the moonlight",
+        "scent": "fresh mountain air, crushed blueberries, wet granite, night wind",
+        "edges": [
+          "the lantern city glows behind like a clustered hive of gold sparks",
+          "ahead, the market stone sits in the center of an empty square",
+          "long dark shadows stretch across the plaza stones"
+        ],
+        "hint": "a dog stepping out from the radiant archway of a lantern-filled city into a quiet, moonlit market square centered around a solitary carved stone"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof paused. \"Is this part of the game?\" The Fool's laughter came from behind a pane. \"Perhaps the only way out,\" she mused, \"is to stop asking the glass to be the fire.\" Ahead, a market stone waited with a groove for an oath and a price in fruit."
+          "text": "Boof paused at the curb of the final alley. \"The only way through the maze,\" she thought, shaking rainwater from her ears, \"is to stop asking the glass to be the fire.\" She knew the difference between real heat that can keep a pup warm and mirrored light that only flatters the eye."
+        },
+        {
+          "type": "paragraph",
+          "text": "She stepped past the last glowing post and entered the quiet market square. Ahead, resting under the open stars, an ancient stone slab waited with a deep circular groove carved into its granite top—a place where oaths were sworn in public and paid in the honest currency of fruit."
         }
       ]
     }

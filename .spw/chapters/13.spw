@@ -6,7 +6,7 @@
 
 ^[chapter/13]{
   title: "Lore.Land Canon"
-  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The serial closes its first loop by making the world’s self-record a public, revisitable surface. The egg rests on a small desk. The last door is an eggshell leaking gold light. The cell keeps it..."
+  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The serial completes its first great cycle by making the world’s self-record a public, revisitable surface. The egg rests upon a quiet reading desk; the last door stands open as a cracked eggshel..."
   mood: "reflection"
   period: "spring"
   chapter_path: "/book/chapter/13/"
@@ -28,20 +28,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The archive at the end of the seam was smaller than its reputation. Boof paused where the path thinned into shelves. Behind her: furrow, grove, sand, keys, rift, glass, oath, well, shards, spine, bloom, confluence. Sh..."
+    excerpt: "The Grand Archive of Lore.Land at the terminus of the river path was smaller, quieter, and vastly more honest than its monumental reputation suggested. Boof padded across the polished slate floor, where the scent of o..."
     route: ^[chapter/13/s01]{open}
   >
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    excerpt: "The vault did not hide. It showed its load path. Every receipt from the serial could be folded into a history a small reader could verify from a single root. Boof did not need to be a clerk. She needed the door to rem..."
+    excerpt: "The archive had nothing to conceal. Its vaulted trusses exposed their load paths exactly like the chassis of Bone.land. Every receipt gathered across the serial was folded into a single transparent history that any tr..."
     handles: ["reflection-intro"]
     route: ^[chapter/13/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"This is where it all leads, Boof,\" the Fool’s voice was soft. \"You’ve seen me in every step. Now see the cell. It was never mine to name.\""
+    excerpt: "\"This is where the road fulfills its promise, Boof,\" the Fool whispered from the cedar stacks, his voice quiet with reverent wonder. \"You met me as an echo, a riddle, a councilor, a song, and a shadow. But in this roo..."
     route: ^[chapter/13/s03]{open}
   >
   s04: [
@@ -53,14 +53,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Mirror of Time"
-    excerpt: "Boof looked from the desk to the door. The first dawn and the last shelf agreed on one thing: the egg had arrived on a road that did not exist yet, and the record had learned, chamber by chamber, how to receipt a cell..."
+    title: "The Living Return Path"
+    excerpt: "Boof looked from the open ledger to the radiant eggshell portal. The first frozen dawn and this final illuminated chamber agreed upon a single, incorruptible covenant: the egg had arrived along a road that had not exi..."
     route: ^[chapter/13/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"I see now,\" Boof whispered. She had not been chasing the Fool. She had been following a true scent to a door the canon was willing to leave open. Behind her the serial remained walkable. Ahead, through the shell, som..."
+    excerpt: "\"I understand now,\" Boof thought, turning her face into the clean morning breeze blowing through the eggshell arch. She had never been chasing a trickster; she had been following an honest scent to a door that the can..."
     route: ^[chapter/13/s06]{open}
   >
 ]

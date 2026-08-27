@@ -3,49 +3,184 @@
   "title": "Bone.land Resonance",
   "logline": "Bone.land is the small constitution — the spine that holds when the veil shakes.",
   "epigraph": "Skeleton first; ornament after the load path is honest.",
-  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert. The four laws — cell, key, turn, receipt — are load-bearing here. The egg nests in the crossing of two beams like a kernel.",
+  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structural honesty becomes the concert. The four civic laws—cell, key, turn, receipt—are load-bearing here. The egg nests into the crossing of two colossal timbers, and the hall settles with an earth-shaking bonk.",
   "mood": "bonk",
   "period": "spring",
   "pillars": [
     "code-craft",
-    "worldbuilding"
+    "worldbuilding",
+    "wonder"
+  ],
+  "topics": [
+    {
+      "id": "polarity",
+      "label": "Held polarity",
+      "href": "/topics/#polarity"
+    },
+    {
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    }
   ],
   "relatedRoutes": [
-    { "label": "Chamber 09 · Shards", "href": "/book/chapter/09/", "kicker": "Prev" },
-    { "label": "Chamber 11 · Bloom", "href": "/book/chapter/11/", "kicker": "Next" }
+    {
+      "label": "Chamber 09 · Shards",
+      "href": "/book/chapter/09/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic offices",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 11 · Bloom",
+      "href": "/book/chapter/11/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "polarity",
+      "label": "Held polarity",
+      "href": "/topics/#polarity",
+      "terms": [
+        "Bone.land",
+        "frame",
+        "timber",
+        "beam",
+        "joint",
+        "joints",
+        "load",
+        "chassis",
+        "skeleton"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "bonk",
+        "shockwave",
+        "structure",
+        "pegs",
+        "cruciform",
+        "egg",
+        "kernel"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "constitution",
+        "law",
+        "cell",
+        "key",
+        "turn",
+        "receipt",
+        "ornament"
+      ]
+    }
   ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "bonk",
-      "climate": { "tempo": "day", "tint": "brass", "hook": "load-path" },
+      "climate": {
+        "tempo": "day",
+        "tint": "brass",
+        "hook": "load-path"
+      },
+      "scene": {
+        "vantage": "at the foot of the monumental great frame between two massive limestone anchor stones, looking up along a rising truss chord",
+        "light": "clean white-gold morning sun behind the structure; a veil of fine sawdust and white scaffold cloth shivering off the high beams in backlit sheets; the bone-timbers themselves matte, honest, and calm",
+        "scent": "cut white oak, quarry limestone chalk, tallow rope grease, the mineral permanence of a frame built to outlast its scaffolding",
+        "edges": [
+          "every mortise, tenon, and scarf joint is fully exposed and pegged with oak trunnels — nothing hidden, nothing clad in plaster",
+          "the falling veil of dust catches the sun like a cascade of water, but the structural frame does not sway an inch",
+          "carpenters and stone-masons stand back in a loose ring on the floor, tools rested, heads tilted upward in respect",
+          "on a side workbench, a single carved rosette ornament sits waiting, having not yet earned a beam that carries load"
+        ],
+        "hint": "monumental timber-and-bone frame from ground level looking up; sheets of backlit veil-cloth and dust shivering off it in morning light; still, honest joinery; builders watching from below; one carved ornament waiting on a bench; white-gold on deep teal"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "The great frame did not pretend to be entertainment. Joints were exposed on purpose. Each beam felt load-bearing — until, with a sudden thud, a loud ",
+          "text": "The great timber chassis of Bone.land did not pretend to be theater. Its massive square-hewn oak beams soared into the morning sky like the ribcage of an ancient leviathan, every mortise, tenon, and wooden peg left completely exposed to the open weather. Boof trotted across the sawdust floor and set the egg squarely into the cruciform joint where the two principal load-bearing trusses crossed. With a sudden, earth-shaking thud, a colossal ",
           "children": [
-            { "type": "custom-bonk", "content": "BONK" },
-            { "type": "text", "text": " ran through the hall. Not slapstick. Contact with irreversible structure. The egg nested where two beams crossed, a kernel in the spine. Four laws were carved, unornamented, along the load path: a cell keeps its own law; a key may be filed smaller; a turn is an act admitted; a receipt is the slip that remains." }
+            {
+              "type": "custom-bonk",
+              "content": "BONK"
+            },
+            {
+              "type": "text",
+              "text": " rang through the entire valley. Not a cartoon slapstick sound, but the deep acoustic thunder of irreversible contact with structural reality. The four foundational laws of the land were carved with an adze along the main tie-beam: a cell keeps its own law; a key may be filed smaller; a turn is an act the world admits; a receipt is the slip that remains."
+            }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "On a workbench near the entrance, a delicate carved rosette sat waiting in the shavings. In Bone.land, ornament is strictly forbidden until the load path has proved it can carry the weight of the roof."
         }
       ]
     },
     {
       "type": "custom-bonk",
+      "scene": {
+        "vantage": "inches from the cruciform joint where the egg sits nested between two crossed ten-inch oak beams",
+        "light": "gold lines of stress-force illuminating the wood grain like lightning frozen in amber",
+        "scent": "scorched oak, hot iron shell, pulverized chalk dust",
+        "edges": [
+          "the egg fits the crossing with zero tolerance, acting as the structural keystone",
+          "the sound wave visibly blows fine sawdust off the timber bevels",
+          "the carved lettering of the four laws glows in deep ochre relief"
+        ],
+        "hint": "macro close-up of a dark cracked egg acting as the keystone in the cruciform intersection of two massive hand-hewn oak beams; sawdust floating in sunbeams"
+      },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "bonk-intro",
-          "text": "The sound was jarring, a shockwave through honest timber. It was as if the world itself had hit a wall and the wall had held. Boof was dazed and, for the first time since the furrow, unsurprised. Structure that tells the truth sounds like that."
+          "text": "The sound of the bonk was staggering—a seismic resonance that traveled straight through the timber, down through the limestone footings, and deep into the bedrock of the world. It was the sound of a universe meeting an immovable principle and discovering that the principle held. Boof shook her coat, her ears ringing with the pure harmonic pitch of truth."
         }
       ]
     },
     {
       "type": "custom-fool",
+      "scene": {
+        "vantage": "looking up at the tie-beam where the Fool hangs upside down by his knees",
+        "light": "sunlight framing his dangling patchwork hood; sawdust sprinkling from his hands",
+        "scent": "dry pine resin, clean wind, oak shavings",
+        "edges": [
+          "the Fool knocks on the solid oak with his knuckles, producing a clear bell-tone",
+          "his face is flush with gravity, his grin wide and affectionate",
+          "below him, the vast empty nave stretches toward an open archway"
+        ],
+        "hint": "a jester hanging upside down by his knees from a massive wooden ceiling truss in a sunlit timber hall, rapping on the wood with his knuckles"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the chassis. Not all endings are the ones we expect. Sometimes you just get bonked by a law that will not yield.\""
+          "text": "\"Ah, Boof!\" the Fool called down, hanging upside down by his heels from the collar-beam like a great colorful bat. He rapped his knuckles against the oak with a sharp, hollow knock. \"You have finally reached the chassis! You see, most people build their stories out of plaster and paint, and the moment an auditor sneezes, the whole facade collapses. But here in Bone.land, you get bonked by a law that will not yield an inch to flattery.\""
         }
       ]
     },
@@ -60,14 +195,23 @@
     },
     {
       "type": "section",
-      "title": "The Bonk",
+      "title": "The Four Load-Bearing Truths",
       "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof sat a moment in the hum of the frame. The bonk was sudden and inevitable. What a cell holds, if you ask the beams, is four substances dressed as town-words: worth, weather, keys, and proof — value, state, authority, evidence, spoken so a dog can smell them. The egg in the crossing did not decorate the hall. It was the kernel the hall was built to carry."
+          "text": "Boof sat quietly upon the chalky floorboards while the structural hum of the frame settled into her bones. What a cell holds, if you interrogate the beams, is four elemental forces translated into plain town vocabulary: worth, weather, keys, and proof—value, state, authority, and evidence, spoken simply enough that a working dog can verify them with her nose."
+        },
+        {
+          "type": "paragraph",
+          "text": "The egg in the timber crossing was no decorative trinket placed for aesthetic balance. It was the living kernel the entire hall had been erected to support. It did not borrow stability from the oak; it gave the oak a reason to stay standing."
         }
       ],
+      "climate": {
+        "tempo": "day",
+        "tint": "bonk",
+        "hook": "four-truths"
+      },
       "scene": {
         "vantage": "under the crossing beams, egg in the joint",
         "light": "day through the frame; gold along load paths",
@@ -83,10 +227,25 @@
     },
     {
       "type": "custom-boof",
+      "scene": {
+        "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking an impossible mountain garden",
+        "light": "radiant morning light illuminating a circular stone staircase that blooms with golden flowers despite having no soil",
+        "scent": "wild jasmine, honey, fresh mountain dew, warm stone bread",
+        "edges": [
+          "the timber cathedral stands firm behind her",
+          "the stone stair climbs three turns and rejoins its own terrace without paradox",
+          "golden vines flower out of the masonry cracks before any seed has been sown"
+        ],
+        "hint": "a dog carrying a glowing egg walking out of a monumental timber hall onto a sunny garden terrace featuring an impossible, blooming spiral stone staircase"
+      },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Is this how it ends?\" Boof asked. The Fool answered with a quieter bonk — a door closing on ornament, another opening on a stair that bloomed before it was planted."
+          "text": "\"Is this where the trail terminates?\" Boof asked, looking up at the soaring king-post. The Fool answered with a softer, resonant knock against the wood—a door closing on empty ornament, and another swinging open upon a stone garden stair that blossomed before a single seed had been planted in the earth."
+        },
+        {
+          "type": "paragraph",
+          "text": "She took the egg back into her sling and trotted through the northern door. Once the load-bearing bones are honest, the world has room to bloom in impossible directions."
         }
       ]
     }
