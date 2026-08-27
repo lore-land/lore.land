@@ -90,6 +90,16 @@
       "chamber": 1
     },
     {
+      "id": "small-constitution",
+      "fantasy": "The Small Constitution",
+      "sigil": "cell",
+      "surface": "Four laws older than the egg, if the town is telling the truth: a cell keeps its own law; a key may be filed smaller, never grown in secret; a turn is an act the world admits; a receipt is the slip that act leaves behind.",
+      "civic": "Identity, permission, authorized action, and the audit trail — the small constitution every other office reduces to.",
+      "craft": "Sovereign objects, capabilities that only narrow, admitted transactions, proofs that compose.",
+      "storyHook": "The egg is a cell. Which office will receipt it without claiming to own it?",
+      "chamber": 10
+    },
+    {
       "id": "scriptorium",
       "fantasy": "Scriptorium",
       "sigil": "quill",

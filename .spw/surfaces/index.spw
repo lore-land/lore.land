@@ -16,7 +16,7 @@
 
 ^"audits"{
   &platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
-  &alignment_probes: "@spw/audits/alignment-probes-2026-07-22.spw (rerunnable: npm run spw:probes)"
+  &alignment_probes: "@spw/audits/alignment-probes-2026-08-26.spw (rerunnable: npm run spw:probes)"
 }
 
 ^"output_formats"{

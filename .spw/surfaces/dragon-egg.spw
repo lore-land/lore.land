@@ -27,6 +27,15 @@ $"worth"{
   =leans{ ~".spw/surfaces/dragon-egg.spw#dragons_egg" }
 }
 
+^"small_constitution"{
+  .note: "the encapsulating civic law the serial can carry in public — four world-words, not a renamed brand"
+  cell: "a dwelling that keeps its own law; the Egg is one"
+  key: "may be filed smaller, never grown in secret"
+  turn: "an act the world admits"
+  receipt: "the slip that act leaves behind"
+  &reader_rule: "adventure surface uses these as town-law; do not gloss them as another land's product"
+}
+
 &"reader_registers"{
   @boof: "tracks the Egg by heat-scent and refuses to name what it is until it moves."
   @grove: "echoes the Egg back a beat late, so there always seems to be a second one just out of sight."

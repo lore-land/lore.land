@@ -1,4 +1,4 @@
-import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_07_19.A';
+import { onScrollFrame, whenIdle } from './scroll-coordinator.mjs?v=2026_08_26.A';
 
 const STORAGE_PREFIX = 'lore.experience';
 

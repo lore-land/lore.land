@@ -1,26 +1,31 @@
 {
   "chapterNumber": 10,
   "title": "Bone.land Resonance",
-  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert—truth transmitted through load-bearing form.",
+  "logline": "Bone.land is the small constitution — the spine that holds when the veil shakes.",
+  "epigraph": "Skeleton first; ornament after the load path is honest.",
+  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structure itself becomes the concert. The four laws — cell, key, turn, receipt — are load-bearing here. The egg nests in the crossing of two beams like a kernel.",
   "mood": "bonk",
   "period": "spring",
+  "pillars": [
+    "code-craft",
+    "worldbuilding"
+  ],
+  "relatedRoutes": [
+    { "label": "Chamber 09 · Shards", "href": "/book/chapter/09/", "kicker": "Prev" },
+    { "label": "Chamber 11 · Bloom", "href": "/book/chapter/11/", "kicker": "Next" }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "bonk",
+      "climate": { "tempo": "day", "tint": "brass", "hook": "load-path" },
       "content": [
         {
           "type": "paragraph",
-          "text": "The maze had stopped pretending to be entertainment. Puzzles still lined the corridors, but each one felt load-bearing—until, with a sudden thud—a loud ",
+          "text": "The great frame did not pretend to be entertainment. Joints were exposed on purpose. Each beam felt load-bearing — until, with a sudden thud, a loud ",
           "children": [
-            {
-              "type": "custom-bonk",
-              "content": "BONK"
-            },
-            {
-              "type": "text",
-              "text": " echoed through the clearing."
-            }
+            { "type": "custom-bonk", "content": "BONK" },
+            { "type": "text", "text": " ran through the hall. Not slapstick. Contact with irreversible structure. The egg nested where two beams crossed, a kernel in the spine. Four laws were carved, unornamented, along the load path: a cell keeps its own law; a key may be filed smaller; a turn is an act admitted; a receipt is the slip that remains." }
           ]
         }
       ]
@@ -31,7 +36,7 @@
         {
           "type": "paragraph",
           "data-content_id": "bonk-intro",
-          "text": "The sound was jarring, reverberating through the ground like a shockwave. It was as if the world itself had hit a wall, leaving Boof dazed and confused."
+          "text": "The sound was jarring, a shockwave through honest timber. It was as if the world itself had hit a wall and the wall had held. Boof was dazed and, for the first time since the furrow, unsurprised. Structure that tells the truth sounds like that."
         }
       ]
     },
@@ -40,7 +45,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the end, haven’t you? But not all endings are the ones we expect. Sometimes... you just get bonked.\""
+          "text": "\"Ah, Boof,\" the Fool's voice was closer now, almost tangible. \"You’ve reached the chassis. Not all endings are the ones we expect. Sometimes you just get bonked by a law that will not yield.\""
         }
       ]
     },
@@ -48,36 +53,40 @@
       "type": "figure",
       "img": {
         "src": "/book/images/10.png",
-        "alt": "The Fool's Bonk",
+        "alt": "A great load-bearing wooden frame, gold seams along honest joints, the cracked egg nested in the crossing of two beams.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool’s Bonk: an unexpected end, or just another beginning?"
+      "figcaption": "Bone.land: the small constitution, load-bearing."
     },
     {
       "type": "section",
       "title": "The Bonk",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof sat for a moment, still stunned from the bonk, trying to understand. It was sudden, yet it felt inevitable. The ground beneath them still hummed with the energy of the impact, and the boonberries hung heavy in the air, as if waiting for something more."
+          "text": "Boof sat a moment in the hum of the frame. The bonk was sudden and inevitable. What a cell holds, if you ask the beams, is four substances dressed as town-words: worth, weather, keys, and proof — value, state, authority, evidence, spoken so a dog can smell them. The egg in the crossing did not decorate the hall. It was the kernel the hall was built to carry."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "under the crossing beams, egg in the joint",
+        "light": "day through the frame; gold along load paths",
+        "scent": "timber, dust, warm iron",
+        "edges": [
+          "joints exposed on purpose",
+          "four laws along the load path",
+          "the egg as kernel, not ornament",
+          "the bonk as contact with structure"
+        ],
+        "hint": "great load-bearing wooden frame, joints exposed, gold seams along honest load paths, coal-dark cracked egg nested in the crossing of two beams"
+      }
     },
     {
       "type": "custom-boof",
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Is this how it ends?\" Boof asked aloud, though the Fool's answer came not in words but in another, quieter bonk—this time softer, almost gentle."
-        }
-      ]
-    },
-    {
-      "type": "custom-fool",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "\"You’ve reached this part of the game, Boof, but the bonk is not the end,\" the Fool’s voice teased. \"It’s just the sound of one door closing... and maybe, another opening.\""
+          "text": "\"Is this how it ends?\" Boof asked. The Fool answered with a quieter bonk — a door closing on ornament, another opening on a stair that bloomed before it was planted."
         }
       ]
     }
@@ -88,14 +97,11 @@
         "description": "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
       },
       {
-        "description": "The bonk at the threshold is not slapstick—it is contact with irreversible structure."
+        "description": "The small constitution is load-bearing here: cell, key, turn, receipt."
+      },
+      {
+        "description": "The bonk at the threshold is not slapstick — it is contact with irreversible structure."
       }
     ]
-  },
-  "logline": "Structure shakes the veil and holds.",
-  "epigraph": "Skeleton first; ornament after the load path is honest.",
-  "pillars": [
-    "code-craft",
-    "worldbuilding"
-  ]
+  }
 }

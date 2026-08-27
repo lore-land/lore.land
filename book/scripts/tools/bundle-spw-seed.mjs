@@ -31,6 +31,8 @@ const banner = `/* GENERATED — do not hand-edit.
    via node book/scripts/tools/bundle-spw-seed.mjs. Regenerate after every workbench update. */
 `;
 
+const CRYPTO_SHIM = path.join(ROOT, 'book/scripts/tools/crypto-browser-shim.mjs');
+
 const result = await esbuild.build({
   entryPoints: [ENTRY],
   bundle: true,
@@ -38,6 +40,11 @@ const result = await esbuild.build({
   platform: 'browser',
   target: 'es2022',
   banner: { js: banner },
+  alias: {
+    // nest-path / patch / stencil identity hashes import node:crypto.
+    // The page bundle cannot follow that; a sync SHA-256 stand-in keeps parse().
+    'node:crypto': CRYPTO_SHIM
+  },
   write: false,
   logLevel: 'silent'
 });

@@ -1,26 +1,31 @@
 {
   "chapterNumber": 5,
   "title": "The Quiet Rift",
-  "description": "Chapter 5 of Lore.Land: The Quiet Rift. The surface holds while the books of the town begin to disagree with themselves.",
+  "logline": "Two receipts cannot both post. The rift is the song of that disagreement.",
+  "epigraph": "Silence is not empty; it is unreconciled.",
+  "description": "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the counting room holds while two receipts refuse to post together. The egg warms the fracture from below; song makes the disagreement audible.",
   "mood": "song",
   "period": "spring",
+  "pillars": [
+    "intrigue",
+    "code-craft"
+  ],
+  "relatedRoutes": [
+    { "label": "Chamber 04 · Council", "href": "/book/chapter/04/", "kicker": "Prev" },
+    { "label": "Chamber 06 · Lanterns", "href": "/book/chapter/06/", "kicker": "Next" }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "song",
+      "climate": { "tempo": "lamplight", "tint": "archive", "hook": "two-receipts" },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof followed the faint notes of a melody, drifting on the air, as if the forest itself were singing. It was the ",
+          "text": "The counting room was calm the way a held breath is calm. Boof followed a faint melody along the floor-crack — the ",
           "children": [
-            {
-              "type": "custom-song",
-              "content": "Fool’s Song"
-            },
-            {
-              "type": "text",
-              "text": ", a tune both haunting and playful."
-            }
+            { "type": "custom-song", "content": "Fool’s Song" },
+            { "type": "text", "text": " — not a lure this time, a diagnostic. Two slips hung over the open ledger. Each was a receipt for the same turn. Conservation said they could not both be true. The egg, set beneath the stone, warmed the hairline where the book had begun to split." }
           ]
         }
       ]
@@ -31,7 +36,7 @@
         {
           "type": "paragraph",
           "data-content_id": "song-verse",
-          "text": "The song whispered, \"Come, come closer... Let your heart follow the rhythm, and your steps follow the sound. There is no end, only the journey.\""
+          "text": "The song did not say come closer. It named the fracture: one receipt for a harvest that arrived, one receipt for a harvest that was only sealed. Melody made the disagreement audible without forcing a false fix."
         }
       ]
     },
@@ -40,7 +45,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"You hear it, don’t you, Boof?\" The Fool’s voice sang in harmony with the forest. \"This is my song. But it is also yours.\""
+          "text": "\"You hear it, don’t you, Boof?\" The Fool’s voice sang with the crack. \"This is my song. It is also the ledger's. A quiet rift is still a rift.\""
         }
       ]
     },
@@ -48,27 +53,40 @@
       "type": "figure",
       "img": {
         "src": "/book/images/05.png",
-        "alt": "The Fool's Song",
+        "alt": "A ledger split by a gold rift, two receipts that cannot both post, the cracked egg warming the fracture from below.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool’s Song: a melody that leads the way through mystery."
+      "figcaption": "The Quiet Rift: two receipts, one turn, no false total."
     },
     {
       "type": "section",
       "title": "The Melody of the Fool",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "The notes of the song twisted through the trees, carrying Boof deeper into the grove. Every step seemed to harmonize with the melody, as if the very ground beneath their feet pulsed with the same rhythm.\nThe boonberries swayed gently in time with the tune, reflecting the light in soft waves."
+          "text": "The notes twisted through the room the way a true count twists a clerk. Every step Boof took along the crack seemed to harmonize with the disagreement. The egg did not choose a slip. A cell keeps its own law; it does not reconcile other people's books. Boof left both receipts unposted and carried the heat toward the city that turns shocks into glass."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "floor-level at the ledger crack, egg below the stone",
+        "light": "lamplight on paper; gold rift; warm shell under the table",
+        "scent": "old paper, stone dust, hot iron",
+        "edges": [
+          "two slips over one ledger",
+          "the crack is a song-shaped hairline",
+          "the egg warms the fracture, does not close it",
+          "neither receipt posts"
+        ],
+        "hint": "quiet counting room, hairline gold rift through stone and paper, two receipts that cannot both post, coal-dark cracked egg warming the fracture from below"
+      }
     },
     {
       "type": "custom-boof",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof hummed along, their voice merging with the Fool’s melody. \"Why does this song feel so familiar?\" Boof wondered aloud. But no answer came, only the continuation of the tune, drawing them onward."
+          "text": "\"Why does this song feel so familiar?\" Boof wondered. Because she had smelled unreconciled books before. Because a dog who works for fruit knows when a total is a performance. The tune drew her onward, toward lanterns that would claim to be the light."
         }
       ]
     }
@@ -76,17 +94,14 @@
   "lore": {
     "loreItems": [
       {
-        "description": "The rift is an audit condition: two truths that cannot both post."
+        "description": "The rift is an audit condition: two receipts that cannot both post."
       },
       {
-        "description": "Song enters as a diagnostic—melody makes the fracture audible without forcing a false fix."
+        "description": "Song enters as a diagnostic — melody makes the fracture audible without forcing a false fix."
+      },
+      {
+        "description": "A cell does not reconcile other people's books. The egg warms the crack and leaves it honest."
       }
     ]
-  },
-  "logline": "Calm on the surface. A fracture running underneath.",
-  "epigraph": "Silence is not empty; it is unreconciled.",
-  "pillars": [
-    "intrigue",
-    "code-craft"
-  ]
+  }
 }

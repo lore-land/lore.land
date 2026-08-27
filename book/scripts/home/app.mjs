@@ -9,18 +9,18 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_19.A';
+} from '../modules/experience-core.mjs?v=2026_08_26.A';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_07_19.A';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_07_19.A';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_07_19.A';
-import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_07_19.A';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_26.A';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_26.A';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_26.A';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_26.A';
 import { initStorySpark } from '../modules/story-spark.mjs?v=2026_07_23.A';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
   initSegmentKeyboard
-} from '../modules/interaction-surface.mjs?v=2026_07_19.A';
+} from '../modules/interaction-surface.mjs?v=2026_08_26.A';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';

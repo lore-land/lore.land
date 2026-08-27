@@ -6,7 +6,7 @@
 
 ^[chapter/12]{
   title: "The Last Confluence"
-  description: "Chapter 12 of Lore.Land: The Last Confluence. All narrative threads meet; the work is merger without amnesia."
+  description: "Chapter 12 of Lore.Land: The Last Confluence. All narrative threads meet. Merger without amnesia. Many hands on one turn; a visible seam; sources remain addressable. The egg rides the current."
   mood: "path"
   period: "spring"
   chapter_path: "/book/chapter/12/"
@@ -21,28 +21,28 @@
 ^[chapter/12/spine]{
   =prev{ ~".spw/chapters/11.spw#chapter_11" }
   =next{ ~".spw/chapters/13.spw#chapter_13" }
-  weave: "<> <> <> [] {} <> <>"
-  reading: "Boof pads in on a thread of scent; the path unrolls itself, listening; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; the path unrolls itself, listening; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
 }
 
 ^[chapter/12/sections][
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof stood at the edge of the clearing, the last echoes of their awakening still resonating within. Before them, a new path opened, stretching out into the unknown. It was not a maze, nor a game—it was something else,..."
+    excerpt: "Two rivers met under a low bridge. Boof stood at the edge of the clearing, the last bloom still on her whiskers. Before them a new path opened — not a maze, not a game. A membrane of current where the waters shared a ..."
     route: ^[chapter/12/s01]{open}
   >
   s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    excerpt: "The path was quiet, unassuming, but full of promise. Boof knew that the journey had changed—no longer about solving puzzles or chasing the Fool. This was about walking forward, with no end in sight, but with a newfoun..."
+    excerpt: "The path was quiet and full of provenance. Boof knew the journey had changed. This was about walking forward with every tributary still named. A quote in the current still belonged to its shelf. You could walk upstrea..."
     handles: ["path-intro"]
     route: ^[chapter/12/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You’ve come far, Boof,\" the Fool’s voice echoed softly. \"But the path ahead is yours to choose. It’s no longer about games, but about what you make of it.\""
+    excerpt: "\"You’ve come far, Boof,\" the Fool’s voice was almost kind. \"The path ahead is yours. Share through the membrane. Do not give the house away.\""
     route: ^[chapter/12/s03]{open}
   >
   s04: [
@@ -55,20 +55,14 @@
     handle: "section/05"
     type: "section"
     title: "The Open Road"
-    excerpt: "Boof looked down the path, feeling a calmness that hadn’t been there before. This was a different kind of journey—one without tricks or hidden challenges. The boonberries swayed gently in the trees, as if urging Boof ..."
+    excerpt: "Boof looked down the joined water and felt a calm that had nothing to do with neatness. Sources remained addressable after merge. The egg, a cell still keeping its own law, did not dissolve into the river. It rode. Do..."
     route: ^[chapter/12/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Where does it lead?\" Boof asked aloud. The Fool didn’t answer, but Boof felt no frustration, only curiosity. It didn’t matter where the path led—it mattered that they were walking it."
+    excerpt: "\"Where does it lead?\" Boof asked. The Fool didn’t answer, and she felt no frustration. It mattered that the tributaries were still walkable. She followed the seam toward the last door."
     route: ^[chapter/12/s06]{open}
-  >
-  s07: <
-    handle: "custom-fool/07"
-    type: "custom-fool"
-    excerpt: "\"You’re ready, Boof. The journey ahead is yours, and it’s one that never truly ends. The Fool's laughter was soft now, almost like an old friend’s chuckle. 'The path is yours to create.'\""
-    route: ^[chapter/12/s07]{open}
   >
 ]
 
@@ -88,7 +82,7 @@
 }
 
 %[chapter/12/measures]{
-  %sections: 7
+  %sections: 6
   %prose: 1
   %plates: 1
   %voices: 3
@@ -97,7 +91,8 @@
 #[chapter/12/lore]{
   notes: [
     "Confluence is a publishing problem: how to ship a whole without flattening provenance."
-    "Sources remain addressable after merge—readers can still walk upstream."
+    "A membrane shares a turn without giving the house away. Sources remain addressable after merge."
+    "Many hands on one turn: the operation happens entirely, or not at all."
   ]
 }
 

@@ -10,7 +10,7 @@ import {
   initProgressiveReveal,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_07_19.A';
+} from '../modules/experience-core.mjs?v=2026_08_26.A';
 
 const SEED_REWARD_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';

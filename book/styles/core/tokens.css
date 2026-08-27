@@ -195,8 +195,13 @@ html[data-theme="ember"] {
   --color-hearth-ink: #7a3812;
   --glass-bg: rgba(255, 248, 240, 0.62);
   --glass-bg-strong: rgba(255, 250, 244, 0.82);
+  --glass-border: rgba(196, 146, 80, 0.28);
   --paper-fiber: rgba(120, 72, 40, 0.05);
   --paper-fiber-strong: rgba(120, 72, 40, 0.1);
+  --color-golden-sand: #c4922e;
+  --color-burnt-orange: #b0602a;
+  --color-parchment-base: #f5ece2;
+  --color-stone-shadow: #5a4a3a;
 }
 
 html[data-theme="cosmos"] {

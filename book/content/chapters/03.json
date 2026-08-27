@@ -1,17 +1,36 @@
 {
   "chapterNumber": 3,
   "title": "Signals in the Sand",
-  "description": "Chapter 3 of Lore.Land: Signals in the Sand. Old routes answer from the dunes, and Boof must decide which signal is invitation and which is trap.",
+  "logline": "Two old routes want to be one turn. The egg is the only witness that both were true.",
+  "epigraph": "A path is a promise with dust on it.",
+  "description": "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the egg onto the flats, where two buried routes try to be admitted as a single turn, and conservation of direction is the only honest count.",
   "mood": "paradox",
   "period": "spring",
+  "pillars": [
+    "worldbuilding",
+    "code-craft"
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 02 · Echo",
+      "href": "/book/chapter/02/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Chamber 04 · Council",
+      "href": "/book/chapter/04/",
+      "kicker": "Next"
+    }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "paradox",
+      "climate": { "tempo": "dusk", "tint": "gold", "hook": "two-routes" },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof stood at the edge of the ",
+          "text": "The grove fell away into sand. Boof stood at the edge of the ",
           "children": [
             {
               "type": "custom-paradox",
@@ -19,7 +38,7 @@
             },
             {
               "type": "text",
-              "text": ", a place where truth and jest twisted together, impossible to untangle."
+              "text": " — not a riddle this time, but a fork that refused to be two places. Under the dunes two older routes glowed like buried slips, both claiming the same next step. The egg against her chest warmed whenever she faced the place they wanted to meet."
             }
           ]
         }
@@ -31,7 +50,7 @@
         {
           "type": "paragraph",
           "data-content_id": "paradox-intro",
-          "text": "\"To move forward, you must go back,\" the paradox whispered, echoing the Fool’s riddles.\n\"To catch the Fool, you must first be caught.\""
+          "text": "\"To move forward, you must go back,\" the paradox whispered, which was only half a lie. The two routes were the same turn seen from different years. One had a receipt the wind had kept. The other had a receipt the sand had eaten. Conservation of direction said they could not both post unless someone admitted them as one."
         }
       ]
     },
@@ -40,7 +59,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"The closer you get, the further away I am.\""
+          "text": "\"You see, Boof, you are always moving, but never arriving,\" the Fool's voice teased. \"That is what a turn looks like before the world agrees to it.\""
         }
       ]
     },
@@ -48,27 +67,40 @@
       "type": "figure",
       "img": {
         "src": "/book/images/03.png",
-        "alt": "The Fool's Paradox",
+        "alt": "A coal-dark cracked egg on a dune, two gold routes under the sand converging toward it.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool's Paradox: where movement is illusion, and reality folds upon itself."
+      "figcaption": "The flats: two signals, one turn, one witness."
     },
     {
       "type": "section",
       "title": "The Enigma of the Paradox",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "The Fool's Paradox bent reality itself. Boof’s every step felt like progress, yet no distance was crossed.\nThe boonberries glowed with a mischievous light, flickering between reality and mirage."
+          "text": "The Fool's Paradox bent the map without bending the ground. Boof’s every step felt like progress, yet the dunes returned her to the same seam. The egg was the witness: it heated only when both routes were true at once. A turn, she understood, is not a step. A turn is an act the world admits — and the sand would not admit two."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "low on the dune, the egg between two faint gold tracks",
+        "light": "dusk teal, gold heat along buried routes",
+        "scent": "hot iron, cold dust, old paper of a receipt the wind kept",
+        "edges": [
+          "two routes under sand converge on the egg",
+          "one slip survives in the wind, the other is eaten",
+          "the egg warms only at the meeting",
+          "no map marks the seam"
+        ],
+        "hint": "wind-cut sand flats at dusk, two older routes glowing under the sand like buried receipts, converging on a coal-dark cracked egg; teal shadow, one gold heat-source"
+      }
     },
     {
       "type": "custom-boof",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof laughed. The paradox was no puzzle to solve, but a lesson to learn. \"To chase is to never catch,\" Boof realized, but even as they did, the Fool’s laughter echoed through the twisted grove."
+          "text": "Boof laughed, which is a dog's way of filing a true scent. The paradox was no puzzle to solve. She walked the seam as one turn and let the two receipts become a single slip the wind could keep. Ahead, council hill lifted its weather. If a turn could be admitted, a key would have to be shown."
         }
       ]
     }
@@ -76,17 +108,14 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Desert signals behave like protocol: latency, spoofing, and durable return addresses."
+        "description": "A turn is an act the world admits. Two routes that want the same next step must post as one, or not at all."
       },
       {
-        "description": "The Fool’s paradox appears as routing advice that collapses if followed too literally."
+        "description": "The egg is a witness, not a map: it heats when both signals are true at once."
+      },
+      {
+        "description": "Conservation of direction: nothing extra appears in the sand. If two receipts cannot both post, the land keeps the seam instead."
       }
     ]
-  },
-  "logline": "Routes older than the map begin to answer.",
-  "epigraph": "A path is a promise with dust on it.",
-  "pillars": [
-    "worldbuilding",
-    "code-craft"
-  ]
+  }
 }

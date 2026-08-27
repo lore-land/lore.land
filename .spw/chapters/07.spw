@@ -6,7 +6,7 @@
 
 ^[chapter/07]{
   title: "Blueberry Oath"
-  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof confronts a shadow that may be the Fool’s—or a debt the reader already carries."
+  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof swears at the market stone. The oath is a key that can be filed smaller, never grown in secret; the private price is blueberries; the egg witnesses. A shadow copies the motion and not the heat."
   mood: "shadow"
   period: "spring"
   chapter_path: "/book/chapter/07/"
@@ -21,28 +21,28 @@
 ^[chapter/07/spine]{
   =prev{ ~".spw/chapters/06.spw#chapter_06" }
   =next{ ~".spw/chapters/08.spw#chapter_08" }
-  weave: "<> <> <> [] {} <> <>"
-  reading: "Boof pads in on a thread of scent; a shadow lengthens to keep pace; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof doubles back along the scent-thread; the Fool takes the last word and vanishes with it"
+  weave: "<> <> <> [] {} <>"
+  reading: "Boof pads in on a thread of scent; a shadow lengthens to keep pace; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; the Fool takes the last word and vanishes with it"
 }
 
 ^[chapter/07/sections][
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Deeper in the labyrinth, Boof stopped pretending the pursuit was one-sided. Something kept the same pace—a shadow , just beyond their reach."
+    excerpt: "The market stone had a groove worn by other mouths. Boof stopped pretending the pursuit was one-sided. Something kept the same pace — a shadow that copied her steps and not the egg's heat. She set the egg beside the s..."
     route: ^[chapter/07/s01]{open}
   >
   s02: <
     handle: "custom-shadow/02"
     type: "custom-shadow"
-    excerpt: "The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely."
+    excerpt: "The shadow stretched across the cobbles, mirroring Boof's every move, but it would not warm. It was an unauthorized copy of a key — motion without permission, shape without receipt. If you forfeit a bond, the shadow i..."
     handles: ["shadow-intro"]
     route: ^[chapter/07/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the shadows. \"This is my shadow, or perhaps... it is yours?\""
+    excerpt: "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the long shade. \"This is my shadow, or perhaps it is the oath's. Whose key is it if it can be copied without heat?\""
     route: ^[chapter/07/s03]{open}
   >
   s04: [
@@ -55,20 +55,14 @@
     handle: "section/05"
     type: "section"
     title: "The Shadow’s Reflection"
-    excerpt: "The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward. The boonberries above them dimmed, casting the world into..."
+    excerpt: "The shadow twisted and sometimes led. It seemed to know the path Boof sought and refused to show the heat. She did not touch it. A key that can be copied without a receipt is not a key you should grow. She left the bl..."
     route: ^[chapter/07/s05]{open}
   }
   s06: <
-    handle: "custom-boof/06"
-    type: "custom-boof"
-    excerpt: "Boof reached out, hoping to touch the shadow, to understand it. \"Is this what the Fool wanted me to see?\" Boof wondered. The shadow flickered and danced, evading their grasp."
-    route: ^[chapter/07/s06]{open}
-  >
-  s07: <
-    handle: "custom-fool/07"
+    handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed from the darkness. \"But the real question is: whose shadow is it?\""
-    route: ^[chapter/07/s07]{open}
+    excerpt: "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed. \"But the real question is: whose key is it, and what do you forfeit if you lie?\""
+    route: ^[chapter/07/s06]{open}
   >
 ]
 
@@ -88,7 +82,7 @@
 }
 
 %[chapter/07/measures]{
-  %sections: 7
+  %sections: 6
   %prose: 1
   %plates: 1
   %voices: 3
@@ -96,8 +90,9 @@
 
 #[chapter/07/lore]{
   notes: [
-    "Oaths in the serial bind publicity to private cost—marketing with consequence."
-    "The Fool’s shadow is a mirror protocol: it copies motion until it demands ownership."
+    "An oath is a key given in public and paid in private. Fruit is the private price; the egg is the witness."
+    "A shadow that copies motion without heat is an unauthorized copy of a key — gesture without receipt."
+    "What you forfeit if you lie is the bond. The stone remembers faces. The fruit does not lie about being fruit."
   ]
 }
 

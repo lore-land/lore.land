@@ -15,17 +15,17 @@
 }
 
 ^"plates_manifest"[
-  ^chamber[01]{ #slug:"dawn-in-boonland"           !state:grounded %version:0 .file:"book/images/01.png" &ledger:"AL-001" }
-  ^chamber[02]{ #slug:"the-first-echo"             !state:grounded %version:0 .file:"book/images/02.png" &ledger:"AL-001" }
-  ^chamber[03]{ #slug:"signals-in-the-sand"        !state:draft    %version:0 .file:"book/images/03.png" &ledger:"AL-001" }
-  ^chamber[04]{ #slug:"crosswind-council"          !state:draft    %version:0 .file:"book/images/04.png" &ledger:"AL-001" }
-  ^chamber[05]{ #slug:"the-quiet-rift"             !state:draft    %version:0 .file:"book/images/05.png" &ledger:"AL-001" }
-  ^chamber[06]{ #slug:"lanterns-of-bonk-city"      !state:draft    %version:0 .file:"book/images/06.png" &ledger:"AL-001" }
-  ^chamber[07]{ #slug:"blueberry-oath"             !state:draft    %version:0 .file:"book/images/07.png" &ledger:"AL-001" }
-  ^chamber[08]{ #slug:"songs-of-the-watering-eye"  !state:draft    %version:0 .file:"book/images/08.png" &ledger:"AL-001" }
-  ^chamber[09]{ #slug:"shards-of-nine-honks"       !state:draft    %version:0 .file:"book/images/09.png" &ledger:"AL-001" }
-  ^chamber[10]{ #slug:"boneland-resonance"         !state:draft    %version:0 .file:"book/images/10.png" &ledger:"AL-001" }
-  ^chamber[11]{ #slug:"paradox-bloom"              !state:draft    %version:0 .file:"book/images/11.png" &ledger:"AL-001" }
-  ^chamber[12]{ #slug:"the-last-confluence"        !state:draft    %version:0 .file:"book/images/12.png" &ledger:"AL-001" }
-  ^chamber[13]{ #slug:"loreland-canon"             !state:draft    %version:0 .file:"book/images/13.png" &ledger:"AL-001" }
+  ^chamber[01]{ #slug:"dawn-in-boonland"           !state:public %version:1 .file:"book/images/01.png" &ledger:"AL-001" }
+  ^chamber[02]{ #slug:"the-first-echo"             !state:public %version:1 .file:"book/images/02.png" &ledger:"AL-001" }
+  ^chamber[03]{ #slug:"signals-in-the-sand"        !state:public %version:1 .file:"book/images/03.png" &ledger:"AL-001" }
+  ^chamber[04]{ #slug:"crosswind-council"          !state:public %version:1 .file:"book/images/04.png" &ledger:"AL-001" }
+  ^chamber[05]{ #slug:"the-quiet-rift"             !state:public %version:1 .file:"book/images/05.png" &ledger:"AL-001" }
+  ^chamber[06]{ #slug:"lanterns-of-bonk-city"      !state:public %version:1 .file:"book/images/06.png" &ledger:"AL-001" }
+  ^chamber[07]{ #slug:"blueberry-oath"             !state:public %version:1 .file:"book/images/07.png" &ledger:"AL-001" }
+  ^chamber[08]{ #slug:"songs-of-the-watering-eye"  !state:public %version:1 .file:"book/images/08.png" &ledger:"AL-001" }
+  ^chamber[09]{ #slug:"shards-of-nine-honks"       !state:public %version:1 .file:"book/images/09.png" &ledger:"AL-001" }
+  ^chamber[10]{ #slug:"boneland-resonance"         !state:public %version:1 .file:"book/images/10.png" &ledger:"AL-001" }
+  ^chamber[11]{ #slug:"paradox-bloom"              !state:public %version:1 .file:"book/images/11.png" &ledger:"AL-001" }
+  ^chamber[12]{ #slug:"the-last-confluence"        !state:public %version:1 .file:"book/images/12.png" &ledger:"AL-001" }
+  ^chamber[13]{ #slug:"loreland-canon"             !state:public %version:1 .file:"book/images/13.png" &ledger:"AL-001" }
 ]

@@ -1,17 +1,28 @@
 {
   "chapterNumber": 8,
   "title": "Songs of the Watering Eye",
-  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes harmonic pressure; Boof must listen until the debt has a name.",
+  "logline": "The Watering Eye is a well that folds every face it has held. The egg's heat names a debt in the water.",
+  "epigraph": "Water keeps every face it has ever held, briefly.",
+  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes a well. Receipts fold under the surface; a face in the water still belongs to its source. The egg names a debt the archive could not file.",
   "mood": "game",
   "period": "spring",
+  "pillars": [
+    "worldbuilding",
+    "intrigue"
+  ],
+  "relatedRoutes": [
+    { "label": "Chamber 07 · Oath", "href": "/book/chapter/07/", "kicker": "Prev" },
+    { "label": "Chamber 09 · Shards", "href": "/book/chapter/09/", "kicker": "Next" }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "game",
+      "climate": { "tempo": "night", "tint": "teal", "hook": "well-fold" },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof reached a clearing where a peculiar sight greeted them—a game board etched into the ground, and the Fool’s voice, playful yet challenging: \"Shall we play?\""
+          "text": "The Watering Eye was a well before it was a song. Boof reached the rim and saw a face held mid-name in the black water, and under it a gold fold of slips stacked like receipts that had learned to stay wet. The Fool’s voice, playful and exact: \"Shall we play?\" The game was listening until the debt had a name."
         }
       ]
     },
@@ -21,7 +32,7 @@
         {
           "type": "paragraph",
           "data-content_id": "game-intro",
-          "text": "The board was filled with symbols—some familiar, others strange. The rules were unclear, but one thing was certain: Boof had no choice but to play."
+          "text": "The board was the water. Symbols rose and sank. The rules were unclear, but one thing was certain: a quote the well kept still belonged to its source. The water did not steal the face. It folded it. Boof had no choice but to listen."
         }
       ]
     },
@@ -30,7 +41,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"The rules are simple, Boof,\" the Fool’s voice echoed from the trees, \"but understanding them, now that’s the tricky part.\""
+          "text": "\"The rules are simple, Boof,\" the Fool’s voice echoed from the stones, \"but understanding them, now that’s the tricky part. The well will hold what you put in. It will not call it yours.\""
         }
       ]
     },
@@ -38,36 +49,40 @@
       "type": "figure",
       "img": {
         "src": "/book/images/08.png",
-        "alt": "The Fool's Game",
+        "alt": "A stone well at night, a face in the water, gold receipts folded under the surface, the cracked egg warming the rim.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool's Game: a challenge where rules bend as much as reality."
+      "figcaption": "The Watering Eye: a well that folds, not a thief that keeps."
     },
     {
       "type": "section",
       "title": "The Game Begins",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof took a deep breath and stepped forward onto the board. With each step, the symbols on the ground shifted beneath their feet. The game had begun, though the goal remained elusive.\nThe boonberries surrounding the clearing swayed, as though they too were watching the unfolding game."
+          "text": "Boof set the egg on the rim. With each breath the gold fold under the water shifted, a history that could be checked without being owned. Resonance is the archive’s other sense: what cannot be filed can still be heard. The egg named a debt in the well — heat against the cold slips — and the water kept the name without taking it."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "rim of the well, egg at the edge, face in the water",
+        "light": "night; gold fold under black water; shell-warmth on the stones",
+        "scent": "wet stone, mineral, warm iron",
+        "edges": [
+          "a face held mid-name",
+          "receipts folded under the surface",
+          "the quote still belongs to its source",
+          "the egg names a debt"
+        ],
+        "hint": "dark watering well at night, still water holding a faint face, gold folds of light stacked like receipts, coal-dark cracked egg on the rim"
+      }
     },
     {
       "type": "custom-boof",
       "content": [
         {
           "type": "paragraph",
-          "text": "\"What’s the objective?\" Boof called out, but no answer came. The Fool’s laughter echoed from afar, playful yet unsettling. Boof felt the game wasn’t just a test of skill—but of something deeper."
-        }
-      ]
-    },
-    {
-      "type": "custom-fool",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "\"The objective, Boof, is whatever you make of it,\" the Fool whispered. \"But remember, not every game can be won.\""
+          "text": "\"What’s the objective?\" Boof called. The Fool’s laughter came from the deep. The objective was whatever you made of it, and not every game can be won. She took the egg and left the face in the water, still belonging to whoever had leaned over first. Uphill, eight honks had already scattered. The ninth had never sounded."
         }
       ]
     }
@@ -78,14 +93,11 @@
         "description": "Resonance is the archive’s other sense: what cannot be filed can still be heard."
       },
       {
-        "description": "Debts named in song are harder to bury than debts named in ink."
+        "description": "The well folds a face without stealing it — a quote that still belongs to its source."
+      },
+      {
+        "description": "Debts named in water are harder to bury than debts named in ink. The egg names one."
       }
     ]
-  },
-  "logline": "Memory resonates until it names a debt.",
-  "epigraph": "Water keeps every face it has ever held, briefly.",
-  "pillars": [
-    "worldbuilding",
-    "intrigue"
-  ]
+  }
 }

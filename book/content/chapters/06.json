@@ -1,26 +1,31 @@
 {
   "chapterNumber": 6,
   "title": "Lanterns of Bonk City",
-  "description": "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes infrastructure as Boof learns how a city turns shocks into shared orientation.",
+  "logline": "Bonk City turns impact into glass: lanterns that show light without claiming to be it.",
+  "epigraph": "A collision is only noise until someone names what it illuminated.",
+  "description": "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic light. Boof learns that a lantern is only glass — it shows the egg's heat, it is not the heat — while grains of the city sleep in the walls and wake when something strikes.",
   "mood": "labyrinth",
   "period": "spring",
+  "pillars": [
+    "worldbuilding",
+    "marketing"
+  ],
+  "relatedRoutes": [
+    { "label": "Chamber 05 · Rift", "href": "/book/chapter/05/", "kicker": "Prev" },
+    { "label": "Chamber 07 · Oath", "href": "/book/chapter/07/", "kicker": "Next" }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "labyrinth",
+      "climate": { "tempo": "night", "tint": "ember", "hook": "glass-not-light" },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof stepped into the ",
+          "text": "Boof stepped into Bonk City the way you step into a struck bell. The streets were a ",
           "children": [
-            {
-              "type": "custom-labyrinth",
-              "content": "Fool’s Labyrinth"
-            },
-            {
-              "type": "text",
-              "text": ", where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step."
-            }
+            { "type": "custom-labyrinth", "content": "Fool’s Labyrinth" },
+            { "type": "text", "text": " of leaning glass. Every lantern turned toward the egg. The lanterns were not the light. They were glass: they showed the heat, they did not own it. In the walls, grains of the city slept — workers, watchers, names that could be woken, metered, shared, and put back to sleep. A collision somewhere upridge had just woken a streetful." }
           ]
         }
       ]
@@ -31,7 +36,7 @@
         {
           "type": "paragraph",
           "data-content_id": "labyrinth-intro",
-          "text": "\"In the labyrinth, the way forward is always behind you, and the way out is through,\" a voice echoed from within the twisting paths."
+          "text": "\"In the labyrinth, the way forward is always through the glass,\" a voice said from the twisting paths. \"Do not confuse the pane with the flame. The city offers light. The offering is not the cell.\""
         }
       ]
     },
@@ -40,7 +45,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is—can you find yourself?\""
+          "text": "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is whether you can tell glass from heat when every street is leaning.\""
         }
       ]
     },
@@ -48,27 +53,40 @@
       "type": "figure",
       "img": {
         "src": "/book/images/06.png",
-        "alt": "The Fool's Labyrinth",
+        "alt": "Night streets: glass lanterns leaning toward a coal-warm cracked egg, the egg the true light.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool’s Labyrinth: a place where direction is an illusion."
+      "figcaption": "Bonk City: a lantern is glass. The egg is the heat."
     },
     {
       "type": "section",
       "title": "The Shifting Maze",
+      "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "The labyrinth was alive, its walls shifting like liquid, bending and twisting the space.\nNo matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they started, yet with a slight change."
+          "text": "The city was alive in the way glass is alive when it holds a flame. No matter how far Boof walked, the lanterns rearranged around the egg. Each impact named a dent into light — spectacle with civic duty. She understood the offering: a place still worth finding after dark, proved by a pane that does not lie about being a pane."
         }
-      ]
+      ],
+      "scene": {
+        "vantage": "street-level, egg on a stall, lanterns leaning in",
+        "light": "the egg the only true source; glass showing it",
+        "scent": "rain on cobble, warm shell, lamp-oil that has not caught",
+        "edges": [
+          "lanterns lean toward the egg",
+          "glass shows heat it does not own",
+          "grains of the city sleep in the walls",
+          "one stall is the only warm point"
+        ],
+        "hint": "night streets of a lantern city; glass lanterns leaning toward a coal-warm cracked egg on a stall; rain, cobbles, throat-warm gold"
+      }
     },
     {
       "type": "custom-boof",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof paused. \"Is this part of the game?\" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared.\n\"Perhaps the only way out,\" Boof mused, \"is to stop trying to escape.\""
+          "text": "Boof paused. \"Is this part of the game?\" The Fool's laughter came from behind a pane. \"Perhaps the only way out,\" she mused, \"is to stop asking the glass to be the fire.\" Ahead, a market stone waited with a groove for an oath and a price in fruit."
         }
       ]
     }
@@ -76,17 +94,14 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Bonk City converts event energy into navigable light—spectacle with civic duty."
+        "description": "Bonk City converts event energy into navigable light — spectacle with civic duty."
       },
       {
-        "description": "Lanterns are proof: each one claims a place still worth finding after dark."
+        "description": "A lantern is glass. It shows heat; it is not the heat. The egg remains the cell."
+      },
+      {
+        "description": "Grains of the city sleep in the walls and wake when something strikes — rented, metered, shared, put back to sleep."
       }
     ]
-  },
-  "logline": "Impact becomes civic light.",
-  "epigraph": "A collision is only noise until someone names what it illuminated.",
-  "pillars": [
-    "worldbuilding",
-    "marketing"
-  ]
+  }
 }

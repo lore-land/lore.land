@@ -52,20 +52,25 @@
   --foreshadow-shadow: 0 0 0 3px #ffb34799;
   --foreshadow-gradient: linear-gradient(120deg, #ffb347 0%, #ff7f50 100%);
 
-  /* Ergonomic component-level styling for motifs, tropes, foreshadowing */
+  /* Motif/trope/foreshadow are series marks, not painted cards.
+     Sections already carry a left rule; these only warm that hairline. */
   [data-motif] {
     --component-color: var(--motif-color);
     --component-bg: var(--motif-bg);
     --component-shadow: var(--motif-shadow);
     --component-gradient: var(--motif-gradient);
-    color: var(--component-color);
-    background: var(--component-bg);
-    box-shadow: var(--component-shadow);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-gold, #c4922e) 70%, transparent 30%);
+  }
+
+  [data-motif="egg"] {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--color-gold, #c4922e) 82%, var(--color-hearth, #b0602a) 18%);
   }
 
   [data-motif][data-foreshadow] {
     --component-shadow: var(--motif-foreshadow);
-    box-shadow: var(--component-shadow);
+    box-shadow:
+      inset 3px 0 0 color-mix(in srgb, var(--color-gold, #c4922e) 78%, transparent 22%),
+      inset 0 0 0 1px color-mix(in srgb, var(--foreshadow-color) 28%, transparent 72%);
   }
 
   [data-trope] {
@@ -73,9 +78,7 @@
     --component-bg: var(--trope-bg);
     --component-shadow: var(--trope-shadow);
     --component-gradient: var(--trope-gradient);
-    color: var(--component-color);
-    background: var(--component-bg);
-    box-shadow: var(--component-shadow);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--trope-color) 55%, transparent 45%);
   }
 
   [data-foreshadow]:not([data-motif]) {
@@ -83,9 +86,7 @@
     --component-bg: var(--foreshadow-bg);
     --component-shadow: var(--foreshadow-shadow);
     --component-gradient: var(--foreshadow-gradient);
-    color: var(--component-color);
-    background: var(--component-bg);
-    box-shadow: var(--component-shadow);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--foreshadow-color) 70%, transparent 30%);
   }
 
   /* Theme generalizability */

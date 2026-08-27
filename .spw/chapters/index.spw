@@ -36,37 +36,37 @@
   c07: {
     title: "Blueberry Oath"
     &file: @spw/chapters/07.spw
-    sections: 7
+    sections: 6
   }
   c08: {
     title: "Songs of the Watering Eye"
     &file: @spw/chapters/08.spw
-    sections: 7
+    sections: 6
   }
   c09: {
     title: "Shards of Nine Honks"
     &file: @spw/chapters/09.spw
-    sections: 7
+    sections: 6
   }
   c10: {
     title: "Bone.land Resonance"
     &file: @spw/chapters/10.spw
-    sections: 7
+    sections: 6
   }
   c11: {
     title: "Paradox Bloom"
     &file: @spw/chapters/11.spw
-    sections: 7
+    sections: 6
   }
   c12: {
     title: "The Last Confluence"
     &file: @spw/chapters/12.spw
-    sections: 7
+    sections: 6
   }
   c13: {
     title: "Lore.Land Canon"
     &file: @spw/chapters/13.spw
-    sections: 7
+    sections: 6
   }
 ]
 

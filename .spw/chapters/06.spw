@@ -6,7 +6,7 @@
 
 ^[chapter/06]{
   title: "Lanterns of Bonk City"
-  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes infrastructure as Boof learns how a city turns shocks into shared orientation."
+  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic light. Boof learns that a lantern is only glass — it shows the egg's heat, it is not the heat — while grains of the city sleep in the walls and wake when something strikes."
   mood: "labyrinth"
   period: "spring"
   chapter_path: "/book/chapter/06/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof stepped into the Fool’s Labyrinth , where every turn seemed to double back on itself. The walls were made of twisting boonberry vines, shifting with each step."
+    excerpt: "Boof stepped into Bonk City the way you step into a struck bell. The streets were a Fool’s Labyrinth of leaning glass. Every lantern turned toward the egg. The lanterns were not the light. They were glass: they showed..."
     route: ^[chapter/06/s01]{open}
   >
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    excerpt: "\"In the labyrinth, the way forward is always behind you, and the way out is through,\" a voice echoed from within the twisting paths."
+    excerpt: "\"In the labyrinth, the way forward is always through the glass,\" a voice said from the twisting paths. \"Do not confuse the pane with the flame. The city offers light. The offering is not the cell.\""
     handles: ["labyrinth-intro"]
     route: ^[chapter/06/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is—can you find yourself?\""
+    excerpt: "\"You’ve found my maze, Boof,\" the Fool’s voice teased from all directions, \"but the real question is whether you can tell glass from heat when every street is leaning.\""
     route: ^[chapter/06/s03]{open}
   >
   s04: [
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Shifting Maze"
-    excerpt: "The labyrinth was alive, its walls shifting like liquid, bending and twisting the space. No matter how far Boof walked, they felt no closer to the exit. Each step was like a loop, bringing them back to where they star..."
+    excerpt: "The city was alive in the way glass is alive when it holds a flame. No matter how far Boof walked, the lanterns rearranged around the egg. Each impact named a dent into light — spectacle with civic duty. She understoo..."
     route: ^[chapter/06/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof paused. \"Is this part of the game?\" they wondered aloud. The Fool's laughter echoed from behind a nearby vine, but no figure appeared. \"Perhaps the only way out,\" Boof mused, \"is to stop trying to escape.\""
+    excerpt: "Boof paused. \"Is this part of the game?\" The Fool's laughter came from behind a pane. \"Perhaps the only way out,\" she mused, \"is to stop asking the glass to be the fire.\" Ahead, a market stone waited with a groove for..."
     route: ^[chapter/06/s06]{open}
   >
 ]
@@ -90,8 +90,9 @@
 
 #[chapter/06/lore]{
   notes: [
-    "Bonk City converts event energy into navigable light—spectacle with civic duty."
-    "Lanterns are proof: each one claims a place still worth finding after dark."
+    "Bonk City converts event energy into navigable light — spectacle with civic duty."
+    "A lantern is glass. It shows heat; it is not the heat. The egg remains the cell."
+    "Grains of the city sleep in the walls and wake when something strikes — rented, metered, shared, put back to sleep."
   ]
 }
 

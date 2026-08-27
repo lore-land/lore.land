@@ -6,7 +6,7 @@
 
 ^[chapter/04]{
   title: "Crosswind Council"
-  description: "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit at one table while the weather refuses to pick a side."
+  description: "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit under shared weather with keys that can only be narrowed. The egg sits between them, a cell no key covers."
   mood: "mirror"
   period: "spring"
   chapter_path: "/book/chapter/04/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof stumbled upon the Fool’s Mirror , a reflective surface that showed not just a reflection, but a world inverted, where the familiar became strange."
+    excerpt: "Council hill kept a table that did not pick a side. Boof set the egg on the wood between two keys and stumbled, almost, upon the Fool’s Mirror — a pane of weather that showed not a face but the size of a permission. O..."
     route: ^[chapter/04/s01]{open}
   >
   s02: <
     handle: "custom-mirror/02"
     type: "custom-mirror"
-    excerpt: "The Fool’s Mirror shimmered, revealing truths that danced between reflection and distortion. It whispered, \"What you see is not what is, but what you believe.\""
+    excerpt: "The Fool’s Mirror shimmered with the shared storm. It whispered, \"What you see is not what is, but what you are still allowed to do.\" Boon saw a harvest. Bane saw a constraint. The egg saw neither. It kept its own law..."
     handles: ["mirror-intro"]
     route: ^[chapter/04/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Look into the mirror, Boof,\" the Fool’s voice echoed. \"In it, you will see not me, but yourself. And in yourself, you will find what you seek.\""
+    excerpt: "\"Look into the glass, Boof,\" the Fool’s voice carried on the crosswind. \"In it you will see not me, but the edge of your key. File it smaller if you must. Do not pretend it grew overnight.\""
     route: ^[chapter/04/s03]{open}
   >
   s04: [
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Reflections of the Fool’s Mirror"
-    excerpt: "As Boof gazed into the mirror, their reflection shifted. It became both them and not them, a version that was twisted by perception, altered by the gaze of the Fool. The boonberries glowed faintly in the reflection, y..."
+    excerpt: "As Boof gazed into the glass, her reflection shifted with the weather. Boon and bane sat under one roof and bargained without declaring war. The membrane between them was the table itself — you could share a turn acro..."
     route: ^[chapter/04/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof touched the mirror, and for a moment, felt their hand sink into its surface, as if reality had become liquid. \"What is this?\" Boof murmured. But the only answer was the Fool’s laughter, drifting like a breeze acr..."
+    excerpt: "Boof left both keys on the table. A key you do not take cannot be accused of growing. She took the egg. Downslope the counting rooms had begun to disagree with themselves — two receipts that could not both post. That ..."
     route: ^[chapter/04/s06]{open}
   >
 ]
@@ -90,8 +90,9 @@
 
 #[chapter/04/lore]{
   notes: [
-    "Councils in Lore.Land treat polarity as infrastructure, not morality play."
-    "Public negotiation is a marketing surface: claims must survive weather and witness."
+    "A key may be filed smaller, never grown in secret. That is the council's oldest weather."
+    "The egg is a cell: it keeps its own law. No key on the table covers it."
+    "Sharing across a membrane is not giving the house away. Boon and bane can sit one turn without becoming one office."
   ]
 }
 

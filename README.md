@@ -73,7 +73,7 @@ Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_07_19.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_08_26.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -81,7 +81,7 @@ This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
 - Local submodule in this workspace: `./.spw/_workbench`
-- Current submodule pin: `5552cec`
+- Current submodule pin: `75d8f9d`
 
 ### Runtime Bridge In lore.land
 
@@ -241,7 +241,7 @@ Chapter `.spw` mirrors are long-form references for extension and semantic diffi
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_07_19.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
+- release token: `2026_08_26.A` (single source: `cache-context.mjs` + `build-chapters.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`

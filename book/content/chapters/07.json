@@ -1,26 +1,31 @@
 {
   "chapterNumber": 7,
   "title": "Blueberry Oath",
-  "description": "Chapter 7 of Lore.Land: Blueberry Oath. Boof confronts a shadow that may be the Fool’s—or a debt the reader already carries.",
+  "logline": "An oath is a key given in public, paid in fruit, with the egg as witness.",
+  "epigraph": "An oath is a contract that remembers your face.",
+  "description": "Chapter 7 of Lore.Land: Blueberry Oath. Boof swears at the market stone. The oath is a key that can be filed smaller, never grown in secret; the private price is blueberries; the egg witnesses. A shadow copies the motion and not the heat.",
   "mood": "shadow",
   "period": "spring",
+  "pillars": [
+    "intrigue",
+    "worldbuilding"
+  ],
+  "relatedRoutes": [
+    { "label": "Chamber 06 · Lanterns", "href": "/book/chapter/06/", "kicker": "Prev" },
+    { "label": "Chamber 08 · Well", "href": "/book/chapter/08/", "kicker": "Next" }
+  ],
   "sections": [
     {
       "type": "custom-boof",
       "data-mood": "shadow",
+      "climate": { "tempo": "dusk", "tint": "berry", "hook": "oath-key" },
       "content": [
         {
           "type": "paragraph",
-          "text": "Deeper in the labyrinth, Boof stopped pretending the pursuit was one-sided. Something kept the same pace—a ",
+          "text": "The market stone had a groove worn by other mouths. Boof stopped pretending the pursuit was one-sided. Something kept the same pace — a ",
           "children": [
-            {
-              "type": "custom-shadow",
-              "content": "shadow"
-            },
-            {
-              "type": "text",
-              "text": ", just beyond their reach."
-            }
+            { "type": "custom-shadow", "content": "shadow" },
+            { "type": "text", "text": " that copied her steps and not the egg's heat. She set the egg beside the stone, scattered blueberries in the groove, and understood the public half of the oath: a key handed over in front of strangers. The private half was the fruit. The witness was the cell that kept its own law." }
           ]
         }
       ]
@@ -31,7 +36,7 @@
         {
           "type": "paragraph",
           "data-content_id": "shadow-intro",
-          "text": "The shadow stretched across the walls, mirroring Boof's every move, but distorted, as though it belonged to someone—or something—else entirely."
+          "text": "The shadow stretched across the cobbles, mirroring Boof's every move, but it would not warm. It was an unauthorized copy of a key — motion without permission, shape without receipt. If you forfeit a bond, the shadow is what remains: the gesture, emptied."
         }
       ]
     },
@@ -40,7 +45,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the shadows. \"This is my shadow, or perhaps... it is yours?\""
+          "text": "\"Ah, you’ve found it, haven’t you, Boof?\" the Fool's voice whispered from the long shade. \"This is my shadow, or perhaps it is the oath's. Whose key is it if it can be copied without heat?\""
         }
       ]
     },
@@ -48,36 +53,41 @@
       "type": "figure",
       "img": {
         "src": "/book/images/07.png",
-        "alt": "The Fool's Shadow",
+        "alt": "A cracked market stone, blueberries as the private price, a coal-dark egg, and a long shadow that copies the egg without its heat.",
         "loading": "lazy"
       },
-      "figcaption": "The Fool’s Shadow: a reflection of more than just light, a reflection of truth."
+      "figcaption": "The oath-stone: public key, private fruit, one witness."
     },
     {
       "type": "section",
       "title": "The Shadow’s Reflection",
+      "data-motif": "egg",
+      "data-foreshadow": "hatch",
       "content": [
         {
           "type": "paragraph",
-          "text": "The shadow twisted and turned, matching Boof’s steps but sometimes leading the way. It seemed to know the path Boof sought but refused to show the way forward.\nThe boonberries above them dimmed, casting the world into a soft twilight."
+          "text": "The shadow twisted and sometimes led. It seemed to know the path Boof sought and refused to show the heat. She did not touch it. A key that can be copied without a receipt is not a key you should grow. She left the blueberries in the groove — payment that smelled true — and carried the egg toward the well that keeps faces without stealing them."
         }
-      ]
-    },
-    {
-      "type": "custom-boof",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "Boof reached out, hoping to touch the shadow, to understand it. \"Is this what the Fool wanted me to see?\" Boof wondered. The shadow flickered and danced, evading their grasp."
-        }
-      ]
+      ],
+      "scene": {
+        "vantage": "cobble-level, stone, berries, egg, long shadow",
+        "light": "dusk teal, gold in the stone's cracks, no heat in the shadow",
+        "scent": "blueberries, wet stone, warm shell",
+        "edges": [
+          "oath groove in the market stone",
+          "fruit as private price",
+          "the egg as witness",
+          "a shadow that copies motion, not heat"
+        ],
+        "hint": "public market stone at twilight, gold kintsugi cracks, blueberries, coal-dark cracked egg, long shadow without warmth"
+      }
     },
     {
       "type": "custom-fool",
       "content": [
         {
           "type": "paragraph",
-          "text": "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed from the darkness. \"But the real question is: whose shadow is it?\""
+          "text": "\"The shadow will always be with you, Boof,\" the Fool’s voice echoed. \"But the real question is: whose key is it, and what do you forfeit if you lie?\""
         }
       ]
     }
@@ -85,17 +95,14 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Oaths in the serial bind publicity to private cost—marketing with consequence."
+        "description": "An oath is a key given in public and paid in private. Fruit is the private price; the egg is the witness."
       },
       {
-        "description": "The Fool’s shadow is a mirror protocol: it copies motion until it demands ownership."
+        "description": "A shadow that copies motion without heat is an unauthorized copy of a key — gesture without receipt."
+      },
+      {
+        "description": "What you forfeit if you lie is the bond. The stone remembers faces. The fruit does not lie about being fruit."
       }
     ]
-  },
-  "logline": "A binding made in public, paid in private.",
-  "epigraph": "An oath is a contract that remembers your face.",
-  "pillars": [
-    "intrigue",
-    "worldbuilding"
-  ]
+  }
 }
