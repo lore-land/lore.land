@@ -13,7 +13,7 @@ lore.land — a worldbuilding monument: seeded chapters, inspectable craft, a li
 - `.spw/audits/` — dated audit + alignment-probe snapshots; newest is pointed to by `index.spw`'s `audit_active`
 - `.spw/workspace.spw` — numbered contracts (`c001`…) + `contract_status` — the closest thing to a project status doc
 - `.spw/tools/*.mjs` — the scripts behind the `npm run spw:*` commands below
-- `.spw/_workbench` — git submodule, `git@github.com:spwashi/spw-workbench.git`. This is the canonical Spw language spec/tooling monorepo (parser, runtime, LSP, CLI). lore.land's `.spw` files are a *consumer* of that spec, not a fork of it. Update with `cd .spw/_workbench && git fetch origin && git checkout origin/main`, then commit the bumped pointer in the superproject.
+- `.spw/_workbench` — git submodule, `https://github.com/spwashi/spw-workbench.git`. This is the canonical Spw language spec/tooling monorepo (parser, runtime, LSP, CLI). lore.land's `.spw` files are a *consumer* of that spec, not a fork of it. Update with `cd .spw/_workbench && git fetch origin && git checkout origin/main`, then commit the bumped pointer in the superproject. HTTPS (not SSH) so `actions/checkout` with `submodules: recursive` can clone it using `GITHUB_TOKEN`.
 
 ## npm scripts for `.spw`
 
