@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_08_26.B" data-cache-context="scriptorium" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_08_27.A" data-cache-context="scriptorium" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,17 +21,18 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
 
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_08_26.B&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_08_26.B&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_08_26.B&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_08_26.B&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_08_26.B&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_08_26.B&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_08_26.B&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_08_26.B&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_26.B&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_08_26.B&ctx=home:climate">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_08_26.B"></script>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_08_27.A&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_08_27.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_08_27.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_08_27.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_08_27.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_08_27.A&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_08_27.A&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_08_27.A&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_27.A&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_08_27.A&ctx=home:climate">
+  <link rel="stylesheet" href="/book/styles/components/production-flow.css?v=2026_08_27.A&ctx=home:flow">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_08_27.A"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -106,6 +107,52 @@
             </details>
           </li>
         </ul>
+      </section>
+
+      <section class="production-flow" id="production-flow" data-flow-surface="scriptorium" aria-labelledby="flow-title">
+        <div class="hub-section-head">
+          <h2 id="flow-title">How a chamber is made</h2>
+        </div>
+        <p class="hub-section-lede">
+          A mystery is produced, not announced. Harvest a pressure, measure it so the count can be
+          checked, file a key that only gets smaller, then emit a turn that leaves a slip.
+          A false slip is refused. That refusal is the proof the walk means it.
+        </p>
+        <ol class="production-stages">
+          <li class="production-stage" data-stage="harvest" data-analog="cell">
+            <button type="button" class="production-stage-hit" data-stage="harvest" aria-pressed="true">
+              <span class="production-stage-index">01</span>
+              <span class="production-stage-verb">Harvest</span>
+              <span class="production-stage-analog">cell</span>
+              <span class="production-stage-story">A pressure becomes a scene the land can hold.</span>
+            </button>
+          </li>
+          <li class="production-stage" data-stage="measure" data-analog="conservation">
+            <button type="button" class="production-stage-hit" data-stage="measure" aria-pressed="false">
+              <span class="production-stage-index">02</span>
+              <span class="production-stage-verb">Measure</span>
+              <span class="production-stage-analog">conservation</span>
+              <span class="production-stage-story">Count it so the count can be checked.</span>
+            </button>
+          </li>
+          <li class="production-stage" data-stage="seal" data-analog="key">
+            <button type="button" class="production-stage-hit" data-stage="seal" aria-pressed="false">
+              <span class="production-stage-index">03</span>
+              <span class="production-stage-verb">Seal</span>
+              <span class="production-stage-analog">key</span>
+              <span class="production-stage-story">File a key smaller. Never grow one in secret.</span>
+            </button>
+          </li>
+          <li class="production-stage" data-stage="emit" data-analog="receipt">
+            <button type="button" class="production-stage-hit" data-stage="emit" aria-pressed="false">
+              <span class="production-stage-index">04</span>
+              <span class="production-stage-verb">Emit</span>
+              <span class="production-stage-analog">receipt</span>
+              <span class="production-stage-story">Admit a turn. Leave a slip. Refuse a false one.</span>
+            </button>
+          </li>
+        </ol>
+        <p class="production-readout">Harvest falls out as a scene. A pressure becomes a scene the land can hold.</p>
       </section>
 
       <section class="hub-onboard" id="seed-rite" aria-labelledby="seed-title">

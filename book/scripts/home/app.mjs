@@ -9,12 +9,12 @@ import {
   bootstrapExperience,
   enhanceLazyImages,
   registerStoryServiceWorker
-} from '../modules/experience-core.mjs?v=2026_08_26.B';
+} from '../modules/experience-core.mjs?v=2026_08_27.A';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_26.B';
-import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_26.B';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_26.B';
-import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_26.B';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_27.A';
+import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_27.A';
+import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
 import { initStorySpark } from '../modules/story-spark.mjs?v=2026_07_23.A';
 import {
   initPassAlong,
@@ -22,7 +22,8 @@ import {
   initSegmentKeyboard,
   initPointerCraft,
   withViewTransition
-} from '../modules/interaction-surface.mjs?v=2026_08_26.B';
+} from '../modules/interaction-surface.mjs?v=2026_08_27.A';
+import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -580,6 +581,10 @@ function initMonumentEntrance() {
   const destroyTemporal = initHubTemporalClimate();
   const destroySegmentKeys = initSegmentKeyboard(document);
   const destroyPointerCraft = initPointerCraft(document);
+  const destroyProduction = initProductionFlow({
+    surface: document.getElementById('production-flow')?.dataset.flowSurface || 'home',
+    announce
+  });
   const destroyPassAlong = initPassAlong({
     title: 'Lore.Land — A Worldbuilding Monument',
     text: 'Enter a seeded world. Chapter One opens at dawn, when Boof unearths a warm egg no map will hold.',
@@ -617,6 +622,9 @@ function initMonumentEntrance() {
     }
     if (destroyPointerCraft) {
       destroyPointerCraft();
+    }
+    if (destroyProduction) {
+      destroyProduction();
     }
     if (destroyPassAlong) {
       destroyPassAlong();

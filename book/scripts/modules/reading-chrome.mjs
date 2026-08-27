@@ -7,7 +7,7 @@
  * - Shared CSS vars for scroll padding so anchors clear sticky bars
  */
 
-import { onScrollFrame, onResizeFrame } from './scroll-coordinator.mjs?v=2026_08_26.B';
+import { onScrollFrame, onResizeFrame } from './scroll-coordinator.mjs?v=2026_08_27.A';
 
 const COMPACT_AT = 48;
 const HIDE_DELTA = 10;

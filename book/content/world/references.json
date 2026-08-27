@@ -1,0 +1,183 @@
+{
+  "title": "References of the land",
+  "preface": "A tale refers. These are the rooms, creatures, objects, and rumours it points at without stopping for.",
+  "inWhich": {
+    "1": "a dog finds an egg the maps will not admit",
+    "2": "the grove answers a beat late, and will not swear to it",
+    "3": "two roads claim the same step",
+    "4": "keys are filed smaller, and none of them fit",
+    "5": "two slips try to be one harvest",
+    "6": "glass shows a light it does not own",
+    "7": "an oath is paid in fruit",
+    "8": "water keeps a face without stealing it",
+    "9": "the ninth honk is missing, and warms",
+    "10": "a hall tells the truth with its weight",
+    "11": "a garden blooms before its seed arrives",
+    "12": "rivers meet and remember their names",
+    "13": "the last door is shaped like a shell, and stays open"
+  },
+  "entries": [
+    {
+      "id": "egg",
+      "kind": "item",
+      "title": "The unnamed egg",
+      "note": "Warm where it ought to have been cold. No nest. No mother. The maps will not write it down. Carry it if you must; naming it is a kind of debt.",
+      "href": "/book/chapter/01/",
+      "terms": ["egg", "shell", "clutch", "hatch", "crack", "dregg", "dregs"],
+      "chambers": [1, 2, 9, 11, 13]
+    },
+    {
+      "id": "boof",
+      "kind": "creature",
+      "title": "Boof",
+      "note": "A dog. She works for fruit. She trusts a scent that ends in something real, and is suspicious of applause.",
+      "href": "/characters/boof.html",
+      "terms": ["Boof", "dog", "paws", "nose", "furrow"],
+      "chambers": [1, 2, 7]
+    },
+    {
+      "id": "boonberry",
+      "kind": "item",
+      "title": "Boonberries",
+      "note": "Ordinary magic: fruit, lantern-fuel, seed, and supper. Now and then one of them notices the story it is sitting in, which is more than most fruit will do.",
+      "href": "/world/boonberry-commons.html",
+      "terms": ["boonberry", "boonberries", "berry", "berries", "constellation"],
+      "chambers": [1, 2, 6]
+    },
+    {
+      "id": "commons-scale",
+      "kind": "place",
+      "title": "The Commons Scale",
+      "note": "Where the harvest is counted in public. A scale that belongs to the commons, not to a landlord. Intact seals have been known to lie.",
+      "href": "/world/civic-magic.html#commons-scale",
+      "terms": ["scale", "measure", "harvest", "seal"],
+      "chambers": [1, 5, 10]
+    },
+    {
+      "id": "maps",
+      "kind": "item",
+      "title": "The maps that look away",
+      "note": "Boon.land's records hold only what the world has agreed exists. Ink that beads and will not take is not a metaphor. It is a refusal.",
+      "href": "/world/civic-magic.html#archive",
+      "terms": ["map", "maps", "ink", "archive", "record", "census", "route book"],
+      "chambers": [1, 3, 13]
+    },
+    {
+      "id": "grove",
+      "kind": "place",
+      "title": "The Grove of Echoes",
+      "note": "A thicket that replays testimony. Workers will not name it after dark. An echo is a summons, not evidence, which has disappointed several clerks.",
+      "href": "/world/civic-magic.html#grove",
+      "terms": ["grove", "echo", "echoes", "thicket", "pollen"],
+      "chambers": [2]
+    },
+    {
+      "id": "council",
+      "kind": "place",
+      "title": "Crosswind Council",
+      "note": "Boon and bane sit under one weather. Keys may be filed smaller. They may not be grown while the room is asleep.",
+      "href": "/world/civic-magic.html#council",
+      "terms": ["council", "key", "keys", "boon", "bane", "weather"],
+      "chambers": [4]
+    },
+    {
+      "id": "receipt",
+      "kind": "item",
+      "title": "A slip",
+      "note": "The paper a turn leaves behind. Two slips for one harvest cannot both post. A false slip is refused, which is how you know the walk means it.",
+      "href": "/world/civic-magic.html#small-constitution",
+      "terms": ["receipt", "receipts", "slip", "slips", "ledger"],
+      "chambers": [5, 8, 13]
+    },
+    {
+      "id": "glass",
+      "kind": "item",
+      "title": "Lantern glass",
+      "note": "Bonk City's lanterns show light. They are not the light. Confusing the pane with the flame has started several small fires, all of them rhetorical.",
+      "href": "/book/chapter/06/",
+      "terms": ["glass", "lantern", "lanterns", "pane"],
+      "chambers": [6]
+    },
+    {
+      "id": "oath-stone",
+      "kind": "place",
+      "title": "The market stone",
+      "note": "An oath is public. The fruit is private. The egg, if present, is the witness, and does not sign.",
+      "href": "/book/chapter/07/",
+      "terms": ["oath", "blueberry", "blueberries", "shadow", "bond"],
+      "chambers": [7]
+    },
+    {
+      "id": "watering-eye",
+      "kind": "place",
+      "title": "The Watering Eye",
+      "note": "A well that folds a face without stealing it. Water keeps what you put in. It will not call it yours.",
+      "href": "/book/chapter/08/",
+      "terms": ["well", "water", "watering", "face", "debt"],
+      "chambers": [8]
+    },
+    {
+      "id": "ninth-honk",
+      "kind": "rumour",
+      "title": "The ninth honk",
+      "note": "Eight were sounded. The ninth was not. Its shard, if you believe the ridge, is warm and egg-shaped. No single keeper can hold the whole call.",
+      "href": "/book/chapter/09/",
+      "terms": ["honk", "honks", "shard", "shards", "relic"],
+      "chambers": [9]
+    },
+    {
+      "id": "bone-hall",
+      "kind": "place",
+      "title": "Bone.land",
+      "note": "The chassis. Joints exposed on purpose. A hall that would rather bonk you than flatter you. Plaster stories do not last here.",
+      "href": "/book/chapter/10/",
+      "terms": ["Bone.land", "beam", "timber", "bonk", "frame", "joint"],
+      "chambers": [10]
+    },
+    {
+      "id": "fool",
+      "kind": "creature",
+      "title": "The Boonberry Fool",
+      "note": "A spirit of wonder who keeps the town from growing too tidy. Often upside down. Rarely helpful in the way one hopes.",
+      "href": "/world/civic-magic.html#fool",
+      "terms": ["Fool", "fool", "jest"],
+      "chambers": [2, 4, 10]
+    },
+    {
+      "id": "cell-law",
+      "kind": "law",
+      "title": "A cell keeps its own law",
+      "note": "What remains the same under every honest test. The egg is one. The maps are not its jurisdiction.",
+      "href": "/world/civic-magic.html#small-constitution",
+      "terms": ["cell", "law", "warmth"],
+      "chambers": [1, 4, 10, 13]
+    },
+    {
+      "id": "key-law",
+      "kind": "law",
+      "title": "A key files smaller",
+      "note": "Permission may be narrowed. It may not be secretly widened. Brass that grows teeth overnight is a crime and a joke.",
+      "href": "/world/civic-magic.html#small-constitution",
+      "terms": ["key", "keys", "permission", "filed"],
+      "chambers": [4, 7]
+    },
+    {
+      "id": "turn-law",
+      "kind": "law",
+      "title": "A turn is admitted, or not",
+      "note": "Two routes that want the same next step must post as one. The sand is particular about this.",
+      "href": "/world/civic-magic.html#small-constitution",
+      "terms": ["turn", "admitted", "step", "seam"],
+      "chambers": [3, 12]
+    },
+    {
+      "id": "scriptorium",
+      "kind": "place",
+      "title": "The Scriptorium",
+      "note": "Where chambers are seeded, revised, and set on a calendar of stones. Patron seals buy presence, not rewrite rights.",
+      "href": "/scriptorium/",
+      "terms": ["scriptorium", "chamberwright", "seal-keeper"],
+      "chambers": []
+    }
+  ]
+}

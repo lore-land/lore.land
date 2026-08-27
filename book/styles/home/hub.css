@@ -3103,3 +3103,245 @@ body[data-surface='monument'] .hub-footer-note {
     pointer-events: auto;
   }
 }
+
+/* ─── Responsive refinement ────────────────────────────────────
+ * The home page has a deliberately rich surface, so its layout needs a
+ * quieter baseline: content should lead at every width and controls should
+ * not become the hero on smaller screens.
+ */
+
+body[data-surface='monument'] .hub-shell {
+  width: min(100%, 72rem);
+}
+
+body[data-surface='monument'] .hub-main {
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+body[data-surface='monument'] .hub-hero {
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+body[data-surface='monument'] .hub-hero h1 {
+  font-size: clamp(2.15rem, 3.25vw, 2.85rem);
+  line-height: 1.08;
+  max-width: 18ch;
+}
+
+body[data-surface='monument'] .hub-hero-copy {
+  min-width: 0;
+}
+
+body[data-surface='monument'] .hub-hero-media img {
+  aspect-ratio: 4 / 3;
+}
+
+body[data-surface='monument'] .hub-cta {
+  min-height: 2.75rem;
+  justify-content: center;
+}
+
+@media (min-width: 56rem) {
+  body[data-surface='monument'] .hub-hero {
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+  }
+
+  body[data-surface='monument'] .hub-hero-media {
+    align-self: start;
+  }
+}
+
+@media (min-width: 40rem) {
+  .route-rail {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .route-rail-label {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 52rem) {
+  body[data-surface='monument'] .hub-shell {
+    --hub-gutter: clamp(1rem, 5vw, 1.35rem);
+  }
+
+  body[data-surface='monument'] .hub-topbar {
+    gap: 0.5rem;
+    padding-top: 0.65rem;
+  }
+
+  body[data-surface='monument'] .hub-topbar::after {
+    margin-top: 0.35rem;
+  }
+
+  /* Keep every appearance control available without letting three stacked
+     * labels push the first story beat off-screen. */
+  body[data-surface='monument'] .monument-climate {
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block: 0.15rem 0.3rem;
+    margin: 0;
+    scrollbar-width: none;
+  }
+
+  body[data-surface='monument'] .monument-climate::-webkit-scrollbar {
+    display: none;
+  }
+
+  body[data-surface='monument'] .climate-field {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  body[data-surface='monument'] .climate-legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  body[data-surface='monument'] .climate-option {
+    min-height: 2rem;
+    padding-inline: 0.46rem;
+    font-size: 0.66rem;
+  }
+
+  body[data-surface='monument'] .hub-main {
+    gap: 2.75rem;
+    padding-top: 1.6rem;
+  }
+
+  body[data-surface='monument'] .hub-hero h1 {
+    font-size: clamp(1.85rem, 7.5vw, 2.15rem);
+    max-width: 16ch;
+    line-height: 1.1;
+  }
+
+  body[data-surface='monument'] .hub-lede {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  body[data-surface='monument'] .hub-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  body[data-surface='monument'] .hub-actions .hub-cta {
+    width: 100%;
+  }
+
+  body[data-surface='monument'] .hub-cta-quiet {
+    align-items: center;
+  }
+
+  body[data-surface='monument'] .chip-row {
+    gap: 0.45rem;
+  }
+
+  body[data-surface='monument'] .chip {
+    min-height: 2rem;
+    padding-inline: 0.7rem;
+  }
+
+  body[data-surface='monument'] .topic-card,
+  body[data-surface='monument'] .hub-pillar-grid li {
+    padding: 1rem;
+    min-height: 0;
+  }
+
+  body[data-surface='monument'] .hub-chapter-list a {
+    grid-template-columns: 1.9rem 4.25rem minmax(0, 1fr);
+    column-gap: 0.6rem;
+    padding-block: 0.8rem;
+  }
+
+  body[data-surface='monument'] .hub-ch-log {
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+}
+
+@media (max-width: 23rem) {
+  body[data-surface='monument'] .hub-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  body[data-surface='monument'] .hub-menu-toggle {
+    padding-inline: 0.55rem;
+  }
+}
+
+/* The opening plate is a small, legible demonstration of the site's
+ * attention model. Light modes share the same coordinates as the page, so
+ * the artwork answers the reader instead of merely decorating the copy. */
+body[data-surface='monument'] .hub-hero-media {
+  overflow: clip;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--hub-paper) 78%, var(--hub-accent));
+  box-shadow: 0 1rem 2.25rem color-mix(in srgb, var(--hub-ink) 13%, transparent);
+  transition: translate 300ms ease-out, box-shadow 300ms ease;
+}
+
+body[data-surface='monument'] .hub-hero-media::before {
+  inset: 0 0 1.8rem;
+  border-radius: 0.85rem 0.85rem 0 0;
+  background:
+    radial-gradient(
+      circle 42% at calc(var(--light-x, 50) * 1%) calc(var(--light-y, 22) * 1%),
+      color-mix(in srgb, #fff2c7 34%, transparent),
+      transparent 72%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      color-mix(in srgb, var(--hub-gold) 13%, transparent) 50%,
+      transparent 70%
+    );
+  background-size: 100% 100%, 220% 100%;
+  background-position: center, calc((var(--light-x, 50) - 50) * 1%) center;
+  opacity: 0.78;
+  transition: background-position 360ms ease-out, opacity 240ms ease;
+}
+
+body[data-surface='monument'] .hub-hero-media img {
+  object-position:
+    calc(50% + (var(--light-x, 50) - 50) * 0.16% + var(--scroll-glow, 0) * 4%)
+    calc(50% + (var(--light-y, 20) - 20) * 0.16% + var(--scroll-glow, 0) * 5%);
+  transition: object-position 700ms cubic-bezier(0.22, 0.8, 0.24, 1), filter 320ms ease, transform 320ms ease;
+}
+
+body[data-surface='monument'][data-lighting='raking'] .hub-hero-media {
+  box-shadow:
+    calc((50 - var(--light-x, 78)) * 0.11px) calc((var(--light-y, 8) + 4) * 0.18px) 2.2rem
+      color-mix(in srgb, var(--hub-hearth) 22%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--hub-gold) 20%, transparent);
+}
+
+body[data-surface='monument'][data-lighting='live'] .hub-hero-media {
+  translate:
+    calc((var(--light-x, 50) - 50) * -0.08px)
+    calc((var(--light-y, 24) - 30) * -0.06px);
+  box-shadow:
+    calc((50 - var(--light-x, 50)) * 0.12px) calc((var(--light-y, 24) - 24) * 0.12px) 2.4rem
+      color-mix(in srgb, var(--hub-accent) 24%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--hub-gold) 24%, transparent);
+}
+
+body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] .hub-hero-media,
+  body[data-surface='monument'] .hub-hero-media::before,
+  body[data-surface='monument'] .hub-hero-media img {
+    transition: none;
+  }
+}

@@ -1,0 +1,101 @@
+/* References — the tale pointing at other rooms of itself. */
+
+.chapter-in-which {
+  margin: 0.15rem 0 0.85rem;
+  max-width: var(--chapter-prose-max, 65ch);
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--color-text-alt, #3a455c);
+}
+
+.reading-ref {
+  order: 2;
+  margin: 0.2rem 0.15rem 0.35rem;
+  padding: 0.55rem 0.35rem 0.2rem;
+  border-top: 1px dashed color-mix(in srgb, var(--color-gold, #c4922e) 28%, transparent);
+}
+
+.reading-ref h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-alt, #3a455c);
+}
+
+.reading-ref-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.reading-ref-item {
+  padding: 0.45rem 0.5rem;
+  border-left: 2px solid color-mix(in srgb, var(--color-gold, #c4922e) 55%, transparent);
+  background: color-mix(in srgb, var(--theme-paper, #fffef9) 88%, var(--color-gold, #c4922e) 6%);
+}
+
+.reading-ref-kind {
+  margin: 0 0 0.12rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--color-gold-ink, #6b5010);
+}
+
+.reading-ref-title {
+  display: inline;
+  font-size: 0.9rem;
+  color: var(--color-text-main, #161d2b);
+}
+
+.reading-ref-note,
+.reading-ref-empty {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--color-text-alt, #3a455c);
+}
+
+.reading-ref-whisper {
+  display: none;
+}
+
+@media (min-width: 72rem) {
+  main.chapter {
+    position: relative;
+  }
+
+  .reading-ref-whisper {
+    display: block;
+    position: absolute;
+    top: 0.4rem;
+    left: calc(100% + 1.1rem);
+    width: min(14rem, 18vw);
+    padding: 0.45rem 0.55rem 0.55rem;
+    border-left: 2px solid color-mix(in srgb, var(--color-gold, #c4922e) 50%, transparent);
+    color: var(--color-text-alt, #3a455c);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    pointer-events: none;
+  }
+
+  .reading-ref-whisper-title {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-family-heading, system-ui, sans-serif);
+    font-size: 0.82rem;
+    color: var(--color-text-main, #161d2b);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-ref-whisper {
+    transition: none;
+  }
+}

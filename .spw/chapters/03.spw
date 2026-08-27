@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The grove fell away behind her into a vast, wind-scoured plain of dry salt and baked earth. Boof stood at the edge of the Fool's Paradox —not a riddle in a book this time, but a physical fork in the crust that refused..."
+    excerpt: "The grove fell away behind her into a vast, wind-scoured plain of dry salt and baked earth. Boof stood at the edge of the Fool's Paradox . The crust forked and would not be two places at once. Under the rippled dunes,..."
     route: ^[chapter/03/s01]{open}
   >
   s02: <

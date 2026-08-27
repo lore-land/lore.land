@@ -1,0 +1,272 @@
+/* Production flow — harvest → measure → seal → emit.
+   Readable as a story pipeline; inspectable as a real receipt chain. */
+
+.production-flow {
+  --flow-gold: var(--color-gold, #c4922e);
+  --flow-ink: var(--hub-ink, var(--color-text-main, #161d2b));
+  --flow-muted: var(--hub-muted, var(--color-text-alt, #3a455c));
+  --flow-line: var(--hub-line, var(--border-color-main, rgba(29, 49, 78, 0.26)));
+  --flow-paper: var(--hub-panel, var(--color-bg-content, #fffef9));
+  margin: 1.4rem 0 0;
+}
+
+.production-flow-kicker,
+.production-cell-kicker {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--flow-muted);
+}
+
+.production-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+@media (min-width: 48rem) {
+  .production-flow:not(.production-flow--rail) .production-stages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+}
+
+.production-stage-hit {
+  appearance: none;
+  display: grid;
+  gap: 0.18rem;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--flow-line);
+  border-radius: 0.7rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 42%, transparent), transparent 55%),
+    var(--flow-paper);
+  color: inherit;
+  cursor: pointer;
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--flow-gold) 0%, transparent);
+  transition: border-color 160ms ease, box-shadow 180ms ease, transform 160ms ease;
+}
+
+.production-stage-hit:hover,
+.production-stage-hit:focus-visible {
+  border-color: color-mix(in srgb, var(--flow-gold) 42%, var(--flow-line));
+  outline: 2px solid var(--color-focus-outline, #8a3f12);
+  outline-offset: 2px;
+}
+
+.production-stage-hit[aria-pressed='true'] {
+  box-shadow:
+    inset 3px 0 0 var(--flow-gold),
+    0 8px 18px color-mix(in srgb, var(--flow-gold) 12%, transparent);
+  border-color: color-mix(in srgb, var(--flow-gold) 48%, var(--flow-line));
+}
+
+.production-stage-index {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--flow-gold);
+}
+
+.production-stage-verb {
+  font-family: 'LoreLand', var(--font-family-heading, system-ui, sans-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  color: var(--flow-ink);
+}
+
+.production-stage-analog {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--flow-muted);
+}
+
+.production-stage-story {
+  font-size: 0.86rem;
+  color: var(--flow-muted);
+  line-height: 1.45;
+}
+
+.production-readout {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: var(--flow-ink);
+  border-left: 2px solid color-mix(in srgb, var(--flow-gold) 70%, transparent);
+  padding-left: 0.7rem;
+}
+
+.production-keyfile {
+  margin-top: 1rem;
+  padding: 0.75rem 0.8rem;
+  border: 1px dashed color-mix(in srgb, var(--flow-gold) 32%, var(--flow-line));
+  border-radius: 0.7rem;
+}
+
+.production-keyfile-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.78rem;
+  margin-bottom: 0.4rem;
+}
+
+.production-keyfile-meta {
+  color: var(--flow-muted);
+  letter-spacing: 0.04em;
+}
+
+.production-keyfile input[type='range'] {
+  width: 100%;
+  accent-color: var(--flow-gold);
+}
+
+.production-keyfile-bar {
+  height: 0.42rem;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--flow-line) 70%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.production-keyfile-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--key-width, 12) / 12 * 100%);
+  background: linear-gradient(90deg, var(--flow-gold), color-mix(in srgb, var(--color-hearth, #b0602a) 70%, var(--flow-gold)));
+  border-radius: inherit;
+}
+
+.production-refuse {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-hearth-ink, #8a4014);
+}
+
+.production-cell {
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--flow-line);
+  background: color-mix(in srgb, var(--flow-gold) 6%, var(--flow-paper));
+}
+
+.production-cell dl {
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.production-cell dl div {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  gap: 0.35rem;
+  font-size: 0.84rem;
+}
+
+.production-cell dt {
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--flow-muted);
+}
+
+.production-cell dd {
+  margin: 0;
+}
+
+.production-receipts {
+  margin-top: 0.9rem;
+}
+
+.production-receipts h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+}
+
+.production-receipt-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--flow-muted);
+  font-size: 0.84rem;
+}
+
+.production-receipt-root {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-family-heading, system-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--flow-ink);
+}
+
+.production-false-slip {
+  appearance: none;
+  margin-top: 0.55rem;
+  padding: 0.38rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--flow-gold) 40%, var(--flow-line));
+  background: transparent;
+  color: var(--flow-ink);
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.production-false-slip:hover,
+.production-false-slip:focus-visible {
+  border-color: var(--flow-gold);
+  outline: 2px solid var(--color-focus-outline, #8a3f12);
+  outline-offset: 2px;
+}
+
+.production-receipts[data-integrity='refused'] .production-receipt-root,
+.production-receipts[data-integrity='tampered'] .production-receipt-root {
+  color: var(--color-hearth-ink, #8a4014);
+}
+
+.production-flow--rail {
+  margin: 0.35rem 0.15rem 0.2rem;
+  padding: 0.55rem 0.35rem 0.15rem;
+  border-top: 1px dashed color-mix(in srgb, var(--flow-gold) 30%, transparent);
+}
+
+.production-flow--rail .production-stages {
+  grid-template-columns: 1fr 1fr;
+}
+
+.production-flow--rail .production-stage-story {
+  display: none;
+}
+
+.production-flow--rail .production-stage-hit {
+  padding: 0.45rem 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .production-stage-hit,
+  .production-keyfile-bar::after {
+    transition: none;
+  }
+}
+
+@media print {
+  .production-flow--rail,
+  .production-false-slip,
+  .production-keyfile {
+    display: none;
+  }
+}

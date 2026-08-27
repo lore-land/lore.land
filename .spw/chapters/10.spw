@@ -54,8 +54,8 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Four Load-Bearing Truths"
-    excerpt: "Boof sat quietly upon the chalky floorboards while the structural hum of the frame settled into her bones. What a cell holds, if you interrogate the beams, is four elemental forces translated into plain town vocabular..."
+    title: "What the Hall Holds"
+    excerpt: "Boof sat on the chalky floor while the hall hummed through her paws. Four notes, if you wanted to count them: a warmth that kept itself, a key that only filed smaller, a step the timber would admit, a slip left in the..."
     route: ^[chapter/10/s05]{open}
   }
   s06: <
@@ -92,7 +92,7 @@
   notes: [
     "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
     "The small constitution is load-bearing here: cell, key, turn, receipt."
-    "The bonk at the threshold is not slapstick — it is contact with irreversible structure."
+    "The bonk is the hall telling the truth with its whole weight."
   ]
 }
 

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_08_26.B';
+const CACHE_VERSION = 'lore-pwa-v2026_08_27.A';
 const OFFLINE_URL = '/book/pwa/offline.html';
 
 /* Precache is exactly one file: the offline shell, which is self-contained

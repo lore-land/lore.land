@@ -12,13 +12,13 @@ import {
   initSelectPreference,
   initProgressiveReveal,
   registerStoryServiceWorker
-} from './modules/experience-core.mjs?v=2026_08_26.B';
+} from './modules/experience-core.mjs?v=2026_08_27.A';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_07_23.B';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_26.B';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
@@ -27,23 +27,25 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_08_26.B';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_08_26.B';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_08_27.A';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_08_27.A';
 import {
   initChapterChrome,
   initScrollChrome
-} from './modules/reading-chrome.mjs?v=2026_08_26.B';
+} from './modules/reading-chrome.mjs?v=2026_08_27.A';
 import {
   applySectionClimateAttributes,
   initCopyClimate
-} from './modules/copy-climate.mjs?v=2026_08_26.B';
-import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_08_26.B';
+} from './modules/copy-climate.mjs?v=2026_08_27.A';
+import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_08_27.A';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
   initSegmentKeyboard,
   initPointerCraft
-} from './modules/interaction-surface.mjs?v=2026_08_26.B';
+} from './modules/interaction-surface.mjs?v=2026_08_27.A';
+import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
+import { initReferences } from './modules/references.mjs?v=2026_08_27.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -161,6 +163,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     const destroySegmentKeys = initSegmentKeyboard(document);
     const destroyPointerCraft = initPointerCraft(document);
+    const destroyProduction = initProductionFlow({
+      surface: 'chapter',
+      chapterData,
+      announce
+    });
 
     // Secondary enhancement: defer until idle so first paint/input stay free.
     let languageExplore = null;
@@ -168,6 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let destroyShader = null;
     let destroySpatial = null;
     let destroyGenre = null;
+    let destroyReferences = null;
     let cancelIdle = () => {};
 
     cancelIdle = whenIdle(async () => {
@@ -187,6 +195,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       destroyShader = initSemanticShader({ root });
       destroySpatial = initSpatialPerspective({ root });
       destroyGenre = initGenreCombinatorics({ root, announce });
+      destroyReferences = await initReferences({ chapterData, announce });
       requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
     }, { timeout: 900 });
 
@@ -208,6 +217,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyPassAlong) destroyPassAlong();
       if (destroySegmentKeys) destroySegmentKeys();
       if (destroyPointerCraft) destroyPointerCraft();
+      if (destroyProduction) destroyProduction();
+      if (destroyReferences) destroyReferences();
       if (destroySwUpdate) destroySwUpdate();
       if (destroyAttention) destroyAttention();
       if (destroyShader) destroyShader();
