@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You’ve found my city of dents, Boof!\" the Fool’s voice called down from a lamplighter’s ladder. He gave his brass bell a crisp tap against a dented bronze post, and the crease blossomed into warm amber brilliance. \"E..."
+    excerpt: "From the lamplighter’s top rung he tapped a brass bell into a crease, and the post remembered heat."
     route: ^[chapter/06/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-labyrinth/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

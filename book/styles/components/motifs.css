@@ -81,6 +81,11 @@
     box-shadow: inset 3px 0 0 color-mix(in srgb, var(--trope-color) 55%, transparent 45%);
   }
 
+  [data-trope="trickster"] {
+    --trope-color: color-mix(in srgb, var(--color-hearth, #b0602a) 62%, var(--color-gold, #c4922e) 38%);
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--trope-color) 72%, transparent 28%);
+  }
+
   [data-foreshadow]:not([data-motif]) {
     --component-color: var(--foreshadow-color);
     --component-bg: var(--foreshadow-bg);

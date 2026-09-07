@@ -77,29 +77,145 @@ export const LIFECYCLE_RESONANCE_BRIDGE = Object.freeze({
   honk: Object.freeze(['implicit-couple'])
 });
 
-export const CUSTOM_ELEMENT_TYPES = Object.freeze([
-  'custom-boof',
-  'custom-boonberry',
-  'custom-fool',
-  'custom-bonk',
-  'custom-puzzle',
-  'custom-echo',
-  'custom-paradox',
-  'custom-mirror',
-  'custom-song',
-  'custom-labyrinth',
-  'custom-shadow',
-  'custom-game',
-  'custom-awakening',
-  'custom-path',
-  'custom-reflection'
-]);
+/**
+ * Story voices: custom elements that mark who is speaking or which
+ * instrument the chamber is using. Block = a readable chamber;
+ * phrase = a charged word inside a sentence. Kickers match the
+ * registers in .spw/tools/export-chapters.mjs.
+ */
+export const STORY_VOICES = Object.freeze({
+  'custom-boof': Object.freeze({
+    id: 'boof', kicker: 'Boof', grammar: 'narrator', voice: 'boof', style: 'boon'
+  }),
+  'custom-boonberry': Object.freeze({
+    id: 'boonberry', kicker: 'Boonberry', grammar: 'modifier', voice: 'environment', style: 'boon'
+  }),
+  'custom-fool': Object.freeze({
+    id: 'fool', kicker: 'The Fool', grammar: 'interlocutor', voice: 'fool', style: 'paradox'
+  }),
+  'custom-bonk': Object.freeze({
+    id: 'bonk', kicker: 'Bonk', grammar: 'bonk', voice: 'environment', style: 'puzzle'
+  }),
+  'custom-puzzle': Object.freeze({
+    id: 'puzzle', kicker: 'Shard', grammar: 'puzzle', voice: 'environment', style: 'puzzle'
+  }),
+  'custom-echo': Object.freeze({
+    id: 'echo', kicker: 'Echo', grammar: 'echo', voice: 'environment', style: 'boon'
+  }),
+  'custom-paradox': Object.freeze({
+    id: 'paradox', kicker: 'Paradox', grammar: 'paradox', voice: 'fool', style: 'paradox'
+  }),
+  'custom-mirror': Object.freeze({
+    id: 'mirror', kicker: 'Mirror', grammar: 'mirror', voice: 'fool', style: 'paradox'
+  }),
+  'custom-song': Object.freeze({
+    id: 'song', kicker: 'Song', grammar: 'melody', voice: 'environment', style: 'boon'
+  }),
+  'custom-labyrinth': Object.freeze({
+    id: 'labyrinth', kicker: 'Labyrinth', grammar: 'labyrinth', voice: 'environment', style: 'game'
+  }),
+  'custom-shadow': Object.freeze({
+    id: 'shadow', kicker: 'Shadow', grammar: 'shadow', voice: 'fool', style: 'paradox'
+  }),
+  'custom-game': Object.freeze({
+    id: 'game', kicker: 'Fold', grammar: 'game', voice: 'environment', style: 'game'
+  }),
+  'custom-awakening': Object.freeze({
+    id: 'awakening', kicker: 'Bloom', grammar: 'awakening', voice: 'boof', style: 'boon'
+  }),
+  'custom-path': Object.freeze({
+    id: 'path', kicker: 'Path', grammar: 'path', voice: 'boof', style: 'boon'
+  }),
+  'custom-reflection': Object.freeze({
+    id: 'reflection', kicker: 'Record', grammar: 'reflection', voice: 'boof', style: 'default'
+  })
+});
+
+export const CUSTOM_ELEMENT_TYPES = Object.freeze(Object.keys(STORY_VOICES));
 
 export const CUSTOM_ELEMENTS_SELECTOR = CUSTOM_ELEMENT_TYPES.join(', ');
 
 export const CHAPTER_FLOW_SELECTOR = ['section', ...CUSTOM_ELEMENT_TYPES]
   .map((selector) => `.chapter > ${selector}`)
   .join(', ');
+
+export const STORY_VOICE_READ_BEHAVIOR = 'load-reactive,selection-reactive';
+
+/**
+ * Trickster masks the Fool may wear. Known faces get a stable label;
+ * any other slug still prints (title-cased) so a later chamber can
+ * extend the trope without a code change.
+ */
+export const TRICKSTER_MASKS = Object.freeze({
+  echo: 'Echo',
+  riddle: 'Riddle',
+  councilor: 'Councilor',
+  song: 'Song',
+  labyrinth: 'Labyrinth',
+  shadow: 'Shadow',
+  game: 'Game',
+  shard: 'Shard',
+  bonk: 'Bonk',
+  bloom: 'Bloom',
+  beginning: 'Beginning',
+  path: 'Path',
+  keep: 'Keep'
+});
+
+export function tricksterMaskLabel(mask) {
+  const key = String(mask || '').trim().toLowerCase();
+  if (!key) {
+    return '';
+  }
+  if (TRICKSTER_MASKS[key]) {
+    return TRICKSTER_MASKS[key];
+  }
+  return key
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+export function voiceKickerWithMask(baseKicker, mask) {
+  const maskLabel = tricksterMaskLabel(mask);
+  const base = String(baseKicker || '').trim() || 'The Fool';
+  return maskLabel ? `${base} · ${maskLabel}` : base;
+}
+
+export function storyVoiceFor(type) {
+  return STORY_VOICES[String(type || '').toLowerCase()] || null;
+}
+
+export function applyStoryVoiceAttributes(element, type, shape) {
+  if (!(element instanceof HTMLElement)) {
+    return element;
+  }
+
+  const normalizedType = String(type || '').toLowerCase();
+  const meta = storyVoiceFor(normalizedType);
+  const resolvedShape = shape === 'phrase' ? 'phrase' : 'block';
+
+  element.dataset.spwComponent = normalizedType;
+  element.dataset.voiceShape = resolvedShape;
+  element.setAttribute('data-spw-behavior', STORY_VOICE_READ_BEHAVIOR);
+
+  if (meta) {
+    element.dataset.voiceKicker = meta.kicker;
+    element.dataset.spwGrammar = meta.grammar;
+    element.dataset.spwVoice = meta.voice;
+  }
+
+  if (resolvedShape === 'phrase') {
+    element.dataset.spwActionable = 'true';
+    if (meta?.kicker && !element.getAttribute('title')) {
+      element.setAttribute('title', meta.kicker);
+    }
+  } else {
+    delete element.dataset.spwActionable;
+    element.removeAttribute('tabindex');
+  }
+
+  return element;
+}
 
 const LOAD_STAGE_TO_LIFECYCLE_STATE = Object.freeze({
   boon: 'pending',

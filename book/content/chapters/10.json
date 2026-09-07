@@ -166,6 +166,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "bonk",
       "scene": {
         "vantage": "looking up at the tie-beam where the Fool hangs upside down by his knees",
         "light": "sunlight framing his dangling patchwork hood; sawdust sprinkling from his hands",
@@ -179,8 +181,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Plaster sneezes. Oak does not."
+        },
+        {
           "type": "paragraph",
-          "text": "\"Ah, Boof!\" the Fool called down, hanging upside down by his heels from the collar-beam like a great colorful bat. He rapped his knuckles against the oak with a sharp, hollow knock. \"You have finally reached the chassis! You see, most people build their stories out of plaster and paint, and the moment an auditor sneezes, the whole facade collapses. But here in Bone.land, you get bonked by a law that will not yield an inch to flattery.\""
+          "text": "He hung from the collar-beam like a bright bat and knocked. The oak answered as law."
         }
       ]
     },

@@ -12,20 +12,9 @@
 
     @media (prefers-reduced-motion: no-preference) {
 
-        .chapter section,
-        .chapter custom-boof,
-        .chapter custom-fool,
-        .chapter custom-boonberry,
-        .chapter custom-echo,
-        .chapter custom-song,
-        .chapter custom-paradox,
-        .chapter custom-bonk,
-        .chapter custom-game,
-        .chapter custom-puzzle,
-        .chapter custom-awakening,
-        .chapter custom-path,
-        .chapter custom-reflection,
-        .chapter figure {
+        .chapter > section,
+        .chapter > figure,
+        .chapter > [data-voice-shape="block"] {
             opacity: 0;
             translate: 0 1rem;
             transition:
@@ -46,47 +35,47 @@
 
         /* ─── Narrator: unhurried, breathing pace ────────────────── */
 
-        [data-spw-voice="boof"] {
+        [data-voice-shape="block"][data-spw-voice="boof"] {
             translate: 0 0.8rem;
         }
 
-        [data-spw-voice="boof"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-voice="boof"][data-spw-visible="true"] {
             transition-duration: 800ms;
             transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
         /* ─── Fool / interlocutor: slides in from the side ───────── */
 
-        [data-spw-voice="fool"] {
+        [data-voice-shape="block"][data-spw-voice="fool"] {
             translate: -1rem 0.4rem;
             opacity: 0;
         }
 
-        [data-spw-voice="fool"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-voice="fool"][data-spw-visible="true"] {
             transition-duration: 600ms;
             transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
         /* ─── Environment: slow dissolve from beneath ────────────── */
 
-        [data-spw-voice="environment"] {
+        [data-voice-shape="block"][data-spw-voice="environment"] {
             translate: 0 0.6rem;
             filter: blur(1px);
         }
 
-        [data-spw-voice="environment"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-voice="environment"][data-spw-visible="true"] {
             transition-duration: 1000ms;
             transition-timing-function: ease;
         }
 
         /* ─── Bonk: percussive snap ───────────────────────────────── */
 
-        [data-spw-grammar="bonk"] {
+        [data-voice-shape="block"][data-spw-grammar="bonk"] {
             translate: 0 -0.5rem;
             scale: 1.01;
         }
 
-        [data-spw-grammar="bonk"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-grammar="bonk"][data-spw-visible="true"] {
             scale: 1;
             transition-duration: 250ms;
             transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -94,13 +83,13 @@
 
         /* ─── Awakening: gentle scale-up + brightness ────────────── */
 
-        [data-spw-grammar="awakening"] {
+        [data-voice-shape="block"][data-spw-grammar="awakening"] {
             scale: 0.97;
             translate: 0 0;
             filter: brightness(0.95);
         }
 
-        [data-spw-grammar="awakening"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-grammar="awakening"][data-spw-visible="true"] {
             scale: 1;
             filter: brightness(1);
             transition-duration: 900ms;
@@ -109,13 +98,13 @@
 
         /* ─── Reflection: mirror dissolve ────────────────────────── */
 
-        [data-spw-grammar="reflection"] {
+        [data-voice-shape="block"][data-spw-grammar="reflection"] {
             translate: 0 0;
             filter: blur(3px);
             opacity: 0;
         }
 
-        [data-spw-grammar="reflection"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-grammar="reflection"][data-spw-visible="true"] {
             filter: none;
             transition-duration: 1200ms;
             transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -123,23 +112,23 @@
 
         /* ─── Path: slides in from the left, forward motion ──────── */
 
-        [data-spw-grammar="path"] {
+        [data-voice-shape="block"][data-spw-grammar="path"] {
             translate: -1.5rem 0;
         }
 
-        [data-spw-grammar="path"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-grammar="path"][data-spw-visible="true"] {
             transition-duration: 700ms;
             transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
         /* ─── Paradox: slight rotation hint ──────────────────────── */
 
-        [data-spw-grammar="paradox"] {
+        [data-voice-shape="block"][data-spw-grammar="paradox"] {
             translate: 0 0.5rem;
             rotate: -0.5deg;
         }
 
-        [data-spw-grammar="paradox"][data-spw-visible="true"] {
+        [data-voice-shape="block"][data-spw-grammar="paradox"][data-spw-visible="true"] {
             rotate: 0deg;
             transition-duration: 800ms;
         }
@@ -192,20 +181,9 @@
 
     @media (prefers-reduced-motion: reduce) {
 
-        .chapter section,
-        .chapter custom-boof,
-        .chapter custom-fool,
-        .chapter custom-boonberry,
-        .chapter custom-echo,
-        .chapter custom-song,
-        .chapter custom-paradox,
-        .chapter custom-bonk,
-        .chapter custom-game,
-        .chapter custom-puzzle,
-        .chapter custom-awakening,
-        .chapter custom-path,
-        .chapter custom-reflection,
-        .chapter figure {
+        .chapter > section,
+        .chapter > figure,
+        .chapter > [data-voice-shape="block"] {
             opacity: 1;
             translate: 0 0;
             filter: none;

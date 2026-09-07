@@ -48,7 +48,7 @@
 ~direction{
   from_audit: "2026-08-26 alignment probes (supersedes 2026-07-22 — plates public, theme_parity closed)"
   order: [
-    "next serial beat: what the cell does once the shell-door is open (chamber 13 leaves it un-named on purpose)",
+    "chamber 13 now names the cell's first public turn (it keeps; it receipts the dawn) without naming what hatches — next serial beat is still the hatch, not the keep",
     "View Transitions chamber crossing (atelier signature phase 05) now that plates are public"
   ]
   keep: [

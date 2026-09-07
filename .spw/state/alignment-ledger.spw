@@ -134,6 +134,15 @@
     resolution: "adopted 2026-08-26 — chapter JSON carries data-motif=egg and data-foreshadow=hatch; motifs.css hairline-only"
     &source: "probe-2026-07-18#attribute_parity"
   }
+
+  ^entry[AL-012]{
+    #axis: linguistic
+    surface: "book/scripts/custom/* story voices + characters.css"
+    evidence: "custom-boof collapsed chamber prose behind a click; custom-puzzle injected a quiz into the nine-shard beat; custom-bonk replaced copy with 'Bonked!'; custom-mirror/labyrinth/shadow were unregistered (inline unknown elements); block chambers were tabindex=0 buttons"
+    !class: defect
+    resolution: "fixed 2026-09-07 — shared StoryVoiceElement, always-visible light-DOM prose, block vs phrase shape, all lexicon voices registered, reading-first behaviors (no collapse/quiz/replace)"
+    &source: "self-audit"
+  }
 }
 
 ^<complaint_route>{

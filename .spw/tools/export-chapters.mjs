@@ -9,12 +9,12 @@ function pad(num) {
   return String(num).padStart(2, '0');
 }
 
-/* One-line registers for the cast confluence. Boof and the Fool are fixed
-   characters (established across media — characterization is not flexible);
-   guest voices take their register from the chamber that summons them. */
+/* One-line registers for the cast confluence. Boof is a fixed character.
+   The Fool is a trickster of honest masks: the person is stable, the face
+   a chamber may add is not — guest voices and new masks plug in here. */
 const VOICE_REGISTERS = {
   boof: 'dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended',
-  fool: 'tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer',
+  fool: 'trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed',
   boonberry: 'lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law',
   echo: 'an old scent re-lit; a summons wearing a borrowed voice, never proof',
   paradox: 'twin truths braided into one rope, pulling opposite ways',

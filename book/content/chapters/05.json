@@ -164,6 +164,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "song",
       "scene": {
         "vantage": "looking up at the tall clerk's high-backed chair where the Fool sits cross-legged",
         "light": "afternoon dust motes swirling around the Fool's raised silver tuning fork",
@@ -177,8 +179,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "A quiet rift is still a rift."
+        },
+        {
           "type": "paragraph",
-          "text": "\"You hear the pitch, don’t you, Boof?\" the Fool murmured from the high clerk's chair, resting a silver tuning fork against the edge of the desk. \"This is not my tune. It is the ledger's own wood crying out under the tension. When you publish a lie cleanly enough, the paper doesn't tear right away—it hums until the rafters shake. A quiet rift is still a rift.\""
+          "text": "The tuning fork hummed against the split desk. The wood, not the Fool, was singing."
         }
       ]
     },

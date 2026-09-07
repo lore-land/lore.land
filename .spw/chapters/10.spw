@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Ah, Boof!\" the Fool called down, hanging upside down by his heels from the collar-beam like a great colorful bat. He rapped his knuckles against the oak with a sharp, hollow knock. \"You have finally reached the chass..."
+    excerpt: "He hung from the collar-beam like a bright bat and knocked. The oak answered as law."
     route: ^[chapter/10/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-bonk/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

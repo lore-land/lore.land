@@ -165,6 +165,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "riddle",
       "scene": {
         "vantage": "looking up the dune slope as the Fool walks backward down the ridge",
         "light": "halo of blinding amber sunset behind the Fool's silhouette; shadows pooling teal",
@@ -178,8 +180,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "A turn is travel the map has not agreed to yet."
+        },
+        {
           "type": "paragraph",
-          "text": "\"You see, Boof, you are always moving, but never arriving,\" the Fool called out, trotting backward down the slope with effortless balance. \"That is what a turn looks like before the world agrees to write it down. You can walk ten miles of progress and end up right where your paws started if the map refuses to admit the curve.\""
+          "text": "He trotted backward down the dune. Footprints filled with sand the moment his heels lifted."
         }
       ]
     },

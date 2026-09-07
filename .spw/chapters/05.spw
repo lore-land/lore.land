@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You hear the pitch, don’t you, Boof?\" the Fool murmured from the high clerk's chair, resting a silver tuning fork against the edge of the desk. \"This is not my tune. It is the ledger's own wood crying out under the t..."
+    excerpt: "The tuning fork hummed against the split desk. The wood, not the Fool, was singing."
     route: ^[chapter/05/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-song/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

@@ -1,6 +1,6 @@
 import { withCacheContext } from './cache-context.mjs?v=2026_02_28.I';
 import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_07_23.B';
-import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.I';
+import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_09_07.A';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -12,10 +12,10 @@ import {
   registerStoryServiceWorker
 } from './experience-core.mjs?v=2026_08_27.A';
 import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_07_23.B';
+import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_09_07.A';
 import { deriveChapterLinks } from './chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './spw-ethos.mjs?v=2026_08_27.A';
-import { registerCustomElements } from '../custom/register.mjs?v=2026_02_28.I';
+import { registerCustomElements } from '../custom/register.mjs?v=2026_09_07.B';
 
 function readChapterData() {
   const source = document.getElementById('chapter-data');
@@ -286,27 +286,17 @@ function setupPrimaryAction(data, announce) {
  * Sets up interactions with custom elements.
  */
 function setupCustomElementsInteractions() {
-  const customElements = document.querySelectorAll(CUSTOM_ELEMENTS_SELECTOR);
-  customElements.forEach((element) => {
-    element.dataset.spwComponent = element.tagName.toLowerCase();
-    element.dataset.spwActionable = 'true';
-    element.tabIndex = element.tabIndex >= 0 ? element.tabIndex : 0;
+  document.querySelectorAll(`${CUSTOM_ELEMENTS_SELECTOR}[data-voice-shape="phrase"]`).forEach((element) => {
+    if (!element.dataset.spwComponent) {
+      element.dataset.spwComponent = element.tagName.toLowerCase();
+    }
 
-    const togglePlayed = () => {
-      element.classList.toggle('active');
-      element.classList.toggle('played');
-    };
-
-    element.addEventListener('click', togglePlayed);
-    element.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        togglePlayed();
-      }
+    element.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const held = element.classList.toggle('is-voice-held');
+      element.setAttribute('aria-pressed', String(held));
     });
   });
-
-  // Similarly, add interactions for other custom elements as needed
 }
 
 /**

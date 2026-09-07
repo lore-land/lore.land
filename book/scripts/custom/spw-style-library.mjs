@@ -61,11 +61,16 @@ const TAG_TO_STYLE = Object.freeze({
   'custom-boonberry': 'boon',
   'custom-echo': 'boon',
   'custom-song': 'boon',
+  'custom-awakening': 'boon',
+  'custom-path': 'boon',
   'custom-fool': 'paradox',
   'custom-paradox': 'paradox',
   'custom-shadow': 'paradox',
+  'custom-mirror': 'paradox',
   'custom-game': 'game',
-  'custom-puzzle': 'puzzle'
+  'custom-labyrinth': 'game',
+  'custom-puzzle': 'puzzle',
+  'custom-bonk': 'puzzle'
 });
 
 function resolveStyleId(component, requestedStyle = '') {

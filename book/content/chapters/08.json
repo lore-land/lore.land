@@ -166,6 +166,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "game",
       "scene": {
         "vantage": "looking across the well at the Fool sitting on the windlass beam, swinging his feet over the open dark",
         "light": "moonlight glinting on the Fool's silver rings and buckles; water reflecting gold up into his face",
@@ -179,8 +181,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "The well keeps the quote and the source. False coin draws sand."
+        },
+        {
           "type": "paragraph",
-          "text": "\"The rules are child's play, Boof,\" the Fool whispered, leaning down from the windlass crossbeam with an arched brow. \"The well will hold whatever grief or tally you pour into it. But it will never allow you to sign your own name to someone else's song. It preserves the quote, and it preserves the source. Try to buy this water with false coins, and the bucket will come up filled with sand.\""
+          "text": "He sat the windlass beam with his feet over the dark, one hand on the crank."
         }
       ]
     },

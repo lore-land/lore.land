@@ -68,7 +68,7 @@
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    excerpt: "\"Are you lost?\" the Fool asked, leaning out from behind the hollow cedar where no door had been cut. He brushed pollen from his mismatched sleeves, no longer entirely playful. \"Or have you finally arrived where the pu..."
+    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, the trick no longer entirely a joke. Boof did not answer with a riddle, and she opened no book. She wrote the grove’s first usable not..."
     route: ^[chapter/02/s07]{open}
   >
 ]
@@ -87,7 +87,7 @@
     .enters: "custom-echo/04"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/07"
   >
 }

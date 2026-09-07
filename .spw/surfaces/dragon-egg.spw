@@ -105,6 +105,10 @@ $"worth"{
     chamber: ~".spw/chapters/13.spw#chapter_13"
     role: "the door the canon leaves open is shell-shaped."
   }
+  p13_keep: {
+    chamber: ~".spw/chapters/13.spw#chapter_13"
+    role: "once the shell-door is open, the cell's first public turn is to keep — it receipts the dawn by remaining itself."
+  }
 ]
 
 ~"adaptation"{

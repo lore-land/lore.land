@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The mountain ridge was a puzzle of slate and singing metal long before it was a skyline. Eight curved shards of an ancient shattered signal-horn lay in a wide crescent along the chimney-stack, each one a glowing relic..."
+    excerpt: "The mountain ridge kept a listening arc of slate and singing metal long before it was a skyline. Eight curved shards of an ancient shattered signal-horn lay in a wide crescent along the chimney-stack, each one a glowi..."
     route: ^[chapter/09/s01]{open}
   >
   s02: <
@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"It is never about assembling a trophy for your mantel, Boof,\" the Fool whispered, leaning down from the chimney rim with an appreciative grin. \"If you weld all nine shards back together into one big trumpet, you get ..."
+    excerpt: "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound."
     route: ^[chapter/09/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-puzzle/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

@@ -12,20 +12,9 @@
 import { onScrollFrame } from './scroll-coordinator.mjs?v=2026_08_27.A';
 
 const OBSERVE_SELECTORS = [
-    'section',
-    'custom-boof',
-    'custom-fool',
-    'custom-boonberry',
-    'custom-echo',
-    'custom-song',
-    'custom-paradox',
-    'custom-bonk',
-    'custom-game',
-    'custom-puzzle',
-    'custom-awakening',
-    'custom-path',
-    'custom-reflection',
-    'figure',
+    ':scope > section',
+    ':scope > figure',
+    ':scope > [data-voice-shape="block"]'
 ].join(', ');
 
 /**

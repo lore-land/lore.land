@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Look into the glass, Boof,\" the Fool’s voice carried over the howling crosswind, nimble and mocking. \"In it you will see not my face, nor yours, but the sharpening edge of your own permission. File your key smaller i..."
+    excerpt: "One-footed on the unposted ledger, a tiny iron file tucked behind his ear, he grinned into the split sky."
     route: ^[chapter/04/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-mirror/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

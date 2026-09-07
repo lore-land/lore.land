@@ -164,6 +164,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "councilor",
       "scene": {
         "vantage": "looking up through the table planks as the Fool balances precariously on the tabletop",
         "light": "the Fool's silhouette backlit by a fork of lightning split between dawn-gold and squall-blue",
@@ -177,8 +179,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "File a key smaller. Never let brass grow teeth in the dark."
+        },
+        {
           "type": "paragraph",
-          "text": "\"Look into the glass, Boof,\" the Fool’s voice carried over the howling crosswind, nimble and mocking. \"In it you will see not my face, nor yours, but the sharpening edge of your own permission. File your key smaller if the lock grows stiff, by all means! But do not let these gentlemen pretend their brass grew teeth while the room was asleep.\""
+          "text": "One-footed on the unposted ledger, a tiny iron file tucked behind his ear, he grinned into the split sky."
         }
       ]
     },

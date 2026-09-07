@@ -124,15 +124,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her, a wide open ",
+          "text": "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her an ",
           "children": [
             {
               "type": "custom-path",
-              "content": "path"
+              "content": "unblended seam"
             },
             {
               "type": "text",
-              "text": " of living current opened—not a labyrinth of mirrors, nor a game of unkept debts. It was a fluid membrane where two entirely distinct waters shared a single downstream journey without erasing their ancestry. Golden braided rope marked the mooring splice on the rail. Down in the water, the egg rode the seam like a buoyant keystone. Many hands could participate in one turn here, or the raft would not launch at all."
+              "text": " of living current ran wide—not a labyrinth of mirrors, nor a game of unkept debts. It was a fluid membrane where two entirely distinct waters shared a single downstream journey without erasing their ancestry. Golden braided rope marked the mooring splice on the rail. Down in the water, the egg rode the seam like a buoyant keystone. Many hands could participate in one turn here, or the raft would not launch at all."
             }
           ]
         },
@@ -165,6 +165,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "path",
       "scene": {
         "vantage": "looking beside Boof on the bridge railing where the Fool leans with elbows on the weathered timber",
         "light": "warm sunset gold bathing his profile; his eyes reflecting the joined river",
@@ -178,8 +180,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Confluence without amnesia."
+        },
+        {
           "type": "paragraph",
-          "text": "\"You have carried the fire across the whole territory, Boof,\" the Fool said quietly, leaning his elbows against the bridge rail beside her. \"The open road downstream belongs to everyone who travels it honestly. Share your warmth through the membrane. Do not give the house away to empire, and do not pretend the two rivers were ever identical. Confluence without amnesia: that is how a living world endures.\""
+          "text": "Elbows on the rail, an unpainted oar at his shoulder, the archive dome already downstream."
         }
       ]
     },

@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"The rules are child's play, Boof,\" the Fool whispered, leaning down from the windlass crossbeam with an arched brow. \"The well will hold whatever grief or tally you pour into it. But it will never allow you to sign y..."
+    excerpt: "He sat the windlass beam with his feet over the dark, one hand on the crank."
     route: ^[chapter/08/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-game/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

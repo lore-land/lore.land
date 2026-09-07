@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her, a wide open path of living curren..."
+    excerpt: "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her an unblended seam of living curren..."
     route: ^[chapter/12/s01]{open}
   >
   s02: <
@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You have carried the fire across the whole territory, Boof,\" the Fool said quietly, leaning his elbows against the bridge rail beside her. \"The open road downstream belongs to everyone who travels it honestly. Share ..."
+    excerpt: "Elbows on the rail, an unpainted oar at his shoulder, the archive dome already downstream."
     route: ^[chapter/12/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-path/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

@@ -125,11 +125,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The mountain ridge was a ",
+          "text": "The mountain ridge kept a ",
           "children": [
             {
               "type": "custom-puzzle",
-              "content": "puzzle"
+              "content": "listening arc"
             },
             {
               "type": "text",
@@ -166,6 +166,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "shard",
       "scene": {
         "vantage": "looking up at the top of the stone chimney where the Fool sits with legs dangling down the flue",
         "light": "starlight catching the silver threads in his cowl; gold shards illuminating his hands",
@@ -179,8 +181,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "The ninth shard was never for blowing. It was for hatching."
+        },
+        {
           "type": "paragraph",
-          "text": "\"It is never about assembling a trophy for your mantel, Boof,\" the Fool whispered, leaning down from the chimney rim with an appreciative grin. \"If you weld all nine shards back together into one big trumpet, you get an empire’s bugle that deafens the valley. But leave them scattered, and every chimney on the ridge gets a hearth that knows when winter is coming. The ninth shard was never made for blowing—it was made for hatching.\""
+          "text": "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound."
         }
       ]
     },

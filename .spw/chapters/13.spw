@@ -41,7 +41,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"This is where the road fulfills its promise, Boof,\" the Fool whispered from the cedar stacks, his voice quiet with reverent wonder. \"You met me as an echo, a riddle, a councilor, a song, and a shadow. But in this roo..."
+    excerpt: "Fork and bell hung on a hook in the stacks. The shelves still had room for a mask no one had named."
     route: ^[chapter/13/s03]{open}
   >
   s04: [
@@ -60,7 +60,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"I understand now,\" Boof thought, turning her face into the clean morning breeze blowing through the eggshell arch. She had never been chasing a trickster; she had been following an honest scent to a door that the can..."
+    excerpt: "Boof set her chin on the desk one last time and felt the egg's heat change. Not hotter — steadier. The countdown that had walked with her for thirteen leagues settled into a hearth-beat: the cell, finding the door alr..."
     route: ^[chapter/13/s06]{open}
   >
 ]
@@ -75,7 +75,7 @@
     .enters: "custom-reflection/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }
@@ -93,6 +93,8 @@
     "A small reader at a single desk can check a whole history. The last door is shell-shaped on purpose."
     "The egg remains a cell: it keeps its own law. The record learns to receipt it without owning it."
     "The open door is intentional: the next cycle can re-enter without pretending the first never happened."
+    "Once the shell-door is open, the cell's first public turn is to keep. It receipts the dawn by remaining itself. What hatches is still un-named."
+    "The Fool is a trickster of honest masks. Chamber 13 names five faces and leaves the next one unfiled — the trope extends by wearing a new mask, not by unmasking the last."
   ]
 }
 

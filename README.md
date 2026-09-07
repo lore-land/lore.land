@@ -73,7 +73,7 @@ Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_08_27.A` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_09_07.B` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 

@@ -267,10 +267,16 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "echo",
       "content": [
         {
+          "type": "pull",
+          "text": "Are you lost — or has the record run out of pretending?"
+        },
+        {
           "type": "paragraph",
-          "text": "\"Are you lost?\" the Fool asked, leaning out from behind the hollow cedar where no door had been cut. He brushed pollen from his mismatched sleeves, no longer entirely playful. \"Or have you finally arrived where the public record cannot pretend to be complete?\""
+          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, the trick no longer entirely a joke."
         },
         {
           "type": "paragraph",

@@ -130,11 +130,11 @@
           "children": [
             {
               "type": "custom-awakening",
-              "content": "awakening"
+              "content": "bloom before seed"
             },
             {
               "type": "text",
-              "text": "—the mystery of bloom before seed. Heavy golden blossoms burst from the dry stone mortar, spilling fragrance across the risers with no visible planting or root-soil. The egg nestled among the petals, late, uncultivated, and completely right. A leaf that keeps its native form does not have to apologize for arriving after the garden has already begun to flower."
+              "text": ". Heavy golden blossoms burst from the dry stone mortar, spilling fragrance across the risers with no visible planting or root-soil. The egg nestled among the petals, late, uncultivated, and completely right. A leaf that keeps its native form does not have to apologize for arriving after the garden has already begun to flower."
             }
           ]
         },
@@ -167,6 +167,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "bloom",
       "scene": {
         "vantage": "looking across the breakfast table at the Fool pouring amber tea into two clay bowls",
         "light": "soft morning sun filtering through wisteria vines onto the linen tablecloth",
@@ -180,8 +182,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Unmasking ends the play. A late seed still feeds."
+        },
+        {
           "type": "paragraph",
-          "text": "\"You have begun to see it clearly, haven’t you, Boof?\" the Fool said softly, setting down a steaming bowl of tea upon the terrace table. His voice had lost its barbed edge, carrying the gentle warmth of an old friend. \"This whole pilgrimage was never about unmasking my tricks. The seed is allowed to be late. The harvest is allowed to precede the sowing, provided the bread on the table feeds the hungry.\""
+          "text": "Bells set aside, he broke bread and poured tea as if the trick had always been breakfast."
         }
       ]
     },
@@ -229,6 +235,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "beginning",
       "scene": {
         "vantage": "looking downhill from the garden parapet toward two great sparkling rivers meeting in the valley below",
         "light": "high morning sun sparkling on two distinctly colored waters joining at a low bridge",
@@ -242,8 +250,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Every awakening is also a beginning."
+        },
+        {
           "type": "paragraph",
-          "text": "\"Take the cell down to the confluence, Boof,\" the Fool smiled, pointing downhill where two great rivers met beneath a low wooden bridge. \"Every awakening is also a beginning. When you reach the joined water, share through the membrane. Do not let either river forget the mountain spring that gave it birth.\""
+          "text": "He pointed downhill to two rivers that had not yet agreed to forget their springs."
         }
       ]
     }

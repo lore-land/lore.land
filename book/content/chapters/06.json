@@ -167,6 +167,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "labyrinth",
       "scene": {
         "vantage": "looking up at a lamplighter's ladder propped against a glowing bronze post",
         "light": "golden light pouring down from the lamp crease onto the Fool's face",
@@ -180,8 +182,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Name the collision and the dent becomes a lamp."
+        },
+        {
           "type": "paragraph",
-          "text": "\"You’ve found my city of dents, Boof!\" the Fool’s voice called down from a lamplighter’s ladder. He gave his brass bell a crisp tap against a dented bronze post, and the crease blossomed into warm amber brilliance. \"Every shock in this town becomes a streetlight once someone is brave enough to name the collision. But can you tell glass from furnace-heat when every mirror in the ward is begging for your attention?\""
+          "text": "From the lamplighter’s top rung he tapped a brass bell into a crease, and the post remembered heat."
         }
       ]
     },

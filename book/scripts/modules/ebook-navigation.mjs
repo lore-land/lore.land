@@ -67,6 +67,10 @@ function labelFromSection(section, index) {
     return heading.textContent.trim();
   }
 
+  if (section.dataset.voiceKicker) {
+    return section.dataset.voiceKicker;
+  }
+
   if (section.dataset.spwComponent) {
     return section.dataset.spwComponent.replace(/^custom-/, '').replace(/-/g, ' ');
   }

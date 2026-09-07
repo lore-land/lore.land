@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"Ah, you’ve noticed your silent companion, haven’t you, Boof?\" the Fool whispered from the rafters of an awning. \"That is the oath’s shadow—or perhaps the shadow of every promise made with crossed fingers. Anyone can ..."
+    excerpt: "From the awning he tossed a shriveled berry. His shadow kept a different rhythm."
     route: ^[chapter/07/s03]{open}
   >
   s04: [
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "\"The shadow will walk beside you until the journey ends, Boof,\" the Fool’s voice called out, fading like church chimes across the square. \"Because whenever you carry genuine fire, the cold world will try to counterfei..."
+    excerpt: "His voice thinned across the square like a last market bell."
     route: ^[chapter/07/s06]{open}
   >
 ]
@@ -76,7 +76,7 @@
     .enters: "custom-shadow/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

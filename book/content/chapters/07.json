@@ -128,7 +128,7 @@
           "children": [
             {
               "type": "custom-shadow",
-              "content": "shadow"
+              "content": "heatless twin"
             },
             {
               "type": "text",
@@ -165,6 +165,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "shadow",
       "scene": {
         "vantage": "looking up into the overhang of an old market awning where the Fool perches",
         "light": "striped sunlight and shadow playing across the Fool's grin",
@@ -178,8 +180,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Whose key is it if it turns and the room stays cold?"
+        },
+        {
           "type": "paragraph",
-          "text": "\"Ah, you’ve noticed your silent companion, haven’t you, Boof?\" the Fool whispered from the rafters of an awning. \"That is the oath’s shadow—or perhaps the shadow of every promise made with crossed fingers. Anyone can copy the shape of a key, my dear hound. The thief can mimic the turn of the wrist. But whose key is it if it turns in the lock without warming the room?\""
+          "text": "From the awning he tossed a shriveled berry. His shadow kept a different rhythm."
         }
       ]
     },
@@ -227,6 +233,8 @@
     },
     {
       "type": "custom-fool",
+      "data-trope": "trickster",
+      "data-mask": "shadow",
       "scene": {
         "vantage": "looking down the long alley leading out of the market square toward the misty hollows",
         "light": "twilight deepening into violet; the market lanterns being lit behind, dark woods ahead",
@@ -240,8 +248,12 @@
       },
       "content": [
         {
+          "type": "pull",
+          "text": "Carry fire and the cold will counterfeit your silhouette."
+        },
+        {
           "type": "paragraph",
-          "text": "\"The shadow will walk beside you until the journey ends, Boof,\" the Fool’s voice called out, fading like church chimes across the square. \"Because whenever you carry genuine fire, the cold world will try to counterfeit the silhouette. Remember what you forfeit if you lie: the stone remembers faces, but the fruit never lies about being sweet.\""
+          "text": "His voice thinned across the square like a last market bell."
         }
       ]
     }

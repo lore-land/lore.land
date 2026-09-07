@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You see, Boof, you are always moving, but never arriving,\" the Fool called out, trotting backward down the slope with effortless balance. \"That is what a turn looks like before the world agrees to write it down. You ..."
+    excerpt: "He trotted backward down the dune. Footprints filled with sand the moment his heels lifted."
     route: ^[chapter/03/s03]{open}
   >
   s04: [
@@ -76,7 +76,7 @@
     .enters: "custom-paradox/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }

@@ -49,6 +49,12 @@
 
   /* ─── Publishing template: logline, epigraph, pillars ──────── */
 
+  .chapter-logline,
+  .chapter-epigraph,
+  .voice-pull {
+    text-wrap: pretty;
+  }
+
   .chapter-logline {
     margin: 0 0 var(--spacing-small);
     max-width: var(--chapter-prose-max);

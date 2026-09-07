@@ -1,19 +1,276 @@
+/*
+ * Story voices — reading-first marks for the chamber cast.
+ *
+ * Block chambers keep a quiet kicker and a voice-colored hairline.
+ * Phrase marks sit inside a sentence: a cloned underline, not a widget.
+ * Grammar-role ornaments in typography.css apply to blocks; phrases
+ * neutralize those so a charged word does not grow a border.
+ */
+
+:is(
+  custom-boof,
+  custom-fool,
+  custom-boonberry,
+  custom-echo,
+  custom-song,
+  custom-paradox,
+  custom-mirror,
+  custom-labyrinth,
+  custom-shadow,
+  custom-game,
+  custom-puzzle,
+  custom-bonk,
+  custom-awakening,
+  custom-path,
+  custom-reflection
+):not([data-voice-shape="phrase"]) {
+  display: block;
+}
+
 custom-boof {
-  background: linear-gradient(150deg, rgba(160, 198, 241, 0.22), rgba(255, 255, 255, 0.55));
+  --voice-mark: color-mix(in srgb, var(--color-accent-main, #2a6f7f) 70%, var(--color-gold, #c4922e) 30%);
 }
 
-custom-fool,
-custom-paradox,
-custom-shadow {
-  background: linear-gradient(150deg, rgba(249, 189, 147, 0.26), rgba(255, 255, 255, 0.55));
+custom-fool {
+  --voice-mark: color-mix(in srgb, var(--color-hearth, #b0602a) 62%, var(--color-gold, #c4922e) 38%);
 }
 
-custom-boonberry,
+/*
+ * Screenshot plate: a cropped Fool chamber should still read as a complete
+ * card — kicker, pull, stamp — without page chrome or a collapsed scene.
+ * data-frame="shot" is the opt-in; custom-fool gets it by default.
+ */
+[data-frame="shot"] {
+  display: flex;
+  flex-direction: column;
+  content-visibility: visible;
+  contain-intrinsic-size: unset;
+  isolation: isolate;
+  break-inside: avoid;
+  padding: clamp(0.85rem, 2.2vw, 1.25rem) clamp(0.9rem, 2.4vw, 1.35rem) 0.9rem;
+  border-radius: 0.7rem;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--voice-mark, var(--color-hearth, #b0602a)) 10%, transparent),
+      transparent 46%
+    ),
+    var(--theme-paper, #fffcf6);
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--voice-mark, var(--color-hearth, #b0602a)) 62%, transparent),
+    0 10px 28px color-mix(in srgb, var(--voice-mark, var(--color-hearth, #b0602a)) 12%, transparent);
+}
+
+/* Card face first: kicker, pull, stamp. Gloss and scene fall below the crop. */
+[data-frame="shot"] > .voice-kicker { order: 0; }
+[data-frame="shot"] > .voice-pull { order: 1; }
+[data-frame="shot"] > .voice-stamp { order: 2; }
+[data-frame="shot"] > p { order: 3; }
+[data-frame="shot"] > .scene-sketch { order: 4; }
+
+custom-fool[data-voice-shape="block"] {
+  font-style: normal;
+}
+
+custom-fool[data-voice-shape="block"]::before {
+  content: none;
+}
+
+.voice-pull {
+  margin: 0.15rem 0 0.7rem;
+  padding: 0;
+  border: 0;
+  max-width: 28ch;
+  font-family: 'LoreLand', var(--font-family-heading, Georgia, serif);
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  text-wrap: pretty;
+  color: var(--theme-text-main, #1a2233);
+}
+
+.voice-stamp {
+  margin: 0.45rem 0 0.7rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed color-mix(in srgb, var(--voice-mark, var(--theme-accent-alt, #1c4f63)) 32%, transparent);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-indent: 0;
+  color: color-mix(in srgb, var(--voice-mark, var(--theme-accent-alt, #1c4f63)) 70%, var(--theme-text-alt, #4a5564));
+}
+
+[data-frame="shot"] > .voice-kicker + .voice-pull {
+  margin-top: 0.2rem;
+}
+
+[data-frame="shot"] > .voice-stamp + .scene-sketch {
+  margin-top: 0.85rem;
+}
+
+[data-trope="trickster"] {
+  --trope-color: var(--voice-mark, #b0602a);
+}
+
+custom-boonberry {
+  --voice-mark: color-mix(in srgb, var(--color-hearth, #b0602a) 45%, #7a3a5c 55%);
+}
+
+custom-echo {
+  --voice-mark: color-mix(in srgb, var(--color-gold, #c4922e) 55%, var(--color-accent-main, #2a6f7f) 45%);
+}
+
 custom-song,
-custom-awakening {
-  background: var(--interactive-bg-hover);
-  outline: 2px solid var(--interactive-outline);
-  outline-offset: 2px;
-  box-shadow: var(--interactive-shadow-hover);
+custom-game {
+  --voice-mark: color-mix(in srgb, var(--color-accent-alt, #1c4f63) 40%, #c4a35a 60%);
 }
 
+custom-paradox,
+custom-mirror {
+  --voice-mark: color-mix(in srgb, var(--color-hearth, #b0602a) 50%, var(--color-accent-main, #2a6f7f) 50%);
+}
+
+custom-labyrinth {
+  --voice-mark: color-mix(in srgb, var(--color-accent-main, #2a6f7f) 55%, #8a6a3a 45%);
+}
+
+custom-shadow {
+  --voice-mark: color-mix(in srgb, var(--color-accent-alt, #1c4f63) 72%, #1a2233 28%);
+}
+
+custom-puzzle {
+  --voice-mark: color-mix(in srgb, var(--color-gold, #c4922e) 70%, var(--color-hearth, #b0602a) 30%);
+}
+
+custom-bonk {
+  --voice-mark: color-mix(in srgb, var(--color-hearth, #b0602a) 78%, var(--color-gold, #c4922e) 22%);
+}
+
+custom-awakening,
+custom-path {
+  --voice-mark: color-mix(in srgb, var(--color-accent-main, #2a6f7f) 48%, var(--color-gold, #c4922e) 52%);
+}
+
+custom-reflection {
+  --voice-mark: color-mix(in srgb, var(--color-accent-alt, #1c4f63) 64%, var(--color-gold, #c4922e) 36%);
+}
+
+[data-voice-shape="block"] {
+  --voice-surface: color-mix(
+    in srgb,
+    var(--spw-runtime-surface-strong, var(--theme-paper, #fffcf6)) 88%,
+    var(--voice-mark, var(--theme-accent-main, #2a6f7f)) 12%
+  );
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--voice-mark, var(--theme-accent-main)) 8%, transparent),
+      transparent 42%
+    ),
+    var(--voice-surface);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--voice-mark, var(--theme-accent-main)) 55%, transparent);
+}
+
+.voice-kicker {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-indent: 0;
+  color: color-mix(in srgb, var(--voice-mark, var(--theme-accent-alt, #1c4f63)) 78%, var(--theme-text-alt, #4a5564));
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+
+[data-voice-shape="block"] > .voice-kicker + p,
+[data-voice-shape="block"] > .voice-kicker + details + p {
+  text-indent: 0;
+}
+
+[data-voice-shape="phrase"] {
+  display: inline;
+  padding: 0 0.22em;
+  margin: 0;
+  border: 0;
+  border-radius: 0.18em;
+  font-style: inherit;
+  font-weight: inherit;
+  background: color-mix(in srgb, var(--voice-mark, var(--theme-accent-main, #2a6f7f)) 16%, transparent);
+  box-shadow: inset 0 -0.09em 0 color-mix(in srgb, var(--voice-mark, var(--color-gold, #c4922e)) 58%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: help;
+}
+
+[data-voice-shape="phrase"]::before,
+[data-voice-shape="phrase"]::after {
+  content: none !important;
+}
+
+[data-voice-shape="phrase"][data-spw-grammar="interlocutor"],
+[data-voice-shape="phrase"][data-spw-grammar="path"],
+[data-voice-shape="phrase"][data-spw-grammar="reflection"],
+[data-voice-shape="phrase"][data-spw-grammar="awakening"],
+[data-voice-shape="phrase"][data-spw-grammar="modifier"],
+[data-voice-shape="phrase"][data-spw-grammar="echo"] {
+  padding: 0 0.22em;
+  margin: 0;
+  border: 0;
+  overflow: visible;
+  background: color-mix(in srgb, var(--voice-mark, var(--theme-accent-main, #2a6f7f)) 16%, transparent);
+  font-style: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+[data-voice-shape="phrase"].is-voice-held {
+  background: color-mix(in srgb, var(--voice-mark, var(--theme-accent-main, #2a6f7f)) 26%, transparent);
+  box-shadow:
+    inset 0 -0.09em 0 color-mix(in srgb, var(--voice-mark, var(--color-gold, #c4922e)) 72%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--voice-mark, var(--theme-accent-main)) 28%, transparent);
+}
+
+custom-bonk[data-voice-shape="phrase"] {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-voice-shape="phrase"],
+  [data-voice-shape="block"] {
+    transition: none;
+  }
+}
+
+@media print {
+  .voice-kicker,
+  .voice-stamp {
+    color: inherit;
+    letter-spacing: 0.08em;
+  }
+
+  [data-voice-shape="block"],
+  [data-frame="shot"] {
+    background: none;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .voice-pull {
+    max-width: none;
+  }
+
+  [data-voice-shape="phrase"] {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    cursor: inherit;
+  }
+}

@@ -1,7 +1,7 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_02_28.I';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
-import { CUSTOM_ELEMENTS_SELECTOR, isCustomElementType } from './modules/story-lexicon.mjs?v=2026_02_28.I';
+import { CUSTOM_ELEMENTS_SELECTOR, applyStoryVoiceAttributes, isCustomElementType, voiceKickerWithMask, storyVoiceFor } from './modules/story-lexicon.mjs?v=2026_09_07.B';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -16,13 +16,13 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_07_23.B';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_07.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
-import { registerCustomElements } from './custom/register.mjs?v=2026_02_28.I';
-import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_03_02.A';
-import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_03_02.A';
+import { registerCustomElements } from './custom/register.mjs?v=2026_09_07.B';
+import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_09_07.A';
+import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_09_07.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
@@ -383,8 +383,9 @@ function populateContent(data) {
   }
 
   if (Array.isArray(data.sections)) {
-    data.sections.forEach(section => {
-      const sectionElement = createSectionElement(section);
+    const stamp = `Chamber ${padChapterNumber(data.chapterNumber)} · ${data.title}`;
+    data.sections.forEach((section) => {
+      const sectionElement = createSectionElement(section, { stamp });
       if (sectionElement) {
         chapterContent.appendChild(sectionElement);
       }
@@ -441,7 +442,7 @@ function padChapterNumber(number) {
  * @param {Object} section - The section data object.
  * @returns {HTMLElement|null} - The created DOM element or null if type is unrecognized.
  */
-function createSectionElement(section) {
+function createSectionElement(section, context = {}) {
   if (!section || !section.type) {
     return null;
   }
@@ -449,17 +450,32 @@ function createSectionElement(section) {
   switch (section.type) {
     case 'paragraph':
       return createParagraph(section);
+    case 'pull':
+      return createPull(section);
     case 'figure':
       return createFigure(section);
     case 'section':
       return createSection(section);
     default:
       if (isCustomElementType(section.type)) {
-        return createCustomElement(section);
+        return createCustomElement(section, context);
       }
       console.warn(`Unrecognized section type: ${section.type}`);
       return null;
   }
+}
+
+/**
+ * Creates a pull-quote — the screenshot face of a voice chamber.
+ * @param {Object} section - { text }
+ * @returns {HTMLElement}
+ */
+function createPull(section) {
+  const quote = document.createElement('blockquote');
+  quote.className = 'voice-pull';
+  quote.dataset.component = 'voice-pull';
+  quote.textContent = String(section.text || '').trim();
+  return quote;
 }
 
 /**
@@ -479,8 +495,7 @@ function createParagraph(section) {
       if (isCustomElementType(child.type)) {
         const customElement = document.createElement(child.type);
         customElement.textContent = child.content;
-        customElement.dataset.spwComponent = child.type;
-        customElement.dataset.spwActionable = 'true';
+        applyStoryVoiceAttributes(customElement, child.type, 'phrase');
         p.appendChild(customElement);
       } else if (child.type === 'text') {
         const textNode = document.createTextNode(child.text);
@@ -623,10 +638,9 @@ function createSection(section) {
  * @param {Object} section - The custom element section data.
  * @returns {HTMLElement} - The created custom element.
  */
-function createCustomElement(section) {
+function createCustomElement(section, context = {}) {
   const customElem = document.createElement(section.type);
-  customElem.dataset.spwComponent = section.type;
-  customElem.dataset.spwActionable = 'true';
+  applyStoryVoiceAttributes(customElem, section.type, 'block');
 
   if (section.valence) {
     customElem.dataset.spwValence = section.valence;
@@ -640,18 +654,49 @@ function createCustomElement(section) {
     }
   });
 
-  if (section.scene) {
-    customElem.dataset.scene = 'true';
-    customElem.appendChild(createSceneSketch(section.scene));
+  if (section.mask && !customElem.dataset.mask) {
+    customElem.dataset.mask = String(section.mask);
+  }
+
+  if (section.type === 'custom-fool') {
+    if (!customElem.getAttribute('data-trope')) {
+      customElem.setAttribute('data-trope', 'trickster');
+    }
+    if (!customElem.getAttribute('data-frame')) {
+      customElem.setAttribute('data-frame', 'shot');
+    }
+  }
+
+  if (customElem.dataset.mask) {
+    const meta = storyVoiceFor(section.type);
+    customElem.dataset.voiceKicker = voiceKickerWithMask(
+      customElem.dataset.voiceKicker || meta?.kicker,
+      customElem.dataset.mask
+    );
   }
 
   if (section.content && Array.isArray(section.content)) {
-    section.content.forEach(contentItem => {
+    section.content.forEach((contentItem) => {
       const contentElement = createSectionElement(contentItem);
       if (contentElement) {
         customElem.appendChild(contentElement);
       }
     });
+  }
+
+  const wantsStamp = customElem.getAttribute('data-frame') === 'shot'
+    || section.type === 'custom-fool'
+    || (Array.isArray(section.content) && section.content.some((item) => item.type === 'pull'));
+  if (wantsStamp && context.stamp && !customElem.querySelector(':scope > .voice-stamp')) {
+    const stamp = document.createElement('div');
+    stamp.className = 'voice-stamp';
+    stamp.textContent = context.stamp;
+    customElem.appendChild(stamp);
+  }
+
+  if (section.scene) {
+    customElem.dataset.scene = 'true';
+    customElem.appendChild(createSceneSketch(section.scene));
   }
 
   return customElem;
@@ -1199,25 +1244,11 @@ function setupCustomElementsInteractions(data) {
     return;
   }
 
-  // Example: Add event listeners to all custom elements for interactivity
-  const customElements = chapterContent.querySelectorAll(CUSTOM_ELEMENTS_SELECTOR);
-
-  customElements.forEach(elem => {
-    // Make custom elements focusable
-    elem.setAttribute('tabindex', '0');
-
-    // Handle focus and blur events for accessibility
-    elem.addEventListener('focus', () => {
-      elem.classList.add('focused');
-    });
-
-    elem.addEventListener('blur', () => {
-      elem.classList.remove('focused');
-    });
-
-    // Example: Handle click events to toggle 'played' state
-    elem.addEventListener('click', () => {
-      elem.classList.toggle('played');
+  chapterContent.querySelectorAll(`${CUSTOM_ELEMENTS_SELECTOR}[data-voice-shape="phrase"]`).forEach((elem) => {
+    elem.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const held = elem.classList.toggle('is-voice-held');
+      elem.setAttribute('aria-pressed', String(held));
     });
   });
 

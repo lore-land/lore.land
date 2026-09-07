@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "\"You have begun to see it clearly, haven’t you, Boof?\" the Fool said softly, setting down a steaming bowl of tea upon the terrace table. His voice had lost its barbed edge, carrying the gentle warmth of an old friend...."
+    excerpt: "Bells set aside, he broke bread and poured tea as if the trick had always been breakfast."
     route: ^[chapter/11/s03]{open}
   >
   s04: [
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "\"Take the cell down to the confluence, Boof,\" the Fool smiled, pointing downhill where two great rivers met beneath a low wooden bridge. \"Every awakening is also a beginning. When you reach the joined water, share thr..."
+    excerpt: "He pointed downhill to two rivers that had not yet agreed to forget their springs."
     route: ^[chapter/11/s06]{open}
   >
 ]
@@ -76,7 +76,7 @@
     .enters: "custom-awakening/02"
   >
   fool: <
-    register: "tone-balance; walks in through doors that were only painted, asking the sideways question that unlocks the straight answer"
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
     .enters: "custom-fool/03"
   >
 }
