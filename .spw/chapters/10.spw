@@ -6,7 +6,7 @@
 
 ^[chapter/10]{
   title: "Bone.land Resonance"
-  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Structural honesty becomes the concert. The four civic laws—cell, key, turn, receipt—are load-bearing here. The egg nests into the crossing of two colossal timbers, and the hall settles with ..."
+  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land is the small constitution — the spine that holds when the veil shakes. Mx. BoneWAP, a pie of clean-boiled honesty, audits the egg's karmic momentum against the ledger of every wish ..."
   mood: "bonk"
   period: "spring"
   chapter_path: "/book/chapter/10/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The great timber chassis of Bone.land did not pretend to be theater. Its massive square-hewn oak beams soared into the morning sky like the ribcage of an ancient leviathan, every mortise, tenon, and wooden peg left co..."
+    excerpt: "Bone.land did not pretend to be theater. Its square-hewn oak beams rose into the morning like the ribcage of a sleeping leviathan, every mortise and peg left exposed to the weather, because this hall was the small con..."
     route: ^[chapter/10/s01]{open}
   >
   s02: <
     handle: "custom-bonk/02"
     type: "custom-bonk"
-    excerpt: "The sound of the bonk was staggering—a seismic resonance that traveled straight through the timber, down through the limestone footings, and deep into the bedrock of the world. It was the sound of a universe meeting a..."
+    excerpt: "The audit itself was staggering to watch. BoneWAP weighed the egg's karmic momentum against the ledger of every wish ever spent, and the finding rose off the page in drawn gold: the smallest wishes have the longest ar..."
     handles: ["bonk-intro"]
     route: ^[chapter/10/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "He hung from the collar-beam like a bright bat and knocked. The oak answered as law."
+    excerpt: "He hung from the collar-beam like a bright bat and knocked. The oak answered as law, and the pie below him signed it."
     route: ^[chapter/10/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "What the Hall Holds"
-    excerpt: "Boof sat on the chalky floor while the hall hummed through her paws. Four notes, if you wanted to count them: a warmth that kept itself, a key that only filed smaller, a step the timber would admit, a slip left in the..."
+    title: "The Finding, Published"
+    excerpt: "BoneWAP did not whisper its finding to a council or fold it into a drawer. It published — copies nailed to the anchor stones, carried to the tavern, read aloud at the Watering Eye. Item one: the egg's wish, spent smal..."
     route: ^[chapter/10/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Is this where the trail terminates?\" Boof asked, looking up at the soaring king-post. The Fool answered with a softer, resonant knock against the wood—a door closing on empty ornament, and another swinging open upon ..."
+    excerpt: "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. An audit does not end a story; it removes the story's excuses. Everyone in the valley now kne..."
     route: ^[chapter/10/s06]{open}
   >
 ]
@@ -90,9 +90,9 @@
 
 #[chapter/10/lore]{
   notes: [
-    "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
-    "The small constitution is load-bearing here: cell, key, turn, receipt."
-    "The bonk is the hall telling the truth with its whole weight."
+    "Bone.land is the small constitution — the spine that holds when the veil shakes. Even its pies keep their joints exposed."
+    "Mx. BoneWAP, a pie of clean-boiled honesty, audits karmic momentum: the smallest wishes have the longest arcs."
+    "The finding, published: BaneWAP's grand wish would cost a generation of coincidences. BaneWAP stops pretending to wait."
   ]
 }
 

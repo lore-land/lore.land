@@ -6,7 +6,7 @@
 
 ^[chapter/03]{
   title: "Signals in the Sand"
-  description: "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the egg onto the wind-cut flats, where two buried routes try to be admitted as a single turn, and conservation of direction is the only honest count."
+  description: "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the unspent wish onto the wind-cut flats, where two buried routes want to be one turn, and finds the Off-Season Genie folded in a half-buried bottle — retired, deadpan, and unable..."
   mood: "paradox"
   period: "spring"
   chapter_path: "/book/chapter/03/"
@@ -35,14 +35,14 @@
   s02: <
     handle: "custom-paradox/02"
     type: "custom-paradox"
-    excerpt: "\"To move forward, you must go back,\" the paradox whispered through the dry wind, which was only half a lie. The two routes were not competing destinations; they were the same turn seen from different years. One had a ..."
+    excerpt: "The stopper turned itself, unhurried, and the Off-Season Genie came out the way steam leaves a kettle that has decided it is now a retired kettle. He was folded neat as a pocket handkerchief and dressed like a clerk w..."
     handles: ["paradox-intro"]
     route: ^[chapter/03/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "He trotted backward down the dune. Footprints filled with sand the moment his heels lifted."
+    excerpt: "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger, sampling the old song of genies and returning it changed: it was never three wishes and a catch, he honked—it was a price list all a..."
     route: ^[chapter/03/s03]{open}
   >
   s04: [
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Seam in the Sand"
-    excerpt: "The Fool's Paradox bent the map without bending an inch of the actual ground. Boof’s every stride across the crunchy salt crust felt like honest travel, yet the drifting dunes returned her repeatedly to the exact same..."
+    excerpt: "Here was the paradox chamber of the flats, and it was not the routes. The Genie could grant anything. He had ended droughts, moved rivers, made three emperors and unmade two of them at cost. What he could not do—what ..."
     route: ^[chapter/03/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof let out a low huff of satisfaction—a dog's way of filing a true scent when the trail finally speaks clear. The paradox was not a trap to be solved by clever argument; it was an intersection to be walked with hone..."
+    excerpt: "Boof let out a low huff and simply walked the seam—paws down its center, honest weight on honest ground—and behind her the two old routes, given at last a traveler who did not ask them to be anything grander than a wa..."
     route: ^[chapter/03/s06]{open}
   >
 ]
@@ -90,9 +90,10 @@
 
 #[chapter/03/lore]{
   notes: [
-    "A turn is an act the world admits. Two routes that want the same next step must post as one, or not at all."
-    "The egg is a witness, not a map: it heats when both signals are true at once."
-    "Conservation of direction: nothing extra appears in the sand. If two receipts cannot both post, the land keeps the seam instead."
+    "The Off-Season Genie is a retired Discount Genie who liquidated his practice: grandiose wishes turned out to be cheap magic, and small honest wishes the expensive kind. The egg is the las..."
+    "Wish-physics is karmic momentum: a wish doesn't create from nothing, it redirects momentum reality already has. Perfect version costs a miracle; mediocre version costs one coincidence and..."
+    "The Genie can grant anything except see what Boof wants — her want sits below the resolution of instruments built for emperors. The low ambition fascinates him, and he joins the walk."
+    "Two old routes wanting one turn settle for free under a traveler who asks nothing grander than a way through. The Genie recognizes his own trade performed by weather."
   ]
 }
 

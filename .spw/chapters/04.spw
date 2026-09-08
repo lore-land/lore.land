@@ -6,7 +6,7 @@
 
 ^[chapter/04]{
   title: "Crosswind Council"
-  description: "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit under shared weather with keys that can only be narrowed. The egg rests between them, a self-governing cell no key covers."
+  description: "Chapter 4 of Lore.Land: Crosswind Council. Boof carries the unspent wish to the hilltop table, where a bitter pie in a banker's crust argues it should be filed and auctioned — and the mirror shows every delegate what wanting becomes when..."
   mood: "mirror"
   period: "spring"
   chapter_path: "/book/chapter/04/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Council Hill kept a great slab of split pine that refused to pick a side. Boof slipped beneath the trestle and set her chin upon the timber between two keys, stumbling, almost, upon the Fool’s Mirror —an upright pane ..."
+    excerpt: "Council Hill kept a great slab of split pine that refused to pick a side, and it was there, under crosswind weather, that Boof brought the egg to be argued over. She slipped beneath the trestle, chin on the timber, an..."
     route: ^[chapter/04/s01]{open}
   >
   s02: <
     handle: "custom-mirror/02"
     type: "custom-mirror"
-    excerpt: "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what you are still allowed to do.\" The delegate of Boon looked into the pan..."
+    excerpt: "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what your wanting is becoming.\" The delegates looked, one by one. The boon-..."
     handles: ["mirror-intro"]
     route: ^[chapter/04/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "One-footed on the unposted ledger, a tiny iron file tucked behind his ear, he grinned into the split sky."
+    excerpt: "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in the sleeve — an old trope, sa..."
     route: ^[chapter/04/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Refraction of Authority"
-    excerpt: "Boof watched the delegates argue across the pine grain. Boon and Bane sat under one shared roof of clouds and bargained without having to declare war. The table itself was the living membrane between them: a sturdy bo..."
+    title: "No Key Covers the Egg"
+    excerpt: "Boof watched the argument cross the pine grain like weather. Boon and bane sat under one shared squall and bargained without declaring war; that was the table's whole genius. But when the clerks brought out the rack o..."
     route: ^[chapter/04/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof left both keys on the table where they lay. A key you do not pick up is a key no clerk can ever accuse you of tampering with. She tucked the feed-sack sling securely against her chest and turned down the southern..."
+    excerpt: "Boof left the hill with the wish she had never asked to hold. Finder, the clerk had written, as if finding were a small thing a dog did with her nose and not a door the world had opened under her paws. The Genie walke..."
     route: ^[chapter/04/s06]{open}
   >
 ]
@@ -90,9 +90,10 @@
 
 #[chapter/04/lore]{
   notes: [
-    "A key may be filed smaller, never grown in secret. That is the council's oldest weather."
-    "The egg is a cell: it keeps its own law. No key on the table covers it."
-    "Sharing across a membrane is not giving the house away. Boon and bane can sit one turn without becoming one office."
+    "Council law: a key may be filed smaller in the open, never grown in secret. A wish is the largest key ever cut — too large for the rack."
+    "Mr. BaneWAP debuts: a pie of hoarded berries gone bitter in a banker's crust. He wants the wish filed, appraised, and auctioned — to himself."
+    "The mirror chamber's truth: BaneWAP is not a foreign villain. He is the reflection of what wanting becomes when it hoards instead of serving slices."
+    "No key covers the egg, so the council cannot rule. The wish stays with its finder. The Fool samples the evil-vizier trope and honks it back as pastry."
   ]
 }
 

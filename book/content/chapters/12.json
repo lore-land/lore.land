@@ -1,9 +1,9 @@
 {
   "chapterNumber": 12,
   "title": "The Last Confluence",
-  "logline": "Threads meet in a membrane that shares without giving the house away.",
-  "epigraph": "Unity that forgets its tributaries becomes empire, not river.",
-  "description": "Chapter 12 of Lore.Land: The Last Confluence. All narrative and craft threads meet. Merger without amnesia: two rivers of distinct water share a single bed along an unblended seam. Many hands join in one turn; provenance remains inspectable; the egg rides the current toward the canon.",
+  "logline": "Boof finally knows her wish, and it is small: one warm furrow kept open, always, for whatever arrives next without a receipt.",
+  "epigraph": "The honest price of a small true wish: everything he had left, plus one Thursday.",
+  "description": "Chapter 12 of Lore.Land: The Last Confluence. Boof names her small true wish at the meeting of two rivers; the Off-Season Genie prices it honestly and retires into the grove as its next echo. BaneWAP, re-sweetened, splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts — every thread meets in a membrane that shares without giving the house away.",
   "mood": "path",
   "period": "spring",
   "pillars": [
@@ -14,7 +14,7 @@
   "topics": [
     {
       "id": "provenance",
-      "label": "Marked funding",
+      "label": "Posted receipts",
       "href": "/topics/#provenance"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "id": "experience",
-      "label": "Experience path",
+      "label": "Wish-physics",
       "href": "/scriptorium/#experience-path"
     }
   ],
@@ -58,19 +58,18 @@
   "lexicon": [
     {
       "id": "provenance",
-      "label": "Marked funding",
+      "label": "Posted receipts",
       "href": "/topics/#provenance",
       "terms": [
         "confluence",
         "river",
         "rivers",
-        "tributary",
-        "tributaries",
-        "merge",
-        "splice",
-        "rope",
-        "source",
-        "provenance"
+        "receipt",
+        "receipts",
+        "posted",
+        "apology",
+        "slice",
+        "audit"
       ]
     },
     {
@@ -81,10 +80,10 @@
         "membrane",
         "seam",
         "bridge",
-        "current",
+        "springs",
         "waters",
         "chalk",
-        "turn"
+        "Thursday"
       ]
     },
     {
@@ -93,10 +92,10 @@
       "href": "/world/boonberry-commons.html",
       "terms": [
         "egg",
-        "cell",
-        "raft",
-        "archive",
-        "door"
+        "wish",
+        "furrow",
+        "grove",
+        "echo"
       ]
     }
   ],
@@ -104,27 +103,28 @@
     {
       "type": "custom-boof",
       "data-mood": "path",
+      "data-motif": "small-want",
       "climate": {
         "tempo": "day",
         "tint": "teal",
-        "hook": "membrane-seam"
+        "hook": "small-true-wish"
       },
       "scene": {
-        "vantage": "on the low timber plank bridge spanning the meeting of waters, muzzle rested over the rail, looking down where two distinct currents rush side by side",
+        "vantage": "on the low timber plank bridge spanning the meeting of waters, muzzle rested over the rail, the warm egg in its feed-sack sling between her paws",
         "light": "late afternoon gold; the joined river runs two-toned past the piers — deep berry-purple water and pale chalk-white water sharing a single bed, the seam dancing with golden spray without blending into mud",
-        "scent": "cold mountain spring water, sweet crushed berry juice, mineral chalk dust, river tar on the planks, and fresh green reeds",
+        "scent": "cold mountain spring water, sweet crushed berry juice, mineral chalk dust, river tar on the planks, and warm shell",
         "edges": [
           "upstream, the two source canyons are visible to their rocky bends — neither river larger, neither claiming precedence",
           "the seam between the currents wanders gracefully down the channel, sharp and unmixed to the horizon",
-          "cargo rafts ride the central join deliberately, keeping one wooden runner in each current for balance",
-          "on the bridge rail, two thick mooring ropes are spliced into one hawser, with every colored strand still traceable to its spool"
+          "the Off-Season Genie leans on the rail beside her, instruments folded small for once",
+          "the egg's coin-wide door glows steady, waiting for a want it can finish"
         ],
-        "hint": "low bridge over a two-toned river confluence at late gold hour; berry-dark and pale chalk currents sharing one bed with a living unblended seam; rafts riding the join; a spliced rope on the rail in near focus; warm light, patient water"
+        "hint": "low bridge over a two-toned river confluence at late gold hour; berry-dark and pale chalk currents sharing one bed with a living unblended seam; a working dog and a tired retired genie at the rail, a warm cracked egg between them; warm light, patient water"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her an ",
+          "text": "Two great mountain rivers met beneath a wide, low-planked timber bridge, and it was there, muzzle over the rail with the egg warm between her paws, that Boof finally knew. Not a hunch. Not the shape of a want seen sideways. She knew, the way a true scent is known at its end, and the wish was small enough to hold in a mouth: that the land keep one warm furrow open — always — for whatever arrives next without a receipt. Below her the waters ran in an ",
           "children": [
             {
               "type": "custom-path",
@@ -132,60 +132,60 @@
             },
             {
               "type": "text",
-              "text": " of living current ran wide—not a labyrinth of mirrors, nor a game of unkept debts. It was a fluid membrane where two entirely distinct waters shared a single downstream journey without erasing their ancestry. Golden braided rope marked the mooring splice on the rail. Down in the water, the egg rode the seam like a buoyant keystone. Many hands could participate in one turn here, or the raft would not launch at all."
+              "text": " — berry-dark and chalk-pale sharing one bed without forgetting their springs — and she understood that her wish was the same shape as the river: a membrane, not a merger. Room made, nothing owned. The Off-Season Genie, who had followed her since the third chamber because her wants were too small for instruments built for emperors, heard it and went very still, the way a craftsman goes still when the one job his tools were never sized for turns out to be the job he stayed retired for."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "On the bridge railing, two thick mooring lines—one woven from dark hemp, the other from pale river flax—had been spliced into a single unbreakable towline. Every individual fiber remained visible, allowing an auditor to trace each strand straight back to its original spinner."
+          "text": "He priced it honestly, because the Blueberry Oath deserved no less. A small aligned wish costs one coincidence and a Thursday, he had always said — but this one asked the land to hold a door open forever, and forever is bought with what a genie keeps in reserve. \"Everything I have left,\" he said, counting it out plainly on the rail, \"plus one Thursday.\" Boof looked at the price and did not haggle. Neither did he."
         }
       ]
     },
     {
       "type": "custom-path",
       "scene": {
-        "vantage": "waterline angle looking down the two-toned river channel",
-        "light": "sunlight skimming across swirling eddies of dark indigo and milky white",
-        "scent": "river foam, pine spray, warm stone",
+        "vantage": "waterline angle looking down the two-toned river channel as the wish begins to grant",
+        "light": "sunlight skimming across swirling eddies of dark indigo and milky white, a warmth spreading upstream against the current",
+        "scent": "river foam, pine spray, thawed loam out of season",
         "edges": [
           "the boundary line between the two waters forms a standing golden wave",
-          "swallows dip and feed along the boundary where insects congregate",
-          "the egg bobs gently in the foam, keeping its orientation steady"
+          "far upcountry, in the dawnward field, one furrow shrugs off its frost and stays warm",
+          "the egg's door-crack releases a single long breath of gold"
         ],
-        "hint": "water-level view of two differently colored currents running side by side down a wide river canyon, split by a golden froth line, with swallows skimming overhead"
+        "hint": "water-level view of two differently colored currents running side by side down a wide river canyon, split by a golden froth line, warmth visibly traveling upstream toward distant fields"
       },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "path-intro",
-          "text": "The river path was quiet, majestic, and full of untarnished provenance. Boof knew that the nature of the quest had fundamentally shifted. This was no longer about escaping cold fields or outwitting riddles; it was about moving forward into public life with every tributary still respectfully named. A quote carried in the current still belonged to the shelf where it was written. You could paddle upstream from any point along the merge and find the clean mountain spring where the water began."
+          "text": "The granting was quiet, as small true things are. No thunder, no rearranged roads, no strangers press-ganged into coincidence. Far upcountry, in the dawnward field where all of this began, one furrow shrugged off its frost and simply stayed warm — always, from now on, a kept place for whatever comes next without a receipt. The wish aligned with momentum the land already had, which is why it cost so little and reached so far. Somewhere a stranger was owed a coincidence, and would get a good one. And a Thursday, somewhere in next week, quietly ceased to exist, and nobody missed it."
         }
       ]
     },
     {
       "type": "custom-fool",
-      "data-trope": "trickster",
+      "data-trope": "last-wish",
       "data-mask": "path",
       "scene": {
-        "vantage": "looking beside Boof on the bridge railing where the Fool leans with elbows on the weathered timber",
+        "vantage": "looking beside Boof on the bridge railing where the Fool leans with elbows on the weathered timber, watching the Genie walk upstream toward the grove",
         "light": "warm sunset gold bathing his profile; his eyes reflecting the joined river",
         "scent": "sun-baked wood, river mint, sweet water",
         "edges": [
-          "the Fool rests an unpainted oar against his shoulder",
-          "his hand rests gently on the spliced mooring rope",
-          "downstream, the great dome of the canon archive appears on the riverbank"
+          "the Genie grows lighter with every step, instruments left folded on the rail",
+          "at the treeline he thins into the grove's dusk like a note joining a chord",
+          "the Fool taps his tuning fork softly, in welcome, not farewell"
         ],
-        "hint": "a jester and a working dog leaning over a wooden bridge rail at sunset, watching two merging rivers flow toward a distant domed stone library"
+        "hint": "a jester and a working dog leaning over a wooden bridge rail at sunset, watching a tired luminous figure walk upstream into a dark whispering grove and become part of it"
       },
       "content": [
         {
           "type": "pull",
-          "text": "Confluence without amnesia."
+          "text": "The last-wish trope, sampled: the genie spends the final granting on himself — and he does not fade. He posts himself to the grove and accrues."
         },
         {
           "type": "paragraph",
-          "text": "Elbows on the rail, an unpainted oar at his shoulder, the archive dome already downstream."
+          "text": "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit."
         }
       ]
     },
@@ -193,64 +193,67 @@
       "type": "figure",
       "img": {
         "src": "/book/images/12.png",
-        "alt": "Two rivers meeting under a low bridge, a visible gold seam of current, the cracked egg riding the confluence.",
+        "alt": "Two rivers meeting under a low bridge, a visible gold seam of current; on the bridge, a pie splits himself in apology while a warm egg glows in a dog's sling.",
         "loading": "lazy"
       },
-      "figcaption": "Confluence: merge without amnesia."
+      "figcaption": "The Last Confluence: everything he had left, plus one Thursday."
     },
     {
       "type": "section",
-      "title": "The Integrity of Provenance",
-      "data-motif": "egg",
+      "title": "Both Receipts Posted",
+      "data-motif": "berry-memory",
+      "data-foreshadow": "ninth-honk",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof looked down the joined river channel and felt a deep, grounded peace that had nothing to do with artificial neatness. Sources remained fully addressable after merge. The egg—a self-governing cell that had kept its own law across thirteen leagues of trial—did not dissolve into the river foam. It rode the current like a ship that carries its own compass."
+          "text": "Then the last threads came down the road to the bridge, because a confluence gathers. Mr. BaneWAP arrived first, walking soft, his banker's crust gone flaky and generous where the awakened berries had re-sweetened him from the inside out. He had no coin fit for the apology he owed, so he paid in the only currency a pie has: he split himself, clean down the crimp, and offered the slices to the road. And Mr. BoonWAP — who serves himself in slices and is never smaller — received him warm, the way Bonk City receives everything, and showed him the trick of it: giving is not subtraction if the filling is true."
         },
         {
           "type": "paragraph",
-          "text": "Downstream, where the river swept past the ancient willow groves, the Grand Archive of Lore.Land had thrown its great rotunda doors wide open. The portal was shaped like a cracked eggshell, illuminated from within by golden lamp-lanes, inviting any reader to inspect the entire history from its first frozen furrow."
+          "text": "Mx. BoneWAP arrived last, clean-boiled and exact, and posted both receipts on the bridge rail where any traveler could audit them: one slice given in apology, one slice received in welcome, sources named, nothing flattened. And here was the quiet miracle of the small wish already at work — both receipts could post, because the wish had aligned them. The whole confluence held: berry water and chalk water, bitter pie and boon pie, ledger and grove, all sharing one bed along a living seam, a membrane that shares without giving the house away. The egg in Boof's sling was lighter now, and its heartbeat had changed from waiting to arriving."
         }
       ],
       "climate": {
         "tempo": "evening",
         "tint": "confluence",
-        "hook": "integrity-provenance"
+        "hook": "both-receipts-posted"
       },
       "scene": {
-        "vantage": "under the low bridge, egg on the seam",
-        "light": "day on two waters, gold rope at the splice",
-        "scent": "river, wet rope, warm shell",
+        "vantage": "on the bridge deck among the gathered cast, receipts nailed to the rail",
+        "light": "evening gold on two waters, lamplight warming the receipts",
+        "scent": "river, warm pie, wet rope, drying ink",
         "edges": [
-          "two currents, one turn",
-          "the seam is visible",
-          "sources remain named",
-          "the egg rides, does not dissolve"
+          "BaneWAP split along the crimp, sweeter for it",
+          "BoonWAP serving welcome in slices, never smaller",
+          "BoneWAP's two receipts posted side by side on the rail",
+          "the seam below holds: shared bed, unforgotten springs"
         ],
-        "hint": "two rivers meeting under a low bridge, visible membrane of current, gold ropes spliced at the seam, coal-dark cracked egg riding the confluence"
+        "hint": "an evening bridge over a two-toned confluence, a gathered cast of sentient pies exchanging slices, two paper receipts posted on the rail, a dog with a glowing egg at the center; warm communal light"
       }
     },
     {
       "type": "custom-boof",
+      "data-motif": "ninth-honk",
+      "data-foreshadow": "readers-wish",
       "scene": {
-        "vantage": "stepping off the bridge landing onto the manicured gravel path leading toward the grand archive rotunda",
+        "vantage": "stepping off the bridge landing onto the gravel path leading downstream toward the grand archive rotunda",
         "light": "violet twilight deepening; a brilliant shaft of golden lamplight pours out of the open archive doors onto the lawn",
-        "scent": "ancient parchment, fresh ink, gardenias, cool river breeze",
+        "scent": "ancient parchment, fresh ink, gardenias, cool river breeze, one furrow's warmth on the wind from far upcountry",
         "edges": [
           "the gravel path is lined with low granite pillars holding unlit beacon bowls",
-          "the egg in her sling is glowing with incandescent gold light from its crown",
-          "the great eggshell-shaped doorway of the library stands completely open to the night"
+          "the egg in her sling is bright now, its door-crack singing almost audibly",
+          "the great eggshell-shaped doorway of the archive stands completely open to the night"
         ],
         "hint": "a dog trotting up a gravel garden path at twilight carrying a radiant glowing egg toward a massive circular stone library with an illuminated open door"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Where does the water end?\" Boof asked, lifting her nose toward the archive rotunda. It doesn't end; it returns to the fields as dew."
+          "text": "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand."
         },
         {
           "type": "paragraph",
-          "text": "She followed the gravel path off the bridge and trotted toward the last door. The serial was not a closed vault to be locked away; it was an open monument built to be read, tested, and walked again."
+          "text": "She followed the gravel path off the bridge with the singing egg against her chest. One thing remained, and she could feel it gathering in the shell like breath before a note: eight honks sounded, one still owed, and a wish, once finished, has one last thing it is required to do."
         }
       ]
     }
@@ -258,13 +261,13 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Confluence is a publishing problem: how to ship a whole without flattening provenance."
+        "description": "Boof's wish, sworn true under the Blueberry Oath: one warm furrow kept open, always, for whatever arrives next without a receipt."
       },
       {
-        "description": "A membrane shares a turn without giving the house away. Sources remain addressable after merge."
+        "description": "Honest price of a forever-small wish: everything the Genie had left, plus one Thursday. He retires into the grove as its next echo — a granting you can visit."
       },
       {
-        "description": "Many hands on one turn: the operation happens entirely, or not at all."
+        "description": "BaneWAP splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts. Both can post because the wish aligned them."
       }
     ]
   }

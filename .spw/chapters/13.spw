@@ -6,7 +6,7 @@
 
 ^[chapter/13]{
   title: "Lore.Land Canon"
-  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The serial completes its first great cycle by making the world’s self-record a public, revisitable surface. The egg rests upon a quiet reading desk; the last door stands open as a cracked eggshel..."
+  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The finished wish sounds as the ninth honk — one clean note over the whole land — and the maps finally take the ink, the warm furrow their first accepted line. The Fool bows, returns every sample..."
   mood: "reflection"
   period: "spring"
   chapter_path: "/book/chapter/13/"
@@ -28,20 +28,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The Grand Archive of Lore.Land at the terminus of the river path was smaller, quieter, and vastly more honest than its monumental reputation suggested. Boof padded across the polished slate floor, where the scent of o..."
+    excerpt: "The archive at the terminus of the river path was smaller, quieter, and vastly more honest than its reputation suggested, and it was here, on the polished slate at the center of the rotunda, that the finished wish did..."
     route: ^[chapter/13/s01]{open}
   >
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    excerpt: "The archive had nothing to conceal. Its vaulted trusses exposed their load paths exactly like the chassis of Bone.land. Every receipt gathered across the serial was folded into a single transparent history that any tr..."
+    excerpt: "The record had nothing to conceal and no clerk to guard it. Every receipt the serial had gathered — the oath, the audit, the apology, the price paid in a genie's whole reserve plus one Thursday — folded into a single ..."
     handles: ["reflection-intro"]
     route: ^[chapter/13/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "Fork and bell hung on a hook in the stacks. The shelves still had room for a mask no one had named."
+    excerpt: "The Boonberry Fool bowed and paid the genre's whole law out loud: the found-object trope, back warmer; the greed trope, back sweeter; the retirement trope, back as an echo you can visit; the small-wish trope, back as ..."
     route: ^[chapter/13/s03]{open}
   >
   s04: [
@@ -53,14 +53,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Living Return Path"
-    excerpt: "Boof looked from the open ledger to the radiant eggshell portal. The first frozen dawn and this final illuminated chamber agreed upon a single, incorruptible covenant: the egg had arrived along a road that had not exi..."
+    title: "The Blank Last Line"
+    excerpt: "Boof looked from the self-writing ledger to the radiant eggshell portal and understood the agreement the first dawn and this last chamber had made between them: the egg had arrived on a road that did not exist until h..."
     route: ^[chapter/13/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof set her chin on the desk one last time and felt the egg's heat change. Not hotter — steadier. The countdown that had walked with her for thirteen leagues settled into a hearth-beat: the cell, finding the door alr..."
+    excerpt: "Boof set her chin on the desk one last time, beside the empty shell. It was still warm — not counting down anymore, just keeping, the way a hearth keeps after the bread is out. A small reader could climb to this desk ..."
     route: ^[chapter/13/s06]{open}
   >
 ]
@@ -89,12 +89,12 @@
 
 #[chapter/13/lore]{
   notes: [
-    "Canon here means durable return path, not sealed dogma."
-    "A small reader at a single desk can check a whole history. The last door is shell-shaped on purpose."
-    "The egg remains a cell: it keeps its own law. The record learns to receipt it without owning it."
-    "The open door is intentional: the next cycle can re-enter without pretending the first never happened."
-    "Once the shell-door is open, the cell's first public turn is to keep. It receipts the dawn by remaining itself. What hatches is still un-named."
-    "The Fool is a trickster of honest masks. Chamber 13 names five faces and leaves the next one unfiled — the trope extends by wearing a new mask, not by unmasking the last."
+    "A finished wish must sound. The ninth honk — the unsounded note carried since Chamber 09 — rings once, clean, over the whole land."
+    "The maps take the ink at last. The first line they accept is the warm furrow; the canon records itself after that."
+    "The Fool names the genre for the record: this was Boonhonk, and the crate it dug from is called lore.land."
+    "Genre law, paid in full: every sampled trope returned changed, with interest — greed back sweeter, retirement back as an echo you can visit, the small wish back as a furrow that never clo..."
+    "The ledger's last line stays blank on purpose. The empty eggshell rests on it as the bottle for the next wish, which belongs to the reader."
+    "A small reader can still check the heat of the shell against the blank last line and find them in agreement: finished and unstarted, both true on purpose."
   ]
 }
 

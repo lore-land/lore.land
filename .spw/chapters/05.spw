@@ -6,7 +6,7 @@
 
 ^[chapter/05]{
   title: "The Quiet Rift"
-  description: "Chapter 5 of Lore.Land: The Quiet Rift. The surface of the town counting room appears serene while two conflicting receipts refuse to post together. The egg warms the fracture from below; the Fool's melody makes the disagreement audible ..."
+  description: "Chapter 5 of Lore.Land: The Quiet Rift. Two claims on the unspent wish refuse to post to one ledger while the Genie teaches wish-physics over the crack itself — old correction-debt from a grandiose wish, still singing. Redirect, don't cr..."
   mood: "song"
   period: "spring"
   chapter_path: "/book/chapter/05/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The town counting room was calm the way a held breath is calm. Sunlight poured through tall stone arches, illuminating rows of immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the cen..."
+    excerpt: "The town counting room was calm the way a drawn bowstring is calm. Sunlight poured through tall stone arches over immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the central desk. Bo..."
     route: ^[chapter/05/s01]{open}
   >
   s02: <
     handle: "custom-song/02"
     type: "custom-song"
-    excerpt: "The song did not invite anyone to dance. It named the fracture with mathematical cruelty: one receipt for a harvest of boonberries that had actually filled the kitchen kettles; one receipt for a harvest that existed o..."
+    excerpt: "The song did not invite anyone to dance. It named the fracture note by note: one claim that would spend the wish as slices, one claim that would bank it whole and let it go bitter. Two receipts on one warmth. The melo..."
     handles: ["song-verse"]
     route: ^[chapter/05/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "The tuning fork hummed against the split desk. The wood, not the Fool, was singing."
+    excerpt: "The tuning fork hummed against the split desk. The wood, not the Fool, was singing — a very old melody, in a key nobody had budgeted for."
     route: ^[chapter/05/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Diagnostic Hum"
-    excerpt: "The acoustic frequency twisted through the tall room the way a true count twists a dishonest clerk. Every step Boof took along the stone split harmonized with the disagreement. The egg did not pick a side between the ..."
+    title: "Wish-Physics Over the Crack"
+    excerpt: "It was here, with his slippered feet planted either side of the hairline, that the Genie finally taught the physics properly. A wish, he said, does not make anything. Making costs miracles, and miracles were exactly t..."
     route: ^[chapter/05/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof knew that scent all too well. A dog who works for honest blueberries knows immediately when a bowl is empty despite what the master shouts from the porch. A total is only as real as the fruit that lands in the di..."
+    excerpt: "Boof understood the physics better than the clerks did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under ..."
     route: ^[chapter/05/s06]{open}
   >
 ]
@@ -90,9 +90,10 @@
 
 #[chapter/05/lore]{
   notes: [
-    "The rift is an audit condition: two receipts that cannot both post."
-    "Song enters as a diagnostic — melody makes the fracture audible without forcing a false fix."
-    "A cell does not reconcile other people's books. The egg warms the crack and leaves it honest."
+    "Two claims on the wish — a boon-claim and a bane-claim — cannot both post. The rift is the song of that disagreement made audible."
+    "Wish-physics, taught properly: a wish redirects momentum the world already has. Small and aligned costs one coincidence and a Thursday; grand and crosswise bills a correction to someone e..."
+    "The rift itself is old correction-debt from a grandiose wish granted centuries ago and never paid down. The land pays the interest a hairline at a time."
+    "The egg warms the crack and leaves it honest. A wish does not reconcile other people's wanting."
   ]
 }
 

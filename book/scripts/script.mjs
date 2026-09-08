@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupPrimaryAction(chapterData);
     setupCustomElementsInteractions(chapterData);
     setupSpwHypertextRoutes(chapterData, announce);
+    setupTropeLedger(announce);
     setupTuningControls(announce);
     // Reading chrome + climate: needed early for sticky pad and temporal light.
     const destroyChapterChrome = initChapterChrome();
@@ -592,6 +593,55 @@ function createSceneSketch(scene) {
   return details;
 }
 
+/** Mark kinds rendered as kicker chips, in display order. */
+const SECTION_MARK_KINDS = [
+  { attribute: 'data-motif', kind: 'motif', description: 'recurring motif' },
+  { attribute: 'data-trope', kind: 'trope', description: 'sampled trope' },
+  { attribute: 'data-foreshadow', kind: 'foreshadow', description: 'foreshadowing' }
+];
+
+/**
+ * Humanizes a kebab-case mark value for reader-facing display.
+ * @param {string} value - The raw mark value (e.g. "ninth-honk").
+ * @returns {string} - The humanized value (e.g. "ninth honk").
+ */
+function humanizeMarkValue(value) {
+  return String(value).split('-').join(' ');
+}
+
+/**
+ * Renders the semantic marks a section carries (motif / trope / foreshadow)
+ * as a small kicker chip row, so the series-mark layer is legible instead
+ * of living only in attribute space.
+ * @param {HTMLElement} elem - The section or custom element carrying data-* marks.
+ * @returns {HTMLElement|null} - A <p class="section-marks"> row, or null when unmarked.
+ */
+function createSectionMarks(elem) {
+  const marks = SECTION_MARK_KINDS
+    .map((meta) => ({ ...meta, value: elem.getAttribute(meta.attribute) }))
+    .filter((meta) => meta.value);
+
+  if (!marks.length) {
+    return null;
+  }
+
+  const row = document.createElement('p');
+  row.className = 'section-marks';
+  row.setAttribute('aria-hidden', 'false');
+
+  marks.forEach((meta) => {
+    const chip = document.createElement('span');
+    chip.className = `mark mark--${meta.kind}`;
+    chip.dataset.mark = meta.value;
+    chip.textContent = humanizeMarkValue(meta.value);
+    chip.title = `${meta.description}: ${humanizeMarkValue(meta.value)}`;
+    chip.setAttribute('aria-label', `${meta.description}: ${humanizeMarkValue(meta.value)}`);
+    row.appendChild(chip);
+  });
+
+  return row;
+}
+
 /**
  * Creates a section element with a heading and content.
  * @param {Object} section - The section data object.
@@ -615,6 +665,11 @@ function createSection(section) {
       sec.setAttribute(key, value);
     }
   });
+
+  const sectionMarks = createSectionMarks(sec);
+  if (sectionMarks) {
+    sec.appendChild(sectionMarks);
+  }
 
   if (section.scene) {
     sec.dataset.scene = 'true';
@@ -665,6 +720,11 @@ function createCustomElement(section, context = {}) {
     if (!customElem.getAttribute('data-frame')) {
       customElem.setAttribute('data-frame', 'shot');
     }
+  }
+
+  const customElemMarks = createSectionMarks(customElem);
+  if (customElemMarks) {
+    customElem.appendChild(customElemMarks);
   }
 
   if (customElem.dataset.mask) {
@@ -836,6 +896,76 @@ function setupSpwHypertextRoutes(data, announce) {
   });
 
   section.append(heading, lead, shortcutHint, list);
+  aside.append(section);
+}
+
+/**
+ * Adds a "Trope ledger" section to the chapter aside when the rendered page
+ * contains any [data-trope] mark: one chip per marked section that scrolls
+ * smoothly to it and briefly flashes it (`.mark-target-flash`).
+ * @param {Function} [announce] - Optional live-region announcer.
+ */
+function setupTropeLedger(announce) {
+  const aside = document.querySelector('aside');
+  const chapterContent = document.getElementById('chapter-content');
+  if (!aside || !chapterContent) {
+    return;
+  }
+
+  const existing = aside.querySelector('.trope-ledger');
+  if (existing) {
+    existing.remove();
+  }
+
+  const marked = Array.from(chapterContent.querySelectorAll('[data-trope]'));
+  if (!marked.length) {
+    return;
+  }
+
+  const section = document.createElement('section');
+  section.className = 'trope-ledger';
+  section.dataset.component = 'trope-ledger';
+  section.setAttribute('aria-label', 'Trope ledger');
+
+  const heading = document.createElement('h2');
+  heading.textContent = 'Trope Ledger';
+
+  const lead = document.createElement('p');
+  lead.textContent = 'Sampled tropes in this chapter. Select one to visit its section.';
+
+  const list = document.createElement('ul');
+  list.className = 'trope-ledger-list';
+
+  marked.forEach((target) => {
+    const value = target.getAttribute('data-trope');
+    const human = humanizeMarkValue(value);
+
+    const li = document.createElement('li');
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'trope-ledger-chip mark mark--trope';
+    chip.dataset.mark = value;
+    chip.textContent = human;
+    chip.setAttribute('aria-label', `Scroll to sampled trope: ${human}`);
+
+    chip.addEventListener('click', () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      target.classList.remove('mark-target-flash');
+      // Force a reflow so re-clicking the same chip restarts the flash.
+      void target.offsetWidth;
+      target.classList.add('mark-target-flash');
+      window.setTimeout(() => target.classList.remove('mark-target-flash'), 1600);
+      if (announce) {
+        announce(`Trope located: ${human}`);
+      }
+    });
+
+    li.append(chip);
+    list.append(li);
+  });
+
+  section.append(heading, lead, list);
   aside.append(section);
 }
 

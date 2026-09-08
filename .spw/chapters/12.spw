@@ -6,7 +6,7 @@
 
 ^[chapter/12]{
   title: "The Last Confluence"
-  description: "Chapter 12 of Lore.Land: The Last Confluence. All narrative and craft threads meet. Merger without amnesia: two rivers of distinct water share a single bed along an unblended seam. Many hands join in one turn; provenance remains inspecta..."
+  description: "Chapter 12 of Lore.Land: The Last Confluence. Boof names her small true wish at the meeting of two rivers; the Off-Season Genie prices it honestly and retires into the grove as its next echo. BaneWAP, re-sweetened, splits himself as apol..."
   mood: "path"
   period: "spring"
   chapter_path: "/book/chapter/12/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Two great mountain rivers met beneath a wide, low-planked timber bridge. Boof stood at the middle pier, yellow blossoms from the paradox garden still dusting her whiskers. Before her an unblended seam of living curren..."
+    excerpt: "Two great mountain rivers met beneath a wide, low-planked timber bridge, and it was there, muzzle over the rail with the egg warm between her paws, that Boof finally knew. Not a hunch. Not the shape of a want seen sid..."
     route: ^[chapter/12/s01]{open}
   >
   s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    excerpt: "The river path was quiet, majestic, and full of untarnished provenance. Boof knew that the nature of the quest had fundamentally shifted. This was no longer about escaping cold fields or outwitting riddles; it was abo..."
+    excerpt: "The granting was quiet, as small true things are. No thunder, no rearranged roads, no strangers press-ganged into coincidence. Far upcountry, in the dawnward field where all of this began, one furrow shrugged off its ..."
     handles: ["path-intro"]
     route: ^[chapter/12/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "Elbows on the rail, an unpainted oar at his shoulder, the archive dome already downstream."
+    excerpt: "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit."
     route: ^[chapter/12/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Integrity of Provenance"
-    excerpt: "Boof looked down the joined river channel and felt a deep, grounded peace that had nothing to do with artificial neatness. Sources remained fully addressable after merge. The egg—a self-governing cell that had kept it..."
+    title: "Both Receipts Posted"
+    excerpt: "Then the last threads came down the road to the bridge, because a confluence gathers. Mr. BaneWAP arrived first, walking soft, his banker's crust gone flaky and generous where the awakened berries had re-sweetened him..."
     route: ^[chapter/12/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Where does the water end?\" Boof asked, lifting her nose toward the archive rotunda. It doesn't end; it returns to the fields as dew. She followed the gravel path off the bridge and trotted toward the last door. The s..."
+    excerpt: "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand. She followed the gravel pat..."
     route: ^[chapter/12/s06]{open}
   >
 ]
@@ -90,9 +90,9 @@
 
 #[chapter/12/lore]{
   notes: [
-    "Confluence is a publishing problem: how to ship a whole without flattening provenance."
-    "A membrane shares a turn without giving the house away. Sources remain addressable after merge."
-    "Many hands on one turn: the operation happens entirely, or not at all."
+    "Boof's wish, sworn true under the Blueberry Oath: one warm furrow kept open, always, for whatever arrives next without a receipt."
+    "Honest price of a forever-small wish: everything the Genie had left, plus one Thursday. He retires into the grove as its next echo — a granting you can visit."
+    "BaneWAP splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts. Both can post because the wish aligned them."
   ]
 }
 

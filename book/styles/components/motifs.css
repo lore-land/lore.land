@@ -119,6 +119,119 @@
   --theme-shadow-strong: 0 24px 44px rgba(2, 8, 24, 0.22);
 }
 
+/*
+ * Section-mark kickers — the legible face of the hairline system above.
+ * A marked section keeps its warmed left rule; the chip row names the mark
+ * so the semantics stop being invisible. Micro-typography matches the
+ * scene-sketch summary: heading mono, letter-spaced, uppercase.
+ */
+.section-marks {
+  margin: 0 0 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  text-indent: 0;
+}
+
+.mark {
+  --mark-color: var(--theme-accent-main, #2a6f7f);
+  display: inline-block;
+  padding: 0.14rem 0.5rem 0.12rem;
+  border: 1px solid color-mix(in srgb, var(--mark-color) 38%, transparent 62%);
+  border-radius: 999px;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--mark-color) 78%, var(--theme-text-main, #1a2233) 22%);
+  background: color-mix(in srgb, var(--mark-color) 8%, transparent 92%);
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.mark:hover {
+  border-color: color-mix(in srgb, var(--mark-color) 68%, transparent 32%);
+  background: color-mix(in srgb, var(--mark-color) 16%, transparent 84%);
+  color: var(--mark-color);
+}
+
+.mark--motif {
+  --mark-color: var(--motif-color);
+}
+
+.mark--trope {
+  --mark-color: var(--trope-color);
+}
+
+.mark--foreshadow {
+  --mark-color: var(--foreshadow-color);
+}
+
+/* Dark themes read the same tokens; only the ink-mix flips toward text-alt. */
+html[data-theme="cosmos"] .mark {
+  color: color-mix(in srgb, var(--mark-color) 72%, var(--theme-text-alt, #b9c4dd) 28%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .mark {
+    color: color-mix(in srgb, var(--mark-color) 72%, var(--theme-text-alt, #b9c4dd) 28%);
+  }
+}
+
+@media print {
+  /* Marks stay useful on paper: ink-only, no tint, no motion. */
+  .mark {
+    background: none;
+    border-color: currentColor;
+    color: inherit;
+    transition: none;
+  }
+}
+
+/*
+ * Trope ledger — aside panel of [data-trope] chips (see setupTropeLedger).
+ * Chips are real buttons; clicking one scrolls to and flashes its section.
+ */
+.trope-ledger-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.trope-ledger-chip {
+  cursor: pointer;
+  appearance: none;
+}
+
+.trope-ledger-chip:focus-visible {
+  outline: 2px solid var(--trope-color);
+  outline-offset: 2px;
+}
+
+/* Brief highlight on the section a ledger chip navigates to. */
+.mark-target-flash {
+  animation: mark-target-flash 1.4s ease-out 1;
+}
+
+@keyframes mark-target-flash {
+  0% {
+    background-color: color-mix(in srgb, var(--component-color, var(--trope-color)) 18%, transparent 82%);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-target-flash {
+    animation: none;
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--component-color, var(--trope-color)) 55%, transparent 45%);
+  }
+}
+
 .motif-controls {
   display: flex;
   flex-wrap: wrap;

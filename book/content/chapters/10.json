@@ -1,9 +1,9 @@
 {
   "chapterNumber": 10,
   "title": "Bone.land Resonance",
-  "logline": "Bone.land is the small constitution — the spine that holds when the veil shakes.",
-  "epigraph": "Skeleton first; ornament after the load path is honest.",
-  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Structural honesty becomes the concert. The four civic laws—cell, key, turn, receipt—are load-bearing here. The egg nests into the crossing of two colossal timbers, and the hall settles with an earth-shaking bonk.",
+  "logline": "In Bone.land's honest timber hall, Mx. BoneWAP audits the wish and publishes the finding that ends BaneWAP's patience: the smallest wishes have the longest arcs.",
+  "epigraph": "Skeleton first. A wish, like a roof, is only as grand as the spine that must hold it.",
+  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land is the small constitution — the spine that holds when the veil shakes. Mx. BoneWAP, a pie of clean-boiled honesty, audits the egg's karmic momentum against the ledger of every wish ever spent, and publishes: grand wishes cost a generation of coincidences. BaneWAP stops pretending to wait.",
   "mood": "bonk",
   "period": "spring",
   "pillars": [
@@ -68,7 +68,7 @@
         "joint",
         "joints",
         "load",
-        "chassis",
+        "spine",
         "skeleton"
       ]
     },
@@ -78,12 +78,12 @@
       "href": "/topics/#motif",
       "terms": [
         "bonk",
-        "shockwave",
-        "structure",
-        "pegs",
-        "cruciform",
+        "audit",
+        "momentum",
+        "arc",
+        "arcs",
         "egg",
-        "kernel"
+        "wish"
       ]
     },
     {
@@ -92,12 +92,12 @@
       "href": "/topics/#promise",
       "terms": [
         "constitution",
-        "law",
-        "cell",
-        "key",
-        "turn",
-        "receipt",
-        "ornament"
+        "ledger",
+        "coincidence",
+        "coincidences",
+        "finding",
+        "published",
+        "corrections"
       ]
     }
   ],
@@ -108,24 +108,24 @@
       "climate": {
         "tempo": "day",
         "tint": "brass",
-        "hook": "load-path"
+        "hook": "spine-holds"
       },
       "scene": {
         "vantage": "at the foot of the monumental great frame between two massive limestone anchor stones, looking up along a rising truss chord",
-        "light": "clean white-gold morning sun behind the structure; a veil of fine sawdust and white scaffold cloth shivering off the high beams in backlit sheets; the bone-timbers themselves matte, honest, and calm",
-        "scent": "cut white oak, quarry limestone chalk, tallow rope grease, the mineral permanence of a frame built to outlast its scaffolding",
+        "light": "clean white-gold morning sun behind the structure; a veil of fine sawdust shaking off the high beams in backlit sheets; the bone-timbers themselves matte, honest, and calm",
+        "scent": "cut white oak, quarry limestone chalk, tallow rope grease — and, faintly, clean-boiled fruit and hot honest crust",
         "edges": [
           "every mortise, tenon, and scarf joint is fully exposed and pegged with oak trunnels — nothing hidden, nothing clad in plaster",
-          "the falling veil of dust catches the sun like a cascade of water, but the structural frame does not sway an inch",
-          "carpenters and stone-masons stand back in a loose ring on the floor, tools rested, heads tilted upward in respect",
-          "on a side workbench, a single carved rosette ornament sits waiting, having not yet earned a beam that carries load"
+          "the veil of dust shivers and falls, but the structural frame does not sway an inch",
+          "on a scrubbed trestle table waits Mx. BoneWAP: a pale, plain pie, steaming with clean-boiled honesty, surrounded by open ledgers",
+          "carved along the main tie-beam runs the small constitution of the land"
         ],
-        "hint": "monumental timber-and-bone frame from ground level looking up; sheets of backlit veil-cloth and dust shivering off it in morning light; still, honest joinery; builders watching from below; one carved ornament waiting on a bench; white-gold on deep teal"
+        "hint": "monumental timber frame from ground level looking up; backlit sheets of dust shivering off it in morning light; still, honest joinery; a plain pale pie on a scrubbed table among open ledgers; white-gold on deep teal"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "The great timber chassis of Bone.land did not pretend to be theater. Its massive square-hewn oak beams soared into the morning sky like the ribcage of an ancient leviathan, every mortise, tenon, and wooden peg left completely exposed to the open weather. Boof trotted across the sawdust floor and set the egg squarely into the cruciform joint where the two principal load-bearing trusses crossed. With a sudden, earth-shaking thud, a colossal ",
+          "text": "Bone.land did not pretend to be theater. Its square-hewn oak beams rose into the morning like the ribcage of a sleeping leviathan, every mortise and peg left exposed to the weather, because this hall was the small constitution — the spine the land trusted to hold when the veil shakes. Boof trotted across the sawdust floor, and the whole valley heard the frame answer her arrival with one deep ",
           "children": [
             {
               "type": "custom-bonk",
@@ -133,40 +133,41 @@
             },
             {
               "type": "text",
-              "text": " rang through the entire valley. Not a cartoon slapstick sound, but the deep acoustic thunder of irreversible contact with structural reality. The four foundational laws of the land were carved with an adze along the main tie-beam: a cell keeps its own law; a key may be filed smaller; a turn is an act the world admits; a receipt is the slip that remains."
+              "text": " — not slapstick, but the sound of a structure declaring itself load-bearing. And on a scrubbed trestle table between the anchor stones sat something new: a pale, plain pie, steaming faintly, ringed by open ledgers. \"Mx. BoneWAP,\" it said, by way of everything. \"Research. I audit momentum. Set the wish on the scale, please.\""
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "On a workbench near the entrance, a delicate carved rosette sat waiting in the shavings. In Bone.land, ornament is strictly forbidden until the load path has proved it can carry the weight of the roof."
+          "text": "Where BaneWAP was hoarded berries gone bitter in a banker's crust, and BoonWAP served himself and was never smaller, BoneWAP was clean-boiled honesty: no sugar it had not declared, no filling it could not show. In Bone.land, even a pie keeps its joints exposed."
         }
       ]
     },
     {
       "type": "custom-bonk",
+      "data-motif": "ledger",
       "scene": {
-        "vantage": "inches from the cruciform joint where the egg sits nested between two crossed ten-inch oak beams",
-        "light": "gold lines of stress-force illuminating the wood grain like lightning frozen in amber",
-        "scent": "scorched oak, hot iron shell, pulverized chalk dust",
+        "vantage": "inches from the trestle table where the egg rests on a brass audit-scale beside the open ledger of every wish ever spent",
+        "light": "gold lines of ledger-light illuminating the wood grain like lightning frozen in amber",
+        "scent": "scorched oak, hot iron shell, ledger ink, clean crust",
         "edges": [
-          "the egg fits the crossing with zero tolerance, acting as the structural keystone",
-          "the sound wave visibly blows fine sawdust off the timber bevels",
-          "the carved lettering of the four laws glows in deep ochre relief"
+          "the ledger's pages run back past memory: every wish ever spent, and what its corrections cost",
+          "the egg's entry draws itself as a long, low, patient arc",
+          "beside it, the projected arc of a grand wish burns short and steep and expensive"
         ],
-        "hint": "macro close-up of a dark cracked egg acting as the keystone in the cruciform intersection of two massive hand-hewn oak beams; sawdust floating in sunbeams"
+        "hint": "macro close-up of a dark cracked egg on a brass scale beside a vast open ledger, gold arcing lines of different lengths rising off the page like drawn light"
       },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "bonk-intro",
-          "text": "The sound of the bonk was staggering—a seismic resonance that traveled straight through the timber, down through the limestone footings, and deep into the bedrock of the world. It was the sound of a universe meeting an immovable principle and discovering that the principle held. Boof shook her coat, her ears ringing with the pure harmonic pitch of truth."
+          "text": "The audit itself was staggering to watch. BoneWAP weighed the egg's karmic momentum against the ledger of every wish ever spent, and the finding rose off the page in drawn gold: the smallest wishes have the longest arcs. A wish that rides the momentum reality already has travels for generations on a single coincidence and a spare Thursday; a grand wish fights the whole current, and the corrections come due like a flood. Boof shook her coat, ears ringing with the pure harmonic pitch of arithmetic being honest."
         }
       ]
     },
     {
       "type": "custom-fool",
-      "data-trope": "trickster",
+      "data-trope": "honest-audit",
       "data-mask": "bonk",
       "scene": {
         "vantage": "looking up at the tie-beam where the Fool hangs upside down by his knees",
@@ -174,19 +175,19 @@
         "scent": "dry pine resin, clean wind, oak shavings",
         "edges": [
           "the Fool knocks on the solid oak with his knuckles, producing a clear bell-tone",
-          "his face is flush with gravity, his grin wide and affectionate",
-          "below him, the vast empty nave stretches toward an open archway"
+          "his face is flush with gravity, his grin wide and knowing",
+          "below him, BoneWAP stamps its finding in clean black ink"
         ],
-        "hint": "a jester hanging upside down by his knees from a massive wooden ceiling truss in a sunlit timber hall, rapping on the wood with his knuckles"
+        "hint": "a jester hanging upside down by his knees from a massive wooden ceiling truss in a sunlit timber hall, rapping on the wood with his knuckles above a pie stamping documents"
       },
       "content": [
         {
           "type": "pull",
-          "text": "Plaster sneezes. Oak does not."
+          "text": "Plaster sneezes. Oak does not. Grand wishes are plaster; small ones are the spine."
         },
         {
           "type": "paragraph",
-          "text": "He hung from the collar-beam like a bright bat and knocked. The oak answered as law."
+          "text": "He hung from the collar-beam like a bright bat and knocked. The oak answered as law, and the pie below him signed it."
         }
       ]
     },
@@ -194,64 +195,65 @@
       "type": "figure",
       "img": {
         "src": "/book/images/10.png",
-        "alt": "A great load-bearing wooden frame, gold seams along honest joints, the cracked egg nested in the crossing of two beams.",
+        "alt": "A great load-bearing wooden frame, gold seams along honest joints; on a trestle table, a plain pie audits the cracked egg against an open ledger.",
         "loading": "lazy"
       },
-      "figcaption": "Bone.land: the small constitution, load-bearing."
+      "figcaption": "Bone.land: the small constitution, load-bearing — and now, audited."
     },
     {
       "type": "section",
-      "title": "What the Hall Holds",
-      "data-motif": "egg",
+      "title": "The Finding, Published",
+      "data-motif": "ledger",
+      "data-foreshadow": "bane-wish",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof sat on the chalky floor while the hall hummed through her paws. Four notes, if you wanted to count them: a warmth that kept itself, a key that only filed smaller, a step the timber would admit, a slip left in the grain so the step could be checked later. She did not name them. She listened."
+          "text": "BoneWAP did not whisper its finding to a council or fold it into a drawer. It published — copies nailed to the anchor stones, carried to the tavern, read aloud at the Watering Eye. Item one: the egg's wish, spent small and true, would run to one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. Item two: the grand wish a certain bitter pie intended would demand corrections costing a generation of coincidences — a whole town's worth of luck, drafted without consent."
         },
         {
           "type": "paragraph",
-          "text": "The egg in the timber crossing was no decorative trinket placed for aesthetic balance. It was the living kernel the entire hall had been erected to support. It did not borrow stability from the oak; it gave the oak a reason to stay standing."
+          "text": "The ink was still drying when word came back up the pass: Mr. BaneWAP had read the audit, understood exactly what it meant, and stopped pretending to wait. Boof felt it through her paws before any messenger arrived — a far-off tremor in the veil, and under it, the hall's deep timbers holding, as they were built to. The spine did not flinch. That was what it was for."
         }
       ],
       "climate": {
         "tempo": "day",
         "tint": "bonk",
-        "hook": "four-truths"
+        "hook": "finding-published"
       },
       "scene": {
-        "vantage": "under the crossing beams, egg in the joint",
-        "light": "day through the frame; gold along load paths",
-        "scent": "timber, dust, warm iron",
+        "vantage": "under the crossing beams, the published finding nailed to the anchor stones, egg warm in the sling",
+        "light": "day through the frame; gold along load paths; clean black ink drying",
+        "scent": "timber, dust, warm iron, fresh ink",
         "edges": [
-          "joints exposed on purpose",
-          "four laws along the load path",
-          "the egg as kernel, not ornament",
-          "the bonk as contact with structure"
+          "the audit nailed where anyone can read it",
+          "small wishes with the longest arcs",
+          "a generation of coincidences priced and refused",
+          "a tremor in the veil; the spine holding"
         ],
-        "hint": "great load-bearing wooden frame, joints exposed, gold seams along honest load paths, coal-dark cracked egg nested in the crossing of two beams"
+        "hint": "great load-bearing wooden frame, joints exposed, printed findings nailed to limestone anchor stones, a working dog with a glowing egg reading them, gold seams along honest load paths"
       }
     },
     {
       "type": "custom-boof",
       "scene": {
-        "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking an impossible mountain garden",
-        "light": "radiant morning light illuminating a circular stone staircase that blooms with golden flowers despite having no soil",
-        "scent": "wild jasmine, honey, fresh mountain dew, warm stone bread",
+        "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking the road south",
+        "light": "hard clear noon; far down the valley, a bruise-dark smudge of crust and hurry moving up the road",
+        "scent": "wild jasmine, warm stone, fresh ink on the wind — and, far off, burnt sugar going bitter",
         "edges": [
-          "the timber cathedral stands firm behind her",
-          "the stone stair climbs three turns and rejoins its own terrace without paradox",
-          "golden vines flower out of the masonry cracks before any seed has been sown"
+          "the timber hall stands firm behind her",
+          "the published finding flutters on every post down the pass",
+          "somewhere below, BaneWAP is no longer waiting"
         ],
-        "hint": "a dog carrying a glowing egg walking out of a monumental timber hall onto a sunny garden terrace featuring an impossible, blooming spiral stone staircase"
+        "hint": "a dog carrying a glowing egg standing on a sunny stone terrace outside a monumental timber hall, looking down a long valley road where a dark shape approaches"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Is this where the trail terminates?\" Boof asked, looking up at the soaring king-post. The Fool answered with a softer, resonant knock against the wood—a door closing on empty ornament, and another swinging open upon a stone garden stair that blossomed before a single seed had been planted in the earth."
+          "text": "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. An audit does not end a story; it removes the story's excuses. Everyone in the valley now knew what the wish cost small and what it cost grand, and one bitter pie had decided the arithmetic applied to other people."
         },
         {
           "type": "paragraph",
-          "text": "She took the egg back into her sling and trotted through the northern door. Once the load-bearing bones are honest, the world has room to bloom in impossible directions."
+          "text": "She settled the egg deeper into her sling and turned south to meet what was coming. Once the load-bearing bones are honest, the shaking of the veil is not the end of the world. It is only the world checking the joints."
         }
       ]
     }
@@ -259,13 +261,13 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Bone.land is the chassis realm: persistence, scaffold, and the ethics of what carries weight."
+        "description": "Bone.land is the small constitution — the spine that holds when the veil shakes. Even its pies keep their joints exposed."
       },
       {
-        "description": "The small constitution is load-bearing here: cell, key, turn, receipt."
+        "description": "Mx. BoneWAP, a pie of clean-boiled honesty, audits karmic momentum: the smallest wishes have the longest arcs."
       },
       {
-        "description": "The bonk is the hall telling the truth with its whole weight."
+        "description": "The finding, published: BaneWAP's grand wish would cost a generation of coincidences. BaneWAP stops pretending to wait."
       }
     ]
   }

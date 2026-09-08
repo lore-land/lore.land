@@ -6,7 +6,7 @@
 
 ^[chapter/02]{
   title: "The First Echo"
-  description: "Chapter 2 of Lore.Land: The First Echo. Boof carries the unnamed egg into the grove that answers a beat late, where pollen grains sleep and wake, and an echo is a summons, never a receipt."
+  description: "Chapter 2 of Lore.Land: The First Echo. Boof carries the unspent wish into the grove that answers a beat late, where echoes rehearse futures, and the Boonberry Fool honks the three-wishes trope back changed."
   mood: "grove"
   period: "spring"
   chapter_path: "/book/chapter/02/"
@@ -30,26 +30,26 @@
     handle: "section/01"
     type: "section"
     title: "A Beat Late"
-    excerpt: "By the second morning the egg was warmer than the feed-sack sling, the sling was warmer than Boof's ribs, and the maps in the town archive were still pretending none of this was a fact. She had walked downhill the way..."
+    excerpt: "By the second morning the egg was warmer than the feed-sack sling, the sling was warmer than Boof's ribs, and the maps in the town archive were still pretending none of this had happened—which, to be fair to the maps,..."
     route: ^[chapter/02/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
-    excerpt: "The incomplete maps had led her here—the grove beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different forgotten fragment ..."
+    excerpt: "The leaning berries had led her here—the grove beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different unfinished fragment..."
     route: ^[chapter/02/s02]{open}
   >
   s03: <
     handle: "custom-boonberry/03"
     type: "custom-boonberry"
-    excerpt: "The berries here did not shine for harvest distribution. They shone like grains under stress—bright when a phrase repeated often enough to become policy, dim when the thicket put them back to sleep. Boof recognized se..."
+    excerpt: "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows—blueberries a wish had passed over long ago, each holding its drop of the granting—and in the thicket they pulsed l..."
     handles: ["grove"]
     route: ^[chapter/02/s03]{open}
   >
   s04: <
     handle: "custom-echo/04"
     type: "custom-echo"
-    excerpt: "\"Follow me,\" said an echo that used Boof’s own pitch from years earlier—the careful, rhythmic clerk-voice she had used back when she thought order was a matter of correct filing. The path forked around an ancient holl..."
+    excerpt: "\"Follow me,\" said an echo that used Boof's own pitch from years earlier—the careful, hopeful voice she had used back when she still asked for things instead of working for them. The path forked around an ancient hollo..."
     route: ^[chapter/02/s04]{open}
   >
   s05: [
@@ -62,13 +62,13 @@
     handle: "section/06"
     type: "section"
     title: "What the Echo Keeps"
-    excerpt: "Boof understood, pacing the mossy fork, that the grove was not a memory palace. It was a failure mode of the archive—overflow storage for stories that had been published too cleanly. Each echo offered a false fork: am..."
+    excerpt: "Boof understood, pacing the mossy fork, that the grove was not a memory palace. It was a rehearsal hall for the unfinished—overflow storage for every wanting the town had declined to sound. Each echo offered her a fut..."
     route: ^[chapter/02/s06]{open}
   }
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, the trick no longer entirely a joke. Boof did not answer with a riddle, and she opened no book. She wrote the grove’s first usable not..."
+    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sampled the trope the way you'd lift..."
     route: ^[chapter/02/s07]{open}
   >
 ]
@@ -101,11 +101,11 @@
 
 #[chapter/02/lore]{
   notes: [
-    "Boof is a dog guide; echoes are old scents re-lit, not automatic proof."
-    "The Grove of Echoes retains overflow testimony the polished archive will not receipt."
-    "Pollen grains in the grove sleep and wake. Brightness is not policy until someone files it."
-    "The grove repeats the egg a beat late, so there always seems to be a second one just out of sight."
-    "An echo is a summons, not a receipt. Boof records this and continues toward the sand."
+    "Boof is a dog guide; echoes are the wish rehearsing futures, not proof of any of them."
+    "The Grove of Echoes keeps what the town preferred not to receipt: unspent wants, unsounded notes."
+    "The Boonberry Fool debuts in person. He was the honk in the treeline; his genre law is that every trope sampled must be returned changed, with interest."
+    "The Fool honks the three-wishes trope back changed: three COMPLETED wishes. A wish isn't granted till it's finished."
+    "A rehearsal is not a granting; a granting needs a finisher. Boof records this and continues toward the sand."
   ]
 }
 

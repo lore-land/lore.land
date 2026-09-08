@@ -6,7 +6,7 @@
 
 ^[chapter/06]{
   title: "Lanterns of Bonk City"
-  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Impact becomes civic illumination. Boof navigates a maze of leaning bronze posts and rain-slick glass, learning that a lantern only transmits the egg's true heat without claiming ownership o..."
+  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Boof winds through streets of glass made from old impacts and meets Mr. BoonWAP, the sentient boonberry pie who serves himself in slices and is never smaller — while Mr. BaneWAP shadows the ..."
   mood: "labyrinth"
   period: "spring"
   chapter_path: "/book/chapter/06/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof trotted into Bonk City the way you step into the acoustic chamber of a struck bell. The streets did not follow straight surveyor lines; they formed a Fool’s Labyrinth of curving bronze posts, rain-slick stone arc..."
+    excerpt: "Boof trotted into Bonk City the way you step into the acoustic chamber of a struck bell. The streets did not follow straight surveyor lines; they formed a Fool’s Labyrinth of curving bronze posts, rain-slick arches, a..."
     route: ^[chapter/06/s01]{open}
   >
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    excerpt: "\"In the labyrinth, the way forward is always through the glass,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame. The city offers illumination for the public highway. But..."
+    excerpt: "\"In the labyrinth, every pane will offer you a version of your own warmth,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame, and do not mistake the flame for the wish. Th..."
     handles: ["labyrinth-intro"]
     route: ^[chapter/06/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "From the lamplighter’s top rung he tapped a brass bell into a crease, and the post remembered heat."
+    excerpt: "From the lamplighter’s top rung he tapped the brass bell into a crease, and the post remembered heat. Old impact, sampled; returned as light, with interest. That, he remarked to no one and everyone, is the whole city ..."
     route: ^[chapter/06/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Economy of Impact"
-    excerpt: "The city was alive in the exact way glass is alive when it catches an honest flame. As Boof walked down the spiraling avenue, the surrounding lanterns rearranged their angles to mirror the coal-dark egg in her sling. ..."
+    title: "The Court of Mr. BoonWAP"
+    excerpt: "At the heart of the labyrinth, in a small round plaza where every street eventually apologized and arrived, Mr. BoonWAP held court from a broad oak table. He was a pie of boonberries — berries a wish had once passed o..."
     route: ^[chapter/06/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof paused at the curb of the final alley. \"The only way through the maze,\" she thought, shaking rainwater from her ears, \"is to stop asking the glass to be the fire.\" She knew the difference between real heat that c..."
+    excerpt: "Boof paused at the last curb of the labyrinth and shook the rain from her ears. She carried a slice of BoonWAP wrapped in waxed paper, and the pie behind her was exactly as large as before, and her wish was still word..."
     route: ^[chapter/06/s06]{open}
   >
 ]
@@ -90,9 +90,10 @@
 
 #[chapter/06/lore]{
   notes: [
-    "Bonk City converts event energy into navigable light — spectacle with civic duty."
-    "A lantern is glass. It shows heat; it is not the heat. The egg remains the cell."
-    "Grains of the city sleep in the walls and wake when something strikes — rented, metered, shared, put back to sleep."
+    "Bonk City's glass is made of old impacts — collisions melted down and forgiven into transparency. Its lanterns show light without claiming to be it."
+    "Mr. BoonWAP debuts: a sentient pie of boonberries — berries a wish once passed over, each holding a drop of the granting. He serves himself in slices and is never smaller."
+    "Asked what she would wish for, Boof cannot say. BoonWAP approves: a wish you can't say yet is still proofing."
+    "Mr. BaneWAP shadows the city gates, lattice-crusted, keeping out of the light — and leaves ahead of Boof on the road to the oath stone."
   ]
 }
 

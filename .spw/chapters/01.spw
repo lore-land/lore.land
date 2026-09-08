@@ -6,7 +6,7 @@
 
 ^[chapter/01]{
   title: "Dawn in Boon.land"
-  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for fruit and honest scents—unearths a warm, unclaimed egg in a field still white with frost, and follows its heat toward a mystery the maps refuse to hold."
+  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for blueberries and honest scents—unearths a warm egg in a frozen furrow: an unspent wish from a genie's closed ledger, which the maps cannot hold because it has not happene..."
   mood: "boon"
   period: "spring"
   chapter_path: "/book/chapter/01/"
@@ -29,7 +29,7 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
-    excerpt: "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like hot iron. In the dawnward field the boonberries slept under a skin of ice, each one holding its drop of light banked low against the..."
+    excerpt: "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like a candle blown out before anyone made a wish on it. In the dawnward field the boonberries slept under a skin of ice, each one holdin..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
@@ -42,8 +42,8 @@
   s03: {
     handle: "section/03"
     type: "section"
-    title: "When a Berry Listens"
-    excerpt: "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But now and then a berry notices the shape of the story it is sitting in..."
+    title: "When a Berry Remembers"
+    excerpt: "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But every boonberry was a blueberry once, a blueberry a wish passed over..."
     route: ^[chapter/01/s03]{open}
   }
   s04: [
@@ -56,20 +56,20 @@
     handle: "section/05"
     type: "section"
     title: "The Maps That Look Away"
-    excerpt: "By full morning Boof had carried the egg—warm as a loaf, heavier than a loaf, and getting warmer—up the slope to the map-house, where Boon.land keeps its record of everything it has agreed to say exists. She had thoug..."
+    excerpt: "By full morning Boof had carried the egg—warm as a loaf, heavier than a loaf, and humming steadier—up the slope to the map-house, where Boon.land keeps its record of everything it has agreed to say exists. She had tho..."
     route: ^[chapter/01/s05]{open}
   }
   s06: {
     handle: "section/06"
     type: "section"
-    title: "Following the Heat"
-    excerpt: "There is a kind of problem a map cannot help you with, and Boof had just met the largest one of her life. If no record would hold the egg, then the egg was not a thing to be filed. It was a thing to be followed. She t..."
+    title: "Following the Hum"
+    excerpt: "There is a kind of problem a map cannot help you with, and Boof had just met the largest one of her life. If no record would hold the egg, then the egg was not a thing to be filed. It was a thing to be finished. She t..."
     route: ^[chapter/01/s06]{open}
   }
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
-    excerpt: "By the time the light went level and amber, Boof was a long way from any desk she had ever been offered and did not miss a single one of them. She had a warm egg no map would name, a direction the field had chosen for..."
+    excerpt: "By the time the light went level and amber, Boof was a long way from any desk she had ever been offered and did not miss a single one of them. She had a warm egg no map would name, a hum no record could hold, and a tr..."
     route: ^[chapter/01/s07]{open}
   >
 ]
@@ -90,14 +90,14 @@
 
 #[chapter/01/lore]{
   notes: [
-    "Boof is a dog based on Spwashi's dog. She works for the land, not an owner—paid in blueberries, honest scents, and trails that end in something real."
-    "Boonberry light is shared warmth: stoves, lanterns, winter kitchens. It sleeps until something the world has no word for asks it to pay attention."
-    "The egg—warm, unclaimed, unhatched—arrives on a road that does not exist yet. Its heat may be a countdown, an invitation, or a debt. The story does not yet say which."
-    "Boon.land's records hold only what the world has agreed exists. Ink will not take the egg's name; the maps end where its heat begins."
-    "The field chooses a direction before the people do—the berries lean toward the grove, off the edge of every known route."
-    "A hairline crack shaped like a door opens along the egg's crown as it warms. Something inside is keeping time."
-    "The grove downhill keeps echoes and will not be named after dark; Boof carries the egg toward it. (Chamber 02.)"
-    "Ink would not take the egg. Boof did not mind. Heat is a kind of record."
+    "Boof is a dog based on Spwashi's dog. She works for the land, not an owner—paid in blueberries, honest scents, and trails that end in something real. Her wants are small, and small wants ..."
+    "Boonberries are blueberries a wish once passed over. Each holds a drop of the granting; they wake when they remember being wished over."
+    "The egg is an unspent wish—the last item in the ledger of a Discount Genie who closed his practice. Its hum is a held breath: a sentence stopped one word before the wishing word."
+    "Boon.land's records hold only what has happened. An ungranted wish has not happened yet, so ink beads off the page; the maps end where its hum begins."
+    "The field remembers a direction before the people do—the berries lean toward the grove, the way a granting once went."
+    "A hairline crack shaped like a door left ajar opens along the egg's crown as it warms. Something inside is waiting to be finished, not hatched."
+    "The grove downhill keeps echoes and will not be named after dark; Boof carries the wish toward it. (Chamber 02.)"
+    "At dusk, one far-off HONK rises from the treeline—one note, like a goose that learned jazz. It is a signature, though no one has met the signer yet."
   ]
 }
 

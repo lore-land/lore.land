@@ -6,7 +6,7 @@
 
 ^[chapter/09]{
   title: "Shards of Nine Honks"
-  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Signal fragments arc across the violet night. Collecting them is community craft, not individual compulsion. The missing ninth shard is the egg—the unblown kernel of a call that chose furnace..."
+  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. The Boonhonk lineage revealed. Nine honks are nine sampled tropes, and the Fool's thirteen-chamber set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with ..."
   mood: "puzzle"
   period: "spring"
   chapter_path: "/book/chapter/09/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The mountain ridge kept a listening arc of slate and singing metal long before it was a skyline. Eight curved shards of an ancient shattered signal-horn lay in a wide crescent along the chimney-stack, each one a glowi..."
+    excerpt: "Boonhonk is an old art with young shoes, and on the ridge above the town the Fool finally showed Boof its bones. He laid his set out on the slates shard by shard — a lineage in nine pieces — for the unit of the art is..."
     route: ^[chapter/09/s01]{open}
   >
   s02: <
     handle: "custom-puzzle/02"
     type: "custom-puzzle"
-    excerpt: "The puzzle was incomplete by deliberate architectural design. No single clerk was meant to hold the entirety of the broadcast in their hand. \"Solve this if you have the pride for it,\" the mountain wind seemed to chall..."
+    excerpt: "He counted them slyly, the way a rich man counts what he means to give away. One: the three-wishes, sampled and returned as wish-physics with a price sheet. Two: the trickster-in-the-tree, returned as a Fool who climb..."
     handles: ["puzzle-intro"]
     route: ^[chapter/09/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound."
+    excerpt: "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound. Not yet."
     route: ^[chapter/09/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Network of the Listeners"
-    excerpt: "Boof knelt upon the cold slates among the humming relics. A few shards leaned toward one another in mutual sympathy, but they refused to fuse into a single horn. The scattering of the signal was the very engine of com..."
+    title: "The Shape with One Hole"
+    excerpt: "Boof nosed the egg toward the hole, and it fitted the way a true scent fits its trail — not forced, only found. The moment its coal-dark shell touched the shards, all eight hummed the same note at once, and Boof under..."
     route: ^[chapter/09/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"How do you complete a song without singing the last bar?\" Boof thought as she trotted down the ridge path. You don't. You let the last bar live as a seed instead of a memory. She did not need to carry all nine horns ..."
+    excerpt: "\"How do you finish a set without sounding the last honk?\" Boof thought as she trotted down the ridge path. You don't. You carry the last note the way you carry a want you have sworn not to spend early — warm, held, an..."
     route: ^[chapter/09/s06]{open}
   >
 ]
@@ -90,9 +90,9 @@
 
 #[chapter/09/lore]{
   notes: [
-    "Nine honks are discrete signal relics — collectible without being gamified into compulsion."
-    "The ninth was never sounded. Its shard is the egg: the kernel of a call that chose heat instead of air."
-    "Scattering forces community: no single keeper can hold the whole call."
+    "Nine honks are nine sampled tropes: the Fool's set has sounded eight — three-wishes, trickster-in-the-tree, genie-in-the-bottle, vizier-at-court, two-receipts, labyrinth-city, sworn-oath,..."
+    "The ninth honk was never sounded. Its shard is the egg: an unspent wish is an unsounded note."
+    "Assembled, the set is a shape with one hole, egg-sized — the whole serial arranged around a held breath."
   ]
 }
 

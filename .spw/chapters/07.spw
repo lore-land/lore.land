@@ -6,7 +6,7 @@
 
 ^[chapter/07]{
   title: "Blueberry Oath"
-  description: "Chapter 7 of Lore.Land: Blueberry Oath. Boof swears a covenant at the ancient market stone. The oath is a key handed over in public; the private price is honest fruit; the egg is the warm, incorruptible witness. Meanwhile, an unauthorize..."
+  description: "Chapter 7 of Lore.Land: Blueberry Oath. An oath is a key given in public, paid in fruit, with the unspent wish as witness. Boof swears to spend the wish only when the want is true, while the Fool samples the sworn-oath trope and the shad..."
   mood: "shadow"
   period: "spring"
   chapter_path: "/book/chapter/07/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The great market stone stood at the center of the square, its granite top worn smooth and dished by centuries of pressing palms. Boof stopped pretending she was walking alone. For the last three blocks, something had ..."
+    excerpt: "The great market stone stood at the center of the square, its granite top worn smooth and dished by centuries of pressing palms. Boof had come to do the one thing the council could not do for her and BaneWAP could not..."
     route: ^[chapter/07/s01]{open}
   >
   s02: <
     handle: "custom-shadow/02"
     type: "custom-shadow"
-    excerpt: "The shadow stretched across the sunny cobbles, mimicking Boof's every twitch of ear and lift of paw, but it remained ice-cold to the touch. It was an unauthorized duplicate of a key—motion without permission, outer sh..."
+    excerpt: "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The Genie read ..."
     handles: ["shadow-intro"]
     route: ^[chapter/07/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "From the awning he tossed a shriveled berry. His shadow kept a different rhythm."
+    excerpt: "From the awning he laid it out like a set: the hero's vow, sampled from every saga that ever rattled a mead-hall — swords kissed, blood mingled, thrones promised. He honked it back changed: no blade, no blood, one blu..."
     route: ^[chapter/07/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Integrity of the Bond"
-    excerpt: "The shadow twisted along the curb, occasionally leaping ahead as if trying to lead the dog astray. It seemed to know the exact path Boof sought toward the deep wells in the south, but it stubbornly refused to radiate ..."
+    title: "The Shadow Price"
+    excerpt: "Boof sat with it a while, chin on the cool granite, while the crowd thinned and the juice dried into the grooves alongside the centuries. The oath had not made the wish safer. It had made it heavier, the way a full bo..."
     route: ^[chapter/07/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "His voice thinned across the square like a last market bell."
+    excerpt: "His voice thinned across the square like a last market bell, and somewhere far off, a cart was already running a Thursday late."
     route: ^[chapter/07/s06]{open}
   >
 ]
@@ -90,9 +90,10 @@
 
 #[chapter/07/lore]{
   notes: [
-    "An oath is a key given in public and paid in private. Fruit is the private price; the egg is the witness."
-    "A shadow that copies motion without heat is an unauthorized copy of a key — gesture without receipt."
-    "What you forfeit if you lie is the bond. The stone remembers faces. The fruit does not lie about being fruit."
+    "An oath is a key given in public and paid in fruit, with the egg — the unspent wish — as witness to a promise about its own spending."
+    "Boof's oath: never spend the wish for spite, show, or hurry — only when the want is true and finally sayable."
+    "The shadow price: every spent wish owes one coincidence to a stranger. Someone always pays the correction, and they are never at the ceremony."
+    "The Fool samples the sworn-oath trope — swords and blood in every saga — and returns it with interest: one blueberry, one dog, and the clause the sagas skip."
   ]
 }
 

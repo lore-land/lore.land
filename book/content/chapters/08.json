@@ -1,9 +1,9 @@
 {
   "chapterNumber": 8,
   "title": "Songs of the Watering Eye",
-  "logline": "The Watering Eye is a well that folds every face it has held. The egg's heat names a debt in the water.",
-  "epigraph": "Water keeps every face it has ever held, briefly.",
-  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. Memory becomes a hydrologic well. Unposted receipts fold under the ink-black surface; a face in the water still belongs to its source. The egg's heat names a debt that the town archives could never file.",
+  "logline": "At a tavern leaning over a well that folds every face it has held, the Genie prices wishes for locals — and Boof's small asks come back unpriceable.",
+  "epigraph": "The well keeps every face; the tavern keeps every round. Between them, all debts are known.",
+  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. A tavern leans over a well that folds every face it has held. The Off-Season Genie runs his negotiation game, pricing wishes for locals, and finds that ordinary desires resist his machinery more than empires do. The water names the debt in the egg's heat.",
   "mood": "game",
   "period": "spring",
   "pillars": [
@@ -45,7 +45,7 @@
       "kicker": "Prev"
     },
     {
-      "label": "Grove of Echoes",
+      "label": "The Watering Eye",
       "href": "/world/civic-magic.html#grove",
       "kicker": "Office"
     },
@@ -68,8 +68,8 @@
         "faces",
         "coping",
         "depth",
-        "resonance",
-        "quote",
+        "fold",
+        "folds",
         "source"
       ]
     },
@@ -81,10 +81,11 @@
         "debt",
         "egg",
         "heat",
-        "receipt",
-        "slips",
-        "gold fold",
-        "rope"
+        "coincidence",
+        "Thursday",
+        "wish",
+        "wishes",
+        "ledger"
       ]
     },
     {
@@ -93,11 +94,12 @@
       "href": "/world/civic-magic.html#fool",
       "terms": [
         "game",
-        "rules",
-        "board",
-        "objective",
-        "turn",
-        "play"
+        "price",
+        "priced",
+        "quote",
+        "lager",
+        "tavern",
+        "unpriceable"
       ]
     }
   ],
@@ -105,88 +107,90 @@
     {
       "type": "custom-boof",
       "data-mood": "game",
+      "data-motif": "ledger",
       "climate": {
         "tempo": "night",
         "tint": "teal",
         "hook": "well-fold"
       },
       "scene": {
-        "vantage": "front paws propped on the mossy granite well-coping, head tipped over the dark void, looking down at still black water an arm's length below",
-        "light": "one brass lantern hung from the well's wooden windlass arm; the water reflects not the lantern above, but earlier lanterns and layered faces from past years",
-        "scent": "wet granite, damp hemp rope, cold mineral water, rising mist, and the sharp hot-iron scent of the egg resting on the stone rim",
+        "vantage": "front paws propped on the mossy granite well-coping under the tavern's leaning floorboards, nose a breath from still black water",
+        "light": "tavern lamplight spilling through gaps in the floor above; the water reflects not tonight's lamps but earlier lamps, and under them, layered faces from other years",
+        "scent": "wet granite, spilled lager, damp hemp rope, cold mineral water — and the hot-iron scent of the egg in its sling",
         "edges": [
-          "the water surface is completely motionless, holding a human face mid-word, mouth open on an unspoken confession",
-          "folded golden sheets of light stack like sunken parchment receipts deep below the waterline",
-          "the taut hemp rope descends into the black shaft without a bucket, trembling with distant underwater vibrations",
-          "around the rim, old carved symbols pulse when spoken to"
+          "the tavern leans over the well like a drinker leaning over a confession",
+          "the water surface is motionless, holding a face mid-wish, mouth open on a want never spoken aloud",
+          "folds of older faces stack beneath the surface like pressed linen going down into the dark",
+          "the Genie's brass instruments are set up on a barrel-head like a card game"
         ],
-        "hint": "dark stone well at night in a misty glen; still black water holding a faint glowing face and stacked golden receipts; a working dog with paws on the mossy coping looking down"
+        "hint": "an old stone well beneath a leaning timber tavern at night; still black water holding faint layered faces; lamplight through floorboards; a working dog with paws on the mossy coping, a glowing egg slung at her chest"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "The Watering Eye had been an ancient civic well long before anyone set its history to music. Boof trotted into the misty glen and propped her front paws against the mossy granite coping. In the still, ink-black water below, she saw a human face held mid-name in shimmering suspension, and beneath it, stacked like underwater parchment, a ",
+          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first. It showed her an older one — a woman mid-wish, mouth open on a want she had never said aloud — and under that face, folded like pressed linen going down into the dark, every other face the well had ever held. From the barrel-head behind her came the ",
           "children": [
             {
               "type": "custom-game",
-              "content": "gold fold"
+              "content": "Genie's quoting voice"
             },
             {
               "type": "text",
-              "text": " of luminous receipts that had learned how to stay wet without rotting. The Fool’s voice drifted up from the dark shaft, playful, precise, and echoing with acoustic clarity: \"Shall we play, Boof? The board is wet, and the game is simple: listen until the debt in the water has an honest name.\""
+              "text": ", brisk as a market morning: \"I can make you famous by Tuesday, or respected by November. Fame is cheap — reality already leans that way for loud people. Respect requires corrections. Choose.\""
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "A ledger in a dry room can be altered with a scraper's knife. But a debt whispered into deep spring water stays folded in the current until someone comes to draw the bucket."
+          "text": "A face said into deep water is not stolen; it is folded, and it stays the property of whoever wore it. The well kept the faces the way an honest ledger keeps a debt: patiently, and without letting anyone else spend them."
         }
       ]
     },
     {
       "type": "custom-game",
       "scene": {
-        "vantage": "looking down directly into the water's surface as concentric golden rings spread from the rim",
-        "light": "glowing gold heraldic marks rising and sinking in the ripples",
-        "scent": "mineral silt, well-moss, old iron hooks",
+        "vantage": "the tavern floor above the well, looking down the long table where the Genie sits pricing wishes like a card dealer",
+        "light": "amber lamplight, brass instruments glinting, a needle on a karmic gauge that will not settle",
+        "scent": "lager, candle tallow, old oak table, the mineral breath of the well rising through the floor",
         "edges": [
-          "symbols of fruit, scales, and horn-notes drift across the water",
-          "the face beneath the ripples stays clear and unblurred",
-          "each wave carries a fragment of an old civic song"
+          "the Genie's instruments were built for emperors and hum with boredom",
+          "a regular at the bar raises one finger for another lager",
+          "locals queue with wants: a roof mended, a cousin forgiven, supper agreed upon",
+          "every small want makes the pricing needle swing wider than a kingdom would"
         ],
-        "hint": "overhead view of ripples in a black stone well, with golden geometric runes and fragments of music floating across the surface"
+        "hint": "a warm crowded tavern interior at night, a genie in a worn coat pricing wishes at a long table with brass instruments, locals queued with humble wants, a trapdoor in the floor open over dark well-water"
       },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "game-intro",
-          "text": "The game board was the surface of the well itself. Luminous symbols of bushels, measures, and forgotten names rose and sank with every ripple of air. The rules were never written on placards, but the fundamental law of the water was absolute: a quote the well keeps still belongs to the voice that uttered it. The water did not steal the face, nor did it claim ownership of the grievance. It merely folded the memory like fine linen, waiting for an auditor who knew how to listen."
+          "text": "The game ran all night and the rules were the Genie's own: name your want, hear your price, pay or fold. Becoming emperor, he explained to a startled goose-girl, was straightforward magic — reality is always half-tipped toward a throne, and a wish need only give it a shove. But getting the whole tavern to agree on supper was an advanced karmic problem, twelve stubborn momentums to redirect at once, and he quoted it at three coincidences and a fortnight of Thursdays. Meanwhile the regular at the bar spent his wish-credit the same way he had spent it all evening. \"You understand,\" said the Genie, \"that was your sixth violation of the natural order.\" \"Yeah,\" said the regular. \"Lager.\" The Genie made a note. \"I am beginning to respect the consistency.\""
         }
       ]
     },
     {
       "type": "custom-fool",
-      "data-trope": "trickster",
+      "data-trope": "tavern-game",
       "data-mask": "game",
       "scene": {
-        "vantage": "looking across the well at the Fool sitting on the windlass beam, swinging his feet over the open dark",
-        "light": "moonlight glinting on the Fool's silver rings and buckles; water reflecting gold up into his face",
-        "scent": "river mint, cold night air, dried willow leaves",
+        "vantage": "looking across the taproom at the Fool perched on the trapdoor's edge, boots swinging over the open well-shaft",
+        "light": "lamplight on his silver rings; well-water reflecting gold up into his face from below",
+        "scent": "river mint, spilled lager, cold night air rising through the floor",
         "edges": [
-          "the Fool holds the crank of the windlass with one hand",
+          "the Fool taps the rhythm of the pricing game on the trapdoor's iron ring",
           "his reflection in the water below wears an expression of deep, ancient solemnity",
-          "mist rises in spirals from the well opening"
+          "the taproom sings off-key behind him and he samples it anyway"
         ],
-        "hint": "a jester sitting atop the wooden roof of an old stone well at night, looking down into the water, surrounded by swirling white mist"
+        "hint": "a jester sitting on the edge of an open trapdoor in a tavern floor at night, feet dangling over dark well-water, lamplight above and gold reflections below"
       },
       "content": [
         {
           "type": "pull",
-          "text": "The well keeps the quote and the source. False coin draws sand."
+          "text": "Eighth honk: the tavern game, sampled and returned — small wants priced dear, because they are the ones the world was not already planning to grant."
         },
         {
           "type": "paragraph",
-          "text": "He sat the windlass beam with his feet over the dark, one hand on the crank."
+          "text": "He sat the trapdoor's edge with his boots over the dark, tapping the game's rhythm on the iron ring, taking the tavern's off-key song and handing it back on-key, with interest."
         }
       ]
     },
@@ -194,64 +198,66 @@
       "type": "figure",
       "img": {
         "src": "/book/images/08.png",
-        "alt": "A stone well at night, a face in the water, gold receipts folded under the surface, the cracked egg warming the rim.",
+        "alt": "A tavern leaning over a stone well at night; faces folded under black water, a genie pricing wishes above, the cracked egg warming the rim.",
         "loading": "lazy"
       },
-      "figcaption": "The Watering Eye: a well that folds, not a thief that keeps."
+      "figcaption": "The Watering Eye: the tavern names the wants; the water names the debts."
     },
     {
       "type": "section",
-      "title": "The Resonance of the Unpaid",
-      "data-motif": "egg",
+      "title": "The Unpriceable Want",
+      "data-motif": "small-want",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof lifted the egg from its feed-sack sling and set its dark, coal-textured base onto the wet granite rim. As the shell touched the stone, its internal furnace sent deep pulses of golden light coursing through the masonry and down into the dark water. The submerged golden folds shifted, rising slightly like an unread history that could be verified without needing to be owned."
+          "text": "Near closing, the Genie tried Boof again, because she fascinated him the way a splinter fascinates a thumb. \"Name it,\" he said. \"Anything.\" She thought of warm furrows, of trails that end in something real, and each time he set his instruments to the want, the needle swung off the dial and came back blank. Too small, the machinery complained — built for emperors, it could not find a want that asked reality to change almost nothing. Boof lifted the egg from its sling and set its coal-dark base on the wet coping, and the shell's heat went down through the stone into the water."
         },
         {
           "type": "paragraph",
-          "text": "Resonance is the town archive's older, wilder sense: what cannot be filed into a book can still be heard in the water. The egg's steady heat named the forgotten debt in the well—heat against cold paper—and the water kept the account open without letting anyone erase the ledger."
+          "text": "The folded faces stirred. One by one they turned toward the warmth the way the berries once had, and the water said, in the plain way water says things, what every face down there had in common: each one owed a coincidence to a stranger, and the egg — an unspent wish — was the debt still standing warm above the fold. The well could not price it either. It only named it, and kept the account open."
         }
       ],
       "climate": {
         "tempo": "midnight",
         "tint": "game",
-        "hook": "resonance-unpaid"
+        "hook": "unpriceable-want"
       },
       "scene": {
-        "vantage": "rim of the well, egg at the edge, face in the water",
-        "light": "night; gold fold under black water; shell-warmth on the stones",
-        "scent": "wet stone, mineral, warm iron",
+        "vantage": "rim of the well below the emptying tavern, egg on the wet coping, faces turning in the water",
+        "light": "last lamplight above; gold folds under black water; shell-warmth on the stones",
+        "scent": "wet stone, cooling lager, warm iron",
         "edges": [
-          "a face held mid-name",
-          "receipts folded under the surface",
-          "the quote still belongs to its source",
-          "the egg names a debt"
+          "the pricing needle blank on Boof's want",
+          "folded faces turning toward the egg's heat",
+          "every spent wish owing a coincidence to a stranger",
+          "the account named and left open"
         ],
-        "hint": "dark watering well at night, still water holding a faint face, gold folds of light stacked like receipts, coal-dark cracked egg on the rim"
+        "hint": "dark stone well at night beneath tavern floorboards, still water full of faint upturned faces, gold folds of light stacked beneath them, coal-dark cracked egg glowing on the rim"
       }
     },
     {
       "type": "custom-boof",
+      "data-motif": "ninth-honk",
+      "data-foreshadow": "ninth-honk",
       "scene": {
-        "vantage": "trotting up a steep rocky ridge toward the high slate roofs overlooking the northern pass",
-        "light": "cold starlight overhead; in the sky, eight faint streaks of falling golden light illuminate the clouds",
-        "scent": "mountain slate, dry grass, cold high wind, ozone",
+        "vantage": "trotting up a steep rocky ridge away from the tavern's last lamp, toward high slate roofs over the northern pass",
+        "light": "cold starlight; behind her, eight faint golden streaks hang in the clouds above the town like held notes",
+        "scent": "mountain slate, dry grass, cold high wind, the fading lager-warmth of the tavern",
         "edges": [
           "the glen of the well lies behind in deep purple mist",
-          "ahead, the mountain ridge rises like the spine of a great slumbering beast",
-          "the egg against her chest pulses in rhythm with a distant harmonic horn-call"
+          "the ridge rises ahead like the spine of a great slumbering beast",
+          "the egg against her chest pulses in rhythm with a distant horn-call"
         ],
-        "hint": "a sturdy dog climbing a rocky mountain ridge at night under a starry sky crossed by faint falling golden shooting-star trails"
+        "hint": "a sturdy dog climbing a rocky mountain ridge at night under a starry sky, faint golden note-trails hanging over the town behind her"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "\"What is the winning move?\" Boof wondered, stepping back from the rim. The Fool's laughter drifted up like spray. The winning move was not taking the well's water home in a jar; it was letting the face in the pool remain its own author."
+          "text": "\"What did I win?\" Boof wondered, taking the egg back into her sling. The Genie had priced fame, thrones, and six lagers, and had folded on her — the only player at the table whose want his game could not hold. Behind her the regular raised one finger at the dark, on principle."
         },
         {
           "type": "paragraph",
-          "text": "She took the warm egg back into her sling and began climbing the northern ridge. Uphill on the high roof-lines, eight horn-shards from an ancient broadcast had already scattered across the chimneys. The ninth had never been blown—and it was already humming against her ribs."
+          "text": "She climbed the northern ridge with the water's word riding warm against her ribs: the egg was a debt, and debts named in water are harder to bury than debts named in ink. Somewhere above the roofs, eight old honks hung in the air like held notes. The ninth had never been sounded — and it was humming against her chest."
         }
       ]
     }
@@ -259,13 +265,13 @@
   "lore": {
     "loreItems": [
       {
-        "description": "Resonance is the archive’s other sense: what cannot be filed can still be heard."
+        "description": "The Watering Eye folds a face without stealing it — a want said into deep water still belongs to its wanter."
       },
       {
-        "description": "The well folds a face without stealing it — a quote that still belongs to its source."
+        "description": "Ordinary desires resist wish fulfillment more than spectacular ones: thrones are cheap, supper agreements are advanced karmic problems."
       },
       {
-        "description": "Debts named in water are harder to bury than debts named in ink. The egg names one."
+        "description": "The water names the debt in the egg's heat: an unspent wish standing warm above the fold, owing a coincidence to a stranger."
       }
     ]
   }

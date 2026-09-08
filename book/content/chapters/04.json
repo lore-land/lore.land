@@ -1,9 +1,9 @@
 {
   "chapterNumber": 4,
   "title": "Crosswind Council",
-  "logline": "At council, keys may be filed smaller, never grown in secret. No key yet covers the egg.",
-  "epigraph": "Benefit without cost is rumor; cost without benefit is ruin.",
-  "description": "Chapter 4 of Lore.Land: Crosswind Council. Boon and bane sit under shared weather with keys that can only be narrowed. The egg rests between them, a self-governing cell no key covers.",
+  "logline": "No law on the hill covers the egg — a wish is the largest key ever cut, and Mr. BaneWAP wants it filed, appraised, and auctioned to himself.",
+  "epigraph": "A key may be filed smaller in the open. It may never be grown in the dark.",
+  "description": "Chapter 4 of Lore.Land: Crosswind Council. Boof carries the unspent wish to the hilltop table, where a bitter pie in a banker's crust argues it should be filed and auctioned — and the mirror shows every delegate what wanting becomes when it hoards.",
   "mood": "mirror",
   "period": "spring",
   "pillars": [
@@ -34,7 +34,7 @@
     },
     {
       "id": "voice",
-      "label": "Voice & register",
+      "label": "The Boonberry Fool",
       "href": "/world/civic-magic.html#fool"
     }
   ],
@@ -67,8 +67,8 @@
         "weather",
         "squall",
         "crosswind",
-        "treaty",
-        "table"
+        "table",
+        "hill"
       ]
     },
     {
@@ -79,11 +79,11 @@
         "key",
         "keys",
         "file",
+        "filed",
         "iron",
         "brass",
-        "cell",
         "mirror",
-        "permission"
+        "egg"
       ]
     },
     {
@@ -91,11 +91,10 @@
       "label": "Public promise",
       "href": "/topics/#promise",
       "terms": [
-        "contract",
-        "cost",
-        "benefit",
-        "membrane",
-        "oath"
+        "wish",
+        "auction",
+        "ledger",
+        "finder"
       ]
     }
   ],
@@ -103,27 +102,28 @@
     {
       "type": "custom-boof",
       "data-mood": "mirror",
+      "data-motif": "ledger",
       "climate": {
         "tempo": "day",
         "tint": "brass",
-        "hook": "keys-on-table"
+        "hook": "largest-key"
       },
       "scene": {
-        "vantage": "under the council table on the windy hilltop, looking between heavy muddy boots and a traveler's oak staff",
+        "vantage": "under the council table on the windy hilltop, looking between muddy delegate boots and the Genie's neatly folded travel slippers",
         "light": "split sky overhead — warm gold sunbreak dawnward, cold teal squall rushing from the far ridge; the table straddles the seam",
-        "scent": "rain about to break on one cheek, dry dust settling on the other, wet wool cloaks, beeswax on the cedar treaty box",
+        "scent": "rain about to break on one cheek, dry dust on the other, wet wool cloaks, warm shell — and under it, faintly, burnt sugar gone sour",
         "edges": [
           "two banners strain toward each other, whipped by opposing crosswinds",
-          "the open treaty box sits at center grain, its iron clasps thrown opposite ways",
-          "pewter cups tremble atop fluttering vellum sheets weighted with river stones",
-          "below the hill, the roofs of Boon.land catch both weathers at once"
+          "a rack of civic keys hangs at the table's center, every one of them filed visibly smaller",
+          "the egg sits in its feed-sack sling on the pine, warm and unranked",
+          "a wide bitter-smelling pie in a dark lattice crust has taken the bane-side chair"
         ],
-        "hint": "hilltop council table seen from underneath, framed by delegates' boots and a staff; sky split between warm gold break and cold teal squall meeting overhead; two banners blowing toward each other; an open box at the table's center"
+        "hint": "hilltop council table seen from underneath, framed by delegates' boots; sky split between warm gold break and cold teal squall; a rack of filed-down keys, a coal-warm cracked egg, and a dark bitter pie seated like a banker at the far end"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "Council Hill kept a great slab of split pine that refused to pick a side. Boof slipped beneath the trestle and set her chin upon the timber between two keys, stumbling, almost, upon the ",
+          "text": "Council Hill kept a great slab of split pine that refused to pick a side, and it was there, under crosswind weather, that Boof brought the egg to be argued over. She slipped beneath the trestle, chin on the timber, and found herself nose to frame with the ",
           "children": [
             {
               "type": "custom-mirror",
@@ -131,13 +131,13 @@
             },
             {
               "type": "text",
-              "text": "—an upright pane of polished weather that returned not a face or a coat of fur, but the exact legal perimeter of what you were permitted to touch. One key was black iron, its teeth notched and filed smaller by generations of honest compromises. The other was gleaming brass, polished smooth, whose keeper constantly leaned over it with a jeweler's rasp, hoping to secretly solder on a wider ward."
+              "text": "—an upright pane of polished weather that returned not your face but the exact shape of your wanting. Above her, the law of the hill was recited as it had been recited for generations: every permission in Boon.land is a key, iron or brass, and a key may be filed smaller in the open, before witnesses, with the shavings swept into the common bin. A key may never be grown in secret. The Genie stood at the table's edge, hands folded, and added the one fact that mattered: a wish is the largest key ever cut. It opens the momentum of the world itself. That was when the bane-side chair creaked."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "The law of the crosswind was older than the shouting delegates above: a key may be filed smaller in the open. A key may never be grown in secret."
+          "text": "Mr. BaneWAP had come up the hill on a hired cart. He was a pie, as Mr. BoonWAP of Bonk City is a pie, but he was a pie of hoarded berries gone bitter in a banker's crust — lattice like ledger lines, filling dark as a shut vault. He did not offer anyone a slice. He proposed, in a voice like interest compounding, that the unspent wish be filed as an asset, appraised, and auctioned to the highest and hungriest bidder. Himself, say."
         }
       ]
     },
@@ -146,45 +146,45 @@
       "scene": {
         "vantage": "gazing into the upright glass pane on the table at eye level",
         "light": "the glass shimmers with trapped storm-clouds and sudden flashes of gold lightning",
-        "scent": "static electricity, cold glass, melted tallow",
+        "scent": "static electricity, cold glass, burnt sugar",
         "edges": [
           "the mirror frame is carved from two different woods that meet at a tongue-and-groove joint",
-          "in the reflection, hands reach for boundaries that light up in pale blue sparks",
-          "the egg reflected in the glass shows no bounding box at all"
+          "in the reflection, BaneWAP's crust shows every hoarded berry pressed flat and sour",
+          "the egg reflected in the glass shows no price tag at all"
         ],
-        "hint": "an ornate glass mirror on a stormy council table reflecting glowing geometric boundary lines around reaching hands, while a cracked egg beside it sits free of lines"
+        "hint": "an ornate glass mirror on a stormy council table reflecting a dark bitter pie whose crust is stuffed with flattened berries, while a cracked warm egg beside it reflects clean and unpriced"
       },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "mirror-intro",
-          "text": "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what you are still allowed to do.\" The delegate of Boon looked into the pane and saw a limitless harvest ready to be seized. The delegate of Bane looked in and saw an unyielding wall of constraints. The egg resting between them saw neither. It was a cell that kept its own internal law, needing no key because no lock on the hill could claim jurisdiction over its shell."
+          "text": "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what your wanting is becoming.\" The delegates looked, one by one. The boon-side saw their small wants, snug as filed keys. Mr. BaneWAP looked longest, and the glass returned him honestly: every berry he had ever hoarded, pressed airless under crust, gone from sweet to bitter for want of being served. He was not a villain from elsewhere. He was the mirror of what wanting becomes when it stops handing out slices. The egg, reflected beside him, showed no bidder's number and no bounding box — a wish keeps its own law, and no appraisal on the hill could get purchase on its shell."
         }
       ]
     },
     {
       "type": "custom-fool",
-      "data-trope": "trickster",
+      "data-trope": "vizier-at-court",
       "data-mask": "councilor",
       "scene": {
-        "vantage": "looking up through the table planks as the Fool balances precariously on the tabletop",
+        "vantage": "looking up through the table planks as the Fool balances on the tabletop",
         "light": "the Fool's silhouette backlit by a fork of lightning split between dawn-gold and squall-blue",
-        "scent": "singed wool, rain, clove, cider",
+        "scent": "singed wool, rain, clove, warm pastry",
         "edges": [
-          "the Fool stands one-footed atop an unposted ledger",
-          "he gestures with a tiny iron file tucked behind his ear",
+          "the Fool stands one-footed atop the auction ledger nobody signed",
+          "he holds up a small hand-pie, steam curling from its vents",
           "the wind tears at his patchwork scarf without blowing him off balance"
         ],
-        "hint": "a jester figure balanced on one foot on a stormy council table, holding a small metal file, smiling down through wind and fluttering parchment"
+        "hint": "a jester figure balanced on one foot on a stormy council table, offering a small steaming hand-pie toward a dark bitter banker-pie, grinning through wind and fluttering parchment"
       },
       "content": [
         {
           "type": "pull",
-          "text": "File a key smaller. Never let brass grow teeth in the dark."
+          "text": "Every court gets a vizier. I sampled that trope, folks — and honked it back as pastry."
         },
         {
           "type": "paragraph",
-          "text": "One-footed on the unposted ledger, a tiny iron file tucked behind his ear, he grinned into the split sky."
+          "text": "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in the sleeve — an old trope, sampled a thousand times. He returned it changed, with interest: in Boon.land the vizier is baked goods, and you can smell exactly what he's been hoarding."
         }
       ]
     },
@@ -192,64 +192,66 @@
       "type": "figure",
       "img": {
         "src": "/book/images/04.png",
-        "alt": "A council table under storm-light, two keys and a coal-dark cracked egg the keys cannot cover.",
+        "alt": "A council table under storm-light: filed keys, a coal-dark cracked egg no key covers, and a bitter pie in a banker's crust arguing for an auction.",
         "loading": "lazy"
       },
-      "figcaption": "Crosswind Council: keys narrow; they do not secretly widen."
+      "figcaption": "Crosswind Council: keys narrow in the open; a wish is too large to file."
     },
     {
       "type": "section",
-      "title": "The Refraction of Authority",
+      "title": "No Key Covers the Egg",
       "data-motif": "egg",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof watched the delegates argue across the pine grain. Boon and Bane sat under one shared roof of clouds and bargained without having to declare war. The table itself was the living membrane between them: a sturdy boundary where opposing factions could share a single turn without either party having to surrender the keys to their house."
+          "text": "Boof watched the argument cross the pine grain like weather. Boon and bane sat under one shared squall and bargained without declaring war; that was the table's whole genius. But when the clerks brought out the rack of civic keys — iron ones honestly narrowed, brass ones watched for secret growing — not one of them matched the egg. The Genie explained it the way he priced everything, flatly and without pity: a wish is not property, because it is not a thing; it is a redirection of momentum the world already has. You cannot auction a bend in the river. You can only stand where it bends."
         },
         {
           "type": "paragraph",
-          "text": "Yet neither the filed iron nor the ambitious brass could turn the lock on the egg. The egg was not an asset up for auction, and it was not a tax to be levied. Filing the council's keys smaller only made the self-sufficient warmth of the uncovered shell more luminous against the dark wood."
+          "text": "So the council could not rule. There was no key to file smaller and none they would dare grow. The oldest clerk wrote the only line the law allowed: the wish stays with its finder. Mr. BaneWAP smiled the way a vault door smiles, and asked, very softly, who the finder's estate would be. Boof felt her fur rise. The bitter pie had not lost. He had merely opened a longer ledger."
         }
       ],
       "climate": {
         "tempo": "storm",
         "tint": "mirror",
-        "hook": "refraction-authority"
+        "hook": "no-key-covers"
       },
       "scene": {
-        "vantage": "table-height, egg between two keys, storm behind",
+        "vantage": "table-height, egg between the key-rack and the bitter pie, storm behind",
         "light": "crosswind storm-light, gold seams in the grain",
-        "scent": "wet wood, brass, iron, warm shell",
+        "scent": "wet wood, brass, iron, warm shell, sour crust",
         "edges": [
-          "iron key already filed smaller",
-          "brass key that wants to grow",
-          "the egg a cell no key covers",
-          "weather refuses to pick a side"
+          "the key-rack: every key honestly narrowed",
+          "the egg unmatched by any of them",
+          "BaneWAP's lattice crust like a shut ledger",
+          "the weather still refusing to pick a side"
         ],
-        "hint": "council table on a windy hill, two keys — one filed smaller — and a coal-warm cracked egg no key covers; storm-light, gold seams in the wood"
+        "hint": "council table on a windy hill, a rack of filed-down keys, a coal-warm cracked egg no key fits, and a dark banker-crusted pie leaning close; storm-light, gold seams in the wood"
       }
     },
     {
       "type": "custom-boof",
+      "data-motif": "ledger",
+      "data-foreshadow": "bane-wish",
       "scene": {
         "vantage": "descending the stone stairs of Council Hill toward the slate roofs of the valley counting house",
         "light": "dusk settling; storm clouds parting to reveal a single bright evening star above the valley",
         "scent": "damp moss, stone steps, chimney smoke, cold ledger ink",
         "edges": [
-          "both keys remain on the table behind her",
+          "the key-rack remains on the table behind her, complete and useless",
           "the egg in the sling glows steadily against the damp night",
-          "down in the valley, the lanterns of the counting room flicker with uneasy light"
+          "far behind, a cart with a bitter smell turns down a different road at the same fork"
         ],
-        "hint": "a dog trotting down ancient stone steps from a hilltop council ring, carrying a glowing warm egg, heading toward a dim valley town"
+        "hint": "a dog trotting down ancient stone steps from a hilltop council ring, carrying a glowing warm egg, while a dark cart takes the parallel road into the same valley"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof left both keys on the table where they lay. A key you do not pick up is a key no clerk can ever accuse you of tampering with. She tucked the feed-sack sling securely against her chest and turned down the southern slope."
+          "text": "Boof left the hill with the wish she had never asked to hold. Finder, the clerk had written, as if finding were a small thing a dog did with her nose and not a door the world had opened under her paws. The Genie walked beside her, unhurried. \"He will not steal it,\" he said of the pie on the other road. \"Stealing costs a miracle. Paperwork costs pocket change, and he knows which one he can afford.\""
         },
         {
           "type": "paragraph",
-          "text": "Downslope in the valley, the counting rooms had already begun to disagree with themselves—two conflicting receipts that could not both post to the same ledger without splitting the parchment in half. That was not an argument for council debate; that was an unhealed rift in the stone."
+          "text": "Downslope in the valley, the counting rooms had already begun to disagree with themselves — two claims on one wish, a boon-claim and a bane-claim, filed the same afternoon, and neither one willing to be the rumor. That was not an argument for council weather. That was a rift, and far below the slate roofs, in the dark under the ledgers, it had already begun to sing."
         }
       ]
     }
@@ -257,13 +259,16 @@
   "lore": {
     "loreItems": [
       {
-        "description": "A key may be filed smaller, never grown in secret. That is the council's oldest weather."
+        "description": "Council law: a key may be filed smaller in the open, never grown in secret. A wish is the largest key ever cut — too large for the rack."
       },
       {
-        "description": "The egg is a cell: it keeps its own law. No key on the table covers it."
+        "description": "Mr. BaneWAP debuts: a pie of hoarded berries gone bitter in a banker's crust. He wants the wish filed, appraised, and auctioned — to himself."
       },
       {
-        "description": "Sharing across a membrane is not giving the house away. Boon and bane can sit one turn without becoming one office."
+        "description": "The mirror chamber's truth: BaneWAP is not a foreign villain. He is the reflection of what wanting becomes when it hoards instead of serving slices."
+      },
+      {
+        "description": "No key covers the egg, so the council cannot rule. The wish stays with its finder. The Fool samples the evil-vizier trope and honks it back as pastry."
       }
     ]
   }

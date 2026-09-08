@@ -133,6 +133,8 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--theme-accent-alt, #1c4f63) 82%, transparent);
+  border-radius: var(--border-radius-small);
+  transition: color 160ms ease, background-color 160ms ease;
 }
 
 .scene-sketch summary::-webkit-details-marker {
@@ -142,6 +144,9 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
 .scene-sketch summary::before {
   content: '◠ ';
   letter-spacing: 0;
+  display: inline-block;
+  color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 70%, transparent);
+  transition: transform 200ms ease;
 }
 
 .scene-sketch[open] summary::before {
@@ -151,12 +156,43 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
 .scene-sketch summary:hover,
 .scene-sketch summary:focus-visible {
   color: var(--theme-accent-main, #2a6f7f);
+  background: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 7%, transparent);
+}
+
+.scene-sketch summary:hover::before {
+  transform: translateY(-1px);
 }
 
 .scene-sketch-body {
   padding: 0.15rem 0.85rem 0.75rem;
   display: grid;
   gap: 0.42rem;
+}
+
+/* Cheap open transition: fade + slight lift of the revealed body. */
+.scene-sketch[open] .scene-sketch-body {
+  animation: scene-sketch-open 220ms ease-out;
+}
+
+@keyframes scene-sketch-open {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-sketch[open] .scene-sketch-body {
+    animation: none;
+  }
+
+  .scene-sketch summary::before {
+    transition: none;
+  }
 }
 
 .scene-sense {
@@ -166,12 +202,14 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
   line-height: 1.55;
 }
 
+/* Micro-typography matches the .mark chips (motifs.css). */
 .scene-sense-label {
   font-style: normal;
   font-family: var(--font-family-heading, monospace);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  line-height: 1.4;
   color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 78%, transparent);
   margin-right: 0.25rem;
 }

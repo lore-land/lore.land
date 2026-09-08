@@ -6,7 +6,7 @@
 
 ^[chapter/11]{
   title: "Paradox Bloom"
-  description: "Chapter 11 of Lore.Land: Paradox Bloom. Impossible routes open into serene, usable forms without needing complete theoretical resolution. Golden flowers blossom from stone before any seed is sown; the egg rests as the late seed, and the ..."
+  description: "Chapter 11 of Lore.Land: Paradox Bloom. BaneWAP snatches the unspent wish and wishes an empire; karmic momentum obliges one coincidence at a time, delivering it mediocre and hollow. Bloom arrives before seed, his hoarded berries wake ins..."
   mood: "awakening"
   period: "spring"
   chapter_path: "/book/chapter/11/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Beyond the threshold of Bone.land, the stone staircase wound through a sunlit mountain terrace and looped peacefully back upon itself. Boof paused on the third riser, blinking into an atmosphere of astonishing calm. T..."
+    excerpt: "It happened between one honest sniff and the next. On the road out of Bone.land, where the audit still hung fresh in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, ti..."
     route: ^[chapter/11/s01]{open}
   >
   s02: <
     handle: "custom-awakening/02"
     type: "custom-awakening"
-    excerpt: "The garden hummed with serene productivity. The surrounding pines no longer whispered cautionary rumors; they stood as patient witnesses to an impossible harvest. Boof understood what her paws had been learning since ..."
+    excerpt: "And then the older magic moved. Now and then a berry notices the shape of the story it is sitting inside — and BaneWAP was made of nothing but berries, hoarded ones, banked bitter for years in a banker's crust. The wi..."
     handles: ["awakening-intro"]
     route: ^[chapter/11/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "Bells set aside, he broke bread and poured tea as if the trick had always been breakfast."
+    excerpt: "He tapped the rented throne once — hollow — and let the note say what the audit had: interest is owed on every borrowed want."
     route: ^[chapter/11/s03]{open}
   >
   s04: [
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Widening Door"
-    excerpt: "Boof was not chasing an elusive jester anymore. The desert flats, the mirrored council, the humming counting room, and the bonk of Bone.land had not been obstacles; they were generative constraints that gave the narra..."
+    title: "The Wish That Would Not Finish"
+    excerpt: "Here is the paradox the audit had circled without naming: a wish only leaves its shell when it is finished, and a wish the size of an empire is never finishable. There is always one more coincidence owed, one more cor..."
     route: ^[chapter/11/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "He pointed downhill to two rivers that had not yet agreed to forget their springs."
+    excerpt: "He pointed downhill to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
     route: ^[chapter/11/s06]{open}
   >
 ]
@@ -90,9 +90,9 @@
 
 #[chapter/11/lore]{
   notes: [
-    "Paradox is treated as generative constraint, not decorative confusion."
-    "Bloom means multiple usable forms from one unresolved premise. The egg is the late seed and is right anyway."
-    "A leaf that keeps its native form does not have to pretend it was something else."
+    "A grand wish grants instantly and minimum-viable: karmic momentum pays it out one coincidence at a time, corrections deferred elsewhere."
+    "A wish only leaves the shell when it is finished. An empire-sized wish is never finishable, so the egg survives its own spending and rolls home."
+    "BaneWAP's hoarded berries wake inside him — a berry notices the story it is sitting inside — and he tastes his hoard for the first time in years. Sweetness is the correction."
   ]
 }
 
