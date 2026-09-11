@@ -12,6 +12,7 @@
   &atelier: "@spw/surfaces/atelier.spw"
   &plates: "@spw/surfaces/plates.spw"
   &dragon_egg: "@spw/surfaces/dragon-egg.spw"
+  &cullet_deck: "@spw/surfaces/cullet-deck.spw"
 }
 
 ^"audits"{

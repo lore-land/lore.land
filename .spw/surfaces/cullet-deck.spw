@@ -1,0 +1,250 @@
+# Cullet and the Unfired Deck — a Bonk.land spiral (story seed)
+# HAND-AUTHORED surface. A companion arc, not a numbered chamber: seven movements that
+# cross the bound serial at 06, 09 and 13 without moving the Egg's plot.
+# Premise leans on chapter 06's canon physics — Bonk City glass is old impacts melted and
+# clarified, panes that remember being struck and forgave it into transparency. Cullet
+# stands inside the refutation of her own fear and cannot hear it.
+# Wordplay lineage: cullet — broken glass collected to go back into the melt.
+# DELIBERATELY RECASTABLE: name, gender, realm and trade are a working cast, not a
+# definition. The load-bearing part is the receipt_law engine — see ~"recast".
+#>cullet_unfired_deck
+#:worldseed #!spiral
+
+~"recast"{
+  .note: "the arc is specified at the engine, not at the cast — swap the surface freely, keep the mechanism"
+  ~mutable: [
+    "name — Cullet is a trade word chosen so the character is named after her own mercy; any name that means salvaged-and-remelted works"
+    "gender — she/her is the working cast; the fear reads the same in any register, and the trade carries no gendering"
+    "realm — Bonk.land is the strongest fit because its glass already forgives impacts, but any realm that memorializes failure in public material will hold the arc"
+    "setting — annealing floor and night market are the working staging; a scriptorium, a kitchen, or a ledger hall would each recolor it honestly"
+    "trope vocabulary — the data-* mark names are provisional until a chamber adopts them"
+  ]
+  .invariant: [
+    "fear of failure is specific, not general — she fears a permanent public record of a mistake, in a realm that keeps one"
+    "the divination device must be blank, and its relief must be genuine before it is costly"
+    "the cost must be civic bookkeeping the world already declares, not a curse laid on her"
+    "the realm's own theology must already refute her fear before page one"
+    "recovery is ordinary, partial, and made of other people"
+  ]
+  =leans{ ~".spw/surfaces/cullet-deck.spw#cullet_unfired_deck" }
+}
+
+^"cullet"{
+  #cast: "working cast — recastable per ~\"recast\"; the engine below survives any renaming"
+  .realm: "Bonk.land — Bonk City, the labyrinth of lantern-light and honest glass."
+  .trade: "apprentice annealer; reads the impact-history in old panes for the families who live behind them."
+  #pronouns: "she/her"
+  .fear: "Fired glass can crack, and cracked glass goes into a wall people walk past forever — so she has kept one plate off the kiln shelf for a season."
+  #gloss: "cullet — the broken glass that goes back into the melt; her name is her city's mercy and she cannot hear it."
+  &chamber_of_origin: ~".spw/chapters/06.spw#chapter_06"
+  =drift{ ~".spw/surfaces/dragon-egg.spw#dragons_egg" }
+}
+
+^"unfired_deck"{
+  .form: "thin unfired glass plates, dealt one-footed by the Fool at a night-market stall of unlit lanterns."
+  .physics: "Unfired means never annealed, never committed, never wrong — that is the whole of the offer."
+  !state: "blank"
+  #gloss: "no plate ever bore a figure; she supplied every verdict and called it a reading."
+  &stall: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+  &dealer: ~".spw/chapters/04.spw#chapter_04"
+}
+
+^"receipt_law"{
+  .note: "the cost is civic law, not metaphor — the small constitution already carries it"
+  &constitution: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+  turn: "an act the world admits."
+  receipt: "the slip that act leaves behind."
+  .clause: "A turn she did not author comes back with a blank receipt, her name in lighter ink."
+  .cost: "In Bonk.land a person is the sum of their receipts. Each reading buys one exemption from failure and spends one slip of self."
+  .tell: "She thins because the record thins — the absence is bookkeeping before it is ever mood."
+}
+
+^"movements"[
+  m1: {
+    title: "The Annealing Floor"
+    beat: "Cullet reads a stranger's pane, names the impact exactly, is praised — then cannot decide whether to fire her own plate."
+    turn: "establish the asymmetry: fluent in everyone's failure, frozen before her own."
+    "data-motif": "cullet"
+  }
+  m2: {
+    title: "The Unfired Deck"
+    beat: "The night market of unlit lanterns. The Fool deals one-footed and sells her blanks."
+    turn: "she takes the first plate as an answer and feels the relief land in her body."
+    "data-trope": "the-reader-who-will-not-be-read"
+  }
+  m3: {
+    title: "The First Blank Receipt"
+    beat: "Her name comes back in lighter ink. She notices. She reads again anyway."
+    turn: "this beat must be pleasurable, or the spiral is not honest."
+    "data-foreshadow": "the-fired-plate"
+  }
+  m4: {
+    title: "Thinning"
+    beat: "She consults the deck on meals, routes, apologies; colleagues stop being able to describe her."
+    turn: "the honest glass has nothing to remember of her, so her reflection arrives a beat late."
+    &register: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+    "data-motif": "cullet"
+  }
+  m5: {
+    title: "The Blank She Obeys"
+    beat: "She draws nothing, reads it as an instruction to be nobody, and re-deals until dawn for the answer she already wanted."
+    turn: "name it plainly — the deck stopped being an oracle and became a way to not be present."
+    "data-trope": "the-oracle-that-is-an-absence"
+  }
+  m6: {
+    title: "Scent Before Story"
+    beat: "Boof can still smell her when no one can see her; the Egg's heat makes the absence legible as warmth where a person should be."
+    turn: "the Fool returns to say the trickster's one honest thing — the plates were always blank."
+    &boof: ~"book/content/characters/boof.json"
+    &heat: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+  }
+  m7: {
+    title: "Back Into the Melt"
+    beat: "She fires one plate. It cracks. The crack is annealed into a pane set in a wall people walk past, and the receipt comes back with her name in full ink."
+    turn: "recovery is ordinary and partial — the deck is filed, not destroyed, and she keeps one small law: one question a day answered by her."
+    "data-foreshadow": "the-fired-plate"
+    "data-motif": "cullet"
+  }
+]
+
+?"unknowns"[
+  "Did the Fool know what he was selling, or is a blank the only honest thing he has?"
+  "Who has been walking past her cracked pane, and do they read it as shame or as weather?"
+  "Does a blank receipt file anywhere, or is that what the bricked-over rooms are?"
+  "If the city forgave every impact into transparency, why did nobody tell her she was included?"
+]
+
+&"crossings"[
+  x06: {
+    chamber: ~".spw/chapters/06.spw#chapter_06"
+    role: "the glass that remembers being struck and forgave it — Cullet's whole arc is already written into the pavement she is afraid of."
+  }
+  x06_apocrypha: {
+    chamber: ~".spw/chapters/apocrypha.spw#chapter_apocrypha"
+    role: "whisper a06 — a lantern burning on the inside of the wall, lighting rooms that were bricked over. Those rooms are her un-receipted turns; graduate the whisper here."
+  }
+  x09: {
+    chamber: ~".spw/chapters/09.spw#chapter_09"
+    role: "one shard among the nine is not a shard but a plate, unfired, and it fits nothing because it was never struck."
+  }
+  x13: {
+    chamber: ~".spw/chapters/13.spw#chapter_13"
+    role: "the cell keeps by remaining itself — which is the exact thing a blank receipt cannot do."
+  }
+]
+
+!"prompt_seeds"[
+  seed_01: {
+    scene: "an annealing floor at shift's end, one unfired plate set apart from the kiln shelf on a cold bench, dust settled on it in a perfect unbroken film"
+    vantage: "bench height, the kiln mouth glowing out of focus behind"
+    light: "kiln-orange from behind, cold blue window light on the plate itself"
+    scent: "hot sand, brass polish, wet wool"
+    edges: "every other plate on the shelf is fired and faintly scarred; this one is flawless and grey"
+    hint: "the dust film has no fingerprints in it at all"
+    "data-motif": "cullet"
+    "data-foreshadow": "the-fired-plate"
+  }
+  seed_02: {
+    scene: "a night-market stall of unlit lanterns where a one-footed figure fans thin glass plates across a cloth, each plate perfectly blank"
+    vantage: "across the stall at eye level, a young glassworker's hands entering frame to choose"
+    light: "no lantern lit; the only glow is coal-warm and comes from off-frame, low and to the left"
+    scent: "smoke that has not caught yet, and cold sugar"
+    edges: "the plates hold no reflection of the woman choosing them"
+    hint: "the dealer is watching her face, not the cards"
+    "data-trope": "the-reader-who-will-not-be-read"
+    "data-motif": "cullet"
+  }
+  seed_03: {
+    scene: "a glassworker walking a Bonk City street of honest panes at dusk, every pane reflecting the street behind her and none reflecting her"
+    vantage: "following, three paces back and slightly low"
+    light: "long gold lantern-reflections across wet stones"
+    scent: "rain on woolen sleeves"
+    edges: "a stout dog at the far end of the street has her head lifted and is looking directly at the empty place"
+    hint: "one reflection is a beat late, and it is the only one that is hers"
+    "data-motif": "cullet"
+    "data-trope": "the-oracle-that-is-an-absence"
+  }
+  seed_04: {
+    scene: "a single fired pane set low in a public wall, a healed crack running through it, annealed and clear"
+    vantage: "a passerby's height, walking past, the pane caught mid-stride"
+    light: "flat morning, no drama"
+    scent: "street dust and cold stone"
+    edges: "the crack is the brightest line in the frame because it carries the most light"
+    hint: "a slip of paper is tucked in the frame joint, name written in full dark ink"
+    "data-motif": "cullet"
+    "data-foreshadow": "the-fired-plate"
+  }
+]
+
+*"variations"{
+  early: "the deck as comfort — warm, ordinary, plausibly harmless; the reader should want her to keep it."
+  deep: "the deck as absence — she is dealing to avoid being in the room, and the prose goes quiet where she should be."
+  after: "the deck filed in a drawer, consulted once a month, not a triumph; the small law is what holds."
+}
+
+^"guardrails"{
+  .cost_visible: "The spiral is shown with its relief honest and its cost visible — the exemption is real, and so is the bill."
+  .no_true_card: "No plate ever predicts truly. Every reading in the arc is hers; the deck supplies nothing."
+  .recovery_shape: "Recovery comes from people, work and the record — never from a wish, a hatch, or a rescue."
+  .partial_ending: "Ending is ordinary and partial. Do not cure her in one turn; the deck survives, the law is what changes."
+  .egg_unnamed: "The Egg appears only as heat that makes an absence legible. It is not explained here and nothing hatches."
+  .out_of_bounds: "Divination is diegetic Bonk.land craft. No real-world fortune-telling claim, and no wiring to any real instrument."
+}
+
+*"wonder"[
+  w1: {
+    moment: "the late reflection"
+    where: ~".spw/surfaces/cullet-deck.spw#cullet_unfired_deck"
+    movement: "m4"
+    craft: "her reflection in honest glass resolves one beat behind her — a short delayed transform on a mirrored pane, never a full ghost effect"
+    calm_fallback: "under reduced-motion the pane simply shows the street behind her and not her; the absence reads in one still frame"
+    %budget: "one signature per movement cluster; w1 and w2 may not run in the same viewport"
+    &gate: ~".spw/surfaces/atelier.spw#wonder_budget"
+  }
+  w2: {
+    moment: "the lighter ink"
+    where: ~".spw/surfaces/cullet-deck.spw#receipt_law"
+    movement: "m3"
+    craft: "a receipt whose name fades a shade each time it is issued — the same slip re-rendered across the arc, ink weight as the only changing variable"
+    calm_fallback: "print and no-JS get the final weight only; the reader still sees a name too faint to be a name"
+    %budget: "the fade is monotonic and never reverses until m7"
+    &gate: ~".spw/surfaces/atelier.spw#wonder_budget"
+  }
+  w3: {
+    moment: "the crack that carries the most light"
+    where: ~".spw/surfaces/cullet-deck.spw#cullet_unfired_deck"
+    movement: "m7"
+    craft: "the healed pane's annealed crack is the brightest line in the plate — the only moment in the arc allowed to be beautiful without hedging"
+    calm_fallback: "it is a still image; it degrades to itself"
+    %budget: "the payoff signature — nothing else in m7 competes with it"
+    &gate: ~".spw/surfaces/atelier.spw#wonder_budget"
+  }
+  w4: {
+    moment: "the deal that shows nothing"
+    where: ~".spw/surfaces/cullet-deck.spw#unfired_deck"
+    movement: "m2"
+    craft: "plates fan out and every face is empty — the wonder is the reader noticing the blank before she does"
+    calm_fallback: "a static fan of blank plates; the joke and the dread both survive without motion"
+    %budget: "one deal, dealt once — re-using the fan in m5 would spend the effect twice"
+    &gate: ~".spw/surfaces/atelier.spw#wonder_budget"
+  }
+]
+
+^"wonder_contract"{
+  .note: "this arc spends from the same budget as every other surface — c012 applies"
+  &contract: ~".spw/workspace.spw#contracts"
+  rules: [
+    "every signature degrades to calm reading under reduced-motion, no-JS and print"
+    "the spiral's wonder must never make the spiral look good — beauty is reserved for m7"
+    "no new signature starts while an existing one carries an open defect-class ledger entry"
+  ]
+}
+
+~"adaptation"{
+  recast_rule: "Change the cast freely; if a change touches the ~\"recast\" invariant list, it is a different story and needs its own seed."
+  intent: "A companion spiral to build chambers against — seven movements, not a numbered chapter; the bound serial's plot does not move."
+  mark_adoption: "First real adopter of data-motif / data-trope / data-foreshadow in chapter prose — see AL-010, which retires them if nothing ever uses them."
+  image_hook: "Feed a prompt_seed's scene/light/scent/edges/hint to an image model; the data-* marks tag the resulting plate for motif tracking."
+  extension_rule: "Add unknowns and prompt_seeds freely; resolve one only by writing the movement that answers it, then retire it here."
+  graduation_probe: "Grep a movement's key phrase under book/content/chapters/ before assuming it is still unwritten."
+}
