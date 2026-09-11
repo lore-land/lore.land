@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-game/02"
     type: "custom-game"
-    excerpt: "The game ran all night and the rules were the Genie's own: name your want, hear your price, pay or fold. Becoming emperor, he explained to a startled goose-girl, was straightforward magic — reality is always half-tipp..."
+    excerpt: "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? He counted the company twice and quoted..."
     handles: ["game-intro"]
     route: ^[chapter/08/s02]{open}
   >
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "The Unpriceable Want"
-    excerpt: "Near closing, the Genie tried Boof again, because she fascinated him the way a splinter fascinates a thumb. \"Name it,\" he said. \"Anything.\" She thought of warm furrows, of trails that end in something real, and each t..."
+    excerpt: "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His needle swung beyond the numbers and came back blank. He reset it. She tried ag..."
     route: ^[chapter/08/s05]{open}
   }
   s06: <

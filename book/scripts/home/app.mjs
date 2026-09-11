@@ -590,7 +590,7 @@ function initMonumentEntrance() {
     text: 'Enter a seeded world. Chapter One opens at dawn, when Boof unearths a warm egg no map will hold.',
     url: typeof location !== 'undefined' ? `${location.origin}/` : 'https://lore.land/',
     mount: document.querySelector('.hub-hero .hub-actions'),
-    label: 'Pass the monument',
+    label: typeof navigator.share === 'function' ? 'Share' : 'Copy link',
     announce
   });
 

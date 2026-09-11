@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Shadow Price"
-    excerpt: "Boof sat with it a while, chin on the cool granite, while the crowd thinned and the juice dried into the grooves alongside the centuries. The oath had not made the wish safer. It had made it heavier, the way a full bo..."
+    excerpt: "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains. Somewhere, a stranger would be late because she had wished: a cart missed, a letter lost, rain on the wrong field..."
     route: ^[chapter/07/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "His voice thinned across the square like a last market bell, and somewhere far off, a cart was already running a Thursday late."
+    excerpt: "His voice thinned with the market bell. Stalls folded, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
     route: ^[chapter/07/s06]{open}
   >
 ]

@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-awakening/02"
     type: "custom-awakening"
-    excerpt: "And then the older magic moved. Now and then a berry notices the shape of the story it is sitting inside — and BaneWAP was made of nothing but berries, hoarded ones, banked bitter for years in a banker's crust. The wi..."
+    excerpt: "Deep beneath his crust, a berry woke. The wish had passed through him, leaving its drop of light just as it had in the fields. One seam shone, then another. Warmth worked through the bitter filling. He tasted what he ..."
     handles: ["awakening-intro"]
     route: ^[chapter/11/s02]{open}
   >

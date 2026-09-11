@@ -35,8 +35,7 @@
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    excerpt: "\"In the labyrinth, every pane will offer you a version of your own warmth,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame, and do not mistake the flame for the wish. Th..."
-    handles: ["labyrinth-intro"]
+    excerpt: "“Every pane will offer you your own warmth,” said a voice behind the glass. Boof turned. Three reflections turned with her. “Very flattering. Very little supper.” She lifted her nose. Through the rain and brass came t..."
     route: ^[chapter/06/s02]{open}
   >
   s03: <
@@ -54,8 +53,8 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Court of Mr. BoonWAP"
-    excerpt: "At the heart of the labyrinth, in a small round plaza where every street eventually apologized and arrived, Mr. BoonWAP held court from a broad oak table. He was a pie of boonberries — berries a wish had once passed o..."
+    title: "The Pie at the Table"
+    excerpt: "Every street eventually arrived at a round plaza. At its center, on an oak table, a warm boonberry pie held court. Rain had followed them into the plaza in the folds of coats and the soles of shoes. It steamed from th..."
     route: ^[chapter/06/s05]{open}
   }
   s06: <

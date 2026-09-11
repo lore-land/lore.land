@@ -30,7 +30,7 @@
     handle: "section/01"
     type: "section"
     title: "A Beat Late"
-    excerpt: "By the second morning the egg was warmer than the feed-sack sling, the sling was warmer than Boof's ribs, and the maps in the town archive were still pretending none of this had happened—which, to be fair to the maps,..."
+    excerpt: "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern, ..."
     route: ^[chapter/02/s01]{open}
   }
   s02: <
@@ -62,7 +62,7 @@
     handle: "section/06"
     type: "section"
     title: "What the Echo Keeps"
-    excerpt: "Boof understood, pacing the mossy fork, that the grove was not a memory palace. It was a rehearsal hall for the unfinished—overflow storage for every wanting the town had declined to sound. Each echo offered her a fut..."
+    excerpt: "Boof paced the fork, nose to moss, while the grove offered rain, harvest, a road back to a better morning. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept co..."
     route: ^[chapter/02/s06]{open}
   }
   s07: <

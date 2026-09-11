@@ -29,21 +29,21 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
-    excerpt: "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like a candle blown out before anyone made a wish on it. In the dawnward field the boonberries slept under a skin of ice, each one holdin..."
+    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground. Beneath the berry rows, ants kept their little hearths. Their patient magic warmed the roots through winter. Above them, the boonberries slept under ..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
     valence: "boon"
-    excerpt: "For as long as she had carried a name, Boof had worked for the land and not for anyone who owned a piece of it. She knew the dawnward field by scent the way other creatures knew it by map: which vine had been generous..."
+    excerpt: "Ant-warmth smelled earthy and even, like bread left under a cloth. This was sharper. A candle just blown out. Boof knew the paths to the kitchens, the mill, and the grove nobody liked to name after dark. She had never..."
     route: ^[chapter/01/s02]{open}
   >
   s03: {
     handle: "section/03"
     type: "section"
     title: "When a Berry Remembers"
-    excerpt: "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But every boonberry was a blueberry once, a blueberry a wish passed over..."
+    excerpt: "Every boonberry had been a blueberry once. A wish had passed over it on the way to being granted, leaving a little of its light behind. Most slept through everything: snow, crows, harvest. The town used them for suppe..."
     route: ^[chapter/01/s03]{open}
   }
   s04: [
@@ -56,20 +56,20 @@
     handle: "section/05"
     type: "section"
     title: "The Maps That Look Away"
-    excerpt: "By full morning Boof had carried the egg—warm as a loaf, heavier than a loaf, and humming steadier—up the slope to the map-house, where Boon.land keeps its record of everything it has agreed to say exists. She had tho..."
+    excerpt: "By morning, Boof had brought the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. Along a fold in the map, two ro..."
     route: ^[chapter/01/s05]{open}
   }
   s06: {
     handle: "section/06"
     type: "section"
     title: "Following the Hum"
-    excerpt: "There is a kind of problem a map cannot help you with, and Boof had just met the largest one of her life. If no record would hold the egg, then the egg was not a thing to be filed. It was a thing to be finished. She t..."
+    excerpt: "Outside, the berries still leaned toward the grove. Boof had spent the morning asking a book. The field had been pointing all along. She settled the feed-sack against her chest, where a pup might ride. A fine gold cra..."
     route: ^[chapter/01/s06]{open}
   }
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
-    excerpt: "By the time the light went level and amber, Boof was a long way from any desk she had ever been offered and did not miss a single one of them. She had a warm egg no map would name, a hum no record could hold, and a tr..."
+    excerpt: "Evening laid long light across the field. Boof was hungry. The egg was warm. For a while, that was all. Behind her, the berries glowed under their leaves. Ahead, the first trees crowded close. Then a sound came out of..."
     route: ^[chapter/01/s07]{open}
   >
 ]

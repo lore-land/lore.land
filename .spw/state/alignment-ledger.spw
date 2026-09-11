@@ -145,6 +145,16 @@
   }
 }
 
+^"reading_revision_2026_09_11"{
+  #axis: linguistic
+  surface: "chapter JSON 01, 06, 13; ebook navigation; sharing; chapter template; home"
+  !class: intentional
+  evidence: "Navigation exposed Spw expressions and monument terminology during ordinary reading."
+  resolution: "Use familiar share, contents, section, and resume labels; retain folded Spw tools for exploration. Prepare material physics through map folds, finite serving labor, and a lost path in a map reproduction."
+  why: "Readers can follow the story directly while recurring objects reward attention to media and tropes. New prose leaves the unnamed figure unrevealed."
+  &source: "user direction 2026-09-11"
+}
+
 ^<complaint_route>{
   .note: "reader complaints enter here, then feed diagnostics — a directed channel from complaint to claim counter"
   flow: [

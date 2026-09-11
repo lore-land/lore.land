@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-song/02"
     type: "custom-song"
-    excerpt: "The song did not invite anyone to dance. It named the fracture note by note: one claim that would spend the wish as slices, one claim that would bank it whole and let it go bitter. Two receipts on one warmth. The melo..."
+    excerpt: "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth. She shifted her paw. The crack ran on ..."
     handles: ["song-verse"]
     route: ^[chapter/05/s02]{open}
   >
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "Wish-Physics Over the Crack"
-    excerpt: "It was here, with his slippered feet planted either side of the hairline, that the Genie finally taught the physics properly. A wish, he said, does not make anything. Making costs miracles, and miracles were exactly t..."
+    excerpt: "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you..."
     route: ^[chapter/05/s05]{open}
   }
   s06: <

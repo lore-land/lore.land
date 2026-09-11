@@ -159,8 +159,15 @@
       "content": [
         {
           "type": "paragraph",
-          "data-content_id": "labyrinth-intro",
-          "text": "\"In the labyrinth, every pane will offer you a version of your own warmth,\" a voice murmured from behind three layered reflections. \"Do not mistake the pane for the flame, and do not mistake the flame for the wish. The glass remembers being hit. That is why it is honest. Follow the honest glass, and the honest glass will follow the smell of supper.\""
+          "text": "“Every pane will offer you your own warmth,” said a voice behind the glass. Boof turned. Three reflections turned with her."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Very flattering. Very little supper.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "She lifted her nose. Through the rain and brass came the smell of crust. “There you are,” said the voice. “Glass can show a flame. It can't bake a pie.”"
         }
       ]
     },
@@ -201,16 +208,44 @@
     },
     {
       "type": "section",
-      "title": "The Court of Mr. BoonWAP",
+      "title": "The Pie at the Table",
       "data-motif": "small-want",
       "content": [
         {
           "type": "paragraph",
-          "text": "At the heart of the labyrinth, in a small round plaza where every street eventually apologized and arrived, Mr. BoonWAP held court from a broad oak table. He was a pie of boonberries — berries a wish had once passed over, each holding its drop of the granting — baked into a crust the color of a good afternoon. He held court the way a hearth holds a kitchen: by being warm in the middle of things. He served himself in slices to everyone who came — the lamplighter, the night porters, a child up past bedtime, a dog with an egg — and he was never smaller. Boof watched the knife go in eleven times and counted the same whole pie after. Wondering how that worked, she realized, was the point. Mr. BoonWAP was wondering-about-pie made civic."
+          "text": "Every street eventually arrived at a round plaza. At its center, on an oak table, a warm boonberry pie held court. Rain had followed them into the plaza in the folds of coats and the soles of shoes. It steamed from the porters' shoulders while they ate. Boof settled where she could watch the table legs and the lanes between them, the dropped crumb, the swinging heel, a spoon rescued before it reached the stones. Above her, conversation passed with the plates. Somebody had lost a button; somebody knew a shortcut home. The egg warmed her chest, the ovens warmed her face, and for a little while she could sit among people whose largest unanswered question was whether to have another slice."
         },
         {
           "type": "paragraph",
-          "text": "He looked at the egg, then at her, with the frank kindness of pastry. \"And you, worker,\" he said, steam curling off him like slow thought, \"if the wish were spent tonight — what would you have it be?\" Boof opened her mouth and found the want was there but the words were not; it was shaped like a warm furrow and a door and next spring all at once, and it would not come out in any order. She closed her mouth, embarrassed. Mr. BoonWAP beamed like a whole harvest. \"Good,\" he said. \"A wish you can't say yet is still proofing. Take it out of the oven early and you get BaneWAP.\" Beyond the plaza, at the dark gate arch, something lattice-crusted shifted its weight and did not come into the light."
+          "text": "The knife went in. A slice came out. The pie stayed whole."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof watched it happen eleven times. A lamplighter ate. A porter took seconds. A child who ought to have been asleep licked the plate. Boof checked beneath the table."
+        },
+        {
+          "type": "paragraph",
+          "text": "No second pie."
+        },
+        {
+          "type": "paragraph",
+          "text": "A server set down another plate and rubbed her wrist. “Enough for everyone,” she told Boof. “Always.” She looked at the washing-up."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof got off the stool. The server sat."
+        },
+        {
+          "type": "paragraph",
+          "text": "Steam rose from the crust. The pie considered the egg. “If you spent the wish tonight, what would you ask?”"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof opened her mouth. A furrow. A door. The smell of next spring. She could feel the want, but couldn't get its pieces into words. She shut her mouth again."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Good,” said the pie. “Still proofing.” At the far gate, something lattice-crusted shifted in the dark. “Take it out too soon,” he added, more quietly, “and see what you get.”"
         }
       ],
       "climate": {

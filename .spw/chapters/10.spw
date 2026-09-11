@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-bonk/02"
     type: "custom-bonk"
-    excerpt: "The audit itself was staggering to watch. BoneWAP weighed the egg's karmic momentum against the ledger of every wish ever spent, and the finding rose off the page in drawn gold: the smallest wishes have the longest ar..."
+    excerpt: "The egg went onto the scale. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The finding appeared in gold: the smallest wishes have the longest arcs. Given the current, a small tu..."
     handles: ["bonk-intro"]
     route: ^[chapter/10/s02]{open}
   >

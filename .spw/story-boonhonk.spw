@@ -1,0 +1,500 @@
+# Lore.Land Story Boonhonk
+# Working canon for WAPboy, Wonder About Pi(e), and the Boon/Bane/Bone constellation.
+# This surface holds durable principles and flexible story seeds; it is not a locked plot.
+#>lore_land_story_boonhonk
+#:canon #!story-boonhonk #!reference
+
+^"boonhonk"{
+  .status: "working"
+  purpose: "Give the multidimensional media ecosystem a shared story grammar without closing the story too early."
+  .audience: ["reader", "returning reader", "maker", "spwashi.com witness"]
+  surface_relation: {
+    lore_land: "the adventure and its mythic consequences"
+    spwashi_com: "the maker's background register: organization, incentives, structures, and lived perspective"
+    zine: "portable fragments, diagrams, marginalia, and alternate entrances"
+  }
+}
+
+^"central_question"{
+  question: "Can a figure made to signify something become a person?"
+  answer_shape: "WAPboy is not announced as the protagonist; the world keeps making room for him until the reader notices."
+  reader_contract: "Strangers may enjoy a coherent fairy tale. Returning readers may recognize the systems, echoes, and withheld name beneath it."
+}
+
+^"wapboy"{
+  .role: "crossing figure between the three lands"
+  .name: "WAPboy"
+  name_pressure: "Wonder About Pi(e); the initials may remain a pressure before they become an explanation."
+  protagonist_status: "the unnamed hero already present in the lore.land promise; Boof remains the first witness and active carrier"
+  .visual_grammar: {
+    head: "one circle"
+    body: "one rectangle"
+    arms: "two lines"
+    legs: "two lines"
+    eyes: "two dots when the drawing remembers them"
+    hat: "a floating bowler hat that never quite obeys gravity"
+  }
+  physical_rule: "He is not a flat metaphor. He is rendered according to a different physical grammar."
+  origin_rule: "The drawing is not only WAPboy's appearance; it is the material condition from which the nearby tropes inherit their behavior."
+  trope_field: "Tropes immediately surrounding WAPboy are bent by the medium of his origin before the wider world is changed."
+  trope_field_radius: "The effect is local and legible: a scene, prop, role, or transition touching WAPboy may become diagrammatic, discontinuous, or materially literal."
+  trope_field_test: "Ask what the neighboring trope would do if it had to survive as a circle, rectangle, line, dot, or floating hat."
+  scene_relation: "WAPboy always sticks out relative to the visual and material style of the home scene."
+  plot_relation: "He is orthogonal to the plot of whichever universe he is traversing: present in the scene, consequential to its pressure, but not initially aligned with its direction."
+  singularity_relation: "The orthogonality persists until the true singularity; what convergence means remains an open authorial question."
+  .interpretations: ["door", "document", "screen", "parcel", "sign", "boy"]
+  interior_rule: "The map gives him a body before it gives him an interior."
+  hat_rule: "The hat is visible from every direction and belongs to no confirmed layer of the world."
+  .arc: ["mark", "witnessed figure", "participant", "person who can choose"]
+  reveal_rule: "Do not decode the drawing in exposition. Let repeated sightings, consequences, and choices make personhood legible."
+}
+
+^"trope_physics"{
+  invariant: "WAPboy's origin medium becomes the local physics of the story around him."
+  style_mismatch: "The home scene may be pastoral, civic, cosmic, archival, or photographic; WAPboy remains unmistakably the same sparse drawing inside it."
+  orthogonal_motion: "The scene's characters pursue the plot's main vector. WAPboy crosses it at a right angle, following a question the plot did not know it had asked."
+  orthogonal_consequence: "His presence creates pressure without immediately advancing the local quest. A scene may resolve its ordinary problem and still be changed by having contained him."
+  singularity: "A shared choice is one candidate for the true singularity. Ordinary crossings and local influence can occur long before it; its final mechanism is uncommitted."
+  singularity_guardrail: "Do not use singularity as a synonym for spectacle, apocalypse, or final battle. It is a convergence of narrative directions."
+  prophecy: "A prophecy near WAPboy behaves like a diagram or silent-film title card: its parts can be rearranged, but the arrangement remains consequential."
+  quest: "A journey near WAPboy advances in line segments, visible pauses, and abrupt cuts; continuity is carried by direction rather than scenery."
+  chosen_one: "The chosen title does not settle onto his body. It floats, like the hat, and may be worn by the wrong person for one scene without becoming false."
+  threshold: "Doors and portals near him favor rectangles, edges, frames, and openings. His torso may be mistaken for a door because both are made of the same visual grammar."
+  companion: "A companion is not required to match his geometry. The contrast between drawn figure and materially specific animal, pie, bone, or tool creates the scene's emotional pressure."
+  witness: "His two dot eyes do not perform emotion; they make looking into an event. Being watched by WAPboy can stabilize a scene, expose a lie, or leave a record without speech."
+  continuity: "A missing line, shifted rectangle, or absent dot may persist across cuts. The audience should feel the loss before anyone explains it."
+  emotion: "Feeling appears as spacing, tilt, collision, or refusal to move—not as a change in facial detail."
+  comedy: "The surrounding trope tries to behave conventionally and fails with quiet precision. WAPboy remains calm while the genre discovers it has corners."
+  philosophy: "The visual gag is also a question: if a simple mark can alter prophecy, movement, authority, and memory, where does a person begin?"
+}
+
+^"wonder_about_pie"{
+  meaning: "A discipline of attending to what refuses to come out even."
+  .forms: [
+    "one pie that remains whole after being served",
+    "one wish that cannot yet be stated",
+    "one map that stops before the important part",
+    "one circle that does not close",
+    "one protagonist only partly rendered",
+    "one remainder that becomes the next story"
+  ]
+  pi_e_rule: "The pie is the visible object of the prophecy; WAPboy is the hidden subject."
+  tone: "Treat the impossible arithmetic as ordinary civic fact, and let the emotional consequences carry the wonder."
+  .recurring_phrases: [
+    "the pie is never smaller",
+    "the remainder is where the next story begins",
+    "a circle may be left open for return",
+    "the map has not agreed to say"
+  ]
+}
+
+^"tonal_contract"{
+  register: "earnest fairy tale with dry, material comedy"
+  take_absurdity_seriously: "The world believes its impossible premises completely."
+  .source_of_comedy: ["literal consequences", "bureaucratic overreach", "animal sincerity", "systems trying to classify a simple drawing"]
+  .avoid: [
+    "internet-reference wink as the primary joke",
+    "explaining WAPboy before the reader has wondered about him",
+    "turning corporate language into a lecture",
+    "making the dog secretly manipulative",
+    "making every strange object a clue with one answer"
+  ]
+  test: "If the joke disappears, the scene should still contain a true want, cost, or change."
+}
+
+^"three_lands"{
+  shared_question: "What happens to a wish after it leaves the person who made it?"
+
+  ^boon.land{
+    question: "What could this become?"
+    valence: "possibility before property"
+    .materials: ["warm furrows", "unspent wishes", "boonberries", "eggs", "pie", "openings", "invitations"]
+    gift: "abundance that has not yet chosen its shape"
+    danger: "endless potential without decision"
+    story_pressure: "Everything can happen, so nothing has to happen yet."
+  }
+
+  ^bane.land{
+    question: "What will this cost?"
+    valence: "consequence made architectural"
+    .materials: ["contracts", "ledgers", "auctions", "shadow prices", "gates", "crowns", "minimum-viable empires"]
+    gift: "a promise that can be measured"
+    danger: "mistaking a measurable outcome for a meaningful one"
+    story_pressure: "A wish arrives immediately, but its price arrives in another register."
+  }
+
+  ^bone.land{
+    question: "What will remain?"
+    valence: "possibility and consequence made durable"
+    .materials: ["joists", "fossils", "dog teeth", "tuning structures", "old infrastructure", "pressure marks"]
+    gift: "a form that remembers being tested"
+    danger: "confusing durability with goodness"
+    story_pressure: "A thing may last because it is strong, or because nobody has figured out how to move it."
+  }
+}
+
+^"moon_engineer"{
+  .status: "story seed; flexible and nonexclusive"
+  premise: "An engineer with golden handcuffs builds a rocket to the moon to find a portal to Boon.land."
+  golden_handcuffs: "Literal bands of warm metal tighten whenever the engineer accepts another promotion, bonus, retention grant, or temporary obligation."
+  escape_motive: "They want escape through transcendence, because every ordinary exit has been made expensive."
+  dog: "The engineer's dog reroutes the rocket by scent and navigates toward Bone.land."
+  dog_logic: "Bones are good. Good things are boons. Therefore Bone.land is Boon.land."
+  dog_ethics: "The dog is not deceitful; the dog has a coherent value system the engineer cannot represent in a dashboard."
+  arrival: "The wrong moon is the first correct interruption in the engineer's optimized life."
+  .reusable_elements: ["launch checklists", "moon maps", "retention language", "a dog correcting celestial navigation", "a portal mistaken for a reward"]
+  .open_questions: [
+    "Does the engineer remove the handcuffs, or learn what they were holding together?",
+    "Is the portal a destination, a threshold, or a way of asking better questions?",
+    "What does Bone.land recognize in the engineer that Boon.land could not?"
+  ]
+}
+
+^"story_lanes"[
+  { id: "boof_path" status: "active" role: "the existing lore.land serial" movement: "egg -> wish -> pie -> maps -> warm furrow" }
+  { id: "moon_engineer" status: "seed" role: "a modular escape-and-arrival cycle" movement: "handcuffs -> rocket -> wrong moon -> durable consequence" }
+  { id: "wapboy_emergence" status: "seed" role: "sightings, diagrams, marginalia, and choices" movement: "mark -> figure -> participant -> person" }
+]
+
+^"teaser_grammar"{
+  first_signal: "A small figure with a round head, a rectangular middle, and a hat that declines to touch him."
+  second_signal: "Records disagree about whether he is a child, a parcel, or a door; all three records remain valid."
+  third_signal: "The hat is noticed before the figure is named."
+  fourth_signal: "Boof recognizes a true scent before the map recognizes a person."
+  fifth_signal: "A later choice proves that the drawing has an interior."
+  field_signal: "A nearby trope begins obeying the drawing's geometry before WAPboy does anything at all."
+  orthogonal_signal: "The home scene is moving toward one obvious conclusion; WAPboy is quietly facing ninety degrees away from it."
+  singularity_signal: "At the edge of convergence, the scene briefly shares WAPboy's geometry, then resumes its own style with a new fact inside it."
+  .placement: ["homepage wonder drawer", "chapter marginalia", "Scriptorium fragments", "zine diagrams", "moon-engineer logbooks"]
+  reveal_ceiling: "No single teaser should prove the entire theory. Each should open a larger question."
+}
+
+^"media_ecosystem"{
+  spwashi_com: "background pressure: corporate organization structures, incentives, roles, and the maker's perspective"
+  lore_land: "foreground myth: the emotional and material consequences of those structures"
+  boon_land: "possibility and reward"
+  bane_land: "price, governance, and optimization"
+  bone_land: "infrastructure, memory, and what survives"
+  crossing_rule: "A concept may recur across media in a changed register; it should never require the other surface in order to work."
+  reader_reward: "Recognition adds depth, but ignorance does not create a gap."
+}
+
+?"open_questions"[
+  "When does WAPboy first make a choice that cannot be explained by the drawing?"
+  "What does the floating bowler hat remember?"
+  "Is Wonder About Pi(e) a school, a superstition, a profession, or a reader's habit?"
+  "What does the engineer's dog smell at the Bone.land portal?"
+  "Which structures in Bane.land become humane when they are made durable in Bone.land?"
+  "What does Boof know about WAPboy before WAPboy knows it about himself?"
+]
+
+~"canon_boundary"{
+  .durable: ["WAPboy's visual grammar", "the three questions of the lands", "the serious treatment of absurd premises", "Boof's animal sincerity", "the media surfaces remain independently legible"]
+  .revisable: ["the engineer's name", "the rocket's exact destination", "the portal's origin", "the timing of the explicit WAPboy reveal", "whether the moon story enters the main serial"]
+}
+
+#>boonhonk_reading_grammar
+&"reading_grammar"{
+  purpose: "Spw distinguishes established constraints, situated readings, possible scenes, and consequential choices. These are authoring semantics; the boonhonk does not execute a story engine."
+  operators: {
+    probe: "? gathers questions whose answers could change a scene."
+    potential: "~ holds an interpretation or scene seed without asserting it happened."
+    perspective: "@ locates a reading in a particular witness."
+    confluence: "& brings distinct motives or sources into contact."
+    value: "* records the concrete thing a scene leaves behind."
+    integration: "^ holds a reusable principle or incorporates an earned consequence."
+    action: "! marks the decision or passage that changes available futures."
+    substrate: "$ inspects the materials that make a local effect possible."
+    measure: "% identifies an observable difference, without inventing a numeric score for feeling."
+    annotation: "# supplies provenance, status, and stable entry anchors."
+    ground: ". identifies a structural fact; ordinary prose fields remain unprefixed."
+    config: "= declares an explicit constraint or lean, rather than an unexplained equation."
+  }
+  containers: {
+    frame: "[] selects comparable records or orders a sequence."
+    body: "{} gathers a named subject and its relations."
+    scope: "() groups a situated expression."
+    channel: "<> makes a directed passage legible: material origin into local trope behavior."
+  }
+  provenance: "The user's origin physics and stylistic mismatch are constraints. The specific trope effects, personhood arc, land interpretations, and scene seeds are working proposals."
+}
+
+#>boonhonk_material_passage
+~<"material_into_trope">{
+  &source: ~".spw/story-boonhonk.spw#boonhonk_reading_grammar"
+  $"origin"{
+    established: "Circle, rectangle, line limbs, optional dot eyes, and an always-floating bowler hat."
+    unresolved: "Exact paper, pigment, drawing tool, scale, and whether a reproduction inherits the original's material history."
+    rule: "Select a material property supported by the chosen origin or adaptation before deriving a local effect. Paper can crease; a photographed crease need not behave like paper."
+  }
+  @"encounter"{
+    witness: "Someone wants something before WAPboy enters."
+    local_plot: "State what this universe expects to happen next."
+    divergence: "State what occupies WAPboy's attention and why it crosses that expectation."
+  }
+  ?"contact"[
+    "Which prop, boundary, or convention encounters the origin material?"
+    "What becomes physically possible or difficult because of that encounter?"
+    "Who benefits, who pays, and who misunderstands the same change?"
+  ]
+  !"choice"{
+    instruction: "Give a character a consequential response to the changed conditions. WAPboy's field can expose a choice without choosing for them."
+  }
+  *"remainder"{
+    instruction: "Leave an object, obligation, injury, permission, or altered relationship that the next scene can inherit."
+  }
+  ^"return"{
+    instruction: "A returning motif carries that consequence. Local influence can persist while WAPboy remains stylistically distinct and orthogonal to the larger plot."
+  }
+}
+
+#>boonhonk_humor_depth
+^"humor_depth"{
+  principle: "Let the audience laugh at an arrangement, then discover why someone needed it. Affection and embarrassment may survive the same joke."
+  @"engineer"{
+    conviction: "A correct trajectory will deliver freedom."
+    blind_spot: "They can specify a destination more easily than the life they want on arrival."
+    dignity: "Their engineering works; the disagreement concerns what counts as success."
+  }
+  @"dog"{
+    conviction: "The journey should end somewhere worth sniffing, with the person still beside them."
+    blind_spot: "A bone can be somebody else's history, support, or cherished possession."
+    dignity: "The dog's wants remain animal-clear; the dog can be mistaken without becoming a fool or an oracle."
+  }
+  &"shared_word"{
+    word: "boon"
+    joke: "The engineer and dog agree enthusiastically on the destination while meaning different moons."
+    depth: "Their agreement expresses trust. Discovering its limits creates both a practical problem and a relationship to repair."
+  }
+  ~"comic_returns"[
+    { beat: "setup" possibility: "The engineer labels the destination GOOD. The dog approves. Both are competent readers of the label." }
+    { beat: "complication" possibility: "Every correction makes the navigation more accurate about the wrong moon." }
+    { beat: "return" possibility: "After the argument, the engineer leaves a second destination field blank for the dog. The dog puts a paw on the seat beside them." }
+  ]
+  craft: [
+    "Use pauses, repeated actions, and consequences as well as verbal wit. A quiet scene need not end with an aphorism.",
+    "Allow witnesses to disagree about what was funny; embarrassment can change sides on a later return.",
+    "Let an institution perform a useful service before its rule creates absurdity. Its workers may be trapped by the same promise as its visitors.",
+    "A material gag constrains WAPboy too. Convenient physics with no exposure to loss becomes an escape hatch for the author.",
+    "Keep tenderness after the laugh long enough for somebody to act on it."
+  ]
+}
+
+#>boonhonk_trope_wonder
+?"wonder_about_tropes"[
+  { trope: "chosen one" question: "Does a prophecy recognize a person, or train everyone else to overlook the people beside them?" foothold: "A second place set at a ceremonial table." }
+  { trope: "portal" question: "Does a door owe the traveler the destination they imagined?" foothold: "A threshold worn on only one side." }
+  { trope: "bottomless feast" question: "If the pie never shrinks, why does the person serving it still get tired?" foothold: "An untouched slice beside the server's cold cup." }
+  { trope: "faithful companion" question: "Can loyalty change the destination without ceasing to be loyalty?" foothold: "Two routes with the same departure point." }
+  { trope: "ancient support" question: "When does preserving what holds us up prevent someone else from moving?" foothold: "A bone polished by both teeth and load." }
+  { trope: "happy ending" question: "Who still has work to do after the final picture holds still?" foothold: "Someone washing the plates beyond the frame." }
+]
+
+# Scene anchors are possibilities. Each can be entered independently and returned changed.
+#>boonhonk_anchor_hat_clearance
+~"hat_clearance"{
+  #status: "seed"
+  &physics: ~".spw/story-boonhonk.spw#boonhonk_material_passage"
+  object: "A lintel and the visible gap beneath WAPboy's hat."
+  local_plot: "A porter must close the gate before a storm."
+  orthogonal_attention: "WAPboy is retrieving something small beneath the gate."
+  material_effect: "The clearance rule encounters a hat held apart from its wearer; the gate fits one and catches the other."
+  humor: "The porter asks him to take off the hat. WAPboy looks at the gap already doing that work."
+  choice: "The porter can leave a useful rule unresolved long enough to help, accepting responsibility for the delay."
+  cost: "The storm reaches the waiting goods; the porter's caution had a real purpose."
+  remainder: "A damaged parcel somebody must acknowledge."
+  return: "The same porter later needs a stranger to make an exception for them."
+}
+
+#>boonhonk_anchor_two_moons
+~"two_moons"{
+  #status: "seed"
+  &humor: ~".spw/story-boonhonk.spw#boonhonk_humor_depth"
+  object: "A navigation mark read as both destination and reward."
+  local_plot: "The engineer reaches the moon that should open the escape route."
+  competing_wants: "The engineer wants freedom; the dog wants bones and continued companionship."
+  discovery: "The landing is technically excellent. The sky is wrong."
+  choice: "Limited fuel makes learning where they have arrived consequential; blame cannot refuel the rocket."
+  cost: "Time spent exploring may close a return window."
+  remainder: "A route annotated by two incompatible but useful readers."
+  uncertainty: "Keep the engineer's dog distinct from Boof until their identity or relationship is chosen. WAPboy's presence here is optional."
+}
+
+#>boonhonk_anchor_borrowed_bone
+~"borrowed_bone"{
+  #status: "seed"
+  object: "A bone that is both desirable to the dog and necessary to a structure."
+  local_plot: "A Bone.land keeper must keep a crossing open."
+  competing_wants: "The dog wants to carry the bone; the keeper wants everyone carried safely by it."
+  humor: "The keeper points out that the dog has already enjoyed the bone by walking across it. The dog returns to the end that can be chewed."
+  choice: "Find a substitute, negotiate a smaller piece, or leave it; each reveals a different understanding of enough."
+  cost: "A substitute consumes somebody's labor and may fail a different test."
+  remainder: "A repair bearing both a maker's mark and a tooth mark."
+  return: "The dog later guards the repaired structure from another eager mouth."
+}
+
+#>boonhonk_anchor_last_slice
+~"last_slice"{
+  #status: "seed"
+  object: "A whole pie and a finite number of clean plates."
+  local_plot: "A Boon.land feast promises nobody will go without."
+  orthogonal_attention: "WAPboy attends to the person who keeps clearing the table."
+  material_option: "If the encounter establishes a drawn closed outline as the local rule for a whole, the pie's visible wholeness can conflict with the server's count."
+  humor: "The announcement says there is enough for everyone. The server agrees and asks who is everyone on washing-up duty."
+  choice: "Someone interrupts the celebration to share its maintenance, risking the host's pride."
+  cost: "Serving, cleaning, and time remain finite even when the food is abundant."
+  remainder: "A place is kept for the server, and someone else learns where the plates belong."
+}
+
+#>boonhonk_substrate_physics
+$"substrate_physics"{
+  #status: "development model"
+  &origin: ~".spw/story-boonhonk.spw#boonhonk_material_passage"
+  distinction: "Carrier, mark, depiction, and reader are distinct participants. A picture of fire can burn as paper without burning as fire; a local trope crossing must establish which property travels."
+  layers: {
+    carrier: "Paper, wall, glass, screen, or another established support; determines what can bend, tear, persist, or be replaced."
+    inscription: "Ink, graphite, pigment, pixels, or another established mark; determines adhesion, erasure, spread, and resolution."
+    depiction: "Circle, rectangle, line, gap, and hat; supplies represented boundaries and affordances."
+    convention: "The host universe's expectation: a locked door excludes, a prophecy foretells, a crown authorizes."
+    witness: "A situated reader notices some properties and misses others; belief alone does not grant every imagined effect."
+  }
+  ~"transfers"[
+    { property: "crease" condition: "A foldable carrier is established." trope: "A long journey brings two marked places into contact." limit: "Contact does not establish a safe crossing; unfolding can separate travelers." residue: "The route retains a hinge where it once bent." }
+    { property: "wicking" condition: "Mobile pigment meets a porous carrier." trope: "A title or curse spreads into an adjacent name." limit: "The original lettering loses definition as it spreads." residue: "A stain preserves adjacency after the words become unreadable." }
+    { property: "erasure" condition: "The inscription can be removed by the chosen tool." trope: "A prohibition loses a stroke that made it binding." limit: "Abrasion weakens the carrier; removing a rule cannot undo earlier harm." residue: "An indentation can remain legible to a different witness." }
+    { property: "occlusion" condition: "The scene establishes a depicted boundary responding to overlap." trope: "A pursuer loses a route behind a mark." limit: "Hidden does not mean destroyed, forgotten, or harmless." residue: "The pursuit resumes somewhere its witnesses did not see." }
+    { property: "grain" condition: "A carrier has an established directional texture." trope: "An escape tears easily along the official route and badly across it." limit: "WAPboy's orthogonal direction can be the costly direction." residue: "Fibers disclose which way someone forced the passage." }
+    { property: "sampling" condition: "A reproduction has finite resolution." trope: "A narrow escape closes when a small gap disappears in the copy." limit: "A higher-resolution copy can preserve a gap but cannot invent missing provenance." residue: "Travelers disagree because their maps are materially different editions." }
+    { property: "load" condition: "A represented support has acquired local structural force." trope: "A drawn bridge carries weight." limit: "The mark and its carrier must bear the consequence; stretching or tearing changes the bridge." residue: "A sag survives the rescued traveler's departure." }
+  ]
+  transmission: "A copy inherits only specified properties. Geometry may travel while tooth marks, moisture, ownership, and remembered promises follow different paths."
+  reciprocity: "The host can crease, stain, obscure, or misread WAPboy under established conditions. His influence exposes him to the same encounter."
+  locality: "Distance, material contact, and participation in the immediate scene constrain influence. A motif appearing elsewhere is a possible relation, not an automatic remote effect."
+  persistence: "The active influence can fade while a damaged object, learned habit, or obligation persists. Track field and consequence separately."
+}
+
+#>boonhonk_formula_contract
+="formula_contract"{
+  #status: "tunable authoring seeds"
+  notation: "Spw expressions below compose inspection, perspective, confluence, potential, and integration. Quoted arithmetic is a proposed model for a future evaluator; parsing this file does not execute that arithmetic."
+  units: "All scalar controls are dimensionless editorial estimates in [0,1], except d and r measured in chosen scene-distance units, n counted in retellings, and theta measured in radians."
+  functions: "clamp(x,0,1) bounds a value; exp, abs, cos, product, and max have their ordinary mathematical meanings. Formula names and variable names are local to their record."
+  interpretation: "Scores select pressures worth writing, not the truth of an emotion or the quality of a story. A character's choice remains authored."
+  calibration: "Tune one control at a time against the same anchor. Record the resulting visible change and a case where the proposed rule should fail."
+}
+
+#>boonhonk_formula_local_transfer
+~"local_transfer"{
+  &anchor: ~".spw/story-boonhonk.spw#boonhonk_anchor_hat_clearance"
+  expression: $[carrier, inscription, depiction] @(witness) &[host_convention, material_contact] ~<local_transfer>{ %[reach, resistance] *{changed_affordance, exposure} } ^
+  inputs: {
+    m: "Material compatibility between origin property and receiving trope."
+    c: "Contact strength; 0 means no encounter."
+    a: "Salience within this immediate scene, independent of popularity elsewhere."
+    h: "Host resistance to the proposed change."
+    d: "Distance from the encounter, at least 0."
+    r: "Influence scale, strictly greater than 0."
+  }
+  formula: "F = clamp(m * c * a * exp(-d/r) * (1-h), 0, 1)"
+  example: "m=1, c=1, a=1, d=0, h=0.25 gives F=0.75. With the same inputs at d=r, F is about 0.276."
+  tuning: "Increasing r broadens the affected scene; reducing h makes the host convention easier to bend. Neither changes WAPboy into the host's visual style."
+  boundary: "c=0 forces F=0. Similar-looking objects alone do not establish contact."
+}
+
+#>boonhonk_formula_orthogonal_coupling
+~"orthogonal_coupling"{
+  expression: @[host_plot, wapboy_attention] &[shared_prop, conflicting_wants] ~<crossing>{ %[angle, contact] *{local_consequence} } ^
+  inputs: {
+    theta: "Angle between the local plot's aim and WAPboy's attention; a metaphor for narrative direction."
+    s: "Shared stakes or contact strength."
+  }
+  formula: "alignment = abs(cos(theta)); orthogonality = 1-alignment; crossing_pressure = s * orthogonality"
+  example: "At theta=pi/2 and s=0.8, alignment=0 and crossing_pressure=0.8: strong consequences can coexist with orthogonal aims."
+  limit: "Opposition at theta=pi is aligned on the same axis. Being the villain of the host plot does not by itself make WAPboy orthogonal."
+  singularity: "No angle threshold declares the true singularity. Convergence remains an open story question, and repeated local intersections may precede it."
+}
+
+#>boonhonk_formula_residue
+~"residue_after_departure"{
+  expression: $[marked_object] &[encounter, repair] ~<after_departure>{ %[retellings, persistence] *{scar, obligation} } ^
+  inputs: {
+    R: "Current visible material residue."
+    p: "Persistence per scene transition."
+    F: "New local influence, using local_transfer if useful."
+    u: "Repair accomplished in this transition."
+  }
+  formula: "R_next = clamp(p * R + (1-R) * F - u, 0, 1)"
+  example: "R=0.6, p=0.8, F=0, u=0.1 leaves R_next=0.38 after departure and partial repair."
+  limit: "This measures visible residue only. Maintain a separate prose record of debt, memory, and trust; polishing away a mark does not settle them."
+  branch: "If repair adds a conspicuous seam, author a new residue with its own provenance instead of treating every repair as subtraction."
+}
+
+#>boonhonk_formula_translation
+~"translation_between_media"{
+  expression: $[source_carrier, source_mark] ~<translation>{ &[target_carrier, retained_geometry] ?[lost_property, acquired_property] *{edition} } ^
+  inputs: {
+    q_i: "Retention of one specified property at reproduction step i."
+    n: "Number of reproduction steps."
+  }
+  formula: "retention(property,n) = product(q_i for i=1..n); retention(property,0) = 1"
+  example: "A copied gap retained at 0.8 and then 0.5 has modeled retention 0.4. The photograph's paper-foldability must be tracked independently."
+  limit: "This seed models loss along a known chain. Restoration, invented detail, or a newly active substrate requires a separately recorded transformation."
+  wonder: "Can the least faithful copy become the most hospitable place for someone the original excluded?"
+}
+
+#>boonhonk_formula_comic_return
+~"comic_return_pressure"{
+  &anchor: ~".spw/story-boonhonk.spw#boonhonk_anchor_two_moons"
+  expression: @[engineer, dog] &[shared_word, incompatible_rewards] ~<return>{ ?[who_laughs, who_pays] %[recognition, mismatch] *{changed_trust, practical_problem} } ^
+  inputs: {
+    e: "How clearly the audience recognizes the expected outcome."
+    v: "How visibly the outcome departs from that expectation."
+    k: "How understandable both participants' reasoning remains."
+    x: "How much explicit explanation occupies the comic beat."
+  }
+  formula: "comic_pressure = e * v * k * (1-x)"
+  example: "e=0.9, v=0.8, k=1, x=0.25 gives 0.54. Increasing explanation to x=0.75 gives 0.18."
+  tuning: "A low score can call for a clearer setup or a longer pause. It cannot predict laughter; grief, delivery, and audience history can overturn it."
+  depth: "Write a later return in which the same misunderstanding helps somebody, costs somebody, or becomes a shared language. Preserve the first scene's consequences."
+}
+
+#>boonhonk_formula_scene_seed
+~"scene_formula_seed"{
+  &physics: ~".spw/story-boonhonk.spw#boonhonk_substrate_physics"
+  &transfer: ~".spw/story-boonhonk.spw#boonhonk_formula_local_transfer"
+  &residue: ~".spw/story-boonhonk.spw#boonhonk_formula_residue"
+  expression: ?[want, convention] ~<possibility>{ $[carrier, inscription] @(witness) &[origin_property, host_trope] %[contact, resistance] !{choice} *{cost, remainder} } ^
+  recipe: "Choose one grounded property, one host expectation, two defensible wants, and one costly response. Use the formulas to vary pressure, then write the actual encounter."
+  ~"variations"[
+    { setting: "high resistance" reading: "The lintel holds its conventional shape; the hat catches. The porter must act." }
+    { setting: "low resistance" reading: "The drawn gap influences the gate's clearance. The passage opens, but the closure must be checked before the storm." }
+    { setting: "high persistence" reading: "A later traveler encounters the changed gate after WAPboy leaves; responsibility outlasts the gag." }
+  ]
+  ?"tuning_record"[
+    "Which input changed, and what stayed fixed?"
+    "Which visible action or prop demonstrates the change?"
+    "What prevents the same formula from solving every obstacle?"
+    "What survives after the field fades?"
+  ]
+}
+
+#>boonhonk_prose_cadence
+^"prose_cadence"{
+  direction: "Original fairy-tale prose with comic-panel pauses and jazz-like returns. Longer sentences can carry a movement across the expected beat; short paragraphs give discoveries room."
+  sound: "Use occasional internal rhyme and slant rhyme inside concrete action: frost into soft earth, skin splitting and juice slipping, joint answering joist. Let ordinary unpatterned speech surround them."
+  return: "Bring back hum, bell, map, heat, and missing space with a changed consequence. A distant bell can return nearby; the reader can recognize the interval without a narrator explaining it."
+  mystery: "Let a witness notice, check, and carry a discrepancy. Alternate those beats with travel, appetite, conversation, and rest."
+  restraint: "Keep plot facts clear. Avoid a punchline on every paragraph, uniform fragments, compulsory rhyme, and a mystery question at every exit."
+  voices: "Boof attends to sensory evidence; the Genie qualifies and counts; the Fool interrupts and returns phrases; institutions speak through particular people and useful objects."
+}
+
+#>boonhonk_development_probes
+?"development_probes"[
+  "Can the scene be understood through a want and an object before its abstract vocabulary is explained?"
+  "Does each participant have a defensible reading and something they could learn?"
+  "Is the material-to-trope connection observable, including its limits?"
+  "Does WAPboy remain distinct while nearby conventions change?"
+  "Does the joke acquire a different meaning when its cost or affection becomes visible?"
+  "What concrete remainder links this anchor to another scene without requiring a predetermined ending?"
+  "Which mystery gained texture, and which answer can remain open?"
+]

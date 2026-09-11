@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-puzzle/02"
     type: "custom-puzzle"
-    excerpt: "He counted them slyly, the way a rich man counts what he means to give away. One: the three-wishes, sampled and returned as wish-physics with a price sheet. Two: the trickster-in-the-tree, returned as a Fool who climb..."
+    excerpt: "The Fool laid out the shards. Three wishes; a trickster in a tree; a genie lately out of business. A vizier, baked bitter. Two claims splitting a floor. Glass streets, a blueberry oath, a tavern game that couldn't pri..."
     handles: ["puzzle-intro"]
     route: ^[chapter/09/s02]{open}
   >
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Shape with One Hole"
-    excerpt: "Boof nosed the egg toward the hole, and it fitted the way a true scent fits its trail — not forced, only found. The moment its coal-dark shell touched the shards, all eight hummed the same note at once, and Boof under..."
+    excerpt: "The egg fitted without a push. Eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for wh..."
     route: ^[chapter/09/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"How do you finish a set without sounding the last honk?\" Boof thought as she trotted down the ridge path. You don't. You carry the last note the way you carry a want you have sworn not to spend early — warm, held, an..."
+    excerpt: "Down the ridge, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the..."
     route: ^[chapter/09/s06]{open}
   >
 ]

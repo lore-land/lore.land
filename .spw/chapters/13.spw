@@ -34,8 +34,7 @@
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    excerpt: "The record had nothing to conceal and no clerk to guard it. Every receipt the serial had gathered — the oath, the audit, the apology, the price paid in a genie's whole reserve plus one Thursday — folded into a single ..."
-    handles: ["reflection-intro"]
+    excerpt: "The ledger lay open. No clerk stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost. Boof had carried a want until she knew its shape. Now the wish wa..."
     route: ^[chapter/13/s02]{open}
   >
   s03: <
@@ -54,13 +53,13 @@
     handle: "section/05"
     type: "section"
     title: "The Blank Last Line"
-    excerpt: "Boof looked from the self-writing ledger to the radiant eggshell portal and understood the agreement the first dawn and this last chamber had made between them: the egg had arrived on a road that did not exist until h..."
+    excerpt: "Boof looked from the ledger to the open shell-door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river bend..."
     route: ^[chapter/13/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof set her chin on the desk one last time, beside the empty shell. It was still warm — not counting down anymore, just keeping, the way a hearth keeps after the bread is out. A small reader could climb to this desk ..."
+    excerpt: "Boof rested her chin beside the shell. Its warmth reached through the wood. Outside, a cart rattled past. A bell rang once. She lifted an ear. Nearby, this time. It stayed nearby. Morning spread across the farms. Smok..."
     route: ^[chapter/13/s06]{open}
   >
 ]

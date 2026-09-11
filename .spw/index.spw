@@ -23,6 +23,7 @@
   runtime: "@spw/runtime/precipitates.spw"
   observable: "@spw/state/observable.spw"
   alignment_ledger: "@spw/state/alignment-ledger.spw"
+  story_boonhonk: "@spw/story-boonhonk.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
 }
 

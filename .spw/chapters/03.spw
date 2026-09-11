@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-paradox/02"
     type: "custom-paradox"
-    excerpt: "The stopper turned itself, unhurried, and the Off-Season Genie came out the way steam leaves a kettle that has decided it is now a retired kettle. He was folded neat as a pocket handkerchief and dressed like a clerk w..."
+    excerpt: "The stopper turned. Steam rose, folded, found sleeves. Out came the Off-Season Genie, neat as a handkerchief and dressed like a clerk on his first day without a desk. He looked from egg to dog to glowing sand. “Two ro..."
     handles: ["paradox-intro"]
     route: ^[chapter/03/s02]{open}
   >
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Seam in the Sand"
-    excerpt: "Here was the paradox chamber of the flats, and it was not the routes. The Genie could grant anything. He had ended droughts, moved rivers, made three emperors and unmade two of them at cost. What he could not do—what ..."
+    excerpt: "The Genie laid his instruments on the sand: a scale, a long glass, a brass needle quick to find a want. He had made emperors with these. Moved rivers. Unmade two emperors at cost. Boof sat still. The scale stayed leve..."
     route: ^[chapter/03/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof let out a low huff and simply walked the seam—paws down its center, honest weight on honest ground—and behind her the two old routes, given at last a traveler who did not ask them to be anything grander than a wa..."
+    excerpt: "Boof huffed and walked between the routes, paws in the seam, her weight enough to give their leaning somewhere to go. Behind her the two lines settled into one turn. A long-held chord came home. No miracle was billed...."
     route: ^[chapter/03/s06]{open}
   >
 ]

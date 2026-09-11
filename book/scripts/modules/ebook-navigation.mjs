@@ -304,9 +304,9 @@ function formatExpression(sigil, handle, payload, syntax = 'prefix') {
   }
 
   if (!safePayload || syntax !== 'postfix') {
-    return safePayload ? `${sigil}[${safeHandle}]{${safePayload}}` : `${sigil}[${safeHandle}]`;
+    return safePayload ? `${sigil}[${JSON.stringify(safeHandle)}]{${JSON.stringify(safePayload)}}` : `${sigil}[${JSON.stringify(safeHandle)}]`;
   }
-  return `{${safePayload}}${sigil}[${safeHandle}]`;
+  return `{${JSON.stringify(safePayload)}}${sigil}[${JSON.stringify(safeHandle)}]`;
 }
 
 function formatSectionHandle(section, syntax = 'prefix') {
@@ -432,13 +432,13 @@ export function initEbookNavigation(chapterData, options = {}) {
   const readerButton = el('button', {
     type: 'button', className: 'ebook-register-button',
     dataset: { ebookRegister: 'reader', spwExpression: 'true' },
-    textContent: '^[register]{reader}', 'aria-label': 'Switch to reader register'
+    textContent: 'Read', 'aria-label': 'Read the story'
   });
 
   const engineerButton = el('button', {
     type: 'button', className: 'ebook-register-button',
     dataset: { ebookRegister: 'engineer', spwExpression: 'true' },
-    textContent: '^[register]{engineer}', 'aria-label': 'Switch to engineer register'
+    textContent: 'Explore the structure', 'aria-label': 'Explore the story structure'
   });
 
   const registerSwitch = el('div', { className: 'ebook-register-switch', role: 'group', 'aria-label': 'Ebook register mode' }, readerButton, engineerButton);
@@ -538,10 +538,10 @@ export function initEbookNavigation(chapterData, options = {}) {
     className: 'ebook-rail-zone ebook-rail-zone--engineer',
     dataset: { railZone: 'engineer' }
   },
-    el('summary', { textContent: 'Handles & filters' }),
+    el('summary', { textContent: 'Behind the story · Spw tools' }),
     el('p', {
       className: 'ebook-nav-bridge',
-      textContent: 'Reader register keeps the path simple. Engineer register surfaces handles, filters, and hops.'
+      textContent: 'Follow recurring ideas and inspect how this chapter is connected. Choose Read to return to the story.'
     }),
     el('p', {
       className: 'ebook-nav-legend',
@@ -604,15 +604,15 @@ export function initEbookNavigation(chapterData, options = {}) {
   const matchingIndices = () => matchingSections().map((section) => section.index);
 
   const renderControlLabels = () => {
-    readerButton.textContent = formatExpression('^', 'register', 'reader', syntaxMode);
-    engineerButton.textContent = formatExpression('^', 'register', 'engineer', syntaxMode);
-    prevButton.textContent = formatExpression('?', 'section', 'prev', syntaxMode);
-    nextButton.textContent = formatExpression('?', 'section', 'next', syntaxMode);
+    readerButton.textContent = formatExpression('=', 'register', 'reader', syntaxMode);
+    engineerButton.textContent = formatExpression('=', 'register', 'engineer', syntaxMode);
+    prevButton.textContent = formatExpression('!', 'section', 'previous', syntaxMode);
+    nextButton.textContent = formatExpression('!', 'section', 'next', syntaxMode);
     if (shellPrev) {
-      shellPrev.textContent = formatExpression('?', 'section', 'prev', syntaxMode);
+      shellPrev.textContent = formatExpression('!', 'section', 'previous', syntaxMode);
     }
     if (shellNext) {
-      shellNext.textContent = formatExpression('?', 'section', 'next', syntaxMode);
+      shellNext.textContent = formatExpression('!', 'section', 'next', syntaxMode);
     }
 
     perspectiveButtons.forEach((button) => {
@@ -620,7 +620,7 @@ export function initEbookNavigation(chapterData, options = {}) {
       if (!mode) {
         return;
       }
-      button.textContent = formatExpression(mode.sigil, 'view', mode.label, syntaxMode);
+      button.textContent = formatExpression('?', 'view', mode.label, syntaxMode);
     });
 
     payloadButtons.forEach((button) => {
@@ -628,17 +628,12 @@ export function initEbookNavigation(chapterData, options = {}) {
       if (!mode) {
         return;
       }
-      button.textContent = formatExpression(mode.sigil, 'payload', mode.label, syntaxMode);
+      button.textContent = formatExpression('?', 'payload', mode.label, syntaxMode);
     });
 
     if (!resumeButton.hidden && resumeButton.dataset.resumeIndex) {
       const resumeIndex = parseSectionIndex(resumeButton.dataset.resumeIndex);
-      resumeButton.textContent = formatExpression(
-        '#',
-        'resume',
-        `s${String(resumeIndex).padStart(2, '0')}`,
-        syntaxMode
-      );
+      resumeButton.textContent = formatExpression('!', 'resume', `s${String(resumeIndex).padStart(2, '0')}`, syntaxMode);
     }
 
     conceptButtons.forEach((button) => {
@@ -667,7 +662,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     });
     writeRegisterMode(nextMode);
     if (spoken && announce) {
-      announce(`Ebook register set to ${nextMode}.`);
+      announce(nextMode === 'reader' ? 'Reading mode.' : 'Story structure tools opened.');
     }
   };
 
@@ -1028,12 +1023,7 @@ export function initEbookNavigation(chapterData, options = {}) {
   if (resumeIndex > 1 && resumeIndex <= sections.length) {
     resumeButton.hidden = false;
     resumeButton.dataset.resumeIndex = String(resumeIndex);
-    resumeButton.textContent = formatExpression(
-      '#',
-      'resume',
-      `s${String(resumeIndex).padStart(2, '0')}`,
-      syntaxMode
-    );
+    resumeButton.textContent = formatExpression('!', 'resume', `s${String(resumeIndex).padStart(2, '0')}`, syntaxMode);
     resumeButton.addEventListener('click', () => jumpTo(resumeIndex, 'resume'));
   }
 

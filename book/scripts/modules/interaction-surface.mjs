@@ -95,10 +95,10 @@ export function initPassAlong(options = {}) {
   button.type = 'button';
   button.className = 'pass-along-button';
   button.dataset.passAlong = canShare ? 'share' : 'copy';
-  button.textContent = options.label || (canShare ? 'Pass this chamber' : 'Copy chamber link');
+  button.textContent = options.label || (canShare ? 'Share' : 'Copy link');
   button.setAttribute(
     'aria-label',
-    canShare ? 'Share this chamber link' : 'Copy this chamber link to the clipboard'
+    canShare ? 'Share this page' : 'Copy this page link to the clipboard'
   );
 
   const onClick = async () => {
@@ -106,13 +106,13 @@ export function initPassAlong(options = {}) {
     try {
       if (canShare) {
         await navigator.share({ title, text, url });
-        showToast('Chamber passed along.', { announce: options.announce });
+        showToast('Shared.', { announce: options.announce });
       } else {
         await navigator.clipboard.writeText(url);
-        showToast('Link copied — ready to pass along.', { announce: options.announce });
+        showToast('Link copied.', { announce: options.announce });
         button.textContent = 'Link copied';
         window.setTimeout(() => {
-          button.textContent = options.label || 'Copy chamber link';
+          button.textContent = options.label || 'Copy link';
         }, 1800);
       }
     } catch (error) {

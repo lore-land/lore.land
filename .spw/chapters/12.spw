@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    excerpt: "The granting was quiet, as small true things are. No thunder, no rearranged roads, no strangers press-ganged into coincidence. Far upcountry, in the dawnward field where all of this began, one furrow shrugged off its ..."
+    excerpt: "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the ants moved beneath it; with less heat to make, they could tend more roots, and the berry rows widened through the winte..."
     handles: ["path-intro"]
     route: ^[chapter/12/s02]{open}
   >
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand. She followed the gravel pat..."
+    excerpt: "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand. Boof followed the gravel pa..."
     route: ^[chapter/12/s06]{open}
   >
 ]
