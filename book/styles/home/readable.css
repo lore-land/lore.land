@@ -1,0 +1,133 @@
+/*
+ * Readable defaults + pinch-aware packing.
+ *
+ * Goals:
+ * - Device-sensitive readable defaults: fluid, rem-anchored type so OS text
+ *   settings and browser zoom are respected; measured line lengths in `ch`;
+ *   balanced headings and pretty paragraph rag where supported.
+ * - Pinch-scaled text: the viewport never blocks pinch zoom, and a small
+ *   companion script (readable.mjs) mirrors `visualViewport.scale` into
+ *   `--pinch-scale` / `data-packing` so components repack instead of
+ *   overflowing when the reader zooms in.
+ * - Component packing: key boards/lists are container-queried so they pack
+ *   by the space they actually have, not by the global viewport width.
+ */
+
+@layer home.readable {
+  :root {
+    /* Respect platform text inflation instead of fighting it. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+
+    /* Effective pinch scale, mirrored from visualViewport by readable.mjs. */
+    --pinch-scale: 1;
+
+    /* Fluid step scale, anchored in rem so user font-size prefs cascade. */
+    --text-step--1: clamp(0.82rem, 0.78rem + 0.25vw, 0.95rem);
+    --text-step-0: clamp(1rem, 0.94rem + 0.45vw, 1.15rem);
+    --text-step-1: clamp(1.12rem, 1.02rem + 0.7vw, 1.35rem);
+    --text-step-2: clamp(1.3rem, 1.12rem + 1.2vw, 1.7rem);
+    --text-step-3: clamp(1.6rem, 1.3rem + 2vw, 2.3rem);
+    --text-step-4: clamp(2rem, 1.5rem + 3.4vw, 3.2rem);
+
+    /* Readable measure caps. */
+    --measure-copy: 62ch;
+    --measure-lede: 56ch;
+    --measure-heading: 24ch;
+  }
+
+  /* Headings balance; body copy keeps a humane rag and measure. */
+  .hub-main :is(h1, h2, h3) {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .hub-main p,
+  .hub-main li {
+    text-wrap: pretty;
+  }
+
+  .hub-lede,
+  .hub-section-lede {
+    max-inline-size: var(--measure-lede);
+    font-size: var(--text-step-1);
+    line-height: 1.55;
+  }
+
+  .hub-hero-copy #hub-title {
+    font-size: var(--text-step-4);
+    line-height: 1.12;
+  }
+
+  .hub-main {
+    font-size: var(--text-step-0);
+  }
+
+  /*
+   * Container-queried packing: boards measure their own inline space, so
+   * they repack whether the constraint comes from a narrow device, a split
+   * window, large user fonts, or a pinch-zoomed visual viewport.
+   */
+  .topic-board,
+  .hub-pillar-grid,
+  .hub-chapter-list,
+  .route-rail,
+  .chip-row {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 34rem) {
+    .topic-card,
+    .hub-pillar-grid > li {
+      inline-size: 100%;
+    }
+  }
+
+  /*
+   * Pinch packing states. readable.mjs sets data-packing on <html>:
+   *   spacious (scale < 1.1) · cozy (1.1–1.6) · compact (> 1.6)
+   * When zoomed in, tighten chrome and let rows wrap so the enlarged text
+   * packs instead of forcing horizontal panning.
+   */
+  html[data-packing='cozy'] .hub-main,
+  html[data-packing='compact'] .hub-main {
+    --hub-gutter: clamp(0.75rem, 2.5vw, 1.25rem);
+  }
+
+  html[data-packing='compact'] .hub-hero {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-packing='compact'] :is(.chip-row, .hub-actions, .route-rail) {
+    flex-wrap: wrap;
+  }
+
+  html[data-packing='compact'] .hub-hero-media {
+    display: none;
+  }
+
+  /* Coarse pointers get taller touch targets by default. */
+  @media (pointer: coarse) {
+    .hub-nav a,
+    .chip,
+    .hub-cta,
+    .route-rail-card {
+      min-block-size: 44px;
+    }
+  }
+
+  /* Short landscape phones: reclaim vertical rhythm. */
+  @media (max-height: 480px) and (orientation: landscape) {
+    .hub-hero {
+      padding-block: clamp(1rem, 3vh, 1.5rem);
+    }
+  }
+
+  /* The prophecy mark — a quiet π set into the hero. */
+  .pi-mark {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    color: var(--color-gold-ink, #6b5010);
+    white-space: nowrap;
+  }
+}

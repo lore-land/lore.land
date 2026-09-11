@@ -1,0 +1,139 @@
+/* Home editorial pass. Scoped to the entrance; colors follow reading climate. */
+body[data-surface='monument'] {
+  background-image:
+    radial-gradient(ellipse at 90% 10%, color-mix(in srgb, var(--hub-gold) 12%, transparent), transparent 55%),
+    radial-gradient(ellipse at 0% 40%, color-mix(in srgb, var(--hub-accent) 8%, transparent), transparent 60%);
+  background-size: auto;
+}
+body[data-surface='monument'] .hub-hero #hub-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.35rem, 4.2vw, 3.7rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  max-width: 17ch;
+  margin-block: 1rem 1.5rem;
+}
+body[data-surface='monument'] #hub-title em {
+  color: var(--hub-accent-deep);
+  font-weight: 400;
+}
+body[data-surface='monument'] .hub-opening {
+  max-width: 49ch;
+  color: var(--hub-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-block: 1rem 1.6rem;
+}
+body[data-surface='monument'] .hub-hero-media {
+  padding: 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 48% 48% 0.25rem 0.25rem / 28% 28% 0.25rem 0.25rem;
+}
+body[data-surface='monument'] .hub-hero-media img {
+  aspect-ratio: 4 / 5;
+  border-radius: inherit;
+}
+body[data-surface='monument'] .hub-hero-media figcaption {
+  padding: 1rem 0.5rem 0.45rem;
+  text-align: center;
+  font-style: italic;
+}
+body[data-surface='monument'] :is(.hub-opening, .hub-lede, .wonder-secret) a {
+  color: var(--hub-accent-deep);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--hub-accent) 50%, transparent);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+body[data-surface='monument'] :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--hub-accent);
+  outline-offset: 5px;
+}
+.wonder-cabinet {
+  scroll-margin-top: 8rem;
+  padding-block: 2rem;
+  border-block: 1px solid var(--hub-line);
+}
+.wonder-cabinet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.wonder-cabinet h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-block: 0.5rem 0.75rem;
+}
+.wonder-cabinet-head p { color: var(--hub-muted); }
+.wonder-draw {
+  flex: 0 0 auto;
+  border: 1px solid var(--hub-line);
+  border-radius: 2rem;
+  padding: 0.7rem 1rem;
+  min-height: 44px;
+  background: transparent;
+  color: var(--hub-accent-deep);
+  font: inherit;
+  cursor: pointer;
+}
+.wonder-draw[hidden] { display: none; }
+.wonder-drawers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+.wonder-drawer {
+  min-width: 0;
+  scroll-margin-top: 8rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--hub-paper) 88%, var(--hub-accent) 12%);
+}
+.wonder-drawer summary {
+  position: relative;
+  padding: 1.5rem;
+  cursor: pointer;
+  list-style: none;
+}
+.wonder-drawer summary::-webkit-details-marker { display: none; }
+.wonder-object {
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 50%;
+  color: var(--hub-accent-deep);
+  font: italic 2.5rem Georgia, serif;
+}
+.wonder-drawer small { display: block; color: var(--hub-muted); font-size: 0.75rem; margin-bottom: 0.4rem; }
+.wonder-drawer strong { display: block; font-size: 1.2rem; font-weight: 400; }
+.wonder-plus { position: absolute; right: 1.25rem; top: 1.4rem; font-size: 1.5rem; color: var(--hub-accent-deep); }
+.wonder-drawer[open] .wonder-plus { rotate: 45deg; }
+.wonder-drawer[open] { border-color: var(--hub-accent); }
+.wonder-drawer[data-discovered] .wonder-object { background: color-mix(in srgb, var(--hub-gold) 22%, transparent); }
+.wonder-secret { padding: 0 1.5rem 1.5rem; font-size: 1rem; line-height: 1.7; }
+.wonder-secret p { margin: 0 0 1rem; }
+.wonder-secret .wonder-whisper { font-style: italic; color: var(--hub-muted); padding-left: 0.8rem; border-left: 1px solid var(--hub-accent); }
+.wonder-secret a { display: block; padding-block: 0.5rem; }
+.wonder-status { color: var(--hub-muted); font-size: 0.85rem; font-style: italic; margin: 1.25rem 0 0; }
+@media (hover: hover) {
+  .wonder-draw:hover, .wonder-drawer summary:hover { background: color-mix(in srgb, var(--hub-gold) 12%, transparent); }
+  body[data-surface='monument'] :is(.hub-opening, .wonder-secret) a:hover { text-decoration-thickness: 2px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wonder-object, .wonder-plus { transition: rotate 240ms ease, background 240ms ease; }
+  .wonder-drawer summary:hover .wonder-object { rotate: -12deg; }
+}
+@media (max-width: 48rem) {
+  .wonder-cabinet-head { align-items: start; flex-direction: column; }
+  .wonder-drawers { grid-template-columns: 1fr; }
+  .wonder-drawer summary { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 2.75rem 1.25rem 1.25rem; }
+  .wonder-object { flex-shrink: 0; margin: 0; }
+  body[data-surface='monument'] .hub-hero-media img { aspect-ratio: 4 / 3; }
+}
+html[data-packing='compact'] .wonder-drawers { grid-template-columns: 1fr; }
+html[data-packing='compact'] .wonder-cabinet-head { flex-direction: column; align-items: start; }

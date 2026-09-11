@@ -83,6 +83,8 @@
       "terms": [
         "boonberry",
         "boonberries",
+        "ants",
+        "ant-hearth",
         "dawnward",
         "hearthward",
         "gold seam",
@@ -147,7 +149,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like a candle blown out before anyone made a wish on it. In the dawnward field the boonberries slept under a skin of ice, each one holding its drop of light banked low against the cold. Boof worked the rows the way she always did: nose down, ears honest, reading the ground for what the night had changed. She had never been paid in coin and never wanted to be. She was paid, when a scent turned out true, in blueberries and in the small clean pride of a thing correctly known. Her wantings were small, and she did not know yet that small wantings are the expensive kind. This morning the ground told her a lie no field should be able to tell. One furrow was warm."
+          "text": "Dawn smelled like frost and wet fur, and then—wrong, and lovely, and impossible—like a candle blown out before anyone made a wish on it. In the dawnward field the boonberries slept under a skin of ice, each one holding its drop of light banked low against the cold. That they grew here at all, in weather like this, was the ants’ doing—small stewards under the rows whose patient magic warms the soil grain by grain, a hearth nobody lights and nobody bills, so the berries can keep growing where winter says they shouldn’t. Boof worked the rows the way she always did: nose down, ears honest, reading the ground for what the night had changed. She had never been paid in coin and never wanted to be. She was paid, when a scent turned out true, in blueberries and in the small clean pride of a thing correctly known. Her wantings were small, and she did not know yet that small wantings are the expensive kind. This morning the ground told her a lie no field should be able to tell. One furrow was warm—warmer than any ant-hearth had ever made it, and the ants beneath it had gone still, listening."
         },
         {
           "type": "paragraph",
@@ -184,7 +186,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "For as long as she had carried a name, Boof had worked for the land and not for anyone who owned a piece of it. She knew the dawnward field by scent the way other creatures knew it by map: which vine had been generous, which had been asked too much, where the frost sat late and where the ground kept a secret warm. Her wantings were short and she was not ashamed of them. She liked fruit—blueberries when a person offered, boonberries when the land was speaking in story. She liked a trail that ended with something real, not applause that smelled of nothing. A true scent, followed to its end, was the only wage she trusted, and she had never once wished for more than the morning could carry."
+          "text": "For as long as she had carried a name, Boof had worked for the land and not for anyone who owned a piece of it. She knew the dawnward field by scent the way other creatures knew it by map: which vine had been generous, which had been asked too much, where the frost sat late and where the ground kept a secret warm. She knew ant-warmth when she smelled it—earthy, even, patient as bread—and this furrow’s heat was something else wearing the ants’ good name. Her wantings were short and she was not ashamed of them. She liked fruit—blueberries when a person offered, boonberries when the land was speaking in story. She liked a trail that ended with something real, not applause that smelled of nothing. A true scent, followed to its end, was the only wage she trusted, and she had never once wished for more than the morning could carry."
         },
         {
           "type": "paragraph",
@@ -199,7 +201,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But every boonberry was a blueberry once, a blueberry a wish passed over on its way to being granted somewhere else, and each one holds a drop of the granting the way a cup holds the smell of what it carried. They do not remember words. They remember being wished over, the way fur remembers a warm hand."
+          "text": "Most boonberries sleep through everything. They are fruit, lantern-fuel, seed, and supper—ordinary magic, the kind a town spends without naming. But every boonberry was a blueberry once, a blueberry a wish passed over on its way to being granted somewhere else, and each one holds a drop of the granting the way a cup holds the smell of what it carried. They do not remember words. They remember being wished over, the way fur remembers a warm hand. And they grow through the cold because the ants will it: colonies below the rows working a small warming magic into the soil, keeping the ground just kind enough for a berry to hold its light through winter. The town spends that warmth without naming it, too."
         },
         {
           "type": "paragraph",
@@ -338,7 +340,7 @@
         "description": "Boof is a dog based on Spwashi's dog. She works for the land, not an owner—paid in blueberries, honest scents, and trails that end in something real. Her wants are small, and small wants are the hardest magic."
       },
       {
-        "description": "Boonberries are blueberries a wish once passed over. Each holds a drop of the granting; they wake when they remember being wished over."
+        "description": "Boonberries are blueberries a wish once passed over. Each holds a drop of the granting; they wake when they remember being wished over. They grow in cold weather only because ants warm the soil beneath them with a small, patient magic—the ant-hearths, a warmth the town spends without naming."
       },
       {
         "description": "The egg is an unspent wish—the last item in the ledger of a Discount Genie who closed his practice. Its hum is a held breath: a sentence stopped one word before the wishing word."
