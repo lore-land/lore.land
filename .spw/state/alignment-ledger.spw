@@ -143,7 +143,14 @@
     resolution: "fixed 2026-09-07 — shared StoryVoiceElement, always-visible light-DOM prose, block vs phrase shape, all lexicon voices registered, reading-first behaviors (no collapse/quiz/replace)"
     &source: "self-audit"
   }
-}
+  ^entry[AL-013]{
+    #axis: geometric
+    surface: "book/templates/chapter.html .section-navigation + book/scripts/modules/ebook-navigation.mjs"
+    evidence: "the bottom section dock shipped as .prev-section/.next-section while the navigation module bound .prev/.next — the dock rendered on every chapter with no click handler, no Spw relabel, and no disabled state at the chapter edges"
+    !class: defect
+    resolution: "fixed 2026-09-16 — the module accepts both class shapes, the dock gained a §NN / total readout and progress seam, and swipe/pinch gestures (reading-gestures.mjs) drive the same jumpRelative path"
+    &source: "self-audit"
+  }}
 
 ^"reading_revision_2026_09_11"{
   #axis: linguistic

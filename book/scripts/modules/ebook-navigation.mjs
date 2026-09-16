@@ -573,8 +573,24 @@ export function initEbookNavigation(chapterData, options = {}) {
     aside.prepend(panel);
   }
 
-  const shellPrev = document.querySelector('.section-navigation .prev');
-  const shellNext = document.querySelector('.section-navigation .next');
+  /* The chapter template ships the dock as .prev-section/.next-section;
+     older shells used .prev/.next. Accept both so the dock is never dead. */
+  const shellNav = document.querySelector('.section-navigation');
+  const shellPrev = shellNav?.querySelector('.prev-section, .prev') || null;
+  const shellNext = shellNav?.querySelector('.next-section, .next') || null;
+  let shellPosition = shellNav?.querySelector('.section-navigation-position') || null;
+  if (shellNav && !shellPosition) {
+    shellPosition = el('output', {
+      className: 'section-navigation-position',
+      'aria-live': 'off',
+      'aria-label': 'Reading position'
+    });
+    if (shellNext) {
+      shellNext.insertAdjacentElement('beforebegin', shellPosition);
+    } else {
+      shellNav.append(shellPosition);
+    }
+  }
   [shellPrev, shellNext].forEach((button) => {
     if (!button) {
       return;
@@ -925,7 +941,16 @@ export function initEbookNavigation(chapterData, options = {}) {
       button.setAttribute('aria-current', concept && activeLabel.includes(concept) ? 'true' : 'false');
     });
 
-    document.body.dataset.ebookSection = String(activeIndex);
+    /* On main, not body, so the per-jump attribute write only invalidates
+       the prose subtree (nothing read body[data-ebook-section]). */
+    main.dataset.ebookActiveSection = String(activeIndex);
+    if (shellPosition) {
+      shellPosition.textContent = `§${String(activeIndex).padStart(2, '0')} / ${sections.length}`;
+      shellPosition.title = sections[activeIndex - 1].label;
+      shellNav.style.setProperty('--dock-progress', (activeIndex / sections.length).toFixed(3));
+      shellNav.dataset.atStart = activeIndex === 1 ? 'true' : 'false';
+      shellNav.dataset.atEnd = activeIndex === sections.length ? 'true' : 'false';
+    }
     updateControls();
     updateReadouts();
     updateLspInspector(sections[activeIndex - 1]);
@@ -1163,7 +1188,18 @@ export function initEbookNavigation(chapterData, options = {}) {
     chapterNumber,
     sectionCount: sections.length,
     jumpToSection: (index) => jumpTo(index, 'api'),
+    jumpRelative: (step, source = 'api') => jumpRelative(step, source),
     currentSection: () => activeIndex,
+    sectionLabel: (index) => sections[Math.max(1, Math.min(index, sections.length)) - 1]?.label || '',
+    setNavShape: (shape) => {
+      if (shape === 'breadth' || shape === 'depth') {
+        panel.dataset.navShape = shape;
+        document.body.dataset.ebookNavShape = shape;
+      } else {
+        delete panel.dataset.navShape;
+        delete document.body.dataset.ebookNavShape;
+      }
+    },
     setPerspective: (mode) => applyPerspective(mode, false),
     setPayloadMode: (mode) => applyPayloadMode(mode, false),
     setSyntaxMode: (mode) => applySyntaxMode(mode, false),

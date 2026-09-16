@@ -1,0 +1,489 @@
+/*
+ * gestures.css — pinch-to-size, swipe-to-turn, and the section dock.
+ *
+ * Data contract (set by reading-gestures.mjs + ebook-navigation.mjs). All
+ * hot-path state is scoped to main.chapter or the cue elements, so a
+ * gesture frame never invalidates styles outside the prose.
+ *   main.chapter  --reader-scale, [data-reader-scale], [data-reading-gestures]
+ *   main.chapter  [data-gesture=pinch|swipe], [data-swipe=prev|next]
+ *   .swipe-cue    --cue-reveal (0…1, inline)
+ *   html          [data-packing] (viewport-packing.mjs, on real page zoom only)
+ *   .section-navigation  --dock-progress, [data-at-start], [data-at-end]
+ *
+ * Unlayered on purpose, like controls.css — these are leaf components that
+ * must win over layered defaults without !important.
+ */
+
+:root {
+  --swipe-cue-ink: color-mix(in srgb, var(--theme-accent-main) 78%, var(--theme-text-main) 22%);
+  --swipe-cue-paper: color-mix(in srgb, var(--theme-paper, var(--color-bg-content)) 92%, #fff 8%);
+  --gesture-gold: var(--color-gold, #c4922e);
+}
+
+/* ─── Touch surface ──────────────────────────────────────────────────
+ * On touch devices the prose owns horizontal drags (swipe) and two-finger
+ * pinches (text size). Vertical panning stays native. Scroll containers
+ * inside the prose (code, Spw payloads) keep their own horizontal pan
+ * because touch-action resolves against the nearest scroller. */
+html[data-touch='true'] main.chapter[data-reading-gestures='on'] {
+  touch-action: pan-y;
+}
+
+html[data-touch='true'] main.chapter[data-reading-gestures='on'] :is(pre, .motif-spw, [data-spw-component] pre) {
+  touch-action: pan-x pan-y;
+}
+
+/* Live pinch: drop transitions so the reflow tracks the fingers. */
+main.chapter[data-gesture='pinch'],
+main.chapter[data-gesture='pinch'] * {
+  transition: none !important;
+}
+
+main.chapter[data-gesture='swipe'] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The active section leans with the drag (inline transform from the
+ * module — a page that's about to turn); it eases back on release via the
+ * section's own transform transition in sections.css. */
+main.chapter[data-swipe] > [data-ebook-section='true'][data-swipe-lean] {
+  transition: transform 40ms linear;
+}
+
+/* ─── Swipe cues ───────────────────────────────────────────────────────
+ * A vertical tab on the edge you're pulling from. It names the section
+ * (or chapter) you'll land on, fills as the drag nears the threshold, and
+ * flashes gold on commit. */
+.swipe-cue {
+  --cue-reveal: 0;
+  position: fixed;
+  top: 50%;
+  z-index: 34;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 0.5rem;
+  align-items: center;
+  max-width: min(58vw, 18rem);
+  padding: 0.55rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--swipe-cue-ink) 34%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 42%, transparent), transparent 60%),
+    var(--swipe-cue-paper);
+  color: var(--swipe-cue-ink);
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--theme-accent-main) 16%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) translateX(var(--cue-offset, 0px));
+  transition:
+    opacity 160ms ease,
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 200ms ease;
+  will-change: transform, opacity;
+}
+
+.swipe-cue::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--theme-accent-main), var(--gesture-gold));
+  transform-origin: left center;
+  transform: scaleX(var(--cue-reveal));
+  transition: transform 60ms linear;
+}
+
+.swipe-cue[data-edge='next'] {
+  right: 0;
+  border-right: 0;
+  border-radius: var(--border-radius-pill) 0 0 var(--border-radius-pill);
+  --cue-offset: calc(100% - var(--cue-reveal) * 100%);
+}
+
+.swipe-cue[data-edge='prev'] {
+  left: 0;
+  border-left: 0;
+  border-radius: 0 var(--border-radius-pill) var(--border-radius-pill) 0;
+  --cue-offset: calc(-100% + var(--cue-reveal) * 100%);
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.swipe-cue[data-edge='next']::after {
+  transform-origin: right center;
+}
+
+.swipe-cue-glyph {
+  grid-row: 1 / span 2;
+  font-family: var(--font-family-heading);
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--gesture-gold);
+}
+
+.swipe-cue[data-edge='prev'] .swipe-cue-glyph {
+  grid-column: 1;
+}
+
+.swipe-cue[data-edge='next'] .swipe-cue-glyph {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.swipe-cue[data-edge='next'] .swipe-cue-kicker,
+.swipe-cue[data-edge='next'] .swipe-cue-label {
+  grid-column: 1;
+  text-align: right;
+}
+
+.swipe-cue-kicker {
+  font-family: 'LoreLand', var(--font-family-heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--swipe-cue-ink) 70%, var(--color-text-alt));
+  white-space: nowrap;
+}
+
+.swipe-cue-label {
+  font-family: var(--font-family-heading);
+  font-size: 0.92rem;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* dragging: --cue-reveal is written inline by the module as the finger moves. */
+.swipe-cue[data-state='dragging'],
+.swipe-cue[data-state='ready'] {
+  opacity: 1;
+}
+
+.swipe-cue[data-state='ready'] {
+  border-color: color-mix(in srgb, var(--gesture-gold) 70%, transparent);
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--gesture-gold) 22%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--gesture-gold) 22%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+}
+
+.swipe-cue[data-state='ready'] .swipe-cue-glyph {
+  color: var(--color-hearth, #b0602a);
+}
+
+/* commit / armed: hold fully revealed without a drag. */
+.swipe-cue[data-state='commit'],
+.swipe-cue[data-state='armed'],
+.swipe-cue[data-state='blocked'] {
+  --cue-reveal: 1;
+  opacity: 1;
+}
+
+.swipe-cue[data-state='commit'] {
+  border-color: var(--gesture-gold);
+  color: var(--color-gold-ink, #6b5010);
+}
+
+.swipe-cue[data-state='commit']::after {
+  background: var(--gesture-gold);
+}
+
+.swipe-cue[data-state='armed'] {
+  animation: swipe-cue-pulse 900ms ease-in-out infinite alternate;
+}
+
+.swipe-cue[data-state='blocked'] {
+  opacity: 0.5;
+}
+
+@keyframes swipe-cue-pulse {
+  from {
+    box-shadow:
+      0 12px 30px color-mix(in srgb, var(--gesture-gold) 12%, transparent),
+      inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  }
+
+  to {
+    box-shadow:
+      0 12px 30px color-mix(in srgb, var(--gesture-gold) 34%, transparent),
+      0 0 0 4px color-mix(in srgb, var(--gesture-gold) 20%, transparent),
+      inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  }
+}
+
+/* ─── First-run hint ─────────────────────────────────────────────────── */
+.gesture-hint {
+  position: fixed;
+  left: 50%;
+  bottom: calc(4.4rem + env(safe-area-inset-bottom, 0px));
+  z-index: 35;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0.6rem;
+  row-gap: 0.15rem;
+  width: min(92vw, 24rem);
+  padding: 0.62rem 0.55rem 0.62rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--theme-accent-main) 30%, var(--border-color-main));
+  border-radius: var(--border-radius-main);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 36%, transparent), transparent 55%),
+    var(--swipe-cue-paper);
+  color: var(--theme-text-main);
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--theme-accent-main) 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  font-family: var(--font-family-heading);
+  font-size: 0.86rem;
+  line-height: 1.35;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gesture-hint[data-state='shown'] {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.gesture-hint[data-state='leaving'] {
+  opacity: 0;
+  transform: translate(-50%, 6px);
+}
+
+.gesture-hint-line {
+  grid-column: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.gesture-hint-glyph {
+  flex: 0 0 2.1rem;
+  color: var(--gesture-gold);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.gesture-hint-close {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  min-width: 2.2rem;
+  min-height: 2.2rem;
+  border: 1px solid color-mix(in srgb, var(--border-color-main) 80%, transparent);
+  border-radius: var(--border-radius-pill);
+  background: transparent;
+  color: var(--color-text-alt);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* ─── Section dock ──────────────────────────────────────────────────────
+ * The bottom pill gets a live position readout and a hairline progress
+ * seam, so the dock says where you are, not only where you can go. */
+.section-navigation-position {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.6rem;
+  min-height: var(--spw-control-height, 2rem);
+  padding: 0.1rem 0.55rem;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--theme-accent-main) 70%, var(--color-text-alt));
+  white-space: nowrap;
+}
+
+.section-navigation--enhanced {
+  position: sticky;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.section-navigation--enhanced::after {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 0;
+  height: 2px;
+  border-radius: var(--border-radius-pill);
+  background: color-mix(in srgb, var(--theme-accent-main) 14%, transparent);
+  pointer-events: none;
+}
+
+.section-navigation--enhanced::before {
+  content: '';
+  position: absolute;
+  left: 0.65rem;
+  bottom: 0;
+  z-index: 1;
+  width: calc(100% - 1.3rem);
+  height: 2px;
+  border-radius: var(--border-radius-pill);
+  background: linear-gradient(90deg, var(--theme-accent-main), var(--gesture-gold));
+  transform-origin: left center;
+  transform: scaleX(var(--dock-progress, 0));
+  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.section-navigation[data-at-end='true'] .next-section,
+.section-navigation[data-at-end='true'] .next {
+  border-color: color-mix(in srgb, var(--gesture-gold) 55%, var(--border-color-main));
+}
+
+/* ─── Text size panel ───────────────────────────────────────────────── */
+.reader-scale-controls {
+  display: grid;
+  gap: 0.42rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+  padding: 0.7rem;
+}
+
+.reader-scale-controls h2 {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.reader-scale-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.reader-scale-button,
+.reader-scale-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--spw-control-height, 2rem);
+  min-width: 2.6rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-pill);
+  background: color-mix(in srgb, var(--spw-panel-surface-strong, #fff) 82%, transparent 18%);
+  color: var(--theme-accent-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.92rem;
+  line-height: 1;
+  padding: 0.22rem 0.6rem;
+  transition: var(--interactive-transition);
+}
+
+.reader-scale-button sup {
+  font-size: 0.6em;
+  margin-left: 0.08em;
+  color: var(--gesture-gold);
+}
+
+.reader-scale-button:disabled {
+  opacity: 0.45;
+}
+
+.reader-scale-button:not(:disabled):hover,
+.reader-scale-button:focus-visible,
+.reader-scale-reset:hover,
+.reader-scale-reset:focus-visible {
+  background: var(--interactive-bg-hover);
+  outline: 2px solid var(--interactive-outline);
+  outline-offset: 2px;
+}
+
+.reader-scale-reset {
+  min-width: 0;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  color: var(--color-text-alt);
+}
+
+.reader-scale-readout {
+  flex: 1 1 auto;
+  min-width: 3.4rem;
+  text-align: center;
+  font-family: "JetBrainsMono", "IBM Plex Mono", "Fira Code", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--theme-accent-main) 70%, var(--color-text-alt));
+}
+
+.reader-scale-guide {
+  margin: 0;
+  color: var(--color-text-alt);
+  font-size: 0.8rem;
+}
+
+/* Bigger prose, calmer chrome: at huge scale the aside chips wrap more
+ * freely and the dock buttons stop competing with the readout. */
+main.chapter[data-reader-scale='huge'] ~ .section-navigation button {
+  font-size: 0.78rem;
+}
+
+/* ─── Pinch packing (page-level zoom that started off the prose) ────── */
+html[data-packing='compact'] aside .additional-links,
+html[data-packing='compact'] .chapter-navigation {
+  flex-wrap: wrap;
+}
+
+html[data-packing='compact'] .lifecycle-breadcrumb,
+html[data-packing='compact'] .swipe-cue,
+html[data-packing='compact'] .gesture-hint {
+  display: none;
+}
+
+/* ─── Coarse pointers: 44px targets on the docks ─────────────────────── */
+@media (pointer: coarse) {
+  .section-navigation button,
+  .chapter-navigation button,
+  .chapter-navigation .hub-home,
+  .reader-scale-button,
+  .reader-scale-reset {
+    min-height: 44px;
+  }
+}
+
+/* ─── Reduced motion: cues fade, nothing slides or pulses ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .swipe-cue {
+    transition: opacity 120ms ease;
+    transform: translateY(-50%);
+  }
+
+  .gesture-hint {
+    transition: opacity 120ms ease;
+    transform: translate(-50%, 0);
+  }
+
+  .section-navigation--enhanced::before,
+  .swipe-cue::after {
+    transition: none;
+  }
+
+  .swipe-cue[data-state='armed'] {
+    animation: none;
+  }
+
+  main.chapter[data-swipe] > [data-ebook-section='true'][data-swipe-lean] {
+    transition: none;
+  }
+}
+
+@media print {
+  .swipe-cue,
+  .gesture-hint,
+  .reader-scale-controls,
+  .section-navigation-position {
+    display: none !important;
+  }
+}

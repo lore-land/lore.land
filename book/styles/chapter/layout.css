@@ -32,7 +32,7 @@
             --chapter-line-height: 1.76;
             --chapter-flow-gap: 0.7rem;
             --chapter-letter-spacing: 0.002em;
-            font-size: 1rem;
+            font-size: calc(1rem * var(--reader-scale, 1));
         }
 
         main.chapter p,
@@ -265,7 +265,7 @@
             --chapter-measure: 62ch;
             --chapter-line-height: 1.78;
             --chapter-flow-gap: 0.8rem;
-            font-size: 1rem;
+            font-size: calc(1rem * var(--reader-scale, 1));
             padding: 1.2rem 1.4rem 1.6rem;
         }
 
@@ -313,7 +313,7 @@
             --chapter-line-height: var(--chapter-reading-line-height);
             /* 1.82 */
             --chapter-flow-gap: var(--chapter-reading-gap);
-            font-size: 1.05rem;
+            font-size: calc(1.05rem * var(--reader-scale, 1));
         }
 
         [data-spw-grammar="interlocutor"] {
@@ -351,7 +351,7 @@
     @media (min-width: 100rem) {
 
         main.chapter {
-            font-size: 1.08rem;
+            font-size: calc(1.08rem * var(--reader-scale, 1));
             --chapter-flow-gap: 1rem;
         }
 

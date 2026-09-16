@@ -16,7 +16,9 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_07.A';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_16.A';
+import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_16.A';
+import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
@@ -138,6 +140,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setupNavigation(chapterData, announce);
     const ebookNav = initEbookNavigation(chapterData, { announce });
+    // Reader gestures: pinch sizes the prose, swipe turns sections. The
+    // text-size panel is the keyboard/mouse route to the same state.
+    const readerScale = initReadingScale({ announce });
+    const destroyGestures = initReadingGestures({
+      surface: chapterContent,
+      nav: ebookNav,
+      scale: readerScale,
+      links: deriveChapterLinks(chapterData),
+      announce
+    });
+    const destroyPacking = initPinchPacking();
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
@@ -210,6 +223,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.__loreCleanup = () => {
       cancelIdle();
       destroyBootstrap();
+      if (destroyGestures) destroyGestures();
+      if (destroyPacking) destroyPacking();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();
