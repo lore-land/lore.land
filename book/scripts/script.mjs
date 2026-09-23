@@ -329,6 +329,8 @@ function populateContent(data) {
     return;
   }
 
+  // The slip for the scribes is static in the template; hold it while the chapter is redrawn.
+  const slip = chapterContent.querySelector('.scriptorium-slip');
   chapterContent.innerHTML = '';
 
   if (data.logline) {
@@ -440,6 +442,9 @@ function populateContent(data) {
 
     chapterContent.appendChild(rail);
   }
+
+  // The slip is the chapter's last word, after the prose and the rail.
+  if (slip) chapterContent.appendChild(slip);
 
   persistReadingResume(data);
 }

@@ -6,7 +6,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_09_23.A';
+const RELEASE = '2026_09_23.B';
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -55,6 +55,10 @@ for (const filename of filenames) {
     OG_IMAGE_ALT: escapeAttribute(`${data.title} — ${logline}`),
     CHAPTER_SLUG: slug,
     CHAPTER_HEADING: escapeAttribute(`Chapter ${slug}: ${data.title}`),
+    CHAPTER_TITLE: escapeAttribute(data.title),
+    CHAPTER_NUMBER: String(expectedNumber),
+    // The chapter rides along explicitly, so the slip knows where the reader was even without a Referer.
+    FEEDBACK_URL: `https://autonomous.feedback/lore.land?at=/book/chapter/${slug}/`,
     MOOD: escapeAttribute(data.mood || 'boon'),
     CHAPTER_DATA: JSON.stringify(data, null, 2).replaceAll('<', '\\u003c')
   });

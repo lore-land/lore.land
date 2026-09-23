@@ -5,7 +5,8 @@
  * Vite (publicDir: false) only emits rollup inputs + imported assets.
  * Absolute paths used by the monument still need to exist at deploy root:
  *   /sw.js, /manifest.webmanifest, /robots.txt, /sitemap.xml,
- *   /book/images/*, /book/pwa/icons/*, /seeds/*, /CNAME, /.nojekyll
+ *   /book/images/*, /book/pwa/icons/*, /seeds/*, /CNAME, /.nojekyll,
+ *   /.well-known/* (autonomous.feedback reads its client file from there)
  *
  * Usage:
  *   node book/scripts/tools/project-dist-static.mjs
@@ -34,7 +35,8 @@ const ROOT_FILES = Object.freeze([
 const TREE_DIRS = Object.freeze([
   'book/images',
   'book/pwa/icons',
-  'seeds'
+  'seeds',
+  '.well-known'
 ]);
 
 /** Paths that must exist after project for a honest dist deploy. */
@@ -48,6 +50,7 @@ const REQUIRED = Object.freeze([
   'book/pwa/icons/icon-512.png',
   'book/images/01.png',
   'zine/index.html',
+  '.well-known/autonomous-feedback.json',
   'index.html',
   '.spw/claims/chapter-claims.spw'
 ]);

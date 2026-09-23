@@ -15,7 +15,7 @@ import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_27.A'
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_27.A';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
-import { initStorySpark } from '../modules/story-spark.mjs?v=2026_09_23.A';
+import { initStorySpark } from '../modules/story-spark.mjs?v=2026_09_23.B';
 import {
   initPassAlong,
   initServiceWorkerUpdate,

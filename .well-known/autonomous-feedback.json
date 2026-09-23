@@ -1,0 +1,141 @@
+{
+  "schema": "autonomous-feedback.client.v0",
+  "host": "lore.land",
+  "name": "Lore.Land",
+  "intro": "What stayed with you, and where the path went dark.",
+  "thanks": "The Scriptorium reads every card. Thank you for carrying one in.",
+  "routes": [
+    { "name": "The entrance", "path": "/" },
+    { "name": "Ch. 1 · Dawn in Boon.land", "path": "/book/chapter/01/" },
+    { "name": "Ch. 2 · The First Echo", "path": "/book/chapter/02/" },
+    { "name": "Ch. 3 · Signals in the Sand", "path": "/book/chapter/03/" },
+    { "name": "Ch. 4 · Crosswind Council", "path": "/book/chapter/04/" },
+    { "name": "Ch. 5 · The Quiet Rift", "path": "/book/chapter/05/" },
+    { "name": "Ch. 6 · Lanterns of Bonk City", "path": "/book/chapter/06/" },
+    { "name": "Ch. 7 · Blueberry Oath", "path": "/book/chapter/07/" },
+    { "name": "Ch. 8 · Songs of the Watering Eye", "path": "/book/chapter/08/" },
+    { "name": "Ch. 9 · Shards of Nine Honks", "path": "/book/chapter/09/" },
+    { "name": "Ch. 10 · Bone.land Resonance", "path": "/book/chapter/10/" },
+    { "name": "Ch. 11 · Paradox Bloom", "path": "/book/chapter/11/" },
+    { "name": "Ch. 12 · The Last Confluence", "path": "/book/chapter/12/" },
+    { "name": "Ch. 13 · Lore.Land Canon", "path": "/book/chapter/13/" },
+    { "name": "Boof", "path": "/characters/boof.html" },
+    { "name": "Civic Magic", "path": "/world/civic-magic.html" },
+    { "name": "Boonberry Commons", "path": "/world/boonberry-commons.html" },
+    { "name": "Scriptorium", "path": "/scriptorium/" },
+    { "name": "Topics", "path": "/topics/" },
+    { "name": "The Boonberry Broadside", "path": "/zine/" }
+  ],
+  "subjects": [
+    {
+      "id": "chapters",
+      "name": "The chapters",
+      "paths": ["/book/chapter"],
+      "prompt": "What stayed with you, or where did you lose the thread?",
+      "example": "The Maps That Look Away stayed with me: I reread the last line twice.",
+      "kinds": ["appreciation", "confusing", "question", "wrong"],
+      "asks": ["Which line or moment?", "What do you think happens next?"],
+      "threads": [
+        { "id": "stayed", "name": "A line stayed with me", "kind": "appreciation" },
+        { "id": "lost", "name": "Lost the thread here", "kind": "confusing" },
+        { "id": "theory", "name": "I have a theory" },
+        { "id": "world-question", "name": "A question about the world", "kind": "question" },
+        { "id": "slip", "name": "A typo or continuity slip", "kind": "wrong" }
+      ]
+    },
+    {
+      "id": "entrance",
+      "name": "Finding my way in",
+      "paths": ["/"],
+      "prompt": "What were you hoping to find?",
+      "example": "I could not tell whether to start at the chambers or the zine.",
+      "kinds": ["confusing", "missing", "question", "appreciation"],
+      "asks": ["How did you find Lore.Land?"],
+      "threads": [
+        {
+          "id": "where-to-start",
+          "name": "Where do I start?",
+          "kind": "question",
+          "stance": "At Chapter One. The chapters read in order, and the whole canon reads without JavaScript.",
+          "link": "/book/chapter/01/"
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "name": "The world",
+      "paths": ["/world"],
+      "prompt": "What would you like to know about Boon.land?",
+      "example": "How does the Commons Scale decide what counts as fair?",
+      "kinds": ["question", "wrong", "appreciation"],
+      "asks": ["Which chapter or place were you thinking of?"],
+      "threads": [
+        { "id": "how-it-works", "name": "How does this work in the world?", "kind": "question" },
+        { "id": "contradiction", "name": "This seems to contradict a chapter", "kind": "wrong" }
+      ]
+    },
+    {
+      "id": "characters",
+      "name": "The characters",
+      "paths": ["/characters"],
+      "prompt": "Who stayed with you, and why?",
+      "example": "Boof chasing the hum felt exactly like my dog at the door.",
+      "kinds": ["appreciation", "question", "missing"],
+      "asks": ["Who would you follow into another chapter?"],
+      "threads": [
+        {
+          "id": "boof-real",
+          "name": "Is Boof real?",
+          "kind": "question",
+          "stance": "Yes. Boof is based on Spwashi's dog. In life she likes blueberries; in Lore.Land those become boonberries.",
+          "link": "/characters/boof.html"
+        },
+        { "id": "more-of", "name": "I want more of this character", "kind": "missing" }
+      ]
+    },
+    {
+      "id": "scriptorium",
+      "name": "The Scriptorium",
+      "paths": ["/scriptorium"],
+      "prompt": "What would you want from the Scriptorium?",
+      "example": "I would like to know what a patron seal opens.",
+      "kinds": ["question", "confusing", "appreciation"],
+      "asks": ["What are you hoping to make or support?"],
+      "threads": [
+        { "id": "seals", "name": "How do patron seals work?", "kind": "question", "link": "/scriptorium/" },
+        { "id": "own-monument", "name": "I would like a monument of my own", "kind": "question" }
+      ]
+    },
+    {
+      "id": "topics",
+      "name": "Topics",
+      "paths": ["/topics"],
+      "prompt": "Which topic, and what did you take it to mean?",
+      "example": "Held polarity: is that about Boof's pack, or about the council?",
+      "kinds": ["confusing", "question", "appreciation"]
+    },
+    {
+      "id": "zine",
+      "name": "The Broadside",
+      "paths": ["/zine"],
+      "prompt": "How did the fold go?",
+      "example": "Folded fine; the back panel printed upside down on my printer.",
+      "kinds": ["broken", "confusing", "appreciation"],
+      "threads": [
+        { "id": "folded", "name": "I folded one", "kind": "appreciation" },
+        { "id": "fold-trouble", "name": "The fold did not work for me", "kind": "confusing" }
+      ]
+    }
+  ],
+  "contact": { "bluesky": "spwashi.com", "x": "spwashi" },
+  "from": "optional",
+  "queue": { "want": true },
+  "theme": {
+    "mode": "light",
+    "background": "#f3ede1",
+    "text": "#161d2b",
+    "accent": "#246270",
+    "corners": "round",
+    "font": "serif"
+  }
+}
