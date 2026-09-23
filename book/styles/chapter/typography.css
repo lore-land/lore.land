@@ -24,14 +24,15 @@
     position: relative;
   }
 
-  /* ─── LoreLand Display for headings ────────────────────────── */
+  /* ─── Headings ──────────────────────────────────────────────
+   * Face, case and tracking live in the unlayered "one voice" block at
+   * the end of this file: reset.css sets h1–h6 unlayered, so a layered
+   * font-family here never reached the page. LoreLand Display stays the
+   * brand mark; titles read in the serif display the home page uses. */
 
   .chapter h1,
   .chapter h2,
   .chapter h3 {
-    font-family: 'LoreLand', var(--font-family-heading);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     color: var(--color-text-main);
   }
 
@@ -779,26 +780,26 @@
 main.chapter[data-acoustics="dense"],
 body[data-acoustics="dense"] main.chapter {
   --chapter-measure: 61ch;
-  --chapter-line-height: 1.93;
+  --chapter-line-height: 1.74;
   --chapter-flow-gap: 1.02rem;
 }
 
 main.chapter[data-acoustics="balanced"],
 body[data-acoustics="balanced"] main.chapter {
   --chapter-measure: 66ch;
-  --chapter-line-height: 1.84;
+  --chapter-line-height: 1.68;
   --chapter-flow-gap: 0.86rem;
 }
 
 main.chapter[data-acoustics="airy"],
 body[data-acoustics="airy"] main.chapter {
   --chapter-measure: 69ch;
-  --chapter-line-height: 1.74;
+  --chapter-line-height: 1.62;
   --chapter-flow-gap: 0.72rem;
 }
 
 body[data-acoustic-texture="epic"] main.chapter h1 {
-  letter-spacing: 0.016em;
+  letter-spacing: -0.01em;
 }
 
 body[data-acoustic-texture="staccato"] main.chapter {
@@ -807,14 +808,62 @@ body[data-acoustic-texture="staccato"] main.chapter {
 
 body[data-readability-band="tight"] main.chapter {
   --chapter-measure: 60ch;
-  --chapter-line-height: 1.95;
+  --chapter-line-height: 1.76;
   --chapter-flow-gap: 1.06rem;
 }
 
 body[data-readability-band="open"] main.chapter {
   --chapter-measure: 71ch;
-  --chapter-line-height: 1.72;
+  --chapter-line-height: 1.6;
   --chapter-flow-gap: 0.7rem;
 }
 
 
+
+/*
+ * ─── One voice (chapter) ─────────────────────────────────────────
+ * Same rule as the entrance: serif for what the story says, mono for
+ * what the structure says. Titles, the logline and the "in which" line
+ * are story; the §NN counter, pillars and kickers stay mono.
+ * Unlayered so it outranks reset.css's unlayered h1–h6 face.
+ */
+main.chapter {
+  --chapter-display: Georgia, 'Times New Roman', serif;
+}
+
+main.chapter :is(h1, h2, h3) {
+  font-family: var(--chapter-display);
+  font-weight: 400;
+  text-transform: none;
+}
+
+body main.chapter h1 {
+  font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+body main.chapter section > h2 {
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+}
+
+main.chapter .chapter-logline {
+  font-family: var(--font-family-body);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+main.chapter .chapter-in-which {
+  font-family: var(--font-family-body);
+  font-size: 1.05rem;
+  letter-spacing: 0;
+}
+
+/* Pull quotes are display lines, not prose: panels.css gives every
+   main.chapter blockquote the reading line-height, which splits a pull. */
+main.chapter blockquote.voice-pull {
+  line-height: 1.3;
+}

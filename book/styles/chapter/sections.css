@@ -23,6 +23,12 @@ main.chapter>section[data-ebook-section="true"] {
 
 main.chapter>[data-ebook-section="true"]::before {
   content: "";
+  /* Voiced sections are also [data-spw-component], whose ::before is a
+     padded label chip (spw.css). Without this reset the chip's padding
+     and border widen the 2px rail to ~16px, laid over the first letters. */
+  padding: 0;
+  border: 0;
+  margin: 0;
   position: absolute;
   left: -0.34rem;
   top: 0.7rem;

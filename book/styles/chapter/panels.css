@@ -32,7 +32,7 @@
   --spw-control-height: 2rem;
   --spw-focus-ring: color-mix(in srgb, var(--theme-accent-main) 60%, transparent 40%);
   --chapter-reading-measure: 66ch;
-  --chapter-reading-line-height: 1.82;
+  --chapter-reading-line-height: 1.68;
   --chapter-reading-gap: 0.84rem;
   --chapter-reading-accent: color-mix(in srgb, var(--theme-accent-main) 52%, var(--theme-paper) 48%);
   --chapter-reading-ink: color-mix(in srgb, var(--theme-text-main) 88%, #0b1627 12%);

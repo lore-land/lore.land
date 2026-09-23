@@ -81,8 +81,24 @@ main.chapter[data-swipe] > [data-ebook-section='true'][data-swipe-lean] {
   transition:
     opacity 160ms ease,
     transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 200ms ease;
+    box-shadow 200ms ease,
+    display 200ms allow-discrete;
   will-change: transform, opacity;
+}
+
+/* At rest the cue is parked a full width past the viewport edge, and a
+   fixed box out there still counts as scrollable overflow: the page
+   gained ~35px of sideways scroll. Take it out of layout while idle;
+   allow-discrete keeps the fade-out, @starting-style the fade-in. */
+.swipe-cue:not([data-state]),
+.swipe-cue[data-state='idle'] {
+  display: none;
+}
+
+@starting-style {
+  .swipe-cue {
+    opacity: 0;
+  }
 }
 
 .swipe-cue::after {
@@ -456,7 +472,7 @@ html[data-packing='compact'] .gesture-hint {
 /* ─── Reduced motion: cues fade, nothing slides or pulses ─────────────── */
 @media (prefers-reduced-motion: reduce) {
   .swipe-cue {
-    transition: opacity 120ms ease;
+    transition: opacity 120ms ease, display 120ms allow-discrete;
     transform: translateY(-50%);
   }
 
