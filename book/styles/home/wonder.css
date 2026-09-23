@@ -137,3 +137,172 @@ body[data-surface='monument'] :is(a, button, summary):focus-visible {
 }
 html[data-packing='compact'] .wonder-drawers { grid-template-columns: 1fr; }
 html[data-packing='compact'] .wonder-cabinet-head { flex-direction: column; align-items: start; }
+
+/*
+ * ─── One page, one voice ─────────────────────────────────────────
+ * The hero and the cabinet speak in a serif display; the bands below
+ * them used to shout in synthesized-bold mono at three different widths
+ * (42rem · 56rem · full), so the right edge stepped in and out. This pass
+ * carries the editorial voice down the whole entrance:
+ *   serif  → anything the story says (titles, card names, chamber names)
+ *   mono   → anything the structure says (kickers, numbers, route labels)
+ * and gives every band the same edge, with prose held to its own measure.
+ */
+body[data-surface='monument'] {
+  --hub-display: Georgia, 'Times New Roman', serif;
+  --hub-band-gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Shared edge: every band spans the shell; copy keeps a humane measure. */
+body[data-surface='monument'] .hub-main > :is(.hub-hero, .discovery-strip, .hub-pillars, .hub-onboard, .hub-chapters, .route-rail, .hub-aside-band),
+body[data-surface='monument'] .hub-main :is(.topic-board, .hub-chapters-head, .region-head) {
+  max-width: none;
+}
+body[data-surface='monument'] .hub-main :is(.hub-section-lede, .hub-steps) {
+  max-inline-size: 58ch;
+}
+
+/* Section titles: the cabinet's voice, everywhere. */
+body[data-surface='monument'] .hub-main :is(.hub-section-head, .hub-onboard, .hub-aside-band) > h2 {
+  font-family: var(--hub-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--hub-ink);
+}
+body[data-surface='monument'] .hub-main .hub-section-head {
+  align-items: end;
+  margin-bottom: 0.9rem;
+}
+body[data-surface='monument'] .hub-main .hub-section-aside {
+  padding-bottom: 0.7rem;
+}
+
+/* Names inside cards and rows are story, not structure. */
+body[data-surface='monument'] .topic-card h2,
+body[data-surface='monument'] .hub-pillar-grid h3,
+body[data-surface='monument'] .hub-ch-title,
+body[data-surface='monument'] .route-rail-title {
+  font-family: var(--hub-display);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+body[data-surface='monument'] .topic-card h2 { font-size: 1.22rem; line-height: 1.2; }
+body[data-surface='monument'] .hub-pillar-grid h3 { font-size: 1.35rem; margin-bottom: 0.45rem; }
+body[data-surface='monument'] .hub-ch-title { font-size: 1.12rem; }
+body[data-surface='monument'] .route-rail-title { font-size: 1.05rem; }
+
+/* Cabinet drawers: paper, not putty. Same material family as the cards below. */
+body[data-surface='monument'] .wonder-drawer {
+  border-radius: 0.75rem;
+  border-color: color-mix(in srgb, var(--hub-gold) 18%, var(--hub-line));
+  background:
+    radial-gradient(circle at 2.6rem 2.6rem, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 7rem),
+    var(--hub-panel);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--hub-paper) 70%, transparent) inset,
+    0 0.6rem 1.5rem color-mix(in srgb, var(--hub-ink) 6%, transparent);
+}
+body[data-surface='monument'] .wonder-drawer[open] {
+  border-color: color-mix(in srgb, var(--hub-accent) 55%, var(--hub-line));
+}
+body[data-surface='monument'] .wonder-object {
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+}
+body[data-surface='monument'] .wonder-drawer small {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Theme board: five doors in one row when there is room, never an orphan.
+ * The kicker is a label, not a spring: only the blurb stretches, so every
+ * title sits on the same line and every trail list rests on the floor. */
+body[data-surface='monument'] .discovery-strip .topic-board {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
+}
+body[data-surface='monument'] .topic-card > .topic-kicker {
+  flex: none;
+  font-size: 0.66rem;
+}
+@media (min-width: 64rem) {
+  /* Five abreast, a long kicker wraps; reserve the line on every card. */
+  body[data-surface='monument'] .discovery-strip .topic-card > .topic-kicker {
+    min-height: 2lh;
+  }
+}
+
+/* Built-from: the four pillars stand in one row on wide screens. */
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .hub-pillar-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Contents: chamber names get room; logs keep a reading measure.
+ * (reset.css caps every li at 70ch; a row is a table line, not a paragraph.) */
+body[data-surface='monument'] .hub-chapter-list > li {
+  max-width: none;
+}
+@media (min-width: 48rem) {
+  body[data-surface='monument'] .hub-chapter-list a {
+    grid-template-columns: 2.4rem 7rem minmax(12rem, 17rem) minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  body[data-surface='monument'] .hub-ch-log {
+    max-inline-size: 60ch;
+  }
+}
+
+/* Threshold + closing bands pair up as spreads on wide screens. */
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .hub-onboard {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-areas: 'head steps' 'cta steps';
+    grid-template-rows: auto 1fr;
+    column-gap: var(--hub-band-gap);
+    align-content: start;
+  }
+  body[data-surface='monument'] .hub-onboard > h2 { grid-area: head; }
+  body[data-surface='monument'] .hub-onboard > .hub-steps { grid-area: steps; margin-top: 0.4rem; }
+  body[data-surface='monument'] .hub-onboard > .hub-onboard-cta { grid-area: cta; align-self: start; margin-top: 1.1rem; }
+
+  body[data-surface='monument'] .hub-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--hub-band-gap);
+  }
+  body[data-surface='monument'] .hub-main > * {
+    grid-column: 1 / -1;
+  }
+  body[data-surface='monument'] .hub-main > .hub-aside-band {
+    grid-column: auto;
+    align-self: start;
+  }
+}
+
+/* Closing spread: Spark and Grain share one rule line and one baseline. */
+body[data-surface='monument'] .hub-main > .hub-aside-band {
+  margin-top: 0;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--hub-line);
+}
+body[data-surface='monument'] .hub-main :is(.hub-onboard, .hub-aside-band) > h2 {
+  margin-bottom: 0.75rem;
+}
+
+/* Theme-true surfaces: these panels mixed literal white, which read as a
+ * pale slab under night's light type. Mix the theme's own panel instead. */
+body[data-surface='monument'] .wonder-cabinet h2 {
+  color: var(--hub-ink);
+}
+body[data-surface='monument'] [data-region='theme'] {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--hub-gold) 9%, transparent), transparent 72%),
+    color-mix(in srgb, var(--hub-panel) 55%, transparent);
+}
+body[data-surface='monument'] .route-rail-card {
+  background: color-mix(in srgb, var(--hub-panel) 60%, transparent);
+}

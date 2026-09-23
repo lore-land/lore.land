@@ -124,10 +124,10 @@ function renderSpark(spark) {
 const STYLE = `
   :host { display: block; }
   .spark-panel {
-    border: 1px solid rgba(42, 111, 127, 0.3);
+    border: 1px solid var(--hub-line, rgba(42, 111, 127, 0.3));
     border-radius: 10px;
     padding: 0.9rem 1rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--hub-panel, rgba(255, 255, 255, 0.7));
     display: grid;
     gap: 0.6rem;
   }
@@ -137,21 +137,22 @@ const STYLE = `
     font-family: var(--font-family-body, Georgia, serif);
     font-size: 0.95rem;
     line-height: 1.5;
-    color: var(--color-text-main, #1a2233);
+    color: var(--hub-ink, var(--color-text-main, #1a2233));
     min-height: 6rem;
   }
   .spark-conjure {
     justify-self: start;
-    border: 1px solid rgba(42, 111, 127, 0.4);
+    border: 1px solid var(--hub-line, rgba(42, 111, 127, 0.4));
     border-radius: 6px;
     padding: 0.4rem 0.8rem;
     background: transparent;
+    color: var(--hub-accent-deep, inherit);
     font-family: var(--font-family-heading, monospace);
     font-size: 0.8rem;
     letter-spacing: 0.03em;
     cursor: pointer;
   }
-  .spark-conjure:hover, .spark-conjure:focus-visible { background: rgba(42, 111, 127, 0.1); }
+  .spark-conjure:hover, .spark-conjure:focus-visible { background: color-mix(in srgb, var(--hub-accent, #2a6f7f) 12%, transparent); }
 `;
 
 class StorySparkElement extends HTMLElement {
