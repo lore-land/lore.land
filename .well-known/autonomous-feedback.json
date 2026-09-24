@@ -2,8 +2,19 @@
   "schema": "autonomous-feedback.client.v0",
   "host": "lore.land",
   "name": "Lore.Land",
+  "title": "A note about the lore",
+  "about": "subject",
   "intro": "What stayed with you, and where the path went dark.",
   "thanks": "The Scriptorium reads every card. Thank you for carrying one in.",
+  "kinds": ["appreciation", "question", "confusing", "missing", "wrong", "broken"],
+  "labels": {
+    "appreciation": { "title": "Stayed with me", "prompt": "What stayed, and where in the lore." },
+    "question": { "title": "A question", "prompt": "What you want to know about the lore." },
+    "confusing": { "title": "Lost the thread", "prompt": "Where the lore stopped making sense." },
+    "missing": { "title": "Wanted more", "prompt": "What you hoped the lore would show, and did not." },
+    "wrong": { "title": "A slip", "prompt": "What does not match the rest of the lore." },
+    "broken": { "title": "Did not work", "prompt": "What you tried to do with it, and what happened." }
+  },
   "routes": [
     { "name": "The entrance", "path": "/" },
     { "name": "Ch. 1 · Dawn in Boon.land", "path": "/book/chapter/01/" },
