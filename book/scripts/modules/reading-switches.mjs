@@ -14,7 +14,12 @@
  * The template's head script applies the stored switches before first
  * paint (html[data-switch-<id>="on"]); keep its cohort rule in sync with
  * cohortFromStorage() here.
+ *
+ * Installed readers (display-mode: standalone) get one default of their own:
+ * the offline shelf starts on, because installing is consent to keep the book.
  */
+
+import { chapterPath } from './chapter-links.mjs?v=2026_02_28.I';
 
 const SWITCHES_KEY = 'lore.switches.v1';
 const SEEN_RELEASE_KEY = 'lore.release.seen';
@@ -37,6 +42,11 @@ export const SWITCHES = Object.freeze([
     id: 'logline', attribute: 'data-switch-logline', stage: 'stable', label: 'Summary above the title',
     hint: 'The one-line summary at the top of each chapter.',
     defaults: { returning: 'on', new: 'off' }
+  },
+  {
+    id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
+    hint: 'All thirteen chapters stay readable with no network: on a train, in a nook, anywhere.',
+    defaults: { returning: 'off', new: 'off', installed: 'on' }
   },
   {
     id: 'scenes-open', attribute: 'data-switch-scenes-open', stage: 'stable', label: 'Open every scene',
@@ -124,8 +134,22 @@ function resolveState() {
   return state;
 }
 
+function isInstalled() {
+  try {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  } catch {
+    return false;
+  }
+}
+
 function valueFor(state, entry) {
-  return state.choices[entry.id] || entry.defaults[state.cohort] || 'off';
+  if (state.choices[entry.id]) {
+    return state.choices[entry.id];
+  }
+  if (isInstalled() && entry.defaults.installed) {
+    return entry.defaults.installed;
+  }
+  return entry.defaults[state.cohort] || 'off';
 }
 
 function resolvedMap(state) {
@@ -182,6 +206,48 @@ function createFocusLine() {
     current = null;
   };
   return { set: (on) => (on ? start() : stop()), stop };
+}
+
+const TOTAL_CHAPTERS = 13;
+const SHELF_KEY = 'lore.shelf.release';
+
+/** Ask the service worker to keep every chapter; report the count it kept. */
+function keepChapters(onKept) {
+  const controller = navigator.serviceWorker?.controller;
+  if (!controller) {
+    queueMicrotask(() => onKept?.(null));
+    return () => {};
+  }
+  const onMessage = (event) => {
+    if (event.data?.type === 'CHAPTERS_KEPT') {
+      onKept?.(event.data);
+    }
+  };
+  navigator.serviceWorker.addEventListener('message', onMessage);
+  const urls = Array.from({ length: TOTAL_CHAPTERS }, (_, index) => new URL(chapterPath(index + 1), window.location.origin).href);
+  // Everything this page loaded to dress itself (modules, styles, fonts, the
+  // sigil) is shared by every chapter; hand it over so kept pages stay dressed.
+  const assets = performance.getEntriesByType('resource')
+    .map((entry) => entry.name)
+    .filter((name) => name.startsWith(window.location.origin) && /\.(css|mjs|js|json|woff2?|otf|svg)(\?|$)/.test(name));
+  controller.postMessage({ type: 'KEEP_CHAPTERS', urls, assets });
+  return () => navigator.serviceWorker.removeEventListener('message', onMessage);
+}
+
+/* Install: never a banner. The browser's offer is held and shown as one
+   quiet button, only to readers who came back or kept reading. */
+let deferredInstall = null;
+const installListeners = new Set();
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstall = event;
+    installListeners.forEach((listener) => listener());
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstall = null;
+    installListeners.forEach((listener) => listener());
+  });
 }
 
 function bindPromptCopy(announce) {
@@ -258,9 +324,38 @@ export function initReadingSwitches({ announce } = {}) {
   persist(state);
 
   const focusLine = createFocusLine();
+  let shelfStatus = null;
+  let releaseShelf = () => {};
+  let shelfAsked = false;
   const react = () => {
     scenesOpen(map['scenes-open'] === 'on');
     focusLine.set(map['focus-line'] === 'on');
+    // Re-shelve once per release: that is when chapter pages and their
+    // versioned assets change. Otherwise the shelf is already full.
+    const release = document.documentElement.dataset.cacheRelease || '';
+    const shelvedFor = (() => {
+      try { return window.localStorage.getItem(SHELF_KEY) || ''; } catch { return ''; }
+    })();
+    if (map['offline-shelf'] === 'on' && !shelfAsked && shelvedFor !== release) {
+      shelfAsked = true;
+      releaseShelf = keepChapters((result) => {
+        if (result?.kept) {
+          try { window.localStorage.setItem(SHELF_KEY, release); } catch { /* next visit retries */ }
+        }
+        if (!shelfStatus) {
+          return;
+        }
+        shelfStatus.textContent = result
+          ? `${result.kept} of ${result.total} chapters are on your shelf.`
+          : 'Your shelf fills the next time the page loads with the offline helper running.';
+      });
+    } else if (map['offline-shelf'] === 'on' && shelvedFor === release) {
+      queueMicrotask(() => {
+        if (shelfStatus) {
+          shelfStatus.textContent = 'Every chapter is on your shelf for offline reading.';
+        }
+      });
+    }
   };
   react();
   const unbindCopy = bindPromptCopy(announce);
@@ -315,7 +410,35 @@ export function initReadingSwitches({ announce } = {}) {
     return box;
   };
 
+  const invited = state.cohort === 'returning' || engaged || isInstalled();
+  const install = document.createElement('button');
+  install.type = 'button';
+  install.className = 'reading-install';
+  install.textContent = 'Put Lore.Land on your shelf';
+  install.hidden = true;
+  const syncInstall = () => {
+    install.hidden = !(deferredInstall && invited);
+  };
+  install.addEventListener('click', async () => {
+    const offer = deferredInstall;
+    if (!offer) {
+      return;
+    }
+    deferredInstall = null;
+    offer.prompt();
+    const choice = await offer.userChoice.catch(() => null);
+    announce?.(choice?.outcome === 'accepted' ? 'Lore.Land is on your shelf.' : 'Maybe later.');
+    syncInstall();
+  });
+  installListeners.add(syncInstall);
+  syncInstall();
+  panel.append(install);
+
   panel.append(group('For every reader', SWITCHES.filter((entry) => entry.stage === 'stable')));
+  shelfStatus = document.createElement('p');
+  shelfStatus.className = 'reading-switches-note reading-shelf-status';
+  shelfStatus.setAttribute('aria-live', 'polite');
+  panel.append(shelfStatus);
   if (engaged) {
     panel.append(group('Trials', SWITCHES.filter((entry) => entry.stage === 'trial'), 'New things we are trying with readers who keep coming back. They may change or leave.'));
   } else {
@@ -338,6 +461,8 @@ export function initReadingSwitches({ announce } = {}) {
 
   return () => {
     focusLine.stop();
+    releaseShelf();
+    installListeners.delete(syncInstall);
     unbindCopy();
     notes?.remove();
     panel.remove();

@@ -40,11 +40,11 @@
   c003: "partial — untested→active on mapped signals; confirmed|refuted + history still PLAN.B"
   c004: "holding — lifecycle_bridge vocabulary shared"
   c005: "holding — observable.spw shape stable"
-  c006: "passing — precache = offline.html only (self-contained inline styles); CACHE_VERSION tracks 2026_07_18.A"
-  c007: "meta passing — full OG + twitter summary_large_image on every public door (2026-07-18); art half waits on plates (AL-001)"
+  c006: "passing — precache = offline shell + two icons; CACHE_VERSION tracks 2026_09_26.B; kept chapters live in lore-pages-v1 across releases (network-first, so never stale online); offline page lists the shelf from cache"
+  c007: "passing — every chapter shares a 1200x630 card: its public plate set in the cover type (npm run assets:brand → book/images/og/); home shares the v2 cover crop"
   c008: "passing — zine + offline in vite input; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
   c009: "passing — lore-cNNN parity; hydration + walkable refs; public projection tool for dist Pages"
-  c010: "passing — code + README share 2026_09_26.A (cache-context + build-chapters SoT); SW CACHE_VERSION follows"
+  c010: "passing — code + README share 2026_09_26.B (cache-context + build-chapters SoT); SW CACHE_VERSION follows"
   .note_atelier: "as of atelier surface mount 2026-07-16"
   c011: "instrumented — probe kit live (spw:probes); complaint route unwired until PLAN.B engine"
   c012: "passing — AL-007 closed; cross-document view transitions turn pages (none under reduced-motion); reveal never hides prerendered prose"
@@ -88,6 +88,7 @@
   alignment_ledger: ".spw/state/alignment-ledger.spw"
   atelier_plan: ".spw/surfaces/atelier.spw"
   release_token: "book/scripts/modules/cache-context.mjs"
+  brand_assets: "npm run assets:brand — chapter share cards (book/images/og/) + PWA icons from the bud sigil; authoring-time, needs magick + rsvg-convert + Georgia"
   chapter_renderer: ~"book/scripts/modules/chapter-render.mjs"
   reading_contract: ~"book/styles/chapter/reading.css"
   enchantment_guide: ~".spw/surfaces/enchantment.spw"
@@ -100,6 +101,6 @@
 
 ~priority{
   p0: ["social OG art plates (atelier phase 02 — ground plates.spw seeds first)"]
-  p1: ["Pages seal for /.spw/** after dist deploy", "manifest any/maskable split + shortcuts", "PLAN.B diagnostics engine"]
+  p1: ["Pages seal for /.spw/** after dist deploy", "PLAN.B diagnostics engine"]
   p2: ["font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps beyond the scribe's desk", "complaint → refutation channel"]
 }

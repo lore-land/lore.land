@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_09_26.B",
+      "date": "2026-09-26",
+      "notes": [
+        "Lore.Land can live on your home screen now, and keep every chapter for reading offline (see Switches).",
+        "When the network is gone, the offline page shows the chapters on your shelf.",
+        "Sharing a chapter shows its painting and title."
+      ]
+    },
+    {
       "release": "2026_09_26.A",
       "date": "2026-09-26",
       "notes": [

@@ -75,6 +75,11 @@ function applyRoom(state) {
   root.style.setProperty('--nook-texture', String(state.texture));
   root.dataset.nookTexture = textureBand(state.texture);
   root.dataset.nookLight = lightBand(state.light);
+  // The browser chrome (and an installed app's title bar) follows the room.
+  const theme = document.getElementById('theme-color');
+  if (theme) {
+    theme.setAttribute('content', { day: '#f3ede1', dusk: '#e7dbc6', lamp: '#161d16' }[lightBand(state.light)]);
+  }
 }
 
 /* ─── Hearth: brown-noise rain through a breathing lowpass, plus embers ── */

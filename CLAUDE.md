@@ -68,7 +68,7 @@ Before adding a sigil to a field in a file with a live consumer (grep the field 
 
 ## Known open items (see `.spw/index.spw` `~direction`)
 
-- 13 chapter plates (`book/images/*.png`, used as `og:image`) are 6-27KB, under the 100KB atelier-phase-02 floor (`AL-001`, `plate_weight`) — regenerate at higher fidelity when doing art passes. All 13 are `draft`/`grounded` state in `plates-manifest.spw`, so `spw:probes` reports these as `review`, not `defect` — the floor only gates chambers once their manifest `!state` reaches `public`.
+- Chapter share images are cards, not raw plates: `npm run assets:brand` (`book/scripts/tools/assets/brand-assets.mjs`) sets each public plate (`book/images/NN.png`) in the cover type into `book/images/og/chapter-NN.jpg` (1200×630) and rebuilds the PWA icons from the bud sigil. Authoring-time only (needs `magick`, `rsvg-convert`, macOS Georgia); outputs are committed. Re-run after a title, "in which" line, plate or sigil changes, then `npm run chapters:build`. `spw:probes` `plate_weight` holds cards to the 100KB floor — dark plates need the higher JPEG quality the tool uses.
 - `theme_parity` review: `book/styles/core/tokens.css` has cosmos-only custom properties with no ember equivalent — confirm intentional before next theme pass.
 
 ## Commit style

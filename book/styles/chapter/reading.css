@@ -1368,3 +1368,24 @@ main.chapter .return-notes ul {
   margin-top: 0.6rem;
   font-style: italic;
 }
+
+/* Install: one quiet button, only when the browser offers and the reader stayed. */
+.reading-install {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-gold, #c4922e) 10%, transparent);
+  color: var(--color-accent-alt);
+  font-size: 0.8rem;
+  box-shadow: none;
+}
+
+.reading-install[hidden] {
+  display: none;
+}
+
+.reading-shelf-status:empty {
+  display: none;
+}

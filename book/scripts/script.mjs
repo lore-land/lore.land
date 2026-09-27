@@ -47,8 +47,8 @@ import {
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_08_27.A';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
-import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.A';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.A';
+import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.B';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.B';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 

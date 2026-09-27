@@ -1,14 +1,14 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from '../modules/chapter-render.mjs';
+import { renderChapterBody, renderChapterCoda, padChapterNumber, chapterOrdinal } from '../modules/chapter-render.mjs';
 import { createMiniDocument } from './mini-dom.mjs';
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_09_26.A';
+const RELEASE = '2026_09_26.B';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 
 const escapeAttribute = (value) => String(value ?? '')
@@ -70,8 +70,9 @@ for (const [index, filename] of filenames.entries()) {
     LOGLINE: escapeAttribute(logline),
     EPIGRAPH: escapeAttribute(data.epigraph || ''),
     CANONICAL_URL: canonicalUrl,
-    OG_IMAGE: `https://lore.land/book/images/${slug}.png`,
-    OG_IMAGE_ALT: escapeAttribute(`${data.title} — ${logline}`),
+    // Share card = the chapter's plate set in the cover type (npm run assets:brand).
+    OG_IMAGE: `https://lore.land/book/images/og/chapter-${slug}.jpg`,
+    OG_IMAGE_ALT: escapeAttribute(`${chapterOrdinal(data.chapterNumber)}: ${data.title}, set over the chapter's painted plate. ${logline}`),
     CHAPTER_SLUG: slug,
     CHAPTER_HEADING: escapeAttribute(`Chapter ${slug}: ${data.title}`),
     CHAPTER_TITLE: escapeAttribute(data.title),

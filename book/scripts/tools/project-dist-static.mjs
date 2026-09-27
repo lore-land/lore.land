@@ -5,7 +5,7 @@
  * Vite (publicDir: false) only emits rollup inputs + imported assets.
  * Absolute paths used by the monument still need to exist at deploy root:
  *   /sw.js, /manifest.webmanifest, /robots.txt, /sitemap.xml,
- *   /book/images/*, /book/pwa/icons/*, /seeds/*, /CNAME, /.nojekyll,
+ *   /book/images/*, /book/pwa/icons/*, /book/pwa/screenshots/*, /book/content/*, /seeds/*, /CNAME, /.nojekyll,
  *   /.well-known/* (autonomous.feedback reads its client file from there)
  *
  * Usage:
@@ -35,6 +35,9 @@ const ROOT_FILES = Object.freeze([
 const TREE_DIRS = Object.freeze([
   'book/images',
   'book/pwa/icons',
+  'book/pwa/screenshots',
+  // fetched at runtime: changes.json (return notes), world/references.json
+  'book/content',
   'seeds',
   '.well-known'
 ]);
@@ -48,7 +51,12 @@ const REQUIRED = Object.freeze([
   'book/pwa/offline.html',
   'book/pwa/icons/icon-192.png',
   'book/pwa/icons/icon-512.png',
+  'book/pwa/icons/icon-maskable-512.png',
+  'book/pwa/icons/favicon.svg',
+  'book/pwa/screenshots/reader-wide.webp',
+  'book/content/changes.json',
   'book/images/01.png',
+  'book/images/og/chapter-01.jpg',
   'zine/index.html',
   '.well-known/autonomous-feedback.json',
   'index.html',
