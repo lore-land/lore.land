@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/13]{
-  title: "Lore.Land Canon"
-  description: "Chapter 13 of Lore.Land: Lore.Land Canon. The finished wish sounds as the ninth honk — one clean note over the whole land — and the maps finally take the ink, the warm furrow their first accepted line. The Fool bows, returns every sample..."
+  title: "The Shell-Shaped Door"
+  description: "Chapter 13 of Lore.Land: The Shell-Shaped Door. The finished wish sounds as the ninth honk — one clean note over the whole land — and the maps finally take the ink, the warm furrow their first accepted line. Boof rests her chin beside th..."
   mood: "reflection"
   period: "spring"
   chapter_path: "/book/chapter/13/"
@@ -28,19 +28,19 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The archive at the terminus of the river path was smaller, quieter, and vastly more honest than its reputation suggested, and it was here, on the polished slate at the center of the rotunda, that the finished wish did..."
+    excerpt: "The round room at the end of the river path was smaller and quieter than any map had promised, and it was here, on the polished slate at the center of the rotunda, that the finished wish did the one last thing a finis..."
     route: ^[chapter/13/s01]{open}
   >
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    excerpt: "The ledger lay open. No clerk stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost. Boof had carried a want until she knew its shape. Now the wish wa..."
+    excerpt: "The great book lay open. No one stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost. Boof had carried a want until she knew its shape. Now the wish ..."
     route: ^[chapter/13/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "The Boonberry Fool bowed and paid the genre's whole law out loud: the found-object trope, back warmer; the greed trope, back sweeter; the retirement trope, back as an echo you can visit; the small-wish trope, back as ..."
+    excerpt: "The Boonberry Fool bowed, and for once said nothing clever. He set each borrowed thing back where it belonged: the found egg, warmer; the greedy wish, sweeter; the echo, somewhere you can visit; the small wish, a furr..."
     route: ^[chapter/13/s03]{open}
   >
   s04: [
@@ -53,7 +53,7 @@
     handle: "section/05"
     type: "section"
     title: "The Blank Last Line"
-    excerpt: "Boof looked from the ledger to the open shell-door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river bend..."
+    excerpt: "Boof looked from the book to the open shell-shaped door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river..."
     route: ^[chapter/13/s05]{open}
   }
   s06: <

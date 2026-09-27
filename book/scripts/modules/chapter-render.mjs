@@ -20,6 +20,7 @@ import {
   voiceKickerWithMask
 } from './story-lexicon.mjs?v=2026_09_26.A';
 import { applySectionClimateAttributes } from './copy-climate.mjs?v=2026_08_27.A';
+import { LENSES, leanFor } from './valence-lens.mjs?v=2026_09_27.A';
 
 const NUMBER_WORDS = Object.freeze([
   '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
@@ -129,7 +130,7 @@ export function renderChapterBody(container, data, options = {}) {
  * gesture is outward — into a building full of other stories.
  */
 function renderStacks(h, stacks) {
-  return h('nav', { className: 'chapter-stacks', 'aria-label': 'Wander the stacks', dataset: { component: 'chapter-stacks' } },
+  return h('nav', { className: 'chapter-stacks', id: 'stacks', 'aria-label': 'Wander the stacks', dataset: { component: 'chapter-stacks' } },
     h('p', { className: 'chapter-stacks-kicker' }, 'Wander the stacks'),
     h('p', { className: 'chapter-stacks-lede' }, 'This chapter has shelf-mates in any library. Take a call number into the aisles and see what is standing next to it.'),
     h('ul', { className: 'chapter-stacks-list' }, ...stacks.entries.map((entry) => h('li', { className: 'chapter-stacks-item' },
@@ -241,6 +242,15 @@ function renderHead(h, data, inWhich) {
   if (data.epigraph) {
     head.append(h('p', { className: 'chapter-epigraph', dataset: { component: 'chapter-epigraph' } }, data.epigraph));
   }
+  // Read as boon, bane or bone (lens-control.mjs wakes this; hidden without script).
+  head.append(h('div', { className: 'chapter-lens', role: 'group', 'aria-label': 'Read this chapter as', hidden: '' },
+    h('span', { className: 'chapter-lens-label' }, 'Read as'),
+    h('button', { type: 'button', className: 'chapter-lens-option', dataset: { lens: '' }, 'aria-pressed': 'true' }, 'Balanced'),
+    ...LENSES.map((lens) => h('button', {
+      type: 'button', className: 'chapter-lens-option', dataset: { lens: lens.id }, 'aria-pressed': 'false', title: lens.question
+    }, lens.label)),
+    h('p', { className: 'chapter-lens-gloss', 'aria-live': 'polite' }, '')
+  ));
   const minutes = readMinutes(data.sections);
   head.append(h('p', { className: 'read-time read-time--chapter', hidden: '' }, `${minutes} min read`));
   return head;
@@ -271,6 +281,12 @@ function renderBlock(h, section, context = {}) {
 
 function renderParagraph(h, section) {
   const p = h('p');
+  // The paragraph's lean (boon / bane / bone) for the reading lens.
+  const plain = `${section.text || ''}${(section.children || []).map((child) => child.text || child.content || '').join('')}`;
+  const lean = leanFor(plain, section.lean);
+  if (lean) {
+    p.dataset.lean = lean;
+  }
   if (section.text) {
     p.append(section.text);
   }

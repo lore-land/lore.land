@@ -128,7 +128,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first. It showed her an older one — a woman mid-wish, mouth open on a want she had never said aloud — and under that face, folded like pressed linen going down into the dark, every other face the well had ever held. From the barrel-head behind her came the ",
+          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first."
+        },
+        {
+          "type": "paragraph",
+          "text": "It showed her an older one — a woman mid-wish, mouth open on a want she had never said aloud — and under that face, folded like pressed linen going down into the dark, every other face the well had ever held. From the barrel-head behind her came the  ",
           "children": [
             {
               "type": "custom-game",
@@ -214,7 +218,15 @@
         },
         {
           "type": "paragraph",
-          "text": "The folded faces stirred. One by one they turned toward the warmth the way the berries once had, and the water said, in the plain way water says things, what every face down there had in common: each one owed a coincidence to a stranger, and the egg — an unspent wish — was the debt still standing warm above the fold. The well could not price it either. It only named it, and kept the account open. Boof leaned over the rim without touching the water. Some faces were clear enough to count the lines around a mouth; others drifted beneath reflections of the tavern windows. A laugh came through the floorboards overhead, and for a moment she could not tell whether one of the faces had laughed too. She moved the egg closer. Ripples reached the far wall and came back through the reflected light. The Genie stood beside her with his instruments shut. She was glad he had stopped asking her to name it."
+          "text": "The folded faces stirred. One by one they turned toward the warmth the way the berries once had. Then the water said, in the plain way water says things, what every face down there had in common: each one owed a coincidence to a stranger. The egg — an unspent wish — was the debt still standing warm above the fold. The well could not price it either."
+        },
+        {
+          "type": "paragraph",
+          "text": "It only named it, and kept the account open. Boof leaned over the rim without touching the water. Some faces were clear enough to count the lines around a mouth; others drifted beneath reflections of the tavern windows. A laugh came through the floorboards overhead, and for a moment she could not tell whether one of the faces had laughed too."
+        },
+        {
+          "type": "paragraph",
+          "text": "She moved the egg closer. Ripples reached the far wall and came back through the reflected light. The Genie stood beside her with his instruments shut. She was glad he had stopped asking her to name it."
         }
       ],
       "climate": {

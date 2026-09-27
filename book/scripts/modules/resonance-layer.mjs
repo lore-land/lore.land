@@ -122,11 +122,12 @@ function clear() {
 
 export function initResonanceLayer() {
   const root = document.documentElement;
-  const sync = () => (root.getAttribute(SWITCH_ATTRIBUTE) === 'on' ? apply() : clear());
+  // On by switch, or by reading through the bone lens: notation is bone's low magic.
+  const sync = () => (root.getAttribute(SWITCH_ATTRIBUTE) === 'on' || root.getAttribute('data-lens') === 'bone' ? apply() : clear());
   sync();
-  // The drawer can switch it any time; the rail's nook panel mounts late.
+  // The drawer or the lens can change it any time; the rail's nook panel mounts late.
   const observer = new MutationObserver(sync);
-  observer.observe(root, { attributes: true, attributeFilter: [SWITCH_ATTRIBUTE] });
+  observer.observe(root, { attributes: true, attributeFilter: [SWITCH_ATTRIBUTE, 'data-lens'] });
   const late = setTimeout(sync, 1500);
   return () => {
     observer.disconnect();

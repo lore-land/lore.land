@@ -23,8 +23,22 @@
       "title": "The unnamed egg",
       "note": "Warm where it ought to have been cold. No nest. No mother. The maps will not write it down. Carry it if you must; naming it is a kind of debt.",
       "href": "/book/chapter/01/",
-      "terms": ["egg", "shell", "clutch", "hatch", "crack", "dregg", "dregs"],
-      "chambers": [1, 2, 9, 11, 13]
+      "terms": [
+        "egg",
+        "shell",
+        "clutch",
+        "hatch",
+        "crack",
+        "dregg",
+        "dregs"
+      ],
+      "chambers": [
+        1,
+        2,
+        9,
+        11,
+        13
+      ]
     },
     {
       "id": "boof",
@@ -32,8 +46,18 @@
       "title": "Boof",
       "note": "A dog. She works for fruit. She trusts a scent that ends in something real, and is suspicious of applause.",
       "href": "/characters/boof.html",
-      "terms": ["Boof", "dog", "paws", "nose", "furrow"],
-      "chambers": [1, 2, 7]
+      "terms": [
+        "Boof",
+        "dog",
+        "paws",
+        "nose",
+        "furrow"
+      ],
+      "chambers": [
+        1,
+        2,
+        7
+      ]
     },
     {
       "id": "boonberry",
@@ -41,8 +65,18 @@
       "title": "Boonberries",
       "note": "Ordinary magic: fruit, lantern-fuel, seed, and supper. Now and then one of them notices the story it is sitting in, which is more than most fruit will do.",
       "href": "/world/boonberry-commons.html",
-      "terms": ["boonberry", "boonberries", "berry", "berries", "constellation"],
-      "chambers": [1, 2, 6]
+      "terms": [
+        "boonberry",
+        "boonberries",
+        "berry",
+        "berries",
+        "constellation"
+      ],
+      "chambers": [
+        1,
+        2,
+        6
+      ]
     },
     {
       "id": "commons-scale",
@@ -50,8 +84,17 @@
       "title": "The Commons Scale",
       "note": "Where the harvest is counted in public. A scale that belongs to the commons, not to a landlord. Intact seals have been known to lie.",
       "href": "/world/civic-magic.html#commons-scale",
-      "terms": ["scale", "measure", "harvest", "seal"],
-      "chambers": [1, 5, 10]
+      "terms": [
+        "scale",
+        "measure",
+        "harvest",
+        "seal"
+      ],
+      "chambers": [
+        1,
+        5,
+        10
+      ]
     },
     {
       "id": "maps",
@@ -59,8 +102,20 @@
       "title": "The maps that look away",
       "note": "Boon.land's records hold only what the world has agreed exists. Ink that beads and will not take is not a metaphor. It is a refusal.",
       "href": "/world/civic-magic.html#archive",
-      "terms": ["map", "maps", "ink", "archive", "record", "census", "route book"],
-      "chambers": [1, 3, 13]
+      "terms": [
+        "map",
+        "maps",
+        "ink",
+        "archive",
+        "record",
+        "census",
+        "route book"
+      ],
+      "chambers": [
+        1,
+        3,
+        13
+      ]
     },
     {
       "id": "grove",
@@ -68,8 +123,16 @@
       "title": "The Grove of Echoes",
       "note": "A thicket that replays testimony. Workers will not name it after dark. An echo is a summons, not evidence, which has disappointed several clerks.",
       "href": "/world/civic-magic.html#grove",
-      "terms": ["grove", "echo", "echoes", "thicket", "pollen"],
-      "chambers": [2]
+      "terms": [
+        "grove",
+        "echo",
+        "echoes",
+        "thicket",
+        "pollen"
+      ],
+      "chambers": [
+        2
+      ]
     },
     {
       "id": "council",
@@ -77,8 +140,17 @@
       "title": "Crosswind Council",
       "note": "Boon and bane sit under one weather. Keys may be filed smaller. They may not be grown while the room is asleep.",
       "href": "/world/civic-magic.html#council",
-      "terms": ["council", "key", "keys", "boon", "bane", "weather"],
-      "chambers": [4]
+      "terms": [
+        "council",
+        "key",
+        "keys",
+        "boon",
+        "bane",
+        "weather"
+      ],
+      "chambers": [
+        4
+      ]
     },
     {
       "id": "receipt",
@@ -86,8 +158,18 @@
       "title": "A slip",
       "note": "The paper a turn leaves behind. Two slips for one harvest cannot both post. A false slip is refused, which is how you know the walk means it.",
       "href": "/world/civic-magic.html#small-constitution",
-      "terms": ["receipt", "receipts", "slip", "slips", "ledger"],
-      "chambers": [5, 8, 13]
+      "terms": [
+        "receipt",
+        "receipts",
+        "slip",
+        "slips",
+        "ledger"
+      ],
+      "chambers": [
+        5,
+        8,
+        13
+      ]
     },
     {
       "id": "glass",
@@ -95,8 +177,15 @@
       "title": "Lantern glass",
       "note": "Bonk City's lanterns show light. They are not the light. Confusing the pane with the flame has started several small fires, all of them rhetorical.",
       "href": "/book/chapter/06/",
-      "terms": ["glass", "lantern", "lanterns", "pane"],
-      "chambers": [6]
+      "terms": [
+        "glass",
+        "lantern",
+        "lanterns",
+        "pane"
+      ],
+      "chambers": [
+        6
+      ]
     },
     {
       "id": "oath-stone",
@@ -104,8 +193,16 @@
       "title": "The market stone",
       "note": "An oath is public. The fruit is private. The egg, if present, is the witness, and does not sign.",
       "href": "/book/chapter/07/",
-      "terms": ["oath", "blueberry", "blueberries", "shadow", "bond"],
-      "chambers": [7]
+      "terms": [
+        "oath",
+        "blueberry",
+        "blueberries",
+        "shadow",
+        "bond"
+      ],
+      "chambers": [
+        7
+      ]
     },
     {
       "id": "watering-eye",
@@ -113,8 +210,16 @@
       "title": "The Watering Eye",
       "note": "A well that folds a face without stealing it. Water keeps what you put in. It will not call it yours.",
       "href": "/book/chapter/08/",
-      "terms": ["well", "water", "watering", "face", "debt"],
-      "chambers": [8]
+      "terms": [
+        "well",
+        "water",
+        "watering",
+        "face",
+        "debt"
+      ],
+      "chambers": [
+        8
+      ]
     },
     {
       "id": "ninth-honk",
@@ -122,8 +227,16 @@
       "title": "The ninth honk",
       "note": "Eight were sounded. The ninth was not. Its shard, if you believe the ridge, is warm and egg-shaped. No single keeper can hold the whole call.",
       "href": "/book/chapter/09/",
-      "terms": ["honk", "honks", "shard", "shards", "relic"],
-      "chambers": [9]
+      "terms": [
+        "honk",
+        "honks",
+        "shard",
+        "shards",
+        "relic"
+      ],
+      "chambers": [
+        9
+      ]
     },
     {
       "id": "bone-hall",
@@ -131,8 +244,17 @@
       "title": "Bone.land",
       "note": "The chassis. Joints exposed on purpose. A hall that would rather bonk you than flatter you. Plaster stories do not last here.",
       "href": "/book/chapter/10/",
-      "terms": ["Bone.land", "beam", "timber", "bonk", "frame", "joint"],
-      "chambers": [10]
+      "terms": [
+        "Bone.land",
+        "beam",
+        "timber",
+        "bonk",
+        "frame",
+        "joint"
+      ],
+      "chambers": [
+        10
+      ]
     },
     {
       "id": "fool",
@@ -140,8 +262,16 @@
       "title": "The Boonberry Fool",
       "note": "A spirit of wonder who keeps the town from growing too tidy. Often upside down. Rarely helpful in the way one hopes.",
       "href": "/world/civic-magic.html#fool",
-      "terms": ["Fool", "fool", "jest"],
-      "chambers": [2, 4, 10]
+      "terms": [
+        "Fool",
+        "fool",
+        "jest"
+      ],
+      "chambers": [
+        2,
+        4,
+        10
+      ]
     },
     {
       "id": "cell-law",
@@ -149,8 +279,17 @@
       "title": "A cell keeps its own law",
       "note": "What remains the same under every honest test. The egg is one. The maps are not its jurisdiction.",
       "href": "/world/civic-magic.html#small-constitution",
-      "terms": ["cell", "law", "warmth"],
-      "chambers": [1, 4, 10, 13]
+      "terms": [
+        "cell",
+        "law",
+        "warmth"
+      ],
+      "chambers": [
+        1,
+        4,
+        10,
+        13
+      ]
     },
     {
       "id": "key-law",
@@ -158,8 +297,16 @@
       "title": "A key files smaller",
       "note": "Permission may be narrowed. It may not be secretly widened. Brass that grows teeth overnight is a crime and a joke.",
       "href": "/world/civic-magic.html#small-constitution",
-      "terms": ["key", "keys", "permission", "filed"],
-      "chambers": [4, 7]
+      "terms": [
+        "key",
+        "keys",
+        "permission",
+        "filed"
+      ],
+      "chambers": [
+        4,
+        7
+      ]
     },
     {
       "id": "turn-law",
@@ -167,8 +314,16 @@
       "title": "A turn is admitted, or not",
       "note": "Two routes that want the same next step must post as one. The sand is particular about this.",
       "href": "/world/civic-magic.html#small-constitution",
-      "terms": ["turn", "admitted", "step", "seam"],
-      "chambers": [3, 12]
+      "terms": [
+        "turn",
+        "admitted",
+        "step",
+        "seam"
+      ],
+      "chambers": [
+        3,
+        12
+      ]
     },
     {
       "id": "scriptorium",
@@ -176,8 +331,119 @@
       "title": "The Scriptorium",
       "note": "Where chambers are seeded, revised, and set on a calendar of stones. Patron seals buy presence, not rewrite rights.",
       "href": "/scriptorium/",
-      "terms": ["scriptorium", "chamberwright", "seal-keeper"],
+      "terms": [
+        "scriptorium",
+        "chamberwright",
+        "seal-keeper"
+      ],
       "chambers": []
+    },
+    {
+      "id": "sighting-sand",
+      "kind": "rumour",
+      "title": "Lines in the sand",
+      "note": "Near the signal stones someone has drawn a circle over a rectangle, with four straight lines for limbs. Above it, a hat — drawn, but not touching.",
+      "href": "/book/chapter/03/",
+      "terms": [
+        "sand",
+        "signal",
+        "signals",
+        "drawn",
+        "lines",
+        "stones"
+      ],
+      "chambers": [
+        3
+      ]
+    },
+    {
+      "id": "sighting-records",
+      "kind": "rumour",
+      "title": "Three records of one visitor",
+      "note": "The council keeps three entries for a guest nobody invited: a child, a parcel, a door. The clerks have compared them. All three are correct.",
+      "href": "/book/chapter/04/",
+      "terms": [
+        "council",
+        "door",
+        "guest",
+        "table",
+        "delegate",
+        "delegates"
+      ],
+      "chambers": [
+        4
+      ]
+    },
+    {
+      "id": "sighting-hat",
+      "kind": "rumour",
+      "title": "A hat, first",
+      "note": "Lamplighters report a bowler hat above the crowd on the glass bridge, moving against the traffic. Nobody reports a face. Everybody reports the hat.",
+      "href": "/book/chapter/06/",
+      "terms": [
+        "lantern",
+        "lanterns",
+        "crowd",
+        "glass",
+        "bridge",
+        "lamplighter"
+      ],
+      "chambers": [
+        6
+      ]
+    },
+    {
+      "id": "sighting-corners",
+      "kind": "rumour",
+      "title": "A puzzle with corners",
+      "note": "Laid out on the ridge, the shards fit best where they make right angles. Nobody set them that way. The honks came out square.",
+      "href": "/book/chapter/09/",
+      "terms": [
+        "shard",
+        "shards",
+        "puzzle",
+        "shape",
+        "hole",
+        "ridge"
+      ],
+      "chambers": [
+        9
+      ]
+    },
+    {
+      "id": "sighting-orthogonal",
+      "kind": "rumour",
+      "title": "Facing another way",
+      "note": "In the bloom every head turned toward the throne. One small figure at the back faced ninety degrees away, toward the garden wall, as if the story were over there.",
+      "href": "/book/chapter/11/",
+      "terms": [
+        "bloom",
+        "throne",
+        "garden",
+        "wall",
+        "seed"
+      ],
+      "chambers": [
+        11
+      ]
+    },
+    {
+      "id": "sighting-scent",
+      "kind": "rumour",
+      "title": "A true scent",
+      "note": "At the confluence Boof stops, nose up, at an empty place on the bridge rail. The map shows no one there. She waits the way she waits for someone she knows.",
+      "href": "/book/chapter/12/",
+      "terms": [
+        "bridge",
+        "rail",
+        "confluence",
+        "scent",
+        "river",
+        "rivers"
+      ],
+      "chambers": [
+        12
+      ]
     }
   ]
 }

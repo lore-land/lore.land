@@ -64,7 +64,7 @@
     sections: 6
   }
   c13: {
-    title: "Lore.Land Canon"
+    title: "The Shell-Shaped Door"
     &file: @spw/chapters/13.spw
     sections: 6
   }

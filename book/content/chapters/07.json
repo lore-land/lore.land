@@ -160,7 +160,11 @@
         {
           "type": "paragraph",
           "data-content_id": "shadow-intro",
-          "text": "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The Genie read it anyway, because pricing things was the one habit he had not liquidated. \"Understand what you have promised to spend,\" he said quietly. \"A wish redirects momentum. Redirected momentum lands somewhere. Every spent wish — mine, yours, anyone's — owes one coincidence to a stranger. A cart delayed, a letter misdelivered, a rain moved to a different field. Someone always pays the correction, and they are never at the ceremony.\""
+          "text": "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The Genie read it anyway, because pricing things was the one habit he had not liquidated."
+        },
+        {
+          "type": "paragraph",
+          "text": "\"Understand what you have promised to spend,\" he said quietly. \"A wish redirects momentum. Redirected momentum lands somewhere. Every spent wish — mine, yours, anyone's — owes one coincidence to a stranger. A cart delayed, a letter misdelivered, a rain moved to a different field. Someone always pays the correction, and they are never at the ceremony.\""
         }
       ]
     },
@@ -207,7 +211,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains. Somewhere, a stranger would be late because she had wished: a cart missed, a letter lost, rain on the wrong field. She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish. Perhaps that stranger was having an ordinary afternoon too, expecting a letter, counting the hours to supper. Boof watched the spool lodge between two stones. The child knelt to free it. She stayed a little longer, until the crowd had become people again."
+          "text": "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains. Somewhere, a stranger would be late because she had wished: a cart missed, a letter lost, rain on the wrong field."
+        },
+        {
+          "type": "paragraph",
+          "text": "She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish."
+        },
+        {
+          "type": "paragraph",
+          "text": "Perhaps that stranger was having an ordinary afternoon too, expecting a letter, counting the hours to supper. Boof watched the spool lodge between two stones. The child knelt to free it. She stayed a little longer, until the crowd had become people again."
         },
         {
           "type": "paragraph",

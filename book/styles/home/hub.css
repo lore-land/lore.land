@@ -1655,6 +1655,29 @@
   transform: rotate(18deg);
 }
 
+/* Lenses are named as Spw expressions: operator = the move, frame = the
+   trope, body = the physics it exerts (scriptorium persona gallery). */
+.persona-name {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.persona-expression {
+  justify-self: start;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--persona-color, #28798c) 10%, transparent);
+  color: var(--persona-color, var(--hub-accent));
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+.persona-physics {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: color-mix(in srgb, var(--persona-color, #28798c) 55%, var(--hub-ink, #1d2733));
+}
+
 .persona-card[data-persona='owner'] { --persona-color: #a4497f; }
 .persona-card[data-persona='operator'] { --persona-color: #28798c; }
 .persona-card[data-persona='community'] { --persona-color: #b7672e; }

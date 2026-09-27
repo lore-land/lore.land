@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger, sampling the old song of genies and returning it changed: it was never three wishes and a catch, he honked—it was a price list all a..."
+    excerpt: "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger. He had sampled the old song of genies, and he handed it back changed. It was never three wishes and a catch, he honked. It was a pri..."
     route: ^[chapter/03/s03]{open}
   >
   s04: [

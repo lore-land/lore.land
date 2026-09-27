@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Scriptorium · Lore.Land</title>
   <meta name="description"
-    content="The Lore.Land scriptorium: how chambers are seeded, how the writing office works in fantasy dress, and how patron seals fund the monument without owning the canon.">
+    content="Your desk in Lore.Land: pick up where you left off, keep the book for offline, see when the next chapter lands and what changed, search every chapter, write to the scribes — each one a spell of Spw you can learn by tapping.">
   <meta name="theme-color" content="#f3ede1">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Scriptorium · Lore.Land">
-  <meta property="og:description" content="The Lore.Land scriptorium: how chambers are seeded, how the writing office works in fantasy dress, and how patron seals fund the monument without owning the canon.">
+  <meta property="og:description" content="Your desk in Lore.Land: pick up where you left off, keep the book for offline, see when the next chapter lands and what changed, search every chapter, write to the scribes — each one a spell of Spw you can learn by tapping.">
   <meta property="og:url" content="https://lore.land/scriptorium/">
   <meta property="og:image" content="https://lore.land/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp">
   <meta property="og:image:alt" content="Lore.Land monument art: layered gold and teal world-glass over the boonberry fields.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Scriptorium · Lore.Land">
-  <meta name="twitter:description" content="The Lore.Land scriptorium: how chambers are seeded, how the writing office works in fantasy dress, and how patron seals fund the monument without owning the canon.">
+  <meta name="twitter:description" content="Your desk in Lore.Land: pick up where you left off, keep the book for offline, see when the next chapter lands and what changed, search every chapter, write to the scribes — each one a spell of Spw you can learn by tapping.">
   <meta name="twitter:image" content="https://lore.land/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp">
 <link rel="canonical" href="https://lore.land/scriptorium/">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -27,12 +27,14 @@
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_08_27.A&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_08_27.A&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_08_27.A&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_08_27.A&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_09_26.D&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_08_27.A&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_27.A&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_08_27.A&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/components/production-flow.css?v=2026_08_27.A&ctx=home:flow">
+  <link rel="stylesheet" href="/book/styles/home/desk.css?v=2026_09_26.D&ctx=scriptorium:desk">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_08_27.A"></script>
+  <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_09_27.B"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -50,23 +52,34 @@
 
     <main id="main-content" class="hub-main">
       <section class="hub-hero scriptorium-hero" aria-labelledby="script-title">
-        <p class="hub-eyebrow">Writing office · in fantasy dress</p>
+        <p class="hub-eyebrow">Your desk in the monument</p>
         <h1 id="script-title">Scriptorium</h1>
         <p class="hub-lede">
-          Behind the chambers is a small order of people who seed, revise, and set stone on a fixed
-          calendar. In the tale they are scribes, seal-keepers, and fools who refuse a cleaner lie.
-          In the workshop they are a writing team folding real process into classic adventure—
-          with enough magic that the map still reads as a world first.
+          The room where the serial keeps your place. Pick up where you stopped, keep the whole book
+          for reading offline, see when the next chapter lands, search every chapter, and send a note
+          to the scribes who write it. Everything here is also a spell: a line of Spw you can learn
+          by tapping it, then cast by typing.
         </p>
-        <div class="hub-actions">
-          <a class="hub-cta hub-cta-primary" href="/book/chapter/01/">
-            Read the current chamber
-            <span class="hub-cta-sub">Dawn in Boon.land</span>
-          </a>
-          <a class="hub-cta hub-cta-quiet" href="#experience-path">Trace the wonder path</a>
-          <a class="hub-cta hub-cta-quiet" href="/world/civic-magic.html">Study civic magic</a>
-        </div>
       </section>
+
+      <section class="desk" id="desk" aria-label="Your desk">
+        <!-- Without script the desk is a plain list of doors; scriptorium-desk.mjs replaces it. -->
+        <ul class="desk-fallback">
+          <li><a href="/book/chapter/01/">Begin at Chapter One: Dawn in Boon.land</a></li>
+          <li><a href="/book/timeline.html">Every chapter, in order</a></li>
+          <li>New chapters are set on the 13th and 26th of each month.</li>
+          <li><a href="https://autonomous.feedback/lore.land?at=/scriptorium/">Write a slip to the scribes</a></li>
+        </ul>
+      </section>
+
+      <header class="scriptorium-part" id="making">
+        <p class="hub-eyebrow">Behind the page</p>
+        <h2>How the book is made</h2>
+        <p class="hub-section-lede">
+          For the curious, and for the writing teams who will join: who does what, how a chapter is
+          seeded and set, and the forces every chapter has to answer to.
+        </p>
+      </header>
 
       <section class="hub-pillars" id="offices" aria-labelledby="offices-title">
         <h2 id="offices-title">Offices of the scriptorium</h2>
@@ -309,17 +322,19 @@
 
       <section class="hub-pillars persona-gallery" id="personas" aria-labelledby="personas-title">
         <p class="hub-eyebrow">Persona development · provisional lenses</p>
-        <h2 id="personas-title">Four people approaching the same monument</h2>
+        <h2 id="personas-title">Four forces acting on the same monument</h2>
         <p class="hub-section-lede">
-          These are behavioral lenses, not finished portraits. Their identities remain deliberately incomplete
-          until interviews, observation, and use reveal more. The owner-steward is the primary design lens;
+          These are behavioral lenses, not portraits, so they carry no names. Each is written as a Spw
+          expression: the operator is the move it makes, the frame is its trope, the body is the physics
+          it exerts. Any visitor may hold all four in one session. The steward is the primary design lens;
           the others keep the experience honest around that center.
         </p>
         <div class="topic-board persona-board">
           <article class="topic-card persona-card" data-persona="owner">
             <p class="topic-kicker">Primary · owner-steward</p>
-            <h2>Amara · building for continuity</h2>
-            <p>Balances cash, reputation, team capacity, and long-term direction. She wants differentiation she can operate—not a story detached from delivery.</p>
+            <h2 class="persona-name"><code class="persona-expression" aria-label="Steward, inertia">^[steward]{inertia}</code> Building for continuity</h2>
+            <p class="persona-physics"><strong>Inertia</strong> — the tendency to keep a heading. Continuity is a kind of mass.</p>
+            <p>Balances cash, reputation, team capacity, and long-term direction. They want differentiation they can operate—not a story detached from delivery.</p>
             <ul class="trail-list">
               <li><strong>Arrives asking:</strong> Is this useful to the business I am responsible for?</li>
               <li><strong>Needs:</strong> a fast conceptual map, credible evidence, and a next decision.</li>
@@ -328,8 +343,9 @@
           </article>
           <article class="topic-card persona-card" data-persona="operator">
             <p class="topic-kicker">Operator · delivery steward</p>
-            <h2>Luis · protecting the handoff</h2>
-            <p>Sees where a public claim meets inventory, labor, tooling, and exceptions. He wants the experience to acknowledge operational truth.</p>
+            <h2 class="persona-name"><code class="persona-expression" aria-label="Keeper, friction">&amp;[keeper]{friction}</code> Protecting the handoff</h2>
+            <p class="persona-physics"><strong>Friction</strong> — the force where two surfaces meet. A promise touching the ground.</p>
+            <p>Sees where a public claim meets inventory, labor, tooling, and exceptions. They want the experience to acknowledge operational truth.</p>
             <ul class="trail-list">
               <li><strong>Arrives asking:</strong> What changes after someone believes the promise?</li>
               <li><strong>Needs:</strong> traceable flows, edge cases, ownership, and repair routes.</li>
@@ -338,7 +354,8 @@
           </article>
           <article class="topic-card persona-card" data-persona="community">
             <p class="topic-kicker">Community · consequence holder</p>
-            <h2>Ren · testing who receives</h2>
+            <h2 class="persona-name"><code class="persona-expression" aria-label="Chorus, flux">?[chorus]{flux}</code> Testing who receives</h2>
+            <p class="persona-physics"><strong>Flux</strong> — what actually passes through a surface. Value measured where it arrives.</p>
             <p>May be a customer, member, neighbor, or partner. They judge the promise by its lived distribution, not by the confidence of its language.</p>
             <ul class="trail-list">
               <li><strong>Arrives asking:</strong> Was this made with people like me in the count?</li>
@@ -348,7 +365,8 @@
           </article>
           <article class="topic-card persona-card" data-persona="builder">
             <p class="topic-kicker">Builder · curious collaborator</p>
-            <h2>Jules · looking for usable patterns</h2>
+            <h2 class="persona-name"><code class="persona-expression" aria-label="Apprentice, resonance">~[apprentice]{resonance}</code> Looking for usable patterns</h2>
+            <p class="persona-physics"><strong>Resonance</strong> — a system answering a frequency it already holds. Patterns that ring.</p>
             <p>Reads for motifs, systems, and ways to contribute. They want craft that can be inspected without draining the world of mystery.</p>
             <ul class="trail-list">
               <li><strong>Arrives asking:</strong> How is this made, and where could I connect?</li>
@@ -379,6 +397,11 @@
           </ul>
         </details>
       </section>
+
+      <header class="scriptorium-part" id="patrons">
+        <p class="hub-eyebrow">Patrons and neighbours</p>
+        <h2>Who keeps the lamps lit</h2>
+      </header>
 
       <section class="hub-pillars" id="patron-seals" aria-labelledby="seals-title">
         <h2 id="seals-title">Patron seals</h2>

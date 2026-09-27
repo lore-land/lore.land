@@ -67,6 +67,22 @@
       root.dataset.nookTexture = texture < 0.15 ? 'plain' : texture > 0.8 ? 'lively' : 'soft';
       const light = Number.isFinite(nook.light) ? nook.light : 0;
       root.dataset.nookLight = light < 0.25 ? 'day' : light < 0.75 ? 'dusk' : 'lamp';
+      /* Genre weights (lens-control.mjs): same arithmetic as applyGenre(). */
+      let g = nook.genre || (['boon', 'bane', 'bone'].includes(nook.lens) ? { [nook.lens]: 1 } : null);
+      if (g) {
+        const w = ['boon', 'bane', 'bone'].map((k) => Math.max(0, Number(g[k]) || 0));
+        const sum = w[0] + w[1] + w[2];
+        if (sum > 0) {
+          const n = w.map((v) => v / sum), max = Math.max(...n), min = Math.min(...n);
+          if (max - min >= 0.08) {
+            root.setAttribute('data-genre-tuned', '');
+            ['boon', 'bane', 'bone'].forEach((k, i) => root.style.setProperty('--w-' + k, (n[i] / max).toFixed(3)));
+            root.style.setProperty('--w-none', ((1 / 3) / max).toFixed(3));
+            const top = n.indexOf(max);
+            if (max >= 0.6) root.setAttribute('data-lens', ['boon', 'bane', 'bone'][top]);
+          }
+        }
+      }
     } catch (error) { /* storage blocked: the usual room */ }
     /* Switches (modules/reading-switches.mjs): decide the cohort before any
        module writes lore.* keys — a reader who was here before this

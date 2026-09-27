@@ -1225,21 +1225,28 @@ main.chapter .plate-prompts .plate-prompt-for {
 }
 
 /* Numbered paragraphs: ::after, because ::before would join the drop cap. */
-html[data-switch-paragraph-numbers="on"] main.chapter {
+html:is([data-switch-paragraph-numbers="on"], [data-lens="bone"]) main.chapter {
   counter-reset: lore-paragraph;
 }
 
-html[data-switch-paragraph-numbers="on"] main.chapter [data-ebook-section] > p {
+html:is([data-switch-paragraph-numbers="on"], [data-lens="bone"]) main.chapter [data-ebook-section] > p:not(.section-marks) {
   position: relative;
   counter-increment: lore-paragraph;
 }
 
-html[data-switch-paragraph-numbers="on"] main.chapter [data-ebook-section] > p::after {
+/* Sections use content-visibility: auto, which implies paint containment:
+   anything drawn outside a section is clipped. Numbers and lens marks get an
+   inner gutter instead. */
+html:is([data-switch-paragraph-numbers="on"], [data-lens], [data-genre-tuned]) main.chapter > [data-ebook-section] {
+  padding-left: calc(var(--flow-pad) + 1.8rem);
+}
+
+html:is([data-switch-paragraph-numbers="on"], [data-lens="bone"]) main.chapter [data-ebook-section] > p:not(.section-marks)::after {
   content: counter(lore-paragraph);
   position: absolute;
   top: 0.35em;
-  left: calc(-1 * var(--flow-pad) - 1.9rem);
-  width: 1.5rem;
+  left: -1.8rem;
+  width: 0.95rem;
   text-align: right;
   font-family: var(--font-family-heading);
   font-size: 0.62rem;
@@ -1249,9 +1256,9 @@ html[data-switch-paragraph-numbers="on"] main.chapter [data-ebook-section] > p::
 }
 
 @media (max-width: 39.99rem) {
-  html[data-switch-paragraph-numbers="on"] main.chapter [data-ebook-section] > p::after {
-    left: calc(-1 * var(--flow-pad) - 0.95rem);
-    width: 0.9rem;
+  html:is([data-switch-paragraph-numbers="on"], [data-lens="bone"]) main.chapter [data-ebook-section] > p:not(.section-marks)::after {
+    left: -1.75rem;
+    width: 1.1rem;
     font-size: 0.55rem;
   }
 }
@@ -1578,4 +1585,202 @@ html[data-nook-light="lamp"] .chapter-stacks-item {
 main.chapter > :has(.resonance-note:not([hidden])),
 aside > :has(.resonance-note:not([hidden])) {
   z-index: 50;
+}
+
+/* ─── Read as: boon · bane · bone (lens-control.mjs, valence-lens.mjs) ──
+ * Every paragraph leans somewhere (data-lean). The lens brings one lean
+ * forward; the others step back but stay readable — the story is whole
+ * under every lens, only its weight moves. Balanced is the default. */
+
+.chapter-lens:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+  text-shadow: none;
+}
+
+.chapter-lens-label {
+  margin-right: 0.25rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-alt);
+}
+
+.chapter-lens-option {
+  padding: 0.22rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent-main) 28%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent-main);
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.86rem;
+  box-shadow: none;
+  transform: none;
+}
+
+.chapter-lens-option:hover,
+.chapter-lens-option:focus-visible {
+  transform: none;
+  background: color-mix(in srgb, var(--color-accent-main) 8%, transparent);
+}
+
+.chapter-lens-option[aria-pressed="true"] {
+  border-color: var(--lens-ink, var(--color-accent-main));
+  background: color-mix(in srgb, var(--lens-ink, var(--color-accent-main)) 14%, transparent);
+  color: var(--color-accent-alt);
+}
+
+.chapter-lens-option[data-lens="boon"] { --lens-ink: #c4922e; }
+.chapter-lens-option[data-lens="bane"] { --lens-ink: #a34a2e; }
+.chapter-lens-option[data-lens="bone"] { --lens-ink: #4d7f8a; }
+
+main.chapter .chapter-lens-gloss {
+  flex: 1 0 100%;
+  max-width: 40ch;
+  margin: 0.2rem auto 0;
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--color-text-alt);
+  text-align: center;
+}
+
+main.chapter .chapter-lens-gloss:empty {
+  display: none;
+}
+
+/* Genre as a blend: each lean's paragraphs sit at 0.4 + 0.6 × its weight
+   (weights normalized so the strongest land is 1), neutral paragraphs at
+   the share an even third would have. Balanced sets no attribute at all. */
+html[data-genre-tuned] main.chapter [data-ebook-section] > p:not(.section-marks) {
+  position: relative;
+  opacity: calc(0.4 + 0.6 * var(--w-none, 1));
+  transition: opacity 360ms ease;
+}
+
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="boon"] { opacity: calc(0.4 + 0.6 * var(--w-boon, 1)); }
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bane"] { opacity: calc(0.4 + 0.6 * var(--w-bane, 1)); }
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bone"] { opacity: calc(0.4 + 0.6 * var(--w-bone, 1)); }
+
+html[data-genre-tuned] main.chapter p[data-lean]::before {
+  content: "";
+  position: absolute;
+  top: 0.3em;
+  bottom: 0.3em;
+  left: -0.55rem;
+  width: 3px;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* Boon: a warm glow in the margin, as strong as boon's share. */
+html[data-genre-tuned] main.chapter p[data-lean="boon"]::before {
+  background: linear-gradient(#e8b45a, #c4922e);
+  box-shadow: 0 0 0.6rem rgba(232, 180, 90, 0.65);
+  opacity: var(--w-boon, 0);
+}
+
+/* Bane: a dry stamp of rust. */
+html[data-genre-tuned] main.chapter p[data-lean="bane"]::before {
+  background: repeating-linear-gradient(180deg, #a34a2e 0 5px, transparent 5px 8px);
+  opacity: var(--w-bane, 0);
+}
+
+/* Bone: a notation tick — a hairline with a mark at each end. */
+html[data-genre-tuned] main.chapter p[data-lean="bone"]::before {
+  width: 7px;
+  left: -0.7rem;
+  background:
+    linear-gradient(#4d7f8a, #4d7f8a) center / 1px 100% no-repeat,
+    linear-gradient(#4d7f8a, #4d7f8a) top / 7px 1px no-repeat,
+    linear-gradient(#4d7f8a, #4d7f8a) bottom / 7px 1px no-repeat;
+  opacity: var(--w-bone, 0);
+}
+
+/* The dial. */
+.chapter-lens-tune[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--color-accent-main) 12%, transparent);
+}
+
+.genre-dial:not([hidden]) {
+  flex: 1 0 100%;
+  display: grid;
+  justify-items: center;
+  margin-top: 0.4rem;
+}
+
+.genre-dial-stage {
+  position: relative;
+  width: min(15rem, 70vw);
+  aspect-ratio: 100 / 92;
+  margin: 1.3rem 4.5rem 2.2rem;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.genre-dial-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.genre-dial-field {
+  fill: color-mix(in srgb, var(--theme-paper, #fffcf6) 70%, var(--color-gold, #c4922e) 8%);
+  stroke: color-mix(in srgb, var(--color-accent-main) 35%, transparent);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+
+.genre-dial-corner--boon { fill: #c4922e; }
+.genre-dial-corner--bane { fill: #a34a2e; }
+.genre-dial-corner--bone { fill: #4d7f8a; }
+
+.genre-dial-handle {
+  fill: var(--color-accent-alt, #1d3c4f);
+  stroke: var(--theme-paper, #fffcf6);
+  stroke-width: 1.4;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.genre-dial-thumb {
+  position: absolute;
+  width: 1.6rem;
+  height: 1.6rem;
+  translate: -50% -50%;
+  border-radius: 50%;
+  outline-offset: 2px;
+}
+
+.genre-dial-label {
+  position: absolute;
+  display: grid;
+  gap: 0.05rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--color-text-alt);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.genre-dial-label strong {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--color-text-main);
+}
+
+.genre-dial-label--boon { left: 50%; top: -1.35rem; translate: -50% -50%; }
+.genre-dial-label--bane { left: 8%; top: 96%; translate: -50% 0; }
+.genre-dial-label--bone { left: 92%; top: 96%; translate: -50% 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-genre-tuned] main.chapter [data-ebook-section] > p {
+    transition: none;
+  }
 }

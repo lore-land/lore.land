@@ -6,7 +6,7 @@
 
 ^[chapter/01]{
   title: "Dawn in Boon.land"
-  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for blueberries and honest scents—unearths a warm egg in a frozen furrow: an unspent wish from a genie's closed ledger, which the maps cannot hold because it has not happene..."
+  description: "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for blueberries and honest scents—unearths a warm egg in a frozen furrow: an unspent wish a genie never finished granting, which the maps cannot hold because it has not happ..."
   mood: "boon"
   period: "spring"
   chapter_path: "/book/chapter/01/"

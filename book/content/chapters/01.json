@@ -3,7 +3,7 @@
   "title": "Dawn in Boon.land",
   "logline": "At dawn, Boof digs a warm egg out of a frozen furrow — an unspent wish, humming like a held breath, that every map in Boon.land refuses to write down.",
   "epigraph": "A wish is not a thing. It is a direction the world has not agreed to turn yet.",
-  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for blueberries and honest scents—unearths a warm egg in a frozen furrow: an unspent wish from a genie's closed ledger, which the maps cannot hold because it has not happened yet.",
+  "description": "Chapter 1 of Lore.Land: Dawn in Boon.land. Boof—a dog who works for blueberries and honest scents—unearths a warm egg in a frozen furrow: an unspent wish a genie never finished granting, which the maps cannot hold because it has not happened yet.",
   "mood": "boon",
   "period": "spring",
   "pillars": [
@@ -157,7 +157,8 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof knew this field. She worked for the land, wherever the fences stood, and took her wages in blueberries. Coin was difficult to chew."
+          "text": "Boof knew this field. She worked for the land, wherever the fences stood, and took her wages in blueberries. Coin was difficult to chew.",
+          "lean": "bane"
         },
         {
           "type": "paragraph",
@@ -296,7 +297,8 @@
         },
         {
           "type": "paragraph",
-          "text": "Then he tried to enter the egg in the book. Egg, one. Dawnward field. Unclaimed. The ink gathered into beads and rolled off the page."
+          "text": "Then he tried to enter the egg in the book. Egg, one. Dawnward field. Unclaimed. The ink gathered into beads and rolled off the page.",
+          "lean": "bone"
         },
         {
           "type": "paragraph",

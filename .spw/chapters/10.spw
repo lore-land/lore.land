@@ -6,7 +6,7 @@
 
 ^[chapter/10]{
   title: "Bone.land Resonance"
-  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land is the small constitution — the spine that holds when the veil shakes. Mx. BoneWAP, a pie of clean-boiled honesty, audits the egg's karmic momentum against the ledger of every wish ..."
+  description: "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land asks what will remain. Mx. BoneWAP, a pie with its joints showing, lays the Egg on the great frame and lets the timber answer: a small wish travels for generations; a grand one come..."
   mood: "bonk"
   period: "spring"
   chapter_path: "/book/chapter/10/"
@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-bonk/02"
     type: "custom-bonk"
-    excerpt: "The egg went onto the scale. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The finding appeared in gold: the smallest wishes have the longest arcs. Given the current, a small tu..."
+    excerpt: "The egg went onto the frame. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The answer came up through the wood in gold: the smallest wishes have the longest arcs. Given the curr..."
     handles: ["bonk-intro"]
     route: ^[chapter/10/s02]{open}
   >
@@ -54,14 +54,14 @@
   s05: {
     handle: "section/05"
     type: "section"
-    title: "The Finding, Published"
-    excerpt: "BoneWAP did not whisper its finding to a council or fold it into a drawer. It published — copies nailed to the anchor stones, carried to the tavern, read aloud at the Watering Eye. Item one: the egg's wish, spent smal..."
+    title: "What the Frame Would Bear"
+    excerpt: "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. By noon the note had gone out on the pass ro..."
     route: ^[chapter/10/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. An audit does not end a story; it removes the story's excuses. Everyone in the valley now kne..."
+    excerpt: "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. A true test does not end a story; it only takes away the story's excuses. Everyone in the val..."
     route: ^[chapter/10/s06]{open}
   >
 ]

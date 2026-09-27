@@ -1,9 +1,9 @@
 {
   "chapterNumber": 13,
-  "title": "Lore.Land Canon",
-  "logline": "The spent wish sounds as the ninth honk; the maps take the ink at last, and the empty shell waits on the blank last line for the reader's wish.",
+  "title": "The Shell-Shaped Door",
+  "logline": "The spent wish sounds as the ninth honk; the maps take the ink at last, and the empty shell waits beside a blank last line — for the next wish, and for whoever is coming to make it.",
   "epigraph": "Every trope you sample must be returned changed, with interest.",
-  "description": "Chapter 13 of Lore.Land: Lore.Land Canon. The finished wish sounds as the ninth honk — one clean note over the whole land — and the maps finally take the ink, the warm furrow their first accepted line. The Fool bows, returns every sampled trope with interest, names the genre Boonhonk, and sets the empty eggshell on the canon's blank last line as the bottle for the reader's wish.",
+  "description": "Chapter 13 of Lore.Land: The Shell-Shaped Door. The finished wish sounds as the ninth honk — one clean note over the whole land — and the maps finally take the ink, the warm furrow their first accepted line. Boof rests her chin beside the empty shell, still warm, and the last line is left blank on purpose. In the doorway, something that is not yet anyone is already on the road.",
   "mood": "reflection",
   "period": "spring",
   "pillars": [
@@ -132,7 +132,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The archive at the terminus of the river path was smaller, quieter, and vastly more honest than its reputation suggested, and it was here, on the polished slate at the center of the rotunda, that the finished wish did the one last thing a finished wish is required to do. It sounded. The ninth honk — the one the Fool had carried unsounded through eight chambers of sampled tropes, the shard that had slept in the shell since before the frost — left the egg as one clean note and rolled out over the whole land at once: over the dawnward field and its one kept furrow, over the grove with its newest echo, over Bonk City serving itself in slices, over Bone.land's honest joists, over two rivers sharing a bed without forgetting their springs. Boof stood in the middle of it with her ears full of gold and understood that she was hearing a ",
+          "text": "The round room at the end of the river path was smaller and quieter than any map had promised, and it was here, on the polished slate at the center of the rotunda, that the finished wish did the one last thing a finished wish is required to do. It sounded."
+        },
+        {
+          "type": "paragraph",
+          "text": "The ninth honk — the one the Fool had carried unsounded through eight chambers of sampled tropes, the shard that had slept in the shell since before the frost — left the egg as one clean note and rolled out over the whole land at once. Over the dawnward field and its one kept furrow, over the grove with its newest echo, over Bonk City serving itself in slices, over Bone.land's honest joists, over two rivers sharing a bed without forgetting their springs."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof stood in the middle of it with her ears full of gold and understood that she was hearing a  ",
           "children": [
             {
               "type": "custom-reflection",
@@ -140,13 +148,17 @@
             },
             {
               "type": "text",
-              "text": " made of sound: every trope the set had sampled, coming home changed, with interest. And when the note settled, the maps — the same maps that had beaded and refused since the first morning — finally took the ink. The first line they accepted, before any border or crown, was the warm furrow. The canon did not wait to be written. It recorded itself, line by line, in the hand of a land that had at last agreed to know what had happened to it."
+              "text": " made of sound: every trope the set had sampled, coming home changed, with interest. And when the note settled, the maps — the same maps that had beaded and refused since the first morning — finally took the ink. The first line they accepted, before any border or crown, was the warm furrow."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "Beside the ledger stood a bowl of cold spring water. Boof drank. The dust of the journey washed from her throat."
+          "text": "Nobody wrote it. The land set it down itself, line by line, having at last agreed to know what had happened to it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Beside the great book stood a bowl of cold spring water. Boof drank. The dust of the journey washed from her throat."
         },
         {
           "type": "paragraph",
@@ -176,7 +188,7 @@
     },
     {
       "type": "custom-reflection",
-      "data-motif": "ledger",
+      "data-motif": "egg",
       "scene": {
         "vantage": "chin rested on the white oak desk, looking at the open vellum ledger as the canon writes itself",
         "light": "clean starlight from the oculus washing over lines of ink arriving without a hand",
@@ -191,7 +203,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The ledger lay open. No clerk stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost."
+          "text": "The great book lay open. No one stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost."
         },
         {
           "type": "paragraph",
@@ -221,11 +233,11 @@
       "content": [
         {
           "type": "pull",
-          "text": "Thirteen chambers, nine honks, every trope returned changed, with interest. This was Boonhonk — and the crate it dug from is called lore.land."
+          "text": "Thirteen chambers, nine honks, and every borrowed trope gone home changed — warmer than it left."
         },
         {
           "type": "paragraph",
-          "text": "The Boonberry Fool bowed and paid the genre's whole law out loud: the found-object trope, back warmer; the greed trope, back sweeter; the retirement trope, back as an echo you can visit; the small-wish trope, back as a furrow that never closes; and the happily-ever-after itself, back changed, with interest — an ever-after that leaves its last line blank. Then he named the set for the record, so the record could shelve it."
+          "text": "The Boonberry Fool bowed, and for once said nothing clever. He set each borrowed thing back where it belonged: the found egg, warmer; the greedy wish, sweeter; the echo, somewhere you can visit; the small wish, a furrow that never closes; and the happily-ever-after, changed — an ever-after that leaves its last line blank."
         }
       ]
     },
@@ -236,16 +248,16 @@
         "alt": "An open night archive, a cracked-eggshell door leaking gold light, the empty eggshell set on a small reading desk beside a ledger's blank last line.",
         "loading": "lazy"
       },
-      "figcaption": "Lore.Land Canon: the ninth honk sounded; the bottle set out for the next wish."
+      "figcaption": "The Shell-Shaped Door: the ninth honk sounded; the shell set out for the next wish."
     },
     {
       "type": "section",
       "title": "The Blank Last Line",
-      "data-motif": "ledger",
+      "data-motif": "unspent-wish",
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof looked from the ledger to the open shell-door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river bend. Here was a place she had been afraid. Here, a place she had eaten."
+          "text": "Boof looked from the book to the open shell-shaped door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river bend. Here was a place she had been afraid. Here, a place she had eaten."
         },
         {
           "type": "paragraph",
@@ -299,7 +311,15 @@
         },
         {
           "type": "paragraph",
-          "text": "Morning spread across the farms. Smoke rose from kitchens; someone would soon be cutting bread. Far off, one furrow steamed in the frost. Boof turned toward the door. She lingered with her nose just beyond the arch, where the cool air met the room's last warmth. The road smelled of damp gravel, horse, a little spilled grain. Behind those came the less certain scents of places she had not visited. Nobody called her back to explain the ending. Inside, the Fool moved a chair away from the desk so there would be room to approach it. Boof heard the legs scrape, then settle. She waited until the cart had passed before stepping into the road."
+          "text": "Morning spread across the farms. Smoke rose from kitchens; someone would soon be cutting bread. Far off, one furrow steamed in the frost. Boof turned toward the door. She lingered with her nose just beyond the arch, where the cool air met the room's last warmth. The road smelled of damp gravel, horse, a little spilled grain."
+        },
+        {
+          "type": "paragraph",
+          "text": "Behind those came the less certain scents of places she had not visited. Nobody called her back to explain the ending. Inside, the Fool moved a chair away from the desk so there would be room to approach it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof heard the legs scrape, then settle. She waited until the cart had passed before stepping into the road. Where its dust settled, a hat hung in the air at the height of a person's head — round-crowned, brimmed, touching nothing. It was a little farther down the road each time she looked. She could not smell who was under it. She could smell that someone was."
         },
         {
           "type": "paragraph",

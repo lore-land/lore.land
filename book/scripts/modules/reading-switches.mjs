@@ -127,6 +127,21 @@ function tryListFromUrl() {
   }
 }
 
+/** For other rooms (the Scriptorium desk): the reader's switches as they stand. */
+export function readSwitches() {
+  const state = resolveState();
+  return { cohort: state.cohort, engaged: chaptersVisited() >= ENGAGED_AFTER || state.tried.length > 0, values: resolvedMap(state) };
+}
+
+/** For other rooms: flip one switch the same way the drawer does. */
+export function setSwitch(id, on) {
+  const state = resolveState();
+  state.choices[id] = on ? 'on' : 'off';
+  applySwitches(resolvedMap(state));
+  persist(state);
+  return resolvedMap(state);
+}
+
 function resolveState() {
   const stored = readJSON(SWITCHES_KEY, null);
   const state = {
@@ -224,8 +239,8 @@ function createFocusLine() {
 const TOTAL_CHAPTERS = 13;
 const SHELF_KEY = 'lore.shelf.release';
 
-/** Ask the service worker to keep every chapter; report the count it kept. */
-function keepChapters(onKept) {
+/** Ask the service worker to keep every chapter (and the desk); report the count it kept. */
+export function keepChapters(onKept) {
   const controller = navigator.serviceWorker?.controller;
   if (!controller) {
     queueMicrotask(() => onKept?.(null));
@@ -243,6 +258,7 @@ function keepChapters(onKept) {
   const assets = performance.getEntriesByType('resource')
     .map((entry) => entry.name)
     .filter((name) => name.startsWith(window.location.origin) && /\.(css|mjs|js|json|woff2?|otf|svg)(\?|$)/.test(name));
+  urls.push(new URL('/scriptorium/', window.location.origin).href);
   controller.postMessage({ type: 'KEEP_CHAPTERS', urls, assets });
   return () => navigator.serviceWorker.removeEventListener('message', onMessage);
 }

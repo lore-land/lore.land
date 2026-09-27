@@ -140,7 +140,7 @@
         },
         {
           "type": "paragraph",
-          "text": "A leaning wooden signpost stood half-swallowed by drift-sand. Its painted lettering had flaked off seasons ago, but its long evening shadow stretched across the flats like an unyielding black needle—and at the tip of the shadow, right where the two routes wanted to become one turn, a curve of green glass broke the crust. Boof dug. The flats gave up a bottle, stoppered, sand-scoured, and warm in the way of a chair somebody has only just left."
+          "text": "A leaning wooden signpost stood half-swallowed by drift-sand. Its painted lettering had flaked off seasons ago, but its long evening shadow stretched across the flats like an unyielding black needle. At the tip of the shadow, right where the two routes wanted to become one turn, a curve of green glass broke the crust. Boof dug. The flats gave up a bottle, stoppered, sand-scoured, and warm in the way of a chair somebody has only just left."
         }
       ]
     },
@@ -161,7 +161,15 @@
         {
           "type": "paragraph",
           "data-content_id": "paradox-intro",
-          "text": "The stopper turned. Steam rose, folded, found sleeves. Out came the Off-Season Genie, neat as a handkerchief and dressed like a clerk on his first day without a desk. He looked from egg to dog to glowing sand. “Two routes. One turn. Used to settle these before breakfast.” A wish, he explained, redirected what was already moving. These routes had been nearly meeting for a century. One coincidence and a Thursday would have done it. He brushed his cuffs. “Of course, I'm closed.” The egg was the last unfinished wish from the practice he'd shut down; he recognized it at once and looked away a moment too late."
+          "text": "The stopper turned. Steam rose, folded, found sleeves. Out came the Off-Season Genie, neat as a handkerchief and dressed like a clerk on his first day without a desk. He looked from egg to dog to glowing sand."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Two routes. One turn. Used to settle these before breakfast.” A wish, he explained, redirected what was already moving. These routes had been nearly meeting for a century. One coincidence and a Thursday would have done it. He brushed his cuffs."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Of course, I'm closed.” The egg was the last unfinished wish from the practice he'd shut down; he recognized it at once and looked away a moment too late."
         }
       ]
     },
@@ -187,7 +195,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger, sampling the old song of genies and returning it changed: it was never three wishes and a catch, he honked—it was a price list all along, and the grand wishes were the loss leaders. Footprints filled with sand the moment his heels lifted."
+          "text": "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger. He had sampled the old song of genies, and he handed it back changed. It was never three wishes and a catch, he honked. It was a price list all along, and the grand wishes were the loss leaders. Footprints filled with sand the moment his heels lifted."
         }
       ]
     },
@@ -207,11 +215,27 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The Genie laid his instruments on the sand: a scale, a long glass, a brass needle quick to find a want. He had made emperors with these. Moved rivers. Unmade two emperors at cost. Boof sat still. The scale stayed level; the glass showed fruit and fields; the needle circled, slowed, and tried again. “Below my resolution,” he said. “Emperors want loudly. You appear to want—” He tapped the glass. “Something these don't show.” He cleaned the lens on his sleeve, although there was no dust on it. Boof waited with the patience she used beside a cupboard someone had forgotten opening. The needle caught a glint of evening, pointed briefly toward the bottle, then swung away. The Genie moved the bottle behind him. Neither mentioned it. Across the flats the wind brushed their footprints shallow, and the two old routes continued their long, unfinished turn. For all his instruments, he had no measure for the length of this particular silence."
+          "text": "The Genie laid his instruments on the sand: a scale, a long glass, a brass needle quick to find a want. He had made emperors with these. Moved rivers. Unmade two emperors at cost."
         },
         {
           "type": "paragraph",
-          "text": "Boof huffed and looked at the seam, where two old routes still leaned toward each other like tired dancers. Could he not simply grant the turn, seal the wish, mend the map? \"I'm not saying no,\" said the Genie. \"I'm saying reality is already moving very quickly in another direction, and every correction has to come out of somewhere. Perfect version costs a miracle. Mediocre version costs one coincidence and a Thursday. Your version—\" and here his voice did something it had not done in years, which was lift \"—I can't price your version. I can't even read it.\" A want too small for the instruments of empire. He had liquidated his whole practice without ever once seeing one."
+          "text": "Boof sat still. The scale stayed level; the glass showed fruit and fields; the needle circled, slowed, and tried again. “Below my resolution,” he said. “Emperors want loudly. You appear to want—” He tapped the glass."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Something these don't show.” He cleaned the lens on his sleeve, although there was no dust on it. Boof waited with the patience she used beside a cupboard someone had forgotten opening. The needle caught a glint of evening, pointed briefly toward the bottle, then swung away. The Genie moved the bottle behind him. Neither mentioned it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Across the flats the wind brushed their footprints shallow, and the two old routes continued their long, unfinished turn. For all his instruments, he had no measure for the length of this particular silence."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof huffed and looked at the seam, where two old routes still leaned toward each other like tired dancers. Could he not simply grant the turn, seal the wish, mend the map? \"I'm not saying no,\" said the Genie."
+        },
+        {
+          "type": "paragraph",
+          "text": "\"I'm saying reality is already moving very quickly in another direction, and every correction has to come out of somewhere. Perfect version costs a miracle. Mediocre version costs one coincidence and a Thursday. Your version—\" and here his voice did something it had not done in years, which was lift \"—I can't price your version. I can't even read it.\" A want too small for the instruments of empire. He had liquidated his whole practice without ever once seeing one."
         }
       ],
       "climate": {
@@ -253,7 +277,11 @@
         },
         {
           "type": "paragraph",
-          "text": "\"I'm coming with you,\" he said, tucking the bottle under one arm. \"Not to grant anything. Understand that. I am closed.\" But a want too small to read had just done, for free, what he would have billed a Thursday for, and low ambition was the one wonder his ledger had never priced. Ahead, where the desert gave way to scrub and rising stone, Council Hill lifted its stormy silhouette against the evening sky. The egg hummed against Boof's ribs, one word short of finished, and the three of them—dog, wish, and the only professional who had ever refused to guess it—walked toward the hill together."
+          "text": "\"I'm coming with you,\" he said, tucking the bottle under one arm. \"Not to grant anything. Understand that. I am closed.\" But a want too small to read had just done, for free, what he would have billed a Thursday for, and low ambition was the one wonder his ledger had never priced."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ahead, where the desert gave way to scrub and rising stone, Council Hill lifted its stormy silhouette against the evening sky. The egg hummed against Boof's ribs, one word short of finished, and the three of them—dog, wish, and the only professional who had ever refused to guess it—walked toward the hill together."
         }
       ]
     }

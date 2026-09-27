@@ -2,6 +2,33 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_09_27.B",
+      "date": "2026-09-27",
+      "notes": [
+        "The chapters read in shorter beats now: the long walls of text are broken where the story turns, and the longest sentences breathe.",
+        "Genre is tunable: under any chapter's title, choose Tune and move the point between fairy tale, absurd reality and low magic. The story follows the blend."
+      ]
+    },
+    {
+      "release": "2026_09_27.A",
+      "date": "2026-09-27",
+      "notes": [
+        "Every chapter now opens with a choice: read it as Boon, Bane or Bone — the fairytale, the reality being left behind, or the notation underneath.",
+        "Several chapters were revised to follow the Egg more closely: less bookkeeping, more warmth, more of what can't be named yet.",
+        "The last chapter has a new name: The Shell-Shaped Door.",
+        "The margins have started to notice something. Keep an eye on them."
+      ]
+    },
+    {
+      "release": "2026_09_26.D",
+      "date": "2026-09-26",
+      "notes": [
+        "The Scriptorium is now your desk: pick up where you left off, search every chapter, keep the book offline, and see when the next chapter lands.",
+        "Everything on the desk is a spell you can tap, then type. Press / there and try ?[next].",
+        "The four design lenses in the Scriptorium are now named for the forces they exert: inertia, friction, flux, resonance."
+      ]
+    },
+    {
       "release": "2026_09_26.C",
       "date": "2026-09-26",
       "notes": [

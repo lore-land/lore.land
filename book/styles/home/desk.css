@@ -1,0 +1,454 @@
+/* home/desk.css — the Scriptorium desk (scriptorium-desk.mjs).
+ *
+ * The spell slate borrows the cover palette (field #2F483A, gold #CDAA72):
+ * a dark writing surface where a cast line glows. Cards are paper, each
+ * carrying its sign as a faint watermark, so the grammar is always in view.
+ */
+
+.desk {
+  --desk-field: #2f483a;
+  --desk-edge: #1a2219;
+  --desk-gold: #cdaa72;
+  --desk-gold-light: #e6c98f;
+  --desk-ink: #1d2733;
+  display: grid;
+  gap: 0.9rem;
+  margin-block: 0.5rem 2.5rem;
+}
+
+.desk-fallback {
+  display: grid;
+  gap: 0.4rem;
+  padding-left: 1.2rem;
+}
+
+.desk[data-ready="true"] .desk-fallback {
+  display: none;
+}
+
+/* ─── The slate ─────────────────────────────────────────────────────── */
+
+.spell-slate {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.55rem 0.55rem 1rem;
+  border-radius: 1rem;
+  background:
+    radial-gradient(60rem 12rem at 20% 0%, rgba(205, 170, 114, 0.12), transparent 60%),
+    radial-gradient(80rem 30rem at 50% 50%, var(--desk-field), var(--desk-edge));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 14px 34px rgba(12, 20, 16, 0.28);
+}
+
+.spell-label {
+  color: var(--desk-gold);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.spell-input {
+  min-width: 0;
+  padding: 0.7rem 0.4rem;
+  border: 0;
+  background: transparent;
+  color: #f3e7cc;
+  font-family: "JetBrainsMono", "IBM Plex Mono", ui-monospace, monospace;
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  letter-spacing: 0.02em;
+  caret-color: var(--desk-gold-light);
+}
+
+.spell-input::placeholder {
+  color: rgba(230, 201, 143, 0.55);
+}
+
+.spell-input:focus {
+  outline: none;
+}
+
+.spell-slate:focus-within {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 2px rgba(205, 170, 114, 0.55), 0 14px 34px rgba(12, 20, 16, 0.28);
+}
+
+.spell-cast {
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(205, 170, 114, 0.6);
+  border-radius: 999px;
+  background: rgba(205, 170, 114, 0.14);
+  color: var(--desk-gold-light);
+  font-family: "JetBrainsMono", "IBM Plex Mono", ui-monospace, monospace;
+  cursor: pointer;
+}
+
+.spell-hint {
+  margin: 0;
+  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--desk-ink) 70%, transparent);
+}
+
+.spell-hint kbd {
+  padding: 0 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--desk-ink) 30%, transparent);
+  border-radius: 0.3rem;
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.8em;
+}
+
+/* ─── The reply: where a cast spell lands ────────────────────────────── */
+
+.spell-reply:empty {
+  display: none;
+}
+
+.spell-reply {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+  padding: 0.9rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(205, 170, 114, 0.45);
+  background: color-mix(in srgb, #fff 70%, var(--desk-gold) 8%);
+}
+
+.spell-reply-sigil {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, var(--desk-field), var(--desk-edge));
+  color: var(--desk-gold-light);
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 1.2rem;
+}
+
+.spell-reply.is-cast .spell-reply-sigil {
+  animation: desk-cast 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes desk-cast {
+  0% { box-shadow: 0 0 0 0 rgba(230, 201, 143, 0.9); transform: scale(0.8); }
+  45% { box-shadow: 0 0 0 0.9rem rgba(230, 201, 143, 0); transform: scale(1.08); }
+  100% { box-shadow: 0 0 0 0 rgba(230, 201, 143, 0); transform: scale(1); }
+}
+
+.spell-reply-body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.spell-reply-body p,
+.spell-reply-body ul {
+  margin: 0;
+}
+
+.spell-reply-reading {
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6a36;
+}
+
+.spell-reply-ask {
+  font-style: italic;
+}
+
+.desk-results {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desk-results a {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.55rem;
+  color: inherit;
+  text-decoration: none;
+  background: rgba(47, 72, 58, 0.06);
+}
+
+.desk-results a:hover,
+.desk-results a:focus-visible {
+  background: rgba(205, 170, 114, 0.2);
+}
+
+.desk-result-where {
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: #6b5328;
+}
+
+.desk-result-snippet {
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+/* ─── Index: the desk's signs, one tap to each card ──────────────────── */
+
+.desk-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.desk-index a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--desk-field) 25%, transparent);
+  border-radius: 999px;
+  color: var(--desk-field);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.desk-index a:hover,
+.desk-index a:focus-visible {
+  background: color-mix(in srgb, var(--desk-gold) 18%, transparent);
+}
+
+.desk-index-sigil {
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  color: #8a6a36;
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────────── */
+
+.desk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.desk-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--desk-field) 18%, transparent);
+  border-radius: 0.9rem;
+  background: var(--hub-panel, #fffdf8);
+  scroll-margin-top: 5rem;
+}
+
+.desk-card::after {
+  content: attr(data-sigil);
+  position: absolute;
+  right: 0.6rem;
+  bottom: -1.4rem;
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 6rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--desk-gold) 16%, transparent);
+  pointer-events: none;
+}
+
+.desk-card:target {
+  border-color: var(--desk-gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--desk-gold) 30%, transparent);
+}
+
+.desk-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.desk-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.desk-card p {
+  margin: 0;
+}
+
+.desk-big {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--desk-field);
+}
+
+.desk-quiet {
+  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--desk-ink) 65%, transparent);
+}
+
+.spell-chip {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(205, 170, 114, 0.7);
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 0%, rgba(205, 170, 114, 0.22), rgba(205, 170, 114, 0.08));
+  color: #6b5328;
+  font-family: "JetBrainsMono", "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: box-shadow 200ms ease, transform 160ms ease;
+}
+
+.spell-chip:hover,
+.spell-chip:focus-visible {
+  box-shadow: 0 0 0.9rem rgba(205, 170, 114, 0.55);
+  transform: translateY(-1px);
+}
+
+.desk-book {
+  display: grid;
+  gap: 0.1rem;
+  max-height: 22rem;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.desk-book li {
+  display: grid;
+  padding: 0.35rem 0.4rem;
+  border-radius: 0.45rem;
+}
+
+.desk-book a {
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr) 1.2rem;
+  align-items: baseline;
+  color: inherit;
+  text-decoration: none;
+}
+
+.desk-book li:hover {
+  background: color-mix(in srgb, var(--desk-gold) 12%, transparent);
+}
+
+.desk-book-num {
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: #8a6a36;
+}
+
+.desk-book-mark {
+  color: var(--desk-field);
+  text-align: right;
+}
+
+.desk-book-which {
+  padding-left: 1.8rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: color-mix(in srgb, var(--desk-ink) 60%, transparent);
+}
+
+.desk-book li:not(.is-opened) .desk-book-title {
+  color: color-mix(in srgb, var(--desk-ink) 75%, transparent);
+}
+
+.desk-notes {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+}
+
+.desk-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.desk-select {
+  min-width: 0;
+  flex: 1 1 12rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
+}
+
+.desk-switches {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.desk-switch {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.desk-switch input {
+  accent-color: var(--desk-field);
+}
+
+.desk-trial {
+  font-size: 0.72rem;
+  color: #8a6a36;
+}
+
+.desk-switch-spell {
+  font-size: 0.68rem;
+  color: color-mix(in srgb, var(--desk-ink) 50%, transparent);
+}
+
+.desk-spells {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.desk-spells td {
+  padding: 0.35rem 0.3rem;
+  vertical-align: top;
+  border-top: 1px solid color-mix(in srgb, var(--desk-field) 10%, transparent);
+}
+
+.desk-spells td:first-child {
+  white-space: nowrap;
+}
+
+.desk-spell-reading {
+  display: block;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: #8a6a36;
+}
+
+.spell-practice {
+  justify-self: start;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--desk-field);
+  border-radius: 999px;
+  background: var(--desk-field);
+  color: var(--desk-gold-light);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Section breaks for the rest of the page. */
+.scriptorium-part {
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid color-mix(in srgb, #2f483a 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spell-reply.is-cast .spell-reply-sigil,
+  .spell-chip {
+    animation: none;
+    transition: none;
+  }
+}

@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "It happened between one honest sniff and the next. On the road out of Bone.land, where the audit still hung fresh in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, ti..."
+    excerpt: "It happened between one honest sniff and the next. On the road out of Bone.land, where the frame's note still hung in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, t..."
     route: ^[chapter/11/s01]{open}
   >
   s02: <
@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "He tapped the rented throne once — hollow — and let the note say what the audit had: interest is owed on every borrowed want."
+    excerpt: "He tapped the rented throne once — hollow — and let the note say what the timber had: interest is owed on every borrowed want."
     route: ^[chapter/11/s03]{open}
   >
   s04: [
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "The Wish That Would Not Finish"
-    excerpt: "Here is the paradox the audit had circled without naming: a wish only leaves its shell when it is finished, and a wish the size of an empire is never finishable. There is always one more coincidence owed, one more cor..."
+    excerpt: "Here is the paradox the timber had circled without naming: a wish only leaves its shell when it is finished, and a wish the size of an empire is never finishable. There is always one more coincidence owed, one more co..."
     route: ^[chapter/11/s05]{open}
   }
   s06: <

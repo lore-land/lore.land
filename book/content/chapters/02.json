@@ -118,7 +118,15 @@
         },
         {
           "type": "paragraph",
-          "text": "She laid the egg on a mossy stone. Pollen hung in rings between the trunks, catching the light; her breath went out and came back thin, a little late. Then the hum returned. Again. Each time it carried something different: rain on leaves, the smell of supper, a door opening onto a morning she almost knew. The grove was trying out futures. None had happened yet. Boof listened until she could pick the returns apart. One came from the hollow cedar, low and round; another thinned among the birches; a third seemed to start behind her teeth. She closed her mouth. It came again. The egg lay still on its stone, and the moss beneath it had begun to dry. She looked from that small pale patch to the trembling gold in the air. So much happening overhead, and down here one egg warming one stone. She kept a paw beside it, where she could feel which of them was real."
+          "text": "She laid the egg on a mossy stone. Pollen hung in rings between the trunks, catching the light; her breath went out and came back thin, a little late. Then the hum returned. Again. Each time it carried something different: rain on leaves, the smell of supper, a door opening onto a morning she almost knew. The grove was trying out futures. None had happened yet."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof listened until she could pick the returns apart. One came from the hollow cedar, low and round; another thinned among the birches; a third seemed to start behind her teeth. She closed her mouth. It came again. The egg lay still on its stone, and the moss beneath it had begun to dry."
+        },
+        {
+          "type": "paragraph",
+          "text": "She looked from that small pale patch to the trembling gold in the air. So much happening overhead, and down here one egg warming one stone. She kept a paw beside it, where she could feel which of them was real."
         }
       ],
       "climate": {
@@ -153,7 +161,7 @@
             },
             {
               "type": "text",
-              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different unfinished fragment from the leaf-mold: half a lullaby somebody stopped singing, the first word of a prayer nobody dared finish, a clerk saying "
+              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed an unfinished fragment out of the leaf-mold. Half a lullaby somebody stopped singing. The first word of a prayer nobody dared finish. A clerk saying no such entry, with the hollow confidence of someone who had never carried a want too small to say out loud."
             },
             {
               "type": "custom-echo",
@@ -188,7 +196,11 @@
         {
           "type": "paragraph",
           "data-content_id": "grove",
-          "text": "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows—blueberries a wish had passed over long ago, each holding its drop of the granting—and in the thicket they pulsed like grains under stress: bright when an echo rehearsed a future they remembered the taste of, dim when the thicket put them back to sleep. Boof recognized several of her own past silences reflected in the dark skins of the fruit—small wantings she had swallowed instead of sounding. That was the grove's first cruelty: it kept what the town preferred not to receipt. Unspent wants. Unsounded notes. And no ant colony warmed this ground—the wild rows grew cold and stubborn, living off whatever heat the echoes left behind, which was why their light flickered instead of holding."
+          "text": "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed like grains under stress — bright when an echo rehearsed a future they remembered the taste of, dim when the thicket put them back to sleep."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof recognized several of her own past silences reflected in the dark skins of the fruit—small wantings she had swallowed instead of sounding. That was the grove's first cruelty: it kept what the town preferred not to receipt. Unspent wants. Unsounded notes. And no ant colony warmed this ground—the wild rows grew cold and stubborn, living off whatever heat the echoes left behind, which was why their light flickered instead of holding."
         }
       ],
       "scene": {
@@ -276,7 +288,15 @@
         },
         {
           "type": "paragraph",
-          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sampled the trope the way you'd lift a plate off a stranger's table—\"You know this one: a lamp, a rub, three wishes, a fool who wastes the third un-wishing the first\"—and then he sounded it, HONK, one long bent note, and handed it back changed: the song never counts the finishing. Anybody can start a wish. Starting is cheap. The grove is full of starts. What costs, what really costs, is the last word, said out loud, with your whole weight on it. Every trope you sample, he said, tipping an invisible hat to the egg, must be returned changed, with interest."
+          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course."
+        },
+        {
+          "type": "paragraph",
+          "text": "He sampled the trope the way you’d lift a plate off a stranger’s table. “You know this one: a lamp, a rub, three wishes, and a fool who wastes the third un-wishing the first.” Then he sounded it — HONK, one long bent note — and handed it back changed: the song never counts the finishing. Anybody can start a wish. Starting is cheap. The grove is full of starts."
+        },
+        {
+          "type": "paragraph",
+          "text": "What costs, what really costs, is the last word, said out loud, with your whole weight on it. Every trope you sample, he said, tipping an invisible hat to the egg, must be returned changed, with interest."
         },
         {
           "type": "paragraph",

@@ -40,7 +40,9 @@ function scoreEntry(entry, haystack, chapterNumber) {
     }
   }
   if (Array.isArray(entry.chambers) && entry.chambers.includes(chapterNumber)) {
-    score += 0.35;
+    // Rumours (sightings, marginal hearsay) belong to their room: in it,
+    // they surface whenever the prose touches them at all.
+    score += entry.kind === 'rumour' && score > 0 ? 3 : 0.35;
   }
   return score;
 }

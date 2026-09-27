@@ -1,9 +1,9 @@
 {
   "chapterNumber": 5,
   "title": "The Quiet Rift",
-  "logline": "Two claims on one wish cannot both post — and the rift beneath the counting room is the singing interest on a grand wish granted centuries ago.",
-  "epigraph": "Silence is not empty; it is unreconciled.",
-  "description": "Chapter 5 of Lore.Land: The Quiet Rift. Two claims on the unspent wish refuse to post to one ledger while the Genie teaches wish-physics over the crack itself — old correction-debt from a grandiose wish, still singing. Redirect, don't create.",
+  "logline": "Two claims pull at one warm egg until the floor itself parts — and the crack beneath the hall is still singing the price of a grand wish granted centuries ago.",
+  "epigraph": "Silence is not empty. It is two wants holding the same breath.",
+  "description": "Chapter 5 of Lore.Land: The Quiet Rift. In a hushed hall of tall arches, a boon-claim and a bane-claim pull at the unspent wish until the slate floor parts beneath it, and the Genie stands astride the crack to teach the physics of wishing: a small turn costs a little; a grand one is still being paid. Redirect, don't create.",
   "mood": "song",
   "period": "spring",
   "pillars": [
@@ -125,7 +125,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The town counting room was calm the way a drawn bowstring is calm. Sunlight poured through tall stone arches over immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the central desk. Boof padded in on quiet paws, following a faint crystalline vibration running along the slate floor-crack — the ",
+          "text": "The hall under the tall stone arches was calm the way a drawn bowstring is calm. Sunlight lay across cedar shelves and a long desk worn pale by elbows, and across the slate floor ran a hairline crack that hummed. Boof padded in on quiet paws, following the vibration before she could hear it — the ",
           "children": [
             {
               "type": "custom-song",
@@ -133,13 +133,18 @@
             },
             {
               "type": "text",
-              "text": " running the crack like a held note. Two slips hung over the open book, pinned with silver bodkins. One was the boon-claim: the wish belongs to the finder and through her to the commons, as council ruled. One was the bane-claim: the wish is an unbanked asset, and Mr. BaneWAP's paperwork had arrived first thing that morning, notarized twice and smelling faintly of sour crust. The ledger could not hold both. Below the desk, the egg warmed the hairline where the floor had begun to part."
+              "text": " running the crack like a held breath. Two slips hung over the desk, pinned with silver bodkins, and both of them were pulling. One was the boon-claim: the wish belongs to whoever found it, and through her to everyone. The other had arrived at first light in Mr. BaneWAP's crust-brown envelope, sealed twice and smelling faintly of sour pastry: the wish is a thing, and things belong to whoever can hold them longest."
             }
-          ]
+          ],
+          "lean": "bane"
         },
         {
           "type": "paragraph",
-          "text": "The silence in the room was not peaceful. It was the silence of an unreconciled disagreement, held together only because nobody had dared to turn the page."
+          "text": "Each slip leaned toward the egg in Boof's sling. The egg leaned toward neither. Below the desk its warmth found the hairline, and the floor began, very quietly, to part."
+        },
+        {
+          "type": "paragraph",
+          "text": "The silence in the room was not peaceful. It was the silence of two wants holding the same breath, kept only because nobody had dared to let it go."
         }
       ]
     },
@@ -160,7 +165,7 @@
         {
           "type": "paragraph",
           "data-content_id": "song-verse",
-          "text": "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth. She shifted her paw. The crack ran on beneath it. Whatever the papers said, the floor could not keep both promises."
+          "text": "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth. She shifted her paw. The crack ran on beneath it. Whatever the slips said, the floor could not keep both promises."
         }
       ]
     },
@@ -197,7 +202,7 @@
         "alt": "A ledger split by a gold rift, a boon-claim and a bane-claim that cannot both post, the cracked egg warming the fracture from below.",
         "loading": "lazy"
       },
-      "figcaption": "The Quiet Rift: two claims, one wish, and a debt older than the ledger."
+      "figcaption": "The Quiet Rift: two claims, one warm egg, and a crack older than anyone's claim."
     },
     {
       "type": "section",
@@ -206,11 +211,23 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you, and somebody else catches the weight.” Long ago, someone had wished grandly here. Gold, perhaps. A throne. The file was gone, but the crack had outlasted the clerks who lost it. “Still paying,” he said. Under his slipper, the note went on."
+          "text": "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you, and somebody else catches the weight.” Long ago, someone had wished grandly here. Gold, perhaps. A throne. Nobody remembered the wish. The crack remembered its weight. “Still paying,” he said. Under his slipper, the note went on."
         },
         {
           "type": "paragraph",
-          "text": "The egg did not pick a side between the two claims. A wish keeps its own law; it does not exist to reconcile other people's wanting. Its heat kept the hairline open and honest, so no clerk could smooth the seam over with gum arabic and fresh ink and call the town balanced. Boof left both claims unposted, pinned in their contradiction, and turned toward the western gate — toward the city that had learned to turn its old corrections into light. A little dried ink clung to the edge of the desk. Boof watched it quiver when the note rose, then rest when it fell. The room had been swept with care. Pens lay straight; the stools were tucked away; whoever worked here had tried to leave things ready for morning. Yet the crack ran beneath all that order, passing under the stool where someone would sit and between the shelves where someone would reach. She could follow it farther than she could see. Somewhere beyond the wall, a cup began to rattle."
+          "text": "The egg did not pick a side. A wish keeps its own law; it is not there to settle other people's wanting. Its heat kept the hairline open and honest, so no one could smooth the seam over with wax and a confident voice and call the quarrel finished."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof left both slips where they hung, pulling at nothing, and turned toward the western gate — toward the city that had learned to turn its old breakages into light. A little dried ink clung to the edge of the desk."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof watched it quiver when the note rose, then rest when it fell. The room had been swept with care. Pens lay straight; the stools were tucked away; whoever worked here had tried to leave things ready for morning. Yet the crack ran beneath all that order, passing under the stool where someone would sit and between the shelves where someone would reach."
+        },
+        {
+          "type": "paragraph",
+          "text": "She could follow it farther than she could see. Somewhere beyond the wall, a cup began to rattle."
         }
       ],
       "climate": {
@@ -247,7 +264,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof understood the physics better than the clerks did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under the bush when the fruit was already going to fall. Redirect, don't create. Her wants had always been small enough to afford. She had simply never known that was a kind of wealth."
+          "text": "Boof understood the physics better than the hall did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under the bush when the fruit was already going to fall. Redirect, don't create. Her wants had always been small enough to afford. She had simply never known that was a kind of wealth."
         },
         {
           "type": "paragraph",

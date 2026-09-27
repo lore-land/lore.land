@@ -104,6 +104,20 @@
   lands_in: "plates, cover studies, nook rooms, boonberry forms — anything scanned or made; the shelf list is where their neighbourhoods are recorded"
 }
 
+^"valence_lens"{
+  .source: "the maker, 2026-09-27: a boon/bane/bone toggle that weights the story toward different elements"
+  boon: "the idealized fairytale — wonder, and the living alchemy of the land's ecologies"
+  bane: "the mundane, absurd, challenging reality — the starting point the hero tries to leave or better"
+  bone: "what can be wondered about the same way twice — structure, count, line; Spw as a low-magic notation"
+  mechanism: "each paragraph carries a lean (authored as \"lean\" in the chapter JSON — Spw's = — or read from vocabulary by valence-lens.mjs); the lens brings one lean forward and lets the others step back, never away"
+  bone_brings: "the notation surfaces under the bone lens: margin sigils and numbered paragraphs"
+  spell: "=[lens]{boon|bane|bone|balanced} at the Scriptorium desk"
+  law: "the story is whole under every lens; only its weight moves"
+  dial: "genre is a blend, not a mode: a triangle with boon (fairy tale), bane (absurd reality) and bone (low magic) at its corners; the reader's point sets three weights, each lean's paragraphs sit at 0.4 + 0.6 × weight, and a land holding 60% becomes the lens"
+  blend_spell: "=[genre]{boon:2 bone:1}"
+  readability: "2026-09-27: 29 wall paragraphs split into beats at sentence boundaries (text asserted unchanged) and ten over-long sentences broken at their turns; beats are also where the dry comedy lands"
+}
+
 ?"open_questions"[
   "Which spwashi.com demo shows a sigil's engineering reading first, and hands the reader to lore.land for its story?"
   "Should a scene, not just a chapter, carry its own shelf-mate?"

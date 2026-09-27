@@ -1,9 +1,9 @@
 {
   "chapterNumber": 10,
   "title": "Bone.land Resonance",
-  "logline": "In Bone.land's honest timber hall, Mx. BoneWAP audits the wish and publishes the finding that ends BaneWAP's patience: the smallest wishes have the longest arcs.",
+  "logline": "In Bone.land's timber hall, a pie of clean-boiled honesty sets the Egg on the great frame and listens to what it will bear — and the answer, rung through every beam, ends BaneWAP's patience: the smallest wishes have the longest arcs.",
   "epigraph": "Skeleton first. A wish, like a roof, is only as grand as the spine that must hold it.",
-  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land is the small constitution — the spine that holds when the veil shakes. Mx. BoneWAP, a pie of clean-boiled honesty, audits the egg's karmic momentum against the ledger of every wish ever spent, and publishes: grand wishes cost a generation of coincidences. BaneWAP stops pretending to wait.",
+  "description": "Chapter 10 of Lore.Land: Bone.land Resonance. Bone.land asks what will remain. Mx. BoneWAP, a pie with its joints showing, lays the Egg on the great frame and lets the timber answer: a small wish travels for generations; a grand one comes back down the river, roof by roof. The whole valley hears it. BaneWAP stops pretending to wait.",
   "mood": "bonk",
   "period": "spring",
   "pillars": [
@@ -125,7 +125,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Bone.land did not pretend to be theater. Its square-hewn oak beams rose into the morning like the ribcage of a sleeping leviathan, every mortise and peg left exposed to the weather, because this hall was the small constitution — the spine the land trusted to hold when the veil shakes. Boof trotted across the sawdust floor, and the whole valley heard the frame answer her arrival with one deep ",
+          "text": "Bone.land did not pretend to be theater. Its square-hewn oak beams rose into the morning like the ribcage of a sleeping leviathan, every mortise and peg left exposed to the weather, because this hall was the small constitution — the spine the land trusted to hold when the veil shakes."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof trotted across the sawdust floor, and the whole valley heard the frame answer her arrival with one deep  ",
           "children": [
             {
               "type": "custom-bonk",
@@ -133,9 +137,13 @@
             },
             {
               "type": "text",
-              "text": " — not slapstick, but the sound of a structure declaring itself load-bearing. And on a scrubbed trestle table between the anchor stones sat something new: a pale, plain pie, steaming faintly, ringed by open ledgers. \"Mx. BoneWAP,\" it said, by way of everything. \"Research. I audit momentum. Set the wish on the scale, please.\""
+              "text": " — not slapstick, but the sound of a structure declaring itself load-bearing. And on a scrubbed trestle table between the anchor stones sat something new: a pale, plain pie, steaming faintly, ringed by plumb lines and tuning pegs."
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "\"Mx. BoneWAP,\" it said, by way of everything. \"Load-bearing. I listen to what things will carry. Set the wish on the frame, please.\""
         },
         {
           "type": "paragraph",
@@ -145,7 +153,7 @@
     },
     {
       "type": "custom-bonk",
-      "data-motif": "ledger",
+      "data-motif": "small-want",
       "scene": {
         "vantage": "inches from the trestle table where the egg rests on a brass audit-scale beside the open ledger of every wish ever spent",
         "light": "gold lines of ledger-light illuminating the wood grain like lightning frozen in amber",
@@ -161,7 +169,7 @@
         {
           "type": "paragraph",
           "data-content_id": "bonk-intro",
-          "text": "The egg went onto the scale. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The finding appeared in gold: the smallest wishes have the longest arcs. Given the current, a small turn could travel generations. Force the whole river round a throne and the corrections would come downstream, roof by roof. Boof shook the ringing from her ears. It stayed in the wood."
+          "text": "The egg went onto the frame. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The answer came up through the wood in gold: the smallest wishes have the longest arcs. Given the current, a small turn could travel generations. Force the whole river round a throne and the corrections would come downstream, roof by roof. Boof shook the ringing from her ears. It stayed in the wood."
         }
       ]
     },
@@ -198,21 +206,33 @@
         "alt": "A great load-bearing wooden frame, gold seams along honest joints; on a trestle table, a plain pie audits the cracked egg against an open ledger.",
         "loading": "lazy"
       },
-      "figcaption": "Bone.land: the small constitution, load-bearing — and now, audited."
+      "figcaption": "Bone.land: the small constitution, load-bearing, and listening."
     },
     {
       "type": "section",
-      "title": "The Finding, Published",
-      "data-motif": "ledger",
+      "title": "What the Frame Would Bear",
+      "data-motif": "small-want",
       "data-foreshadow": "bane-wish",
       "content": [
         {
           "type": "paragraph",
-          "text": "BoneWAP did not whisper its finding to a council or fold it into a drawer. It published — copies nailed to the anchor stones, carried to the tavern, read aloud at the Watering Eye. Item one: the egg's wish, spent small and true, would run to one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. Item two: the grand wish a certain bitter pie intended would demand corrections costing a generation of coincidences — a whole town's worth of luck, drafted without consent. People stopped to read with baskets on their arms and tools still in their hands. Some followed each line with a finger; some asked a neighbor to say it again. The finding traveled out of the hall in voices that sounded nothing alike. Boof heard one person stumble over a sum and another get impatient, then go back and help. By afternoon the paper at the lowest stone had softened at its corners. A child held it flat while an older reader finished. There was no bell to mark the moment the news became theirs."
+          "text": "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley."
         },
         {
           "type": "paragraph",
-          "text": "The ink was wet when word came up the pass: the bitter pie had read the finding. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; dust drifted from a beam. She checked the sling."
+          "text": "By noon the note had gone out on the pass road, to the tavern, to the Watering Eye, where people said it back to one another. The Egg’s wish, spent small and true, would cost one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. The grand wish a certain bitter pie intended would call in a generation of coincidences — a whole town’s luck, drawn without asking."
+        },
+        {
+          "type": "paragraph",
+          "text": "People stopped to hear it with baskets on their arms and tools still in their hands. Some hummed the note to check it; some asked a neighbor to say it again. It traveled out of the hall in voices that sounded nothing alike."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof heard one person stumble over the sum and another get impatient, then go back and help. By afternoon the saying had softened at its edges, the way told things do. A child kept the note going while an older neighbor finished the sentence. There was no bell to mark the moment the news became theirs."
+        },
+        {
+          "type": "paragraph",
+          "text": "The note was still in the beams when word came up the pass: the bitter pie had heard it. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; dust drifted from a beam. She checked the sling."
         }
       ],
       "climate": {
@@ -249,7 +269,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. An audit does not end a story; it removes the story's excuses. Everyone in the valley now knew what the wish cost small and what it cost grand, and one bitter pie had decided the arithmetic applied to other people."
+          "text": "\"Is this where the trail terminates?\" Boof asked the king-post. The Fool answered with a soft knock on the honest oak — no. A true test does not end a story; it only takes away the story's excuses. Everyone in the valley now knew what the wish cost small and what it cost grand, and one bitter pie had decided the arithmetic applied to other people."
         },
         {
           "type": "paragraph",

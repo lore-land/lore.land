@@ -116,7 +116,7 @@
         "edges": [
           "BaneWAP's crimped banker's crust flakes as he runs, dropping bitter crumbs that no bird will take",
           "the egg glows through his tin lockbox like a coal through a keyhole",
-          "behind them the audit-stamps of Bone.land still hang in the air, unblinking",
+          "behind them the ringing timbers of Bone.land still hang in the air, unblinking",
           "the road ahead is already, impossibly, rearranging itself to be convenient for him"
         ],
         "hint": "a bitter banker-crusted pie fleeing down a morning road clutching a tin lockbox that leaks warm gold light; a working dog frozen mid-stride behind; the landscape subtly rearranging itself ahead of the thief; cold audit light, one warm stolen source"
@@ -124,7 +124,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "It happened between one honest sniff and the next. On the road out of Bone.land, where the audit still hung fresh in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, tin lockbox open and shut, the egg gone from Boof's sling before her growl could finish forming. He did not run far. He did not need to. He stood on a low rise with the warm shell in both crimped hands and wished the wish he had been drafting since the auction failed: an empire, whole, at once. And the wish — this is the part no one had priced — granted instantly. It was a moment of ",
+          "text": "It happened between one honest sniff and the next. On the road out of Bone.land, where the frame's note still hung in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, tin lockbox open and shut, the egg gone from Boof's sling before her growl could finish forming. He did not run far. He did not need to."
+        },
+        {
+          "type": "paragraph",
+          "text": "He stood on a low rise with the warm shell in both crimped hands and wished the wish he had been drafting since the auction failed: an empire, whole, at once. And the wish — this is the part no one had priced — granted instantly. It was a moment of  ",
           "children": [
             {
               "type": "custom-awakening",
@@ -186,7 +190,7 @@
         },
         {
           "type": "paragraph",
-          "text": "He tapped the rented throne once — hollow — and let the note say what the audit had: interest is owed on every borrowed want."
+          "text": "He tapped the rented throne once — hollow — and let the note say what the timber had: interest is owed on every borrowed want."
         }
       ]
     },
@@ -207,7 +211,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Here is the paradox the audit had circled without naming: a wish only leaves its shell when it is finished, and a wish the size of an empire is never finishable. There is always one more coincidence owed, one more correction pending in some far county where a stranger's luck must be bent to balance a king's. The grant kept arriving and kept not being done. The empire stood, hollow as a rented crown, and the egg in BaneWAP's hands stayed exactly as warm as it had been in the frozen furrow — spent and unspent at once, a note held but not released. At the edge of the new court, a woman still holding her market basket asked whether she could go home. A banner brushed her shoulder. No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject. She needed to get the bread indoors before rain. Boof watched her take one step backward, then another. The banner lifted, and she slipped beneath it."
+          "text": "Here is the paradox the timber had circled without naming: a wish only leaves its shell when it is finished, and a wish the size of an empire is never finishable. There is always one more coincidence owed, one more correction pending in some far county where a stranger's luck must be bent to balance a king's. The grant kept arriving and kept not being done."
+        },
+        {
+          "type": "paragraph",
+          "text": "The empire stood, hollow as a rented crown, and the egg in BaneWAP's hands stayed exactly as warm as it had been in the frozen furrow — spent and unspent at once, a note held but not released. At the edge of the new court, a woman still holding her market basket asked whether she could go home. A banner brushed her shoulder."
+        },
+        {
+          "type": "paragraph",
+          "text": "No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject."
+        },
+        {
+          "type": "paragraph",
+          "text": "She needed to get the bread indoors before rain. Boof watched her take one step backward, then another. The banner lifted, and she slipped beneath it."
         },
         {
           "type": "paragraph",

@@ -55,6 +55,8 @@ const REQUIRED = Object.freeze([
   'book/pwa/icons/favicon.svg',
   'book/pwa/screenshots/reader-wide.webp',
   'book/content/changes.json',
+  'book/content/catalog.json',
+  'book/content/search.json',
   'book/images/01.png',
   'book/images/og/chapter-01.jpg',
   'zine/index.html',

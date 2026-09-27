@@ -1,7 +1,7 @@
 {
   "chapterNumber": 9,
   "title": "Shards of Nine Honks",
-  "logline": "The Fool lays out his set: eight tropes sampled and returned. The pieces assemble into a shape with one hole — egg-sized.",
+  "logline": "On the ridge, eight honks lie out as shards of sound — and the pieces assemble into a shape with one hole, exactly egg-sized.",
   "epigraph": "An unspent wish is an unsounded note. Everything else in the set was arranged around its silence.",
   "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. The Boonhonk lineage revealed. Nine honks are nine sampled tropes, and the Fool's thirteen-chamber set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was never sounded.",
   "mood": "puzzle",
@@ -208,7 +208,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The egg fitted without a push. Eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for what she still carried. The Fool let her look. For once, he had nothing to add. The slates still held the day's warmth. Below them, somebody was closing shutters, one clap after another down the street, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw. They made a shape together, but she remembered the distance between them, the meals and mud and waiting. No one could have handed her that at the beginning."
+          "text": "The egg fitted without a push. Eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for what she still carried. The Fool let her look. For once, he had nothing to add. The slates still held the day's warmth."
+        },
+        {
+          "type": "paragraph",
+          "text": "Below them, somebody was closing shutters, one clap after another down the street, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw."
+        },
+        {
+          "type": "paragraph",
+          "text": "They made a shape together, but she remembered the distance between them, the meals and mud and waiting. No one could have handed her that at the beginning."
         },
         {
           "type": "paragraph",

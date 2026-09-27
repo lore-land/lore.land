@@ -133,9 +133,13 @@
             },
             {
               "type": "text",
-              "text": " of curving bronze posts, rain-slick arches, and leaning panes. The glass of Bonk City was not quarried or blown from river sand alone: it was made of old impacts, every collision the city had ever survived melted down and clarified, so that the panes remembered being struck and had forgiven it into transparency. The lanterns were honest in the one way that mattered — they showed light without claiming to be it. Every one of them turned its faceted face toward the warm egg in her sling, casting its heat across the cobbles while owning not a single ember of the flame."
+              "text": " of curving bronze posts, rain-slick arches, and leaning panes. The glass of Bonk City was not quarried or blown from river sand alone: it was made of old impacts, every collision the city had ever survived melted down and clarified, so that the panes remembered being struck and had forgiven it into transparency. The lanterns were honest in the one way that mattered — they showed light without claiming to be it."
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Every one of them turned its faceted face toward the warm egg in her sling, casting its heat across the cobbles while owning not a single ember of the flame."
         },
         {
           "type": "paragraph",
@@ -213,7 +217,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Every street eventually arrived at a round plaza. At its center, on an oak table, a warm boonberry pie held court. Rain had followed them into the plaza in the folds of coats and the soles of shoes. It steamed from the porters' shoulders while they ate. Boof settled where she could watch the table legs and the lanes between them, the dropped crumb, the swinging heel, a spoon rescued before it reached the stones. Above her, conversation passed with the plates. Somebody had lost a button; somebody knew a shortcut home. The egg warmed her chest, the ovens warmed her face, and for a little while she could sit among people whose largest unanswered question was whether to have another slice."
+          "text": "Every street eventually arrived at a round plaza. At its center, on an oak table, a warm boonberry pie held court. Rain had followed them into the plaza in the folds of coats and the soles of shoes. It steamed from the porters' shoulders while they ate."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof settled where she could watch the table legs and the lanes between them, the dropped crumb, the swinging heel, a spoon rescued before it reached the stones. Above her, conversation passed with the plates. Somebody had lost a button; somebody knew a shortcut home."
+        },
+        {
+          "type": "paragraph",
+          "text": "The egg warmed her chest, the ovens warmed her face, and for a little while she could sit among people whose largest unanswered question was whether to have another slice."
         },
         {
           "type": "paragraph",
@@ -288,7 +300,7 @@
         },
         {
           "type": "paragraph",
-          "text": "She stepped past the last glowing pane into the quiet square, where an ancient stone slab waited under the open stars with a deep circular groove carved into its granite top — a place where oaths are given in public and paid in the honest currency of fruit. The wheel-tracks in the dew ahead of her smelled of hoarded berries. BaneWAP had left the gates before her, and he had come this way."
+          "text": "She stepped past the last glowing pane into the quiet square. Under the open stars waited an ancient stone slab with a deep circular groove carved into its granite top: the place where oaths are given in public and paid in the honest currency of fruit. The wheel-tracks in the dew ahead of her smelled of hoarded berries. BaneWAP had left the gates before her, and he had come this way."
         }
       ]
     }

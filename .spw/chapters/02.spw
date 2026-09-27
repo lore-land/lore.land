@@ -36,13 +36,13 @@
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
-    excerpt: "The leaning berries had led her here—the grove beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed a different unfinished fragment..."
+    excerpt: "The leaning berries had led her here—the grove beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed an unfinished fragment out of t..."
     route: ^[chapter/02/s02]{open}
   >
   s03: <
     handle: "custom-boonberry/03"
     type: "custom-boonberry"
-    excerpt: "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows—blueberries a wish had passed over long ago, each holding its drop of the granting—and in the thicket they pulsed l..."
+    excerpt: "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed lik..."
     handles: ["grove"]
     route: ^[chapter/02/s03]{open}
   >
@@ -68,7 +68,7 @@
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sampled the trope the way you'd lift..."
+    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sampled the trope the way you’d lift..."
     route: ^[chapter/02/s07]{open}
   >
 ]

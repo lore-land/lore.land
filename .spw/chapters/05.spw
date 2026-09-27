@@ -6,7 +6,7 @@
 
 ^[chapter/05]{
   title: "The Quiet Rift"
-  description: "Chapter 5 of Lore.Land: The Quiet Rift. Two claims on the unspent wish refuse to post to one ledger while the Genie teaches wish-physics over the crack itself — old correction-debt from a grandiose wish, still singing. Redirect, don't cr..."
+  description: "Chapter 5 of Lore.Land: The Quiet Rift. In a hushed hall of tall arches, a boon-claim and a bane-claim pull at the unspent wish until the slate floor parts beneath it, and the Genie stands astride the crack to teach the physics of wishin..."
   mood: "song"
   period: "spring"
   chapter_path: "/book/chapter/05/"
@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The town counting room was calm the way a drawn bowstring is calm. Sunlight poured through tall stone arches over immaculate cedar shelves, empty clerk stools, and a master ledger spread wide upon the central desk. Bo..."
+    excerpt: "The hall under the tall stone arches was calm the way a drawn bowstring is calm. Sunlight lay across cedar shelves and a long desk worn pale by elbows, and across the slate floor ran a hairline crack that hummed. Boof..."
     route: ^[chapter/05/s01]{open}
   >
   s02: <
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof understood the physics better than the clerks did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under ..."
+    excerpt: "Boof understood the physics better than the hall did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under th..."
     route: ^[chapter/05/s06]{open}
   >
 ]

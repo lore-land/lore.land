@@ -42,21 +42,22 @@
   ],
   "shortcuts": [
     {
-      "name": "Chapter One: Dawn in Boon.land",
-      "short_name": "Chapter One",
-      "url": "/book/chapter/01/?source=pwa-shortcut",
+      "name": "Your desk: pick up, search, keep offline",
+      "short_name": "Your desk",
+      "url": "/scriptorium/?source=pwa-shortcut#desk",
       "icons": [
         {
           "src": "/book/pwa/icons/icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         }
-      ]
+      ],
+      "description": "Pick up where you left off, search the book, keep it offline, see when the next chapter lands, and write to the scribes."
     },
     {
-      "name": "The Scriptorium",
-      "short_name": "Scriptorium",
-      "url": "/scriptorium/?source=pwa-shortcut",
+      "name": "Chapter One: Dawn in Boon.land",
+      "short_name": "Chapter One",
+      "url": "/book/chapter/01/?source=pwa-shortcut",
       "icons": [
         {
           "src": "/book/pwa/icons/icon-192.png",
