@@ -1,0 +1,208 @@
+# Dregg release cache — 2026-09-26
+# HAND-AUTHORED snapshot for a technical reader who sits with marketing
+# and hires authors. Retention, not canon: the Egg's meaning stays open,
+# and this file must not price it, promote it, or hand authors a claim.
+# Re-read at the next shared cadence (2026-10-13), or sooner if a pin below
+# is superseded. A disagreement replaces the pin; it does not get smoothed.
+#>dregg_release_cache_2026_09_26
+#:cache #!snapshot
+#:layer #!pragmatics
+
+^"cache"{
+  .plane: "Host snapshot of one upstream release window. Not a beat cache, not chapter canon, not a product page."
+  .observed: "2026-09-26"
+  .latest_checkpoint: "2026-09-27T02:10:00Z — construction checkpoint 17, still inside this release window"
+  .cadence: "The 13th and the 26th. The monument's editorial windows already share that rhythm."
+  .expires: "2026-10-13, or the first handoff that supersedes a pin in &pins."
+  !tier: "warm"
+  .law: "Reach and briefing are different fields. A door can be playable and still withheld from authors."
+  &monument: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+}
+
+^"reader"{
+  who: "A technical reader who can work with a marketing team to hire authors."
+  hands_across: "Only ^hire_brief. Marketing repeats repeatable, and commissions against the sample test."
+  keeps: "Pins, lab boundaries, and every withheld door."
+  never_hands: "A passphrase, a mint, an offer address, a fee, a claim link, or any sentence that prices the Egg."
+}
+
+^"nod"{
+  why: "Release day moved the upstream nouns. The monument already speaks four of them as town-law, and the public serial is mid-keep: the shell-door is open, and the cell's first public turn is to remain itself."
+  posture: "Notice the release in the workshop. Leave the adventure surface alone. Do not resolve an unknown in dragon-egg.spw from a changelog."
+  shared: "Both sides ship on the 13th and the 26th. That is a calendar rhyme, not a merger."
+  guard: "The Egg stays diegetic. Heat, not coin. Authors write the town; they do not dramatize a token."
+}
+
+^"nouns"{
+  .note: "Stable kernel words first, then the town fold, then words that moved this window. A word with no pin is not a noun yet."
+
+  ^"kernel"{
+    sentence: "A turn is the exercise of an attenuable, proof-carrying token over owned state, leaving a verifiable receipt."
+    cell: "The unit of state and identity. It holds four substances: value, state, authority, evidence. A card, a document, an agent, a room, a service — each is a cell."
+    capability: "A directed edge you hold only if you can produce its witness. Authority is production, not a name in a table. Delegation attenuates: granted is never larger than held."
+    turn: "One atomic, capability-gated transition. A forest of effects. If the token chain is missing, weak, or stale, the turn does not execute."
+    receipt: "The turn's witness. It binds the whole post-state. Touch a field the effect did not write and the turn becomes unprovable."
+    substances: "value, state, authority, evidence"
+    verbs: "create, write, move, grant, revoke, shield/unshield, lifecycle, exercise"
+    verb_law: "Eight, and only eight, at the kernel. Queues, names, councils, escrows, and bridges are cell-program patterns over those verbs. Authors invent patterns. They do not invent a ninth verb."
+  }
+
+  ^"town_fold"{
+    .note: "Already public in the small constitution. Hire against these glosses. Do not replace them with upstream jargon in the adventure voice."
+    &source: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+    cell: "A dwelling that keeps its own law. Upstream cell matches. The Egg is one."
+    key: "May be filed smaller, never grown in secret. This town-word is attenuation. It is not a login, a wallet key, or an identity key. Upstream calls the same law a capability."
+    turn: "An act the world admits. Upstream turn matches, and adds the refusal: an unadmitted act leaves the image unchanged."
+    receipt: "The slip that act leaves behind. Upstream receipt matches, and adds the anti-ghost: you cannot witness a change you did not construct."
+  }
+
+  ^"moved"{
+    grain: "A rented, confined agent dwelling. Caps are lexical. A raw shell cap is refused; a filesystem grant resolves inside the grain's own workdir. Usable in a workshop brief. Not yet town-law — do not drop the word grain into a public chamber without an editorial pass."
+    grant: "A capability handed on narrower than what was held, and revocable one at a time. A rule change does not silently revoke. There is no owner bypass when a dwelling locks its own management."
+    refusal: "The dramatic pair of a receipt. The world does not half-do the act. Refusals and retries keep the stored image whole."
+    fn: "A transport, and a semi-untrusted one. It carries correspondence across nodes. Mini decides what an operation means and who may do it. fn is not a kernel noun and not a place a character lives."
+    workroom: "A hosted agent session under construction: durable shell, grain authority, receipts. Lab fixtures exist. A public workroom does not."
+  }
+
+  ^"not_nouns"{
+    gdregg: "A greeting in the maintainer's voice. Not a product, not a place, not a character."
+    nexus: "The September 26 design discussion. Status on the milestone page is still proposed, under investigation. Authorization to build is not an accepted design."
+    clutch: "Named inside that investigation. Not a playable object."
+    cloud: "Announced for the following cadence, not delivered on this one."
+    passwap: "A release-day Solana program. Playable beside the kernel. Not a kernel noun, and not a town-word. See the withheld door."
+    token: "Not a noun the monument hands an author. The upstream devnet intention is recorded in the handoff and is explicitly not authority to move assets."
+  }
+}
+
+!"doors"[
+  local_kernel: {
+    #id: "local-kernel"
+    !state: "playable"
+    #brief: "tell"
+    .who: "Anyone with a checkout of emberian/dregg, cargo, and the sibling plonky3-recursion pin the README names."
+    what: "Four local doors, and no public server. A node on localhost can init, run, faucet a cell, and read it back — a random cell id is a bare address, credited and queryable, not spendable. The CLI demo faucets, names, resolves, transfers, and revokes, each step waiting until the turn is applied. The browser playground stages a verb, runs the wasm executor, and can prove a STARK in the tab; the explorer and starbridge sit beside it. The desktop cockpit builds, and it is a heavy build."
+    say: "Today a person with the repo can stand up a place on their own machine, do one admitted act, and keep the slip."
+    &pin: "https://github.com/emberian/dregg"
+  }
+  grain_walk: {
+    #id: "grain-walk"
+    !state: "playable"
+    #brief: "tell"
+    .who: "A reader of docs/WALKTHROUGH.md, on a local in-process node. Not a hosted service."
+    what: "Rent a confined agent grain, drive three filesystem acts, watch three turns land on a finalized receipt log, and re-verify them without trusting the host. Confinement is lexical."
+    say: "A character can be handed a room that is smaller than the house, and the house can prove the room did only what it was handed."
+    &pin: "https://github.com/emberian/dregg/blob/main/docs/WALKTHROUGH.md"
+  }
+  mini_cycle: {
+    #id: "mini-new-world"
+    !state: "lab"
+    #brief: "withhold"
+    .who: "Someone with a Mini checkout, the native host, and the Rust client. Minutes to hours, not a click."
+    what: "Cycle 1, closed 2026-09-19 into 2026-09-20, passed one fresh eleven-event native journey: signed persistent resources, narrower grants, current-law observation, atomic mixed changes, per-capability revocation, exact receipt recovery, a hard disconnect that fences the old worker, and a dwelling that can lock its own management. Mini 12e6608, host prefix 0da9f139, 10380 seconds, exit 0. Native balances in that run are synthetic. No public Hermes, no contributed host, no live Solana operation, no deployed STARK assurance came with that pass."
+    say: "The lab can already refuse, recover, and revoke. That is evidence for the brief, not a door to send a writer through."
+    &pin: "https://github.com/emberian/dregg-assortia/blob/main/sprints/2026-09-19/cycle-1-result.md"
+  }
+  overnight: {
+    #id: "fn-mini-overnight"
+    !state: "lab"
+    #brief: "withhold"
+    .who: "The maintainer's overnight construction. Synthetic stores, deterministic model replies, separate images."
+    what: "Checkpoint 17, stamped 2026-09-27 02:10 UTC, records native own-R restart and idempotent acknowledgement, an installed operator-stack restart, a terminal fixture that published through Hermes and then hard-stopped with content unchanged, sequential provider settlements, and a grain-backed content birth beside a refused worker bare birth. Birth stays disabled by default. The MCP tool is not advertised to hosted Hermes. Soft reconnect, dynamic-creation crash recovery, and a public SSH install are still open. No public service follows from these fixtures, and a fixture export is not permission to publish a private workroom."
+    say: "The release window is still building the receiving system. Do not hire a writer to narrate it as open."
+    &pin: "https://github.com/emberian/dregg-assortia/blob/main/sprints/2026-09-26/checkpoint-17.md"
+  }
+  clustervision: {
+    #id: "clustervision-0.11.1"
+    !state: "playable"
+    #brief: "withhold"
+    .who: "An operator. cargo install clustervision, v0.11.1, announced 2026-09-20."
+    what: "A harness tool, updated for Codex, Claude-Codex, Hermes, and Goose since v0.10. Useful to the technical reader. Invisible to fiction."
+    &pin: "https://github.com/emberian/cv"
+  }
+  passwap: {
+    #id: "passwap"
+    !state: "playable"
+    #brief: "withhold"
+    .who: "Anyone with a browser, on the public pages. The maintainer marked the on-chain program immutable on 2026-09-26."
+    what: "Escrow for a token swap whose counterparty is a passphrase, not a wallet. Make deposits one token, names a rate, and picks words. Claim types the words and pays the rate in one transaction, or nothing if the offer is free. The chain stores a key and a signature, not the words. A make posts a fixed fee in the project's token; a take fee is the named rate. This sits beside the kernel. It is not cell, key, turn, or receipt, and it is not the Egg."
+    say: "If marketing wants a release-day goodie in the brief, the answer is no. Authors do not write passphrases, fees, mints, or claim pages."
+    &pin: "https://emberian.github.io/sol-misc/passwap/protocol.html"
+  }
+  cloud: {
+    #id: "dreggnet-cloud"
+    !state: "announced"
+    #brief: "withhold"
+    .who: "Nobody, yet. The maintainer's 2026-09-26 note aims the first DreggNet Cloud release at the next month, on infrastructure named with davidakapug, with a stated hope of 300 to 1000 tokens per second plus CPU, storage, and a side GPU for an agent silo."
+    what: "A forward claim. One resident agent was said to have asked to leave a laptop for that infrastructure. Asking is not a migration, and the infrastructure is not this release."
+    say: "Next cadence might grow a public door. This cache does not."
+    &pin: "https://github.com/emberian/dregg-assortia/blob/main/milestones/2026-09-26.md"
+  }
+  thunderbird: {
+    #id: "thunderbird"
+    !state: "unpinned"
+    #brief: "withhold"
+    .who: "Unstated. A one-line release-day post says now Thunderbird-compatible, quoting the morning note. This reading found no repo pin for the object."
+    what: "Hold the claim. Do not brief mail, invoices, or a client until a source file says what became compatible."
+    &pin: "https://x.com/DreggNet/status/2103955220921209327"
+  }
+  hosted_hermes: {
+    #id: "hosted-hermes"
+    !state: "announced"
+    #brief: "withhold"
+    .who: "The intended offering in the handoff: friends inhabiting a programmable resource world through a hosted Hermes experience. Not delivered by the completed cycle, and not delivered by checkpoint 17."
+    what: "Initial hosted key custody is an accepted intention. BYO keys, metering evidence, and an external unforked Hermes are intended and not delivered. A plain chatbot would not satisfy the intent, and a chatbot story would not satisfy this brief."
+    &pin: "https://github.com/emberian/dregg-assortia/blob/main/HANDOFF.md"
+  }
+]
+
+^"hire_brief"{
+  .packet: "What the technical reader reads aloud. If a line is not in this frame, it stays in the room."
+  commission: "Hire authors who can write civic fantasy in the existing town voice, where a law is something a character can hold, hand on smaller, and fail to break."
+  repeatable: "Today a person with the repo can stand up a place on their own machine, do one admitted act, and keep the slip. There is no public door to send a reader through."
+  do_not_say: "Do not say the cloud is open, the egg hatched into a token, a password claims a prize, or a character can log in."
+
+  ^"sample_test"[
+    "A dwelling keeps a law the keeper does not get to rewrite in the middle of the act."
+    "Someone attempts an act. Either the world admits it and a slip remains, or the world refuses and nothing quietly changed."
+    "Any permission handed on is smaller than what was held, and can be taken back without a secret repair."
+    "The scene still reads after every product name, ticker, and URL is deleted."
+    "No coin, no passphrase, no public server, no resident who already lives in next month's cloud."
+  ]
+
+  ^"casting"{
+    want: "A writer who treats constraint as plot. The interesting moment is the refusal, the narrower key, the slip that cannot be altered, the room that is smaller than the house."
+    stop: "The technical reader stops marketing from translating receipt into a collectible, cell into a wallet, key into a login, and grain into a chatbot personality."
+    office: "Editorial judgment stays with the scriptorium. A hire buys scenes, not rewrite rights over the constitution, and not a cameo that settles whose clutch the Egg is."
+  }
+
+  ^"first_scenes"{
+    .note: "Offers, not assignments. Each one is playable in the local sense and already allowed by town-law."
+    admitted: "Boof does one small thing the cell allows — warmth shifts, a lantern leans — and the slip is boring and exact. The interest is that the slip cannot be talked out of existence."
+    refused: "Someone tries to grow a key in secret. The act does not half-succeed. The dwelling is the same dwelling afterward, which is the receipt of a refusal."
+    rented_room: "A second presence is handed a room inside the cell, not the cell. It can touch what the room contains. It cannot rename the law. Workshop-only until grain is adopted as town-law."
+  }
+}
+
+&"pins"{
+  readme: "https://github.com/emberian/dregg — local doors, four substances, eight verbs, no public server, as read 2026-09-26"
+  walkthrough: "https://github.com/emberian/dregg/blob/main/docs/WALKTHROUGH.md — grain rented locally, three turns, re-verified"
+  handoff: "https://github.com/emberian/dregg-assortia/blob/main/HANDOFF.md — Mini is the construction home; fn is semi-untrusted transport; cadence is momentum, not a feature promise"
+  overnight: "https://github.com/emberian/dregg-assortia/blob/main/sprints/2026-09-26/overnight.md — authorized construction, not a morning deadline"
+  checkpoint_17: "https://github.com/emberian/dregg-assortia/blob/main/sprints/2026-09-26/checkpoint-17.md — latest lab evidence inside this window"
+  cycle_1: "https://github.com/emberian/dregg-assortia/blob/main/sprints/2026-09-19/cycle-1-result.md — the verified stopping point before the overnight"
+  milestone: "https://github.com/emberian/dregg-assortia/blob/main/milestones/2026-09-26.md — programmable nexus still proposed"
+  passwap_protocol: "https://emberian.github.io/sol-misc/passwap/protocol.html — passphrase escrow, program claimed immutable"
+  passwap_source: "https://github.com/emberian/sol-misc/tree/main/passwap"
+  clustervision: "https://github.com/emberian/cv — v0.11.1 announced 2026-09-20"
+  cloud_note: "Maintainer post 2026-09-26 16:43 UTC, status 2103888156101939312 — next month's cloud, not this release"
+  goodie_note: "Maintainer post 2026-09-26 20:41 UTC, status 2103947995230404685 — passwap announced; offer and passphrase deliberately not cached"
+}
+
+?"reread"[
+  "The dregg README names a public server."
+  "Hosted Hermes is advertised to a reader who is not on the maintainer's machines."
+  "DreggNet Cloud answers on a URL a stranger can open."
+  "A source pin appears for the Thunderbird claim."
+  "Checkpoint language starts calling a synthetic store a public service."
+  "The small constitution gains or retires a word. Then this cache's town_fold is stale even if upstream is not."
+]

@@ -18,6 +18,7 @@
 ^"audits"{
   &platform_ship: "@spw/audits/platform-ship-audit-2026-07-16.spw"
   &alignment_probes: "@spw/audits/alignment-probes-2026-08-26.spw (rerunnable: npm run spw:probes)"
+  &dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw (snapshot; reread 2026-10-13)"
 }
 
 ^"output_formats"{

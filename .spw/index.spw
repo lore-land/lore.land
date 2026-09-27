@@ -25,6 +25,7 @@
   alignment_ledger: "@spw/state/alignment-ledger.spw"
   story_boonhonk: "@spw/story-boonhonk.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+  dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw"
 }
 
 &plans{

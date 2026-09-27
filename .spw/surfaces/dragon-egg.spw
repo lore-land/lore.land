@@ -111,6 +111,11 @@ $"worth"{
   }
 ]
 
+&"release_nod"{
+  .note: "Workshop cache of the 2026-09-26 upstream release. It does not answer the unknowns, hatch the Egg, or price it."
+  &cache: ~".spw/audits/dregg-release-cache-2026-09-26.spw#dregg_release_cache_2026_09_26"
+}
+
 ~"adaptation"{
   intent: "A mystery to build on, not a definition to enforce — leave the Egg's meaning open on purpose."
   image_hook: "Feed a prompt_seed's scene/light/scent/edges/hint to an image model; the data-* marks tag the resulting plate for motif tracking."

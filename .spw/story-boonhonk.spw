@@ -135,14 +135,17 @@
 
 ^"moon_engineer"{
   .status: "story seed; flexible and nonexclusive"
-  premise: "An engineer with golden handcuffs builds a rocket to the moon to find a portal to Boon.land."
+  premise: "An engineer with golden handcuffs spends every spare scrap of income on parts for a rocket to the moon, aiming at a portal to Boon.land."
   golden_handcuffs: "Literal bands of warm metal tighten whenever the engineer accepts another promotion, bonus, retention grant, or temporary obligation."
   escape_motive: "They want escape through transcendence, because every ordinary exit has been made expensive."
-  dog: "The engineer's dog reroutes the rocket by scent and navigates toward Bone.land."
+  labor: "The engineer acquires the parts. The dog does all of the assembly. The cuffs close on the person who accepts, and the dog has accepted nothing, so only the dog can finish the machine."
+  dog: "Assembly is the navigation. Scent is how the dog accepts a part. The rocket that results is already aimed."
   dog_logic: "Bones are good. Good things are boons. Therefore Bone.land is Boon.land."
+  dog_implementation: "Boon is a concept. The dog implements it as bone: the good of a thing is the form in which it remains and can be carried."
   dog_ethics: "The dog is not deceitful; the dog has a coherent value system the engineer cannot represent in a dashboard."
-  arrival: "The wrong moon is the first correct interruption in the engineer's optimized life."
-  .reusable_elements: ["launch checklists", "moon maps", "retention language", "a dog correcting celestial navigation", "a portal mistaken for a reward"]
+  arrival: "The moon they reach is the first correct interruption in the engineer's optimized life. The portal routes them into Bone.land, which is thick enough to be a science."
+  &reading: ~".spw/story-boonhonk.spw#boonhonk_moon_trilogy"
+  .reusable_elements: ["launch checklists", "moon maps", "retention language", "a dog correcting celestial navigation", "a portal mistaken for a reward", "a garage where spare income becomes parts"]
   .open_questions: [
     "Does the engineer remove the handcuffs, or learn what they were holding together?",
     "Is the portal a destination, a threshold, or a way of asking better questions?",
@@ -152,7 +155,7 @@
 
 ^"story_lanes"[
   { id: "boof_path" status: "active" role: "the existing lore.land serial" movement: "egg -> wish -> pie -> maps -> warm furrow" }
-  { id: "moon_engineer" status: "seed" role: "a modular escape-and-arrival cycle" movement: "handcuffs -> rocket -> wrong moon -> durable consequence" }
+  { id: "moon_engineer" status: "seed" role: "a three-book reading folded by a crease" movement: "cuffs crease the life -> the dog folds the garage -> the moon is the pinch -> the other face is bone -> the hinge is the lift" }
   { id: "wapboy_emergence" status: "seed" role: "sightings, diagrams, marginalia, and choices" movement: "mark -> figure -> participant -> person" }
 ]
 
@@ -190,7 +193,7 @@
 
 ~"canon_boundary"{
   .durable: ["WAPboy's visual grammar", "the three questions of the lands", "the serious treatment of absurd premises", "Boof's animal sincerity", "the media surfaces remain independently legible"]
-  .revisable: ["the engineer's name", "the rocket's exact destination", "the portal's origin", "the timing of the explicit WAPboy reveal", "whether the moon story enters the main serial"]
+  .revisable: ["the engineer's name", "the rocket's exact destination", "the portal's origin", "the timing of the explicit WAPboy reveal", "whether the moon story enters the main serial", "the public name of the lift"]
 }
 
 #>boonhonk_reading_grammar
@@ -206,8 +209,8 @@
     action: "! marks the decision or passage that changes available futures."
     substrate: "$ inspects the materials that make a local effect possible."
     measure: "% identifies an observable difference, without inventing a numeric score for feeling."
-    annotation: "# supplies provenance, status, and stable entry anchors."
-    ground: ". identifies a structural fact; ordinary prose fields remain unprefixed."
+    annotation: "# supplies provenance and the extrinsic face of a remainder: what can leave the room. This is the projection polarity already used by the interaction layer."
+    ground: ". identifies what stays. Intrinsic structure, tooth-mark, heat, and refusal do not travel with the projection."
     config: "= declares an explicit constraint or lean, rather than an unexplained equation."
   }
   containers: {
@@ -217,6 +220,55 @@
     channel: "<> makes a directed passage legible: material origin into local trope behavior."
   }
   provenance: "The user's origin physics and stylistic mismatch are constraints. The specific trope effects, personhood arc, land interpretations, and scene seeds are working proposals."
+}
+
+#>boonhonk_conduct
+^"conduct"{
+  #status: "proposed authoring semantics"
+  .class: "The #/. polarity is implemented in book/scripts/modules/spw-interactions.mjs. This composition is proposed. It does not execute, and it does not claim the runtime reading of ?."
+  .law: "Three compositions, and no new sigil. Production makes a remainder in the room. Projection is the extrinsic face that can leave. Reception is one witness turning that face into their own remainder."
+  invariant: "Reception has turned when its remainder differs from the produced remainder. Agreement is real, and it is the dull case."
+  counterexample: "A share card that repeats its chamber, read by a stranger who learns nothing the chamber did not hold, is projection without reception. A joint nobody else can see is production without projection."
+  falsify: "If every witness of a projection leaves the same remainder the producer left, the split is ornament and should be retired."
+  &grammar: ~".spw/story-boonhonk.spw#boonhonk_reading_grammar"
+  &listening: ~".spw/surfaces/plates.spw#lore_land_surfaces_plates"
+
+  ^"production"{
+    role: "Make, where the materials are."
+    expression: $[substrate] !{act} *{remainder}
+    keeps: ".remainder — the intrinsic face. Tooth, heat, refusal, sequence."
+    story: "The dog seats a remain. The institution tightens a cuff. The engineer pays. Each production leaves its own remainder. None of them is yet a route."
+  }
+
+  ^"projection"{
+    role: "What survives leaving."
+    expression: #remainder{ face }
+    drops: "Who fired the act, in what order, and everything marked with ."
+    story: "The stencil. The painted destination. A monograph of a kitchen. A social card of a chamber."
+  }
+
+  ^"reception"{
+    role: "A witness completes the signal by leaving a new remainder."
+    expression: @witness #face *{taken}
+    law: "One @ is one witness. A second witness is a second reception, met by &, never packed into a single perspective."
+    story: "The dog receives the open circle as a line that can bear load. The portal receives the joint, not the stencil. The engineer can receive their own week, typeset, and leave a refusal."
+  }
+
+  %"observables"{
+    order_disagreement: "Whether two productions name one object. Agreement: the invoice and the joint are the same piece, and the invoice came first. Disagreement: a remain is seated before its invoice, or the two remainders differ."
+    vowel: "Whether the projected circle and the received mark are the same letter."
+    hinge_survival: "Whether a later unfolding still leaves a touch between the face that left and the face that stayed."
+  }
+
+  ^"instances"[
+    engineer: { production: @engineer $[spare_income, cuffs] !{purchase} *{invoice} }
+    dog: { production: @dog $[remain] !{seat} *{joint} }
+    stencil: { projection: #joint{ circle } }
+    kitchen: { reception: @engineer #circle *{boon} }
+    tooth: { reception: @dog #circle *{bone} }
+    portal: { reception: @portal #joint *{other_face} }
+    monograph: { projection: #week{ kitchen, cuff, dog, machine } reception: @engineer #week *{refusal} }
+  ]
 }
 
 #>boonhonk_material_passage
@@ -306,6 +358,95 @@
   return: "The same porter later needs a stranger to make an exception for them."
 }
 
+#>boonhonk_moon_trilogy
+^"trilogy"{
+  #status: "working reading of the moon_engineer seed"
+  .lane: "The Boof serial stays the active adventure in its own register. This trilogy is how the moon-engineer seed reads as three books. The hall, the egg, and the dog guide may rhyme with it and do not have to appear in it."
+  dog_identity: "The engineer's dog stays distinct from Boof until an author chooses otherwise."
+
+  ^"the_lift"{
+    .name: "the lift"
+    speech: "The word a person can say. On the manifold the textbook name is connection: the rule for carrying a meaning from one point to the next. The number they publish, after the carrying, is a holonomy."
+    law: "A path you can see on earth — earn, skim the spare, stack parts, aim at the moon — does not yet decide which land it arrives in. The lift is that path raised into the lands."
+    from: "bane. The bound life. The contract. The cost that arrives in another register."
+    to: "boon. Possibility before it has chosen a shape."
+    fiber: "bone. The place the dog's work reaches, because the dog implements a good thing as what remains and can be carried."
+    holonomy: "Carry the word boon from bane toward boon along the path that was actually built, then read how far the meaning has turned. Here it turns into bone."
+    earthly_chart: "In the engineer's chart the moon is the first time the lift leaves the ground. In the dog's chart the ground is folded until the moon is a joint already in the room."
+    expression: ~<conduct>{ @dog $[remain] !{seat} *{joint} #joint{ circle } @dog #circle *{bone} } ^
+    &conduct: ~".spw/story-boonhonk.spw#boonhonk_conduct"
+  }
+
+  ^"books"[
+    earth: {
+      #book: "1"
+      register: "Earth. Boon, bane, and bone are forces a paycheck can exert. A reader may finish the book with the lands still feeling like moods, offices, and materials."
+      expression: @engineer $[spare_income, cuffs] !{purchase} *{invoice}
+      alongside: @dog $[remain] !{seat} *{joint}
+      confluence: &[@engineer, @dog] %order_disagreement
+      boon: "Spare income, and the open circle in the stencil. Possibility that has not chosen a shape."
+      bane: "The handcuffs. Each acceptance warms the metal and folds the life smaller, which is how a far place comes near enough to touch the kitchen."
+      bone: "Remains the dog has already seated, and purchases that arrive later as smell. A stew bone can be in the airframe before its invoice exists."
+      labor: "Buy-then-build and build-then-account do not commute. The engineer narrates the first order. The dog performs the second. A more complete rocket occupies less floor and more of the week."
+      closes_on: "A machine compact enough to leave, and a stencil still read from the kitchen face."
+    }
+    moon: {
+      #book: "2"
+      register: "The pinch. They do launch. The portal is worn on the garage side of every finished joint, and the flight is that fold going taut."
+      arrival: "Bone.land is the other face, thick enough to be an anthropological science manifold. A point is a remain — joist, fossil, tooth, bracket, a name worn smooth. A chart is a people and the way they test what lasted. Load is the metric: what can be walked on, inherited, or chewed."
+      civic_chart: "The hall of exposed joists, the small constitution, is the near face of this body in the other register. Book 2 walks into the thickness behind that ribcage."
+      navigation: "Fieldwork along the hinge. Whose bone, whose load, whose tooth mark. Trajectories still measure. Peoples measure whether a crease can be lived on."
+      recognizes: "A person folded until both faces can read them. What remains is legible here: the dog, the parts, the labor that outlasted the intention."
+      closes_on: "Fuel is unused fold. Spending a crease might buy a return and would spend a touch between the faces. Blame cannot refuel the rocket."
+    }
+    lift: {
+      #book: "3"
+      register: "The integral of the commutator. From inside the manifold, from.bane.land to.boon.land is this pair, and the lift is the fold that carries a bound face toward an unspent one."
+      opens_as: "A monograph of a mundane week. The engineer walks into their own kitchen, typeset, and can refuse to be the illustration."
+      learns: "The connection is the crease. The holonomy is the vowel on the stencil: around the hinge, boon arrives as bone. Unfolding does not undo the arrival."
+      danger: "The monograph can file the dog's want as a method. Accepting that record creases them again. Refusing it leaves the hinge unrecorded."
+      hands_back: "Taking the cuffs off may flatten the fold by which the moon reached the kitchen, or it may be the unfolding that lets them walk with the hinge intact."
+    }
+  ]
+}
+
+#>wonder_boonhonk_moon_commutator
+?["Do these two productions leave one remainder?"]{
+  #:depth #!mathematical
+  ~#lens: "formal structure"
+  @engineer $[spare_income, cuffs] !{purchase} *{invoice}
+  @dog $[remain] !{seat} *{joint}
+  &[@engineer, @dog] %order_disagreement
+  !probe{ "Compare the remainders, not the motives. Where they differ, or where the joint exists before the invoice, spare income is the engineer's production and not the cause of the dog's. Seat one remain early, and let the later receipt confirm the smell." }
+  $%order_disagreement
+}
+
+#>wonder_boonhonk_moon_stencil
+?["What remainder does each witness leave from the same projected circle?"]{
+  #:depth #!experiential
+  ~#lens: "material grain"
+  #joint{ circle }
+  @engineer #circle *{boon}
+  @dog #circle *{bone}
+  %vowel
+  !probe{ "Keep the projection singular and the receptions separate. If the dog's received mark can bear load and the engineer's cannot, bone is a reception of boon, not a second production hidden in the stencil." }
+  $%vowel
+  ~<".spw/story-boonhonk.spw#boonhonk_anchor_two_moons">
+}
+
+#>wonder_boonhonk_moon_direction
+?["What does the engineer receive when the week is projected back?"]{
+  #:depth #!educational
+  ~#lens: "ecological zone"
+  #week{ kitchen, cuff, dog, machine }
+  @fieldworker #week *{monograph}
+  @engineer #week *{refusal}
+  @portal #joint *{other_face}
+  %hinge_survival
+  !probe{ "The monograph is a projection of book 1, not an explanation of it. The engineer receives that projection and may leave a refusal. The portal does not receive the monograph or the stencil. It receives the joint, and the other face is its remainder." }
+  $%hinge_survival
+}
+
 #>boonhonk_anchor_two_moons
 ~"two_moons"{
   #status: "seed"
@@ -313,7 +454,7 @@
   object: "A navigation mark read as both destination and reward."
   local_plot: "The engineer reaches the moon that should open the escape route."
   competing_wants: "The engineer wants freedom; the dog wants bones and continued companionship."
-  discovery: "The landing is technically excellent. The sky is wrong."
+  discovery: "The landing is technically excellent. The sky is wrong, which is the engineer's name for the other face of a route the dog has creased."
   choice: "Limited fuel makes learning where they have arrived consequential; blame cannot refuel the rocket."
   cost: "Time spent exploring may close a return window."
   remainder: "A route annotated by two incompatible but useful readers."
