@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 ^meta{
-  ran: "2026-09-27T20:31:37.788Z"
+  ran: "2026-09-27T20:52:34.132Z"
   kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes)"
   ledger: ".spw/state/alignment-ledger.spw"
   scope: "static half of the five ledger probes — visual probes remain manual"
@@ -22,9 +22,9 @@
   defects: 0
   reviews: 0
   canonical_mirror: { checked: 13, findings: 0 }
-  share_parity: { checked: 20, findings: 0 }
+  share_parity: { checked: 21, findings: 0 }
   precache_existence: { checked: 4, findings: 0 }
-  reduced_motion_gates: { checked: 11, findings: 0 }
+  reduced_motion_gates: { checked: 12, findings: 0 }
   theme_parity: { checked: 58, findings: 0 }
   attribute_parity: { checked: 136, findings: 0 }
 }

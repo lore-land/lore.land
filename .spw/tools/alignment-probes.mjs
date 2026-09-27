@@ -39,7 +39,8 @@ const DOOR_PAGES = [
   'characters/boof.html',
   'world/civic-magic.html',
   'world/boonberry-commons.html',
-  'zine/index.html'
+  'zine/index.html',
+  'folios/index.html'
 ];
 
 function read(file) {

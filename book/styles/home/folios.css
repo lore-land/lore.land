@@ -1,0 +1,243 @@
+/* home/folios.css — the folio wall (folio-wall.mjs).
+ *
+ * A folio is a page under glass. Liquid glass (not yet seasoned): the scan
+ * refracts through an animated displacement filter and a highlight follows
+ * the pointer. Seasoned: still, clear glass with one quiet sheen. Layers
+ * under the top scan peek out at the edge, oldest deepest. */
+
+.folio-wall {
+  display: grid;
+  gap: 1.4rem;
+  margin-block: 0.5rem 2.5rem;
+}
+
+.folio-status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--hub-ink, #1d2733) 70%, transparent);
+}
+
+.folio-shelf {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.folio-shelf-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2f483a;
+}
+
+.folio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1.2rem 1rem;
+  align-items: start;
+}
+
+.folio {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.folio-figure {
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* The glass. */
+.folio-glass {
+  --mx: 50%;
+  --my: 35%;
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 4 / 5;
+  border-radius: 0.45rem;
+  overflow: hidden;
+  background: #1a2219;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 14px 34px rgba(12, 20, 16, 0.22);
+  cursor: default;
+}
+
+.folio-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Older layers peek out at the bottom-right, deepest furthest. */
+.folio-layer--under {
+  inset: auto;
+  right: calc(-0.5rem * var(--depth, 1));
+  bottom: calc(-0.5rem * var(--depth, 1));
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  filter: saturate(0.85) brightness(0.9);
+  z-index: -1;
+}
+
+.folio-glass:has(.folio-layer--under) {
+  overflow: visible;
+  border-radius: 0.45rem;
+}
+
+.folio-glass:has(.folio-layer--under) > .folio-layer:not(.folio-layer--under) {
+  border-radius: 0.45rem;
+}
+
+.folio-empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #cdaa72;
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
+/* The sheen: a highlight that follows the pointer while liquid. */
+.folio-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(38% 30% at var(--mx) var(--my), rgba(255, 250, 235, 0.42), rgba(255, 250, 235, 0.08) 55%, transparent 75%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.22), transparent 38%, rgba(0, 0, 0, 0.08) 100%);
+  mix-blend-mode: screen;
+  transition: background-position 120ms ease;
+}
+
+/* Liquid: refraction, a slow breath, and the sheen alive. */
+.folio.is-liquid .folio-layer:not(.folio-layer--under) {
+  filter: url(#liquid-glass) saturate(1.08);
+  transform: scale(1.04);
+  animation: folio-breathe 9s ease-in-out infinite;
+}
+
+.folio.is-liquid .folio-glass {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 0 0 1px rgba(205, 170, 114, 0.35),
+    0 18px 44px rgba(12, 20, 16, 0.28),
+    0 0 2.5rem rgba(205, 170, 114, 0.22);
+}
+
+/* Liquid glass refracts; it does not blur. The sheen only saturates. */
+.folio.is-liquid .folio-sheen {
+  backdrop-filter: saturate(1.12);
+  -webkit-backdrop-filter: saturate(1.12);
+}
+
+@keyframes folio-breathe {
+  0%, 100% { transform: scale(1.04) translate(0, 0); }
+  50% { transform: scale(1.05) translate(-0.4%, 0.3%); }
+}
+
+/* Seasoned: still and clear. */
+.folio.is-seasoned .folio-sheen {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.18), transparent 40%);
+  mix-blend-mode: normal;
+}
+
+/* Words. */
+.folio-caption {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.folio-kicker {
+  font-family: "JetBrainsMono", "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a6a36;
+}
+
+.folio-title {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #2f483a;
+}
+
+.folio-note {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--hub-ink, #1d2733) 75%, transparent);
+}
+
+.folio-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.4rem 0.8rem;
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(47, 72, 58, 0.16);
+  font-size: 0.8rem;
+}
+
+.folio-meta div {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.folio-meta dt {
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a6a36;
+}
+
+.folio-meta dd {
+  margin: 0;
+  color: var(--hub-ink, #1d2733);
+}
+
+.folio-meta a {
+  color: #2f483a;
+}
+
+.folio-how {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px dashed rgba(47, 72, 58, 0.3);
+  border-radius: 0.8rem;
+  background: rgba(205, 170, 114, 0.06);
+}
+
+.folio-how h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.folio-how ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio.is-liquid .folio-layer:not(.folio-layer--under) {
+    filter: url(#liquid-glass-still) saturate(1.05);
+    animation: none;
+    transform: scale(1.03);
+  }
+  .folio-sheen {
+    transition: none;
+  }
+}

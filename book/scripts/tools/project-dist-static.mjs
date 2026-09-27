@@ -60,6 +60,8 @@ const REQUIRED = Object.freeze([
   'book/images/01.png',
   'book/images/og/chapter-01.jpg',
   'zine/index.html',
+  'folios/index.html',
+  'book/content/folios.json',
   '.well-known/autonomous-feedback.json',
   'index.html',
   '.spw/claims/chapter-claims.spw'

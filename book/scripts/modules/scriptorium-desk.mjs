@@ -109,6 +109,7 @@ function chapterFrom(value) {
 export const SPELLBOOK = Object.freeze([
   { op: '~', example: '~[resume]', does: 'Pick up where you left off.' },
   { op: '@', example: '@05', does: 'Open a chapter. @[chapter/05]{section} opens a chamber.' },
+  { op: '@', example: '@[folios]', does: 'Step over to the folio wall: pages under glass, seasoning.' },
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
@@ -260,7 +261,10 @@ export async function initScriptoriumDesk() {
     if (op === '@') {
       const home = /^(home|entrance)$/i.test(handle);
       const n = chapterFrom(handle || payload);
-      if (home) {
+      if (/^folios?$/i.test(handle)) {
+        say(op, el('p', {}, 'Stepping over to the folio wall.'));
+        go('/folios/');
+      } else if (home) {
         say(op, el('p', {}, 'Stepping back to the entrance.'));
         go('/');
       } else if (n) {

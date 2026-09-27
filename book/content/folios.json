@@ -1,0 +1,90 @@
+{
+  "note": "The folio wall (folio-wall.mjs). Hand-authored. A folio: id, title, maker ('maker' for the site's own, otherwise a reader's handle), made, glassed (ISO dates), digital (true for a flat image, false for a laminated scan), chamber (chapter it stands near), optional subject/lc/dewey (else the chapter's first shelf-mate is shown), note (what it is standing next to), alt, layers[] oldest→newest each { scan, date }. A folio seasons once a 13th or 26th passes after `glassed`.",
+  "folios": [
+    {
+      "id": "cover-v2",
+      "title": "LORE . LAND — the sapling on its island",
+      "maker": "maker",
+      "made": "2026-09-26",
+      "glassed": "2026-09-26",
+      "digital": true,
+      "chamber": 13,
+      "note": "The wordmark over a still lake at night; the bud sigil above it. The second layer is the same page cropped for a card — glassed over the first the same day.",
+      "alt": "LORE . LAND in gold capitals over a dark teal lake, a bare sapling on a small island beneath a gold seed-bud sigil.",
+      "layers": [
+        { "scan": "/book/images/covers/lore-land-cover-v2.webp", "date": "2026-09-26" },
+        { "scan": "/book/images/covers/lore-land-cover-v2-og.jpg", "date": "2026-09-26" }
+      ]
+    },
+    {
+      "id": "nook-v6",
+      "title": "A nook with a window",
+      "maker": "maker",
+      "made": "2026-09-26",
+      "glassed": "2026-09-26",
+      "digital": true,
+      "chamber": 6,
+      "note": "Rain on the glass, books on the sill. One of seven rooms the chapters read in at lamplight.",
+      "alt": "A dim reading nook: a rain-streaked window, stacked books on the sill, a lamp glowing warm.",
+      "layers": [
+        { "scan": "/book/images/nook/nook-room-v6.webp", "date": "2026-09-26" }
+      ]
+    },
+    {
+      "id": "cover-v3",
+      "title": "The thin gold tree",
+      "maker": "maker",
+      "made": "2026-09-26",
+      "glassed": "2026-09-26",
+      "digital": true,
+      "chamber": 2,
+      "note": "A branching line floating in a forest of teal and amber lights. Stands near the grove that answers a beat late.",
+      "alt": "A thin gold branching tree floating in soft-focus teal and amber lights, LORE . LAND set low.",
+      "layers": [
+        { "scan": "/book/images/covers/lore-land-cover-v3.webp", "date": "2026-09-26" }
+      ]
+    },
+    {
+      "id": "boonhonk-jazz",
+      "title": "Boonhonk, as a jazz motif",
+      "maker": "maker",
+      "made": "2026-03-01",
+      "glassed": "2026-03-01",
+      "digital": true,
+      "chamber": 9,
+      "note": "An early study of the sound the Fool makes: bent brass, sampled and returned. Seasoned long ago; clear.",
+      "alt": "An abstract interface study with a warm brass jazz motif.",
+      "layers": [
+        { "scan": "/seeds/2026-03-01/spwashi_UI_design_with_a_boonhonk_abstract_jazz_motif_df48a673-742b-4fa1-85de-3db612236633.webp", "date": "2026-03-01" }
+      ]
+    },
+    {
+      "id": "boon-bane-bone",
+      "title": "Boon, Bane, Bone",
+      "maker": "maker",
+      "made": "2026-03-01",
+      "glassed": "2026-03-01",
+      "digital": true,
+      "chamber": 10,
+      "note": "Three lands in three colours, before they had questions. Stands near the timber hall that asks what will remain.",
+      "alt": "A bright abstract study in three colour fields with a smooth texture.",
+      "layers": [
+        { "scan": "/seeds/2026-03-01/spwashi_BoonBaneBone_bright_color_smooth_texture_fb93d81a-895e-497c-b464-66ac3bea3593.webp", "date": "2026-03-01" }
+      ]
+    },
+    {
+      "id": "abstraction",
+      "title": "lore.land, abstracted",
+      "maker": "maker",
+      "made": "2026-03-01",
+      "glassed": "2026-03-01",
+      "digital": true,
+      "chamber": 1,
+      "note": "The first shape the site had before it had a furrow. Kept as the oldest layer of the whole wall.",
+      "alt": "An abstract composition in the site's early palette.",
+      "layers": [
+        { "scan": "/seeds/2026-03-01/spwashi_lore.land_abstraction_4b9dd49f-3dcd-4c38-b126-cfb177a66798.webp", "date": "2026-03-01" }
+      ]
+    }
+  ]
+}
