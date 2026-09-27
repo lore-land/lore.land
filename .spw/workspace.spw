@@ -26,6 +26,11 @@
   c013: "Media plates derive from scene canon; iterative studies use {name}-v{N} naming and graduate through the ledger."
   c014: "Literacy ladder rungs are opt-in; each rung has a visible, dismissible on-ramp on the rung below."
   c015: "Refinement passes are additive and leave precipitates; pass N+1 never requires hand re-verifying pass N."
+  c016: "Chapter prose ships prerendered in the page; one renderer (chapter-render.mjs) serves build and browser, so no-JS, search, reader mode and first paint all get the story."
+  c017: "Readers see words, scribes see Spw: every Spw instrument waits behind the scribe's desk (reader-tier whitelist in chapter/reading.css), and the desk relabels the reader's own controls in Spw."
+  c018: "The reading nook belongs to the reader: coziness, texture and hearth persist per reader, apply before first paint, and sound starts only from the reader's gesture."
+  c019: "Nobody loses what they had: returning readers keep the defaults they learned (cohort), new features ship off, trials reach engaged readers or ?try links, and a returning reader is told in plain words what moved."
+  c020: "Strains leave lore.land as grammar, never nouns: a pattern travels to boon.land, bane.land or bone.land only after it roots here, as a host-neutral module plus contract (.spw/surfaces/inoculant.spw)."
 }
 
 ^contract_status{
@@ -39,13 +44,19 @@
   c007: "meta passing — full OG + twitter summary_large_image on every public door (2026-07-18); art half waits on plates (AL-001)"
   c008: "passing — zine + offline in vite input; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
   c009: "passing — lore-cNNN parity; hydration + walkable refs; public projection tool for dist Pages"
-  c010: "passing — code + README share 2026_09_07.B (cache-context + build-chapters SoT); SW still 2026_08_27.A (precache unchanged)"
+  c010: "passing — code + README share 2026_09_26.A (cache-context + build-chapters SoT); SW CACHE_VERSION follows"
   .note_atelier: "as of atelier surface mount 2026-07-16"
   c011: "instrumented — probe kit live (spw:probes); complaint route unwired until PLAN.B engine"
-  c012: "holding — AL-007 closed: real media gates on cadence/shimmer; View Transitions pending"
+  c012: "passing — AL-007 closed; cross-document view transitions turn pages (none under reduced-motion); reveal never hides prerendered prose"
   c013: "starting — plates.spw drafted; material-study-v1 + wonder-path-v1 in flight; no plate graduated"
-  c014: "partial — read/notice/explore rungs live; operate/inspect on-ramps implicit; author rung planned"
+  c014: "partial — read/notice/explore rungs live; author rung on-ramp is the scribe's desk toggle in the reader rail (guide: .spw/surfaces/enchantment.spw); operate/inspect on-ramps implicit"
   c015: "holding — probe kit shipped (atelier phase 03); pass reruns are one command with .spw precipitates"
+  .note_reading: "as of reading-contract release 2026-09-26"
+  c016: "passing — 13 chapters prerendered by chapters:build; browser renders only when data-prerendered is absent"
+  c017: "passing — reader register plain; scribe register tokenized Spw; component chips scribe-only"
+  c018: "passing — reading-nook.mjs + head script; hearth is synthesized Web Audio, off by default"
+  c019: "passing — reading-switches.mjs: cohort decided pre-paint; full-rail + logline kept for returning; 4 trials gated at 3 chapters or ?try; changes.json return notes"
+  c020: "seeded — six strains named; none grafted yet; lands receive in their own register per story-boonhonk crossing_rule"
 }
 
 &lifecycle{
@@ -77,6 +88,12 @@
   alignment_ledger: ".spw/state/alignment-ledger.spw"
   atelier_plan: ".spw/surfaces/atelier.spw"
   release_token: "book/scripts/modules/cache-context.mjs"
+  chapter_renderer: ~"book/scripts/modules/chapter-render.mjs"
+  reading_contract: ~"book/styles/chapter/reading.css"
+  enchantment_guide: ~".spw/surfaces/enchantment.spw"
+  inoculant_theory: ~".spw/surfaces/inoculant.spw"
+  reader_switches: ~"book/scripts/modules/reading-switches.mjs"
+  return_notes: "book/content/changes.json — add a plain-words entry every release"
   seal_checklist: ~".spw/surfaces/platform.spw#seal_checklist_additions"
   public_projection: ~".spw/surfaces/publish.spw#spw_public_projection"
 }
@@ -84,5 +101,5 @@
 ~priority{
   p0: ["social OG art plates (atelier phase 02 — ground plates.spw seeds first)"]
   p1: ["Pages seal for /.spw/** after dist deploy", "manifest any/maskable split + shortcuts", "PLAN.B diagnostics engine"]
-  p2: ["share API", "view transitions (atelier signature phase 05)", "font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps", "complaint → refutation channel"]
+  p2: ["font self-host (ledger AL-004)", "SW update toast", "c014 literacy on-ramps beyond the scribe's desk", "complaint → refutation channel"]
 }

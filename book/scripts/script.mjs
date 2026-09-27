@@ -1,7 +1,8 @@
 // scripts/script.mjs
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
-import { CUSTOM_ELEMENTS_SELECTOR, applyStoryVoiceAttributes, isCustomElementType, voiceKickerWithMask, storyVoiceFor } from './modules/story-lexicon.mjs?v=2026_09_07.B';
+import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_26.A';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -16,7 +17,7 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_16.A';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_26.A';
 import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_16.A';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
@@ -24,7 +25,7 @@ import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A'
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_09_07.B';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_09_07.A';
-import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_09_07.A';
+import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_09_26.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
@@ -35,10 +36,7 @@ import {
   initChapterChrome,
   initScrollChrome
 } from './modules/reading-chrome.mjs?v=2026_08_27.A';
-import {
-  applySectionClimateAttributes,
-  initCopyClimate
-} from './modules/copy-climate.mjs?v=2026_08_27.A';
+import { initCopyClimate } from './modules/copy-climate.mjs?v=2026_08_27.A';
 import { whenIdle } from './modules/scroll-coordinator.mjs?v=2026_08_27.A';
 import {
   initPassAlong,
@@ -48,6 +46,9 @@ import {
 } from './modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_08_27.A';
+import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
+import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.A';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -77,10 +78,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   injectSvgFilters(document);
 
-  // Page-forward entrance (chapter/motion.css) — attribute cleared once the
-  // animation lands so re-entering sections never replays it.
+  // Page-forward entrance (chapter/motion.css) — only when the browser has
+  // to draw the chapter itself. Prerendered prose is already on screen, and
+  // fading it out to fade it back in would read as a flicker; page turns
+  // between chapters are a cross-document view transition instead.
   const chapterShell = document.getElementById('chapter-content');
-  if (chapterShell) {
+  if (chapterShell && !chapterShell.dataset.prerendered) {
     chapterShell.dataset.chapterEntering = 'true';
     const settleEntrance = () => {
       delete chapterShell.dataset.chapterEntering;
@@ -151,6 +154,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       announce
     });
     const destroyPacking = initPinchPacking();
+    const destroyNook = initReadingNook({ announce });
+    const destroySwitches = initReadingSwitches({ announce });
+    const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
@@ -225,6 +231,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       destroyBootstrap();
       if (destroyGestures) destroyGestures();
       if (destroyPacking) destroyPacking();
+      if (destroyLineShare) destroyLineShare();
+      if (destroyNook) destroyNook();
+      if (destroySwitches) destroySwitches();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();
@@ -318,8 +327,9 @@ function persistReadingResume(data) {
 }
 
 /**
- * Populates the main content of the chapter based on the sections defined in chapter data.
- * Template order: logline → title → epigraph → byline → sections.
+ * Chapter prose arrives prerendered (build-chapters.mjs runs the same
+ * renderer at build time), so the usual path only notes the reading
+ * position. The browser renders only when a page arrives without prose.
  * @param {Object} data - The chapter data object.
  */
 function populateContent(data) {
@@ -329,457 +339,21 @@ function populateContent(data) {
     return;
   }
 
-  // The slip for the scribes is static in the template; hold it while the chapter is redrawn.
-  const slip = chapterContent.querySelector('.scriptorium-slip');
-  chapterContent.innerHTML = '';
-
-  if (data.logline) {
-    const logline = document.createElement('p');
-    logline.className = 'chapter-logline';
-    logline.dataset.component = 'chapter-logline';
-    logline.textContent = data.logline;
-    chapterContent.appendChild(logline);
+  if (!chapterContent.dataset.prerendered) {
+    // The slip for the scribes is static in the template; hold it while the chapter is drawn.
+    const slip = chapterContent.querySelector('.scriptorium-slip');
+    chapterContent.replaceChildren();
+    renderChapterBody(chapterContent, data, { doc: document, withBase: withSiteBase });
+    if (slip) chapterContent.appendChild(slip);
+    renderChapterCoda(chapterContent, data, { doc: document, withBase: withSiteBase });
   }
-
-  const chapterHeading = document.createElement('h1');
-  chapterHeading.textContent = `Chapter ${padChapterNumber(data.chapterNumber)}: ${data.title}`;
-  chapterContent.appendChild(chapterHeading);
-
-  if (data.epigraph) {
-    const epigraph = document.createElement('p');
-    epigraph.className = 'chapter-epigraph';
-    epigraph.dataset.component = 'chapter-epigraph';
-    epigraph.textContent = data.epigraph;
-    chapterContent.appendChild(epigraph);
-  }
-
-  const byline = document.createElement('p');
-  byline.className = 'chapter-byline';
-  byline.dataset.component = 'chapter-byline';
-
-  const authorLink = document.createElement('a');
-  authorLink.href = 'https://spwashi.com/?from=lore.land';
-  authorLink.target = '_blank';
-  authorLink.rel = 'noopener noreferrer';
-  authorLink.textContent = 'Spwashi';
-  authorLink.setAttribute('aria-label', 'Open author site spwashi.com');
-
-  const homeLink = document.createElement('a');
-  homeLink.href = withSiteBase('/');
-  homeLink.textContent = 'Lore.Land';
-  homeLink.setAttribute('aria-label', 'Return to Lore.Land');
-
-  byline.append('From the Lore.Land monument · ', authorLink, ' · ', homeLink);
-  chapterContent.appendChild(byline);
-
-  if (Array.isArray(data.pillars) && data.pillars.length) {
-    const pillars = document.createElement('p');
-    pillars.className = 'chapter-pillars';
-    pillars.dataset.component = 'chapter-pillars';
-    pillars.textContent = `Seeded with: ${data.pillars.join(' · ')}`;
-    chapterContent.appendChild(pillars);
-  }
-
-  if (Array.isArray(data.topics) && data.topics.length) {
-    const topicNav = document.createElement('nav');
-    topicNav.className = 'chapter-topic-row';
-    topicNav.dataset.component = 'chapter-topics';
-    topicNav.setAttribute('aria-label', 'Related topics');
-    data.topics.forEach((topic) => {
-      const chip = document.createElement('a');
-      chip.className = 'chapter-topic-chip';
-      chip.href = topic.href || `/topics/#${topic.id || ''}`;
-      chip.textContent = topic.label || topic.id || 'topic';
-      topicNav.appendChild(chip);
-    });
-    const allTopics = document.createElement('a');
-    allTopics.className = 'chapter-topic-chip chapter-topic-chip--quiet';
-    allTopics.href = withSiteBase('/topics/');
-    allTopics.textContent = 'All topics';
-    topicNav.appendChild(allTopics);
-    chapterContent.appendChild(topicNav);
-  }
-
-  if (Array.isArray(data.sections)) {
-    const stamp = `Chamber ${padChapterNumber(data.chapterNumber)} · ${data.title}`;
-    data.sections.forEach((section) => {
-      const sectionElement = createSectionElement(section, { stamp });
-      if (sectionElement) {
-        chapterContent.appendChild(sectionElement);
-      }
-    });
-  } else {
-    console.warn('No sections found in chapter data.');
-  }
-
-  if (Array.isArray(data.relatedRoutes) && data.relatedRoutes.length) {
-    const rail = document.createElement('nav');
-    rail.className = 'chapter-route-rail';
-    rail.dataset.component = 'chapter-related-routes';
-    rail.setAttribute('aria-label', 'Continue exploring');
-
-    const label = document.createElement('p');
-    label.className = 'chapter-route-rail-label';
-    label.textContent = 'Continue';
-    rail.appendChild(label);
-
-    data.relatedRoutes.forEach((route) => {
-      const card = document.createElement('a');
-      card.className = 'chapter-route-card';
-      card.href = route.href || '#';
-      if (route.kicker) {
-        const kicker = document.createElement('span');
-        kicker.className = 'chapter-route-kicker';
-        kicker.textContent = route.kicker;
-        card.appendChild(kicker);
-      }
-      const title = document.createElement('span');
-      title.className = 'chapter-route-title';
-      title.textContent = route.label || 'Route';
-      card.appendChild(title);
-      rail.appendChild(card);
-    });
-
-    chapterContent.appendChild(rail);
-  }
-
-  // The slip is the chapter's last word, after the prose and the rail.
-  if (slip) chapterContent.appendChild(slip);
 
   persistReadingResume(data);
 }
 
-/**
- * Pads the chapter number with a leading zero if necessary.
- * @param {number} number - The chapter number.
- * @returns {string} - The padded chapter number.
- */
-function padChapterNumber(number) {
-  return number.toString().padStart(2, '0');
-}
-
-/**
- * Creates a DOM element based on the section type.
- * @param {Object} section - The section data object.
- * @returns {HTMLElement|null} - The created DOM element or null if type is unrecognized.
- */
-function createSectionElement(section, context = {}) {
-  if (!section || !section.type) {
-    return null;
-  }
-
-  switch (section.type) {
-    case 'paragraph':
-      return createParagraph(section);
-    case 'pull':
-      return createPull(section);
-    case 'figure':
-      return createFigure(section);
-    case 'section':
-      return createSection(section);
-    default:
-      if (isCustomElementType(section.type)) {
-        return createCustomElement(section, context);
-      }
-      console.warn(`Unrecognized section type: ${section.type}`);
-      return null;
-  }
-}
-
-/**
- * Creates a pull-quote — the screenshot face of a voice chamber.
- * @param {Object} section - { text }
- * @returns {HTMLElement}
- */
-function createPull(section) {
-  const quote = document.createElement('blockquote');
-  quote.className = 'voice-pull';
-  quote.dataset.component = 'voice-pull';
-  quote.textContent = String(section.text || '').trim();
-  return quote;
-}
-
-/**
- * Creates a paragraph element, handling any nested children.
- * @param {Object} section - The paragraph section data.
- * @returns {HTMLElement} - The created paragraph element.
- */
-function createParagraph(section) {
-  const p = document.createElement('p');
-
-  if (section.text) {
-    p.textContent = section.text;
-  }
-
-  if (section.children && Array.isArray(section.children)) {
-    section.children.forEach(child => {
-      if (isCustomElementType(child.type)) {
-        const customElement = document.createElement(child.type);
-        customElement.textContent = child.content;
-        applyStoryVoiceAttributes(customElement, child.type, 'phrase');
-        p.appendChild(customElement);
-      } else if (child.type === 'text') {
-        const textNode = document.createTextNode(child.text);
-        p.appendChild(textNode);
-      }
-    });
-  }
-
-  return p;
-}
-
-/**
- * Creates a figure element with an image and caption.
- * @param {Object} section - The figure section data.
- * @returns {HTMLElement} - The created figure element.
- */
-function createFigure(section) {
-  const figure = document.createElement('figure');
-  figure.className = 'chapter-figure';
-
-  if (section.img) {
-    const img = document.createElement('img');
-    img.src = section.img.src;
-    img.alt = section.img.alt || '';
-    img.loading = section.img.loading || 'lazy';
-    img.decoding = 'async';
-    if (/\/book\/images\//.test(section.img.src)) {
-      figure.dataset.visualDefault = 'colloquial';
-    }
-    figure.appendChild(img);
-  }
-
-  if (section.figcaption) {
-    const figcaption = document.createElement('figcaption');
-    figcaption.textContent = section.figcaption;
-    figure.appendChild(figcaption);
-  }
-
-  return figure;
-}
-
-/**
- * Renders a section's `scene` block as a collapsed sketch — an invitation
- * to imagine, not an obligation. The structured fields (vantage / light /
- * scent / edges / hint) also stay machine-readable in #chapter-data so
- * later image models can pick up the same hooks the reader practices on.
- * @param {Object} scene - { vantage, light, scent, edges[], hint }
- * @returns {HTMLElement} - A <details class="scene-sketch"> element.
- */
-function createSceneSketch(scene) {
-  const details = document.createElement('details');
-  details.className = 'scene-sketch';
-  details.dataset.component = 'scene-sketch';
-  if (scene.hint) {
-    details.dataset.sceneHint = scene.hint;
-  }
-
-  const summary = document.createElement('summary');
-  summary.textContent = 'Step into the scene';
-  details.appendChild(summary);
-
-  const body = document.createElement('div');
-  body.className = 'scene-sketch-body';
-
-  const addSense = (label, text) => {
-    if (!text) {
-      return;
-    }
-    const line = document.createElement('p');
-    line.className = 'scene-sense';
-    const tag = document.createElement('span');
-    tag.className = 'scene-sense-label';
-    tag.textContent = label;
-    line.append(tag, ' ', text);
-    body.appendChild(line);
-  };
-
-  addSense('vantage', scene.vantage);
-  addSense('light', scene.light);
-  addSense('scent', scene.scent);
-
-  if (Array.isArray(scene.edges) && scene.edges.length) {
-    const edges = document.createElement('ul');
-    edges.className = 'scene-edges';
-    scene.edges.forEach((edge) => {
-      const item = document.createElement('li');
-      item.textContent = edge;
-      edges.appendChild(item);
-    });
-    body.appendChild(edges);
-  }
-
-  details.appendChild(body);
-  return details;
-}
-
-/** Mark kinds rendered as kicker chips, in display order. */
-const SECTION_MARK_KINDS = [
-  { attribute: 'data-motif', kind: 'motif', description: 'recurring motif' },
-  { attribute: 'data-trope', kind: 'trope', description: 'sampled trope' },
-  { attribute: 'data-foreshadow', kind: 'foreshadow', description: 'foreshadowing' }
-];
-
-/**
- * Humanizes a kebab-case mark value for reader-facing display.
- * @param {string} value - The raw mark value (e.g. "ninth-honk").
- * @returns {string} - The humanized value (e.g. "ninth honk").
- */
+/** Humanizes a kebab-case mark value ("ninth-honk" → "ninth honk"). */
 function humanizeMarkValue(value) {
   return String(value).split('-').join(' ');
-}
-
-/**
- * Renders the semantic marks a section carries (motif / trope / foreshadow)
- * as a small kicker chip row, so the series-mark layer is legible instead
- * of living only in attribute space.
- * @param {HTMLElement} elem - The section or custom element carrying data-* marks.
- * @returns {HTMLElement|null} - A <p class="section-marks"> row, or null when unmarked.
- */
-function createSectionMarks(elem) {
-  const marks = SECTION_MARK_KINDS
-    .map((meta) => ({ ...meta, value: elem.getAttribute(meta.attribute) }))
-    .filter((meta) => meta.value);
-
-  if (!marks.length) {
-    return null;
-  }
-
-  const row = document.createElement('p');
-  row.className = 'section-marks';
-  row.setAttribute('aria-hidden', 'false');
-
-  marks.forEach((meta) => {
-    const chip = document.createElement('span');
-    chip.className = `mark mark--${meta.kind}`;
-    chip.dataset.mark = meta.value;
-    chip.textContent = humanizeMarkValue(meta.value);
-    chip.title = `${meta.description}: ${humanizeMarkValue(meta.value)}`;
-    chip.setAttribute('aria-label', `${meta.description}: ${humanizeMarkValue(meta.value)}`);
-    row.appendChild(chip);
-  });
-
-  return row;
-}
-
-/**
- * Creates a section element with a heading and content.
- * @param {Object} section - The section data object.
- * @returns {HTMLElement} - The created section element.
- */
-function createSection(section) {
-  const sec = document.createElement('section');
-
-  if (section.title) {
-    const h2 = document.createElement('h2');
-    h2.textContent = section.title;
-    sec.appendChild(h2);
-  }
-
-  // Copy hooks → data-tempo / data-tint / data-climate (authored or inferred)
-  applySectionClimateAttributes(sec, section);
-
-  // Pass through any remaining data-* keys from JSON (builder attribute surface)
-  Object.entries(section).forEach(([key, value]) => {
-    if (key.startsWith('data-') && typeof value === 'string' && !sec.hasAttribute(key)) {
-      sec.setAttribute(key, value);
-    }
-  });
-
-  const sectionMarks = createSectionMarks(sec);
-  if (sectionMarks) {
-    sec.appendChild(sectionMarks);
-  }
-
-  if (section.scene) {
-    sec.dataset.scene = 'true';
-    sec.appendChild(createSceneSketch(section.scene));
-  }
-
-  if (section.content && Array.isArray(section.content)) {
-    section.content.forEach(contentItem => {
-      const contentElement = createSectionElement(contentItem);
-      if (contentElement) {
-        sec.appendChild(contentElement);
-      }
-    });
-  }
-
-  return sec;
-}
-
-/**
- * Creates a custom element based on its type and content.
- * @param {Object} section - The custom element section data.
- * @returns {HTMLElement} - The created custom element.
- */
-function createCustomElement(section, context = {}) {
-  const customElem = document.createElement(section.type);
-  applyStoryVoiceAttributes(customElem, section.type, 'block');
-
-  if (section.valence) {
-    customElem.dataset.spwValence = section.valence;
-  }
-
-  applySectionClimateAttributes(customElem, section);
-
-  Object.entries(section).forEach(([key, value]) => {
-    if (key.startsWith('data-') && typeof value === 'string' && !customElem.hasAttribute(key)) {
-      customElem.setAttribute(key, value);
-    }
-  });
-
-  if (section.mask && !customElem.dataset.mask) {
-    customElem.dataset.mask = String(section.mask);
-  }
-
-  if (section.type === 'custom-fool') {
-    if (!customElem.getAttribute('data-trope')) {
-      customElem.setAttribute('data-trope', 'trickster');
-    }
-    if (!customElem.getAttribute('data-frame')) {
-      customElem.setAttribute('data-frame', 'shot');
-    }
-  }
-
-  const customElemMarks = createSectionMarks(customElem);
-  if (customElemMarks) {
-    customElem.appendChild(customElemMarks);
-  }
-
-  if (customElem.dataset.mask) {
-    const meta = storyVoiceFor(section.type);
-    customElem.dataset.voiceKicker = voiceKickerWithMask(
-      customElem.dataset.voiceKicker || meta?.kicker,
-      customElem.dataset.mask
-    );
-  }
-
-  if (section.content && Array.isArray(section.content)) {
-    section.content.forEach((contentItem) => {
-      const contentElement = createSectionElement(contentItem);
-      if (contentElement) {
-        customElem.appendChild(contentElement);
-      }
-    });
-  }
-
-  const wantsStamp = customElem.getAttribute('data-frame') === 'shot'
-    || section.type === 'custom-fool'
-    || (Array.isArray(section.content) && section.content.some((item) => item.type === 'pull'));
-  if (wantsStamp && context.stamp && !customElem.querySelector(':scope > .voice-stamp')) {
-    const stamp = document.createElement('div');
-    stamp.className = 'voice-stamp';
-    stamp.textContent = context.stamp;
-    customElem.appendChild(stamp);
-  }
-
-  if (section.scene) {
-    customElem.dataset.scene = 'true';
-    customElem.appendChild(createSceneSketch(section.scene));
-  }
-
-  return customElem;
 }
 
 /**
@@ -1263,12 +837,18 @@ function bindRouteControl(control, route, announce) {
     return;
   }
 
-  control.textContent = route.label;
   control.setAttribute('data-spw-route', route.routeName);
   control.setAttribute('data-spw-route-label', route.label);
   control.setAttribute('data-spw-expression', 'true');
-  control.setAttribute('aria-label', route.ariaLabel);
 
+  // Real links (the template ships them) navigate natively: new tabs,
+  // prefetch, and cross-document view transitions all keep working.
+  if (control.tagName === 'A' && control.getAttribute('href')) {
+    return;
+  }
+
+  control.textContent = route.label;
+  control.setAttribute('aria-label', route.ariaLabel);
   control.addEventListener('click', (event) => {
     event.preventDefault();
     window.location.href = route.href;
@@ -1373,6 +953,10 @@ function setupPrimaryAction(data) {
 
   if (!primaryActionButton) {
     console.warn('Primary action button not found.');
+    return;
+  }
+
+  if (primaryActionButton.tagName === 'A' && primaryActionButton.getAttribute('href')) {
     return;
   }
 

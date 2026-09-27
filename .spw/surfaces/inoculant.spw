@@ -1,0 +1,147 @@
+# Lore.Land as Inoculant
+# A theory of how lore.land cultures patterns under story pressure and
+# passes them, as living strains, into boon.land, bane.land and bone.land.
+#>lore_land_surfaces_inoculant
+#:surface #!theory
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  An inoculant is not a transplant. A gardener does not move a finished plant
+  into new ground; they introduce a living culture so the ground can grow its
+  own. Lore.land is the culture. Its readers are the pressure that keeps the
+  culture alive: a pattern that survives a real reader who did not ask for it
+  is a pattern worth passing on. The lands receive strains, never stories.
+  Each land grows what the strain becomes in its own register, and answers to
+  its own question. Recognition across lands adds depth; ignorance leaves no gap.
+}
+
+^meta{
+  audience: ["maker", "scribe", "implementer", "whoever builds the next land"]
+  grounds: ~".spw/story-boonhonk.spw#three_lands"
+  crossing_rule: ~".spw/story-boonhonk.spw#media_ecosystem"
+  realms: ~".spw/surfaces/domains.spw#literal_valence_realms"
+  related: {
+    enchantment: ~".spw/surfaces/enchantment.spw"
+    workspace: ~".spw/workspace.spw"
+    ledger: ~".spw/state/alignment-ledger.spw"
+  }
+}
+
+&invariants{
+  #invariant: a_strain_carries_grammar_never_nouns
+  #invariant: every_land_stays_independently_legible
+  #invariant: a_strain_is_proven_on_readers_before_it_travels
+  #invariant: what_a_land_learns_returns_as_a_ledger_entry
+  #invariant: nothing_a_reader_relied_on_is_taken_by_a_transfer
+}
+
+^<lore_to_lands>{
+  from: "lore.land, the foreground myth"
+  to: ["boon.land", "bane.land", "bone.land"]
+  carries: "host-neutral modules, reading contracts, authoring vocabulary, the continuity promise"
+  never_carries: "Boof, the Egg, chapter prose, the boonberry palette, any plot"
+  medium: "a strain is a module plus a contract plus this surface's description of it; code alone is a cutting, not a culture"
+}
+
+!"developmental_stages"[
+  { stage: "germ" where: "lore.land trial switch, offered to engaged readers or by ?try link" proof: "someone chose to keep it on" }
+  { stage: "rooting" where: "lore.land stable switch or default" proof: "a release passed with no reader losing what they had" }
+  { stage: "isolate" where: "a host-neutral module and a numbered contract" proof: "it renders under the mini-dom and in the browser from the same code" }
+  { stage: "graft" where: "a sibling land adopts the strain in its own register" proof: "the land's question is sharper for having it" }
+  { stage: "fruit" where: "the land grows a variant lore.land could not have" proof: "the variant returns to lore.land as a ledger entry, and sometimes as a new strain" }
+]
+
+?"strains"[
+  {
+    #id: "prerendered-page"
+    grammar: "the work is in the page before any script; one renderer, two hosts"
+    cultured_by: ~"book/scripts/modules/chapter-render.mjs"
+    contract: "c016"
+    boon: "an offering that arrives whole, without asking the visitor to run anything first"
+    bane: "the price of enhancement is paid by the maker at build time, never by the reader at load time"
+    bone: "what remains when every script fails is the thing itself"
+  }
+  {
+    #id: "two-registers"
+    grammar: "readers see words, makers see the grammar; the same controls, relabeled"
+    cultured_by: ~"book/scripts/modules/ebook-navigation.mjs"
+    contract: "c017"
+    boon: "an invitation to learn the language by watching familiar things change their names"
+    bane: "no reader pays attention for an instrument they did not open"
+    bone: "the grammar outlives any one interface because it was always underneath"
+  }
+  {
+    #id: "reader-owned-room"
+    grammar: "the visitor tunes the room; the room remembers; nothing moves on arrival"
+    cultured_by: ~"book/scripts/modules/reading-nook.mjs"
+    contract: "c018"
+    boon: "many rooms, one door"
+    bane: "the land may not spend the visitor's senses; sound waits for a gesture"
+    bone: "a preference that persists is a small piece of infrastructure the visitor built"
+  }
+  {
+    #id: "continuity-promise"
+    grammar: "nobody loses what they had; new things arrive off; trials go to those who stayed"
+    cultured_by: ~"book/scripts/modules/reading-switches.mjs"
+    contract: "c019"
+    boon: "features as invitations, not impositions"
+    bane: "change has a price, and the maker pays it by keeping the old defaults for the people who relied on them"
+    bone: "a cohort is a fossil record of what each reader learned to lean on"
+  }
+  {
+    #id: "return-reason"
+    grammar: "a returning visitor is told, in plain words, what moved"
+    cultured_by: ~"book/content/changes.json"
+    contract: "c019"
+    boon: "the reason to come back is that something grew"
+    bane: "notes, not metrics; the visitor is never shown their own engagement as a score"
+    bone: "a changelog in the reader's language is the land's memory, legible to strangers"
+  }
+  {
+    #id: "enchantment-vocabulary"
+    grammar: "a small, stable set of marks a writing team can learn in an afternoon"
+    cultured_by: ~".spw/surfaces/enchantment.spw"
+    contract: "c014"
+    boon: "each mark is a door a writer can open in any passage"
+    bane: "a mark that does not change what a reader wants next is decoration, and decoration has upkeep"
+    bone: "marks are data; they outlast the styling that shows them"
+  }
+]
+
+^"lands"{
+  ^boon.land{
+    question: "What could this become?"
+    receives_first: ["continuity-promise as invitation", "reader-owned-room", "two-registers"]
+    growth: "a garden of trials where every feature is an offering and every offering can be declined"
+    counter_danger: "endless potential without decision; the inoculant answers with graduation — a trial either roots or leaves"
+  }
+  ^bane.land{
+    question: "What will this cost?"
+    receives_first: ["continuity-promise as price", "return-reason", "prerendered-page"]
+    growth: "an architecture where every change carries its price in the open and the maker, not the visitor, pays it"
+    counter_danger: "mistaking the measurable for the meaningful; the inoculant answers with notes over metrics and reading over clicks"
+  }
+  ^bone.land{
+    question: "What will remain?"
+    receives_first: ["prerendered-page", "enchantment-vocabulary", "continuity-promise as record"]
+    growth: "a land of stable anchors, citable passages and cohorts kept like strata, where a form remembers being tested"
+    counter_danger: "confusing durability with goodness; the inoculant answers by keeping old defaults for those who relied on them without imposing them on anyone new"
+  }
+}
+
+^"pentad_reading"{
+  .note: "the valence pentad already names the lifecycle; the strains sit on it"
+  boon: "the germ — a trial offered"
+  bane: "the price — kept defaults, paid by the maker"
+  bone: "the skeleton — the prerendered page, the anchors, the cohorts"
+  bonk: "the test — a ?try link placed in an engaged reader's hands"
+  honk: "the announcement — the return note that says something grew"
+}
+
+?"open_questions"[
+  "Does a strain carry its own trial switch into the new land, or must every land re-earn its readers' trust from germ?"
+  "What does bane.land do with the continuity promise when a kept default is itself the harm?"
+  "Is bone.land where retired strains go to be studied, and can a fossil be re-cultured?"
+  "Which strain does lore.land need back from the lands first?"
+]

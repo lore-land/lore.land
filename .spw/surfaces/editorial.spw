@@ -22,7 +22,7 @@
     publish: ".spw/surfaces/publish.spw"
     domains: ".spw/surfaces/domains.spw"
     chapter_contract: "book/content/chapters/*.json"
-    scene_sketches: "book/scripts/script.mjs#createSceneSketch"
+    scene_sketches: ~"book/scripts/modules/chapter-render.mjs#renderSceneSketch"
     language_explore: "book/scripts/modules/language-exploration.mjs"
   }
   cadence: "public ship windows on the 13th and 26th"

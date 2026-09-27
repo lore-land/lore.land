@@ -29,7 +29,7 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
-    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground. Beneath the berry rows, ants kept their little hearths. Their patient magic warmed the roots through winter. Above them, the boonberries slept under ..."
+    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning. Everything was where it belonged. The latch lifted at the kitchen. The bucket knocked the well. ..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
@@ -56,7 +56,7 @@
     handle: "section/05"
     type: "section"
     title: "The Maps That Look Away"
-    excerpt: "By morning, Boof had brought the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. Along a fold in the map, two ro..."
+    excerpt: "Before the frost was off the fences, Boof had carried the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. Along ..."
     route: ^[chapter/01/s05]{open}
   }
   s06: {

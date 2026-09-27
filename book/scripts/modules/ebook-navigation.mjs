@@ -68,7 +68,10 @@ function labelFromSection(section, index) {
   }
 
   if (section.dataset.voiceKicker) {
-    return section.dataset.voiceKicker;
+    // "Boof · Ant-warmth smelled earthy…" — a voice's name alone repeats
+    // down the contents; its opening words tell the chambers apart.
+    const opening = section.querySelector(':scope > p')?.textContent.trim().split(/\s+/).slice(0, 4).join(' ');
+    return opening ? `${section.dataset.voiceKicker} · ${opening.replace(/[,.;:!?]+$/, '')}…` : section.dataset.voiceKicker;
   }
 
   if (section.dataset.spwComponent) {
@@ -96,18 +99,18 @@ function nearestSectionIndex(sections) {
   }
 
   const anchor = 130;
-  let bestIndex = 0;
+  let bestIndex = sections[0].index || 1;
   let bestDistance = Number.POSITIVE_INFINITY;
   sections.forEach((entry, index) => {
     const rect = entry.node.getBoundingClientRect();
     const distance = Math.abs(rect.top - anchor);
     if (distance < bestDistance) {
       bestDistance = distance;
-      bestIndex = index;
+      bestIndex = entry.index || index + 1;
     }
   });
 
-  return bestIndex + 1;
+  return bestIndex;
 }
 
 function deriveConceptsFromSections(sections) {
@@ -432,13 +435,13 @@ export function initEbookNavigation(chapterData, options = {}) {
   const readerButton = el('button', {
     type: 'button', className: 'ebook-register-button',
     dataset: { ebookRegister: 'reader', spwExpression: 'true' },
-    textContent: 'Read', 'aria-label': 'Read the story'
+    textContent: 'Read', 'aria-label': 'Back to reading'
   });
 
   const engineerButton = el('button', {
     type: 'button', className: 'ebook-register-button',
     dataset: { ebookRegister: 'engineer', spwExpression: 'true' },
-    textContent: 'Explore the structure', 'aria-label': 'Explore the story structure'
+    textContent: 'Scribe', 'aria-label': 'Open the scribe’s desk'
   });
 
   const registerSwitch = el('div', { className: 'ebook-register-switch', role: 'group', 'aria-label': 'Ebook register mode' }, readerButton, engineerButton);
@@ -521,6 +524,17 @@ export function initEbookNavigation(chapterData, options = {}) {
     'aria-label': 'Spw handle inspector'
   }, lspSummary, lspList);
 
+  const deskToggle = el('button', {
+    type: 'button', className: 'scribe-desk-toggle',
+    dataset: { scribeDeskToggle: 'true' },
+    textContent: 'Open the scribe’s desk',
+    'aria-pressed': 'false'
+  });
+  const deskNote = el('p', {
+    className: 'scribe-desk-note',
+    textContent: 'The desk shows how this chapter is written in Spw: its marks, handles, and claims. Readers never need it; scribes learn from it.'
+  });
+
   // Reading zone: always present. Engineering tools live in a folded details
   // so the rail stops competing with the story on first look.
   const readingZone = el('div', {
@@ -531,17 +545,19 @@ export function initEbookNavigation(chapterData, options = {}) {
     status,
     progress,
     controls,
-    toc
+    toc,
+    deskToggle,
+    deskNote
   );
 
   const engineerZone = el('details', {
     className: 'ebook-rail-zone ebook-rail-zone--engineer',
     dataset: { railZone: 'engineer' }
   },
-    el('summary', { textContent: 'Behind the story · Spw tools' }),
+    el('summary', { textContent: 'Scribe’s desk · section instruments' }),
     el('p', {
       className: 'ebook-nav-bridge',
-      textContent: 'Follow recurring ideas and inspect how this chapter is connected. Choose Read to return to the story.'
+      textContent: 'Filter sections by how they are written, and inspect the handles each one defines or leans on. Choose Read to put the desk away.'
     }),
     el('p', {
       className: 'ebook-nav-legend',
@@ -580,10 +596,11 @@ export function initEbookNavigation(chapterData, options = {}) {
   const shellNext = shellNav?.querySelector('.next-section, .next') || null;
   let shellPosition = shellNav?.querySelector('.section-navigation-position') || null;
   if (shellNav && !shellPosition) {
-    shellPosition = el('output', {
+    // The readout is also the contents: one tap from anywhere in the chapter.
+    shellPosition = el('button', {
+      type: 'button',
       className: 'section-navigation-position',
-      'aria-live': 'off',
-      'aria-label': 'Reading position'
+      'aria-label': 'Reading position — open the chapter contents'
     });
     if (shellNext) {
       shellNext.insertAdjacentElement('beforebegin', shellPosition);
@@ -598,6 +615,42 @@ export function initEbookNavigation(chapterData, options = {}) {
     button.dataset.ebookNav = 'true';
     button.dataset.spwExpression = 'true';
   });
+
+  const supportsPopover = typeof HTMLElement !== 'undefined' && Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover');
+  const contentsLinks = sections.map((section) => el('a', {
+    className: 'chapter-contents-link',
+    href: `#${section.id}`,
+    dataset: { sectionIndex: String(section.index) }
+  },
+    el('span', { className: 'chapter-contents-number', textContent: String(section.index).padStart(2, '0') }),
+    el('span', { className: 'chapter-contents-title', textContent: section.label })
+  ));
+  const contentsPopover = supportsPopover && shellPosition ? el('div', {
+    className: 'chapter-contents-popover',
+    id: 'chapter-contents-popover',
+    popover: 'auto',
+    'aria-label': 'Chapter contents'
+  },
+    el('p', { className: 'chapter-contents-kicker', textContent: 'In this chapter' }),
+    el('ol', { className: 'chapter-contents-list' }, ...contentsLinks.map((link) => el('li', {}, link))),
+    el('a', { className: 'chapter-contents-all', href: '/book/timeline.html', textContent: 'All chapters →' })
+  ) : null;
+  if (contentsPopover) {
+    document.body.append(contentsPopover);
+    shellPosition.setAttribute('popovertarget', contentsPopover.id);
+    contentsLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        contentsPopover.hidePopover();
+        jumpTo(parseSectionIndex(link.dataset.sectionIndex), 'contents');
+      });
+    });
+  } else if (shellPosition) {
+    shellPosition.addEventListener('click', () => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      panel.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
 
   if (shellPrev) {
     shellPrev.textContent = '?[section]{prev}';
@@ -619,17 +672,53 @@ export function initEbookNavigation(chapterData, options = {}) {
 
   const matchingIndices = () => matchingSections().map((section) => section.index);
 
+  /* Two registers, one set of controls: readers see plain words, scribes
+     see the same moves written as Spw. Learning the grammar is a matter of
+     opening the desk and watching the labels you already know change. */
+  const isScribe = () => document.documentElement.dataset.ebookRegister === 'engineer';
+  const dockLabel = (glyph, word, before) => {
+    const arrow = el('span', { 'aria-hidden': 'true', textContent: glyph });
+    const text = el('span', { className: 'dock-word', textContent: word });
+    return before ? [arrow, ' ', text] : [text, ' ', arrow];
+  };
+
+  // Only scribe-register labels are Spw; the runtime tokenizes whatever
+  // carries data-spw-expression, which would shred a reader's plain label.
+  const markExpression = (node, on) => {
+    if (!node) {
+      return;
+    }
+    if (on) {
+      node.dataset.spwExpression = 'true';
+    } else {
+      delete node.dataset.spwExpression;
+    }
+  };
+
   const renderControlLabels = () => {
-    readerButton.textContent = formatExpression('=', 'register', 'reader', syntaxMode);
-    engineerButton.textContent = formatExpression('=', 'register', 'engineer', syntaxMode);
-    prevButton.textContent = formatExpression('!', 'section', 'previous', syntaxMode);
-    nextButton.textContent = formatExpression('!', 'section', 'next', syntaxMode);
+    const scribe = isScribe();
+    [readerButton, engineerButton, prevButton, nextButton, resumeButton, shellPrev, shellNext, ...tocLinks]
+      .forEach((node) => markExpression(node, scribe));
+    readerButton.textContent = scribe ? formatExpression('=', 'register', 'reader', syntaxMode) : 'Read';
+    engineerButton.textContent = scribe ? formatExpression('=', 'register', 'scribe', syntaxMode) : 'Scribe';
+    prevButton.textContent = scribe ? formatExpression('!', 'section', 'previous', syntaxMode) : '‹ Back';
+    nextButton.textContent = scribe ? formatExpression('!', 'section', 'next', syntaxMode) : 'Next ›';
     if (shellPrev) {
-      shellPrev.textContent = formatExpression('!', 'section', 'previous', syntaxMode);
+      if (scribe) {
+        shellPrev.textContent = formatExpression('!', 'section', 'previous', syntaxMode);
+      } else {
+        shellPrev.replaceChildren(...dockLabel('‹', 'Back', true));
+      }
     }
     if (shellNext) {
-      shellNext.textContent = formatExpression('!', 'section', 'next', syntaxMode);
+      if (scribe) {
+        shellNext.textContent = formatExpression('!', 'section', 'next', syntaxMode);
+      } else {
+        shellNext.replaceChildren(...dockLabel('›', 'Next', false));
+      }
     }
+    deskToggle.textContent = scribe ? 'Close the desk · back to reading' : 'Open the scribe’s desk';
+    deskToggle.setAttribute('aria-pressed', scribe ? 'true' : 'false');
 
     perspectiveButtons.forEach((button) => {
       const mode = PERSPECTIVE_MODES.find((entry) => entry.id === button.dataset.perspective);
@@ -649,7 +738,9 @@ export function initEbookNavigation(chapterData, options = {}) {
 
     if (!resumeButton.hidden && resumeButton.dataset.resumeIndex) {
       const resumeIndex = parseSectionIndex(resumeButton.dataset.resumeIndex);
-      resumeButton.textContent = formatExpression('!', 'resume', `s${String(resumeIndex).padStart(2, '0')}`, syntaxMode);
+      resumeButton.textContent = scribe
+        ? formatExpression('!', 'resume', `s${String(resumeIndex).padStart(2, '0')}`, syntaxMode)
+        : `Resume at §${String(resumeIndex).padStart(2, '0')}`;
     }
 
     conceptButtons.forEach((button) => {
@@ -660,8 +751,15 @@ export function initEbookNavigation(chapterData, options = {}) {
     tocLinks.forEach((link, index) => {
       const section = sections[index];
       const handle = formatSectionHandle(section, syntaxMode);
-      link.textContent = handle;
       link.dataset.spwHandle = handle;
+      if (scribe) {
+        link.textContent = handle;
+      } else {
+        link.replaceChildren(
+          el('span', { className: 'ebook-toc-number', textContent: String(section.index).padStart(2, '0') }),
+          el('span', { className: 'ebook-toc-title', textContent: section.label })
+        );
+      }
     });
   };
 
@@ -677,8 +775,9 @@ export function initEbookNavigation(chapterData, options = {}) {
       button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
     writeRegisterMode(nextMode);
+    renderControlLabels();
     if (spoken && announce) {
-      announce(nextMode === 'reader' ? 'Reading mode.' : 'Story structure tools opened.');
+      announce(nextMode === 'reader' ? 'Back to reading.' : 'The scribe’s desk is open: the chapter’s Spw is showing.');
     }
   };
 
@@ -934,6 +1033,9 @@ export function initEbookNavigation(chapterData, options = {}) {
     tocLinks.forEach((link, linkIdx) => {
       link.setAttribute('aria-current', linkIdx + 1 === activeIndex ? 'true' : 'false');
     });
+    contentsLinks.forEach((link, linkIdx) => {
+      link.setAttribute('aria-current', linkIdx + 1 === activeIndex ? 'true' : 'false');
+    });
 
     const activeLabel = sections[activeIndex - 1].label.toLowerCase();
     conceptButtons.forEach((button) => {
@@ -954,7 +1056,10 @@ export function initEbookNavigation(chapterData, options = {}) {
     updateControls();
     updateReadouts();
     updateLspInspector(sections[activeIndex - 1]);
-    persist(activeIndex);
+    // Opening a chapter is not reading it: keep the saved place until the reader moves.
+    if (source !== 'init') {
+      persist(activeIndex);
+    }
 
     window.dispatchEvent(
       new CustomEvent('lore:ebook-section-change', {
@@ -1033,6 +1138,7 @@ export function initEbookNavigation(chapterData, options = {}) {
   });
 
   readerButton.addEventListener('click', () => applyRegister('reader', true));
+  deskToggle.addEventListener('click', () => applyRegister(isScribe() ? 'reader' : 'engineer', true));
   engineerButton.addEventListener('click', () => applyRegister('engineer', true));
   prefixButton.addEventListener('click', () => applySyntaxMode('prefix', true));
   postfixButton.addEventListener('click', () => applySyntaxMode('postfix', true));
@@ -1163,8 +1269,34 @@ export function initEbookNavigation(chapterData, options = {}) {
     }
   });
 
-  const startIndex = resumeIndex > 0 && resumeIndex <= sections.length ? resumeIndex : parseSectionIndex(stored?.sectionIndex);
+  const startIndex = nearestSectionIndex(sections);
   applyRegister(readRegisterMode(), false);
+
+  // A saved place is an offer, not a teleport: the reader who arrives at the
+  // top sees where they left off and chooses whether to go there.
+  let resumeOffer = null;
+  if (resumeIndex > 1 && resumeIndex <= sections.length && startIndex <= 1 && !window.location.hash) {
+    const target = sections[resumeIndex - 1];
+    resumeOffer = el('button', {
+      type: 'button',
+      className: 'resume-offer',
+      'aria-label': `Resume reading at section ${resumeIndex}: ${target.label}`
+    },
+      el('span', { className: 'resume-offer-kicker', textContent: 'Pick up where you left off' }),
+      el('span', { className: 'resume-offer-target', textContent: `§${String(resumeIndex).padStart(2, '0')} · ${target.label}` })
+    );
+    resumeOffer.addEventListener('click', () => {
+      jumpTo(resumeIndex, 'resume');
+      resumeOffer?.remove();
+      resumeOffer = null;
+    });
+    const head = main.querySelector('.chapter-head');
+    if (head) {
+      head.append(resumeOffer);
+    } else {
+      main.prepend(resumeOffer);
+    }
+  }
   applySyntaxMode(stored?.syntaxMode === 'postfix' ? 'postfix' : 'prefix', false);
   applyPerspective(stored?.perspective || 'composite', false);
   applyPayloadMode(stored?.payloadMode || 'all', false);
@@ -1181,6 +1313,8 @@ export function initEbookNavigation(chapterData, options = {}) {
       cancelAnimationFrame(rafId);
     }
     holdKeys.clear();
+    resumeOffer?.remove();
+    contentsPopover?.remove();
     panel.remove();
   };
 
@@ -1203,6 +1337,8 @@ export function initEbookNavigation(chapterData, options = {}) {
     setPerspective: (mode) => applyPerspective(mode, false),
     setPayloadMode: (mode) => applyPayloadMode(mode, false),
     setSyntaxMode: (mode) => applySyntaxMode(mode, false),
+    setRegister: (mode) => applyRegister(mode, false),
+    resumeIndex: () => (resumeIndex > 1 && resumeIndex <= sections.length ? resumeIndex : 0),
     destroy
   };
 }

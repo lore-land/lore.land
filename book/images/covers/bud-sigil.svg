@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 32">
+  <!-- The bud sigil from the LORE . LAND cover studies (lore-land-cover-v2), redrawn as a
+       hairline mark. Used as a CSS mask, so its colour comes from the page's light. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-opacity="0.45"/>
+      <stop offset="0.55"/>
+      <stop offset="1"/>
+    </linearGradient>
+  </defs>
+  <path d="M15 2 C16.4 5 18.6 7.4 20.2 10.2 C20.6 11 20.8 11.8 21.4 12.3 C22.6 12.8 24.4 13.4 24.8 15.6 C25.2 19 22.4 22.8 19.2 25.4 C17.6 26.7 16.2 27.9 15 29.6 C13.8 27.9 12.4 26.7 10.8 25.4 C7.6 22.8 4.8 19 5.2 15.6 C5.6 13.4 7.4 12.8 8.6 12.3 C9.2 11.8 9.4 11 9.8 10.2 C11.4 7.4 13.6 5 15 2 Z" fill="none" stroke="url(#g)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M15 29.6 C14.8 26.5 14.9 23.5 15.3 20.5" fill="none" stroke="#000" stroke-width="0.55" stroke-linecap="round" stroke-opacity="0.7"/>
+</svg>

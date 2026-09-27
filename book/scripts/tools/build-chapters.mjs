@@ -1,12 +1,15 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from '../modules/chapter-render.mjs';
+import { createMiniDocument } from './mini-dom.mjs';
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_09_23.B';
+const RELEASE = '2026_09_26.A';
+const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -28,11 +31,27 @@ if (filenames.length !== 13) {
   throw new Error(`Expected 13 chapter files in ${CONTENT_DIR}; found ${filenames.length}.`);
 }
 
-for (const filename of filenames) {
+const references = JSON.parse(await readFile(REFERENCES_PATH, 'utf8'));
+const chapters = await Promise.all(filenames.map(async (filename) => (
+  JSON.parse(await readFile(resolve(CONTENT_DIR, filename), 'utf8'))
+)));
+const inWhichFor = (chapter) => chapter.inWhich || references.inWhich?.[String(chapter.chapterNumber)] || '';
+const chapterHref = (number) => `/book/chapter/${padChapterNumber(number)}/`;
+
+/** Prose goes into the page at build time; the browser only enhances it. */
+const renderSlot = (render, data, options) => {
+  const doc = createMiniDocument();
+  const holder = doc.createElement('div');
+  render(holder, data, { doc, ...options });
+  return holder.children.map((node) => `    ${node.outerHTML}`).join('\n');
+};
+
+for (const [index, filename] of filenames.entries()) {
   const slug = filename.slice(0, 2);
-  const source = await readFile(resolve(CONTENT_DIR, filename), 'utf8');
-  const data = JSON.parse(source);
+  const data = chapters[index];
   const expectedNumber = Number(slug);
+  const previous = chapters[(index - 1 + chapters.length) % chapters.length];
+  const next = chapters[(index + 1) % chapters.length];
 
   if (data.chapterNumber !== expectedNumber || !data.title || !data.description || !Array.isArray(data.sections)) {
     throw new Error(`${filename} does not satisfy the chapter content contract.`);
@@ -60,6 +79,24 @@ for (const filename of filenames) {
     // The chapter rides along explicitly, so the slip knows where the reader was even without a Referer.
     FEEDBACK_URL: `https://autonomous.feedback/lore.land?at=/book/chapter/${slug}/`,
     MOOD: escapeAttribute(data.mood || 'boon'),
+    PREV_HREF: chapterHref(previous.chapterNumber),
+    PREV_NUMBER: padChapterNumber(previous.chapterNumber),
+    PREV_TITLE: escapeAttribute(previous.title),
+    NEXT_HREF: chapterHref(next.chapterNumber),
+    NEXT_NUMBER: padChapterNumber(next.chapterNumber),
+    NEXT_TITLE: escapeAttribute(next.title),
+    CHAPTER_EDGE: index === 0 ? 'first' : index === chapters.length - 1 ? 'last' : 'middle',
+    CHAPTER_BODY: renderSlot(renderChapterBody, data, {
+      inWhich: inWhichFor(data),
+      next: {
+        number: next.chapterNumber,
+        title: next.title,
+        inWhich: inWhichFor(next),
+        href: chapterHref(next.chapterNumber),
+        wraps: index === chapters.length - 1
+      }
+    }),
+    CHAPTER_CODA: renderSlot(renderChapterCoda, data, {}),
     CHAPTER_DATA: JSON.stringify(data, null, 2).replaceAll('<', '\\u003c')
   });
 

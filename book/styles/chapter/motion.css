@@ -8,13 +8,13 @@
 
 @layer motion.book {
 
-    /* ─── Default: elements start hidden, await scroll reveal ─── */
+    /* ─── Pending: only blocks the observer armed (they began below the
+     * fold) wait for a reveal. Prose is prerendered, so nothing is hidden
+     * without script, and nothing already on screen ever blinks out. ─── */
 
     @media (prefers-reduced-motion: no-preference) {
 
-        .chapter > section,
-        .chapter > figure,
-        .chapter > [data-voice-shape="block"] {
+        .chapter > [data-spw-reveal="pending"] {
             opacity: 0;
             translate: 0 1rem;
             transition:
@@ -35,7 +35,7 @@
 
         /* ─── Narrator: unhurried, breathing pace ────────────────── */
 
-        [data-voice-shape="block"][data-spw-voice="boof"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-voice="boof"] {
             translate: 0 0.8rem;
         }
 
@@ -46,7 +46,7 @@
 
         /* ─── Fool / interlocutor: slides in from the side ───────── */
 
-        [data-voice-shape="block"][data-spw-voice="fool"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-voice="fool"] {
             translate: -1rem 0.4rem;
             opacity: 0;
         }
@@ -58,7 +58,7 @@
 
         /* ─── Environment: slow dissolve from beneath ────────────── */
 
-        [data-voice-shape="block"][data-spw-voice="environment"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-voice="environment"] {
             translate: 0 0.6rem;
             filter: blur(1px);
         }
@@ -70,7 +70,7 @@
 
         /* ─── Bonk: percussive snap ───────────────────────────────── */
 
-        [data-voice-shape="block"][data-spw-grammar="bonk"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-grammar="bonk"] {
             translate: 0 -0.5rem;
             scale: 1.01;
         }
@@ -83,7 +83,7 @@
 
         /* ─── Awakening: gentle scale-up + brightness ────────────── */
 
-        [data-voice-shape="block"][data-spw-grammar="awakening"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-grammar="awakening"] {
             scale: 0.97;
             translate: 0 0;
             filter: brightness(0.95);
@@ -98,7 +98,7 @@
 
         /* ─── Reflection: mirror dissolve ────────────────────────── */
 
-        [data-voice-shape="block"][data-spw-grammar="reflection"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-grammar="reflection"] {
             translate: 0 0;
             filter: blur(3px);
             opacity: 0;
@@ -112,7 +112,7 @@
 
         /* ─── Path: slides in from the left, forward motion ──────── */
 
-        [data-voice-shape="block"][data-spw-grammar="path"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-grammar="path"] {
             translate: -1.5rem 0;
         }
 
@@ -123,7 +123,7 @@
 
         /* ─── Paradox: slight rotation hint ──────────────────────── */
 
-        [data-voice-shape="block"][data-spw-grammar="paradox"] {
+        [data-spw-reveal="pending"][data-voice-shape="block"][data-spw-grammar="paradox"] {
             translate: 0 0.5rem;
             rotate: -0.5deg;
         }

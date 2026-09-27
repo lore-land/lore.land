@@ -186,7 +186,9 @@ export function storyVoiceFor(type) {
 }
 
 export function applyStoryVoiceAttributes(element, type, shape) {
-  if (!(element instanceof HTMLElement)) {
+  // Duck-typed, not instanceof HTMLElement: the build prerenders chapters
+  // through a DOM shim (book/scripts/tools/mini-dom.mjs) with no HTMLElement.
+  if (!element || typeof element.setAttribute !== 'function' || !element.dataset) {
     return element;
   }
 

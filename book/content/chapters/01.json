@@ -149,7 +149,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Dawn smelled of frost and wet fur. Boof put her nose to the ground. Beneath the berry rows, ants kept their little hearths. Their patient magic warmed the roots through winter. Above them, the boonberries slept under ice, each holding a drop of light. Boof followed the rows past a fence leaning into last year's weeds, past the place where the miller's boots always stopped to scrape off mud. She knew what belonged to morning: the latch lifting at the kitchen, the bucket knocking the well, a blackbird trying the same few notes until one pleased it. Under all that, the ants worked without a sound she could hear. She paused now and then to sniff a root, and the field gave back its usual answers. That was why the strange warmth caught her before she saw the hole."
+          "text": "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning."
+        },
+        {
+          "type": "paragraph",
+          "text": "Everything was where it belonged. The latch lifted at the kitchen. The bucket knocked the well. A blackbird tried the same few notes until one pleased it. Beneath the berry rows, the ants kept their little hearths, and their patient magic warmed the roots through winter; above them, the boonberries slept under ice, each holding a drop of light. Boof followed the rows past the fence that leaned into last year's weeds, past the place where the miller always stopped to scrape his boots. She sniffed a root here and there, and the field gave back its usual answers."
         },
         {
           "type": "paragraph",
@@ -256,7 +260,7 @@
           "berry by berry the row turns the same way, ice sliding off like sleep",
           "the constellation of light points off the edge of any route Boof knows"
         ],
-        "hint": "macro row of dark berries skinned in frost, one split by a hairline gold seam, its light streaming past a lamp-dark humming egg toward a distant dark treeline; shallow depth, gold on deep frozen blue"
+        "hint": "macro row of boonberries skinned in frost: clusters of glassy teal drupelets, an amber ember at the core of each; one berry split by a hairline gold seam, its light streaming past a lamp-dark humming egg toward a distant dark treeline; shallow depth, deep leaf-green dark, vignette and grain"
       }
     },
     {
@@ -276,7 +280,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "By morning, Boof had brought the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book."
+          "text": "Before the frost was off the fences, Boof had carried the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book."
         },
         {
           "type": "paragraph",
@@ -300,7 +304,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The maps could hold what had happened. An unspent wish was still waiting to happen; there was nowhere on the page for it to stay."
+          "text": "Maps keep what has happened. An unspent wish has not happened yet, and the page had nowhere to put it."
         },
         {
           "type": "paragraph",

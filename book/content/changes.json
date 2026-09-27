@@ -1,0 +1,16 @@
+{
+  "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
+  "releases": [
+    {
+      "release": "2026_09_26.A",
+      "date": "2026-09-26",
+      "notes": [
+        "Chapter One's opening was tightened: the warm furrow arrives sooner.",
+        "A reading nook in the rail: coziness, texture, light from daylight to lamplight, and an optional hearth.",
+        "Each chapter now ends by turning the page toward the next one, and the contents are one tap from the dock.",
+        "Select any line to get a link straight to it.",
+        "Nothing you used went away: the rail and summary are as you left them. See Switches in the rail."
+      ]
+    }
+  ]
+}

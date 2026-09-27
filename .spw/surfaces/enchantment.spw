@@ -1,0 +1,121 @@
+# Lore.Land Enchantment Surface
+# What a scribe can do to a passage, and what each enchantment becomes for
+# a reader and for a scribe. The contract a writing team learns first.
+#>lore_land_surfaces_enchantment
+#:surface #!editorial
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  A passage is enchanted when it carries more than its words: a motif it
+  keeps returning to, a voice that is not the narrator's, a scene the reader
+  can step into, a line worth quoting. Every enchantment below is authored as
+  data in the chapter JSON, rendered at build time into the page, legible to a
+  reader as story, and legible to a scribe as Spw at the scribe's desk.
+  Nothing here requires a reader to know Spw; everything here rewards a scribe
+  who does.
+}
+
+^meta{
+  audience: ["scribe", "chamberwright", "motif gardener", "implementer"]
+  canon: "book/content/chapters/NN.json"
+  renderer: ~"book/scripts/modules/chapter-render.mjs"
+  build: "npm run chapters:build"
+  related: {
+    editorial: ~".spw/surfaces/editorial.spw"
+    plates: ~".spw/surfaces/plates.spw"
+    workspace: ~".spw/workspace.spw"
+  }
+}
+
+&invariants{
+  #invariant: prose_is_in_the_page_before_any_script_runs
+  #invariant: one_renderer_two_hosts_build_and_browser
+  #invariant: readers_see_words_scribes_see_spw
+  #invariant: every_enchantment_is_optional_and_additive
+  #invariant: an_enchantment_never_hides_prose
+}
+
+?"enchantments"[
+  {
+    name: "section"
+    json: "{ type: section, title, content: [...] }"
+    reader: "a titled chamber with a stable anchor, e.g. #the-warm-furrow"
+    scribe: "a .[s01/{}] handle in the contents; the anchor is the section's address"
+    craft: "titles are devices, not labels; they should invite the reader to hunt a pattern"
+  }
+  {
+    name: "voice"
+    json: "{ type: custom-boof | custom-echo | custom-boonberry | ..., content: [...] }"
+    reader: "a block in another voice, with a quiet kicker naming it"
+    scribe: "a story-voice element with its grammar role and valence"
+    craft: "a voice earns a block when it changes what the reader knows, not only how it sounds"
+  }
+  {
+    name: "phrase voice"
+    json: "paragraph.children: [{ type: custom-boof, content: \"...\" }]"
+    reader: "a few words spoken inside a sentence, marked but never interrupting"
+    scribe: "a phrase-shaped voice, actionable in the scribe register"
+  }
+  {
+    name: "mark"
+    json: "section[\"data-motif\" | \"data-trope\" | \"data-foreshadow\"]: \"kebab-name\""
+    reader: "a small chip under the heading: unspent wish, berry memory"
+    scribe: "a series mark the probes and trope ledger can follow across chambers"
+    craft: "a motif recurs, a trope is sampled and must be returned changed, a foreshadow must be paid"
+  }
+  {
+    name: "scene"
+    json: "section.scene: { vantage, light, scent, edges[], hint }"
+    reader: "Step into the scene: a folded sketch of where to stand and what to notice"
+    scribe: "structured image hooks; hint feeds plate studies (plates.spw)"
+    craft: "vantage first; one warm source; edges are things a camera could point at"
+  }
+  {
+    name: "pull"
+    json: "{ type: pull, text } inside a voice"
+    reader: "a display line, the passage's screenshot face"
+    scribe: "a shot-framed voice with a chamber stamp"
+  }
+  {
+    name: "climate"
+    json: "section.climate: { tempo, tint, hook, strength }"
+    reader: "the page's light shifts as the chamber comes into view"
+    scribe: "data-tempo / data-tint / data-climate on the chamber"
+  }
+]
+
+!"a_scribes_pass"[
+  "read the chapter as a reader first, nook on plain paper, desk closed"
+  "open the scribe's desk; watch the same contents and dock become Spw"
+  "enchant one passage: add a mark, a scene, or a voice in the chapter JSON"
+  "npm run chapters:build, then read it again as a reader; the enchantment must not cost the prose"
+  "select a line you enchanted and use Link this line; if the link does not make someone want to read on, the enchantment is decoration"
+]
+
+^boonberry_form{
+  .source: "five concept studies shared 2026-09-26 (boonberry concept; orange boonberry; the noticing berry)"
+  palette: "teal and amber, lit from within, on a leaf-dark ground; the berry is the warmest thing in any frame"
+  finish: "vignette and grain; shallow depth; dew beads that catch the inner light"
+  answers: "plates.spw asked whether old light reads sun-gold or berry-blue; a boonberry is both, teal flesh around an amber core"
+  ^"forms"[
+    {
+      name: "field cluster"
+      body: "a cluster of glassy teal drupelets, each keeping a small amber ember at its core, beaded with dew"
+      where: "the berry rows in winter, sleeping under ice"
+    }
+    {
+      name: "lantern"
+      body: "a single translucent honey-gold berry, lobed in twos or in fours like a quatrefoil, gold dust suspended inside, a knot of dark seeds where the lobes meet"
+      leaves: "teal-dark leaves veined with gold"
+      where: "what the town hangs for lanterns; the four-lobed lantern is the chapter-end ornament (chapter/reading.css)"
+    }
+    {
+      name: "the noticing berry"
+      body: "a chunky teal berry with a starfield glow deep inside, amber bead-eyes, a flat unimpressed mouth, papery leaves on top"
+      where: "one that has noticed the story it is sitting in; the custom-boonberry voice; Boof's postage on the scribes' slip"
+      register: "illustrated, ink-outlined, painterly; the photographic studies are the world, this one is its voice"
+    }
+  ]
+  open: "chapter one says every boonberry was a blueberry once; did the passing wish bead one berry into many drupelets, each a kept drop of its light, and does a lantern berry mean the wish lingered longer?"
+}

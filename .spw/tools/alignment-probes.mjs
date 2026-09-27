@@ -250,6 +250,9 @@ function probeAttributeParity() {
         const src = fs.readFileSync(full, 'utf8');
         for (const match of src.matchAll(/dataset\.([a-zA-Z]\w*)/g)) setters.add(camelToKebab(match[1]));
         for (const match of src.matchAll(/setAttribute\(\s*['"](data-[\w-]+)/g)) setters.add(match[1]);
+        // Registries that declare their attribute and apply it in a loop
+        // (reading-switches.mjs: { id, attribute: 'data-switch-…' }).
+        for (const match of src.matchAll(/attribute:\s*['"](data-[\w-]+)/g)) setters.add(match[1]);
         for (const block of src.matchAll(/dataset:\s*\{([^}]*)\}/g)) {
           for (const key of block[1].matchAll(/([a-zA-Z]\w*)\s*:/g)) setters.add(camelToKebab(key[1]));
         }

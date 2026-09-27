@@ -39,9 +39,14 @@ export function initBookScrollObserver(root) {
         return () => { };
     }
 
-    // Cap stagger so late sections do not wait seconds to animate.
-    elements.forEach((el, index) => {
-        el.style.setProperty('--entrance-delay', String(Math.min(index * 48, 480)));
+    // Only blocks that start below the fold wait for a reveal; whatever is
+    // already on screen stays put (the prose is prerendered and visible).
+    const fold = window.innerHeight || 0;
+    const pending = elements.filter((el) => el.getBoundingClientRect().top > fold);
+    pending.forEach((el, index) => {
+        el.dataset.spwReveal = 'pending';
+        // Cap stagger so late sections do not wait seconds to animate.
+        el.style.setProperty('--entrance-delay', String(Math.min(index * 48, 240)));
     });
 
     const observer = new IntersectionObserver(
@@ -53,10 +58,10 @@ export function initBookScrollObserver(root) {
                 }
             }
         },
-        { threshold: 0.08, rootMargin: '0px 0px -6% 0px' }
+        { threshold: 0 }
     );
 
-    for (const el of elements) {
+    for (const el of pending) {
         observer.observe(el);
     }
 

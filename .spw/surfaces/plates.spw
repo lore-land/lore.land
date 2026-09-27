@@ -27,7 +27,7 @@
     atelier: ~".spw/surfaces/atelier.spw#media_production"
     platform: ~".spw/surfaces/platform.spw#phase.04"
     ledger: ".spw/state/alignment-ledger.spw#AL-001"
-    scene_schema: "book/scripts/script.mjs#createSceneSketch"
+    scene_schema: ~"book/scripts/modules/chapter-render.mjs#renderSceneSketch"
     prose_sot: "book/content/chapters/*.json"
   }
   review_protocol: [
@@ -761,7 +761,46 @@
     relation: "asks how a held scene becomes public intrigue without becoming advertisement"
   }
   &scene_runtime{
-    href: "book/scripts/script.mjs#createSceneSketch"
+    href: ~"book/scripts/modules/chapter-render.mjs#renderSceneSketch"
     relation: "turns vantage / light / scent / edges / hint into inspectable reading affordance"
   }
+}
+
+^"cover_studies"[
+  {
+    #slug: "lore-land-cover-v1"
+    .file: "book/images/covers/lore-land-cover-v1.webp"
+    image: "LORE . LAND over a teal field in soft focus; a hairline gold seed-sigil above, a flourish below, rust-bronze foliage blurred at the edges"
+  }
+  {
+    #slug: "lore-land-cover-v2"
+    .file: "book/images/covers/lore-land-cover-v2.webp"
+    image: "LORE . LAND over a still dark lake; a bare sapling on a small island, pines dissolving into teal mist, a few stars; the gold bud sigil above the wordmark"
+    use: "source of the bud sigil; its 1200x628 crop lore-land-cover-v2-og.jpg (sigil, wordmark, sapling on its island) is the home share card"
+  }
+  {
+    #slug: "lore-land-cover-v3"
+    .file: "book/images/covers/lore-land-cover-v3.webp"
+    image: "a thin gold branching tree floating in a forest of teal and amber bokeh; LORE . LAND set low"
+  }
+  {
+    #slug: "lore-land-cover-v4"
+    .file: "book/images/covers/lore-land-cover-v4.webp"
+    image: "a vertical gold filament threaded with small sigils, an eye at its centre, LORE . LAND across it; dark foliage with amber points"
+  }
+  {
+    #slug: "bud-sigil"
+    .file: "book/images/covers/bud-sigil.svg"
+    image: "the seed-bud from v2 redrawn as a hairline vector: ogee dome, stepped shoulders, a squat point, one faint vein"
+    use: "chapter head mark above the chapter kicker; a CSS mask, coloured by the reading nook's light (chapter/reading.css)"
+  }
+]
+
+^"cover_palette"{
+  .source: "sampled from the four cover studies, 2026-09-26"
+  field: "#2F483A"
+  edge: "#1F2213"
+  wordmark_gold: "#CDAA72"
+  wordmark: "serif capitals, widely tracked, the dot spaced like a word: LORE . LAND"
+  carried_into: "the reading nook's lamplight room, the chapter bar's wordmark, the sigil's gold"
 }

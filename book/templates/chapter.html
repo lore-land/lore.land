@@ -45,34 +45,75 @@
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v={{RELEASE}}&ctx=chapter:climate">
   <link rel="stylesheet" href="/book/styles/components/cards.css?v={{RELEASE}}&ctx=chapter:layout">
   <link rel="stylesheet" href="/book/styles/components/gestures.css?v={{RELEASE}}&ctx=chapter:gestures">
+  <link rel="stylesheet" href="/book/styles/chapter/reading.css?v={{RELEASE}}&ctx=chapter:reading">
   <link rel="stylesheet" href="/book/chapter/{{CHAPTER_SLUG}}/style.css?v={{RELEASE}}">
   <link id="period-styles" rel="stylesheet">
   <link id="mood-styles" rel="stylesheet">
   <script defer type="module" src="/book/scripts/script.mjs?v={{RELEASE}}"></script>
+  <script>
+    /* The reading nook (modules/reading-nook.mjs) before first paint:
+       coziness and texture are the room, and the room should not move. */
+    try {
+      const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+      const root = document.documentElement;
+      if (Number.isFinite(nook.cozy)) root.style.setProperty('--cozy', String(nook.cozy));
+      const texture = Number.isFinite(nook.texture) ? nook.texture : 0.6;
+      root.style.setProperty('--nook-texture', String(texture));
+      root.dataset.nookTexture = texture < 0.15 ? 'plain' : texture > 0.8 ? 'lively' : 'soft';
+      const light = Number.isFinite(nook.light) ? nook.light : 0;
+      root.dataset.nookLight = light < 0.25 ? 'day' : light < 0.75 ? 'dusk' : 'lamp';
+    } catch (error) { /* storage blocked: the usual room */ }
+    /* Switches (modules/reading-switches.mjs): decide the cohort before any
+       module writes lore.* keys — a reader who was here before this
+       release keeps its defaults — then apply stored switches pre-paint. */
+    try {
+      const root = document.documentElement;
+      let sw = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null');
+      if (!sw) {
+        const returning = Object.keys(localStorage).some((k) => k.startsWith('lore.') && !/^lore\.(nook|switches|release)/.test(k));
+        sw = { cohort: returning ? 'returning' : 'new', choices: {}, tried: [],
+          resolved: returning ? { 'return-notes': 'on', 'full-rail': 'on', logline: 'on' } : { 'return-notes': 'on' } };
+        localStorage.setItem('lore.switches.v1', JSON.stringify(sw));
+      }
+      const tried = (new URLSearchParams(location.search).get('try') || '').split(',').filter(Boolean);
+      const resolved = Object.assign({}, sw.resolved, Object.fromEntries(tried.map((id) => [id, 'on'])));
+      Object.entries(resolved).forEach(([id, value]) => { if (value === 'on') root.setAttribute('data-switch-' + id, 'on'); });
+    } catch (error) { /* storage blocked: defaults */ }
+  </script>
+  <script>
+    /* Page turns read forward or back: later chapter slides in from the
+       right, earlier from the left (chapter/reading.css §9). Must run
+       before first render, hence a classic inline script. */
+    addEventListener('pagereveal', (event) => {
+      const from = window.navigation && navigation.activation && navigation.activation.from;
+      if (!event.viewTransition || !from) return;
+      const n = (url) => Number((/\/book\/chapter\/(\d{2})\//.exec(new URL(url).pathname) || [])[1] || 0);
+      const a = n(from.url), b = n(location.href);
+      if (a && b && a !== b) event.viewTransition.types.add(b > a ? 'forward' : 'back');
+    });
+  </script>
+  <!-- Page turns are instant: the neighbouring chapters are fetched while the reader reads. -->
+  <script type="speculationrules">
+  {
+    "prefetch": [
+      { "urls": ["{{NEXT_HREF}}"], "eagerness": "eager" },
+      { "where": { "href_matches": "/book/chapter/*" }, "eagerness": "moderate" }
+    ]
+  }
+  </script>
 </head>
 <body data-mood="{{MOOD}}" data-chapter="{{CHAPTER_SLUG}}">
   <a class="skip-link" href="#chapter-content">Skip to chapter</a>
-  <nav class="chapter-navigation" aria-label="Chapter navigation">
-    <a href="/" class="hub-home" aria-label="Return to Lore.Land">Lore.Land</a>
-    <button class="prev" aria-label="Previous chapter">Previous Chapter</button>
-    <button class="next" aria-label="Next chapter">Next Chapter</button>
+  <nav class="chapter-navigation" aria-label="Chapters" data-edge="{{CHAPTER_EDGE}}">
+    <a href="/" class="hub-home" aria-label="Return to the Lore.Land entrance">Lore.Land</a>
+    <a class="prev" href="{{PREV_HREF}}" rel="prev" aria-label="Previous: Chapter {{PREV_NUMBER}}, {{PREV_TITLE}}"><span aria-hidden="true">←</span> <span class="nav-word">Chapter</span> {{PREV_NUMBER}}</a>
+    <a class="next" href="{{NEXT_HREF}}" rel="next" aria-label="Next: Chapter {{NEXT_NUMBER}}, {{NEXT_TITLE}}"><span class="nav-word">Chapter</span> {{NEXT_NUMBER}} <span aria-hidden="true">→</span></a>
   </nav>
   <div class="reading-progress" aria-hidden="true"></div>
   <div class="lifecycle-breadcrumb" aria-hidden="true"></div>
 
-  <main class="chapter" id="chapter-content" tabindex="-1">
-    <noscript>
-      <article class="chapter-static">
-        <p class="chapter-logline">{{LOGLINE}}</p>
-        <h1>{{CHAPTER_HEADING}}</h1>
-        <p class="chapter-epigraph">{{EPIGRAPH}}</p>
-        <p>{{DESCRIPTION}}</p>
-        <p>
-          <a href="/">Return to Lore.Land</a>
-          · <a href="/book/chapter/01/">Enter Chapter One</a>
-        </p>
-      </article>
-    </noscript>
+  <main class="chapter" id="chapter-content" tabindex="-1" aria-labelledby="chapter-title" data-prerendered="{{RELEASE}}">
+{{CHAPTER_BODY}}
     <div class="scriptorium-slip" data-component="scriptorium-slip" role="region" aria-labelledby="scriptorium-slip-title">
       <p class="scriptorium-slip-kicker">A slip for the scribes</p>
       <h2 id="scriptorium-slip-title">What stayed with you in {{CHAPTER_TITLE}}?</h2>
@@ -80,11 +121,12 @@
       <p><a class="scriptorium-slip-door" href="{{FEEDBACK_URL}}" referrerpolicy="no-referrer-when-downgrade">Write a slip for Chapter {{CHAPTER_NUMBER}} <span aria-hidden="true">→</span></a></p>
       <p class="scriptorium-slip-note">Opens autonomous.feedback, the Scriptorium's post. You keep a card either way.</p>
     </div>
+{{CHAPTER_CODA}}
   </main>
 
   <div class="section-navigation" aria-label="Section navigation">
-    <button class="prev-section" aria-label="Go to the previous section">Previous Section</button>
-    <button class="next-section" aria-label="Go to the next section">Next Section</button>
+    <button class="prev-section" type="button" aria-label="Previous section"><span aria-hidden="true">‹</span> <span class="dock-word">Back</span></button>
+    <button class="next-section" type="button" aria-label="Next section"><span class="dock-word">Next</span> <span aria-hidden="true">›</span></button>
   </div>
 
   <aside aria-label="Reading tools">
@@ -101,7 +143,7 @@
       <a href="/zine/" class="zine-link">Printable zine</a>
       <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
     </nav>
-    <button class="primary-action" aria-label="Advance story">Advance Story</button>
+    <a class="primary-action" href="{{NEXT_HREF}}" rel="next">Continue to Chapter {{NEXT_NUMBER}} <span aria-hidden="true">→</span></a>
   </aside>
 
   <script type="application/json" id="chapter-data">{{CHAPTER_DATA}}</script>

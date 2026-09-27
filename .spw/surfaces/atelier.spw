@@ -29,7 +29,7 @@
     publish: ".spw/surfaces/publish.spw"
     ledger: ".spw/state/alignment-ledger.spw"
     claims: ".spw/claims/chapter-claims.spw"
-    scene_sketches: "book/scripts/script.mjs#createSceneSketch"
+    scene_sketches: ~"book/scripts/modules/chapter-render.mjs#renderSceneSketch"
     plan_a_refinement: "PLAN.A.spw#production_overlay_2026_07_16"
     plan_b_complaints: "PLAN.B.spw#production_overlay_2026_07_16"
     plan_c_wonder: "PLAN.C.spw#production_overlay_2026_07_16"
