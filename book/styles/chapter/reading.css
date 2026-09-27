@@ -2139,3 +2139,262 @@ main.chapter[data-xray] .xr-sentence.is-held {
     transition: none;
   }
 }
+
+/* ─── Constellation (constellation.mjs) ──────────────────────────────────
+ * A ring of thirteen boonberries, one per chamber, lit where a thread runs.
+ * Marks become doors: motif / trope / foreshadow chips, colophon threads,
+ * voice kickers, and x-ray notes all open one. */
+
+main.chapter .section-marks button.mark,
+main.chapter .chapter-topic-chip[data-constellation],
+main.chapter .voice-kicker[data-constellation] {
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 200ms ease, background-color 160ms ease;
+}
+
+main.chapter .section-marks button.mark {
+  font: inherit;
+  line-height: inherit;
+  appearance: none;
+}
+
+main.chapter .section-marks button.mark:hover,
+main.chapter .section-marks button.mark:focus-visible,
+main.chapter .chapter-topic-chip[data-constellation]:hover,
+main.chapter .voice-kicker[data-constellation]:hover,
+main.chapter .voice-kicker[data-constellation]:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0.8rem color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  background-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+}
+
+.xr-note-constellation {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 10%, transparent);
+  color: var(--color-accent-alt);
+  font-size: 0.76rem;
+  box-shadow: none;
+}
+
+.constellation {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: min(22rem, calc(100vw - 1rem));
+  max-height: min(80dvh, 34rem);
+  padding: 0.9rem 0.95rem 0.85rem;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  border-radius: 0.9rem;
+  background: linear-gradient(var(--theme-paper, #fffcf6), var(--theme-paper, #fffcf6)), var(--bg-color-main, #f3ede1);
+  color: var(--color-text-main);
+  box-shadow: 0 24px 60px color-mix(in srgb, #0b1627 26%, transparent);
+  font-family: var(--font-family-body);
+}
+
+.constellation::backdrop {
+  background: color-mix(in srgb, #0b1627 10%, transparent);
+}
+
+.constellation.is-sheet {
+  inset: auto 0.5rem 0.5rem 0.5rem;
+  width: auto;
+  margin: 0 auto;
+  max-width: 26rem;
+}
+
+.constellation-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0 0.5rem;
+  align-items: start;
+}
+
+.constellation-kicker {
+  grid-column: 1;
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent-main);
+}
+
+.constellation-title {
+  grid-column: 1;
+  margin: 0.05rem 0 0;
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-accent-alt);
+}
+
+.constellation-close {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-alt);
+  font-size: 1.1rem;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.constellation-ring {
+  display: block;
+  width: min(11rem, 60vw);
+  height: auto;
+  margin: 0.5rem auto 0.2rem;
+  overflow: visible;
+}
+
+.constellation-path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--sigil-gold, #a67c38) 30%, transparent);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
+}
+
+.constellation-centre {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 18px;
+  fill: var(--color-accent-alt);
+}
+
+.constellation-centre-sub {
+  font-family: var(--font-family-heading);
+  font-size: 6.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--color-text-alt);
+}
+
+/* The berries: hollow teal when the thread does not pass; teal skin with an
+   amber ember when it does; a gold ring around the chamber you are in. */
+.constellation-berry .constellation-skin {
+  fill: color-mix(in srgb, #4d9f97 12%, transparent);
+  stroke: color-mix(in srgb, #4d9f97 45%, transparent);
+  stroke-width: 0.9;
+  transition: fill 160ms ease, transform 160ms ease;
+}
+
+.constellation-berry .constellation-ember {
+  fill: transparent;
+  transition: fill 200ms ease;
+}
+
+.constellation-berry.is-lit {
+  cursor: pointer;
+}
+
+.constellation-berry.is-lit .constellation-skin {
+  fill: #4d9f97;
+  stroke: #2e6f69;
+}
+
+.constellation-berry.is-lit .constellation-ember {
+  fill: #f4b25c;
+  filter: drop-shadow(0 0 2px rgba(244, 178, 92, 0.9));
+}
+
+.constellation-berry.is-lit:hover .constellation-skin,
+.constellation-berry.is-lit:focus-visible .constellation-skin {
+  fill: #5fb3ab;
+  transform: scale(1.18);
+}
+
+.constellation-berry:focus-visible {
+  outline: none;
+}
+
+.constellation-berry:focus-visible .constellation-skin {
+  stroke: var(--sigil-gold, #a67c38);
+  stroke-width: 1.6;
+}
+
+.constellation-here {
+  fill: none;
+  stroke: var(--sigil-gold, #a67c38);
+  stroke-width: 0.9;
+  stroke-dasharray: 1.5 2;
+  animation: constellation-here 3s linear infinite;
+}
+
+@keyframes constellation-here {
+  to { stroke-dashoffset: -7; }
+}
+
+.constellation-berry.is-door .constellation-skin {
+  stroke-dasharray: 2 1.5;
+}
+
+.constellation-sum {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-alt);
+  text-align: center;
+}
+
+.constellation-list {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.constellation-list a {
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.45rem;
+  color: inherit;
+  font-size: 0.86rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.constellation-list a:hover,
+.constellation-list a:focus-visible {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+}
+
+.constellation-list li.is-here a {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 8%, transparent);
+}
+
+.constellation-num {
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  color: var(--sigil-gold, #a67c38);
+}
+
+.constellation-tag {
+  font-family: var(--font-family-heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-main);
+}
+
+.constellation-all {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.78rem;
+  color: var(--color-accent-main);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .constellation-here { animation: none; }
+  .constellation-berry .constellation-skin { transition: none; }
+}

@@ -17,9 +17,11 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_09_26.D';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_09_27.D';
+import { constellationFor } from './constellation.mjs?v=2026_09_27.E';
 
 const CATALOG_URL = '/book/content/catalog.json';
+const SEMANTIC_URL = '/book/content/semantic.json';
 const CHANGES_URL = '/book/content/changes.json';
 const SEARCH_URL = '/book/content/search.json';
 const FEEDBACK_URL = 'https://autonomous.feedback/lore.land?at=';
@@ -112,6 +114,8 @@ export const SPELLBOOK = Object.freeze([
   { op: '@', example: '@[folios]', does: 'Step over to the folio wall: pages under glass, seasoning.' },
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
+  { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
+  { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
   { op: '!', example: '![keep]{shelf}', does: 'Keep every chapter for offline reading.' },
   { op: '^', example: '^[slip]{05}', does: 'Write a slip to the scribes about a chapter.' },
@@ -130,6 +134,7 @@ const PRACTICE = Object.freeze([
   { ask: 'Pick up where you stopped reading.', check: (s) => s.op === '~' && (!s.handle || s.handle === 'resume') },
   { ask: 'Turn the room to lamplight.', check: (s) => s.op === '=' && s.handle === 'light' && s.payload === 'lamp' },
   { ask: 'Read the next chapter for what will remain.', check: (s) => s.op === '=' && s.handle === 'lens' && s.payload === 'bone' },
+  { ask: 'Find every chamber where the unspent wish recurs.', check: (s) => s.op === '&' && /^(motif|thread)$/.test(s.handle) && s.payload === 'unspent-wish' },
   { ask: 'Tell the scribes what stayed with you in Chapter Two.', check: (s) => s.op === '^' && s.handle === 'slip' && chapterFrom(s.payload) === 2 },
   { ask: 'Find Chapter Three’s shelf-mates in the library.', check: (s) => s.op === '#' && s.handle === 'stacks' && chapterFrom(s.payload) === 3 }
 ]);
@@ -300,6 +305,32 @@ export async function initScriptoriumDesk() {
       } else {
         say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf] or ?[find]{words}.`));
       }
+    } else if (op === '&') {
+      const kinds = ['thread', 'motif', 'trope', 'foreshadow', 'lean', 'voice'];
+      if (!handle || (/^threads?$/.test(handle) && !payload)) {
+        const index = await fetch(SEMANTIC_URL).then((res) => (res.ok ? res.json() : null)).catch(() => null);
+        if (!index) { say(op, el('p', {}, 'The weave is not loaded.')); return; }
+        const chip = (key, label, count) => el('button', { type: 'button', className: 'spell-chip', onClick: () => { input.value = key; cast(key); } }, `${label} · ${count}`);
+        const threads = Object.entries(index.threads).map(([id, t]) => chip(`&[thread]{${id}}`, t.label, Object.keys(t.chapters).length));
+        const motifs = Object.entries(index.marks.motif).map(([k, v]) => chip(`&[motif]{${k}}`, k.split('-').join(' '), v.length));
+        const tropes = Object.entries(index.marks.trope).map(([k, v]) => chip(`&[trope]{${k}}`, k.split('-').join(' '), v.length));
+        say(op, el('p', {}, 'The weave. Each count is how many places carry it; tap one to see where.'),
+          el('p', { className: 'desk-weave-kicker' }, 'Threads'), el('div', { className: 'desk-weave' }, threads),
+          el('p', { className: 'desk-weave-kicker' }, 'Motifs'), el('div', { className: 'desk-weave' }, motifs),
+          el('p', { className: 'desk-weave-kicker' }, 'Sampled tropes'), el('div', { className: 'desk-weave' }, tropes),
+          el('p', { className: 'desk-weave-kicker' }, 'Leans and voices'), el('div', { className: 'desk-weave' },
+            ['boon', 'bane', 'bone'].map((l) => chip(`&[lean]{${l}}`, l, index.leans[l].length)),
+            Object.entries(index.voices).map(([v, list]) => chip(`&[voice]{${v}}`, v, list.length))));
+        return;
+      }
+      const kind = kinds.includes(handle) ? handle : 'motif';
+      const result = await constellationFor(`${kind}:${payload || handle}`);
+      if (!result) { say(op, el('p', {}, `Nothing carries ${kind} “${payload || handle}” yet. &[threads] lists what exists.`)); return; }
+      say(op, el('p', {}, `${result.title} — ${result.kicker}. Runs through ${result.chapters.length} of ${TOTAL} chambers, ${result.places.length} section${result.places.length === 1 ? '' : 's'}.`),
+        el('ol', { className: 'desk-results' }, result.places.map((p) => el('li', {},
+          el('a', { href: `/book/chapter/${pad(p.c)}/#${p.id}` },
+            el('span', { className: 'desk-result-where' }, `${pad(p.c)} · ${titleOf(p.c)} · ${p.label}${p.n ? ` · ${p.n}` : ''}`))))),
+        result.href ? el('a', { href: result.href }, 'All of this thread →') : null);
     } else if (op === '%') {
       say(op, el('p', {}, `You have opened ${state.visited.size} of ${TOTAL} chapters.${state.visited.size < TOTAL ? ` The next unopened is Chapter ${pad([...Array(TOTAL)].map((_, i) => i + 1).find((n) => !state.visited.has(n)))}.` : ' Every one.'}`));
     } else if (op === '!') {

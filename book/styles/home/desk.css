@@ -452,3 +452,18 @@
     transition: none;
   }
 }
+
+.desk-weave-kicker {
+  margin: 0.4rem 0 0.1rem;
+  font-family: "JetBrainsMono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a6a36;
+}
+
+.desk-weave {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}

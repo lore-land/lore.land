@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_09_27.E",
+      "date": "2026-09-27",
+      "notes": [
+        "Every mark on a chapter is now a door: tap a motif, a trope, a thread, or a voice's name and a ring of thirteen boonberries lights up wherever it runs through the book. Tap a berry to go there.",
+        "At the desk, &[threads] shows the whole weave; &[thread]{motif} or &[motif]{unspent-wish} follows one."
+      ]
+    },
+    {
       "release": "2026_09_27.D",
       "date": "2026-09-27",
       "notes": [

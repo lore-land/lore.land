@@ -51,7 +51,8 @@ import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.B';
 import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_27.D';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.C';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.D';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.E';
+import { initConstellation } from './modules/constellation.mjs?v=2026_09_27.E';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -162,6 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyResonance = initResonanceLayer();
     const destroyLens = initLensControl({ announce });
     const destroyXray = initXrayReading({ announce });
+    const destroyConstellation = initConstellation({ announce });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -243,6 +245,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyResonance) destroyResonance();
       if (destroyLens) destroyLens();
       if (destroyXray) destroyXray();
+      if (destroyConstellation) destroyConstellation();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

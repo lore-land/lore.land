@@ -177,10 +177,17 @@ function noteFor(unit, lexicon) {
       const siblings = unit.closest('.xr-paragraph')?.querySelectorAll(`.xr-word[data-group="${group.id}"]`).length || 1;
       note.append(`“${unit.textContent}” belongs to `, Object.assign(document.createElement('strong'), { textContent: group.label }),
         ` — ${siblings} word${siblings === 1 ? '' : 's'} of that thread in this paragraph. `);
+      const where = document.createElement('button');
+      where.type = 'button';
+      where.className = 'xr-note-constellation';
+      where.dataset.constellation = `thread:${group.id}`;
+      where.textContent = 'Where else it runs';
+      note.append(where);
       if (group.href) {
+        note.append(' ');
         const link = document.createElement('a');
         link.href = group.href;
-        link.textContent = 'Follow the thread →';
+        link.textContent = 'All of it →';
         note.append(link);
       }
     }
