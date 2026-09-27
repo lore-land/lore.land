@@ -1,0 +1,69 @@
+{
+  "note": "The shelf list: each chapter's shelf-mates in any library, by Library of Congress and Dewey call number. Rendered as 'Wander the stacks' at a chapter's end (chapter-render.mjs). Ranges are broad on purpose — the point is to stand in the aisle and browse. `tale` is an Aarne–Thompson–Uther tale type where the chapter samples one.",
+  "search": "https://search.worldcat.org/search?q=su%3A",
+  "chapters": {
+    "1": [
+      { "subject": "Dogs", "lc": "SF421–440", "dewey": "636.7", "wander": "Find the thinnest book on working dogs and read how it describes a nose." },
+      { "subject": "Maps", "lc": "GA101–1776", "dewey": "526 · 912", "wander": "Open an old atlas to a place you have never been. Look for what the map leaves blank." },
+      { "subject": "Jazz", "lc": "ML3505–3509", "dewey": "781.65", "wander": "Somewhere on this shelf is a goose who learned it. Pick the book with the most worn spine." }
+    ],
+    "2": [
+      { "subject": "Wishes in folklore", "search": "Folklore", "tale": "ATU 750A · The Three Wishes", "lc": "GR", "dewey": "398.2", "wander": "Walk the folktale shelves and count the books with a wish in them. Stop at three." },
+      { "subject": "Sound and echoes", "search": "Sound", "lc": "QC221–246", "dewey": "534", "wander": "Take down a book on acoustics and find the page where a sound comes back late." },
+      { "subject": "Trees", "lc": "QK475–494", "dewey": "582.16", "wander": "Find a field guide to trees. Choose one you have walked past without naming." }
+    ],
+    "3": [
+      { "subject": "Genies and bottled spirits", "search": "Folklore", "tale": "ATU 331 · The Spirit in the Bottle", "lc": "GR", "dewey": "398.2", "wander": "Look for a tale where the one who was helped is not grateful. There are more than you would think." },
+      { "subject": "Paradox", "lc": "BC199.P2", "dewey": "165", "wander": "Open anywhere and read until something is true twice in opposite directions." },
+      { "subject": "Signal processing", "lc": "TK5102.9", "dewey": "621.3822", "wander": "Find a diagram of a signal before and after sampling. Notice what fell between the samples." }
+    ],
+    "4": [
+      { "subject": "Locks and keys", "lc": "TS519–520", "dewey": "683.3", "wander": "Find the drawing of a key's cut. Every notch is an argument about who gets in." },
+      { "subject": "Winds", "lc": "QC930.5–959", "dewey": "551.518", "wander": "Look up the local names for winds. Some places have a wind for every mood of a council." },
+      { "subject": "Optics", "lc": "QC350–467", "dewey": "535", "wander": "Find a chapter on mirrors and read how an image can be accurate and still reversed." }
+    ],
+    "5": [
+      { "subject": "Folk songs", "lc": "M1627–1853", "dewey": "782.42162", "wander": "Find a songbook and a song about work. Hum the first line under your breath." },
+      { "subject": "Bookkeeping", "lc": "HF5601–5689", "dewey": "657.2", "wander": "Open an old bookkeeping manual to double entry. Two slips, one harvest." },
+      { "subject": "Earthquakes and faults", "search": "Earthquakes", "lc": "QE531–541", "dewey": "551.22", "wander": "Find a map of a fault line. Read about the silence before it moves." }
+    ],
+    "6": [
+      { "subject": "Mazes and labyrinths", "search": "Labyrinths", "lc": "GV1507.M3", "dewey": "793.73", "wander": "Trace one maze with a finger, never lifting it. Notice where the city would put its lanterns." },
+      { "subject": "Glass", "lc": "NK5100–5440", "dewey": "748", "wander": "Find a photograph of old glass holding a light that is not its own." },
+      { "subject": "Lighting", "lc": "TH7700–7975", "dewey": "621.32", "wander": "Look up how lamps were placed along old streets. Count the dark between them." }
+    ],
+    "7": [
+      { "subject": "Blueberries", "lc": "SB381–386", "dewey": "634.7", "wander": "Find how berry bushes are pruned. What is cut so that more can grow?" },
+      { "subject": "Sundials", "lc": "QB215–237", "dewey": "681.1111", "wander": "Find a sundial's motto. Many of them are about shadows, and most of them are about debts." }
+    ],
+    "8": [
+      { "subject": "Wells", "lc": "TD405–410", "dewey": "628.114", "wander": "Find the drawing of a well in section. Water keeps a face at the top and a depth below." },
+      { "subject": "Games of skill", "search": "Games", "lc": "GV1199–1511", "dewey": "794", "wander": "Learn one tavern game's rules from the book. Notice which rule is really about trust." },
+      { "subject": "Taverns and inns", "search": "Taverns (Inns)", "lc": "TX901–953", "dewey": "647.95", "wander": "Find an old inn's sign in a picture. Guess what the name promised the thirsty." }
+    ],
+    "9": [
+      { "subject": "Puzzles", "lc": "GV1491–1507", "dewey": "793.73", "wander": "Find a puzzle with one piece missing on purpose. Read how the solver is meant to feel the hole." },
+      { "subject": "Mosaics", "lc": "NA3750–3850", "dewey": "738.5", "wander": "Look closely at a mosaic's shards. Find the one the artist had to break twice." },
+      { "subject": "Music theory", "lc": "MT6", "dewey": "781", "wander": "Find the chapter on rests. A silence is written down, counted, and kept." }
+    ],
+    "10": [
+      { "subject": "Bones", "search": "Skeleton", "lc": "QM101–117", "dewey": "611.71", "wander": "Find the drawing of the whole skeleton. Name the bone that carries the most and says the least." },
+      { "subject": "Structural engineering", "lc": "TA630–695", "dewey": "624.1", "wander": "Find a diagram of load moving through a frame. A hall tells the truth with its weight." },
+      { "subject": "Auditing", "lc": "HF5667–5668", "dewey": "657.45", "wander": "Open to the chapter on evidence. What counts as a finding?" }
+    ],
+    "11": [
+      { "subject": "The short-sighted wish", "search": "Folklore", "tale": "ATU 775 · Midas' Short-Sighted Wish", "lc": "GR", "dewey": "398.2", "wander": "Find a wish that was granted exactly. Read one page past the granting." },
+      { "subject": "Seeds", "lc": "SB113.2–118.46", "dewey": "631.521", "wander": "Look up how long seeds can wait. Some wait longer than the people who planted them." },
+      { "subject": "Flower gardening", "lc": "SB403–450.87", "dewey": "635.9", "wander": "Find a flower that blooms before its leaves. Some things arrive before their reasons." }
+    ],
+    "12": [
+      { "subject": "Rivers", "lc": "GB1201–1397", "dewey": "551.483", "wander": "Find where two rivers meet on a map and read both of their names aloud." },
+      { "subject": "Place names", "search": "Names, Geographical", "lc": "G104–108", "dewey": "910.014", "wander": "Look up the name of a river near you. Find the older name underneath it." }
+    ],
+    "13": [
+      { "subject": "Shells", "search": "Mollusks", "lc": "QL401–432", "dewey": "594", "wander": "Find a shell drawn in cross-section. Notice that it is a door that grew." },
+      { "subject": "Doors", "lc": "NA3000–3010", "dewey": "721.822", "wander": "Find a door that has been left open in a photograph. Ask who it is waiting for." },
+      { "subject": "Cataloging", "lc": "Z693–695.83", "dewey": "025.3", "wander": "End where the library describes itself. Read how a new book is given a place, then go give one to something you love." }
+    ]
+  }
+}

@@ -94,6 +94,7 @@ function humanizeMarkValue(value) {
  * @param {(href: string) => string} [options.withBase] - site-base resolver
  * @param {string} [options.inWhich] - "a dog finds an egg…" (no "In which", no period)
  * @param {{ number: number, title: string, inWhich?: string, href: string, wraps?: boolean }} [options.next]
+ * @param {{ entries: Array, search: string }} [options.stacks] - this chapter's shelf list
  */
 export function renderChapterBody(container, data, options = {}) {
   const doc = options.doc || container.ownerDocument;
@@ -116,7 +117,38 @@ export function renderChapterBody(container, data, options = {}) {
   if (options.next?.href) {
     container.append(renderTurn(h, options.next, withBase));
   }
+  if (options.stacks?.entries?.length) {
+    container.append(renderStacks(h, options.stacks));
+  }
   return container;
+}
+
+/**
+ * Wander the stacks: the chapter's shelf-mates in any library, by call
+ * number, from book/content/world/shelf-list.json. The story's last
+ * gesture is outward — into a building full of other stories.
+ */
+function renderStacks(h, stacks) {
+  return h('nav', { className: 'chapter-stacks', 'aria-label': 'Wander the stacks', dataset: { component: 'chapter-stacks' } },
+    h('p', { className: 'chapter-stacks-kicker' }, 'Wander the stacks'),
+    h('p', { className: 'chapter-stacks-lede' }, 'This chapter has shelf-mates in any library. Take a call number into the aisles and see what is standing next to it.'),
+    h('ul', { className: 'chapter-stacks-list' }, ...stacks.entries.map((entry) => h('li', { className: 'chapter-stacks-item' },
+      h('p', { className: 'chapter-stacks-subject' }, entry.subject),
+      h('p', { className: 'chapter-stacks-call' },
+        h('abbr', { title: 'Library of Congress classification' }, 'LC'), ` ${entry.lc}`,
+        h('span', { className: 'chapter-stacks-sep', 'aria-hidden': 'true' }, ' · '),
+        'Dewey ', entry.dewey,
+        entry.tale ? h('span', { className: 'chapter-stacks-tale' }, ` · tale type ${entry.tale}`) : null
+      ),
+      h('p', { className: 'chapter-stacks-wander' }, entry.wander),
+      h('a', {
+        className: 'chapter-stacks-find',
+        href: `${stacks.search}${encodeURIComponent(entry.search || entry.subject)}`,
+        rel: 'noopener',
+        target: '_blank'
+      }, 'Find it in a library near you', h('span', { 'aria-hidden': 'true' }, ' ↗'))
+    )))
+  );
 }
 
 /**

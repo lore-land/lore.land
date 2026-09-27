@@ -31,6 +31,7 @@
   c018: "The reading nook belongs to the reader: coziness, texture and hearth persist per reader, apply before first paint, and sound starts only from the reader's gesture."
   c019: "Nobody loses what they had: returning readers keep the defaults they learned (cohort), new features ship off, trials reach engaged readers or ?try links, and a returning reader is told in plain words what moved."
   c020: "Strains leave lore.land as grammar, never nouns: a pattern travels to boon.land, bane.land or bone.land only after it roots here, as a host-neutral module plus contract (.spw/surfaces/inoculant.spw)."
+  c021: "One grammar, two registers: every Spw operator and container has a literary reading, a library reading and a witness line (spw-resonance.mjs, importable by spwashi.com); every chapter ends by sending the reader into a library (shelf-list.json)."
 }
 
 ^contract_status{
@@ -57,6 +58,7 @@
   c018: "passing — reading-nook.mjs + head script; hearth is synthesized Web Audio, off by default"
   c019: "passing — reading-switches.mjs: cohort decided pre-paint; full-rail + logline kept for returning; 4 trials gated at 3 chapters or ?try; changes.json return notes"
   c020: "seeded — six strains named; none grafted yet; lands receive in their own register per story-boonhonk crossing_rule"
+  c021: "passing — 12 operators + 4 containers read in story, stacks, machine and signal (.spw/surfaces/resonance.spw); 13 shelf lists; the grammar, faintly is a trial"
 }
 
 &lifecycle{
@@ -93,6 +95,8 @@
   reading_contract: ~"book/styles/chapter/reading.css"
   enchantment_guide: ~".spw/surfaces/enchantment.spw"
   inoculant_theory: ~".spw/surfaces/inoculant.spw"
+  resonance_contract: ~".spw/surfaces/resonance.spw"
+  shelf_list: "book/content/world/shelf-list.json — each chapter's shelf-mates by LC and Dewey call number"
   reader_switches: ~"book/scripts/modules/reading-switches.mjs"
   return_notes: "book/content/changes.json — add a plain-words entry every release"
   seal_checklist: ~".spw/surfaces/platform.spw#seal_checklist_additions"

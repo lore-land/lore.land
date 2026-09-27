@@ -1389,3 +1389,193 @@ main.chapter .return-notes ul {
 .reading-shelf-status:empty {
   display: none;
 }
+
+/* ─── Wander the stacks (book/content/world/shelf-list.json) ────────────
+ * The chapter's shelf-mates by call number. Shown by default; hidden only
+ * once switches are ready and the reader has turned it off. */
+
+html[data-switches-ready]:not([data-switch-stacks="on"]) main.chapter > .chapter-stacks {
+  display: none;
+}
+
+main.chapter > .chapter-stacks {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: clamp(1.2rem, 3vw, 1.8rem);
+  max-width: var(--flow-wide);
+}
+
+.chapter-stacks-kicker {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-family-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-main);
+}
+
+main.chapter .chapter-stacks-lede {
+  max-width: 46ch;
+  margin: 0 auto;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.95em;
+  color: var(--color-text-alt);
+  text-indent: 0;
+}
+
+.chapter-stacks-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapter-stacks-item {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 0.85rem 0.9rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--border-color-main) 80%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--color-gold, #c4922e) 60%, transparent);
+  border-radius: 0.3rem 0.6rem 0.6rem 0.3rem;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.45rem, color-mix(in srgb, var(--color-accent-main) 6%, transparent) 1.45rem 1.5rem),
+    color-mix(in srgb, var(--theme-paper) 94%, var(--color-gold, #c4922e) 3%);
+}
+
+main.chapter .chapter-stacks-item p {
+  margin: 0;
+  max-width: none;
+  text-indent: 0;
+}
+
+main.chapter .chapter-stacks-subject {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 1.1em;
+  color: var(--color-accent-alt);
+}
+
+main.chapter .chapter-stacks-call {
+  font-family: var(--font-family-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-main);
+}
+
+.chapter-stacks-call abbr {
+  text-decoration: none;
+}
+
+main.chapter .chapter-stacks-wander {
+  font-size: 0.9em;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--color-text-main);
+}
+
+.chapter-stacks-find {
+  justify-self: start;
+  margin-top: 0.15rem;
+  font-family: var(--font-family-heading);
+  font-size: 0.72rem;
+  color: var(--color-accent-main);
+}
+
+html[data-nook-light="lamp"] .chapter-stacks-item {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.45rem, rgba(205, 170, 114, 0.05) 1.45rem 1.5rem),
+    rgba(32, 46, 38, 0.9);
+}
+
+/* ─── The grammar, faintly (resonance-layer.mjs, trial) ──────────────── */
+
+.resonance {
+  position: relative;
+  display: inline-block;
+  margin-inline-start: 0.4em;
+  vertical-align: 0.1em;
+  text-shadow: none;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.resonance-sigil {
+  min-width: 1.6rem;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-gold, #c4922e) 8%, transparent);
+  color: color-mix(in srgb, var(--color-gold, #c4922e) 80%, var(--color-accent-main));
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  box-shadow: none;
+  opacity: 0.75;
+  transform: none;
+}
+
+.resonance-sigil:hover,
+.resonance-sigil:focus-visible,
+.resonance-sigil[aria-expanded="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.resonance-note:not([hidden]) {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.4rem);
+  left: 50%;
+  translate: -50% 0;
+  display: grid;
+  gap: 0.35rem;
+  width: min(20rem, 80vw);
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 45%, transparent);
+  border-radius: 0.6rem;
+  background: linear-gradient(var(--theme-paper, #fffcf6), var(--theme-paper, #fffcf6)), var(--bg-color-main, #f3ede1);
+  box-shadow: 0 16px 40px color-mix(in srgb, #0b1627 22%, transparent);
+  color: var(--color-text-main);
+  font-family: var(--font-family-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal;
+}
+
+.resonance-note-title {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 1.05rem;
+  color: var(--color-accent-alt);
+}
+
+.resonance-note-library,
+.resonance-note-engineering {
+  font-size: 0.76rem;
+  color: var(--color-text-alt);
+}
+
+.resonance-note-engineering {
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+}
+
+.resonance-note-witness {
+  padding-top: 0.3rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 30%, transparent);
+  font-style: italic;
+}
+
+/* Every flow block is its own stacking context (panels.css z-index: 1);
+   the block holding an open note rises above its neighbours. */
+main.chapter > :has(.resonance-note:not([hidden])),
+aside > :has(.resonance-note:not([hidden])) {
+  z-index: 50;
+}

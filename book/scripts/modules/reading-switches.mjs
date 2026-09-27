@@ -44,6 +44,11 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'on', new: 'off' }
   },
   {
+    id: 'stacks', attribute: 'data-switch-stacks', stage: 'stable', label: 'Wander the stacks',
+    hint: 'At each chapter\u2019s end: its shelf-mates in any library, by call number.',
+    defaults: { returning: 'on', new: 'on' }
+  },
+  {
     id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
     hint: 'All thirteen chapters stay readable with no network: on a train, in a nook, anywhere.',
     defaults: { returning: 'off', new: 'off', installed: 'on' }
@@ -66,6 +71,11 @@ export const SWITCHES = Object.freeze([
   {
     id: 'reading-time', attribute: 'data-switch-reading-time', stage: 'trial', label: 'Minutes per section',
     hint: 'How long each chamber takes, at an unhurried pace.',
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'resonance', attribute: 'data-switch-resonance', stage: 'trial', label: 'The grammar, faintly',
+    hint: 'Each part of a chapter shows the Spw sigil it enacts. Tap one for its reading in the story, the stacks, and the machine.',
     defaults: { returning: 'off', new: 'off' }
   },
   {
@@ -160,6 +170,9 @@ function resolvedMap(state) {
    greppable and spw:probes' attribute_parity can trace CSS to its setter. */
 function applySwitches(map) {
   const root = document.documentElement;
+  // Until this is set, default-on features show (no-JS, first paint); after
+  // it, CSS may hide what a reader switched off.
+  root.setAttribute('data-switches-ready', 'true');
   SWITCHES.forEach((entry) => {
     if (map[entry.id] === 'on') {
       root.setAttribute(entry.attribute, 'on');

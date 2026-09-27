@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_09_26.C",
+      "date": "2026-09-26",
+      "notes": [
+        "Every chapter now ends with its shelf-mates in any library: call numbers to take into the aisles, and a way to find them near you.",
+        "A new trial for readers who keep coming back: the grammar, faintly — each part of a chapter shows the sign it enacts."
+      ]
+    },
+    {
       "release": "2026_09_26.B",
       "date": "2026-09-26",
       "notes": [

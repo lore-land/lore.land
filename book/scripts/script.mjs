@@ -2,7 +2,7 @@
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_26.A';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_26.C';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -48,7 +48,8 @@ import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A
 import { initReferences } from './modules/references.mjs?v=2026_08_27.A';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.B';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.B';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.C';
+import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_26.C';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -156,6 +157,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyPacking = initPinchPacking();
     const destroyNook = initReadingNook({ announce });
     const destroySwitches = initReadingSwitches({ announce });
+    const destroyResonance = initResonanceLayer();
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -234,6 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyLineShare) destroyLineShare();
       if (destroyNook) destroyNook();
       if (destroySwitches) destroySwitches();
+      if (destroyResonance) destroyResonance();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

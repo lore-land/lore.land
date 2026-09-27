@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_09_26.B';
+const CACHE_VERSION = 'lore-pwa-v2026_09_26.C';
 /* Chapters a reader has opened (or asked to keep) live in their own cache,
  * which survives releases: navigations are network-first, so a kept page is
  * only ever served when the network is gone, and it is refreshed on the next

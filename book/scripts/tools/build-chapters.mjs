@@ -8,8 +8,9 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_09_26.B';
+const RELEASE = '2026_09_26.C';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
+const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -32,6 +33,7 @@ if (filenames.length !== 13) {
 }
 
 const references = JSON.parse(await readFile(REFERENCES_PATH, 'utf8'));
+const shelfList = JSON.parse(await readFile(SHELF_LIST_PATH, 'utf8'));
 const chapters = await Promise.all(filenames.map(async (filename) => (
   JSON.parse(await readFile(resolve(CONTENT_DIR, filename), 'utf8'))
 )));
@@ -95,6 +97,10 @@ for (const [index, filename] of filenames.entries()) {
         inWhich: inWhichFor(next),
         href: chapterHref(next.chapterNumber),
         wraps: index === chapters.length - 1
+      },
+      stacks: {
+        entries: shelfList.chapters?.[String(data.chapterNumber)] || [],
+        search: shelfList.search
       }
     }),
     CHAPTER_CODA: renderSlot(renderChapterCoda, data, {}),

@@ -1,0 +1,112 @@
+# Lore.Land Resonance Surface
+# One grammar, two sites. spwashi.com demonstrates what Spw does, as
+# engineering; lore.land shows what the same grammar means, as literature,
+# and how a library would keep it. This surface is the contract between them.
+#>lore_land_surfaces_resonance
+#:surface #!theory
+#:layer #!semantics
+#:status #!seeded
+
+~<rationale>{
+  The engine room and the reading room share a floor plan. spwashi.com is the
+  engine room: operators as mechanisms, containers as housings, charge and
+  discharge as load, the spirit sequence as a drivetrain — sampled, discrete,
+  digital. lore.land is the reading room: the same operators as the moves a
+  story makes, the same containers as chambers, letters and asides, the same
+  sequence as a chapter's spine — continuous, tuned by hand, analog. Between
+  them stands a library, which is where the two have always met: a building
+  that turns continuous human meaning into call numbers, and call numbers
+  back into a person wandering an aisle. Lore.land should leave a reader
+  wanting to go there.
+}
+
+^meta{
+  audience: ["maker", "scribe", "whoever builds spwashi.com's demo", "a reader who likes libraries"]
+  engineering_register: ~"book/scripts/modules/spw-interactions.mjs"
+  literary_register: ~"book/scripts/modules/spw-resonance.mjs"
+  shelf_list: "book/content/world/shelf-list.json"
+  spec: ~".spw/_workbench/lib/spw-v0.2.0-alpha/core/OPERATORS.md"
+  related: {
+    inoculant: ~".spw/surfaces/inoculant.spw"
+    enchantment: ~".spw/surfaces/enchantment.spw"
+    lands: ~".spw/story-boonhonk.spw#three_lands"
+  }
+}
+
+&invariants{
+  #invariant: one_grammar_two_registers_never_two_grammars
+  #invariant: the_literary_register_imports_nothing_so_any_site_can_load_it
+  #invariant: every_literary_reading_names_where_lore_land_already_enacts_it
+  #invariant: every_reading_is_witnessed_by_a_line_the_canon_actually_contains
+  #invariant: the_story_never_needs_the_grammar_to_be_read
+}
+
+^<spwashi_com_to_lore_land>{
+  from: "spwashi.com — the engine room: parser, runtime, inspector, the grammar shown working"
+  to: "lore.land — the reading room: the same grammar enacted by a story and kept like a library"
+  seam: "spwashi.com may import { OPERATOR_RESONANCE, CONTAINER_RESONANCE, SPIRIT_SPINE } from https://lore.land/book/scripts/modules/spw-resonance.mjs (no imports, no DOM) and show the literary reading beside its engineering one"
+  return_path: "lore.land's scribe register shows the engineering reading beside the literary one (the grammar, faintly)"
+  crossing_rule: "each site stays whole without the other; recognition adds depth, ignorance leaves no gap"
+}
+
+^"axes"{
+  discipline: {
+    engine_room: "mechanical engineering — mechanism, load, tolerance, datum, drivetrain"
+    reading_room: "library and information science — accession, provenance, subject, call number, circulation"
+  }
+  signal: {
+    digital: "spwashi.com — tokens, parse trees, discrete states; the switches drawer is digital (on / off)"
+    analog: "lore.land — tone, climate, cadence; the nook's dials are analog, and Texture is literally a noise floor"
+    transduction: "a Spw sigil is a sample of a story; a call number is a sample of a book; both lose something on purpose so a stranger can find the rest"
+  }
+}
+
+?"readings"[
+  { sigil: "!" story: "the event" stacks: "accession" machine: "actuator, trigger" signal: "an impulse" }
+  { sigil: "?" story: "the question" stacks: "the reference interview" machine: "sensor, probe" signal: "a measurement" }
+  { sigil: "~" story: "the unspent" stacks: "on order, not yet shelved" machine: "stored energy, a wound spring" signal: "the continuous wave before sampling" }
+  { sigil: "@" story: "whose eyes" stacks: "provenance, point of access" machine: "datum, reference frame" signal: "reference potential, ground" }
+  { sigil: "&" story: "the meeting" stacks: "see also" machine: "coupling, gear train" signal: "mixing" }
+  { sigil: "*" story: "the cost made concrete" stacks: "the copy in hand" machine: "output work" signal: "quantization" }
+  { sigil: "^" story: "the turn" stacks: "the series statement" machine: "transmission to the next stage" signal: "the output stage" }
+  { sigil: "#" story: "the margin" stacks: "subject headings, marginalia" machine: "label, tolerance note" signal: "modulation onto a carrier" }
+  { sigil: "." story: "the ground" stacks: "physical description, the reading room" machine: "ground plane" signal: "baseline, DC level" }
+  { sigil: "=" story: "the lean" stacks: "the scope note" machine: "preload, bias spring" signal: "a filter" }
+  { sigil: "%" story: "the cadence" stacks: "collation, extent" machine: "gauge" signal: "the sampling rate" }
+  { sigil: "$" story: "the page itself" stacks: "the catalog describing itself" machine: "frame, chassis" signal: "the medium and its noise floor" }
+  { sigil: "[]" story: "the shot" stacks: "the plate" machine: "fixture, jig" signal: "a window" }
+  { sigil: "{}" story: "the chamber" stacks: "the bound unit" machine: "housing, enclosure" signal: "an integrator" }
+  { sigil: "()" story: "the aside" stacks: "the footnote" machine: "bushing, sleeve" signal: "a sub-band" }
+  { sigil: "<>" story: "the letter" stacks: "the call slip" machine: "conduit, duct" signal: "a channel" }
+]
+
+!"chapter_spine"[
+  { sigil: "!" line: "Something happens." }
+  { sigil: "?" line: "The chapter asks." }
+  { sigil: "~" line: "Something waits, unspent." }
+  { sigil: "@" line: "We choose whose eyes." }
+  { sigil: "&" line: "Two things meet." }
+  { sigil: "*" line: "Something costs." }
+  { sigil: "^" line: "The page turns." }
+]
+
+^"library_wandering"{
+  practice: "every chapter ends with its shelf-mates: subjects, LC and Dewey call numbers, a folktale type where one is sampled, a small instruction for the aisle, and a way to find it in a library nearby"
+  why: "a story that sends you into a building full of other stories has finished its job; the serial should be a door, not a wall"
+  shelf_list: "book/content/world/shelf-list.json — broad ranges on purpose; stand in the aisle and browse"
+  tale_types: "the fool's sampled tropes are catalogued folktale types (Aarne–Thompson–Uther); folklorists shelve tales the way librarians shelve books"
+}
+
+^"folio_practice"{
+  .source: "the maker scans laminated folios and wonders how they resonate with books in the library (2026-09-26)"
+  practice: "a folio that enters lore.land is catalogued like an item: a subject heading or two, a call-number neighbourhood, a line about what it might be standing next to"
+  becomes: "the folio is a call slip — it names a place in the stacks where its conversation continues"
+  lands_in: "plates, cover studies, nook rooms, boonberry forms — anything scanned or made; the shelf list is where their neighbourhoods are recorded"
+}
+
+?"open_questions"[
+  "Which spwashi.com demo shows a sigil's engineering reading first, and hands the reader to lore.land for its story?"
+  "Should a scene, not just a chapter, carry its own shelf-mate?"
+  "Can a returning reader leave a call number on a scribes' slip — a book the chapter reminded them of — and have it join the shelf list?"
+  "What is the analog control on spwashi.com, and the digital one here?"
+]
