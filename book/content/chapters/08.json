@@ -107,7 +107,7 @@
     {
       "type": "custom-boof",
       "data-mood": "game",
-      "data-motif": "ledger",
+      "data-motif": "berry-memory",
       "climate": {
         "tempo": "night",
         "tint": "teal",
@@ -146,7 +146,7 @@
         },
         {
           "type": "paragraph",
-          "text": "A face said into deep water is not stolen; it is folded, and it stays the property of whoever wore it. The well kept the faces the way an honest ledger keeps a debt: patiently, and without letting anyone else spend them."
+          "text": "A face said into deep water is not stolen; it is folded, and it stays the property of whoever wore it. The well kept the faces the way good ground keeps rain: patiently, and without letting anyone else spend them."
         }
       ]
     },
@@ -169,6 +169,14 @@
           "type": "paragraph",
           "data-content_id": "game-intro",
           "text": "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? He counted the company twice and quoted three coincidences and a fortnight of Thursdays. At the bar, the regular raised his glass. “Six violations of the natural order,” the Genie told him. “Lager,” said the regular. The Genie wrote it down. After a moment, he underlined it."
+        },
+        {
+          "type": "paragraph",
+          "text": "A line of ants had left a crumb on the barrel-head at dusk. He quoted them nothing, struck a match for their torch-bearer, and wrote nothing down. Old customers."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two beavers took the whole evening over a dam. They wanted the wording exact: the bend, the height, the arrangement of the sticks. By the time they had it right they had drawn it on the table in spilled lager, argued the drawing into a better one, and gone out to build it before the Genie could quote a price. He watched them go with something like professional respect. Beavers, he told Boof, always wished slowly enough to finish the job themselves."
         }
       ]
     },

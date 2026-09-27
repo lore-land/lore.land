@@ -6,7 +6,7 @@
 
 ^[chapter/09]{
   title: "Shards of Nine Honks"
-  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. The Boonhonk lineage revealed. Nine honks are nine sampled tropes, and the Fool's thirteen-chamber set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with ..."
+  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was ne..."
   mood: "puzzle"
   period: "spring"
   chapter_path: "/book/chapter/09/"
@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boonhonk is an old art with young shoes, and on the ridge above the town the Fool finally showed Boof its bones. He laid his set out on the slates shard by shard — a lineage in nine pieces — for the unit of the art is..."
+    excerpt: "The Fool had an art, and on the ridge above the town he finally showed Boof its bones. He laid his set out on the slates shard by shard — a lineage in nine pieces — for the unit of the art is the honk: a trope sampled..."
     route: ^[chapter/09/s01]{open}
   >
   s02: <

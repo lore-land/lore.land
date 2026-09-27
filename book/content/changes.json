@@ -2,6 +2,23 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_09_27.D",
+      "date": "2026-09-27",
+      "notes": [
+        "X-ray reading, in Switches: hover a word, a sentence or a paragraph and the structure shows through — the threads a word belongs to, the way a sentence leans, the sign a paragraph sits under. Click to hold it.",
+        "The ants have noticed the egg."
+      ]
+    },
+    {
+      "release": "2026_09_27.C",
+      "date": "2026-09-27",
+      "notes": [
+        "The ants under the berry rows have torches now, and streets; the Genie, it turns out, did good business with them.",
+        "Boof works for the land, not for fruit — a slip that had lingered in the copy is mended everywhere it stood.",
+        "Page controls are quieter, and on a phone the page runs to the edge. The genre dial folds away until you want it."
+      ]
+    },
+    {
       "release": "2026_09_27.B",
       "date": "2026-09-27",
       "notes": [

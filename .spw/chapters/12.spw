@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    excerpt: "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the ants moved beneath it; with less heat to make, they could tend more roots, and the berry rows widened through the winte..."
+    excerpt: "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the ants moved beneath it. With less heat to make, they could tend more roots; their torch-lines ran farther along the furr..."
     handles: ["path-intro"]
     route: ^[chapter/12/s02]{open}
   >

@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof understood the physics better than the hall did, because she had lived it at bowl-height her whole life. A dog who works for honest blueberries knows you cannot wish a bowl full; you can only be standing under th..."
+    excerpt: "Boof understood the physics better than the hall did, because she had lived it at bowl-height her whole life. A dog who works for the land knows you cannot wish a bowl full; you can only be standing under the bush whe..."
     route: ^[chapter/05/s06]{open}
   >
 ]

@@ -1,0 +1,112 @@
+# Lore.Land Folios
+# Laminated folios — pages pressed under glass — as a mechanic the story reads,
+# and as the thing readers and the maker actually make, scan and circulate.
+#>lore_land_surfaces_folios
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  The maker laminates folios and scans them. In Boon.land, Bonk City's glass is
+  made of old impacts, clarified — so to laminate a page there is to glass it:
+  pressure, heat, and the page stops taking ink and starts keeping it. A
+  glassed folio is the opposite of the maps that bead and refuse the Egg. The
+  maps hold only what has happened; a folio holds what someone chose to keep,
+  and when the story changes you glass a new page over the last, so the older
+  lines stay legible underneath. The magic is in the process, not the object:
+  anyone with a page, a sheet, and heat can make one. Anyone without a physical
+  space can make the digital kind and pass it along.
+}
+
+^meta{
+  .source: "the maker, 2026-09-27: folios as a meta mechanic; regular scans; more people making and updating them; digital art circulated for those without stable physical space"
+  planted: ["book/content/chapters/06.json (a porter's folio at BoonWAP's table)", "book/content/chapters/13.json (the last page has never been glassed)", "book/content/world/references.json#folio"]
+  related: {
+    resonance: ~".spw/surfaces/resonance.spw#folio_practice"
+    enchantment: ~".spw/surfaces/enchantment.spw"
+    stacks: "book/content/world/shelf-list.json"
+    glass_canon: "book/content/chapters/06.json — glass made of old impacts, forgiven into transparency"
+  }
+}
+
+&invariants{
+  #invariant: the_magic_is_the_process_never_the_owner
+  #invariant: a_folio_keeps_what_was_chosen_a_map_keeps_what_happened
+  #invariant: layering_never_erases_the_older_line_stays_legible
+  #invariant: a_digital_folio_is_a_folio
+  #invariant: the_egg_cannot_be_glassed_until_it_has_happened
+}
+
+^"process_magic"{
+  pressure: "what you are willing to press flat and commit to"
+  heat: "the warmth you bring to it; a folio glassed cold clouds"
+  clarity: "Bonk glass remembers being struck and forgives it into transparency; a folio made from a hard season reads clearer, not darker"
+  layering: "re-glass over the last page when the story changes; nothing known is lost, only layered"
+  overpaint: "paint laid on the glass is the only mark a glassed page still takes; it sits above what was kept, and the kept page shows through it"
+  attention: "a folio someone has sat with reads warmer; the town cannot say how it knows, and does not need to"
+  weather: "a glassed page carries through rain, a pocket, a coat, a long road"
+}
+
+~"metaphysics"{
+  .source: "the maker, 2026-09-27: imagine the plastic as a fluid that can turn into glass; open to exploring the metaphysics; Apple's Liquid Glass as a reason to explore shaders"
+  fluid: "before it sets, the glassing is a liquid — it runs, it refracts, it bends the page under it; while it moves, the page can still change"
+  setting: "it sets by attention, not by cooling: a page someone has sat with goes clear; a page rushed goes cloudy. Bonk glass is old impact clarified, so a folio made from a hard season sets clearer, not darker"
+  liquid_glass: "on the site, a folio that has not yet seasoned should look like liquid glass — refracting what is behind it, moving a little with the pointer — and settle to still, clear glass once its stone has passed"
+  shader_note: "CSS can carry most of it: backdrop-filter blur + saturate for the liquid state, an SVG feDisplacementMap on a slow turbulence for the refraction, a transition to none once seasoned; a WebGL shader only if the displacement needs to follow the pointer at speed"
+  ?open: [
+    "Is the fluid the same stuff as the grove's echoes — futures that have not set?"
+    "What un-sets a folio: heat, doubt, or a stranger's attention?"
+    "Does Boof's nose read the fluid state as a scent (pressure and heat, faintly, of the day it was made)?"
+  ]
+}
+
+?"in_story"[
+  "Who glasses the town's folios, and what do they refuse to glass?"
+  "Can a folio be un-glassed, and what does the page remember of the pressure?"
+  "Does a folio carried into Bone.land count as something that remained, or something carried in?"
+  "What does Boof smell on a folio — the day it was made, or the day it was last changed?"
+  "Whose folio is the drawn hill with the drawn dog, glassed smaller each season?"
+]
+
+^"the_makers_process"{
+  .source: "the maker, 2026-09-27"
+  listen: "doodle while listening — livestreams, talk, the room's noise; the hand keeps what the ear lets through"
+  cluster: "after the ideas have been talked through in videos, collage the topical clusters that turned out to work well together"
+  glass: "laminate the collage — pressure and heat; the page stops taking ink and starts keeping it"
+  season: "wait; let the collection gain time. A folio is not read the day it is glassed"
+  paint: "paint on the glassed folio — the new layer sits over the sealed one, and both are the piece"
+  meditate: "sit with it, as with the rest of the maker's art; a folio is finished by attention, not by the laminator"
+  drop: "post the originals somewhere as an art drop; the scans keep circulating regardless"
+  in_story: "the Fool's set is this process in another register: sample the tropes that were in the air, keep the ones that rang together, sound them, wait for the ninth. And BoonWAP's rule — still proofing; take it out too soon and see what you get — is the seasoning stage said as pie"
+  law: "a folio must season before it is read; the waiting is part of the glassing, and the town knows a rushed folio by its cloud"
+}
+
+!"reader_mechanic"[
+  { stage: "make" what: "a page (drawing, note, map, list) pressed under a sheet — laminated, or a flat digital image for those without a table or a laminator" }
+  { stage: "scan" what: "a photograph or scan of the folio; the maker does this regularly and will do more" }
+  { stage: "shelve" what: "a folio enters lore.land catalogued like a library item: a title, a chamber it stands near, a call-number neighbourhood from shelf-list.json, one line about what it is standing next to" }
+  { stage: "season" what: "a shelved folio waits one stone (a 13th or a 26th) before the desk shows it; a folio that has waited longer reads clearer" }
+  { stage: "layer" what: "an updated folio is a new scan over the old; both are kept, the old visible under the new" }
+  { stage: "circulate" what: "digital folios travel to readers who have no physical space; a folio that arrives by screen is not a lesser folio" }
+]
+
+~"folio_house"{
+  #status: "seed — bane register"
+  .source: "the maker, 2026-09-27"
+  premise: "A company that sells glassed folios by the gross: records, ledgers, keepsakes, all pressed clear and guaranteed against weather. Its catalogue calls the process lamination and prices it per sheet."
+  clerk: "The maker's in-universe self works there — a folio clerk who doodles through meetings and glasses the doodles after hours, on company stock, without asking."
+  blind_spot: "Nobody at the house knows what a folio becomes in the presence of the land's warmth. They have never had one near the berry rows, or near a dog who has walked through them."
+  bane_reading: "the mundane, absurd, challenging reality the hero is trying to leave or better — a good product, an honest price, and no idea what it is for"
+  rhyme: ~".spw/story-boonhonk.spw#moon_engineer"
+  ?open: [
+    "What is the house's name, and does it appear on the folio's edge or only on the invoice?"
+    "Which chamber first shows a folio clerk, and do they meet Boof or only her scent?"
+    "Does the house ever learn what it has been selling — and does the clerk tell them?"
+  ]
+}
+
+~"not_yet_built"{
+  desk_spell: "*[folio]{scan} — add a folio to your shelf from the Scriptorium desk (a proposal; the desk has no upload surface yet)"
+  gallery: "a folio wall: the maker's scans first, then readers', each layered where updated"
+  canon_rule: "a folio may propose a scene; only a written chamber can make it happen — same as the Egg's unknowns"
+}

@@ -131,7 +131,19 @@ export function initLensControl({ announce } = {}) {
   }
   const gloss = control.querySelector('.chapter-lens-gloss');
   const options = [...control.querySelectorAll('.chapter-lens-option')];
+  const menu = control.querySelector('.chapter-lens-menu') || control;
+  const toggle = control.querySelector('.chapter-lens-toggle');
+  const current = control.querySelector('.chapter-lens-current');
   let genre = readGenre();
+
+  const shortName = () => {
+    if (isBalanced(genre)) {
+      return 'Balanced';
+    }
+    const [[first, a], [second, b]] = Object.entries(genre).sort((x, y) => y[1] - x[1]);
+    const name = (id) => lensById(id)?.label || id;
+    return a > 0.97 ? name(first) : b >= 0.2 ? `${name(first)} & ${name(second)}` : `Mostly ${name(first)}`;
+  };
 
   /* The dial: a triangle, a point, and the three lands at its corners. */
   const tune = document.createElement('button');
@@ -140,6 +152,15 @@ export function initLensControl({ announce } = {}) {
   tune.setAttribute('aria-expanded', 'false');
   tune.textContent = 'Tune';
   gloss.before(tune);
+  const onToggle = () => {
+    menu.hidden = !menu.hidden;
+    toggle?.setAttribute('aria-expanded', String(!menu.hidden));
+    if (menu.hidden) {
+      dial.hidden = true;
+      tune.setAttribute('aria-expanded', 'false');
+    }
+  };
+  toggle?.addEventListener('click', onToggle);
 
   const dial = document.createElement('div');
   dial.className = 'genre-dial';
@@ -173,7 +194,7 @@ export function initLensControl({ announce } = {}) {
   stage.className = 'genre-dial-stage';
   stage.append(svg, thumb, ...labels);
   dial.append(stage);
-  control.append(dial);
+  menu.append(dial);
 
   const place = () => {
     const point = toPoint(genre);
@@ -188,6 +209,9 @@ export function initLensControl({ announce } = {}) {
     const at = isBalanced(genre) ? 'balanced' : (['boon', 'bane', 'bone'].find((id) => genre[id] > 0.97) || '');
     options.forEach((option) => option.setAttribute('aria-pressed', String((option.dataset.lens || 'balanced') === at)));
     gloss.textContent = describeGenre(genre);
+    if (current) {
+      current.textContent = shortName();
+    }
     place();
   };
 
@@ -267,6 +291,7 @@ export function initLensControl({ announce } = {}) {
 
   return () => {
     control.removeEventListener('click', onOption);
+    toggle?.removeEventListener('click', onToggle);
     tune.removeEventListener('click', onTune);
     stage.removeEventListener('pointerdown', onDown);
     stage.removeEventListener('pointermove', onMove);

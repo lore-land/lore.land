@@ -3368,3 +3368,15 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
     transition: none;
   }
 }
+
+/* A phone is the page: the monument runs to the edge, text keeps a hand's-width gutter. */
+@media (max-width: 39.99rem) {
+  body[data-surface='monument'] {
+    padding: 0;
+  }
+
+  body[data-surface='monument'] .hub-shell {
+    padding-inline: clamp(0.9rem, 4vw, 1.25rem);
+    border-radius: 0;
+  }
+}

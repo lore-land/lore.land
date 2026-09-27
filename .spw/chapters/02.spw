@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-boonberry/03"
     type: "custom-boonberry"
-    excerpt: "The berries here did not shine for harvest distribution. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed lik..."
+    excerpt: "The berries here did not shine for the harvest. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed like grains ..."
     handles: ["grove"]
     route: ^[chapter/02/s03]{open}
   >

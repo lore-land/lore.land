@@ -44,7 +44,7 @@
       "id": "boof",
       "kind": "creature",
       "title": "Boof",
-      "note": "A dog. She works for fruit. She trusts a scent that ends in something real, and is suspicious of applause.",
+      "note": "A dog. She works for the land, not for pay. She trusts a scent that ends in something real, and is suspicious of applause.",
       "href": "/characters/boof.html",
       "terms": [
         "Boof",
@@ -443,6 +443,49 @@
       ],
       "chambers": [
         12
+      ]
+    },
+    {
+      "id": "ant-hearths",
+      "kind": "place",
+      "title": "The ant hearths",
+      "note": "Under the berry rows, small streets no map has room for. The ants keep torches along the roots and hold the winter off with other cold-blooded neighbours. They have never asked anyone for anything.",
+      "href": "/world/boonberry-commons.html#ant-hearths",
+      "terms": [
+        "ants",
+        "ant",
+        "hearth",
+        "hearths",
+        "torch",
+        "torches",
+        "roots",
+        "beetle"
+      ],
+      "chambers": [
+        1,
+        2,
+        12
+      ]
+    },
+    {
+      "id": "folio",
+      "kind": "item",
+      "title": "A glassed folio",
+      "note": "A page pressed under a sheet of Bonk glass. It stops taking ink and starts keeping it, weather or no weather. When the story changes you glass a new page over the old; the older lines stay legible underneath. Anyone can make one. The round room's last page has never been glassed.",
+      "href": "/book/chapter/06/",
+      "terms": [
+        "folio",
+        "folios",
+        "glassed",
+        "glass",
+        "pressed",
+        "layered",
+        "page",
+        "pages"
+      ],
+      "chambers": [
+        6,
+        13
       ]
     }
   ]

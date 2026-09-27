@@ -2,7 +2,7 @@
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_27.A';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_27.C';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -48,9 +48,10 @@ import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A
 import { initReferences } from './modules/references.mjs?v=2026_09_27.A';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.B';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_26.D';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_27.D';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
-import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.B';
+import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.C';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.D';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -160,6 +161,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroySwitches = initReadingSwitches({ announce });
     const destroyResonance = initResonanceLayer();
     const destroyLens = initLensControl({ announce });
+    const destroyXray = initXrayReading({ announce });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -240,6 +242,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroySwitches) destroySwitches();
       if (destroyResonance) destroyResonance();
       if (destroyLens) destroyLens();
+      if (destroyXray) destroyXray();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

@@ -32,19 +32,19 @@ export const chapterManifest = [
   {
     number: 4,
     title: 'Crosswind Council',
-    logline: 'The council can file any key smaller — but a wish is the largest key there is, and no law on the hill covers the egg. Enter Mr. BaneWAP, arguing for an auction.',
+    logline: 'No law on the hill covers the egg — a wish is the largest key ever cut, and Mr. BaneWAP wants it filed, appraised, and auctioned to himself.',
     spw: '^[chapter/04]{ &[council]{ boon + bane negotiate } }'
   },
   {
     number: 5,
     title: 'The Quiet Rift',
-    logline: 'A boon-claim and a bane-claim on one wish cannot both post — and the rift under the counting room is the song of that disagreement, still unpaid from a grand wish granted centuries ago.',
+    logline: 'Two claims pull at one warm egg until the floor itself parts — and the crack beneath the hall is still singing the price of a grand wish granted centuries ago.',
     spw: '^[chapter/05]{ ~[rift]{ calm outside, fracture within } }'
   },
   {
     number: 6,
     title: 'Lanterns of Bonk City',
-    logline: 'In a labyrinth of lantern-light, Mr. BoonWAP holds court — a warm pie who is never smaller — and asks Boof the question she cannot answer yet. At the gates, something bitter keeps to the shadows.',
+    logline: 'In a labyrinth of lantern-light, Mr. BoonWAP — a warm pie who serves himself and is never smaller — asks Boof the one question she cannot answer yet.',
     spw: '^[chapter/06]{ ("bonk.city") [ ![lantern]{ streets ignite } ] }'
   },
   {
@@ -62,13 +62,13 @@ export const chapterManifest = [
   {
     number: 9,
     title: 'Shards of Nine Honks',
-    logline: 'The Fool lays out his set: eight tropes sampled and returned. The pieces assemble into a shape with one hole — egg-sized.',
+    logline: 'On the ridge, eight honks lie out as shards of sound — and the pieces assemble into a shape with one hole, exactly egg-sized.',
     spw: '^[chapter/09]{ *[relic]{ nine honks scatter into night } }'
   },
   {
     number: 10,
     title: 'Bone.land Resonance',
-    logline: 'In Bone.land\'s honest timber hall, Mx. BoneWAP audits the wish — and finds the smallest wishes have the longest arcs. BaneWAP stops pretending to wait.',
+    logline: 'In Bone.land\'s timber hall, a pie of clean-boiled honesty sets the Egg on the great frame and listens to what it will bear — and the answer, rung through every beam, ends BaneWAP\'s patience: the smallest wishes have the longest arcs.',
     spw: '^[chapter/10]{ ("bone.land") [ <concert>{ truth shakes the veil } ] }'
   },
   {
@@ -85,8 +85,8 @@ export const chapterManifest = [
   },
   {
     number: 13,
-    title: 'Lore.Land Canon',
-    logline: 'The spent wish sounds as the ninth honk; the maps take the ink at last, and the empty shell waits on the blank last line for the reader\'s wish.',
+    title: 'The Shell-Shaped Door',
+    logline: 'The spent wish sounds as the ninth honk; the maps take the ink at last, and the empty shell waits beside a blank last line — for the next wish, and for whoever is coming to make it.',
     spw: '^[chapter/13]{ ^[canon]{ world records itself and loops } }'
   }
 ];

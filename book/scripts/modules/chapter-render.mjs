@@ -243,13 +243,19 @@ function renderHead(h, data, inWhich) {
     head.append(h('p', { className: 'chapter-epigraph', dataset: { component: 'chapter-epigraph' } }, data.epigraph));
   }
   // Read as boon, bane or bone (lens-control.mjs wakes this; hidden without script).
-  head.append(h('div', { className: 'chapter-lens', role: 'group', 'aria-label': 'Read this chapter as', hidden: '' },
-    h('span', { className: 'chapter-lens-label' }, 'Read as'),
-    h('button', { type: 'button', className: 'chapter-lens-option', dataset: { lens: '' }, 'aria-pressed': 'true' }, 'Balanced'),
-    ...LENSES.map((lens) => h('button', {
-      type: 'button', className: 'chapter-lens-option', dataset: { lens: lens.id }, 'aria-pressed': 'false', title: lens.question
-    }, lens.label)),
-    h('p', { className: 'chapter-lens-gloss', 'aria-live': 'polite' }, '')
+  head.append(h('div', { className: 'chapter-lens', hidden: '' },
+    h('button', { type: 'button', className: 'chapter-lens-toggle', 'aria-expanded': 'false' },
+      h('span', { className: 'chapter-lens-label' }, 'Read as'),
+      h('b', { className: 'chapter-lens-current' }, 'Balanced'),
+      h('span', { className: 'chapter-lens-caret', 'aria-hidden': 'true' }, '▾')
+    ),
+    h('div', { className: 'chapter-lens-menu', role: 'group', 'aria-label': 'Read this chapter as', hidden: '' },
+      h('button', { type: 'button', className: 'chapter-lens-option', dataset: { lens: '' }, 'aria-pressed': 'true' }, 'Balanced'),
+      ...LENSES.map((lens) => h('button', {
+        type: 'button', className: 'chapter-lens-option', dataset: { lens: lens.id }, 'aria-pressed': 'false', title: lens.question
+      }, lens.label)),
+      h('p', { className: 'chapter-lens-gloss', 'aria-live': 'polite' }, '')
+    )
   ));
   const minutes = readMinutes(data.sections);
   head.append(h('p', { className: 'read-time read-time--chapter', hidden: '' }, `${minutes} min read`));

@@ -3,7 +3,7 @@
   "title": "Shards of Nine Honks",
   "logline": "On the ridge, eight honks lie out as shards of sound — and the pieces assemble into a shape with one hole, exactly egg-sized.",
   "epigraph": "An unspent wish is an unsounded note. Everything else in the set was arranged around its silence.",
-  "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. The Boonhonk lineage revealed. Nine honks are nine sampled tropes, and the Fool's thirteen-chamber set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was never sounded.",
+  "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was never sounded.",
   "mood": "puzzle",
   "period": "spring",
   "pillars": [
@@ -126,7 +126,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Boonhonk is an old art with young shoes, and on the ridge above the town the Fool finally showed Boof its bones. He laid his set out on the slates shard by shard — a ",
+          "text": "The Fool had an art, and on the ridge above the town he finally showed Boof its bones. He laid his set out on the slates shard by shard — a ",
           "children": [
             {
               "type": "custom-puzzle",
@@ -140,7 +140,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The law of the genre is short enough for a dog to carry: every trope you sample must be returned changed, with interest. A honk that only repeats is a debt; a honk that returns is a harvest."
+          "text": "The law of it is short enough for a dog to carry: every trope you sample must be returned changed, with interest. A honk that only repeats is a debt; a honk that returns is a harvest."
         }
       ]
     },

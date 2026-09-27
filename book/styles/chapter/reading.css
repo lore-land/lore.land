@@ -50,9 +50,20 @@ body:has(> main.chapter) > :is(nav.chapter-navigation, .section-navigation, main
   }
 }
 
+/* A phone is the page: no gutter at all, and the bar and dock run edge to edge. */
 @media (max-width: 39.99rem) {
   body:has(> main.chapter) {
-    padding-inline: 0;
+    padding: 0;
+    gap: 0.35rem;
+  }
+
+  body:has(> main.chapter) > :is(nav.chapter-navigation, .section-navigation, main.chapter, aside) {
+    border-radius: 0;
+    border-inline: 0;
+  }
+
+  body:has(> main.chapter) > nav.chapter-navigation {
+    border-top: 0;
   }
 }
 
@@ -495,6 +506,7 @@ html:not([data-ebook-register="engineer"]):not([data-switch-full-rail="on"]) asi
   .reader-scale-controls,
   .reading-nook,
   .reading-switches,
+  .xray-panel,
   .reading-ref,
   #lore-button,
   #lore-collector,
@@ -514,13 +526,14 @@ aside .ebook-nav-panel { order: 1; }
 aside .reader-scale-controls { order: 2; }
 aside .reading-nook { order: 2; }
 aside .reading-switches { order: 2; }
+aside .xray-panel { order: 2; }
 aside .reading-ref { order: 3; }
 aside #lore-button,
 aside ul#lore-collector { order: 4; }
 aside .chapter-tuning-controls { order: 5; }
 aside .primary-action { order: 6; }
 aside .additional-links { order: 7; }
-aside > :not(.chamber-seal-mount, .ebook-nav-panel, .reader-scale-controls, .reading-nook, .reading-switches, .reading-ref, #lore-button, #lore-collector, .chapter-tuning-controls, .primary-action, .additional-links) {
+aside > :not(.chamber-seal-mount, .ebook-nav-panel, .reader-scale-controls, .reading-nook, .reading-switches, .xray-panel, .reading-ref, #lore-button, #lore-collector, .chapter-tuning-controls, .primary-action, .additional-links) {
   order: 10;
 }
 
@@ -1717,7 +1730,7 @@ html[data-genre-tuned] main.chapter p[data-lean="bone"]::before {
   position: relative;
   width: min(15rem, 70vw);
   aspect-ratio: 100 / 92;
-  margin: 1.3rem 4.5rem 2.2rem;
+  margin: 2.6rem 4.5rem 2.4rem;
   touch-action: none;
   cursor: crosshair;
 }
@@ -1781,6 +1794,348 @@ html[data-genre-tuned] main.chapter p[data-lean="bone"]::before {
 
 @media (prefers-reduced-motion: reduce) {
   html[data-genre-tuned] main.chapter [data-ebook-section] > p {
+    transition: none;
+  }
+}
+
+/* ─── Page controls: hairline gold on paper, in the cover's type ─────────
+ * The story is the only thing on the page that should look heavy. */
+
+nav.chapter-navigation :is(a.prev, a.next),
+.section-navigation :is(button, .prev-section, .next-section),
+.reader-scale-button,
+.reader-scale-reset {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  color: var(--color-accent-alt);
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  box-shadow: none;
+  filter: none;
+}
+
+nav.chapter-navigation :is(a.prev, a.next):hover,
+nav.chapter-navigation :is(a.prev, a.next):focus-visible,
+.section-navigation :is(button, .prev-section, .next-section):hover,
+.section-navigation :is(button, .prev-section, .next-section):focus-visible {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+  border-color: var(--sigil-gold, #a67c38);
+  box-shadow: none;
+  transform: none;
+}
+
+nav.chapter-navigation .nav-word,
+.section-navigation .dock-word {
+  font-family: var(--chapter-display, Georgia, serif);
+}
+
+.section-navigation {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 20%, transparent), transparent 60%),
+    color-mix(in srgb, var(--theme-paper) 96%, transparent);
+  border-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 30%, transparent);
+}
+
+button.section-navigation-position {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--sigil-gold, #a67c38);
+}
+
+html[data-nook-light="lamp"] nav.chapter-navigation :is(a.prev, a.next),
+html[data-nook-light="lamp"] .section-navigation :is(button, .prev-section, .next-section) {
+  color: #e6c98f;
+}
+
+/* The lens, folded: one quiet line under the epigraph until it is wanted. */
+.chapter-lens:not([hidden]) {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+  text-shadow: none;
+}
+
+.chapter-lens-toggle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 35%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-alt);
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+
+.chapter-lens-toggle:hover,
+.chapter-lens-toggle:focus-visible,
+.chapter-lens-toggle[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 10%, transparent);
+  transform: none;
+  box-shadow: none;
+}
+
+.chapter-lens-current {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-accent-alt);
+}
+
+.chapter-lens-caret {
+  font-size: 0.7rem;
+  color: var(--sigil-gold, #a67c38);
+}
+
+.chapter-lens-menu:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.chapter-lens-menu .chapter-lens-label {
+  display: none;
+}
+
+/* ─── X-ray reading (xray-reading.mjs) ───────────────────────────────────
+ * Off by default. Ten lexicon threads get ten hues by index; a word in a
+ * thread carries a faint underline always, and its whole thread lights on
+ * hover or hold. Sentences and paragraphs show their lean; paragraphs also
+ * show the section's Spw sign in the margin. */
+
+main.chapter[data-xray] {
+  --xr-0: #c4922e; --xr-1: #4d9f97; --xr-2: #a34a2e; --xr-3: #7a5ca8; --xr-4: #4d7f8a;
+  --xr-5: #b8862f; --xr-6: #5e8a4a; --xr-7: #a86a8a; --xr-8: #6b7fae; --xr-9: #8a6a36;
+}
+
+.xr-word[data-group] {
+  --xr: var(--xr-9);
+  background: linear-gradient(transparent 82%, color-mix(in srgb, var(--xr) 45%, transparent) 82%);
+  border-radius: 2px;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.xr-word[data-group-index="0"], .xray-legend li[data-group-index="0"] { --xr: var(--xr-0); }
+.xr-word[data-group-index="1"], .xray-legend li[data-group-index="1"] { --xr: var(--xr-1); }
+.xr-word[data-group-index="2"], .xray-legend li[data-group-index="2"] { --xr: var(--xr-2); }
+.xr-word[data-group-index="3"], .xray-legend li[data-group-index="3"] { --xr: var(--xr-3); }
+.xr-word[data-group-index="4"], .xray-legend li[data-group-index="4"] { --xr: var(--xr-4); }
+.xr-word[data-group-index="5"], .xray-legend li[data-group-index="5"] { --xr: var(--xr-5); }
+.xr-word[data-group-index="6"], .xray-legend li[data-group-index="6"] { --xr: var(--xr-6); }
+.xr-word[data-group-index="7"], .xray-legend li[data-group-index="7"] { --xr: var(--xr-7); }
+.xr-word[data-group-index="8"], .xray-legend li[data-group-index="8"] { --xr: var(--xr-8); }
+.xr-word[data-group-index="9"], .xray-legend li[data-group-index="9"] { --xr: var(--xr-9); }
+
+/* Word mode: any word answers the pointer; thread words answer with their thread. */
+main.chapter[data-xray="word"] .xr-word {
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+main.chapter[data-xray="word"] .xr-word:hover,
+main.chapter[data-xray="word"] .xr-word.is-held {
+  background-color: color-mix(in srgb, var(--color-accent-main) 14%, transparent);
+}
+
+main.chapter[data-xray="word"] .xr-word[data-group]:hover,
+main.chapter[data-xray="word"] .xr-word.is-held[data-group],
+main.chapter[data-xray="word"] .xr-word.is-kin {
+  background-color: color-mix(in srgb, var(--xr) 26%, transparent);
+  color: color-mix(in srgb, var(--xr) 55%, var(--color-text-main));
+  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--xr) 35%, transparent);
+}
+
+main.chapter[data-xray="word"] .xr-word.is-held {
+  outline: 1px solid var(--xr, var(--color-accent-main));
+  outline-offset: 1px;
+}
+
+/* Sentence mode: the sentence lifts and shows its lean. */
+main.chapter[data-xray="sentence"] .xr-sentence {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 180ms ease;
+}
+
+main.chapter[data-xray="sentence"] .xr-sentence:hover,
+main.chapter[data-xray="sentence"] .xr-sentence.is-held {
+  background-color: color-mix(in srgb, var(--xr-lean, var(--color-accent-main)) 14%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--xr-lean, var(--color-accent-main)) 14%, transparent);
+}
+
+main.chapter[data-xray="sentence"] .xr-sentence[data-lean="boon"] { --xr-lean: #c4922e; }
+main.chapter[data-xray="sentence"] .xr-sentence[data-lean="bane"] { --xr-lean: #a34a2e; }
+main.chapter[data-xray="sentence"] .xr-sentence[data-lean="bone"] { --xr-lean: #4d7f8a; }
+
+main.chapter[data-xray="sentence"] .xr-sentence:hover .xr-word[data-group],
+main.chapter[data-xray="sentence"] .xr-sentence.is-held .xr-word[data-group] {
+  background-color: color-mix(in srgb, var(--xr) 24%, transparent);
+}
+
+/* Paragraph mode: the lean mark and the section's sign in the margin. */
+main.chapter[data-xray="paragraph"] .xr-paragraph {
+  position: relative;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+main.chapter[data-xray="paragraph"] > [data-ebook-section] {
+  padding-left: calc(var(--flow-pad) + 1.8rem);
+}
+
+main.chapter[data-xray="paragraph"] .xr-paragraph::before {
+  content: attr(data-xr-sigil);
+  position: absolute;
+  left: -1.7rem;
+  top: 0.15em;
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--sigil-gold, #a67c38) 70%, transparent);
+  opacity: 0.55;
+  transition: opacity 160ms ease;
+}
+
+main.chapter[data-xray="paragraph"] .xr-paragraph:hover,
+main.chapter[data-xray="paragraph"] .xr-paragraph.is-held {
+  background-color: color-mix(in srgb, var(--xr-lean, var(--color-accent-main)) 9%, transparent);
+  box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--xr-lean, var(--color-accent-main)) 9%, transparent);
+  border-radius: 0.4rem;
+}
+
+main.chapter[data-xray="paragraph"] .xr-paragraph:hover::before,
+main.chapter[data-xray="paragraph"] .xr-paragraph.is-held::before {
+  opacity: 1;
+}
+
+main.chapter[data-xray="paragraph"] .xr-paragraph[data-xr-lean="boon"] { --xr-lean: #c4922e; }
+main.chapter[data-xray="paragraph"] .xr-paragraph[data-xr-lean="bane"] { --xr-lean: #a34a2e; }
+main.chapter[data-xray="paragraph"] .xr-paragraph[data-xr-lean="bone"] { --xr-lean: #4d7f8a; }
+
+main.chapter[data-xray="paragraph"] .xr-paragraph:hover .xr-word[data-group],
+main.chapter[data-xray="paragraph"] .xr-paragraph.is-held .xr-word[data-group] {
+  background-color: color-mix(in srgb, var(--xr) 22%, transparent);
+}
+
+/* The note a held unit leaves. */
+.xr-note {
+  display: block;
+  margin: 0.35rem 0 0.2rem;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--xr, var(--xr-lean, var(--sigil-gold, #a67c38)));
+  border-radius: 0 0.5rem 0.5rem 0;
+  /* --theme-paper is translucent by design; a note over prose must not be. */
+  background:
+    linear-gradient(color-mix(in srgb, var(--theme-paper, #fffcf6) 92%, var(--color-text-main) 4%), color-mix(in srgb, var(--theme-paper, #fffcf6) 92%, var(--color-text-main) 4%)),
+    var(--bg-color-main, #f3ede1);
+  color: var(--color-text-alt);
+  font-family: var(--font-family-body);
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.45;
+  text-indent: 0;
+  text-shadow: none;
+  cursor: auto;
+}
+
+.xr-word .xr-note,
+.xr-sentence .xr-note {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  width: min(24rem, 78vw);
+  margin-top: 0.4rem;
+  box-shadow: 0 12px 32px color-mix(in srgb, #0b1627 18%, transparent);
+}
+
+main.chapter[data-xray] .xr-word.is-held,
+main.chapter[data-xray] .xr-sentence.is-held {
+  position: relative;
+}
+
+.xr-note code {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  color: var(--sigil-gold, #a67c38);
+}
+
+.xr-note a {
+  color: var(--color-accent-main);
+}
+
+/* The rail panel. */
+.xray-panel {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.75rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: var(--theme-paper);
+}
+
+.xray-panel h2 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.xray-lede {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-alt);
+}
+
+.xray-modes {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.xray-mode {
+  flex: 1 1 0;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent-alt);
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.8rem;
+  box-shadow: none;
+}
+
+.xray-mode[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 16%, transparent);
+  border-color: var(--sigil-gold, #a67c38);
+}
+
+.xray-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xray-legend li {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--xr, #8a6a36) 16%, transparent);
+  color: color-mix(in srgb, var(--xr, #8a6a36) 60%, var(--color-text-main));
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xr-word, .xr-sentence, .xr-paragraph, .xr-paragraph::before {
     transition: none;
   }
 }

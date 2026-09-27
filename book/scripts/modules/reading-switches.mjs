@@ -44,6 +44,11 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'on', new: 'off' }
   },
   {
+    id: 'xray', attribute: 'data-switch-xray', stage: 'stable', label: 'X-ray reading',
+    hint: 'Hover a word, sentence or paragraph and the structure shows through: the threads it belongs to, the way it leans. Click to hold.',
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'stacks', attribute: 'data-switch-stacks', stage: 'stable', label: 'Wander the stacks',
     hint: 'At each chapter\u2019s end: its shelf-mates in any library, by call number.',
     defaults: { returning: 'on', new: 'on' }

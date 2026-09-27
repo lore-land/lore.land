@@ -102,7 +102,7 @@
     {
       "type": "custom-boof",
       "data-mood": "mirror",
-      "data-motif": "ledger",
+      "data-motif": "key",
       "climate": {
         "tempo": "day",
         "tint": "brass",
@@ -162,11 +162,11 @@
         {
           "type": "paragraph",
           "data-content_id": "mirror-intro",
-          "text": "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what your wanting is becoming.\" The delegates looked, one by one. The boon-side saw their small wants, snug as filed keys. Mr."
+          "text": "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what your wanting is becoming.\" The delegates looked, one by one. The boon-side saw their small wants, snug as filed keys."
         },
         {
           "type": "paragraph",
-          "text": "BaneWAP looked longest, and the glass returned him honestly: every berry he had ever hoarded, pressed airless under crust, gone from sweet to bitter for want of being served. He was not a villain from elsewhere. He was the mirror of what wanting becomes when it stops handing out slices."
+          "text": "Mr. BaneWAP looked longest, and the glass returned him honestly: every berry he had ever hoarded, pressed airless under crust, gone from sweet to bitter for want of being served. He was not a villain from elsewhere. He was the mirror of what wanting becomes when it stops handing out slices."
         },
         {
           "type": "paragraph",
@@ -255,7 +255,7 @@
     },
     {
       "type": "custom-boof",
-      "data-motif": "ledger",
+      "data-motif": "key",
       "data-foreshadow": "bane-wish",
       "scene": {
         "vantage": "descending the stone stairs of Council Hill toward the slate roofs of the valley counting house",
@@ -275,7 +275,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Below the hill, two claims reached the counting room before supper. One named Boof. One called the wish an asset. The clerks pinned them side by side, shut the door, and went home. Under the desk, where no one thought to listen, the floor began to sing."
+          "text": "Below the hill, two claims reached the hall of arches before supper. One named Boof. One called the wish an asset. The clerks pinned them side by side, shut the door, and went home. Under the desk, where no one thought to listen, the floor began to sing."
         }
       ]
     }
