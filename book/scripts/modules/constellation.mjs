@@ -3,7 +3,7 @@
  *
  * Any mark on the page can be asked where else it recurs: a motif, trope or
  * foreshadow chip under a section heading, a thread chip in the colophon, a
- * thread in an x-ray note, or an element carrying data-constellation. The
+ * thread in a structure-mode note, or an element carrying data-constellation. The
  * answer is a constellation: a ring of thirteen boonberries, one per chamber,
  * lit where the thread runs (amber at the core), the chamber you are in
  * marked, and under it the sections themselves as doors. It is the shape
@@ -278,6 +278,11 @@ export function initConstellation({ announce } = {}) {
     window.removeEventListener('resize', onResize);
     pop.remove();
   };
+}
+
+/** The whole index, for modules that compare threads themselves (structure-mode brush). */
+export function semanticIndex() {
+  return loadIndex();
 }
 
 /** For other rooms (the desk): the resolved places for a key. */

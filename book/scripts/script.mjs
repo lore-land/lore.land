@@ -18,7 +18,7 @@ import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_26.A';
-import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_16.A';
+import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_27.I';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
@@ -47,12 +47,13 @@ import {
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_09_27.A';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
-import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_26.B';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_27.D';
+import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_27.I';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_27.I';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
-import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.C';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.E';
-import { initConstellation } from './modules/constellation.mjs?v=2026_09_27.E';
+import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.I';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.I';
+import { initConstellation } from './modules/constellation.mjs?v=2026_09_27.I';
+import { initSettled } from './modules/settled.mjs?v=2026_09_27.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
 
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       announce
     });
     const destroyPacking = initPinchPacking();
+    const destroySettled = initSettled();
     const destroyNook = initReadingNook({ announce });
     const destroySwitches = initReadingSwitches({ announce });
     const destroyResonance = initResonanceLayer();
@@ -241,6 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyPacking) destroyPacking();
       if (destroyLineShare) destroyLineShare();
       if (destroyNook) destroyNook();
+      if (destroySettled) destroySettled();
       if (destroySwitches) destroySwitches();
       if (destroyResonance) destroyResonance();
       if (destroyLens) destroyLens();

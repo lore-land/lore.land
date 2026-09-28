@@ -14,6 +14,8 @@
  * before first paint. Balanced is the default: nothing is weighted.
  */
 
+import { settle } from './settled.mjs?v=2026_09_27.I';
+
 import { LENSES, lensById } from './valence-lens.mjs?v=2026_09_27.A';
 
 const NOOK_KEY = 'lore.nook.v1';
@@ -225,6 +227,9 @@ export function initLensControl({ announce } = {}) {
     }
     if (spoken) {
       announce?.(describeGenre(genre));
+      const lens = dominant(genre);
+      const forward = lens ? `Paragraphs that lean ${lens} come forward; the rest step back, never away.` : 'Every lean at the same strength.';
+      settle({ sigil: '=', title: `Read as ${shortName()}`, detail: `${forward}${lens === 'boon' ? ' Scenes unfold.' : lens === 'bone' ? ' The notation surfaces.' : ''}`, at: current || toggle || control, region: 'main.chapter' });
     }
   };
 
@@ -261,6 +266,8 @@ export function initLensControl({ announce } = {}) {
   const onUp = () => {
     if (dragging) {
       dragging = false;
+      const lens = dominant(genre);
+      settle({ sigil: '=', title: `Read as ${shortName()}`, detail: lens ? `Paragraphs that lean ${lens} come forward; the rest step back, never away.` : describeGenre(genre), at: thumb, region: 'main.chapter' });
       announce?.(describeGenre(genre));
     }
   };

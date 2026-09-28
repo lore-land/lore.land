@@ -19,6 +19,7 @@
  * the offline shelf starts on, because installing is consent to keep the book.
  */
 
+import { settle } from './settled.mjs?v=2026_09_27.I';
 import { chapterPath } from './chapter-links.mjs?v=2026_02_28.I';
 
 const SWITCHES_KEY = 'lore.switches.v1';
@@ -31,61 +32,73 @@ export const SWITCHES = Object.freeze([
   {
     id: 'return-notes', attribute: 'data-switch-return-notes', stage: 'stable', label: 'Notes on what changed',
     hint: 'When you come back after a new release, a short card says what is new.',
+    effect: { on: 'Next release, a card at the top says what changed.', off: 'No card next release; the notes still live at /changes.' },
     defaults: { returning: 'on', new: 'on' }
   },
   {
     id: 'full-rail', attribute: 'data-switch-full-rail', stage: 'stable', label: 'Every instrument in the rail',
     hint: 'The rail as it was: every Spw panel beside the story, desk or no desk.',
+    effect: { on: 'Every Spw panel is back beside the story.', off: 'The rail keeps only what a reader uses; the panels live at the desk.' }, region: 'aside',
     defaults: { returning: 'on', new: 'off' }
   },
   {
     id: 'logline', attribute: 'data-switch-logline', stage: 'stable', label: 'Summary above the title',
     hint: 'The one-line summary at the top of each chapter.',
+    effect: { on: 'The one-line summary sits above each title.', off: 'Titles stand alone again.' }, region: '.chapter-logline, main.chapter .chapter-head',
     defaults: { returning: 'on', new: 'off' }
   },
   {
-    id: 'xray', attribute: 'data-switch-xray', stage: 'stable', label: 'X-ray reading',
-    hint: 'Hover a word, sentence or paragraph and the structure shows through: the threads it belongs to, the way it leans. Click to hold.',
+    id: 'xray', attribute: 'data-switch-xray', stage: 'stable', label: 'Structure mode',
+    hint: 'Tap, hold or brush words, sentences and paragraphs: the threads they belong to, the way they lean, the sign they sit under.',
+    effect: { on: 'Tap a word, hold it, or brush across a line — the structure shows through.', off: 'The prose is plain prose again.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'stacks', attribute: 'data-switch-stacks', stage: 'stable', label: 'Wander the stacks',
     hint: 'At each chapter\u2019s end: its shelf-mates in any library, by call number.',
+    effect: { on: 'Each chapter ends with its shelf-mates, by call number.', off: 'Chapters end without the shelf.' }, region: '.chapter-stacks',
     defaults: { returning: 'on', new: 'on' }
   },
   {
     id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
     hint: 'All thirteen chapters stay readable with no network: on a train, in a nook, anywhere.',
+    effect: { on: 'Keeping all thirteen chapters for reading with no network.', off: 'Only the chapters you have opened stay kept.' },
     defaults: { returning: 'off', new: 'off', installed: 'on' }
   },
   {
     id: 'scenes-open', attribute: 'data-switch-scenes-open', stage: 'stable', label: 'Open every scene',
     hint: 'Scene sketches start unfolded: where to stand, the light, the smell.',
+    effect: { on: 'Every scene sketch starts unfolded.', off: 'Scene sketches start folded.' }, region: 'main.chapter details.scene-sketch',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', label: 'Reading line',
     hint: 'Paragraphs you are not reading dim a little.',
+    effect: { on: 'Paragraphs you are not reading dim a little.', off: 'Every paragraph at full strength.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'paragraph-numbers', attribute: 'data-switch-paragraph-numbers', stage: 'trial', label: 'Numbered paragraphs',
     hint: 'Numbers in the margin, for citing a passage in a note or a workshop.',
+    effect: { on: 'Numbers in the margin of every paragraph.', off: 'The margin is clear.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'reading-time', attribute: 'data-switch-reading-time', stage: 'trial', label: 'Minutes per section',
     hint: 'How long each chamber takes, at an unhurried pace.',
+    effect: { on: 'Each chamber says how long it takes.', off: 'No minutes shown.' }, region: 'main.chapter .section-meta',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'resonance', attribute: 'data-switch-resonance', stage: 'trial', label: 'The grammar, faintly',
     hint: 'Each part of a chapter shows the Spw sigil it enacts. Tap one for its reading in the story, the stacks, and the machine.',
+    effect: { on: 'Each part shows the sigil it enacts; tap one for its readings.', off: 'The grammar steps back out of sight.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'prompts', attribute: 'data-switch-prompts', stage: 'trial', label: 'Plate prompts',
     hint: 'At the chapter’s end: image prompts composed from its scenes, ready to copy.',
+    effect: { on: "Image prompts wait at the chapter's end.", off: 'No prompts at the end.' }, region: '.chapter-prompts, main.chapter',
     defaults: { returning: 'off', new: 'off' }
   }
 ]);
@@ -428,6 +441,13 @@ export function initReadingSwitches({ announce } = {}) {
         persist(state);
         react();
         announce?.(`${entry.label}: ${input.checked ? 'on' : 'off'}.`);
+        settle({
+          sigil: input.checked ? '!' : '~',
+          title: `${entry.label}: ${input.checked ? 'on' : 'off'}`,
+          detail: input.checked ? entry.effect?.on || entry.hint : entry.effect?.off || 'Back as it was.',
+          at: input,
+          region: input.checked ? entry.region || 'main.chapter' : null
+        });
       });
       const text = document.createElement('span');
       text.className = 'reading-switch-text';

@@ -71,9 +71,9 @@ main.chapter>[data-ebook-section="true"].is-ebook-active {
 
 main.chapter>[data-ebook-section="true"][data-motif='egg'].is-ebook-active {
   box-shadow:
-    inset 3px 0 0 color-mix(in srgb, var(--color-gold, #c4922e) 78%, var(--theme-accent-main) 22%),
-    0 8px 28px color-mix(in srgb, var(--color-gold, #c4922e) 16%, transparent),
-    0 0 2.6rem color-mix(in srgb, var(--color-hearth, #b0602a) calc(10% + var(--heat, 0) * 20%), transparent);
+    inset 3px 0 0 color-mix(in srgb, var(--egg-shell-mark, var(--color-gold, #c4922e)) 78%, var(--theme-accent-main) 22%),
+    0 8px 28px color-mix(in srgb, var(--egg-shell-mark, var(--color-gold, #c4922e)) 16%, transparent),
+    0 0 2.6rem color-mix(in srgb, var(--egg-heat-mark, var(--color-hearth, #b0602a)) calc(10% + var(--heat, 0) * 20%), transparent);
 }
 
 main.chapter>[data-ebook-section="true"].is-ebook-active::before {

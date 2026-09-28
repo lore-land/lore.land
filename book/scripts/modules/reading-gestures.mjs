@@ -29,6 +29,8 @@
  *   .gesture-hint  first-run hint (touch only)
  */
 
+import { settle } from './settled.mjs?v=2026_09_27.I';
+
 const SCALE_KEY = 'lore.reader.scale.v1';
 const HINT_KEY = 'lore.reader.gesture-hint.v1';
 
@@ -126,6 +128,7 @@ export function initReadingScale(options = {}) {
     }
     if (persist && !quiet && changed) {
       announce(`Text size ${percent(current)}.`);
+      settle({ sigil: '%', title: `Text ${percent(current)}`, detail: 'The whole chapter rescales; the rail keeps its size.', at: readout, region: 'main.chapter' });
     }
     return current;
   };

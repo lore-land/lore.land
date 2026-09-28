@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_09_27.C" data-cache-context="home" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_09_27.H" data-cache-context="home" data-theme="paper" data-egg-style="opal">
 
 <head>
   <meta charset="UTF-8">
@@ -48,6 +48,14 @@
       }
     }
   </script>
+  <script>
+    try {
+      const eggStyle = localStorage.getItem('lore-egg-style-v1');
+      const smoothStyle = eggStyle === 'thorn' ? 'amber' : eggStyle;
+      if (['stone', 'opal', 'amber'].includes(smoothStyle)) document.documentElement.dataset.eggStyle = smoothStyle;
+      if (eggStyle === 'thorn') localStorage.setItem('lore-egg-style-v1', 'amber');
+    } catch { /* A blocked storage shelf leaves the default appearance. */ }
+  </script>
 
   <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_09_27.C&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_09_27.C&ctx=canon:baseline">
@@ -62,8 +70,9 @@
   <link rel="stylesheet" href="/book/styles/components/production-flow.css?v=2026_09_27.C&ctx=home:flow">
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_09_27.C"></script>
-  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_09_27.C">
+  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_09_27.H">
   <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_09_27.C"></script>
+  <script defer type="module" src="/book/scripts/home/egg-style.mjs?v=2026_09_27.H"></script>
   <script defer type="module" src="/book/scripts/home/readable.mjs?v=2026_09_27.C"></script>
 </head>
 
@@ -110,14 +119,29 @@
             <a class="chip" data-material="berry" href="/world/boonberry-commons.html">Boonberries</a>
             <a class="chip" data-material="mask" href="/scriptorium/#desk">Your desk</a>
             <a class="chip" data-material="zine" href="/zine/">Fold a zine</a>
-            <a class="chip chip--quiet" href="/topics/">All topics</a>
+            <a class="chip chip--quiet" href="#routes">All routes</a>
           </div>
+          <fieldset class="egg-style-picker" id="egg-style" aria-describedby="egg-style-hint" hidden>
+            <legend>How do you see the egg?</legend>
+            <p id="egg-style-hint">One egg, three readings of its shell.</p>
+            <div class="egg-style-options">
+              <label><input type="radio" name="egg-style" value="opal" checked><span class="egg-style-swatch" data-egg-swatch="opal" aria-hidden="true"></span>Opal</label>
+              <label><input type="radio" name="egg-style" value="stone"><span class="egg-style-swatch" data-egg-swatch="stone" aria-hidden="true"></span>Stone</label>
+              <label><input type="radio" name="egg-style" value="amber"><span class="egg-style-swatch" data-egg-swatch="amber" aria-hidden="true"></span>Amber</label>
+            </div>
+          </fieldset>
         </div>
         <figure class="hub-hero-media" data-climate="dawn" data-material="field">
-          <img src="/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp" width="1600" height="1600"
-            alt="Four painterly studies of a lone traveler crossing the fields of Lore.Land"
+          <img data-egg-variant="opal" src="/book/images/home/egg-opal-smooth-v2.webp" width="1448" height="1086"
+            alt="A smooth teal egg holds a gentle amber glow in a frosted boonberry furrow"
             fetchpriority="high" decoding="async">
-          <figcaption>Dawnward field · the morning the warm furrow opened</figcaption>
+          <img data-egg-variant="stone" src="/book/images/home/egg-stone-smooth-v2.webp" width="1448" height="1086"
+            alt="A smooth blue-grey egg holds a low amber glow beneath winter berries"
+            loading="lazy" decoding="async">
+          <img data-egg-variant="amber" src="/book/images/home/egg-amber-smooth-v1.webp" width="1448" height="1086"
+            alt="A smooth honey-amber egg glows warmly in the winter furrow"
+            loading="lazy" decoding="async">
+          <figcaption>The warm egg · one mystery, three smooth readings of its shell</figcaption>
         </figure>
       </section>
 
@@ -132,7 +156,7 @@
         </div>
         <div class="wonder-drawers">
           <details class="wonder-drawer" id="curiosity-egg">
-            <summary><span class="wonder-object wonder-object-egg" aria-hidden="true">◌</span><span><small>01 · A question with a shell</small><strong>Listen to the egg</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
+            <summary><span class="wonder-object wonder-object-egg" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 5c-8 0-14 15-14 24a14 14 0 0 0 28 0C38 20 32 5 24 5Z"/><path d="M17 22c1-5 3-8 6-10"/><path d="M17 33c3 3 8 4 13 1"/></svg></span><span><small>01 · A question with a shell</small><strong>Listen to the egg</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
             <div class="wonder-secret">
               <p>The frost says winter. The shell says otherwise. Between them, your palm becomes a season neither one has named.</p>
               <p class="wonder-whisper">Some questions hatch before they are answered.</p>
@@ -141,7 +165,7 @@
             </div>
           </details>
           <details class="wonder-drawer" id="curiosity-berry">
-            <summary><span class="wonder-object wonder-object-berry" aria-hidden="true">✳</span><span><small>02 · A summer under the snow</small><strong>Part the berry leaves</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
+            <summary><span class="wonder-object wonder-object-berry" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 6v15m0 0-11-9m11 9 12-10M24 21l-9 8m9-8 9 9"/><path d="M20 10c-3-5-8-5-11-3 1 4 4 7 9 7m11-3c2-5 6-7 10-6 0 5-3 8-9 9"/><circle cx="12" cy="33" r="5"/><circle cx="24" cy="32" r="5"/><circle cx="36" cy="34" r="5"/></svg></span><span><small>02 · A summer under the snow</small><strong>Part the berry leaves</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
             <div class="wonder-secret">
               <p>Above, the snow tucks in the field. Below, the ants keep the hearth: torches along the roots, small streets no map has room for. A berry is a little borrowed summer, passed from root to mouth.</p>
               <p class="wonder-whisper">Nobody has ever eaten one warm.</p>
@@ -150,7 +174,7 @@
             </div>
           </details>
           <details class="wonder-drawer" id="curiosity-pie">
-            <summary><span class="wonder-object wonder-object-pie" aria-hidden="true">π</span><span><small>03 · An ending that will not end</small><strong>Count the crumbs</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
+            <summary><span class="wonder-object wonder-object-pie" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 7a17 17 0 1 0 17 17H24V7Z"/><path d="M24 24 36 12M27 8l14 12M17 18l8 6-4 11"/><circle cx="39" cy="35" r="1"/><circle cx="44" cy="39" r="1"/></svg></span><span><small>03 · An ending that will not end</small><strong>Count the crumbs</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
             <div class="wonder-secret">
               <p>One pie. One spill. One more crumb. The prophecy closes its ledger; the filling quietly writes in the margin.</p>
               <p class="wonder-whisper">The remainder is where the next story begins.</p>
@@ -175,6 +199,7 @@
         </div>
         <div class="topic-board">
           <article class="topic-card" data-material="wax" data-lead="true">
+            <div class="topic-card-plate" aria-hidden="true"><img data-egg-preview src="/book/images/home/egg-opal-smooth-v2.webp" width="1448" height="1086" alt="" loading="lazy" decoding="async"><span>01 / THE FURROW</span></div>
             <p class="topic-kicker">The mystery</p>
             <h2><a href="/book/chapter/01/">The Dragon's Egg</a></h2>
             <p>A warm, unclaimed egg no map will hold—and something inside it keeping time.</p>
@@ -184,9 +209,10 @@
             </ul>
           </article>
           <article class="topic-card" data-material="hearth">
+            <div class="topic-card-plate" aria-hidden="true"><img src="/book/images/home/boonberry-village-v1.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async"><span>THE COMMONS / UNDERLIGHT</span></div>
             <p class="topic-kicker">The land listens</p>
             <h2><a href="/world/boonberry-commons.html">Boonberries</a></h2>
-            <p>Fruit that grows through winter because ants warm the soil beneath it—ordinary magic that wakes when something arrives the world has no word for yet.</p>
+            <p>A berry shrub lit from below, sheltering small hearths while the larger village gathers around it.</p>
             <ul class="trail-list">
               <li><a href="/world/boonberry-commons.html#ant-hearths">The ant hearths</a></li>
               <li><a href="/world/boonberry-commons.html">Boonberry commons</a></li>
@@ -194,6 +220,7 @@
             </ul>
           </article>
           <article class="topic-card" data-material="mask">
+            <div class="topic-card-plate" aria-hidden="true"><img src="/book/images/thumbs/03.webp" width="384" height="216" alt="" loading="lazy" decoding="async"><span>03 / THE TRAIL</span></div>
             <p class="topic-kicker">The guide</p>
             <h2><a href="/characters/boof.html">Boof · dog of the land</a></h2>
             <p>Works for the land, not for pay, and trusts an honest scent. When no map will help, she follows the heat.</p>
@@ -203,6 +230,7 @@
             </ul>
           </article>
           <article class="topic-card" data-material="berry">
+            <div class="topic-card-plate" aria-hidden="true"><img src="/book/images/thumbs/06.webp" width="384" height="216" alt="" loading="lazy" decoding="async"><span>06 / THE LANTERNS</span></div>
             <p class="topic-kicker">The prophecy</p>
             <h2><a href="/book/chapter/06/">1pi(e), destined to spill</a></h2>
             <p>A warm pie who is never smaller, and the unnamed hero fated to tip it — exactly once, never evenly.</p>
@@ -212,6 +240,7 @@
             </ul>
           </article>
           <article class="topic-card" data-material="lantern">
+            <div class="topic-card-plate" aria-hidden="true"><img src="/book/images/thumbs/13.webp" width="384" height="216" alt="" loading="lazy" decoding="async"><span>13 / THE DOOR</span></div>
             <p class="topic-kicker">Motif</p>
             <h2><a href="/topics/#motif">Marks &amp; lanterns</a></h2>
             <p>Objects that recur until the town can read them—the egg's crack, the leaning berry, the lit shell.</p>
@@ -355,27 +384,55 @@
         </ol>
       </section>
 
-      <nav class="route-rail" data-region="routes" aria-label="Primary routes from the entrance">
-        <p class="route-rail-label">Routes</p>
-        <a class="route-rail-card" href="/book/chapter/01/" data-priority="primary">
+      <nav class="route-rail" id="routes" data-region="routes" aria-label="Ways through Lore.Land">
+        <p class="route-rail-label">Choose a route <span>Eight ways into the same land</span></p>
+        <a class="route-rail-card" href="/book/chapter/01/" data-priority="primary" data-route="read">
+          <span class="route-rail-index" aria-hidden="true">01</span>
           <span class="route-rail-kicker">Read</span>
           <span class="route-rail-title">Chapter 01</span>
+          <span class="route-rail-note">Begin at the warm furrow.</span>
         </a>
-        <a class="route-rail-card" href="/topics/">
+        <a class="route-rail-card" href="/characters/boof.html" data-route="boof">
+          <span class="route-rail-index" aria-hidden="true">02</span>
+          <span class="route-rail-kicker">Meet</span>
+          <span class="route-rail-title">Boof</span>
+          <span class="route-rail-note">Follow the honest scent.</span>
+        </a>
+        <a class="route-rail-card" href="/topics/" data-route="topics">
+          <span class="route-rail-index" aria-hidden="true">03</span>
           <span class="route-rail-kicker">Discover</span>
           <span class="route-rail-title">Topics</span>
+          <span class="route-rail-note">Carry a handle between chapters.</span>
         </a>
-        <a class="route-rail-card" href="/world/civic-magic.html">
+        <a class="route-rail-card" href="/world/boonberry-commons.html" data-route="commons">
+          <span class="route-rail-index" aria-hidden="true">04</span>
+          <span class="route-rail-kicker">Wander</span>
+          <span class="route-rail-title">Boonberry commons</span>
+          <span class="route-rail-note">Find what keeps winter warm.</span>
+        </a>
+        <a class="route-rail-card" href="/world/civic-magic.html" data-route="map">
+          <span class="route-rail-index" aria-hidden="true">05</span>
           <span class="route-rail-kicker">Map</span>
           <span class="route-rail-title">Civic magic</span>
+          <span class="route-rail-note">Learn how the town works.</span>
         </a>
-        <a class="route-rail-card" href="/scriptorium/">
+        <a class="route-rail-card" href="/scriptorium/" data-route="craft">
+          <span class="route-rail-index" aria-hidden="true">06</span>
           <span class="route-rail-kicker">Craft</span>
           <span class="route-rail-title">Scriptorium</span>
+          <span class="route-rail-note">Open the reader's desk.</span>
         </a>
-        <a class="route-rail-card" href="/zine/">
+        <a class="route-rail-card" href="/folios/" data-route="folios">
+          <span class="route-rail-index" aria-hidden="true">07</span>
+          <span class="route-rail-kicker">Keep</span>
+          <span class="route-rail-title">Folios</span>
+          <span class="route-rail-note">See pages pressed under glass.</span>
+        </a>
+        <a class="route-rail-card" href="/zine/" data-route="broadside">
+          <span class="route-rail-index" aria-hidden="true">08</span>
           <span class="route-rail-kicker">Fold</span>
           <span class="route-rail-title">Broadside</span>
+          <span class="route-rail-note">Take the story in one sheet.</span>
         </a>
       </nav>
 

@@ -1205,11 +1205,11 @@ main.chapter figure[data-craft='hot'] img {
   box-shadow:
     inset 3px 0 0 color-mix(
       in srgb,
-      var(--color-gold, #c4922e) calc(70% + var(--heat) * 30%),
-      var(--color-hearth, #b0602a) calc(var(--heat) * 18%)
+      var(--egg-shell-mark, var(--color-gold, #c4922e)) calc(70% + var(--heat) * 30%),
+      var(--egg-heat-mark, var(--color-hearth, #b0602a)) calc(var(--heat) * 18%)
     ),
     0 0 calc(0.8rem + var(--heat) * 1.8rem)
-      color-mix(in srgb, var(--color-gold, #c4922e) calc(var(--heat) * 26%), transparent);
+      color-mix(in srgb, var(--egg-heat-mark, var(--color-gold, #c4922e)) calc(var(--heat) * 26%), transparent);
 }
 
 @media (prefers-reduced-motion: no-preference) {

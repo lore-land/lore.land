@@ -34,10 +34,88 @@ body[data-surface='monument'] .hub-hero-media img {
   aspect-ratio: 4 / 5;
   border-radius: inherit;
 }
+body[data-surface='monument'] .hub-hero-media img[data-egg-variant] {
+  display: none;
+}
+html[data-egg-style='opal'] body[data-surface='monument'] .hub-hero-media img[data-egg-variant='opal'],
+html[data-egg-style='stone'] body[data-surface='monument'] .hub-hero-media img[data-egg-variant='stone'],
+html[data-egg-style='amber'] body[data-surface='monument'] .hub-hero-media img[data-egg-variant='amber'] {
+  display: block;
+}
 body[data-surface='monument'] .hub-hero-media figcaption {
   padding: 1rem 0.5rem 0.45rem;
   text-align: center;
   font-style: italic;
+}
+body[data-surface='monument'][data-theme='night'] .hub-hero-media figcaption {
+  color: var(--hub-muted);
+  opacity: 1;
+}
+body[data-surface='monument'] .egg-style-picker:not([hidden]) {
+  display: block;
+  max-width: 30rem;
+  margin: 1.35rem 0 0;
+  padding: 0.85rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--hub-line);
+}
+body[data-surface='monument'] .egg-style-picker legend {
+  padding: 0 0.4rem 0 0;
+  color: var(--hub-accent-deep);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+body[data-surface='monument'] .egg-style-picker p {
+  margin: 0.25rem 0 0.7rem;
+  color: var(--hub-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+body[data-surface='monument'] .egg-style-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+body[data-surface='monument'] .egg-style-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.55rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  cursor: pointer;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+}
+body[data-surface='monument'] .egg-style-options label:has(input:checked) {
+  border-color: var(--hub-accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hub-accent) 35%, transparent);
+}
+body[data-surface='monument'] .egg-style-options input {
+  margin: 0;
+  accent-color: var(--hub-accent-deep);
+}
+body[data-surface='monument'] .egg-style-swatch {
+  display: inline-block;
+  width: 0.85rem;
+  height: 1.1rem;
+  flex: none;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 55%, transparent);
+  border-radius: 52% 52% 46% 46% / 62% 62% 38% 38%;
+}
+body[data-surface='monument'] .egg-style-swatch[data-egg-swatch='opal'] {
+  background: radial-gradient(circle at 48% 88%, #f6a339, transparent 54%), linear-gradient(135deg, #155b6a, #7cc6a4);
+}
+body[data-surface='monument'] .egg-style-swatch[data-egg-swatch='stone'] {
+  background: radial-gradient(circle at 60% 70%, #e7ab36 0 7%, transparent 28%), linear-gradient(140deg, #38475d, #101926);
+}
+body[data-surface='monument'] .egg-style-swatch[data-egg-swatch='amber'] {
+  background: radial-gradient(circle at 45% 90%, #ffcf70, transparent 55%), linear-gradient(150deg, #5da68f, #d77727);
 }
 body[data-surface='monument'] :is(.hub-opening, .hub-lede, .wonder-secret) a {
   color: var(--hub-accent-deep);
@@ -217,6 +295,93 @@ body[data-surface='monument'] .wonder-drawer small {
   text-transform: uppercase;
 }
 
+/* Three hand-drawn marks recur where the reader first meets the story's objects. */
+body[data-surface='monument'] .wonder-object svg {
+  width: 2.3rem;
+  height: 2.3rem;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body[data-surface='monument'] .wonder-object-egg { color: var(--hub-hearth-ink); }
+body[data-surface='monument'] .wonder-object-berry { color: var(--hub-berry); }
+body[data-surface='monument'] .wonder-object-pie { color: var(--hub-gold-ink); }
+body[data-surface='monument'][data-theme='night'] .wonder-object-egg { color: var(--hub-hearth); }
+body[data-surface='monument'][data-theme='night'] .wonder-object-pie { color: var(--hub-gold); }
+html[data-egg-style='opal'] body[data-surface='monument'] .wonder-object-egg,
+html[data-egg-style='amber'] body[data-surface='monument'] .wonder-object-egg {
+  color: color-mix(in srgb, #217b7c 72%, var(--hub-ink));
+}
+html[data-egg-style='opal'] body[data-surface='monument'] .wonder-object-egg svg > path:first-child,
+html[data-egg-style='amber'] body[data-surface='monument'] .wonder-object-egg svg > path:first-child {
+  fill: color-mix(in srgb, #48a7a0 18%, transparent);
+}
+html[data-egg-style='amber'] body[data-surface='monument'] .wonder-object-egg svg > path:first-child {
+  fill: color-mix(in srgb, #e6a34c 22%, transparent);
+}
+html[data-egg-style='stone'] body[data-surface='monument'] .wonder-object-egg svg > path:first-child {
+  fill: color-mix(in srgb, #16263a 22%, transparent);
+}
+
+/* The chapter plates become small windows into each route, with archive labels
+ * integrated into the image rather than another row of text in the card. */
+body[data-surface='monument'] .discovery-strip .topic-card-plate {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--material-accent, var(--hub-accent)) 44%, var(--hub-line));
+  border-radius: 0.48rem;
+  background: var(--hub-accent-deep);
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+}
+body[data-surface='monument'] .discovery-strip .topic-card-plate::after {
+  content: '';
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(transparent, rgba(9, 23, 31, 0.72));
+  pointer-events: none;
+}
+body[data-surface='monument'] .discovery-strip .topic-card-plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 260ms ease, filter 260ms ease;
+}
+body[data-surface='monument'] .discovery-strip .topic-card-plate span {
+  position: absolute;
+  z-index: 1;
+  inset: auto auto 0.5rem 0.55rem;
+  color: #fff7dc;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px #0a1720;
+}
+body[data-surface='monument'] .discovery-strip .topic-card::before {
+  display: none;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .discovery-strip .topic-card:hover .topic-card-plate img,
+  body[data-surface='monument'] .discovery-strip .topic-card:focus-within .topic-card-plate img {
+    transform: scale(1.045);
+    filter: saturate(1.08);
+  }
+}
+@media (max-width: 29rem) {
+  body[data-surface='monument'] .discovery-strip .topic-board {
+    grid-template-columns: 1fr;
+  }
+}
+html[data-packing='compact'] body[data-surface='monument'] .discovery-strip .topic-card-plate {
+  display: none;
+}
+
 /* Theme board: five doors in one row when there is room, never an orphan.
  * The kicker is a label, not a spring: only the blurb stretches, so every
  * title sits on the same line and every trail list rests on the floor. */
@@ -305,4 +470,87 @@ body[data-surface='monument'] [data-region='theme'] {
 }
 body[data-surface='monument'] .route-rail-card {
   background: color-mix(in srgb, var(--hub-panel) 60%, transparent);
+}
+
+/* Eight routes read as a small field guide: an index, a material cue, and a
+ * reason to enter each door. Scope the grid to the entrance; other pages keep
+ * their compact related-route rail. */
+body[data-surface='monument'] .route-rail[data-region='routes'] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  scroll-margin-top: 8rem;
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-label {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  margin-bottom: 0.2rem;
+  color: var(--hub-accent-deep);
+  font-size: 0.72rem;
+}
+body[data-surface='monument'] .route-rail-label span {
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card {
+  --route-accent: var(--hub-accent);
+  --route-ink: var(--hub-accent-deep);
+  position: relative;
+  min-width: 0;
+  min-height: 8rem;
+  padding: 1rem 1.05rem;
+  border-top: 2px solid var(--route-accent);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--route-accent) 12%, transparent), transparent 55%),
+    var(--hub-panel);
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-index {
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  color: color-mix(in srgb, var(--route-ink) 63%, var(--hub-muted));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  font-variant-numeric: tabular-nums;
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-kicker {
+  padding-right: 2rem;
+  color: var(--route-ink);
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-title {
+  margin-top: 0.15rem;
+  font-family: var(--hub-display);
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-note {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='commons'] { --route-accent: var(--hub-berry); }
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='folios'] { --route-accent: var(--hub-gold); }
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='broadside'] { --route-accent: var(--hub-hearth); }
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='boof'] { --route-accent: var(--hub-hearth); }
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='topics'] { --route-accent: var(--hub-berry); }
+
+@media (min-width: 35rem) {
+  body[data-surface='monument'] .route-rail[data-region='routes'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .route-rail[data-region='routes'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

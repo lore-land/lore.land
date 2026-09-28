@@ -18,7 +18,7 @@
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
 import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_09_27.D';
-import { constellationFor } from './constellation.mjs?v=2026_09_27.E';
+import { constellationFor } from './constellation.mjs?v=2026_09_27.I';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';

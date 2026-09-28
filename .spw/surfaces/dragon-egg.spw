@@ -55,12 +55,12 @@ $"worth"{
 
 !"prompt_seeds"[
   seed_01: {
-    scene: "a warm ovoid stone half-buried in scorched boonberry loam, a faint scale-pattern surfacing under the ash"
+    scene: "a smooth warm ovoid half-buried in boonberry loam, its unbroken shell catching the first light"
     vantage: "low and kneeling, a hand's breadth from the shell"
-    light: "pre-dawn coal-glow leaking through hairline cracks"
+    light: "pre-dawn amber warmth diffusing through the seamless lower shell"
     scent: "hot iron over crushed berries"
     edges: "unmelted frost ringing the rim of the burn"
-    hint: "one crack is shaped like a door"
+    hint: "a door-shaped current of light moves deep inside, with no opening yet"
     "data-motif": "egg"
     "data-foreshadow": "hatch"
   }
@@ -90,6 +90,15 @@ $"worth"{
   ember: "cracks glow orange, ash still settling, heat rising."
   cold: "shell gone grey, heat withdrawn inward — more ominous than the fire."
   waking: "a slit pupil of light widening behind the shell."
+}
+
+^"appearance_lenses"{
+  .rule: "A reader may choose how the same Egg appears. The choice changes illustration and motif color, never the Egg's identity, the prose, or what may hatch."
+  .shared: "One smooth unhatched shell in a winter furrow, rounded enough to cradle; warmth glows beneath its continuous surface while the frost at its edge remains."
+  stone: "A satin blue-grey shell with a muted teal sheen; amber warmth diffuses through its lower half."
+  opal: "A translucent teal shell; amber light pools low inside without revealing its contents."
+  amber: "A honey-amber shell with sea-green light near its crown and golden warmth held low inside."
+  .witness: "These are readings of one mystery, not three eggs or three outcomes."
 }
 
 ^"placements"[

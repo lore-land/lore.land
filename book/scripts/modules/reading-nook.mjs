@@ -12,25 +12,31 @@
  * and the sound. Sound only ever starts from the reader's own gesture.
  */
 
+import { settle } from './settled.mjs?v=2026_09_27.I';
+
 const NOOK_KEY = 'lore.nook.v1';
 const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0 });
 
 const DIALS = Object.freeze([
   {
     id: 'cozy', label: 'Coziness', min: 0.6, max: 1.5, step: 0.05,
-    words: [[0.8, 'snug'], [1.15, 'cozy'], [Infinity, 'roomy']]
+    words: [[0.8, 'snug'], [1.15, 'cozy'], [Infinity, 'roomy']],
+    effect: (v) => v < 0.8 ? 'Lines sit closer; more story per screen.' : v < 1.15 ? 'The page breathes at its usual pace.' : 'Wide margins and air between the lines.'
   },
   {
     id: 'texture', label: 'Texture', min: 0, max: 1, step: 0.05,
-    words: [[0.15, 'plain paper'], [0.8, 'soft grain'], [Infinity, 'lively']]
+    words: [[0.15, 'plain paper'], [0.8, 'soft grain'], [Infinity, 'lively']],
+    effect: (v) => v < 0.15 ? 'A flat page, nothing moving.' : v < 0.8 ? 'A faint grain under the words.' : 'Grain and motion in the paper, like a lit room.'
   },
   {
     id: 'light', label: 'Light', min: 0, max: 1, step: 0.5,
-    words: [[0.25, 'daylight'], [0.75, 'dusk'], [Infinity, 'lamplight']]
+    words: [[0.25, 'daylight'], [0.75, 'dusk'], [Infinity, 'lamplight']],
+    effect: (v) => v < 0.25 ? 'Read by day: the page at its brightest.' : v < 0.75 ? 'The room dims toward evening.' : 'A lamp on the page; the room goes dark around it.'
   },
   {
     id: 'hearth', label: 'Hearth', min: 0, max: 1, step: 0.05,
-    words: [[0.001, 'silent'], [0.4, 'a whisper of rain'], [Infinity, 'rain & embers']]
+    words: [[0.001, 'silent'], [0.4, 'a whisper of rain'], [Infinity, 'rain & embers']],
+    effect: (v) => v < 0.001 ? 'The room is quiet.' : v < 0.4 ? 'Rain, faintly, behind the story.' : 'Rain and a fire, for as long as this tab is open.'
   }
 ]);
 
@@ -260,6 +266,7 @@ export function initReadingNook({ announce } = {}) {
     input.addEventListener('change', () => {
       writeNook(state);
       announce?.(`${dial.label}: ${readout.textContent}.`);
+      settle({ sigil: '.', title: `${dial.label}: ${readout.textContent}`, detail: dial.effect?.(state[dial.id]) || '', at: input, region: dial.id === 'hearth' ? null : 'main.chapter' });
     });
 
     readout.textContent = wordFor(dial, state[dial.id]);
@@ -283,6 +290,7 @@ export function initReadingNook({ announce } = {}) {
     hearth?.set(0);
     writeNook(state);
     announce?.('Reading nook reset.');
+    settle({ sigil: '.', title: 'The usual room', detail: 'Cozy, soft grain, daylight, quiet.', at: reset, region: 'main.chapter' });
   });
   panel.append(reset);
 

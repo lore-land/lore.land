@@ -56,6 +56,14 @@
   <link id="mood-styles" rel="stylesheet">
   <script defer type="module" src="/book/scripts/script.mjs?v={{RELEASE}}"></script>
   <script>
+    /* Carry the reader's chosen appearance of the Egg into its motif marks.
+       This changes the reading light, never the chapter's words or plate. */
+    try {
+      const eggStyle = localStorage.getItem('lore-egg-style-v1');
+      const smoothStyle = eggStyle === 'thorn' ? 'amber' : eggStyle;
+      if (['stone', 'opal', 'amber'].includes(smoothStyle)) document.documentElement.dataset.eggStyle = smoothStyle;
+      if (eggStyle === 'thorn') localStorage.setItem('lore-egg-style-v1', 'amber');
+    } catch { /* Storage is optional. */ }
     /* The reading nook (modules/reading-nook.mjs) before first paint:
        coziness and texture are the room, and the room should not move. */
     try {

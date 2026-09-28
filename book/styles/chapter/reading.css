@@ -2398,3 +2398,444 @@ main.chapter .voice-kicker[data-constellation]:focus-visible {
   .constellation-here { animation: none; }
   .constellation-berry .constellation-skin { transition: none; }
 }
+
+/* ─── Settled: every change says what it changed (settled.mjs) ──────────
+ * A small card near the control — sigil, what settled, one line of
+ * consequence — and a gold sweep over the region it changed. On a phone
+ * the card is a strip at the foot of the screen. Nothing waits on it. */
+
+.settled {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.settled[hidden] { display: none !important; }
+
+.settled-card {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: min(22rem, calc(100vw - 1rem));
+  padding: 0.55rem 0.8rem 0.55rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 55%, transparent);
+  border-radius: 0.7rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--theme-paper, #fffcf6) 94%, var(--color-text-main) 3%), color-mix(in srgb, var(--theme-paper, #fffcf6) 94%, var(--color-text-main) 3%)),
+    var(--bg-color-main, #f3ede1);
+  color: var(--color-text-main);
+  box-shadow: 0 10px 28px color-mix(in srgb, #0b1627 18%, transparent);
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.settled-card.is-in { opacity: 1; transform: none; }
+.settled-card.is-out { opacity: 0; transform: translateY(-4px); transition: opacity 300ms ease, transform 300ms ease; }
+
+.settled-card.is-strip {
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 8px);
+  max-width: min(30rem, calc(100vw - 2rem));
+}
+
+.settled-card.is-strip.is-in { transform: translate(-50%, 0); }
+.settled-card.is-strip.is-out { transform: translate(-50%, -4px); }
+
+.settled-sigil {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 18%, transparent);
+  color: var(--sigil-gold, #a67c38);
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.95rem;
+  animation: settled-pip 600ms ease-out;
+}
+
+@keyframes settled-pip {
+  0% { transform: scale(0.6); box-shadow: 0 0 0 0 color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent); }
+  60% { transform: scale(1.08); }
+  100% { transform: none; box-shadow: 0 0 0 0.6rem transparent; }
+}
+
+.settled-text { display: grid; gap: 0.05rem; min-width: 0; }
+
+.settled-title {
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.settled-detail {
+  font-family: var(--font-family-body);
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--color-text-alt);
+}
+
+/* The sweep: a hairline of gold crosses the region that changed. */
+.is-settling { position: relative; }
+.is-settling::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--sigil-gold, #a67c38) 14%, transparent) 50%, transparent 70%);
+  background-size: 260% 100%;
+  animation: settled-sweep 900ms ease-out forwards;
+}
+
+@keyframes settled-sweep {
+  from { background-position: 120% 0; opacity: 1; }
+  to { background-position: -120% 0; opacity: 0; }
+}
+
+/* ─── X-ray gestures: tap, hold, brush (xray-reading.mjs) ─────────────── */
+
+/* A pressed unit tightens; a let-go unit leaves a trace that fades. */
+main.chapter[data-xray] .is-pressing {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--xr, var(--xr-lean, var(--sigil-gold, #a67c38))) 55%, transparent);
+  border-radius: 3px;
+  transition: box-shadow 480ms ease-in;
+}
+
+main.chapter[data-xray] .is-traced {
+  animation: xr-trace 2600ms ease-out forwards;
+  border-radius: 3px;
+}
+
+@keyframes xr-trace {
+  0% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--sigil-gold, #a67c38) 50%, transparent), 0 0 0.8rem color-mix(in srgb, var(--sigil-gold, #a67c38) 35%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent, 0 0 0 transparent; }
+}
+
+/* A pin: a small gold mark and a lasting outline; pins outlast taps. */
+main.chapter[data-xray] .is-pinned {
+  position: relative;
+  outline: 1.5px dashed color-mix(in srgb, var(--sigil-gold, #a67c38) 75%, transparent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+main.chapter[data-xray] .xr-word.is-pinned::after,
+main.chapter[data-xray] .xr-sentence.is-pinned::after {
+  content: "&";
+  position: absolute;
+  top: -0.9em;
+  right: -0.35em;
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.6rem;
+  line-height: 1;
+  color: var(--sigil-gold, #a67c38);
+  pointer-events: none;
+}
+
+main.chapter[data-xray="paragraph"] .xr-paragraph.is-pinned::before {
+  content: "&";
+  opacity: 1;
+  color: var(--sigil-gold, #a67c38);
+}
+
+/* Brushing: each word crossed lights in order, thread by thread. */
+main.chapter[data-xray].is-brushing,
+main.chapter[data-xray].is-brushing .xr-word,
+main.chapter[data-xray].is-brushing .xr-sentence,
+main.chapter[data-xray].is-brushing .xr-paragraph {
+  cursor: crosshair;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+main.chapter[data-xray].is-brushable [data-ebook-section] > p,
+main.chapter[data-xray].is-brushable .voice-pull {
+  touch-action: none;
+}
+
+main.chapter[data-xray] .xr-word.is-brushed {
+  --brush-color: var(--xr, var(--sigil-gold, #a67c38));
+  background-color: color-mix(in srgb, var(--brush-color) 24%, transparent);
+  color: color-mix(in srgb, var(--brush-color) 55%, var(--color-text-main));
+  box-shadow: 0 0 0.45rem color-mix(in srgb, var(--brush-color) 30%, transparent);
+  border-radius: 3px;
+  animation: xr-brush-in 260ms ease-out backwards;
+  animation-delay: calc(var(--brush-i, 0) * 18ms);
+  transition: background-color 1200ms ease, color 1200ms ease, box-shadow 1200ms ease;
+}
+
+main.chapter[data-xray] .xr-word.is-brushed:not([data-group]) {
+  --brush-color: var(--sigil-gold, #a67c38);
+  background-color: color-mix(in srgb, var(--brush-color) 12%, transparent);
+  color: inherit;
+  box-shadow: none;
+}
+
+main.chapter[data-xray] .xr-word.is-brushed.is-fading {
+  background-color: color-mix(in srgb, var(--brush-color) 7%, transparent);
+  color: inherit;
+  box-shadow: none;
+}
+
+main.chapter[data-xray] .xr-word.is-brushed.is-fading[data-group] {
+  background-color: color-mix(in srgb, var(--brush-color) 12%, transparent);
+}
+
+@keyframes xr-brush-in {
+  from { transform: translateY(-0.12em); opacity: 0.6; }
+  to { transform: none; opacity: 1; }
+}
+
+main.chapter[data-xray] .xr-sentence.is-brushed,
+main.chapter[data-xray] .xr-paragraph.is-brushed {
+  border-radius: 3px;
+}
+
+/* The brush note: what the sweep found, and where those threads meet again. */
+.xr-brush-note {
+  position: relative;
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.55rem 0 0.25rem;
+  padding: 0.6rem 2rem 0.6rem 0.8rem;
+  border-left: 3px solid var(--sigil-gold, #a67c38);
+  border-radius: 0 0.55rem 0.55rem 0;
+  background:
+    linear-gradient(color-mix(in srgb, var(--theme-paper, #fffcf6) 92%, var(--color-text-main) 4%), color-mix(in srgb, var(--theme-paper, #fffcf6) 92%, var(--color-text-main) 4%)),
+    var(--bg-color-main, #f3ede1);
+  color: var(--color-text-alt);
+  font-family: var(--font-family-body);
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.45;
+  text-indent: 0;
+  text-shadow: none;
+  cursor: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  animation: xr-note-in 260ms ease-out;
+}
+
+@keyframes xr-note-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.xr-brush-note > div { margin: 0; text-indent: 0; }
+
+/* The paragraph after a brush note keeps its indent, as after any paragraph. */
+main.chapter .xr-brush-note + p { text-indent: 1.6em; }
+
+.xr-brush-head {
+  font-family: var(--chapter-display, Georgia, serif);
+  color: var(--color-text-main);
+}
+
+.xr-thread {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  margin: 0.1rem 0;
+  padding: 0.08rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--xr, #8a6a36) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--xr, #8a6a36) 16%, transparent);
+  color: color-mix(in srgb, var(--xr, #8a6a36) 60%, var(--color-text-main));
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.xr-thread:hover { background: color-mix(in srgb, var(--xr, #8a6a36) 28%, transparent); }
+
+.xr-thread-count { opacity: 0.7; font-size: 0.6rem; }
+
+.xr-thread[data-group-index="0"], .xray-pin-meta[data-group-index="0"] { --xr: var(--xr-0); }
+.xr-thread[data-group-index="1"], .xray-pin-meta[data-group-index="1"] { --xr: var(--xr-1); }
+.xr-thread[data-group-index="2"], .xray-pin-meta[data-group-index="2"] { --xr: var(--xr-2); }
+.xr-thread[data-group-index="3"], .xray-pin-meta[data-group-index="3"] { --xr: var(--xr-3); }
+.xr-thread[data-group-index="4"], .xray-pin-meta[data-group-index="4"] { --xr: var(--xr-4); }
+.xr-thread[data-group-index="5"], .xray-pin-meta[data-group-index="5"] { --xr: var(--xr-5); }
+.xr-thread[data-group-index="6"], .xray-pin-meta[data-group-index="6"] { --xr: var(--xr-6); }
+.xr-thread[data-group-index="7"], .xray-pin-meta[data-group-index="7"] { --xr: var(--xr-7); }
+.xr-thread[data-group-index="8"], .xray-pin-meta[data-group-index="8"] { --xr: var(--xr-8); }
+.xr-thread[data-group-index="9"], .xray-pin-meta[data-group-index="9"] { --xr: var(--xr-9); }
+
+.xr-lean {
+  font-family: var(--font-family-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.xr-lean[data-lean="boon"] { color: #c4922e; }
+.xr-lean[data-lean="bane"] { color: #a34a2e; }
+.xr-lean[data-lean="bone"] { color: #4d7f8a; }
+
+.xr-brush-meet { color: var(--color-text-alt); }
+
+.xr-chamber {
+  font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  color: var(--color-accent-main);
+}
+
+strong.xr-chamber { color: var(--sigil-gold, #a67c38); }
+
+.xr-brush-close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-alt);
+  font-size: 1rem;
+  line-height: 1;
+  box-shadow: none;
+}
+
+/* The rail: brush-with-a-finger, and the pins held. */
+.xray-brushable {
+  justify-self: start;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent-alt);
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.76rem;
+  box-shadow: none;
+}
+
+.xray-brushable[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 16%, transparent);
+  border-color: var(--sigil-gold, #a67c38);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .xray-brushable { display: none; }
+}
+
+.xray-pins {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+}
+
+.xray-pins h3 {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sigil-gold, #a67c38);
+}
+
+.xray-pin-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xray-pin-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 0.3rem;
+  align-items: center;
+  max-width: none;
+  padding: 0;
+}
+
+.xray-pin-text {
+  grid-column: 1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-main);
+  font-family: var(--font-family-body);
+  font-size: 0.78rem;
+  text-align: left;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.xray-pin-text:hover { color: var(--color-accent-main); }
+
+.xray-pin-meta {
+  grid-column: 1;
+  font-family: var(--font-family-heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--xr, var(--color-text-alt)) 70%, var(--color-text-main));
+}
+
+.xray-pin-drop {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-alt);
+  box-shadow: none;
+}
+
+.xray-pin-share {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--color-text-alt);
+}
+
+.xray-pins-clear {
+  justify-self: start;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent-alt);
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.72rem;
+  box-shadow: none;
+}
+
+/* A held finger is a pin, not a selection or a callout. */
+@media (pointer: coarse) {
+  main.chapter[data-xray] .xr-paragraph {
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  main.chapter[data-xray] .xr-note,
+  main.chapter[data-xray] .xr-brush-note {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settled-card { transition: opacity 200ms ease; transform: none; }
+  .settled-card.is-strip { transform: translate(-50%, 0); }
+  .settled-sigil, .is-settling::after, .xr-word.is-brushed, .xr-brush-note { animation: none; }
+  main.chapter[data-xray] .is-traced { animation: none; }
+}
