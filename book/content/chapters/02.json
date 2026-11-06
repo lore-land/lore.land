@@ -127,11 +127,35 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern and hazel-switch, where the air smelled damp—and somehow twice breathed. She stopped beneath the first tree. Nothing moved. Something arrived again."
+          "text": "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern and hazel-switch, where the air smelled {{grove-air}}—and somehow twice breathed. She stopped beneath the first tree. Nothing moved. Something arrived again.",
+          "slots": {
+            "grove-air": {
+              "clock": "hour",
+              "variants": [
+                "damp",
+                "of wet bark",
+                "of crushed fern",
+                "green",
+                "of rain on its way"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
-          "text": "She laid the egg on a mossy stone. Pollen hung in rings between the trunks, catching the light; her breath went out and came back thin, a little late. Then the hum returned. Again. Each time it carried something different: rain on leaves, the smell of supper, a door opening onto a morning she almost knew. The grove was trying out futures. None had happened yet."
+          "text": "She laid the egg on a mossy stone. Pollen hung in rings between the trunks, catching the light; her breath went out and came back thin, a little late. Then the hum returned. Again. Each time it carried something different: {{rehearsed-futures}}. The grove was trying out futures. None had happened yet.",
+          "slots": {
+            "rehearsed-futures": {
+              "clock": "minute",
+              "variants": [
+                "rain on leaves, the smell of supper, a door opening onto a morning she almost knew",
+                "snow on a sill, a kettle coming to the boil, a gate swinging onto a lane she almost knew",
+                "hail on a roof, bread cooling on a ledge, a window opening onto a summer she almost knew",
+                "wind in barley, the smell of a hot stone, a stair climbing to a room she almost knew",
+                "rain in a gutter, apples stewing somewhere, a voice calling across a yard she almost knew"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -202,7 +226,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The same workers said, usually over a second cup of birch-sap tea, that hob-deer grazed in here: deer no taller than a boot, cropping the moss on days nobody keeps. Asked which days those were, they could never say, and took that as proof. Boof found one patch of moss cropped short and tidy. She had been fooled by rabbits before."
+          "text": "The same workers said, usually over a second cup of birch-sap tea, that hob-deer grazed in here: deer no taller than a boot, cropping the moss on days nobody keeps. Asked which days those were, they could never say, and took that as proof. Boof found one patch of moss cropped short and tidy. She had been fooled by {{fooled-by}} before. Keep the morning, not the week, the workers say of dogs; nobody had thought to ask her which day this was.",
+          "slots": {
+            "fooled-by": {
+              "clock": "day",
+              "variants": [
+                "rabbits",
+                "voles",
+                "a hare with tidy habits",
+                "dormice",
+                "a very thorough slug"
+              ]
+            }
+          }
         }
       ],
       "scene": {
@@ -295,7 +331,23 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof paced the fork, nose to moss, while the grove offered rain, harvest, a road back to a better morning. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept coming back for another try. She could spend her whole life here listening to almost."
+          "text": "Boof paced the fork, nose to moss, while the grove offered {{offered-futures}}. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept coming back for another try. She could spend her whole life here listening to almost.",
+          "slots": {
+            "offered-futures": {
+              "clock": "hour",
+              "variants": [
+                "rain, harvest, a road back to a better morning",
+                "snow, a full larder, a lane back to a kinder spring",
+                "thaw, a long table, a path back to a gentler evening",
+                "hail, a good apple year, a road back to an easier spring",
+                "a dry summer, a wedding, a gate back to a warmer morning"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Try it again, a little changed: that is all the grove is doing, the woodcutters say, and they will not hear it called lying. They say it at the saw-pit too, to a cut that binds — back the blade out, set it a hair lower, keep the cut that runs. Boof had let a whole day of tries go by. Only one had held. It lay on the stone where she had put it, and the moss under it had dried pale."
         },
         {
           "type": "paragraph",
@@ -354,7 +406,19 @@
         },
         {
           "type": "paragraph",
-          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and cedar shavings in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course."
+          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and {{collar-litter}} in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course.",
+          "slots": {
+            "collar-litter": {
+              "clock": "hour",
+              "variants": [
+                "cedar shavings",
+                "a curl of cedar bark",
+                "two birch leaves and a beetle",
+                "a sprig of hazel catkins",
+                "a pinch of cedar dust and one small fern"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -410,7 +474,64 @@
       },
       {
         "description": "Torch-ants will not settle where a light comes back to them twice, so the grove's roots stay cold and its wild rows flicker. Grove workers add, over birch-sap tea, that hob-deer no taller than a boot graze there on days nobody keeps."
+      },
+      {
+        "description": "Try it again, a little changed: the woodcutters' word for what the grove does when it repeats you a beat late. Not lying; rehearsing. They say it at the saw-pit to a cut that binds, and keep the cut that runs."
       }
     ]
+  },
+  "table": {
+    "place": "The grove downhill of the field: birch, fern and hazel-switch, hollow cedars loud with wrens, and rings of gold pollen hanging between the trunks round a mossy stone. Everything said here comes back a beat late and a little changed. Past the inner ring lies the listening thicket, where every step presses an unfinished thing out of the leaf-mold — half a lullaby, the first word of a prayer — and wild boonberries hook your sleeve from thorned runners over roots cold all the way down. At the far edge stands a lightning-split dead tree, and beyond it, salt-glare.",
+    "light": "Green noon strained through the canopy, brightest in the pollen rings where the air is rehearsing; it goes moth-soft toward evening, and the wild berries flicker brighter whenever an echo tries out a future they remember the taste of.",
+    "people": [
+      {
+        "name": "a sawyer at the saw-pit",
+        "want": "to fell the right cedar before the storm on the biggest moth's wing arrives",
+        "voice": "Reads the wings before felling and is cheerfully wrong a third of the time; will not hear the grove called a liar."
+      },
+      {
+        "name": "your own echo",
+        "want": "to be followed round the hollow cedar and back",
+        "voice": "One player's own voice from years ago: careful, hopeful, still asking for things."
+      },
+      {
+        "name": "a field-hand on her second cup of birch-sap tea",
+        "want": "for someone, anyone, to see a hob-deer and say so",
+        "voice": "Swears to it. Cannot say which days nobody keeps, and takes that as proof."
+      }
+    ],
+    "hooks": [
+      "Prints on the felling line. Cloven prints have started pressing into the moss along the line the sawyers mean to fell, and nobody will cut while something tall is standing there unseen. Find out what it is waiting for — by the prints, by the moss, by what the wrens repeat — without ever seeing it. Nobody has.",
+      "The end of the lullaby. A grandmother in the town has lost the end of the song she sang her children, and its first half presses out of the thicket's leaf-mold every seven paces. The thicket keeps only starts. The ending will have to be tried again, a little changed, until one holds; she will know it when she hears it.",
+      "Warm the wild rows. A field-hand wants the thicket's berries to hold their light instead of flickering, but torch-ants will not settle where a light comes back to them twice. Find a hollow in the grove where nothing answers, or a way to hush one, and then persuade the most particular creatures in the land to move house."
+    ],
+    "encounters": [
+      "Someone coughs, and three cedars cough after them, politely, one at a time — the third a little changed, as if it had a better idea.",
+      "An echo in one character's younger voice says “Follow me.” The path forks round a hollow cedar and rejoins, and whoever followed arrives a beat after the rest of the party for the rest of the day.",
+      "A pollen ring tightens round something one of you set down, and a second one shivers in the air a breath behind it: the grove trying out a future where it has already been given away, then setting it back down, unconvinced.",
+      "Cloven prints press into the moss a pace from someone's shoulder and walk off between the birches with nothing above them. The moss sighs up behind each one. There is no scent at all.",
+      "Toward dusk the rehearsal moths come off the bark to sun themselves on anything warm. Their wings carry drizzle, a hard white glare like light off salt, and on the biggest, a grey-green storm sitting on a hill.",
+      "A patch of moss cropped short and tidy. Hob-deer, swears the field-hand. A very thorough slug, says everyone else."
+    ],
+    "finds": [
+      {
+        "wonder": "echo-wrens",
+        "use": "A wren sings anything back a beat late: a password, a name, a tune you have half forgotten. The catch: what comes back is a little changed, and in the grove the changed one is the one people remember."
+      },
+      {
+        "wonder": "rehearsal-moths",
+        "use": "Read the wings at dusk and you know tomorrow's weather, a little smudged. The catch: the woodcutters are wrong a third of the time reading them, and nobody can tell which third until tomorrow."
+      },
+      {
+        "wonder": "lag-stag",
+        "use": "Its prints press down a beat after it has passed; watch where they stop and you know where something tall stood looking down. The catch: no musk, no breath, nothing for a nose — and nobody, at any table, ever sees it."
+      }
+    ],
+    "bracework": {
+      "spw": "<moth ~ morning>",
+      "does": "A passage where a moth dreams of being tomorrow. Walk through and for one breath you stand in the weather on its wing, close enough to see what the sawyers will be felling into.",
+      "costs": "You come back a beat late — your words land after your mouth has stopped — until you sleep. And the moth whose wing you walked through is blank by morning, so the grove's almanac is a day short."
+    },
+    "question": "The grove keeps every start. Which one of yours is out there in the leaf-mold — and if it came back to you a little changed, would you keep it?"
   }
 }

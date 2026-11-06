@@ -168,12 +168,36 @@
         },
         {
           "type": "paragraph",
-          "text": "The kiln stood just inside the gate, breathing a smell like a hot coin. Its soot-furred keeper saw the gold crack in the egg's crown and lifted her tongs. “We take cracks,” she said kindly. Boof stepped wide. This crack was not hers to shut.",
+          "text": "The kiln stood just inside the gate, breathing a smell like {{kiln-smell}}. Its soot-furred keeper saw the gold crack in the egg's crown and lifted her tongs. “We take cracks,” she said kindly. Boof stepped wide. This crack was not hers to shut.",
+          "slots": {
+            "kiln-smell": {
+              "clock": "hour",
+              "variants": [
+                "a hot coin",
+                "a scorched thimble",
+                "struck flint",
+                "a kettle boiled dry",
+                "a horseshoe off the anvil"
+              ]
+            }
+          },
           "lean": "bane"
         },
         {
           "type": "paragraph",
-          "text": "The lanterns were honest in the one way that mattered — they showed light without claiming to be it. Most were dent-lanterns, and every dent threw a bright crease on the cobbles: a street the light remembers. Some of those streets had since moved. Boof followed one round a bakery and came out where she began, smelling of bread."
+          "text": "The lanterns were honest in the one way that mattered — they showed light without claiming to be it. Most were dent-lanterns, and every dent threw a bright crease on the cobbles: a street the light remembers. Some of those streets had since moved. Boof followed one round a bakery and came out where she began, smelling of {{bakery-air}}.",
+          "slots": {
+            "bakery-air": {
+              "clock": "hour",
+              "variants": [
+                "bread",
+                "caraway",
+                "treacle",
+                "seed-cake",
+                "hot rye"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -181,7 +205,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Then rain came, fine as flour, and the city rang. Its chime-gutters are tuned like a shelf of cups, and a sound roof rings bell-bright. Two lanes along, one rang flat. A roofer stopped mid-bite, said “Cobbler's, back corner,” and went off with the rest of his bun."
+          "text": "Then rain came, fine as {{rain-fine}}, and the city rang. Its chime-gutters are tuned like a shelf of cups, and a sound roof rings bell-bright. Two lanes along, one rang flat. A roofer stopped mid-bite, said “Cobbler's, back corner,” and went off with the rest of his bun.",
+          "slots": {
+            "rain-fine": {
+              "clock": "hour",
+              "variants": [
+                "flour",
+                "sifted sugar",
+                "kiln-ash",
+                "pollen",
+                "chalk-dust"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -224,7 +260,19 @@
         },
         {
           "type": "paragraph",
-          "text": "But pane-snails had been at the soot, grazing it off by night in slow silver loops, and where one had passed the glass was forgiven clear right through: no Boof, no warmth, only a wet step, a cat on a sill, a corner. Boof sniffed a trail, chalk and cold rain, and went the way it showed her.",
+          "text": "But pane-snails had been at the soot, grazing it off by night in slow silver loops, and where one had passed the glass was forgiven clear right through: no Boof, no warmth, only a wet step, {{through-the-pane}}, a corner. Boof sniffed a trail, chalk and cold rain, and went the way it showed her.",
+          "slots": {
+            "through-the-pane": {
+              "clock": "minute",
+              "variants": [
+                "a cat on a sill",
+                "a sparrow on a railing",
+                "a mop in a pail",
+                "a boot on a scraper",
+                "a crow on a chimney-pot"
+              ]
+            }
+          },
           "lean": "boon"
         },
         {
@@ -279,13 +327,31 @@
         },
         {
           "type": "paragraph",
-          "text": "A stall between the chestnut drum and the umbrella-mender sold brace-boxes: small glass boxes with sigil-etched lids, each fogged with a weather nobody had planned. The stall-keeper wrote every lid before she sealed it, so a box could be checked, and refused, before it was made.",
+          "text": "A stall between {{stall-neighbour}} and the umbrella-mender sold brace-boxes: small glass boxes with sigil-etched lids, each fogged with a weather nobody had planned. The stall-keeper wrote every lid before she sealed it, so a box could be checked, and refused, before it was made.",
+          "slots": {
+            "stall-neighbour": {
+              "clock": "day",
+              "variants": [
+                "the chestnut drum",
+                "the cider urn",
+                "the toffee pan",
+                "the tinker's barrow",
+                "the bootlace-seller"
+              ]
+            }
+          },
           "lean": "bone"
         },
         {
           "type": "paragraph",
           "text": "{frost & hearth} snowed warm flakes on a thumbnail of hearthstone. (cat & bath) held nothing at all. Boof stopped at [grove @ dog], where cedars no taller than barley turned, very slightly, to look at her. Then every box on the shelf brightened toward the egg.",
           "lean": "boon"
+        },
+        {
+          "type": "bracework",
+          "spw": "[grove @ dog]",
+          "gloss": "Square braces make a window you can only look into, and the @ lets the grove watch the dog back, which changes both a little.",
+          "maker": "the brace-box keeper"
         },
         {
           "type": "paragraph",
@@ -308,6 +374,10 @@
           "type": "paragraph",
           "text": "He turned it over. A second page lay glassed beneath, older, the same hill drawn smaller. Folios, he told the child: whenever the story changed you took one to the folio press, which glassed it flat and warm over the last, so nothing known was lost, only layered. Boof put her nose to the edge. It smelled of pressure and heat and, faintly, of the day it was made.",
           "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "The child licked a thumb to rub the rain-smear out. The porter caught it first. “Glass over, never scrape,” he said, the glaziers' first law, and set the thumb on the glass instead. It left a small print that smelled, to Boof, of boonberry. “Next time this goes under the press, so does that,” said the porter. “Then you're in it.” Across the table a glazier with lead under her nails nodded. “At the map-house they say first ink stays. Same law. Wetter town.”"
         },
         {
           "type": "paragraph",
@@ -429,7 +499,69 @@
       },
       {
         "description": "A plaza stall sells brace-boxes: pocket weathers combined from two nouns, a sigil, and braces, written on the lid first so they can be checked and refused. They hold only what both nouns agree on and run on borrowed warmth — every one brightened toward the egg."
+      },
+      {
+        "description": "Glass over, never scrape — the glaziers' first law. A folio is never scraped to mend it: the new page is glassed over the old, and a child's thumbprint left on the glass goes under the press with it. A glazier at BoonWAP's table calls it the map-house rule, first ink stays, in a wetter town."
       }
     ]
+  },
+  "table": {
+    "place": "Bonk City at lamp-lighting: a labyrinth of crooked, rain-slick lanes where every pane was melted down from something struck and every lantern post is warm where it was once dented. Put a palm to a pane and you can feel, faintly, the blow it forgave; follow the bright crease a dent-lantern throws on the cobbles and you may walk a street that has since moved. The air is hot crust, kiln-iron, lamp oil and wet brass, and every lane winds, eventually, to a round plaza where a pie holds court and is never smaller.",
+    "light": "Deep blue dusk, then lantern-gold pooling in every dent and crease; rain turns the cobbles to long gold mirrors and sets the chime-gutters ringing. In the small hours the lamps burn low, pane-snails come out to graze the soot, and the one clear pane in a backward-hung alley is the only honest window in it.",
+    "people": [
+      {
+        "name": "the kiln-keeper",
+        "want": "one more cracked thing to forgive before the fire banks; a kiln with nothing in it sulks",
+        "voice": "Soot-furred to the elbows and kind as a nurse; reaches for anything cracked with her tongs — “We take cracks” — and takes no for an answer, the first time."
+      },
+      {
+        "name": "the lamplighter",
+        "want": "to finish her round before the rain does, because every dark post is a lane somebody will walk wrong",
+        "voice": "Three clacks of the lamp-ladder, one ring of the bell, and directions that are true eventually: “Everything's that way.”"
+      },
+      {
+        "name": "the brace-box keeper",
+        "want": "to sell a box nobody will regret, which means reading every lid aloud before she seals it",
+        "voice": "Writes first, seals second, refuses third; says “Only what both nouns agree on” the way a baker says “Mind, it's hot.”"
+      },
+      {
+        "name": "the server",
+        "want": "to sit down for one whole slice; the pie is never smaller, and neither is the washing-up",
+        "voice": "Cheerful, rubbing her wrist — “Enough for everyone. Always.” — then a long look at the sink."
+      }
+    ],
+    "hooks": [
+      "A street has moved. The bakery that smelled of hot rye is gone from its lane, though its bread-smell still comes through the wall, and the only map to where it went is the crease one dent-lantern throws on the cobbles. Walk the street the light remembers, find the shop, and get the morning loaves to the plaza before dawn puts that lantern out.",
+      "Someone scraped a folio. A lane's page was rubbed clean to fix a mistake instead of being glassed over, and now three households remember three different streets and none of them can prove it. The glaziers will not press a new page over a hole. Find out what was scraped and why, and rebuild the lost layer from what neighbours, lanterns and pane-snail trails still remember.",
+      "Something in the cobbler's lane has gone cold: the oven, the cat, the cobbler's temper. In a back room, a brace-box bought at the plaza stall — its lid smudged past reading — is fogging a small, glad weather on borrowed warmth. Trace what it is borrowing from, then decide: hold the box and keep its weather, or let it go cold in its week and give the lane its warmth back. The child who bought it has opinions."
+    ],
+    "encounters": [
+      "Rain fine as kiln-ash, and the chime-gutters ring like a shelf of cups — except one roof, two lanes over, ringing flat. A roofer with half a bun asks whoever is nearest to hold his ladder.",
+      "A backward-hung alley: every pane shows the party themselves, warmly lit, flattering and no help at all, until someone finds a pane-snail's clear silver trail and looks through it.",
+      "The kiln-keeper spots something cracked in someone's kit — a cup, a fiddle, a shield — and offers, kindly, to forgive it into glass. It will come back clear, and it will never ring the same.",
+      "By the chestnut drum, two children walking brass pie-dividers round a paper pie demand that an adult judge the leftover sliver. Whoever rules will be argued with, at length, by both.",
+      "A lamplighter's lamp-ladder jams half out of its walking-staff shape. Until it is freed, three lanes stay dark, and the creases on their cobbles point to streets that are no longer there.",
+      "Over the back wall, where no street goes, two gate-pigeons rise into the lamplight fast asleep and sink again; a porter mutters that the storm-weight groaned worse tonight."
+    ],
+    "finds": [
+      {
+        "wonder": "folio-press",
+        "use": "Glass a page flat and warm over the last one: the new story of a place is kept, and the old one stays readable underneath. The catch: a folio only ever gets heavier, nothing pressed comes back out, and the press refuses any page with a scraped hole in it."
+      },
+      {
+        "wonder": "dent-lanterns",
+        "use": "Follow a lantern's bright crease and walk a street the light remembers, including streets that have since moved. The catch: you arrive where the street used to go, which may now be someone's kitchen, and the crease only shows while the lamp is lit."
+      },
+      {
+        "wonder": "brace-boxes",
+        "use": "Etch two nouns, a sigil and braces on the lid and the box fogs into a small weather of only what both nouns agree on. The catch: it runs on borrowed warmth — a week, if nobody holds it — and something nearby goes that much colder. The torch-ants could tell you where from."
+      }
+    ],
+    "bracework": {
+      "spw": "<dent ~ street>",
+      "does": "A passage where a lantern's dent dreams it is a street again: for one crossing you can walk a lane the light remembers, even one that moved away years ago. You can go through. You cannot stay.",
+      "costs": "The lantern it was struck from goes dark for a night, the lamplighter's round comes up one post short, and somebody, somewhere, walks the wrong way home."
+    },
+    "question": "What crack does each of you carry that is not the kiln's to shut — and what would the glass remember of it if you let her?"
   }
 }

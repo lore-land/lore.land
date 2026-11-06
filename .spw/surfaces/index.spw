@@ -14,6 +14,7 @@
   &dragon_egg: "@spw/surfaces/dragon-egg.spw"
   &wonder_about_pie: "@spw/surfaces/wonder-about-pie.spw"
   &almanac: "@spw/surfaces/almanac.spw"
+  &knobs: "@spw/surfaces/knobs.spw"
   &cullet_deck: "@spw/surfaces/cullet-deck.spw"
 }
 

@@ -3,7 +3,8 @@
   "kinds": {
     "creature": "Bestiary",
     "contrivance": "Contrivances",
-    "bracework": "Bracework"
+    "bracework": "Bracework",
+    "saying": "Sayings"
   },
   "wonders": [
     {
@@ -17,6 +18,18 @@
       ],
       "note": "Keep lit streets along the berry roots all winter, so the field never freezes through. Businesslike; very particular about torches.",
       "hint": "Something keeps the field warm from underneath.",
+      "prompt": {
+        "vantage": "cheek to the frost at the lip of a dug furrow, a working dog's nose an inch from an ant street cut open in the loam",
+        "light": "frost-white grey dawn above; below, pinprick torches tallow-yellow and ember-warm along the berry roots, the only warmth in the field",
+        "scent": "thawed loam, ant-smoke like a snuffed wick, cold berry juice, a bread-warmth under the frost",
+        "edges": [
+          "a torch-ant relighting a neighbour's torch from the right corner while the whole street waits",
+          "a single-file detour of pinpricks bending around the break in their street",
+          "teal boonberries asleep under ice above the roots, each keeping an amber drop of light",
+          "a child's ear-print pressed into the rime at the top of the furrow"
+        ],
+        "hint": "cross-section of a frost-bitten berry field at grey dawn, tiny torch-ants keeping lamp-lit streets along loam-dark berry roots, single-file torch processions, one ant relighting a torch at the correct corner while the street waits, ice-sleeping teal berries above with amber cores, warm from underneath, painterly, businesslike wonder"
+      },
       "home": 1,
       "echoes": [
         2,
@@ -36,6 +49,18 @@
       ],
       "note": "Small brown wrens that sing a beat late. They nest in hollow cedars; a wren-call is the grove saying again.",
       "hint": "A bird in the grove that is always a little behind.",
+      "prompt": {
+        "vantage": "belly-low in old leaves at the grove's rim, looking up the split trunk of a hollow cedar where a wren pair nests",
+        "light": "green noon strained through cedar canopy, teal in the shade, with brighter pollen-gold rings hanging in the air where a sound is about to come again",
+        "scent": "shredded cedar bark, crushed fern, wet moss, resin on a woodcutter's axe",
+        "edges": [
+          "three hollow cedars in a row, a small brown wren at each knothole, beaks opening one after another",
+          "a woodcutter's axe stopped mid-swing at the clearing edge, a chip still in the air",
+          "a shaggy dark working dog mid-sneeze, the cedars answering it one at a time",
+          "a faint second wren a beat behind each real one, like a print taken twice"
+        ],
+        "hint": "small brown wrens singing from the knotholes of hollow cedars, each a beat late after the last, faint after-images trailing their open beaks, a woodcutter's axe paused at the clearing edge, green noon through moss-thick grove, gold pollen rings in teal shade, painterly, wren-quick, gently comic"
+      },
       "home": 2,
       "echoes": [
         12,
@@ -52,6 +77,18 @@
       ],
       "note": "A white stag nobody has seen. Its hoofprints press into the moss a beat after it has passed.",
       "hint": "Prints in the grove, with nothing to make them.",
+      "prompt": {
+        "vantage": "nose down in the moss at the grove's edge, a working dog's height, the freshest hoofprint filling the foreground",
+        "light": "moth-soft evening under the trees, teal shade deepening, a low amber glow from the field behind; nothing anywhere to cast a shadow into the prints",
+        "scent": "wet moss, crushed fern, cold air with no musk, no breath, no warm hide in it at all",
+        "edges": [
+          "a line of cloven prints pressing into the moss one after another with nothing above them",
+          "the newest print still sinking, moss fronds springing outward around it",
+          "a low cedar bough swaying though there is no wind",
+          "a dark dog's muzzle in the nearest print, finding no scent"
+        ],
+        "hint": "moss-thick grove floor at dusk, a trail of large cloven hoofprints pressing into the moss one by one with nothing above them, the newest still sinking, a low bough swaying without wind, empty air where a white stag should be, teal shade, faint amber glow, painterly, hushed, unseen"
+      },
       "home": 2,
       "echoes": [
         14
@@ -68,6 +105,18 @@
       ],
       "note": "Dusk moths whose wings carry tomorrow’s weather, a little smudged. The grove keeps its almanac on them.",
       "hint": "Wings that know the weather early.",
+      "prompt": {
+        "vantage": "nose-level with the cedar bark as the moths come off it into the dusk",
+        "light": "moth-soft evening under the trees; each wing faintly lit by the small weather painted on it",
+        "scent": "old paper, cedar bark, cooling moss, rain that has not arrived yet",
+        "edges": [
+          "one wing smudged with drizzle, another with a hard white glare like light off salt",
+          "the biggest moth carrying a grey-green storm sitting on a tiny hill",
+          "a moth slowly opening and closing its wings so the rain on them comes and goes",
+          "through a gap in the trunks, a far hill under the same grey-green storm the biggest moth carries"
+        ],
+        "hint": "dusk moths the colour of old paper coming off cedar bark, each wing smudged with tomorrow's weather, a drizzle on one, a white salt-glare on another, a grey-green storm over a tiny hill on the largest, wings opening and closing the rain, moth-soft grove light, painterly, intimate"
+      },
       "home": 2,
       "echoes": [
         11,
@@ -85,6 +134,18 @@
       ],
       "note": "Vast, slow creatures under the salt flats. The flats are the roof of their road; their old roads glow under the crust.",
       "hint": "Something enormous moves under the flats.",
+      "prompt": {
+        "vantage": "nose an inch off the salt crust where the flats begin, one paw lifted and set down carefully, never stamping",
+        "light": "last level amber raking the crust; every salt ridge throws a long teal shadow; beneath, gold whale-roads glowing up through the grains",
+        "scent": "dry salt pan, hot dust cooling, cold brine rising through the cracks, a salt-raker's weathered rope",
+        "edges": [
+          "two glowing whale-roads converging under the crust toward the same turn",
+          "the vast dim flank of a whale sliding beneath translucent salt like weather under ice",
+          "a salt-raker's wooden rake laid flat on the roof of the road",
+          "a ring of flat black signal stones small on the horizon"
+        ],
+        "hint": "endless cracked salt flats at amber dusk, glowing gold roads running beneath the translucent crust, a vast slow whale shape gliding under the salt like weather beneath ice, two roads bending toward one turn, salt-stiff ridges throwing teal shadows, low horizon, painterly, immense, patient"
+      },
       "home": 3,
       "echoes": [
         9
@@ -101,6 +162,18 @@
       ],
       "note": "Finger-long lizards that bask on the signal stones and flick their tails in a code only the stones answer.",
       "hint": "Small tails, flicking a message on warm stones.",
+      "prompt": {
+        "vantage": "chin on the crust at the rim of the ring of signal stones, a flicking tail a nose-length away",
+        "light": "low amber sun on flat black stones; each stone answering a flick with a faint ember-warm pulse at its centre",
+        "scent": "hot stone, dry salt, scorched sand, paint long since worn off",
+        "edges": [
+          "a salt-pale skink mid-flick, its tail blurred like a pen stroke: short, short, long",
+          "a weathered signpost at the ring's centre, its paint gone with its reason",
+          "a dog's shadow just touching the ring, every tail stopped mid-sentence and pointing",
+          "faint warm rings glowing on the black stones where a message was answered"
+        ],
+        "hint": "a ring of flat black signal stones on cracked salt flats at sunset, finger-long salt-pale skinks basking and flicking their tails busy as a clerk's pen, each stone answering with a faint ember-warm glow, a worn signpost at the centre, long teal shadows, painterly, curious, precise"
+      },
       "home": 3,
       "echoes": [
         9
@@ -117,6 +190,18 @@
       ],
       "note": "Iron roosters of Council Hill that vote by turning. The crosswind is their disagreement made weather.",
       "hint": "Iron that turns with an opinion.",
+      "prompt": {
+        "vantage": "low in wet gorse at the foot of a ring post on Council Hill, looking up at the iron roosters against a split sky",
+        "light": "split sky: warm gold sunbreak dawnward, cold teal squall rushing off the far ridge; rust-red combs catching the gold",
+        "scent": "rain on one cheek and dry dust on the other, wet wool cloaks, cold iron, crushed gorse",
+        "edges": [
+          "seven iron weathercocks on seven posts, no two facing the same way, the seventh spinning on its pin",
+          "a clerk's cap blown into the gorse",
+          "grass on the hilltop bent two ways at once by the crosswind",
+          "two council banners with a gap between them"
+        ],
+        "hint": "seven iron weathercocks rust-red at the comb atop posts around a hilltop council ring, each turned a different way by opinion while the wind follows them, the seventh spinning, gorse bent two directions at once, a clerk's cap tumbling, split sky of gold sunbreak and teal squall, painterly, comic gravity"
+      },
       "home": 4,
       "echoes": [
         7
@@ -133,6 +218,18 @@
       ],
       "note": "Live in the Rift’s crack and keep its pitch. They go silent when someone lies near the floor.",
       "hint": "A small chorus that lives in a crack.",
+      "prompt": {
+        "vantage": "floor-level at the lip of a hairline crack in a slate counting-room floor, where it leaves a desk leg",
+        "light": "wide calm afternoon light through clean arched windows; one hairline of dark the light will not cross; a faint gold glow down inside the crack",
+        "scent": "seed-cake crumbs, linseed floor wax, stone dust, cold tea gone glassy",
+        "edges": [
+          "chalk-pale crickets no longer than barleycorns lined along the crack's lip, wings raised, holding one note",
+          "seed-cake crumbs set at the crack's edge for elevenses",
+          "a clerk's felt hush-slipper mid-step on the slate",
+          "one cricket fallen silent, wings folded, near a shadow on the floor"
+        ],
+        "hint": "a hairline crack running through a polished slate counting-room floor, tiny chalk-pale crickets lined along its lip holding a single note like a patient choir, seed-cake crumbs, a clerk's felt hush-slipper, calm afternoon light from arched windows, gold glow deep in the crack, painterly, owl-quiet, exact"
+      },
       "home": 5,
       "echoes": [
         13
@@ -149,6 +246,18 @@
       ],
       "note": "Glass-snails that graze soot off Bonk City’s panes at night. Their slow trails are how a pane is forgiven clear.",
       "hint": "Something cleans the city’s glass by night.",
+      "prompt": {
+        "vantage": "nose to a soot-furred pane in a narrow Bonk City alley, a snail's slow loop at eye level",
+        "light": "deep blue night; lantern-gold behind the glass; the cleaned trails let the true lamplight through, silver-bright",
+        "scent": "chalk, cold rain, lamp soot, damp mortar",
+        "edges": [
+          "silver snail-trails looping through the soot, each one a clear window onto a wet step, a cat on a sill, a corner",
+          "glass-shelled snails, translucent, a faint amber glow inside each shell",
+          "a # and a . etched small in the pane's lower corner",
+          "a lantern doubled and redoubled in the glass not yet grazed"
+        ],
+        "hint": "soot-furred glass panes in a lantern-lit alley at night, translucent glass-shelled snails grazing slow silver loops through the soot, every trail forgiven clear so a wet step and a cat on a sill show through, rain-slick, half-forgiven glass, teal night and amber lamplight, painterly, tender"
+      },
       "home": 6,
       "echoes": [
         13,
@@ -166,6 +275,18 @@
       ],
       "note": "Sleep on the parcel gate’s counterweight and ride it up and down all night without waking.",
       "hint": "Birds that sleep on something moving.",
+      "prompt": {
+        "vantage": "inside the low arch of the parcel gate, looking up into the slot in the wall where the counterweight rides",
+        "light": "a porter's belt-lantern, tallow-yellow and swinging, against a storm-dark sky; rain silvered where the lantern catches it",
+        "scent": "pigeon-down, wet flour sacks, lantern smoke, cold iron",
+        "edges": [
+          "two grey pigeons fast asleep, heads tucked, on top of the iron counterweight as it rises an inch",
+          "the bread-oven-sized weight riding its slot in the thick old wall",
+          "rain beginning on stacked flour sacks below the arch",
+          "a single downy feather drifting through the lantern light"
+        ],
+        "hint": "two plump grey pigeons fast asleep, heads tucked under wings, riding a huge iron counterweight an inch up and an inch down in a slot in an old city wall, a porter's swinging lantern below, storm rain starting on flour sacks, down drifting in the light, painterly, cozy, slightly absurd"
+      },
       "home": 15,
       "echoes": [
         6
@@ -182,6 +303,18 @@
       ],
       "note": "Grey market moths drawn to sworn words. They settle in the oath groove only when a promise is true.",
       "hint": "Moths that can tell a true promise.",
+      "prompt": {
+        "vantage": "pressed in among market-day knees and wicker baskets, eye-level with the worn top of the oath stone and its groove",
+        "light": "hard honest noon on an open square; the juice line in the groove glinting berry-dark; cool shade under the striped awnings",
+        "scent": "dust and old wool, the inside of a coat pocket, ripe blueberry juice, sun-warmed granite",
+        "edges": [
+          "lint-grey moths settling one by one along a groove of blueberry juice, wings shut flat as purses",
+          "the seams of a striped awning overhead where more moths are waiting",
+          "a single unbruised blueberry on a brass pan beside the stone",
+          "a ring of faces watching the moths instead of the one who swore"
+        ],
+        "hint": "a worn granite oath stone in a busy market square at noon, a groove of crushed blueberry juice across its top, lint-grey moths drifting down from striped awnings to settle along the line, wings shut flat as purses, wool skirts and baskets crowding close, painterly, solemn, sun-warmed"
+      },
       "home": 7,
       "echoes": [
         12
@@ -198,6 +331,18 @@
       ],
       "note": "Pale fish in the Watering Eye that swim through the faces the well has kept, folding them gently so they fit.",
       "hint": "Something swims among the faces in the well.",
+      "prompt": {
+        "vantage": "front paws on the mossy granite well-coping under the tavern floor, nose a breath above still black water",
+        "light": "tavern lamplight spilling through gaps in the floorboards; the water reflecting earlier lamps and older faces, gold folding under black water",
+        "scent": "wet granite, damp hemp rope, cold mineral water, a tin cup left in a stream",
+        "edges": [
+          "spoon-long chalk-pale fish tucking a loose chin under and smoothing a brow flat",
+          "layered faces from other years drifting below like folded laundry",
+          "a wet hemp rope and bucket hanging just above the water",
+          "one fish risen to the surface, turning politely away"
+        ],
+        "hint": "looking down into a well-black tavern well by lamplight, faces from other years layered beneath the surface like folded laundry, chalk-pale spoon-sized fish gently tucking chins and smoothing brows so each face fits beside the others, gold lamplight folding under dark water, mossy granite rim, painterly, tender, eerie"
+      },
       "home": 8,
       "echoes": [
         10
@@ -214,6 +359,18 @@
       ],
       "note": "Geese that fly in nines and honk in uneven time. One of them taught the Fool his note, or the other way round.",
       "hint": "A honk with a swing to it.",
+      "prompt": {
+        "vantage": "crouched on a high slate roof-ridge beside a cold stone chimney, looking up into the dusk",
+        "light": "deep violet evening; the last light on the undersides of grey wings; eight curved shards glowing gold on the slate below",
+        "scent": "chimney smoke banked for the night, cold damp slate, warm brass, oatcake crumbs",
+        "edges": [
+          "nine geese in a loose, swinging wedge, one wingbeat out of step",
+          "eight curved brass shards in a crescent on the slate, each ringing back a honk",
+          "a gap at the end of the crescent where the ninth honk finds nothing",
+          "lit windows in the town below being shut one by one"
+        ],
+        "hint": "nine geese crossing a deep violet dusk in a loose, ragged, swinging wedge, necks out mid-honk in uneven time, over high slate rooftops and chimneys, eight curved brass shards glowing gold in a crescent on the ridge below ringing back, windows shutting in the town, painterly, playful, off-beat"
+      },
       "home": 9,
       "echoes": [
         1,
@@ -231,6 +388,18 @@
       ],
       "note": "Roost in the ridge chimneys and carry a sound a little farther than it meant to go.",
       "hint": "Birds that carry sound.",
+      "prompt": {
+        "vantage": "on the slates at the foot of a stone ridge chimney, looking up the stack as the birds pour out",
+        "light": "night with cold starlight above and warm shard-glow from below catching the swifts' undersides",
+        "scent": "wood ash, soot, cold slate, warm brass",
+        "edges": [
+          "a soot-furred whirl of swifts spiralling out of the flue",
+          "faint gold rings of sound carried on their wings down over the roofs",
+          "far below, a kettle-lid trembling on a cottage hearth through an open door",
+          "loose soot drifting down like dark snow"
+        ],
+        "hint": "a soot-furred whirl of chimney-swifts pouring from a stone flue on a high slate ridge at night, carrying faint gold rings of sound downhill over the roofs a little farther than meant, kettle-lids trembling on distant hearths, soot drifting, starlight and warm glow from below, painterly, swirling"
+      },
       "home": 9,
       "echoes": [
         10
@@ -247,6 +416,18 @@
       ],
       "note": "Small dark beetles in Bone.land timber that click when a beam is asked to bear more than it agreed to.",
       "hint": "A click in the timber, when something is too heavy.",
+      "prompt": {
+        "vantage": "inches from a crack in a great oak tie-beam, a dog's nose to the grain",
+        "light": "clean white-gold morning through the open truss; gold load-light running in the grain like lightning frozen in amber",
+        "scent": "cut white oak, quarry chalk dust, tallow rope grease, scorched oak",
+        "edges": [
+          "small dark beetles in the timber cracks, wing-cases lifted, clicking",
+          "a ripple of beetles running along the tie-beam like rain starting on a roof",
+          "a caret cut beside the nearest joint",
+          "sawdust shaking off the high beams in backlit sheets"
+        ],
+        "hint": "close view of a great oak tie-beam in a vast open-truss timber hall, small dark beetles clicking in the cracks of the grain and running along it like rain starting on a roof, gold load-light flickering through the wood like lightning in amber, backlit sawdust, joist-honest, painterly, close"
+      },
       "home": 10,
       "echoes": [
         12
@@ -263,6 +444,18 @@
       ],
       "note": "Build paper crowns in the bloom garden, beautiful and hollow. A rented crown is wasp-work.",
       "hint": "Somebody builds crowns out of paper.",
+      "prompt": {
+        "vantage": "low under a flowering blackthorn, looking up at a grey paper crown hung among the thorns",
+        "light": "clean spring morning going strange at the edges; sun through thin grey paper so the crown glows like a lantern with nothing inside",
+        "scent": "sloe blossom, sap, chewed wasp paper, a sun-warmed straw bee-skep",
+        "edges": [
+          "a ribbed and turreted grey paper crown built among blackthorn twigs, wasps walking its battlements",
+          "a weathered fence rail nearby, its grain gnawed pale where the paper came from",
+          "a slow grey trickle of wasps leaving the crown toward a quince in bloom",
+          "an emptied crown fallen in the grass, light as a husk"
+        ],
+        "hint": "an intricate grey paper crown, ribbed and turreted like a tiny palace, built by wasps among blossoming blackthorn, sunlight glowing through its thin hollow walls, wasps walking the battlements and trickling off toward quince blossom, a gnawed fence rail nearby, painterly, beautiful and hollow-proud"
+      },
       "home": 11,
       "echoes": [
         12
@@ -279,6 +472,18 @@
       ],
       "note": "Arrive at a flower before it opens and wait, humming, as if the bloom owed them.",
       "hint": "Bees that come before the flowers.",
+      "prompt": {
+        "vantage": "nose-level with a quince branch of shut buds on the garden's rise",
+        "light": "early spring morning, low amber sun, the buds still tight and green-pink, teal shade under the branches",
+        "scent": "sap, cold dew, sloe blossom from farther off, a sun-warmed straw skep",
+        "edges": [
+          "a fat bee hanging in the air before a closed bud, humming, waiting",
+          "bees perched along tight quince buds like customers at a shop not yet open",
+          "one bud just beginning to loosen at the tip",
+          "dew beads on the buds catching amber light"
+        ],
+        "hint": "plump early bees waiting, humming, on tightly shut quince buds in a spring garden at dawn, hovering before closed petals as if the bloom owed them, perched like customers at a shop not yet open, dew beads catching low amber sun, teal shade, painterly, impatient, funny"
+      },
       "home": 11,
       "echoes": [
         13
@@ -295,6 +500,18 @@
       ],
       "note": "Swim exactly on the unblended seam of the two rivers, one paw in each water.",
       "hint": "Something swims on the line between two waters.",
+      "prompt": {
+        "vantage": "waterline, low at the foot of the timber bridge, looking down the two-toned channel",
+        "light": "late afternoon gold; berry-purple and chalk-white water side by side in one bed, the seam between them dancing with gold spray",
+        "scent": "cold spring water, crushed berry juice, mineral chalk dust, river tar on the planks",
+        "edges": [
+          "an otter rolling along the seam, one paw in the berry-dark water and one in the chalk-pale",
+          "its fur drying berry-dark on one flank and chalk-pale on the other",
+          "a boatman's skiff moored at the bank, oar shipped",
+          "the gold froth line of the seam running downstream unblended"
+        ],
+        "hint": "an otter rolling down a river exactly on the seam where berry-purple and chalk-white currents share one bed without blending, one paw in each water, fur drying dark on one flank and pale on the other, gold spray along the seam, late light, painterly, playful, two-sprung"
+      },
       "home": 12,
       "echoes": [
         13
@@ -311,6 +528,18 @@
       ],
       "note": "Stand in the berry-dark river so still their reflections dry into the bank.",
       "hint": "Birds so still their reflections stay.",
+      "prompt": {
+        "vantage": "low on the mudbank downstream of the bridge, at a dog's height, the shallows at eye level",
+        "light": "late gold sunlight skimming over berry-dark shallows; the dried reflections matte and ink-dark on the shining mud",
+        "scent": "river mud, reed, cold spray, berry-dark water",
+        "edges": [
+          "a heron lifting out of the shallows for the first time that season, wings wide",
+          "its reflection left behind on the mud, dried there like an ink print",
+          "other herons standing so still their mirror images have set into the bank",
+          "rings spreading where the long legs left the water"
+        ],
+        "hint": "a tall heron lifting off berry-dark river shallows at golden hour, leaving its reflection behind dried onto the mudbank like an ink print, other herons standing motionless with their reflections set into the bank, reeds, two-toned river beyond, painterly, still, uncanny"
+      },
       "home": 12,
       "echoes": [
         14
@@ -327,6 +556,18 @@
       ],
       "note": "Keep the gaps in the archive’s shelves clear for chronicles not yet written. They nest in what is missing.",
       "hint": "Someone guards the empty places on the shelves.",
+      "prompt": {
+        "vantage": "nose at the nearest shelf gap at a dog's height, the owl filling it",
+        "light": "night inside the round archive; one clean lane of starlight from the roof oculus; a lamp-oil amber glow in the owl's one open eye",
+        "scent": "old cedar shelves, beeswax, iron-gall ink, owl-feather and nothing else",
+        "edges": [
+          "a grey owl round as a loaf sitting in a book-wide gap, one lamp-oil eye open, beak mid-clack",
+          "curving rings of shelves receding, each ending in an owl-kept gap",
+          "a jar of dusk moths on a high shelf",
+          "a single down feather on the empty shelf board"
+        ],
+        "hint": "a round grey owl sitting in an empty book-wide gap on a curved cedar bookshelf in a circular stone archive at night, one lamp-oil amber eye open, keeping the space clear for chronicles not yet written, rings of shelves receding, a lane of starlight, owl-quiet, painterly"
+      },
       "home": 13,
       "echoes": [
         1
@@ -342,6 +583,18 @@
       ],
       "note": "Deer no taller than a boot that graze between frost-ruts only on days nobody keeps.",
       "hint": "Small deer of a day nobody kept.",
+      "prompt": {
+        "vantage": "low in a frozen farm lane between the frost-ruts, a working dog's nose level with the little herd",
+        "light": "flat blue pre-dawn turning to low gold winter sun; no lamp in any window, no smoke from any chimney",
+        "scent": "dry bracken, cold pennies, frost, old onions behind a shut kitchen door",
+        "edges": [
+          "a herd of deer no taller than a boot cropping rime off the verge with small exact teeth",
+          "a farm boot left by a door, the same height as the deer",
+          "frost-ruts with no new cart tracks in them",
+          "a farmhouse with no smoke and no lamp, utterly still"
+        ],
+        "hint": "a little herd of boot-high deer, dun-backed and white at the tail, cropping rime off a frozen lane verge between frost-ruts, an empty winter farmyard with no smoke or lamplight, a shaggy dark working dog watching them calmly, flat blue dawn turning gold, unkept and utterly still, painterly"
+      },
       "home": 14,
       "echoes": [
         2
@@ -357,6 +610,18 @@
       ],
       "note": "A fox the colour of an unturned page, seen only on unkept days, trotting as if late for something.",
       "hint": "A pale fox, on a day nobody kept.",
+      "prompt": {
+        "vantage": "low in a winter lane at a dog's height, as the fox comes through a gap in a frosted hedge",
+        "light": "low winter sun over frost and stubble; the fox so pale it looks unshaded, like a drawing nobody has finished",
+        "scent": "frost, cut hedge, dry bracken, the clean dry smell of new paper",
+        "edges": [
+          "a fox the colour of an unturned page, head low, mid-trot",
+          "hedge twigs still springing back where it came through",
+          "pawprints in the rime that look faintly pencilled",
+          "a stubble field going gold to its far edge"
+        ],
+        "hint": "a fox the colour of an unturned page trotting quickly through a gap in a frosted hedge, head low as if late for something, its pale body barely shaded like a pencil drawing on paper, rime-white lane, low winter sun over stubble, an unkept day, painterly, brisk, uncanny"
+      },
       "home": 14,
       "echoes": [
         13
@@ -373,6 +638,18 @@
       ],
       "note": "The archivist’s flat stones for holding a map’s crease. One is always missing.",
       "hint": "Weights for a map that will not lie flat.",
+      "prompt": {
+        "vantage": "front paws up on the map-house reading table, nose level with the table's lip",
+        "light": "high dusty window-light in a cool grey room; the stones river-grey and faintly warm where a hand last held them",
+        "scent": "oak-gall ink, cold slate, old paper, beeswax",
+        "edges": [
+          "a wooden rack cut for seven river-flat stones holding six, one hollow empty",
+          "a map held flat at three corners while the fourth curls up",
+          "one stone set on the crease where two roads touch",
+          "a young grey owl shelved in a rafter gap between rolled maps"
+        ],
+        "hint": "a map-house reading table in dusty window-light, river-flat grey press-stones holding a hand-drawn map open at three corners while the fourth curls, a wooden rack cut for seven stones holding six with one hollow empty, oak-gall ink, cold slate, painterly, quiet, exact"
+      },
       "home": 1,
       "echoes": [
         13
@@ -388,6 +665,18 @@
       ],
       "note": "Where new maps hang to dry. Maps that refuse ink drip back into the trough.",
       "hint": "Where maps hang, waiting.",
+      "prompt": {
+        "vantage": "low beside the slate trough under the drying-line, looking up at the hanging maps",
+        "light": "high dusty window-light across the back wall; wet ink glistening on the pegged pages",
+        "scent": "oak-gall ink, wet paper, cold slate, rabbit-skin size",
+        "edges": [
+          "maps pegged by their corners along a waxed line like washing",
+          "one stubborn page shedding its ink in beads until it hangs clean as a washed collar",
+          "a single black drop of ink sitting in the trough water, refusing to mix",
+          "rolled maps stacked in the rafters above"
+        ],
+        "hint": "a waxed drying-line along a stone map-house wall, hand-drawn maps pegged by their corners like washing above a slate trough, one stubborn page dripping its ink back off in beads until it hangs blank, a black drop sitting unmixed in the water below, dusty window-light, painterly, patient"
+      },
       "home": 1,
       "echoes": [
         13
@@ -403,6 +692,18 @@
       ],
       "note": "The Genie’s brass needle, quick to find a want. It circles, slows, and tries again.",
       "hint": "A needle that points at wanting.",
+      "prompt": {
+        "vantage": "low on the dune at a dog's height, eye-level with the instruments laid out on green baize",
+        "light": "dusk teal over the sand, gold heat glowing along buried routes; brass catching the last amber",
+        "scent": "hot brass, velvet, cold dust, the old paper of a closed ledger",
+        "edges": [
+          "a brass needle on a small engraved dial, circling, slowing, swinging back to try again",
+          "a genie's thumbnail poised at the dial's rim to reset it",
+          "a long brass glass and a pan scale beside it on the baize",
+          "a shaggy dark working dog sitting very still just past the dial's reach"
+        ],
+        "hint": "a brass want-needle on a small engraved dial circling, slowing and trying again, blurred with its own hesitation, set on green baize on a folding desk among desert dunes at dusk, a long glass and a pan scale beside it, a working dog sitting still beyond, teal and amber, painterly"
+      },
       "home": 3,
       "echoes": [
         8,
@@ -419,6 +720,18 @@
       ],
       "note": "The Genie’s long glass. It shows only wants larger than a loaf.",
       "hint": "A glass that cannot see small things.",
+      "prompt": {
+        "vantage": "behind the long glass at the height of the baize, looking along it toward the dog",
+        "light": "last amber over the dunes, the lens catching gold, teal shadows pooling in the sand",
+        "scent": "brass polish, velvet, warm dust, a faint smell of loaf-crust",
+        "edges": [
+          "a forearm-long brass glass on a folding desk",
+          "in the lens a field, a crop in the field, a harvest in the crop, all crisp",
+          "the dog in the lens only a soft smudge",
+          "a genie's hand folding the glass shut, politely declined"
+        ],
+        "hint": "a forearm-long brass spyglass on green baize among the dunes at dusk, its lens showing a field, a crop, a whole harvest in crisp detail while the dark working dog sitting in front of it is only a soft smudge, gold light along buried routes, painterly, wry"
+      },
       "home": 3,
       "echoes": [
         8
@@ -434,6 +747,18 @@
       ],
       "note": "The Genie’s pan scale, balanced against coincidences.",
       "hint": "A scale for the price of a wish.",
+      "prompt": {
+        "vantage": "low on the dune, eye-level with the brass pans on the baize",
+        "light": "dusk teal over the sand; brass pans glowing ember-warm; gold heat in the buried routes beneath",
+        "scent": "hot brass, velvet, cold dust",
+        "edges": [
+          "one pan sunk under a single lentil-sized coincidence, stamped small",
+          "a velvet tray of tiny stamped coincidences where the weights should be",
+          "the beam tipping honey-slow",
+          "a dark dog's forepaw at the edge of the cloth"
+        ],
+        "hint": "a delicate brass pan scale on a velvet cloth in the desert dunes at dusk, one pan sunk under a single lentil-sized token, a tray of tiny stamped coincidences beside it instead of weights, the beam tipping honey-slow, gold light on brass against teal shadow, painterly, intimate, strange"
+      },
       "home": 3,
       "echoes": [
         12
@@ -449,6 +774,18 @@
       ],
       "note": "The folding desk the Genie keeps in his bottle, with a drawer for Thursdays.",
       "hint": "A whole office, folded small.",
+      "prompt": {
+        "vantage": "crouched on a dune crest, eye-level with a green bottle lying across two tracks of gold fire",
+        "light": "raking sunset setting the dune crests ablaze; gold lines crossing under the dust",
+        "scent": "scorched sand, old brass polish, something faintly like tea",
+        "edges": [
+          "a folding desk coming leg by leg out of the bottle's neck, the way a heron comes out of reeds",
+          "pigeonholes and a dry inkwell on a baize top no bigger than a tea-tray",
+          "one narrow drawer with a small brass label, open a finger's width and dark inside",
+          "a gold track glowing under the sand beneath the bottle"
+        ],
+        "hint": "a tiny folding writing desk unfolding leg by leg out of the neck of a green glass bottle on a sunset dune, like a heron stepping from reeds, baize top, pigeonholes, dry inkwell, one narrow drawer open a finger's width, gold sand-light, painterly, whimsical, precise"
+      },
       "home": 3,
       "echoes": [
         12
@@ -464,6 +801,18 @@
       ],
       "note": "Where keys are filed smaller, never grown. The filings go into a jar called the honest jar.",
       "hint": "A bench where keys only get smaller.",
+      "prompt": {
+        "vantage": "table-height at the bench's edge on Council Hill, nose level with the vise jaws",
+        "light": "crosswind storm-light; gold seams in the worn oak grain; iron gleaming wet",
+        "scent": "oiled iron filings, brass, wet wood, gorse on the wind",
+        "edges": [
+          "a large old key clamped in a vise, a file drawn across it once",
+          "a glass jar half full of grey filings, the honest jar",
+          "a rack of keys, each a hair smaller than it once was",
+          "a clerk's apron hem dusted grey"
+        ],
+        "hint": "a scarred oak workbench on a windy hilltop, a large old iron key clamped in a vise and filed a hair smaller, never larger, a glass jar half full of grey filings, a rack of worn keys, storm-light with gold seams in the grain, painterly, honest, small"
+      },
       "home": 4,
       "echoes": [
         7
@@ -479,6 +828,18 @@
       ],
       "note": "Weaves the hill’s two winds into the council’s tablecloth. When the vote turns, the weave changes colour.",
       "hint": "A loom worked by weather.",
+      "prompt": {
+        "vantage": "under the council table at the slab's head, the tablecloth's hem at a dog's eye level",
+        "light": "split sky: warm gold sunbreak dawnward, cold teal squall off the far ridge, the loom straddling the seam",
+        "scent": "rain on one cheek and dry dust on the other, wet wool, resin, cold air",
+        "edges": [
+          "a shuttle flying between warp and weft with no weaver at the loom",
+          "warp threads streaming like wind, honey-gold on one side, squall-teal on the other",
+          "the tablecloth's hem changing colour mid-row as the vote turns",
+          "seven iron weathercocks on posts behind the loom"
+        ],
+        "hint": "a weaverless wooden loom on a windy hilltop, its shuttle flying on its own between a warp of dawn-wind and a weft of squall, weaving a long council tablecloth in honey-gold and squall-teal that changes colour mid-row, split sky of sunbreak and storm, painterly, alive"
+      },
       "home": 4,
       "echoes": [
         13
@@ -494,6 +855,18 @@
       ],
       "note": "Brass calipers set across the Rift’s crack. They measure in notes, not inches.",
       "hint": "Calipers that measure a sound.",
+      "prompt": {
+        "vantage": "floor-level at the hairline crack where it leaves the desk leg for the slate",
+        "light": "calm afternoon light through arched windows; a thin gold glow down inside the crack; brass bright at the hinge",
+        "scent": "stone dust, ink dust, brass, linseed floor wax",
+        "edges": [
+          "forearm-long brass calipers straddling the crack, one jaw on each lip of slate",
+          "a tiny bell at the hinge, trembling with a note",
+          "a shaggy dark tail-tip just brushing the calipers",
+          "a ledger margin ruled with a column of small pencilled marks"
+        ],
+        "hint": "forearm-long brass calipers straddling a hairline crack in a slate floor, a tiny bell trembling at the hinge as it measures in notes not inches, a shaggy dark tail-tip brushing past, calm afternoon light from arched windows, gold glow down in the crack, painterly, hushed, precise"
+      },
       "home": 5,
       "echoes": [
         10
@@ -509,6 +882,18 @@
       ],
       "note": "The forgiving kiln of Bonk City. It melts old impacts down into clear glass.",
       "hint": "Where the city’s bruises become glass.",
+      "prompt": {
+        "vantage": "at the curb just inside the city gate, low, looking into the kiln's open iron doors",
+        "light": "kiln-warm orange from the iron doors against deep blue dusk; a ribbon of molten glass running clear as water",
+        "scent": "hot iron, glass-smoke, wet cobbles, supper smoke",
+        "edges": [
+          "a heap of dented kettles, bent cart rims and a cracked bell waiting their turn",
+          "a soot-furred keeper with long tongs",
+          "molten glass pouring off clear into a mould",
+          "new panes cooling on a rack, faint ripples where the dents used to be"
+        ],
+        "hint": "a forgiving glass kiln just inside a city gate at blue dusk, iron doors breathing heat, a soot-furred keeper with tongs, a heap of dented kettles, bent cart rims and a cracked bell waiting, the blows melted out and molten glass pouring off clear, kiln-warm, painterly"
+      },
       "home": 6,
       "echoes": [
         15
@@ -525,6 +910,18 @@
       ],
       "note": "Lanterns hammered from dented brass. Each dent is a street the light remembers.",
       "hint": "Lanterns that remember being struck.",
+      "prompt": {
+        "vantage": "at the curb, shoulder against a bronze lamp post warm where it was once dented, eye-level with the wet cobbles",
+        "light": "deep blue dusk; dent-bright creases of gold thrown across rain-slick stones, each dent its own beam",
+        "scent": "warm bronze, lamp oil, wet cobbles, fresh bread from a bakery corner",
+        "edges": [
+          "a hammered brass lantern, every dent throwing a separate bright crease",
+          "creases of light on the cobbles drawing lanes that run into walls where streets have moved",
+          "a bakery corner with wet pawprints going round it and coming back to the start",
+          "a lamplighter's ladder folded into a staff, leaning on the post"
+        ],
+        "hint": "a dented brass lantern glowing on a crooked lamp post at blue dusk, every dent throwing its own bright crease of light across rain-slick cobbles, the creases drawing lanes that run into walls and around a bakery corner, a labyrinth of old glass, dent-bright, painterly, wistful"
+      },
       "home": 6,
       "echoes": [
         9,
@@ -542,6 +939,18 @@
       ],
       "note": "Gutters that ring when it rains, so the city can hear which roofs are leaking.",
       "hint": "The city listens to its rain.",
+      "prompt": {
+        "vantage": "low in a narrow lane, looking up along the eaves",
+        "light": "rain fine as flour at lamp-lit dusk; lantern-gold beading along brass gutters",
+        "scent": "wet slate, rain on bronze, a warm bun, lamp oil",
+        "edges": [
+          "brass gutters of graded sizes along the eaves like a shelf of cups, rain drumming them",
+          "small bright rings of sound rising from each gutter",
+          "one gutter dull and rust-spotted, ringing flat",
+          "a roofer mid-bite of a bun, pointing up at it"
+        ],
+        "hint": "brass rain gutters along crooked rooftops tuned like a shelf of cups, ringing bell-bright as rain fine as flour falls at lamp-lit dusk, small rings of sound rising from each, one rust-dull gutter ringing flat, a roofer mid-bite pointing up, chime-loud, painterly, merry"
+      },
       "home": 6,
       "echoes": [
         15
@@ -558,6 +967,18 @@
       ],
       "note": "The lamplighters’ hinged ladders that fold into a walking staff.",
       "hint": "A ladder that becomes a staff.",
+      "prompt": {
+        "vantage": "low at the foot of a bronze lamp post in a winding lane, looking up the ladder",
+        "light": "deep blue dusk; each lantern catching only when its bell is rung; gold on brass hinges",
+        "scent": "lamp oil, brass polish, rain on wool sleeves",
+        "edges": [
+          "a hinged ladder mid-unfold, clacking open in three sections from a walking staff",
+          "a lamplighter on the top rung ringing a small brass bell against the post",
+          "other lamplighters down the lane with ladders folded back into staffs",
+          "a lantern just catching, its neighbour still dark"
+        ],
+        "hint": "a lamplighter at blue dusk shaking a hinged brass-jointed ladder out of its walking-staff shape in three clacks against a crooked lamp post, ringing a small bell at the top so the lantern catches, others walking the lane with ladders folded, lamp-lit, painterly, rhythmic"
+      },
       "home": 6,
       "echoes": [
         15
@@ -573,6 +994,18 @@
       ],
       "note": "Glasses a page flat and warm, layering it over the last so nothing known is lost.",
       "hint": "A press for keeping pages under glass.",
+      "prompt": {
+        "vantage": "table-height in a lantern-lit Bonk City press-room, nose to the warm edge of a fresh folio",
+        "light": "lantern-gold pooling on oak; warm amber glow coming up through layered glass",
+        "scent": "pressure and heat, warm glass, faintly the day the page was made, rain on cobbles outside",
+        "edges": [
+          "a small iron screw-press lowering its warm platen onto a page",
+          "a glassed folio with the same hill drawn twice, larger above and smaller beneath",
+          "stacked folios like panes of amber",
+          "a child's hands waiting to receive one"
+        ],
+        "hint": "a small iron folio press in a lantern-lit workshop glassing a hand-drawn page flat and warm over an older one, layered glass sheets showing the same hill drawn larger above and smaller beneath, nothing known lost, stacked folios glowing like amber panes, painterly, warm, archival"
+      },
       "home": 6,
       "echoes": [
         13
@@ -589,6 +1022,18 @@
       ],
       "note": "Small glass boxes with sigil-etched lids. Each holds a pocket realm combined from two nouns and a sigil, and runs on borrowed warmth.",
       "hint": "Small boxes that hold small weathers.",
+      "prompt": {
+        "vantage": "at the plaza rim, eye-level with the stall's lowest shelf of boxes",
+        "light": "lantern-gold on glass; each box lit from within by its own small weather",
+        "scent": "cold glass, chestnut smoke from the drum, wet umbrella silk, wool mittens",
+        "edges": [
+          "glass boxes each fogged with a different tiny weather: warm snow, a moonlit stream, a little rising procession",
+          "sigils and braces etched on every lid",
+          "a stall-keeper writing a lid before she seals it",
+          "a chestnut drum smoking on one side and an umbrella-mender on the other"
+        ],
+        "hint": "a market stall of small glass boxes with etched braces and sigils on their lids, each fogged into its own tiny weather, warm snow, a moonlit stream, a rising lantern procession, lit from within on borrowed warmth, a chestnut drum smoking beside it, lantern-lit dusk, teal and amber, painterly"
+      },
       "home": 6,
       "echoes": [
         13,
@@ -605,6 +1050,18 @@
       ],
       "note": "Brass compasses for dividing a pie evenly. They never come out even.",
       "hint": "An instrument that cannot quite divide.",
+      "prompt": {
+        "vantage": "low at the end of a night-school bench, eye-level with a paper pie",
+        "light": "winter morning schoolroom, hearth-glow on one side and window frost on the other; brass compass points catching the light",
+        "scent": "chalk, paper, wet wool mittens, a stove",
+        "edges": [
+          "brass dividers walking round a paper pie, a ring of pinpricks along its rim",
+          "a sliver left over, thin as a paring",
+          "two pupils leaning over it like judges",
+          "brace-boxes warming between mittens on the next bench"
+        ],
+        "hint": "children at a night-school bench walking brass pie-dividers round a paper pie to cut even slices for luck, a sliver thin as a paring always left over, pinpricks along the rim, two pupils arguing over it like judges, frost on the window, hearth-glow, painterly, earnest, funny"
+      },
       "home": 15,
       "echoes": [
         6
@@ -620,6 +1077,18 @@
       ],
       "note": "Weighs the fruit an oath is paid in. It ignores the hand that pays.",
       "hint": "A scale that weighs promises in fruit.",
+      "prompt": {
+        "vantage": "pressed among market-day knees, eye-level with the scale's brass pan",
+        "light": "hard honest noon; brass bright; a cold shadow reaching into the square from an alley",
+        "scent": "ripe blueberry juice, sun-warmed granite, iron filings, crowd wool",
+        "edges": [
+          "a single unbruised blueberry on a brass pan, the needle settled at one",
+          "a hand above the pan, blurred and ignored",
+          "a clerk's apron grey with old key filings",
+          "a long cold shadow reaching from an alley mouth"
+        ],
+        "hint": "a brass oath-scale beside a worn granite stone in a noon market square, a single unbruised blueberry on its pan, the needle settled, the paying hand above it blurred and ignored, a clerk's apron grey with filings, a cold shadow reaching from an alley, painterly, solemn"
+      },
       "home": 7,
       "echoes": [
         12
@@ -635,6 +1104,18 @@
       ],
       "note": "On still nights the bucket comes up holding a face instead of water.",
       "hint": "A winch that sometimes brings up the wrong thing.",
+      "prompt": {
+        "vantage": "front paws on the mossy well-coping beneath the tavern floor, the bucket passing a nose-length away",
+        "light": "tavern lamplight through floorboard gaps; well-black water below; a quiet face lit gold in the rising bucket",
+        "scent": "wet hemp rope, wet granite, spilled lager, cold mineral water",
+        "edges": [
+          "a wooden bucket rising on wet hemp, a calm face looking up out of it instead of water",
+          "a potboy leaning over to wish it good evening",
+          "the winch drum worn smooth, turning honey-slow, four beats a turn",
+          "a rain-butt by the kitchen door, the night's real water"
+        ],
+        "hint": "an old wooden well-winch beneath tavern floorboards on a still night, a dripping bucket rising honey-slow on wet hemp rope holding a calm face instead of water, a potboy leaning in politely to say good evening, lamplight through the boards, well-black water below, painterly, gentle, eerie"
+      },
       "home": 8,
       "echoes": [
         10
@@ -650,6 +1131,18 @@
       ],
       "note": "The Fool’s rack for the nine honk shards. One slot is egg-shaped.",
       "hint": "A rack with one strangely shaped slot.",
+      "prompt": {
+        "vantage": "on the high slate roof-ridge beside a cold chimney, nose-level with the rack",
+        "light": "deep violet evening; curved shards glowing gold in their slots; one slot lightless",
+        "scent": "chimney smoke, cold damp slate, warm brass, smoked ash wood",
+        "edges": [
+          "a rack of smoked ash with nine felt-lined slots, eight holding curved glowing shards",
+          "the ninth slot egg-shaped and empty",
+          "a retired turnip resting on the slate nearby",
+          "nine geese crossing the dusk overhead"
+        ],
+        "hint": "a rack of smoked ash wood on a slate rooftop at violet dusk, nine felt-lined slots, eight holding curved brass shards that glow and hum, the ninth slot egg-shaped and empty, a retired turnip on the slate beside it, chimney smoke, painterly, whimsical, expectant"
+      },
       "home": 9,
       "echoes": [
         13
@@ -665,6 +1158,18 @@
       ],
       "note": "BoneWAP’s felt-headed mallet for asking a beam what it will bear.",
       "hint": "A mallet made for asking, not striking.",
+      "prompt": {
+        "vantage": "inches from the sill beam where the mallet's felt head meets the oak",
+        "light": "clean white-gold morning through the great frame; a soft ring of gold load-light running the grain from the tap",
+        "scent": "cut white oak, chalk dust, felt, clean crust",
+        "edges": [
+          "a felt-headed mallet worn pale at the grip, its head resting against a sill beam",
+          "a ring of gold travelling along the grain from the touch",
+          "chalked plans on a scrubbed trestle table",
+          "a pale, plain, square-baked pie steaming on the trestle"
+        ],
+        "hint": "a felt-headed listening mallet worn pale at the grip touching an oak sill beam in a vast open-truss timber hall, not a blow but a question, a soft ring of gold load-light running along the grain, chalked plans on a scrubbed trestle, sawdust in white-gold morning, painterly, joist-honest"
+      },
       "home": 10,
       "echoes": [
         15
@@ -681,6 +1186,18 @@
       ],
       "note": "Small bells hung from Bone.land’s joists that ring when weight passes over.",
       "hint": "Bells that ring under weight.",
+      "prompt": {
+        "vantage": "low beneath the joists, looking up along the load path",
+        "light": "white-gold morning through the frame; gold lines of load-light like lightning frozen in amber",
+        "scent": "scorched oak, chalk dust, tallow rope, brass",
+        "edges": [
+          "a row of small brass bells hung beneath the joists, swinging in sequence down the brace",
+          "a weight just set on a beam above, the nearest bell still ringing",
+          "a limestone anchor stone at the end of the line, gone quiet in the chalk",
+          "motes of chalk dust shaken loose"
+        ],
+        "hint": "a row of small brass bells hung beneath massive oak joists in a timber hall, ringing one after another down the brace as a weight passes over, swinging in sequence toward a limestone anchor stone, gold load-light in the grain, white-gold morning dust, painterly, musical"
+      },
       "home": 10,
       "echoes": [
         12
@@ -697,6 +1214,18 @@
       ],
       "note": "Brass pins on the confluence bridge where receipts are posted for any traveller to read.",
       "hint": "Where the bridge keeps its notices.",
+      "prompt": {
+        "vantage": "muzzle over the rail of the plank bridge, eye-level with the pinned notices",
+        "light": "evening gold on two waters; a ferryman's lamp warming the paper",
+        "scent": "river, wet rope, drying ink, a ferryman's pipe, river tar",
+        "edges": [
+          "brass pins along a weathered rail holding small fluttering notices",
+          "a sketched lost goat on one notice",
+          "two receipts pinned side by side, a grey moth resting on each",
+          "the two-toned river running below"
+        ],
+        "hint": "brass pins along a weathered timber bridge rail holding the small news, fluttering paper notices, a sketched lost goat, two receipts side by side with a grey moth resting on each, berry-dark and chalk-pale river below, evening gold and lamplight, painterly, civic, gentle"
+      },
       "home": 12,
       "echoes": [
         15
@@ -712,6 +1241,18 @@
       ],
       "note": "Rung when someone needs to cross the seam without wetting both springs.",
       "hint": "A bell for crossing between two waters.",
+      "prompt": {
+        "vantage": "low on the landing gravel at the foot of the bell post",
+        "light": "evening gold on two waters; the bronze lip catching gold along its crack",
+        "scent": "river spray, wet rope, a ferryman's pipe smoke, tarred planks",
+        "edges": [
+          "a cracked bronze bell on a post, its rope still swaying",
+          "a ferryman pointing his pipe at the bridge planks",
+          "the unblended seam of two waters running past the landing",
+          "small load-bells hung beneath the bridge deck"
+        ],
+        "hint": "a cracked bronze ferry-bell on a weathered post at a river landing, its rope still swaying, a ferryman pointing his pipe toward the plank bridge, the unblended seam of berry-dark and chalk-pale water running past, evening gold, painterly, quiet, two-sprung"
+      },
       "home": 12,
       "echoes": [
         13
@@ -727,6 +1268,18 @@
       ],
       "note": "The archive’s great press for folios. It has pressed every page but the last.",
       "hint": "A press that has never pressed one page.",
+      "prompt": {
+        "vantage": "desk-height in the archive, looking past the open ledger to the press behind it",
+        "light": "night shelves; one clean lane of starlight from the oculus; iron edges faintly warm",
+        "scent": "cooling iron, oak, beeswax, paper",
+        "edges": [
+          "an upright oak-and-iron press with a screw thick as a mill-shaft, wound high",
+          "glassed pages stacked season over season, older lines legible under the new",
+          "an open ledger whose last line is blank",
+          "the press ticking as it cools"
+        ],
+        "hint": "a towering upright press of oak and iron behind an archive desk, its screw thick as a mill-shaft wound high, stacks of glassed pages with older lines legible under newer ones, an open ledger with one blank last line, a lane of starlight, painterly, monumental, patient"
+      },
       "home": 13,
       "echoes": [
         15
@@ -742,6 +1295,18 @@
       ],
       "note": "The parcel gate’s iron counterweight. It lets one porter lift a gate meant for three.",
       "hint": "Iron that makes one person strong enough.",
+      "prompt": {
+        "vantage": "inside the low arch of the parcel gate, looking up at the slot in the wall",
+        "light": "a porter's belt-lantern, warm and swinging; storm-dark beyond the arch",
+        "scent": "wet flour, lantern smoke, oak gate, cold iron, pigeon-down",
+        "edges": [
+          "a bread-oven-sized iron counterweight riding a slot in the thick wall, chain taut",
+          "a single porter with his shoulder under an oak gate hung for three",
+          "two pigeons asleep on top of the weight",
+          "rain beginning on stacked flour sacks"
+        ],
+        "hint": "a massive bread-oven-sized iron counterweight rising in a slot in a thick old city wall, letting one porter hold up an oak gate hung for three, his shoulder braced, belt-lantern swinging, sleeping pigeons riding the weight, storm rain on flour sacks, painterly, humble, heroic"
+      },
       "home": 15,
       "echoes": [
         6
@@ -757,6 +1322,18 @@
       ],
       "note": "The carpenter’s folding rule, with a hinge for every size of door.",
       "hint": "A rule that folds to fit any door.",
+      "prompt": {
+        "vantage": "low at the foot of the parcel gate's arch at midnight, looking up along the rule's unfolded length",
+        "light": "a carpenter's lantern set on the stones, warm and close; storm-wet dark beyond; brass hinges glinting",
+        "scent": "boxwood, brass, wet stone, lantern smoke",
+        "edges": [
+          "a boxwood-and-brass folding rule unfolded hinge by hinge against the arch",
+          "the rule stopped of its own accord with a click at an honest doorway size",
+          "a repair log open on a flour sack, pencil held above it",
+          "the porter's gate-book tucked beside the lantern, out of the rain"
+        ],
+        "hint": "a carpenter's boxwood-and-brass folding rule with a hinge for every size of door, unfolding against an old stone gate arch at midnight and stopping on its own with a click, a lantern on the stones, a repair log on a flour sack, painterly, exact, quietly uncanny"
+      },
       "home": 15,
       "echoes": [
         5
@@ -772,6 +1349,18 @@
       ],
       "note": "Two sides, one table: the council’s law cut into the pine before any argument starts. Confluence without whitening.",
       "hint": "A law written in braces on a hilltop.",
+      "prompt": {
+        "vantage": "under the council table on Council Hill, nose level with the slab's carved edge",
+        "light": "split sky: gold sunbreak dawnward and teal squall off the far ridge; gold seams in the pine grain",
+        "scent": "pine resin, wet wool cloaks, rain on one cheek and dust on the other, iron filings",
+        "edges": [
+          "&[boon, bane]{table} chiselled into the slab's edge, worn smooth by thumbs",
+          "muddy delegate boots on both sides of the one table",
+          "the tablecloth's hem honey-gold on one side and squall-teal on the other",
+          "a joiner's chisel left in a groove of the carving"
+        ],
+        "hint": "close view of a long pine council table on a windy hilltop, chiselled braces and sigils cut into its edge at nose height and worn smooth by thumbs, muddy boots on both sides, a tablecloth half honey-gold and half squall-teal, split sky of sunbreak and storm, painterly, civic, steady"
+      },
       "home": 4,
       "echoes": [
         12
@@ -788,6 +1377,18 @@
       ],
       "note": "Glaziers etch # on a pane’s street face, the face that travels, and . on the inside face, the one that stays.",
       "hint": "Two marks on every pane.",
+      "prompt": {
+        "vantage": "standing in a narrow alley between two bay windows, a dog's height, nose to the etched corner of a pane",
+        "light": "endless recursive lantern-gold reflections bouncing between the panes; the street beyond hidden",
+        "scent": "rainwater, tallow candles, damp mortar, cold glass",
+        "edges": [
+          "a # and a . etched in each pane's lower corner, the whole row hung . face out",
+          "a shaggy dark working dog reflected back at herself down the alley, again and again",
+          "a glazier's diamond-point cutter left on a sill",
+          "one pane-snail trail opening a single true window onto the street"
+        ],
+        "hint": "a narrow lamp-lit alley of bay windows hung backward, each pane etched small in its corner with a hash and a dot, every pane busy staying and reflecting a shaggy dark working dog back at herself in endless recursion, a glazier's cutter on a sill, painterly, labyrinthine, amber and teal"
+      },
       "home": 6,
       "echoes": [
         15
@@ -804,6 +1405,18 @@
       ],
       "note": "Joiners cut ^ where a beam lifts and . where it stands. A frame can be read before it is leaned on.",
       "hint": "Marks a joiner reads before trusting a beam.",
+      "prompt": {
+        "vantage": "at the foot of a great oak joint in Bone.land's frame, a dog's nose at the footing",
+        "light": "clean white-gold morning behind the truss; backlit sawdust; gold load-light in the grain",
+        "scent": "cut white oak, quarry chalk, tallow rope grease, fresh chisel shavings",
+        "edges": [
+          "a small caret ^ chiselled beside a joint where the beam lifts",
+          "a single dot . cut at the footing where a post stands",
+          "pegged mortise-and-tenon joints running back past memory, each one marked",
+          "curls of chisel shaving on the limestone anchor stone"
+        ],
+        "hint": "close view of a great pegged oak mortise-and-tenon joint in a vast open-truss timber hall, a small chiselled caret where the beam lifts and a single cut dot where the post stands, marks running back joint after joint, chisel shavings, white-gold morning, gold load-light in the grain, painterly, joist-honest"
+      },
       "home": 10,
       "echoes": [
         13
@@ -819,6 +1432,18 @@
       ],
       "note": "The archive files every record as a small realm in braces. The blank last line is an open brace with no close.",
       "hint": "A brace nobody has closed.",
+      "prompt": {
+        "vantage": "chin on the white oak desk in the round archive, level with the ledger's last line",
+        "light": "one clean lane of starlight from the roof oculus over the open ledger; gold dawn far off through the door",
+        "scent": "vellum, iron-gall ink, beeswax, cedar shelves",
+        "edges": [
+          "the last line of the ledger blank except for a single open brace {, with no close",
+          "every line above it a small record closed neatly in braces",
+          "a pen waiting upright in the inkwell",
+          "the great glassing press's screw wound high behind the desk"
+        ],
+        "hint": "an open vellum ledger on an archive desk under a lane of starlight, every line a small record closed in fine inked braces, the last line blank but for a single open curly brace with no close, a pen waiting in its well, shelves with owl-kept gaps behind, painterly, expectant, still"
+      },
       "home": 13,
       "echoes": [
         14
@@ -835,6 +1460,18 @@
       ],
       "note": "A combine: frost and hearth in one room. It snows warm. The warm furrow is one the land made by itself.",
       "hint": "Snow that falls warm.",
+      "prompt": {
+        "vantage": "front-bench height in the night school, among pupils' mittens, the box a nose-length away",
+        "light": "winter morning schoolroom, hearth-glow ember-warm; warm snow lit amber as it falls, frost teal on the window",
+        "scent": "chalk, wet wool mittens, woodsmoke, snow that smells of bread",
+        "edges": [
+          "a brace-box lid chalked {frost & hearth}, warmed between mittens",
+          "warm snow falling from the open box onto the front bench, pupils catching it on their tongues",
+          "the window fogged on its inside face only, the outside face clear to the lane",
+          "a neighbouring box running pale and not staying"
+        ],
+        "hint": "a winter night-school classroom, a small glass box on a front bench with chalked braces and an ampersand on its lid, warm snow falling out of it, children catching the snowflakes on their tongues, hearth-glow ember-warm, frost-teal window fogged on its inside face, painterly, delighted"
+      },
       "home": 15,
       "echoes": [
         1,
@@ -852,10 +1489,277 @@
       ],
       "note": "A combine: a passage where water is thinking about being light. You can go through it; you cannot stay.",
       "hint": "A passage made of river and moonlight.",
+      "prompt": {
+        "vantage": "low on the landing gravel beside the ferryman's slate, the river at eye level",
+        "light": "clear dusk; the moon coming up and laying a pale lane of light exactly along the seam of the two waters",
+        "scent": "river spray, chalk, wet rope, cool night air",
+        "edges": [
+          "a ferryman's slate propped at the landing, chalked <river ~ moon>",
+          "a lane of moonlight on the seam that looks like a road you could stand on",
+          "a skiff passing through the lane without slowing",
+          "the ferryman's pipe-glow at the end of the landing"
+        ],
+        "hint": "a river landing at clear dusk, a ferryman's slate chalked with angled braces and a tilde, the moon laying a pale lane of light along the seam where berry-dark and chalk-pale waters meet, a skiff passing through without stopping, water thinking about being light, painterly, luminous, transient"
+      },
       "home": 12,
       "echoes": [
         15
       ]
+    },
+    {
+      "id": "first-ink-stays",
+      "name": "First ink stays",
+      "kind": "saying",
+      "region": "the map-house",
+      "terms": [
+        "first ink stays"
+      ],
+      "note": "The archivist's rule: the first hand on a map is never scraped. Everything after goes in pencil beside it, so you can see what changed and what it changed from.",
+      "hint": "A rule about ink, older than the archivist.",
+      "home": 1,
+      "echoes": [
+        6,
+        13
+      ],
+      "craft": "Variant zero is canon (c024): the book's own wording is prerendered and always returns; everything that breathes around it is pencil."
+    },
+    {
+      "id": "try-it-again",
+      "name": "Try it again, a little changed",
+      "kind": "saying",
+      "region": "the grove",
+      "terms": [
+        "try it again, a little changed"
+      ],
+      "note": "What the woodcutters say the grove is doing when it repeats you a beat late: not lying, rehearsing. Keep the try that holds.",
+      "hint": "Something the grove is always doing.",
+      "home": 2,
+      "echoes": [
+        9,
+        14
+      ],
+      "craft": "Iterate in increments: one lesson per release, each a little changed from the last, keeping only what holds (PLAN.E plan_contracts)."
+    },
+    {
+      "id": "build-where-it-leans",
+      "name": "Build where the land already leans",
+      "kind": "saying",
+      "region": "the Genie's bottle",
+      "terms": [
+        "build where the land already leans"
+      ],
+      "note": "The Genie's oldest advice, priced at nothing: a wish redirects what is already moving. Never cut a road the land does not want.",
+      "hint": "Advice a genie gives away for free.",
+      "home": 3,
+      "echoes": [
+        10,
+        12
+      ],
+      "craft": "Reuse a pattern before inventing one: every new lesson stands on a past wonder's precipitate (the curriculum)."
+    },
+    {
+      "id": "write-it-before-you-argue-it",
+      "name": "Write it before you argue it",
+      "kind": "saying",
+      "region": "Council Hill",
+      "terms": [
+        "write it before you argue it"
+      ],
+      "note": "Why the hill's law is cut in braces into the pine before any debate: so it can be leaned on and checked while tempers are cool.",
+      "hint": "A habit of the hill's founders.",
+      "home": 4,
+      "echoes": [
+        10,
+        15
+      ],
+      "craft": "Types before features (L13): name the shape, check it, then build — book:check runs before anything reaches main."
+    },
+    {
+      "id": "listen-before-you-mend",
+      "name": "Listen before you mend",
+      "kind": "saying",
+      "region": "the Quiet Rift",
+      "terms": [
+        "listen before you mend"
+      ],
+      "note": "The clerks' rule for the singing floor: take the crack's note before you touch the slate. A mended floor that was never heard keeps singing underneath.",
+      "hint": "A rule the clerks keep about the floor.",
+      "home": 5,
+      "echoes": [
+        8,
+        13
+      ],
+      "craft": "Probe before you fix (c011, spw:probes): every misalignment is heard and written down before it is mended."
+    },
+    {
+      "id": "glass-over-never-scrape",
+      "name": "Glass over, never scrape",
+      "kind": "saying",
+      "region": "Bonk City",
+      "terms": [
+        "glass over, never scrape"
+      ],
+      "note": "The glaziers' first law: when the story changes, glass the new page over the old. Nothing known is lost, only layered.",
+      "hint": "A law the glaziers keep.",
+      "home": 6,
+      "echoes": [
+        13,
+        15
+      ],
+      "craft": "Nobody loses what they had (c019): returning readers keep their defaults, new things arrive as trials, and every release says what moved."
+    },
+    {
+      "id": "promise-the-next-stone",
+      "name": "Promise the next stone, not the road",
+      "kind": "saying",
+      "region": "the market stone",
+      "terms": [
+        "promise the next stone, not the road"
+      ],
+      "note": "What the oath-clerk tells anyone about to swear something enormous. A small oath can be kept; a road can only be hoped for.",
+      "hint": "Advice from the oath-clerk.",
+      "home": 7,
+      "echoes": [
+        12,
+        14
+      ],
+      "craft": "Ship increments, not roadmaps: one stone at a time, on the 13th and the 26th."
+    },
+    {
+      "id": "the-winch-song-underneath",
+      "name": "The winch song underneath",
+      "kind": "saying",
+      "region": "the Watering Eye",
+      "terms": [
+        "the winch song underneath"
+      ],
+      "note": "Every song the tavern sings is the well-winch's four-beat song underneath; the regulars say you can hear it if you stop clapping.",
+      "hint": "A tune under every tune.",
+      "home": 8,
+      "echoes": [
+        9,
+        13
+      ],
+      "craft": "Every new feature is an old pattern underneath; read the past wonders as lessons and you can hear the next one coming."
+    },
+    {
+      "id": "one-shard-at-a-time",
+      "name": "One shard at a time",
+      "kind": "saying",
+      "region": "the ridge",
+      "terms": [
+        "one shard at a time"
+      ],
+      "note": "How the Fool says a set is learned: not whole, but a shard at a time, each sounded and returned before the next.",
+      "hint": "How a set is learned.",
+      "home": 9,
+      "echoes": [
+        13,
+        15
+      ],
+      "craft": "A curriculum: lessons in order, each leaving something the next can stand on."
+    },
+    {
+      "id": "chalk-is-cheaper-than-oak",
+      "name": "Chalk is cheaper than oak",
+      "kind": "saying",
+      "region": "Bone.land",
+      "terms": [
+        "chalk is cheaper than oak"
+      ],
+      "note": "The joiners' reason for chalking a frame on the floor first: a mistake in braces falls on nobody.",
+      "hint": "A joiner's reason.",
+      "home": 10,
+      "echoes": [
+        4,
+        15
+      ],
+      "craft": "Draft in the cheapest material: a plan, a schema, a validator, a trial switch — before oak, before main."
+    },
+    {
+      "id": "open-nothing-before-it-has-filled",
+      "name": "Open nothing before it has filled",
+      "kind": "saying",
+      "region": "the bloom garden",
+      "terms": [
+        "open nothing before it has filled"
+      ],
+      "note": "The beekeepers' rule, learned the day every bud in the garden opened on demand and held nothing.",
+      "hint": "A beekeeper's rule.",
+      "home": 11,
+      "echoes": [
+        7,
+        14
+      ],
+      "craft": "Trials season before they graduate: a feature opens to everyone only after it has filled."
+    },
+    {
+      "id": "two-springs-one-bed",
+      "name": "Two springs, one bed",
+      "kind": "saying",
+      "region": "the confluence",
+      "terms": [
+        "two springs, one bed"
+      ],
+      "note": "What the boatmen call the rivers: sharing one bed without forgetting where each came from. A membrane, not a merger.",
+      "hint": "What the boatmen call the rivers.",
+      "home": 12,
+      "echoes": [
+        4,
+        13
+      ],
+      "craft": "Separable layers (PLAN.E architecture): content and engine share one book without either whitening the other."
+    },
+    {
+      "id": "leave-room-for-the-path",
+      "name": "Leave room for the path",
+      "kind": "saying",
+      "region": "the Round Archive",
+      "terms": [
+        "leave room for the path"
+      ],
+      "note": "Pencilled in the margin of the archive's map: a record should leave a way through it. Every shelf keeps a gap.",
+      "hint": "Something pencilled in a margin.",
+      "home": 13,
+      "echoes": [
+        1,
+        14
+      ],
+      "craft": "Nothing is a dead end (c027): every wonder, card and chapter links onward; the last line stays open."
+    },
+    {
+      "id": "keep-the-morning",
+      "name": "Keep the morning, not the week",
+      "kind": "saying",
+      "region": "the kept Thursday",
+      "terms": [
+        "keep the morning, not the week"
+      ],
+      "note": "How a dog keeps time, and why Boof had the day nobody kept: attend to what is here, not to what the calendar says is.",
+      "hint": "How a dog keeps time.",
+      "home": 14,
+      "echoes": [
+        2,
+        15
+      ],
+      "craft": "Attend to the increment in front of you; the calendar is a projection, the morning is the work."
+    },
+    {
+      "id": "a-box-for-what-you-do-not-know",
+      "name": "A box for what you do not know",
+      "kind": "saying",
+      "region": "the parcel gate",
+      "terms": [
+        "a box for what you do not know"
+      ],
+      "note": "What the records clerk says a good form needs after the night of the three records: one box left honestly open.",
+      "hint": "What a good form needs.",
+      "home": 15,
+      "echoes": [
+        4,
+        13
+      ],
+      "craft": "Types that admit the unclassified: a schema with room for what it cannot name yet is a schema that lasts."
     }
   ]
 }

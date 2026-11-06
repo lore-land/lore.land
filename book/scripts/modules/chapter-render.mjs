@@ -63,11 +63,22 @@ export function sectionSlug(title) {
     .slice(0, 64);
 }
 
+/* Living slots (PLAN.E L15, contract c024): a paragraph's text may carry
+ * {{name}} placeholders; variant zero of each slot is the canonical prose. */
+const SLOT_PATTERN = /\{\{([a-z0-9-]+)\}\}/g;
+
+/** The paragraph's canonical text: every {{slot}} resolved to its variant zero. */
+export function resolveSlots(block) {
+  const text = String(block?.text || '');
+  if (!block?.slots || !text.includes('{{')) return text;
+  return text.replace(SLOT_PATTERN, (match, name) => block.slots[name]?.variants?.[0] ?? '');
+}
+
 function blockText(block) {
   if (!block) {
     return '';
   }
-  const own = [block.text, block.content && typeof block.content === 'string' ? block.content : '']
+  const own = [resolveSlots(block), block.content && typeof block.content === 'string' ? block.content : '']
     .filter(Boolean).join(' ');
   const children = [...(Array.isArray(block.content) ? block.content : []), ...(block.children || [])]
     .map(blockText).join(' ');
@@ -111,7 +122,7 @@ export function renderChapterBody(container, data, options = {}) {
   // Wonders (book/content/world/almanac.json): the first time each is named in
   // a chapter it is marked, so a reader can collect it (modules/almanac.mjs).
   const wonders = Array.isArray(options.wonders) ? options.wonders : [];
-  const marked = new Set();
+  const marked = options.markedOut instanceof Set ? options.markedOut : new Set();
   (Array.isArray(data.sections) ? data.sections : []).forEach((section) => {
     const node = renderBlock(h, section, { stamp, usedIds, wonders, marked });
     if (node) {
@@ -127,7 +138,63 @@ export function renderChapterBody(container, data, options = {}) {
   if (options.stacks?.entries?.length) {
     container.append(renderStacks(h, options.stacks));
   }
+  if (data.table) {
+    container.append(renderTable(h, data, options.wonderNames || {}));
+  }
   return container;
+}
+
+/**
+ * At the table (PLAN.E L19): the chapter as a place to play. A closed
+ * game-master's page — the place, its light, its people, three hooks, a d6
+ * of encounters, the wonders worth carrying out, a bracework move — and the
+ * page's own dice: every living slot in the chapter, numbered, its first
+ * face the book's own words.
+ */
+function renderTable(h, data, wonderNames) {
+  const t = data.table;
+  const heading = (text) => h('p', { className: 'chapter-table-h' }, text);
+  const slots = [];
+  const gather = (node) => (Array.isArray(node?.content) ? node.content : []).forEach((item) => {
+    if (item.type === 'paragraph' && item.slots) Object.entries(item.slots).forEach(([name, slot]) => slots.push({ name, ...slot }));
+    else if (Array.isArray(item.content)) gather(item);
+  });
+  (data.sections || []).forEach(gather);
+
+  const body = h('div', { className: 'chapter-table-body' },
+    h('p', { className: 'chapter-table-place' }, t.place || ''),
+    t.light ? h('p', { className: 'chapter-table-light' }, h('span', { className: 'chapter-table-label' }, 'Light'), ` ${t.light}`) : null,
+    Array.isArray(t.people) && t.people.length ? h('div', { className: 'chapter-table-block' },
+      heading('People'),
+      h('ul', { className: 'chapter-table-people' }, ...t.people.map((p) => h('li', {},
+        h('strong', {}, p.name), ` wants ${String(p.want || '').replace(/^wants?\s+/i, '')}`,
+        p.voice ? h('span', { className: 'chapter-table-voice' }, ` — ${p.voice}`) : null)))) : null,
+    Array.isArray(t.hooks) && t.hooks.length ? h('div', { className: 'chapter-table-block' },
+      heading('Hooks'), h('ol', { className: 'chapter-table-hooks' }, ...t.hooks.map((hook) => h('li', {}, hook)))) : null,
+    Array.isArray(t.encounters) && t.encounters.length ? h('div', { className: 'chapter-table-block' },
+      heading(`Roll a d${t.encounters.length}`), h('ol', { className: 'chapter-table-dice' }, ...t.encounters.map((e) => h('li', {}, e)))) : null,
+    Array.isArray(t.finds) && t.finds.length ? h('div', { className: 'chapter-table-block' },
+      heading('Worth carrying out'),
+      h('ul', { className: 'chapter-table-finds' }, ...t.finds.map((f) => h('li', {},
+        h('a', { href: `/almanac/#wonder-${f.wonder}`, className: 'chapter-table-find' }, wonderNames[f.wonder] || f.wonder), ` — ${f.use}`)))) : null,
+    t.bracework?.spw ? h('div', { className: 'chapter-table-block chapter-table-brace' },
+      heading('A bracework move'),
+      h('code', { className: 'chapter-table-spw' }, t.bracework.spw),
+      h('p', {}, h('span', { className: 'chapter-table-label' }, 'Does'), ` ${t.bracework.does}`),
+      h('p', {}, h('span', { className: 'chapter-table-label' }, 'Costs'), ` ${t.bracework.costs}`)) : null,
+    slots.length ? h('div', { className: 'chapter-table-block chapter-table-slots' },
+      heading('The page\u2019s own dice'),
+      h('p', { className: 'chapter-table-note' }, 'Every phrase in this chapter that breathes, as a table to roll on. The first face is the book\u2019s own words.'),
+      ...slots.map((slot) => h('div', { className: 'chapter-table-slot' },
+        h('p', { className: 'chapter-table-slot-head' }, `d${slot.variants.length} · turns by the ${slot.clock || 'hour'}`),
+        h('ol', {}, ...slot.variants.map((v, i) => h('li', i === 0 ? { className: 'is-canon' } : {}, v)))))) : null,
+    t.question ? h('p', { className: 'chapter-table-question' }, h('span', { className: 'chapter-table-label' }, 'Ask the table'), ` ${t.question}`) : null);
+
+  return h('details', { className: 'chapter-table', id: 'table', dataset: { component: 'chapter-table' } },
+    h('summary', {},
+      h('span', { className: 'chapter-table-kicker' }, 'At the table'),
+      h('span', { className: 'chapter-table-title' }, 'Play in this chapter')),
+    body);
 }
 
 /**
@@ -167,7 +234,7 @@ export function renderChapterCoda(container, data, options = {}) {
   const withBase = options.withBase || ((href) => href);
   const h = createFactory(doc);
 
-  const colophon = renderColophon(h, data, withBase);
+  const colophon = renderColophon(h, data, withBase, options.wonders);
   if (colophon) {
     container.append(colophon);
   }
@@ -279,6 +346,8 @@ function renderBlock(h, section, context = {}) {
       return renderParagraph(h, section, context);
     case 'pull':
       return h('blockquote', { className: 'voice-pull', dataset: { component: 'voice-pull' } }, String(section.text || '').trim());
+    case 'bracework':
+      return renderBracework(h, section);
     case 'figure':
       return renderFigure(h, section);
     case 'section':
@@ -332,16 +401,53 @@ function appendMarked(h, parent, text, context = {}) {
   }
 }
 
+/* Text with living slots: the canonical words of each slot sit in a span that
+ * carries its clock and variants; living.mjs turns them when the reader has
+ * the living page on. Everything around a slot is marked for wonders as usual. */
+function appendWithSlots(h, p, section, context) {
+  const text = String(section.text || '');
+  if (!section.slots || !text.includes('{{')) {
+    appendMarked(h, p, text, context);
+    return;
+  }
+  let last = 0;
+  for (const match of text.matchAll(SLOT_PATTERN)) {
+    if (match.index > last) appendMarked(h, p, text.slice(last, match.index), context);
+    const slot = section.slots[match[1]];
+    const variants = Array.isArray(slot?.variants) ? slot.variants : [];
+    p.append(h('span', {
+      className: 'living-slot',
+      dataset: { slot: match[1], clock: slot?.clock || 'hour', variants: JSON.stringify(variants) }
+    }, variants[0] ?? ''));
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) appendMarked(h, p, text.slice(last), context);
+}
+
+/* Bracework (PLAN.E L14, contract c025): the makers' notation, set in the
+ * page as its expression and a gloss; bracework.mjs asks the Spw interpreter
+ * to read it into a diagram when the block comes near. */
+function renderBracework(h, section) {
+  const expr = String(section.spw || '').trim();
+  if (!expr) return null;
+  return h('figure', { className: 'bracework', dataset: { component: 'bracework', spw: expr } },
+    h('span', { className: 'bracework-kicker' }, 'Bracework'),
+    h('code', { className: 'bracework-expr' }, expr),
+    h('figcaption', { className: 'bracework-gloss' },
+      String(section.gloss || ''),
+      section.maker ? h('span', { className: 'bracework-maker' }, ` — ${section.maker}`) : null));
+}
+
 function renderParagraph(h, section, context = {}) {
   const p = h('p');
   // The paragraph's lean (boon / bane / bone) for the reading lens.
-  const plain = `${section.text || ''}${(section.children || []).map((child) => child.text || child.content || '').join('')}`;
+  const plain = `${resolveSlots(section)}${(section.children || []).map((child) => child.text || child.content || '').join('')}`;
   const lean = leanFor(plain, section.lean);
   if (lean) {
     p.dataset.lean = lean;
   }
   if (section.text) {
-    appendMarked(h, p, section.text, context);
+    appendWithSlots(h, p, section, context);
   }
   if (Array.isArray(section.children)) {
     section.children.forEach((child) => {
@@ -569,9 +675,24 @@ function renderTurn(h, next, withBase) {
   return h('nav', { className: 'chapter-turn', 'aria-label': 'Next chapter', dataset: { component: 'chapter-turn' } }, link);
 }
 
-function renderColophon(h, data, withBase) {
+function renderColophon(h, data, withBase, wonders = []) {
   const hasTopics = Array.isArray(data.topics) && data.topics.length;
   const colophon = h('footer', { className: 'chapter-colophon', dataset: { component: 'chapter-colophon' } });
+
+  // Nothing is a dead end (c027): the wonders this chapter names, each a door to the almanac.
+  if (Array.isArray(wonders) && wonders.length) {
+    const row = h('nav', { className: 'chapter-wonder-row', 'aria-label': 'Wonders in this chapter', dataset: { component: 'chapter-wonders' } });
+    row.append(h('span', { className: 'chapter-threads-label' }, 'Wonders here'));
+    wonders.forEach((wonder) => {
+      row.append(h('a', {
+        className: 'chapter-wonder-chip',
+        href: withBase(`/almanac/#wonder-${wonder.id}`),
+        dataset: { kind: wonder.kind, wonderLink: wonder.id },
+        title: wonder.lives ? `Lives in ${wonder.lives}` : wonder.name
+      }, wonder.name));
+    });
+    colophon.append(row);
+  }
 
   if (hasTopics || (Array.isArray(data.pillars) && data.pillars.length)) {
     const threads = h('nav', { className: 'chapter-topic-row', 'aria-label': 'Threads in this chapter', dataset: { component: 'chapter-topics' } });

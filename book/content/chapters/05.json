@@ -151,7 +151,19 @@
         },
         {
           "type": "paragraph",
-          "text": "It was not only the crack that hummed. Down in the dark of it lived the hum-crickets, chalk-pale and no longer than a barleycorn, and they kept its pitch the way a choir keeps a note for a singer who has stepped out. The clerks fed them seed-cake crumbs at elevenses and crossed the floor in felt hush-slippers. A cricket that went silent, they said, meant somebody near the floor was lying.",
+          "text": "It was not only the crack that hummed. Down in the dark of it lived the hum-crickets, chalk-pale and no longer than a barleycorn, and they kept its pitch the way a choir keeps a note for a singer who has stepped out. The clerks fed them {{elevenses}} at elevenses and crossed the floor in felt hush-slippers. A cricket that went silent, they said, meant somebody near the floor was lying.",
+          "slots": {
+            "elevenses": {
+              "clock": "day",
+              "variants": [
+                "seed-cake crumbs",
+                "oatcake crumbs",
+                "crumbs of caraway bun",
+                "parkin crumbs",
+                "shortbread crumbs"
+              ]
+            }
+          },
           "lean": "boon"
         },
         {
@@ -198,7 +210,19 @@
         },
         {
           "type": "paragraph",
-          "text": "She shifted her paw. The crack ran on beneath it, under a pounce-pot and a dropped quill. Whatever the slips said, the floor could not keep both promises."
+          "text": "She shifted her paw. The crack ran on beneath it, under {{floor-litter}}. Whatever the slips said, the floor could not keep both promises.",
+          "slots": {
+            "floor-litter": {
+              "clock": "hour",
+              "variants": [
+                "a pounce-pot and a dropped quill",
+                "a sand-shaker and a curl of string",
+                "a pen-wiper and a lost button",
+                "a blotter and a fallen stick of sealing wax",
+                "a tea-tray and a spill of pencil shavings"
+              ]
+            }
+          }
         }
       ]
     },
@@ -249,6 +273,10 @@
         },
         {
           "type": "paragraph",
+          "text": "The youngest clerk had the wax pot open before the bell had stopped. The oldest put two fingers on her wrist. “Listen before you mend,” he said. It had been the floor's rule since the winter a mason poured lead into the crack without taking its note, and the slate went on singing through the lead all spring, a tone lower and sulking, until they chipped it out. He wrote the new note in the margin first. Then he shut the wax pot himself."
+        },
+        {
+          "type": "paragraph",
           "text": "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you, and somebody else catches the weight.”"
         },
         {
@@ -274,7 +302,19 @@
         },
         {
           "type": "paragraph",
-          "text": "She could follow the crack farther than she could see. Somewhere beyond the wall, a cup began to rattle."
+          "text": "She could follow the crack farther than she could see. Somewhere beyond the wall, {{far-rattle}}.",
+          "slots": {
+            "far-rattle": {
+              "clock": "minute",
+              "variants": [
+                "a cup began to rattle",
+                "a spoon began to chatter in its saucer",
+                "a windowpane began to buzz",
+                "a row of jars began to tick against each other",
+                "a kettle lid began to tap"
+              ]
+            }
+          }
         }
       ],
       "climate": {
@@ -322,7 +362,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Out in the avenue, the thin song faded into footfall, wheel-rattle, evening trade: a knife-grinder's sparks, a chestnut drum, a coal cart backing into a lane with a great deal of advice. Boof kept the egg close. Ahead, Bonk City's windows caught the last light: old impacts melted into glass, a skyline of things that had been struck and still let someone see through."
+          "text": "Out in the avenue, the thin song faded into footfall, wheel-rattle, evening trade: a knife-grinder's sparks, a chestnut drum, {{avenue-cart}}. Boof kept the egg close. Ahead, Bonk City's windows caught the last light: old impacts melted into glass, a skyline of things that had been struck and still let someone see through.",
+          "slots": {
+            "avenue-cart": {
+              "clock": "hour",
+              "variants": [
+                "a coal cart backing into a lane with a great deal of advice",
+                "a brewer's dray backing into a yard with a great deal of advice",
+                "a hay wain turning in the street with a great deal of advice",
+                "a barrow of slates going round a corner with everyone's help",
+                "a carrier's van reversing up an alley to a chorus of opinions"
+              ]
+            }
+          }
         }
       ]
     }
@@ -349,7 +401,69 @@
       },
       {
         "description": "A carpenter's door-rule lies folded on the hall's sill, shut on a size that fits no door in the room. Nobody has claimed it."
+      },
+      {
+        "description": "Listen before you mend: the clerks' rule for the singing floor. The crack's note is taken and written in the margin before anyone touches the slate. A floor once leaded over unheard sang on underneath all spring, a tone lower, until it was chipped out."
       }
     ]
+  },
+  "table": {
+    "place": "The hall of arches below Council Hill: cedar shelves, a long desk worn pale by elbows, clean arched windows, and across the slate floor a hairline crack that hums. Clerks cross it in felt hush-slippers; two claim-slips hang over the desk on silver bodkins, both pulling; brass calipers straddle the crack with a small bell at the hinge, and the ledger margin keeps a column of notes. It smells of ink dust, linseed wax, cold tea gone glassy and seed-cake crumbs, and through the door comes the evening trade of the avenue to Bonk City.",
+    "light": "Wide, calm afternoon light that will not cross one dark hairline on the floor, with a faint gold down inside the crack. By lamplight the two pinned slips throw doubled shadows across the desk, and the gold in the crack is the brightest thing in the room.",
+    "people": [
+      {
+        "name": "the oldest clerk of the hall",
+        "want": "to take the crack's note every morning before anything is touched, and to keep the margin true",
+        "voice": "A fingernail on the bell; speaks in pitches; two fingers on your wrist if you reach for the wax."
+      },
+      {
+        "name": "the youngest clerk",
+        "want": "to mend something, anything, today",
+        "voice": "Sleeves rolled, wax pot always open; quick, kind, and learning to wait."
+      },
+      {
+        "name": "the hum-crickets",
+        "want": "elevenses at the crack's lip, and nobody lying near the floor",
+        "voice": "A chalk-pale choir holding the lower note. They fall silent all at once and never say which kind of lying they meant."
+      },
+      {
+        "name": "the Off-Season Genie",
+        "want": "to stand at the window and not be involved",
+        "voice": "Reads the gauge like a price tag, in semitones, and reminds you that lying has two meanings."
+      }
+    ],
+    "hooks": [
+      "The leaded floor. In a counting house across the avenue, someone once mended a singing crack without taking its note, and the floor has sung on underneath ever since, a tone lower and sulking; now every cup on the street rattles at night. Listen before you mend: find the note it sang before the lead, before anyone lifts a chisel.",
+      "A silence at noon. Every cricket in the hall went quiet at once this morning, and nobody was lying down. Somebody near the floor is lying — or lying in some way the crickets have never been told about. The clerks want to know which before tomorrow's note is taken.",
+      "The rule on the sill. A carpenter's door-rule lies on the window sill, folded shut on a size that matches no door in the hall. Unfold it hinge by hinge and go looking for the door it was measuring — a cellar, a bread-oven, a dovecote, a vestry — and find every one wrong by a hair. Whoever set it down mid-measure has not come back for it, and the rule will not say whose it is."
+    ],
+    "encounters": [
+      "A tail, a hem or a boot brushes the crack-gauge and the bell gives a note nobody has written yet. The oldest clerk wants it in the margin before anyone moves.",
+      "Someone lies down on the cold slate to hear the floor better, and every cricket stops. Three clerks look very hard at them.",
+      "Elevenses: seed-cake crumbs at the crack's lip. The crickets edge up to eat, and the room's note dips a hair while they chew.",
+      "Beyond the wall a cup begins to rattle, then a spoon in its saucer, then a row of jars: the crack runs farther than anyone can see.",
+      "A runner arrives with a crust-brown envelope, sealed twice and smelling of sour pastry. Over the desk, the silver bodkins start to pull.",
+      "Out in the avenue a coal cart backs into a lane with a great deal of advice, and its jolting sets the hall's note a semitone sharp until it has gone round the corner."
+    ],
+    "finds": [
+      {
+        "wonder": "hum-crickets",
+        "use": "Ask your question near the crack: if every cricket stops, someone near the floor is lying. The catch: lying has two meanings and nobody has ever told the crickets which, so sit down on the slate to rest and a whole choir will call you a liar."
+      },
+      {
+        "wonder": "crack-gauge",
+        "use": "Set across any break — a floor, a beam, a friendship — it measures in notes, not inches, and the bell tells you how much is still owed. The catch: it gives you the interest, never the wish behind it, and once you have taken a note, somebody has to take it again every morning after."
+      },
+      {
+        "wonder": "door-rule",
+        "use": "Unfold it hinge by hinge against a doorway and it stops with a click on an honest size. The catch: this one is folded shut on a size no door in the hall matches, nobody claims it, and it will not say whose it is."
+      }
+    ],
+    "bracework": {
+      "spw": "[ledger @ cricket]",
+      "does": "A window on the account book as the crickets hear it: for a minute every entry sings at its own pitch, and anything still owing rings flat.",
+      "costs": "It runs on the crack's own warmth. For a week the floor sings a semitone sharp, the oldest clerk needs an extra line in the margin every morning, and the crickets keep the lower note to themselves out of pique."
+    },
+    "question": "Somebody wished grandly over this floor once, and the crack is still paying the note. Nobody remembers the wish. What was it — and who, today, is still catching the weight?"
   }
 }

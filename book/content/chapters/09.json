@@ -165,12 +165,32 @@
         },
         {
           "type": "paragraph",
-          "text": "The slates still smelled of noon's slate-cakes, oat and soot. A few signal-skinks, come up from the flats in a roofer's cart, basked there flicking their tails at the chimney stones, which keep another code."
+          "text": "The slates still smelled of noon's slate-cakes, {{slate-cake}}. A few signal-skinks, come up from the flats in a roofer's cart, basked there flicking their tails at the chimney stones, which keep another code.",
+          "slots": {
+            "slate-cake": {
+              "clock": "day",
+              "variants": [
+                "oat and soot",
+                "barley and soot",
+                "rye and chimney-smoke",
+                "honey and ash",
+                "caraway and soot"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
           "text": "Then, out of the dusk, the geese: nine in a loose wedge, honking in uneven time. Jazz-geese always fly in nines. As each one honked, a shard on the slate rang back. Eight rang. The ninth honk passed over the crescent, found nothing to answer it, and went on into the dark. Boof knew that bent note from the edge of the grove. One goose had taught the Fool his note, or the other way round; neither would say.",
           "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Eight bells in uneven time is weather, not a set, and Boof's ears had gone flat under it. “One shard at a time,” said the Fool, “or it's only hail.” He lifted the lamp's shard, sounded it against his thumbnail, and set it back in its place before he touched the next. It rang the way the woodcutters say the grove does everything: try it again, a little changed."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then the tree's, then the bottle's, each returned before the next came up. By the fourth Boof could smell where every one had come from: cedar, salt, the iron of a windy hill. The well's came last and slowest, four beats a turn, the winch song underneath, and her paws remembered wet coping. Sounded one by one, they made a road she could follow back."
         }
       ]
     },
@@ -198,6 +218,12 @@
           "type": "paragraph",
           "text": "Then he chalked it on the next slate, as makers do, to check a thing before anyone leans on it: (lamp & tree & bottle & crust & receipt & glass & berry & well & ). Round braces: everything inside must arrive together. Eight pieces of a nine-piece combine are not a smaller combine. They are a heap that hums.",
           "lean": "bone"
+        },
+        {
+          "type": "bracework",
+          "spw": "(lamp & tree & bottle & crust & receipt & glass & berry & well & )",
+          "gloss": "Round braces gather what must arrive together, so eight things with the ninth place left blank are not a smaller combine but a heap that hums.",
+          "maker": "the Fool"
         }
       ]
     },
@@ -253,11 +279,34 @@
         },
         {
           "type": "paragraph",
-          "text": "Below them, somebody was closing shutters, one clap after another down the street, humming a note she had not had at supper, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw."
+          "text": "Below them, somebody was {{evening-chore}}, humming a note she had not had at supper, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw.",
+          "slots": {
+            "evening-chore": {
+              "clock": "minute",
+              "variants": [
+                "closing shutters, one clap after another down the street",
+                "beating a rug, one thump after another over a rail",
+                "calling hens in, one name after another across a yard",
+                "setting out milk-pails, one clank after another along a step"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
-          "text": "Some of the places were in sight. Far off, Bonk City's dent-lanterns were coming on, every dent a lane the light remembered. Farther still the salt flats glowed along their whale-roads; where two had wanted one turn, a single line now bent, and a salt-whale was travelling it, slow as weather."
+          "text": "Some of the places were in sight. Far off, Bonk City's dent-lanterns were coming on, every dent a lane the light remembered. Farther still the salt flats glowed along their whale-roads; where two had wanted one turn, a single line now bent, and a salt-whale was travelling it, {{whale-pace}}.",
+          "slots": {
+            "whale-pace": {
+              "clock": "hour",
+              "variants": [
+                "slow as weather",
+                "slow as a thaw",
+                "slow as rising dough",
+                "slow as honey off a spoon",
+                "slow as a season turning"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -309,7 +358,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Down the ridge, past roofers' ladders lashed for the night, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the silence had been waiting with her."
+          "text": "Down the ridge, past {{ridge-sights}}, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the silence had been waiting with her.",
+          "slots": {
+            "ridge-sights": {
+              "clock": "hour",
+              "variants": [
+                "roofers' ladders lashed for the night",
+                "dovecotes shut for the night",
+                "washing left out on the leads",
+                "chimney-pots capped against the dew",
+                "slate-stacks roped under sacking"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -340,7 +401,64 @@
       },
       {
         "description": "Chalked as a combine, the set is a round brace — everything inside must arrive together — with eight names joined by ampersands and a blank after the last. Eight pieces of a nine-piece combine make only a heap that hums, and no one chalks a name into the blank."
+      },
+      {
+        "description": "One shard at a time: how the Fool says a set is learned. Eight shards rung together in uneven time are only weather; sounded one by one, each returned before the next is touched, they make a road you can follow back — the lamp's shard ringing the way the grove does everything (try it again, a little changed), the well's with the winch song underneath."
       }
     ]
+  },
+  "table": {
+    "place": "A high slate roof-ridge above the town at dusk: cold chimney stones, slates still warm from noon and crusted with slate-cake crumbs, signal-skinks basking where the heat lingers. Below, the town is closing up for the night, shutter by shutter; far off, Bonk City's dent-lanterns are coming on, and farther still the salt flats glow along their whale-roads. The Fool's shard-rack of smoked ash lies open on the slates: nine felt-lined slots, the ninth egg-shaped.",
+    "light": "Violet dusk, gold shard-glow on the slate and lamps coming on in the valley below. Full night brings starlight and wind; the town's lamps go out one clap of a shutter at a time, until the shards are the warmest light left on the roof.",
+    "people": [
+      {
+        "name": "the Fool",
+        "want": "someone to learn a set properly, one shard at a time, and return each one changed",
+        "voice": "Interrupts, hands your last phrase back changed, and never — ever — chalks a name into the blank."
+      },
+      {
+        "name": "the roofer",
+        "want": "his ladders lashed before the dew, and the signal-skinks out of his cart; they rode up from the flats with him and will not go home",
+        "voice": "Slate-dust in his eyebrows; talks about weather as if it owed him money."
+      },
+      {
+        "name": "the shutter-closer",
+        "want": "to know where she got the note she has been humming since supper",
+        "voice": "One clap of a shutter at a time down the street; deeply suspicious of chimney-swifts."
+      }
+    ],
+    "hooks": [
+      "A note in the wrong house. The chimney-swifts carried a shard's hum down off the ridge and it lodged in a kitchen: a woman who never sang now hums it closing her shutters, and her kettle has started answering. Bring the note back up to the ridge before its shard forgets how to ring — and persuade her to give it up, which she may not want to do.",
+      "Learn a honk. The Fool will teach one player one honk: an old tale sampled, sounded in a new mouth, and returned changed, with interest. The law is short enough for a dog to carry, and a honk that only repeats is a debt the ridge collects — so the player has to find what, in their own story, the old tale gets back.",
+      "The missing turnip. For years the Fool kept a turnip in the rack's ninth slot so it would not look sad. The turnip is gone, and down in the town someone is boasting of a vegetable that hums. Get it back, without asking out loud what the slot was for."
+    ],
+    "encounters": [
+      "Jazz-geese pass over in a loose wedge of nine, honking in uneven time, and everything tuned on the ridge rings back: shards, a belt-buckle, someone's back teeth.",
+      "Signal-skinks flick their tails at the chimney stones, and the stones tick warm in answer. Copy the flick and you get an answer too, in a code nobody alive can read.",
+      "Chimney-swifts pour out of a flue in a soot-furred whirl and carry the last thing anyone said a little farther than it meant to go — down into somebody's supper.",
+      "A roofer's ladder, lashed for the night, works loose in the wind. The slates are warm. The drop is not.",
+      "Below, someone is calling hens in, one name after another across a yard; by the end the party knows nine hens' names and the shape of a family argument.",
+      "Far off, a salt-whale turns along a whale-road, slow as a thaw, and the whole ridge hums faintly with it, like a shard nobody has sounded."
+    ],
+    "finds": [
+      {
+        "wonder": "shard-rack",
+        "use": "Each felt-lined slot keeps a shard's note; lift one out and sound it and you hear the shape of the tale it was cut from. The catch: every shard sampled must be returned changed, with interest, before the next is touched — and the ninth slot is egg-shaped and takes nothing else. It put up with a turnip once, out of kindness."
+      },
+      {
+        "wonder": "chimney-swifts",
+        "use": "Say something into a flue and the swifts will carry it off the ridge, flue to flue, to kitchens by supper. The catch: always a little farther than it meant to go, never exactly where it was sent — and nothing said on the ridge stays on the ridge, including what you meant to keep."
+      },
+      {
+        "wonder": "jazz-geese",
+        "use": "Hum a note at a passing wedge and, if they like it, they will honk it back in uneven time from wherever they are going. The catch: they only ever return a note changed, and none of them will tell you who taught it to whom."
+      }
+    ],
+    "bracework": {
+      "spw": "(goose ^ note)",
+      "does": "A gathering that rises: one note — a warning, a name, a tune — is lifted into a passing wedge of jazz-geese and carried wherever they are going, to land when they do.",
+      "costs": "Round braces mean everything must arrive together, so the note lands only when all nine geese do, and one goose is always late. Until it lands, whoever wrote it cannot hum, whistle or carry a tune."
+    },
+    "question": "Which old tale would each of you sample into a shard — and what would you have to give back, changed, so it isn't a debt?"
   }
 }

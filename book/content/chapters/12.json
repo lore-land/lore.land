@@ -146,7 +146,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. River tar on the planks. Under it all, warm shell."
+          "text": "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. {{bridge-smell}}. Under it all, warm shell.",
+          "slots": {
+            "bridge-smell": {
+              "clock": "hour",
+              "variants": [
+                "River tar on the planks",
+                "Wet hemp on the mooring posts",
+                "Crushed mint along the landing",
+                "Pipe-smoke drifting from the ferry steps",
+                "Sun-warm pitch between the boards"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -168,8 +180,20 @@
         },
         {
           "type": "paragraph",
-          "text": "A seam-otter came down the channel exactly on the line, one paw in each water, rolling without ever choosing a side. Its fur dried berry-dark on one flank and chalk-pale on the other; boatmen swear there are two kinds of otter here. There is one kind, wet in both waters.",
-          "lean": "boon"
+          "text": "A seam-otter came down the channel exactly on the line, one paw in each water, rolling without ever choosing a side. Its fur dried berry-dark on one flank and chalk-pale on the other; {{otter-swearers}} swear there are two kinds of otter here. There is one kind, wet in both waters.",
+          "lean": "boon",
+          "slots": {
+            "otter-swearers": {
+              "clock": "hour",
+              "variants": [
+                "boatmen",
+                "anglers",
+                "eel-catchers",
+                "the washerwomen",
+                "bargees"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -177,7 +201,7 @@
         },
         {
           "type": "paragraph",
-          "text": "He laid his instruments on the rail one last time. The want-needle did not circle; it found Boof and held, like a dog on a point. The wish-scale would not settle at a coincidence, or a season of them, or a lifetime; it kept tipping, honey-slow, toward always."
+          "text": "He laid his instruments on the rail one last time. The want-needle did not circle; it found Boof and held, like a dog on a point. The wish-scale would not settle at a coincidence, or a season of them, or a lifetime; it kept tipping, honey-slow, toward always. “Build where the land already leans,” he murmured: his oldest advice, and the only thing he had ever priced at nothing. The ants had kept that field warm every winter Boof could remember. She was only asking it to go on."
         },
         {
           "type": "paragraph",
@@ -280,12 +304,24 @@
         },
         {
           "type": "paragraph",
-          "text": "Mx. BoneWAP arrived last, clean-boiled and exact, with the oath-scale from the market stone under one arm. It weighed both slices and found them equal; the oath-scale ignores the hand that pays."
+          "text": "Mx. BoneWAP arrived last, clean-boiled and exact, with the oath-scale from the market stone under one arm. It weighed both slices and found them equal; the oath-scale ignores the hand that pays. BaneWAP drew breath to swear he would never be bitter again. “Promise the next stone, not the road,” said BoneWAP, who had it from the oath-clerk, and he swore to the slice instead."
         },
         {
           "type": "paragraph",
-          "text": "Most days the rail-pins held the bridge's small news: ferry hours, a lost goat, a recipe for eel pie the pies present politely did not read. BoneWAP posted both receipts among them for any traveler to read: one slice given in apology, one slice received in welcome, sources named, nothing flattened.",
-          "lean": "bone"
+          "text": "Most days the rail-pins held the bridge's small news: ferry hours, {{small-news}}, a recipe for eel pie the pies present politely did not read. BoneWAP posted both receipts among them for any traveler to read: one slice given in apology, one slice received in welcome, sources named, nothing flattened.",
+          "lean": "bone",
+          "slots": {
+            "small-news": {
+              "clock": "day",
+              "variants": [
+                "a lost goat",
+                "a found oar",
+                "a strayed heifer",
+                "a fiddle left on the landing",
+                "a coracle found adrift"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -297,11 +333,27 @@
         },
         {
           "type": "paragraph",
+          "text": "The boatmen have a plainer name for it. “Two springs, one bed,” said the ferryman, and went back down to his boat, which carries two bailing-cans, one stained berry-dark and one chalk-white. He has never once bailed one water with the other’s can. In forty years the boat has never once gone down."
+        },
+        {
+          "type": "paragraph",
           "text": "The egg in Boof's sling was lighter now, and its heartbeat had changed from waiting to arriving."
         },
         {
           "type": "paragraph",
-          "text": "Boof listened to the travelers crossing behind her, the different weights of their steps — a drover, two goats — and the pause where someone stopped to look down. Under the bridge, one river carried a darker thread for a while before the currents loosened it."
+          "text": "Boof listened to the travelers crossing behind her, the different weights of their steps — {{crossing-steps}} — and the pause where someone stopped to look down. Under the bridge, one river carried a darker thread for a while before the currents loosened it.",
+          "slots": {
+            "crossing-steps": {
+              "clock": "minute",
+              "variants": [
+                "a drover, two goats",
+                "a tinker, a handcart",
+                "a fishwife, a creel",
+                "a shepherd, one ewe",
+                "a carter, a slow horse"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -383,7 +435,72 @@
       },
       {
         "description": "Every clear dusk the ferrymen chalk <river ~ moon> on the landing slate — not to make the moonrun, which the river makes itself, but so no stranger mistakes a passage for a place to stop. The Genie left his bottle-desk folded on the rail, its drawer for Thursdays empty."
+      },
+      {
+        "description": "Two springs, one bed: what the boatmen call the rivers. The ferryman keeps two bailing-cans, one stained berry-dark and one chalk-white, and has never bailed one water with the other’s can."
+      },
+      {
+        "description": "Pricing the furrow, the Genie murmured his oldest advice, the one thing he ever priced at nothing — build where the land already leans; the ants had kept that field warm every winter Boof could remember. BaneWAP, about to swear never to be bitter again, was told to promise the next stone, not the road, and swore to the slice instead."
       }
     ]
+  },
+  "table": {
+    "place": "A wide, low-planked timber bridge where two mountain rivers meet and share one bed without blending: berry-dark water sweet with far orchards on one side, chalk-pale water quarry-cold on the other, and between them a seam that shines like spun gold. Brass rail-pins along the rail hold the bridge’s small news; a cracked ferry-bell hangs at the landing beside a slate where the ferrymen chalk the moonrun at dusk; under the deck, small load-bells ring for every weight that crosses. It smells of river tar, wet hemp, crushed mint and pipe smoke, and a gravel path runs on downstream to an archive with its door open.",
+    "light": "Late-afternoon gold skimming two colours of water. At dusk the moon lays a lane of light along the seam — a passage you can go through and nobody can stay in — and lamplight spills from the archive door across the lawn downstream.",
+    "people": [
+      {
+        "name": "the ferryman",
+        "want": "every stranger across dry on both sides, and nobody mistaking the moonrun for a place to stop",
+        "voice": "points with his pipe instead of talking; will not lend you the wrong bailing-can"
+      },
+      {
+        "name": "an eel-catcher",
+        "want": "a wager settled: that there are two kinds of otter here, the berry kind and the chalk kind",
+        "voice": "certain, generous, wrong, and delighted to be proven so over supper"
+      },
+      {
+        "name": "Mx. BoneWAP",
+        "want": "every receipt posted with its source named and nothing flattened into anything else",
+        "voice": "clean-boiled and exact; weighs before speaking, and speaks in receipts"
+      },
+      {
+        "name": "a tinker with a handcart",
+        "want": "to get across without trusting the bridge, which means ringing the ferry-bell and admitting it",
+        "voice": "jangles when nervous; bargains with the planks"
+      }
+    ],
+    "hooks": [
+      "One receipt on the rail-pins has no oath-moth on it, and every other receipt does. Find which word in it is not true, and who pinned it there, before the next traveller relies on it.",
+      "Two eel-catchers have bet their boats on whether there are one or two kinds of otter at the seam. Prove it without catching a single otter, and without either of them losing a boat.",
+      "A traveller who has lost someone means to stand in the moonrun tonight and stay. Get them through the passage and out on the far side before the light leaves the water — without once telling them they cannot."
+    ],
+    "encounters": [
+      "The load-bells ring under someone who swore they were carrying nothing; count the rings and you know how much they carry, if not what.",
+      "A notice on the rail-pins (roll: a lost goat, a found oar, a strayed heifer, a fiddle left on the landing, a coracle found adrift) — and its owner is crossing the bridge right now, going the other way.",
+      "A seam-otter rolls past exactly on the line, one paw in each water; whoever follows it along the seam stays dry on both sides for one crossing.",
+      "Someone rings the ferry-bell (roll: a drover with two goats, a tinker with a handcart, a fishwife with a creel, a shepherd with one ewe, a carter with a slow horse) and needs to cross without wetting both springs.",
+      "An ink-heron lifts out of the shallows and leaves its reflection dried on the mud; whatever else was reflected beside it stays on the bank too, until the next rain.",
+      "A grey oath-moth comes in off the market road and settles on somebody’s sleeve the moment they say a true thing they had not meant to say aloud."
+    ],
+    "finds": [
+      {
+        "wonder": "ferry-bell",
+        "use": "Ring it and the ferryman takes you over the seam without wetting both springs. Ring it only because you doubt the bridge, and the whole landing hears that you doubted it."
+      },
+      {
+        "wonder": "rail-pins",
+        "use": "Pin anything to the rail and every traveller will read it. Oath-moths settle only on true words, so everyone can also see which of your postings has no moth."
+      },
+      {
+        "wonder": "moonrun",
+        "use": "At dusk the chalked <river ~ moon> is a passage of thinking water that carries you downstream faster than any boat. You can go through it; you cannot stay, and anything set down in it goes with the light."
+      }
+    ],
+    "bracework": {
+      "spw": "(berry & chalk)",
+      "does": "A gathering: two people who have fallen out arrive at the same landing at the same moment, neither ahead, neither giving way, each still entirely themselves.",
+      "costs": "For a day afterward each tastes the other’s spring in everything; one bite in three is somebody else’s home. And a gathering cannot be half kept — if either turns back, both get wet."
+    },
+    "question": "What would your party post on the rail-pins for any traveller to read — and would a moth settle on it?"
   }
 }

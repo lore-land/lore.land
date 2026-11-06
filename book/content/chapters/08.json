@@ -142,7 +142,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards, nose first through spilled lager and wet rope, and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first."
+          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards, nose first through spilled lager and {{tavern-floor}}, and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first.",
+          "slots": {
+            "tavern-floor": {
+              "clock": "hour",
+              "variants": [
+                "wet rope",
+                "sawdust",
+                "pipe-ash",
+                "damp straw",
+                "onion skins"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -169,7 +181,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Overhead the well-winch creaked. The tavern bucket came down past her nose on its wet hemp rope, sank, and was wound up again to the winch song, honey-slow, four beats a turn, so it would not knock anyone on the way. It was a still night. On still nights the bucket comes up holding a face instead of water. The potboy looked in, said \"Evening,\" to whoever it was, and let it back down. The kitchen drew from the rain-butt instead, and the soup tasted faintly of roof."
+          "text": "Overhead the well-winch creaked. The tavern bucket came down past her nose on its wet hemp rope, sank, and was wound up again to the winch song, honey-slow, four beats a turn, so it would not knock anyone on the way. It was a still night. On still nights the bucket comes up holding a face instead of water. The potboy looked in, said \"Evening,\" to whoever it was, and let it back down. The kitchen drew from the rain-butt instead, and {{kitchen-pot}} tasted faintly of roof.",
+          "slots": {
+            "kitchen-pot": {
+              "clock": "day",
+              "variants": [
+                "the soup",
+                "the leek broth",
+                "the barley stew",
+                "the pea soup",
+                "the dumplings"
+              ]
+            }
+          }
         }
       ]
     },
@@ -197,7 +221,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The locals queued with their wants the way they queued at the winch: a roof mended before the rains, a cousin forgiven, a goat talked back over a wall. They held pewter tankards while they waited and drank them while they thought. A crock of pickled walnuts went round. Every want was smaller than a throne, and every one cost more."
+          "text": "The locals queued with their wants the way they queued at the winch: a roof mended before the rains, a cousin forgiven, {{queued-want}}. They held pewter tankards while they waited and drank them while they thought. A crock of pickled walnuts went round. Every want was smaller than a throne, and every one cost more.",
+          "slots": {
+            "queued-want": {
+              "clock": "hour",
+              "variants": [
+                "a goat talked back over a wall",
+                "a hen coaxed down from the rafters",
+                "a lost ewe walked home",
+                "a sulking stove taught to draw",
+                "a mule argued out of a ditch"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -205,7 +241,23 @@
         },
         {
           "type": "paragraph",
-          "text": "Two beavers, smelling of willow bark and creek mud, took the whole evening over a dam. They wanted the wording exact: the bend, the height, the arrangement of the sticks. By the time they had it right they had drawn it on the table in spilled lager, argued the drawing into a better one, and gone out to build it before the Genie could quote a price. He watched them go with something like professional respect. Beavers, he told Boof, always wished slowly enough to finish the job themselves."
+          "text": "Two beavers, smelling of {{beaver-smell}} and creek mud, took the whole evening over a dam. They wanted the wording exact: the bend, the height, the arrangement of the sticks. By the time they had it right they had drawn it on the table in spilled lager, argued the drawing into a better one, and gone out to build it before the Genie could quote a price. He watched them go with something like professional respect. Beavers, he told Boof, always wished slowly enough to finish the job themselves.",
+          "slots": {
+            "beaver-smell": {
+              "clock": "hour",
+              "variants": [
+                "willow bark",
+                "alder sap",
+                "birch shavings",
+                "wet hazel",
+                "chewed aspen"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Later the taproom sang: a reel about a miller's daughter, too quick, with clapping, and a carter from over the pass clapped quickest of all. Down the shaft the bucket began to swing. The regular put one hand flat on the bar. Table by table the clapping stopped, the carter's last, and Boof felt it through the boards before anyone heard it: four slow beats a turn, under the reel like a floor under dancers. “The winch song underneath,” said the potboy, winding. “They all are.” The bucket came up even, and knocked nobody."
         }
       ]
     },
@@ -251,7 +303,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His want-needle swung past the numbers and came back blank. He reset it with a thumbnail. She tried again. Same small click, same empty dial."
+          "text": "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His want-needle swung past the numbers and came back blank. He reset it with a thumbnail. She tried again. Same small click, same empty dial. He had the baize case half open to mend the needle when he remembered the clerks at the Rift: listen before you mend. He held it to his ear instead. It ticked as sweetly as the day he bought it."
         },
         {
           "type": "paragraph",
@@ -273,7 +325,19 @@
         },
         {
           "type": "paragraph",
-          "text": "It only named it, and kept the account open. Boof leaned over the rim without touching the water. Some faces were clear enough to count the lines around a mouth; others drifted beneath reflections of the tavern windows. A laugh came through the floorboards overhead, and for a moment she could not tell whether one of the faces had laughed too."
+          "text": "It only named it, and kept the account open. Boof leaned over the rim without touching the water. Some faces were clear enough to count the lines around a mouth; others drifted beneath reflections of {{reflected-light}}. A laugh came through the floorboards overhead, and for a moment she could not tell whether one of the faces had laughed too.",
+          "slots": {
+            "reflected-light": {
+              "clock": "minute",
+              "variants": [
+                "the tavern windows",
+                "the stair candles",
+                "the copper pots",
+                "the hanging lamps",
+                "the hearth-glow"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -349,7 +413,68 @@
       },
       {
         "description": "The Genie's resolution glass, which cannot see a want smaller than a loaf, found the potboy's want for the heel of the last loaf; of Boof it showed only wet stones and an egg. The torch-ants who came up to the barrel-head had their torch relit for nothing."
+      },
+      {
+        "description": "Every song the Watering Eye sings has the winch song underneath; the regulars say you can hear it if you stop clapping. When a too-quick reel set the bucket swinging, the regular laid a hand flat on the bar, the room stopped clapping, and the bucket came up even and knocked nobody."
+      },
+      {
+        "description": "Finding his want-needle blank on Boof, the Genie had its case half open to mend it before he remembered the Rift clerks' rule — listen before you mend — and heard it ticking perfectly."
       }
     ]
+  },
+  "table": {
+    "place": "The Watering Eye: a tavern built leaning over an ancient well like a drinker over a confession. Down under the sagging floorboards, mossy coping rings black water that shows not your face but older ones, folded like pressed linen into the dark, with chalk-pale fish moving among them. Up in the taproom: pewter tankards, a crock of pickled walnuts going round, a long table where an out-of-season genie prices wants, and a well-winch whose slow four-beat song is under every tune anyone sings.",
+    "light": "Amber lamplight leaking down through gaps in the floor onto still water that reflects earlier lamps than tonight's. Toward closing the lamps go out one by one, until the folded faces in the well are the brightest thing in the building.",
+    "people": [
+      {
+        "name": "the potboy",
+        "want": "the heel of the last loaf, and the last bucket wound up without knocking anybody",
+        "voice": "Says “Evening” to whatever the bucket brings up; sings four beats a turn without noticing he is doing it."
+      },
+      {
+        "name": "the regular",
+        "want": "another lager, and nobody clapping over the winch",
+        "voice": "One raised finger, one word, and — when the room forgets the song underneath — one hand laid flat on the bar."
+      },
+      {
+        "name": "the Genie",
+        "want": "a want he can price properly; thrones bore him, suppers fascinate him",
+        "voice": "Brisk as a market morning; qualifies everything, counts the company twice, writes it down and, after a moment, underlines it."
+      },
+      {
+        "name": "the elder beaver",
+        "want": "the exact wording of a dam: the bend, the height, the arrangement of the sticks",
+        "voice": "Smells of willow bark and creek mud; argues the younger one's drawings into better ones in spilled lager, slowly, and leaves to build before anyone can quote a price."
+      }
+    ],
+    "hooks": [
+      "A face that won't fold. On a still night the bucket came up with a face the remembrancers cannot fold flat; it keeps turning toward the stair. A face said into deep water stays its owner's — it can't be kept or spent — and somebody in the taproom tonight wore this one once and has forgotten the want they said into the well. Find them, and let them decide whether to remember.",
+      "The Genie's game. Name a want, hear the price, pay or fold. Thrones are cheap; a supper everyone agrees on costs three coincidences and a fortnight of Thursdays. Each player names something they want, the table decides what they will pay and what they will fold, and somebody out in the valley catches the correction.",
+      "The rope is going. The well-winch's hemp is fraying and the cooper wants to splice it tonight, before market. The potboy says listen before you mend: the winch sings a beat flat a turn before it fails, and a splice in the wrong place will knock a face on the way up. Someone has to listen through a whole night of songs to find the flat beat."
+    ],
+    "encounters": [
+      "A line of torch-ants comes up through a knot-hole with a crumb for the barrel-head; their torch went out on the damp stair. Somebody has to strike a match. The Genie never charges them.",
+      "A reel starts, too quick, with clapping, and down the shaft the bucket begins to swing. Somebody has to get the room to stop clapping and find the winch song underneath.",
+      "The bucket comes up holding a face instead of water, and the face looks at one of the party as if it knows them. The potboy says “Evening” and waits to see whether they will let it back down.",
+      "A local in the Genie's queue wants a sulking stove taught to draw. The Genie quotes three coincidences. Anyone with a chimney-brush could fix it by supper, for a bowl of soup that tastes faintly of roof.",
+      "A remembrancer rises through the faces, looks one of the party over, and turns politely away, as if they were a face it had not been asked to keep. Yet.",
+      "The Genie's resolution glass, swinging idly across the room, finds a want larger than a loaf. It is not the one anybody said out loud."
+    ],
+    "finds": [
+      {
+        "wonder": "well-winch",
+        "use": "Wound to the four-beat song on a still night, the bucket may come up holding a face instead of water: someone who once said a want into the well. The catch: the face stays its owner's. You may look, greet it and let it back down, never keep it — and the kitchen drinks rain-water till morning."
+      },
+      {
+        "wonder": "want-needle",
+        "use": "Held near someone, the brass needle circles toward their want, slows, and tries again. The catch: it finds big wants fast and small ones never, and a blank dial does not mean nobody wants anything — only that the want is too small and too true for brass."
+      }
+    ],
+    "bracework": {
+      "spw": "{reel & winch}",
+      "does": "A room where the quick song and the slow one run together without either giving way: for a minute everything inside moves at four beats a turn under whatever is being sung. Thrown tankards arrive gently, a fist lands as a handshake, the bucket comes up without knocking.",
+      "costs": "Warmth borrowed from the hearth, which drops a notch and sulks; and a debt of tempo — whoever wrote it cannot hurry at anything until the next still night."
+    },
+    "question": "If the bucket came up tonight holding your face, what want would it still be keeping — and would you say “Evening” and let it back down?"
   }
 }

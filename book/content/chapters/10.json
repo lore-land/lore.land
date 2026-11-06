@@ -147,7 +147,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof's nose sorted the place before her eyes did: oak cut that week, quarry chalk, tallow on the hoist ropes. Nothing painted, nothing glued. A peg-boy on a sawhorse was eating a joiner's loaf, rye baked square-cornered so it sits on a beam without rolling off."
+          "text": "Boof's nose sorted the place before her eyes did: oak cut that week, quarry chalk, tallow on the hoist ropes. Nothing painted, nothing glued. A peg-boy on a sawhorse was eating a joiner's loaf, {{loaf-grain}} baked square-cornered so it sits on a beam without rolling off.",
+          "slots": {
+            "loaf-grain": {
+              "clock": "day",
+              "variants": [
+                "rye",
+                "spelt",
+                "barley",
+                "maslin",
+                "brown wheat"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -184,6 +196,16 @@
           "type": "paragraph",
           "text": "Frames here are chalked on the floor in braces and marks before anyone raises them, because chalk is cheaper than oak and a mistake in braces falls on nobody. The marks are what is left of the argument. Boof found a dot on the sill beam and set the sling down there.",
           "lean": "bone"
+        },
+        {
+          "type": "bracework",
+          "spw": "{^[ridge-beam] .[sill-beam]}",
+          "gloss": "The caret marks the ridge-beam, which lifts and is busy; the dot marks the sill beam, which stands, and is where a load may be set down.",
+          "maker": "the Bone.land joiners"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof's nose found fresh chalk before her eyes found the joiner, on her knees across the hall, drawing tomorrow's frame on the boards. The peg-boy asked, through loaf, why she didn't just cut it. She sat back, found two braces meeting wrong, scuffed them out with her heel and drew them again a hand's width over. “Chalk is cheaper than oak,” she said. Every joiner says it. The bench by the door is why: cut from the one beam in living memory raised before it was chalked. It is very comfortable. Nobody likes sitting on it."
         }
       ]
     },
@@ -272,7 +294,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. The chimney-swifts carried it farther than it meant to go, flue to flue, until kettle-lids hummed it on hearths that had never heard of Bone.land."
+          "text": "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. The chimney-swifts carried it farther than it meant to go, flue to flue, until {{hearth-hum}} hummed it on hearths that had never heard of Bone.land.",
+          "slots": {
+            "hearth-hum": {
+              "clock": "hour",
+              "variants": [
+                "kettle-lids",
+                "fire-irons",
+                "pot-hooks",
+                "warming-pans",
+                "skillet-handles"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -280,11 +314,27 @@
         },
         {
           "type": "paragraph",
-          "text": "The Egg’s wish, spent small and true, would cost one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. The grand wish a certain bitter pie intended would call in a generation of coincidences — a whole town’s luck, drawn without asking."
+          "text": "The Egg’s wish, spent small and true, would cost one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. The grand wish a certain bitter pie intended would call in a generation of coincidences — a whole town’s luck, drawn without asking. Boof had heard it once before, for nothing, from a genie in the sand: build where the land already leans."
         },
         {
           "type": "paragraph",
-          "text": "People stopped to hear it with baskets on their arms and tools still in their hands; a cooper forgot to set down his half-hooped barrel. Some hummed the note to check it; some asked a neighbor to say it again. It traveled out of the hall in voices that sounded nothing alike."
+          "text": "People stopped to hear it with baskets on their arms and tools still in their hands; {{held-work}}. Some hummed the note to check it; some asked a neighbor to say it again. It traveled out of the hall in voices that sounded nothing alike.",
+          "slots": {
+            "held-work": {
+              "clock": "hour",
+              "variants": [
+                "a cooper forgot to set down his half-hooped barrel",
+                "a thatcher forgot the bundle of reed on her shoulder",
+                "a smith held a shoe in the tongs until it cooled",
+                "a weaver left her shuttle halfway through the warp",
+                "a dairy-wife let her churn run slow and stop"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "At the anchor stones two carters began to argue the sum, louder each time round. A joiner handed them a stub of chalk without a word. Write it before you argue it, they say on Council Hill; Bone.land adds only that you do it on the floor. They wrote it. Halfway across the boards they found they agreed, and were annoyed about it, and finished anyway."
         },
         {
           "type": "paragraph",
@@ -297,7 +347,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The note was still in the beams when word came up the pass: the bitter pie had heard it. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; dust drifted from a beam; somewhere in the tie-beam a single load-beetle clicked at a weight nobody had set down yet. She checked the sling."
+          "text": "The note was still in the beams when word came up the pass: the bitter pie had heard it. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; {{tremor-sign}}; somewhere in the tie-beam a single load-beetle clicked at a weight nobody had set down yet. She checked the sling.",
+          "slots": {
+            "tremor-sign": {
+              "clock": "minute",
+              "variants": [
+                "dust drifted from a beam",
+                "a shaving curled down from a joist",
+                "chalk sifted from a brace",
+                "a cobweb shivered in the rafters",
+                "sawdust ran from a peg-hole"
+              ]
+            }
+          }
         }
       ],
       "climate": {
@@ -371,7 +433,72 @@
       },
       {
         "description": "Chimney-swifts carried the frame's note to kitchens that had never heard of Bone.land; the Rift hall's crack-gauge read it as the same law on a younger floor, nothing owed yet."
+      },
+      {
+        "description": "Chalk is cheaper than oak: every joiner says it, and the bench by the door is why — cut from the one beam in living memory raised before it was chalked. It is very comfortable; nobody likes sitting on it."
+      },
+      {
+        "description": "Bone.land keeps Council Hill's rule, write it before you argue it, and adds only that you do it on the floor in chalk. Two carters arguing the frame's sum found, halfway across the boards, that they agreed. The finding itself was the Genie's free advice rung through oak: build where the land already leans."
       }
     ]
+  },
+  "table": {
+    "place": "Bone.land's great frame: a timber hall like the ribcage of a sleeping leviathan, every mortise and peg left bare to the weather, carets and dots cut beside the joints. The floor is sawdust over oak boards chalked with tomorrow's frames; the air is cut white oak, quarry chalk and tallow on the hoist ropes; small brass load-bells hang under the joists and ring wherever weight goes. Between two limestone anchor stones, on a scrubbed trestle, a plain pie with its ingredients pricked into its crust listens to what things will bear.",
+    "light": "Clean white-gold morning through the trusses, sawdust coming off the high beams in backlit sheets — the joiners call it sawdust weather. By afternoon the light lies along the load paths in gold seams, and fresh black ink dries on whatever has been posted to the anchor stones.",
+    "people": [
+      {
+        "name": "Mx. BoneWAP",
+        "want": "to know what a thing will bear before anyone leans on it, and to say the answer where everyone can hear",
+        "voice": "Plain and polite, joints showing: “Set it on the frame, please.” Asks with a felt mallet, never with a blow."
+      },
+      {
+        "name": "the floor-joiner",
+        "want": "tomorrow's frame chalked right before the oak comes up the pass",
+        "voice": "On her knees, chalk behind one ear; scuffs a mistake out with her heel and says “Chalk is cheaper than oak.”"
+      },
+      {
+        "name": "the peg-boy",
+        "want": "to raise something, anything, without chalking it first",
+        "voice": "Talks through a mouthful of square-cornered loaf; asks why not just cut it; gets told about the bench."
+      },
+      {
+        "name": "the clerk from the Rift",
+        "want": "to set the crack-gauge across one more floor and compare its note with the Rift's",
+        "voice": "Takes the note before touching anything; listens before mending; measures in notes, not inches."
+      }
+    ],
+    "hooks": [
+      "A beam that was lied to. A barn-frame is chalked, cut and ready for raising day, and every beam must be told its load out loud. But somewhere in it a load-beetle clicks at a weight nobody admits setting down. Find what the plan is hiding before the frame goes up, or before somebody stands under it.",
+      "The bench by the door. It was cut from the one beam in living memory raised before it was chalked. Someone wants it burned; someone wants it kept as a lesson; it is very comfortable either way. Find out what it was meant to hold, and why it failed, before the joiners decide with their heels.",
+      "Ask a bridge. A footbridge downriver must carry the harvest carts next week, and nobody knows what it will bear. BoneWAP lends the listening mallet — felt-headed, for asking, never for striking. The party must ask the bridge properly and carry its note back up the pass, true, before the telling softens it into a rumour."
+    ],
+    "encounters": [
+      "Someone crosses the floor and the whole frame answers with one deep BONK; sawdust comes off the high beams in sheets. Sawdust weather.",
+      "A load-bell rings overhead, then the next, then the next: weight is travelling down a brace. Don't be standing where it is going.",
+      "The peg-boy offers a corner of his loaf — spelt today, baked square so it doesn't roll off beams — for a good story about a building that fell down.",
+      "Two joiners on their knees disagree about a brace, in chalk. One rubs out a caret; the other draws it back, smaller. They ask the party to judge. In chalk.",
+      "The frame's note rings out across the valley, and anyone holding something forgets to set it down: a cooper his half-hooped barrel, a thatcher her bundle of reed, a player whatever is in their hands.",
+      "Somewhere in the tie-beam, a single load-beetle clicks at a weight nobody has set down yet."
+    ],
+    "finds": [
+      {
+        "wonder": "listening-mallet",
+        "use": "Tap a beam, a bridge, a wall — anything built — with the felt head and it answers in a note what it will bear. The catch: struck hard, anything says only that it has been struck; and it tells you the load, never whether the load is worth carrying."
+      },
+      {
+        "wonder": "load-beetles",
+        "use": "A few in a timber will click when it is asked to bear more than it agreed to: a warning before anything cracks. The catch: they click at the agreement, not the weight, so a beam told a lie on raising day can keep its secret quietly right up until it can't."
+      },
+      {
+        "wonder": "mortise-marks",
+        "use": "Read the ^ and the . beside a joint and you know, before you lean on it, which beams lift and which stand, and where a load may be set down. The catch: only on frames whose makers cut the marks honestly — and you do not ask a lifting thing a question. It is busy."
+      }
+    ],
+    "bracework": {
+      "spw": "{.[chalk] ^[frame]}",
+      "does": "The chalk stands and the frame lifts: a frame drawn on the floor rises exactly as drawn, no more and no less, and stands for as long as its chalk stays unscuffed.",
+      "costs": "A full day's argument had out loud on the floor before anything rises, a week of the joiners' patience, and the floor itself — nobody may walk across that chalk again. One careless heel and the frame comes down as gently as it went up."
+    },
+    "question": "What would each of you ask the listening mallet to sound — a beam, a bridge, a promise, yourself — and what would you do if the answer were less than you hoped to bear?"
   }
 }

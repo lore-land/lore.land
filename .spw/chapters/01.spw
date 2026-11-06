@@ -29,7 +29,7 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
-    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot. Everything was where it belonged. The..."
+    excerpt: "Dawn smelled of {{dawn-smell}}. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot. Everything was where it belonged. The la..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
@@ -69,7 +69,7 @@
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
-    excerpt: "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was frying onions, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was al..."
+    excerpt: "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was {{supper-smell}}, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was..."
     route: ^[chapter/01/s07]{open}
   >
 ]
@@ -102,6 +102,7 @@
     "The map-house hangs new maps on a drying-line over a slate trough; an entry that will not take ink drips back into the trough and sits there unmixed. Its press-stones live in a rack cut f..."
     "Archivists pencil an entry small in the margin, in the makers' old shorthand, before they ink it, to see whether it will bear. The egg would not take .[egg], a thing that stays where it i..."
     "Steam from the warm furrow fell back as warm snow — what children call a hearth-drift, and make by a method they explain only to other children. The field made one by itself."
+    "First ink stays: the map-house never scrapes the first hand on a map. Whatever comes after goes in pencil beside it, so the next reader can see what changed and what it changed from. The ..."
   ]
 }
 

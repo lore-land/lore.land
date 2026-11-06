@@ -1,0 +1,44 @@
+# Scene-light knobs — steering motifs for the chapter's CSS tokens
+# The light is the scene's first; a reader may hold it. Data: book/content/world/knobs.json.
+# Runtime: book/scripts/modules/scene-light.mjs. Styles: book/styles/chapter/reading.css (Hold the light).
+#>knobs
+#:surface #!light #!tokens
+
+^"knobs"{
+  .status: "working"
+  purpose: "A few continuous controls (knobs) steer the page's CSS tokens; named presets (motifs) steer the knobs; the frame's edges deepen the dark at the edges. Lighting becomes something to play with and to tune a screenshot by, inline."
+  &plan: ~"PLAN.E.spw#plan_e"
+  &climate: "book/scripts/modules/copy-climate.mjs (tempo + tint → field light)"
+}
+
+^"tokens"{
+  x: "--light-x — where the light stands (0–100)"
+  y: "--light-y — how high it hangs (0–100)"
+  glow: "--light-strength — how strongly it falls"
+  warmth: "--tempo-warmth — how much amber is in it"
+  ink: "--copy-tint-hue — the hue the accents lean toward"
+  grain: "--knob-grain — the tooth of the paper (overlay)"
+  edge: "--knob-edge — how far the dark comes in from the frame (vignette)"
+  glide: "the light's tokens are registered with @property so a moved sun glides; none under reduced motion"
+}
+
+&"steering"{
+  .law: "Steer, don't seize. The climate sets the scene's light; the active section's motif pulls the knobs part of the way (steer 0.45) toward its preset; a reader's held light wins until they let it go."
+  motifs: "egg amber held low · unspent-wish unspent warmth · berry-memory teal and berry lit from within · ledger ink on rag · small-want a small steady lamp · key brass filed smaller · ninth-honk one clean gold note · missing-thursday a day with nobody in it · hat pencil on paper · torch a pin of light with the dark close round it · bell nearby this time · button horn, scuffed · receipt three honest records · feast every lamp lit"
+  edges: "Each detail in a scene's edges list deepens the vignette a little: strangeness lives at the frame, so the frame darkens to make room for it."
+  wonders: "Tapping a wonder flares the light toward it for a breath, then returns it."
+  new_motif_rule: "A new data-motif in a chapter should arrive with a preset in knobs.json: a few knobs and a five-word 'says'."
+}
+
+&"play"{
+  hold: "Hold the light: drag the sun across a small sky, turn the knobs; a settle card says what changed."
+  carry: "Carry the light: it follows the pointer until it is set down."
+  let_go: "Let the scene light itself: the climate's own light returns."
+  frame: "Frame this: the passage being read, set on a card at story (9:16), square or card (1.91:1) proportions with the chapter's kicker and address, the knobs at hand; the controls step back after a moment so the screenshot is clean."
+}
+
+~"guards"{
+  reading: "Nothing here moves text. Light, grain and edge sit over or behind the page; the words stay where they are."
+  motion: "Reduced motion: no glide, no flare, no carried trail — every knob still works."
+  continuity: "Switch scene-light (default on) removes the tools; the scenes keep lighting themselves."
+}

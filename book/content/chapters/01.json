@@ -162,7 +162,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot."
+          "text": "Dawn smelled of {{dawn-smell}}. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot.",
+          "slots": {
+            "dawn-smell": {
+              "clock": "hour",
+              "variants": [
+                "frost and wet fur",
+                "frost and woodsmoke",
+                "frost and wet sheep",
+                "rime and the miller's first fire",
+                "frost and the last of the night's rain"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -179,7 +191,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof followed the rows past the fence that leaned into last year's weeds, past the scraping-post where the miller knocked the loam off his boots. She sniffed a root here and there, and the field gave back its usual answers: vole, frost-bitten clover, the sour ghost of a fox who had thought better of it."
+          "text": "Boof followed the rows past the fence that leaned into last year's weeds, past the scraping-post where the miller knocked the loam off his boots. She sniffed a root here and there, and the field gave back its usual answers: {{field-answers}}.",
+          "slots": {
+            "field-answers": {
+              "clock": "hour",
+              "variants": [
+                "vole, frost-bitten clover, the sour ghost of a fox who had thought better of it",
+                "mole, cold chickweed, the musky ghost of a stoat who had found nothing worth stopping for",
+                "vole, frost-bitten sorrel, the damp ghost of a hare who had only been passing through",
+                "shrew, crushed clover, the sleepy ghost of a hedgehog who had wintered in the wrong row",
+                "vole, frost-bitten dock, the rank ghost of a badger who had been looking for somebody else"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -270,7 +294,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The town used them for supper and lanterns: berry-lamps in jam jars on the porch posts, crust-gold pies at harvest. Nobody ate one warm. By the time a boonberry reached a table it had given its light to a lamp or a pie, and what was left was sweet and ordinary. Boof had never wondered what the light was for. She had been busy."
+          "text": "The town used them for supper and lanterns: berry-lamps in {{lamp-jars}}, crust-gold pies at harvest. Nobody ate one warm. By the time a boonberry reached a table it had given its light to a lamp or a pie, and what was left was sweet and ordinary. Boof had never wondered what the light was for. She had been busy.",
+          "slots": {
+            "lamp-jars": {
+              "clock": "day",
+              "variants": [
+                "jam jars on the porch posts",
+                "pickle jars along the window sills",
+                "bottle-ends hung from the eaves",
+                "mustard pots on the gateposts",
+                "jelly jars along the garden walls"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -325,7 +361,19 @@
         },
         {
           "type": "paragraph",
-          "text": "The map-house smelled of oak-gall ink and cold slate. Along the back wall ran the drying-line, where new maps hung by their corners like washing over a slate trough. In a loaf-wide gap between rolled maps in the rafters, a young shelf-owl sat as if it had been shelved there."
+          "text": "The map-house smelled of {{reading-room-smell}}. Along the back wall ran the drying-line, where new maps hung by their corners like washing over a slate trough. In a loaf-wide gap between rolled maps in the rafters, a young shelf-owl sat as if it had been shelved there.",
+          "slots": {
+            "reading-room-smell": {
+              "clock": "hour",
+              "variants": [
+                "oak-gall ink and cold slate",
+                "oak-gall ink and lamp-oil",
+                "pounce-dust and cold slate",
+                "beeswax and damp vellum",
+                "oak-gall ink and somebody's porridge"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -333,7 +381,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The archivist smoothed the fold. The bell dwindled to a far, thin chime."
+          "text": "The archivist smoothed the fold. The bell dwindled to a far, thin chime. “Leave room for the path,” he murmured, to the map or to the bell, and did not say which path."
         },
         {
           "type": "paragraph",
@@ -364,6 +412,10 @@
         {
           "type": "paragraph",
           "text": "At last he pegged the page on the drying-line, since a stubborn entry sometimes sets when nobody is watching. The beads ran down and dropped into the trough until the page hung clean as a washed collar, all but the pencilled tilde. Below, the ink sat in one black drop and would not mix with the water."
+        },
+        {
+          "type": "paragraph",
+          "text": "He unpegged the page and laid it in the book beside the old field map: an ordinary field, in some long-dead surveyor's brown ink. “First ink stays,” he said. Nobody scrapes the first hand on a map; whatever comes after goes in pencil beside it, so whoever opens the book next can see what changed, and what it changed from. Beside the ordinary field, faint as a hair, the tilde waited."
         },
         {
           "type": "paragraph",
@@ -443,7 +495,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was frying onions, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was all. Behind her, the berries glowed under their leaves. Ahead, the first trees crowded close."
+          "text": "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was {{supper-smell}}, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was all. Behind her, the berries glowed under their leaves. Ahead, the first trees crowded close.",
+          "slots": {
+            "supper-smell": {
+              "clock": "hour",
+              "variants": [
+                "frying onions",
+                "toasting oatcakes",
+                "stewing leeks in butter",
+                "roasting the last of the parsnips",
+                "browning butter for pancakes"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -518,7 +582,69 @@
       },
       {
         "description": "Steam from the warm furrow fell back as warm snow — what children call a hearth-drift, and make by a method they explain only to other children. The field made one by itself."
+      },
+      {
+        "description": "First ink stays: the map-house never scrapes the first hand on a map. Whatever comes after goes in pencil beside it, so the next reader can see what changed and what it changed from. The egg's only entry is a pencilled tilde beside an ordinary field."
       }
     ]
+  },
+  "table": {
+    "place": "The dawnward field at first light: frost-skinned berry rows, a fence leaning into last year's weeds, the miller's scraping-post, and one furrow steaming where it ought to be iron-hard. Lie with an ear to the rime and you can hear the torch-ants keeping their corners underneath, a dry ticking like seeds in a gourd. Uphill, the map-house: oak-gall ink and cold slate, new maps pegged on the drying-line like washing, a rack of press-stones cut for seven that holds six, and a young owl shelved in the rafters. Downhill, past the sloe hedge, the grove nobody names after dark.",
+    "light": "Grey dawn over white frost, the only warm light leaking up out of the ground; high, dusty window-light in the map-house by mid-morning; and by evening a long amber that leaves the berry rows glowing under their leaves like banked coals, every one of them leaning the same way.",
+    "people": [
+      {
+        "name": "Boof",
+        "want": "to read the field the way she reads it every morning, and to learn who left something warm in it without leaving a trail",
+        "voice": "Nose before name. She appreciates a blueberry, follows an honest scent, works for the land and is nobody's to send."
+      },
+      {
+        "name": "the archivist",
+        "want": "to get the morning's entries into the book before the frost lifts, and to find the seventh press-stone, which he has stopped admitting he looks for",
+        "voice": "Talks to maps like nervous horses; pencils before he inks, never scrapes, and murmurs his rules aloud in case the paper forgets them."
+      },
+      {
+        "name": "a frost-eared child",
+        "want": "to hear every ant-street in the field, and to find out who taught the field to make warm snow",
+        "voice": "Lies down mid-conversation; explains things only to other children, and only if they swear."
+      },
+      {
+        "name": "a torch-ant street-warden",
+        "want": "every torch on its street lit from the right corner, and nothing dug through it",
+        "voice": "Businesslike. Answers in torch-flicks, and waits, holding its light, until you correct yourself."
+      }
+    ],
+    "hooks": [
+      "The seventh press-stone. The archivist has decided this is the year, and would like help he will not quite ask for: rumour says the stone was carried off long ago to hold down something that would not lie flat. Follow it through kitchens, the mill and the ditch — and when it comes home, notice which of the other six has gone missing.",
+      "A dark corner. A torch went out at the wrong corner overnight and a whole ant-street has stopped; one berry row is freezing through, and the frost is feeling its way toward the miller's cellar. The ants will not take a light from a lantern, a candle or a well-meaning stranger. Find the right corner, on streets no map has room for, and wait to be allowed.",
+      "A boundary that will not take ink. Two neighbours bring a fence dispute to the map-house, and the good steel nib the archivist keeps for boundary disputes takes only one of their lines; the other beads off the page and drops into the trough. Something one of them is claiming has not happened yet. Find out what, before it does."
+    ],
+    "encounters": [
+      "Children lying with their ears to the rime shush you hard: an ant-street is ticking under your boots, and one careless step puts a corner out.",
+      "Steam off a warm furrow meets the cold and comes down as snow that does not sting. The children call it a hearth-drift and will explain the method only to another child; one of you will have to be one, convincingly.",
+      "A scent-trail through the rows — vole, frost-bitten clover, the sour ghost of a fox who thought better of it — ends at a whole wheel of cheese gone into the ditch to think things over. Somebody is missing a cheese and will want to know who found it.",
+      "A cart bell rings under the map-house window while a map lies folded on the table; for as long as it rings, two roads a day's walk apart lie touching along the crease, and the archivist reaches for a press-stone.",
+      "The young shelf-owl in the rafters will not let anyone shelve a rolled map in its loaf-wide gap. It is keeping the space for something nobody has written yet, and says so with its beak.",
+      "At dusk nine jazz-geese cross the last light in a ragged, swinging line, each honk a little behind the beat. Every window on the lane shuts. In the downhill trees, something answers once."
+    ],
+    "finds": [
+      {
+        "wonder": "torch-ants",
+        "use": "Follow the brightest torch-ant: they test their torches against anything warm and unfinished and go home a shade brighter, so a bright one has just come from something worth finding. The catch: cut a street and they detour without complaint, but a torch out at the wrong corner stops the whole street, and a stopped street is a frozen row by morning."
+      },
+      {
+        "wonder": "drying-line",
+        "use": "Peg a page on it and leave the room. An entry that is so will set while nobody watches; one that has not happened yet beads off and drops into the trough, unmixed. The catch: it tells you only that a thing is not yet so, never what it will be — and the archivist counts his pegs."
+      },
+      {
+        "wonder": "press-stones",
+        "use": "Borrowed from the rack, one holds flat anything that keeps curling: a map, a letter, an argument somebody keeps unfolding. The catch: the rack is cut for seven and holds six; take one and it holds five, and the archivist knows before you reach the door."
+      }
+    ],
+    "bracework": {
+      "spw": "[map @ field]",
+      "does": "A window the size of a page. Look in and you see the map as the field sees it: every ant-street, scent-trail and leaning row drawn in, for as long as you can hold your breath.",
+      "costs": "Perspective changes both sides a little. The map keeps one line it cannot account for, which the archivist must pencil beside the first ink, never over it; the row that did the watching forgets for a day which way it was leaning. And the torch-ants will want to know whose warmth you borrowed."
+    },
+    "question": "When a berry leans its light toward one of you instead of toward the grove, what unfinished thing are you carrying?"
   }
 }

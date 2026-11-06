@@ -26,6 +26,9 @@ jobs:
       - name: spw:seed-bundle:verify (vendored browser parser matches the current submodule pin)
         run: npm run spw:seed-bundle:verify
 
+      - name: book:check (chapters, slots, bracework, almanac, anchors — c026)
+        run: npm run book:check
+
       - name: build (chapters:build -> spw:export -> vite build -> spw:project -> dist:static)
         run: npm run build
 

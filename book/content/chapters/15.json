@@ -166,7 +166,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to talk. Every road into it bends at least twice on the way in, so that whichever gate you came by, you arrive facing the plaza and the pie; the city likes to see your face."
+          "text": "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to {{post-talk}}. Every road into it bends at least twice on the way in, so that whichever gate you came by, you arrive facing the plaza and the pie; the city likes to see your face.",
+          "slots": {
+            "post-talk": {
+              "clock": "hour",
+              "variants": [
+                "talk",
+                "gossip",
+                "compare notes",
+                "trade the news",
+                "keep out of the wind"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -174,7 +186,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof reached it at dusk, two days of straight walking after the hedge, with the sky behind her gone the green-black of a bruise on a pear. A storm was coming over the far hills, turning things over to see what was underneath. Every pane of glass in the back lanes had begun to hum, the way Bonk glass does when weather is coming. It remembers being struck, and would rather not be again."
+          "text": "Boof reached it at dusk, two days of straight walking after the hedge, with the sky behind her gone the green-black of {{storm-sky}}. A storm was coming over the far hills, turning things over to see what was underneath. Every pane of glass in the back lanes had begun to hum, the way Bonk glass does when weather is coming. It remembers being struck, and would rather not be again.",
+          "slots": {
+            "storm-sky": {
+              "clock": "hour",
+              "variants": [
+                "a bruise on a pear",
+                "a beetle's back",
+                "old bottle-glass",
+                "duckweed under ice",
+                "a drake's neck"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -223,7 +247,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Outside the wall, on the cobbles, stood the evening's last deliveries: crates of lamp-glass, a barrel of oil, and eleven sacks of fine flour stamped for the Feast of the Uneven Slice. There was time to shut the gate or time to bring the goods in. There was not time for both."
+          "text": "Outside the wall, on the cobbles, stood the evening's last deliveries: crates of lamp-glass, {{deliveries}}, and eleven sacks of fine flour stamped for the Feast of the Uneven Slice. There was time to shut the gate or time to bring the goods in. There was not time for both.",
+          "slots": {
+            "deliveries": {
+              "clock": "day",
+              "variants": [
+                "a barrel of oil",
+                "a cask of pear cider",
+                "a firkin of salt butter",
+                "a bale of lamp-wick",
+                "a hamper of candle-ends"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -342,11 +378,15 @@
         },
         {
           "type": "paragraph",
-          "text": "After pies came combines. Each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box warmed between mittens. If the nouns agreed, the box fogged into a small weather. It teaches a child what will hold together before anything is built."
+          "text": "After pies came combines. Each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box warmed between mittens. If the nouns agreed, the box fogged into a small weather. It teaches a child what will hold together before anything is built. Chalk is cheaper than oak, the mistress tells them, and a box that will not fog has cost nobody a beam."
         },
         {
           "type": "paragraph",
           "text": "One girl's {frost & hearth} snowed warm, and the front bench caught the hearth-drift on their tongues. A boy's <river ~ moon> ran pale and would not stay. On the window the warm snow fogged the . face, the inside one; the # face, out to the lane, stayed clear."
+        },
+        {
+          "type": "paragraph",
+          "text": "Above the slate, in the mistress’s round hand, stood the week’s copybook lines, to be copied ten times each before the brace-boxes came out: write it before you argue it; one shard at a time; keep the morning, not the week. The front bench had copied the first line ten times and was already arguing about the second."
         },
         {
           "type": "paragraph",
@@ -405,12 +445,26 @@
         },
         {
           "type": "paragraph",
+          "text": "“Glass over, never scrape,” said the clerk; every child in Bonk City copies it at the night school."
+        },
+        {
+          "type": "paragraph",
           "text": "The clerk, who had a form with one box on it, went away to find a form with three.",
           "lean": "bane"
         },
         {
           "type": "paragraph",
           "text": "Before lunch the clerk had one, headed in a careful hand: [child, parcel, door]. A window of a form: three boxes to look into, none to stand in."
+        },
+        {
+          "type": "bracework",
+          "spw": "[child, parcel, door]",
+          "gloss": "A window of a form: three boxes to look into and none to stand in, so the city can keep all three records side by side without choosing among them.",
+          "maker": "the records office clerk"
+        },
+        {
+          "type": "paragraph",
+          "text": "Under the three, the clerk ruled one more box, smaller, with no heading at all. “A good form needs a box for what you do not know,” the clerk said, blotting it. “Left honestly open. Otherwise the next thing through the gate has to be cut down to fit the last.” BoneWAP tapped the empty box once with the felt head and listened. It held."
         }
       ]
     },
@@ -443,8 +497,20 @@
         },
         {
           "type": "paragraph",
-          "text": "So they came for her, kindly, with a ribbon. They led her through the lanes to the plaza, where the pie was holding court, and where at the head of the long table the city had already set a second place, with a cloth, and a cup, and a plate, for the one who was coming. They sat her at it. The title of the one destined to spill exactly one pie settled on her the way a hat might, which is to say it did not quite touch.",
-          "lean": "boon"
+          "text": "So they came for her, kindly, with {{ribbon}}. They led her through the lanes to the plaza, where the pie was holding court, and where at the head of the long table the city had already set a second place, with a cloth, and a cup, and a plate, for the one who was coming. They sat her at it. The title of the one destined to spill exactly one pie settled on her the way a hat might, which is to say it did not quite touch.",
+          "lean": "boon",
+          "slots": {
+            "ribbon": {
+              "clock": "hour",
+              "variants": [
+                "a ribbon",
+                "a rosette",
+                "a sprig of bay",
+                "a wreath of holly",
+                "a knitted collar"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -494,7 +560,72 @@
       },
       {
         "description": "The records clerk's new form is headed [child, parcel, door]: a window of a form, three boxes to look into and none to stand in."
+      },
+      {
+        "description": "Under [child, parcel, door] the clerk ruled one more box with no heading: a good form needs a box for what you do not know, left honestly open, or the next thing through the gate must be cut down to fit the last. BoneWAP tapped it and it held. By one o’clock the city, which kept no such box, had decided it was the dog."
+      },
+      {
+        "description": "The night school’s copybook lines: write it before you argue it; one shard at a time; keep the morning, not the week. Chalk is cheaper than oak, the mistress tells pupils whose brace-boxes will not fog; every child in Bonk City copies glass over, never scrape there, the clerk included."
       }
     ]
+  },
+  "table": {
+    "place": "Bonk City’s back wall at storm dusk, where a straight line across the land comes out at the low parcel gate. There are no straight streets: lanes curl like the inside of a shell, bronze posts lean together to talk, and one stands bolt upright. The gate was hung for three porters and is kept by one, thanks to the storm-weight — an iron counterweight the size of a bread-oven riding in a slot in the wall, pigeons asleep on top — and its lintel is low, built for boxes. Inside lie the gate-book, the records hall’s board of brass pins and the night school’s paper pies; it smells of wet flour, lamp-oil, cold bronze, hot brass and pigeon-down, and every pane in the lane is humming.",
+    "light": "Green-black storm dusk, a porter’s belt-lantern swinging, dent-lanterns lit one dent-bright corner at a time. By morning the light comes clean through glass that remembers being struck, and falls across three receipts pinned side by side.",
+    "people": [
+      {
+        "name": "the porter",
+        "want": "the gate down before the storm, and everything that comes through it written in the book",
+        "voice": "few words; signs his own name to his own choices"
+      },
+      {
+        "name": "the carpenter",
+        "want": "to know how a lintel got a mark where nothing touched it",
+        "voice": "measures anything that stands still long enough, then frowns at the answer"
+      },
+      {
+        "name": "the night school’s mistress",
+        "want": "every raised hand called on",
+        "voice": "round hand, warm room; never fills in a child’s name for them"
+      },
+      {
+        "name": "the records clerk",
+        "want": "a form that fits whatever comes through the gate next",
+        "voice": "careful hand, blots everything twice, leaves one box open on purpose"
+      }
+    ],
+    "hooks": [
+      "Three sacks of feast flour were spoiled at the parcel gate, and the porter signed the damage in his own name. Find three sacks of fine flour in a city where every baker is baking for the feast, before the feast clerks come asking.",
+      "Something small and precious went missing in the plaza — a ring, a key, a letter — and has been kicked from lane to lane by the city’s feet ever since. Find it the way lost things are found in Bonk City: where nobody looks down.",
+      "A gate across the city was left open in the storm, and a whole lane of glass came down; the bonk-kiln is booked until spring. Keep that lane through the winter with pane-snails, chime-gutters and the goodwill of a glazier who owes nobody anything."
+    ],
+    "encounters": [
+      "The panes in the lane begin to hum: weather inside the hour, and the glass would rather not be struck again.",
+      "A late delivery stands outside the wall (roll: a barrel of oil, a cask of pear cider, a firkin of salt butter, a bale of lamp-wick, a hamper of candle-ends); there is time to bring it in or to shut the gate, not both.",
+      "A lamplighter unfolds her staff into a lamp-ladder and asks someone to hold the foot while she lights a dent-lantern; each dent is a street the light remembers.",
+      "The chime-gutters ring roof by roof, and one roof that has never leaked rings for the first time.",
+      "A night-school pupil’s brace-box fogs open in the lane: snow that falls warm, or a pale passage that will not let anyone stay.",
+      "By the washtubs at the edge of the plaza, a figure in a few plain lines stands under a hat that touches nothing, a quarter turn away from the crowd, watching the one person nobody else is watching. He does not come when called."
+    ],
+    "finds": [
+      {
+        "wonder": "storm-weight",
+        "use": "It lets one person lift a gate meant for three. It takes most of the weight, never all — and in a wind, the rest is plenty. The pigeons asleep on top must not be woken."
+      },
+      {
+        "wonder": "door-rule",
+        "use": "Unfold it against anything that stands still and it stops with a click at any honest doorway: a fair test of whether a thing is a way through. It measures what it finds and never asks, and whatever it says goes in a log someone else will read."
+      },
+      {
+        "wonder": "pie-dividers",
+        "use": "Walk them round anything to share it evenly; they never come out even. The sliver left over is the luck, and the table must decide who gets it."
+      }
+    ],
+    "bracework": {
+      "spw": "[gate @ storm]",
+      "does": "A window where the gate watches the storm: for a minute it shows, to the breath, how long until the weather arrives — enough to know whether there is time to bring the goods in and shut the gate as well.",
+      "costs": "Watching changes both. The gate flinches at every cloud for a month, and the storm remembers the gate: next year it comes by the back wall first."
+    },
+    "question": "What does your party refuse to fill in — and what does it cost to leave the box open?"
   }
 }

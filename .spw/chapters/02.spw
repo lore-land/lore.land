@@ -62,13 +62,13 @@
     handle: "section/06"
     type: "section"
     title: "What the Echo Keeps"
-    excerpt: "Boof paced the fork, nose to moss, while the grove offered rain, harvest, a road back to a better morning. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept co..."
+    excerpt: "Boof paced the fork, nose to moss, while the grove offered {{offered-futures}}. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept coming back for another try. ..."
     route: ^[chapter/02/s06]{open}
   }
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and cedar shavings in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sam..."
+    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and {{collar-litter}} in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He ..."
     route: ^[chapter/02/s07]{open}
   >
 ]
@@ -110,6 +110,7 @@
     "The lag-stag is never seen. Its cloven prints press into the moss a beat after it passes and carry no scent at all; woodcutters insist it is white. Its prints stopped beside the egg's sto..."
     "Rehearsal moths are the grove's almanac: dusk moths whose wings carry tomorrow's weather, a little smudged. Woodcutters read them before felling and are wrong about a third of the time. T..."
     "Torch-ants will not settle where a light comes back to them twice, so the grove's roots stay cold and its wild rows flicker. Grove workers add, over birch-sap tea, that hob-deer no taller..."
+    "Try it again, a little changed: the woodcutters' word for what the grove does when it repeats you a beat late. Not lying; rehearsing. They say it at the saw-pit to a cut that binds, and k..."
   ]
 }
 

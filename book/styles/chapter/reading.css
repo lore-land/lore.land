@@ -3138,3 +3138,765 @@ strong.xr-chamber { color: var(--sigil-gold, #a67c38); }
 
 @keyframes wonder-card-in { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
 @keyframes wonder-sigil { 0% { transform: scale(0.4) rotate(-30deg); } 60% { transform: scale(1.35) rotate(8deg); } 100% { transform: none; } }
+
+/* ─── A living page (living.mjs; PLAN.E L15–L16, c024, c028) ────────────
+ * Slots look like any other words. When one turns, it blurs out and back
+ * in, and a faint gold underline lingers a moment so the change is
+ * noticeable. Soil: wonder marks catch the light on a slow rhythm projected
+ * from how far each wonder runs. Light only; nothing moves; nothing glints
+ * under reduced motion. */
+
+main.chapter .living-slot {
+  transition: opacity 280ms ease, filter 280ms ease;
+}
+
+main.chapter .living-slot.is-turning {
+  opacity: 0.15;
+  filter: blur(3px);
+}
+
+main.chapter .living-slot.is-turned {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 70%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  animation: slot-settle 1.4s ease-out forwards;
+}
+
+@keyframes slot-settle {
+  to { text-decoration-color: transparent; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-switch-living='on'] main.chapter .wonder-mark {
+    animation: soil-glint var(--glint-period, 14s) ease-in-out var(--glint-delay, 0s) infinite;
+  }
+}
+
+@keyframes soil-glint {
+  0%, 86%, 100% { text-shadow: none; }
+  91% { text-shadow: 0 0 0.45em color-mix(in srgb, var(--wonder-ink, #a67c38) 70%, transparent), 0 0 0.12em color-mix(in srgb, var(--wonder-ink, #a67c38) 90%, transparent); }
+}
+
+/* ─── Bracework (bracework.mjs; PLAN.E L14, c025) ───────────────────────
+ * The makers' notation set in the page: the expression and its gloss, then
+ * — once the Spw interpreter has read it — the shape it read, in berry ink. */
+
+main.chapter figure.bracework {
+  --brace-ink: var(--color-berry, #5b3a6e);
+  margin: 1.4rem 0;
+  padding: 0.95rem 1.1rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--brace-ink) 35%, transparent);
+  border-left: 3px solid var(--brace-ink);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--brace-ink) 9%, transparent), transparent 60%),
+    color-mix(in srgb, var(--bg-color-main, #f6f0e4) 85%, var(--brace-ink) 4%);
+}
+
+main.chapter .bracework-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--brace-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+main.chapter .bracework-expr {
+  display: block;
+  color: var(--brace-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
+}
+
+main.chapter .bracework-gloss {
+  margin-top: 0.45rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+main.chapter .bracework-maker {
+  color: var(--color-text-alt);
+  font-style: normal;
+  font-size: 0.88em;
+}
+
+main.chapter .bracework-reading {
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed color-mix(in srgb, var(--brace-ink) 35%, transparent);
+}
+
+main.chapter .bracework-shape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0 0 0.6rem;
+}
+
+main.chapter .bracework-token {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.85rem;
+}
+
+main.chapter .bracework-token:is(.is-open, .is-close) {
+  color: var(--brace-ink);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+main.chapter .bracework-token.is-thing {
+  padding: 0.12rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--brace-ink) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-color-main, #f6f0e4) 70%, transparent);
+}
+
+main.chapter .bracework-token.is-sigil {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 20%, transparent);
+  color: var(--sigil-gold, #a67c38);
+}
+
+main.chapter .bracework-lines {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+main.chapter .bracework-note,
+main.chapter .bracework-source {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-alt);
+  font-size: 0.78rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main.chapter figure.bracework[data-read='parsed'] .bracework-token {
+    animation: brace-token-in 420ms ease-out both;
+  }
+  main.chapter figure.bracework[data-read='parsed'] .bracework-token:nth-child(n+2) { animation-delay: 60ms; }
+  main.chapter figure.bracework[data-read='parsed'] .bracework-token:nth-child(n+4) { animation-delay: 120ms; }
+  main.chapter figure.bracework[data-read='parsed'] .bracework-token:nth-child(n+6) { animation-delay: 180ms; }
+}
+
+@keyframes brace-token-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ─── Wonders here (colophon; c027) ─────────────────────────────────── */
+
+.chapter-wonder-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+}
+
+.chapter-wonder-chip {
+  --wonder-ink: var(--sigil-gold, #a67c38);
+  padding: 0.18rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--wonder-ink) 45%, transparent);
+  border-radius: 999px;
+  color: var(--color-text-main);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.chapter-wonder-chip[data-kind='contrivance'] { --wonder-ink: var(--color-accent-main, #246270); }
+.chapter-wonder-chip[data-kind='bracework'] { --wonder-ink: var(--color-berry, #5b3a6e); }
+
+.chapter-wonder-chip:hover,
+.chapter-wonder-chip:focus-visible {
+  background: color-mix(in srgb, var(--wonder-ink) 12%, transparent);
+  border-color: var(--wonder-ink);
+}
+
+/* A bracework plate is a figure, but not a picture: undo the chapter's
+ * figure, caption and drop-cap dress so it reads as notation and a gloss. */
+main.chapter figure.bracework {
+  text-align: left;
+}
+
+main.chapter figure.bracework .bracework-kicker {
+  display: block;
+}
+
+main.chapter figure.bracework figcaption.bracework-gloss {
+  margin: 0.45rem 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-main);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: normal;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: none;
+}
+
+main.chapter figure.bracework p::first-letter,
+main.chapter figure.bracework span::first-letter {
+  float: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  initial-letter: normal;
+}
+
+/* Sayings in the prose (#, the face that travels): hearth ink, and the card's workshop reading. */
+.wonder-mark[data-kind='saying'],
+.chapter-wonder-chip[data-kind='saying'],
+.wonder-card.is-saying { --wonder-ink: var(--color-hearth, #b0602a); }
+
+:is(html[data-switch-wonders='on'], html:not([data-switches-ready])) main.chapter .wonder-mark[data-kind='saying'] {
+  font-style: italic;
+}
+
+.wonder-card-craft {
+  margin: 0 0 0.55rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 2px solid color-mix(in srgb, var(--wonder-ink) 60%, transparent);
+  background: color-mix(in srgb, var(--wonder-ink) 7%, transparent);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.wonder-card-craft span {
+  color: var(--color-text-alt);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ─── At the table (PLAN.E L19) ─────────────────────────────────────────
+ * A closed game-master's page at the chapter's end: serif for the place,
+ * mono for the structure, the page's own dice set like a printed table. */
+
+html[data-switches-ready]:not([data-switch-table='on']) .chapter-table {
+  display: none;
+}
+
+.chapter-table {
+  --table-ink: var(--color-accent-main, #246270);
+  margin: 2rem 0 1rem;
+  border: 1px solid color-mix(in srgb, var(--table-ink) 35%, transparent);
+  border-top: 3px solid var(--table-ink);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--table-ink) 8%, transparent), transparent 55%),
+    color-mix(in srgb, var(--bg-color-main, #f6f0e4) 90%, var(--table-ink) 3%);
+}
+
+.chapter-table > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.8rem;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.chapter-table > summary::-webkit-details-marker { display: none; }
+
+.chapter-table > summary::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--table-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+}
+
+.chapter-table[open] > summary::after { content: '−'; }
+
+.chapter-table-kicker,
+.chapter-table-label,
+.chapter-table-h,
+.chapter-table-slot-head {
+  color: var(--table-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.chapter-table-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+}
+
+.chapter-table-body {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0 1.1rem 1.2rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.5;
+}
+
+.chapter-table-body p,
+.chapter-table-body ol,
+.chapter-table-body ul {
+  margin: 0;
+}
+
+.chapter-table-place {
+  font-size: 1.05rem;
+}
+
+.chapter-table-h {
+  margin: 0 0 0.3rem !important;
+}
+
+.chapter-table-body li {
+  max-width: none;
+  margin-bottom: 0.25rem;
+}
+
+.chapter-table-voice {
+  color: var(--color-text-alt);
+  font-style: italic;
+}
+
+.chapter-table-dice {
+  padding-left: 1.6rem;
+}
+
+.chapter-table-dice li::marker {
+  color: var(--table-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+}
+
+.chapter-table-spw {
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  color: var(--color-berry, #5b3a6e);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 1rem;
+}
+
+.chapter-table-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.7rem;
+}
+
+.chapter-table-slots > .chapter-table-h,
+.chapter-table-slots > .chapter-table-note {
+  grid-column: 1 / -1;
+}
+
+.chapter-table-note {
+  color: var(--color-text-alt);
+  font-size: 0.88rem;
+}
+
+.chapter-table-slot {
+  padding: 0.5rem 0.65rem;
+  border: 1px dashed color-mix(in srgb, var(--table-ink) 35%, transparent);
+  border-radius: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.chapter-table-slot ol {
+  padding-left: 1.3rem;
+}
+
+.chapter-table-slot li.is-canon {
+  font-weight: 600;
+}
+
+.chapter-table-question {
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid var(--sigil-gold, #a67c38);
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 8%, transparent);
+  font-style: italic;
+}
+
+/* ─── Hold the light (scene-light.mjs; PLAN.E L20–L21) ──────────────────
+ * The field light's tokens are registered so a moved sun glides instead of
+ * jumping; grain and edge are a quiet overlay above the page; the light
+ * table and the frame live in the top layer. */
+
+@property --light-x { syntax: '<number>'; inherits: true; initial-value: 50; }
+@property --light-y { syntax: '<number>'; inherits: true; initial-value: 16; }
+@property --light-strength { syntax: '<number>'; inherits: true; initial-value: 0.6; }
+@property --tempo-warmth { syntax: '<number>'; inherits: true; initial-value: 0.45; }
+@property --knob-grain { syntax: '<number>'; inherits: true; initial-value: 0.12; }
+@property --knob-edge { syntax: '<number>'; inherits: true; initial-value: 0.18; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-scene-knobs='ready'] {
+    transition: --light-x 900ms cubic-bezier(0.2, 0.8, 0.3, 1), --light-y 900ms cubic-bezier(0.2, 0.8, 0.3, 1), --light-strength 700ms ease, --tempo-warmth 900ms ease, --knob-edge 700ms ease;
+  }
+  html[data-light-carried] {
+    transition: --light-x 120ms linear, --light-y 120ms linear;
+  }
+}
+
+html[data-light-carried] body {
+  cursor: crosshair;
+}
+
+/* Grain and edge: the tooth of the paper and the dark at the frame's edges. */
+html[data-scene-knobs='ready']:is([data-switch-scene-light='on'], :not([data-switches-ready]))::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 80% at 50% 45%, transparent 55%, color-mix(in srgb, #0b1627 calc(var(--knob-edge) * 55%), transparent) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: calc(0.35 + var(--knob-grain) * 0.65);
+  mix-blend-mode: multiply;
+}
+
+html:is([data-theme='night'], [data-theme='ember'])[data-scene-knobs='ready']::after {
+  mix-blend-mode: soft-light;
+}
+
+/* Tools at a section's end: quiet until the section is near. */
+html[data-switches-ready]:not([data-switch-scene-light='on']) .scene-tools {
+  display: none;
+}
+
+main.chapter .scene-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0;
+  opacity: 0.55;
+  transition: opacity 200ms ease;
+}
+
+main.chapter [data-ebook-section]:hover .scene-tools,
+main.chapter .scene-tools:focus-within {
+  opacity: 1;
+}
+
+main.chapter .scene-tool {
+  padding: 0.22rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-alt);
+  cursor: pointer;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+main.chapter .scene-tool:hover,
+main.chapter .scene-tool:focus-visible {
+  border-color: var(--sigil-gold, #a67c38);
+  color: var(--color-text-main);
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+}
+
+/* The light table. */
+.light-table {
+  position: fixed;
+  inset: auto;
+  z-index: 72;
+  width: min(21rem, calc(100vw - 1.25rem));
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 50%, transparent);
+  border-top: 3px solid var(--sigil-gold, #a67c38);
+  border-radius: 0.6rem;
+  background: var(--bg-color-main, #f6f0e4);
+  color: var(--color-text-main);
+  box-shadow: 0 16px 38px color-mix(in srgb, #0b1627 24%, transparent);
+  overflow: visible;
+}
+
+.light-table.is-sheet {
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: max(0.6rem, env(safe-area-inset-bottom, 0px));
+  top: auto;
+  width: auto;
+}
+
+.light-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.light-kicker {
+  color: var(--sigil-gold, #a67c38);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.light-close {
+  border: 0;
+  background: transparent;
+  color: var(--color-text-alt);
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.light-scene,
+.light-steer,
+.light-held {
+  margin: 0.45rem 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.light-scene span,
+.light-held {
+  color: var(--color-text-alt);
+}
+
+.light-steer {
+  font-style: italic;
+}
+
+/* The sky: a small window of the page's light; drag the sun across it. */
+.light-sky {
+  position: relative;
+  height: 7rem;
+  margin: 0.4rem 0 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--color-text-main) 18%, transparent);
+  border-radius: 0.45rem;
+  background:
+    radial-gradient(ellipse 60% 70% at calc(var(--light-x, 50) * 1%) calc(var(--light-y, 16) * 1%), hsl(calc(28 + (1 - var(--tempo-warmth, 0.45)) * 160) 90% 70% / calc(var(--light-strength, 0.6) * 0.9)), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, #12394a 70%, transparent), color-mix(in srgb, #2f483a 80%, transparent));
+  cursor: grab;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.light-sky:focus-visible {
+  outline: 2px solid var(--sigil-gold, #a67c38);
+  outline-offset: 2px;
+}
+
+.light-sun {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: -0.55rem 0 0 -0.55rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6d8, #f0c45a 55%, transparent 72%);
+  box-shadow: 0 0 1rem 0.3rem color-mix(in srgb, #f0c45a 60%, transparent);
+  pointer-events: none;
+}
+
+.light-knobs {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.light-knob,
+.frame-knob {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.light-knob input,
+.frame-knob input {
+  width: 100%;
+  accent-color: var(--sigil-gold, #a67c38);
+}
+
+.light-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.light-action {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+  color: var(--color-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.light-action.is-quiet {
+  background: transparent;
+}
+
+/* ─── Frame this: a passage set for a screenshot ─────────────────────── */
+
+.frame-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, #0b1627 82%, transparent);
+  overflow: hidden;
+}
+
+.frame-card {
+  --frame-type: 1.15rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: clamp(1.4rem, 5vmin, 3rem);
+  overflow: hidden;
+  border-radius: 0.4rem;
+  color: var(--color-text-main, #161d2b);
+  background-color: var(--bg-color-main, #f3ede1);
+  background-image:
+    radial-gradient(ellipse 80% 60% at calc(var(--light-x, 50) * 1%) calc(var(--light-y, 16) * 1%), hsl(calc(28 + (1 - var(--tempo-warmth, 0.45)) * 160) 85% 62% / calc(var(--light-strength, 0.6) * 0.42)), transparent 65%),
+    radial-gradient(ellipse 90% 70% at 50% 110%, color-mix(in srgb, #12394a 22%, transparent), transparent 60%);
+  box-shadow: 0 1.4rem 4rem color-mix(in srgb, #000 45%, transparent);
+}
+
+.frame-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 80% at 50% 45%, transparent 50%, color-mix(in srgb, #0b1627 calc(var(--knob-edge) * 70%), transparent) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: calc(0.3 + var(--knob-grain) * 0.7);
+  mix-blend-mode: multiply;
+}
+
+.frame-card[data-aspect='story'] { height: min(90dvh, 52rem); aspect-ratio: 9 / 16; }
+.frame-card[data-aspect='square'] { width: min(90vw, 82dvh, 44rem); aspect-ratio: 1; }
+.frame-card[data-aspect='card'] { width: min(94vw, 64rem, calc(82dvh * 1.905)); aspect-ratio: 1.905; }
+
+.frame-kicker,
+.frame-foot {
+  margin: 0;
+  color: color-mix(in srgb, var(--sigil-gold, #a67c38) 80%, var(--color-text-main));
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.frame-foot {
+  margin-top: auto;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+.frame-title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: calc(var(--frame-type) * 1.45);
+  line-height: 1.15;
+}
+
+.frame-text {
+  display: grid;
+  gap: 0.7em;
+  overflow: hidden;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: var(--frame-type);
+  line-height: 1.55;
+}
+
+.frame-text p {
+  margin: 0;
+}
+
+.frame-text .scene-tools {
+  display: none;
+}
+
+.frame-bar {
+  position: fixed;
+  left: 50%;
+  bottom: max(0.8rem, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.8rem;
+  width: min(60rem, calc(100vw - 1.5rem));
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, #0b1627 88%, transparent);
+  color: #f3ede1;
+  transform: translateX(-50%);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.frame-bar.is-quiet {
+  opacity: 0;
+  transform: translate(-50%, 0.6rem);
+  pointer-events: none;
+}
+
+.frame-group {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.frame-bar button {
+  padding: 0.28rem 0.65rem;
+  border: 1px solid color-mix(in srgb, #f3ede1 30%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+}
+
+.frame-bar button.is-on,
+.frame-bar .frame-done {
+  border-color: #f0c45a;
+  background: color-mix(in srgb, #f0c45a 22%, transparent);
+}
+
+.frame-bar .frame-knob {
+  grid-template-columns: auto 6rem;
+  color: #f3ede1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-bar { transition: none; }
+}
+
+/* The framed passage sits in the middle of its card; the address keeps the foot. */
+.frame-text {
+  margin-block: auto;
+}

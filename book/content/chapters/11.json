@@ -138,7 +138,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Below Bone.land the road ran through an old bloom garden nobody had kept for years. Quince had gone to riot over the walls, the blackthorn hedge stood white with flower, and a moss-thick sundial pointed at the wrong hour without minding. Boof smelled sap, sloe-blossom, a straw bee-skep warming in the sun. Then cold pastry."
+          "text": "Below Bone.land the road ran through an old bloom garden nobody had kept for years. Quince had gone to riot over the walls, the blackthorn hedge stood white with flower, and a moss-thick sundial pointed at the wrong hour without minding. Boof smelled sap, sloe-blossom, {{garden-scent}}. Then cold pastry.",
+          "slots": {
+            "garden-scent": {
+              "clock": "hour",
+              "variants": [
+                "a straw bee-skep warming in the sun",
+                "dew lifting off the moss-thick sundial",
+                "wild garlic bruised along the wall-foot",
+                "violets keeping to the cool of the wall",
+                "old brick warming under the quince"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -164,12 +176,40 @@
         },
         {
           "type": "paragraph",
-          "text": "Karmic momentum does not refuse a grand wish. It simply pays it out the way momentum pays everything: one coincidence at a time, minimum-viable, corrections deferred. A barn deed blew against his crust. A road bent to end at his feet. A distant clerk misfiled a fortune in his name. The empire arrived. It arrived mediocre.",
-          "lean": "bane"
+          "text": "Over the wall came the beekeeper whose skeps stood along its foot, her veil half on. Her bees were walking the open petals and coming away with nothing. She looked at the flowers, and at the pie on the rise, and said to nobody who would listen, “Open nothing before it has filled.” Then she went down the row stopping each skep door with a twist of grass, so her bees would stay home until there was something to fetch. It has been the beekeepers’ rule ever since."
         },
         {
           "type": "paragraph",
-          "text": "It arrived in pieces. The throne came first, shed at the garden gate by a players' wagon that hit a rut at the convenient moment — a stage prop, gilt over pine. The throne smelled rented: hire-straw and other people's sitting. Banners came after, lifted off a dyer's line by an obliging gust, in colors nobody had ordered. Subjects arrived halfway through errands. One still held a loaf."
+          "text": "Karmic momentum does not refuse a grand wish. It simply pays it out the way momentum pays everything: one coincidence at a time, minimum-viable, corrections deferred. A {{coincidence-deed}} blew against his crust. A road bent to end at his feet. A distant clerk misfiled a fortune in his name. The empire arrived. It arrived mediocre.",
+          "lean": "bane",
+          "slots": {
+            "coincidence-deed": {
+              "clock": "day",
+              "variants": [
+                "barn deed",
+                "mill deed",
+                "orchard deed",
+                "quarry deed",
+                "pasture deed"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "It arrived in pieces. The throne came first, shed at the garden gate by a players' wagon that hit a rut at the convenient moment — a stage prop, gilt over pine. The throne smelled rented: {{rented-smell}} and other people's sitting. Banners came after, lifted off a dyer's line by an obliging gust, in colors nobody had ordered. Subjects arrived halfway through errands. One still held a loaf.",
+          "slots": {
+            "rented-smell": {
+              "clock": "hour",
+              "variants": [
+                "hire-straw",
+                "greasepaint",
+                "stage-dust",
+                "tallow-smoke",
+                "trunk-camphor"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -205,7 +245,19 @@
         {
           "type": "paragraph",
           "data-content_id": "awakening-intro",
-          "text": "Deep beneath his crust, a berry woke. The wish had passed through him, leaving its drop of light just as it had in the fields. One seam shone, then another. Warmth worked through the bitter filling. He tasted what he had kept from everyone, himself included. Sweet. It had been sweet all along. Around him, the banners stirred. He made a small sound the throne did nothing to support."
+          "text": "Deep beneath his crust, a berry woke. The wish had passed through him, leaving its drop of light just as it had in the fields. One seam shone, then another. Warmth worked through the bitter filling. He tasted what he had kept from everyone, himself included. Sweet. It had been sweet all along. Around him, the banners {{banner-motion}}. He made a small sound the throne did nothing to support.",
+          "slots": {
+            "banner-motion": {
+              "clock": "minute",
+              "variants": [
+                "stirred",
+                "lifted and settled",
+                "sagged on their poles",
+                "snapped once and hung still",
+                "turned their wrong colors to the light"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -273,7 +325,19 @@
         },
         {
           "type": "paragraph",
-          "text": "No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket, a seed-loaf still warm on its underside, and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject."
+          "text": "No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket, {{basket-loaf}} still warm on its underside, and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject.",
+          "slots": {
+            "basket-loaf": {
+              "clock": "hour",
+              "variants": [
+                "a seed-loaf",
+                "a rye cob",
+                "a plaited milk-loaf",
+                "a barley bannock",
+                "a crust-gold oat loaf"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -281,7 +345,7 @@
         },
         {
           "type": "paragraph",
-          "text": "His crimped hands softened. The egg slipped, tipped, rolled down the rise, past a banner dragging in the dust, through quince petals that had opened too soon. Boof stepped forward. It came to rest against her paws, warm as ever. The crack had widened enough to show gold within. She checked the shell with her nose: hot iron, sap, a little sweetened crust. Still humming. Still waiting."
+          "text": "His crimped hands softened. The egg slipped, tipped, rolled down the rise, past a banner dragging in the dust, through quince petals that had opened too soon. Boof stepped forward. It came to rest against her paws, warm as ever. The crack had widened enough to show gold within. She checked the shell with her nose: hot iron, sap, a little sweetened crust. Still humming. Still waiting. She left the crack alone. She had watched a whole garden opened early that morning."
         },
         {
           "type": "paragraph",
@@ -330,7 +394,18 @@
         },
         {
           "type": "paragraph",
-          "text": "He pointed downhill, past the last of the blackthorn, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
+          "text": "He pointed downhill, {{downhill-past}}, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them.",
+          "slots": {
+            "downhill-past": {
+              "clock": "hour",
+              "variants": [
+                "past the last of the blackthorn",
+                "past the last of the quince walls",
+                "past a stile gone green with moss",
+                "past the garden's last tumbled wall"
+              ]
+            }
+          }
         }
       ]
     }
@@ -354,7 +429,69 @@
       },
       {
         "description": "Rehearsal moths shaken from the hedge wear the empire's weather — rain over a court with no roof, arriving in instalments. A subject who reads the moth goes home with her bread."
+      },
+      {
+        "description": "Open nothing before it has filled: the beekeepers’ rule, learned the morning every bud in the garden opened on demand and held nothing. The beekeeper stopped her skep doors with grass so her bees stayed home until the flowers had something to give; Boof, with the egg back at her paws, left the crack alone."
       }
     ]
+  },
+  "table": {
+    "place": "The bloom garden below Bone.land, the morning a wish granted all at once. Quince has rioted over the old walls, the blackthorn hedge stands white with flower and grey with crown-wasp paper, and a moss-thick sundial points at the wrong hour without minding. Every bud is open and nothing in them is ready; on a low rise stands a throne of gilt over pine shed by a players’ wagon, ringed by banners in colours nobody ordered and subjects still halfway through their errands. It smells of sap, sloe-blossom and sun-warm straw skeps — then cold pastry, greasepaint and wasp paper.",
+    "light": "Clean morning light that goes strange at the edges, as if the sky were being rented. By afternoon the moths’ smudged forecast comes true: rain over a court with no roof, arriving in instalments.",
+    "people": [
+      {
+        "name": "the beekeeper",
+        "want": "to keep her bees at home, doors stopped with grass, until the opened flowers have something in them",
+        "voice": "veil half on; gentle with bees, short with anyone who wants anything now"
+      },
+      {
+        "name": "the woman with the market basket",
+        "want": "to get her bread indoors before the rain the moth on her basket promised",
+        "voice": "polite, apologetic, and one step farther backward every time you look"
+      },
+      {
+        "name": "the players’ stage-keeper",
+        "want": "the throne back on the wagon before tonight’s performance two villages on",
+        "voice": "talks like a prompter, feeding you your next line before you have found it"
+      },
+      {
+        "name": "Boof",
+        "want": "the egg back at her paws, by its own weight if it will come that way",
+        "voice": "nose first; growls once and means it; walks beside people, never sent"
+      }
+    ],
+    "hooks": [
+      "The players want their throne back by evening, but the grant keeps returning it to the garden gate one convenient rut at a time. Find the one coincidence that would let a throne go — somebody, somewhere, who honestly needs a chair.",
+      "A clerk far off misfiled a fortune in the emperor’s name, and the deed it belonged to blew against his crust this morning. Carry it back to the household it was meant for before the correction reaches them the slow way, one bent coincidence at a time.",
+      "The beekeeper asks the party to keep the garden shut for a week — no picking, no wishing, no shortcuts — while the flowers fill. Everyone who passes through has an excellent reason to open something now."
+    ],
+    "encounters": [
+      "A deed (roll: barn, mill, orchard, quarry, pasture) blows against someone’s legs and will not come unstuck until they agree to own a little of it.",
+      "A banner in a colour nobody ordered drops over the party, and for the rest of the scene everyone in the garden treats them as subjects of the realm.",
+      "Rehearsal moths blunder out of the hedge wearing tomorrow’s weather; whoever reads the smudge right knows when the next instalment of rain will fall.",
+      "A paper crown comes loose from the blackthorn and settles on the nearest head: beautiful, hollow, and humming with tenants who leave only when the wearer does something sweet.",
+      "Early bees hang humming at something shut — a box, a door, a letter in a pocket — certain it owes them an opening.",
+      "A subject arrives halfway through an errand, still holding a loaf (roll: seed-loaf, rye cob, plaited milk-loaf, barley bannock, crust-gold oat loaf), and asks politely which way is home."
+    ],
+    "finds": [
+      {
+        "wonder": "crown-wasps",
+        "use": "A paper crown from the blackthorn makes strangers defer to whoever wears it, for exactly as long as it stays occupied. Hold it to your ear and you can hear it is rented; the wasps move out the moment the wearer turns sweet, and then it weighs exactly what it is."
+      },
+      {
+        "wonder": "early-bees",
+        "use": "Follow an early bee to whatever is about to open — a bud, a letter, a door, a decision. It waits there humming, and so must you: open the thing before it has filled and it holds nothing at all."
+      },
+      {
+        "wonder": "rehearsal-moths",
+        "use": "Catch one gently and read tomorrow’s weather off its wings, a little smudged. The smudge always falls across the hour you most need to know."
+      }
+    ],
+    "bracework": {
+      "spw": "{bud ~ honey}",
+      "does": "A room you can stand in for a minute, where a shut bud dreams of being honey. Step in and you can smell whether the thing you are waiting on will be worth the wait — never what it will hold, only whether it will fill.",
+      "costs": "The minute is borrowed from your own patience: the next time you wait for anything, it takes a minute longer. The box runs on borrowed warmth, and the ants under the walls will notice whose."
+    },
+    "question": "What is your party carrying that has not filled yet — and who among you keeps wanting to open it?"
   }
 }

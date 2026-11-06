@@ -172,7 +172,19 @@
         },
         {
           "type": "paragraph",
-          "text": "She put her nose to the crack beneath the kitchen door. Cold stone. Old onions. Nobody."
+          "text": "She put her nose to the crack beneath the kitchen door. Cold stone. {{kitchen-smell}}. Nobody.",
+          "slots": {
+            "kitchen-smell": {
+              "clock": "hour",
+              "variants": [
+                "Old onions",
+                "Cold ashes",
+                "Dried sage",
+                "Apples in straw",
+                "Yesterday's soap"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -191,7 +203,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there."
+          "text": "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. Keep the morning, not the week, the shepherds say of a good dog, and it is the highest praise they have."
         },
         {
           "type": "paragraph",
@@ -200,7 +212,19 @@
         },
         {
           "type": "paragraph",
-          "text": "She knew only what her nose told her. The people were not in this day. Everything else was. The blackbird was on the fence, trying the same few notes until one pleased it. The crows were in the stubble. The river was at its slow work and the frost at its quick one, and under the berry rows the ants carried their small lights home along the roots."
+          "text": "She knew only what her nose told her. The people were not in this day. Everything else was. The blackbird was on the fence, trying the same few notes until one pleased it. {{field-birds}}. The river was at its slow work and the frost at its quick one, and under the berry rows the ants carried their small lights home along the roots.",
+          "slots": {
+            "field-birds": {
+              "clock": "minute",
+              "variants": [
+                "The crows were in the stubble",
+                "The rooks were in the bare elms",
+                "The starlings were on the barn roof",
+                "The fieldfares were in the hawthorn",
+                "The jackdaws were on the cold chimney"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -289,7 +313,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof circled the furrow once, slowly. No tracks in the frost. No scent but steam and ant-smoke and her own breath. She circled it again."
+          "text": "Boof circled the furrow once, slowly. No tracks in the frost. No scent but steam and ant-smoke and her own breath. She circled it again. She did not dig. Open nothing before it has filled, the beekeeper had said in the bloom garden, and Boof had seen that garden opened early."
         },
         {
           "type": "paragraph",
@@ -391,7 +415,7 @@
         },
         {
           "type": "paragraph",
-          "text": "A moment later a fox came through the new gap at a quick trot, the color of an unturned page, head low, as if late for something it had been told about in another week. It did not look at either of them. Boof had no word for it. The archive downriver had one, penciled in a margin: page-fox."
+          "text": "A moment later a fox came through the new gap at a quick trot, the color of an unturned page, head low, as if late for something it had been told about in another week. It did not look at either of them. Boof had no word for it. The archive downriver had one, penciled in a margin: page-fox. Higher in that same margin, in the same pencil: leave room for the path. The hedge seemed to have taken it to heart."
         },
         {
           "type": "paragraph",
@@ -400,11 +424,19 @@
         },
         {
           "type": "paragraph",
+          "text": "The lane went round the old stone with the iron ring, and so did Boof. Words had been cut into its weathered side long ago, at the height a hand comes to rest when a walker stops for breath: promise the next stone, not the road. She did not need to read them. She could smell how many hands had rested there on the way past, and that told her most of what they said."
+        },
+        {
+          "type": "paragraph",
           "text": "She stopped once, at the house, for something from the shelf by the cold stove: a slice of BoonWAP in waxed paper that she had carried out of Bonk City a long way back and never eaten. It was still warm. It had no business being warm. She did not know what she was saving it for. A long walk was reason enough to bring it."
         },
         {
           "type": "paragraph",
           "text": "All that Thursday they crossed the land in their two ways, his straight and hers bent. Past the grove that keeps echoes, where the echo-wrens sang from the hollow cedars a beat late and the grove repeated the hat a beat late too, and then could not decide where to put it — and something in there that sounded a little like an old genie said, to nobody, “Ah. There it is.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "The woodcutters say the grove only ever does one thing: try it again, a little changed. It tried the hat again, a little higher, and again, until it hung at a person’s height above nothing, which seemed to satisfy it."
         },
         {
           "type": "paragraph",
@@ -425,7 +457,19 @@
         },
         {
           "type": "paragraph",
-          "text": "At the top of the rise the light went long and gold, and then it went out all at once, the way a lamp is put out by someone with somewhere to be."
+          "text": "At the top of the rise the light went long and {{last-light}}, and then it went out all at once, the way a lamp is put out by someone with somewhere to be.",
+          "slots": {
+            "last-light": {
+              "clock": "hour",
+              "variants": [
+                "gold",
+                "copper",
+                "amber",
+                "rose-gold",
+                "ember-warm"
+              ]
+            }
+          }
         }
       ]
     },
@@ -446,11 +490,35 @@
         },
         {
           "type": "paragraph",
-          "text": "Below the rise, in the farms along the road, latches lifted. Smoke stood up from three chimneys at once. A bucket knocked a well and somebody swore at the cold — cheerfully, the way a person swears who has slept well and expects a perfectly ordinary day. Not one of them had missed anything. A Thursday is very easy not to miss, if nobody tells you it was there."
+          "text": "Below the rise, in the farms along the road, latches lifted. Smoke stood up from {{chimneys}} at once. A bucket knocked a well and somebody swore at the cold — cheerfully, the way a person swears who has slept well and expects a perfectly ordinary day. Not one of them had missed anything. A Thursday is very easy not to miss, if nobody tells you it was there.",
+          "slots": {
+            "chimneys": {
+              "clock": "hour",
+              "variants": [
+                "three chimneys",
+                "four chimneys",
+                "the bakehouse and two farms",
+                "every chimney along the lane",
+                "a whole row of chimneys"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
-          "text": "Up the Bonk City road came a cart drawn by a mule in a knitted ear-cap, and on the cart a bell, and behind the bell a crier in a coat with too many buttons, ringing at every gate as if each gate had asked her to personally."
+          "text": "Up the Bonk City road came a cart drawn by {{mule-wear}}, and on the cart a bell, and behind the bell a crier in a coat with too many buttons, ringing at every gate as if each gate had asked her to personally.",
+          "slots": {
+            "mule-wear": {
+              "clock": "day",
+              "variants": [
+                "a mule in a knitted ear-cap",
+                "a mule in a striped wool muffler",
+                "a mule in a patched quilt blanket",
+                "a mule with ribbons plaited in its mane",
+                "a mule in two odd red stockings"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -565,7 +633,72 @@
       },
       {
         "description": "The lag-stag's prints press into the grove's moss beside Boof's own, a beat late. It has never before walked beside anyone."
+      },
+      {
+        "description": "Keep the morning, not the week, the shepherds say of a good dog — the highest praise they have, and the reason Boof had the day nobody kept."
+      },
+      {
+        "description": "On the unkept day the land kept its sayings for nobody: promise the next stone, not the road, cut at resting-hand height in the old stone with the iron ring; the grove trying the hat again, a little changed, until it hung at a person’s height. Boof carried the warm slice unopened."
       }
     ]
+  },
+  "table": {
+    "place": "Boon.land on the day nobody kept. Farm kitchens with the latch down and no smoke, a mill wheel standing still with water running under it, a boot-scraper still wearing last night’s mud; in the field the warm furrow steams in a margin of hearth-drift, and near it the ant-streets run ruled and straight and meet at right angles. Hob-deer no taller than a boot crop rime between the frost-ruts, a hedge shows a neat rectangular gap with green cut edges, and the lane bends round a frozen pond and an old stone with an iron ring. To be here at all, a character must have lost count of the week: animals, wanderers, anyone who has stopped counting.",
+    "light": "Flat blue before dawn, with no lamp in any window; then low winter gold moving sideways all day over frost and stubble, until at the top of the rise it goes out all at once, the way a lamp is put out by someone with somewhere to be — and it is Friday.",
+    "people": [
+      {
+        "name": "Boof",
+        "want": "to walk the fences, which will want checking either way",
+        "voice": "considers a mystery for about as long as it takes to scratch behind one ear, then goes to work"
+      },
+      {
+        "name": "the ant with the dead torch",
+        "want": "a light that will do",
+        "voice": "inspects every offer as if it has been sold a bad torch before"
+      },
+      {
+        "name": "the hob-deer",
+        "want": "the rime on the verge, and nothing else in the world",
+        "voice": "small exact teeth; never taught to run, so they do not"
+      },
+      {
+        "name": "the crier, on Friday",
+        "want": "word of any stranger received without a receipt, and every gate rung as if it had asked her personally",
+        "voice": "generous eye, loud bell; holds her pencil a long while before writing anything she cannot stand behind"
+      }
+    ],
+    "hooks": [
+      "The mill has stood all Thursday with water running under it, and Friday’s bread depends on Thursday’s grinding. Grind it yourselves — and accept that on Friday nobody will remember anyone did.",
+      "The hob-deer have never been taught to run, and on Friday the lane will be full of carts. Get the little herd off the road before the light goes, without teaching them fear.",
+      "On Friday the crier wants word of any stranger received without a receipt. Tell her what you saw on a day she never had, and find out which of your words her ink will keep."
+    ],
+    "encounters": [
+      "A kitchen door with the latch down; at the crack beneath it, cold stone and (roll: old onions, cold ashes, dried sage, apples in straw, yesterday’s soap) — and nobody.",
+      "A little herd of hob-deer crops rime in the lane and does not run; walk slowly and they follow you to the next gate.",
+      "A page-fox comes through a gap at a quick trot, head low, late for something it was told about in another week. It will not stop, and it is never early.",
+      "The grove repeats the party a beat late, then tries it again, a little changed: one of you comes back a little louder, or a little gentler, than you went in.",
+      "Fresh hoofprints press into the frost beside the party’s own, a beat after they are made. Nobody sees what makes them.",
+      "Above the warm furrow, at a person’s height, a black hat rests on nothing; where the steam thins, plain lines stay under it, facing a quarter turn away from everyone. He does not answer. He can be followed by direction, never by road."
+    ],
+    "finds": [
+      {
+        "wonder": "hob-deer",
+        "use": "Walk slowly beside a hob-deer and it leads along the frost-ruts to wherever the day is quietest. Teach one to run — a shout, a chase — and no hob-deer will come out on an unkept day again."
+      },
+      {
+        "wonder": "lag-stag",
+        "use": "Its prints press in beside yours a beat late: proof, on a day with no witnesses, that you were not alone. It walks only beside someone who is not looking for it; turn round, and the prints stop."
+      },
+      {
+        "wonder": "torch-ants",
+        "use": "Near the furrow their streets run ruled and true, a straight line to follow across any field. The ants are particular about torches: take light from their street and one day you will be asked to give a little back."
+      }
+    ],
+    "bracework": {
+      "spw": "[week @ morning]",
+      "does": "A window where the week watches a morning: through it you see only what is actually here today — the cold stove, the unswept step, the deer in the lane — and none of what the week says ought to be.",
+      "costs": "Whoever looks through loses count of the days for a night and wakes not knowing what day it is. Here, that is how you get in; anywhere else, somebody has to tell you."
+    },
+    "question": "What does your party do with a day nobody will remember you had?"
   }
 }

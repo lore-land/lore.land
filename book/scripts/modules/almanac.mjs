@@ -21,8 +21,8 @@ const KEY = 'lore.almanac.v1';
 const DATA_URL = '/book/content/world/almanac.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
 
-export const KIND_SIGIL = Object.freeze({ creature: '@', contrivance: '$', bracework: '&' });
-export const KIND_WORD = Object.freeze({ creature: 'creature', contrivance: 'contrivance', bracework: 'bracework' });
+export const KIND_SIGIL = Object.freeze({ creature: '@', contrivance: '$', bracework: '&', saying: '#' });
+export const KIND_WORD = Object.freeze({ creature: 'creature', contrivance: 'contrivance', bracework: 'bracework', saying: 'saying' });
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -202,6 +202,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
         el('button', { type: 'button', className: 'wonder-card-close', 'aria-label': 'Close' }, '×')),
       el('p', { className: 'wonder-card-name' }, wonder.name),
       el('p', { className: 'wonder-card-note' }, wonder.note),
+      wonder.craft ? el('p', { className: 'wonder-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
       el('p', { className: 'wonder-card-status' }, statusLine(result, livesIn, count, data.wonders.length)),
       livesIn.length > 1 ? el('nav', { className: 'wonder-card-places', 'aria-label': `Where ${wonder.name} lives` },
         el('span', { className: 'wonder-card-places-label' }, 'Lives in'), ...doors) : null,
@@ -214,6 +215,8 @@ export function initAlmanac({ chapterData, announce } = {}) {
     card.querySelector('.wonder-card-close').addEventListener('click', close);
     openMark = mark;
     mark.setAttribute('aria-expanded', 'true');
+    // Other rooms may answer a find (scene-light.mjs flares the light toward it).
+    window.dispatchEvent(new CustomEvent('lore:wonder', { detail: { id: wonder.id, kind: wonder.kind, isNew: result.isNew, at: mark } }));
     paint();
     if (result.isNew) {
       mark.classList.remove('is-kept');

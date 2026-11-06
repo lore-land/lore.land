@@ -413,3 +413,93 @@ body[data-surface='monument'] .almanac-kept-empty {
   from { transform: translateY(0); }
   to { transform: translateY(-2.5px); }
 }
+
+/* A card reached from a chapter's "Wonders here" row says so. */
+body[data-surface='monument'] .almanac-card:target {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--kind-ink) 45%, transparent);
+  scroll-margin-top: 6rem;
+}
+
+/* Plate prompt: the wonder in words, ready to paint from (PLAN.E L10). */
+body[data-surface='monument'] .almanac-prompt {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+}
+
+body[data-surface='monument'] .almanac-prompt summary {
+  cursor: pointer;
+  color: color-mix(in srgb, var(--kind-ink) 70%, var(--hub-ink));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .almanac-prompt dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.6rem;
+  margin: 0.5rem 0;
+}
+
+body[data-surface='monument'] .almanac-prompt dt {
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .almanac-prompt dd {
+  margin: 0;
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .almanac-prompt-line code {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--kind-ink) 8%, var(--hub-paper));
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+body[data-surface='monument'] .almanac-prompt-copy {
+  margin-top: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+/* An opened plate prompt grows its own card, not its row-mates. */
+body[data-surface='monument'] .almanac-cards {
+  align-items: start;
+}
+
+/* Sayings: the face that travels (#), in hearth ink, with their workshop reading. */
+body[data-surface='monument'] .almanac-shelf[data-kind='saying'] { --kind-ink: var(--hub-hearth); }
+
+body[data-surface='monument'] .almanac-shelf[data-kind='saying'] .almanac-card-name {
+  font-style: italic;
+}
+
+body[data-surface='monument'] .almanac-card-craft {
+  padding: 0.45rem 0.6rem;
+  border-left: 2px solid color-mix(in srgb, var(--kind-ink) 60%, transparent);
+  background: color-mix(in srgb, var(--kind-ink) 7%, transparent);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+body[data-surface='monument'] .almanac-card-craft span {
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

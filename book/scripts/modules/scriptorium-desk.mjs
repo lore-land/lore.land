@@ -17,11 +17,11 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.C';
-import { constellationFor } from './constellation.mjs?v=2026_11_05.A';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.B';
+import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
-import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_05.C';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_06.B';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -124,6 +124,7 @@ export const SPELLBOOK = Object.freeze([
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
   { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
+  { op: '?', example: '?[living]', does: 'What breathes in the book: how many phrases turn by the minute, the hour and the day.' },
   { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
   { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
@@ -314,6 +315,18 @@ export async function initScriptoriumDesk() {
         say(op, el('p', {}, await shelfLine()));
       } else if (handle === 'find') {
         cast(payload);
+      } else if (handle === 'living' || handle === 'breathing') {
+        const index = await semanticIndex();
+        const slots = index?.slots;
+        const on = readSwitches().values.living === 'on';
+        if (!slots) {
+          say(op, el('p', {}, 'The book has not said what breathes yet.'));
+        } else {
+          const total = slots.minute + slots.hour + slots.day;
+          say(op, el('div', {},
+            el('p', {}, `The book breathes in ${total} places: ${slots.minute} by the minute, ${slots.hour} by the hour, ${slots.day} by the day. The words you read first are always its own.`),
+            el('p', {}, on ? 'Your living page is on.' : 'Your living page is off. =[living]{on} turns it on; a chapter link with ?try=living tries it once.')));
+        }
       } else if (handle === 'almanac' || handle === 'wonders') {
         const data = await loadAlmanac();
         const kept = readAlmanac();

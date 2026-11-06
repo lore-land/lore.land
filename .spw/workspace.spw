@@ -34,6 +34,11 @@
   c021: "One grammar, two registers: every Spw operator and container has a literary reading, a library reading and a witness line (spw-resonance.mjs, importable by spwashi.com); every chapter ends by sending the reader into a library (shelf-list.json)."
   c022: "The Scriptorium is the reader's desk: every desk action is a Spw spell shown on its card, castable by tap or by typing; plain words search the book and open on the words (text fragments); practice checks spells without casting."
   c023: "Every chapter can be read as boon, bane or bone: paragraphs carry a lean (authored or read), the lens weights without removing, and bone brings up the notation (.spw/surfaces/resonance.spw#valence_lens)."
+  c024: "Canonical prose is variant zero: a living slot's first variant reproduces the authored sentence exactly and is what the build prerenders; no slot carries plot facts, names, anchors or wonder terms (PLAN.E L15)."
+  c025: "The page reads its own notation on demand: bracework blocks prerender as expression and gloss; the vendored Spw interpreter loads only when a block nears the viewport, and a block it reads as prose says so (PLAN.E L14)."
+  c026: "No book file reaches main unless npm run book:check passes: chapter shape, slots, bracework, almanac terms, sighting anchors, compass words (PLAN.E L13)."
+  c027: "Nothing is a dead end: every wonder links to each place it lives and to the almanac; every chapter names the wonders it holds (PLAN.E L09)."
+  c028: "Soil glints, never shifts: reference-projected motion lights components without reordering or reflowing prose, and stops under reduced motion (PLAN.E L16)."
 }
 
 ^contract_status{
@@ -62,6 +67,12 @@
   c020: "seeded — six strains named; none grafted yet; lands receive in their own register per story-boonhonk crossing_rule"
   c021: "passing — 12 operators + 4 containers read in story, stacks, machine and signal (.spw/surfaces/resonance.spw); 13 shelf lists; the grammar, faintly is a trial"
   c022: "passing — scriptorium-desk.mjs + desk.css; build writes book/content/catalog.json and search.json; PWA shortcut 'Your desk'; lenses renamed as Spw physics expressions"
+  .note_living: "as of PLAN.E 2026-11-06"
+  c024: "passing — 69 slots across 15 chapters (15 minute, 40 hour, 14 day); variant zero byte-identical to the authored prose (checked against HEAD); living.mjs waits outside the reading band; trial switch 'living' (?try=living); desk ?[living]"
+  c025: "passing — six bracework plates (ch04, 06, 09, 10, 13, 15); five parse, ch04's &[boon, bane]{table} says honestly it reads as prose; spw-seed is a lazy chunk loaded near the viewport"
+  c026: "passing — npm run book:check (book/schema/book-types.mjs) in CI: 0 errors, 0 warnings"
+  c027: "passing — wonder cards, almanac entries and every chapter colophon (Wonders here) link each place; dead-end probe still to write (L09)"
+  c028: "passing — soil glints (text-shadow only, period projected from places lived) ride the living trial; none under reduced motion"
   c023: "passing — valence-lens.mjs + lens-control.mjs genre dial (continuous boon/bane/bone weights, pre-paint); 45 boon / 29 bone / 17 bane paragraphs by vocabulary, 3 authored; story copy revised toward the Egg (ch 1, 5, 9–13) and re-paced into beats; six WAPboy sightings in marginalia"
 }
 

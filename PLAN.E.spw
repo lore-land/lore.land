@@ -1,0 +1,241 @@
+#>plan_e
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  Plan E gives lore.land a direction for its next season: a living book that is
+  also a model for future books. Its spine is a curriculum. Every wonder already
+  built (prerendered prose, switches, lenses, structure mode, the constellation,
+  sightings, the almanac, the growing serial) is read back as a lesson: one
+  pattern, the files that carry it, the contract that guards it. Each next
+  feature is a lesson that reuses a pattern before it invents one, ships in a
+  small increment with a probe, and leaves a precipitate the following lesson
+  can stand on. Attention to past wonder is the curriculum; incremental
+  development is how it is taught.
+}
+
+^meta{
+  source: "PLAN.E.spw (written 2026-11-06)"
+  dialect: spw_native
+  style: curriculum_lessons
+  normative_voice: direction
+  lesson_count: 22
+  dependency_model: lessons_with_prerequisites
+  &curriculum_reader: "a future maker of lore.land, or of another book built on its engine"
+  &workspace: ~".spw/workspace.spw#lore_land_workspace"
+  &almanac: ~".spw/surfaces/almanac.spw#almanac"
+  &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
+}
+
+&plan_contracts{
+  lesson_shape: "data → build → runtime → reader surface → canon → probe; a lesson is done when all six are present or explicitly waived"
+  increment_rule: "one lesson per release token; never two unverified lessons in one stone"
+  continuity: "c019 holds: anything that changes what a returning reader sees ships as a trial or behind a switch"
+  degrade: "c012 + c016 hold: every lesson reads correctly with no JS, reduced motion, print, and the default variant"
+  #invariant: canonical_prose_is_variant_zero
+}
+
+^"direction"{
+  north_star: "A book that is alive while you read it, and an engine another book could be poured into."
+  living: "Sentences breathe by the minute and the hour; references glint like grains in living soil; wonders recur and can be kept; the Spw interpreter reads the land's own notation in the page."
+  model: "Content, schema, engine and surfaces are separable: a future book brings its chapters, almanac, serial and canon; the engine brings rendering, collecting, switches, the desk and the probes."
+  legible: "Everything that moves can be explained in one sentence on the desk, switched off, and read back as Spw."
+  screenshot: "Every unique element has a face worth capturing: a wonder card, a bracework plate, a quote card, a chapter card — each sized and composed to survive being shared out of context."
+  linked: "Nothing is a dead end. A wonder links to every place it lives; a place to every wonder in it; a chapter to its threads, its wonders, its sightings and its shelf."
+}
+
+^"curriculum"{
+  .note: "Lessons L01–L08 are past wonder, read back as patterns. L09–L18 are next. Prerequisites name the lessons whose precipitates a lesson stands on."
+
+  ^lesson[L01]{
+    #name: "the story is in the page"
+    pattern: "one renderer serves build and browser; prose ships prerendered"
+    files: "book/scripts/modules/chapter-render.mjs, book/scripts/tools/build-chapters.mjs, book/templates/chapter.html"
+    &contract: "c016"
+    reuse: "every new block type (slots, bracework) is rendered here first, as plain HTML that needs no script"
+  }
+  ^lesson[L02]{
+    #name: "nobody loses what they had"
+    pattern: "switches with cohort defaults, trials, return notes"
+    files: "book/scripts/modules/reading-switches.mjs, book/content/changes.json"
+    &contract: "c019"
+    reuse: "every new behaviour that alters the page gets a literal data-switch-* attribute and a plain-words note"
+  }
+  ^lesson[L03]{
+    #name: "read as boon, bane or bone"
+    pattern: "authored metadata on paragraphs (lean) weights presentation without removing text"
+    files: "valence-lens.mjs, lens-control.mjs"
+    &contract: "c023"
+    reuse: "slots and soil read the same paragraph metadata; nothing hides prose"
+  }
+  ^lesson[L04]{
+    #name: "structure shows through"
+    pattern: "runtime wraps prose text nodes and unwraps text-exact; inline elements stay whole"
+    files: "xray-reading.mjs"
+    reuse: "anything inserted inline (marks, slots) must be an element, so structure mode keeps it whole"
+  }
+  ^lesson[L05]{
+    #name: "every mark is a door"
+    pattern: "build-time semantic index (semantic.json) + on-demand navigator"
+    files: "build-chapters.mjs (semantic), constellation.mjs"
+    reuse: "new indexes (wonders, slots, references) are written by the build into semantic.json, never computed by crawling pages"
+  }
+  ^lesson[L06]{
+    #name: "notice him and the drawing gains a line"
+    pattern: "a play loop: an event in the prose → per-reader storage → feedback card → a page that remembers"
+    files: "sightings.mjs, settled.mjs (top-layer cards)"
+    reuse: "collect, then say so near the thing; keep per reader; show the whole elsewhere"
+  }
+  ^lesson[L07]{
+    #name: "the land fills in"
+    pattern: "data-first worldbuilding: canon (almanac.spw) → typed data (almanac.json) → validated prose → build marks → collection"
+    files: "almanac.spw, almanac.json, almanac.mjs, /almanac/"
+    reuse: "new nouns enter as data with exact terms, a home and echoes; prose uses the terms verbatim; the validator proves it"
+  }
+  ^lesson[L08]{
+    #name: "the book grows"
+    pattern: "one extent module generated from serial.json; nothing hardcodes a count"
+    files: "book/content/serial.json, book-extent.mjs"
+    reuse: "any new countable (books, wonders, slots) is derived, generated and imported, never typed twice"
+  }
+
+  ^lesson[L09]{
+    #name: "nothing is a dead end"
+    prerequisites: [L05, L07]
+    increment: "chapter colophon gains 'Wonders here' (each linking to its other places and its almanac entry); almanac entries link to sightings and threads; the desk answers &[wonder]{id}"
+    done_when: "every wonder card, almanac entry and colophon row has at least two outbound links; a probe counts dead ends"
+  }
+  ^lesson[L10]{
+    #name: "language rich enough to paint from"
+    prerequisites: [L07]
+    increment: "every almanac wonder carries a scene-schema prompt (vantage, light, scent, edges, hint); the almanac shows a plate prompt for kept wonders; trope-prompt reads them"
+    done_when: "54 of 54 wonders have prompts; prompts follow PLATE_PROMPT_STYLE; no prompt names a real artist or brand"
+  }
+  ^lesson[L11]{
+    #name: "a face worth capturing"
+    prerequisites: [L06, L07]
+    increment: "screenshot-ready faces: the wonder card has a snapshot layout (kind ink, sigil, name, note, places) at 1080×1350 and 1200×630; quote cards from line-share use the cover type; bracework plates render as cards"
+    done_when: "each face fits a phone screenshot without cropping its name; contrast passes in paper, ember and night"
+  }
+  ^lesson[L12]{
+    #name: "each thing has its own signature"
+    prerequisites: [L07, L11]
+    increment: "kind and region signatures: creatures breathe (a slow glint), contrivances tick (a small mechanical step), bracework shows its sigil; regions lend an ink and a texture to marks, cards and plates"
+    done_when: "a reader can tell a creature from a contrivance from bracework at a glance, in the prose and on the card, with motion off"
+  }
+  ^lesson[L13]{
+    #name: "the book has types"
+    prerequisites: [L01, L07]
+    increment: "book/schema/book-types.mjs names the narrative and semiotic types; npm run book:check validates every chapter, slot, bracework block, wonder and anchor; CI runs it"
+    done_when: "an invalid chapter cannot reach main; a future book can run book:check on its own content"
+  }
+  ^lesson[L14]{
+    #name: "the page reads its own notation"
+    prerequisites: [L01, L13]
+    increment: "bracework blocks in chapters are prerendered as their expression and gloss, then read by the Spw interpreter (vendored spw-seed) into a diagram: container, operands, operator, with the resonance reading of each sigil"
+    done_when: "every bracework block parses or says honestly that the interpreter reads it as prose; the parser loads only when a block nears the viewport"
+  }
+  ^lesson[L15]{
+    #name: "the book breathes"
+    prerequisites: [L01, L02, L13]
+    increment: "living slots: a paragraph may carry {{slot}} placeholders whose variants turn by the minute, the hour or the day; variant zero is the canonical prose and is what the build prerenders; trial switch 'living'"
+    done_when: "canonical prose is byte-identical with variant zero; slots never carry plot facts, anchors or wonder terms; reduced motion swaps without animation; the desk says what is breathing"
+  }
+  ^lesson[L16]{
+    #name: "living soil"
+    prerequisites: [L05, L07, L15]
+    increment: "references project onto the paragraph: marks and slot words glint on a rhythm derived from how far their thread runs (places, threads, leans), phased by the clock — grains catching light, never moving the line being read"
+    done_when: "glints are deterministic per minute, off under reduced motion, and never reorder or reflow prose; a later lesson may let components settle within a paragraph's gutter"
+  }
+  ^lesson[L17]{
+    #name: "type-rich story generation"
+    prerequisites: [L10, L13]
+    increment: "a generator contract: a scene is Place × Voice × Beat × Lean with Wonder echoes and Sighting pressure; tools propose seeds (never prose) from the types; authors accept, rework or refuse"
+    done_when: "spw:trope-prompt and a new spw:scene-seed read the typed model; every proposal names its sources and its open questions"
+  }
+  ^lesson[L19]{
+    #name: "every chapter is a place to play"
+    prerequisites: [L07, L15]
+    increment: "chapter JSON carries a `table`: place, light, people with wants and voices, three hooks, a d6, finds (wonders worth carrying out), a bracework move, an open question; the renderer adds the page's own dice — every living slot as a roll table"
+    done_when: "every chapter has a table that agrees with its prose; book:check validates it; switch 'table'"
+  }
+  ^lesson[L20]{
+    #name: "hold the light"
+    prerequisites: [L01, L02]
+    increment: "knobs (x, y, glow, warmth, ink, grain, edge) steer the field light's tokens; the active section's motif steers part of the way; scene edges deepen the vignette; the reader can drag the sun, turn the knobs, carry the light, or let the scene light itself; wonders flare the light toward them"
+    done_when: "knobs.json + .spw/surfaces/knobs.spw name every knob and motif preset; nothing moves text; reduced motion keeps every control and drops the glide"
+  }
+  ^lesson[L21]{
+    #name: "frame it where you read it"
+    prerequisites: [L11, L20]
+    increment: "Frame this: the passage being read set on a card at story, square or card proportions, with kicker, address, type size and the knobs, controls that step back for a clean screenshot"
+    done_when: "a reader can make a share-worthy screenshot of any passage without leaving the chapter"
+  }
+  ^lesson[L22]{
+    #name: "the plan becomes the land's philosophy"
+    prerequisites: [L07]
+    increment: "fifteen sayings — collectible, kind saying (#, the face that travels) — carry the plan's abstractions as the land's own craft wisdom: first ink stays (variant zero), try it again a little changed (increments), build where the land already leans (reuse), write it before you argue it (types), listen before you mend (probes), glass over never scrape (continuity), promise the next stone not the road (one stone at a time), the winch song underneath (patterns), one shard at a time (curriculum), chalk is cheaper than oak (draft cheap), open nothing before it has filled (trials), two springs one bed (separable layers), leave room for the path (no dead ends), keep the morning not the week (the increment in front of you), a box for what you do not know (open types)"
+    done_when: "each saying has a home where it is shown working and echoes where it is quoted; each card carries its workshop reading (craft)"
+  }
+  ^lesson[L18]{
+    #name: "an engine for the next book"
+    prerequisites: [L08, L13]
+    increment: "book.config.json (title, lands, palette, serial, kinds) is the one place a book names itself; engine modules read it; a starter book (two chapters, five wonders) builds green"
+    done_when: "copying content/ + book.config.json into a fresh checkout yields a working, probed, living book"
+  }
+}
+
+^"semiotics"{
+  .note: "Narrative and semiotic abstractions for type-rich story generation (L13, L17). Types are vocabulary first, code second."
+  sign: "A Sign has a signifier (the mark on the page), a signified (what the story means by it) and an interpretant (what a witness leaves with). Wonders, sightings, bracework and slots are all signs; the reader's almanac is a record of interpretants."
+  wonder: "kind ∈ {creature, contrivance, bracework}; region; terms; home; echoes; note; hint; prompt"
+  place: "region with a register (creature_wonder | contrivance | bracework) and an ink"
+  voice: "custom-* story voices (narrator, boonberry, echo, labyrinth…) — who sees"
+  beat: "one sigil of the spirit sequence (! ? ~ @ & * ^) — what a section does"
+  lean: "boon | bane | bone — how a paragraph weighs"
+  slot: "a living span: name, clock ∈ {minute, hour, day}, variants (variant zero canonical)"
+  reference: "an edge from a paragraph to a wonder, thread, rumour or chapter; projection = how far it runs"
+  sighting: "a sign whose signified is withheld; it accrues strokes, never a name"
+  generation_rule: "A scene seed = Place × Voice × Beat × Lean, echoing at least one Wonder already met and leaving one remainder the next scene can inherit (story-boonhonk material_passage)."
+}
+
+^"architecture"{
+  layers: {
+    content: "book/content/** — chapters, almanac, serial, references, shelves (a book's own)"
+    schema: "book/schema/** — types and validators (shared)"
+    engine: "book/scripts/modules/** — render, collect, switch, desk, living, bracework (shared)"
+    tools: "book/scripts/tools/** — build, check, brand (shared)"
+    canon: ".spw/** — direction, contracts, surfaces (a book's own, in the engine's grammar)"
+    surfaces: "index.html, almanac/, scriptorium/, chapters (templated)"
+  }
+  rules: [
+    "engine modules never hardcode a book's nouns; they read content or generated modules",
+    "a generated module (book-extent.mjs) is regenerated by the build and imported without ?v=",
+    "every interpreter-dependent feature degrades to its prerendered text",
+    "fixed overlays live in the top layer (body carries perspective)",
+    "story-voice elements swallow bubbling clicks: bind interactive marks directly"
+  ]
+}
+
+^"formats"{
+  living_slot: "paragraph { text: '… {{name}} …', slots: { name: { clock: 'minute'|'hour'|'day', variants: [canonical, …] } } } — 3–6 variants, interchangeable in the sentence, true to the scene's time and place; no plot facts, names, wonder terms, anchors or compass words inside a slot"
+  bracework_block: "section content item { type: 'bracework', spw: '{frost & hearth}', gloss: 'one sentence', maker: 'who writes it' } — placed after the paragraph that mentions it"
+  wonder_prompt: "almanac wonder { prompt: { vantage, light, scent, edges: [..], hint } } — the scene schema, for plates"
+}
+
+!"increments"[
+  i1: { lessons: [L13], release: "2026_11_06.A", note: "types + book:check, so every later lesson is validated" }
+  i2: { lessons: [L15, L16], release: "2026_11_06.A", note: "living slots + soil glints as a trial; slots seeded in every chapter" }
+  i3: { lessons: [L14], release: "2026_11_06.A", note: "bracework blocks read by the interpreter" }
+  i4: { lessons: [L09, L10], release: "next", note: "colophon wonder links; wonder prompts on the almanac" }
+  i5: { lessons: [L11, L12], release: "next", note: "snapshot faces and kind signatures" }
+  i5b: { lessons: [L19, L20, L21, L22], release: "2026_11_06.B", note: "at the table; hold the light; frame it; the sayings" }
+  i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
+]
+
+?"open"[
+  "Should living graduate from trial to default once returning readers have had it for two stones?"
+  "Does soil ever move a component, or only light it? (L16 says light only, for now.)"
+  "Which wonders, if any, belong to Book Two alone?"
+  "Can a reader's kept combines become a folio?"
+]

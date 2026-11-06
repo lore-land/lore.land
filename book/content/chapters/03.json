@@ -170,7 +170,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Around its foot lay a ring of flat black signal stones, set out so long ago the reason had worn off with the paint. Signal-skinks basked on every one, finger-long and salt-pale, tails busy as a clerk's pen. They flicked — short, short, long — and each stone answered with a faint tick of warmth. Nobody could read it. When Boof's shadow crossed the ring, every tail stopped mid-sentence and pointed down the signpost's shadow."
+          "text": "Around its foot lay a ring of flat black signal stones, set out so long ago the reason had worn off with the paint. Signal-skinks basked on every one, finger-long and salt-pale, tails busy as a clerk's pen. They flicked — {{stone-code}} — and each stone answered with a faint tick of warmth. Nobody could read it. When Boof's shadow crossed the ring, every tail stopped mid-sentence and pointed down the signpost's shadow.",
+          "slots": {
+            "stone-code": {
+              "clock": "minute",
+              "variants": [
+                "short, short, long",
+                "long, short, short",
+                "short, long, short",
+                "short, short, short, long",
+                "long, short, long, short"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -275,11 +287,35 @@
         },
         {
           "type": "paragraph",
-          "text": "“Something these don't show.” He cleaned the lens on his sleeve, although there was no dust on it. Boof waited with the patience she used beside a cupboard someone had forgotten opening. The needle caught a glint of evening, pointed briefly toward the bottle, then swung away. The Genie moved the bottle behind him. Neither mentioned it."
+          "text": "“Something these don't show.” He cleaned the lens on his sleeve, although there was no dust on it. Boof waited with the patience she used beside a cupboard someone had forgotten opening. The needle caught {{needle-glint}}, pointed briefly toward the bottle, then swung away. The Genie moved the bottle behind him. Neither mentioned it.",
+          "slots": {
+            "needle-glint": {
+              "clock": "hour",
+              "variants": [
+                "a glint of evening",
+                "a coin of low sun",
+                "a red thread of sunset",
+                "a splinter of the last light",
+                "a wink of dusk"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
-          "text": "Across the flats the wind brushed their footprints shallow, and the two old routes continued their long, unfinished turn. Far down the seam a whale groaned once, the way a sleeper complains about the blankets. For all his instruments, he had no measure for the length of this particular silence."
+          "text": "Across the flats the wind brushed their footprints shallow, and the two old routes continued their long, unfinished turn. Far down the seam a whale groaned once, {{deep-groan}}. For all his instruments, he had no measure for the length of this particular silence.",
+          "slots": {
+            "deep-groan": {
+              "clock": "minute",
+              "variants": [
+                "the way a sleeper complains about the blankets",
+                "the way an old house complains about the frost",
+                "the way a cellar door complains about the damp",
+                "the way a barn beam complains about the snow",
+                "the way a moored boat complains about the tide"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -288,6 +324,10 @@
         {
           "type": "paragraph",
           "text": "\"I'm saying reality is already moving very quickly in another direction, and every correction has to come out of somewhere. Perfect version costs a miracle. Mediocre version costs one coincidence and a Thursday. Your version—\" and here his voice did something it had not done in years, which was lift \"—I can't price your version. I can't even read it.\" A want too small for the instruments of empire. He had liquidated his whole practice without ever once seeing one."
+        },
+        {
+          "type": "paragraph",
+          "text": "He had one thing left that was free, because he had never found a way to sell it. He gave it to her the way he used to give it to emperors at the door, after the bill: “Build where the land already leans. Never cut a road the land does not want.” The emperors had all gone off and cut roads anyway. Two of them he had later unmade, at cost. Boof looked at the seam."
         }
       ],
       "climate": {
@@ -337,7 +377,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Ahead, where the desert gave way to saltbush and rising stone, Council Hill lifted its stormy silhouette against the evening sky, its storm grey-green, just as a moth had smudged it. The egg hummed against Boof's ribs, one word short of finished, and the three of them—dog, wish, and the only professional who had ever refused to guess it—walked toward the hill together."
+          "text": "Ahead, where the desert gave way to saltbush and rising stone, Council Hill lifted its stormy silhouette against {{hill-sky}}, its storm grey-green, just as a moth had smudged it. The egg hummed against Boof's ribs, one word short of finished, and the three of them—dog, wish, and the only professional who had ever refused to guess it—walked toward the hill together.",
+          "slots": {
+            "hill-sky": {
+              "clock": "hour",
+              "variants": [
+                "the evening sky",
+                "a plum-dark sky",
+                "a sky going smoke-blue",
+                "the last green of the sky",
+                "a bruise-coloured sky"
+              ]
+            }
+          }
         }
       ]
     }
@@ -367,7 +419,64 @@
       },
       {
         "description": "The bottle-desk folds out of the Genie's bottle leg by leg: baize top, pigeonholes, a dry inkwell, and one drawer labelled Thursdays that he never lets anyone count. What escapes it smells of rain on shop shutters."
+      },
+      {
+        "description": "Build where the land already leans: the Off-Season Genie's oldest advice, the one thing his practice never charged for. A wish redirects what is already moving. The emperors who heard it cut roads anyway."
       }
     ]
+  },
+  "table": {
+    "place": "The salt flats past the last split tree: a wind-scoured plain of dry salt and baked earth, rime-white where the crust is thin, with two old gold roads glowing under it that fork and rejoin like a sentence being remembered. This is the roof of the salt-whales' road, and on the roof nobody stamps. In the middle, a signpost half-swallowed by drift-sand, its paint and its reason long gone, and round its foot a ring of flat black signal stones where salt-pale skinks bask and flick. At the far edge, saltbush, rising stone, and a hill under its own storm.",
+    "light": "A harsh amber that breaks out of the grove's shade like a door opening, then a long level dusk in which every ridge throws a teal shadow and the roads under the grains glow brighter. All session the signpost's shadow swings across the flats like a black needle, and the skinks point down it.",
+    "people": [
+      {
+        "name": "a salt-raker",
+        "want": "to rake the morning's crop without once stamping on the roof",
+        "voice": "Walks flat-footed, talks low, and calls the whales the neighbours downstairs."
+      },
+      {
+        "name": "the Off-Season Genie",
+        "want": "to stay closed, and to be asked for advice instead of wishes",
+        "voice": "Neat as a handkerchief. Qualifies, counts and prices everything, then gives away the one thing he cannot sell."
+      },
+      {
+        "name": "a sign-painter from the hill",
+        "want": "to repaint the signpost's arrow, if anyone can tell her which way it pointed",
+        "voice": "Brush behind one ear; asks everyone the way, and paints nothing until two of them agree."
+      }
+    ],
+    "hooks": [
+      "Tin needles. A peddler at the edge of the flats is selling want-needles of tin at a discount. Every one of them points down, customers keep stamping to make them work, and under the crust a whale has stopped mid-turn. Shut the stall without a scene, and get the whale moving again.",
+      "Another seam. The salt-rakers know two more old roads, out past the signal stones, that have been almost meeting for longer than anyone has raked. No genie will take the job; the only one about is closed. Build where the land already leans: find the place where both roads want the same next step, and give their leaning somewhere to go.",
+      "Where the sign pointed. The sign-painter will not paint an arrow she cannot vouch for. The skinks point down the signpost's shadow, the stones answer in a code nobody reads, and every raker remembers the arrow differently. Find out where it pointed before the paint flaked — or decide, and live with it."
+    ],
+    "encounters": [
+      "The ground speaks under your boots, one long low note, and every salt flake on the crust stands up and lies down again like the hair along a dog's back.",
+      "Skinks flick short, short, long, and each stone ticks warm. Let a shadow cross the ring and every tail stops mid-sentence and points down the signpost's shadow.",
+      "A salt-raker lays her rake flat and lies down beside it with an ear to a crack. She asks you, very politely, to stand still until something has passed underneath.",
+      "Far down the seam a whale groans like a moored boat complaining about the tide, and the crust under the party goes warm through the soles.",
+      "The wind brushes your footprints shallow and brings the smell of rain that fell in another valley. Look back and the way you came is gone; only the glow under the grains says where the roads run.",
+      "At the tip of a long shadow, a glint: an empty brass lamp half in the drift, a price ticket still tied to its spout in a hand nobody knows."
+    ],
+    "finds": [
+      {
+        "wonder": "salt-whales",
+        "use": "Lie with an ear to a crack and the whales tell you where the roads run and which way something enormous is turning; walk the glow and you cross the flats safely. The catch: on the roof you do not stamp. A stamp stops the whale beneath you mid-turn, and a turn once stopped can take a century to start again."
+      },
+      {
+        "wonder": "signal-skinks",
+        "use": "Their tails point down the signpost's shadow toward wherever something is waiting to be found, and the stones answer. The catch: nobody can read the code, and the moment a shadow touches the ring the message stops mid-sentence. Someone always has to stand in the sun."
+      },
+      {
+        "wonder": "want-needle",
+        "use": "If the Genie lends it, ask it who in a crowd wants most and it swings to the loudest want. The catch: a small want sets it circling and trying again for ever, and it always points for a moment at its owner's own bottle before swinging away. He will move the bottle. Nobody mentions it."
+      }
+    ],
+    "bracework": {
+      "spw": "<salt ~ sea>",
+      "does": "A passage where the salt dreams it is the sea again. Step in at one end and you cross the thin crust buoyant as a swimmer, too light to stamp, and come out dry at the other.",
+      "costs": "Everything you carry comes out salt-stiff, bread included. And for an hour the whale beneath believes the sea has come back upstairs and rises to look; someone on the roof will have to tell it, gently, that it has not."
+    },
+    "question": "Two things in your character's life have been almost meeting for years. What are they — and whose weight, set down between them, would give their leaning somewhere to go?"
   }
 }

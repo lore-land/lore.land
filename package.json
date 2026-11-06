@@ -18,6 +18,7 @@
     "assets:optimize": "node book/scripts/tools/assets/optimize-assets.mjs",
     "assets:optimize:dry": "node book/scripts/tools/assets/optimize-assets.mjs --dry-run",
     "assets:brand": "node book/scripts/tools/assets/brand-assets.mjs",
+    "book:check": "node book/scripts/tools/book-check.mjs",
     "spw:probes": "node .spw/tools/alignment-probes.mjs",
     "spw:plates": "node .spw/tools/plates-manifest.mjs",
     "spw:lint": "tsx .spw/tools/spw-lint.mjs",

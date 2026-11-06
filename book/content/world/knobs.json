@@ -1,0 +1,35 @@
+{
+  "note": "Scene-light knobs (book/scripts/modules/scene-light.mjs; canon .spw/surfaces/knobs.spw). Knobs are the few continuous controls that steer the chapter's CSS tokens. Motifs are named presets the active section steers toward; edges (a scene's frame details) deepen the vignette. A reader can take the light and turn any knob; letting go returns the scene's own light.",
+  "knobs": {
+    "x": { "label": "Where the light stands", "min": 0, "max": 100, "step": 1, "default": 50, "token": "--light-x" },
+    "y": { "label": "How high it hangs", "min": 0, "max": 100, "step": 1, "default": 16, "token": "--light-y" },
+    "glow": { "label": "Glow", "min": 0, "max": 1, "step": 0.01, "default": 0.6, "token": "--light-strength", "reads": "how strongly the light falls on the page" },
+    "warmth": { "label": "Warmth", "min": 0, "max": 1, "step": 0.01, "default": 0.45, "token": "--tempo-warmth", "reads": "how much amber is in it" },
+    "ink": { "label": "Ink", "min": 0, "max": 360, "step": 1, "default": 175, "token": "--copy-tint-hue", "reads": "the hue the accents lean toward" },
+    "grain": { "label": "Grain", "min": 0, "max": 1, "step": 0.01, "default": 0.12, "token": "--knob-grain", "reads": "the tooth of the paper" },
+    "edge": { "label": "Edge", "min": 0, "max": 1, "step": 0.01, "default": 0.18, "token": "--knob-edge", "reads": "how far the dark comes in from the frame's edges" }
+  },
+  "steer": 0.45,
+  "edgePerSceneEdge": 0.035,
+  "motifs": {
+    "egg": { "warmth": 0.72, "glow": 0.82, "ink": 34, "edge": 0.34, "says": "amber held low inside a dark shell" },
+    "unspent-wish": { "warmth": 0.62, "glow": 0.72, "ink": 42, "edge": 0.26, "says": "a warmth that has not been spent" },
+    "berry-memory": { "warmth": 0.46, "glow": 0.62, "ink": 292, "edge": 0.22, "says": "teal and berry, lit from within" },
+    "ledger": { "warmth": 0.3, "glow": 0.5, "ink": 40, "grain": 0.34, "says": "ink on rag paper" },
+    "small-want": { "warmth": 0.56, "glow": 0.56, "ink": 28, "edge": 0.2, "says": "a small, steady lamp" },
+    "key": { "warmth": 0.42, "glow": 0.58, "ink": 45, "edge": 0.3, "says": "brass filed smaller" },
+    "ninth-honk": { "warmth": 0.6, "glow": 0.9, "ink": 46, "edge": 0.16, "says": "one clean gold note" },
+    "missing-thursday": { "warmth": 0.22, "glow": 0.36, "ink": 205, "edge": 0.44, "grain": 0.26, "says": "a day with nobody in it" },
+    "hat": { "warmth": 0.24, "glow": 0.5, "ink": 215, "grain": 0.46, "edge": 0.18, "says": "pencil on paper, a hat that will not land" },
+    "torch": { "warmth": 0.82, "glow": 0.7, "ink": 30, "edge": 0.56, "says": "a pin of light with the dark close round it" },
+    "bell": { "warmth": 0.52, "glow": 0.66, "ink": 42, "edge": 0.2, "says": "a bell nearby this time" },
+    "button": { "warmth": 0.46, "glow": 0.55, "ink": 30, "grain": 0.36, "says": "horn, a little scuffed" },
+    "receipt": { "warmth": 0.34, "glow": 0.52, "ink": 45, "grain": 0.42, "says": "three honest records, pinned" },
+    "feast": { "warmth": 0.76, "glow": 0.76, "ink": 28, "edge": 0.24, "says": "a long table, every lamp lit" }
+  },
+  "frames": {
+    "story": { "label": "Story · 9:16", "ratio": 0.5625 },
+    "square": { "label": "Square", "ratio": 1 },
+    "card": { "label": "Card · 1.91:1", "ratio": 1.905 }
+  }
+}

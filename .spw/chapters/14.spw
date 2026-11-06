@@ -36,7 +36,7 @@
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
-    excerpt: "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. So she did not know it was Thursday. She di..."
+    excerpt: "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. Keep the morning, not the week, the shepher..."
     route: ^[chapter/14/s02]{open}
   >
   s03: <
@@ -74,7 +74,7 @@
     handle: "section/08"
     type: "section"
     title: "Friday"
-    excerpt: "It was Friday before Boof had finished blinking. Below the rise, in the farms along the road, latches lifted. Smoke stood up from three chimneys at once. A bucket knocked a well and somebody swore at the cold — cheerf..."
+    excerpt: "It was Friday before Boof had finished blinking. Below the rise, in the farms along the road, latches lifted. Smoke stood up from {{chimneys}} at once. A bucket knocked a well and somebody swore at the cold — cheerful..."
     route: ^[chapter/14/s08]{open}
   }
   s09: <
@@ -120,6 +120,8 @@
     "Unkept creatures walk only on days nobody keeps. Hob-deer no taller than a boot graze between the frost-ruts, unafraid, because nobody has ever been out on such a day to teach them to run..."
     "Near the figure, the land's wonders borrow his geometry for a moment: a skein of jazz-geese falls into a perfect square, three by three, and honks once in time; the dried reflections of i..."
     "The lag-stag's prints press into the grove's moss beside Boof's own, a beat late. It has never before walked beside anyone."
+    "Keep the morning, not the week, the shepherds say of a good dog — the highest praise they have, and the reason Boof had the day nobody kept."
+    "On the unkept day the land kept its sayings for nobody: promise the next stone, not the road, cut at resting-hand height in the old stone with the iron ring; the grove trying the hat agai..."
   ]
 }
 

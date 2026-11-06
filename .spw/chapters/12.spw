@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. River tar on the planks. Under it all, warm shell. Two great mountain rivers met b..."
+    excerpt: "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. {{bridge-smell}}. Under it all, warm shell. Two great mountain rivers met beneath ..."
     route: ^[chapter/12/s01]{open}
   >
   s02: <
@@ -97,6 +97,8 @@
     "The ferry-bell is rung by anyone who needs to cross the seam without wetting both springs, or who doubts the bridge will hold them. Load-bells under the deck rang light under the re-sweet..."
     "The rail-pins hold the bridge's small news; BoneWAP posted both receipts there after the market stone's oath-scale weighed the two slices equal, and oath-moths settled one to each."
     "Every clear dusk the ferrymen chalk <river ~ moon> on the landing slate — not to make the moonrun, which the river makes itself, but so no stranger mistakes a passage for a place to stop...."
+    "Two springs, one bed: what the boatmen call the rivers. The ferryman keeps two bailing-cans, one stained berry-dark and one chalk-white, and has never bailed one water with the other’s can."
+    "Pricing the furrow, the Genie murmured his oldest advice, the one thing he ever priced at nothing — build where the land already leans; the ants had kept that field warm every winter Boof..."
   ]
 }
 

@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Down the ridge, past roofers' ladders lashed for the night, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wa..."
+    excerpt: "Down the ridge, past {{ridge-sights}}, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was..."
     route: ^[chapter/09/s06]{open}
   >
 ]
@@ -97,6 +97,7 @@
     "Chimney-swifts roost in the ridge flues and carry a sound a little farther than it meant to go: nothing said on the ridge stays on the ridge. They took the assembled hum down into the tow..."
     "The Fool keeps his set in a shard-rack of smoked ash — nine felt-lined slots, the ninth egg-shaped since before he knew why; for years it held a turnip so the rack would not look sad."
     "Chalked as a combine, the set is a round brace — everything inside must arrive together — with eight names joined by ampersands and a blank after the last. Eight pieces of a nine-piece co..."
+    "One shard at a time: how the Fool says a set is learned. Eight shards rung together in uneven time are only weather; sounded one by one, each returned before the next is touched, they mak..."
   ]
 }
 

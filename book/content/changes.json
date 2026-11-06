@@ -2,6 +2,26 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_06.B",
+      "date": "2026-11-06",
+      "notes": [
+        "Hold the light: at the end of every section, open the light table and drag the sun across a small sky, turn the scene's warmth, glow, ink, grain and edge, or carry the light with you until you set it down. Each scene's motif already leans its light a little: an egg holds amber low, a hat is pencil on paper, a torch keeps the dark close. Tap a wonder and the light leans toward it.",
+        "Frame this: set the passage you are reading on a card — story, square or card proportions — with the chapter's name and address, the type size and the light at hand. The controls step back so the screenshot is clean.",
+        "At the table: every chapter now ends with a closed page for playing in it — the place, its light, its people and what they want, three hooks, a d6, things worth carrying out, a bracework move, and the page's own dice.",
+        "Sayings: the land's makers have rules they live by — first ink stays; glass over, never scrape; chalk is cheaper than oak — and they travel from chapter to chapter. Tap one to keep it; each has a second reading, in the workshop."
+      ]
+    },
+    {
+      "release": "2026_11_06.A",
+      "date": "2026-11-06",
+      "notes": [
+        "A living page, to try (Switches → A living page, or any chapter with ?try=living): a few phrases in every chapter breathe, turning by the minute, the hour or the day — away from wherever you are reading. The marks glint now and then, like grains in soil. Switch it off and every word is the book's own again.",
+        "Bracework in the chapters: where the land's makers write in sigils and braces — the council's law, a brace-box, the joiners' marks, the archive's catalogue, the clerk's new form — the page now reads it with the Spw interpreter and draws what it found.",
+        "Every chapter ends by naming the wonders it holds; each is a door to its page in your almanac.",
+        "Kept wonders in the almanac now offer a plate prompt: the scene in words, ready to paint from."
+      ]
+    },
+    {
       "release": "2026_11_05.C",
       "date": "2026-11-05",
       "notes": [

@@ -167,8 +167,26 @@
           "lean": "bone"
         },
         {
+          "type": "bracework",
+          "spw": "&[boon, bane]{table}",
+          "gloss": "Two sides held in one frame, neither whitened, with a single table round the lot, like a room everyone has agreed to stay in.",
+          "maker": "the hill's founders, before the first argument"
+        },
+        {
           "type": "paragraph",
-          "text": "Each delegate thumbed the braces before sitting, to be sure nobody had filed them open in the night. Nobody ever had. Boof sniffed the cut: resin and old thumbs."
+          "text": "Each delegate thumbed the braces before sitting, to be sure nobody had filed them open in the night. Nobody ever had. Boof sniffed the cut: {{cut-smell}}. The ferry delegate thumbed it last, said “Two springs, one bed,” as if that were the whole of the law, and sat.",
+          "slots": {
+            "cut-smell": {
+              "clock": "hour",
+              "variants": [
+                "resin and old thumbs",
+                "resin and rain",
+                "pine-pitch and pocket-lint",
+                "resin and somebody's mutton breakfast",
+                "resin and a little wet wool"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -181,6 +199,10 @@
         {
           "type": "paragraph",
           "text": "The bitter pie arrived by hired cart, lattice crust tight over berries he'd kept too long. He offered nobody a slice. The wish, he proposed, should be valued, filed, and sold to someone prepared to bear its considerable responsibilities. He paused to let the council imagine such a person. Then supplied his own name."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nothing is argued on the hill until it has been written. Write it before you argue it, the founders said, and cut their own law first to show how. So while the pie was still being reasonable, the youngest clerk chalked his motion on the pine beside the law: [wish]{BaneWAP}. A window, with one man's room round it, where the law had a table. Nobody needed to raise a voice. Boof sniffed both. The law smelled of resin. The motion smelled of chalk, which comes off."
         },
         {
           "type": "paragraph",
@@ -264,7 +286,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The youngest clerk carried the largest key to the key-file bench anyway and set it in the vise. He drew the file once, from habit, before remembering that the bench only makes keys smaller. He swept the grey filings into the honest jar and hung the key back, a hair lighter and no nearer.",
+          "text": "The youngest clerk carried the largest key to the key-file bench anyway and set it in the vise. He drew the file once, from habit, before remembering that the bench only makes keys smaller. He swept the grey filings into the honest jar and hung the key back, a hair lighter and no nearer. Blowing the last filings off his thumb, he said the register ought to have a box for what you do not know. Nobody wrote that down.",
           "lean": "bane"
         },
         {
@@ -273,7 +295,19 @@
         },
         {
           "type": "paragraph",
-          "text": "From beneath the table, Boof could see the parts of the meeting the mirror missed: wet hems, hobnailed boots braced against the slope, a clerk warming cramped fingers under one arm. Whenever a delegate struck the pine, dust shook loose beside her nose. They wanted the rain kept off their roofs and the paths kept open to their doors; some wanted more, but those wants were there beneath the grander words."
+          "text": "From beneath the table, Boof could see the parts of the meeting the mirror missed: wet hems, hobnailed boots braced against the slope, {{under-table}}. Whenever a delegate struck the pine, dust shook loose beside her nose. They wanted the rain kept off their roofs and the paths kept open to their doors; some wanted more, but those wants were there beneath the grander words.",
+          "slots": {
+            "under-table": {
+              "clock": "minute",
+              "variants": [
+                "a clerk warming cramped fingers under one arm",
+                "a delegate's pasty going cold in a coat pocket",
+                "a toe working its way out of a darned stocking",
+                "a twist of toffee passed hand to hand along the bench",
+                "a knitting bag with its needles still going"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -285,11 +319,23 @@
         },
         {
           "type": "paragraph",
-          "text": "None of the keys fitted. The oldest clerk tried the last one, set it down, and wrote: the wish stays with its finder. Round the ring the weathercocks came slowly to rest, every one pointing at the gap between the banners, which on Council Hill is how a tie is recorded."
+          "text": "None of the keys fitted. The oldest clerk tried the last one, set it down, and wrote: the wish stays with its finder. Round the ring the weathercocks came slowly to rest, every one pointing at the gap between the banners, which on Council Hill is how a tie is recorded. The youngest clerk wiped the pie's motion off the pine with his sleeve. “Chalk is cheaper than oak,” said a joiner on the bench, though the slab was pine."
         },
         {
           "type": "paragraph",
-          "text": "Rain ticked on the tabletop. Across it, the pie smiled. “And who,” he asked, “inherits from the finder?” Boof's fur lifted along her back. The clerk kept his pen above the page."
+          "text": "{{rain-on-table}} on the tabletop. Across it, the pie smiled. “And who,” he asked, “inherits from the finder?” Boof's fur lifted along her back. The clerk kept his pen above the page.",
+          "slots": {
+            "rain-on-table": {
+              "clock": "hour",
+              "variants": [
+                "Rain ticked",
+                "Hail skipped",
+                "Sleet hissed",
+                "Fat drops knocked",
+                "Rain pattered"
+              ]
+            }
+          }
         }
       ],
       "climate": {
@@ -341,7 +387,19 @@
         },
         {
           "type": "paragraph",
-          "text": "Behind them, at sundown, the clerks cut the day's end off the tablecloth and folded it for the shepherd whose roof had leaked worst that week: the one custom on the hill that has never needed a vote.",
+          "text": "Behind them, at sundown, the clerks cut the day's end off the tablecloth and folded it for {{worst-roof}} whose roof had leaked worst that week: the one custom on the hill that has never needed a vote.",
+          "slots": {
+            "worst-roof": {
+              "clock": "day",
+              "variants": [
+                "the shepherd",
+                "the cooper",
+                "the goose-girl",
+                "the hedger at the top gate",
+                "the widow by the ford"
+              ]
+            }
+          },
           "lean": "boon"
         },
         {
@@ -376,7 +434,69 @@
       },
       {
         "description": "At sundown the day's end of the tablecloth is cut and given to whoever's roof leaked worst that week — the one custom on the hill that has never needed a vote."
+      },
+      {
+        "description": "Write it before you argue it: on Council Hill a motion is chalked in braces on the pine beside the founders' law before anyone may speak to it, so the ring can see its shape while tempers are cool. Laws are cut; motions are chalked, and chalk comes off."
       }
     ]
+  },
+  "table": {
+    "place": "The top of Council Hill in crosswind weather: seven posts in a ring, an iron weathercock on each, and inside it a great slab of split pine with the hill's first law cut at nose height and worn smooth by thumbs. At the slab's head the crosswind loom weaves the tablecloth with no weaver; to one side stand the key-file bench, its vise, and an honest jar of grey filings that has never been emptied. Rain on one cheek, dust on the other, wet wool, resin — and a sourness like burnt sugar whenever the bitter pie is in session.",
+    "light": "A split sky, warm gold sunbreak on the dawnward side and cold teal squall off the far ridge, with the table straddling the seam. The seam moves whenever the weathercocks do; if all seven ever agree, the light goes so still that papers stay where they are put.",
+    "people": [
+      {
+        "name": "the oldest clerk",
+        "want": "to record whatever the hill decides, even when what it decides is a tie",
+        "voice": "Pen held above the page until he is sure. Writes first, speaks second, and not much."
+      },
+      {
+        "name": "the youngest clerk",
+        "want": "to be useful, which on this hill mostly means chalking motions and filing keys",
+        "voice": "Eager, grey to the cuffs with filings; says the true thing out loud and is surprised when nobody writes it down."
+      },
+      {
+        "name": "Mr. BaneWAP",
+        "want": "to have something valued, filed and sold to someone prepared to bear its responsibilities — himself",
+        "voice": "A bitter pie in a lattice crust, reasonable to the last crumb. Pauses to let you imagine. Never offers a slice."
+      },
+      {
+        "name": "the seventh weathercock",
+        "want": "to be persuaded, properly, for once",
+        "voice": "Iron, rust-red at the comb. Spins on its pin while it thinks, and the wind goes wherever it finally faces."
+      }
+    ],
+    "hooks": [
+      "A still afternoon. All seven weathercocks have agreed twice in living memory, and both times the hill went so still that papers stayed where they were put. Someone needs one still afternoon — to dry a harvest, to fly a lantern, to hear a whisper from the valley — and must get seven opinionated iron roosters to face the same way.",
+      "The honest jar. The jar of filings has never once been emptied, which the hill considers the point. Last night someone tried. Find out who wanted the filings, and what key they meant to grow from them in secret.",
+      "A motion for the slate. You need a permission from the hill: a ford, a mill-race, a path through a commons. Here a motion is chalked in braces on the pine before anyone may argue it, and the whole ring reads its shape before it hears a word. Write it so it holds, then argue it while tempers are cool."
+    ],
+    "encounters": [
+      "The seventh weathercock spins on its pin; the crosswind doubles and hangs somebody's cap in the gorse, and the vote waits while they fetch it.",
+      "The tablecloth's hem goes the colour of wet straw under one of you. On this hill that means you are speaking only to be heard.",
+      "Under the table a delegate's pasty goes cold in a coat pocket and a twist of toffee is passed hand to hand along the bench. The hill's real wants are down here: rain off the roofs, paths open to the doors.",
+      "Rain ticks on the tabletop, then hail skips, then sleet hisses; every chalked motion on the pine begins to run, and the clerks argue whether a smudged brace still counts.",
+      "Someone looks into the Fool's Mirror and sees not their face but the exact shape of their wanting — and so does everyone standing behind them.",
+      "At sundown the clerks cut the day's end off the tablecloth and fold it for whoever's roof leaked worst that week. This week it might be one of you, and refusing is not done."
+    ],
+    "finds": [
+      {
+        "wonder": "crosswind-loom",
+        "use": "Read its hem and you know how a vote is going before anyone says so: gold for the boon-side speaking well, teal for the bane-side, wet straw for anyone talking only to be heard. The catch: it weaves everyone at the table, you included, an inch an hour, and the cloth is kept."
+      },
+      {
+        "wonder": "key-file-bench",
+        "use": "File a permission smaller in the open, before witnesses, and it is honestly yours. The catch: the bench only ever makes things smaller; anything you want to grow has to be argued at the table instead, in front of the jar."
+      },
+      {
+        "wonder": "weathercocks",
+        "use": "Win one over and the wind follows it; the weather on the hill leans your way for as long as it faces you. The catch: they turn toward what they favour, not toward whoever asked, and an iron rooster that has turned its tail to you does not turn back the same day."
+      }
+    ],
+    "bracework": {
+      "spw": "&[shepherd, miller]{ford}",
+      "does": "The slab's own shape, borrowed: two sides of a quarrel held in one frame with one room round them. Chalk it on the pine and the shepherd and the miller can argue the ford all day without either being whitened, and neither may leave until it is settled.",
+      "costs": "Chalked, it lasts until the rain. Cut, it lasts as long as the hill, and binds whoever cut it long after they have changed their mind."
+    },
+    "question": "All seven weathercocks have agreed twice in living memory. Nobody remembers either vote, only that the papers stayed where they were put. What did the hill agree on?"
   }
 }

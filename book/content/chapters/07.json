@@ -139,7 +139,19 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, a nettle cheese in dock leaves, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay the sharp blue smell of oaths. Over the bell-arch creaked the market's own weathercock, an iron cousin of the roosters on Council Hill, bought down the slope the year the hill had one opinion too many."
+          "text": "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, {{cheese-stall}}, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay the sharp blue smell of oaths. Over the bell-arch creaked the market's own weathercock, an iron cousin of the roosters on Council Hill, bought down the slope the year the hill had one opinion too many.",
+          "slots": {
+            "cheese-stall": {
+              "clock": "day",
+              "variants": [
+                "a nettle cheese in dock leaves",
+                "a sage cheese in muslin",
+                "a ewe's cheese rolled in ash",
+                "a soft cheese under burdock",
+                "a smoked cheese in a wicker cage"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -170,7 +182,23 @@
         },
         {
           "type": "paragraph",
-          "text": "Around the square, stall-holders lifted the weights off their scales, as is done for an oath, so no turnip would be weighed against a promise. Boof pressed the blueberry into the stone. Skin split; juice slipped into the groove worn by other paws and palms. She would spend the wish when the want was true. Not for spite, not for show. Not because a crowd was waiting. The square fell quiet enough to hear a stall-cloth flap. Beneath her other paw, the egg grew warmer."
+          "text": "Behind Boof and her one berry, a young drover who smelled of mule waited with a whole basket of last autumn's apples. He had come to swear the whole pass road mended, as long as he lived. The clerk lifted the basket back into his arms. “Promise the next stone, not the road,” she said. “A road is for hoping.” He went red, and thought, and settled on the fallen milestone at the ford: upright by market-day. He kept one apple out to pay with. The rest went to his mule, who had sworn nothing and was delighted."
+        },
+        {
+          "type": "paragraph",
+          "text": "Around the square, stall-holders lifted the weights off their scales, as is done for an oath, so no turnip would be weighed against a promise. Boof pressed the blueberry into the stone. Skin split; juice slipped into the groove worn by other paws and palms. She would spend the wish when the want was true. Not for spite, not for show. Not because a crowd was waiting. The square fell quiet enough to hear {{quiet-sound}}. Beneath her other paw, the egg grew warmer.",
+          "slots": {
+            "quiet-sound": {
+              "clock": "minute",
+              "variants": [
+                "a stall-cloth flap",
+                "a sparrow land",
+                "a scale-pan tick",
+                "a hen settle",
+                "a donkey sigh"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
@@ -261,11 +289,23 @@
         },
         {
           "type": "paragraph",
-          "text": "She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, the cress-seller sluiced her baskets at the trough, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish."
+          "text": "She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, {{trough-chore}} at the trough, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish.",
+          "slots": {
+            "trough-chore": {
+              "clock": "hour",
+              "variants": [
+                "the cress-seller sluiced her baskets",
+                "a drover watered his mule",
+                "the potter wetted her clay",
+                "a tinker cooled a mended pan",
+                "the wool-boy rinsed a fleece"
+              ]
+            }
+          }
         },
         {
           "type": "paragraph",
-          "text": "Perhaps that stranger was having an ordinary afternoon too, expecting a letter, counting the hours to supper. Boof watched the spool lodge between two stones. The child knelt to free it. She stayed a little longer, until the crowd had become people again."
+          "text": "Perhaps that stranger was having an ordinary afternoon too, expecting a letter, counting the hours to supper. Boof watched the spool lodge between two stones. The child knelt to free it. She stayed a little longer, until the crowd had become people again. At the cheese stall a boy wheedled for a wheel cut cheap at the day's end, and was told, as boys in that market are always told, to open nothing before it has filled."
         },
         {
           "type": "paragraph",
@@ -317,7 +357,19 @@
         },
         {
           "type": "paragraph",
-          "text": "His voice thinned with the market bell. Stalls folded into barrows, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
+          "text": "His voice thinned with the market bell. {{closing-up}}, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call.",
+          "slots": {
+            "closing-up": {
+              "clock": "hour",
+              "variants": [
+                "Stalls folded into barrows",
+                "Trestles folded flat for the night",
+                "Baskets nested into baskets",
+                "Weights went back on the scales",
+                "Awning-poles rattled into bundles"
+              ]
+            }
+          }
         }
       ]
     }
@@ -347,7 +399,65 @@
       },
       {
         "description": "When an oath is sworn, stall-holders lift the weights off their own scales so that no turnip is weighed against a promise."
+      },
+      {
+        "description": "Promise the next stone, not the road: the oath-clerk hands back any basket brought to pay for an enormous oath. A drover who came to swear the whole pass road mended swore instead to set the ford's fallen milestone upright by market-day, and paid one apple."
       }
     ]
+  },
+  "table": {
+    "place": "The market square on an oath day: a great granite stone at the centre, its top dished smooth by centuries of palms, a groove worn into it and stained blue-black with sworn juice. Around it, stalls of cut cress, warm tallow, cheeses in dock leaves and muslin, last autumn's apples wrinkling in a cart; over the bell-arch, an iron weathercock bought down from Council Hill. When someone is about to swear, every stall-holder lifts the weights off their scale, and the square goes quiet enough to hear a sparrow land.",
+    "light": "Hard, honest noon that throws each oath's shadow long and cold across the grooves; by teal dusk the awnings are rolled up with the moths still inside, the close bell rings, and the stone gives the day's heat back to whoever stays to lean on it.",
+    "people": [
+      {
+        "name": "the oath-clerk",
+        "want": "oaths small enough to be kept; she has handed back a great many baskets",
+        "voice": "Apron grey with key-filings, knees that chose the flatter town; puts the basket back in your arms and says “Promise the next stone, not the road.”"
+      },
+      {
+        "name": "the young drover",
+        "want": "to keep the oath he shrank — the ford's fallen milestone upright by market-day — and the stone is heavier than he swore it was",
+        "voice": "Red to the ears, one apple in his pocket, and a mule who thinks the whole business went splendidly."
+      },
+      {
+        "name": "the cheese-wife",
+        "want": "to sell her ripe wheels and keep knives off the rest",
+        "voice": "Certain moths only like sugar and says so to everyone; to anyone holding a knife: “Open nothing before it has filled.”"
+      },
+      {
+        "name": "the wool-merchant",
+        "want": "a scale, anywhere, that will notice his rings",
+        "voice": "A ringed thumb that drifts toward every pan in the market; generous, loud, and quite sure the rules were made for smaller merchants."
+      }
+    ],
+    "hooks": [
+      "The milestone at the ford. The drover swore to stand it upright by market-day and paid an apple for it, and the stone weighs twice what his promise did. The party can help, but the oath is his: his hands have to be on the stone when it rises, and the oath-moths will know if they weren't.",
+      "The stranger's bill. A wish was spent somewhere far off, and today someone in this square is paying its coincidence: a cart delayed, a letter gone astray, rain moved onto the wrong field. Nobody can undo a correction. But the party can find out who is paying it, and make their afternoon kinder than it was going to be.",
+      "The moths stayed up. A respected merchant swore in public at noon, paid well, and not one oath-moth came down from the awning seams. The square has gone very quiet. Is the oath false, or only too big to be true yet? Find out before the close bell, without accusing anyone in daylight."
+    ],
+    "encounters": [
+      "A stall-holder lifts the weights off her scale and the hush spreads stall by stall: someone is about to swear. Anyone haggling must stop mid-word, and mean it.",
+      "The wool-merchant leans a ringed thumb on the oath-scale's brass pan. The needle ignores the thumb, the rings and the merchant. He tries the other thumb.",
+      "Lint-grey oath-moths drift down out of the awning and settle on someone's sleeve: somebody at the table has just promised something true without noticing they had.",
+      "A tinker cools a mended pan in the trough with a hiss and asks whether anyone has seen a letter go by; his has been late three days, for no reason anybody can find.",
+      "A child's spool rolls under the dried-fruit stall and lodges between two stones; freeing it takes three people, a turnip-knife and a great deal of advice.",
+      "The weathercock over the bell-arch turns against the wind and stays turned. It only does that to watch an oath, and nobody is swearing one — not out loud."
+    ],
+    "finds": [
+      {
+        "wonder": "oath-scale",
+        "use": "Weighs the fruit an oath is paid in and ignores the hand that pays: no thumb, ring, title or bribe moves its needle. The catch: it weighs only what you pay. Nothing in the square weighs what the stranger pays."
+      },
+      {
+        "wonder": "oath-moths",
+        "use": "A pocketful will come down and settle on a promise only when it is true. The catch: they judge promises, not people — they will settle for the worst person in the market if the promise is true — and to a moth, an oath too big to keep yet looks like no oath at all."
+      }
+    ],
+    "bracework": {
+      "spw": "{stone ^ berry}",
+      "does": "For one minute, in a room no wider than a market stall, a single pressed berry lifts a stone the way an oath lifts a person: enough to stand a fallen milestone upright, or hold a cart-wheel off a child.",
+      "costs": "The berry, pressed and gone; a hush the whole square must keep while it works, every scale unweighted; and it lifts only as much as the promise behind it is small. Swear the road inside the braces and the stone comes down on your foot."
+    },
+    "question": "What is the smallest true thing each of you would swear on this stone — and who, somewhere you will never see, pays the coincidence for it?"
   }
 }

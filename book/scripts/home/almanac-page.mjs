@@ -2,10 +2,13 @@
 // each thing lives, and a bench for combining found things into small
 // realms (the night school's game; bracework as a toy). Everything is read
 // from this browser's own shelf; nothing is sent anywhere.
-import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_05.C';
+import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
+// The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
+const PLATE_STYLE = 'lore.land, teal and amber lit from within, leaf-dark ground, vignette and grain';
+const PLATE_FLAGS = '--raw --stylize 1000 --v 8.2';
 const pad = (n) => String(n).padStart(2, '0');
 const $ = (selector) => document.querySelector(selector);
 
@@ -66,10 +69,34 @@ function placeChips(data, wonder, kept) {
   });
 }
 
+/* A kept wonder offers its plate prompt (PLAN.E L10): the scene in words, ready to paint from. */
+function promptBlock(wonder) {
+  const prompt = wonder.prompt;
+  if (!prompt?.hint) return null;
+  const line = `${prompt.hint}, ${PLATE_STYLE} ${PLATE_FLAGS}`;
+  const copy = el('button', { type: 'button', className: 'almanac-prompt-copy' }, 'Copy');
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(line);
+      copy.textContent = 'Copied';
+    } catch {
+      copy.textContent = 'Select and copy';
+    }
+  });
+  return el('details', { className: 'almanac-prompt' },
+    el('summary', {}, 'Plate prompt'),
+    el('dl', {},
+      el('dt', {}, 'Vantage'), el('dd', {}, prompt.vantage || ''),
+      el('dt', {}, 'Light'), el('dd', {}, prompt.light || ''),
+      el('dt', {}, 'Scent'), el('dd', {}, prompt.scent || '')),
+    el('p', { className: 'almanac-prompt-line' }, el('code', {}, line)),
+    copy);
+}
+
 function card(data, wonder, kept) {
   const chips = placeChips(data, wonder, kept);
   if (!kept) {
-    return el('li', { className: 'almanac-card is-unfound' },
+    return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}` },
       el('p', { className: 'almanac-card-kicker' }, `Unrecorded · ${wonder.region}`),
       el('p', { className: 'almanac-card-hint' }, wonder.hint),
       chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null);
@@ -78,7 +105,9 @@ function card(data, wonder, kept) {
     el('p', { className: 'almanac-card-kicker' }, `${KIND_SIGIL[wonder.kind] || '·'} ${wonder.region}`),
     el('p', { className: 'almanac-card-name' }, wonder.name),
     el('p', { className: 'almanac-card-note' }, wonder.note),
+    wonder.craft ? el('p', { className: 'almanac-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
     chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, chips.length > 1 ? 'Lives in' : 'Found in'), ...chips) : null,
+    promptBlock(wonder),
     el('p', { className: 'almanac-card-first' }, `First kept ${kept.first}`));
 }
 
@@ -86,7 +115,7 @@ function paintShelves(data) {
   const state = readAlmanac();
   let placesTotal = 0;
   let placesFound = 0;
-  ['creature', 'contrivance', 'bracework'].forEach((kind) => {
+  ['creature', 'contrivance', 'bracework', 'saying'].forEach((kind) => {
     const list = data.wonders.filter((w) => w.kind === kind);
     // Found first, in the order the book meets them; then the unrecorded.
     const ordered = [...list.filter((w) => state[w.id]), ...list.filter((w) => !state[w.id])];

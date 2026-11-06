@@ -28,7 +28,7 @@
   s01: <
     handle: "custom-labyrinth/01"
     type: "custom-labyrinth"
-    excerpt: "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to talk. Every road into it bends at least twice on the way in, so that whichever gate you came by, you arri..."
+    excerpt: "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to {{post-talk}}. Every road into it bends at least twice on the way in, so that whichever gate you came by,..."
     route: ^[chapter/15/s01]{open}
   >
   s02: {
@@ -107,6 +107,8 @@
     "The carpenter's door-rule has a hinge for every size of door; laid against the figure, it stops on its own, the way it does at any honest doorway."
     "The night school cuts paper pies with pie-dividers that never come out even (the sliver is the luck) and plays combines: two nouns from a hat, a sigil and a container, and a brace-box war..."
     "The records clerk's new form is headed [child, parcel, door]: a window of a form, three boxes to look into and none to stand in."
+    "Under [child, parcel, door] the clerk ruled one more box with no heading: a good form needs a box for what you do not know, left honestly open, or the next thing through the gate must be ..."
+    "The night school’s copybook lines: write it before you argue it; one shard at a time; keep the morning, not the week. Chalk is cheaper than oak, the mistress tells pupils whose brace-boxe..."
   ]
 }
 

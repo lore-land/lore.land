@@ -61,6 +61,18 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'on', new: 'on' }
   },
   {
+    id: 'scene-light', attribute: 'data-switch-scene-light', stage: 'stable', label: 'Hold the light',
+    hint: 'At the end of each section: hold the scene\u2019s light (drag the sun, turn its warmth, glow, ink, grain and edge, or carry it with you) and frame a passage for a screenshot.',
+    effect: { on: 'Each section ends with the light table and a frame.', off: 'The scenes light themselves; no tools at the section\u2019s end.' }, region: 'main.chapter',
+    defaults: { returning: 'on', new: 'on' }
+  },
+  {
+    id: 'table', attribute: 'data-switch-table', stage: 'stable', label: 'At the table',
+    hint: 'At each chapter\u2019s end, a closed page for playing in it: the place, its people, hooks, a d6, things worth carrying out, a bracework move, and the page\u2019s own dice.',
+    effect: { on: 'Each chapter ends with a page for playing in it.', off: 'Chapters end without the table.' }, region: '.chapter-table',
+    defaults: { returning: 'on', new: 'on' }
+  },
+  {
     id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
     hint: 'Every chapter stays readable with no network: on a train, in a nook, anywhere.',
     effect: { on: 'Keeping every chapter for reading with no network.', off: 'Only the chapters you have opened stay kept.' },
@@ -83,6 +95,12 @@ export const SWITCHES = Object.freeze([
     hint: 'When you notice the figure under the hat, a small card says so, and his drawing gains a line.',
     effect: { on: 'Each sighting gets a card and a line in the drawing.', off: 'Sightings are kept quietly, without a card.' },
     defaults: { returning: 'on', new: 'on' }
+  },
+  {
+    id: 'living', attribute: 'data-switch-living', stage: 'trial', label: 'A living page',
+    hint: 'Some phrases breathe, turning by the minute, the hour or the day, and the marks glint like grains in soil. The words under your eyes never change; switch it off and the book reads in its own words again.',
+    effect: { on: 'The page breathes: a few phrases turn with the clock, away from where you are reading.', off: 'Every phrase is the book\u2019s own again.' }, region: 'main.chapter',
+    defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', label: 'Reading line',

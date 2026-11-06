@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, a nettle cheese in dock leaves, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay..."
+    excerpt: "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, {{cheese-stall}}, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay the sharp blu..."
     route: ^[chapter/07/s01]{open}
   >
   s02: <
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "His voice thinned with the market bell. Stalls folded into barrows, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
+    excerpt: "His voice thinned with the market bell. {{closing-up}}, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
     route: ^[chapter/07/s06]{open}
   >
 ]
@@ -98,6 +98,7 @@
     "The oath-scale weighs the fruit an oath is paid in and ignores the hand that pays. One berry is the smallest oath the stone accepts — and, the oath-clerk says, the commonest true one."
     "The market keeps its own weathercock, bought down from Council Hill the year the hill had one opinion too many; turning against the wind to watch an oath is its only vote. The oath-clerk ..."
     "When an oath is sworn, stall-holders lift the weights off their own scales so that no turnip is weighed against a promise."
+    "Promise the next stone, not the road: the oath-clerk hands back any basket brought to pay for an enormous oath. A drover who came to swear the whole pass road mended swore instead to set ..."
   ]
 }
 

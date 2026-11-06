@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "He pointed downhill, past the last of the blackthorn, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
+    excerpt: "He pointed downhill, {{downhill-past}}, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
     route: ^[chapter/11/s06]{open}
   >
 ]
@@ -96,6 +96,7 @@
     "Crown-wasps build paper crowns in the bloom garden's blackthorn, chewed from fence rails and old auction notices. BaneWAP's crown was found, not made: wasp-work, beautiful, hollow and ten..."
     "Early bees wait at shut buds as if the bloom owed them. A grand wish opens every flower at once, and a flower opened on demand has nothing in it yet."
     "Rehearsal moths shaken from the hedge wear the empire's weather — rain over a court with no roof, arriving in instalments. A subject who reads the moth goes home with her bread."
+    "Open nothing before it has filled: the beekeepers’ rule, learned the morning every bud in the garden opened on demand and held nothing. The beekeeper stopped her skep doors with grass so ..."
   ]
 }
 
