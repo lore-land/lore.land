@@ -14,6 +14,9 @@
  *
  *   settle({ sigil: '=', title: 'Lamplight', detail: 'The room is lit for evening.',
  *            at: controlElement, region: 'main.chapter' })
+ *
+ * `art` (an SVG string this codebase wrote, never reader text) sits beside
+ * the words — the sightings drawing uses it to show the stroke just earned.
  */
 
 const LIFETIME = 2600;
@@ -33,11 +36,37 @@ function el(tag, attrs = {}, ...children) {
 let host = null;
 let timer = 0;
 
+/* body carries perspective (reset.css), which makes it the containing block
+ * for position:fixed — a card placed by viewport coordinates would land at
+ * the top of the document, off-screen once the reader has scrolled. The top
+ * layer (a manual popover) is outside every containing block; without the
+ * Popover API the host sits beside body instead. */
+const canPopover = () => typeof HTMLElement !== 'undefined' && 'showPopover' in HTMLElement.prototype;
+
 function ensureHost() {
   if (host && host.isConnected) return host;
   host = el('div', { className: 'settled', role: 'status', 'aria-live': 'polite', hidden: '' });
-  document.body.append(host);
+  if (canPopover()) {
+    host.setAttribute('popover', 'manual');
+    document.body.append(host);
+  } else {
+    document.documentElement.append(host);
+  }
   return host;
+}
+
+function reveal(box) {
+  box.hidden = false;
+  if (box.hasAttribute('popover') && !box.matches(':popover-open')) {
+    try { box.showPopover(); } catch { /* already shown or detached */ }
+  }
+}
+
+function conceal(box) {
+  if (box.hasAttribute('popover') && box.matches(':popover-open')) {
+    try { box.hidePopover(); } catch { /* already hidden */ }
+  }
+  box.hidden = true;
 }
 
 function placeNear(card, at) {
@@ -70,19 +99,21 @@ function sweep(region) {
 }
 
 /**
- * @param {{ sigil?: string, title: string, detail?: string, at?: Element|null, region?: string|Element|null, tone?: string }} what
+ * @param {{ sigil?: string, title: string, detail?: string, art?: string, lifetime?: number, at?: Element|null, region?: string|Element|null, tone?: string }} what
  */
 export function settle(what = {}) {
   if (!what.title || typeof document === 'undefined') return;
   const box = ensureHost();
   clearTimeout(timer);
-  const card = el('div', { className: `settled-card${what.tone ? ` is-${what.tone}` : ''}` },
-    el('span', { className: 'settled-sigil', 'aria-hidden': 'true' }, what.sigil || '·'),
+  const art = typeof what.art === 'string' && what.art.startsWith('<svg') ? el('span', { className: 'settled-art', 'aria-hidden': 'true' }) : null;
+  if (art) art.innerHTML = what.art;
+  const card = el('div', { className: `settled-card${what.tone ? ` is-${what.tone}` : ''}${art ? ' has-art' : ''}` },
+    art || el('span', { className: 'settled-sigil', 'aria-hidden': 'true' }, what.sigil || '·'),
     el('span', { className: 'settled-text' },
       el('strong', { className: 'settled-title' }, what.title),
       what.detail ? el('span', { className: 'settled-detail' }, what.detail) : null));
   box.replaceChildren(card);
-  box.hidden = false;
+  reveal(box);
   placeNear(card, what.at instanceof Element ? what.at : null);
   // A timeout, not a frame: frames stop in a background tab, and the card must still settle.
   setTimeout(() => card.classList.add('is-in'), 20);
@@ -90,8 +121,8 @@ export function settle(what = {}) {
   timer = setTimeout(() => {
     card.classList.remove('is-in');
     card.classList.add('is-out');
-    setTimeout(() => { if (box.firstChild === card) { box.hidden = true; box.replaceChildren(); } }, 320);
-  }, LIFETIME);
+    setTimeout(() => { if (box.firstChild === card) { conceal(box); box.replaceChildren(); } }, 320);
+  }, Number(what.lifetime) > 0 ? Number(what.lifetime) : LIFETIME);
 }
 
 export function initSettled() {

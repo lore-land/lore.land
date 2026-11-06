@@ -17,9 +17,10 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.A';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.B';
 import { constellationFor } from './constellation.mjs?v=2026_11_05.A';
-import { TOTAL_CHAPTERS } from './book-extent.mjs';
+import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
+import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -74,9 +75,14 @@ function readerState() {
   return { visited, resume, place };
 }
 
-/** The 13th and 26th: when the next stone is set. */
+/** When the next stone is set: the serial's own date if it has one, else the next 13th or 26th. */
 function nextStone(from = new Date()) {
   const today = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  const [y, m, d] = String(NEXT_STONE?.date || '').split('-').map(Number);
+  if (y && m && d) {
+    const set = new Date(y, m - 1, d);
+    if (set >= today) return { date: set, days: Math.round((set - today) / 86400000) };
+  }
   for (let offset = 0; offset < 2; offset += 1) {
     for (const day of [13, 26]) {
       const candidate = new Date(today.getFullYear(), today.getMonth() + offset, day);
@@ -115,6 +121,7 @@ export const SPELLBOOK = Object.freeze([
   { op: '@', example: '@[folios]', does: 'Step over to the folio wall: pages under glass, seasoning.' },
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
+  { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
   { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
   { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
@@ -131,6 +138,7 @@ export const SPELLBOOK = Object.freeze([
 const PRACTICE = Object.freeze([
   { ask: 'Open Chapter Seven.', check: (s) => s.op === '@' && chapterFrom(s.handle || s.payload) === 7 },
   { ask: 'Ask when the next chapter lands.', check: (s) => s.op === '?' && s.handle === 'next' },
+  { ask: 'Count your sightings of the hat.', check: (s) => s.op === '?' && s.handle === 'sightings' },
   { ask: 'Keep the whole book for a trip without signal.', check: (s) => s.op === '!' && s.handle === 'keep' },
   { ask: 'Pick up where you stopped reading.', check: (s) => s.op === '~' && (!s.handle || s.handle === 'resume') },
   { ask: 'Turn the room to lamplight.', check: (s) => s.op === '=' && s.handle === 'light' && s.payload === 'lamp' },
@@ -303,8 +311,21 @@ export async function initScriptoriumDesk() {
         say(op, el('p', {}, await shelfLine()));
       } else if (handle === 'find') {
         cast(payload);
+      } else if (handle === 'sightings' || handle === 'hat') {
+        const seen = readSightings();
+        const found = SIGHTINGS.filter((s) => seen[s.id]);
+        const sketch = el('span', { className: 'desk-sightings-sketch' });
+        sketch.innerHTML = sightingsFigure(seen);
+        const line = found.length === SIGHTINGS.length
+          ? 'Nine sightings, nine strokes. The drawing is whole; he still has no name.'
+          : found.length
+            ? `${found.length} of ${SIGHTINGS.length} noticed. The rest are in the margins and the prose, waiting to be read past.`
+            : 'Nothing noticed yet. He turns up in the margins before he turns up in the story.';
+        say(op, el('div', { className: 'desk-sightings' }, sketch,
+          el('div', {}, el('p', {}, line),
+            found.length ? el('ul', {}, found.map((s) => el('li', {}, el('a', { href: `/book/chapter/${pad(s.chapter)}/` }, `${pad(s.chapter)} · ${s.title}`)))) : null)));
       } else {
-        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf] or ?[find]{words}.`));
+        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf], ?[sightings] or ?[find]{words}.`));
       }
     } else if (op === '&') {
       const kinds = ['thread', 'motif', 'trope', 'foreshadow', 'lean', 'voice'];

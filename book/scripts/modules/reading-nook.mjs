@@ -12,7 +12,7 @@
  * and the sound. Sound only ever starts from the reader's own gesture.
  */
 
-import { settle } from './settled.mjs?v=2026_09_27.I';
+import { settle } from './settled.mjs?v=2026_11_05.B';
 
 const NOOK_KEY = 'lore.nook.v1';
 const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0 });

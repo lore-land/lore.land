@@ -55,6 +55,14 @@
   }
 }
 
+^"sightings"{
+  .note: "Play loop (book/scripts/modules/sightings.mjs): nine sightings, nine strokes of the plain drawing. Noticing one — a margin rumour surfacing, or a prose passage read — earns a stroke; the drawing never earns a name."
+  margins: "sighting-sand 03 head · sighting-records 04 body · sighting-hat 06 hat · sighting-corners 09 left leg · sighting-orthogonal 11 right leg · sighting-scent 12 left eye"
+  prose: "road 13 left arm · furrow 14 right arm (drawn shorter: the torch) · button 15 right eye"
+  where_seen: "a settle card on the chapter (switch: sightings, default on); the home hat drawer; the desk's ?[sightings]"
+  extend: "a later sighting adds no strokes — nine is whole. New sightings can redraw (a moved line, a missing dot) once the story earns a choice."
+}
+
 ?"open"[
   "Who receives the good coincidence the small wish owed a stranger?"
   "What does the hat remember?"

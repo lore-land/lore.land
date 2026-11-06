@@ -19,7 +19,7 @@
  * the offline shelf starts on, because installing is consent to keep the book.
  */
 
-import { settle } from './settled.mjs?v=2026_09_27.I';
+import { settle } from './settled.mjs?v=2026_11_05.B';
 import { chapterPath } from './chapter-links.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
@@ -71,6 +71,12 @@ export const SWITCHES = Object.freeze([
     hint: 'Scene sketches start unfolded: where to stand, the light, the smell.',
     effect: { on: 'Every scene sketch starts unfolded.', off: 'Scene sketches start folded.' }, region: 'main.chapter details.scene-sketch',
     defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'sightings', attribute: 'data-switch-sightings', stage: 'stable', label: 'Sightings',
+    hint: 'When you notice the figure under the hat, a small card says so, and his drawing gains a line.',
+    effect: { on: 'Each sighting gets a card and a line in the drawing.', off: 'Sightings are kept quietly, without a card.' },
+    defaults: { returning: 'on', new: 'on' }
   },
   {
     id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', label: 'Reading line',

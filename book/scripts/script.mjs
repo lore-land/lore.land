@@ -19,7 +19,7 @@ import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_05.A';
-import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_27.I';
+import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_05.B';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
@@ -46,15 +46,16 @@ import {
   initPointerCraft
 } from './modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
-import { initReferences } from './modules/references.mjs?v=2026_09_27.A';
+import { initReferences } from './modules/references.mjs?v=2026_11_05.B';
+import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
-import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_27.I';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_05.A';
+import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_05.B';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_05.B';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
-import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.I';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_05.A';
+import { initLensControl } from './modules/lens-control.mjs?v=2026_11_05.B';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_05.B';
 import { initConstellation } from './modules/constellation.mjs?v=2026_11_05.A';
-import { initSettled } from './modules/settled.mjs?v=2026_09_27.I';
+import { initSettled } from './modules/settled.mjs?v=2026_11_05.B';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
@@ -207,6 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let destroySpatial = null;
     let destroyGenre = null;
     let destroyReferences = null;
+    let destroySightings = null;
     let cancelIdle = () => {};
 
     cancelIdle = whenIdle(async () => {
@@ -226,6 +228,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       destroyShader = initSemanticShader({ root });
       destroySpatial = initSpatialPerspective({ root });
       destroyGenre = initGenreCombinatorics({ root, announce });
+      // Sightings listen first: the references' opening paint may already surface one.
+      destroySightings = initSightings({ chapterData });
       destroyReferences = await initReferences({ chapterData, announce });
       requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
     }, { timeout: 900 });
@@ -260,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyPointerCraft) destroyPointerCraft();
       if (destroyProduction) destroyProduction();
       if (destroyReferences) destroyReferences();
+      if (destroySightings) destroySightings();
       if (destroySwUpdate) destroySwUpdate();
       if (destroyAttention) destroyAttention();
       if (destroyShader) destroyShader();

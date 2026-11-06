@@ -467,3 +467,25 @@
   flex-wrap: wrap;
   gap: 0.3rem;
 }
+
+/* ?[sightings]: the drawing so far beside what was noticed. */
+.desk-sightings {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.desk-sightings-sketch {
+  flex: none;
+  width: 4.2rem;
+  height: 5.4rem;
+  padding: 0.35rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-gold, #c4922e) 50%, transparent);
+  border-radius: 0.35rem;
+  color: var(--hub-ink, currentColor);
+}
+
+.desk-sightings ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}

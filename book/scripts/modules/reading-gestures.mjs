@@ -29,7 +29,7 @@
  *   .gesture-hint  first-run hint (touch only)
  */
 
-import { settle } from './settled.mjs?v=2026_09_27.I';
+import { settle } from './settled.mjs?v=2026_11_05.B';
 
 const SCALE_KEY = 'lore.reader.scale.v1';
 const HINT_KEY = 'lore.reader.gesture-hint.v1';

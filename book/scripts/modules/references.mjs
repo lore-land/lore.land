@@ -4,6 +4,8 @@
  * Story still reads without this.
  */
 
+import { isSighting, readSightings } from './sightings.mjs?v=2026_11_05.B';
+
 const REFERENCES_URL = '/book/content/world/references.json';
 
 let referencesPromise = null;
@@ -74,6 +76,9 @@ function paintList(list, entries) {
       const item = document.createElement('li');
       item.className = 'reading-ref-item';
       item.dataset.kind = entry.kind || 'rumour';
+      if (isSighting(entry.id)) {
+        item.setAttribute('data-sighting', readSightings()[entry.id] ? 'seen' : 'new');
+      }
       const kicker = document.createElement('p');
       kicker.className = 'reading-ref-kind';
       kicker.textContent = entry.kind || 'ref';
@@ -171,6 +176,7 @@ export async function initReferences(options = {}) {
       whisper = null;
     }
     if (!entries.length || !anchor || window.matchMedia('(max-width: 70rem)').matches) {
+      noticeSightings(entries);
       return;
     }
     whisper = paintWhisper(entries[0]);
@@ -179,6 +185,17 @@ export async function initReferences(options = {}) {
       host.style.position = 'relative';
     }
     host.appendChild(whisper);
+    noticeSightings(entries);
+  };
+
+  // A sighting that surfaces is a sighting noticed: sightings.mjs keeps it
+  // and says so, beside the whisper (wide) or as a strip (narrow).
+  const noticeSightings = (entries) => {
+    entries.filter((entry) => isSighting(entry.id)).forEach((entry) => {
+      window.dispatchEvent(new CustomEvent('lore:sighting', {
+        detail: { id: entry.id, at: whisper && whisper.isConnected ? whisper : null }
+      }));
+    });
   };
 
   const paragraphs = [...main.querySelectorAll('p')].filter(

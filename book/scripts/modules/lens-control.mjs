@@ -14,7 +14,7 @@
  * before first paint. Balanced is the default: nothing is weighted.
  */
 
-import { settle } from './settled.mjs?v=2026_09_27.I';
+import { settle } from './settled.mjs?v=2026_11_05.B';
 
 import { LENSES, lensById } from './valence-lens.mjs?v=2026_09_27.A';
 

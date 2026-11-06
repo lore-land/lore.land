@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_05.A" data-cache-context="home" data-theme="paper" data-egg-style="opal">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_05.B" data-cache-context="home" data-theme="paper" data-egg-style="opal">
 
 <head>
   <meta charset="UTF-8">
@@ -70,9 +70,10 @@
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_05.A"></script>
   <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_05.A">
-  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_05.A">
-  <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_11_05.A"></script>
-  <script defer type="module" src="/book/scripts/home/egg-style.mjs?v=2026_09_27.H"></script>
+  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_05.B">
+  <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_11_05.B"></script>
+  <script defer type="module" src="/book/scripts/home/play.mjs?v=2026_11_05.B"></script>
+  <script defer type="module" src="/book/scripts/home/egg-style.mjs?v=2026_11_05.B"></script>
   <script defer type="module" src="/book/scripts/home/readable.mjs?v=2026_09_27.C"></script>
 </head>
 
@@ -141,7 +142,7 @@
           </div>
           <fieldset class="egg-style-picker" id="egg-style" aria-describedby="egg-style-hint" hidden>
             <legend>How do you see the egg?</legend>
-            <p id="egg-style-hint">One egg, three readings of its shell.</p>
+            <p id="egg-style-hint" aria-live="polite">One egg, three readings of its shell.</p>
             <div class="egg-style-options">
               <label><input type="radio" name="egg-style" value="opal" checked><span class="egg-style-swatch" data-egg-swatch="opal" aria-hidden="true"></span>Opal</label>
               <label><input type="radio" name="egg-style" value="stone"><span class="egg-style-swatch" data-egg-swatch="stone" aria-hidden="true"></span>Stone</label>
@@ -237,6 +238,7 @@
             <div class="wonder-secret">
               <p>It hangs at the height of a person's head and rests on nothing. Steam parts around the gap beneath it. The crier wrote down that she saw a hat, and the ink stayed.</p>
               <p class="wonder-whisper">The margins have started keeping notes. Nobody has given him a name.</p>
+              <div class="wonder-sketch" data-sightings-sketch hidden></div>
               <a href="/book/chapter/14/#the-hat-above-the-furrow">Stand at the furrow in Chapter Fourteen →</a>
               <a href="/book/chapter/15/#three-receipts">Read the three records in Chapter Fifteen →</a>
             </div>
