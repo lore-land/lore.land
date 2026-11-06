@@ -20,7 +20,8 @@
  */
 
 import { settle } from './settled.mjs?v=2026_09_27.I';
-import { chapterPath } from './chapter-links.mjs?v=2026_02_28.I';
+import { chapterPath } from './chapter-links.mjs?v=2026_11_05.A';
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
 const SWITCHES_KEY = 'lore.switches.v1';
 const SEEN_RELEASE_KEY = 'lore.release.seen';
@@ -61,8 +62,8 @@ export const SWITCHES = Object.freeze([
   },
   {
     id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
-    hint: 'All thirteen chapters stay readable with no network: on a train, in a nook, anywhere.',
-    effect: { on: 'Keeping all thirteen chapters for reading with no network.', off: 'Only the chapters you have opened stay kept.' },
+    hint: 'Every chapter stays readable with no network: on a train, in a nook, anywhere.',
+    effect: { on: 'Keeping every chapter for reading with no network.', off: 'Only the chapters you have opened stay kept.' },
     defaults: { returning: 'off', new: 'off', installed: 'on' }
   },
   {
@@ -254,7 +255,6 @@ function createFocusLine() {
   return { set: (on) => (on ? start() : stop()), stop };
 }
 
-const TOTAL_CHAPTERS = 13;
 const SHELF_KEY = 'lore.shelf.release';
 
 /** Ask the service worker to keep every chapter (and the desk); report the count it kept. */

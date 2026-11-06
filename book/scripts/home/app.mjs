@@ -11,11 +11,12 @@ import {
   registerStoryServiceWorker
 } from '../modules/experience-core.mjs?v=2026_08_27.A';
 import { injectSvgFilters } from '../modules/svg-filters.mjs';
-import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_08_27.A';
+import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_11_05.A';
+import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_27.A';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
-import { initStorySpark } from '../modules/story-spark.mjs?v=2026_09_23.B';
+import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_05.A';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
@@ -54,7 +55,7 @@ function writePref(key, value) {
 function readResumeChapter() {
   try {
     const value = Number(window.localStorage.getItem(RESUME_KEY) || '0');
-    return value >= 1 && value <= 13 ? value : 0;
+    return value >= 1 && value <= TOTAL_CHAPTERS ? value : 0;
   } catch {
     return 0;
   }
@@ -586,8 +587,8 @@ function initMonumentEntrance() {
     announce
   });
   const destroyPassAlong = initPassAlong({
-    title: 'Lore.Land — A Worldbuilding Monument',
-    text: 'Enter a seeded world. Chapter One opens at dawn, when Boof unearths a warm egg no map will hold.',
+    title: 'Lore.Land — An Independent Serial',
+    text: 'A dog digs a warm egg out of a frozen field. Book Two begins on a Thursday nobody kept.',
     url: typeof location !== 'undefined' ? `${location.origin}/` : 'https://lore.land/',
     mount: document.querySelector('.hub-hero .hub-actions'),
     label: typeof navigator.share === 'function' ? 'Share' : 'Copy link',

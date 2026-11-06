@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_05.A",
+      "date": "2026-11-05",
+      "notes": [
+        "Book Two begins: two new chapters, The Thursday Nobody Kept and Child, Parcel, or Door. The next stone is set Friday 13 November.",
+        "Something has come through the warm furrow without a receipt. It is under a hat.",
+        "The home page now says what is new, who is in the story, and the story so far for anyone arriving partway.",
+        "The ring of berries has a second, inner ring for Book Two, and Book Two's seals begin a new day at dawn gold.",
+        "Keep offline now keeps every chapter, however many there are."
+      ]
+    },
+    {
       "release": "2026_09_27.I",
       "date": "2026-09-27",
       "notes": [

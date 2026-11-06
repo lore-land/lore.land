@@ -7,7 +7,9 @@
  * answer is a constellation: a ring of thirteen boonberries, one per chamber,
  * lit where the thread runs (amber at the core), the chamber you are in
  * marked, and under it the sections themselves as doors. It is the shape
- * with one hole from chapter nine, drawn as navigation.
+ * with one hole from chapter nine, drawn as navigation. Book Two walks a
+ * second, inner ring — the same thirteen positions, a second day — so
+ * chamber 14 sits inside chamber 01.
  *
  * Data: book/content/semantic.json (chapters:build). Fetched on first use.
  *
@@ -15,8 +17,11 @@
  * trope:<value> · foreshadow:<value> · lean:<boon|bane|bone> · voice:<id>
  */
 
+import { TOTAL_CHAPTERS, CHAMBERS_PER_RING } from './book-extent.mjs';
+
 const SEMANTIC_URL = '/book/content/semantic.json';
-const TOTAL = 13;
+const TOTAL = TOTAL_CHAPTERS;
+const RING_RADII = [52, 33];
 const pad = (n) => String(n).padStart(2, '0');
 const KIND_WORDS = Object.freeze({
   thread: 'a thread', motif: 'a motif', trope: 'a sampled trope', foreshadow: 'a foreshadowing', lean: 'a lean', voice: 'a voice'
@@ -95,6 +100,10 @@ function drawRing(result, index, current, onPick) {
   const svg = svgEl('svg', { viewBox: `0 0 ${size} ${size}`, class: 'constellation-ring', role: 'img', 'aria-label': `${result.title}: chambers ${result.chapters.map(pad).join(', ')}` });
   // The faint path the wish walked: chamber to chamber, round the ring.
   svg.append(svgEl('circle', { cx, cy, r: radius, class: 'constellation-path' }));
+  // A later book's ring is drawn whole even while it is still being walked.
+  for (let ring = 1; ring * CHAMBERS_PER_RING < TOTAL && ring < RING_RADII.length; ring += 1) {
+    svg.append(svgEl('circle', { cx, cy, r: RING_RADII[ring], class: 'constellation-path is-later' }));
+  }
   const centre = svgEl('text', { x: cx, y: cy + 1, class: 'constellation-centre', 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   centre.textContent = `${result.chapters.length}`;
   const centreSub = svgEl('text', { x: cx, y: cy + 13, class: 'constellation-centre-sub', 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
@@ -103,13 +112,15 @@ function drawRing(result, index, current, onPick) {
 
   for (let n = 1; n <= TOTAL; n += 1) {
     // Chamber one at the top, clockwise; the thirteenth closes the ring beside it.
-    const angle = -Math.PI / 2 + ((n - 1) / TOTAL) * Math.PI * 2;
-    const x = cx + radius * Math.cos(angle);
-    const y = cy + radius * Math.sin(angle);
+    const ring = Math.min(Math.floor((n - 1) / CHAMBERS_PER_RING), RING_RADII.length - 1);
+    const slot = (n - 1) % CHAMBERS_PER_RING;
+    const angle = -Math.PI / 2 + (slot / CHAMBERS_PER_RING) * Math.PI * 2;
+    const x = cx + RING_RADII[ring] * Math.cos(angle);
+    const y = cy + RING_RADII[ring] * Math.sin(angle);
     const lit = result.chapters.includes(n);
     const chapter = index.chapters.find((c) => c.n === n);
     const g = svgEl('g', {
-      class: `constellation-berry${lit ? ' is-lit' : ''}${n === current ? ' is-here' : ''}${n === TOTAL ? ' is-door' : ''}`,
+      class: `constellation-berry${lit ? ' is-lit' : ''}${n === current ? ' is-here' : ''}${n === CHAMBERS_PER_RING ? ' is-door' : ''}${ring ? ' is-later' : ''}`,
       transform: `translate(${x.toFixed(2)} ${y.toFixed(2)})`,
       tabindex: lit ? '0' : '-1',
       role: lit ? 'link' : 'presentation',

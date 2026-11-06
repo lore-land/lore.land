@@ -1,6 +1,7 @@
 import { withSiteBase } from './spw-routing.mjs?v=2026_03_02.A';
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
-const DEFAULT_TOTAL_CHAPTERS = 13;
+const DEFAULT_TOTAL_CHAPTERS = TOTAL_CHAPTERS;
 
 export function chapterPath(number) {
   return withSiteBase(`/book/chapter/${String(number).padStart(2, '0')}/`);

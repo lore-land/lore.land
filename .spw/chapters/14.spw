@@ -1,0 +1,127 @@
+# Chapter 14 Canon Reference
+# Generated from /book/chapter/14/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_14
+#:chapter-canon #!reference
+
+^[chapter/14]{
+  title: "The Thursday Nobody Kept"
+  description: "Chapter 14 of Lore.Land: The Thursday Nobody Kept. Book Two begins. The Genie paid for Boof's wish with everything he had left, plus one Thursday, and now the week skips it — but a dog keeps mornings, not weeks, and the field keeps every..."
+  mood: "path"
+  period: "winter"
+  chapter_path: "/book/chapter/14/"
+}
+
+&[chapter/14/routes]{
+  web: "/book/chapter/14/"
+  timeline: "/book/timeline.html#chapter-14"
+  motif: ~[motif/chapter-14]{optional}
+}
+
+^[chapter/14/spine]{
+  =prev{ ~".spw/chapters/13.spw#chapter_13" }
+  =next{ ~".spw/chapters/15.spw#chapter_15" }
+  weave: "{} <> <> {} <> [] <> {} <>"
+  reading: "the telling opens; Boof pads in on a thread of scent; the boonberries kindle; the telling gathers; Boof doubles back along the scent-thread; the plate catches the light; the path unrolls itself, listening; the telling gathers; Boof closes the day with the trail still warm"
+}
+
+^[chapter/14/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Wrong Quiet"
+    excerpt: "Dawn smelled of frost and wet fur, and of nothing else at all. Boof put her nose to the ground and read the field the way she read it every morning. Frost on the furrows. Loam under the frost. The berry rows asleep be..."
+    route: ^[chapter/14/s01]{open}
+  }
+  s02: <
+    handle: "custom-boof/02"
+    type: "custom-boof"
+    excerpt: "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. So she did not know it was Thursday. She di..."
+    route: ^[chapter/14/s02]{open}
+  >
+  s03: <
+    handle: "custom-boonberry/03"
+    type: "custom-boonberry"
+    excerpt: "The berries noticed first. They always did; noticing is most of what a boonberry is for. Every morning since the wish, the little lights under the ice had leaned toward the warm furrow, the way a sleeper turns to the ..."
+    route: ^[chapter/14/s03]{open}
+  >
+  s04: {
+    handle: "section/04"
+    type: "section"
+    title: "The Hat Above the Furrow"
+    excerpt: "The warm furrow was steaming when she reached it. It always steamed now. That was the wish: one furrow kept open, always, for whatever arrived next. The frost drew back from it in a soft margin, and beneath it the ant..."
+    route: ^[chapter/14/s04]{open}
+  }
+  s05: <
+    handle: "custom-boof/05"
+    type: "custom-boof"
+    excerpt: "She went to see what he was looking at, because that is what a dog does with somebody else's attention. It was an ant. One ant, at the very end of the ruled street, holding up a torch that had gone out. It held it the..."
+    route: ^[chapter/14/s05]{open}
+  >
+  s06: [
+    handle: "figure/06"
+    type: "figure"
+    image: "/book/images/14.png"
+    route: ^[chapter/14/s06]{open}
+  ]
+  s07: <
+    handle: "custom-path/07"
+    type: "custom-path"
+    excerpt: "When he moved, he did not walk. He was in one place, and then in the next place along, as if the day were being told in pictures and somebody had skipped the ones in between. Then a pause. Then the next picture. Boof ..."
+    route: ^[chapter/14/s07]{open}
+  >
+  s08: {
+    handle: "section/08"
+    type: "section"
+    title: "Friday"
+    excerpt: "It was Friday before Boof had finished blinking. Below the rise, in the farms along the road, latches lifted. Smoke stood up from three chimneys at once. A bucket knocked a well and somebody swore at the cold — cheerf..."
+    route: ^[chapter/14/s08]{open}
+  }
+  s09: <
+    handle: "custom-boof/09"
+    type: "custom-boof"
+    excerpt: "The cart went on toward Bonk City with its bell, and the road went with it, in its usual bends. The figure went a quarter turn off the road, straight into the field. Boof sat in the road with the warm slice in her tee..."
+    route: ^[chapter/14/s09]{open}
+  >
+]
+
+&[chapter/14/cast]{
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/02"
+  >
+  boonberry: <
+    register: "lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law"
+    .enters: "custom-boonberry/03"
+  >
+  path: <
+    register: "a road conjured by walking; it unwalks itself behind you"
+    .enters: "custom-path/07"
+  >
+}
+
+%[chapter/14/measures]{
+  %sections: 9
+  %prose: 3
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/14/lore]{
+  notes: [
+    "The Genie's price comes due. One Thursday goes missing from every person's week; people sleep on Wednesday and wake on Friday, having missed nothing they know of."
+    "Those who keep no calendar keep the day anyway: the land, the ants, the birds, and a dog who keeps mornings instead of weeks."
+    "Near the warm furrow the ant torch-lines stop curling along roots and run straight, meeting at right angles."
+    "A black bowler hat hangs at a person's height above the furrow, resting on nothing. Under it, a figure drawn in a few plain lines, facing a quarter turn away from everything."
+    "An ant's dead torch is relit from the end of a drawn arm. The arm stays shorter by about a torch's length."
+    "He does not walk; he is in one place and then the next. He goes straight where the lane bends, and a hedge he passes through keeps a rectangular gap."
+    "Bonk City's crier announces the Feast of the Uneven Slice: at the Turning of the Year, the one destined to spill exactly one pie will come to the table. Households that received a strange..."
+    "The crier takes him for a poor scarecrow until he looks at her. She writes down that she saw a hat, and the ink stays."
+  ]
+}
+
+~[chapter/14/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

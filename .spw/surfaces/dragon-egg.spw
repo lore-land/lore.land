@@ -118,6 +118,10 @@ $"worth"{
     chamber: ~".spw/chapters/13.spw#chapter_13"
     role: "once the shell-door is open, the cell's first public turn is to keep — it receipts the dawn by remaining itself."
   }
+  p14: {
+    chamber: ~".spw/chapters/14.spw#chapter_14"
+    role: "the shell stays at the archive, empty and warm; the furrow the spent wish keeps open receives someone without a receipt. Nothing says the two are related."
+  }
 ]
 
 &"release_nod"{

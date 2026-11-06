@@ -2,7 +2,8 @@
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_09_27.C';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_05.A';
+import { TOTAL_CHAPTERS } from './modules/book-extent.mjs';
 import {
   bootstrapExperience,
   enhanceLazyImages,
@@ -17,10 +18,10 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_09_26.A';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_05.A';
 import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_09_27.I';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
-import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_02_28.I';
+import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_09_07.B';
@@ -30,7 +31,7 @@ import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
-import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_08_27.A';
+import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_11_05.A';
 import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_08_27.A';
 import {
   initChapterChrome,
@@ -48,14 +49,14 @@ import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A
 import { initReferences } from './modules/references.mjs?v=2026_09_27.A';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_09_27.I';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_09_27.I';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_05.A';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_09_27.I';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_09_27.I';
-import { initConstellation } from './modules/constellation.mjs?v=2026_09_27.I';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_05.A';
+import { initConstellation } from './modules/constellation.mjs?v=2026_11_05.A';
 import { initSettled } from './modules/settled.mjs?v=2026_09_27.I';
 
-const CHAPTER_SEED_LOOKUP = chapterSeedMap(13, '01');
+const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
 /* import.meta.glob is a Vite build-time construct; the deployed site serves
  * these modules raw, where calling it throws before anything renders. Under

@@ -87,6 +87,8 @@
   { 11: "paradox / nourishment / topology"       status: draft     anchor: "returning stair" }
   { 12: "union / provenance / confluence"        status: draft     anchor: "low bridge" }
   { 13: "record / recursion / inspectability"    status: draft     anchor: "open archive" }
+  { 14: "absence / geometry / arrival"           status: study     anchor: "warm furrow" }
+  { 15: "classification / care / threshold"      status: study     anchor: "parcel gate" }
 ]
 
 &"domain_constellations"{
@@ -94,7 +96,7 @@
 
   &counting{
     domains: [accounting, metrology, audit, provenance]
-    chambers: [01, 05, 07, 13]
+    chambers: [01, 05, 07, 13, 15]
     recurring_forms: [scale, ledger, groove, open_record]
     ask: "when does an instrument reveal truth, and when does its neatness conceal a fracture?"
   }
@@ -115,7 +117,7 @@
 
   &living_geometry{
     domains: [ecology, topology, architecture, hydrology, wayfinding]
-    chambers: [02, 03, 10, 11, 12]
+    chambers: [02, 03, 10, 11, 12, 14]
     recurring_forms: [ring, fork, joint, impossible_seam, tributary]
     ask: "which structures hold because they resist change, and which hold because they keep changing legibly?"
   }
@@ -129,7 +131,7 @@
 
   &animal_scale{
     domains: [animal_perception, phenomenology, accessibility, cinematography, scent_landscape]
-    chambers: [01, 02, 03, 04, 06, 08, 11, 12, 13]
+    chambers: [01, 02, 03, 04, 06, 08, 11, 12, 13, 14, 15]
     recurring_forms: [nose_height, knees, paws, curb, coping, low_bridge, floor]
     ask: "what becomes important when authority is viewed below its usual eye line?"
   }

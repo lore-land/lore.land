@@ -11,9 +11,9 @@ const CONFIG = {
     'What new trope could this chapter authorize?'
   ],
   route: {
-    href: '/book/chapter/01/',
-    label: '^[route/01]{continue}',
-    ariaLabel: 'Continue to chapter 01'
+    href: '/book/chapter/14/',
+    label: '^[route/14]{continue}',
+    ariaLabel: 'Continue to chapter 14'
   }
 };
 

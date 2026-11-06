@@ -15,9 +15,10 @@
  */
 
 import { normalizeSpwSource } from './spw-routing.mjs?v=2026_03_02.A';
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
 const PLATES_SOURCE = 'surfaces/plates';
-const CHAMBER_COUNT = 13;
+const CHAMBER_COUNT = TOTAL_CHAPTERS;
 
 function pad(num) {
   return String(num).padStart(2, '0');
@@ -80,7 +81,7 @@ function pickRandom(arr) {
 
 /** Compose one fresh spark for a random chamber. Returns null if the
  *  canon text doesn't have enough for that chamber (should not happen
- *  across all 13, but stay honest rather than fabricate). */
+ *  across the shelf, but stay honest rather than fabricate). */
 export function composeSpark(text, chamberOverride) {
   const chamber = chamberOverride || pad(1 + Math.floor(Math.random() * CHAMBER_COUNT));
   const shelf = readShelf(text, chamber);

@@ -28,4 +28,6 @@
   ^chamber[11]{ #slug:"paradox-bloom"              !state:public %version:1 .file:"book/images/11.png" &ledger:"AL-001" }
   ^chamber[12]{ #slug:"the-last-confluence"        !state:public %version:1 .file:"book/images/12.png" &ledger:"AL-001" }
   ^chamber[13]{ #slug:"loreland-canon"             !state:public %version:1 .file:"book/images/13.png" &ledger:"AL-001" }
+  ^chamber[14]{ #slug:"the-thursday-nobody-kept"   !state:study %version:1 .file:"book/images/14.png" &ledger:"AL-001" }
+  ^chamber[15]{ #slug:"child-parcel-or-door"       !state:study %version:1 .file:"book/images/15.png" &ledger:"AL-001" }
 ]

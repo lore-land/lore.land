@@ -1,0 +1,525 @@
+{
+  "chapterNumber": 14,
+  "title": "The Thursday Nobody Kept",
+  "logline": "The Genie's price comes due: a Thursday goes missing from every person's week but not from the field — and on the day nobody kept, Boof finds someone standing under the hat.",
+  "epigraph": "A week can lose a day. A field never has.",
+  "inWhich": "a day goes missing from the week, and the field keeps it anyway",
+  "description": "Chapter 14 of Lore.Land: The Thursday Nobody Kept. Book Two begins. The Genie paid for Boof's wish with everything he had left, plus one Thursday, and now the week skips it — but a dog keeps mornings, not weeks, and the field keeps everything. On the day no person is in, Boof walks her rounds, finds the ants' torch-lines running straight, and under a hat that rests on nothing, a figure drawn in a few plain lines, facing a quarter turn away from all of it.",
+  "mood": "path",
+  "period": "winter",
+  "pillars": [
+    "worldbuilding",
+    "wonder",
+    "intrigue"
+  ],
+  "topics": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "memory",
+      "label": "What maps admit",
+      "href": "/topics/#memory"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 13 · The Door",
+      "href": "/book/chapter/13/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "The ant hearths",
+      "href": "/world/boonberry-commons.html#ant-hearths",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 15 · Child, Parcel, or Door",
+      "href": "/book/chapter/15/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "nose",
+        "scent",
+        "paws",
+        "fences",
+        "mornings",
+        "dog"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "hat",
+        "line",
+        "lines",
+        "circle",
+        "rectangle",
+        "dots",
+        "drawing",
+        "straight",
+        "quarter",
+        "pencil"
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "What maps admit",
+      "href": "/topics/#memory",
+      "terms": [
+        "Thursday",
+        "Wednesday",
+        "Friday",
+        "week",
+        "day",
+        "slip",
+        "ink",
+        "crier",
+        "receipt",
+        "sheet"
+      ]
+    },
+    {
+      "id": "wonder",
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html",
+      "terms": [
+        "ants",
+        "ant",
+        "torch",
+        "torches",
+        "ant-street",
+        "ant-streets",
+        "berries",
+        "furrow",
+        "steam",
+        "warm",
+        "slice"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Wrong Quiet",
+      "data-motif": "missing-thursday",
+      "data-foreshadow": "hat",
+      "climate": {
+        "tempo": "dawn",
+        "tint": "teal",
+        "hook": "wrong-quiet"
+      },
+      "scene": {
+        "vantage": "nose-height at the foot of a farmhouse kitchen door in deep frost, the yard behind empty",
+        "light": "flat blue pre-dawn; no lamp in any window, no smoke from any chimney",
+        "scent": "frost, wet fur, thin day-old bread, cold stone, old onions",
+        "edges": [
+          "the berry rows asleep under ice, each holding a drop of light",
+          "a mill wheel standing still with water running under it",
+          "a boot-scraper with last night's mud still on its blade"
+        ],
+        "hint": "a winter farmyard at dawn with every sign of people and no people; a working dog listening at a shut kitchen door; berry-light under ice; utterly still"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Dawn smelled of frost and wet fur, and of nothing else at all."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof put her nose to the ground and read the field the way she read it every morning. Frost on the furrows. Loam under the frost. The berry rows asleep beneath their ice, each holding its drop of light, and down among the roots the ants at their hearths, keeping the winter honest. Everything was where it belonged."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nothing was happening to any of it."
+        },
+        {
+          "type": "paragraph",
+          "text": "The latch did not lift at the kitchen. The bucket did not knock the well. No smoke stood up from the chimney, and yesterday's bread smell had gone thin and stayed thin, the way a smell does when nobody is coming to cut the loaf."
+        },
+        {
+          "type": "paragraph",
+          "text": "She put her nose to the crack beneath the kitchen door. Cold stone. Old onions. Nobody."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the mill the water ran under the wheel and the wheel did not turn. The miller's boot-scraper still wore a ridge of last night's mud along its blade. Boof sat beside it for as long as the miller usually took to come out and swear at the weather. The weather went unsworn at.",
+          "lean": "bane"
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "climate": {
+        "tempo": "dawn",
+        "tint": "hearth",
+        "hook": "dog-keeps-mornings"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there."
+        },
+        {
+          "type": "paragraph",
+          "text": "So she did not know it was Thursday. She did not know that, not long before, on a bridge where two rivers met, a retired genie had counted everything he had left onto the rail and added one Thursday besides — or that the week had closed over the gap like water over a dropped stone, so that every person in Boon.land had gone to sleep on Wednesday and would wake on Friday without the faintest sense of having missed a thing.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "She knew only what her nose told her. The people were not in this day. Everything else was. The blackbird was on the fence, trying the same few notes until one pleased it. The crows were in the stubble. The river was at its slow work and the frost at its quick one, and under the berry rows the ants carried their small lights home along the roots."
+        },
+        {
+          "type": "paragraph",
+          "text": "Whatever had taken the day out of the week had taken it only from those who kept one. Nobody had been able to take it out of the field."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof considered this for about as long as it takes to scratch behind one ear. Then she went to walk the fences. If the people had been taken out of the day, the fences had not, and they would want checking either way.",
+          "lean": "bane"
+        }
+      ]
+    },
+    {
+      "type": "custom-boonberry",
+      "climate": {
+        "tempo": "morning",
+        "tint": "berry",
+        "hook": "quarter-turn"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The berries noticed first. They always did; noticing is most of what a boonberry is for."
+        },
+        {
+          "type": "paragraph",
+          "text": "Every morning since the wish, the little lights under the ice had leaned toward the warm furrow, the way a sleeper turns to the warm side of the bed. This morning they leaned, and then each one corrected — a quarter turn, all the way down the rows, with a small sound like frost settling.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Not toward the furrow. Square to it. As if something were standing there that could only be looked at from the side."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "The Hat Above the Furrow",
+      "data-motif": "hat",
+      "data-trope": "arrival-without-receipt",
+      "climate": {
+        "tempo": "morning",
+        "tint": "gold",
+        "hook": "hat-above-furrow",
+        "strength": 1.1
+      },
+      "scene": {
+        "vantage": "low at the lip of a steaming furrow in a frozen berry field, looking up past ruled lines of tiny torches",
+        "light": "winter morning gold coming in low and sideways; steam lit from beneath by ant-torches",
+        "scent": "steam, ant-smoke, frost, her own breath — and no one",
+        "edges": [
+          "ant torch-lines that should curl along roots run dead straight and meet at right angles",
+          "one line of torches climbs the furrow wall and stops as if ruled",
+          "a black bowler hat hangs at a person's head height, resting on nothing, steam parting around the gap beneath it",
+          "in the steam under the hat: a circle, a rectangle, four plain lines"
+        ],
+        "hint": "painterly frozen berry field at golden winter morning; a steaming furrow; tiny ant torches in perfect ruled lines; a black bowler hat floating above the furrow; beneath it a figure drawn in plain pencil lines — circle head, rectangle body, line limbs — visibly a drawing inside a painting"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The warm furrow was steaming when she reached it. It always steamed now. That was the wish: one furrow kept open, always, for whatever arrived next. The frost drew back from it in a soft margin, and beneath it the ants worked late into the coldest nights, and a beetle or two had moved in for the winter and been made to feel at home."
+        },
+        {
+          "type": "paragraph",
+          "text": "This morning the ant-streets were wrong."
+        },
+        {
+          "type": "paragraph",
+          "text": "Ant-streets follow roots, and roots follow water, curling and doubling back, so the little lights had always run in curls. Now, for an arm's length on either side of the furrow, they ran straight. They met at right angles. One line of torches climbed the furrow's wall to the lip of the frost and stopped there as neatly as if someone had ruled it and lifted the pencil.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Above that place, at the height of a person's head, the hat was waiting."
+        },
+        {
+          "type": "paragraph",
+          "text": "It was the hat from the road. Round in the crown, short in the brim, black as a stove. It rested on nothing. Steam rose into the gap beneath it, parted around the gap the way water parts around a stone, and closed again above."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof circled the furrow once, slowly. No tracks in the frost. No scent but steam and ant-smoke and her own breath. She circled it again."
+        },
+        {
+          "type": "paragraph",
+          "text": "The second time round, the steam had a shape in it."
+        },
+        {
+          "type": "paragraph",
+          "text": "A circle, under the hat. Below the circle, a rectangle. Two lines down from the rectangle and two lines out from its sides. It was not a person made of steam. It was a drawing of a person, done the plainest way there is, by someone who had not had much time and had not wanted to waste any. Where the steam thinned, the lines stayed."
+        },
+        {
+          "type": "paragraph",
+          "text": "He was not facing her. He was not facing the house, or the road, or the grove. He was facing exactly a quarter turn away from all of it, toward a place on the furrow's edge where nothing seemed to be."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof could not smell him. She could smell that someone was."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "data-motif": "torch",
+      "climate": {
+        "tempo": "morning",
+        "tint": "ember",
+        "hook": "torch-and-line"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "She went to see what he was looking at, because that is what a dog does with somebody else's attention."
+        },
+        {
+          "type": "paragraph",
+          "text": "It was an ant. One ant, at the very end of the ruled street, holding up a torch that had gone out. It held it the way you hold up a thing to show that it is broken, before you are ready to say it can't be mended."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two dots had arrived in the circle of his head while Boof was looking at the ant. She had the strong impression that they had not been there before, and that they would not always be."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then he did a thing Boof had no word for. He lifted one arm — a line — and lowered the end of it to the ant's torch, and the end of the line was lit, a little, as if it had always been a wick and had only now been asked.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The torch caught."
+        },
+        {
+          "type": "paragraph",
+          "text": "The ant inspected it. It turned it this way and that, in the manner of someone who has been sold a bad torch before, and decided this one would do. It went home down the straight street without looking back.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "He lowered the arm. It was shorter than the other one now. Not by much — by about the length of an ant's torch. Boof looked at that arm, and at the other arm, and at that arm again. Nobody explained."
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/14.png",
+        "alt": "A lone tree on a golden slope under a teal storm sky; a stream bends below, and a plain pencil-drawn figure — circle head, rectangle body, line limbs, one arm shorter — walks straight up the hill beneath a black bowler hat floating clear of his head.",
+        "loading": "lazy"
+      },
+      "figcaption": "The Thursday Nobody Kept: the lane bends; the hat goes straight."
+    },
+    {
+      "type": "custom-path",
+      "climate": {
+        "tempo": "day",
+        "tint": "teal",
+        "hook": "straight-where-road-bends"
+      },
+      "scene": {
+        "vantage": "from the bent lane at a dog's height, watching a figure keep a dead-straight line across the country ahead",
+        "light": "a whole unpeopled winter day, low sun moving over frost and stubble, long gold at the end",
+        "scent": "frozen pond, cut hedge, river mud, the waxed paper of a warm slice",
+        "edges": [
+          "a hedge with a neat rectangular gap exactly one figure wide, its cut edges green",
+          "a frozen pond crossed on the shortest line",
+          "a grove repeating a hat a beat late"
+        ],
+        "hint": "winter countryside seen from a winding lane; far ahead a sparse line-drawn figure under a floating bowler hat walks a perfectly straight line through a hedge, leaving a rectangular gap; painterly land, diagrammatic traveler"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "When he moved, he did not walk. He was in one place, and then in the next place along, as if the day were being told in pictures and somebody had skipped the ones in between. Then a pause. Then the next picture. Boof had followed hares, and hares did not do that. She had followed the Genie's directions, and even those did not do that."
+        },
+        {
+          "type": "paragraph",
+          "text": "He went straight. The lane out of the field bends twice, once around the miller's pond and once around the old stone with the iron ring in it, and he did not bend with it. He crossed the frozen pond on the shortest line. He passed the stone without minding it. Where the hedge stood in his way he went through, and afterward there was a gap in the hedge: a neat rectangle exactly his size, its cut edges green, as if the hedge had always grown that way and was only now admitting it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof took the lane. She had paws, and they were not the kind for crossing ponds. It did not matter. Wherever the lane straightened, he was ahead on it. Direction was enough to follow. The scenery could do as it liked.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "She stopped once, at the house, for something from the shelf by the cold stove: a slice of BoonWAP in waxed paper that she had carried out of Bonk City a long way back and never eaten. It was still warm. It had no business being warm. She did not know what she was saving it for. A long walk was reason enough to bring it."
+        },
+        {
+          "type": "paragraph",
+          "text": "All that Thursday they crossed the land in their two ways, his straight and hers bent. Past the grove that keeps echoes, which repeated the hat a beat late and then could not decide where to put it — and something in there that sounded a little like an old genie said, to nobody, “Ah. There it is.” Along the river path. Up the long rise toward the Bonk City road."
+        },
+        {
+          "type": "paragraph",
+          "text": "No one else was on any of it. A day without people, Boof found, was not empty. It was only quiet enough to hear the land at work.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "At the top of the rise the light went long and gold, and then it went out all at once, the way a lamp is put out by someone with somewhere to be."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Friday",
+      "data-motif": "bell",
+      "data-foreshadow": "feast",
+      "climate": {
+        "tempo": "morning",
+        "tint": "archive",
+        "hook": "crier-bell"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "It was Friday before Boof had finished blinking."
+        },
+        {
+          "type": "paragraph",
+          "text": "Below the rise, in the farms along the road, latches lifted. Smoke stood up from three chimneys at once. A bucket knocked a well and somebody swore at the cold — cheerfully, the way a person swears who has slept well and expects a perfectly ordinary day. Not one of them had missed anything. A Thursday is very easy not to miss, if nobody tells you it was there."
+        },
+        {
+          "type": "paragraph",
+          "text": "Up the Bonk City road came a cart, and on the cart a bell, and behind the bell a crier in a coat with too many buttons, ringing at every gate as if each gate had asked her to personally."
+        },
+        {
+          "type": "paragraph",
+          "text": "“By leave of the table,” she called, “and the pie at the head of it! The remainder has come due!”"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof sat down in the middle of the road, so that the cart would have to stop or go around. It stopped. Carts usually did."
+        },
+        {
+          "type": "paragraph",
+          "text": "The crier read from a sheet that had been folded so many times it was more crease than paper. At the Turning of the Year, in Bonk City, at the Feast of the Uneven Slice, the one destined to spill exactly one pie would come to the table. Not one pie and a bit. Not most of one. One. It had been foretold for so long that the city had stopped believing it — which was, the crier said, lowering the sheet, apparently the sign.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Then the last line, read slower: any household that has received a stranger without a receipt is asked to send word."
+        },
+        {
+          "type": "paragraph",
+          "text": "She looked down over the rail at Boof. “Anything turn up at yours?”"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof looked across the road."
+        },
+        {
+          "type": "paragraph",
+          "text": "The hat hung above the long grass at the verge, at the height of a person's head. Under it stood the figure, plain as chalk on slate, facing the hedge."
+        },
+        {
+          "type": "paragraph",
+          "text": "The crier followed her look. “Oh,” she said. “Someone's put up a scarecrow. Not a very good one.” She regarded it with the generous eye of a woman who had seen a great many scarecrows and liked most of them. “Nice hat.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "The figure turned his head. It did not turn the way a head turns. One moment the circle faced the hedge; the next it faced the crier, with nothing in between, and two dots in it."
+        },
+        {
+          "type": "paragraph",
+          "text": "The crier, to her credit, did not drop the bell. She took out a pencil instead, and a clean slip, and held the one over the other for some time. Writing down what had arrived was her whole work. The maps took ink these days. There was no reason on earth it should not be easy."
+        },
+        {
+          "type": "paragraph",
+          "text": "“I'll put that I saw a hat,” she said at last, and wrote it, and the ink stayed."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "data-motif": "unspent-wish",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "into-the-field"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The cart went on toward Bonk City with its bell, and the road went with it, in its usual bends."
+        },
+        {
+          "type": "paragraph",
+          "text": "The figure went a quarter turn off the road, straight into the field. Boof sat in the road with the warm slice in her teeth and did the arithmetic a dog does, which is not done in numbers. The road was going to the feast. Everyone on it would be going to the feast. The feast was where the story was plainly meant to happen. The figure was going somewhere the story had not said."
+        },
+        {
+          "type": "paragraph",
+          "text": "She could not smell him. She could smell that someone was."
+        },
+        {
+          "type": "paragraph",
+          "text": "Far behind her, in the warm furrow, one ant-street ran perfectly straight, and at the end of it burned a torch that had been, until that morning, a little of somebody's arm."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof went into the field."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "The Genie's price comes due. One Thursday goes missing from every person's week; people sleep on Wednesday and wake on Friday, having missed nothing they know of."
+      },
+      {
+        "description": "Those who keep no calendar keep the day anyway: the land, the ants, the birds, and a dog who keeps mornings instead of weeks."
+      },
+      {
+        "description": "Near the warm furrow the ant torch-lines stop curling along roots and run straight, meeting at right angles."
+      },
+      {
+        "description": "A black bowler hat hangs at a person's height above the furrow, resting on nothing. Under it, a figure drawn in a few plain lines, facing a quarter turn away from everything."
+      },
+      {
+        "description": "An ant's dead torch is relit from the end of a drawn arm. The arm stays shorter by about a torch's length."
+      },
+      {
+        "description": "He does not walk; he is in one place and then the next. He goes straight where the lane bends, and a hedge he passes through keeps a rectangular gap."
+      },
+      {
+        "description": "Bonk City's crier announces the Feast of the Uneven Slice: at the Turning of the Year, the one destined to spill exactly one pie will come to the table. Households that received a stranger without a receipt should send word."
+      },
+      {
+        "description": "The crier takes him for a poor scarecrow until he looks at her. She writes down that she saw a hat, and the ink stays."
+      }
+    ]
+  }
+}

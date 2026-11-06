@@ -1436,12 +1436,6 @@
   box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--hub-gold) 16%, transparent);
 }
 
-.discovery-strip .topic-card[data-lead='true'] {
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--hub-hearth) 38%, transparent),
-    0 0.9rem 1.8rem color-mix(in srgb, var(--hub-hearth) 14%, transparent);
-}
-
 .hub-section-aside {
   color: var(--region-accent, var(--hub-accent));
 }

@@ -154,9 +154,9 @@
 }
 
 ^"story_lanes"[
-  { id: "boof_path" status: "active" role: "the existing lore.land serial" movement: "egg -> wish -> pie -> maps -> warm furrow" }
+  { id: "boof_path" status: "complete" role: "Book One of the lore.land serial (01–13)" movement: "egg -> wish -> pie -> maps -> warm furrow" }
   { id: "moon_engineer" status: "seed" role: "a three-book reading folded by a crease" movement: "cuffs crease the life -> the dog folds the garage -> the moon is the pinch -> the other face is bone -> the hinge is the lift" }
-  { id: "wapboy_emergence" status: "seed" role: "sightings, diagrams, marginalia, and choices" movement: "mark -> figure -> participant -> person" }
+  { id: "wapboy_emergence" status: "active" role: "Book Two of the serial (14–), with Boof still the first witness; sightings, diagrams, marginalia, and choices — see .spw/surfaces/wonder-about-pie.spw" movement: "mark -> figure -> participant -> person" }
 ]
 
 ^"teaser_grammar"{

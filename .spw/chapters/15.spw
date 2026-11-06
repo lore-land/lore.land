@@ -1,0 +1,113 @@
+# Chapter 15 Canon Reference
+# Generated from /book/chapter/15/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_15
+#:chapter-canon #!reference
+
+^[chapter/15]{
+  title: "Child, Parcel, or Door"
+  description: "Chapter 15 of Lore.Land: Child, Parcel, or Door. A straight line across Boon.land comes out where no road arrives — at Bonk City's low parcel gate, at dusk, with a storm behind it. The porter holds the gate for a figure whose hat will no..."
+  mood: "labyrinth"
+  period: "winter"
+  chapter_path: "/book/chapter/15/"
+}
+
+&[chapter/15/routes]{
+  web: "/book/chapter/15/"
+  timeline: "/book/timeline.html#chapter-15"
+  motif: ~[motif/chapter-15]{optional}
+}
+
+^[chapter/15/spine]{
+  =prev{ ~".spw/chapters/14.spw#chapter_14" }
+  weave: "<> {} <> <> [] {} <>"
+  reading: "the labyrinth grows a new corridor; the telling gathers; Boof pads in on a thread of scent; the reflection reads back by candlelight; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
+}
+
+^[chapter/15/sections][
+  s01: <
+    handle: "custom-labyrinth/01"
+    type: "custom-labyrinth"
+    excerpt: "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to talk. Every road into it bends at least twice on the way in, so that whichever gate you came by, you arri..."
+    route: ^[chapter/15/s01]{open}
+  >
+  s02: {
+    handle: "section/02"
+    type: "section"
+    title: "The Parcel Gate"
+    excerpt: "The porter was hauling the gate shut when they came. He was a broad man with a lantern on a hook at his belt and the face of someone who has been told by a great many storms exactly what they think of open gates. Outs..."
+    route: ^[chapter/15/s02]{open}
+  }
+  s03: <
+    handle: "custom-boof/03"
+    type: "custom-boof"
+    excerpt: "Boof shook the rain out of her ears and went to see what he was holding. It was a button: horn, a little scuffed, round, with two holes in it. Boof knew it. She had been under BoonWAP's table on the wet night somebody..."
+    route: ^[chapter/15/s03]{open}
+  >
+  s04: <
+    handle: "custom-reflection/04"
+    type: "custom-reflection"
+    excerpt: "That night the city wrote him down three times. The porter wrote him in the gate-book, in the columns the gate-book has. Received: one, at dusk, by hand. Shape: rectangular, with handle (separate). Condition: dry, whi..."
+    route: ^[chapter/15/s04]{open}
+  >
+  s05: [
+    handle: "figure/05"
+    type: "figure"
+    image: "/book/images/15.png"
+    route: ^[chapter/15/s05]{open}
+  ]
+  s06: {
+    handle: "section/06"
+    type: "section"
+    title: "Three Receipts"
+    excerpt: "By breakfast the records office had all three, and the records office does not like a stranger to be three things. It sent for Mx. BoneWAP. BoneWAP came up from the lower town clean-boiled and exact, crust laid like a..."
+    route: ^[chapter/15/s06]{open}
+  }
+  s07: <
+    handle: "custom-boof/07"
+    type: "custom-boof"
+    excerpt: "None of which was what the city was talking about. By noon the word had gone round every curve of Bonk City, as word does there, bouncing off the glass: the crier's notice had been right. Someone had come in at the pa..."
+    route: ^[chapter/15/s07]{open}
+  >
+]
+
+&[chapter/15/cast]{
+  labyrinth: <
+    register: "a maze that grows a corridor for every wrong turn, and remembers each one"
+    .enters: "custom-labyrinth/01"
+  >
+  boof: <
+    register: "dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended"
+    .enters: "custom-boof/03"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/04"
+  >
+}
+
+%[chapter/15/measures]{
+  %sections: 7
+  %prose: 2
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/15/lore]{
+  notes: [
+    "Bonk City has no straight streets; every road bends twice so that you arrive facing the plaza. A straight line comes out at the back wall, at the low parcel gate."
+    "A bronze post that leaned for two hundred years stands upright after the figure passes it."
+    "The parcel gate fits the figure and not his hat. The porter holds the gate against a thirty-year rule; the feast flour is spoiled; he signs the damage in his own name. The hat goes over t..."
+    "Under the gate the figure retrieves a horn button lost in the plaza long ago: round, with two holes."
+    "Three honest records: the gate-book says parcel, the carpenter's log says door (opens inward), the night school's roll says child (name left blank)."
+    "Mx. BoneWAP pins all three side by side and will not take any of them down."
+    "By one o'clock the city decides the destined one is the dog, and seats Boof at the second place."
+    "The figure stands a quarter turn away from the feast, watching the woman who washes the plates."
+  ]
+}
+
+~[chapter/15/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

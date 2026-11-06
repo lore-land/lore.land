@@ -17,8 +17,9 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_09_27.D';
-import { constellationFor } from './constellation.mjs?v=2026_09_27.I';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.A';
+import { constellationFor } from './constellation.mjs?v=2026_11_05.A';
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -27,7 +28,7 @@ const SEARCH_URL = '/book/content/search.json';
 const FEEDBACK_URL = 'https://autonomous.feedback/lore.land?at=';
 const HISTORY_KEY = 'lore.desk.spells.v1';
 const NOOK_KEY = 'lore.nook.v1';
-const TOTAL = 13;
+const TOTAL = TOTAL_CHAPTERS;
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -551,7 +552,7 @@ export async function initScriptoriumDesk() {
     card('desk-book', '%', 'Your copy of the book', '%[read]',
       el('p', { className: 'desk-quiet' }, `${state.visited.size} of ${TOTAL} opened.`), bookList),
     card('desk-shelf', '!', 'Read without a signal', '![keep]{shelf}',
-      el('p', {}, 'Keep all thirteen chapters on this device, dressed and whole, for trains, flights and quiet rooms.'), shelfStatus),
+      el('p', {}, 'Keep every chapter on this device, dressed and whole, for trains, flights and quiet rooms.'), shelfStatus),
     card('desk-new', '?', 'What changed', '?[new]',
       latest ? el('ul', { className: 'desk-notes' }, (latest.notes || []).map((note) => el('li', {}, note))) : el('p', {}, 'No notes yet.'),
       latest?.date ? el('p', { className: 'desk-quiet' }, `Set ${latest.date}.`) : null),

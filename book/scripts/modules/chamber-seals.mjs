@@ -3,7 +3,8 @@
  *
  * Every chamber wears its number as petals: counting is reading.
  * The thirteen tints sweep one full day, dawn gold to midnight ink,
- * so the chapter index doubles as a horizon timeline.
+ * so the chapter index doubles as a horizon timeline. Book Two starts a
+ * second day: chamber 14 is dawn gold again, with fourteen petals.
  *
  * Pure string construction, deterministic per chapter, no DOM required
  * until render — the same module can stamp seals at build time.
@@ -68,17 +69,17 @@ function waxBlobPath(rng, cx, cy, baseRadius) {
 }
 
 export function chamberTint(chapterNumber) {
-  const index = Math.min(Math.max(chapterNumber, 1), CHAMBER_TINTS.length) - 1;
+  const index = (Math.max(Math.round(chapterNumber) || 1, 1) - 1) % CHAMBER_TINTS.length;
   return CHAMBER_TINTS[index];
 }
 
 /**
  * Build the seal as an SVG string.
- * @param {number} chapterNumber 1..13 — the petal count and tint index.
+ * @param {number} chapterNumber 1..26 — the petal count; the tint repeats each day of thirteen.
  * @param {{ idSuffix?: string, title?: string }} [options]
  */
 export function sealMarkup(chapterNumber, options = {}) {
-  const n = Math.min(Math.max(Math.round(chapterNumber) || 1, 1), 13);
+  const n = Math.min(Math.max(Math.round(chapterNumber) || 1, 1), 26);
   const tint = chamberTint(n);
   const rng = mulberry32(n * 1013 + 7);
   const gradientId = `seal-wax-${n}${options.idSuffix ? `-${options.idSuffix}` : ''}`;

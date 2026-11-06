@@ -24,7 +24,9 @@ import { LENSES, leanFor } from './valence-lens.mjs?v=2026_09_27.A';
 
 const NUMBER_WORDS = Object.freeze([
   '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
-  'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen'
+  'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen',
+  'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen',
+  'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'
 ]);
 
 /** Style tail for plate prompts — the series look from the 2026-09-26 studies. */
@@ -488,8 +490,22 @@ function renderVoice(h, section, context) {
 
 /* ─── Chapter end: the turn, the colophon, the doors ─────────────────── */
 
+/** "2026-11-13" → "Friday 13 November", read as a calendar day wherever the reader is. */
+function stoneDay(iso) {
+  const [year, month, day] = String(iso || '').split('-').map(Number);
+  if (!year || !month || !day) return '';
+  const date = new Date(Date.UTC(year, month - 1, day));
+  const weekday = date.toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' });
+  const monthName = date.toLocaleDateString('en-GB', { month: 'long', timeZone: 'UTC' });
+  return `${weekday} ${day} ${monthName}`;
+}
+
 function renderTurn(h, next, withBase) {
-  const kicker = next.wraps ? 'The serial continues · begin again' : 'Turn the page';
+  // The newest chapter turns toward the next stone, then back to the first page.
+  const stone = next.wraps && next.upcoming ? stoneDay(next.upcoming.date) : '';
+  const kicker = stone
+    ? `${chapterOrdinal(next.upcoming.chapter)} is set ${stone} · until then, begin again`
+    : next.wraps ? 'The serial continues · begin again' : 'Turn the page';
   const link = h('a', {
     className: 'chapter-turn-link',
     href: withBase(next.href),

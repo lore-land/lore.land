@@ -64,6 +64,16 @@
       { "subject": "Shells", "search": "Mollusks", "lc": "QL401–432", "dewey": "594", "wander": "Find a shell drawn in cross-section. Notice that it is a door that grew." },
       { "subject": "Doors", "lc": "NA3000–3010", "dewey": "721.822", "wander": "Find a door that has been left open in a photograph. Ask who it is waiting for." },
       { "subject": "Cataloging", "lc": "Z693–695.83", "dewey": "025.3", "wander": "End where the library describes itself. Read how a new book is given a place, then go give one to something you love." }
+    ],
+    "14": [
+      { "subject": "Calendars", "lc": "CE1–97", "dewey": "529.3", "wander": "Find a calendar that once dropped days on purpose. Read what people said they had lost, and whether the fields noticed." },
+      { "subject": "Drawing", "search": "Drawing -- Technique", "lc": "NC730–758", "dewey": "741.2", "wander": "Find a figure drawn in as few lines as will hold it. Count the lines. Notice which one you would miss first." },
+      { "subject": "Ants", "lc": "QL568.F7", "dewey": "595.796", "wander": "Find a drawing of an ant nest cut open. Trace one street home." }
+    ],
+    "15": [
+      { "subject": "Parcel post", "search": "Postal service", "lc": "HE6000–7500", "dewey": "383", "wander": "Find the rules for what may be sent by parcel post. Then find the year someone posted a child." },
+      { "subject": "Classification", "search": "Classification -- Books", "lc": "Z696–697", "dewey": "025.4", "wander": "Find where the library shelves a book that is about two things. Ask who decided, and whether the book would agree." },
+      { "subject": "Carpentry", "lc": "TH5601–5701", "dewey": "694", "wander": "Find how a door is measured for its frame. Then measure something that is standing still." }
     ]
   }
 }

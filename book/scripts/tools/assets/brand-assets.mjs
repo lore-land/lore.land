@@ -3,6 +3,7 @@
  *
  *   node book/scripts/tools/assets/brand-assets.mjs            (npm run assets:brand)
  *   node book/scripts/tools/assets/brand-assets.mjs --og       only chapter share cards
+ *   node book/scripts/tools/assets/brand-assets.mjs --og --chapters=14,15   only those cards
  *   node book/scripts/tools/assets/brand-assets.mjs --icons    only PWA icons
  *
  * Chapter cards (book/images/og/chapter-NN.jpg, 1200×630): the chapter's own
@@ -94,7 +95,7 @@ function buildIcons(work) {
   console.log('icons: icon-192, icon-512, icon-maskable-512, apple-touch-icon, favicon.svg');
 }
 
-function buildCards(work) {
+function buildCards(work, onlyChapters = null) {
   if (!existsSync(SERIF) || !existsSync(SERIF_ITALIC)) {
     throw new Error(`brand-assets needs Georgia at ${FONT_DIR} for chapter cards.`);
   }
@@ -103,7 +104,8 @@ function buildCards(work) {
   const sigil = join(work, 'card-sigil.png');
   renderSvg(sigilSvg({ size: 46, scale: 1, stroke: 1.1, background: false }), sigil, work);
 
-  const files = readdirSync(CHAPTERS).filter((name) => /^\d{2}\.json$/.test(name)).sort();
+  const files = readdirSync(CHAPTERS).filter((name) => /^\d{2}\.json$/.test(name)
+    && (!onlyChapters || onlyChapters.includes(Number(name.slice(0, 2))))).sort();
   for (const name of files) {
     const data = JSON.parse(readFileSync(join(CHAPTERS, name), 'utf8'));
     const slug = name.slice(0, 2);
@@ -151,9 +153,11 @@ need('magick');
 need('rsvg-convert');
 const work = mkdtempSync(join(tmpdir(), 'lore-brand-'));
 try {
-  const only = process.argv.slice(2);
+  const chapterArg = process.argv.find((arg) => arg.startsWith('--chapters='));
+  const onlyChapters = chapterArg ? chapterArg.slice('--chapters='.length).split(',').map(Number).filter(Boolean) : null;
+  const only = process.argv.slice(2).filter((arg) => !arg.startsWith('--chapters='));
   if (!only.length || only.includes('--icons')) buildIcons(work);
-  if (!only.length || only.includes('--og')) buildCards(work);
+  if (!only.length || only.includes('--og')) buildCards(work, onlyChapters);
 } finally {
   rmSync(work, { recursive: true, force: true });
 }

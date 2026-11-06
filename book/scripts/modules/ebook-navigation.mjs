@@ -70,7 +70,8 @@ function labelFromSection(section, index) {
   if (section.dataset.voiceKicker) {
     // "Boof · Ant-warmth smelled earthy…" — a voice's name alone repeats
     // down the contents; its opening words tell the chambers apart.
-    const opening = section.querySelector(':scope > p')?.textContent.trim().split(/\s+/).slice(0, 4).join(' ');
+    // Skip the marks row (motif / trope chips): it is a <p>, but not prose.
+    const opening = section.querySelector(':scope > p:not(.section-marks)')?.textContent.trim().split(/\s+/).slice(0, 4).join(' ');
     return opening ? `${section.dataset.voiceKicker} · ${opening.replace(/[,.;:!?]+$/, '')}…` : section.dataset.voiceKicker;
   }
 

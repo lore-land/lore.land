@@ -20,6 +20,7 @@
 
 ^[chapter/13/spine]{
   =prev{ ~".spw/chapters/12.spw#chapter_12" }
+  =next{ ~".spw/chapters/14.spw#chapter_14" }
   weave: "<> <> <> [] {} <>"
   reading: "Boof pads in on a thread of scent; the reflection reads back by candlelight; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
 }

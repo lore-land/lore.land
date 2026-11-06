@@ -1,0 +1,488 @@
+/*
+ * ─── The serial, now ─────────────────────────────────────────────
+ * The entrance says what is new, when the next stone is set, who is in
+ * the story, and which book a chapter belongs to. Same voice as the rest
+ * of the page: serif for what the story says, mono for what the structure
+ * says, every surface mixed from the theme's own panel.
+ * Unlayered on purpose — it follows wonder.css and refines it.
+ */
+
+/* Hero: a second door for returning readers. */
+body[data-surface='monument'] .hub-hero .hub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+body[data-surface='monument'] .hub-cta-new {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 55%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-gold) 10%, var(--hub-panel));
+  color: var(--hub-ink);
+  padding: 0.72rem 1.15rem 0.72rem 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+body[data-surface='monument'] .hub-cta-new::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  width: 0.42rem;
+  height: 0.42rem;
+  margin-top: -0.21rem;
+  border-radius: 50%;
+  background: var(--hub-gold);
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--hub-gold) 22%, transparent);
+}
+
+body[data-surface='monument'] .hub-cta-new:hover,
+body[data-surface='monument'] .hub-cta-new:focus-visible {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 18%, var(--hub-panel));
+}
+
+body[data-surface='monument'] .hub-cta-new .hub-cta-sub {
+  color: var(--hub-muted);
+}
+
+/* ─── Book Two: new stones ─────────────────────────────────────── */
+
+body[data-surface='monument'] .serial-now {
+  position: relative;
+  scroll-margin-top: 6rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--hub-line);
+  border-top: 3px solid var(--hub-gold);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--hub-gold) 14%, transparent), transparent 55%),
+    radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--hub-accent) 10%, transparent), transparent 60%),
+    var(--hub-panel);
+}
+
+body[data-surface='monument'] .serial-now-head {
+  max-width: 46rem;
+  margin-bottom: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+body[data-surface='monument'] .serial-now-head h2 {
+  margin: 0.3rem 0 0.55rem;
+  font-family: var(--hub-display);
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .serial-now-head h2 em {
+  color: color-mix(in srgb, var(--hub-gold) 62%, var(--hub-ink));
+}
+
+body[data-surface='monument'] .serial-stones {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+body[data-surface='monument'] .serial-stone {
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+}
+
+body[data-surface='monument'] .serial-stone > a,
+body[data-surface='monument'] .serial-stone-next {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: 100%;
+  padding: 0.6rem 0.6rem 1.05rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--hub-paper) 70%, var(--hub-panel));
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+body[data-surface='monument'] .serial-stone > a:hover,
+body[data-surface='monument'] .serial-stone > a:focus-visible {
+  border-color: color-mix(in srgb, var(--hub-gold) 60%, var(--hub-line));
+  box-shadow: 0 0.9rem 1.8rem color-mix(in srgb, var(--hub-ink) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+body[data-surface='monument'] .serial-stone-plate {
+  display: block;
+  margin-bottom: 0.45rem;
+  overflow: hidden;
+  border-radius: 0.32rem;
+  aspect-ratio: 16 / 9;
+  background: var(--hub-accent-deep);
+}
+
+body[data-surface='monument'] .serial-stone-plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+body[data-surface='monument'] .serial-stone > a:hover .serial-stone-plate img {
+  transform: scale(1.03);
+}
+
+body[data-surface='monument'] :is(.serial-stone-kicker, .serial-stone-title, .serial-stone-in-which) {
+  display: block;
+  padding-inline: 0.45rem;
+}
+
+body[data-surface='monument'] .serial-stone-kicker {
+  color: var(--hub-accent-deep);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .serial-new {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--hub-gold);
+  color: #1d1708;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  vertical-align: 0.08em;
+}
+
+body[data-surface='monument'] .serial-stone-title {
+  font-family: var(--hub-display);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  line-height: 1.15;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .serial-stone-in-which {
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-size: 0.98rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* The next stone: a sealed place, not a link. */
+body[data-surface='monument'] .serial-stone-next {
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.25rem 1.1rem;
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--hub-gold) 45%, var(--hub-line));
+  background: transparent;
+}
+
+body[data-surface='monument'] .serial-stone-next :is(.serial-stone-kicker, .serial-stone-title, .serial-stone-in-which) {
+  padding-inline: 0;
+}
+
+body[data-surface='monument'] .serial-stone-seal {
+  display: block;
+  width: 4.6rem;
+  height: 4.6rem;
+  margin-bottom: 0.6rem;
+}
+
+body[data-surface='monument'] .serial-stone-seal svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The story so far: a quiet disclosure, open to anyone arriving mid-serial. */
+body[data-surface='monument'] .serial-recap {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--hub-line);
+}
+
+body[data-surface='monument'] .serial-recap summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  padding: 0.95rem 0 0.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+body[data-surface='monument'] .serial-recap summary::-webkit-details-marker {
+  display: none;
+}
+
+body[data-surface='monument'] .serial-recap summary::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--hub-accent-deep);
+  font-family: var(--font-family-mono, monospace);
+}
+
+body[data-surface='monument'] .serial-recap[open] summary::after {
+  content: '−';
+}
+
+body[data-surface='monument'] .serial-recap-kicker {
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-style: italic;
+}
+
+body[data-surface='monument'] .serial-recap summary strong {
+  font-family: var(--hub-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--hub-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--hub-gold) 70%, transparent);
+  text-underline-offset: 0.25em;
+}
+
+body[data-surface='monument'] .serial-recap-body {
+  max-width: 62ch;
+  padding: 0.6rem 0 0.2rem;
+  font-family: var(--hub-display);
+  font-size: 1.04rem;
+  line-height: 1.6;
+}
+
+body[data-surface='monument'] .serial-recap-body p {
+  margin: 0 0 0.85rem;
+}
+
+body[data-surface='monument'] .serial-recap-doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+}
+
+@media (min-width: 44rem) {
+  body[data-surface='monument'] .serial-stones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  body[data-surface='monument'] .serial-stone-next {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1.1rem;
+  }
+  body[data-surface='monument'] .serial-stone-next .serial-stone-seal {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .serial-stones {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.8fr);
+  }
+  body[data-surface='monument'] .serial-stone-next {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  body[data-surface='monument'] .serial-stone-next .serial-stone-seal {
+    margin-bottom: 0.6rem;
+  }
+}
+
+/* ─── Curiosities: four drawers now ─────────────────────────────── */
+
+body[data-surface='monument'] .wonder-drawers {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .wonder-drawers {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 34rem) {
+  body[data-surface='monument'] .wonder-drawers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+html[data-packing='compact'] body[data-surface='monument'] .wonder-drawers {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body[data-surface='monument'] .wonder-object-hat img {
+  object-position: center 52%;
+}
+
+/* ─── Who you'll meet ───────────────────────────────────────────── */
+
+body[data-surface='monument'] .cast-board {
+  scroll-margin-top: 6rem;
+}
+
+body[data-surface='monument'] .cast-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: 0.8rem;
+}
+
+body[data-surface='monument'] .cast-card {
+  --cast-accent: var(--hub-accent);
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+}
+
+body[data-surface='monument'] .cast-card[data-cast='boof'] { --cast-accent: var(--hub-hearth); }
+body[data-surface='monument'] .cast-card[data-cast='ants'] { --cast-accent: var(--hub-gold); }
+body[data-surface='monument'] .cast-card[data-cast='genie'] { --cast-accent: var(--hub-berry); }
+body[data-surface='monument'] .cast-card[data-cast='bane'] { --cast-accent: var(--hub-hearth-ink, var(--hub-hearth)); }
+body[data-surface='monument'] .cast-card[data-cast='boon'] { --cast-accent: var(--hub-gold); }
+body[data-surface='monument'] .cast-card[data-cast='bone'] { --cast-accent: var(--hub-muted); }
+body[data-surface='monument'] .cast-card[data-cast='hat'] { --cast-accent: var(--hub-ink); }
+
+body[data-surface='monument'] .cast-card a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  height: 100%;
+  padding: 0.95rem 1rem 1.05rem;
+  border: 1px solid var(--hub-line);
+  border-top: 2px solid var(--cast-accent);
+  border-radius: 0.35rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--cast-accent) 10%, transparent), transparent 55%),
+    color-mix(in srgb, var(--hub-panel) 70%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+body[data-surface='monument'] .cast-card a:hover,
+body[data-surface='monument'] .cast-card a:focus-visible {
+  border-color: color-mix(in srgb, var(--cast-accent) 55%, var(--hub-line));
+}
+
+body[data-surface='monument'] .cast-first {
+  color: color-mix(in srgb, var(--cast-accent) 55%, var(--hub-muted));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .cast-name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--hub-display);
+  font-size: 1.3rem;
+  line-height: 1.15;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .cast-line {
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* The hat floats a little, as it does everywhere else. */
+body[data-surface='monument'] .cast-hat {
+  width: 1.7rem;
+  height: auto;
+  fill: currentColor;
+  translate: 0 -0.35rem;
+  rotate: -7deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .cast-card[data-cast='hat'] a:hover .cast-hat {
+    translate: 0.2rem -0.6rem;
+    transition: translate 600ms ease;
+  }
+}
+
+/* ─── Contents: two books ───────────────────────────────────────── */
+
+body[data-surface='monument'] .hub-book-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.75rem;
+  margin: 1.6rem 0 0.6rem;
+  font-family: var(--hub-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+  font-weight: 400;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .hub-chapters-head + .hub-book-title {
+  margin-top: 0.4rem;
+}
+
+body[data-surface='monument'] :is(.hub-book-label, .hub-book-span) {
+  color: var(--hub-accent-deep);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .hub-book-span {
+  margin-left: auto;
+  color: var(--hub-muted);
+  letter-spacing: 0.06em;
+}
+
+body[data-surface='monument'] .hub-ch-upcoming a {
+  opacity: 0.82;
+}
+
+body[data-surface='monument'] .hub-ch-upcoming .hub-ch-thumb-pending {
+  display: grid;
+  place-items: center;
+}
+
+body[data-surface='monument'] .hub-ch-upcoming .hub-ch-thumb-pending svg {
+  width: 62%;
+  height: auto;
+}
+
+body[data-surface='monument'] .hub-ch-upcoming .hub-ch-title {
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] :is(.serial-stone > a, .serial-stone-plate img) {
+    transition: none;
+  }
+  body[data-surface='monument'] .serial-stone > a:hover {
+    transform: none;
+  }
+}
+
+/* Phone hero: bleed to the viewport's edges, whatever the shell's gutter is.
+ * (The shell pads with its own clamp, not --hub-gutter, so a gutter-based
+ * negative margin overshot by a few pixels and scrolled the page sideways.) */
+@media (max-width: 39.99rem) {
+  body[data-surface='monument'] .hub-hero-media {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+}

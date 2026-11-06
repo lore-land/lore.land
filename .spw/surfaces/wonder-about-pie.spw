@@ -1,0 +1,80 @@
+# Book Two — Wonder About Pi(e)
+# Working arc for chambers 14 onward. Book One (01–13) carried an unspent wish to a
+# furrow kept open "for whatever arrives next without a receipt". Book Two is what arrives.
+# Plot is flexible; Boof's characterization is not; the Egg stays an open question.
+#>book_two
+#:story #!book-two #!working
+
+^"book_two"{
+  .title: "Wonder About Pi(e)"
+  .status: "working"
+  .chambers: "14 →"
+  premise: "The Genie paid for Boof's wish with everything he had left, plus one Thursday. The Thursday goes missing from every person's week and stays in the field. On the day nobody kept, someone arrives through the warm furrow without a receipt — a figure in a few plain lines under a hat that never lands."
+  shared_question: "What happens to a wish after it leaves the person who made it?"
+  book_question: "Can a figure made to signify something become a person?"
+  &boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
+  &egg: ~".spw/surfaces/dragon-egg.spw#dragons_egg"
+}
+
+^"host_vector"{
+  .note: "The plot the book's people are pursuing. WAPboy crosses it at a right angle (story-boonhonk#trope_physics)."
+  feast: "Bonk City's Feast of the Uneven Slice at the Turning of the Year, where the one destined to spill exactly one pie is foretold to come to the table."
+  hunt: "The city wants the destined one found before the feast — some to stop the spill, some to crown it."
+  floating_title: "The chosen title floats like the hat. It lands on the wrong person for one scene at a time without becoming false."
+  orthogonal: "The figure attends to whoever the feast overlooks: an ant whose torch went out, a porter holding a gate, the person who washes the plates."
+}
+
+^"threads_paid"{
+  .note: "Book One plants that Book Two collects. Collect by placement, never by explanation."
+  thursday: "chs 03, 05, 08, 12, 13 — a small wish costs a coincidence and a Thursday; ch14 is the Thursday."
+  coincidence: "ch07 — every spent wish owes a coincidence to a stranger; ch12 — a stranger would receive a good coincidence. Left unassigned on purpose."
+  furrow: "ch12 — one warm furrow kept open, always, for whatever arrives next without a receipt; ch14 — something does."
+  hat: "ch13 — a hat at a person's height, touching nothing, farther down the road each time she looked."
+  slice: "ch06 → ch10 — the warm BoonWAP slice Boof has never eaten; still warm in ch14. Carried, never explained."
+  button: "ch06 — somebody in the plaza lost a button; ch15 — the figure retrieves it from under the parcel gate."
+  bell: "ch01 far cart bell → ch13 nearby → ch14 arrives on the crier's cart."
+}
+
+^"chambers"{
+  c14: {
+    title: "The Thursday Nobody Kept"
+    signal: "first_signal + field_signal + orthogonal_signal (story-boonhonk#teaser_grammar)"
+    beats: "no person is in the day → the berries correct a quarter turn → ruled ant-streets → the hat above the furrow, a drawing under it facing ninety degrees away → a dead torch relit from the end of a line arm; the arm stays shorter → straight across country, hedge left with a rectangular gap → Friday arrives with everyone in it → the crier announces the feast; mistakes him for a scarecrow; writes that she saw a hat"
+    remainder: "a straight ant-street with a torch that was a little of somebody's arm"
+  }
+  c15: {
+    title: "Child, Parcel, or Door"
+    signal: "second_signal — records disagree; all three remain valid"
+    beats: "a straight line comes out at the parcel gate where no road arrives → the porter must shut the gate before the storm; the figure fits under the lintel and the hat does not → the porter holds the gate; the feast flour is spoiled; he signs the damage in his own name → the button → gate-book (parcel), repair log (door), night-school roll (child) → Mx. BoneWAP posts all three → by one o'clock the city decides the destined one is the dog"
+    remainder: "three receipts pinned side by side; a lintel marked where a hat very nearly touched it"
+  }
+  c16: {
+    .status: "next stone — 2026-11-13"
+    title_seed: "The Second Place"
+    seed: "Boof wears the floating title for one scene at BoonWAP's table. The figure, at the back, dries plates beside the washer-up nobody has asked the name of (story-boonhonk#boonhonk_anchor_last_slice). If the pie is never smaller, why does the person serving it still get tired?"
+  }
+}
+
+?"open"[
+  "Who receives the good coincidence the small wish owed a stranger?"
+  "What does the hat remember?"
+  "Whose arm-length of line is burning in the ant-street, and does it grow back?"
+  "Is the empty shell at the archive still warm because of what left it, or what is coming?"
+  "Who is destined to spill exactly one pie — and is destiny something you can be mistaken for?"
+]
+
+~"guards"{
+  wapboy: "Never decode the drawing in prose. The name WAPboy does not appear in chapter text until a choice earns it."
+  egg: "Do not say what hatched, or whether anything did. The shell stays warm and empty."
+  fool: "Sidelined. Book Two does not lean on the Fool."
+  boof: "Works for the land, not for pay or fruit; appreciates blueberries without liking them; nose before name."
+  compass: "No cardinal directions — dawnward, hearthward, duskward, by day or destination."
+  ledger: "Records appear as comedy and as care, never as the engine."
+}
+
+^"plates"{
+  .rule: "A Book Two plate is a painted scene with the figure drawn into it in plain lines — the mismatch is the canon (story-boonhonk#wapboy scene_relation)."
+  .status: "study — drawn over 2026-03-01 seed paintings until a painted plate is grounded"
+  p14: "lone tree under a teal storm; a stream bends, the hat goes straight up the slope"
+  p15: "Bonk City's snowed back lanes at night; the figure with a parcel tag, a lit seam like a door, a button in one hand"
+}

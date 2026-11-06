@@ -13,7 +13,7 @@ if (cabinet) {
     discovered.add(drawer.id);
     drawer.dataset.discovered = 'true';
     status.textContent = discovered.size === drawers.length
-      ? 'Three curiosities, three beginnings. Which thread will you follow?'
+      ? `${drawers.length} curiosities, ${drawers.length} beginnings. Which thread will you follow?`
       : `${discovered.size} of ${drawers.length} curiosities found. The land has more to tell.`;
   }
 
