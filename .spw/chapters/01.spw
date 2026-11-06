@@ -29,14 +29,14 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
-    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning. Everything was where it belonged. The latch lifted at the kitchen. The bucket knocked the well. ..."
+    excerpt: "Dawn smelled of frost and wet fur. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot. Everything was where it belonged. The..."
     route: ^[chapter/01/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
     valence: "boon"
-    excerpt: "Ant-warmth smelled earthy and even, like bread left under a cloth. This was sharper. A candle just blown out. Boof knew the paths to the kitchens, the mill, and the grove nobody liked to name after dark. She had never..."
+    excerpt: "Ant-warmth smelled earthy and even, like bread left under a cloth. This was sharper. A candle just blown out. Boof knew the paths to the kitchens, the mill with its flour-pale doorstep, and the grove nobody liked to n..."
     route: ^[chapter/01/s02]{open}
   >
   s03: {
@@ -56,20 +56,20 @@
     handle: "section/05"
     type: "section"
     title: "The Maps That Look Away"
-    excerpt: "Before the frost was off the fences, Boof had carried the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. Along ..."
+    excerpt: "Before the frost was off the fences, Boof had carried the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. The ma..."
     route: ^[chapter/01/s05]{open}
   }
   s06: {
     handle: "section/06"
     type: "section"
     title: "Following the Hum"
-    excerpt: "Outside, the berries still leaned toward the grove. Boof had spent the morning asking a book. The field had been pointing all along. She settled the feed-sack against her chest, where a pup might ride. A fine gold cra..."
+    excerpt: "Outside, the berries still leaned toward the grove, every row combed one way like wet fur. Boof had spent the morning asking a book. The field had been pointing all along. She settled the feed-sack against her chest, ..."
     route: ^[chapter/01/s06]{open}
   }
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
-    excerpt: "Evening laid long light across the field. Boof was hungry. The egg was warm. For a while, that was all. Behind her, the berries glowed under their leaves. Ahead, the first trees crowded close. Then a sound came out of..."
+    excerpt: "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was frying onions, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was al..."
     route: ^[chapter/01/s07]{open}
   >
 ]
@@ -98,6 +98,10 @@
     "A hairline crack shaped like a door left ajar opens along the egg's crown as it warms. Something inside is waiting to be finished, not hatched."
     "The grove downhill keeps echoes and will not be named after dark; Boof carries the wish toward it. (Chamber 02.)"
     "At dusk, one far-off HONK rises from the treeline—one note, like a goose that learned jazz. It is a signature, though no one has met the signer yet."
+    "Torch-ants keep the field's lit streets along the berry roots all winter. They are businesslike and particular about torches: one that goes out at the wrong corner stops the whole street ..."
+    "The map-house hangs new maps on a drying-line over a slate trough; an entry that will not take ink drips back into the trough and sits there unmixed. Its press-stones live in a rack cut f..."
+    "Archivists pencil an entry small in the margin, in the makers' old shorthand, before they ink it, to see whether it will bear. The egg would not take .[egg], a thing that stays where it i..."
+    "Steam from the warm furrow fell back as warm snow — what children call a hearth-drift, and make by a method they explain only to other children. The field made one by itself."
   ]
 }
 

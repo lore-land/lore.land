@@ -3,7 +3,7 @@
   "title": "Shards of Nine Honks",
   "logline": "On the ridge, eight honks lie out as shards of sound — and the pieces assemble into a shape with one hole, exactly egg-sized.",
   "epigraph": "An unspent wish is an unsounded note. Everything else in the set was arranged around its silence.",
-  "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was never sounded.",
+  "description": "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge from the shard-rack while jazz-geese pass in nines, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was never sounded.",
   "mood": "puzzle",
   "period": "spring",
   "pillars": [
@@ -69,7 +69,9 @@
         "tropes",
         "sample",
         "sampled",
-        "egg"
+        "egg",
+        "shard-rack",
+        "combine"
       ]
     },
     {
@@ -84,7 +86,17 @@
         "arc",
         "set",
         "chamber",
-        "chambers"
+        "chambers",
+        "jazz-geese",
+        "jazz-goose",
+        "chimney-swifts",
+        "chimney-swift",
+        "signal-skinks",
+        "salt-whale",
+        "dent-lanterns",
+        "whale-roads",
+        "slate-cakes",
+        "flue"
       ]
     },
     {
@@ -97,7 +109,9 @@
         "Fool",
         "lineage",
         "hole",
-        "note"
+        "note",
+        "chalk",
+        "ampersand"
       ]
     }
   ],
@@ -114,12 +128,15 @@
       "scene": {
         "vantage": "crouched on a high roof-ridge beside a cold stone chimney, paws gripping the slate, watching the Fool lay out glowing shards in a crescent",
         "light": "deep violet evening; eight curved shards glow gold on the slate, each humming a different old story",
-        "scent": "chimney smoke banked for the night, cold damp slate, warm brass, the hot-iron breath of the egg",
+        "scent": "chimney smoke banked for the night, cold damp slate, warm brass, the hot-iron breath of the egg, oatcake crumbs baked onto warm slate",
         "edges": [
           "eight curved shards lie in an open crescent on the slate, one per sampled trope",
           "each shard hums the shape of the tale it was cut from",
           "the crescent closes on itself with one gap — a hole exactly the size of a curled cat",
-          "the Fool counts on his fingers and grins at the arithmetic"
+          "the Fool counts on his fingers and grins at the arithmetic",
+          "a shard-rack of smoked ash beside the crescent, nine felt-lined slots, the ninth egg-shaped and empty",
+          "nine jazz-geese crossing the dusk in a loose wedge, honking in uneven time",
+          "a few finger-long signal-skinks basking on the warm slates"
         ],
         "hint": "rooftop vantage at deep blue dusk; a jester arranging eight glowing gold shards in a crescent on dark slates while a working dog watches, one egg-sized gap left in the shape"
       },
@@ -140,7 +157,20 @@
         },
         {
           "type": "paragraph",
+          "text": "They came out of a shard-rack of smoked ash with nine felt-lined slots. The ninth was egg-shaped, and had been, the Fool said, since long before he knew why; for years he kept a turnip in it so the rack would not look sad."
+        },
+        {
+          "type": "paragraph",
           "text": "The law of it is short enough for a dog to carry: every trope you sample must be returned changed, with interest. A honk that only repeats is a debt; a honk that returns is a harvest."
+        },
+        {
+          "type": "paragraph",
+          "text": "The slates still smelled of noon's slate-cakes, oat and soot. A few signal-skinks, come up from the flats in a roofer's cart, basked there flicking their tails at the chimney stones, which keep another code."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then, out of the dusk, the geese: nine in a loose wedge, honking in uneven time. Jazz-geese always fly in nines. As each one honked, a shard on the slate rang back. Eight rang. The ninth honk passed over the crescent, found nothing to answer it, and went on into the dark. Boof knew that bent note from the edge of the grove. One goose had taught the Fool his note, or the other way round; neither would say.",
+          "lean": "boon"
         }
       ]
     },
@@ -153,7 +183,8 @@
         "edges": [
           "each shard bears the ghost of a trope: a lamp, a tree, a bottle, a court",
           "the crescent assembles into a nearly closed shape",
-          "one hole remains at its heart, precisely egg-sized"
+          "one hole remains at its heart, precisely egg-sized",
+          "on the next slate, a chalked line in round braces: eight names joined by ampersands, and a blank after the last"
         ],
         "hint": "macro close-up of jagged glowing brass shards arranged in a near-circle on dark roof slates, one egg-sized hole at the center of the assembled shape"
       },
@@ -162,6 +193,11 @@
           "type": "paragraph",
           "data-content_id": "puzzle-intro",
           "text": "The Fool laid out the shards. Three wishes; a trickster in a tree; a genie lately out of business. A vizier, baked bitter. Two claims splitting a floor. Glass streets, a blueberry oath, a tavern game that couldn't price its quietest player. He touched each piece as he named it, letting the little rings overlap. “Eight.” He slid them together. One space remained. Boof looked at the space, then down at her sling."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then he chalked it on the next slate, as makers do, to check a thing before anyone leans on it: (lamp & tree & bottle & crust & receipt & glass & berry & well & ). Round braces: everything inside must arrive together. Eight pieces of a nine-piece combine are not a smaller combine. They are a heap that hums.",
+          "lean": "bone"
         }
       ]
     },
@@ -187,7 +223,7 @@
         },
         {
           "type": "paragraph",
-          "text": "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound. Not yet."
+          "text": "On the chimney rim he breathed through an empty mouthpiece of dark horn. Steam came out, amber. Not sound. Not yet."
         }
       ]
     },
@@ -208,11 +244,20 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The egg fitted without a push. Eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for what she still carried. The Fool let her look. For once, he had nothing to add. The slates still held the day's warmth."
+          "text": "The egg fitted without a push, and the heap stopped being a heap: eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for what she still carried. The Fool let her look. For once, he had nothing to add, and he chalked nothing into the blank. The slates still held the day's warmth."
         },
         {
           "type": "paragraph",
-          "text": "Below them, somebody was closing shutters, one clap after another down the street, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw."
+          "text": "At the first note the chimney-swifts poured out of the flue in a soot-furred whirl and carried the hum down over the roofs, a little farther than it meant to go. Nothing said on the ridge stays on the ridge; the swifts see to that.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Below them, somebody was closing shutters, one clap after another down the street, humming a note she had not had at supper, while a late cart worked its way toward the gate. Boof could have followed any of those sounds to an ordinary evening. Instead she stayed with the pieces. This one caught the light like the grove; that edge brought back the hard feel of the market stone beneath her paw."
+        },
+        {
+          "type": "paragraph",
+          "text": "Some of the places were in sight. Far off, Bonk City's dent-lanterns were coming on, every dent a lane the light remembered. Farther still the salt flats glowed along their whale-roads; where two had wanted one turn, a single line now bent, and a salt-whale was travelling it, slow as weather."
         },
         {
           "type": "paragraph",
@@ -220,7 +265,11 @@
         },
         {
           "type": "paragraph",
-          "text": "\"A honk is spent breath,\" the Fool said, lifting the egg free and settling it back in her sling. \"A wish is breath still held. Same lineage, opposite ends.\" The ninth honk would sound when the wish was spent — no sooner, and by the Blueberry Oath, not before the want was true. She left the eight shards singing softly on the rooftop and turned down toward the northern pass, where the great timber spine of Bone.land waited to be asked what a small thing can hold."
+          "text": "\"A honk is spent breath,\" the Fool said, lifting the egg free and settling it back in her sling. \"A wish is breath still held. Same lineage, opposite ends.\" The ninth honk would sound when the wish was spent — no sooner, and by the Blueberry Oath, not before the want was true."
+        },
+        {
+          "type": "paragraph",
+          "text": "She left the eight shards singing softly on the rooftop beside the shard-rack, its egg-shaped slot empty again; nobody mentioned the turnip. Then she turned down toward the pass, where the great timber spine of Bone.land waited to be asked what a small thing can hold."
         }
       ],
       "climate": {
@@ -236,7 +285,9 @@
           "eight honks sounded and returned",
           "the ninth hole filled and unfilled again",
           "the set as a table of contents",
-          "the wish as breath still held"
+          "the wish as breath still held",
+          "chimney-swifts pouring from the flue in a soot-furred whirl, carrying the hum downhill",
+          "far off, Bonk City's dent-lanterns coming on, and beyond them the glowing whale-roads of the salt flats"
         ],
         "hint": "night ridge, eight glowing gold shards locked into a single shape, the coal-dark cracked egg glowing at the heart of the assembly"
       }
@@ -258,7 +309,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Down the ridge, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the silence had been waiting with her."
+          "text": "Down the ridge, past roofers' ladders lashed for the night, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the silence had been waiting with her."
         },
         {
           "type": "paragraph",
@@ -277,6 +328,18 @@
       },
       {
         "description": "Assembled, the set is a shape with one hole, egg-sized — the whole serial arranged around a held breath."
+      },
+      {
+        "description": "Jazz-geese fly in nines and honk in uneven time. Passing over the ridge, eight of their honks each rang a shard; the ninth found nothing to answer it. One goose taught the Fool his note, or the Fool taught the goose — neither will say."
+      },
+      {
+        "description": "Chimney-swifts roost in the ridge flues and carry a sound a little farther than it meant to go: nothing said on the ridge stays on the ridge. They took the assembled hum down into the town before supper was cleared."
+      },
+      {
+        "description": "The Fool keeps his set in a shard-rack of smoked ash — nine felt-lined slots, the ninth egg-shaped since before he knew why; for years it held a turnip so the rack would not look sad."
+      },
+      {
+        "description": "Chalked as a combine, the set is a round brace — everything inside must arrive together — with eight names joined by ampersands and a blank after the last. Eight pieces of a nine-piece combine make only a heap that hums, and no one chalks a name into the blank."
       }
     ]
   }

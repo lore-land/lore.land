@@ -649,3 +649,11 @@ body[data-surface='monument'] .serial-stone-count {
   font-size: 0.66rem;
   letter-spacing: 0.06em;
 }
+
+/* Nine routes sit as a three-by-three field guide on wide screens. */
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='almanac'] { --route-accent: var(--hub-berry); }
+@media (min-width: 64rem) {
+  body[data-surface='monument'] .route-rail[data-region='routes'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

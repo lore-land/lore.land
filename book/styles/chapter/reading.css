@@ -2938,3 +2938,203 @@ strong.xr-chamber { color: var(--sigil-gold, #a67c38); }
   content: ' · a sighting';
   color: var(--sigil-gold, #a67c38);
 }
+
+/* ─── Wonders (almanac.mjs) ──────────────────────────────────────────────
+ * The first time a chapter names a creature, a contrivance or a piece of
+ * bracework, it is marked: a dotted underline in its kind's ink. Tap it and
+ * it is kept; kept here, the line goes solid and a small dot sits after it. */
+
+.wonder-mark {
+  --wonder-ink: var(--sigil-gold, #a67c38);
+}
+
+.wonder-mark[data-kind='contrivance'] { --wonder-ink: var(--color-accent-main, #246270); }
+.wonder-mark[data-kind='bracework'] { --wonder-ink: var(--color-berry, #5b3a6e); }
+
+:is(html[data-switch-wonders='on'], html:not([data-switches-ready])) main.chapter .wonder-mark {
+  cursor: pointer;
+  border-radius: 0.2em;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--wonder-ink) 80%, transparent);
+  text-underline-offset: 0.24em;
+  transition: background-color 160ms ease, text-decoration-color 160ms ease;
+}
+
+:is(html[data-switch-wonders='on'], html:not([data-switches-ready])) main.chapter .wonder-mark:is(:hover, :focus-visible, [aria-expanded='true']) {
+  background: color-mix(in srgb, var(--wonder-ink) 14%, transparent);
+  text-decoration-color: var(--wonder-ink);
+  outline: none;
+}
+
+:is(html[data-switch-wonders='on'], html:not([data-switches-ready])) main.chapter .wonder-mark[data-found] {
+  text-decoration-style: solid;
+  text-decoration-thickness: 1px;
+}
+
+:is(html[data-switch-wonders='on'], html:not([data-switches-ready])) main.chapter .wonder-mark[data-found='here']::after {
+  content: '';
+  display: inline-block;
+  width: 0.32em;
+  height: 0.32em;
+  margin-left: 0.12em;
+  vertical-align: 0.55em;
+  border-radius: 50%;
+  background: var(--wonder-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main.chapter .wonder-mark.is-kept {
+    animation: wonder-kept 900ms ease-out;
+  }
+}
+
+@keyframes wonder-kept {
+  0% { background: color-mix(in srgb, var(--wonder-ink) 45%, transparent); box-shadow: 0 0 0 0 color-mix(in srgb, var(--wonder-ink) 40%, transparent); }
+  100% { background: transparent; box-shadow: 0 0 0 10px transparent; }
+}
+
+/* The card: in the top layer, near the word (a sheet on phones). */
+.wonder-card {
+  --wonder-ink: var(--sigil-gold, #a67c38);
+  position: fixed;
+  inset: auto;
+  z-index: 70;
+  width: min(21rem, calc(100vw - 1.25rem));
+  margin: 0;
+  padding: 0.85rem 0.95rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--wonder-ink) 50%, transparent);
+  border-top: 3px solid var(--wonder-ink);
+  border-radius: 0.6rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--wonder-ink) 12%, transparent), transparent 55%),
+    var(--bg-color-main, #f6f0e4);
+  color: var(--color-text-main);
+  box-shadow: 0 14px 34px color-mix(in srgb, #0b1627 22%, transparent);
+  overflow: visible;
+}
+
+.wonder-card.is-contrivance { --wonder-ink: var(--color-accent-main, #246270); }
+.wonder-card.is-bracework { --wonder-ink: var(--color-berry, #5b3a6e); }
+
+.wonder-card.is-sheet {
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: max(0.6rem, env(safe-area-inset-bottom, 0px));
+  top: auto;
+  width: auto;
+}
+
+.wonder-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wonder-card-sigil {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--wonder-ink) 16%, transparent);
+  color: var(--wonder-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.85rem;
+}
+
+.wonder-card-kind {
+  flex: 1;
+  color: var(--color-text-alt);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wonder-card-close {
+  border: 0;
+  background: transparent;
+  color: var(--color-text-alt);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wonder-card-name {
+  margin: 0.45rem 0 0.25rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.wonder-card-note {
+  margin: 0 0 0.55rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.wonder-card-status {
+  margin: 0 0 0.55rem;
+  color: var(--wonder-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.wonder-card.is-new .wonder-card-status::before {
+  content: '✦ ';
+}
+
+.wonder-card-places {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+
+.wonder-card-places-label {
+  margin-right: 0.15rem;
+  color: var(--color-text-alt);
+  font-size: 0.75rem;
+}
+
+.wonder-card-place {
+  min-width: 2rem;
+  padding: 0.14rem 0.4rem;
+  border: 1px dashed color-mix(in srgb, var(--wonder-ink) 55%, transparent);
+  border-radius: 999px;
+  color: var(--color-text-main);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.wonder-card-place.is-found {
+  border-style: solid;
+  background: color-mix(in srgb, var(--wonder-ink) 18%, transparent);
+}
+
+.wonder-card-place.is-here {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--wonder-ink) 35%, transparent);
+}
+
+.wonder-card-almanac {
+  font-size: 0.82rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wonder-card {
+    animation: wonder-card-in 240ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  }
+  .wonder-card.is-new .wonder-card-sigil {
+    animation: wonder-sigil 700ms cubic-bezier(0.2, 0.9, 0.3, 1.5);
+  }
+}
+
+@keyframes wonder-card-in { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes wonder-sigil { 0% { transform: scale(0.4) rotate(-30deg); } 60% { transform: scale(1.35) rotate(8deg); } 100% { transform: none; } }

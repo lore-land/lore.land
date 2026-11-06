@@ -68,7 +68,13 @@
         "squall",
         "crosswind",
         "table",
-        "hill"
+        "hill",
+        "weathercocks",
+        "weathercock",
+        "crosswind loom",
+        "tablecloth",
+        "&[boon, bane]{table}",
+        "bracework"
       ]
     },
     {
@@ -83,7 +89,11 @@
         "iron",
         "brass",
         "mirror",
-        "egg"
+        "egg",
+        "key-file bench",
+        "honest jar",
+        "filings",
+        "vise"
       ]
     },
     {
@@ -111,12 +121,15 @@
       "scene": {
         "vantage": "under the council table on the windy hilltop, looking between muddy delegate boots and the Genie's neatly folded travel slippers",
         "light": "split sky overhead — warm gold sunbreak dawnward, cold teal squall rushing from the far ridge; the table straddles the seam",
-        "scent": "rain about to break on one cheek, dry dust on the other, wet wool cloaks, warm shell — and under it, faintly, burnt sugar gone sour",
+        "scent": "rain about to break on one cheek, dry dust on the other, wet wool cloaks, warm shell — and under it, faintly, burnt sugar gone sour, resin, iron filings",
         "edges": [
           "two banners strain toward each other, whipped by opposing crosswinds",
           "a rack of civic keys hangs at the table's center, every one of them filed visibly smaller",
           "the egg sits in its feed-sack sling on the pine, warm and unranked",
-          "a wide bitter-smelling pie in a dark lattice crust has taken the bane-side chair"
+          "a wide bitter-smelling pie in a dark lattice crust has taken the bane-side chair",
+          "seven iron weathercocks on the ring posts, no two facing the same way",
+          "the crosswind loom at the slab's head, its shuttle flying without a weaver, the tablecloth hem changing colour at dog height",
+          "&[boon, bane]{table} cut into the slab's edge at nose height, worn smooth by thumbs"
         ],
         "hint": "hilltop council table seen from underneath, framed by delegates' boots; sky split between warm gold break and cold teal squall; a rack of filed-down keys, a coal-warm cracked egg, and a dark bitter pie seated like a banker at the far end"
       },
@@ -131,9 +144,35 @@
             },
             {
               "type": "text",
-              "text": "—an upright pane of polished weather that returned not your face but the exact shape of your wanting. Above her, the law of the hill was recited as it had been recited for generations: every permission in Boon.land is a key, iron or brass, and a key may be filed smaller in the open, before witnesses, with the shavings swept into the common bin. A key may never be grown in secret."
+              "text": "—an upright pane of polished weather that returned not your face but the exact shape of your wanting."
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The hill smelled of two weathers at once. Round the council ring stood seven posts, and on every post an iron weathercock, rust-red at the comb. They did not follow the wind. They turned toward whatever they favoured, and the wind followed them. The crosswind was only the weathercocks disagreeing, made weather."
+        },
+        {
+          "type": "paragraph",
+          "text": "Twice in living memory all seven had agreed, and the hill went so still that papers stayed where they were put. Nobody remembered the vote. Everybody remembered the papers."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the head of the slab the crosswind loom worked without a weaver: dawn-wind for the warp, squall for the weft, the shuttle flying between them on its own. It wove the council's tablecloth an inch an hour, honey-gold and squall-teal, and when the vote turned, the weave changed colour.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Cut into the slab's edge, at nose height, was the hill's first law: &[boon, bane]{table}. The founders had chiselled it in bracework before the first argument, the way a joiner writes a joint before she saws, so it could be leaned on and checked while tempers were cool. Two sides in one frame, merged without whitening either. One table round the lot, like a room you agree to stay in.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Each delegate thumbed the braces before sitting, to be sure nobody had filed them open in the night. Nobody ever had. Boof sniffed the cut: resin and old thumbs."
+        },
+        {
+          "type": "paragraph",
+          "text": "Above her, the law of the hill was recited as it had been recited for generations: every permission in Boon.land is a key, iron or brass, and a key may be filed smaller in the open, before witnesses, with the shavings swept into the honest jar. A key may never be grown in secret. The jar had never once been emptied, which the hill considered the point."
         },
         {
           "type": "paragraph",
@@ -142,6 +181,11 @@
         {
           "type": "paragraph",
           "text": "The bitter pie arrived by hired cart, lattice crust tight over berries he'd kept too long. He offered nobody a slice. The wish, he proposed, should be valued, filed, and sold to someone prepared to bear its considerable responsibilities. He paused to let the council imagine such a person. Then supplied his own name."
+        },
+        {
+          "type": "paragraph",
+          "text": "All round the ring the weathercocks swung: three to face the pie, three tails to him, the seventh spinning on its pin. The crosswind doubled and hung a clerk's cap in the gorse. Boof flattened her ears. She did not know how iron voted. She knew what it smelled like when it was cross.",
+          "lean": "bane"
         }
       ]
     },
@@ -196,7 +240,7 @@
         },
         {
           "type": "paragraph",
-          "text": "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in the sleeve — an old trope, sampled a thousand times. He returned it changed, with interest: in Boon.land the vizier is baked goods, and you can smell exactly what he's been hoarding."
+          "text": "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite — clove and windfall apple — and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in the sleeve — an old trope, sampled a thousand times. He returned it changed, with interest: in Boon.land the vizier is baked goods, and you can smell exactly what he's been hoarding."
         }
       ]
     },
@@ -220,11 +264,20 @@
         },
         {
           "type": "paragraph",
+          "text": "The youngest clerk carried the largest key to the key-file bench anyway and set it in the vise. He drew the file once, from habit, before remembering that the bench only makes keys smaller. He swept the grey filings into the honest jar and hung the key back, a hair lighter and no nearer.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
           "text": "The Genie explained it the way he priced everything, flatly and without pity: a wish is not property, because it is not a thing; it is a redirection of momentum the world already has. You cannot auction a bend in the river. You can only stand where it bends."
         },
         {
           "type": "paragraph",
-          "text": "From beneath the table, Boof could see the parts of the meeting the mirror missed: wet hems, boots braced against the slope, a clerk warming cramped fingers under one arm. Whenever a delegate struck the pine, dust shook loose beside her nose. They wanted the rain kept off their roofs and the paths kept open to their doors; some wanted more, but those wants were there beneath the grander words."
+          "text": "From beneath the table, Boof could see the parts of the meeting the mirror missed: wet hems, hobnailed boots braced against the slope, a clerk warming cramped fingers under one arm. Whenever a delegate struck the pine, dust shook loose beside her nose. They wanted the rain kept off their roofs and the paths kept open to their doors; some wanted more, but those wants were there beneath the grander words."
+        },
+        {
+          "type": "paragraph",
+          "text": "And she could see the tablecloth's hem, which showed her the vote before anyone above: teal when the bane-side spoke well, gold for the boon-side, and a muddy wet-straw weave whenever somebody spoke only to be heard. There was a good deal of wet straw."
         },
         {
           "type": "paragraph",
@@ -232,7 +285,11 @@
         },
         {
           "type": "paragraph",
-          "text": "None of the keys fitted. The oldest clerk tried the last one, set it down, and wrote: the wish stays with its finder. Rain ticked on the tabletop. Across it, the pie smiled. “And who,” he asked, “inherits from the finder?” Boof's fur lifted along her back. The clerk kept his pen above the page."
+          "text": "None of the keys fitted. The oldest clerk tried the last one, set it down, and wrote: the wish stays with its finder. Round the ring the weathercocks came slowly to rest, every one pointing at the gap between the banners, which on Council Hill is how a tie is recorded."
+        },
+        {
+          "type": "paragraph",
+          "text": "Rain ticked on the tabletop. Across it, the pie smiled. “And who,” he asked, “inherits from the finder?” Boof's fur lifted along her back. The clerk kept his pen above the page."
         }
       ],
       "climate": {
@@ -243,12 +300,15 @@
       "scene": {
         "vantage": "table-height, egg between the key-rack and the bitter pie, storm behind",
         "light": "crosswind storm-light, gold seams in the grain",
-        "scent": "wet wood, brass, iron, warm shell, sour crust",
+        "scent": "wet wood, brass, iron, warm shell, sour crust, oiled iron filings",
         "edges": [
           "the key-rack: every key honestly narrowed",
           "the egg unmatched by any of them",
           "BaneWAP's lattice crust like a shut ledger",
-          "the weather still refusing to pick a side"
+          "the weather still refusing to pick a side",
+          "the key-file bench and its vise, the honest jar half full of grey filings",
+          "the tablecloth fringe at dog height, changing colour with the vote",
+          "seven weathercocks come to rest, all pointing at the gap between the banners"
         ],
         "hint": "council table on a windy hill, a rack of filed-down keys, a coal-warm cracked egg no key fits, and a dark banker-crusted pie leaning close; storm-light, gold seams in the wood"
       }
@@ -264,14 +324,25 @@
         "edges": [
           "the key-rack remains on the table behind her, complete and useless",
           "the egg in the sling glows steadily against the damp night",
-          "far behind, a cart with a bitter smell turns down a different road at the same fork"
+          "far behind, a cart with a bitter smell turns down a different road at the same fork",
+          "a folded yard of gold-and-teal tablecloth carried down the steps toward a leaking roof",
+          "on the hilltop behind her, the weathercocks black against the parting cloud"
         ],
         "hint": "a dog trotting down ancient stone steps from a hilltop council ring, carrying a glowing warm egg, while a dark cart takes the parallel road into the same valley"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "Boof left the hill with the wish she had never asked to hold. Finder, the clerk had written, as if finding were a small thing a dog did with her nose and not a door the world had opened under her paws. The Genie walked beside her, unhurried. \"He will not steal it,\" he said of the pie on the other road. \"Stealing costs a miracle. Paperwork costs pocket change, and he knows which one he can afford.\""
+          "text": "Boof left the hill with the wish she had never asked to hold, down hill-slate steps dished by centuries of boots that had come down still disagreeing. Finder, the clerk had written, as if finding were a small thing a dog did with her nose and not a door the world had opened under her paws."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Genie walked beside her, unhurried. \"He will not steal it,\" he said of the pie on the other road. \"Stealing costs a miracle. Paperwork costs pocket change, and he knows which one he can afford.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "Behind them, at sundown, the clerks cut the day's end off the tablecloth and folded it for the shepherd whose roof had leaked worst that week: the one custom on the hill that has never needed a vote.",
+          "lean": "boon"
         },
         {
           "type": "paragraph",
@@ -293,6 +364,18 @@
       },
       {
         "description": "No key covers the egg, so the council cannot rule. The wish stays with its finder. The Fool samples the evil-vizier trope and honks it back as pastry."
+      },
+      {
+        "description": "Council Hill's iron weathercocks vote by turning, and the crosswind is their disagreement made weather. A tie is recorded when every one of them points at the gap between the banners."
+      },
+      {
+        "description": "The council slab carries the hill's first law, cut in bracework before any argument: &[boon, bane]{table} — two sides, one table. Written first so it can be leaned on and checked; delegates thumb the braces before sitting to be sure nobody filed them open."
+      },
+      {
+        "description": "The key-file bench can only make a key smaller; its filings go into the honest jar, never emptied. The crosswind loom weaves the council's tablecloth from the hill's two winds, and the vote shows first in its hem."
+      },
+      {
+        "description": "At sundown the day's end of the tablecloth is cut and given to whoever's roof leaked worst that week — the one custom on the hill that has never needed a vote."
       }
     ]
   }

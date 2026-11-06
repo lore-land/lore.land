@@ -1,7 +1,7 @@
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderChapterBody, renderChapterCoda, padChapterNumber, chapterOrdinal, sectionSlug } from '../modules/chapter-render.mjs';
+import { renderChapterBody, renderChapterCoda, padChapterNumber, chapterOrdinal, sectionSlug, wonderTermPattern } from '../modules/chapter-render.mjs';
 import { isCustomElementType, storyVoiceFor } from '../modules/story-lexicon.mjs';
 import { leanFor } from '../modules/valence-lens.mjs';
 import { createMiniDocument } from './mini-dom.mjs';
@@ -10,10 +10,11 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_05.B';
+const RELEASE = '2026_11_05.C';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
+const ALMANAC_PATH = resolve(ROOT, 'book/content/world/almanac.json');
 const EXTENT_PATH = resolve(ROOT, 'book/scripts/modules/book-extent.mjs');
 
 const escapeAttribute = (value) => String(value ?? '')
@@ -40,6 +41,8 @@ if (filenames.length < 13 || filenames.some((name, index) => Number(name.slice(0
 const references = JSON.parse(await readFile(REFERENCES_PATH, 'utf8'));
 const shelfList = JSON.parse(await readFile(SHELF_LIST_PATH, 'utf8'));
 const serial = JSON.parse(await readFile(SERIAL_PATH, 'utf8'));
+const almanac = JSON.parse(await readFile(ALMANAC_PATH, 'utf8'));
+const wonders = (almanac.wonders || []).map(({ id, kind, terms }) => ({ id, kind, terms }));
 const chapters = await Promise.all(filenames.map(async (filename) => (
   JSON.parse(await readFile(resolve(CONTENT_DIR, filename), 'utf8'))
 )));
@@ -96,6 +99,7 @@ for (const [index, filename] of filenames.entries()) {
     NEXT_TITLE: escapeAttribute(next.title),
     CHAPTER_EDGE: index === 0 ? 'first' : index === chapters.length - 1 ? 'last' : 'middle',
     CHAPTER_BODY: renderSlot(renderChapterBody, data, {
+      wonders,
       inWhich: inWhichFor(data),
       next: {
         number: next.chapterNumber,
@@ -174,6 +178,8 @@ const semantic = {
   threads: {},
   marks: { motif: {}, trope: {}, foreshadow: {} },
   leans: { boon: [], bane: [], bone: [] },
+  // Where each almanac wonder is first named in a chapter (the marked place).
+  wonders: {},
   voices: {}
 };
 const paragraphsOf = (block) => {
@@ -203,6 +209,7 @@ for (const chapter of chapters) {
     const entry = semantic.threads[group.id] || (semantic.threads[group.id] = { labels: {}, href: group.href, chapters: {} });
     entry.labels[group.label] = (entry.labels[group.label] || 0) + 1;
   });
+  const wondersFound = new Set();
   for (const block of chapter.sections) {
     const isFlow = block.type === 'section' || isCustomElementType(block.type);
     if (!isFlow) continue;
@@ -228,6 +235,14 @@ for (const chapter of chapters) {
     Object.entries(marks).forEach(([kind, value]) => {
       if (!value) return;
       (semantic.marks[kind][value] = semantic.marks[kind][value] || []).push(where);
+    });
+    // wonders: the first section in this chapter that names each one
+    const prose = paragraphsOf(block).map((p) => p.text).join(' ');
+    wonders.forEach((wonder) => {
+      if (wondersFound.has(wonder.id)) return;
+      if (!wonder.terms.some((term) => wonderTermPattern(term).test(prose))) return;
+      wondersFound.add(wonder.id);
+      (semantic.wonders[wonder.id] = semantic.wonders[wonder.id] || []).push(where);
     });
     // voice
     const voice = block.type === 'section' ? 'narrator' : (storyVoiceFor(block.type)?.id || block.type.replace('custom-', ''));

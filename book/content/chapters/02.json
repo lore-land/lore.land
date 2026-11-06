@@ -74,7 +74,17 @@
         "listening",
         "thicket",
         "reserve",
-        "clearing"
+        "clearing",
+        "echo-wrens",
+        "echo-wren",
+        "wren-call",
+        "lag-stag",
+        "rehearsal moths",
+        "rehearsal moth",
+        "hob-deer",
+        "hollow cedar",
+        "woodcutters",
+        "moss"
       ]
     },
     {
@@ -89,7 +99,8 @@
         "unspent",
         "granted",
         "receipt",
-        "honk"
+        "honk",
+        "torch-ants"
       ]
     },
     {
@@ -103,7 +114,8 @@
         "trail",
         "wants",
         "wanting",
-        "want"
+        "want",
+        "birch-sap tea"
       ]
     }
   ],
@@ -115,7 +127,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern, where the air smelled damp—and somehow twice breathed. She stopped beneath the first tree. Nothing moved. Something arrived again."
+          "text": "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern and hazel-switch, where the air smelled damp—and somehow twice breathed. She stopped beneath the first tree. Nothing moved. Something arrived again."
         },
         {
           "type": "paragraph",
@@ -123,11 +135,20 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof listened until she could pick the returns apart. One came from the hollow cedar, low and round; another thinned among the birches; a third seemed to start behind her teeth. She closed her mouth. It came again. The egg lay still on its stone, and the moss beneath it had begun to dry."
+          "text": "Boof listened until she could pick the returns apart. One came from the hollow cedar, low and round; another thinned among the birches; a third seemed to start behind her teeth. She closed her mouth. It came again."
         },
         {
           "type": "paragraph",
-          "text": "She looked from that small pale patch to the trembling gold in the air. So much happening overhead, and down here one egg warming one stone. She kept a paw beside it, where she could feel which of them was real."
+          "text": "She tried the cedar first, nose leading. There was no second egg in the hollow. There was a wren, brown as a dropped glove and not much bigger than a walnut, sitting in a nest of shredded bark with its beak open, finishing the hum a beat after the egg had finished it. It looked at Boof as if she were the one who was late."
+        },
+        {
+          "type": "paragraph",
+          "text": "Echo-wrens, the woodcutters called them; every hollow cedar kept a pair, and they sang everything a beat behind, axes included. At the grove's edge a wren-call meant anything that came back to you. Boof sneezed. Three cedars sneezed after her, politely, one at a time.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The egg lay still on its stone, and the moss beneath it had begun to dry. She looked from that small pale patch to the trembling gold in the air. So much happening overhead, and down here one egg warming one stone. She kept a paw beside it, where she could feel which of them was real."
         }
       ],
       "climate": {
@@ -138,12 +159,13 @@
       "scene": {
         "vantage": "belly-low in old leaves at the clearing's rim, ears up, one paw lifted mid-step",
         "light": "green noon strained through canopy; brighter rings where the air itself is rehearsing",
-        "scent": "wet bark, crushed fern, and the same trace of snuffed candle arriving twice",
+        "scent": "wet bark, crushed fern, shredded cedar bark, and the same trace of snuffed candle arriving twice",
         "edges": [
           "the grove's trunks stand in near-circles, like sound drawn slow",
           "pollen hangs in ring after ring around a bare center stone",
           "the egg sits on the stone; a second egg-shape shivers in the hanging dust, a beat late",
-          "hearthward, one path out — the only line the circles do not close"
+          "hearthward, one path out — the only line the circles do not close",
+          "in the hollow cedar, a walnut-sized brown wren sits beak-open in shredded bark, finishing the hum a beat late"
         ],
         "hint": "forest clearing at green noon seen from ground level; concentric rings of hanging pollen and light around a lamp-dark cracked egg on a bare center stone; a ghost of a second egg in the rings; trunks curved in echo arcs; one dark path breaking the circles; deep green cut by pale gold rings"
       }
@@ -162,7 +184,7 @@
             },
             {
               "type": "text",
-              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed an unfinished fragment out of the leaf-mold. Half a lullaby somebody stopped singing. The first word of a prayer nobody dared finish. A clerk saying no such entry, with the hollow confidence of someone who had never carried a want too small to say out loud."
+              "text": " beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed an unfinished fragment out of the leaf-mold. Half a lullaby somebody stopped singing. The first word of a prayer nobody dared finish. A clerk saying "
             },
             {
               "type": "custom-echo",
@@ -170,13 +192,17 @@
             },
             {
               "type": "text",
-              "text": " with the hollow confidence of someone who had never carried a wanting too small to say out loud."
+              "text": ", with the hollow confidence of someone who had never carried a wanting too small to say out loud."
             }
           ]
         },
         {
           "type": "paragraph",
           "text": "Boof knew how towns worked. When a record-house is too clean, the wanting does not vanish; it drains downhill into the wild growth, where nobody asks what you came for. This thicket was where Boon.land kept every wish it preferred not to admit to having, every note it wanted to sound and didn't."
+        },
+        {
+          "type": "paragraph",
+          "text": "The same workers said, usually over a second cup of birch-sap tea, that hob-deer grazed in here: deer no taller than a boot, cropping the moss on days nobody keeps. Asked which days those were, they could never say, and took that as proof. Boof found one patch of moss cropped short and tidy. She had been fooled by rabbits before."
         }
       ],
       "scene": {
@@ -186,7 +212,8 @@
         "edges": [
           "underfoot, the soil is layered with dried pulp from old rejected parchment",
           "half a lullaby repeats every seven paces, never reaching its end",
-          "the egg's hum radiates against Boof's chest like a breath held one word too long"
+          "the egg's hum radiates against Boof's chest like a breath held one word too long",
+          "one patch of moss between the roots is cropped short and tidy, as if by very small teeth"
         ],
         "hint": "a dog's muzzle sniffing mossy forest floor where scraps of uninked paper dissolve into loam; faint glowing spore-lights circling"
       }
@@ -197,11 +224,20 @@
         {
           "type": "paragraph",
           "data-content_id": "grove",
-          "text": "The berries here did not shine for the harvest. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed like grains under stress — bright when an echo rehearsed a future they remembered the taste of, dim when the thicket put them back to sleep."
+          "text": "The berries here did not shine for the harvest. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed like grains under stress — bright when an echo rehearsed a future they remembered the taste of, dim when the thicket put them back to sleep. Their thorned runners hooked Boof's coat as she passed, like a shopkeeper with one more thing to show you."
         },
         {
           "type": "paragraph",
-          "text": "Boof recognized several of her own past silences reflected in the dark skins of the fruit—small wantings she had swallowed instead of sounding. That was the grove's first cruelty: it kept what the town preferred not to admit to. Unspent wants. Unsounded notes. And no ants kept this ground. No torch-lines ran along the roots; no small city held the winter off. The wild rows grew cold and stubborn, living off whatever heat the echoes left behind, which was why their light flickered instead of holding."
+          "text": "Boof recognized several of her own past silences reflected in the dark skins of the fruit—small wantings she had swallowed instead of sounding. That was the grove's first cruelty: it kept what the town preferred not to admit to. Unspent wants. Unsounded notes."
+        },
+        {
+          "type": "paragraph",
+          "text": "And no torch-ants kept this ground. No lit streets ran along the roots; no small city held the winter off. Boof put her nose to a root out of habit and found it cold all the way down, like a house nobody has lived in for a winter. Torch-ants will not settle where a light comes back to them twice, the field-hands say; a torch that answers itself is a torch nobody can be particular about.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "So the wild rows grew cold and stubborn, living off whatever heat the echoes left behind, which was why their light flickered instead of holding."
         }
       ],
       "scene": {
@@ -211,7 +247,8 @@
         "edges": [
           "wild boonberries cluster on thorned runners",
           "each berry pulses with a trapped drop of an old granting",
-          "frost from the open fields clings to the underside of the leaves—no ant-hearth tends this soil"
+          "frost from the open fields clings to the underside of the leaves—no ant-hearth tends this soil",
+          "the roots under the runners are cold all the way down; no torch-lit street runs beneath them"
         ],
         "hint": "close-up of dark indigo berries on thorny vines, each berry pulsing with inner golden light like a trapped firefly; green moss background"
       }
@@ -233,7 +270,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "\"Follow me,\" said an echo that used Boof's own pitch from years earlier—the careful, hopeful voice she had used back when she still asked for things instead of working for them. The path forked around an ancient hollow cedar and rejoined on the other side. Time here did not reverse; it rehearsed. In the suspended dust of the pollen rings there was always a second egg, a breath behind the first, shivering in gold spores—the wish trying out a future where it had already been granted, then setting the future back down, unconvinced, and trying the next one."
+          "text": "\"Follow me,\" said an echo that used Boof's own pitch from years earlier—the careful, hopeful voice she had used back when she still asked for things instead of working for them. The path forked around an ancient hollow cedar, loud with wrens, and rejoined on the other side. Time here did not reverse; it rehearsed."
+        },
+        {
+          "type": "paragraph",
+          "text": "In the suspended dust of the pollen rings there was always a second egg, a breath behind the first, shivering in gold spores—the wish trying out a future where it had already been granted, then setting the future back down, unconvinced, and trying the next one."
         }
       ]
     },
@@ -258,7 +299,29 @@
         },
         {
           "type": "paragraph",
-          "text": "She took up the sling. In the pollen, the other egg lingered a breath behind, then stayed where it was. Boof walked on. Downhill, damp bark gave way to salt air; under the sand, something older had begun to answer. She listened without turning back."
+          "text": "On her third pass, the moss beside her sank. Two prints, cloven and broad, pressed down a pace from her shoulder, then two more, walking away between the birches with nothing above them. The moss sighed up slowly behind each, like a cushion after a guest has gone."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof put her nose in the nearest print and got nothing: no musk, no breath, no warm hide, not even the green of a crushed stem. A track without a scent was a word without a mouth. The woodcutters call it the lag-stag, and say it is white, though nobody has ever seen it, which is a bold thing to say about a colour.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "She followed the prints round the cedar and back. They came past her again, a beat late, and stopped beside the egg's stone, deep and square-set, as if something tall had stood there a moment, looking down. The moss rose. Nothing else did."
+        },
+        {
+          "type": "paragraph",
+          "text": "Toward evening the light under the trees went moth-soft, and the rehearsal moths came off the bark, dusk moths the colour of old paper, to sun themselves on the warm shell. Their wings were smudged with weather: drizzle on one, a hard white glare like light off salt on another, and on the biggest, a grey-green storm sitting on a hill.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The grove keeps its almanac on them. Woodcutters read the wings before felling, and are wrong about a third of the time, which is better than the almanac at the mill. Boof read only dust and lamp-oil, and the powder they left on the shell in the shape of tomorrow."
+        },
+        {
+          "type": "paragraph",
+          "text": "She took up the sling. The moths lifted off one by one, a little put out. In the pollen, the other egg lingered a breath behind, then stayed where it was. Boof walked on. Downhill, damp bark gave way to salt air; under the sand, something older had begun to answer. She listened without turning back."
         }
       ],
       "climate": {
@@ -273,7 +336,9 @@
         "edges": [
           "the last tree of the grove stands dead, split by ancient lightning",
           "the phantom pollen egg fades as Boof lifts the real weight",
-          "the sand dunes begin immediately where the shade ends"
+          "the sand dunes begin immediately where the shade ends",
+          "cloven prints press into the moss beside the egg's stone with nothing above them",
+          "paper-coloured dusk moths settle on the warm shell, wings smudged with drizzle, salt-glare, and a storm on a hill"
         ],
         "hint": "view from dim green woods looking out toward sun-bleached golden sand dunes; a dog silhouette carrying a glowing bundle"
       }
@@ -289,11 +354,11 @@
         },
         {
           "type": "paragraph",
-          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course."
+          "text": "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and cedar shavings in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course."
         },
         {
           "type": "paragraph",
-          "text": "He sampled the trope the way you’d lift a plate off a stranger’s table. “You know this one: a lamp, a rub, three wishes, and a fool who wastes the third un-wishing the first.” Then he sounded it — HONK, one long bent note — and handed it back changed: the song never counts the finishing. Anybody can start a wish. Starting is cheap. The grove is full of starts."
+          "text": "He sampled the trope the way you’d lift a plate off a stranger’s table. “You know this one: a lamp, a rub, three wishes, and a fool who wastes the third un-wishing the first.” Then he sounded it — HONK, one long bent note, which an echo-wren overhead tried a beat late and abandoned halfway — and handed it back changed: the song never counts the finishing. Anybody can start a wish. Starting is cheap. The grove is full of starts."
         },
         {
           "type": "paragraph",
@@ -333,6 +398,18 @@
       },
       {
         "description": "A rehearsal is not a granting; a granting needs a finisher. Boof records this and continues toward the sand."
+      },
+      {
+        "description": "Echo-wrens nest in pairs in the grove's hollow cedars and sing everything a beat late — the egg's hum, the woodcutters' axes, a dog's sneeze. At the grove's edge, a wren-call means anything that comes back to you."
+      },
+      {
+        "description": "The lag-stag is never seen. Its cloven prints press into the moss a beat after it passes and carry no scent at all; woodcutters insist it is white. Its prints stopped beside the egg's stone, as if something tall had stood there looking down."
+      },
+      {
+        "description": "Rehearsal moths are the grove's almanac: dusk moths whose wings carry tomorrow's weather, a little smudged. Woodcutters read them before felling and are wrong about a third of the time. The night Boof left, their wings showed salt-glare and a storm sitting on a hill."
+      },
+      {
+        "description": "Torch-ants will not settle where a light comes back to them twice, so the grove's roots stay cold and its wild rows flicker. Grove workers add, over birch-sap tea, that hob-deer no taller than a boot graze there on days nobody keeps."
       }
     ]
   }

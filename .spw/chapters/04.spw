@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in the sleeve — an old trope, sa..."
+    excerpt: "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite — clove and windfall apple — and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in ..."
     route: ^[chapter/04/s03]{open}
   >
   s04: [
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Boof left the hill with the wish she had never asked to hold. Finder, the clerk had written, as if finding were a small thing a dog did with her nose and not a door the world had opened under her paws. The Genie walke..."
+    excerpt: "Boof left the hill with the wish she had never asked to hold, down hill-slate steps dished by centuries of boots that had come down still disagreeing. Finder, the clerk had written, as if finding were a small thing a ..."
     route: ^[chapter/04/s06]{open}
   >
 ]
@@ -94,6 +94,10 @@
     "Mr. BaneWAP debuts: a pie of hoarded berries gone bitter in a banker's crust. He wants the wish filed, appraised, and auctioned — to himself."
     "The mirror chamber's truth: BaneWAP is not a foreign villain. He is the reflection of what wanting becomes when it hoards instead of serving slices."
     "No key covers the egg, so the council cannot rule. The wish stays with its finder. The Fool samples the evil-vizier trope and honks it back as pastry."
+    "Council Hill's iron weathercocks vote by turning, and the crosswind is their disagreement made weather. A tie is recorded when every one of them points at the gap between the banners."
+    "The council slab carries the hill's first law, cut in bracework before any argument: &[boon, bane]{table} — two sides, one table. Written first so it can be leaned on and checked; delegat..."
+    "The key-file bench can only make a key smaller; its filings go into the honest jar, never emptied. The crosswind loom weaves the council's tablecloth from the hill's two winds, and the vo..."
+    "At sundown the day's end of the tablecloth is cut and given to whoever's roof leaked worst that week — the one custom on the hill that has never needed a vote."
   ]
 }
 

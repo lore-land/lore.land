@@ -17,10 +17,11 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.B';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_05.C';
 import { constellationFor } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_05.C';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -122,6 +123,7 @@ export const SPELLBOOK = Object.freeze([
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
+  { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
   { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
   { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
@@ -139,6 +141,7 @@ const PRACTICE = Object.freeze([
   { ask: 'Open Chapter Seven.', check: (s) => s.op === '@' && chapterFrom(s.handle || s.payload) === 7 },
   { ask: 'Ask when the next chapter lands.', check: (s) => s.op === '?' && s.handle === 'next' },
   { ask: 'Count your sightings of the hat.', check: (s) => s.op === '?' && s.handle === 'sightings' },
+  { ask: 'Open your almanac and count what you have kept.', check: (s) => s.op === '?' && s.handle === 'almanac' },
   { ask: 'Keep the whole book for a trip without signal.', check: (s) => s.op === '!' && s.handle === 'keep' },
   { ask: 'Pick up where you stopped reading.', check: (s) => s.op === '~' && (!s.handle || s.handle === 'resume') },
   { ask: 'Turn the room to lamplight.', check: (s) => s.op === '=' && s.handle === 'light' && s.payload === 'lamp' },
@@ -311,6 +314,18 @@ export async function initScriptoriumDesk() {
         say(op, el('p', {}, await shelfLine()));
       } else if (handle === 'find') {
         cast(payload);
+      } else if (handle === 'almanac' || handle === 'wonders') {
+        const data = await loadAlmanac();
+        const kept = readAlmanac();
+        const line = (kind, word) => {
+          const list = data.wonders.filter((w) => w.kind === kind);
+          return el('li', {}, `${word}: ${list.filter((w) => kept[w.id]).length} of ${list.length}`);
+        };
+        const total = data.wonders.filter((w) => kept[w.id]).length;
+        say(op, el('div', {},
+          el('p', {}, total ? `${total} of ${data.wonders.length} wonders kept.` : 'Nothing kept yet. In any chapter, the dotted words are doors: tap one to keep it.'),
+          el('ul', {}, line('creature', 'Creatures'), line('contrivance', 'Contrivances'), line('bracework', 'Bracework')),
+          el('p', {}, el('a', { href: '/almanac/' }, 'Open your almanac →'))));
       } else if (handle === 'sightings' || handle === 'hat') {
         const seen = readSightings();
         const found = SIGHTINGS.filter((s) => seen[s.id]);
@@ -325,7 +340,7 @@ export async function initScriptoriumDesk() {
           el('div', {}, el('p', {}, line),
             found.length ? el('ul', {}, found.map((s) => el('li', {}, el('a', { href: `/book/chapter/${pad(s.chapter)}/` }, `${pad(s.chapter)} · ${s.title}`)))) : null)));
       } else {
-        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf], ?[sightings] or ?[find]{words}.`));
+        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf], ?[sightings], ?[almanac] or ?[find]{words}.`));
       }
     } else if (op === '&') {
       const kinds = ['thread', 'motif', 'trope', 'foreshadow', 'lean', 'voice'];

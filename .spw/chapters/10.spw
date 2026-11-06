@@ -35,7 +35,7 @@
   s02: <
     handle: "custom-bonk/02"
     type: "custom-bonk"
-    excerpt: "The egg went onto the frame. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The answer came up through the wood in gold: the smallest wishes have the longest arcs. Given the curr..."
+    excerpt: "The egg went onto the frame. A weight slid, a beam settled, and the little brass load-bells under the joists rang one after another down the brace until the weight reached the anchor stone and went quiet in the chalk...."
     handles: ["bonk-intro"]
     route: ^[chapter/10/s02]{open}
   >
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "What the Frame Would Bear"
-    excerpt: "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. By noon the note had gone out on the pass ro..."
+    excerpt: "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. The chimney-swifts carried it farther than i..."
     route: ^[chapter/10/s05]{open}
   }
   s06: <
@@ -93,6 +93,10 @@
     "Bone.land is the small constitution — the spine that holds when the veil shakes. Even its pies keep their joints exposed."
     "Mx. BoneWAP, a pie of clean-boiled honesty, audits karmic momentum: the smallest wishes have the longest arcs."
     "The finding, published: BaneWAP's grand wish would cost a generation of coincidences. BaneWAP stops pretending to wait."
+    "Bone.land frames are chalked on the floor in braces and marks before anyone raises them; the mortise marks — ^ where a beam lifts, . where it stands — are what is left of the argument, so..."
+    "Every beam is told its load out loud on raising day. Load-beetles in the timber click when a beam is asked to bear more than it agreed to; load-bells under the joists ring wherever weight..."
+    "BoneWAP's listening mallet is felt-headed: a beam struck hard says only that it was struck; a beam asked properly says what it will bear."
+    "Chimney-swifts carried the frame's note to kitchens that had never heard of Bone.land; the Rift hall's crack-gauge read it as the same law on a younger floor, nothing owed yet."
   ]
 }
 

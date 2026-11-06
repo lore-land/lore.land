@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_05.C" data-cache-context="almanac" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Almanac · Lore.Land</title>
+  <meta name="description" content="Your almanac of Boon.land: the creatures, contrivances and bracework you have found in the chapters, where else each one lives, and a bench for combining them into small realms.">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="canonical" href="https://lore.land/almanac/">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Almanac · Lore.Land">
+  <meta property="og:description" content="Creatures, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
+  <meta property="og:url" content="https://lore.land/almanac/">
+  <meta property="og:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="628">
+  <meta property="og:image:alt" content="LORE . LAND in gold capitals over a dark teal lake at night; a bare sapling stands on a small island beneath a gold seed-bud sigil.">
+  <meta property="og:site_name" content="Lore.Land">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Almanac · Lore.Land">
+  <meta name="twitter:description" content="Creatures, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
+  <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_05.A&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_05.C&ctx=almanac:page">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_05.B"></script>
+  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_05.C"></script>
+</head>
+<body data-surface="monument" data-presence="threshold" data-current-scene="almanac">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/almanac/" aria-current="page">Almanac</a>
+        <a href="/scriptorium/">Scriptorium</a>
+        <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="hub-main almanac-main">
+      <section class="hub-hero almanac-hero" aria-labelledby="almanac-title">
+        <p class="hub-eyebrow">Your almanac · creatures, contrivances, bracework</p>
+        <h1 id="almanac-title">What you have found in Boon.land</h1>
+        <p class="hub-lede">
+          Every chapter names things worth keeping: creatures of the wild places, contrivances of the built ones, and
+          bracework — the makers' habit of writing what they mean to make in sigils and braces. The first time a chapter
+          names one, it is marked with a dotted line. Tap it, and it comes here. Most of them live in more than one
+          place; finding one again somewhere new is how the almanac fills in.
+        </p>
+        <p class="almanac-tally" data-almanac-tally>Opening the almanac…</p>
+      </section>
+
+      <section class="almanac-figure" aria-labelledby="figure-title">
+        <span class="almanac-figure-art" data-almanac-sketch aria-hidden="true"></span>
+        <div>
+          <h2 id="figure-title">The figure under the hat</h2>
+          <p data-almanac-sightings>Each time you notice him, his drawing gains a line.</p>
+        </div>
+      </section>
+
+      <section class="almanac-shelf" id="bestiary" data-kind="creature" aria-labelledby="bestiary-title">
+        <div class="almanac-shelf-head">
+          <h2 id="bestiary-title"><span class="almanac-sigil" aria-hidden="true">@</span> Bestiary</h2>
+          <p class="almanac-shelf-count" data-shelf-count="creature"></p>
+        </div>
+        <p class="almanac-shelf-lede">The wild places keep creatures, and every one of them watches back a little.</p>
+        <ul class="almanac-cards" data-shelf="creature"></ul>
+      </section>
+
+      <section class="almanac-shelf" id="contrivances" data-kind="contrivance" aria-labelledby="contrivances-title">
+        <div class="almanac-shelf-head">
+          <h2 id="contrivances-title"><span class="almanac-sigil" aria-hidden="true">$</span> Contrivances</h2>
+          <p class="almanac-shelf-count" data-shelf-count="contrivance"></p>
+        </div>
+        <p class="almanac-shelf-lede">Where people build, they build things that help a little and cost a little: kilns, needles, bells, presses.</p>
+        <ul class="almanac-cards" data-shelf="contrivance"></ul>
+      </section>
+
+      <section class="almanac-shelf" id="bracework" data-kind="bracework" aria-labelledby="bracework-title">
+        <div class="almanac-shelf-head">
+          <h2 id="bracework-title"><span class="almanac-sigil" aria-hidden="true">&amp;</span> Bracework</h2>
+          <p class="almanac-shelf-count" data-shelf-count="bracework"></p>
+        </div>
+        <p class="almanac-shelf-lede">
+          Makers write what they mean to build before they build it, so it can be leaned on, read by strangers, or combined
+          into something nobody planned. Braces say what is held together; a sigil says how.
+        </p>
+        <ul class="almanac-cards" data-shelf="bracework"></ul>
+      </section>
+
+      <section class="almanac-bench" id="bench" aria-labelledby="bench-title">
+        <div class="almanac-shelf-head">
+          <h2 id="bench-title">The combining bench</h2>
+          <p class="almanac-shelf-count">a night-school game</p>
+        </div>
+        <p class="almanac-shelf-lede">
+          Choose a container and a sigil, then two things. Close the braces and the box fogs into a small realm. A combine
+          holds only what both things agree on, and it runs on borrowed warmth. The things you have found in the chapters
+          join the hat of words; a few common words are always in it.
+        </p>
+        <form class="almanac-bench-form" data-bench>
+          <fieldset>
+            <legend>Container</legend>
+            <label><input type="radio" name="container" value="[]"> <code>[ ]</code> a window</label>
+            <label><input type="radio" name="container" value="{}" checked> <code>{ }</code> a room</label>
+            <label><input type="radio" name="container" value="()"> <code>( )</code> a gathering</label>
+            <label><input type="radio" name="container" value="<>"> <code>&lt; &gt;</code> a passage</label>
+          </fieldset>
+          <fieldset>
+            <legend>Sigil</legend>
+            <label><input type="radio" name="sigil" value="&" checked> <code>&amp;</code> together</label>
+            <label><input type="radio" name="sigil" value="~"> <code>~</code> dreaming</label>
+            <label><input type="radio" name="sigil" value="@"> <code>@</code> watching</label>
+            <label><input type="radio" name="sigil" value="^"> <code>^</code> lifting</label>
+          </fieldset>
+          <div class="almanac-bench-nouns">
+            <label>First thing <select name="a" data-noun></select></label>
+            <label>Second thing <select name="b" data-noun></select></label>
+            <button type="button" class="almanac-bench-draw" data-draw>Draw from the hat</button>
+          </div>
+          <output class="almanac-bench-out" data-bench-out aria-live="polite"></output>
+          <div class="almanac-bench-actions">
+            <button type="button" class="hub-cta hub-cta-primary" data-keep>Keep this combine</button>
+          </div>
+        </form>
+        <h3 class="almanac-kept-title">Combines you have kept</h3>
+        <ul class="almanac-kept" data-kept></ul>
+      </section>
+    </main>
+
+    <footer class="hub-footer">
+      <p>Raised by <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a> · your almanac lives in this browser</p>
+      <p class="hub-footer-note">Story first · process in the grain · marks stay marked</p>
+    </footer>
+  </div>
+</body>
+</html>

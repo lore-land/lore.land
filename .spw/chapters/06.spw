@@ -6,7 +6,7 @@
 
 ^[chapter/06]{
   title: "Lanterns of Bonk City"
-  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Boof winds through streets of glass made from old impacts and meets Mr. BoonWAP, the sentient boonberry pie who serves himself in slices and is never smaller — while Mr. BaneWAP shadows the ..."
+  description: "Chapter 6 of Lore.Land: Lanterns of Bonk City. Boof winds through streets of glass made from old impacts, past a forgiving kiln and a stall of boxed weathers, and meets Mr. BoonWAP, the sentient boonberry pie who serves himself in slices..."
   mood: "labyrinth"
   period: "spring"
   chapter_path: "/book/chapter/06/"
@@ -35,13 +35,13 @@
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
-    excerpt: "“Every pane will offer you your own warmth,” said a voice behind the glass. Boof turned. Three reflections turned with her. “Very flattering. Very little supper.” She lifted her nose. Through the rain and brass came t..."
+    excerpt: "“Every pane will offer you your own warmth,” said a voice behind the glass. Boof turned. Three reflections turned with her. “Very flattering. Very little supper.” In the corner of every pane a glazier had etched two m..."
     route: ^[chapter/06/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "From the lamplighter’s top rung he tapped the brass bell into a crease, and the post remembered heat. Old impact, sampled; returned as light, with interest. That, he remarked to no one and everyone, is the whole city ..."
+    excerpt: "From the top rung of the lamplighter’s lamp-ladder he tapped the brass bell into a crease, and the post remembered heat. Old impact, sampled; returned as light, with interest. That, he remarked to no one and everyone,..."
     route: ^[chapter/06/s03]{open}
   >
   s04: [
@@ -93,6 +93,10 @@
     "Mr. BoonWAP debuts: a sentient pie of boonberries — berries a wish once passed over, each holding a drop of the granting. He serves himself in slices and is never smaller."
     "Asked what she would wish for, Boof cannot say. BoonWAP approves: a wish you can't say yet is still proofing."
     "Mr. BaneWAP shadows the city gates, lattice-crusted, keeping out of the light — and leaves ahead of Boof on the road to the oath stone."
+    "The bonk-kiln melts the blow out of anything struck and pours it off as clear glass. Its keeper offered to forgive the egg's crack; Boof stepped wide of the tongs."
+    "Dent-lanterns throw bright creases on the cobbles — streets the light remembers, some since moved. Chime-gutters ring in the rain so a roofer can hear which roof leaks; lamplighters' lamp..."
+    "Glaziers etch # on a pane's street face (the face that travels) and . on its inside face (the face that stays); a pane hung backward shows you yourself. Pane-snails graze soot by night, a..."
+    "A plaza stall sells brace-boxes: pocket weathers combined from two nouns, a sigil, and braces, written on the lid first so they can be checked and refused. They hold only what both nouns ..."
   ]
 }
 

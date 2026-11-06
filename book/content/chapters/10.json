@@ -69,7 +69,19 @@
         "joints",
         "load",
         "spine",
-        "skeleton"
+        "skeleton",
+        "load-beetles",
+        "load-beetle",
+        "listening mallet",
+        "load-bells",
+        "load-bell",
+        "mortise marks",
+        "mortise mark",
+        "sill beam",
+        "tie-beam",
+        "raising day",
+        "joiner's loaf",
+        "sawdust weather"
       ]
     },
     {
@@ -97,7 +109,11 @@
         "coincidences",
         "finding",
         "published",
-        "corrections"
+        "corrections",
+        "chimney-swifts",
+        "remembrancers",
+        "crack-gauge",
+        "well-winch"
       ]
     }
   ],
@@ -113,14 +129,16 @@
       "scene": {
         "vantage": "at the foot of the monumental great frame between two massive limestone anchor stones, looking up along a rising truss chord",
         "light": "clean white-gold morning sun behind the structure; a veil of fine sawdust shaking off the high beams in backlit sheets; the bone-timbers themselves matte, honest, and calm",
-        "scent": "cut white oak, quarry limestone chalk, tallow rope grease — and, faintly, clean-boiled fruit and hot honest crust",
+        "scent": "cut white oak, quarry limestone chalk, tallow rope grease — and, faintly, clean-boiled fruit and hot honest crust, square-baked rye",
         "edges": [
           "every mortise, tenon, and scarf joint is fully exposed and pegged with oak trunnels — nothing hidden, nothing clad in plaster",
           "the veil of dust shivers and falls, but the structural frame does not sway an inch",
-          "on a scrubbed trestle table waits Mx. BoneWAP: a pale, plain pie, steaming with clean-boiled honesty, surrounded by open ledgers",
-          "carved along the main tie-beam runs the small constitution of the land"
+          "on a scrubbed trestle table waits Mx. BoneWAP: a pale, plain pie, steaming with clean-boiled honesty, surrounded by chalked plans and a felt-headed listening mallet",
+          "carved along the main tie-beam runs the small constitution of the land",
+          "beside every joint, a mortise mark cut in the oak: a small caret where a beam lifts, a single dot where it stands",
+          "a peg-boy on a sawhorse eating a square-cornered joiner's loaf"
         ],
-        "hint": "monumental timber frame from ground level looking up; backlit sheets of dust shivering off it in morning light; still, honest joinery; a plain pale pie on a scrubbed table among open ledgers; white-gold on deep teal"
+        "hint": "monumental timber frame from ground level looking up; backlit sheets of dust shivering off it in morning light; still, honest joinery; a plain pale pie on a scrubbed table among chalked frame-plans; white-gold on deep teal"
       },
       "content": [
         {
@@ -129,7 +147,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Boof trotted across the sawdust floor, and the whole valley heard the frame answer her arrival with one deep  ",
+          "text": "Boof's nose sorted the place before her eyes did: oak cut that week, quarry chalk, tallow on the hoist ropes. Nothing painted, nothing glued. A peg-boy on a sawhorse was eating a joiner's loaf, rye baked square-cornered so it sits on a beam without rolling off."
+        },
+        {
+          "type": "paragraph",
+          "text": "She trotted across the sawdust floor, and the whole valley heard the frame answer her arrival with one deep  ",
           "children": [
             {
               "type": "custom-bonk",
@@ -137,9 +159,13 @@
             },
             {
               "type": "text",
-              "text": " — not slapstick, but the sound of a structure declaring itself load-bearing. And on a scrubbed trestle table between the anchor stones sat something new: a pale, plain pie, steaming faintly, ringed by plumb lines and tuning pegs."
+              "text": " — not slapstick, but the sound of a structure declaring itself load-bearing. Sawdust came off the high beams in sheets; the joiners call that sawdust weather."
             }
           ]
+        },
+        {
+          "type": "paragraph",
+          "text": "On a scrubbed trestle table between the anchor stones sat something new: a pale, plain pie, steaming faintly, ringed by plumb lines and tuning pegs. Its ingredients were pricked into the rim of its crust. Boof checked the list with her nose. It was complete."
         },
         {
           "type": "paragraph",
@@ -148,6 +174,16 @@
         {
           "type": "paragraph",
           "text": "Where BaneWAP was hoarded berries gone bitter in a banker's crust, and BoonWAP served himself and was never smaller, BoneWAP was clean-boiled honesty: no sugar it had not declared, no filling it could not show. In Bone.land, even a pie keeps its joints exposed."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof made for the nearest beam. \"Not that one,\" said BoneWAP. \"Read the mortise marks.\" Beside every joint a joiner had cut a caret ^ where the beam lifts, a dot . where it stands. That beam was a lifter, and you do not ask a lifting thing a question; it is busy.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Frames here are chalked on the floor in braces and marks before anyone raises them, because chalk is cheaper than oak and a mistake in braces falls on nobody. The marks are what is left of the argument. Boof found a dot on the sill beam and set the sling down there.",
+          "lean": "bone"
         }
       ]
     },
@@ -155,21 +191,41 @@
       "type": "custom-bonk",
       "data-motif": "small-want",
       "scene": {
-        "vantage": "inches from the trestle table where the egg rests on a brass audit-scale beside the open ledger of every wish ever spent",
-        "light": "gold lines of ledger-light illuminating the wood grain like lightning frozen in amber",
-        "scent": "scorched oak, hot iron shell, ledger ink, clean crust",
+        "vantage": "inches from the trestle table where the egg rests on a mortise dot cut into the sill beam, small brass load-bells hanging overhead",
+        "light": "gold lines of load-light running the wood grain like lightning frozen in amber",
+        "scent": "scorched oak, hot iron shell, chalk dust, clean crust",
         "edges": [
-          "the ledger's pages run back past memory: every wish ever spent, and what its corrections cost",
+          "the frame's mortise marks run back past memory: a caret where each beam lifts, a dot where it stands",
           "the egg's entry draws itself as a long, low, patient arc",
-          "beside it, the projected arc of a grand wish burns short and steep and expensive"
+          "beside it, the projected arc of a grand wish burns short and steep and expensive",
+          "a felt-headed listening mallet resting against the sill beam",
+          "small brass load-bells shivering beneath the joists along the load path"
         ],
-        "hint": "macro close-up of a dark cracked egg on a brass scale beside a vast open ledger, gold arcing lines of different lengths rising off the page like drawn light"
+        "hint": "macro close-up of a dark cracked egg set on a joint of the great frame, gold arcing lines of different lengths rising off the timber like drawn light"
       },
       "content": [
         {
           "type": "paragraph",
           "data-content_id": "bonk-intro",
-          "text": "The egg went onto the frame. A weight slid, a beam settled, and a low note ran through the frame into Boof's paws. The answer came up through the wood in gold: the smallest wishes have the longest arcs. Given the current, a small turn could travel generations. Force the whole river round a throne and the corrections would come downstream, roof by roof. Boof shook the ringing from her ears. It stayed in the wood."
+          "text": "The egg went onto the frame. A weight slid, a beam settled, and the little brass load-bells under the joists rang one after another down the brace until the weight reached the anchor stone and went quiet in the chalk. Boof could hear exactly where the egg was being carried."
+        },
+        {
+          "type": "paragraph",
+          "text": "BoneWAP lifted the listening mallet, felt-headed and worn pale at the grip, and tapped the sill beam once. Not a blow; a question. A beam struck hard tells you only that it has been struck."
+        },
+        {
+          "type": "paragraph",
+          "text": "A low note ran through the frame into Boof's paws. In the cracks of the timber the load-beetles listened. They click when a beam is asked to bear more than it agreed to, and every beam here is told its load out loud on raising day, the way a child is told its chores. Not one clicked."
+        },
+        {
+          "type": "paragraph",
+          "text": "The answer came up through the wood in gold: the smallest wishes have the longest arcs. Given the current, a small turn could travel generations.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Then BoneWAP tapped again and asked the other question — what if the whole river were forced round a throne? The load-beetles went off along the tie-beam like rain starting on a roof, ridge to sill. The corrections would come downstream, roof by roof. Boof shook the ringing from her ears. It stayed in the wood.",
+          "lean": "bane"
         }
       ]
     },
@@ -216,15 +272,24 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley."
+          "text": "BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. The chimney-swifts carried it farther than it meant to go, flue to flue, until kettle-lids hummed it on hearths that had never heard of Bone.land."
         },
         {
           "type": "paragraph",
-          "text": "By noon the note had gone out on the pass road, to the tavern, to the Watering Eye, where people said it back to one another. The Egg’s wish, spent small and true, would cost one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. The grand wish a certain bitter pie intended would call in a generation of coincidences — a whole town’s luck, drawn without asking."
+          "text": "By noon the note had gone out on the pass road, to the tavern, to the Watering Eye, where people said it back to one another. Down in the well the remembrancers rose through the folded faces to listen, and the well-winch turned a quarter-turn by itself, as if the bucket wanted to hear too."
         },
         {
           "type": "paragraph",
-          "text": "People stopped to hear it with baskets on their arms and tools still in their hands. Some hummed the note to check it; some asked a neighbor to say it again. It traveled out of the hall in voices that sounded nothing alike."
+          "text": "The Egg’s wish, spent small and true, would cost one lent coincidence and a spare Thursday, and its arc would outlast every roof in the valley. The grand wish a certain bitter pie intended would call in a generation of coincidences — a whole town’s luck, drawn without asking."
+        },
+        {
+          "type": "paragraph",
+          "text": "People stopped to hear it with baskets on their arms and tools still in their hands; a cooper forgot to set down his half-hooped barrel. Some hummed the note to check it; some asked a neighbor to say it again. It traveled out of the hall in voices that sounded nothing alike."
+        },
+        {
+          "type": "paragraph",
+          "text": "A clerk from the hall of arches had carried the crack-gauge up the pass to compare floors. Set across the tie-beam, the brass calipers closed to a hair and hummed the note back higher and cleaner than the Rift's: the same law, a younger floor, nothing owed yet.",
+          "lean": "bone"
         },
         {
           "type": "paragraph",
@@ -232,7 +297,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The note was still in the beams when word came up the pass: the bitter pie had heard it. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; dust drifted from a beam. She checked the sling."
+          "text": "The note was still in the beams when word came up the pass: the bitter pie had heard it. He had understood it. He had stopped waiting. Boof felt the tremor before she heard the messenger's feet. Above her, the pegs held; dust drifted from a beam; somewhere in the tie-beam a single load-beetle clicked at a weight nobody had set down yet. She checked the sling."
         }
       ],
       "climate": {
@@ -245,10 +310,12 @@
         "light": "day through the frame; gold along load paths; clean black ink drying",
         "scent": "timber, dust, warm iron, fresh ink",
         "edges": [
-          "the audit nailed where anyone can read it",
+          "the frame's answer rung where anyone can hear it",
           "small wishes with the longest arcs",
           "a generation of coincidences priced and refused",
-          "a tremor in the veil; the spine holding"
+          "a tremor in the veil; the spine holding",
+          "brass crack-gauge calipers set across the tie-beam, humming",
+          "chimney-swifts pouring off the ridge stacks with the note"
         ],
         "hint": "great load-bearing wooden frame, joints exposed, printed findings nailed to limestone anchor stones, a working dog with a glowing egg reading them, gold seams along honest load paths"
       }
@@ -256,7 +323,7 @@
     {
       "type": "custom-boof",
       "scene": {
-        "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking the road south",
+        "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking the long road down the valley",
         "light": "hard clear noon; far down the valley, a bruise-dark smudge of crust and hurry moving up the road",
         "scent": "wild jasmine, warm stone, fresh ink on the wind — and, far off, burnt sugar going bitter",
         "edges": [
@@ -273,11 +340,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Nothing grew in Bone.land that had not been carried in. In her sling, beside the egg, the slice from Bonk City was still warm through its paper. She had carried it over the pass without eating it. She did not know why, and she did not take it out."
+          "text": "Nothing grew in Bone.land that had not been carried in. In her sling, beside the egg, the slice from Bonk City was still warm through its waxed paper. She had carried it over the pass without eating it. She did not know why, and she did not take it out."
         },
         {
           "type": "paragraph",
-          "text": "She settled the egg deeper against her chest and turned south. Behind her, the timber answered the shaking with small creaks, peg to socket, joint to joist. Ahead, the road looked much as it had that morning. She went carefully."
+          "text": "She settled the egg deeper against her chest and turned downhill, toward the road the bitter smell was climbing. Behind her, the timber answered the shaking with small creaks, peg to socket, joint to joist. Ahead, the road looked much as it had that morning. She went carefully."
         }
       ]
     }
@@ -292,6 +359,18 @@
       },
       {
         "description": "The finding, published: BaneWAP's grand wish would cost a generation of coincidences. BaneWAP stops pretending to wait."
+      },
+      {
+        "description": "Bone.land frames are chalked on the floor in braces and marks before anyone raises them; the mortise marks — ^ where a beam lifts, . where it stands — are what is left of the argument, so a frame can be read before it is leaned on."
+      },
+      {
+        "description": "Every beam is told its load out loud on raising day. Load-beetles in the timber click when a beam is asked to bear more than it agreed to; load-bells under the joists ring wherever weight passes, so nobody stands beneath it."
+      },
+      {
+        "description": "BoneWAP's listening mallet is felt-headed: a beam struck hard says only that it was struck; a beam asked properly says what it will bear."
+      },
+      {
+        "description": "Chimney-swifts carried the frame's note to kitchens that had never heard of Bone.land; the Rift hall's crack-gauge read it as the same law on a younger floor, nothing owed yet."
       }
     ]
   }

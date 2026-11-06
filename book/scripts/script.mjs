@@ -48,9 +48,10 @@ import {
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_11_05.B';
 import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
+import { initAlmanac } from './modules/almanac.mjs?v=2026_11_05.C';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_05.B';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_05.B';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_05.C';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_05.B';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_05.B';
@@ -168,6 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyLens = initLensControl({ announce });
     const destroyXray = initXrayReading({ announce });
     const destroyConstellation = initConstellation({ announce });
+    const destroyAlmanac = initAlmanac({ chapterData, announce });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -254,6 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyLens) destroyLens();
       if (destroyXray) destroyXray();
       if (destroyConstellation) destroyConstellation();
+      if (destroyAlmanac) destroyAlmanac();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

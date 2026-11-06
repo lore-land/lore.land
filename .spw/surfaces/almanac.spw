@@ -1,0 +1,123 @@
+# The Almanac of Boon.land — creatures, contrivances, and bracework
+# Worldbuilding canon for the 2026-11 chapter pass. Nouns and adjectives the land keeps.
+# Every entry must DO something in a scene (cost, help, misread, remember) — no catalogue dumps.
+# Lowercase compound nouns by preference; proper names are rare and earned.
+#>almanac
+#:canon #!worldbuilding #!working
+
+^"almanac"{
+  .status: "working"
+  purpose: "Give every region a texture of its own: creature wonder where the land is wild, inventive contrivances where people build, and bracework (Spw as an in-world craft) where makers combine things into small realms."
+  &boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
+  &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
+  rule: "The world believes its impossible premises completely. A wonder has a habit, a cost, and someone who misreads it."
+  data: "book/content/world/almanac.json (54 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes)"
+  runtime: "chapter-render.mjs marks the first naming of each wonder per chapter (.wonder-mark); almanac.mjs collects on tap (lore.almanac.v1); /almanac/ shows the collection and the combining bench; desk ?[almanac]; switch wonders"
+  revisit: "Every wonder has a home chapter and at least one echo; a reader's entry fills in place by place."
+}
+
+^"registers"{
+  creature_wonder: "the dawnward field, the grove, the salt flats, the Watering Eye, the bloom garden, the confluence, the kept Thursday"
+  contrivance: "Bonk City, Council Hill, the Quiet Rift hall, Bone.land's great frame, the Round Archive, the parcel gate"
+  bracework: "wherever makers build or record: the council slab, the glaziers' panes, the joiners' mortises, the archive catalogue, the night school"
+}
+
+^"bestiary"{
+  torch_ants: "keep lit streets along the berry roots all winter; businesslike, particular about torches; the warmth under the field is theirs"
+  echo_wrens: "small brown wrens of the grove that sing a beat late; nest in hollow cedars; a wren-call is the grove saying again"
+  lag_stag: "a white stag of the grove nobody has seen; its hoofprints press into the moss a beat after it has passed"
+  rehearsal_moths: "dusk moths whose wings carry tomorrow's weather, a little smudged; the grove's almanac"
+  salt_whales: "vast slow creatures under the salt flats; the flats are the roof of their road; old whale-roads glow under the crust, and two of them want the same turn"
+  signal_skinks: "finger-long lizards that bask on the signal stones and flick their tails in a code only the stones answer"
+  weathercocks: "iron roosters of Council Hill that vote by turning; the crosswind is their disagreement made weather"
+  hum_crickets: "live in the Quiet Rift's crack and keep its pitch; go silent when someone lies near the floor"
+  pane_snails: "glass-snails of Bonk City that graze soot off the panes at night; their slow trails are how a pane is forgiven clear"
+  oath_moths: "grey market moths drawn to sworn words; they settle in the oath groove only when a promise is true"
+  remembrancers: "pale fish in the Watering Eye that swim through the faces the well has kept, folding them gently so they fit"
+  jazz_geese: "geese that fly in nines and honk in uneven time; one of them taught the Fool his note, or the other way round"
+  chimney_swifts: "roost in the ridge chimneys and carry a sound a little farther than it meant to go"
+  load_beetles: "small dark beetles in Bone.land timber that click when a beam is asked to bear more than it agreed to; a lit-street beetle in chapter 12 is one of their cousins"
+  crown_wasps: "build paper crowns in the bloom garden, beautiful and hollow; a rented crown is wasp-work"
+  early_bees: "arrive at a flower before it opens and wait, humming, as if the bloom owed them"
+  seam_otters: "swim exactly on the unblended seam of the two rivers, one paw in each water"
+  ink_herons: "stand in the berry-dark river so still their reflections dry into the bank"
+  shelf_owls: "keep the gaps in the Round Archive's shelves clear for chronicles not yet written; they nest in what is missing"
+  hob_deer: "deer no taller than a boot that graze between frost-ruts only on days nobody keeps; an unkept creature"
+  page_fox: "a fox the colour of an unturned page, seen only on unkept days, trotting as if late for something"
+  gate_pigeons: "sleep on the parcel gate's counterweight and ride it up and down all night without waking"
+}
+
+^"contrivances"{
+  press_stones: "the archivist's flat stones for holding a map's crease; one is always missing"
+  drying_line: "where the map-house hangs new maps to dry; maps that refuse ink drip back into the trough"
+  want_needle: "the Genie's brass needle, quick to find a want; circles, slows, tries again"
+  resolution_glass: "the Genie's long glass; it shows only wants larger than a loaf"
+  wish_scale: "the Genie's pan scale, balanced against coincidences"
+  bottle_desk: "the folding desk the Genie keeps in his bottle, with a drawer for Thursdays"
+  key_file_bench: "Council Hill's bench where keys are filed smaller, never grown; the filings are swept into a jar called the honest jar"
+  crosswind_loom: "weaves the hill's two winds into the council's tablecloth; when the vote turns, the weave changes colour"
+  crack_gauge: "brass calipers set across the Rift's crack; they measure in notes, not inches"
+  bonk_kiln: "the forgiving kiln of Bonk City; melts down old impacts into clear glass"
+  dent_lanterns: "lanterns hammered from dented brass; each dent is a street the light remembers"
+  chime_gutters: "gutters that ring when it rains, so the city can hear which roofs are leaking"
+  lamp_ladders: "the lamplighters' hinged ladders that fold into a staff"
+  folio_press: "glasses a page flat and warm, layering it over the last"
+  oath_scale: "weighs the fruit an oath is paid in; ignores the hand that pays"
+  well_winch: "the Watering Eye's winch; on still nights the bucket comes up holding a face instead of water"
+  shard_rack: "the Fool's rack for the nine honk shards; one slot egg-shaped"
+  listening_mallet: "BoneWAP's felt-headed mallet for asking a beam what it will bear"
+  load_bells: "small bells hung from Bone.land's joists that ring when weight passes over"
+  rail_pins: "brass pins on the confluence bridge where receipts are posted for any traveller to read"
+  ferry_bell: "rung at the confluence when someone needs to cross the seam without wetting both springs"
+  glassing_press: "the Round Archive's great press for folios; it pressed every page but the last"
+  storm_weight: "the parcel gate's iron counterweight; it lets one man lift a gate meant for three"
+  door_rule: "the carpenter's folding rule; it has a hinge for every size of door"
+  pie_dividers: "brass compasses the night school uses to divide paper pies evenly; they never come out even"
+  brace_boxes: "small glass boxes with sigil-etched lids, sold in Bonk City; each holds a pocket realm combined from two nouns and a sigil"
+}
+
+^"bracework"{
+  .note: "Spw as an in-world low craft (the bone register). Makers write what they mean to build in sigils and braces before they build it, because a thing written can be checked, combined, and refused before anyone carries a beam."
+  why: "Braces say what is held together; sigils say how. Written first, a plan can be leaned on (Bone.land), read by strangers (the rail pins), or combined into something nobody planned (brace-boxes)."
+  containers: {
+    frame: "[] a window — you can only look into it"
+    body: "{} a room — you can stand in it for a minute"
+    scope: "() a gathering — everything in it must arrive together"
+    channel: "<> a passage — you can go through it, never stay"
+  }
+  sigils_in_use: {
+    confluence: "& merges two things without whitening either (the council slab, the rivers)"
+    potential: "~ lets one thing dream of being the other (mist, rehearsal)"
+    perspective: "@ lets one thing watch the other, which changes both a little"
+    integration: "^ lifts one thing by the other (ridge-beams, rising processions)"
+    annotation: "# the face that travels (the street face of a pane)"
+    ground: ". the face that stays (the inside face of a pane, the footing of a frame)"
+  }
+  combines: "The night school's game: draw two nouns from a hat, choose a sigil and a container, close the braces, and the brace-box fogs into a small weather. {frost & hearth} snows warm. <river ~ moon> is a passage where water is thinking about being light. [grove @ dog] is a window where the trees watch back. (ant ^ lantern) is a procession that rises."
+  limit: "A brace-box holds only what both nouns agree on, and it runs on borrowed warmth: it goes cold in a week unless someone holds it. The ants disapprove of brace-boxes; they know where the warmth comes from."
+  guard: "Bracework stays a craft people use, not a spell that solves the plot. Never decode WAPboy or the Egg in it."
+}
+
+^"adjectives"{
+  .note: "A palette, not a quota. Compound adjectives built from the land's own materials; use them where a plain word would blur."
+  palette: "loam-dark, frost-bitten, honey-slow, chalk-pale, berry-dark, ember-warm, lamp-lit, glass-clear, rain-slick, salt-stiff, bell-bright, moth-soft, crumb-sweet, iron-cold, smoke-blue, tallow-yellow, jam-thick, burr-rough, owl-quiet, wren-quick, kiln-warm, dent-bright, soot-furred, moss-thick, sap-slow, needle-fine, lantern-ripe, ledger-grey, felt-headed, half-forgiven, beat-late, square-cornered, unkept, thrice-folded, crust-gold, well-black, chime-loud, joist-honest, hollow-proud, two-sprung"
+}
+
+^"placements"{
+  .note: "Which chapter introduces what (first sighting); later chapters may echo."
+  c01: "torch_ants (deepen), press_stones, drying_line; a first bracework glimpse: the archivist's margin sigils"
+  c02: "echo_wrens, lag_stag (prints only), rehearsal_moths"
+  c03: "salt_whales, signal_skinks, want_needle, resolution_glass, wish_scale, bottle_desk"
+  c04: "weathercocks, key_file_bench, crosswind_loom; bracework on the council slab: &[boon, bane]{table}"
+  c05: "hum_crickets, crack_gauge"
+  c06: "pane_snails, bonk_kiln, dent_lanterns, chime_gutters, lamp_ladders, folio_press, brace_boxes (a stall); glaziers' # and . faces"
+  c07: "oath_moths, oath_scale"
+  c08: "remembrancers, well_winch"
+  c09: "jazz_geese, chimney_swifts, shard_rack; the nine shards as a combine"
+  c10: "load_beetles, listening_mallet, load_bells; mortise bracework (^ at the ridge, . at the footing)"
+  c11: "crown_wasps, early_bees"
+  c12: "seam_otters, ink_herons, rail_pins, ferry_bell"
+  c13: "shelf_owls, glassing_press; the brace-catalogue (the blank last line is an open brace)"
+  c14: "hob_deer, page_fox (unkept creatures of the missing Thursday); torch_ants echo"
+  c15: "gate_pigeons, storm_weight, door_rule, pie_dividers; the night school's combines; the clerk's new form [child, parcel, door]"
+}

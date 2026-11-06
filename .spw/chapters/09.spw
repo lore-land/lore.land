@@ -6,7 +6,7 @@
 
 ^[chapter/09]{
   title: "Shards of Nine Honks"
-  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge, the shards assemble into a shape with one hole, egg-sized — the ninth honk that was ne..."
+  description: "Chapter 9 of Lore.Land: Shards of Nine Honks. Nine honks are nine sampled tropes, and the Fool's set has sounded eight of them. Laid out on the ridge from the shard-rack while jazz-geese pass in nines, the shards assemble into a shape wi..."
   mood: "puzzle"
   period: "spring"
   chapter_path: "/book/chapter/09/"
@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "On the chimney rim he breathed through an empty mouthpiece. Steam came out. Not sound. Not yet."
+    excerpt: "On the chimney rim he breathed through an empty mouthpiece of dark horn. Steam came out, amber. Not sound. Not yet."
     route: ^[chapter/09/s03]{open}
   >
   s04: [
@@ -55,13 +55,13 @@
     handle: "section/05"
     type: "section"
     title: "The Shape with One Hole"
-    excerpt: "The egg fitted without a push. Eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close enough to touch, with a space for wh..."
+    excerpt: "The egg fitted without a push, and the heap stopped being a heap: eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close e..."
     route: ^[chapter/09/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "Down the ridge, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was true; now she knew the..."
+    excerpt: "Down the ridge, past roofers' ladders lashed for the night, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wa..."
     route: ^[chapter/09/s06]{open}
   >
 ]
@@ -93,6 +93,10 @@
     "Nine honks are nine sampled tropes: the Fool's set has sounded eight — three-wishes, trickster-in-the-tree, genie-in-the-bottle, vizier-at-court, two-receipts, labyrinth-city, sworn-oath,..."
     "The ninth honk was never sounded. Its shard is the egg: an unspent wish is an unsounded note."
     "Assembled, the set is a shape with one hole, egg-sized — the whole serial arranged around a held breath."
+    "Jazz-geese fly in nines and honk in uneven time. Passing over the ridge, eight of their honks each rang a shard; the ninth found nothing to answer it. One goose taught the Fool his note, ..."
+    "Chimney-swifts roost in the ridge flues and carry a sound a little farther than it meant to go: nothing said on the ridge stays on the ridge. They took the assembled hum down into the tow..."
+    "The Fool keeps his set in a shard-rack of smoked ash — nine felt-lined slots, the ninth egg-shaped since before he knew why; for years it held a turnip so the rack would not look sad."
+    "Chalked as a combine, the set is a round brace — everything inside must arrive together — with eight names joined by ampersands and a blank after the last. Eight pieces of a nine-piece co..."
   ]
 }
 

@@ -29,7 +29,7 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "It happened between one honest sniff and the next. On the road out of Bone.land, where the frame's note still hung in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, t..."
+    excerpt: "Below Bone.land the road ran through an old bloom garden nobody had kept for years. Quince had gone to riot over the walls, the blackthorn hedge stood white with flower, and a moss-thick sundial pointed at the wrong h..."
     route: ^[chapter/11/s01]{open}
   >
   s02: <
@@ -42,7 +42,7 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "He tapped the rented throne once — hollow — and let the note say what the timber had: interest is owed on every borrowed want."
+    excerpt: "He tapped the rented throne once — hollow, gilt over pine — and let the note say what the timber had: interest is owed on every borrowed want."
     route: ^[chapter/11/s03]{open}
   >
   s04: [
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
-    excerpt: "He pointed downhill to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
+    excerpt: "He pointed downhill, past the last of the blackthorn, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
     route: ^[chapter/11/s06]{open}
   >
 ]
@@ -93,6 +93,9 @@
     "A grand wish grants instantly and minimum-viable: karmic momentum pays it out one coincidence at a time, corrections deferred elsewhere."
     "A wish only leaves the shell when it is finished. An empire-sized wish is never finishable, so the egg survives its own spending and rolls home."
     "BaneWAP's hoarded berries wake inside him — a berry notices the story it is sitting inside — and he tastes his hoard for the first time in years. Sweetness is the correction."
+    "Crown-wasps build paper crowns in the bloom garden's blackthorn, chewed from fence rails and old auction notices. BaneWAP's crown was found, not made: wasp-work, beautiful, hollow and ten..."
+    "Early bees wait at shut buds as if the bloom owed them. A grand wish opens every flower at once, and a flower opened on demand has nothing in it yet."
+    "Rehearsal moths shaken from the hedge wear the empire's weather — rain over a court with no roof, arriving in instalments. A subject who reads the moth goes home with her bread."
   ]
 }
 

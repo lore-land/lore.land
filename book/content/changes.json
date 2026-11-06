@@ -2,6 +2,16 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_05.C",
+      "date": "2026-11-05",
+      "notes": [
+        "Every chapter was revised for the land itself: more of what things are made of, what they smell like, who keeps them, and what lives in the wild places — echo-wrens and salt-whales, pane-snails and seam-otters, kilns and needles and bells.",
+        "The first time a chapter names a creature, a contrivance or a piece of bracework, it is marked with a dotted line. Tap it to keep it in your almanac; the card says where else it lives, so finding it again somewhere new fills in its entry.",
+        "A new page, the Almanac, keeps what you have found — with silhouettes of what is still out there, the drawing of the figure under the hat, and a combining bench where found things become small realms in braces. (Switches → Wonders in the prose turns the marks off.)",
+        "At the desk, ?[almanac] counts what you have kept."
+      ]
+    },
+    {
       "release": "2026_11_05.B",
       "date": "2026-11-05",
       "notes": [

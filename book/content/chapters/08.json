@@ -3,7 +3,7 @@
   "title": "Songs of the Watering Eye",
   "logline": "At a tavern leaning over a well that folds every face it has held, the Genie prices wishes for locals — and Boof's small asks come back unpriceable.",
   "epigraph": "The well keeps every face; the tavern keeps every round. Between them, all debts are known.",
-  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. A tavern leans over a well that folds every face it has held. The Off-Season Genie runs his negotiation game, pricing wishes for locals, and finds that ordinary desires resist his machinery more than empires do. The water names the debt in the egg's heat.",
+  "description": "Chapter 8 of Lore.Land: Songs of the Watering Eye. A tavern leans over a well that folds every face it has held, where pale remembrancers tuck the kept faces so they fit. The Off-Season Genie runs his negotiation game, pricing wishes for locals, and finds that ordinary desires resist his machinery more than empires do. The water names the debt in the egg's heat.",
   "mood": "game",
   "period": "spring",
   "pillars": [
@@ -70,7 +70,13 @@
         "depth",
         "fold",
         "folds",
-        "source"
+        "source",
+        "remembrancers",
+        "remembrancer",
+        "well-winch",
+        "bucket",
+        "winch song",
+        "rain-butt"
       ]
     },
     {
@@ -99,7 +105,13 @@
         "quote",
         "lager",
         "tavern",
-        "unpriceable"
+        "unpriceable",
+        "want-needle",
+        "resolution glass",
+        "torch-ants",
+        "potboy",
+        "tankards",
+        "pickled walnuts"
       ]
     }
   ],
@@ -116,19 +128,21 @@
       "scene": {
         "vantage": "front paws propped on the mossy granite well-coping under the tavern's leaning floorboards, nose a breath from still black water",
         "light": "tavern lamplight spilling through gaps in the floor above; the water reflects not tonight's lamps but earlier lamps, and under them, layered faces from other years",
-        "scent": "wet granite, spilled lager, damp hemp rope, cold mineral water — and the hot-iron scent of the egg in its sling",
+        "scent": "wet granite, spilled lager, damp hemp rope, cold mineral water — and the hot-iron scent of the egg in its sling, a tin-cup coldness where the pale fish turn",
         "edges": [
           "the tavern leans over the well like a drinker leaning over a confession",
           "the water surface is motionless, holding a face mid-wish, mouth open on a want never spoken aloud",
           "folds of older faces stack beneath the surface like pressed linen going down into the dark",
-          "the Genie's brass instruments are set up on a barrel-head like a card game"
+          "the Genie's brass instruments are set up on a barrel-head like a card game",
+          "chalk-pale remembrancers no longer than a spoon, folding the kept faces so they fit",
+          "the well-winch's bucket coming down on wet hemp rope, and on a still night coming up with a face in it"
         ],
         "hint": "an old stone well beneath a leaning timber tavern at night; still black water holding faint layered faces; lamplight through floorboards; a working dog with paws on the mossy coping, a glowing egg slung at her chest"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first."
+          "text": "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards, nose first through spilled lager and wet rope, and set her front paws on the mossy coping. The water below was black and perfectly still, and it did not show her own face first."
         },
         {
           "type": "paragraph",
@@ -147,6 +161,15 @@
         {
           "type": "paragraph",
           "text": "A face said into deep water is not stolen; it is folded, and it stays the property of whoever wore it. The well kept the faces the way good ground keeps rain: patiently, and without letting anyone else spend them."
+        },
+        {
+          "type": "paragraph",
+          "text": "Something down there smelled of a tin cup left in a stream. Then Boof saw them: chalk-pale fish no longer than a spoon, swimming between the faces. Remembrancers, the tavern called them. They went through the faces the way a laundress goes through a basket, tucking a loose chin under, smoothing a brow flat, folding each face gently so it would fit beside the others. One rose to look at Boof and turned politely away, as if she were a face it had not been asked to keep.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Overhead the well-winch creaked. The tavern bucket came down past her nose on its wet hemp rope, sank, and was wound up again to the winch song, honey-slow, four beats a turn, so it would not knock anyone on the way. It was a still night. On still nights the bucket comes up holding a face instead of water. The potboy looked in, said \"Evening,\" to whoever it was, and let it back down. The kitchen drew from the rain-butt instead, and the soup tasted faintly of roof."
         }
       ]
     },
@@ -160,7 +183,9 @@
           "the Genie's instruments were built for emperors and hum with boredom",
           "a regular at the bar raises one finger for another lager",
           "locals queue with wants: a roof mended, a cousin forgiven, supper agreed upon",
-          "every small want makes the pricing needle swing wider than a kingdom would"
+          "every small want makes the pricing needle swing wider than a kingdom would",
+          "a file of torch-ants on the barrel-head, their torch relit from the Genie's match",
+          "a crock of pickled walnuts going down the queue of pewter tankards"
         ],
         "hint": "a warm crowded tavern interior at night, a genie in a worn coat pricing wishes at a long table with brass instruments, locals queued with humble wants, a trapdoor in the floor open over dark well-water"
       },
@@ -168,15 +193,19 @@
         {
           "type": "paragraph",
           "data-content_id": "game-intro",
-          "text": "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? He counted the company twice and quoted three coincidences and a fortnight of Thursdays. At the bar, the regular raised his glass. “Six violations of the natural order,” the Genie told him. “Lager,” said the regular. The Genie wrote it down. After a moment, he underlined it."
+          "text": "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? His needle swung so wide it rang against its case; he counted the company twice and quoted three coincidences and a fortnight of Thursdays. At the bar, the regular raised his glass. “Six violations of the natural order,” the Genie told him. “Lager,” said the regular. The Genie wrote it down. After a moment, he underlined it."
         },
         {
           "type": "paragraph",
-          "text": "A line of ants had left a crumb on the barrel-head at dusk. He quoted them nothing, struck a match for their torch-bearer, and wrote nothing down. Old customers."
+          "text": "The locals queued with their wants the way they queued at the winch: a roof mended before the rains, a cousin forgiven, a goat talked back over a wall. They held pewter tankards while they waited and drank them while they thought. A crock of pickled walnuts went round. Every want was smaller than a throne, and every one cost more."
         },
         {
           "type": "paragraph",
-          "text": "Two beavers took the whole evening over a dam. They wanted the wording exact: the bend, the height, the arrangement of the sticks. By the time they had it right they had drawn it on the table in spilled lager, argued the drawing into a better one, and gone out to build it before the Genie could quote a price. He watched them go with something like professional respect. Beavers, he told Boof, always wished slowly enough to finish the job themselves."
+          "text": "A line of torch-ants had come up through a knot-hole at dusk, a long walk from the field, and left a crumb on the barrel-head; the well-damp had put their torch out on the stair. He quoted them nothing, struck a match for their torch-bearer, and wrote nothing down. Old customers."
+        },
+        {
+          "type": "paragraph",
+          "text": "Two beavers, smelling of willow bark and creek mud, took the whole evening over a dam. They wanted the wording exact: the bend, the height, the arrangement of the sticks. By the time they had it right they had drawn it on the table in spilled lager, argued the drawing into a better one, and gone out to build it before the Genie could quote a price. He watched them go with something like professional respect. Beavers, he told Boof, always wished slowly enough to finish the job themselves."
         }
       ]
     },
@@ -202,7 +231,7 @@
         },
         {
           "type": "paragraph",
-          "text": "He sat the trapdoor's edge with his boots over the dark, tapping the game's rhythm on the iron ring, taking the tavern's off-key song and handing it back on-key, with interest."
+          "text": "He sat the trapdoor's edge with his boots over the dark, tapping the game's rhythm on the iron ring, taking the tavern's off-key song — a winch song underneath, like every song in the Watering Eye — and handing it back on-key, with interest."
         }
       ]
     },
@@ -222,11 +251,25 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His needle swung beyond the numbers and came back blank. He reset it. She tried again. Same small click, same empty dial. Boof lowered the egg onto the wet stone around the well. Heat spread under her paws, through the coping, down."
+          "text": "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His want-needle swung past the numbers and came back blank. He reset it with a thumbnail. She tried again. Same small click, same empty dial."
         },
         {
           "type": "paragraph",
-          "text": "The folded faces stirred. One by one they turned toward the warmth the way the berries once had. Then the water said, in the plain way water says things, what every face down there had in common: each one owed a coincidence to a stranger. The egg — an unspent wish — was the debt still standing warm above the fold. The well could not price it either."
+          "text": "He tried the resolution glass, which cannot see a want smaller than a loaf. It found one at once, in the potboy, who had been eyeing the heel of the last loaf all night. Of Boof it showed only wet stones and an egg. The Genie folded the glass shut with the face of a man whose tools have all, politely, declined.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof lowered the egg onto the wet stone around the well. Heat spread under her paws, through the coping, down. The folded faces stirred. One by one they turned toward the warmth the way the berries once had."
+        },
+        {
+          "type": "paragraph",
+          "text": "The remembrancers went quick among them, re-folding every face that turned, and for once they fell behind. One rose to the egg's reflection and nosed along it for an edge to fold. It found none. It hung there a moment, pale as a fingernail, then sank back to its work.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Then the water said, in the plain way water says things, what every face down there had in common: each one owed a coincidence to a stranger. The egg — an unspent wish — was the debt still standing warm above the fold. The well could not price it either."
         },
         {
           "type": "paragraph",
@@ -234,7 +277,7 @@
         },
         {
           "type": "paragraph",
-          "text": "She moved the egg closer. Ripples reached the far wall and came back through the reflected light. The Genie stood beside her with his instruments shut. She was glad he had stopped asking her to name it."
+          "text": "She moved the egg closer. Ripples reached the far wall and came back through the reflected light. The Genie stood beside her with his instruments shut in their baize case. She was glad he had stopped asking her to name it."
         }
       ],
       "climate": {
@@ -250,7 +293,9 @@
           "the pricing needle blank on Boof's want",
           "folded faces turning toward the egg's heat",
           "every spent wish owing a coincidence to a stranger",
-          "the account named and left open"
+          "the account named and left open",
+          "the resolution glass showing only the potboy's want for the last loaf",
+          "a pale remembrancer nosing the egg's reflection for an edge it cannot find"
         ],
         "hint": "dark stone well at night beneath tavern floorboards, still water full of faint upturned faces, gold folds of light stacked beneath them, coal-dark cracked egg glowing on the rim"
       }
@@ -260,7 +305,7 @@
       "data-motif": "ninth-honk",
       "data-foreshadow": "ninth-honk",
       "scene": {
-        "vantage": "trotting up a steep rocky ridge away from the tavern's last lamp, toward high slate roofs over the northern pass",
+        "vantage": "trotting up a steep rocky ridge away from the tavern's last lamp, toward high slate roofs above the pass road",
         "light": "cold starlight; behind her, eight faint golden streaks hang in the clouds above the town like held notes",
         "scent": "mountain slate, dry grass, cold high wind, the fading lager-warmth of the tavern",
         "edges": [
@@ -277,7 +322,7 @@
         },
         {
           "type": "paragraph",
-          "text": "She climbed toward the roofs with the well's answer warming her ribs. The egg was a debt. The faces below had turned toward it together, though no voice had called them. Above the ridge, eight old notes hung in the dark. She listened for the missing one and felt it humming against her chest."
+          "text": "She climbed toward the roofs with the well's answer warming her ribs. Behind her, slow, four beats a turn, the potboy was singing up the last bucket of the night. The egg was a debt. The faces below had turned toward it together, though no voice had called them. Above the ridge, eight old notes hung in the dark. She listened for the missing one and felt it humming against her chest."
         }
       ]
     }
@@ -292,6 +337,18 @@
       },
       {
         "description": "The water names the debt in the egg's heat: an unspent wish standing warm above the fold, owing a coincidence to a stranger."
+      },
+      {
+        "description": "Remembrancers — chalk-pale fish no longer than a spoon — swim through the faces the Watering Eye has kept and fold them gently so they fit. One nosed the egg's reflection for an edge to fold and found none."
+      },
+      {
+        "description": "On still nights the well-winch brings the bucket up holding a face instead of water. The potboy greets it and lets it back down, and the kitchen draws from the rain-butt; the soup tastes faintly of roof."
+      },
+      {
+        "description": "Every song in the Watering Eye is a winch song underneath — honey-slow, four beats a turn — so the bucket never knocks a face on the way up."
+      },
+      {
+        "description": "The Genie's resolution glass, which cannot see a want smaller than a loaf, found the potboy's want for the heel of the last loaf; of Boof it showed only wet stones and an egg. The torch-ants who came up to the barrel-head had their torch relit for nothing."
       }
     ]
   }

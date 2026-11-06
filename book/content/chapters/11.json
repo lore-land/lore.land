@@ -67,7 +67,17 @@
         "sweet",
         "bitter",
         "crust",
-        "filling"
+        "filling",
+        "crown-wasps",
+        "crown-wasp",
+        "early bees",
+        "early bee",
+        "rehearsal moths",
+        "rehearsal moth",
+        "bloom garden",
+        "quince",
+        "blackthorn",
+        "bee-skep"
       ]
     },
     {
@@ -95,7 +105,9 @@
         "crown",
         "shell",
         "warm",
-        "gold"
+        "gold",
+        "paper crown",
+        "wasp-work"
       ]
     }
   ],
@@ -110,21 +122,31 @@
         "hook": "bloom-before-seed"
       },
       "scene": {
-        "vantage": "dog-height on the road out of Bone.land, the feed-sack sling suddenly light, BaneWAP's banker-crust silhouette already three furrows off with the egg",
-        "light": "clean audit-morning light going strange at the edges, as if the sky were being invoiced",
-        "scent": "cold pastry, bitter berries, ledger dust, and under it all the warm-iron scent of the egg receding fast",
+        "vantage": "dog-height on the road out of Bone.land, the feed-sack sling suddenly light, BaneWAP's banker-crust silhouette only a few paces off, the egg in his tin lockbox",
+        "light": "clean morning light going strange at the edges, as if the sky were being rented",
+        "scent": "sap and sloe-blossom, a sun-warmed straw bee-skep, then cold pastry, bitter berries, wasp paper, and under it all the warm-iron scent of the egg receding fast",
         "edges": [
           "BaneWAP's crimped banker's crust flakes as he runs, dropping bitter crumbs that no bird will take",
           "the egg glows through his tin lockbox like a coal through a keyhole",
           "behind them the ringing timbers of Bone.land still hang in the air, unblinking",
-          "the road ahead is already, impossibly, rearranging itself to be convenient for him"
+          "the road ahead is already, impossibly, rearranging itself to be convenient for him",
+          "the road runs through an old bloom garden gone to riot: quince over the walls, blackthorn in white flower, a moss-thick sundial",
+          "early bees wait, humming, at quince buds that have not opened"
         ],
-        "hint": "a bitter banker-crusted pie fleeing down a morning road clutching a tin lockbox that leaks warm gold light; a working dog frozen mid-stride behind; the landscape subtly rearranging itself ahead of the thief; cold audit light, one warm stolen source"
+        "hint": "a bitter banker-crusted pie a few paces down a morning road, clutching a tin lockbox that leaks warm gold light; a working dog frozen mid-stride behind; the landscape subtly rearranging itself ahead of the thief; cold audit light, one warm stolen source"
       },
       "content": [
         {
           "type": "paragraph",
-          "text": "It happened between one honest sniff and the next. On the road out of Bone.land, where the frame's note still hung in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, tin lockbox open and shut, the egg gone from Boof's sling before her growl could finish forming. He did not run far. He did not need to."
+          "text": "Below Bone.land the road ran through an old bloom garden nobody had kept for years. Quince had gone to riot over the walls, the blackthorn hedge stood white with flower, and a moss-thick sundial pointed at the wrong hour without minding. Boof smelled sap, sloe-blossom, a straw bee-skep warming in the sun. Then cold pastry."
+        },
+        {
+          "type": "paragraph",
+          "text": "It happened between one honest sniff and the next. Where the frame's note still hung in the air, Mr. BaneWAP stopped shadowing and simply took — banker's crust cracking with the effort, tin lockbox open and shut, the egg gone from Boof's sling before her growl could finish forming. He did not run far. He did not need to."
+        },
+        {
+          "type": "paragraph",
+          "text": "All around the rise, on the shut quince buds, the early bees were already waiting. They come a week before the blossom and hum at closed petals as if the bloom owed them. Boof had always thought it a poor way to spend a spring."
         },
         {
           "type": "paragraph",
@@ -136,13 +158,31 @@
             },
             {
               "type": "text",
-              "text": ". Karmic momentum does not refuse a grand wish. It simply pays it out the way momentum pays everything: one coincidence at a time, minimum-viable, corrections deferred. A barn deed blew against his crust. A road bent to end at his feet. A distant clerk misfiled a fortune in his name. The empire arrived. It arrived mediocre."
+              "text": ". Every bud in the garden opened at once, for him, with a sound like a drawer pulled out. The early bees went in and came straight out again. A flower opened on demand has not had time to fill."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "His empire arrived in pieces: throne first, banners after, subjects caught halfway through errands. One still held a loaf. The throne smelled rented. The banners hung in colors nobody had ordered. Boof watched the new emperor wait for the scene to feel complete. It kept arriving. It never did."
+          "text": "Karmic momentum does not refuse a grand wish. It simply pays it out the way momentum pays everything: one coincidence at a time, minimum-viable, corrections deferred. A barn deed blew against his crust. A road bent to end at his feet. A distant clerk misfiled a fortune in his name. The empire arrived. It arrived mediocre.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "It arrived in pieces. The throne came first, shed at the garden gate by a players' wagon that hit a rut at the convenient moment — a stage prop, gilt over pine. The throne smelled rented: hire-straw and other people's sitting. Banners came after, lifted off a dyer's line by an obliging gust, in colors nobody had ordered. Subjects arrived halfway through errands. One still held a loaf."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof watched the new emperor wait for the scene to feel complete. It kept arriving. It never did."
+        },
+        {
+          "type": "paragraph",
+          "text": "The crown came last, as crowns do. The wish did not make one; it found one. All spring the crown-wasps had been building in the blackthorn — grey paper chewed from fence rails and old auction notices, ribbed and turreted and very fine — and the nearest of their crowns came loose and settled on his crust. It was beautiful. It was hollow. It was still occupied."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof heard it before he did: a dry, papery hum, a rented thing with tenants. Every rented crown is wasp-work, if you hold it to your ear.",
+          "lean": "bane"
         }
       ]
     },
@@ -156,7 +196,8 @@
         "edges": [
           "the hoarded berries wake in sequence, ice-of-years sliding off them like sleep",
           "each waking berry leans its light toward the egg in his hands",
-          "BaneWAP's crust flakes where the sweetness pushes from inside"
+          "BaneWAP's crust flakes where the sweetness pushes from inside",
+          "crown-wasps trickling out of a grey paper crown toward the sweetness"
         ],
         "hint": "macro close-up of a dark bitter pie's cracked crust with hoarded berries waking one by one into gold seams of light inside it, the light leaning toward a warm egg held in crimped pastry hands"
       },
@@ -165,6 +206,11 @@
           "type": "paragraph",
           "data-content_id": "awakening-intro",
           "text": "Deep beneath his crust, a berry woke. The wish had passed through him, leaving its drop of light just as it had in the fields. One seam shone, then another. Warmth worked through the bitter filling. He tasted what he had kept from everyone, himself included. Sweet. It had been sweet all along. Around him, the banners stirred. He made a small sound the throne did nothing to support."
+        },
+        {
+          "type": "paragraph",
+          "text": "Wasps know sweetness before anyone. The crown-wasps came down out of their paper crown in a slow grey trickle, walked the flaking crust where the sweet was pushing through, and drifted off toward the quince. The crown stayed on his head, empty now. It weighed exactly what it was.",
+          "lean": "boon"
         }
       ]
     },
@@ -190,7 +236,7 @@
         },
         {
           "type": "paragraph",
-          "text": "He tapped the rented throne once — hollow — and let the note say what the timber had: interest is owed on every borrowed want."
+          "text": "He tapped the rented throne once — hollow, gilt over pine — and let the note say what the timber had: interest is owed on every borrowed want."
         }
       ]
     },
@@ -215,19 +261,31 @@
         },
         {
           "type": "paragraph",
-          "text": "The empire stood, hollow as a rented crown, and the egg in BaneWAP's hands stayed exactly as warm as it had been in the frozen furrow — spent and unspent at once, a note held but not released. At the edge of the new court, a woman still holding her market basket asked whether she could go home. A banner brushed her shoulder."
+          "text": "The empire stood, hollow as a rented crown, and the egg in BaneWAP's hands stayed exactly as warm as it had been in the frozen furrow — spent and unspent at once, a note held but not released."
         },
         {
           "type": "paragraph",
-          "text": "No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject."
+          "text": "The banners had shaken the hedges, and rehearsal moths blundered out into daylight like guests at the wrong hour, a long way from the grove. Their wings carry tomorrow's weather, a little smudged. Today they carried the empire's: rain coming on over a court with no roof, arriving in instalments."
         },
         {
           "type": "paragraph",
-          "text": "She needed to get the bread indoors before rain. Boof watched her take one step backward, then another. The banner lifted, and she slipped beneath it."
+          "text": "At the edge of the new court, a woman still holding her market basket asked whether she could go home. A banner brushed her shoulder. A rehearsal moth sat on the basket handle, opening and closing the rain."
         },
         {
           "type": "paragraph",
-          "text": "His crimped hands softened. The egg slipped, tipped, rolled down the rise, past a banner dragging in the dust. Boof stepped forward. It came to rest against her paws, warm as ever. The crack had widened enough to show gold within. She checked the shell with her nose. Still humming. Still waiting. That night, wherever she set the sling down, the ground beneath it was busy by morning: torch-lines bent toward the shell from every root within reach, and the frost drew back a hand's width, as if something under the loam had been given more to work with. Whatever was in the egg, it was not keeping its warmth to itself."
+          "text": "No one answered; the emperor was staring at his own hands. Boof could smell bread cooling in the basket, a seed-loaf still warm on its underside, and dust rising where the throne had scraped the ground. The empire needed this woman to be a subject."
+        },
+        {
+          "type": "paragraph",
+          "text": "She needed to get the bread indoors before rain; she had read the moth. Boof watched her take one step backward, then another. The banner lifted, and she slipped beneath it."
+        },
+        {
+          "type": "paragraph",
+          "text": "His crimped hands softened. The egg slipped, tipped, rolled down the rise, past a banner dragging in the dust, through quince petals that had opened too soon. Boof stepped forward. It came to rest against her paws, warm as ever. The crack had widened enough to show gold within. She checked the shell with her nose: hot iron, sap, a little sweetened crust. Still humming. Still waiting."
+        },
+        {
+          "type": "paragraph",
+          "text": "That night, wherever she set the sling down, the ground beneath it was busy by morning: torch-lines bent toward the shell from every root within reach, and the frost drew back a hand's width, as if something under the loam had been given more to work with. Whatever was in the egg, it was not keeping its warmth to itself. An early bee was waiting on the sling's knot, as if the egg owed it something too. Boof let it wait."
         }
       ],
       "climate": {
@@ -243,7 +301,9 @@
           "the egg rolls of its own weight, unhurried, certain",
           "the crack-door on its crown is a coin wide now",
           "BaneWAP kneels in his own empire, tasting his hoard for the first time",
-          "the wish remains unspent because it remains unfinished"
+          "the wish remains unspent because it remains unfinished",
+          "rehearsal moths shaken out of the hedge into daylight, tomorrow's rain smudged on their wings",
+          "quince petals opened too soon, drifting under the rolling egg"
         ],
         "hint": "a coal-dark egg with a coin-wide door-shaped crack leaking gold, rolling downhill through grass toward a waiting dog's paws; a hollow stage-set empire and a kneeling softened pie blurred behind; warm foreground, hollow background"
       }
@@ -270,7 +330,7 @@
         },
         {
           "type": "paragraph",
-          "text": "He pointed downhill to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
+          "text": "He pointed downhill, past the last of the blackthorn, to two rivers that had not yet agreed to forget their springs, and Boof — who finally almost knew her want — went to meet them."
         }
       ]
     }
@@ -285,6 +345,15 @@
       },
       {
         "description": "BaneWAP's hoarded berries wake inside him — a berry notices the story it is sitting inside — and he tastes his hoard for the first time in years. Sweetness is the correction."
+      },
+      {
+        "description": "Crown-wasps build paper crowns in the bloom garden's blackthorn, chewed from fence rails and old auction notices. BaneWAP's crown was found, not made: wasp-work, beautiful, hollow and tenanted — and the wasps left it the moment his hoard turned sweet."
+      },
+      {
+        "description": "Early bees wait at shut buds as if the bloom owed them. A grand wish opens every flower at once, and a flower opened on demand has nothing in it yet."
+      },
+      {
+        "description": "Rehearsal moths shaken from the hedge wear the empire's weather — rain over a court with no roof, arriving in instalments. A subject who reads the moth goes home with her bread."
       }
     ]
   }

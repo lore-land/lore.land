@@ -1,0 +1,415 @@
+/*
+ * The almanac page — what a reader has found, where else it lives, and a
+ * bench for combining found things into small realms. Serif for what the
+ * story says, mono for what the structure says; every surface mixed from
+ * the theme's own panel. Each kind keeps its ink:
+ *   creature @ gold · contrivance $ teal · bracework & berry
+ */
+
+body[data-surface='monument'] .almanac-main {
+  --hub-display: Georgia, 'Times New Roman', serif;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+body[data-surface='monument'] .almanac-hero h1 {
+  font-family: var(--hub-display);
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .almanac-hero .hub-lede {
+  max-width: 62ch;
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .almanac-tally {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-gold) 16%, transparent);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+/* The figure under the hat */
+body[data-surface='monument'] .almanac-figure {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-gold) 55%, var(--hub-line));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
+}
+
+body[data-surface='monument'] .almanac-figure-art {
+  flex: none;
+  width: 4.4rem;
+  height: 5.6rem;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .almanac-figure-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+body[data-surface='monument'] .almanac-figure h2 {
+  margin: 0 0 0.3rem;
+  font-family: var(--hub-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .almanac-figure p {
+  margin: 0;
+  max-width: 56ch;
+  font-family: var(--hub-display);
+  color: var(--hub-muted);
+}
+
+/* Shelves */
+body[data-surface='monument'] .almanac-shelf {
+  --kind-ink: var(--hub-gold);
+  scroll-margin-top: 6rem;
+}
+
+body[data-surface='monument'] .almanac-shelf[data-kind='contrivance'] { --kind-ink: var(--hub-accent); }
+body[data-surface='monument'] .almanac-shelf[data-kind='bracework'] { --kind-ink: var(--hub-berry); }
+
+body[data-surface='monument'] .almanac-shelf-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  border-bottom: 1px solid var(--hub-line);
+}
+
+body[data-surface='monument'] .almanac-shelf-head h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--hub-display);
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .almanac-sigil {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-right: 0.25rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--kind-ink, var(--hub-gold)) 16%, transparent);
+  color: var(--kind-ink, var(--hub-gold));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.95rem;
+  vertical-align: 0.15em;
+}
+
+body[data-surface='monument'] .almanac-shelf-count {
+  margin: 0;
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .almanac-shelf-lede {
+  max-width: 62ch;
+  margin: 0.7rem 0 1rem;
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .almanac-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0.8rem;
+}
+
+body[data-surface='monument'] .almanac-card {
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--hub-line);
+  border-top: 2px solid var(--kind-ink);
+  border-radius: 0.4rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--kind-ink) 10%, transparent), transparent 55%),
+    color-mix(in srgb, var(--hub-panel) 75%, transparent);
+}
+
+body[data-surface='monument'] .almanac-card.is-unfound {
+  border-style: dashed;
+  border-top-style: dashed;
+  background: transparent;
+}
+
+body[data-surface='monument'] .almanac-card p {
+  margin: 0;
+}
+
+body[data-surface='monument'] .almanac-card-kicker {
+  color: color-mix(in srgb, var(--kind-ink) 60%, var(--hub-muted));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .almanac-card-name {
+  font-family: var(--hub-display);
+  font-size: 1.22rem;
+  line-height: 1.2;
+}
+
+body[data-surface='monument'] .almanac-card-note,
+body[data-surface='monument'] .almanac-card-hint {
+  font-family: var(--hub-display);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .almanac-card-hint {
+  font-style: italic;
+}
+
+body[data-surface='monument'] .almanac-card-places {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: auto !important;
+  padding-top: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .almanac-place {
+  min-width: 2rem;
+  padding: 0.12rem 0.4rem;
+  border: 1px dashed color-mix(in srgb, var(--kind-ink) 55%, transparent);
+  border-radius: 999px;
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+body[data-surface='monument'] .almanac-place.is-found {
+  border-style: solid;
+  background: color-mix(in srgb, var(--kind-ink) 18%, transparent);
+}
+
+body[data-surface='monument'] .almanac-place:hover,
+body[data-surface='monument'] .almanac-place:focus-visible {
+  border-color: var(--kind-ink);
+}
+
+body[data-surface='monument'] .almanac-card-first {
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+
+/* The combining bench */
+body[data-surface='monument'] .almanac-bench {
+  --kind-ink: var(--hub-berry);
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  border: 1px solid var(--hub-line);
+  border-top: 3px solid var(--hub-berry);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--hub-berry) 10%, transparent), transparent 55%),
+    var(--hub-panel);
+}
+
+body[data-surface='monument'] .almanac-bench-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+body[data-surface='monument'] .almanac-bench-form fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body[data-surface='monument'] .almanac-bench-form legend {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .almanac-bench-form fieldset label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+
+body[data-surface='monument'] .almanac-bench-form fieldset label:has(input:checked) {
+  border-color: var(--hub-berry);
+  background: color-mix(in srgb, var(--hub-berry) 14%, transparent);
+}
+
+body[data-surface='monument'] .almanac-bench-form input[type='radio'] {
+  accent-color: var(--hub-berry);
+}
+
+body[data-surface='monument'] .almanac-bench-nouns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.7rem;
+}
+
+body[data-surface='monument'] .almanac-bench-nouns label {
+  display: grid;
+  gap: 0.2rem;
+  color: var(--hub-muted);
+  font-size: 0.8rem;
+}
+
+body[data-surface='monument'] .almanac-bench-nouns select {
+  min-width: 11rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.35rem;
+  background: var(--hub-paper);
+  color: var(--hub-ink);
+  font: inherit;
+}
+
+body[data-surface='monument'] .almanac-bench-draw {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--hub-berry) 50%, var(--hub-line));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+}
+
+body[data-surface='monument'] .almanac-bench-out {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 6rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--hub-berry) 40%, var(--hub-line));
+  border-radius: 0.6rem;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, #fff 40%, transparent), transparent 60%),
+    color-mix(in srgb, var(--hub-berry) 7%, var(--hub-paper));
+  font-family: var(--hub-display);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+body[data-surface='monument'] .almanac-bench-expr {
+  color: var(--hub-berry);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 1.05rem;
+}
+
+body[data-surface='monument'] .almanac-kept-title {
+  margin: 1.4rem 0 0.5rem;
+  font-family: var(--hub-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .almanac-kept {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+body[data-surface='monument'] .almanac-kept-item {
+  max-width: none;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.4rem;
+  font-family: var(--hub-display);
+  font-size: 0.92rem;
+}
+
+body[data-surface='monument'] .almanac-kept-item code {
+  color: var(--hub-berry);
+  white-space: nowrap;
+}
+
+body[data-surface='monument'] .almanac-kept-drop {
+  border: 0;
+  background: transparent;
+  color: var(--hub-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+body[data-surface='monument'] .almanac-kept-empty {
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-style: italic;
+}
+
+@media (max-width: 34rem) {
+  body[data-surface='monument'] .almanac-kept-item {
+    grid-template-columns: 1fr auto;
+  }
+  body[data-surface='monument'] .almanac-kept-item code {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .almanac-bench-out.is-fogging {
+    animation: bench-fog 700ms ease-out;
+  }
+  body[data-surface='monument'] .almanac-figure-art .sk-hat {
+    animation: almanac-hat 3.2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes bench-fog {
+  from { filter: blur(6px); opacity: 0.35; }
+  to { filter: none; opacity: 1; }
+}
+
+@keyframes almanac-hat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2.5px); }
+}

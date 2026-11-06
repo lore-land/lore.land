@@ -29,13 +29,13 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The round room at the end of the river path was smaller and quieter than any map had promised, and it was here, on the polished slate at the center of the rotunda, that the finished wish did the one last thing a finis..."
+    excerpt: "The round room at the end of the river path was smaller and quieter than any map had promised. The seam-otters that had swum beside Boof down the bank turned back at its steps, where the rivers blended and left them n..."
     route: ^[chapter/13/s01]{open}
   >
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
-    excerpt: "The great book lay open. No one stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. The pages held what each had cost. Boof had carried a want until she knew its shape. Now the wish ..."
+    excerpt: "The great book lay open on a cloth from the crosswind loom, whose weave still shifted color in the draught from the door. No one stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. T..."
     route: ^[chapter/13/s02]{open}
   >
   s03: <
@@ -95,6 +95,10 @@
     "Genre law, paid in full: every sampled trope returned changed, with interest — greed back sweeter, retirement back as an echo you can visit, the small wish back as a furrow that never clo..."
     "The ledger's last line stays blank on purpose. The empty eggshell rests on it as the bottle for the next wish, which belongs to the reader."
     "A small reader can still check the heat of the shell against the blank last line and find them in agreement: finished and unstarted, both true on purpose."
+    "The Round Archive keeps a little of everything the land has met: a jar of rehearsal moths whose wings show tomorrow's frost and then a blur where a day should be, a drawer of brace-boxes ..."
+    "Shelf-owls keep the gap at the end of every ring of shelves clear for chronicles not yet written. They nest in what is missing and will not have a nose in it."
+    "The archive files each record as a small realm in braces, and checks it by whether the brace will close. The blank last line is an open brace with no close."
+    "The glassing press has pressed every page of the great book but the last, which is why the last can still take a line."
   ]
 }
 

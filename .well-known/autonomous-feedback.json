@@ -36,6 +36,7 @@
     { "name": "Civic Magic", "path": "/world/civic-magic.html" },
     { "name": "Boonberry Commons", "path": "/world/boonberry-commons.html" },
     { "name": "Scriptorium", "path": "/scriptorium/" },
+    { "name": "Almanac", "path": "/almanac/" },
     { "name": "Topics", "path": "/topics/" },
     { "name": "The Boonberry Broadside", "path": "/zine/" }
   ],

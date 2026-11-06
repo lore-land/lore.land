@@ -108,8 +108,12 @@ export function renderChapterBody(container, data, options = {}) {
   container.append(renderHead(h, data, options.inWhich));
 
   const stamp = `Chamber ${padChapterNumber(data.chapterNumber)} · ${data.title}`;
+  // Wonders (book/content/world/almanac.json): the first time each is named in
+  // a chapter it is marked, so a reader can collect it (modules/almanac.mjs).
+  const wonders = Array.isArray(options.wonders) ? options.wonders : [];
+  const marked = new Set();
   (Array.isArray(data.sections) ? data.sections : []).forEach((section) => {
-    const node = renderBlock(h, section, { stamp, usedIds });
+    const node = renderBlock(h, section, { stamp, usedIds, wonders, marked });
     if (node) {
       container.append(node);
     }
@@ -272,7 +276,7 @@ function renderBlock(h, section, context = {}) {
   }
   switch (section.type) {
     case 'paragraph':
-      return renderParagraph(h, section);
+      return renderParagraph(h, section, context);
     case 'pull':
       return h('blockquote', { className: 'voice-pull', dataset: { component: 'voice-pull' } }, String(section.text || '').trim());
     case 'figure':
@@ -287,7 +291,48 @@ function renderBlock(h, section, context = {}) {
   }
 }
 
-function renderParagraph(h, section) {
+/* A term matches as a whole word when it begins or ends with a letter;
+ * sigil-led bracework terms (# face, {frost & hearth}) match exactly. */
+const termPatterns = new Map();
+export function wonderTermPattern(term) {
+  return termPattern(term);
+}
+function termPattern(term) {
+  if (!termPatterns.has(term)) {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const lead = /^[\p{L}\p{N}]/u.test(term) ? '(?<![\\p{L}\\p{N}-])' : '';
+    const tail = /[\p{L}\p{N}]$/u.test(term) ? '(?![\\p{L}\\p{N}-])' : '';
+    termPatterns.set(term, new RegExp(`${lead}${escaped}${tail}`, /^[\p{L}]/u.test(term) ? 'iu' : 'u'));
+  }
+  return termPatterns.get(term);
+}
+
+function appendMarked(h, parent, text, context = {}) {
+  const wonders = context.wonders || [];
+  let rest = String(text || '');
+  while (rest) {
+    let best = null;
+    for (const wonder of wonders) {
+      if (context.marked?.has(wonder.id)) continue;
+      for (const term of wonder.terms || []) {
+        const match = termPattern(term).exec(rest);
+        if (match && (!best || match.index < best.index || (match.index === best.index && match[0].length > best.length))) {
+          best = { index: match.index, length: match[0].length, wonder };
+        }
+      }
+    }
+    if (!best) {
+      parent.append(rest);
+      return;
+    }
+    if (best.index) parent.append(rest.slice(0, best.index));
+    parent.append(h('span', { className: 'wonder-mark', dataset: { wonder: best.wonder.id, kind: best.wonder.kind } }, rest.slice(best.index, best.index + best.length)));
+    context.marked.add(best.wonder.id);
+    rest = rest.slice(best.index + best.length);
+  }
+}
+
+function renderParagraph(h, section, context = {}) {
   const p = h('p');
   // The paragraph's lean (boon / bane / bone) for the reading lens.
   const plain = `${section.text || ''}${(section.children || []).map((child) => child.text || child.content || '').join('')}`;
@@ -296,7 +341,7 @@ function renderParagraph(h, section) {
     p.dataset.lean = lean;
   }
   if (section.text) {
-    p.append(section.text);
+    appendMarked(h, p, section.text, context);
   }
   if (Array.isArray(section.children)) {
     section.children.forEach((child) => {
@@ -305,7 +350,7 @@ function renderParagraph(h, section) {
         applyStoryVoiceAttributes(phrase, child.type, 'phrase');
         p.append(phrase);
       } else if (child.type === 'text') {
-        p.append(child.text);
+        appendMarked(h, p, child.text, context);
       }
     });
   }

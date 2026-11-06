@@ -79,7 +79,16 @@
         "gap",
         "lintel",
         "post",
-        "glass"
+        "glass",
+        "storm-weight",
+        "gate-pigeons",
+        "pane-snails",
+        "dent-lanterns",
+        "lamp-ladders",
+        "chime-gutters",
+        "bonk-kiln",
+        "face",
+        "window"
       ]
     },
     {
@@ -101,7 +110,12 @@
         "form",
         "parcel",
         "door",
-        "child"
+        "child",
+        "door-rule",
+        "rail-pins",
+        "listening mallet",
+        "glassing press",
+        "boxes"
       ]
     },
     {
@@ -119,7 +133,13 @@
         "cup",
         "title",
         "BoonWAP",
-        "BoneWAP"
+        "BoneWAP",
+        "pie-dividers",
+        "combines",
+        "brace-box",
+        "hearth-drift",
+        "sliver",
+        "luck"
       ]
     }
   ],
@@ -134,11 +154,12 @@
       "scene": {
         "vantage": "a dog's height in a curving back lane of Bonk City at dusk, the low parcel gate ahead in the old wall",
         "light": "storm dusk, green-black sky; lamplight in leaning panes; one bronze post standing bolt upright among the leaning ones",
-        "scent": "rain on the way, lamp-oil, wet flour sacks, cold bronze",
+        "scent": "rain on the way, lamp-oil, wet flour sacks, cold bronze, hot brass from new-lit lanterns",
         "edges": [
           "every lane curls like the inside of a shell; no straight street anywhere",
           "a single bronze post at the lane's corner stands perfectly upright after two hundred years of leaning",
-          "the glass in the back lanes hums faintly ahead of the weather"
+          "the glass in the back lanes hums faintly ahead of the weather",
+          "pane-snails clamped flat to the humming panes; lamplighters with ladders folded into staffs, lighting dented brass lanterns"
         ],
         "hint": "a city of curving lanes, leaning bronze posts and old glass at storm dusk; a low gate in a thick wall; one post absurdly straight; a pencil-drawn figure under a floating bowler hat stopped at the gate"
       },
@@ -154,6 +175,10 @@
         {
           "type": "paragraph",
           "text": "Boof reached it at dusk, two days of straight walking after the hedge, with the sky behind her gone the green-black of a bruise on a pear. A storm was coming over the far hills, turning things over to see what was underneath. Every pane of glass in the back lanes had begun to hum, the way Bonk glass does when weather is coming. It remembers being struck, and would rather not be again."
+        },
+        {
+          "type": "paragraph",
+          "text": "Pane-snails had clamped themselves flat to the humming glass. The lamplighters were out early, lamp-ladders folded into staffs, lighting the dent-lanterns one dent-bright corner at a time."
         },
         {
           "type": "paragraph",
@@ -176,12 +201,14 @@
       "scene": {
         "vantage": "inside the low arch of the parcel gate, looking out at rain beginning on stacked flour sacks",
         "light": "a porter's belt-lantern, warm and swinging; storm-dark beyond",
-        "scent": "wet flour, lantern smoke, oak gate, the first heavy rain",
+        "scent": "wet flour, lantern smoke, oak gate, pigeon-down, the first heavy rain",
         "edges": [
           "a broad porter holding a heavy gate up with both hands and a shoulder",
+          "an iron counterweight the size of a bread-oven riding in a slot in the wall, a row of pigeons asleep on top of it",
           "a black bowler hat pressed level against the stone face of the lintel, resting on nothing",
           "beneath it a line-drawn figure folded at the middle over something small on the stones",
-          "eleven flour sacks stamped for the feast taking the first drops"
+          "eleven flour sacks stamped for the feast taking the first drops",
+          "gutters along the wall ringing like small bells as the rain finds them"
         ],
         "hint": "low stone gateway at storm dusk; a porter straining to hold the gate open; a floating bowler hat that cannot fit beneath the lintel; a sparse drawn figure crouched under it; rain on sacks of flour; lantern light"
       },
@@ -192,11 +219,15 @@
         },
         {
           "type": "paragraph",
+          "text": "The parcel gate was hung for three porters and has had one for thirty years, because of the storm-weight: an iron counterweight the size of a bread-oven, riding in a slot in the wall, that lets one man lift what three were meant to."
+        },
+        {
+          "type": "paragraph",
           "text": "Outside the wall, on the cobbles, stood the evening's last deliveries: crates of lamp-glass, a barrel of oil, and eleven sacks of fine flour stamped for the Feast of the Uneven Slice. There was time to shut the gate or time to bring the goods in. There was not time for both."
         },
         {
           "type": "paragraph",
-          "text": "He had chosen the gate. A Bonk City gate left open in a storm lets the wind into the lanes, and the wind in the lanes breaks glass, and the glass of Bonk City is made of every blow the city has ever taken. It does not like to take another.",
+          "text": "He had chosen the gate. A Bonk City gate left open in a storm lets the wind into the lanes, and the wind in the lanes breaks glass, and the glass of Bonk City is made of every blow the city has ever taken. It does not like to take another. The bonk-kiln, which forgives old blows into new glass, is booked until spring.",
           "lean": "bane"
         },
         {
@@ -217,11 +248,15 @@
         },
         {
           "type": "paragraph",
-          "text": "The porter looked at the gap too. He looked at the sky. The first big drops came down on the flour sacks with a sound like someone knocking politely on a row of doors."
+          "text": "The porter looked at the gap too. He looked at the sky. The first big drops came down on the flour sacks with a sound like someone knocking politely on a row of doors. Along the wall the chime-gutters began to ring, roof by roof, telling the city which of its roofs leaked."
         },
         {
           "type": "paragraph",
-          "text": "He had kept that gate thirty years by one rule: the gate comes down before the storm does. It was a good rule. He had seen what happened to the lanes the year somebody forgot it. He held the gate up anyway, with both hands and his shoulder, and said nothing, and the rain came down on the feast flour, and the figure went on with whatever he was doing on the stones."
+          "text": "He had kept that gate thirty years by one rule: the gate comes down before the storm does. It was a good rule. He had seen what happened to the lanes the year somebody forgot it."
+        },
+        {
+          "type": "paragraph",
+          "text": "He held the gate up anyway. The storm-weight took most of it; he took the rest with both hands and his shoulder, and in a wind the rest is plenty. Up in the slot, the gate-pigeons who sleep on the weight every night rode it an inch up and an inch down and did not wake. He said nothing, and the rain came down on the feast flour, and the figure went on with whatever he was doing on the stones."
         },
         {
           "type": "paragraph",
@@ -294,12 +329,28 @@
         },
         {
           "type": "paragraph",
-          "text": "Then, since he was standing still, she measured him. Carpenters measure anything that stands still long enough. So tall. So wide. Square at every corner, with a line straight down the middle where a door would open. In her repair log she wrote: one door, standard, hung without frame. Opens — she held the pencil a while — inward.",
+          "text": "Then, since he was standing still, she measured him. Carpenters measure anything that stands still long enough. Her door-rule has a hinge for every size of door; she unfolded it against him, and it stopped on its own with a click, the way it does at any honest doorway."
+        },
+        {
+          "type": "paragraph",
+          "text": "So tall. So wide. Square at every corner, with a line straight down the middle where a door would open. In her repair log she wrote: one door, standard, hung without frame. Opens — she held the pencil a while — inward.",
           "lean": "bone"
         },
         {
           "type": "paragraph",
-          "text": "In the morning the night school's mistress found him at the back of her room. Her pupils were practicing for the feast, as they did every winter, cutting paper pies into even slices for luck and never once managing it. He was sitting on the end of the last bench with one line raised in the air, the way a pupil raises a hand, and nobody had called on him."
+          "text": "In the morning the night school's mistress found him at the back of her room. Her pupils were practicing for the feast, as they did every winter, walking brass pie-dividers round paper pies to cut them into even slices for luck. Pie-dividers never come out even; the sliver left over is the luck."
+        },
+        {
+          "type": "paragraph",
+          "text": "After pies came combines. Each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box warmed between mittens. If the nouns agreed, the box fogged into a small weather. It teaches a child what will hold together before anything is built."
+        },
+        {
+          "type": "paragraph",
+          "text": "One girl's {frost & hearth} snowed warm, and the front bench caught the hearth-drift on their tongues. A boy's <river ~ moon> ran pale and would not stay. On the window the warm snow fogged the . face, the inside one; the # face, out to the lane, stayed clear."
+        },
+        {
+          "type": "paragraph",
+          "text": "The figure was sitting on the end of the last bench with one line raised in the air, the way a pupil raises a hand, and nobody had called on him."
         },
         {
           "type": "paragraph",
@@ -337,7 +388,11 @@
         },
         {
           "type": "paragraph",
-          "text": "BoneWAP came up from the lower town clean-boiled and exact, crust laid like a set of good joists, and read the gate-book, and the repair log, and the roll, in that order — slowly, the way a builder reads a beam, not for what it says but for what it will bear. Then they pinned all three to the board in the hall where the city posts what has arrived: side by side, sources named, nothing smoothed into anything else."
+          "text": "BoneWAP came up from the lower town clean-boiled and exact, crust laid like a set of good joists, the listening mallet under one arm, and read the gate-book, and the repair log, and the roll, in that order — slowly, the way a builder reads a beam, not for what it says but for what it will bear. They tapped each once with the mallet's felt head, and listened."
+        },
+        {
+          "type": "paragraph",
+          "text": "Then they pinned all three with brass rail-pins to the board in the hall where the city posts what has arrived: side by side, sources named, nothing smoothed into anything else."
         },
         {
           "type": "paragraph",
@@ -345,13 +400,17 @@
         },
         {
           "type": "paragraph",
-          "text": "“Lean on any of them,” said BoneWAP, “and see if it holds.” They tapped the board. “A parcel is a thing someone is responsible for until it arrives. A door is a thing someone is responsible for keeping in good order. A child is both of those, for a great deal longer.” They stepped back. “I would not take any of them down.”",
+          "text": "“Lean on any of them,” said BoneWAP, “and see if it holds.” They tapped the board. “A parcel is a thing someone is responsible for until it arrives. A door is a thing someone is responsible for keeping in good order. A child is both of those, for a great deal longer.” They stepped back. “I would not take any of them down. When the archive's glassing press has them, it can press all three, one over another.”",
           "lean": "bone"
         },
         {
           "type": "paragraph",
           "text": "The clerk, who had a form with one box on it, went away to find a form with three.",
           "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Before lunch the clerk had one, headed in a careful hand: [child, parcel, door]. A window of a form: three boxes to look into, none to stand in."
         }
       ]
     },
@@ -423,6 +482,18 @@
       },
       {
         "description": "The figure stands a quarter turn away from the feast, watching the woman who washes the plates."
+      },
+      {
+        "description": "The parcel gate was hung for three porters and is kept by one, because of the storm-weight, an iron counterweight in the wall. The gate-pigeons sleep on it and ride it up and down all night without waking."
+      },
+      {
+        "description": "The carpenter's door-rule has a hinge for every size of door; laid against the figure, it stops on its own, the way it does at any honest doorway."
+      },
+      {
+        "description": "The night school cuts paper pies with pie-dividers that never come out even (the sliver is the luck) and plays combines: two nouns from a hat, a sigil and a container, and a brace-box warmed between mittens fogs into a small weather. {frost & hearth} snows warm."
+      },
+      {
+        "description": "The records clerk's new form is headed [child, parcel, door]: a window of a form, three boxes to look into and none to stand in."
       }
     ]
   }

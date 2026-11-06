@@ -30,7 +30,7 @@
     handle: "section/01"
     type: "section"
     title: "A Beat Late"
-    excerpt: "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern, ..."
+    excerpt: "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern a..."
     route: ^[chapter/02/s01]{open}
   }
   s02: <
@@ -68,7 +68,7 @@
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
-    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sampled the trope the way you’d lift..."
+    excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and cedar shavings in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He sam..."
     route: ^[chapter/02/s07]{open}
   >
 ]
@@ -106,6 +106,10 @@
     "The Boonberry Fool debuts in person. He was the honk in the treeline; his genre law is that every trope sampled must be returned changed, with interest."
     "The Fool honks the three-wishes trope back changed: three COMPLETED wishes. A wish isn't granted till it's finished."
     "A rehearsal is not a granting; a granting needs a finisher. Boof records this and continues toward the sand."
+    "Echo-wrens nest in pairs in the grove's hollow cedars and sing everything a beat late — the egg's hum, the woodcutters' axes, a dog's sneeze. At the grove's edge, a wren-call means anythi..."
+    "The lag-stag is never seen. Its cloven prints press into the moss a beat after it passes and carry no scent at all; woodcutters insist it is white. Its prints stopped beside the egg's sto..."
+    "Rehearsal moths are the grove's almanac: dusk moths whose wings carry tomorrow's weather, a little smudged. Woodcutters read them before felling and are wrong about a third of the time. T..."
+    "Torch-ants will not settle where a light comes back to them twice, so the grove's roots stay cold and its wild rows flicker. Grove workers add, over birch-sap tea, that hob-deer no taller..."
   ]
 }
 

@@ -35,14 +35,14 @@
   s02: <
     handle: "custom-song/02"
     type: "custom-song"
-    excerpt: "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth. She shifted her paw. The crack ran on ..."
+    excerpt: "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth, and down in the crack the crickets too..."
     handles: ["song-verse"]
     route: ^[chapter/05/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "The tuning fork hummed against the split desk. The wood, not the Fool, was singing — a very old melody, in a key nobody had budgeted for."
+    excerpt: "The tuning fork hummed against the split desk. The wood, not the Fool, was singing — a very old melody, in a key nobody had budgeted for. Dust stood still in the light to listen."
     route: ^[chapter/05/s03]{open}
   >
   s04: [
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "Wish-Physics Over the Crack"
-    excerpt: "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you..."
+    excerpt: "Where the crack left the desk leg for the floor, the clerks had set the crack-gauge: brass calipers as long as a forearm, one jaw on each lip of slate, a small bell at the hinge. It measured in notes, not inches. Ever..."
     route: ^[chapter/05/s05]{open}
   }
   s06: <
@@ -94,6 +94,9 @@
     "Wish-physics, taught properly: a wish redirects momentum the world already has. Small and aligned costs one coincidence and a Thursday; grand and crosswise bills a correction to someone e..."
     "The rift itself is old correction-debt from a grandiose wish granted centuries ago and never paid down. The land pays the interest a hairline at a time."
     "The egg warms the crack and leaves it honest. A wish does not reconcile other people's wanting."
+    "Hum-crickets live in the Quiet Rift's crack and keep its pitch. They go silent when someone lies near the floor — in either sense; nobody has ever told them which."
+    "The crack-gauge, brass calipers set across the rift, measures in notes, not inches; each morning a clerk takes the note. With the egg in the hall it rang a note nobody had written yet — t..."
+    "A carpenter's door-rule lies folded on the hall's sill, shut on a size that fits no door in the room. Nobody has claimed it."
   ]
 }
 

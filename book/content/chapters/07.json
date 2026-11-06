@@ -3,7 +3,7 @@
   "title": "Blueberry Oath",
   "logline": "At the market stone Boof swears the only oath a wish allows: to spend it when the want is true — and learns the shadow price, that every spent wish owes a coincidence to a stranger.",
   "epigraph": "Every wish is paid twice: once by the wisher, once by someone who never hears about it.",
-  "description": "Chapter 7 of Lore.Land: Blueberry Oath. An oath is a key given in public, paid in fruit, with the unspent wish as witness. Boof swears to spend the wish only when the want is true, while the Fool samples the sworn-oath trope and the shadow names the correction someone else will pay.",
+  "description": "Chapter 7 of Lore.Land: Blueberry Oath. An oath is a key given in public, paid in fruit on the oath-scale, with the unspent wish as witness. Boof swears to spend the wish only when the want is true, and the grey oath-moths settle in the groove; the Fool samples the sworn-oath trope and the shadow names the correction someone else will pay.",
   "mood": "shadow",
   "period": "spring",
   "pillars": [
@@ -69,7 +69,14 @@
         "witness",
         "public",
         "groove",
-        "key"
+        "key",
+        "oath-moths",
+        "oath-moth",
+        "oath-scale",
+        "oath-clerk",
+        "weathercock",
+        "key-file bench",
+        "bell-arch"
       ]
     },
     {
@@ -82,7 +89,10 @@
         "fruit",
         "juice",
         "price",
-        "paid"
+        "paid",
+        "cress",
+        "tallow",
+        "dried-fruit"
       ]
     },
     {
@@ -96,7 +106,8 @@
         "heat",
         "coincidence",
         "correction",
-        "stranger"
+        "stranger",
+        "moths"
       ]
     }
   ],
@@ -113,16 +124,23 @@
       "scene": {
         "vantage": "pressed in among market-day knees, rough wool skirts, and wicker baskets, eye-level with the oath stone's worn top",
         "light": "hard honest noon on the open square; the pressed paw and crushed fruit in bright focus, while an unnatural long shadow reaches into an alley",
-        "scent": "sun-warmed granite, ripe blueberry juice sharp and sweet, crowd wool, cold cellar draft moving out of the alley alone",
+        "scent": "sun-warmed granite, ripe blueberry juice sharp and sweet, crowd wool, cold cellar draft moving out of the alley alone, tallow and cut cress from the stalls, the pocket-dust smell of moths",
         "edges": [
           "a paw presses flat upon the granite, one berry crushed beneath it, juice filling the ancient concentric grooves",
           "the grooves hold dried residue from oaths sworn across centuries, stained in different shades of deep blue",
           "witnesses stand in a tight circle — townsfolk, the Genie, and a warm slice of pie on a plate someone carried from the city",
-          "in the alley shade, a long shadow with a lattice edge listens without stepping into the sun"
+          "in the alley shade, a long shadow with a lattice edge listens without stepping into the sun",
+          "beside the stone, the oath-scale's brass pan with one berry on it, the needle settled at one",
+          "lint-grey oath-moths coming down from the awning seams to settle along the juice line, wings shut flat as purses",
+          "over the bell-arch, the market's iron weathercock turned against the wind to watch"
         ],
         "hint": "sunlit market square at crowd-knee height; a dog's paw pressing a blueberry to a worn oath stone, juice tracing old grooves; ringed witnesses in noon light; a lattice-edged shadow stretching from a dark alley toward the stone; bright noon against one cold dark"
       },
       "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, a nettle cheese in dock leaves, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay the sharp blue smell of oaths. Over the bell-arch creaked the market's own weathercock, an iron cousin of the roosters on Council Hill, bought down the slope the year the hill had one opinion too many."
+        },
         {
           "type": "paragraph",
           "text": "The great market stone stood at the center of the square, its granite top worn smooth and dished by centuries of pressing palms. Boof had come to do the one thing the council could not do for her and BaneWAP could not undo: bind herself, in public, to the wish. For an oath here was understood exactly as the Genie had taught her to understand keys — it was a ",
@@ -133,13 +151,35 @@
             },
             {
               "type": "text",
-              "text": ", handed to the whole watching town at once, so that no one hand could ever secretly grow it. The public half was the words. The private half was paid in fruit, pressed into the rock where centuries of sworn juice had gone before. And the witness was the egg itself, set warm upon the lip of the stone: an unspent wish, watching a promise being made about its own spending."
+              "text": ", handed to the whole watching town at once, so that no one hand could ever secretly grow it."
             }
           ]
         },
         {
           "type": "paragraph",
-          "text": "Boof pressed a blueberry into the stone. Skin split; juice slipped into the groove worn by other paws and palms. She would spend the wish when the want was true. Not for spite, not for show. Not because a crowd was waiting. The square fell quiet enough to hear a stall-cloth flap. Beneath her other paw, the egg grew warmer."
+          "text": "The public half was the words. The private half was paid in fruit, pressed into the rock where centuries of sworn juice had gone before. And the witness was the egg itself, set warm upon the lip of the stone: an unspent wish, watching a promise being made about its own spending."
+        },
+        {
+          "type": "paragraph",
+          "text": "First the fruit was weighed. The oath-clerk had filed keys at the key-file bench on Council Hill until her knees chose the flatter town; her apron was still grey with filings. She took the blueberry Boof had carried in, unbruised in a soft mouth, and set it on the oath-scale, which weighs the fruit an oath is paid in and ignores the hand that pays."
+        },
+        {
+          "type": "paragraph",
+          "text": "A wool-merchant once leaned a ringed thumb on its brass pan for good measure. The needle ignored the thumb, the rings, and the merchant. For Boof's berry it trembled and settled at one: the smallest oath the stone accepts and, the clerk said, the commonest true one.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Around the square, stall-holders lifted the weights off their scales, as is done for an oath, so no turnip would be weighed against a promise. Boof pressed the blueberry into the stone. Skin split; juice slipped into the groove worn by other paws and palms. She would spend the wish when the want was true. Not for spite, not for show. Not because a crowd was waiting. The square fell quiet enough to hear a stall-cloth flap. Beneath her other paw, the egg grew warmer."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof smelled them first: dust and old wool, the inside of a coat pocket. Then the oath-moths came down out of the awning seams, lint-grey. They settle in the groove only when a promise is true. One landed on the juice line. Then three. Then a dozen, wings shut flat as purses, drinking nothing. The whole square watched them instead of the dog.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "A cheese-wife said moths only liked sugar; the clerk asked why they never sat on her jam. Up on its pin the weathercock turned against the wind to watch — a market weathercock's only vote — and stayed turned."
         }
       ]
     },
@@ -152,7 +192,8 @@
         "edges": [
           "the shadow has the shape of a dog and an egg, but no warmth radiates from the outline",
           "it lies across the oath grooves without wetting them",
-          "where it touches the stone, no juice dries"
+          "where it touches the stone, no juice dries",
+          "grey moths sitting on in the shadowed groove, unbothered by the cold"
         ],
         "hint": "a dark silhouetted dog-and-egg shadow stretching across bright sunny cobblestones toward a pitch-black alley, lying over an oath stone's grooves without touching their color"
       },
@@ -160,11 +201,16 @@
         {
           "type": "paragraph",
           "data-content_id": "shadow-intro",
-          "text": "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The Genie read it anyway, because pricing things was the one habit he had not liquidated."
+          "text": "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The moths sat on in it, unbothered. The Genie read the clause anyway, because pricing things was the one habit he had not liquidated."
         },
         {
           "type": "paragraph",
           "text": "\"Understand what you have promised to spend,\" he said quietly. \"A wish redirects momentum. Redirected momentum lands somewhere. Every spent wish — mine, yours, anyone's — owes one coincidence to a stranger. A cart delayed, a letter misdelivered, a rain moved to a different field. Someone always pays the correction, and they are never at the ceremony.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "He nodded at the oath-scale. \"That weighs what you pay. Nothing in this square weighs what they pay.\"",
+          "lean": "bane"
         }
       ]
     },
@@ -190,7 +236,7 @@
         },
         {
           "type": "paragraph",
-          "text": "From the awning he laid it out like a set: the hero's vow, sampled from every saga that ever rattled a mead-hall — swords kissed, blood mingled, thrones promised. He honked it back changed: no blade, no blood, one blueberry, one working dog, and a clause the sagas always skipped — the stranger's bill. That was the interest. An oath that admits its shadow is worth ten that don't."
+          "text": "From the dried-fruit stall's crossbeam, among strings of shrivelled berries, he laid it out like a set: the hero's vow, sampled from every saga that ever rattled a mead-hall — swords kissed, blood mingled, thrones promised. He honked it back changed: no blade, no blood, one blueberry, one working dog, and a clause the sagas always skipped — the stranger's bill. That was the interest. An oath that admits its shadow is worth ten that don't."
         }
       ]
     },
@@ -211,11 +257,11 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains. Somewhere, a stranger would be late because she had wished: a cart missed, a letter lost, rain on the wrong field."
+          "text": "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains, and the moths kept their places along it like a grey stitch in blue cloth. Somewhere, a stranger would be late because she had wished: a cart missed, a letter lost, rain on the wrong field."
         },
         {
           "type": "paragraph",
-          "text": "She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish."
+          "text": "She could neither find them nor warn them. The oath gave her no way around that. She sat until the stone cooled beneath her chin. Around her, the square returned to its smaller business. A merchant shook rain from an awning, the cress-seller sluiced her baskets at the trough, a child chased a rolling spool, and two neighbors resumed an argument they had set aside for the ceremony. None of them knew which stranger would catch the turn of her wish."
         },
         {
           "type": "paragraph",
@@ -223,7 +269,11 @@
         },
         {
           "type": "paragraph",
-          "text": "She pressed one last blueberry into the central groove until the purple juice welled up and filled the old gold-veined cracks. Payment that smelled true. The lattice-edged shadow at the alley mouth withdrew without a sound — an oath witnessed in public is a poor thing to bid on. Boof lifted the egg back into her sling and turned her nose south, toward the ancient well that keeps every face without stealing a single soul."
+          "text": "She pressed one last blueberry into the central groove until the purple juice welled up and filled the old gold-veined cracks. Payment that smelled true. The lattice-edged shadow at the alley mouth withdrew without a sound — an oath witnessed in public is a poor thing to bid on."
+        },
+        {
+          "type": "paragraph",
+          "text": "The market bell rang the close. The oath-moths lifted all together and went back into the awnings, and the awnings were rolled up with them inside, which they did not seem to mind. Boof lifted the egg back into her sling and turned her nose duskward, toward the ancient well that keeps every face without stealing a single soul."
         }
       ],
       "climate": {
@@ -239,7 +289,8 @@
           "oath groove in the market stone, freshly blue",
           "fruit as the private price",
           "the egg as witness, one degree warmer",
-          "a shadow that names the stranger's bill"
+          "a shadow that names the stranger's bill",
+          "grey moths lifting at the close bell into awnings being rolled for the night"
         ],
         "hint": "public market stone at twilight, gold-veined cracks, crushed blueberries, coal-dark cracked egg, one long cold shadow withdrawing into an alley"
       }
@@ -266,7 +317,7 @@
         },
         {
           "type": "paragraph",
-          "text": "His voice thinned with the market bell. Stalls folded, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
+          "text": "His voice thinned with the market bell. Stalls folded into barrows, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
         }
       ]
     }
@@ -284,6 +335,18 @@
       },
       {
         "description": "The Fool samples the sworn-oath trope — swords and blood in every saga — and returns it with interest: one blueberry, one dog, and the clause the sagas skip."
+      },
+      {
+        "description": "Oath-moths fold lint-grey in the market's awning seams and come down to settle in the oath groove only when a promise is true. They settled for Boof's oath, and sat on unbothered in its shadow: a true oath may have a dark half and still be true."
+      },
+      {
+        "description": "The oath-scale weighs the fruit an oath is paid in and ignores the hand that pays. One berry is the smallest oath the stone accepts — and, the oath-clerk says, the commonest true one."
+      },
+      {
+        "description": "The market keeps its own weathercock, bought down from Council Hill the year the hill had one opinion too many; turning against the wind to watch an oath is its only vote. The oath-clerk once filed keys at the hill's key-file bench."
+      },
+      {
+        "description": "When an oath is sworn, stall-holders lift the weights off their own scales so that no turnip is weighed against a promise."
       }
     ]
   }

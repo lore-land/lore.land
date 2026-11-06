@@ -1,0 +1,861 @@
+{
+  "note": "The almanac of Boon.land — wonders a reader can collect (book/scripts/modules/almanac.mjs). Canon: .spw/surfaces/almanac.spw. `terms` are matched in the prose, case-insensitively; `home` is where each is first met, `echoes` where it returns.",
+  "kinds": {
+    "creature": "Bestiary",
+    "contrivance": "Contrivances",
+    "bracework": "Bracework"
+  },
+  "wonders": [
+    {
+      "id": "torch-ants",
+      "name": "Torch-ants",
+      "kind": "creature",
+      "region": "the dawnward field",
+      "terms": [
+        "torch-ants",
+        "torch-ant"
+      ],
+      "note": "Keep lit streets along the berry roots all winter, so the field never freezes through. Businesslike; very particular about torches.",
+      "hint": "Something keeps the field warm from underneath.",
+      "home": 1,
+      "echoes": [
+        2,
+        8,
+        12,
+        14
+      ]
+    },
+    {
+      "id": "echo-wrens",
+      "name": "Echo-wrens",
+      "kind": "creature",
+      "region": "the grove",
+      "terms": [
+        "echo-wrens",
+        "echo-wren"
+      ],
+      "note": "Small brown wrens that sing a beat late. They nest in hollow cedars; a wren-call is the grove saying again.",
+      "hint": "A bird in the grove that is always a little behind.",
+      "home": 2,
+      "echoes": [
+        12,
+        14
+      ]
+    },
+    {
+      "id": "lag-stag",
+      "name": "The lag-stag",
+      "kind": "creature",
+      "region": "the grove",
+      "terms": [
+        "lag-stag"
+      ],
+      "note": "A white stag nobody has seen. Its hoofprints press into the moss a beat after it has passed.",
+      "hint": "Prints in the grove, with nothing to make them.",
+      "home": 2,
+      "echoes": [
+        14
+      ]
+    },
+    {
+      "id": "rehearsal-moths",
+      "name": "Rehearsal moths",
+      "kind": "creature",
+      "region": "the grove",
+      "terms": [
+        "rehearsal moths",
+        "rehearsal moth"
+      ],
+      "note": "Dusk moths whose wings carry tomorrow’s weather, a little smudged. The grove keeps its almanac on them.",
+      "hint": "Wings that know the weather early.",
+      "home": 2,
+      "echoes": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "salt-whales",
+      "name": "Salt-whales",
+      "kind": "creature",
+      "region": "the salt flats",
+      "terms": [
+        "salt-whales",
+        "salt-whale"
+      ],
+      "note": "Vast, slow creatures under the salt flats. The flats are the roof of their road; their old roads glow under the crust.",
+      "hint": "Something enormous moves under the flats.",
+      "home": 3,
+      "echoes": [
+        9
+      ]
+    },
+    {
+      "id": "signal-skinks",
+      "name": "Signal-skinks",
+      "kind": "creature",
+      "region": "the salt flats",
+      "terms": [
+        "signal-skinks",
+        "signal-skink"
+      ],
+      "note": "Finger-long lizards that bask on the signal stones and flick their tails in a code only the stones answer.",
+      "hint": "Small tails, flicking a message on warm stones.",
+      "home": 3,
+      "echoes": [
+        9
+      ]
+    },
+    {
+      "id": "weathercocks",
+      "name": "The weathercocks",
+      "kind": "creature",
+      "region": "Council Hill",
+      "terms": [
+        "weathercocks",
+        "weathercock"
+      ],
+      "note": "Iron roosters of Council Hill that vote by turning. The crosswind is their disagreement made weather.",
+      "hint": "Iron that turns with an opinion.",
+      "home": 4,
+      "echoes": [
+        7
+      ]
+    },
+    {
+      "id": "hum-crickets",
+      "name": "Hum-crickets",
+      "kind": "creature",
+      "region": "the Quiet Rift",
+      "terms": [
+        "hum-crickets",
+        "hum-cricket"
+      ],
+      "note": "Live in the Rift’s crack and keep its pitch. They go silent when someone lies near the floor.",
+      "hint": "A small chorus that lives in a crack.",
+      "home": 5,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "pane-snails",
+      "name": "Pane-snails",
+      "kind": "creature",
+      "region": "Bonk City",
+      "terms": [
+        "pane-snails",
+        "pane-snail"
+      ],
+      "note": "Glass-snails that graze soot off Bonk City’s panes at night. Their slow trails are how a pane is forgiven clear.",
+      "hint": "Something cleans the city’s glass by night.",
+      "home": 6,
+      "echoes": [
+        13,
+        15
+      ]
+    },
+    {
+      "id": "gate-pigeons",
+      "name": "Gate-pigeons",
+      "kind": "creature",
+      "region": "Bonk City",
+      "terms": [
+        "gate-pigeons",
+        "gate-pigeon"
+      ],
+      "note": "Sleep on the parcel gate’s counterweight and ride it up and down all night without waking.",
+      "hint": "Birds that sleep on something moving.",
+      "home": 15,
+      "echoes": [
+        6
+      ]
+    },
+    {
+      "id": "oath-moths",
+      "name": "Oath-moths",
+      "kind": "creature",
+      "region": "the market stone",
+      "terms": [
+        "oath-moths",
+        "oath-moth"
+      ],
+      "note": "Grey market moths drawn to sworn words. They settle in the oath groove only when a promise is true.",
+      "hint": "Moths that can tell a true promise.",
+      "home": 7,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "remembrancers",
+      "name": "Remembrancers",
+      "kind": "creature",
+      "region": "the Watering Eye",
+      "terms": [
+        "remembrancers",
+        "remembrancer"
+      ],
+      "note": "Pale fish in the Watering Eye that swim through the faces the well has kept, folding them gently so they fit.",
+      "hint": "Something swims among the faces in the well.",
+      "home": 8,
+      "echoes": [
+        10
+      ]
+    },
+    {
+      "id": "jazz-geese",
+      "name": "Jazz-geese",
+      "kind": "creature",
+      "region": "the ridge",
+      "terms": [
+        "jazz-geese",
+        "jazz-goose"
+      ],
+      "note": "Geese that fly in nines and honk in uneven time. One of them taught the Fool his note, or the other way round.",
+      "hint": "A honk with a swing to it.",
+      "home": 9,
+      "echoes": [
+        1,
+        14
+      ]
+    },
+    {
+      "id": "chimney-swifts",
+      "name": "Chimney-swifts",
+      "kind": "creature",
+      "region": "the ridge",
+      "terms": [
+        "chimney-swifts",
+        "chimney-swift"
+      ],
+      "note": "Roost in the ridge chimneys and carry a sound a little farther than it meant to go.",
+      "hint": "Birds that carry sound.",
+      "home": 9,
+      "echoes": [
+        10
+      ]
+    },
+    {
+      "id": "load-beetles",
+      "name": "Load-beetles",
+      "kind": "creature",
+      "region": "Bone.land",
+      "terms": [
+        "load-beetles",
+        "load-beetle"
+      ],
+      "note": "Small dark beetles in Bone.land timber that click when a beam is asked to bear more than it agreed to.",
+      "hint": "A click in the timber, when something is too heavy.",
+      "home": 10,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "crown-wasps",
+      "name": "Crown-wasps",
+      "kind": "creature",
+      "region": "the bloom garden",
+      "terms": [
+        "crown-wasps",
+        "crown-wasp"
+      ],
+      "note": "Build paper crowns in the bloom garden, beautiful and hollow. A rented crown is wasp-work.",
+      "hint": "Somebody builds crowns out of paper.",
+      "home": 11,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "early-bees",
+      "name": "Early bees",
+      "kind": "creature",
+      "region": "the bloom garden",
+      "terms": [
+        "early bees",
+        "early bee"
+      ],
+      "note": "Arrive at a flower before it opens and wait, humming, as if the bloom owed them.",
+      "hint": "Bees that come before the flowers.",
+      "home": 11,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "seam-otters",
+      "name": "Seam-otters",
+      "kind": "creature",
+      "region": "the confluence",
+      "terms": [
+        "seam-otters",
+        "seam-otter"
+      ],
+      "note": "Swim exactly on the unblended seam of the two rivers, one paw in each water.",
+      "hint": "Something swims on the line between two waters.",
+      "home": 12,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "ink-herons",
+      "name": "Ink-herons",
+      "kind": "creature",
+      "region": "the confluence",
+      "terms": [
+        "ink-herons",
+        "ink-heron"
+      ],
+      "note": "Stand in the berry-dark river so still their reflections dry into the bank.",
+      "hint": "Birds so still their reflections stay.",
+      "home": 12,
+      "echoes": [
+        14
+      ]
+    },
+    {
+      "id": "shelf-owls",
+      "name": "Shelf-owls",
+      "kind": "creature",
+      "region": "the Round Archive",
+      "terms": [
+        "shelf-owls",
+        "shelf-owl"
+      ],
+      "note": "Keep the gaps in the archive’s shelves clear for chronicles not yet written. They nest in what is missing.",
+      "hint": "Someone guards the empty places on the shelves.",
+      "home": 13,
+      "echoes": [
+        1
+      ]
+    },
+    {
+      "id": "hob-deer",
+      "name": "Hob-deer",
+      "kind": "creature",
+      "region": "the kept Thursday",
+      "terms": [
+        "hob-deer"
+      ],
+      "note": "Deer no taller than a boot that graze between frost-ruts only on days nobody keeps.",
+      "hint": "Small deer of a day nobody kept.",
+      "home": 14,
+      "echoes": [
+        2
+      ]
+    },
+    {
+      "id": "page-fox",
+      "name": "The page-fox",
+      "kind": "creature",
+      "region": "the kept Thursday",
+      "terms": [
+        "page-fox"
+      ],
+      "note": "A fox the colour of an unturned page, seen only on unkept days, trotting as if late for something.",
+      "hint": "A pale fox, on a day nobody kept.",
+      "home": 14,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "press-stones",
+      "name": "Press-stones",
+      "kind": "contrivance",
+      "region": "the map-house",
+      "terms": [
+        "press-stones",
+        "press-stone"
+      ],
+      "note": "The archivist’s flat stones for holding a map’s crease. One is always missing.",
+      "hint": "Weights for a map that will not lie flat.",
+      "home": 1,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "drying-line",
+      "name": "The drying-line",
+      "kind": "contrivance",
+      "region": "the map-house",
+      "terms": [
+        "drying-line"
+      ],
+      "note": "Where new maps hang to dry. Maps that refuse ink drip back into the trough.",
+      "hint": "Where maps hang, waiting.",
+      "home": 1,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "want-needle",
+      "name": "The want-needle",
+      "kind": "contrivance",
+      "region": "the Genie’s bottle",
+      "terms": [
+        "want-needle"
+      ],
+      "note": "The Genie’s brass needle, quick to find a want. It circles, slows, and tries again.",
+      "hint": "A needle that points at wanting.",
+      "home": 3,
+      "echoes": [
+        8,
+        12
+      ]
+    },
+    {
+      "id": "resolution-glass",
+      "name": "The resolution glass",
+      "kind": "contrivance",
+      "region": "the Genie’s bottle",
+      "terms": [
+        "resolution glass"
+      ],
+      "note": "The Genie’s long glass. It shows only wants larger than a loaf.",
+      "hint": "A glass that cannot see small things.",
+      "home": 3,
+      "echoes": [
+        8
+      ]
+    },
+    {
+      "id": "wish-scale",
+      "name": "The wish-scale",
+      "kind": "contrivance",
+      "region": "the Genie’s bottle",
+      "terms": [
+        "wish-scale"
+      ],
+      "note": "The Genie’s pan scale, balanced against coincidences.",
+      "hint": "A scale for the price of a wish.",
+      "home": 3,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "bottle-desk",
+      "name": "The bottle-desk",
+      "kind": "contrivance",
+      "region": "the Genie’s bottle",
+      "terms": [
+        "bottle-desk"
+      ],
+      "note": "The folding desk the Genie keeps in his bottle, with a drawer for Thursdays.",
+      "hint": "A whole office, folded small.",
+      "home": 3,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "key-file-bench",
+      "name": "The key-file bench",
+      "kind": "contrivance",
+      "region": "Council Hill",
+      "terms": [
+        "key-file bench"
+      ],
+      "note": "Where keys are filed smaller, never grown. The filings go into a jar called the honest jar.",
+      "hint": "A bench where keys only get smaller.",
+      "home": 4,
+      "echoes": [
+        7
+      ]
+    },
+    {
+      "id": "crosswind-loom",
+      "name": "The crosswind loom",
+      "kind": "contrivance",
+      "region": "Council Hill",
+      "terms": [
+        "crosswind loom"
+      ],
+      "note": "Weaves the hill’s two winds into the council’s tablecloth. When the vote turns, the weave changes colour.",
+      "hint": "A loom worked by weather.",
+      "home": 4,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "crack-gauge",
+      "name": "The crack-gauge",
+      "kind": "contrivance",
+      "region": "the Quiet Rift",
+      "terms": [
+        "crack-gauge"
+      ],
+      "note": "Brass calipers set across the Rift’s crack. They measure in notes, not inches.",
+      "hint": "Calipers that measure a sound.",
+      "home": 5,
+      "echoes": [
+        10
+      ]
+    },
+    {
+      "id": "bonk-kiln",
+      "name": "The bonk-kiln",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "bonk-kiln"
+      ],
+      "note": "The forgiving kiln of Bonk City. It melts old impacts down into clear glass.",
+      "hint": "Where the city’s bruises become glass.",
+      "home": 6,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "dent-lanterns",
+      "name": "Dent-lanterns",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "dent-lanterns",
+        "dent-lantern"
+      ],
+      "note": "Lanterns hammered from dented brass. Each dent is a street the light remembers.",
+      "hint": "Lanterns that remember being struck.",
+      "home": 6,
+      "echoes": [
+        9,
+        15
+      ]
+    },
+    {
+      "id": "chime-gutters",
+      "name": "Chime-gutters",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "chime-gutters",
+        "chime-gutter"
+      ],
+      "note": "Gutters that ring when it rains, so the city can hear which roofs are leaking.",
+      "hint": "The city listens to its rain.",
+      "home": 6,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "lamp-ladders",
+      "name": "Lamp-ladders",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "lamp-ladders",
+        "lamp-ladder"
+      ],
+      "note": "The lamplighters’ hinged ladders that fold into a walking staff.",
+      "hint": "A ladder that becomes a staff.",
+      "home": 6,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "folio-press",
+      "name": "The folio press",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "folio press"
+      ],
+      "note": "Glasses a page flat and warm, layering it over the last so nothing known is lost.",
+      "hint": "A press for keeping pages under glass.",
+      "home": 6,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "brace-boxes",
+      "name": "Brace-boxes",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "brace-boxes",
+        "brace-box"
+      ],
+      "note": "Small glass boxes with sigil-etched lids. Each holds a pocket realm combined from two nouns and a sigil, and runs on borrowed warmth.",
+      "hint": "Small boxes that hold small weathers.",
+      "home": 6,
+      "echoes": [
+        13,
+        15
+      ]
+    },
+    {
+      "id": "pie-dividers",
+      "name": "Pie-dividers",
+      "kind": "contrivance",
+      "region": "Bonk City",
+      "terms": [
+        "pie-dividers"
+      ],
+      "note": "Brass compasses for dividing a pie evenly. They never come out even.",
+      "hint": "An instrument that cannot quite divide.",
+      "home": 15,
+      "echoes": [
+        6
+      ]
+    },
+    {
+      "id": "oath-scale",
+      "name": "The oath-scale",
+      "kind": "contrivance",
+      "region": "the market stone",
+      "terms": [
+        "oath-scale"
+      ],
+      "note": "Weighs the fruit an oath is paid in. It ignores the hand that pays.",
+      "hint": "A scale that weighs promises in fruit.",
+      "home": 7,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "well-winch",
+      "name": "The well-winch",
+      "kind": "contrivance",
+      "region": "the Watering Eye",
+      "terms": [
+        "well-winch"
+      ],
+      "note": "On still nights the bucket comes up holding a face instead of water.",
+      "hint": "A winch that sometimes brings up the wrong thing.",
+      "home": 8,
+      "echoes": [
+        10
+      ]
+    },
+    {
+      "id": "shard-rack",
+      "name": "The shard-rack",
+      "kind": "contrivance",
+      "region": "the ridge",
+      "terms": [
+        "shard-rack"
+      ],
+      "note": "The Fool’s rack for the nine honk shards. One slot is egg-shaped.",
+      "hint": "A rack with one strangely shaped slot.",
+      "home": 9,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "listening-mallet",
+      "name": "The listening mallet",
+      "kind": "contrivance",
+      "region": "Bone.land",
+      "terms": [
+        "listening mallet"
+      ],
+      "note": "BoneWAP’s felt-headed mallet for asking a beam what it will bear.",
+      "hint": "A mallet made for asking, not striking.",
+      "home": 10,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "load-bells",
+      "name": "Load-bells",
+      "kind": "contrivance",
+      "region": "Bone.land",
+      "terms": [
+        "load-bells",
+        "load-bell"
+      ],
+      "note": "Small bells hung from Bone.land’s joists that ring when weight passes over.",
+      "hint": "Bells that ring under weight.",
+      "home": 10,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "rail-pins",
+      "name": "Rail-pins",
+      "kind": "contrivance",
+      "region": "the confluence",
+      "terms": [
+        "rail-pins",
+        "rail-pin"
+      ],
+      "note": "Brass pins on the confluence bridge where receipts are posted for any traveller to read.",
+      "hint": "Where the bridge keeps its notices.",
+      "home": 12,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "ferry-bell",
+      "name": "The ferry-bell",
+      "kind": "contrivance",
+      "region": "the confluence",
+      "terms": [
+        "ferry-bell"
+      ],
+      "note": "Rung when someone needs to cross the seam without wetting both springs.",
+      "hint": "A bell for crossing between two waters.",
+      "home": 12,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "glassing-press",
+      "name": "The glassing press",
+      "kind": "contrivance",
+      "region": "the Round Archive",
+      "terms": [
+        "glassing press"
+      ],
+      "note": "The archive’s great press for folios. It has pressed every page but the last.",
+      "hint": "A press that has never pressed one page.",
+      "home": 13,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "storm-weight",
+      "name": "The storm-weight",
+      "kind": "contrivance",
+      "region": "the parcel gate",
+      "terms": [
+        "storm-weight"
+      ],
+      "note": "The parcel gate’s iron counterweight. It lets one porter lift a gate meant for three.",
+      "hint": "Iron that makes one person strong enough.",
+      "home": 15,
+      "echoes": [
+        6
+      ]
+    },
+    {
+      "id": "door-rule",
+      "name": "The door-rule",
+      "kind": "contrivance",
+      "region": "the parcel gate",
+      "terms": [
+        "door-rule"
+      ],
+      "note": "The carpenter’s folding rule, with a hinge for every size of door.",
+      "hint": "A rule that folds to fit any door.",
+      "home": 15,
+      "echoes": [
+        5
+      ]
+    },
+    {
+      "id": "council-slab",
+      "name": "The council slab: &[boon, bane]{table}",
+      "kind": "bracework",
+      "region": "Council Hill",
+      "terms": [
+        "&[boon, bane]{table}"
+      ],
+      "note": "Two sides, one table: the council’s law cut into the pine before any argument starts. Confluence without whitening.",
+      "hint": "A law written in braces on a hilltop.",
+      "home": 4,
+      "echoes": [
+        12
+      ]
+    },
+    {
+      "id": "pane-faces",
+      "name": "Pane faces: # and .",
+      "kind": "bracework",
+      "region": "Bonk City",
+      "terms": [
+        "# face",
+        ". face"
+      ],
+      "note": "Glaziers etch # on a pane’s street face, the face that travels, and . on the inside face, the one that stays.",
+      "hint": "Two marks on every pane.",
+      "home": 6,
+      "echoes": [
+        15
+      ]
+    },
+    {
+      "id": "mortise-marks",
+      "name": "Mortise marks: ^ and .",
+      "kind": "bracework",
+      "region": "Bone.land",
+      "terms": [
+        "mortise marks",
+        "mortise mark"
+      ],
+      "note": "Joiners cut ^ where a beam lifts and . where it stands. A frame can be read before it is leaned on.",
+      "hint": "Marks a joiner reads before trusting a beam.",
+      "home": 10,
+      "echoes": [
+        13
+      ]
+    },
+    {
+      "id": "open-brace",
+      "name": "The open brace",
+      "kind": "bracework",
+      "region": "the Round Archive",
+      "terms": [
+        "open brace"
+      ],
+      "note": "The archive files every record as a small realm in braces. The blank last line is an open brace with no close.",
+      "hint": "A brace nobody has closed.",
+      "home": 13,
+      "echoes": [
+        14
+      ]
+    },
+    {
+      "id": "hearth-drift",
+      "name": "Hearth-drift: {frost & hearth}",
+      "kind": "bracework",
+      "region": "the night school",
+      "terms": [
+        "{frost & hearth}",
+        "hearth-drift"
+      ],
+      "note": "A combine: frost and hearth in one room. It snows warm. The warm furrow is one the land made by itself.",
+      "hint": "Snow that falls warm.",
+      "home": 15,
+      "echoes": [
+        1,
+        14
+      ]
+    },
+    {
+      "id": "moonrun",
+      "name": "Moonrun: <river ~ moon>",
+      "kind": "bracework",
+      "region": "the confluence",
+      "terms": [
+        "<river ~ moon>",
+        "moonrun"
+      ],
+      "note": "A combine: a passage where water is thinking about being light. You can go through it; you cannot stay.",
+      "hint": "A passage made of river and moonlight.",
+      "home": 12,
+      "echoes": [
+        15
+      ]
+    }
+  ]
+}

@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "Two great mountain rivers met beneath a wide, low-planked timber bridge, and it was there, muzzle over the rail with the egg warm between her paws, that Boof finally knew. Not a hunch. Not the shape of a want seen sid..."
+    excerpt: "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. River tar on the planks. Under it all, warm shell. Two great mountain rivers met b..."
     route: ^[chapter/12/s01]{open}
   >
   s02: <
     handle: "custom-path/02"
     type: "custom-path"
-    excerpt: "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the ants moved beneath it. With less heat to make, they could tend more roots; their torch-lines ran farther along the furr..."
+    excerpt: "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the torch-ants moved beneath it. With less heat to make, they could tend more roots; their torch-lines ran farther along th..."
     handles: ["path-intro"]
     route: ^[chapter/12/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit."
+    excerpt: "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit. By the week's end the echo-wrens in the hollow cedars had a..."
     route: ^[chapter/12/s03]{open}
   >
   s04: [
@@ -61,7 +61,7 @@
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
-    excerpt: "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand. Boof followed the gravel pa..."
+    excerpt: "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand. Below the path the moon cam..."
     route: ^[chapter/12/s06]{open}
   >
 ]
@@ -93,6 +93,10 @@
     "Boof's wish, sworn true under the Blueberry Oath: one warm furrow kept open, always, for whatever arrives next without a receipt."
     "Honest price of a forever-small wish: everything the Genie had left, plus one Thursday. He retires into the grove as its next echo — a granting you can visit."
     "BaneWAP splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts. Both can post because the wish aligned them."
+    "Seam-otters swim exactly on the confluence seam, one paw in each water; their fur dries two colors, so boatmen swear there are two kinds. Ink-herons stand so still in the berry-dark shall..."
+    "The ferry-bell is rung by anyone who needs to cross the seam without wetting both springs, or who doubts the bridge will hold them. Load-bells under the deck rang light under the re-sweet..."
+    "The rail-pins hold the bridge's small news; BoneWAP posted both receipts there after the market stone's oath-scale weighed the two slices equal, and oath-moths settled one to each."
+    "Every clear dusk the ferrymen chalk <river ~ moon> on the landing slate — not to make the moonrun, which the river makes itself, but so no stranger mistakes a passage for a place to stop...."
   ]
 }
 

@@ -6,7 +6,7 @@
 
 ^[chapter/08]{
   title: "Songs of the Watering Eye"
-  description: "Chapter 8 of Lore.Land: Songs of the Watering Eye. A tavern leans over a well that folds every face it has held. The Off-Season Genie runs his negotiation game, pricing wishes for locals, and finds that ordinary desires resist his machin..."
+  description: "Chapter 8 of Lore.Land: Songs of the Watering Eye. A tavern leans over a well that folds every face it has held, where pale remembrancers tuck the kept faces so they fit. The Off-Season Genie runs his negotiation game, pricing wishes for..."
   mood: "game"
   period: "spring"
   chapter_path: "/book/chapter/08/"
@@ -29,20 +29,20 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
-    excerpt: "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards and set her front paws ..."
+    excerpt: "The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards, nose first through spi..."
     route: ^[chapter/08/s01]{open}
   >
   s02: <
     handle: "custom-game/02"
     type: "custom-game"
-    excerpt: "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? He counted the company twice and quoted..."
+    excerpt: "All night the Genie dealt in wants. Name one, hear the price, pay or fold. An empire? Quite manageable; the world was forever tipping toward a throne. Supper everyone agreed on? His needle swung so wide it rang agains..."
     handles: ["game-intro"]
     route: ^[chapter/08/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
-    excerpt: "He sat the trapdoor's edge with his boots over the dark, tapping the game's rhythm on the iron ring, taking the tavern's off-key song and handing it back on-key, with interest."
+    excerpt: "He sat the trapdoor's edge with his boots over the dark, tapping the game's rhythm on the iron ring, taking the tavern's off-key song — a winch song underneath, like every song in the Watering Eye — and handing it bac..."
     route: ^[chapter/08/s03]{open}
   >
   s04: [
@@ -55,7 +55,7 @@
     handle: "section/05"
     type: "section"
     title: "The Unpriceable Want"
-    excerpt: "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His needle swung beyond the numbers and came back blank. He reset it. She tried ag..."
+    excerpt: "Near closing, he tried Boof again. “Anything. Name it.” She thought of the furrow, the warmth, a trail with something real at its end. His want-needle swung past the numbers and came back blank. He reset it with a thu..."
     route: ^[chapter/08/s05]{open}
   }
   s06: <
@@ -93,6 +93,10 @@
     "The Watering Eye folds a face without stealing it — a want said into deep water still belongs to its wanter."
     "Ordinary desires resist wish fulfillment more than spectacular ones: thrones are cheap, supper agreements are advanced karmic problems."
     "The water names the debt in the egg's heat: an unspent wish standing warm above the fold, owing a coincidence to a stranger."
+    "Remembrancers — chalk-pale fish no longer than a spoon — swim through the faces the Watering Eye has kept and fold them gently so they fit. One nosed the egg's reflection for an edge to f..."
+    "On still nights the well-winch brings the bucket up holding a face instead of water. The potboy greets it and lets it back down, and the kitchen draws from the rain-butt; the soup tastes ..."
+    "Every song in the Watering Eye is a winch song underneath — honey-slow, four beats a turn — so the bucket never knocks a face on the way up."
+    "The Genie's resolution glass, which cannot see a want smaller than a loaf, found the potboy's want for the heel of the last loaf; of Boof it showed only wet stones and an egg. The torch-a..."
   ]
 }
 

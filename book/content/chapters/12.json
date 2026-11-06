@@ -69,7 +69,14 @@
         "posted",
         "apology",
         "slice",
-        "audit"
+        "audit",
+        "rail-pins",
+        "rail-pin",
+        "oath-scale",
+        "oath-moths",
+        "want-needle",
+        "wish-scale",
+        "bottle-desk"
       ]
     },
     {
@@ -83,7 +90,14 @@
         "springs",
         "waters",
         "chalk",
-        "Thursday"
+        "Thursday",
+        "seam-otters",
+        "seam-otter",
+        "ferry-bell",
+        "load-bells",
+        "moonrun",
+        "<river ~ moon>",
+        "&[boon, bane]{table}"
       ]
     },
     {
@@ -95,7 +109,13 @@
         "wish",
         "furrow",
         "grove",
-        "echo"
+        "echo",
+        "ink-herons",
+        "ink-heron",
+        "torch-ants",
+        "echo-wrens",
+        "load-beetle",
+        "crown-wasps"
       ]
     }
   ],
@@ -117,11 +137,17 @@
           "upstream, the two source canyons are visible to their rocky bends — neither river larger, neither claiming precedence",
           "the seam between the currents wanders gracefully down the channel, sharp and unmixed to the horizon",
           "the Off-Season Genie leans on the rail beside her, instruments folded small for once",
-          "the egg's coin-wide door glows steady, waiting for a want it can finish"
+          "the egg's coin-wide door glows steady, waiting for a want it can finish",
+          "a seam-otter rolls down the channel exactly on the seam, fur berry-dark on one flank and chalk-pale on the other",
+          "on the rail: a brass want-needle pointing steady, a pan scale with one side emptied, a folding desk clicked shut"
         ],
         "hint": "low bridge over a two-toned river confluence at late gold hour; berry-dark and pale chalk currents sharing one bed with a living unblended seam; a working dog and a tired retired genie at the rail, a warm cracked egg between them; warm light, patient water"
       },
       "content": [
+        {
+          "type": "paragraph",
+          "text": "The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. River tar on the planks. Under it all, warm shell."
+        },
         {
           "type": "paragraph",
           "text": "Two great mountain rivers met beneath a wide, low-planked timber bridge, and it was there, muzzle over the rail with the egg warm between her paws, that Boof finally knew. Not a hunch. Not the shape of a want seen sideways."
@@ -142,11 +168,25 @@
         },
         {
           "type": "paragraph",
+          "text": "A seam-otter came down the channel exactly on the line, one paw in each water, rolling without ever choosing a side. Its fur dried berry-dark on one flank and chalk-pale on the other; boatmen swear there are two kinds of otter here. There is one kind, wet in both waters.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
           "text": "The Off-Season Genie had followed her since the third chamber, because her wants were too small for instruments built for emperors. He heard it and went very still — the way a craftsman goes still when the one job his tools were never sized for turns out to be the job he stayed retired for."
         },
         {
           "type": "paragraph",
+          "text": "He laid his instruments on the rail one last time. The want-needle did not circle; it found Boof and held, like a dog on a point. The wish-scale would not settle at a coincidence, or a season of them, or a lifetime; it kept tipping, honey-slow, toward always."
+        },
+        {
+          "type": "paragraph",
           "text": "The Genie counted the price onto the rail. Once, he'd said a small wish cost a coincidence and a Thursday. This one asked for always. He emptied what remained in his reserve and kept his hand open beside it. “Everything left,” he said. “Plus one Thursday.” Boof looked from his hand to his face. Neither bargained."
+        },
+        {
+          "type": "paragraph",
+          "text": "Last he opened the bottle-desk's narrow drawer for Thursdays. Empty: he had spent them all on emperors. This one would come out of the week ahead. He folded the desk shut for good, with a small brass click like a shop door at closing, and left it on the rail.",
+          "lean": "bane"
         }
       ]
     },
@@ -159,7 +199,8 @@
         "edges": [
           "the boundary line between the two waters forms a standing golden wave",
           "far upcountry, in the dawnward field, one furrow shrugs off its frost and stays warm",
-          "the egg's door-crack releases a single long breath of gold"
+          "the egg's door-crack releases a single long breath of gold",
+          "downstream, an ink-heron lifting off the shallows, its dried reflection left printed on the bank"
         ],
         "hint": "water-level view of two differently colored currents running side by side down a wide river canyon, split by a golden froth line, warmth visibly traveling upstream toward distant fields"
       },
@@ -167,7 +208,15 @@
         {
           "type": "paragraph",
           "data-content_id": "path-intro",
-          "text": "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the ants moved beneath it. With less heat to make, they could tend more roots; their torch-lines ran farther along the furrow than they had in years, and a beetle who had been cold since autumn found a lit street. The berry rows widened through the winter. The ants had known the Genie longer than anyone, and they were the only ones who noticed what always had cost him. A stranger would receive a good coincidence. Somewhere in the coming week, a Thursday quietly went missing. On the bridge, no thunder. Only water under wood, and the Genie putting his empty hand away."
+          "text": "Far upcountry, frost loosened along one furrow. The ground warmed and stayed warm. That night the torch-ants moved beneath it. With less heat to make, they could tend more roots; their torch-lines ran farther along the furrow than they had in years, and a beetle who had been cold since autumn — a load-beetle, a long way from any timber — found a lit street."
+        },
+        {
+          "type": "paragraph",
+          "text": "The berry rows widened through the winter. The ants had known the Genie longer than anyone, and they were the only ones who noticed what always had cost him. A stranger would receive a good coincidence. Somewhere in the coming week, a Thursday quietly went missing."
+        },
+        {
+          "type": "paragraph",
+          "text": "On the bridge, no thunder. Only water under wood, and the Genie putting his empty hand away. Downstream an ink-heron lifted out of the berry-dark shallows for the first time that season. It had stood so still that its reflection had dried into the bank, and it left the reflection behind on the mud."
         }
       ]
     },
@@ -193,7 +242,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit."
+          "text": "Spent to the last coin of himself, the Off-Season Genie walked upstream into the grove that keeps echoes, and became its next one — a granting you can visit. By the week's end the echo-wrens in the hollow cedars had a new call, a beat late: a small dry cough, like a man clearing his throat before a price."
         }
       ]
     },
@@ -214,7 +263,16 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Then the last threads came down the road to the bridge, because a confluence gathers. Mr. BaneWAP arrived first, walking soft, his banker's crust gone flaky and generous where the awakened berries had re-sweetened him from the inside out. He had no coin fit for the apology he owed, so he paid in the only currency a pie has: he split himself, clean down the crimp, and offered the slices to the road."
+          "text": "Then the last threads came down the road to the bridge, because a confluence gathers. Mr. BaneWAP arrived first, walking soft, his banker's crust gone flaky and generous where the awakened berries had re-sweetened him from the inside out. It came away in grey curls as he walked, thin as crown-wasp paper."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the landing he stopped and rang the ferry-bell, which is rung by anyone who needs to cross the seam without wetting both springs, or who doubts the bridge will hold them. The ferryman pointed his pipe at the planks. BaneWAP stepped on. The load-bells beneath the deck rang under him once each, small and light, all the way out to where Boof stood. He had been heavier the last time anything weighed him.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "He had no coin fit for the apology he owed, so he paid in the only currency a pie has: he split himself, clean down the crimp, and offered the slices to the road."
         },
         {
           "type": "paragraph",
@@ -222,15 +280,28 @@
         },
         {
           "type": "paragraph",
-          "text": "Mx. BoneWAP arrived last, clean-boiled and exact, and pinned both receipts to the bridge rail where any traveler could read them: one slice given in apology, one slice received in welcome, sources named, nothing flattened. And here was the quiet miracle of the small wish already at work — both receipts could hang side by side, because the wish had aligned them."
+          "text": "Mx. BoneWAP arrived last, clean-boiled and exact, with the oath-scale from the market stone under one arm. It weighed both slices and found them equal; the oath-scale ignores the hand that pays."
         },
         {
           "type": "paragraph",
-          "text": "The whole confluence held: berry water and chalk water, bitter pie and boon pie, hall and grove, all sharing one bed along a living seam, a membrane that shares without giving the house away. The egg in Boof's sling was lighter now, and its heartbeat had changed from waiting to arriving."
+          "text": "Most days the rail-pins held the bridge's small news: ferry hours, a lost goat, a recipe for eel pie the pies present politely did not read. BoneWAP posted both receipts among them for any traveler to read: one slice given in apology, one slice received in welcome, sources named, nothing flattened.",
+          "lean": "bone"
         },
         {
           "type": "paragraph",
-          "text": "Boof listened to the travelers crossing behind her, the different weights of their steps, the pause where someone stopped to look down. Under the bridge, one river carried a darker thread for a while before the currents loosened it."
+          "text": "Grey oath-moths came in off the market road and settled on the receipts, one to each; they settle only where a sworn word is true. And here was the quiet miracle of the small wish already at work — both receipts could hang side by side, because the wish had aligned them."
+        },
+        {
+          "type": "paragraph",
+          "text": "The whole confluence held: berry water and chalk water, bitter pie and boon pie, hall and grove, all sharing one bed along a living seam, a membrane that shares without giving the house away. It was the council's law from the hill, &[boon, bane]{table}, written this time in water instead of pine."
+        },
+        {
+          "type": "paragraph",
+          "text": "The egg in Boof's sling was lighter now, and its heartbeat had changed from waiting to arriving."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof listened to the travelers crossing behind her, the different weights of their steps — a drover, two goats — and the pause where someone stopped to look down. Under the bridge, one river carried a darker thread for a while before the currents loosened it."
         },
         {
           "type": "paragraph",
@@ -245,12 +316,14 @@
       "scene": {
         "vantage": "on the bridge deck among the gathered cast, receipts nailed to the rail",
         "light": "evening gold on two waters, lamplight warming the receipts",
-        "scent": "river, warm pie, wet rope, drying ink",
+        "scent": "river, warm pie, wet rope, drying ink, a ferryman's pipe",
         "edges": [
           "BaneWAP split along the crimp, sweeter for it",
           "BoonWAP serving welcome in slices, never smaller",
           "BoneWAP's two receipts posted side by side on the rail",
-          "the seam below holds: shared bed, unforgotten springs"
+          "the seam below holds: shared bed, unforgotten springs",
+          "brass rail-pins along the bridge rail holding the small news, two receipts pinned among them, a grey oath-moth on each",
+          "a cracked bronze ferry-bell on a post at the landing; small load-bells hung beneath the deck"
         ],
         "hint": "an evening bridge over a two-toned confluence, a gathered cast of sentient pies exchanging slices, two paper receipts posted on the rail, a dog with a glowing egg at the center; warm communal light"
       }
@@ -266,7 +339,8 @@
         "edges": [
           "the gravel path is lined with low granite pillars holding unlit beacon bowls",
           "the egg in her sling is bright now, its door-crack singing almost audibly",
-          "the great eggshell-shaped doorway of the archive stands completely open to the night"
+          "the great eggshell-shaped doorway of the archive stands completely open to the night",
+          "below the path, the moonrun: a lane of moonlight laid along the river's seam, and a ferryman's chalked slate at the landing"
         ],
         "hint": "a dog trotting up a gravel garden path at twilight carrying a radiant glowing egg toward a massive circular stone library with an illuminated open door"
       },
@@ -274,6 +348,11 @@
         {
           "type": "paragraph",
           "text": "\"Where does a spent wish go?\" Boof asked the twilight, nose lifted toward the archive downstream. Nowhere, said the warm wind off the far furrow. It stays. It becomes a place you can stand."
+        },
+        {
+          "type": "paragraph",
+          "text": "Below the path the moon came up and laid a lane of light along the seam. At the landing the ferryman chalked it on his slate, as ferrymen do every clear dusk — <river ~ moon> — not to make the moonrun, which the river makes itself, but so no stranger mistakes it for a place to stop. You can go through. Nobody stays.",
+          "lean": "bone"
         },
         {
           "type": "paragraph",
@@ -292,6 +371,18 @@
       },
       {
         "description": "BaneWAP splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts. Both can post because the wish aligned them."
+      },
+      {
+        "description": "Seam-otters swim exactly on the confluence seam, one paw in each water; their fur dries two colors, so boatmen swear there are two kinds. Ink-herons stand so still in the berry-dark shallows that their reflections dry into the bank — one lifted when the wish granted and left its reflection behind."
+      },
+      {
+        "description": "The ferry-bell is rung by anyone who needs to cross the seam without wetting both springs, or who doubts the bridge will hold them. Load-bells under the deck rang light under the re-sweetened BaneWAP."
+      },
+      {
+        "description": "The rail-pins hold the bridge's small news; BoneWAP posted both receipts there after the market stone's oath-scale weighed the two slices equal, and oath-moths settled one to each."
+      },
+      {
+        "description": "Every clear dusk the ferrymen chalk <river ~ moon> on the landing slate — not to make the moonrun, which the river makes itself, but so no stranger mistakes a passage for a place to stop. The Genie left his bottle-desk folded on the rail, its drawer for Thursdays empty."
       }
     ]
   }

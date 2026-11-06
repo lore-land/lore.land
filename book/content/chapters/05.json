@@ -83,7 +83,13 @@
         "hairline",
         "egg",
         "wish",
-        "stone"
+        "stone",
+        "hum-crickets",
+        "hum-cricket",
+        "crickets",
+        "crack-gauge",
+        "calipers",
+        "door-rule"
       ]
     },
     {
@@ -95,7 +101,10 @@
         "melody",
         "hum",
         "note",
-        "tuning fork"
+        "tuning fork",
+        "pitch",
+        "semitones",
+        "bell"
       ]
     }
   ],
@@ -113,12 +122,14 @@
       "scene": {
         "vantage": "on a counting-room stool's crossbar, chin at cedar desk height, where the vellum spread fills the field of view",
         "light": "wide calm afternoon sunlight through clean arched windows; on the sunlit page, one hairline of pure dark that light refuses to cross",
-        "scent": "ink dust, linseed floor wax, cold tea gone glassy in a porcelain cup, stone kept excessively quiet",
+        "scent": "ink dust, linseed floor wax, cold tea gone glassy in a porcelain cup, stone kept excessively quiet, seed-cake crumbs",
         "edges": [
           "the master ledger lies open to a spread balanced to the penny, except for the hairline fracture",
           "the crack runs off the vellum, across the desk grain, down the carved leg, and into the slate floor",
           "two claim-slips hang pinned above the split — one smelling of shared kitchens, one of a shut vault",
-          "the Genie stands at the window with his back to the room, listening to the floor"
+          "the Genie stands at the window with his back to the room, listening to the floor",
+          "chalk-pale hum-crickets at the lip of the crack, keeping its pitch",
+          "felt hush-slippers in a row by the door"
         ],
         "hint": "sunlit counting room from low at the desk edge; an open ledger with a single hairline crack of darkness running across page, desk, and wall; two pinned claim-slips fluttering without wind; a tall quiet figure at the window; warm paper tones split by one thin dark seam"
       },
@@ -133,9 +144,19 @@
             },
             {
               "type": "text",
-              "text": " running the crack like a held breath. Two slips hung over the desk, pinned with silver bodkins, and both of them were pulling. One was the boon-claim: the wish belongs to whoever found it, and through her to everyone. The other had arrived at first light in Mr. BaneWAP's crust-brown envelope, sealed twice and smelling faintly of sour pastry: the wish is a thing, and things belong to whoever can hold them longest."
+              "text": " running the crack like a held breath."
             }
           ],
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "It was not only the crack that hummed. Down in the dark of it lived the hum-crickets, chalk-pale and no longer than a barleycorn, and they kept its pitch the way a choir keeps a note for a singer who has stepped out. The clerks fed them seed-cake crumbs at elevenses and crossed the floor in felt hush-slippers. A cricket that went silent, they said, meant somebody near the floor was lying.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Two slips hung over the desk, pinned with silver bodkins, and both of them were pulling. One was the boon-claim: the wish belongs to whoever found it, and through her to everyone. The other had arrived at first light in Mr. BaneWAP's crust-brown envelope, sealed twice and smelling faintly of sour pastry: the wish is a thing, and things belong to whoever can hold them longest.",
           "lean": "bane"
         },
         {
@@ -144,7 +165,15 @@
         },
         {
           "type": "paragraph",
-          "text": "The silence in the room was not peaceful. It was the silence of two wants holding the same breath, kept only because nobody had dared to let it go."
+          "text": "Boof lay down beside the crack to hear it better, chin on the cold slate. Every cricket in the hall stopped at once. So did the pens. Three clerks found themselves looking very hard at a dog. Boof looked back, owl-quiet. She had only lain down."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Genie did not turn from the window. “Lying has two meanings,” he said. “Nobody has ever told the crickets which.” Boof stood. The hum came back as if it had never left."
+        },
+        {
+          "type": "paragraph",
+          "text": "Under the hum, the silence in the room was not peaceful. It was the silence of two wants holding the same breath, kept only because nobody had dared to let it go."
         }
       ]
     },
@@ -165,7 +194,11 @@
         {
           "type": "paragraph",
           "data-content_id": "song-verse",
-          "text": "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth. She shifted her paw. The crack ran on beneath it. Whatever the slips said, the floor could not keep both promises."
+          "text": "The song climbed the rafters by a narrow stair of notes. One rose for a wish shared out; one held for a wish locked away. Together they made a sound Boof could feel in her teeth, and down in the crack the crickets took the lower note and held it, patient as hens on a cold clutch."
+        },
+        {
+          "type": "paragraph",
+          "text": "She shifted her paw. The crack ran on beneath it, under a pounce-pot and a dropped quill. Whatever the slips said, the floor could not keep both promises."
         }
       ]
     },
@@ -191,7 +224,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The tuning fork hummed against the split desk. The wood, not the Fool, was singing — a very old melody, in a key nobody had budgeted for."
+          "text": "The tuning fork hummed against the split desk. The wood, not the Fool, was singing — a very old melody, in a key nobody had budgeted for. Dust stood still in the light to listen."
         }
       ]
     },
@@ -211,15 +244,25 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you, and somebody else catches the weight.” Long ago, someone had wished grandly here. Gold, perhaps. A throne. Nobody remembered the wish. The crack remembered its weight. “Still paying,” he said. Under his slipper, the note went on."
+          "text": "Where the crack left the desk leg for the floor, the clerks had set the crack-gauge: brass calipers as long as a forearm, one jaw on each lip of slate, a small bell at the hinge. It measured in notes, not inches. Every morning the oldest clerk took the note with a fingernail and wrote it in the margin. F at the thaw. F sharp by lambing. When Boof's tail brushed the calipers, the bell gave a note nobody had written yet.",
+          "lean": "bone"
         },
         {
           "type": "paragraph",
-          "text": "The egg did not pick a side. A wish keeps its own law; it is not there to settle other people's wanting. Its heat kept the hairline open and honest, so no one could smooth the seam over with wax and a confident voice and call the quarrel finished."
+          "text": "The Genie stood astride the crack. “A cart rolling. Rain falling. A Thursday on its way. A wish can turn those.” He nudged a loose edge of slate. “Ask for a little turn, pay a little. Ask the world to swing around you, and somebody else catches the weight.”"
         },
         {
           "type": "paragraph",
-          "text": "Boof left both slips where they hung, pulling at nothing, and turned toward the western gate — toward the city that had learned to turn its old breakages into light. A little dried ink clung to the edge of the desk."
+          "text": "He bent to the gauge and read it the way he read a price tag. “There's the interest,” he said. “In semitones.” Long ago, someone had wished grandly here. Gold, perhaps. A throne. Nobody remembered the wish. The crack remembered its weight. “Still paying,” he said. Under his slipper, the note went on.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "The egg did not pick a side. A wish keeps its own law; it is not there to settle other people's wanting. Its heat kept the hairline open and honest, so no one could smooth the seam over with wax and a confident voice and call the quarrel finished. The crickets edged up the crack to sit near it, the way old men edge their chairs toward a stove."
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof left both slips where they hung, pulling at nothing, and turned toward the duskward gate — toward the city that had learned to turn its old breakages into light. A little dried ink clung to the edge of the desk."
         },
         {
           "type": "paragraph",
@@ -227,7 +270,11 @@
         },
         {
           "type": "paragraph",
-          "text": "She could follow it farther than she could see. Somewhere beyond the wall, a cup began to rattle."
+          "text": "On the window sill lay a carpenter's door-rule, boxwood and brass, folded shut on a size that matched no door in the hall. Nobody claimed it. It had the look of a thing set down mid-measure."
+        },
+        {
+          "type": "paragraph",
+          "text": "She could follow the crack farther than she could see. Somewhere beyond the wall, a cup began to rattle."
         }
       ],
       "climate": {
@@ -243,7 +290,9 @@
           "two claims over one ledger",
           "the crack is a song-shaped hairline of old correction-debt",
           "the egg warms the fracture, does not close it",
-          "neither claim posts"
+          "neither claim posts",
+          "the crack-gauge's brass calipers straddling the seam, a small bell at the hinge",
+          "a carpenter's door-rule folded on the window sill, set to no door in the room"
         ],
         "hint": "quiet counting room, hairline gold rift through stone and paper, two claim-slips that cannot both post, a coal-dark cracked egg warming the fracture from below while a tall figure lectures over the seam"
       }
@@ -257,7 +306,8 @@
         "edges": [
           "the counting house door remains ajar behind her",
           "the sound of the humming ledger fades into the busy noise of the avenue",
-          "ahead, the skyline of Bonk City glints with glass lantern towers"
+          "ahead, the skyline of Bonk City glints with glass lantern towers",
+          "a knife-grinder's wheel throwing sparks at the avenue's edge"
         ],
         "hint": "a working dog carrying a glowing egg emerging from an old stone doorway onto a wide paved road leading toward a city of gleaming glass lantern spires"
       },
@@ -268,7 +318,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Out in the avenue, the thin song faded into footfall, wheel-rattle, evening trade. Boof kept the egg close. Ahead, Bonk City's windows caught the last light: old impacts melted into glass, a skyline of things that had been struck and still let someone see through."
+          "text": "At the archway she looked back once. The door stood ajar on a gold, still room, and from under its floor came the hum, a little higher than it had been that morning."
+        },
+        {
+          "type": "paragraph",
+          "text": "Out in the avenue, the thin song faded into footfall, wheel-rattle, evening trade: a knife-grinder's sparks, a chestnut drum, a coal cart backing into a lane with a great deal of advice. Boof kept the egg close. Ahead, Bonk City's windows caught the last light: old impacts melted into glass, a skyline of things that had been struck and still let someone see through."
         }
       ]
     }
@@ -286,6 +340,15 @@
       },
       {
         "description": "The egg warms the crack and leaves it honest. A wish does not reconcile other people's wanting."
+      },
+      {
+        "description": "Hum-crickets live in the Quiet Rift's crack and keep its pitch. They go silent when someone lies near the floor — in either sense; nobody has ever told them which."
+      },
+      {
+        "description": "The crack-gauge, brass calipers set across the rift, measures in notes, not inches; each morning a clerk takes the note. With the egg in the hall it rang a note nobody had written yet — the old wish's interest, in semitones."
+      },
+      {
+        "description": "A carpenter's door-rule lies folded on the hall's sill, shut on a size that fits no door in the room. Nobody has claimed it."
       }
     ]
   }

@@ -49,13 +49,13 @@
     handle: "section/04"
     type: "section"
     title: "The Hat Above the Furrow"
-    excerpt: "The warm furrow was steaming when she reached it. It always steamed now. That was the wish: one furrow kept open, always, for whatever arrived next. The frost drew back from it in a soft margin, and beneath it the ant..."
+    excerpt: "The warm furrow was steaming when she reached it. It always steamed now. That was the wish: one furrow kept open, always, for whatever arrived next — an open brace in the field, with no close. The frost drew back from..."
     route: ^[chapter/14/s04]{open}
   }
   s05: <
     handle: "custom-boof/05"
     type: "custom-boof"
-    excerpt: "She went to see what he was looking at, because that is what a dog does with somebody else's attention. It was an ant. One ant, at the very end of the ruled street, holding up a torch that had gone out. It held it the..."
+    excerpt: "She went to see what he was looking at, because that is what a dog does with somebody else's attention. It was an ant. One ant, at the very end of the ruled street, holding up a torch that had gone out — a splinter of..."
     route: ^[chapter/14/s05]{open}
   >
   s06: [
@@ -117,6 +117,9 @@
     "He does not walk; he is in one place and then the next. He goes straight where the lane bends, and a hedge he passes through keeps a rectangular gap."
     "Bonk City's crier announces the Feast of the Uneven Slice: at the Turning of the Year, the one destined to spill exactly one pie will come to the table. Households that received a strange..."
     "The crier takes him for a poor scarecrow until he looks at her. She writes down that she saw a hat, and the ink stays."
+    "Unkept creatures walk only on days nobody keeps. Hob-deer no taller than a boot graze between the frost-ruts, unafraid, because nobody has ever been out on such a day to teach them to run..."
+    "Near the figure, the land's wonders borrow his geometry for a moment: a skein of jazz-geese falls into a perfect square, three by three, and honks once in time; the dried reflections of i..."
+    "The lag-stag's prints press into the grove's moss beside Boof's own, a beat late. It has never before walked beside anyone."
   ]
 }
 
