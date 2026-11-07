@@ -195,6 +195,12 @@
     increment: "six bindings on a shelf of spines in the nook — rag, Bonk glass, salt flat, hearth clay, slate & chalk, starfield — each restating the base tokens and dressing the section cards in its material; the lamp room's colours become --room-* variables so a dark binding brings its own night; ?binding= binds one visit"
     done_when: "every binding reads at AA on its own paper; light bindings yield to lamplight; dark bindings keep their night at any light; the head script binds before first paint; a new binding is one palette block in bindings.css and one entry in BINDINGS"
   }
+  ^lesson[L26]{
+    #name: "the look is told, not set"
+    prerequisites: [L24, L25]
+    increment: "the home page's theme leaves the top bar for a scene: the binder at the folio house by the parcel gate keeps six covers on pegs, and one sentence holds every choice — She binds it in [rag], sets the lamp [low, at a slant], and leaves the shutters [open] — each phrase turned like a telling, each choice answered in her own words; the top bar only says what the copy is bound in"
+    done_when: "no settings form on any page with the home top bar; the cover chosen at the folio house binds the chapters and a cover chosen in a chapter's nook binds the home page (one book, one binding); the home page wears its cover before first paint"
+  }
   ^lesson[L18]{
     #name: "an engine for the next book"
     prerequisites: [L08, L13]
@@ -251,6 +257,7 @@
   i5: { lessons: [L11, L12], release: "next", note: "snapshot faces and kind signatures" }
   i5b: { lessons: [L19, L20, L21, L22], release: "2026_11_06.B", note: "at the table; hold the light; frame it; the sayings" }
   i5c: { lessons: [L23, L24, L25], release: "2026_11_06.D", note: "begin again; other tellings and the hour dial; bindings; the page and rail set as a pair on wide screens" }
+  i5d: { lessons: [L26], release: "2026_11_06.E", note: "the binder at the folio house: the home page's look as a scene" }
   i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
 ]
 
@@ -260,5 +267,5 @@
   "Which wonders, if any, belong to Book Two alone?"
   "Can a reader's kept combines become a folio?"
   "Should a telling heard every way unlock anything beyond its double underline?"
-  "Does the home page take the reader's binding, or keep its own paper?"
+  "Does the binder have a name, and does she appear in a chapter?"
 ]

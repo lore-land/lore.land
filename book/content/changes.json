@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_06.E",
+      "date": "2026-11-06",
+      "notes": [
+        "The home page's look has moved out of the top bar and into the story: at the folio house by the parcel gate, the binder keeps six covers on pegs. Tap the underlined words in her sentence to change the cover, the lamp and the shutters.",
+        "One book, one binding: the cover you choose at the folio house binds every chapter, and a cover chosen in a chapter's Reading nook binds the home page."
+      ]
+    },
+    {
       "release": "2026_11_06.D",
       "date": "2026-11-06",
       "notes": [

@@ -26,13 +26,15 @@ import {
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
 import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_06.D';
+import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.E';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
 const WONDER_KEY = 'lore.monument.wonder';
 const LIGHTING_KEY = 'lore.monument.lighting';
 
-const THEMES = ['paper', 'ember', 'night'];
+// The covers on the binder's pegs (bindery.mjs): paper is rag, night is night cloth.
+const THEMES = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
 const WONDERS = ['quiet', 'rich', 'deep'];
 const LIGHTINGS = ['still', 'raking', 'live'];
 
@@ -135,109 +137,6 @@ function applyClimate({ theme, wonder, lighting }) {
     root.style.setProperty('--light-y', '8');
     root.style.setProperty('--light-strength', wonder === 'deep' ? '0.82' : wonder === 'quiet' ? '0.48' : '0.66');
   }
-}
-
-function buildSegment(name, label, options, current) {
-  const field = document.createElement('div');
-  field.className = 'climate-field';
-  field.dataset.climateField = name;
-
-  const legend = document.createElement('span');
-  legend.className = 'climate-legend';
-  legend.textContent = label;
-  field.appendChild(legend);
-
-  const group = document.createElement('div');
-  group.className = 'climate-segment';
-  group.setAttribute('role', 'group');
-  group.setAttribute('aria-label', label);
-
-  options.forEach((option) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'climate-option';
-    button.dataset.value = option;
-    button.textContent = option;
-    button.setAttribute('aria-pressed', option === current ? 'true' : 'false');
-    group.appendChild(button);
-  });
-
-  field.appendChild(group);
-  return field;
-}
-
-function ensureClimateToggle(state, announce) {
-  const topbar = document.querySelector('.hub-topbar');
-  if (!topbar) {
-    return null;
-  }
-
-  let form = topbar.querySelector('.monument-climate');
-  if (form) {
-    return form;
-  }
-
-  form = document.createElement('form');
-  form.className = 'monument-climate';
-  form.setAttribute('aria-label', 'Reading climate');
-  form.addEventListener('submit', (event) => event.preventDefault());
-
-  form.append(
-    buildSegment('theme', 'Theme', THEMES, state.theme),
-    buildSegment('wonder', 'Depth', WONDERS, state.wonder),
-    buildSegment('lighting', 'Light', LIGHTINGS, state.lighting)
-  );
-
-  form.addEventListener('click', (event) => {
-    const button = event.target.closest('.climate-option');
-    if (!button) {
-      return;
-    }
-    const field = button.closest('.climate-field');
-    if (!field) {
-      return;
-    }
-    const name = field.dataset.climateField;
-    const value = button.dataset.value;
-    if (!name || !value) {
-      return;
-    }
-
-    field.querySelectorAll('.climate-option').forEach((item) => {
-      item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
-    });
-
-    if (name === 'theme') {
-      state.theme = value;
-      writePref(THEME_KEY, value);
-    } else if (name === 'wonder') {
-      state.wonder = value;
-      writePref(WONDER_KEY, value);
-    } else if (name === 'lighting') {
-      state.lighting = value;
-      writePref(LIGHTING_KEY, value);
-      if (value === 'live') {
-        state._bindLivePointer?.();
-      } else {
-        state._unbindLivePointer?.();
-      }
-    }
-
-    withViewTransition(() => applyClimate(state));
-    if (announce) {
-      announce(`Climate: ${state.theme} theme, ${state.wonder} depth, ${state.lighting} light.`);
-    }
-  });
-
-  // Place after nav when present
-  const nav = topbar.querySelector('.hub-nav');
-  if (nav) {
-    nav.insertAdjacentElement('afterend', form);
-  } else {
-    topbar.appendChild(form);
-  }
-
-  return form;
 }
 
 function initDynamicLighting(state) {
@@ -589,14 +488,31 @@ function initMonumentEntrance() {
   const destroyArtifactCircuit = initArtifactCircuit();
 
   const state = {
-    theme: readPref(THEME_KEY, THEMES, document.documentElement.dataset.theme || 'paper'),
+    // A cover chosen in a chapter's nook binds this page too, until one is chosen here.
+    theme: readPref(THEME_KEY, THEMES, coverForBinding(nookBinding())?.theme || document.documentElement.dataset.theme || 'paper'),
     wonder: readPref(WONDER_KEY, WONDERS, document.documentElement.dataset.wonder || 'rich'),
     lighting: readPref(LIGHTING_KEY, LIGHTINGS, document.documentElement.dataset.lighting || 'raking')
   };
 
   applyClimate(state);
-  ensureClimateToggle(state, announce);
   const destroyLighting = initDynamicLighting(state);
+  // The look is a scene, not a setting: the binder at the folio house (bindery.mjs).
+  const destroyBindery = initBindery({
+    state,
+    announce,
+    choose: (name, value) => {
+      state[name] = value;
+      writePref({ theme: THEME_KEY, wonder: WONDER_KEY, lighting: LIGHTING_KEY }[name], value);
+      if (name === 'lighting') {
+        if (value === 'live') {
+          state._bindLivePointer?.();
+        } else {
+          state._unbindLivePointer?.();
+        }
+      }
+      withViewTransition(() => applyClimate(state));
+    }
+  });
   const destroyMenu = initHubMenu({ announce });
   const destroyScrollChrome = initScrollChrome({ mode: 'hub' });
   const destroyTemporal = initHubTemporalClimate();
@@ -620,6 +536,7 @@ function initMonumentEntrance() {
     if (destroyLighting) {
       destroyLighting();
     }
+    destroyBindery();
     if (destroyMenu) {
       destroyMenu();
     }

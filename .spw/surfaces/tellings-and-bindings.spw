@@ -1,7 +1,7 @@
 # Other tellings, bindings, beginning again — the reader's hands on the book
 # Runtime: book/scripts/modules/{tellings,living,begin-again,reading-nook}.mjs
 # Styles: book/styles/chapter/reading.css (Other tellings), book/styles/chapter/bindings.css, book/styles/components/begin-again.css
-# Plan: PLAN.E.spw lessons L23 (begin again), L24 (other tellings), L25 (bindings)
+# Plan: PLAN.E.spw lessons L23 (begin again), L24 (other tellings), L25 (bindings), L26 (the binder)
 #>tellings_and_bindings
 #:surface #!tellings #!bindings #!again
 
@@ -34,6 +34,17 @@
   starfield: "Starfield — night-blue cloth stamped with pale stars, for reading outdoors"
   room: "a dark binding sets --room-floor, --room-field, --room-page, --room-heading, --room-section, --room-chip, --room-link, --room-mark; the lamp room's rules read them with the lamp's own values as fallback"
   new_binding_rule: "one palette block in bindings.css (the base tokens restated, then one dressing for the cards), one entry in BINDINGS (id, spine, name, says, paper, ink, band, tone, chrome), one entry in the chapter template's head script"
+}
+
+^"the_binder"{
+  .law: "The look is told, not set. A theme is a cover someone in the land puts on your copy."
+  scene: "home page, #bindery (home/bindery.mjs, book/styles/home/bindery.css): at the folio house by the parcel gate, the binder keeps this book unbound on her bench and six covers on pegs above it"
+  sentence: "She binds it in [cover], sets the lamp [down on the bench | low, at a slant | in your hand], and leaves the shutters [drawn | open | off their hinges]. Each bracket is a phrase to turn, like a telling; the covers also come down off their pegs by hand"
+  answers: "the binder answers each choice in one line of her own (rag was a miller's shirt; Bonk glass remembers every knock; salt is made for squinting; oven clay is still warm; chalk is cheaper than oak; night cloth reads best under the real thing)"
+  covers: "paper = rag, glass, salt, ember = oven clay, slate, night = night cloth (data-theme on the home pages; data-binding in chapters)"
+  one_binding: "a cover chosen at the folio house binds the chapters (lore.nook.v1 binding); a cover chosen in a chapter's nook binds the home pages (lore.monument.theme)"
+  top_bar: "no settings in the top bar: it says 'Bound in salt crust' and leads to the binder"
+  ?open: ["Does the binder have a name, and does she appear in a chapter?"]
 }
 
 ^"begin_again"{

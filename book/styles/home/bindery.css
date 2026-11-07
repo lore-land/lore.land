@@ -1,0 +1,359 @@
+/*
+ * bindery.css — the binder at the folio house (home/bindery.mjs; PLAN.E L26).
+ *
+ * The home page's look, told as a scene: six covers hang on pegs above the
+ * binder's bench, and one sentence holds every choice — cover, lamp,
+ * shutters — as phrases a reader turns. Serif is the story; the only mono
+ * is the eyebrow and the "2 of 6" tag. Colours are the page's own --hub-*
+ * tokens, so the scene wears whichever cover it is showing.
+ */
+
+body[data-surface='monument'] .bindery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+  border: 1px solid var(--hub-line);
+  border-radius: 1.1rem;
+  background:
+    radial-gradient(60% 80% at 92% 0%, color-mix(in srgb, var(--hub-gold) 12%, transparent), transparent 70%),
+    var(--hub-panel);
+}
+
+@media (min-width: 60rem) {
+  body[data-surface='monument'] .bindery {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+
+body[data-surface='monument'] .bindery-copy h2 {
+  margin: 0.2rem 0 0.7rem;
+  max-width: 18ch;
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  text-transform: none;
+}
+
+.bindery-copy p:not(.hub-eyebrow) {
+  max-width: 34rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.6;
+}
+
+.bindery-whisper {
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+/* The pegs: a rail of wood, a cover on each peg, swaying a little. */
+.bindery-bench {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.bindery-pegs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.35rem, 1.2vw, 0.8rem);
+  padding: 1.1rem 0.2rem 0;
+  border-top: 5px solid color-mix(in srgb, var(--hub-gold) 40%, #6b4a2a);
+  border-radius: 2px;
+}
+
+.bindery-cover {
+  --sway: 0deg;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--hub-ink);
+  cursor: pointer;
+  transform-origin: 50% -1.1rem;
+  transform: rotate(var(--sway));
+  transition: transform 420ms cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+.bindery-cover:nth-child(1) { --sway: -1.5deg; }
+.bindery-cover:nth-child(2) { --sway: 1deg; }
+.bindery-cover:nth-child(3) { --sway: -0.5deg; }
+.bindery-cover:nth-child(4) { --sway: 1.5deg; }
+.bindery-cover:nth-child(5) { --sway: -1deg; }
+.bindery-cover:nth-child(6) { --sway: 0.5deg; }
+
+/* The peg, and the cord the cover hangs by. */
+.bindery-cover::before {
+  content: '';
+  position: absolute;
+  top: -1.1rem;
+  left: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--hub-gold) 55%, #4a3018);
+  transform: translate(-50%, -40%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.bindery-cover::after {
+  content: '';
+  position: absolute;
+  top: -0.9rem;
+  left: 50%;
+  width: 1px;
+  height: 0.9rem;
+  background: color-mix(in srgb, var(--hub-ink) 35%, transparent);
+}
+
+.bindery-cover-face {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 3px 6px 6px 3px;
+  box-shadow:
+    inset 5px 0 0 rgba(0, 0, 0, 0.14),
+    inset 6px 0 0 rgba(255, 255, 255, 0.18),
+    0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.bindery-cover-name {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: clamp(0.72rem, 1.4vw, 0.86rem);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.bindery-cover-from {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.68rem;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--hub-muted);
+  text-align: center;
+}
+
+.bindery-cover:hover,
+.bindery-cover:focus-visible {
+  outline: none;
+  transform: rotate(0deg) translateY(-2px);
+}
+
+.bindery-cover:focus-visible .bindery-cover-face {
+  box-shadow: 0 0 0 2px var(--hub-hearth), 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* Taken down from its peg: on the bench, in hand. */
+.bindery-cover[aria-checked='true'] {
+  transform: rotate(0deg) translateY(0.55rem);
+}
+
+.bindery-cover[aria-checked='true']::after {
+  opacity: 0;
+}
+
+/* The peg stays on the rail when its cover comes down. */
+.bindery-cover[aria-checked='true']::before {
+  transform: translate(-50%, calc(-40% - 0.55rem));
+}
+
+.bindery-cover[aria-checked='true'] .bindery-cover-face {
+  box-shadow:
+    inset 5px 0 0 rgba(0, 0, 0, 0.14),
+    inset 6px 0 0 rgba(255, 255, 255, 0.18),
+    0 10px 18px rgba(0, 0, 0, 0.26),
+    0 0 0 2px var(--hub-gold);
+}
+
+.bindery-cover[aria-checked='true'] .bindery-cover-name {
+  font-weight: 600;
+}
+
+/* The six materials. */
+.bindery-cover[data-value='paper'] .bindery-cover-face {
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 92, 50, 0.07) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120, 92, 50, 0.06) 0 1px, transparent 1px 4px),
+    linear-gradient(160deg, #f7f0e1, #e8dcc3);
+}
+
+.bindery-cover[data-value='glass'] .bindery-cover-face {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.4' stroke-linecap='round' opacity='0.85'%3E%3Cpath d='M66 34 96 8M66 34 94 52M66 34 52 4M66 34 38 60M66 34 84 88M58 26 62 14'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat,
+    linear-gradient(125deg, rgba(255, 255, 255, 0.55) 0 18%, transparent 30% 62%, rgba(255, 255, 255, 0.3) 68%, transparent 76%),
+    linear-gradient(160deg, #cde6dd, #8ec2b5);
+}
+
+.bindery-cover[data-value='salt'] .bindery-cover-face {
+  background:
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(160, 175, 190, 0.7), transparent 2px),
+    radial-gradient(1px 1px at 70% 22%, rgba(160, 175, 190, 0.6), transparent 2px),
+    radial-gradient(1.5px 1.5px at 44% 68%, rgba(160, 175, 190, 0.6), transparent 2px),
+    radial-gradient(1px 1px at 82% 80%, rgba(160, 175, 190, 0.7), transparent 2px),
+    linear-gradient(to bottom, #ffffff 0 58%, #c7cfd6 58% 59%, #eef0ec 59%);
+}
+
+.bindery-cover[data-value='ember'] .bindery-cover-face {
+  background:
+    radial-gradient(circle at 34% 40%, transparent 0 0.4rem, rgba(90, 40, 16, 0.18) 0.42rem 0.48rem, transparent 0.5rem),
+    radial-gradient(circle at 66% 66%, transparent 0 0.35rem, rgba(90, 40, 16, 0.16) 0.37rem 0.42rem, transparent 0.44rem),
+    linear-gradient(170deg, #d58a5c, #a85a2e 70%, #8a4426);
+}
+
+.bindery-cover[data-value='slate'] .bindery-cover-face {
+  background:
+    radial-gradient(70% 40% at 40% 40%, rgba(255, 255, 255, 0.1), transparent 70%),
+    linear-gradient(160deg, #343e40, #222a2c);
+  border: 3px solid #8a6a44;
+}
+
+.bindery-cover[data-value='night'] .bindery-cover-face {
+  background:
+    radial-gradient(1.2px 1.2px at 22% 20%, #fff, transparent 2px),
+    radial-gradient(1px 1px at 70% 32%, #dbe8ff, transparent 2px),
+    radial-gradient(1.4px 1.4px at 48% 64%, #ffeec9, transparent 2px),
+    radial-gradient(1px 1px at 80% 78%, #fff, transparent 2px),
+    radial-gradient(1px 1px at 30% 84%, #cfe0ff, transparent 2px),
+    linear-gradient(170deg, #1b2a4a, #0b1226);
+}
+
+/* The sentence that holds every choice; each choice a phrase to turn. */
+.bindery-sentence {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: clamp(1.08rem, 2vw, 1.3rem);
+  line-height: 1.7;
+}
+
+.bindery-phrase {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0 0.04em;
+  border: 0;
+  border-radius: 0.25em;
+  background: transparent;
+  box-shadow: none;
+  color: var(--hub-accent-deep);
+  cursor: pointer;
+  font: inherit;
+  font-style: italic;
+  text-decoration: underline wavy color-mix(in srgb, var(--hub-gold) 60%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-skip-ink: none;
+}
+
+.bindery-phrase:hover,
+.bindery-phrase:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--hub-gold) 16%, transparent);
+  text-decoration-color: var(--hub-gold);
+}
+
+.bindery-phrase:focus-visible {
+  box-shadow: 0 0 0 2px var(--hub-hearth);
+}
+
+.bindery-phrase::after {
+  content: attr(data-told);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.2em);
+  padding: 0.24em 0.5em;
+  border-radius: 999px;
+  background: var(--hub-gold);
+  color: var(--hub-paper);
+  font: 600 0.6rem/1 var(--font-family-heading, monospace);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.bindery-phrase:is(:hover, :focus-visible, .is-rolling)::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.bindery-phrase-words {
+  display: inline-block;
+}
+
+.bindery-says {
+  min-height: 3.2em;
+  margin: 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid color-mix(in srgb, var(--hub-gold) 55%, transparent);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--hub-ink);
+}
+
+.bindery-foot {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--hub-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bindery-phrase.is-rolling .bindery-phrase-words {
+    animation: bindery-roll 480ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .bindery-says.is-new {
+    animation: bindery-says 520ms ease-out;
+  }
+
+  .bindery-cover:not([aria-checked='true']):hover {
+    animation: bindery-sway 1.2s ease-in-out;
+  }
+}
+
+@keyframes bindery-roll {
+  0% { transform: none; opacity: 1; filter: none; }
+  45% { transform: translateY(-0.45em); opacity: 0; filter: blur(2px); }
+  46% { transform: translateY(0.45em); opacity: 0; }
+  100% { transform: none; opacity: 1; filter: none; }
+}
+
+@keyframes bindery-says {
+  from { opacity: 0; transform: translateX(-4px); }
+}
+
+@keyframes bindery-sway {
+  0%, 100% { transform: rotate(0deg) translateY(-2px); }
+  30% { transform: rotate(2.5deg) translateY(-2px); }
+  65% { transform: rotate(-1.5deg) translateY(-2px); }
+}
+
+/* A phone keeps one rail of six; the covers say only what they are. */
+@media (max-width: 34rem) {
+  .bindery-cover-from {
+    display: none;
+  }
+
+  .bindery-cover-name {
+    font-size: 0.64rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bindery-cover {
+    transition: none;
+  }
+}

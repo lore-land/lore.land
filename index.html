@@ -54,6 +54,15 @@
       const smoothStyle = eggStyle === 'thorn' ? 'amber' : eggStyle;
       if (['stone', 'opal', 'amber'].includes(smoothStyle)) document.documentElement.dataset.eggStyle = smoothStyle;
       if (eggStyle === 'thorn') localStorage.setItem('lore-egg-style-v1', 'amber');
+      /* The cover the binder put on this copy (home/bindery.mjs), before first paint:
+         chosen here, else the binding a chapter's Reading nook chose. */
+      const covers = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
+      let cover = localStorage.getItem('lore.monument.theme');
+      if (!covers.includes(cover)) {
+        const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+        cover = { glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' }[nook.binding] || '';
+      }
+      if (cover) document.documentElement.dataset.theme = cover;
     } catch { /* A blocked storage shelf leaves the default appearance. */ }
   </script>
 
@@ -63,15 +72,16 @@
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_09_27.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_09_27.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_09_27.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_05.A&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_06.E&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_09_27.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.C&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_09_27.C&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_06.D"></script>
-  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_05.A">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_06.E"></script>
+  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_06.E">
   <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_05.C">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
+  <link rel="stylesheet" href="/book/styles/home/bindery.css?v=2026_11_06.E">
   <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_11_05.B"></script>
   <script defer type="module" src="/book/scripts/home/play.mjs?v=2026_11_05.B"></script>
   <script defer type="module" src="/book/scripts/home/egg-style.mjs?v=2026_11_05.B"></script>
@@ -93,6 +103,7 @@
         <a href="/folios/">Folios</a>
         <a href="/zine/">Broadside</a>
       </nav>
+      <a class="bindery-mark" href="#bindery" title="How your copy is bound"><span class="bindery-mark-lede">Bound in</span> <span class="bindery-mark-words">rag</span></a>
   </header>
 
   <div class="hub-shell">
@@ -196,6 +207,32 @@
             <p class="serial-recap-doors"><a href="/book/chapter/01/">Read Book One from the beginning →</a> <a href="/book/chapter/14/">Go on to Book Two →</a></p>
           </div>
         </details>
+      </section>
+
+      <section class="bindery" id="bindery" data-region="bindery" data-cover="paper" aria-labelledby="bindery-title">
+        <div class="bindery-copy">
+          <p class="hub-eyebrow">At the folio house · how your copy is bound</p>
+          <h2 id="bindery-title">Bound in what the land had to hand</h2>
+          <p>Nobody in Boon.land keeps a book in one cover for long. At the folio house by the parcel gate, the binder keeps this one unbound on her bench, its pages squared and waiting, and six covers on pegs above it: rag from the mill, a pane of Bonk glass, a board of salt crust, a slab of oven clay, a schoolroom slate, a length of night-blue cloth.</p>
+          <p class="bindery-whisper">The pages never change. Only what holds them.</p>
+        </div>
+        <div class="bindery-bench">
+          <div class="bindery-pegs" role="radiogroup" aria-label="Cover">
+            <button type="button" class="bindery-cover" role="radio" data-value="paper" data-binding="rag" aria-checked="true"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Rag</span><span class="bindery-cover-from">from the mill</span></button>
+            <button type="button" class="bindery-cover" role="radio" data-value="glass" data-binding="glass" aria-checked="false" tabindex="-1"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Bonk glass</span><span class="bindery-cover-from">from Bonk City</span></button>
+            <button type="button" class="bindery-cover" role="radio" data-value="salt" data-binding="salt" aria-checked="false" tabindex="-1"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Salt crust</span><span class="bindery-cover-from">off the flats</span></button>
+            <button type="button" class="bindery-cover" role="radio" data-value="ember" data-binding="ember" aria-checked="false" tabindex="-1"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Oven clay</span><span class="bindery-cover-from">from the oven wall</span></button>
+            <button type="button" class="bindery-cover" role="radio" data-value="slate" data-binding="slate" aria-checked="false" tabindex="-1"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Slate</span><span class="bindery-cover-from">from the schoolroom</span></button>
+            <button type="button" class="bindery-cover" role="radio" data-value="night" data-binding="starfield" aria-checked="false" tabindex="-1"><span class="bindery-cover-face" aria-hidden="true"></span><span class="bindery-cover-name">Night cloth</span><span class="bindery-cover-from">off the loom at dusk</span></button>
+          </div>
+          <p class="bindery-sentence">
+            She binds it in <button type="button" class="bindery-phrase" data-choice="theme"><span class="bindery-phrase-words">rag</span></button>,
+            sets the lamp <button type="button" class="bindery-phrase" data-choice="lighting"><span class="bindery-phrase-words">low, at a slant</span></button>,
+            and leaves the shutters <button type="button" class="bindery-phrase" data-choice="wonder"><span class="bindery-phrase-words">open</span></button>.
+          </p>
+          <p class="bindery-says" aria-live="polite">Rag, then. It was a miller’s shirt once; it has heard worse than anything in here.</p>
+          <p class="bindery-foot">Tap an underlined phrase to change how she binds it. Every chapter keeps the cover you choose, and the same six hang in each chapter’s Reading nook.</p>
+        </div>
       </section>
 
       <section class="wonder-cabinet" id="curiosities" aria-labelledby="curiosities-title">
@@ -307,7 +344,7 @@
         <ol class="hub-steps">
           <li>
             <strong>Tune the room.</strong>
-            Daylight, dusk or lamplight; a nook with a window; text as large as you like. Pinch the prose on a phone and it re-sets itself.
+            Daylight, dusk or lamplight; a nook with a window; text as large as you like; and whatever cover <a href="#bindery">the binder</a> puts on it. Pinch the prose on a phone and it re-sets itself.
           </li>
           <li>
             <strong>Choose a lens.</strong>

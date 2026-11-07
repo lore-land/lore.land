@@ -20,7 +20,7 @@ import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
 import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.D';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.D';
 import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_06.D';
-import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.D';
+import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.E';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
@@ -462,6 +462,8 @@ export async function initScriptoriumDesk() {
         say(op, el('p', {}, `The room will be ${value === 'lamp' ? 'lamplit' : value === 'dusk' ? 'at dusk' : 'in daylight'} when you next open a chapter.`));
       } else if (handle === 'binding' && BINDINGS.some((binding) => binding.id === value)) {
         writeJSON(NOOK_KEY, { ...nook, binding: value });
+        // One book, one binding: the home page wears it too (home/bindery.mjs).
+        try { window.localStorage.setItem('lore.monument.theme', { rag: 'paper', starfield: 'night' }[value] || value); } catch { /* home keeps its own */ }
         const binding = BINDINGS.find((entry) => entry.id === value);
         say(op, el('p', {}, `The book will be bound in ${binding.name} when you next open a chapter. ${binding.says}`));
       } else if (['cozy', 'texture'].includes(handle) && Number.isFinite(Number(value))) {

@@ -279,7 +279,7 @@
       background: color-mix(in srgb, var(--hub-accent) 16%, transparent);
     }
 
-    .hub-topbar--enhanced .monument-climate {
+    .hub-topbar--enhanced .bindery-mark {
       order: 4;
     }
   }
@@ -2447,8 +2447,8 @@ body[data-surface='monument'][data-theme='ember'] {
   background-color: var(--hub-paper);
 }
 
-html[data-theme='night'] body[data-surface='monument'],
-body[data-surface='monument'][data-theme='night'] {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'],
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) {
   --hub-ink: #e6eeff;
   --hub-muted: #b7c6ed;
   --hub-paper: #11182a;
@@ -2466,36 +2466,92 @@ body[data-surface='monument'][data-theme='night'] {
   background-blend-mode: screen, soft-light, soft-light, screen, soft-light;
 }
 
-html[data-theme='night'] body[data-surface='monument'] .hub-topbar,
-body[data-surface='monument'][data-theme='night'] .hub-topbar {
+/* The binder's other covers (home/bindery.mjs; chapters: chapter/bindings.css).
+ * Paper is rag, night is night cloth; these three complete the six pegs. */
+
+html[data-theme='glass'] body[data-surface='monument'],
+body[data-surface='monument'][data-theme='glass'] {
+  --hub-ink: #10302b;
+  --hub-muted: #3f615b;
+  --hub-paper: #dbe8e2;
+  --hub-paper-deep: #cadcd3;
+  --hub-panel: color-mix(in srgb, #f1f8f5 92%, transparent);
+  --hub-line: color-mix(in srgb, #1d6a61 24%, transparent);
+  --hub-accent: #1d6a61;
+  --hub-accent-deep: #0e4741;
+  --hub-gold: #a7802c;
+  --hub-hearth: #a3501f;
+  --hub-berry: #6a3d63;
+  --hub-night: #0e2b28;
+  color: var(--hub-ink);
+  background-color: var(--hub-paper);
+}
+
+html[data-theme='salt'] body[data-surface='monument'],
+body[data-surface='monument'][data-theme='salt'] {
+  --hub-ink: #222b35;
+  --hub-muted: #56616d;
+  --hub-paper: #f4f5f2;
+  --hub-paper-deep: #e6e9e6;
+  --hub-panel: color-mix(in srgb, #ffffff 92%, transparent);
+  --hub-line: color-mix(in srgb, #2f5070 16%, transparent);
+  --hub-accent: #2f6187;
+  --hub-accent-deep: #234a69;
+  --hub-gold: #c0714b;
+  --hub-hearth: #b0603a;
+  --hub-berry: #6b4a78;
+  --hub-night: #1d2a38;
+  color: var(--hub-ink);
+  background-color: var(--hub-paper);
+}
+
+/* Slate shares night's dark-room rules above; its own chalk palette wins here. */
+html[data-theme='slate'] body[data-surface='monument'],
+body[data-surface='monument'][data-theme='slate'] {
+  --hub-ink: #ebe8de;
+  --hub-muted: #b8b5aa;
+  --hub-paper: #1e2527;
+  --hub-paper-deep: #161b1c;
+  --hub-panel: color-mix(in srgb, #283133 92%, transparent);
+  --hub-line: color-mix(in srgb, #ebe8de 18%, transparent);
+  --hub-accent: #f0d46a;
+  --hub-accent-deep: #f6e6a2;
+  --hub-gold: #f0d46a;
+  --hub-hearth: #f2a38a;
+  --hub-berry: #c9a6e0;
+  --hub-night: #0f1314;
+}
+
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-topbar,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-topbar {
   background: color-mix(in srgb, var(--hub-paper) 88%, #000);
   border-bottom-color: color-mix(in srgb, var(--hub-accent) 24%, transparent);
 }
 
-html[data-theme='night'] body[data-surface='monument'] .hub-hero h1,
-body[data-surface='monument'][data-theme='night'] .hub-hero h1 {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-hero h1,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-hero h1 {
   filter: drop-shadow(0 0 18px color-mix(in srgb, var(--hub-accent) 35%, transparent));
 }
 
-html[data-theme='night'] body[data-surface='monument'] .hub-cta-primary,
-body[data-surface='monument'][data-theme='night'] .hub-cta-primary {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-cta-primary,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-cta-primary {
   background: color-mix(in srgb, var(--hub-accent) 82%, #0a1528);
   color: #071018 !important;
   border-color: color-mix(in srgb, var(--hub-accent) 60%, #fff);
 }
 
-html[data-theme='night'] body[data-surface='monument'] .topic-card,
-body[data-surface='monument'][data-theme='night'] .topic-card,
-html[data-theme='night'] body[data-surface='monument'] .hub-pillar-grid li,
-body[data-surface='monument'][data-theme='night'] .hub-pillar-grid li,
-html[data-theme='night'] body[data-surface='monument'] .callout,
-body[data-surface='monument'][data-theme='night'] .callout {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .topic-card,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .topic-card,
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-pillar-grid li,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-pillar-grid li,
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .callout,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .callout {
   background: var(--hub-panel);
   border-color: var(--hub-line);
 }
 
-html[data-theme='night'] body[data-surface='monument'] .chip,
-body[data-surface='monument'][data-theme='night'] .chip {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .chip,
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .chip {
   background: color-mix(in srgb, var(--hub-panel) 80%, transparent);
   color: var(--hub-accent-deep);
 }
@@ -2516,89 +2572,36 @@ body[data-surface='monument'][data-lighting='raking'] .topic-card {
       color-mix(in srgb, var(--material-accent, var(--hub-accent)) calc(var(--light-strength) * 22%), transparent);
 }
 
-/* Climate control UI */
-.monument-climate {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem 0.65rem;
-  align-items: center;
-  justify-content: flex-end;
+/* The cover, said in the top bar (home/bindery.mjs). The look is chosen in
+ * the binder's scene on the home page, not here: this only says what the
+ * copy is bound in, and leads there. */
+.bindery-mark {
   margin-left: auto;
-  max-width: min(100%, 28rem);
-}
-
-.climate-field {
-  display: grid;
-  gap: 0.18rem;
-}
-
-.climate-legend {
-  font-family: var(--font-family-heading, system-ui, sans-serif);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  padding: 0.2rem 0.1rem;
   color: var(--hub-muted);
-  opacity: 0.9;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.climate-segment {
-  display: inline-flex;
-  border: 1px solid color-mix(in srgb, var(--hub-accent) 22%, var(--hub-line));
-  border-radius: 999px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
-}
-
-.climate-option {
-  appearance: none;
-  border: 0;
-  margin: 0;
-  padding: 0.22rem 0.48rem;
-  background: transparent;
-  color: var(--hub-muted);
-  font-family: var(--font-family-heading, system-ui, sans-serif);
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  cursor: pointer;
-  line-height: 1.2;
-}
-
-.climate-option + .climate-option {
-  border-left: 1px solid color-mix(in srgb, var(--hub-line) 80%, transparent);
-}
-
-.climate-option[aria-pressed='true'] {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, #fff 35%, transparent), transparent),
-    color-mix(in srgb, var(--hub-accent) 20%, transparent);
+.bindery-mark-words {
   color: var(--hub-accent-deep);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hub-accent) 28%, transparent);
+  text-decoration: underline wavy color-mix(in srgb, var(--hub-gold) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
 }
 
-.climate-option:hover,
-.climate-option:focus-visible {
-  color: var(--hub-ink);
-  background: color-mix(in srgb, var(--hub-accent) 12%, transparent);
-}
-
-.climate-option:focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--hub-hearth-ink, var(--hub-hearth)));
-  outline-offset: 1px;
-  z-index: 1;
-}
-
-.climate-option:active {
-  background: color-mix(in srgb, var(--hub-accent) 24%, transparent);
+.bindery-mark:hover .bindery-mark-words,
+.bindery-mark:focus-visible .bindery-mark-words {
+  text-decoration-color: var(--hub-gold);
 }
 
 @media (max-width: 52rem) {
-  .monument-climate {
+  .bindery-mark {
     order: 3;
-    flex-basis: 100%;
-    justify-content: flex-start;
-    max-width: none;
-    margin: 0.15rem 0 0.35rem;
+    margin: 0.1rem 0 0.3rem;
   }
 }
 
@@ -2690,11 +2693,11 @@ body[data-surface='monument'] > .hub-shell {
   filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--hub-ink) 26%, transparent));
 }
 
-html[data-theme='night'] body[data-surface='monument'] .hub-ch-thumb-pending.has-seal {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-ch-thumb-pending.has-seal {
   background: radial-gradient(circle at 50% 40%, #232f47, #131a2b 84%);
 }
 
-html[data-theme='night'] body[data-surface='monument'] .hub-ch-thumb-pending.has-seal::after {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-ch-thumb-pending.has-seal::after {
   color: color-mix(in srgb, #cfdcf2 62%, transparent);
 }
 
@@ -2737,15 +2740,15 @@ body[data-surface='monument'] {
   opacity: 0.4;
 }
 
-html[data-theme='night'] body[data-surface='monument'] .boof-paw {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .boof-paw {
   color: #cfdcf2;
 }
 
-html[data-theme='night'] body[data-surface='monument'] .boof-paw.is-placed {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .boof-paw.is-placed {
   opacity: 0.17;
 }
 
-html[data-theme='night'] body[data-surface='monument'] .boof-sprig.is-placed {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .boof-sprig.is-placed {
   opacity: 0.5;
 }
 
@@ -2803,7 +2806,7 @@ body[data-surface='monument']::after {
   background-size: 180px 180px;
 }
 
-html[data-theme='night'] body[data-surface='monument']::after {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument']::after {
   mix-blend-mode: soft-light;
   opacity: 0.07;
 }
@@ -2979,27 +2982,6 @@ body[data-surface='monument'] .hub-cta-quiet {
   letter-spacing: 0.02em;
 }
 
-/* Climate controls: recede until needed */
-body[data-surface='monument'] .monument-climate {
-  opacity: 0.72;
-  transition: opacity 200ms ease;
-}
-
-body[data-surface='monument'] .monument-climate:hover,
-body[data-surface='monument'] .monument-climate:focus-within {
-  opacity: 1;
-}
-
-body[data-surface='monument'] .climate-option {
-  padding: 0.2rem 0.44rem;
-  font-size: 0.64rem;
-}
-
-body[data-surface='monument'] .climate-legend {
-  font-size: 0.58rem;
-  opacity: 0.75;
-}
-
 /* Topbar hairline: thinner, softer fade */
 body[data-surface='monument'] .hub-topbar::after {
   height: 1px;
@@ -3025,7 +3007,7 @@ body[data-surface='monument'] ::selection {
   color: var(--hub-ink);
 }
 
-html[data-theme='night'] body[data-surface='monument'] ::selection {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] ::selection {
   background: color-mix(in srgb, var(--hub-accent) 40%, transparent);
   color: #fff;
 }
@@ -3094,7 +3076,7 @@ body[data-surface='monument'] .hub-footer-note {
 @media print {
   body[data-surface='monument']::before,
   body[data-surface='monument']::after,
-  body[data-surface='monument'] .monument-climate {
+  body[data-surface='monument'] .bindery-mark {
     display: none !important;
   }
 
@@ -3107,7 +3089,6 @@ body[data-surface='monument'] .hub-footer-note {
 @media (prefers-reduced-motion: reduce) {
   body[data-surface='monument'] .chip,
   body[data-surface='monument'] .route-rail-card,
-  body[data-surface='monument'] .monument-climate,
   body[data-surface='monument'] .hub-topbar,
   body[data-surface='monument'] .hub-menu-toggle-bars::before,
   body[data-surface='monument'] .hub-menu-toggle-bars::after {

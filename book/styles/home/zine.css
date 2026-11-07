@@ -248,7 +248,7 @@
 
 /* ————— Night theme ————— */
 
-html[data-theme='night'] body[data-surface='monument'] .broadside-sheet {
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .broadside-sheet {
   /* Ink stays ink: the sheet is future paper, not an interface. */
   box-shadow: 0 1.4rem 2.6rem rgba(0, 0, 0, 0.55);
 }

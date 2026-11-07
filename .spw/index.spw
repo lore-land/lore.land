@@ -38,7 +38,7 @@
   ethos: "PLAN.B.spw"
   shadow_chrome: "PLAN.C.spw"
   houdini_firefox: "PLAN.D.spw"
-  living_book: "PLAN.E.spw (direction + curriculum L01–L25)"
+  living_book: "PLAN.E.spw (direction + curriculum L01–L26)"
   platform_ship: "@spw/surfaces/platform.spw"
   editorial_desk: "@spw/surfaces/editorial.spw"
   atelier_production: "@spw/surfaces/atelier.spw"

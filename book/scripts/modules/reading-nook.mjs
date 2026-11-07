@@ -381,6 +381,10 @@ export function initReadingNook({ announce } = {}) {
         paintShelf();
       });
       writeNook(state);
+      // One book, one binding: the home page wears the same cover (home/bindery.mjs).
+      try {
+        window.localStorage.setItem('lore.monument.theme', { rag: 'paper', starfield: 'night' }[binding.id] || binding.id);
+      } catch { /* the home page keeps its own */ }
       announce?.(`Bound in ${binding.name}.`);
       settle({ sigil: '❘', title: `Bound in ${binding.name}`, detail: binding.says, at: spine, region: 'main.chapter' });
     });

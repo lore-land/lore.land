@@ -47,7 +47,7 @@ body[data-surface='monument'] .hub-hero-media figcaption {
   text-align: center;
   font-style: italic;
 }
-body[data-surface='monument'][data-theme='night'] .hub-hero-media figcaption {
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-hero-media figcaption {
   color: var(--hub-muted);
   opacity: 1;
 }
@@ -307,8 +307,8 @@ body[data-surface='monument'] .wonder-object svg {
 body[data-surface='monument'] .wonder-object-egg { color: var(--hub-hearth-ink); }
 body[data-surface='monument'] .wonder-object-berry { color: var(--hub-berry); }
 body[data-surface='monument'] .wonder-object-pie { color: var(--hub-gold-ink); }
-body[data-surface='monument'][data-theme='night'] .wonder-object-egg { color: var(--hub-hearth); }
-body[data-surface='monument'][data-theme='night'] .wonder-object-pie { color: var(--hub-gold); }
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .wonder-object-egg { color: var(--hub-hearth); }
+body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .wonder-object-pie { color: var(--hub-gold); }
 html[data-egg-style='opal'] body[data-surface='monument'] .wonder-object-egg,
 html[data-egg-style='amber'] body[data-surface='monument'] .wonder-object-egg {
   color: color-mix(in srgb, #217b7c 72%, var(--hub-ink));
