@@ -1,0 +1,369 @@
+/*
+ * bindings.css — the book's paper and ink (reading-nook.mjs BINDINGS; PLAN.E L25).
+ *
+ * A binding is a whole look chosen from a shelf of spines in the Reading
+ * nook: rag (the book as first bound), glass, salt, ember, slate, starfield.
+ * Each one restates the base tokens (tokens.css), so every --color-* alias
+ * and component follows, then dresses the section cards in its material.
+ *
+ * Light bindings yield to lamplight: the nook's Light dial at "lamp" takes
+ * any light binding into the lamp room. Dark bindings (data-binding-tone)
+ * keep their own night at any light, and supply the lamp room's --room-*
+ * colours (reading.css) so its dark-room rules wear their palette.
+ *
+ * The chapter template's head script sets data-binding before first paint;
+ * ?binding=glass binds the book for one visit (stage-directions.mjs).
+ * Loaded after reading.css: a binding is the last word on colour.
+ */
+
+/* ─── Bonk glass: sea-glass pages, bottle-green ink ───────────────────── */
+
+html[data-binding="glass"]:not([data-nook-light="lamp"]) {
+  --bg-color-main: #dbe8e2;
+  --bg-color-content: rgba(239, 247, 243, 0.9);
+  --bg-color-content-strong: rgba(246, 252, 249, 0.96);
+  --color-parchment-base: #dbe8e2;
+  --accent-color-main: #1d6a61;
+  --accent-color-alt: #0e4741;
+  --accent-gradient: linear-gradient(130deg, #2a8a7e 0%, #135a52 100%);
+  --text-color-main: #10302b;
+  --text-color-alt: #3b5d57;
+  --focus-outline-color: #a3501f;
+  --hover-bg-color: rgba(29, 106, 97, 0.12);
+  --border-color-main: rgba(29, 106, 97, 0.24);
+  --glass-bg: rgba(236, 246, 242, 0.58);
+  --glass-bg-strong: rgba(244, 250, 247, 0.8);
+  --glass-border: rgba(90, 167, 157, 0.34);
+  --paper-fiber: rgba(30, 110, 100, 0.045);
+  --paper-fiber-strong: rgba(30, 110, 100, 0.085);
+  --color-celestial-teal: #1d6a61;
+  --sigil-gold: #3d8c81;
+  --chapter-reading-ink: #0f2925;
+  /* Glass remembers being struck: a few hairlines from one point. */
+  --glass-struck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath stroke='%23ffffff' stroke-width='1.1' opacity='0.85' d='M70 30 98 6M70 30 97 46M70 30 50 2M70 30 40 54M70 30 88 82M61 21 66 9M83 38 92 31M57 41 49 47'/%3E%3Cpath stroke='%231d6a61' stroke-width='0.45' opacity='0.4' d='M70 30 98 6M70 30 97 46M70 30 50 2M70 30 40 54M70 30 88 82'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+html[data-binding="glass"]:not([data-nook-light="lamp"]) main.chapter > [data-ebook-section] {
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 66%, rgba(255, 255, 255, 0.24) 72%, rgba(255, 255, 255, 0) 79%),
+    var(--glass-struck) right 0.4rem top 0.4rem / 4.6rem 4.6rem no-repeat,
+    color-mix(in srgb, var(--bg-color-content-strong) 90%, #5aa79d 10%);
+  border-color: rgba(90, 167, 157, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 10px 28px rgba(16, 60, 54, 0.12);
+}
+
+/* ─── Salt flat: bleached white, sky-blue ink, all air ────────────────── */
+
+html[data-binding="salt"]:not([data-nook-light="lamp"]) {
+  --bg-color-main: #f2f4f1;
+  --bg-color-content: rgba(255, 255, 255, 0.84);
+  --bg-color-content-strong: rgba(255, 255, 255, 0.95);
+  --color-parchment-base: #f2f4f1;
+  --accent-color-main: #2f6187;
+  --accent-color-alt: #234a69;
+  --accent-gradient: linear-gradient(130deg, #4a82ad 0%, #2a5a80 100%);
+  --text-color-main: #222b35;
+  --text-color-alt: #56616d;
+  --hover-bg-color: rgba(47, 97, 135, 0.1);
+  --border-color-main: rgba(47, 80, 110, 0.14);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(150, 170, 190, 0.3);
+  --paper-fiber: rgba(140, 150, 160, 0.02);
+  --paper-fiber-strong: rgba(140, 150, 160, 0.04);
+  --color-celestial-teal: #2f6187;
+  --sigil-gold: #c0714b;
+  --chapter-reading-ink: #1f2731;
+}
+
+/* Salt cards are not cards: a hairline horizon and the glare above it. */
+html[data-binding="salt"]:not([data-nook-light="lamp"]) main.chapter > [data-ebook-section] {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 9rem);
+  border-color: transparent;
+  border-top: 1px solid rgba(47, 80, 110, 0.2);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ─── Hearth clay: terracotta, soot-brown ink ─────────────────────────── */
+
+html[data-binding="ember"]:not([data-nook-light="lamp"]) {
+  --bg-color-main: #efdfcd;
+  --bg-color-content: rgba(253, 244, 234, 0.92);
+  --bg-color-content-strong: rgba(255, 250, 244, 0.97);
+  --color-parchment-base: #efdfcd;
+  --accent-color-main: #8a4426;
+  --accent-color-alt: #64301b;
+  --accent-gradient: linear-gradient(130deg, #a85a2e 0%, #6f3420 100%);
+  --text-color-main: #2a1810;
+  --text-color-alt: #5e4033;
+  --hover-bg-color: rgba(138, 68, 38, 0.13);
+  --border-color-main: rgba(110, 58, 30, 0.22);
+  --glass-bg: rgba(255, 246, 236, 0.62);
+  --glass-bg-strong: rgba(255, 249, 242, 0.84);
+  --glass-border: rgba(196, 136, 80, 0.3);
+  --paper-fiber: rgba(130, 70, 36, 0.055);
+  --paper-fiber-strong: rgba(130, 70, 36, 0.1);
+  --color-celestial-teal: #8a4426;
+  --sigil-gold: #b5652e;
+  --chapter-reading-ink: #2a170e;
+}
+
+/* The oven wall's warmth, low in every card. */
+html[data-binding="ember"]:not([data-nook-light="lamp"]) main.chapter > [data-ebook-section] {
+  background: color-mix(in srgb, var(--bg-color-content-strong) 94%, #e8a46a 6%);
+  box-shadow:
+    inset 0 -3.5rem 3rem -3rem rgba(200, 109, 44, 0.2),
+    0 10px 24px rgba(90, 40, 16, 0.1);
+}
+
+/* ─── Slate & chalk: a schoolroom slate, chalk words ──────────────────── */
+
+html[data-binding="slate"] {
+  color-scheme: dark;
+  --bg-color-main: #1e2527;
+  --bg-color-content: rgba(36, 44, 46, 0.94);
+  --bg-color-content-strong: rgba(42, 51, 53, 0.97);
+  --color-parchment-base: #1e2527;
+  --accent-color-main: #f0d46a;
+  --accent-color-alt: #f6e6a2;
+  --accent-gradient: linear-gradient(130deg, #d8b84a 0%, #a8892e 100%);
+  --text-color-main: #ebe8de;
+  --text-color-alt: #b8b5aa;
+  --text-color-content: #1b1f20;
+  --focus-outline-color: #f2a38a;
+  --hover-bg-color: rgba(240, 212, 106, 0.12);
+  --border-color-main: rgba(235, 232, 222, 0.16);
+  --shadow-main: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 20px 44px rgba(0, 0, 0, 0.55);
+  --glass-bg: rgba(36, 44, 46, 0.62);
+  --glass-bg-strong: rgba(42, 51, 53, 0.82);
+  --glass-border: rgba(235, 232, 222, 0.16);
+  --paper-fiber: rgba(255, 255, 255, 0.025);
+  --paper-fiber-strong: rgba(255, 255, 255, 0.045);
+  --color-celestial-teal: #8fd3c7;
+  --color-golden-sand: #f0d46a;
+  --color-burnt-orange: #f2a38a;
+  --color-gold: #f0d46a;
+  --color-gold-ink: #f0d46a;
+  --color-hearth-ink: #f2a38a;
+  --color-berry: #c9a6e0;
+  --color-stone-shadow: #0b0e0f;
+  --sigil-gold: #f0d46a;
+  --chapter-reading-ink: #ecebe4;
+  --room-floor: #161b1c;
+  --room-page: 32 39 41;
+  --room-heading: #f6efcf;
+  --room-section: rgba(38, 46, 48, 0.9);
+  --room-chip: rgba(44, 53, 55, 0.92);
+  --room-link: #f0d46a;
+  --room-mark: #f0d46a;
+  --room-mark-ink: #1b1f20;
+  /* Old chalk the cloth never quite took off. */
+  --room-field:
+    radial-gradient(42rem 16rem at 18% 16%, rgba(255, 255, 255, 0.055), transparent 70%),
+    radial-gradient(30rem 12rem at 82% 58%, rgba(255, 255, 255, 0.045), transparent 70%),
+    radial-gradient(24rem 9rem at 36% 90%, rgba(255, 255, 255, 0.04), transparent 70%),
+    repeating-linear-gradient(176deg, rgba(255, 255, 255, 0.012) 0 3px, transparent 3px 11px),
+    linear-gradient(180deg, #232b2d, #191f21);
+}
+
+/* Chalk words carry a little dust. */
+html[data-binding="slate"] main.chapter :is(h1, h2, h3, .chapter-turn-title) {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.4), 0 0 7px rgba(255, 255, 255, 0.08);
+}
+
+html[data-binding="slate"] main.chapter > [data-ebook-section] {
+  border-color: rgba(235, 232, 222, 0.14);
+}
+
+/* ─── Starfield: night-blue cloth, pale stars ─────────────────────────── */
+
+html[data-binding="starfield"] {
+  color-scheme: dark;
+  --bg-color-main: #0e1526;
+  --bg-color-content: rgba(20, 30, 52, 0.9);
+  --bg-color-content-strong: rgba(26, 38, 66, 0.95);
+  --color-parchment-base: #0e1526;
+  --accent-color-main: #7ed0ff;
+  --accent-color-alt: #c4e4ff;
+  --accent-gradient: linear-gradient(130deg, #3f88c5 0%, #6a4fbf 100%);
+  --text-color-main: #eef3ff;
+  --text-color-alt: #c5d2f0;
+  --text-color-content: #f7fbff;
+  --focus-outline-color: #f0c66a;
+  --hover-bg-color: rgba(126, 208, 255, 0.16);
+  --border-color-main: rgba(150, 185, 235, 0.3);
+  --shadow-main: 0 16px 36px rgba(2, 8, 24, 0.48);
+  --shadow-hover: 0 24px 44px rgba(2, 8, 24, 0.6);
+  --glass-bg: rgba(22, 34, 58, 0.62);
+  --glass-bg-strong: rgba(28, 42, 73, 0.8);
+  --glass-border: rgba(180, 205, 255, 0.22);
+  --paper-fiber: rgba(140, 165, 220, 0.05);
+  --paper-fiber-strong: rgba(140, 165, 220, 0.1);
+  --color-celestial-teal: #7ed0ff;
+  --color-golden-sand: #e0b24a;
+  --color-burnt-orange: #e08a4a;
+  --color-gold: #f0c66a;
+  --color-gold-ink: #f0c66a;
+  --color-hearth-ink: #f0a46a;
+  --color-berry: #c8a8ff;
+  --color-stone-shadow: #04070f;
+  --sigil-gold: #f0c66a;
+  --chapter-reading-ink: #e9eefb;
+  --room-floor: #070b16;
+  --room-page: 18 27 46;
+  --room-heading: #dbe9ff;
+  --room-section: rgba(20, 30, 52, 0.88);
+  --room-chip: rgba(26, 38, 66, 0.92);
+  --room-link: #9fdcff;
+  --room-mark: #f0c66a;
+  --room-mark-ink: #0e1526;
+  --room-field:
+    radial-gradient(1.3px 1.3px at 22px 34px, rgba(255, 255, 255, 0.9), transparent 2px) 0 0 / 190px 170px,
+    radial-gradient(1px 1px at 128px 92px, rgba(214, 232, 255, 0.75), transparent 2px) 0 0 / 190px 170px,
+    radial-gradient(1.5px 1.5px at 64px 140px, rgba(255, 238, 205, 0.85), transparent 2.4px) 0 0 / 240px 220px,
+    radial-gradient(1px 1px at 176px 44px, rgba(255, 255, 255, 0.6), transparent 2px) 0 0 / 270px 250px,
+    radial-gradient(1.1px 1.1px at 40px 210px, rgba(190, 214, 255, 0.7), transparent 2px) 0 0 / 310px 290px,
+    radial-gradient(60rem 40rem at 72% -10%, rgba(70, 105, 168, 0.34), transparent 70%),
+    radial-gradient(40rem 30rem at 8% 110%, rgba(106, 79, 191, 0.18), transparent 70%),
+    linear-gradient(180deg, #0f1830, #080d1a);
+}
+
+/* ─── A dark binding's own room (lamplight brings the nook's instead) ─── */
+
+html[data-binding-tone="dark"]:not([data-nook-light="lamp"]) {
+  background: var(--room-floor, #121710);
+}
+
+html[data-binding-tone="dark"]:not([data-nook-light="lamp"]) body:has(> main.chapter) {
+  background: var(--room-field);
+  background-attachment: fixed;
+}
+
+html[data-binding-tone="dark"]:not([data-nook-light="lamp"]) body main#chapter-content {
+  background: rgb(var(--room-page) / 0.9);
+}
+
+html[data-binding-tone="dark"]:not([data-nook-light="lamp"]) body:has(> main.chapter) > aside {
+  background: rgb(var(--room-page) / 0.92);
+}
+
+html[data-binding-tone="dark"] :is(nav.chapter-navigation, .section-navigation) {
+  background: rgb(var(--room-page) / 0.94);
+  border-color: var(--border-color-main);
+}
+
+/* ─── The shelf of spines (Reading nook) ──────────────────────────────── */
+
+.reading-nook-binding {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.25rem 0.5rem;
+  margin: 0.2rem 0 0;
+}
+
+.binding-shelf {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.2rem;
+  height: 5.6rem;
+  padding: 0.6rem 0.35rem 0;
+  border-bottom: 4px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, #5a3a1e);
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(to bottom, transparent 70%, color-mix(in srgb, var(--color-stone-shadow, #5a4a3a) 14%, transparent));
+}
+
+.binding-spine {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: var(--spine-h, 4.4rem);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 3px 3px 1px 1px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent 24%, rgba(255, 255, 255, 0.12) 42%, transparent 60%, rgba(0, 0, 0, 0.24)),
+    linear-gradient(to bottom, transparent 0.5rem, var(--spine-band) 0.5rem 0.72rem, transparent 0.72rem calc(100% - 0.72rem), var(--spine-band) calc(100% - 0.72rem) calc(100% - 0.5rem), transparent calc(100% - 0.5rem)),
+    var(--spine-paper);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  color: var(--spine-ink);
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  transform: rotate(var(--spine-lean, 0deg));
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 200ms ease;
+}
+
+.binding-spine:nth-child(1) { --spine-h: 4.5rem; }
+.binding-spine:nth-child(2) { --spine-h: 4.1rem; }
+.binding-spine:nth-child(3) { --spine-h: 4.7rem; }
+.binding-spine:nth-child(4) { --spine-h: 4.3rem; }
+.binding-spine:nth-child(5) { --spine-h: 4.6rem; }
+.binding-spine:nth-child(6) { --spine-h: 4.2rem; }
+
+.binding-spine-title {
+  position: absolute;
+  inset: 0.85rem 0 0.85rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  writing-mode: vertical-rl;
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.binding-spine:hover,
+.binding-spine:focus-visible {
+  transform: rotate(0deg) translateY(-0.25rem);
+  outline: none;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.binding-spine:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-focus-outline, #8a3f12), 0 6px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* The book on the reading desk: pulled out of the row. */
+.binding-spine[aria-checked="true"] {
+  transform: rotate(0deg) translateY(-0.6rem);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.24), 0 0 0 1px var(--sigil-gold, #a67c38);
+}
+
+.binding-says {
+  grid-column: 1 / -1;
+  margin: 0.15rem 0 0;
+  font-size: 0.76rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-text-alt);
+}
+
+/* Rebinding sweeps the new binding across the page like a turned board. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-rebinding]::view-transition-old(root) {
+    animation: none;
+  }
+
+  html[data-rebinding]::view-transition-new(root) {
+    animation: rebind-sweep 560ms cubic-bezier(0.25, 0.8, 0.25, 1) both;
+  }
+}
+
+@keyframes rebind-sweep {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .binding-spine { transition: none; }
+}

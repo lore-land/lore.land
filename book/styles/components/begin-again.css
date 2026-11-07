@@ -1,0 +1,145 @@
+/*
+ * begin-again.css — the Begin again sheet and its buttons (begin-again.mjs; PLAN.E L23).
+ * Shared by chapter pages, the home page and the desk, so it stands alone:
+ * every colour is a token with a fallback.
+ */
+
+.begin-again {
+  justify-self: start;
+  padding: 0.25rem 0.1rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-accent-main);
+  cursor: pointer;
+  font-size: 0.74rem;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 3px;
+}
+
+.begin-again:hover,
+.begin-again:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.begin-again--rail {
+  margin-top: 0.35rem;
+}
+
+.begin-again-coda {
+  margin: 1.2rem auto 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-text-alt);
+}
+
+.begin-again-coda .begin-again {
+  font-size: inherit;
+  font-style: normal;
+}
+
+.again-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  width: min(30rem, calc(100vw - 32px));
+  height: fit-content;
+  max-height: calc(100vh - 32px);
+  margin: auto;
+  padding: 1.2rem 1.25rem 1rem;
+  overflow: auto;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  border-radius: 1rem;
+  background: var(--bg-color-content-strong, #fffdf8);
+  box-shadow: 0 24px 60px rgba(12, 16, 24, 0.3);
+  color: var(--color-text-main);
+}
+
+.again-sheet::backdrop {
+  background: rgba(12, 16, 24, 0.32);
+}
+
+.again-sheet h2 {
+  margin: 0;
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 1.35rem;
+  color: var(--color-accent-alt);
+}
+
+.again-lede {
+  margin: 0.2rem 0 0.9rem;
+  font-style: italic;
+  color: var(--color-text-alt);
+}
+
+.again-choices {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.again-choice {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 35%, transparent);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--bg-color-content-strong, #fffdf8) 92%, var(--sigil-gold, #a67c38) 6%);
+  box-shadow: none;
+  color: var(--color-text-main);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.again-choice:hover,
+.again-choice:focus-visible {
+  border-color: var(--sigil-gold, #a67c38);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.again-choice-name {
+  font-family: var(--chapter-display, var(--font-family-body, Georgia), serif);
+  font-size: 1.05rem;
+  color: var(--color-accent-alt);
+}
+
+.again-choice-says {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--color-text-alt);
+}
+
+.again-restore,
+.again-cancel {
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.2rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-accent-main);
+  cursor: pointer;
+  font-size: 0.82rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.again-restore {
+  display: block;
+  font-weight: 600;
+}
+
+.again-cancel {
+  color: var(--color-text-alt);
+}
+
+.hub-again {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.8rem;
+  margin: 0.55rem 0 0;
+  font-size: 0.86rem;
+}

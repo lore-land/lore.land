@@ -330,8 +330,8 @@ export function activateClimate(climate, options = {}) {
   setLightVars(root, profile, strength);
   setTintVars(root, tint);
 
-  // Soft paper theme bias without fighting user night/ember prefs.
-  const userTheme = root.dataset.theme || body.dataset.theme || 'paper';
+  // Soft paper theme bias without fighting user night/ember prefs or a chosen binding (reading-nook.mjs).
+  const userTheme = root.dataset.binding || root.dataset.theme || body.dataset.theme || 'paper';
   if (userTheme !== 'paper' && userTheme) {
     root.dataset.tempoTheme = 'respect-user';
   } else if (tempo === 'night' || tempo === 'dusk') {

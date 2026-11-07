@@ -29,7 +29,8 @@
  * Reduced motion: no gliding, no flare; every knob still works.
  * Switch: `scene-light` (default on).
  */
-import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.C';
+import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.D';
+import { cueForHour } from './tellings.mjs?v=2026_11_06.D';
 
 const KNOBS_URL = '/book/content/world/knobs.json';
 const NUMERIC = ['x', 'y', 'glow', 'warmth', 'ink', 'grain', 'edge'];
@@ -98,6 +99,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
   let flareTimer = 0;
   const directions = readStage();
   let cue = null;              // the named light cue last set
+  let dialLight = false;       // the cue came from the hour dial
   const touched = new Set();   // knobs the reader (or the URL) turned past the cue
 
   /* The cue nearest where the light stands: links name a light, not coordinates. */
@@ -111,14 +113,18 @@ export function initSceneLight({ chapterData, announce } = {}) {
   };
 
   /* The stage as it stands, as a link anyone can open (stage-directions.mjs). */
-  const currentStage = (extra = {}) => ({
-    knobs: held ? Object.fromEntries([...touched].filter((k) => k in held).map((k) => [k, held[k]])) : {},
-    cue: held ? (cue || nearestCue(held)) : directions.cue,
-    motif: directions.motif,
-    phrases: root.dataset.stageClock ? 'turn' : null,
-    at: root.dataset.stageClock ? new Date(root.dataset.stageClock) : null,
-    ...extra
-  });
+  const currentStage = (extra = {}) => {
+    const clock = root.dataset.stageClock;
+    return {
+      knobs: held ? Object.fromEntries([...touched].filter((k) => k in held).map((k) => [k, held[k]])) : {},
+      cue: held ? (cue || nearestCue(held)) : directions.cue,
+      motif: directions.motif,
+      binding: root.dataset.binding || null,
+      phrases: clock && clock !== 'canon' ? 'turn' : null,
+      at: clock === 'canon' ? 'canon' : clock ? new Date(clock) : null,
+      ...extra
+    };
+  };
   const copyStage = async (button, extra) => {
     const link = stageLink(currentStage(extra));
     try {
@@ -189,7 +195,10 @@ export function initSceneLight({ chapterData, announce } = {}) {
 
   const take = (patch, quiet = false) => {
     held = { ...(held || read()), ...patch };
-    if ('x' in patch || 'y' in patch) cue = null;
+    if ('x' in patch || 'y' in patch) {
+      cue = null;
+      dialLight = false;
+    }
     root.dataset.lightHeld = 'true';
     write(held);
     if (!quiet) paintTable();
@@ -206,7 +215,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
     return true;
   };
 
-  const letGo = (at) => {
+  const letGo = (at, quiet = false) => {
     held = null;
     cue = null;
     touched.clear();
@@ -214,7 +223,22 @@ export function initSceneLight({ chapterData, announce } = {}) {
     if (base) write(base);
     steer();
     paintTable();
-    settle('The scene lights itself', 'The light goes back to the scene’s own.', at);
+    if (!quiet) settle('The scene lights itself', 'The light goes back to the scene’s own.', at);
+  };
+
+  /* The hour dial (tellings.mjs) walks the light with the page's clock —
+   * unless the reader has moved the sun by hand, which wins. */
+  const onStageClock = (event) => {
+    if (!config || !enabled()) return;
+    const at = event.detail?.at;
+    if (held && !cue && !dialLight) return;
+    if (at instanceof Date) {
+      if (applyCue(cueForHour(at.getHours()))) dialLight = true;
+    } else if (dialLight) {
+      dialLight = false;
+      if (directions.cue) applyCue(directions.cue);
+      else letGo(null, true);
+    }
   };
 
   /* ─── The light table ─────────────────────────────────────────────── */
@@ -268,6 +292,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
           const chip = el('button', { type: 'button', className: `light-cue${cue === name ? ' is-on' : ''}`, title: c.says, 'data-cue': name }, name);
           chip.addEventListener('click', () => {
             applyCue(name);
+            dialLight = false;
             table.querySelectorAll('.light-cue').forEach((x) => x.classList.toggle('is-on', x === chip));
             settle(`Light cue: ${name}`, `${c.says.charAt(0).toUpperCase()}${c.says.slice(1)}.`, chip);
           });
@@ -511,6 +536,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
 
   window.addEventListener('lore:copy-climate', onClimate);
   window.addEventListener('lore:wonder', onWonder);
+  window.addEventListener('lore:stage-clock', onStageClock);
   document.addEventListener('keydown', onKey);
   document.addEventListener('click', onOutside);
   loadKnobs().then((data) => {
@@ -542,6 +568,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
     tools.forEach((row) => row.remove());
     window.removeEventListener('lore:copy-climate', onClimate);
     window.removeEventListener('lore:wonder', onWonder);
+    window.removeEventListener('lore:stage-clock', onStageClock);
     document.removeEventListener('keydown', onKey);
     document.removeEventListener('click', onOutside);
   };

@@ -5,6 +5,10 @@
  *   texture   --nook-texture  0 plain paper … 1 lively   grain, glows, tints, vignette
  *   light     data-nook-light day · dusk · lamp          the room's own light
  *   hearth    (Web Audio)     0 silent … 1 rain & embers   synthesized, no files
+ *   binding   data-binding    rag · glass · salt · ember · slate · starfield
+ *             the book's paper and ink, chosen from a shelf of spines (PLAN.E L25);
+ *             lamplight takes a light binding into the dark, the dark ones keep
+ *             their own night. ?binding=glass binds it for one visit.
  *
  * State lives in localStorage (lore.nook.v1). The chapter template's head
  * script applies coziness and texture before first paint so a returning
@@ -15,7 +19,18 @@
 import { settle } from './settled.mjs?v=2026_11_05.B';
 
 const NOOK_KEY = 'lore.nook.v1';
-const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0 });
+const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0, binding: 'rag' });
+
+/** The bindings on the shelf: paper, ink and the room each brings. `tone` dark keeps its own night. */
+export const BINDINGS = Object.freeze([
+  { id: 'rag', spine: 'Rag', name: 'Rag paper', says: 'Cream rag, iron-gall ink: the book as it was first bound.', paper: '#f3ede1', ink: '#1c4f63', band: '#a67c38', tone: 'light', chrome: '#f3ede1' },
+  { id: 'glass', spine: 'Glass', name: 'Bonk glass', says: 'Sea-glass pages and bottle-green ink, glass that remembers being struck.', paper: '#dce9e3', ink: '#0f4a44', band: '#5aa79d', tone: 'light', chrome: '#dfe9e4' },
+  { id: 'salt', spine: 'Salt', name: 'Salt flat', says: 'Bleached white and sky-blue ink, all glare and air.', paper: '#f7f8f5', ink: '#284e6c', band: '#c47c58', tone: 'light', chrome: '#f4f5f2' },
+  { id: 'ember', spine: 'Clay', name: 'Hearth clay', says: 'Terracotta and soot-brown ink, warm from the oven wall.', paper: '#f1e1cf', ink: '#6f3420', band: '#c86d2c', tone: 'light', chrome: '#f1e3d3' },
+  { id: 'slate', spine: 'Slate', name: 'Slate & chalk', says: 'A schoolroom slate: chalk-white words, chalk-yellow marks. Cheaper than oak.', paper: '#262e30', ink: '#ecebe4', band: '#f0d46a', tone: 'dark', chrome: '#1f2526' },
+  { id: 'starfield', spine: 'Stars', name: 'Starfield', says: 'Night-blue cloth stamped with pale stars, for reading outdoors.', paper: '#141e34', ink: '#eef3ff', band: '#7ed0ff', tone: 'dark', chrome: '#0e1526' }
+]);
+const bindingFor = (id) => BINDINGS.find((binding) => binding.id === id) || BINDINGS[0];
 
 const DIALS = Object.freeze([
   {
@@ -74,6 +89,15 @@ export function lightBand(value) {
   return value < 0.25 ? 'day' : value < 0.75 ? 'dusk' : 'lamp';
 }
 
+/** The binding on show: a stage direction (?binding=) for this visit, else the reader's own. */
+function shownBinding(state) {
+  try {
+    const staged = new URLSearchParams(window.location.search).get('binding');
+    if (BINDINGS.some((binding) => binding.id === staged)) return staged;
+  } catch { /* no URL */ }
+  return bindingFor(state.binding).id;
+}
+
 /** Same writes the template's head script makes, kept in one place here. */
 function applyRoom(state) {
   const root = document.documentElement;
@@ -81,10 +105,36 @@ function applyRoom(state) {
   root.style.setProperty('--nook-texture', String(state.texture));
   root.dataset.nookTexture = textureBand(state.texture);
   root.dataset.nookLight = lightBand(state.light);
+  const binding = bindingFor(shownBinding(state));
+  if (binding.id === 'rag') {
+    delete root.dataset.binding;
+    delete root.dataset.bindingTone;
+  } else {
+    root.dataset.binding = binding.id;
+    root.dataset.bindingTone = binding.tone;
+  }
   // The browser chrome (and an installed app's title bar) follows the room.
   const theme = document.getElementById('theme-color');
   if (theme) {
-    theme.setAttribute('content', { day: '#f3ede1', dusk: '#e7dbc6', lamp: '#161d16' }[lightBand(state.light)]);
+    const lamp = lightBand(state.light) === 'lamp' && binding.tone !== 'dark';
+    theme.setAttribute('content', lamp ? '#161d16' : binding.id !== 'rag' ? binding.chrome : { day: '#f3ede1', dusk: '#e7dbc6' }[lightBand(state.light)]);
+  }
+}
+
+/* A rebinding sweeps across the page like a turned board, where the browser can. */
+function rebind(change) {
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && typeof document.startViewTransition === 'function') {
+    document.documentElement.dataset.rebinding = 'true';
+    const transition = document.startViewTransition(change);
+    // A sweep that cannot finish (a starved or hidden tab) never holds the page.
+    const skip = setTimeout(() => transition.skipTransition?.(), 1500);
+    transition.finished.finally(() => {
+      clearTimeout(skip);
+      delete document.documentElement.dataset.rebinding;
+    });
+  } else {
+    change();
   }
 }
 
@@ -274,6 +324,81 @@ export function initReadingNook({ announce } = {}) {
     panel.append(row);
   });
 
+  /* The binding: a shelf of spines. The one the book is bound in stands out. */
+  const shelf = document.createElement('div');
+  shelf.className = 'reading-nook-binding';
+  const shelfName = document.createElement('span');
+  shelfName.className = 'reading-nook-name';
+  shelfName.textContent = 'Binding';
+  const shelfReadout = document.createElement('output');
+  shelfReadout.className = 'reading-nook-readout';
+  const spines = document.createElement('div');
+  spines.className = 'binding-shelf';
+  spines.setAttribute('role', 'radiogroup');
+  spines.setAttribute('aria-label', 'Binding');
+  const says = document.createElement('p');
+  says.className = 'binding-says';
+  const paintShelf = () => {
+    const current = shownBinding(state);
+    const binding = bindingFor(current);
+    shelfReadout.textContent = binding.name;
+    says.textContent = binding.says + (binding.tone !== 'dark' && lightBand(state.light) === 'lamp' ? ' Lamplight takes it into the dark.' : '');
+    spines.querySelectorAll('.binding-spine').forEach((spine) => {
+      const on = spine.dataset.binding === current;
+      spine.setAttribute('aria-checked', on ? 'true' : 'false');
+      spine.tabIndex = on ? 0 : -1;
+    });
+  };
+  BINDINGS.forEach((binding, index) => {
+    const spine = document.createElement('button');
+    spine.type = 'button';
+    spine.className = 'binding-spine';
+    spine.dataset.binding = binding.id;
+    spine.setAttribute('role', 'radio');
+    spine.setAttribute('aria-label', binding.name);
+    spine.title = binding.name;
+    spine.style.setProperty('--spine-paper', binding.paper);
+    spine.style.setProperty('--spine-ink', binding.ink);
+    spine.style.setProperty('--spine-band', binding.band);
+    spine.style.setProperty('--spine-lean', `${((index * 7) % 5) - 2}deg`);
+    const stamp = document.createElement('span');
+    stamp.className = 'binding-spine-title';
+    stamp.textContent = binding.spine;
+    spine.append(stamp);
+    spine.addEventListener('click', () => {
+      if (state.binding === binding.id && shownBinding(state) === binding.id) return;
+      state.binding = binding.id;
+      rebind(() => {
+        // A chosen binding outlasts a stage direction's: drop ?binding= from this page's address.
+        try {
+          const url = new URL(window.location.href);
+          if (url.searchParams.has('binding')) {
+            url.searchParams.delete('binding');
+            window.history.replaceState(window.history.state, '', url);
+          }
+        } catch { /* keep the address */ }
+        applyRoom(state);
+        paintShelf();
+      });
+      writeNook(state);
+      announce?.(`Bound in ${binding.name}.`);
+      settle({ sigil: '❘', title: `Bound in ${binding.name}`, detail: binding.says, at: spine, region: 'main.chapter' });
+    });
+    spine.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = spines.children[(index + step + BINDINGS.length) % BINDINGS.length];
+      next.focus();
+      next.click();
+    });
+    spines.append(spine);
+  });
+  shelf.append(shelfName, shelfReadout, spines, says);
+  panel.append(shelf);
+  paintShelf();
+  panel.addEventListener('change', paintShelf);
+
   const reset = document.createElement('button');
   reset.type = 'button';
   reset.className = 'reading-nook-reset';
@@ -286,11 +411,14 @@ export function initReadingNook({ announce } = {}) {
       input.value = String(state[dial.id]);
       readouts[dial.id].textContent = wordFor(dial, state[dial.id]);
     });
-    applyRoom(state);
+    rebind(() => {
+      applyRoom(state);
+      paintShelf();
+    });
     hearth?.set(0);
     writeNook(state);
     announce?.('Reading nook reset.');
-    settle({ sigil: '.', title: 'The usual room', detail: 'Cozy, soft grain, daylight, quiet.', at: reset, region: 'main.chapter' });
+    settle({ sigil: '.', title: 'The usual room', detail: 'Cozy, soft grain, daylight, quiet, rag paper.', at: reset, region: 'main.chapter' });
   });
   panel.append(reset);
 

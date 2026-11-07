@@ -26,6 +26,8 @@
   story_boonhonk: "@spw/story-boonhonk.spw"
   book_two: "@spw/surfaces/wonder-about-pie.spw"
   almanac: "@spw/surfaces/almanac.spw"
+  knobs: "@spw/surfaces/knobs.spw"
+  tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
   dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw"
 }
@@ -36,7 +38,7 @@
   ethos: "PLAN.B.spw"
   shadow_chrome: "PLAN.C.spw"
   houdini_firefox: "PLAN.D.spw"
-  living_book: "PLAN.E.spw (direction + curriculum L01–L18)"
+  living_book: "PLAN.E.spw (direction + curriculum L01–L25)"
   platform_ship: "@spw/surfaces/platform.spw"
   editorial_desk: "@spw/surfaces/editorial.spw"
   atelier_production: "@spw/surfaces/atelier.spw"

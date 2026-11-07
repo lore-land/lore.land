@@ -10,7 +10,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_06.C';
+const RELEASE = '2026_11_06.D';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
@@ -213,6 +213,8 @@ const semantic = {
   wonders: {},
   // Living slots (PLAN.E L15): how many phrases breathe, by chapter and clock.
   slots: { minute: 0, hour: 0, day: 0, chapters: {} },
+  // Other tellings (PLAN.E L24): how many ways each slot is told, by chapter.
+  tellings: { total: 0, chapters: {} },
   voices: {}
 };
 const paragraphsOf = (block) => {
@@ -272,11 +274,14 @@ for (const chapter of chapters) {
     // slots: phrases that breathe here, by clock
     const countSlots = (node) => (Array.isArray(node?.content) ? node.content : []).forEach((item) => {
       if (item.type === 'paragraph' && item.slots) {
-        Object.values(item.slots).forEach((slot) => {
+        Object.entries(item.slots).forEach(([name, slot]) => {
           const clock = ['minute', 'hour', 'day'].includes(slot.clock) ? slot.clock : 'hour';
           semantic.slots[clock] += 1;
           const key = String(chapter.chapterNumber);
           semantic.slots.chapters[key] = (semantic.slots.chapters[key] || 0) + 1;
+          const told = Array.isArray(slot.variants) ? slot.variants.length : 0;
+          (semantic.tellings.chapters[key] = semantic.tellings.chapters[key] || {})[name] = told;
+          semantic.tellings.total += told;
         });
       } else if (Array.isArray(item.content)) countSlots(item);
     });

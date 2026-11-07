@@ -14,7 +14,7 @@ import { injectSvgFilters } from '../modules/svg-filters.mjs';
 import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_11_06.C';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_11_06.D';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
 import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_05.A';
 import {
@@ -25,6 +25,7 @@ import {
   withViewTransition
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
+import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_06.D';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -95,6 +96,24 @@ function enhancePrimaryCta() {
   primary.href = `/book/chapter/${padded}/`;
   primary.replaceChildren(document.createTextNode('Continue reading'), sub);
   primary.setAttribute('aria-label', `Continue reading at chapter ${padded}`);
+}
+
+/* Begin again (begin-again.mjs): beside Continue reading, once there is anything to begin again from. */
+function addBeginAgain() {
+  const actions = document.querySelector('.hub-hero .hub-actions');
+  if (!actions) {
+    return;
+  }
+  const marks = readingMarks();
+  const kept = keptMarks();
+  if (!marks.chapters && !kept) {
+    return;
+  }
+  const row = document.createElement('p');
+  row.className = 'hub-again';
+  row.append(beginAgainButton(kept && !marks.chapters ? '❦ Put back your marks' : '↺ Begin again'));
+  actions.insertAdjacentElement('afterend', row);
+  window.addEventListener('lore:marks-restored', () => window.location.reload(), { once: true });
 }
 
 function applyClimate({ theme, wonder, lighting }) {
@@ -563,6 +582,7 @@ function initMonumentEntrance() {
   initStorySpark();
   markCurrentChapterInIndex();
   enhancePrimaryCta();
+  addBeginAgain();
   renderChamberSeals(document);
   const destroyTrail = initBoofTrail();
   const destroyPresence = initScenePresence();

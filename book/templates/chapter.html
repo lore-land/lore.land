@@ -51,6 +51,8 @@
   <link rel="stylesheet" href="/book/styles/components/cards.css?v={{RELEASE}}&ctx=chapter:layout">
   <link rel="stylesheet" href="/book/styles/components/gestures.css?v={{RELEASE}}&ctx=chapter:gestures">
   <link rel="stylesheet" href="/book/styles/chapter/reading.css?v={{RELEASE}}&ctx=chapter:reading">
+  <link rel="stylesheet" href="/book/styles/chapter/bindings.css?v={{RELEASE}}&ctx=chapter:bindings">
+  <link rel="stylesheet" href="/book/styles/components/begin-again.css?v={{RELEASE}}&ctx=chapter:again">
   <link rel="stylesheet" href="/book/chapter/{{CHAPTER_SLUG}}/style.css?v={{RELEASE}}">
   <link id="period-styles" rel="stylesheet">
   <link id="mood-styles" rel="stylesheet">
@@ -75,6 +77,14 @@
       root.dataset.nookTexture = texture < 0.15 ? 'plain' : texture > 0.8 ? 'lively' : 'soft';
       const light = Number.isFinite(nook.light) ? nook.light : 0;
       root.dataset.nookLight = light < 0.25 ? 'day' : light < 0.75 ? 'dusk' : 'lamp';
+      /* The binding (reading-nook.mjs BINDINGS): ?binding= for one visit, else the reader's own. */
+      const tones = { glass: 'light', salt: 'light', ember: 'light', slate: 'dark', starfield: 'dark' };
+      const staged = new URLSearchParams(location.search).get('binding');
+      const binding = tones[staged] ? staged : tones[nook.binding] ? nook.binding : '';
+      if (binding) {
+        root.dataset.binding = binding;
+        root.dataset.bindingTone = tones[binding];
+      }
       /* Genre weights (lens-control.mjs): same arithmetic as applyGenre(). */
       let g = nook.genre || (['boon', 'bane', 'bone'].includes(nook.lens) ? { [nook.lens]: 1 } : null);
       if (g) {

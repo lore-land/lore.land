@@ -42,7 +42,8 @@
   section: "#section-id — the section on stage"
   frame: "stage=story|square|card · p=3 | p=all · type=1.4 · controls=off"
   light: "light=dawn|morning|noon|afternoon|dusk|night|lamp — a named cue (where the light stands, its warmth, its glow); knobs glow, warmth, ink, grain, edge turn past it; motif=egg lights the scene as that motif does"
-  words: "phrases=turn|still · at=19:00 | at=2026-11-13T19:00 | at=canon — the stage clock pins which words the turning phrases show"
+  words: "phrases=turn|still · at=19:00 | at=2026-11-13T19:00 | at=canon — the stage clock pins which words the turning phrases show; the hour dial (Other tellings) sets the same clock and walks the light to the hour's cue"
+  binding: "binding=rag|glass|salt|ember|slate|starfield — the book's paper and ink for one visit (bindings.css); Copy stage link writes the binding on show"
   why_cues: "A light is named, not plotted: a link says dusk, not 20,20. Copy stage link writes the nearest cue and only the knobs a reader turned."
 }
 

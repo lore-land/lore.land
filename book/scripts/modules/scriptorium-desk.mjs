@@ -17,7 +17,10 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.C';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.D';
+import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.D';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_06.D';
+import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.D';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
@@ -125,16 +128,19 @@ export const SPELLBOOK = Object.freeze([
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
   { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
   { op: '?', example: '?[living]', does: 'What breathes in the book: how many phrases turn by the minute, the hour and the day.' },
+  { op: '?', example: '?[tellings]', does: 'How many of the book’s other tellings you have heard.' },
   { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
   { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
   { op: '!', example: '![keep]{shelf}', does: 'Keep every chapter for offline reading.' },
+  { op: '!', example: '![again]', does: 'Begin the book again: from the top, or a fresh copy. ![again]{top} goes straight there.' },
   { op: '^', example: '^[slip]{05}', does: 'Write a slip to the scribes about a chapter.' },
   { op: '#', example: '#[stacks]{03}', does: 'Open a chapter at its shelf-mates in the library.' },
   { op: '*', example: '*[card]{05}', does: 'Copy a chapter’s link, card and all.' },
   { op: '=', example: '=[lens]{bone}', does: 'Read chapters as boon, bane or bone (or balanced).' },
   { op: '=', example: '=[genre]{boon:2 bone:1}', does: 'Blend genres: fairy tale, absurd reality, low magic, in any proportion.' },
   { op: '=', example: '=[light]{lamp}', does: 'Set the room: light day|dusk|lamp, or any switch on|off.' },
+  { op: '=', example: '=[binding]{glass}', does: 'Bind the book: rag, glass, salt, ember, slate or starfield.' },
   { op: '$', example: '$[desk]', does: 'Show this spellbook.' }
 ]);
 
@@ -327,6 +333,14 @@ export async function initScriptoriumDesk() {
             el('p', {}, `The book breathes in ${total} places: ${slots.minute} by the minute, ${slots.hour} by the hour, ${slots.day} by the day. The words you read first are always its own.`),
             el('p', {}, on ? 'Phrases turn with the clock for you.' : 'Phrases hold still for you. =[living]{on} lets them turn; for one visit, open a chapter with ?phrases=turn, or ?at=19:00 to read the words of that hour.')));
         }
+      } else if (handle === 'tellings' || handle === 'told') {
+        const totals = await loadTellingTotals();
+        const heard = heardCount(readHeard());
+        say(op, el('div', {},
+          el('p', {}, totals?.total
+            ? `You have heard ${heard} of the book’s ${totals.total} tellings.`
+            : `You have heard ${heard} tellings.`),
+          el('p', {}, 'In any chapter, tap a phrase with a wavy line to hear its next telling, hold it to see them all, or turn the hour in the rail.')));
       } else if (handle === 'almanac' || handle === 'wonders') {
         const data = await loadAlmanac();
         const kept = readAlmanac();
@@ -384,8 +398,22 @@ export async function initScriptoriumDesk() {
     } else if (op === '%') {
       say(op, el('p', {}, `You have opened ${state.visited.size} of ${TOTAL} chapters.${state.visited.size < TOTAL ? ` The next unopened is Chapter ${pad([...Array(TOTAL)].map((_, i) => i + 1).find((n) => !state.visited.has(n)))}.` : ' Every one.'}`));
     } else if (op === '!') {
+      if (handle === 'again') {
+        const how = payload.toLowerCase();
+        if (how === 'top') {
+          fromTheTop();
+          window.location.assign('/book/chapter/01/');
+        } else if (how === 'fresh') {
+          say(op, el('p', {}, 'A fresh copy clears what you have read and kept. Choose it on the sheet, so nothing is cleared by a typo.'));
+          openBeginAgain();
+        } else {
+          openBeginAgain();
+          say(op, el('p', {}, 'Two ways to begin again: from the top, keeping everything, or a fresh copy.'));
+        }
+        return;
+      }
       if (handle !== 'keep') {
-        say(op, el('p', {}, 'The desk knows one event: ![keep]{shelf}.'));
+        say(op, el('p', {}, 'The desk knows two events: ![keep]{shelf} and ![again].'));
         return;
       }
       setSwitch('offline-shelf', true);
@@ -432,6 +460,10 @@ export async function initScriptoriumDesk() {
       } else if (handle === 'light' && ['day', 'dusk', 'lamp'].includes(value)) {
         writeJSON(NOOK_KEY, { ...nook, light: { day: 0, dusk: 0.5, lamp: 1 }[value] });
         say(op, el('p', {}, `The room will be ${value === 'lamp' ? 'lamplit' : value === 'dusk' ? 'at dusk' : 'in daylight'} when you next open a chapter.`));
+      } else if (handle === 'binding' && BINDINGS.some((binding) => binding.id === value)) {
+        writeJSON(NOOK_KEY, { ...nook, binding: value });
+        const binding = BINDINGS.find((entry) => entry.id === value);
+        say(op, el('p', {}, `The book will be bound in ${binding.name} when you next open a chapter. ${binding.says}`));
       } else if (['cozy', 'texture'].includes(handle) && Number.isFinite(Number(value))) {
         writeJSON(NOOK_KEY, { ...nook, [handle]: Number(value) });
         say(op, el('p', {}, `${handle} set to ${value}.`));
@@ -442,7 +474,7 @@ export async function initScriptoriumDesk() {
         say(op, el('p', {}, `${SWITCHES.find((entry) => entry.id === handle).label}: ${next ? 'on' : 'off'}.`));
         renderSwitches();
       } else {
-        say(op, el('p', {}, 'Set what? =[lens]{bone}, =[light]{lamp}, =[cozy]{1.2}, or a switch like =[focus-line]{on}.'));
+        say(op, el('p', {}, 'Set what? =[lens]{bone}, =[light]{lamp}, =[binding]{slate}, =[cozy]{1.2}, or a switch like =[focus-line]{on}.'));
       }
     } else if (op === '$') {
       say(op, el('p', {}, 'The desk describing itself: every spell it knows is in the spellbook.'));

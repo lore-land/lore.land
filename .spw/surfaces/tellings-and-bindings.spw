@@ -1,0 +1,52 @@
+# Other tellings, bindings, beginning again — the reader's hands on the book
+# Runtime: book/scripts/modules/{tellings,living,begin-again,reading-nook}.mjs
+# Styles: book/styles/chapter/reading.css (Other tellings), book/styles/chapter/bindings.css, book/styles/components/begin-again.css
+# Plan: PLAN.E.spw lessons L23 (begin again), L24 (other tellings), L25 (bindings)
+#>tellings_and_bindings
+#:surface #!tellings #!bindings #!again
+
+^"tellings_and_bindings"{
+  .status: "working"
+  purpose: "A reader should be able to start the book over, hear it told other ways, and bind it in another paper, each in one gesture, and none of it at the cost of what they already have."
+  &plan: ~"PLAN.E.spw#plan_e"
+  &stage: ~".spw/surfaces/knobs.spw#stage_directions"
+}
+
+^"tellings"{
+  .law: "Variant zero is the book's own words. Every other telling is a reader's to find."
+  mark: "a faint wavy line under a phrase told more than one way; doubled once every telling has been heard"
+  tap: "rolls the phrase to its next telling, like a tumbler: up and out, in from below; never a reflow; a tag says which of how many"
+  hold: "deals the hand: every telling as a card; the unheard face down, a blank the length of their words; turn one over to hear it, and the phrase takes it"
+  dial: "Turn the hour (rail): the page's clock runs through the day; phrases ripple out from the middle of the screen; the light walks to the hour's cue (dawn, morning, noon, afternoon, dusk, night); past midnight is the next day; Back to now; The book's own words"
+  heard: "a telling is heard once it has been on screen; kept per reader (lore.tellings.v1); counted against the book's total (semantic.json tellings)"
+  turner: "living.mjs owns the turning; tellings.mjs asks by lore:telling and lore:stage-clock and listens for lore:told"
+  switch: "tellings — stable, on for every cohort; off, every phrase is plain words and what was heard is kept. The clock trial (living) is separate: phrases that turn by themselves."
+}
+
+^"bindings"{
+  .law: "A binding is a whole look: paper, ink, and the material of the cards. The room's light is the nook's; lamplight takes a light binding into the dark, a dark binding keeps its own night."
+  shelf: "Reading nook → Binding: six spines; the one the book is bound in is pulled out of the row; rebinding sweeps across the page like a turned board"
+  rag: "Rag paper — cream rag, iron-gall ink: the book as first bound"
+  glass: "Bonk glass — sea-glass pages, bottle-green ink, a sheen on every card and a few hairlines where it was struck"
+  salt: "Salt flat — bleached white, sky-blue ink, no cards at all: a hairline horizon and the glare above it"
+  ember: "Hearth clay — terracotta, soot-brown ink, the oven wall's warmth low in every card"
+  slate: "Slate & chalk — chalk-white words, chalk-yellow marks, old chalk the cloth never took off. Chalk is cheaper than oak."
+  starfield: "Starfield — night-blue cloth stamped with pale stars, for reading outdoors"
+  room: "a dark binding sets --room-floor, --room-field, --room-page, --room-heading, --room-section, --room-chip, --room-link, --room-mark; the lamp room's rules read them with the lamp's own values as fallback"
+  new_binding_rule: "one palette block in bindings.css (the base tokens restated, then one dressing for the cards), one entry in BINDINGS (id, spine, name, says, paper, ink, band, tone, chrome), one entry in the chapter template's head script"
+}
+
+^"begin_again"{
+  .law: "Starting over never costs a reader what they found."
+  from_the_top: "every mark kept; Chapter One, first page; no chapter offers to pick up where you left off"
+  fresh_copy: "every reading mark set aside, then cleared; settings stay (switches, nook, text size, binding)"
+  put_back: "the set-aside marks return, joined with whatever was marked since; lists join, records merge, the kept value wins a tie"
+  where: "home (beside Continue reading), the rail's contents, the newest chapter's end, the desk (![again])"
+  mark: "the page that opens after a restart says what happened"
+}
+
+~"guards"{
+  reading: "Nothing here moves a line: a telling rolls in place, a binding repaints, a restart reloads."
+  motion: "Reduced motion: no roll, no flip, no sweep; every telling and every binding is still a tap away."
+  continuity: "Every new control is additive. Phrases look like words until a reader turns one; a binding defaults to rag; nothing is cleared without being set aside."
+}

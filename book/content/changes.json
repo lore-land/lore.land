@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_06.D",
+      "date": "2026-11-06",
+      "notes": [
+        "Phrases with a faint wavy line are told more than one way. Tap one to hear its next telling; hold it to see every telling as a card, the ones you have not heard yet face down.",
+        "Other tellings, in the rail: turn the hour and every phrase rolls to that hour's words while the light walks with it. Back to now, or the book's own words, whenever you like.",
+        "Bind the book: Reading nook → Binding has six spines — rag paper, Bonk glass, salt flat, hearth clay, slate & chalk, starfield.",
+        "Begin again, beside Continue reading or under the contents: from the top, keeping everything, or a fresh copy whose marks are set aside so you can put them back.",
+        "On a wide screen the page and its rail sit together in the middle, with the room around them."
+      ]
+    },
+    {
       "release": "2026_11_06.C",
       "date": "2026-11-06",
       "notes": [

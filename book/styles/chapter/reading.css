@@ -503,6 +503,7 @@ aside a.primary-action {
 html:not([data-ebook-register="engineer"]):not([data-switch-full-rail="on"]) aside > :not(
   .chamber-seal-mount,
   .ebook-nav-panel,
+  .tellings-panel,
   .reader-scale-controls,
   .reading-nook,
   .reading-switches,
@@ -533,7 +534,7 @@ aside ul#lore-collector { order: 4; }
 aside .chapter-tuning-controls { order: 5; }
 aside .primary-action { order: 6; }
 aside .additional-links { order: 7; }
-aside > :not(.chamber-seal-mount, .ebook-nav-panel, .reader-scale-controls, .reading-nook, .reading-switches, .xray-panel, .reading-ref, #lore-button, #lore-collector, .chapter-tuning-controls, .primary-action, .additional-links) {
+aside > :not(.chamber-seal-mount, .ebook-nav-panel, .tellings-panel, .reader-scale-controls, .reading-nook, .reading-switches, .xray-panel, .reading-ref, #lore-button, #lore-collector, .chapter-tuning-controls, .primary-action, .additional-links) {
   order: 10;
 }
 
@@ -979,33 +980,36 @@ html[data-nook-light="lamp"] body:has(> main.chapter) {
   background-attachment: fixed;
 }
 
-/* Paper fibers screen-blend a grey haze over a dark room; keep them a whisper. */
-html[data-nook-light="lamp"] body:has(> main.chapter)::before {
+/* Paper fibers screen-blend a grey haze over a dark room; keep them a whisper.
+ * The rules from here to the line-share are the dark room's: lamplight, or a
+ * dark binding (bindings.css). Colours come from --room-* with the lamp's as
+ * the fallback, so a binding brings its own night. */
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) body:has(> main.chapter)::before {
   mix-blend-mode: screen;
   opacity: calc(var(--nook-texture, 0.6) * 0.25);
 }
 
-html[data-nook-light="lamp"] main.chapter :is(h1, h2),
-html[data-nook-light="lamp"] .chapter-turn-title {
-  color: #e2c68f;
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter :is(h1, h2),
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-turn-title {
+  color: var(--room-heading, #e2c68f);
 }
 
-html[data-nook-light="lamp"] main.chapter > [data-ebook-section] {
-  background: color-mix(in srgb, #1b271f 94%, #cdaa72 3%);
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter > [data-ebook-section] {
+  background: var(--room-section, color-mix(in srgb, #1b271f 94%, #cdaa72 3%));
 }
 
-html[data-nook-light="lamp"] :is(.chapter-topic-chip, .chapter-route-card, .chapter-turn-link, .scriptorium-slip, .reading-nook, .resume-offer) {
-  background: rgba(32, 46, 38, 0.9);
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) :is(.chapter-topic-chip, .chapter-route-card, .chapter-turn-link, .scriptorium-slip, .reading-nook, .resume-offer, .tellings-panel) {
+  background: var(--room-chip, rgba(32, 46, 38, 0.9));
   box-shadow: none;
 }
 
-html[data-nook-light="lamp"] .line-share {
-  background: #f3cf94;
-  color: #1a140b;
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .line-share {
+  background: var(--room-mark, #f3cf94);
+  color: var(--room-mark-ink, #1a140b);
 }
 
-html[data-nook-light="lamp"] ::target-text {
-  background: rgba(226, 165, 83, 0.35);
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) ::target-text {
+  background: color-mix(in srgb, var(--room-mark, #e2a553) 40%, transparent);
 }
 
 /* The end ornament: a four-lobed amber boonberry, seeds where lobes meet. */
@@ -1122,16 +1126,16 @@ html[data-nook-light="lamp"] {
 html[data-nook-light="lamp"] body main#chapter-content {
   background:
     linear-gradient(to bottom,
-      rgba(22, 31, 25, calc(0.72 - 0.62 * var(--nook-texture, 0.6))) 0,
-      rgba(22, 31, 25, calc(0.94 - 0.2 * var(--nook-texture, 0.6))) min(34rem, 60vh),
-      rgba(22, 31, 25, calc(0.97 - 0.12 * var(--nook-texture, 0.6))) min(60rem, 110vh));
+      rgb(var(--room-page, 22 31 25) / calc(0.72 - 0.62 * var(--nook-texture, 0.6))) 0,
+      rgb(var(--room-page, 22 31 25) / calc(0.94 - 0.2 * var(--nook-texture, 0.6))) min(34rem, 60vh),
+      rgb(var(--room-page, 22 31 25) / calc(0.97 - 0.12 * var(--nook-texture, 0.6))) min(60rem, 110vh));
 }
 
 html[data-nook-light="lamp"] body:has(> main.chapter) > aside {
-  background: rgba(22, 31, 25, calc(0.94 - 0.3 * var(--nook-texture, 0.6)));
+  background: rgb(var(--room-page, 22 31 25) / calc(0.94 - 0.3 * var(--nook-texture, 0.6)));
 }
 
-html[data-nook-light="lamp"] main.chapter .chapter-head {
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter .chapter-head {
   text-shadow: 0 1px 12px rgba(6, 10, 7, 0.85), 0 0 2px rgba(6, 10, 7, 0.6);
 }
 
@@ -1506,10 +1510,10 @@ main.chapter .chapter-stacks-wander {
   color: var(--color-accent-main);
 }
 
-html[data-nook-light="lamp"] .chapter-stacks-item {
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-stacks-item {
   background:
     repeating-linear-gradient(0deg, transparent 0 1.45rem, rgba(205, 170, 114, 0.05) 1.45rem 1.5rem),
-    rgba(32, 46, 38, 0.9);
+    var(--room-chip, rgba(32, 46, 38, 0.9));
 }
 
 /* ─── The grammar, faintly (resonance-layer.mjs, trial) ──────────────── */
@@ -1844,9 +1848,9 @@ button.section-navigation-position {
   color: var(--sigil-gold, #a67c38);
 }
 
-html[data-nook-light="lamp"] nav.chapter-navigation :is(a.prev, a.next),
-html[data-nook-light="lamp"] .section-navigation :is(button, .prev-section, .next-section) {
-  color: #e6c98f;
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) nav.chapter-navigation :is(a.prev, a.next),
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .section-navigation :is(button, .prev-section, .next-section) {
+  color: var(--room-link, #e6c98f);
 }
 
 /* The lens, folded: one quiet line under the epigraph until it is wanted. */
@@ -3147,12 +3151,23 @@ strong.xr-chamber { color: var(--sigil-gold, #a67c38); }
  * under reduced motion. */
 
 main.chapter .living-slot {
-  transition: opacity 280ms ease, filter 280ms ease;
+  position: relative;
+  top: 0;
+  transition: opacity 240ms ease, filter 240ms ease, top 240ms cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
+/* A turn rolls like a tumbler: up and out, then in from below (living.mjs). */
 main.chapter .living-slot.is-turning {
-  opacity: 0.15;
-  filter: blur(3px);
+  top: -0.45em;
+  opacity: 0;
+  filter: blur(2px);
+}
+
+main.chapter .living-slot.is-arriving {
+  top: 0.45em;
+  opacity: 0;
+  filter: blur(2px);
+  transition: none;
 }
 
 main.chapter .living-slot.is-turned {
@@ -3930,4 +3945,473 @@ main.chapter .scene-tool:focus-visible {
 .light-cue:focus-visible {
   border-color: var(--sigil-gold, #a67c38);
   background: color-mix(in srgb, var(--sigil-gold, #a67c38) 16%, transparent);
+}
+
+/* ─── Other tellings (tellings.mjs; PLAN.E L24) ─────────────────────────
+ * A phrase told more than one way wears a faint wavy line. Tap it and it
+ * rolls to its next telling; a tag says which of how many. Hold it for the
+ * hand: every telling as a card, the unheard ones face down. Heard every
+ * way, the line doubles. Switch `tellings` (stable, on). */
+
+:is(html:not([data-switches-ready]), html[data-switch-tellings="on"]) main.chapter .living-slot.is-telling {
+  border-radius: 0.2em;
+  cursor: pointer;
+  text-decoration: underline wavy color-mix(in srgb, var(--sigil-gold, #a67c38) 46%, transparent);
+  text-decoration-thickness: 1px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.3em;
+  -webkit-touch-callout: none;
+  user-select: none;
+  transition: opacity 240ms ease, filter 240ms ease, top 240ms cubic-bezier(0.3, 0.7, 0.4, 1), background-color 160ms ease;
+}
+
+:is(html:not([data-switches-ready]), html[data-switch-tellings="on"]) main.chapter .living-slot.is-telling:is(:hover, :focus-visible) {
+  outline: none;
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 14%, transparent);
+  text-decoration-color: var(--sigil-gold, #a67c38);
+}
+
+:is(html:not([data-switches-ready]), html[data-switch-tellings="on"]) main.chapter .living-slot.is-telling[data-heard-all] {
+  text-decoration-style: double;
+  text-decoration-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 72%, transparent);
+}
+
+/* "2 of 5": shown on hover and focus, and for a moment after a turn. */
+:is(html:not([data-switches-ready]), html[data-switch-tellings="on"]) main.chapter .living-slot.is-telling::after {
+  content: attr(data-told);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.3em);
+  z-index: 3;
+  padding: 0.24em 0.5em;
+  border-radius: 999px;
+  background: var(--sigil-gold, #a67c38);
+  color: var(--bg-color-main, #f3ede1);
+  font: 600 0.6rem/1 "JetBrainsMono", var(--font-family-mono, monospace);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+:is(html:not([data-switches-ready]), html[data-switch-tellings="on"]) main.chapter .living-slot.is-telling:is(:hover, :focus-visible, .is-told)::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* The hand: every telling as a card, fanned. */
+.telling-fan {
+  position: fixed;
+  inset: auto;
+  z-index: 60;
+  width: min(36rem, calc(100vw - 16px));
+  margin: 0;
+  padding: 0.75rem 0.75rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  border-radius: 0.9rem;
+  background: var(--bg-color-content-strong, #fffdf8);
+  box-shadow: 0 18px 44px rgba(12, 16, 24, 0.24);
+  color: var(--color-text-main);
+  overflow: visible;
+}
+
+.telling-fan-head,
+.telling-fan-foot {
+  margin: 0;
+  text-align: center;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: var(--color-text-alt);
+}
+
+.telling-fan-head strong {
+  color: var(--sigil-gold, #a67c38);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.telling-hand {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 1.1rem 1.2rem 0.9rem;
+}
+
+.telling-card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  width: 7.4rem;
+  min-height: 9.6rem;
+  margin: 0 -0.75rem;
+  padding: 0.8rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 38%, transparent);
+  border-radius: 0.55rem;
+  background: var(--bg-color-content-strong, #fffdf8);
+  box-shadow: 0 4px 14px rgba(12, 16, 24, 0.14);
+  color: var(--chapter-reading-ink, var(--color-text-main));
+  cursor: pointer;
+  font-family: var(--font-family-body);
+  font-size: 0.86rem;
+  line-height: 1.35;
+  text-align: center;
+  transform-origin: 50% 130%;
+  transform: rotate(calc(var(--spread, 0) * 5deg)) translateY(calc(var(--lift, 0) * 0.35rem));
+  transition: translate 200ms cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 200ms ease;
+}
+
+.telling-card:hover,
+.telling-card:focus-visible {
+  z-index: 2;
+  translate: 0 -0.7rem;
+  outline: none;
+  box-shadow: 0 12px 24px rgba(12, 16, 24, 0.22), 0 0 0 2px color-mix(in srgb, var(--sigil-gold, #a67c38) 60%, transparent);
+}
+
+.telling-card.is-current {
+  z-index: 1;
+  border-color: var(--sigil-gold, #a67c38);
+  box-shadow: 0 8px 18px rgba(12, 16, 24, 0.2), inset 0 0 0 1px var(--sigil-gold, #a67c38);
+}
+
+.telling-card-note {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sigil-gold, #a67c38);
+}
+
+.telling-card-note::before {
+  content: "✦ ";
+}
+
+/* Face down: the back of the card, and a blank the length of its words. */
+.telling-card.is-face-down {
+  background:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--sigil-gold, #a67c38) 24%, transparent) 0 1.5px, transparent 1.5px 7px),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--sigil-gold, #a67c38) 16%, transparent) 0 1px, transparent 1px 9px),
+    var(--telling-back, var(--color-accent-alt, #184456));
+  border-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 60%, transparent);
+}
+
+.telling-card-back {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.telling-card-back::before {
+  content: "?";
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--bg-color-content-strong, #fffdf8);
+  color: var(--telling-back, var(--color-accent-alt, #184456));
+  font-family: var(--chapter-display, Georgia, serif);
+  font-size: 1.1rem;
+}
+
+/* In a dark room the accent is light; card backs stay dark. */
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) {
+  --telling-back: color-mix(in srgb, var(--sigil-gold, #a67c38) 26%, var(--bg-color-main, #161d16));
+}
+
+.telling-card-blank {
+  width: calc(30% + var(--len, 0.5) * 60%);
+  height: 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-color-content-strong, #fffdf8) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .telling-card.is-flipping {
+    animation: telling-flip-out 170ms ease-in forwards;
+  }
+
+  .telling-card.is-unflipping {
+    animation: telling-flip-in 220ms ease-out;
+  }
+
+  .telling-fan.is-open .telling-card {
+    animation: telling-deal 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
+    animation-delay: calc((var(--spread, 0) + 3) * 35ms);
+  }
+}
+
+@keyframes telling-flip-out { to { scale: 0.04 1; } }
+@keyframes telling-flip-in { from { scale: 0.04 1; } to { scale: 1 1; } }
+@keyframes telling-deal { from { opacity: 0; translate: 0 1.6rem; } }
+
+@media (max-width: 34rem) {
+  .telling-hand {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-inline: 0;
+  }
+
+  .telling-card {
+    width: calc(50% - 0.4rem);
+    min-height: 6.4rem;
+    margin: 0;
+    transform: none;
+    font-size: 0.82rem;
+  }
+}
+
+/* The rail: Other tellings, with the hour dial. */
+html[data-switches-ready]:not([data-switch-tellings="on"]) .tellings-panel {
+  display: none;
+}
+
+aside .tellings-panel { order: 1; }
+
+.tellings-panel {
+  display: grid;
+  gap: calc(0.55rem * var(--cozy, 1));
+  padding: 0.75rem;
+  border: var(--interactive-border);
+  border-radius: var(--border-radius-small);
+  background: color-mix(in srgb, var(--theme-paper) 90%, var(--sigil-gold, #a67c38) 5%);
+}
+
+.tellings-panel h2 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.tellings-count,
+.tellings-dial-note {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text-alt);
+}
+
+.tellings-dial-note {
+  font-style: italic;
+}
+
+.tellings-dial {
+  position: relative;
+  justify-self: center;
+  width: min(11rem, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  --dial-sun: #f0c25a;
+}
+
+.tellings-dial.is-dragging {
+  cursor: grabbing;
+}
+
+.tellings-dial:focus-visible {
+  outline: 2px solid var(--color-focus-outline, #8a3f12);
+  outline-offset: 3px;
+}
+
+.tellings-dial[data-cue="dawn"] { --dial-sun: #f4a76a; }
+.tellings-dial[data-cue="morning"] { --dial-sun: #f6cf6a; }
+.tellings-dial[data-cue="noon"] { --dial-sun: #fbe8a0; }
+.tellings-dial[data-cue="afternoon"] { --dial-sun: #f2b950; }
+.tellings-dial[data-cue="dusk"] { --dial-sun: #e0783f; }
+.tellings-dial[data-cue="night"] { --dial-sun: #c9d6f2; }
+
+.tellings-dial-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tellings-dial-face .dial-sky {
+  fill: color-mix(in srgb, var(--dial-sun) 14%, var(--bg-color-content-strong, #fffdf8));
+  stroke: color-mix(in srgb, var(--sigil-gold, #a67c38) 30%, transparent);
+  transition: fill 400ms ease;
+}
+
+.tellings-dial-face .dial-ring {
+  fill: none;
+  stroke: color-mix(in srgb, var(--sigil-gold, #a67c38) 55%, transparent);
+  stroke-width: 1;
+}
+
+.tellings-dial-face .dial-tick {
+  stroke: color-mix(in srgb, var(--color-text-alt) 55%, transparent);
+  stroke-width: 1;
+}
+
+.tellings-dial-face .dial-tick.is-long {
+  stroke: var(--sigil-gold, #a67c38);
+  stroke-width: 1.6;
+}
+
+.tellings-dial-face .dial-word {
+  fill: var(--color-text-alt);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+}
+
+.tellings-dial-face .dial-word.is-glyph {
+  font-size: 10px;
+  fill: var(--sigil-gold, #a67c38);
+}
+
+.tellings-dial-face .dial-hand {
+  stroke: var(--sigil-gold, #a67c38);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.tellings-dial-face .dial-sun {
+  fill: var(--dial-sun);
+  stroke: color-mix(in srgb, var(--dial-sun) 60%, #3a2410);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--dial-sun) 80%, transparent));
+  transition: fill 300ms ease;
+}
+
+.tellings-dial-face .dial-pin {
+  fill: var(--sigil-gold, #a67c38);
+}
+
+.tellings-dial-readout {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.1rem;
+  padding-top: 1.6rem;
+  pointer-events: none;
+}
+
+.tellings-dial-time {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.86rem;
+  color: var(--color-text-main);
+}
+
+.tellings-dial-day {
+  font-family: var(--font-family-body);
+  font-size: 0.68rem;
+  font-style: italic;
+  color: var(--color-text-alt);
+}
+
+.tellings-dial:not([data-dialed]) .tellings-dial-day::before {
+  content: "◷ ";
+  font-style: normal;
+}
+
+.tellings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.tellings-actions button {
+  padding: 0.22rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-accent-main);
+  font-size: 0.72rem;
+}
+
+.tellings-actions button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.tellings-phrases {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tellings-phrase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.24rem 0.4rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text-main);
+  font-family: var(--font-family-body);
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.tellings-phrase:hover,
+.tellings-phrase:focus-visible {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 12%, transparent);
+}
+
+.tellings-phrase-name::first-letter {
+  text-transform: uppercase;
+}
+
+.tellings-phrase-pips {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.tellings-phrase-pips .pip {
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 70%, transparent);
+  border-radius: 50%;
+}
+
+.tellings-phrase-pips .pip.is-heard {
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 55%, transparent);
+}
+
+.tellings-phrase-pips .pip.is-current {
+  background: var(--sigil-gold, #a67c38);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--sigil-gold, #a67c38) 25%, transparent);
+}
+
+.tellings-phrase[data-heard-all] .tellings-phrase-name::after {
+  content: " ✦";
+  color: var(--sigil-gold, #a67c38);
+}
+
+/* ─── Layout: the page and its rail, set as a pair (wide screens) ────────
+ * The prose keeps its measure; on a wide window the chapter panel hugs it
+ * instead of stretching, and the room shows either side of the pair. A
+ * narrower desktop keeps the edge-to-edge page (the gutters collapse). */
+
+@media (min-width: 70rem) {
+  body:has(> main.chapter):has(> aside) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, calc(44rem + 8rem * var(--cozy, 1)))
+      clamp(17rem, 21vw, 23rem)
+      minmax(0, 1fr);
+  }
 }

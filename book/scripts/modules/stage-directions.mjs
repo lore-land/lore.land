@@ -16,10 +16,13 @@
  *                              light stands, its warmth and its glow
  *   &glow=0.8 &warmth=0.7 &ink=34 &grain=0.3 &edge=0.5   knobs, turned past the cue
  *   &motif=egg                 light the scene as this motif does
+ *   &binding=glass             bind the book in this paper and ink for the visit:
+ *                              rag, glass, salt, ember, slate or starfield
  *   &phrases=turn|still        do phrases turn with the clock on this visit
  *   &at=19:00 | &at=2026-11-13T19:00 | &at=canon
  *                              the stage clock: which words the turning phrases show
- *                              (canon: the book's own words)
+ *                              (canon: the book's own words); the hour dial in
+ *                              Other tellings sets the same clock (tellings.mjs)
  *   &controls=off              no frame controls, for a clean automated capture
  *
  * The older ?try=living still turns phrases on (reading-switches.mjs).
@@ -64,6 +67,7 @@ export function readStage(href = typeof location !== 'undefined' ? location.href
     knobs,
     cue: /^[a-z]+$/.test(q.get('light') || '') ? q.get('light') : null,
     motif: q.get('motif') || null,
+    binding: /^[a-z]+$/.test(q.get('binding') || '') ? q.get('binding') : null,
     phrases: ['turn', 'still'].includes(q.get('phrases')) ? q.get('phrases') : null,
     at: readClock(q.get('at')),
     controls: q.get('controls') === 'off' ? 'off' : null
@@ -72,13 +76,13 @@ export function readStage(href = typeof location !== 'undefined' ? location.href
 
 /** True when this URL gives any stage direction at all. */
 export function hasStage(stage = readStage()) {
-  return Boolean(stage.aspect || stage.type || stage.cue || stage.motif || stage.phrases || stage.at || stage.controls || Object.keys(stage.knobs || {}).length);
+  return Boolean(stage.aspect || stage.type || stage.cue || stage.motif || stage.binding || stage.phrases || stage.at || stage.controls || Object.keys(stage.knobs || {}).length);
 }
 
 /** Write a stage back into a link: only what is set, in a stable order. */
 export function stageLink(stage, href = location.href) {
   const url = new URL(href);
-  ['stage', 'p', 'type', 'light', 'sun', 'glow', 'warmth', 'ink', 'grain', 'edge', 'motif', 'phrases', 'at', 'controls', 'try'].forEach((key) => url.searchParams.delete(key));
+  ['stage', 'p', 'type', 'light', 'sun', 'glow', 'warmth', 'ink', 'grain', 'edge', 'motif', 'binding', 'phrases', 'at', 'controls', 'try'].forEach((key) => url.searchParams.delete(key));
   const set = (key, value) => { if (value != null && value !== '') url.searchParams.set(key, String(value)); };
   const r = (n, digits = 2) => (Number.isFinite(n) ? Number(n.toFixed(digits)) : null);
   set('stage', stage.aspect);
@@ -89,6 +93,7 @@ export function stageLink(stage, href = location.href) {
   ['glow', 'warmth', 'grain', 'edge'].forEach((key) => set(key, r(k[key])));
   set('ink', Number.isFinite(k.ink) ? Math.round(k.ink) : null);
   set('motif', stage.motif);
+  set('binding', stage.binding && stage.binding !== 'rag' ? stage.binding : null);
   set('phrases', stage.phrases);
   if (stage.at === 'canon') set('at', 'canon');
   else if (stage.at instanceof Date) set('at', `${stage.at.getFullYear()}-${pad(stage.at.getMonth() + 1)}-${pad(stage.at.getDate())}T${pad(stage.at.getHours())}:${pad(stage.at.getMinutes())}`);

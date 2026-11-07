@@ -511,7 +511,8 @@
     position: relative;
   }
 
-  [data-spw-grammar="paradox"]::before {
+  /* Not on a section: there ::before is the voice stripe, and the tilt would swing it across the text. */
+  [data-spw-grammar="paradox"]:not([data-ebook-section])::before {
     content: '?';
     font-family: 'LoreLand', var(--font-family-heading);
     position: absolute;
