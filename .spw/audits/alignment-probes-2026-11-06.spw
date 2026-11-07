@@ -7,7 +7,7 @@
 #:layer #!pragmatics
 
 ^meta{
-  ran: "2026-11-06T23:35:36.991Z"
+  ran: "2026-11-07T00:12:09.092Z"
   kit: ".spw/tools/alignment-probes.mjs (npm run spw:probes)"
   ledger: ".spw/state/alignment-ledger.spw"
   scope: "static half of the five ledger probes — visual probes remain manual"
@@ -26,7 +26,7 @@
   precache_existence: { checked: 4, findings: 0 }
   reduced_motion_gates: { checked: 14, findings: 0 }
   theme_parity: { checked: 58, findings: 0 }
-  attribute_parity: { checked: 152, findings: 0 }
+  attribute_parity: { checked: 153, findings: 0 }
 }
 
 .note: "all scriptable probes clean — only the manual visual probes remain"

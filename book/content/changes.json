@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_06.C",
+      "date": "2026-11-06",
+      "notes": [
+        "A chapter's address can now set the stage for one visit, in plain words: ?light=dusk (or dawn, morning, noon, afternoon, night, lamp), ?stage=story with p=3 to frame a passage, ?phrases=turn to let phrases turn with the clock, ?at=19:00 to read the words of that hour. Nothing you set in Switches changes.",
+        "Frame this and the light table have Copy stage link: the light, the words and the frame you tuned, as a link anyone can open.",
+        "The light table has named cues — dawn, morning, noon, afternoon, dusk, night, lamp — beside the sky you can drag.",
+        "The trial once called a living page is now plainly named: Phrases turn with the clock.",
+        "A light you hold now stays where you put it while you scroll."
+      ]
+    },
+    {
       "release": "2026_11_06.B",
       "date": "2026-11-06",
       "notes": [

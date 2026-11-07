@@ -19,7 +19,7 @@ import {
   storyVoiceFor,
   voiceKickerWithMask
 } from './story-lexicon.mjs?v=2026_09_26.A';
-import { applySectionClimateAttributes } from './copy-climate.mjs?v=2026_08_27.A';
+import { applySectionClimateAttributes } from './copy-climate.mjs?v=2026_11_06.C';
 import { LENSES, leanFor } from './valence-lens.mjs?v=2026_09_27.A';
 
 const NUMBER_WORDS = Object.freeze([

@@ -3168,7 +3168,7 @@ main.chapter .living-slot.is-turned {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html[data-switch-living='on'] main.chapter .wonder-mark {
+  :is(html[data-switch-living='on'], html[data-stage-phrases='turn']) main.chapter .wonder-mark {
     animation: soil-glint var(--glint-period, 14s) ease-in-out var(--glint-delay, 0s) infinite;
   }
 }
@@ -3899,4 +3899,35 @@ main.chapter .scene-tool:focus-visible {
 /* The framed passage sits in the middle of its card; the address keeps the foot. */
 .frame-text {
   margin-block: auto;
+}
+
+/* Stage directions: ?controls=off leaves only the card, for an automated capture. */
+.frame-bar.is-hidden {
+  display: none;
+}
+
+/* Light cues: named lights a tap (or ?light=dusk) can set. */
+.light-cues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.3rem 0 0.1rem;
+}
+
+.light-cue {
+  padding: 0.16rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-main);
+  cursor: pointer;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+}
+
+.light-cue.is-on,
+.light-cue:hover,
+.light-cue:focus-visible {
+  border-color: var(--sigil-gold, #a67c38);
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 16%, transparent);
 }

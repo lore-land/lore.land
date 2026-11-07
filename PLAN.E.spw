@@ -169,7 +169,7 @@
     #name: "frame it where you read it"
     prerequisites: [L11, L20]
     increment: "Frame this: the passage being read set on a card at story, square or card proportions, with kicker, address, type size and the knobs, controls that step back for a clean screenshot"
-    done_when: "a reader can make a share-worthy screenshot of any passage without leaving the chapter"
+    done_when: "a reader can make a share-worthy screenshot of any passage without leaving the chapter, and share the recipe: the URL is a set of stage directions (?stage=story&p=3&light=dusk&at=19:00#section), written back by Copy stage link"
   }
   ^lesson[L22]{
     #name: "the plan becomes the land's philosophy"

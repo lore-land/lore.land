@@ -21,9 +21,15 @@
  * card proportions, its knobs at hand, for a clean screenshot. Tapping a
  * wonder flares the light toward it.
  *
+ * Stage directions (stage-directions.mjs) set all of this from the URL for
+ * one visit — ?stage=story&p=3&light=dusk&warmth=0.8&motif=egg#section — and
+ * "Copy stage link" writes the current stage back into a link: the named
+ * light cue nearest where the sun stands, and only the knobs a reader turned.
+ *
  * Reduced motion: no gliding, no flare; every knob still works.
  * Switch: `scene-light` (default on).
  */
+import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.C';
 
 const KNOBS_URL = '/book/content/world/knobs.json';
 const NUMERIC = ['x', 'y', 'glow', 'warmth', 'ink', 'grain', 'edge'];
@@ -90,6 +96,39 @@ export function initSceneLight({ chapterData, announce } = {}) {
   let stage = null;
   let carrying = null;
   let flareTimer = 0;
+  const directions = readStage();
+  let cue = null;              // the named light cue last set
+  const touched = new Set();   // knobs the reader (or the URL) turned past the cue
+
+  /* The cue nearest where the light stands: links name a light, not coordinates. */
+  const nearestCue = (values) => {
+    const cues = Object.entries(config?.cues || {});
+    if (!cues.length || !values) return null;
+    return cues.reduce((best, [name, c]) => {
+      const d = (c.x - values.x) ** 2 + (c.y - values.y) ** 2;
+      return d < best.d ? { name, d } : best;
+    }, { name: null, d: Infinity }).name;
+  };
+
+  /* The stage as it stands, as a link anyone can open (stage-directions.mjs). */
+  const currentStage = (extra = {}) => ({
+    knobs: held ? Object.fromEntries([...touched].filter((k) => k in held).map((k) => [k, held[k]])) : {},
+    cue: held ? (cue || nearestCue(held)) : directions.cue,
+    motif: directions.motif,
+    phrases: root.dataset.stageClock ? 'turn' : null,
+    at: root.dataset.stageClock ? new Date(root.dataset.stageClock) : null,
+    ...extra
+  });
+  const copyStage = async (button, extra) => {
+    const link = stageLink(currentStage(extra));
+    try {
+      await navigator.clipboard.writeText(link);
+      button.textContent = 'Stage link copied';
+    } catch {
+      window.prompt?.call(window, 'Stage link', link);
+    }
+    settle('Stage link', 'Anyone who opens it sees this light, these words and this frame.', button);
+  };
 
   const token = (key) => config?.knobs?.[key]?.token;
   const read = () => {
@@ -116,7 +155,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
       return;
     }
     const current = base || read();
-    const motif = active?.dataset.motif;
+    const motif = directions.motif || active?.dataset.motif;
     const preset = config.motifs?.[motif];
     const t = config.steer ?? 0.45;
     const target = { ...current };
@@ -150,13 +189,27 @@ export function initSceneLight({ chapterData, announce } = {}) {
 
   const take = (patch, quiet = false) => {
     held = { ...(held || read()), ...patch };
+    if ('x' in patch || 'y' in patch) cue = null;
     root.dataset.lightHeld = 'true';
     write(held);
     if (!quiet) paintTable();
   };
 
+  const applyCue = (name) => {
+    const c = config?.cues?.[name];
+    if (!c) return false;
+    take({ x: c.x, y: c.y, warmth: c.warmth, glow: c.glow }, true);
+    cue = name;
+    touched.delete('warmth');
+    touched.delete('glow');
+    paintTable();
+    return true;
+  };
+
   const letGo = (at) => {
     held = null;
+    cue = null;
+    touched.clear();
     delete root.dataset.lightHeld;
     if (base) write(base);
     steer();
@@ -195,23 +248,35 @@ export function initSceneLight({ chapterData, announce } = {}) {
     const knobRow = (key) => {
       const knob = config.knobs[key];
       const input = el('input', { type: 'range', min: knob.min, max: knob.max, step: knob.step, 'data-knob': key, 'aria-label': knob.label });
-      input.addEventListener('input', () => take({ [key]: Number(input.value) }, true));
+      input.addEventListener('input', () => { touched.add(key); take({ [key]: Number(input.value) }, true); });
       input.addEventListener('change', () => settle(`${knob.label} held`, knob.reads ? `${knob.reads.charAt(0).toUpperCase()}${knob.reads.slice(1)}.` : '', input));
       return el('label', { className: 'light-knob' }, el('span', {}, knob.label), input);
     };
     const carry = el('button', { type: 'button', className: 'light-action' }, 'Carry the light');
     const release = el('button', { type: 'button', className: 'light-action is-quiet' }, 'Let the scene light itself');
     const framer = el('button', { type: 'button', className: 'light-action' }, 'Frame this');
+    const linker = el('button', { type: 'button', className: 'light-action is-quiet' }, 'Copy stage link');
+    linker.addEventListener('click', () => copyStage(linker, { section: section.id || null }));
     table = el('div', { className: 'light-table', role: 'dialog', 'aria-label': 'The light table' },
       el('div', { className: 'light-head' },
         el('span', { className: 'light-kicker' }, '☼ The light table'),
         el('button', { type: 'button', className: 'light-close', 'aria-label': 'Close' }, '×')),
       section.dataset.sceneLight ? el('p', { className: 'light-scene' }, el('span', {}, 'The scene’s own light · '), section.dataset.sceneLight) : null,
       preset ? el('p', { className: 'light-steer' }, `Steered by ${motif.replace(/-/g, ' ')}: ${preset.says}.`) : null,
+      el('div', { className: 'light-cues', role: 'group', 'aria-label': 'Light cues' },
+        ...Object.entries(config.cues || {}).map(([name, c]) => {
+          const chip = el('button', { type: 'button', className: `light-cue${cue === name ? ' is-on' : ''}`, title: c.says, 'data-cue': name }, name);
+          chip.addEventListener('click', () => {
+            applyCue(name);
+            table.querySelectorAll('.light-cue').forEach((x) => x.classList.toggle('is-on', x === chip));
+            settle(`Light cue: ${name}`, `${c.says.charAt(0).toUpperCase()}${c.says.slice(1)}.`, chip);
+          });
+          return chip;
+        })),
       sky,
       el('div', { className: 'light-knobs' }, ...['glow', 'warmth', 'ink', 'grain', 'edge'].map(knobRow)),
       el('p', { className: 'light-held' }),
-      el('div', { className: 'light-actions' }, carry, framer, release));
+      el('div', { className: 'light-actions' }, carry, framer, release, linker));
 
     const fromSky = (event) => {
       const box = sky.getBoundingClientRect();
@@ -290,7 +355,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
     delete root.dataset.framing;
   };
 
-  const openFrame = (section) => {
+  const openFrame = (section, opts = {}) => {
     closeFrame();
     const paragraphs = [...section.querySelectorAll(':scope > p:not(.section-marks)')].filter((p) => p.textContent.trim());
     if (!paragraphs.length) return;
@@ -300,8 +365,9 @@ export function initSceneLight({ chapterData, announce } = {}) {
       const d = Math.abs(box.top + box.height / 2 - band);
       return d < best.d ? { i, d } : best;
     }, { i: 0, d: Infinity }).i;
-    let whole = false;
-    let aspect = 'story';
+    if (Number.isInteger(opts.paragraph)) index = Math.min(Math.max(opts.paragraph - 1, 0), paragraphs.length - 1);
+    let whole = opts.paragraph === 'all';
+    let aspect = opts.aspect || 'story';
     const number = Number(chapterData?.chapterNumber || 0);
     const title = section.querySelector('h2, h3')?.textContent?.trim() || section.dataset.voiceKicker || '';
     const text = el('div', { className: 'frame-text' });
@@ -338,7 +404,7 @@ export function initSceneLight({ chapterData, announce } = {}) {
     });
     const prev = el('button', { type: 'button', className: 'frame-step', 'aria-label': 'Previous paragraph' }, '◀');
     const next = el('button', { type: 'button', className: 'frame-step', 'aria-label': 'Next paragraph' }, '▶');
-    const all = el('button', { type: 'button', className: 'frame-step' }, 'Whole section');
+    const all = el('button', { type: 'button', className: `frame-step${whole ? ' is-on' : ''}` }, 'Whole section');
     prev.addEventListener('click', () => { whole = false; index = (index - 1 + paragraphs.length) % paragraphs.length; fill(); });
     next.addEventListener('click', () => { whole = false; index = (index + 1) % paragraphs.length; fill(); });
     all.addEventListener('click', () => { whole = !whole; all.classList.toggle('is-on', whole); fill(); });
@@ -347,19 +413,32 @@ export function initSceneLight({ chapterData, announce } = {}) {
       sized = true;
       card.style.setProperty('--frame-type', `${size.value}rem`);
     });
+    if (opts.type) {
+      sized = true;
+      size.value = String(opts.type);
+      card.style.setProperty('--frame-type', `${opts.type}rem`);
+    }
     const knob = (key) => {
       const k = config.knobs[key];
       const input = el('input', { type: 'range', min: k.min, max: k.max, step: k.step, value: String((held || read())[key]), 'aria-label': k.label });
-      input.addEventListener('input', () => take({ [key]: Number(input.value) }, true));
+      input.addEventListener('input', () => { touched.add(key); take({ [key]: Number(input.value) }, true); });
       return el('label', { className: 'frame-knob' }, el('span', {}, k.label), input);
     };
     const done = el('button', { type: 'button', className: 'frame-done' }, 'Done');
     done.addEventListener('click', closeFrame);
+    const linker = el('button', { type: 'button', className: 'frame-link' }, 'Copy stage link');
+    linker.addEventListener('click', () => copyStage(linker, {
+      section: section.id || null,
+      aspect,
+      paragraph: whole ? 'all' : index + 1,
+      type: sized ? Number(size.value) : null
+    }));
     const bar = el('div', { className: 'frame-bar' },
       el('div', { className: 'frame-group' }, ...aspectButtons),
       el('div', { className: 'frame-group' }, prev, next, all),
       el('label', { className: 'frame-knob' }, el('span', {}, 'Type'), size),
       ...['glow', 'warmth', 'edge', 'grain'].map(knob),
+      linker,
       done);
     stage = el('div', { className: 'frame-stage', role: 'dialog', 'aria-label': 'Frame for a screenshot' }, card, bar);
     fill();
@@ -372,9 +451,13 @@ export function initSceneLight({ chapterData, announce } = {}) {
       clearTimeout(quiet);
       quiet = setTimeout(() => bar.classList.add('is-quiet'), 2600);
     };
-    stage.addEventListener('pointermove', wake);
-    stage.addEventListener('keydown', wake);
-    wake();
+    if (opts.controls === 'off') {
+      bar.classList.add('is-hidden');
+    } else {
+      stage.addEventListener('pointermove', wake);
+      stage.addEventListener('keydown', wake);
+      wake();
+    }
     announce?.('Framed for a screenshot. The controls step back after a moment; Escape closes.');
   };
 
@@ -435,7 +518,20 @@ export function initSceneLight({ chapterData, announce } = {}) {
     if (!config) return;
     root.dataset.sceneKnobs = 'ready';
     base = read();
+    // Stage directions from the URL: the motif's light first, the cue held
+    // over it, the turned knobs over that, then the frame.
     steer();
+    if (directions.cue) applyCue(directions.cue);
+    if (Object.keys(directions.knobs).length) {
+      Object.keys(directions.knobs).forEach((key) => touched.add(key));
+      take(directions.knobs, true);
+    }
+    steer();
+    if (directions.aspect) {
+      const target = sections.find((s) => s.id && s.id === directions.section) || sections[0];
+      target.scrollIntoView({ block: 'center' });
+      setTimeout(() => openFrame(target, directions), 450);
+    }
   });
 
   return () => {

@@ -17,7 +17,7 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.B';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.C';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
@@ -325,7 +325,7 @@ export async function initScriptoriumDesk() {
           const total = slots.minute + slots.hour + slots.day;
           say(op, el('div', {},
             el('p', {}, `The book breathes in ${total} places: ${slots.minute} by the minute, ${slots.hour} by the hour, ${slots.day} by the day. The words you read first are always its own.`),
-            el('p', {}, on ? 'Your living page is on.' : 'Your living page is off. =[living]{on} turns it on; a chapter link with ?try=living tries it once.')));
+            el('p', {}, on ? 'Phrases turn with the clock for you.' : 'Phrases hold still for you. =[living]{on} lets them turn; for one visit, open a chapter with ?phrases=turn, or ?at=19:00 to read the words of that hour.')));
         }
       } else if (handle === 'almanac' || handle === 'wonders') {
         const data = await loadAlmanac();

@@ -467,7 +467,8 @@ export function initCopyClimate(options = {}) {
     }
     lastScrollWrite = progress;
     html.style.setProperty('--copy-scroll', String(Math.round(progress * 1000) / 1000));
-    if (!reduced && activeEl) {
+    // A light a reader (or a stage direction) holds stays where it was put.
+    if (!reduced && activeEl && html.dataset.lightHeld !== 'true') {
       const base = TEMPO_PROFILES[activeEl.dataset.tempo] || TEMPO_PROFILES.day;
       const y = base.lightY + progress * 10;
       html.style.setProperty('--light-y', String(Math.round(y * 10) / 10));

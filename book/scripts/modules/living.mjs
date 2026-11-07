@@ -17,9 +17,13 @@
  * and surer its glint — and phased by the clock. Light only; nothing moves
  * or reflows. Reduced motion: slots turn without animation, nothing glints.
  *
- * Switch: `living` (a trial; ?try=living).
+ * Switch: `living` ("Phrases turn with the clock", a trial). Stage directions
+ * set it for one visit: ?phrases=turn|still, and ?at=19:00 (or a full date,
+ * or "canon") pins every phrase to the words of that moment — no ticking —
+ * so a screenshot can be reproduced exactly (stage-directions.mjs).
  */
 import { loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
+import { readStage } from './stage-directions.mjs?v=2026_11_06.C';
 
 const PERIOD = Object.freeze({ minute: 60_000, hour: 3_600_000, day: 86_400_000 });
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -55,7 +59,16 @@ export function initLiving({ chapterData } = {}) {
   const marks = [...main.querySelectorAll('.wonder-mark[data-wonder]')];
   if (!slots.length && !marks.length) return () => {};
 
-  const on = () => root.getAttribute('data-switch-living') === 'on';
+  const stage = readStage();
+  const pinned = stage.at instanceof Date ? stage.at : null;
+  const on = () => {
+    if (stage.phrases === 'still' || stage.at === 'canon') return false;
+    if (stage.phrases === 'turn' || pinned) return true;
+    return root.getAttribute('data-switch-living') === 'on';
+  };
+  const clockNow = () => pinned || new Date();
+  // Stage directions turn phrases on without touching the reader's switch; the glints follow.
+  if (on() && root.getAttribute('data-switch-living') !== 'on') root.setAttribute('data-stage-phrases', 'turn');
   let timer = 0;
   let soiled = false;
 
@@ -83,12 +96,15 @@ export function initLiving({ chapterData } = {}) {
 
   const schedule = () => {
     clearTimeout(timer);
+    if (pinned) return; // a pinned stage clock does not tick
     timer = setTimeout(() => tick(false), PERIOD.minute - (Date.now() % PERIOD.minute) + 40);
   };
 
   const tick = (immediate) => {
     if (!on()) return;
-    const now = new Date();
+    const now = clockNow();
+    // The moment the phrases show, for "Copy stage link" (scene-light.mjs).
+    root.dataset.stageClock = new Date(Math.floor(now.getTime() / PERIOD.minute) * PERIOD.minute).toISOString();
     slots.forEach((slot) => {
       const text = variantFor(slot.name, slot.clock, slot.variants, now, salt);
       if (text === slot.node.textContent) return;
@@ -107,7 +123,7 @@ export function initLiving({ chapterData } = {}) {
     if (soiled || !marks.length) return;
     soiled = true;
     const data = await loadAlmanac();
-    const hour = bucket('hour', new Date());
+    const hour = bucket('hour', clockNow());
     marks.forEach((mark) => {
       const lives = new Set(data.places(mark.dataset.wonder).map((p) => p.c)).size || 1;
       const period = 9 + lives * 3.5;
@@ -124,6 +140,7 @@ export function initLiving({ chapterData } = {}) {
 
   const restore = () => {
     clearTimeout(timer);
+    delete root.dataset.stageClock;
     slots.forEach((slot) => turn(slot, slot.variants[0], false));
   };
 

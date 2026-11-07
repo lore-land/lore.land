@@ -97,9 +97,9 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'living', attribute: 'data-switch-living', stage: 'trial', label: 'A living page',
-    hint: 'Some phrases breathe, turning by the minute, the hour or the day, and the marks glint like grains in soil. The words under your eyes never change; switch it off and the book reads in its own words again.',
-    effect: { on: 'The page breathes: a few phrases turn with the clock, away from where you are reading.', off: 'Every phrase is the book\u2019s own again.' }, region: 'main.chapter',
+    id: 'living', attribute: 'data-switch-living', stage: 'trial', label: 'Phrases turn with the clock',
+    hint: 'A few phrases in every chapter turn by the minute, the hour or the day (never the one you are reading), and the marked words catch the light now and then. Off, every word is the book\u2019s own. For one visit: ?phrases=turn, or ?at=19:00 to see the words of that hour.',
+    effect: { on: 'Phrases turn with the clock, away from where you are reading.', off: 'Every phrase is the book\u2019s own again.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {

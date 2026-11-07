@@ -37,6 +37,15 @@
   frame: "Frame this: the passage being read, set on a card at story (9:16), square or card (1.91:1) proportions with the chapter's kicker and address, the knobs at hand; the controls step back after a moment so the screenshot is clean."
 }
 
+^"stage_directions"{
+  .note: "A chapter's URL is a set of stage directions for one visit (book/scripts/modules/stage-directions.mjs); they never change a reader's own settings. Copy stage link writes the current stage back."
+  section: "#section-id — the section on stage"
+  frame: "stage=story|square|card · p=3 | p=all · type=1.4 · controls=off"
+  light: "light=dawn|morning|noon|afternoon|dusk|night|lamp — a named cue (where the light stands, its warmth, its glow); knobs glow, warmth, ink, grain, edge turn past it; motif=egg lights the scene as that motif does"
+  words: "phrases=turn|still · at=19:00 | at=2026-11-13T19:00 | at=canon — the stage clock pins which words the turning phrases show"
+  why_cues: "A light is named, not plotted: a link says dusk, not 20,20. Copy stage link writes the nearest cue and only the knobs a reader turned."
+}
+
 ~"guards"{
   reading: "Nothing here moves text. Light, grain and edge sit over or behind the page; the words stay where they are."
   motion: "Reduced motion: no glide, no flare, no carried trail — every knob still works."

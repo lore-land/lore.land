@@ -14,7 +14,7 @@ import { injectSvgFilters } from '../modules/svg-filters.mjs';
 import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
-import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_08_27.A';
+import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_11_06.C';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
 import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_05.A';
 import {
