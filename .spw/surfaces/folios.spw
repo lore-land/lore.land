@@ -47,6 +47,15 @@
   weather: "a glassed page carries through rain, a pocket, a coat, a long road"
 }
 
+^"worktable"{
+  .note: "The maker's real laminated folios, scanned, live at spwashi.com (design/folios/, design/folios/october-2026/; canon .spw/surfaces/folio-archive.spw in that repo, local at ~/air/spwashi.com). lore.land shows the ones that stand near a place in the land — book/content/world/worktable.json, book/scripts/home/worktable.mjs — on the folio wall (#worktable) and beside Exactly One Pie."
+  origin: "spwashi.com is the origin and the shop. lore.land points (images served from spwashi.com, links across) and never copies, reprices or claims a piece: lore.land is a second source for new pieces, never the origin of the archive; community and lore.land contributions are not folio inventory."
+  stands_near: "each piece names where in the land it stands, loosely — a folio is not an episode, and the land is not one campaign"
+  asks: "a piece's own question (the archive's opens) is quoted as it asks; none is written for a piece that does not ask"
+  withheld_name: "pieces whose title or image names the figure under the hat stay on the maker's side; the reading room keeps the name withheld"
+  records: "hand-chosen, ids are the archive's source ids; add one by hand when a new scan stands near a chapter"
+}
+
 ~"metaphysics"{
   .source: "the maker, 2026-09-27: imagine the plastic as a fluid that can turn into glass; open to exploring the metaphysics; Apple's Liquid Glass as a reason to explore shaders"
   fluid: "before it sets, the glassing is a liquid — it runs, it refracts, it bends the page under it; while it moves, the page can still change"

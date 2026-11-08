@@ -20,8 +20,11 @@
  *              it settles if you let it. Tilted all the way, it goes.
  *   Boof       now and then she crosses the lanes on her own business. Brush past her
  *              and the pie steadies: she works for the land, and the land likes a level pie.
- *   cuts       the scene changes like a silent film: a title card, then the next place —
- *              the parcel gate in a storm, the lanes, the plaza, the long table.
+ *   scenes     the city changes under the carry — the parcel gate in a storm, the lanes,
+ *              the plaza, the long table — said in a toast at the top of the screen
+ *              while the colours cross over and play goes on; a beat with nothing new
+ *              in the lanes lets the next place arrive. Only the prophecy and the
+ *              spill get a whole silent-film card.
  *   the end    always exactly one spill. The prophecy holds; what changes is who was
  *              under the hat, how far they carried it, and how many clowns got WAP.
  *              The hat does not fall. It never has.
@@ -243,6 +246,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const cardLine = card.querySelector('[data-pie-card-line]');
   const cardAction = card.querySelector('[data-pie-card-action]');
   const meter = root.querySelector('[data-pie-meter]');
+  const toast = root.querySelector('[data-pie-toast]');
+  const toastTitle = toast?.querySelector('[data-pie-toast-title]');
+  const toastLine = toast?.querySelector('[data-pie-toast-line]');
+  let toastTimer = 0;
   const live = root.querySelector('[data-pie-live]');
   const bestOut = document.querySelector('[data-pie-best]');
   const left = root.querySelector('[data-pie-step="-1"]');
@@ -251,7 +258,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   let colors = palette();
   let record = readRecord();
-  let state = 'title';     // title | running | cut | paused | spilling | over
+  let state = 'title';     // title | running | paused | spilling | over
   let frame = 0;
   let last = 0;
   let run = null;
@@ -418,49 +425,58 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   const hideCard = () => { card.hidden = true; };
 
+  /* A toast: where we are now, and who is under the hat. Play does not stop for it. */
+  const showToast = (title, line, ms = 2600) => {
+    if (!toast) return;
+    toastTitle.textContent = title;
+    toastLine.textContent = line || '';
+    toast.classList.remove('is-in');
+    void toast.offsetWidth;
+    toast.classList.add('is-in');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-in'), ms);
+  };
+  const hideToast = () => {
+    clearTimeout(toastTimer);
+    toast?.classList.remove('is-in');
+  };
+
   const start = () => {
     colors = palette();
     if (record.sound) primeAudio();
     run = fresh();
-    state = 'cut';
-    const who = `Under the hat, this time: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}`;
-    showCard(scene().card, who, '');
+    hideCard();
+    state = 'running';
+    const who = `Under the hat: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}`;
+    showToast(scene().card, who, 3200);
     say(`${scene().card} ${who}`);
-    setTimeout(() => {
-      if (state === 'cut') {
-        hideCard();
-        state = 'running';
-      }
-    }, reduced?.matches ? 1100 : 1700);
     last = performance.now();
     loop();
   };
 
   const cutTo = (index) => {
+    run.prevScene = run.sceneIndex;
+    run.sceneT = 0;
     run.sceneIndex = index;
     run.sceneStart = cobbles();
-    run.things = run.things.filter((thing) => thing.y > H * 0.55);
-    state = 'cut';
+    // A beat with nothing new in the lanes, so the next place can arrive.
+    run.spawnIn = Math.max(run.spawnIn, 1.3);
     const again = index >= SCENES.length ? 'Again, and faster.' : '';
-    // The title floats, like the hat: at a cut it may settle on someone else.
+    // The title floats, like the hat: at a change of place it may settle on someone else.
     let moved = '';
     if (Math.random() < 0.5) {
+      run.prevCarrier = run.carrier;
+      run.swapT = 0;
       run.carrier = drawCarrierLot(run.carrier.id);
       moved = `The hat moved on. Under it now: ${run.carrier.name}.`;
     }
     const line = [again, moved].filter(Boolean).join(' ');
-    showCard(scene().card, line, '');
+    showToast(scene().card, line, moved ? 3000 : 2400);
     say(`${scene().card} ${line}`);
-    setTimeout(() => {
-      if (state === 'cut') {
-        hideCard();
-        state = 'running';
-        last = performance.now();
-      }
-    }, moved ? (reduced?.matches ? 1100 : 1500) : (reduced?.matches ? 650 : 1000));
   };
 
   const spill = (rawCause) => {
+    hideToast();
     const selfWap = rawCause === 'wobble' && run.carrier.id === 'clown';
     const cause = selfWap ? 'wobble-clown' : rawCause;
     state = 'spilling';
@@ -592,6 +608,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       hat.x += hat.vx * dt * 10;
       hat.y += hat.vy * dt * 10;
     }
+    if (run.sceneT != null && run.sceneT < 1) run.sceneT = Math.min(1, run.sceneT + dt / (reduced?.matches ? 0.4 : 1.4));
+    if (run.swapT != null && run.swapT < 1) run.swapT = Math.min(1, run.swapT + dt / 0.6);
     if (run.spill) run.spill.t += dt;
     run.bursts.forEach((burst) => { burst.t += dt; });
     run.bursts = run.bursts.filter((burst) => burst.t < 0.9);
@@ -610,12 +628,22 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   /* ─── Drawing: the city in its colours; the figure in plain ink ─── */
 
+  /* A place's light: the paper, tinted. Between places, one crosses into the next. */
+  const skyFor = (s) => {
+    const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold }[s.tint];
+    return [mix(colors.paper, tint, s.tint === 'night' ? 0.32 : 0.16), mix(colors.deep, tint, s.tint === 'night' ? 0.22 : 0.08)];
+  };
   const drawScene = () => {
     const s = run ? scene() : SCENES[0];
-    const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold }[s.tint];
+    let [top, bottom] = skyFor(s);
+    if (run && run.prevScene != null && run.sceneT < 1) {
+      const [fromTop, fromBottom] = skyFor(SCENES[run.prevScene % SCENES.length]);
+      top = mix(fromTop, top, run.sceneT);
+      bottom = mix(fromBottom, bottom, run.sceneT);
+    }
     const sky = ctx.createLinearGradient(0, 0, 0, H);
-    sky.addColorStop(0, mix(colors.paper, tint, s.tint === 'night' ? 0.32 : 0.16));
-    sky.addColorStop(1, mix(colors.deep, tint, s.tint === 'night' ? 0.22 : 0.08));
+    sky.addColorStop(0, top);
+    sky.addColorStop(1, bottom);
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, H);
     // Cobbles, scrolling with the scene.
@@ -963,7 +991,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.globalAlpha = 1;
     }
     const who = run?.carrier?.id || 'figure';
-    if (who === 'figure') {
+    const plainLines = (alpha) => {
+      ctx.save();
+      ctx.globalAlpha *= alpha;
       ctx.beginPath();
       ctx.arc(x, y - 44, 9, 0, Math.PI * 2);          // head
       ctx.stroke();
@@ -972,8 +1002,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.moveTo(x - 4, y - 7); ctx.lineTo(x - 6 - stride, y + 16);
       ctx.moveTo(x + 4, y - 7); ctx.lineTo(x + 6 + stride, y + 16);
       ctx.stroke();
-    } else {
-      drawBody(who, x, y, stride);
+      ctx.beginPath();                                     // eyes, when the drawing remembers them
+      ctx.arc(x - 3, y - 45, 1.3, 0, Math.PI * 2);
+      ctx.arc(x + 3, y - 45, 1.3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
+    const bodyOf = (id, alpha) => {
+      if (id === 'figure') plainLines(alpha);
+      else {
+        ctx.save();
+        ctx.globalAlpha *= alpha;
+        drawBody(id, x, y, stride);
+        ctx.restore();
+      }
+    };
+    // When the hat moves on, the one who was under it fades and the next comes up; the hat stays.
+    const swapping = run?.prevCarrier && run.swapT < 1;
+    if (swapping) bodyOf(run.prevCarrier.id, 1 - run.swapT);
+    bodyOf(who, swapping ? run.swapT : 1);
+    if (who !== 'figure') {
       ctx.strokeStyle = who === 'clown' ? '#d6473e' : '#3a2a20';
       ctx.fillStyle = ctx.strokeStyle;
     }
@@ -986,13 +1034,6 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.moveTo(x - 8, y - 30); ctx.lineTo(px - 18, py + 2);
     ctx.moveTo(x + 8, y - 30); ctx.lineTo(px + 18, py + 2);
     ctx.stroke();
-    // Eyes, when the drawing remembers them.
-    if (who === 'figure') {
-      ctx.beginPath();
-      ctx.arc(x - 3, y - 45, 1.3, 0, Math.PI * 2);
-      ctx.arc(x + 3, y - 45, 1.3, 0, Math.PI * 2);
-      ctx.fill();
-    }
     ctx.restore();
     if (!spilled) drawPie(px, py, tilt);
     drawHat();
@@ -1174,7 +1215,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const tick = (now) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      if (state === 'running' || state === 'spilling' || state === 'cut') update(state === 'cut' ? 0 : dt);
+      if (state === 'running' || state === 'spilling') update(dt);
       draw();
       if (state !== 'paused' && state !== 'title' && state !== 'over') frame = requestAnimationFrame(tick);
       else if (state === 'over') draw();
@@ -1201,7 +1242,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (event.target.closest?.('input, textarea, select, [contenteditable]')) return;
     const key = event.key;
     // Mid-run the arrows always steer; otherwise they start a run only from inside the game.
-    const steering = state === 'running' || state === 'cut' || root.contains(document.activeElement);
+    const steering = state === 'running' || root.contains(document.activeElement);
     if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && steering) { event.preventDefault(); step(-1); }
     else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && steering) { event.preventDefault(); step(1); }
     else if (key === ' ' || key === 'Enter') {

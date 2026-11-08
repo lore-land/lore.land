@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.C",
+      "date": "2026-11-07",
+      "notes": [
+        "Exactly One Pie no longer stops at each new place: the change is said in a small note at the top of the game while the colours cross over and the carry goes on. When the hat moves on, the next carrier fades in under it.",
+        "The folio wall has a new shelf: folios from the maker's own worktable at spwashi.com — real pages, collaged, laminated and painted — each with the question it asks and where in the land it stands. Two of them hang beside Exactly One Pie."
+      ]
+    },
+    {
       "release": "2026_11_07.B",
       "date": "2026-11-07",
       "notes": [

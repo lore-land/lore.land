@@ -3355,3 +3355,11 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
     border-radius: 0;
   }
 }
+
+/* The rooms (folios, almanac, scriptorium, pie: body[data-current-scene]) open
+ * on a text heading where the sun-motif photograph — the body's last
+ * background layer — lands on a mid-width window and covers the words. The
+ * rooms keep the light and drop the picture; the entrance keeps both. */
+html body[data-surface='monument'][data-current-scene] {
+  background-size: auto, auto, auto, auto, 0 0;
+}

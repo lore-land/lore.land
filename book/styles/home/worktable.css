@@ -1,0 +1,129 @@
+/*
+ * worktable.css — the maker's folios that stand near lore.land
+ * (home/worktable.mjs). Real laminated pages, scanned: the glass gets a
+ * plain, slightly glossy frame so the scan reads as an object, not a thumbnail.
+ */
+
+.worktable {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.worktable-head h2 {
+  margin: 0.2rem 0 0.4rem;
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400;
+}
+
+.worktable-head p {
+  max-width: 40rem;
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.55;
+  color: var(--hub-muted);
+}
+
+.worktable-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.worktable-card {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.75rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.8rem;
+  background: var(--hub-panel);
+}
+
+.worktable-glass {
+  display: block;
+  padding: 0.3rem;
+  border-radius: 0.35rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 40%),
+    color-mix(in srgb, var(--hub-paper) 70%, #ffffff);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  transform: rotate(-1deg);
+  transition: transform 220ms ease;
+}
+
+.worktable-card:nth-child(2n) .worktable-glass { transform: rotate(1.2deg); }
+.worktable-card:nth-child(3n) .worktable-glass { transform: rotate(-0.4deg); }
+
+.worktable-glass:hover,
+.worktable-glass:focus-visible {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.worktable-glass img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.2rem;
+}
+
+.worktable-card.is-unseen .worktable-glass {
+  min-height: 6rem;
+  background: repeating-linear-gradient(45deg, var(--hub-line) 0 1px, transparent 1px 8px);
+}
+
+.worktable-card.is-unseen .worktable-glass img {
+  display: none;
+}
+
+.worktable-text p {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.4;
+}
+
+.worktable-title {
+  color: var(--hub-ink);
+  font-size: 1rem;
+}
+
+.worktable-asks {
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--hub-accent-deep);
+}
+
+.worktable-near {
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+}
+
+.worktable-origin {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .worktable-glass { transition: none; }
+}
+
+/* Beside the game: two at most, stacked, small. */
+.pie-worktable {
+  margin: 1.2rem 0;
+}
+
+.pie-worktable .worktable-list {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 36rem;
+}
+
+/* On the game's own page, "stands near" would point at itself. */
+.pie-worktable .worktable-near {
+  display: none;
+}

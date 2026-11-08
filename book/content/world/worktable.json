@@ -1,0 +1,160 @@
+{
+  "note": "The maker's laminated folios that stand near lore.land (book/scripts/home/worktable.mjs). They live at spwashi.com, where they were made: lore.land points at them and never copies or reprices them (spwashi.com .spw/surfaces/folio-archive.spw — lore.land is a second source for new pieces, never the origin of the archive). Hand-chosen from spwashi.com public/data/folio-days.json; ids are the archive's source ids. 'asks' is the folio's own question where the archive gives one; 'near' is where in lore.land it stands, loosely — a folio is not an episode. Pieces whose title or image names the figure under the hat are left on the maker's side.",
+  "source": "https://spwashi.com/design/folios/",
+  "pieces": [
+    {
+      "id": "folio-2026-10-18-01",
+      "title": "It is my boonhat",
+      "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-01",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-it-is-my-boonhat-thumb.webp",
+      "width": 204,
+      "height": 256,
+      "alt": "Laminated folio, blue, violet and rust paint over graph paper: panels read WONDER under a ? glyph, HOW DO I WANT TO RELATE, MOSTLY ITS VIBES and Boon, BANE., bone, BONK; a black blob figure thinks it is my boonhat",
+      "asks": "what would your boonhat look like?",
+      "near": {
+        "href": "/book/chapter/14/#the-hat-above-the-furrow",
+        "label": "the hat above the furrow, Chapter Fourteen"
+      }
+    },
+    {
+      "id": "folio-2026-09-26-03",
+      "title": "Boof and the Boonberry Pool",
+      "href": "https://spwashi.com/design/folios/#folio-03",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-boof-boonberry-pool-thumb.webp",
+      "width": 256,
+      "height": 200,
+      "alt": "A lilac collage titled Boof and the Boonberry Pool, with a blue pool, a flowing hair-like plume, and a curling word card",
+      "asks": null,
+      "near": {
+        "href": "/book/chapter/01/",
+        "label": "Chapter One, where the berries remember"
+      }
+    },
+    {
+      "id": "folio-2026-10-20-06",
+      "title": "Headline honk in clown downtown",
+      "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-06",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-headline-honk-clown-downtown-thumb.webp",
+      "width": 203,
+      "height": 256,
+      "alt": "Laminated folio, olive and lavender paint: a teal sign reads HEADLINE HONK in clown down-town above a drawn skyline, beside a Boon plaque under a striped spiral O, a list of @ Boon, BANE., bone, BONK, HONK, and a ? with faces",
+      "asks": "what makes headline news in clown downtown?",
+      "near": {
+        "href": "/pie/",
+        "label": "Exactly One Pie, where clowns love WAP"
+      }
+    },
+    {
+      "id": "folio-2026-09-27-15",
+      "title": "Honk about pi, lavender",
+      "href": "https://spwashi.com/design/folios/#folio-0927-15",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-honk-about-pi-lavender-thumb.webp",
+      "width": 256,
+      "height": 199,
+      "alt": "Stamped outlines on pink and lavender with a teal corner: honk about pi, honk, and a speech tag, turned on their side",
+      "asks": "what would you honk about pi?",
+      "near": {
+        "href": "/pie/",
+        "label": "Exactly One Pie, and Book Two: Wonder About Pi(e)"
+      }
+    },
+    {
+      "id": "folio-2026-09-27-16",
+      "title": "Honk about a pie, legal pad",
+      "href": "https://spwashi.com/design/folios/#folio-0927-16",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-honk-about-a-pie-legal-pad-thumb.webp",
+      "width": 256,
+      "height": 200,
+      "alt": "A yellow legal pad drawn with honk about a pie, boon honk, and rank, an infinity sign in the corner",
+      "asks": "what goes on the next line of the legal pad?",
+      "near": {
+        "href": "/book/chapter/15/",
+        "label": "the three records, Chapter Fifteen"
+      }
+    },
+    {
+      "id": "folio-2026-10-17-03",
+      "title": "Bonk and the water cycle",
+      "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-03",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-water-cycle-mirrored-thumb.webp",
+      "width": 200,
+      "height": 256,
+      "alt": "Laminated folio, mint, pink and yellow transfer: a cut-out ink creature of looping shapes with spiral eyes, lettered BONK, over mirrored H2O sun, THE WATER CYCLE and AGUA lettering, white spirals and two red tulips",
+      "asks": "what part of the water cycle goes bonk?",
+      "near": {
+        "href": "/book/chapter/06/",
+        "label": "Bonk City in the rain, Chapter Six"
+      }
+    },
+    {
+      "id": "folio-2026-09-27-22",
+      "title": "Boon, bane, bone land tree",
+      "href": "https://spwashi.com/design/folios/#folio-0927-22",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-boon-bane-bone-land-tree-thumb.webp",
+      "width": 256,
+      "height": 199,
+      "alt": "On violet and magenta, tags for boon.land, bane.land, and bone.land branch from a tree whose trunk reads boon bane bone.com",
+      "asks": "which branch of the tree would you climb?",
+      "near": {
+        "href": "/book/chapter/01/",
+        "label": "Read as Boon, Bane or Bone, under any chapter’s title"
+      }
+    },
+    {
+      "id": "folio-2026-09-27-19",
+      "title": "Honk, bane, bonk, boon map",
+      "href": "https://spwashi.com/design/folios/#folio-0927-19",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-honk-bane-bonk-boon-map-thumb.webp",
+      "width": 256,
+      "height": 200,
+      "alt": "A drawn map on teal: rooms labeled honk, bane, bonk, and boon, a bone, spirals, and a tag reading teal stripes vibes",
+      "asks": "which room on the map would you enter first?",
+      "near": {
+        "href": "/#chambers",
+        "label": "the contents, every room of the land"
+      }
+    },
+    {
+      "id": "folio-2026-09-26-24",
+      "title": "How to make honk",
+      "href": "https://spwashi.com/design/folios/#folio-24",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-to-make-honk-thumb.webp",
+      "width": 256,
+      "height": 200,
+      "alt": "A lavender page titled How to make honk, wiring five labeled boxes down to a list of operator words, with a plume and a small cloud card",
+      "asks": null,
+      "near": {
+        "href": "/book/chapter/12/",
+        "label": "the ninth honk"
+      }
+    },
+    {
+      "id": "folio-2026-09-27-03",
+      "title": "Boon.land arrows, teal stripes",
+      "href": "https://spwashi.com/design/folios/#folio-0927-03",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-boon-land-arrows-teal-stripes-thumb.webp",
+      "width": 256,
+      "height": 200,
+      "alt": "Ink on violet: tags reading in boon.land, to boon.land, and from bane.land above an arrow through coiled rings, with Teal Stripes Vibes lettered on a torn corner",
+      "asks": "is the arrow leaving boon.land or arriving?",
+      "near": {
+        "href": "/book/chapter/13/",
+        "label": "the road out, Chapter Thirteen"
+      }
+    },
+    {
+      "id": "folio-2026-09-26-26",
+      "title": "Lore Land webcomic zine",
+      "href": "https://spwashi.com/design/folios/#folio-26",
+      "thumb": "https://spwashi.com/public/images/assets/folios/folio-lore-land-webcomic-zine-thumb.webp",
+      "width": 202,
+      "height": 256,
+      "alt": "A pink wash over a pencil plan for Lore Land as an interactive webcomic and an augmented-reality zine, with Teal Stripes Vibes dot com and boon, bone, and honk boxes",
+      "asks": null,
+      "near": {
+        "href": "/zine/",
+        "label": "the Broadside you can fold"
+      }
+    }
+  ]
+}

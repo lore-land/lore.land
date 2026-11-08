@@ -30,12 +30,14 @@
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_09_27.D&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_09_27.D&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_09_27.D&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_06.E&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_07.C&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_09_27.D&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.D&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/home/folios.css?v=2026_09_27.D&ctx=folios:wall">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.A"></script>
   <script defer type="module" src="/book/scripts/modules/folio-wall.mjs?v=2026_09_27.D"></script>
+  <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
+  <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.C"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="folios">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -65,6 +67,15 @@
 
       <section class="folio-wall" id="folio-wall" aria-label="Folios">
         <p class="folio-status">Loading the wall…</p>
+      </section>
+
+      <section class="worktable" id="worktable" data-worktable aria-labelledby="worktable-title" hidden>
+        <div class="worktable-head">
+          <p class="hub-eyebrow">From the maker’s worktable · spwashi.com</p>
+          <h2 id="worktable-title">Folios that stand near the land</h2>
+          <p>The folios on this wall are glassed in the story. These are glassed in the world: printer pages, collaged and laminated, painted a season over, scanned. They live at spwashi.com, where they were made; here, each one only says where in the land it stands. A folio is not an episode. It stands near one.</p>
+        </div>
+        <ul class="worktable-list"></ul>
       </section>
 
       <section class="folio-how" id="make-one" aria-labelledby="make-title">
