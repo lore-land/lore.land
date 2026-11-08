@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.K" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.L" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -46,14 +46,14 @@
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.K&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.L&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.K&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.L&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.J"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.K"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.L"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.L"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -113,7 +113,7 @@
               <p class="pie-card-line" data-pie-card-line></p>
               <div class="pie-card-modes" data-pie-card-modes hidden aria-label="How to carry it"></div>
               <div class="pie-card-chapters" data-pie-card-chapters hidden aria-label="Start chapter"></div>
-              <button type="button" class="pie-card-action" data-pie-card-action>Carry the pie</button>
+              <button type="button" class="pie-card-action" data-pie-card-action>▶ Play</button>
               <p class="pie-card-links" data-pie-card-links></p>
             </div>
             <div class="pie-intro" data-pie-intro hidden aria-live="polite"></div>
@@ -150,6 +150,8 @@
             <button type="button" class="pie-tool" data-pie-toggle="story" aria-pressed="true">◫ Story</button>
             <button type="button" class="pie-tool" data-pie-toggle="zen" aria-pressed="false">◌ Zen</button>
             <button type="button" class="pie-tool" data-pie-fullscreen aria-pressed="false">⛶ Full</button>
+            <button type="button" class="pie-tool" data-pie-ask aria-pressed="false" title="Ask: the lanes slow, and a tap on anything says what it is in the story">? Ask</button>
+            <button type="button" class="pie-tool" data-pie-labels aria-pressed="false" title="Labels: every thing wears its name and where the book first has it">◇ Labels</button>
             <button type="button" class="pie-tool pie-tool-hand" data-pie-hand aria-pressed="false" title="Swap the pad and the buttons, for the other hand">⇄ Hands</button>
           </div>
           <p class="visually-hidden pie-live" data-pie-live role="status" aria-live="polite"></p>
@@ -187,6 +189,7 @@
         </div>
         <div class="pie-rules">
           <p><b class="pie-rule-name">The way through</b> The land comes in rows, and every row leaves a way through, never more than a step from the last. Step across, or ahead and back: four steps up the lanes, where the wonders wait and what is coming comes sooner. Or hop: low things pass under you, and a slice thrown at the top of a hop is lofted like one off a ramp.</p>
+          <p><b class="pie-rule-name">Height</b> Everything in the lanes stands at a height, marked by its ring: <b>⤒</b> low, and a hop clears it; <b>⤒⤒</b> taller, and only a high hop clears it (the third hop of a chain, each hop taken soon after a good landing); <b>▮</b> too tall to hop; and things in the air pass over the hat. A gauge beside the carrier shows how high a hop is going. The lanes gain height from Chapter Four, games from Six, and depth from Ten.</p>
           <p><b class="pie-rule-name">The tilt</b> The tilt is what is at stake. Every step tilts the pie a little, hurried steps more; a knock tilts it a lot. Step under the direction it is tipping to catch the balance, or hold your lane a breath to poise the plate: a poised throw costs no tilt and widens the gold window. A deft hop just as something low reaches your feet steadies the landing. The red ring beside the pie, and the level under the screen, show how far it has tipped. Full, it spills.</p>
           <p><b class="pie-rule-name">The aura</b> The pie in hand stays whole because an aura keeps replenishing it, and the aura needs two ingredients: flour for the crust, boonberries for the filling. Every slice you throw draws on both; a slice that reaches nobody costs more. Run either dry and the slices go without it (the clowns are not particular), and a thin pie tips more easily. Keep both high and the pies grow: the pie in hand swells, and every slice is bigger, reaches wider, and satisfies more. The two levels at the foot of the screen show what is left.</p>
           <p><b class="pie-rule-name">Flour in the air</b> Flour in the air feeds the two pies of the quinary five: a burst bag, a slice into a bag, a kicked-up pile, a march of Mimes Against WAP shaking out their placards. It brings them sooner, and makes whichever is here stronger.</p>
@@ -237,6 +240,9 @@
               <li><canvas data-pie-sprite="egg" width="64" height="64" aria-hidden="true"></canvas><div><strong>Something warm, egg-shaped</strong><span>Now and then, at the very top of the lanes. It is not for taking. Pass close, and the pie settles faster for a while, and the next knock is forgiven.</span></div></li>
               <li><canvas data-pie-sprite="berry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boonberries · they foresee</strong><span>Teal and amber, lit from within: the filling, and a kindly foretelling. Step through them and for a moment the clear way up the lanes shows in teal, before you need it. Whether the berry showed it or you remembered it, the lane does not say.</span></div></li>
               <li><canvas data-pie-sprite="boneberry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boneberries · they feed</strong><span>Bone-white, a dusk-red blush, a faint smoke. Savoury: they taste of the place they grow (burnt ends in Bonk City, rib tips in Bone.land, falafel at the parcel gate). Grown, not raised. Crust and filling both, and for a while your steps tilt less.</span></div></li>
+              <li><canvas data-pie-sprite="arrow" width="64" height="64" aria-hidden="true"></canvas><div><strong>An arrow on the track · from Four</strong><span>Step on it and the needle points where it points, and holds: every throw while it holds is Perfect.</span></div></li>
+              <li><canvas data-pie-sprite="vane" width="64" height="64" aria-hidden="true"></canvas><div><strong>A weathercock · from Four</strong><span>By the lanes. Pass close and your needle swings the way it points.</span></div></li>
+              <li><canvas data-pie-sprite="horn" width="64" height="64" aria-hidden="true"></canvas><div><strong>A brass horn · a game</strong><span>Step into it and a game begins: Vane Alley, The Parade, or (from Ten) The Long View, where the road recedes.</span></div></li>
               <li><canvas data-pie-sprite="pile" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pile of flour</strong><span>A little crust underfoot. And a ramp: a slice thrown over a pile is lofted clean over whatever is next. Piles in a row loft it further.</span></div></li>
               <li><canvas data-pie-sprite="boof" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boof</strong><span>Crosses the lanes on her own business. Brush past her and the pie steadies.</span></div></li>
               <li><canvas data-pie-sprite="switch" width="64" height="64" aria-hidden="true"></canvas><div><strong>Off switch</strong><span>Mr. BaneWAP always leaves one. Step on it, or hit it with a slice, and he is foiled. His rented wind drifts slices too.</span></div></li>

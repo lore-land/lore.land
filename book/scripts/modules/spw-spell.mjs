@@ -17,6 +17,13 @@
  *   - cast: on first sight the spell inks in, glyph by glyph, and the sigils flare once
  *     (none of it under reduced motion; nothing depends on it)
  *   - play: a ▶ plays the spell as music (spw-sound.mjs), each atom lighting as it sounds
+ *   - prime and cast (the canonical tap, after spwashi.com's charge cycle and factshift's lifecycle):
+ *     a first tap primes an atom (nothing is written; its next step and what it would do are said,
+ *     and it holds a charge that bleeds, 0.82 less 0.18 every 2.8 s, quiet below 0.08); a second tap
+ *     while it is charged casts it: one change, a receipt in the sigil's own verb (answered, taken,
+ *     struck…), a discharge of its kind (release ? ! · transfer ~ @ & $ · ground # = . % · project ^ *),
+ *     and residue: a cast atom keeps a faint halo. Escape, or a tap elsewhere, lets go (back to ground).
+ *     The spell element dispatches spw:cast (bubbles) with { sigil, label, atom, text, kind, verb }.
  *   - texture: a spell that names a material ($glass, $frost, …) wears it (materials.css tokens)
  */
 
@@ -76,7 +83,25 @@ function span(className, text, title) {
  */
 const MATERIALS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
 
-export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false } = {}) {
+/* The charge cycle, read from spwashi.com (.spw/conventions/charge-cycle.spw): how each sigil discharges,
+ * the verb its receipt is said in, and the lifetime of a prime. */
+export const DISCHARGE = Object.freeze({
+  '?': 'release', '!': 'release', '~': 'transfer', '@': 'transfer', '&': 'transfer', '$': 'transfer',
+  '#': 'ground', '=': 'ground', '.': 'ground', '%': 'ground', '^': 'project', '*': 'project'
+});
+export const CAST_VERB = Object.freeze({
+  '?': 'answered', '!': 'struck', '~': 'taken', '@': 'seen', '&': 'joined', '$': 'made', '#': 'marked',
+  '=': 'tuned', '.': 'let go', '%': 'measured', '^': 'lifted', '*': 'kept'
+});
+const KIND_SAYS = Object.freeze({
+  release: 'a release: it happens at once, and is over',
+  transfer: 'a transfer: it carries something to something else, for a while',
+  ground: 'a ground: it sets a value, and it stays',
+  project: 'a projection: it binds upward, and is kept'
+});
+const CHARGE = Object.freeze({ primed: 0.82, step: 0.18, tickMs: 2800, quiet: 0.08 });
+
+export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false, onCast = null } = {}) {
   const root = document.createElement('div');
   root.className = `spell${cast ? ' is-uncast' : ''}`;
   // Made of something: the first $material it names gives it that material's ground and sheen.
@@ -105,7 +130,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       const role = SIGIL_ROLES[t.text];
       atom = document.createElement('span');
       atom.className = `spell-atom op-${role?.role || 'plain'}`;
-      atom.tabIndex = explain ? 0 : -1;
+      atom.tabIndex = 0;
       line.append(atom);
       node = span(`spell-sigil op-${role?.role || 'plain'}`, t.text, role ? `${t.text} ${role.role}: ${role.says}` : '');
       atom.append(node);
@@ -171,7 +196,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   if (copy) root.append(copyButton(() => tokens.map((t) => t.text).join(''), typeof copy === 'string' ? copy : ''));
   if (scrub && numberN) enableScrub(line, tokens, scrub);
   root.append(line);
-  if (explain) root.append(gloss);
+  root.append(gloss);   // always: a prime and a cast say themselves here
 
   // Brackets know their pairs; atoms say what they do.
   const light = (pair, on) => line.querySelectorAll('.spell-bracket').forEach((b) => { if (b.dataset.pair === pair) b.classList.toggle('is-paired', on); });
@@ -185,7 +210,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   });
   const say = (a, on) => {
     a.classList.toggle('is-lit', on);
-    if (!explain) return;
+    if (!explain || line.querySelector('.spell-atom.is-primed')) return;
     gloss.textContent = on ? (explain(a.textContent.trim(), a.dataset.sigil, a.dataset.label) || `${a.dataset.sigil} ${SIGIL_ROLES[a.dataset.sigil]?.role || ''}: ${SIGIL_ROLES[a.dataset.sigil]?.says || ''}`) : '';
   };
   line.addEventListener('pointerover', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, true); });
@@ -193,8 +218,71 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   line.addEventListener('focusin', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, true); });
   line.addEventListener('focusout', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, false); });
 
+  enablePriming(root, line, gloss, explain, onCast);
   if (cast) castWhenSeen(root);
   return root;
+}
+
+/* The canonical tap: prime, then cast; a prime is a charge that bleeds away; a cast leaves residue. */
+function enablePriming(root, line, gloss, explain, onCast) {
+  let primed = null;
+  let timer = null;
+  const say = (text) => { if (gloss.isConnected) gloss.textContent = text; };
+  const meaning = (a) => (explain ? explain(a.textContent.trim(), a.dataset.sigil, a.dataset.label) : '') || `${a.dataset.sigil} ${SIGIL_ROLES[a.dataset.sigil]?.says || ''}`;
+  const ground = (quietly = false) => {
+    clearInterval(timer);
+    timer = null;
+    if (primed) {
+      primed.classList.remove('is-primed');
+      primed.style.removeProperty('--charge');
+      if (!quietly) say(`${primed.dataset.sigil}${primed.dataset.label || ''}, let go: back to ground.`);
+    }
+    primed = null;
+  };
+  const prime = (a) => {
+    ground(true);
+    primed = a;
+    let charge = CHARGE.primed;
+    a.classList.add('is-primed');
+    a.style.setProperty('--charge', String(charge));
+    const kind = DISCHARGE[a.dataset.sigil] || 'ground';
+    say(`Primed: ${meaning(a)} It is ${KIND_SAYS[kind]}. Tap again to cast it.`);
+    timer = setInterval(() => {
+      charge -= CHARGE.step;
+      if (charge < CHARGE.quiet) { ground(); return; }
+      a.style.setProperty('--charge', charge.toFixed(2));
+    }, CHARGE.tickMs);
+  };
+  const castAtom = (a) => {
+    const sigil = a.dataset.sigil;
+    const kind = DISCHARGE[sigil] || 'ground';
+    const verb = CAST_VERB[sigil] || 'cast';
+    const detail = { sigil, label: a.dataset.label || '', atom: a.textContent.trim(), text: line.textContent, kind, verb };
+    ground(true);
+    a.classList.remove('is-cast');
+    void a.offsetWidth;
+    a.classList.add('is-cast', 'is-spent');
+    const receipt = onCast?.(detail);
+    say(`${verb.charAt(0).toUpperCase()}${verb.slice(1)}: ${typeof receipt === 'string' && receipt ? receipt : meaning(a)}`);
+    root.dispatchEvent(new CustomEvent('spw:cast', { bubbles: true, detail }));
+  };
+  const tap = (a) => {
+    if (primed === a) castAtom(a);
+    else prime(a);
+  };
+  line.addEventListener('click', (event) => {
+    if (event.target.closest('.spell-number.is-scrub, a')) return;
+    const a = event.target.closest('.spell-atom');
+    if (a) tap(a);
+    else ground();
+  });
+  line.addEventListener('keydown', (event) => {
+    const a = event.target.closest('.spell-atom');
+    if (event.key === 'Escape') ground();
+    else if (a && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); tap(a); }
+  });
+  // A tap anywhere else lets the prime go.
+  document.addEventListener('pointerdown', (event) => { if (primed && !root.contains(event.target)) ground(true); });
 }
 
 /*
@@ -297,7 +385,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_08.K').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_08.L').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

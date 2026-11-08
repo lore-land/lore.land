@@ -2210,8 +2210,7 @@ html.pie-immersive {
 /* ─── Under the screen: one bar of switches, its state shown, not spelled ─── */
 .pie-cabinet .pie-tools {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(3.6rem, 1fr));
   gap: 0;
   border: 1px solid var(--hub-line);
   border-radius: 0.7rem;
@@ -2668,4 +2667,26 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 @media (prefers-reduced-motion: reduce) {
   .pie-cardface-reading li { animation: none; }
+}
+
+/* ? Ask: what a thing is in the story, and the passage going by when it was met. */
+.pie-cardface-ask {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-accent) 55%, var(--hub-line));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-accent) 6%, transparent);
+}
+
+.pie-cardface-ask p {
+  max-width: none;
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  color: var(--hub-ink);
+}
+
+.pie-cabinet.is-asking .pie-screen canvas {
+  cursor: help;
 }

@@ -150,16 +150,16 @@
  * no rain, no bob, no shake, no flying clowns; every control the same.
  */
 
-import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.J';
+import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.L';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
-import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.H';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.J';
+import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.L';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.J';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.K';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.L';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -215,6 +215,17 @@ const SLIPS = new Set(['puddle', 'frost', 'sack']);
 /* Low enough to jump: a hop clears them. (Berries, wonders and clowns are met in the air too.) */
 const LOW = new Set(['baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner']);
 const JUMP_DUR = 0.62;
+/* The implicit z: how high each thing stands, as its own dimension of play. 0 ground (puddles, holes,
+ * arrows: underfoot) · 1 low (a hop clears it) · 2 body (posts, glass, people: too tall, though a high
+ * hop clears the lighter ones) · 3 air (pigeons, wasps: drawn over the carrier) · 4 high (the Egg). */
+const Z = Object.freeze({
+  puddle: 0, frost: 0, hole: 0, ditch: 0, furrow: 0, pile: 0, arrow: 0,
+  sack: 1, stone: 1, snail: 1, spool: 1, banner: 1, baneberry: 1, berry: 1, boneberry: 1, beaver: 1, switch: 1,
+  post: 2, pane: 2, chair: 2, throne: 2, table: 2, mime: 2, mimewall: 2, march: 2, clerk: 2, subject: 2, dividers: 2, clown: 2, vane: 2, horn: 2, wonder: 2,
+  pigeon: 3, wasps: 3, egg: 4
+});
+/* A high hop (the third of a chain) clears the lighter of the tall things too. */
+const HIGH_CLEARS = new Set(['post', 'pane', 'chair', 'stone', 'snail', 'spool', 'banner', 'hole', 'ditch']);
 
 /* Learnability: the book introduces the lanes as it goes. A thing first comes up the lanes in the
  * chapter where the story is ready for it (or anywhere, once the visitor has met it), and the
@@ -223,7 +234,7 @@ const INTRO = Object.freeze({
   stone: 1, hole: 1, frost: 1, furrow: 1, pigeon: 1, snail: 1,
   ditch: 2, puddle: 2, beaver: 2,
   sack: 3, post: 3, spool: 3, pane: 3, boneberry: 3,
-  throne: 4, subject: 4, wasps: 4, banner: 4, baneberry: 4, bane: 4,
+  throne: 4, subject: 4, wasps: 4, banner: 4, baneberry: 4, bane: 4, arrow: 4, vane: 4, horn: 4,
   mime: 5,
   clerk: 6, dividers: 6, chair: 6, march: 6, boon: 6
 });
@@ -236,6 +247,9 @@ const MEET = Object.freeze({
   snail: ['A pane-snail', 'Was there first. Knocks; low enough to hop.'],
   berry: ['Boonberries', 'Filling, and a glimpse: walk through them and the clear way up the lanes shows teal for a moment, before you need it.'],
   boneberry: ['A boneberry', 'Savoury, a whole meal in a berry: crust and filling both, and for a while your steps tilt less.'],
+  arrow: ['An arrow on the track', 'Step on it and the needle points where it points, held there a moment: every throw while it holds is Perfect.'],
+  vane: ['A weathercock by the lanes', 'Walk past it and your needle swings the way it is pointing. The lanes vote, here, with iron.'],
+  horn: ['A horn on a stand', 'Step into it and a game begins: an alley of arrows, a parade of clowns down the diagonal, or the long view.'],
   pile: ['A pile of flour', 'Crust underfoot, and a ramp: a slice thrown over it is lofted.'],
   clown: ['A clown', 'The pips over its head are how much pie it wants. Throw (X, or tap where), or walk into it.'],
   wonder: ['A wonder from this chapter', 'It waits up the lanes a moment: step ahead (↑) into it to keep it.'],
@@ -354,7 +368,7 @@ function readRecord() {
       met: Array.isArray(parsed.met) ? parsed.met : [],
       cards: Array.isArray(parsed.cards) ? parsed.cards : [],
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
-      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right' },
+      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true },
       sound: parsed.sound !== false
     };
   } catch {
@@ -934,7 +948,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: ['bane', 1], boxed: ['bane', 0.8], bane_fed: ['bane', 0.6], scheme_ran: ['bane', 1], foretold: ['bane', 0.8],
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
-    caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3]
+    caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -942,7 +957,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'knocks', boxed: 'slices boxed', bane_fed: 'baneberries fed to him', scheme_ran: 'schemes run', foretold: 'foretellings come true',
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
-    caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes'
+    caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views'
   });
   let leanRules = {};
   const lean = (event, n = 1) => {
@@ -985,7 +1001,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     march: { pops: ['…!!!'], bits: 'none', drama: 0.9 },
     clerk: { pops: ['DAMAGE!', 'STAMPED!'], bits: 'confetti', drama: 1 },
     switch: { pops: ['FOILED!', 'CLICK!'], bits: 'stars', drama: 1.3 },
-    spill: { pops: ['SPLAT!!', 'EXACTLY ONE.'], bits: 'juice', drama: 1.8 }
+    spill: { pops: ['SPLAT!!', 'EXACTLY ONE.'], bits: 'juice', drama: 1.8 },
+    hop: { pops: ['HOP!', 'WHEE!'], bits: 'flour', drama: 0.7 },
+    arrow: { pops: ['→ AIMED!', 'ON THE ARROW!'], bits: 'stars', drama: 0.7 },
+    horn: { pops: ['TOOT!'], bits: 'confetti', drama: 1.3 }
   });
   const SCENE_WHIMSY_DEFAULTS = Object.freeze({
     field: { drama: 0.9, material: 'frost' }, gate: { drama: 1, material: 'steam' }, lanes: { drama: 1.1, material: 'brass' },
@@ -1021,11 +1040,159 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     if (w.sound) sfx(w.sound, 0, x);
   }
+  /* ─── Minigames: a horn up the lanes starts one (and the lanes gain a dimension as the book goes) ───
+   * Each is a timed session with its own rule, a banner and a countdown, and a score said at its end.
+   *   alley      (from Four)  arrows on every row: step on one and the needle points true and holds;
+   *                           clowns come at the angles the arrows point to
+   *   parade     (from Six)   clowns come down the diagonal from one side; the needle holds their angle
+   *   long_view  (from Ten)   the lanes recede to a far point: you see what is coming sooner, and the
+   *                           far end of the road is drawn small (a change of perspective, not of rules) */
+  const DIMENSIONS_GAINED = Object.freeze([
+    [4, 'height', 'The lanes have height now', 'Arrows on the track and weathercocks by the lanes turn your aim. Hop in a chain and the third, a high hop, clears the lighter tall things (⤒⤒).'],
+    [6, 'games', 'The lanes have games now', 'A brass horn up the lanes starts one: an alley of arrows, or a parade down the diagonal.'],
+    [10, 'depth', 'The lanes have depth now', 'A horn may open the long view: the road recedes to a far point, and you see what is coming sooner.']
+  ]);
+  const MINIS = Object.freeze({
+    alley: { from: 4, dur: 8, title: 'Vane Alley', line: 'Arrows on every row. Step on one and the needle points true and holds; a throw while it holds is Perfect.', word: 'VANE ALLEY!' },
+    parade: { from: 6, dur: 9, title: 'The Parade', line: 'Clowns come down the diagonal from one side, and the needle holds their angle. WAP them as they come.', word: 'PARADE!' },
+    long_view: { from: 10, dur: 10, title: 'The Long View', line: 'The lanes recede to a far point. You see what is coming sooner; every hop clean and every WAP counts.', word: 'THE LONG VIEW' }
+  });
+  function startMini(id) {
+    if (!run || run.mini) return;
+    const open = Object.entries(MINIS).filter(([, m]) => m.from <= run.chapter || run.lap > 0).map(([k]) => k);
+    const which = id && MINIS[id] ? id : pick(open.length ? open : ['alley']);
+    const m = MINIS[which];
+    run.mini = { id: which, t: 0, dur: m.dur * TUNE.mini_dur, score: 0, side: pick([-1, 1]), next: 0.3 };
+    impact('horn', W / 2, 150, { scale: 1.3, word: m.word });
+    sfx('wonder', 'contrivance');
+    showToast(m.title, m.line, 3200, 'wonder');
+    say(`${m.title}. ${m.line}`);
+    turnCard('horn');
+  }
+  function endMini() {
+    const m = run.mini;
+    run.mini = null;
+    if (!m) return;
+    impact('combo', W / 2, 160, { scale: 0.8 + Math.min(1.2, m.score * 0.12), word: `${MINIS[m.id].title.toUpperCase()} ×${m.score}` });
+    if (m.score) lean(m.id, Math.min(3, m.score / 3));
+    say(`${MINIS[m.id].title}, over: ${m.score}.`);
+  }
+  function tickMini(dt) {
+    const m = run?.mini;
+    if (!m) return;
+    m.t += dt;
+    m.next -= dt;
+    if (m.id === 'parade') {
+      // The needle holds the parade's angle; clowns come down the diagonal from one side.
+      run.aim.a = clamp(m.side * 0.42, -AIM_MAX, AIM_MAX);
+      run.aimLock = Math.max(run.aimLock || 0, 0.25);
+      if (m.next <= 0) {
+        m.next = 0.8;
+        const c = makeThing('clown', m.side > 0 ? LANES - 1 : 0);
+        c.vx = -m.side * 60;
+        c.parade = true;
+        run.things.push(c);
+      }
+    } else if (m.id === 'alley' && m.next <= 0) {
+      m.next = 1.2;
+      run.things.push(makeThing('clown', pick([0, 1, LANES - 2, LANES - 1])));
+    }
+    if (m.t >= m.dur) endMini();
+  }
+  /* How far into the long view: it eases in and out, so the road leans away and back. */
+  const longK = () => {
+    const m = run?.mini;
+    if (!m || m.id !== 'long_view' || reduced?.matches) return 0;
+    return clamp(Math.min(m.t, m.dur - m.t) / 0.8, 0, 1);
+  };
+  /* The long view's perspective: a row at height y is drawn this much narrower, toward the middle. */
+  const viewScale = (y) => 1 - longK() * (1 - clamp(y / H, 0, 1)) * 0.42;
+  let warpCanvas = null;
+  /** The long view: the finished frame re-drawn in strips, each narrower the further up the road. */
+  function warpLongView() {
+    const k = longK();
+    if (!k) return;
+    const cw = canvas.width;
+    const ch = canvas.height;
+    warpCanvas = warpCanvas || document.createElement('canvas');
+    if (warpCanvas.width !== cw || warpCanvas.height !== ch) { warpCanvas.width = cw; warpCanvas.height = ch; }
+    const off = warpCanvas.getContext('2d');
+    off.clearRect(0, 0, cw, ch);
+    off.drawImage(canvas, 0, 0);
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = colors.paper;
+    ctx.fillRect(0, 0, cw, ch);
+    const strip = Math.max(2, Math.round(ch / 140));
+    for (let y = 0; y < ch; y += strip) {
+      const s = viewScale((y / ch) * H);
+      const dw = cw * s;
+      ctx.drawImage(warpCanvas, 0, y, cw, strip, (cw - dw) / 2, y, dw, strip);
+    }
+    // A haze at the far end: the road goes on further than the screen.
+    const haze = ctx.createLinearGradient(0, 0, 0, ch * 0.35);
+    haze.addColorStop(0, `rgba(255, 246, 228, ${0.45 * k})`);
+    haze.addColorStop(1, 'rgba(255, 246, 228, 0)');
+    ctx.fillStyle = haze;
+    ctx.fillRect(0, 0, cw, ch * 0.35);
+    ctx.restore();
+  }
+  /** The minigame's banner and countdown, over the screen. */
+  function drawMiniBanner() {
+    const m = run?.mini;
+    if (!m) return;
+    const left = Math.max(0, 1 - m.t / m.dur);
+    ctx.save();
+    ctx.fillStyle = 'rgba(20, 18, 24, 0.82)';
+    ctx.beginPath(); ctx.roundRect(W / 2 - 92, 96, 184, 30, 8); ctx.fill();
+    ctx.fillStyle = '#ffe36b';
+    ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${MINIS[m.id].title.toUpperCase()} · ${m.score}`, W / 2, 110);
+    ctx.fillStyle = 'rgba(255, 227, 107, 0.25)';
+    ctx.fillRect(W / 2 - 80, 116, 160, 4);
+    ctx.fillStyle = '#ffe36b';
+    ctx.fillRect(W / 2 - 80, 116, 160 * left, 4);
+    ctx.restore();
+  }
+  /* Clear about height: a hop gauge beside the carrier while a hop is on, with the two lines that
+   * matter (a hop clears low things; a high hop, the third of a chain, clears the lighter tall ones). */
+  function drawHopGauge() {
+    if (!run || state !== 'running' || !(run.jumpT > 0 || (run.hopChain || 0) > 0)) return;
+    const lift = jumpLift();
+    const max = TUNE.hop_lift * (1 + 2 * TUNE.hop_chain);
+    const x = run.x + 26;
+    const base = run.y + 14;
+    const h = 44;
+    const at = (v) => base - (v / max) * h;
+    ctx.save();
+    ctx.globalAlpha = 0.85;
+    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.45);
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x, base - h); ctx.stroke();
+    ctx.fillStyle = run.highHop ? '#f2c14e' : colors.accent;
+    ctx.fillRect(x - 2, at(lift), 4, base - at(lift));
+    ctx.font = '700 7px "JetBrainsMono", ui-monospace, monospace';
+    ctx.textAlign = 'left';
+    [[9, 'LOW ⤒'], [TUNE.hop_lift * (1 + 2 * TUNE.hop_chain) * 0.92, 'HIGH ⤒⤒']].forEach(([v, label]) => {
+      ctx.fillStyle = lift >= v ? '#2c8b86' : mix(colors.ink, colors.paper, 0.4);
+      ctx.fillRect(x - 4, at(v), 8, 1);
+      ctx.fillText(label, x + 6, at(v) + 2.5);
+    });
+    ctx.restore();
+  }
+  /* Clear about height: a hazard wears a small mark of what a hop does about it. */
+  const heightMark = (thing) => {
+    if (LOW.has(thing.kind)) return '⤒';
+    if (HIGH_CLEARS.has(thing.kind)) return '⤒⤒';
+    return (Z[thing.kind] ?? 2) >= 2 && thing.fatal ? '▮' : '';
+  };
+
   /* A scene's own texture as it begins (its $material, played by spw-sound.mjs), when sound is on. */
   function sceneTexture(id) {
     const material = sceneWhimsy(id).material;
     if (!record.sound || !material) return;
-    import('../modules/spw-sound.mjs?v=2026_11_08.K').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
+    import('../modules/spw-sound.mjs?v=2026_11_08.L').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
   }
   const drawWhimsy = () => {
     if (!run) return;
@@ -1096,6 +1263,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       case 'switch': thing.w = 30; thing.h = 30; thing.fatal = false; break;
       case 'berry': thing.w = 24; thing.h = 22; thing.fatal = false; break;
       case 'boneberry': thing.w = 22; thing.h = 20; thing.fatal = false; break;
+      case 'arrow': thing.w = 30; thing.h = 14; thing.fatal = false; thing.angle = pick([-0.5, -0.3, 0.3, 0.5]); break;
+      case 'vane': thing.w = 18; thing.h = 40; thing.fatal = false; thing.ghost = true; thing.angle = pick([-0.45, 0.45]); break;
+      case 'horn': thing.w = 26; thing.h = 26; thing.fatal = false; break;
       case 'baneberry': thing.w = 22; thing.h = 20; thing.fatal = false; break;
       case 'beaver': thing.w = 30; thing.h = 20; thing.fatal = false; thing.vx = pick([-1, 1]) * 8; break;
       case 'pile': thing.w = 40; thing.h = 14; thing.fatal = false; break;
@@ -1237,6 +1407,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       bone.y -= 70;
       run.things.push(bone);
     }
+    // The land points: arrows on the track and vanes by the lanes (from Four, where the weathercocks
+    // vote), and now and then a horn that starts a game.
+    if (allowed('arrow') && Math.random() < (run.mini?.id === 'alley' ? 0.85 : 0.06)) {
+      const arrow = makeThing('arrow', pick(free));
+      arrow.y -= 30;
+      run.things.push(arrow);
+    }
+    if (allowed('vane') && !run.mini && Math.random() < 0.035) {
+      const vane = makeThing('vane', pick([0, LANES - 1]));
+      vane.y -= 20;
+      run.things.push(vane);
+    }
+    if (allowed('horn') && !run.mini && Math.random() < TUNE.horn_chance) {
+      const horn = makeThing('horn', pick(free));
+      horn.y -= 40;
+      run.things.push(horn);
+    }
     const clowns = (run.boon ? 0.62 : 0.14) * (s.id === 'plaza' ? 1.4 : 1);
     if (Math.random() < clowns) {
       const lane = pick(free);
@@ -1332,7 +1519,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   /* A hop: low things pass under it. The pie lifts a little off the plate, and lands with a jostle. */
-  const jumpLift = () => (run?.jumpT > 0 ? Math.sin(Math.PI * (1 - run.jumpT / JUMP_DUR)) * 26 : 0);
+  // A hop hangs a moment at the top (the curve is flattened there), and a chain of hops goes higher.
+  const jumpLift = () => (run?.jumpT > 0 ? Math.sin(Math.PI * (1 - run.jumpT / JUMP_DUR)) ** 0.75 * TUNE.hop_lift * (run.hopPower || 1) : 0);
   const airborne = () => jumpLift() > 9;
   const jump = () => {
     if (state === 'title' || state === 'over') {
@@ -1347,6 +1535,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.deftHop = grazing;
     run.stillT = 0;
     run.jumpT = JUMP_DUR;
+    // A chain: hop again soon after a good landing and the next hop goes higher; the third is a high
+    // hop, which clears the lighter tall things too (=hop_window, =hop_chain).
+    const quick = run.t - (run.lastLand ?? -9) < TUNE.hop_window;
+    run.hopChain = quick && run.lastHopGood ? Math.min(3, (run.hopChain || 0) + 1) : 0;
+    run.hopPower = 1 + run.hopChain * TUNE.hop_chain;
+    run.highHop = run.hopChain >= 2;
+    if (run.hopChain) impact('hop', run.x, run.y - 74, { scale: 0.45 + run.hopChain * 0.25, word: run.highHop ? 'HIGH HOP!' : 'HOP HOP!' });
+    if (!reduced?.matches) for (let i = 0; i < 6; i += 1) run.puffs.push({ x: run.x + rand(-10, 10), y: run.y + 14, vx: rand(-50, 50), vy: rand(-30, -5), t: 0.3 });
     run.wobble = Math.min(1.2, run.wobble + (grazing ? 0.01 : 0.04));
     sfx('hop');
     spawnRing(run.x, run.y + 12, 22, colors.ink, 0.45);
@@ -1392,11 +1588,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const TUNE_RANGE = Object.freeze({
     aim_step: [0.04, 0.4], knock_swing: [0, 0.4], pad_pace: [0.5, 1], slow_land: [0.3, 0.9],
     foretell_after: [1, 8], flinch_chance: [0, 0.6], flinch_tilt: [0, 0.4], in_kind: [0, 1.5],
-    swipe_across: [0.25, 1.2], swipe_along: [20, 90], ahead_bonus: [0, 0.5], drama: [0, 2]
+    swipe_across: [0.25, 1.2], swipe_along: [20, 90], ahead_bonus: [0, 0.5], drama: [0, 2],
+    hop_lift: [16, 44], hop_chain: [0, 0.35], hop_window: [0.2, 1.2], arrow_hold: [0.5, 5], horn_chance: [0, 0.2], mini_dur: [0.5, 2]
   });
   const TUNE_DEFAULTS = Object.freeze({
     aim_step: 0.13, knock_swing: 0.12, pad_pace: 0.85, slow_land: 0.55, foretell_after: 3.2, flinch_chance: 0.22, flinch_tilt: 0.16, in_kind: 0.9,
-    swipe_across: 0.5, swipe_along: 40, ahead_bonus: 0.18, drama: 1
+    swipe_across: 0.5, swipe_along: 40, ahead_bonus: 0.18, drama: 1,
+    hop_lift: 26, hop_chain: 0.15, hop_window: 0.55, arrow_hold: 2.2, horn_chance: 0.03, mini_dur: 1
   });
   const TUNE = { ...TUNE_DEFAULTS };
   const tuneWith = (values = {}) => Object.entries(values).forEach(([key, value]) => {
@@ -1567,6 +1765,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const from = throwFrom();
     const shot = (heading, echo = false) => ({ x: from.x, y: from.y, vx: Math.sin(heading) * SLICE_SPEED, vy: -Math.cos(heading) * SLICE_SPEED, reach: SLICE_REACH + (wasPoised ? 45 : 0), bounces: 0, t: 0, bent: new Set(), ramped: new Set(), loft: 0, missing, echo, poised: wasPoised, helping: missing ? 1 : helping(rich) + (run.tin > 0 ? 0.5 : 0), size: missing ? 0.85 : 0.9 + rich * 0.6 });
     const first = shot(a);
+    first.sure = run.aimLock > 0;   // thrown on an arrow (or in a parade): Perfect wherever it lands on a face
     if (run.tin > 0 && !missing) run.tin -= 1;   // the sliver tin: half again, three times
     sfx('throw');
     // Thrown from the top of a hop, a slice is lofted as if off a ramp.
@@ -1665,7 +1864,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (Math.abs((thing.y - 6) - shot.y) > thing.h * 0.5 + 6) continue;
       if (thing.kind === 'clown' || thing.kind === 'switch') {
         const centred = Math.abs(thing.x - shot.x) < (shot.poised ? 9 : 6);
-        const perfect = centred || shot.bounces > 0 || shot.ramped.size > 0 || shot.curved;
+        const perfect = centred || shot.bounces > 0 || shot.ramped.size > 0 || shot.curved || shot.sure;
         if (thing.kind === 'switch') foil(thing, perfect);
         else if (shot.missing) wap(thing, 'thin', shot.missing);
         else wap(thing, perfect ? 'perfect' : 'throw', null, shot.helping);
@@ -1901,6 +2100,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.tags.push({ x: thing.x, y: thing.y - 72, t: 0, text: `${Math.round(thing.fed * 100) / 100} OF ${want} · MORE` });
     }
     run.waps += perfect ? 2 : 1;
+    if (run.mini) run.mini.score += perfect ? 2 : 1;
     // WAPs close together run on: a combo steadies the pie and readies the next slice.
     run.combo = run.comboT > 0 ? run.combo + 1 : 1;
     run.comboT = 2.6;
@@ -1997,8 +2197,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         paintCardChapters(n);
         if (state === 'title' || state === 'over') {
           cardAction.textContent = state === 'over'
-            ? `Carry another pie from ${chapterWords(n)}`
-            : n > 1 ? `Carry the pie from ${chapterWords(n)}` : 'Carry the pie';
+            ? `▶ Play again from ${chapterWords(n)}`
+            : n > 1 ? `▶ Play from ${chapterWords(n)}` : '▶ Play';
           prepareLeg(n).then((leg) => {
             if ((state === 'title' || state === 'over') && chosenStartChapter === n) paintFlows(leg);
           });
@@ -2103,7 +2303,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // Variant zero: the book's own words; slots stay ready to turn with the carry's lean.
           const rawText = String(item.text);
           const text = rawText.replace(/\{\{([a-z0-9-]+)\}\}/gi, (_, name) => item.slots?.[name]?.variants?.[0] ?? '');
-          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, voice: voiceName(section.type) });
+          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, voice: voiceName(section.type), room: section.room?.spw || null, title: section.title || null });
         } else if (Array.isArray(item.content)) {
           walk(item);
         }
@@ -2217,6 +2417,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.mawWas = mawAhead();
     if (run.sceneId !== (CHAPTER_SCENE[n] || 'lanes')) sceneTexture(CHAPTER_SCENE[n] || 'lanes');
     run.sceneId = CHAPTER_SCENE[n] || 'lanes';
+    // The lanes gain a dimension as the book goes: height from Four, games from Six, depth from Ten.
+    const gained = DIMENSIONS_GAINED.find(([from, id]) => n === from && !record.met.includes(`dim-${id}`));
+    if (gained) {
+      record.met.push(`dim-${gained[1]}`);
+      writeRecord(record);
+      setTimeout(() => showToast(gained[2], gained[3], 4200, 'wonder'), 1600);
+    }
     run.legStart = cobbles();
     run.leg = null;
     run.wonderQueue = [];
@@ -2360,7 +2567,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const marks = run.outcomes.map((o) => (o.outcome === 'won' ? `The mimes took ${chapterWords(o.n)}.` : o.outcome === 'back' ? `${chapterWords(o.n)} won back from the mimes.` : o.outcome === 'held' ? `The mimes kept ${chapterWords(o.n)}.` : '')).filter(Boolean).join(' ');
       const carried = run.outcomes.length ? ` Chapters carried through: ${run.outcomes.length}.${marks ? ` ${marks}` : ''}` : '';
       const firsts = run.met.length ? ` Met for the first time: ${run.met.join(', ')}.` : '';
-      showCard('Exactly one.', `${CAUSES[cause]} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${served}${foiled}${carried}${firsts} The hat did not fall.`, chosenStartChapter > 1 ? `Carry another pie from ${chapterWords(chosenStartChapter)}` : 'Carry another pie');
+      showCard('Exactly one.', `${CAUSES[cause]} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${served}${foiled}${carried}${firsts} The hat did not fall.`, chosenStartChapter > 1 ? `▶ Play again from ${chapterWords(chosenStartChapter)}` : '▶ Play again');
       paintCarries();
       paintCardChapters(run.chapter);
       paintCardModes();
@@ -2427,7 +2634,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.stillT = 0;
     run.tiltDir = clamp(run.tiltDir + (thing.x < run.x ? 0.65 : -0.65), -1, 1);
     // A knock turns the carrier, and the needle turns with them, away from what hit.
-    run.aim.a = clamp(run.aim.a + (thing.x < run.x ? TUNE.knock_swing : -TUNE.knock_swing), -AIM_MAX, AIM_MAX);
+    if (!(run.aimLock > 0)) run.aim.a = clamp(run.aim.a + (thing.x < run.x ? TUNE.knock_swing : -TUNE.knock_swing), -AIM_MAX, AIM_MAX);
     run.hurtT = 0.9;
     run.rattled = 0.6;
     run.shake = 0.28;
@@ -3062,6 +3269,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // Hit-stop: the world holds its breath a moment at a great impact (the pops and bits still move).
     let dt = rawDt;
     if (run?.hitStop > 0) { run.hitStop = Math.max(0, run.hitStop - rawDt); dt = rawDt * 0.12; }
+    if (askMode && state === 'running') dt *= 0.25;   // ? Ask: the lanes slow while you look
     if (run) {
       run.punch = Math.max(0, (run.punch || 0) - rawDt * 4);
       run.pops = run.pops.filter((p) => (p.t += rawDt) < 1.1);
@@ -3207,6 +3415,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (run.jumpT === 0) {
         // Down again: the pie lands on the plate with a little jostle (the porter barely feels it).
         run.jumpCool = 0.22;
+        run.lastLand = run.t;
+        run.lastHopGood = run.deftHop || (run.hopClears || 0) >= 1;
+        run.landT = 0.2;
+        if (!reduced?.matches) for (let i = 0; i < 8; i += 1) run.puffs.push({ x: run.x + rand(-12, 12), y: run.y + 14, vx: rand(-70, 70), vy: rand(-25, -5), t: 0.25 });
+        if (run.lastHopGood) {
+          run.punch = Math.max(run.punch || 0, 0.25 * TUNE.drama);
+          impact('hop', run.x, run.y - 92, { scale: 0.55 + Math.min(3, run.hopClears || 1) * 0.15, word: (run.hopClears || 0) >= 2 ? `HOP ×${run.hopClears}!` : pick(['DEFT!', 'NEAT!', 'LIGHT AS FLOUR!']) });
+        } else {
+          run.hopChain = 0;
+        }
+        run.highHop = false;
         if (run.deftHop || run.hopClears >= 2) {
           sfx('deft');
           lean('deft');
@@ -3235,7 +3454,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else {
       run.stillT = 0;
     }
-    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
+    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
     // The pie settles if you let it.
     // A knock rattles it for a moment; after that it settles, faster with something warm close by or when held in poise.
     if (!(run.rattled > 0)) {
@@ -3271,6 +3490,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (state === 'running') {
       tickForetold(dt);
       tickEcology(dt);
+      tickMini(dt);
+      // A weathercock by the lanes swings the needle the way it points, while the carrier passes it.
+      const vane = run.things.find((t) => t.kind === 'vane' && Math.abs(t.x - run.x) < LANE_W * 1.6 && Math.abs(t.y - run.y) < 70);
+      if (vane && !(run.aimLock > 0)) {
+        run.aim.a += (clamp(vane.angle, -AIM_MAX, AIM_MAX) - run.aim.a) * Math.min(1, dt * 3);
+        if (!vane.said) { vane.said = true; run.tags.push({ x: vane.x, y: vane.y - 40, t: 0, text: 'THE VANE TURNS YOU' }); }
+      }
       if (run.escort) run.escort.t -= dt;
     }
     setSoundMood({ muffled: state === 'running' && run.lag > 0, thin: state === 'running' && mawAhead() });
@@ -3428,8 +3654,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.throws = run.throws.filter((shot) => !shot.done);
 
       for (const thing of run.things) {
-        if (thing.wapped || thing.knocked || thing.cleared || !hits(thing)) continue;
-        if (airborne() && LOW.has(thing.kind)) {
+        if (thing.ghost || thing.wapped || thing.knocked || thing.cleared || !hits(thing)) continue;
+        if (airborne() && (LOW.has(thing.kind) || (run.highHop && HIGH_CLEARS.has(thing.kind)))) {
           // Cleared in a hop: a hazard or a slip passed under is passed for good, and a slice readies.
           if (thing.fatal || SLIPS.has(thing.kind)) {
             thing.cleared = true;
@@ -3437,8 +3663,31 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             lean('hop_clear');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
-            run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: 'CLEARED' });
+            run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: run.highHop && !LOW.has(thing.kind) ? 'OVER THE TOP' : 'CLEARED' });
+            if (run.mini) run.mini.score += 1;
+            if (run.highHop && !LOW.has(thing.kind)) impact('hop', thing.x, thing.y - 40, { scale: 0.8, word: pick(['OVER!', 'WHEEE!', 'UP AND OVER!']) });
           }
+          continue;
+        }
+        if (thing.kind === 'arrow') {
+          // On the arrow: the needle points where it points, and holds; a throw while it holds is Perfect.
+          if (!airborne()) {
+            thing.wapped = true;
+            thing.wapT = 0.4;
+            thing.spin = 0;
+            run.aim.a = clamp(thing.angle, -AIM_MAX, AIM_MAX);
+            run.aimLock = TUNE.arrow_hold;
+            sfx('catch');
+            impact('arrow', thing.x, thing.y - 24, { scale: 0.7 });
+            lean('aimed');
+          }
+          continue;
+        }
+        if (thing.kind === 'horn') {
+          thing.wapped = true;
+          thing.wapT = 0.5;
+          thing.spin = 0;
+          startMini();
           continue;
         }
         if (thing.kind === 'clown') {
@@ -3965,7 +4214,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // A hazard coming down the carrier's own lane pulses, so the one that matters reads first.
     if (!thing.wapped && !thing.knocked && !thing.cleared && (thing.fatal || SLIPS.has(thing.kind))) {
       const hurt = thing.fatal;
-      const coming = run && state === 'running' && thing.y < run.y && run.y - thing.y < 260
+      const coming = run && state === 'running' && thing.y < run.y && run.y - thing.y < (run.mini?.id === 'long_view' ? 440 : 260)
         && (WIDE.has(thing.kind) ? thing.gap !== run.lane : Math.abs(thing.x - run.x) < (thing.w + 20) / 2);
       const pulse = coming && !reduced?.matches ? 0.5 + Math.sin(run.t * 12) * 0.5 : coming ? 1 : 0;
       const rgb = hurt ? '200, 56, 40' : '40, 110, 170';
@@ -3987,6 +4236,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.ellipse(x, footY, rx, thing.kind === 'puddle' || thing.kind === 'frost' ? 12 : 8, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
+        // Its height, said plainly: ⤒ a hop clears it · ⤒⤒ only a high hop · ▮ too tall to hop.
+        const mark = heightMark(thing);
+        if (mark) {
+          ctx.setLineDash([]);
+          const lit = mark === '⤒⤒' ? run?.highHop : mark === '⤒';
+          ctx.font = '800 9px "JetBrainsMono", ui-monospace, monospace';
+          ctx.textAlign = 'left';
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'rgba(255, 252, 244, 0.85)';
+          ctx.strokeText(mark, x + rx - 2, footY + 3);
+          ctx.fillStyle = lit ? '#2c8b86' : 'rgba(40, 32, 28, 0.7)';
+          ctx.fillText(mark, x + rx - 2, footY + 3);
+        }
       }
       ctx.setLineDash([]);
     }
@@ -4353,6 +4615,55 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.strokeStyle = '#3d6a3a';
         ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(x, y - 9); ctx.quadraticCurveTo(x + 3, y - 14, x + 7, y - 15); ctx.stroke();
+        break;
+      }
+      case 'arrow': {
+        // An arrow painted on the track: where it points, the needle will point.
+        if (thing.wapped) ctx.globalAlpha = Math.max(0, thing.wapT * 2);
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(thing.angle);
+        ctx.fillStyle = 'rgba(242, 193, 78, 0.85)';
+        ctx.strokeStyle = 'rgba(120, 80, 20, 0.7)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(0, -11); ctx.lineTo(8, -1); ctx.lineTo(3, -1); ctx.lineTo(3, 8); ctx.lineTo(-3, 8); ctx.lineTo(-3, -1); ctx.lineTo(-8, -1);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.restore();
+        break;
+      }
+      case 'vane': {
+        // A weathercock on its pole, by the lanes: the iron votes, and points.
+        ctx.strokeStyle = mix(colors.ink, colors.paper, 0.25);
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x, y + 16); ctx.lineTo(x, y - 14); ctx.stroke();
+        ctx.save();
+        ctx.translate(x, y - 16);
+        ctx.rotate(thing.angle + (reduced?.matches ? 0 : Math.sin((run?.t || 0) * 2 + x) * 0.06));
+        ctx.fillStyle = '#5d4a2c';
+        ctx.beginPath(); ctx.moveTo(0, -12); ctx.lineTo(5, -2); ctx.lineTo(-5, -2); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(0, -2); ctx.lineTo(0, 10); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(-4, 4, 6, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+        break;
+      }
+      case 'horn': {
+        // A brass horn on a stand: step into it and a game begins.
+        if (thing.wapped) ctx.globalAlpha = Math.max(0, thing.wapT * 2);
+        ctx.strokeStyle = '#7a5a20';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x, y + 14); ctx.lineTo(x, y); ctx.stroke();
+        const g = ctx.createLinearGradient(x - 12, 0, x + 12, 0);
+        g.addColorStop(0, '#f2c14e'); g.addColorStop(1, '#a8782a');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.moveTo(x - 10, y - 4); ctx.lineTo(x + 6, y - 9); ctx.lineTo(x + 6, y + 3); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(x + 8, y - 3, 3.5, 8, 0, 0, Math.PI * 2); ctx.fill();
+        if (!reduced?.matches) {
+          ctx.strokeStyle = 'rgba(242, 193, 78, 0.6)';
+          ctx.lineWidth = 1;
+          const r = 12 + ((run?.t || 0) * 18) % 10;
+          ctx.beginPath(); ctx.arc(x + 9, y - 3, r, -0.6, 0.6); ctx.stroke();
+        }
         break;
       }
       case 'boneberry': {
@@ -4984,7 +5295,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     const ink = colors.ink;
     const stride = state === 'running' && !reduced?.matches ? Math.sin((run?.t || 0) * 10) * 5 : 0;
+    // Squash and stretch: a crouch to leap, a stretch in the air, a squash on landing.
+    let sx = 1;
+    let sy = 1;
+    if (run && !reduced?.matches) {
+      if (run.jumpT > 0) {
+        const p = 1 - run.jumpT / JUMP_DUR;
+        sy = p < 0.12 ? 0.88 : 1 + Math.sin(Math.PI * p) * 0.09 * (run.hopPower || 1);
+        sx = 2 - sy;
+      } else if (run.landT > 0) {
+        const k = run.landT / 0.2;
+        sy = 1 - 0.2 * k;
+        sx = 1 + 0.18 * k;
+      }
+    }
     ctx.save();
+    if (sx !== 1 || sy !== 1) {
+      ctx.translate(x, y + 16);
+      ctx.scale(sx, sy);
+      ctx.translate(-x, -(y + 16));
+    }
     ctx.strokeStyle = ink;
     ctx.fillStyle = ink;
     ctx.lineWidth = 2;
@@ -5537,12 +5867,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawRules();
     drawBoonWAP();
     drawBaneWAP();
-    run?.things.forEach(drawThing);
+    // Drawn by height (the implicit z): ground first, then low, then bodies; things in the air after
+    // the carrier, so a pigeon passes over the hat and a hop passes over a stone.
+    const byZ = (a, b) => (Z[a.kind] ?? 2) - (Z[b.kind] ?? 2) || a.y - b.y;
+    const things = run ? [...run.things].sort(byZ) : [];
+    things.filter((t) => (Z[t.kind] ?? 2) < 3).forEach(drawThing);
     drawForetold();
     drawAim();
     drawEscorts();
     drawBoof();
     drawFigure();
+    things.filter((t) => (Z[t.kind] ?? 2) >= 3).forEach(drawThing);
+    drawHopGauge();
     drawFlight();
     drawSpill();
     drawBursts();
@@ -5555,6 +5891,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.fillRect(0, 0, W, H);
     }
     ctx.restore();
+    warpLongView();
+    drawMiniBanner();
+    drawAskTags();
     if (run?.hurtT > 0 && !record.view.zen) {
       const edge = ctx.createRadialGradient(W / 2, H / 2, H * 0.32, W / 2, H / 2, H * 0.62);
       edge.addColorStop(0, 'rgba(200, 50, 36, 0)');
@@ -5583,7 +5922,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const pause = () => {
     if (state !== 'running') return;
     state = 'paused';
-    showCard('A pause.', 'The pie is held very still. The city waits, politely.', 'Carry on');
+    showCard('A pause.', 'The pie is held very still. The city waits, politely.', '▶ Keep playing');
     const home = returnAnchor();
     if (home) cardLinks?.replaceChildren(home);
     say('Paused.');
@@ -5780,6 +6119,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (knock.drop) chips.push('a step back');
     }
     if (LOW.has(kind)) chips.push('⤒ a hop clears it');
+    else if (HIGH_CLEARS.has(kind)) chips.push('⤒⤒ only a high hop clears it');
+    else if (KNOCKS[kind] && (Z[kind] ?? 2) >= 3) chips.push('in the air: step aside');
+    else if (KNOCKS[kind]) chips.push('▮ too tall to hop');
     if (SLIPS.has(kind)) chips.push('slips');
     const from = INTRO[kind] || INTRO[kind.replace('carrier-', '')];
     if (from) chips.push(`in the lanes from Chapter ${from}`);
@@ -5897,7 +6239,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     area.closest('section')?.scrollIntoView({ block: 'start', behavior: reduced?.matches ? 'auto' : 'smooth' });
     area.focus({ preventScroll: true });
   }
-  function renderCard(kind, { moment = null, isNew = false, live = false, compact = false } = {}) {
+  function renderCard(kind, { moment = null, isNew = false, live = false, compact = false, ask = null } = {}) {
     const c = CARDS[kind];
     const face = nodeOf('article', `pie-cardface type-${c.type}${compact ? ' is-compact' : ''}`);
     const sprite = document.createElement('canvas');
@@ -5937,7 +6279,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     face.append(box);
     // Turned during a carry, the card is read aloud by the lanes before it plays: atom by atom.
-    if (live) interpretCard(rendered, spell.kind, box);
+    if (live && !ask) interpretCard(rendered, spell.kind, box);
+    // Asked about (? Ask): what it is in the story, and the passage going by in the book as it was met.
+    if (ask) {
+      const inBook = nodeOf('div', 'pie-cardface-ask');
+      inBook.append(nodeOf('span', 'pie-cardface-spell-label', 'In the book, as you met it'));
+      if (ask.wonder) {
+        const w = ask.wonder;
+        const p = nodeOf('p', 'pie-cardface-ask-wonder');
+        p.append(nodeOf('b', '', w.name || 'A wonder'), w.note ? ` — ${w.note}` : '');
+        inBook.append(p);
+      }
+      if (ask.passage) {
+        const p = nodeOf('p', 'pie-cardface-ask-passage');
+        const a = nodeOf('a', '', `${chapterWords(ask.passage.chapter)}${ask.passage.title ? `, ${ask.passage.title}` : ''} →`);
+        a.href = ask.passage.href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        p.append(`“${ask.passage.words}…” `, a);
+        inBook.append(p);
+        if (ask.passage.room) inBook.append(renderSpell(ask.passage.room, { cast: false, play: true, label: 'The room it was met in' }));
+      }
+      face.append(inBook);
+    }
     if (moment) {
       face.append(nodeOf('p', 'pie-cardface-moment', `Met in ${chapterWords(moment.chapter)}, under ${carrierById(moment.carrier).name}, row ${moment.row} of ${ROWS}, lane ${moment.lane}, at ${moment.speed} px/s, tilt ${pct(moment.tilt)}.`));
     }
@@ -5975,10 +6339,84 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (designMode) designable(face, kind);
     return face;
   }
+  /* ─── ? Ask: tap anything in the lanes to learn what it is in the story, and where the book is ───
+   * While it is on, the lanes slow to a quarter, every thing wears a small tag of where the book first
+   * has it, and a tap opens that thing's card with the passage going by as it was met. */
+  let askMode = false;
+  const askBtn = root.querySelector('[data-pie-ask]');
+  const labelsBtn = root.querySelector('[data-pie-labels]');
+  const paintAsk = () => {
+    askBtn?.setAttribute('aria-pressed', askMode ? 'true' : 'false');
+    labelsBtn?.setAttribute('aria-pressed', record.view.labels ? 'true' : 'false');
+    root.classList.toggle('is-asking', askMode);
+  };
+  // Labels: the name tags on everything, kept on or off (they are on by themselves while asking).
+  labelsBtn?.addEventListener('click', () => {
+    record.view.labels = !record.view.labels;
+    writeRecord(record);
+    paintAsk();
+    say(record.view.labels ? 'Labels on: every thing in the lanes wears its name and where the book first has it.' : 'Labels off.');
+  });
+  askBtn?.addEventListener('click', () => {
+    askMode = !askMode;
+    paintAsk();
+    say(askMode ? 'Ask: the lanes slow; tap anything to learn what it is in the story.' : 'Ask is off.');
+  });
+  const cardKindOf = (thing) => (thing.kind === 'wonder' ? 'wonder' : CARDS[thing.kind] ? thing.kind : null);
+  function inspect(at) {
+    if (!run) return false;
+    let kind = null;
+    let found = null;
+    if (Math.hypot(at.x - run.x, at.y - (run.y - 20)) < 30) kind = `carrier-${run.carrier.id}`;
+    else if (run.boof && Math.hypot(at.x - run.boof.x, at.y - run.boof.y) < 34) kind = 'boof';
+    else {
+      found = run.things
+        .filter((t) => !t.wapped && cardKindOf(t))
+        .map((t) => ({ t, d: Math.hypot(t.x - at.x, t.y - at.y) }))
+        .filter((o) => o.d < 40)
+        .sort((a, b) => a.d - b.d)[0]?.t || null;
+      if (found) kind = cardKindOf(found);
+      else if (run.boon && at.y < PRESENCE_Y + 50) kind = 'boon';
+      else if (run.bane && at.y < PRESENCE_Y + 50) kind = 'bane';
+    }
+    if (!kind || !CARDS[kind]) return false;
+    const now = passing();
+    openReveal({
+      kind,
+      moment: momentOf(),
+      isNew: false,
+      ask: {
+        wonder: found?.wonder || null,
+        passage: now ? { chapter: now.leg.n, title: now.para.title, room: now.para.room, words: now.para.text.split(/\s+/).slice(0, 12).join(' '), href: passageHref(now) } : null
+      }
+    });
+    return true;
+  }
+  /* In ask mode, every thing wears a tag: its name, and where the book first has it. */
+  function drawAskTags() {
+    if (!(askMode || record.view.labels) || !run) return;
+    ctx.save();
+    ctx.font = '700 8px "JetBrainsMono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    run.things.forEach((t) => {
+      const kind = cardKindOf(t);
+      if (!kind || t.wapped || t.y < 20 || t.y > H) return;
+      const c = CARDS[kind];
+      const from = c.chapter || INTRO[t.kind] || null;
+      const label = `${(t.wonder?.name || c.name).replace(/^(A|An|The) /, '').slice(0, 16)}${from ? ` · ${from}` : ''}`;
+      const w = ctx.measureText(label).width + 8;
+      ctx.fillStyle = 'rgba(20, 18, 24, 0.78)';
+      ctx.beginPath(); ctx.roundRect(t.x - w / 2, t.y - t.h / 2 - 18, w, 12, 4); ctx.fill();
+      ctx.fillStyle = '#ffe36b';
+      ctx.fillText(label, t.x, t.y - t.h / 2 - 9);
+    });
+    ctx.restore();
+  }
+  paintAsk();
   function openReveal(item) {
     if (!introOut || !CARDS[item.kind]) return;
     state = 'revealing';
-    introOut.replaceChildren(renderCard(item.kind, { moment: item.moment, isNew: item.isNew, live: true }));
+    introOut.replaceChildren(renderCard(item.kind, { moment: item.moment, isNew: item.isNew, live: true, ask: item.ask || null }));
     introOut.hidden = false;
     introOut.querySelector('.pie-intro-go')?.focus({ preventScroll: true });
     const c = CARDS[item.kind];
@@ -6037,7 +6475,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (intro) chosenStartChapter = 1;
         paintCardModes();
         paintCardChapters(chosenStartChapter);
-        cardAction.textContent = intro ? 'Carry the pie from the beginning' : chosenStartChapter > 1 ? `Carry the pie from ${chapterWords(chosenStartChapter)}` : 'Carry the pie';
+        cardAction.textContent = intro ? '▶ Play from the beginning' : chosenStartChapter > 1 ? `▶ Play from ${chapterWords(chosenStartChapter)}` : '▶ Play';
         prepareLeg(chosenStartChapter).then((leg) => { if (state === 'title' || state === 'over') paintFlows(leg); });
       });
       return b;
@@ -6667,7 +7105,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let press = null;
   const toGame = (event) => {
     const box = canvas.getBoundingClientRect();
-    return { x: ((event.clientX - box.left) / box.width) * W, y: ((event.clientY - box.top) / box.height) * H, px: box.width / W };
+    const y = ((event.clientY - box.top) / box.height) * H;
+    // In the long view the road is drawn narrower toward its far end: undo that for where a tap lands.
+    const x = W / 2 + (((event.clientX - box.left) / box.width) * W - W / 2) / viewScale(y);
+    return { x, y, px: box.width / W };
   };
   // How far a drag goes for one step: =swipe_across (a fraction of a lane) and =swipe_along (in the game's units).
   const stepAcross = () => LANE_W * TUNE.swipe_across;
@@ -6717,6 +7158,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return;
     }
     if (state !== 'running') return;
+    if (askMode && Math.hypot(dx, dy) < 26 && inspect(toGame(event))) return;
     if (done.fromPie) {
       // Pulled from the pie: a flick along the needle; barely moved, a hop.
       if (done.aimed) throwSlice(run.aim.a);
@@ -6803,7 +7245,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     firstChapter > 1
       ? `From ${chapterWords(firstChapter)}${entry ? `, ${entry.place}` : ''}: someone in a hat is carrying one, level, through the rest of the book. It is not always the same someone.`
       : 'Nobody has said who. Someone in a hat is carrying one, level, in both hands, through the whole book, chapter by chapter. It is not always the same someone.',
-    entry ? entry.door : firstChapter > 1 ? `Carry the pie from ${chapterWords(firstChapter)}` : 'Carry the pie');
+    entry ? `▶ Play: ${entry.door.charAt(0).toLowerCase()}${entry.door.slice(1)}` : firstChapter > 1 ? `▶ Play from ${chapterWords(firstChapter)}` : '▶ Play');
   paintCardChapters(chosenStartChapter);
   prepareLeg(chosenStartChapter).then((leg) => {
     if (state === 'title') paintFlows(leg);

@@ -42,6 +42,15 @@
   design: "?design on /pie/ names every section of a card and copies a note for it: ?design[card.kind.section]{ #now[…] #note[…] @by[…] }"
 }
 
+^prime_and_cast{
+  .note: "spw-spell.mjs enablePriming, after spwashi.com: .spw/conventions/charge-cycle.spw, the factshift lifecycle (primed, held, actualized, residue), spw.quest pivot (a tap primes, a second tap acts)"
+  tap: "a first tap primes an atom: nothing is written, and its next step is said (what it would do in the game, and its discharge kind); a second tap while it is charged casts it: one change, a receipt in the sigil own verb, and residue (a faint halo stays)"
+  lifetime: "a prime holds a charge of 0.82 that bleeds 0.18 every 2.8 s and goes quiet below 0.08, back to ground; Escape or a tap elsewhere lets it go at once"
+  kinds: "release ? ! (at once, and over) · transfer ~ @ & $ (carries something on, for a while) · ground # = . % (sets a value, and stays) · project ^ * (binds upward, and is kept)"
+  verbs: "? answered · ! struck · ~ taken · @ seen · & joined · $ made · # marked · = tuned · . let go · % measured · ^ lifted · * kept"
+  event: "a cast dispatches spw:cast with sigil, label, atom, kind and verb, for whatever page the spell is on to act on"
+}
+
 ^card_interpreter{
   .note: "pie-game.mjs interpretCard"
   narrative: "as a card turns in the lanes, the lanes read its spell aloud, one atom at a time, each lit and said in plain words: what it is, what it costs, what it gives, whose voice says it"

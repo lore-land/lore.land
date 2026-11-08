@@ -292,3 +292,32 @@ main.chapter .projection-spell-lines li.is-carries .spell {
 @media (prefers-reduced-motion: reduce) {
   .spell-number.is-nudged { animation: none; }
 }
+
+/* Prime, then cast (the canonical tap): a primed atom glows by its charge, which bleeds every 2.8 s;
+ * a cast flares once and leaves residue, a faint dashed halo, the way an answered question stays found. */
+.spell-atom.is-primed {
+  background: color-mix(in srgb, var(--role, var(--spell-gold)) calc(var(--charge, 0.8) * 30%), transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--role, var(--spell-gold)) calc(var(--charge, 0.8) * 80%), transparent),
+    0 0 calc(var(--charge, 0.8) * 1.4em) color-mix(in srgb, var(--role, var(--spell-gold)) 45%, transparent);
+  transition: background-color 600ms ease, box-shadow 600ms ease;
+}
+
+.spell-atom.is-spent {
+  outline: 1px dashed color-mix(in srgb, var(--role, var(--spell-gold)) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.spell-atom.is-cast {
+  animation: spell-cast 700ms ease-out;
+}
+
+@keyframes spell-cast {
+  0% { box-shadow: 0 0 0 2px var(--role, var(--spell-gold)), 0 0 1.6em var(--role, var(--spell-gold)); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spell-atom.is-cast { animation: none; }
+  .spell-atom.is-primed { transition: none; }
+}

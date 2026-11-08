@@ -110,7 +110,7 @@ export function initPieSegues({ chapterData } = {}) {
       title: `Exactly One Pie, from ${segue.place}${held ? ' · held by Mimes Against WAP' : ''}`
     },
       el('span', { className: 'pie-door-sigil', 'aria-hidden': 'true' }, '◎'),
-      ` ${segue.door}${held ? ' · held by the mimes — win it back' : ''}`);
+      ` ▶ Play: ${segue.door.charAt(0).toLowerCase()}${segue.door.slice(1)}${held ? ' · held by the mimes — win it back' : ''}`);
     const row = el('p', { className: 'pie-door-row' }, door);
     section.append(row);
     added.push(row);

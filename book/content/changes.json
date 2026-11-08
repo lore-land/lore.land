@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.L",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie the lanes now have height, and say so: every hazard's ring marks whether a hop clears it (⤒), only a high hop does (⤒⤒), or it is too tall (▮). Hops hang at the top, squash and stretch, and chain: hop again soon after clearing something and the next goes higher, and the third clears the posts.",
+        "From Chapter Four arrows on the track set your aim and hold it (every throw on an arrow is Perfect), and weathercocks by the lanes swing it. From Six a brass horn starts a game, Vane Alley or The Parade; from Ten, The Long View, where the road recedes to a far point and you see what is coming sooner.",
+        "? Ask slows the lanes and lets you tap anything to learn what it is in the story and which passage of the book was going by; ◇ Labels keeps every thing's name on. Tapping a sigil in any spell now primes it and a second tap casts it, the way spells are cast on spwashi.com. And the buttons say Play."
+      ]
+    },
+    {
       "release": "2026_11_08.K",
       "date": "2026-11-08",
       "notes": [
