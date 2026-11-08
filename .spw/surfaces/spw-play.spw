@@ -1,0 +1,72 @@
+# Lore.Land Spw as play
+# What makes the language useful and fun here: spells that can be heard (spw-sound.mjs), touched and
+# turned (scrubbable numbers), copied and pasted with their origin, read aloud by the card
+# interpreter, worn as textures, woven as stories (story-loom.mjs), and discussed by a design table.
+# The last block is what this repository asks of the workbench, as distinct from the language's
+# other readers.
+#>lore_land_surfaces_spw_play
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  A notation becomes a toy before it becomes a tool when every part of it answers a touch. Here a spell lights by role, says what each part does, can be played as music, and its numbers turn like dials; copied, it carries where it came from, and pasted, it goes where it belongs. None of it is required to read the book; all of it rewards the reader who leans in.
+}
+
+^music{
+  .note: "book/scripts/modules/spw-sound.mjs; a play button on any spell (spw-spell.mjs play option)"
+  voices: "? a rising fourth left open · ~ a slow pad · @ a pluck placed by name · & a third · * a bell · ^ three notes climbing · ! a knock and a thump · # a glass ping · . a low ground note · = the filter turned · % ticks, n of them · $ a texture by material"
+  time: "[ ] one after another · { } held over a ground · ( ) all at once · < > a passage, each note gliding into the next"
+  pitch: "a label chooses a degree of the spell own pentatonic key; the whole text chooses the key, so every spell has its own"
+  words: "a quoted string is breathed, a syllable at a time, under the music"
+  lit: "each atom lights as it sounds, so a spell can be followed by ear and eye at once"
+}
+
+^textures{
+  .note: "the eight materials (materials.mjs) as sound and as surface"
+  sound: "glass shimmers · flour puffs · berry plucks · frost crackles · ink hums low · brass rings · steam breathes · oak knocks"
+  surface: "a spell that names a $material wears its ground and sheen (materials.css tokens)"
+  scenes: "each place in the game has a material (!scenes{} in pie-rules.spw) and plays its texture as it begins"
+}
+
+^dials{
+  .note: "scrub option of spw-spell.mjs; the tuning desk on /pie/ (=tune, =lean, !scenes)"
+  turn: "scroll over a number, drag it up or down, or focus it and use the arrow keys (shift for ten); it is held to its range"
+  effect: "the game retunes at once, and the spell is kept as the visit own, beside the bench"
+  tunables: "aim step, knock swing, pad pace, slow land, foretelling, flinch, in kind, swipe across, swipe along, ahead bonus, drama"
+}
+
+^copy_and_paste{
+  copy: "a copy button on a spell copies only the spell, with #from[where it came from] on its own line"
+  paste: "pasted anywhere on /pie/ (outside a text box), a spell is read and routed: rules to the bench and into play, a card to its place in the deck, a carry beside the provenance cards, a chapter reading to a link that reads it that way"
+  design: "?design on /pie/ names every section of a card and copies a note for it: ?design[card.kind.section]{ #now[…] #note[…] @by[…] }"
+}
+
+^card_interpreter{
+  .note: "pie-game.mjs interpretCard"
+  narrative: "as a card turns in the lanes, the lanes read its spell aloud, one atom at a time, each lit and said in plain words: what it is, what it costs, what it gives, whose voice says it"
+  identity: "every card has a spell: its rule (a knock, a power) or who it is, @kind{ .type[…] .first[…] ^sprite[…] #name[…] }"
+}
+
+^whimsy{
+  .note: "!whimsy{} and !scenes{} in pie-rules.spw; impact() in pie-game.mjs"
+  impacts: "a word pops (BONK!, SPLAT!, BZZT!), bits fly (juice, crumbs, feathers, glass, confetti, stars, flour), the view leans in, and at the best moments the world holds its breath"
+  scale: "=drama times the sprite own drama times the scene own; calm under reduced motion and zen"
+}
+
+^stories{
+  .note: "stories.spw, read by story-loom.mjs at /scriptorium/#loom"
+  pattern: "touch a value and the stories that share it light; what they share is written as one spell, with ~_ where they part, and can be played"
+}
+
+?workbench_asks[
+  runtime_reader: { why: "this book reads Spw in the browser at runtime (game rules, stories, signatures), where the 634 KB bundle costs a cold 300 ms or more" ask: "a small runtime entry for reading (lite.ts exists) with the same tree, published as its own bundle" }
+  honest_success: { why: "a broken spell on the bench was called a success" ask: "success false, or a structural flag, whenever a structured read falls back to prose" }
+  attach_rules: { why: "four walkers here each special-case @, ( ), and postfix observers" ask: "one attachment rule: a frame or body after any sigil and label belongs to that term; a postfix @ belongs to what it follows" }
+  everyday_valence: { why: "a goose honks and a berry is a boneberry: the valence words are everyday nouns in this book" ask: "identifiers where identifiers are expected; modifiers only where a modifier can stand" }
+  ranges_and_units: { why: "every number in the game rules is a dial with a range, and some are seconds" ask: "a way to write a range and a unit with a number, so a dial knows its bounds without a side table: ~lit[7s] =aim_step[0.13 of 0.04..0.4]" }
+  holes: { why: "the loom writes what stories share with ~_ where they part" ask: "a pattern variable (a hole) as grammar, so anti-unification can be written and read back" }
+  provenance: { why: "copy and paste carries #from[…] on its own line" ask: "a standard provenance annotation a reader can rely on, and a way to attach it to an expression" }
+  sound_and_texture: { why: "spells are played here as music and worn as textures" ask: "a shared registry of sigil voices and material textures, so another reader of the language can play a spell the same way" }
+  prose_canon: { why: "canon here is prose-heavy: apostrophes in rationale capsules still degrade a file" ask: "prose capsules that tolerate apostrophes and quotes as text" }
+]

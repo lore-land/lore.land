@@ -3,7 +3,7 @@
  * knowing its pair, every atom saying what it does, and the whole thing written in light the
  * first time it comes into view.
  *
- *   renderSpell(text, { explain, cast, link })  → an element (.spell) ready to place anywhere
+ *   renderSpell(text, { explain, cast, link, play })  → an element (.spell) ready to place anywhere
  *   enchant(root)                               → turns every .spell-source inside root into a spell
  *
  * It reads the surface of the language only (sigils, containers, labels, strings, numbers, paths),
@@ -16,6 +16,8 @@
  *   - hover a bracket and its pair lights too
  *   - cast: on first sight the spell inks in, glyph by glyph, and the sigils flare once
  *     (none of it under reduced motion; nothing depends on it)
+ *   - play: a ▶ plays the spell as music (spw-sound.mjs), each atom lighting as it sounds
+ *   - texture: a spell that names a material ($glass, $frost, …) wears it (materials.css tokens)
  */
 
 export const SIGIL_ROLES = Object.freeze({
@@ -36,7 +38,7 @@ export const SIGIL_ROLES = Object.freeze({
 const CONTAINER_NAMES = Object.freeze({ '[': 'a frame', '{': 'a body', '(': 'a gathering', '<': 'a passage' });
 
 /* The surface of a spell, as tokens: sigil, label, open, close, string, number, path, word, space, other. */
-function tokenize(text) {
+export function tokenize(text) {
   const tokens = [];
   const re = /(\s+)|("(?:[^"\\]|\\.)*"?)|([?~@&*^!#.=%$])(?=[A-Za-z_"[{(<]|$)|([[{(<])|([\]})>])|(-?\d+(?:\.\d+)?)|([A-Za-z_][\w-]*)|(.)/gu;
   let m;
@@ -72,9 +74,17 @@ function span(className, text, title) {
  * A spell, rendered. explain(atomText, sigil, label) may return a plain sentence for an atom
  * (shown under the spell as it is lit); link(path) may return an href for a quoted path.
  */
-export function renderSpell(text, { explain = null, cast = true, link = null, label = '' } = {}) {
+const MATERIALS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
+
+export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false } = {}) {
   const root = document.createElement('div');
   root.className = `spell${cast ? ' is-uncast' : ''}`;
+  // Made of something: the first $material it names gives it that material's ground and sheen.
+  const material = (/\$([a-z]+)/.exec(String(text)) || [])[1];
+  if (MATERIALS.includes(material)) {
+    root.classList.add('has-material');
+    root.dataset.material = material;
+  }
   const line = document.createElement('code');
   line.className = 'spell-line';
   if (label) line.setAttribute('aria-label', label);
@@ -86,7 +96,10 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   let glyph = 0;
   let atom = null;
   const close = () => { atom = null; };
-  tokenize(String(text)).forEach((t) => {
+  // Kept, so a scrubbed number can be written back into the spell's own text.
+  const tokens = tokenize(String(text));
+  let numberN = 0;
+  tokens.forEach((t, position) => {
     let node;
     if (t.type === 'sigil') {
       const role = SIGIL_ROLES[t.text];
@@ -130,6 +143,17 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       close();
     } else if (t.type === 'number') {
       node = span('spell-number', t.text);
+      if (scrub) {
+        node.classList.add('is-scrub');
+        node.tabIndex = 0;
+        node.dataset.position = String(position);
+        node.dataset.label = atom?.dataset.label || '';
+        node.dataset.sigil = atom?.dataset.sigil || '';
+        node.setAttribute('role', 'spinbutton');
+        node.setAttribute('aria-label', `${atom?.dataset.label || 'number'}: scroll, drag or use the arrow keys to change`);
+        node.setAttribute('aria-valuenow', t.text);
+        numberN += 1;
+      }
       (atom || line).append(node);
     } else if (t.type === 'space') {
       if (atom && !atom.querySelector('.spell-open')) close();
@@ -143,6 +167,9 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
     glyph += 1;
   });
   root.style.setProperty('--glyphs', String(glyph));
+  if (play) root.append(playButton(text, line));
+  if (copy) root.append(copyButton(() => tokens.map((t) => t.text).join(''), typeof copy === 'string' ? copy : ''));
+  if (scrub && numberN) enableScrub(line, tokens, scrub);
   root.append(line);
   if (explain) root.append(gloss);
 
@@ -168,6 +195,124 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
 
   if (cast) castWhenSeen(root);
   return root;
+}
+
+/*
+ * Scrub: a number in a spell is a dial. Scroll over it, drag it up or down, or focus it and use
+ * the arrow keys (shift for ten times as much); scrub.range(label, sigil) may hold it between two
+ * bounds, and scrub.change(text, { label, value }) hears the whole spell, rewritten, each time.
+ */
+function enableScrub(line, tokens, scrub) {
+  const stepOf = (text) => {
+    const decimals = (String(text).split('.')[1] || '').length;
+    return decimals ? 10 ** -Math.min(decimals, 2) : 1;
+  };
+  const nudge = (node, steps) => {
+    const position = Number(node.dataset.position);
+    const before = tokens[position].text;
+    const step = stepOf(before);
+    const [lo, hi] = scrub.range?.(node.dataset.label, node.dataset.sigil) || [-Infinity, Infinity];
+    const value = Math.min(hi, Math.max(lo, Number(before) + steps * step));
+    const decimals = (String(step).split('.')[1] || '').length;
+    const text = decimals ? value.toFixed(decimals) : String(Math.round(value));
+    if (text === before) return;
+    tokens[position].text = text;
+    node.textContent = text;
+    node.setAttribute('aria-valuenow', text);
+    node.classList.remove('is-nudged');
+    void node.offsetWidth;
+    node.classList.add('is-nudged');
+    scrub.change?.(tokens.map((t) => t.text).join(''), { label: node.dataset.label, value: Number(text) });
+  };
+  line.addEventListener('wheel', (event) => {
+    const node = event.target.closest('.spell-number.is-scrub');
+    if (!node) return;
+    event.preventDefault();
+    nudge(node, (event.deltaY < 0 ? 1 : -1) * (event.shiftKey ? 10 : 1));
+  }, { passive: false });
+  let drag = null;
+  line.addEventListener('pointerdown', (event) => {
+    const node = event.target.closest('.spell-number.is-scrub');
+    if (!node) return;
+    event.preventDefault();
+    drag = { node, y: event.clientY, id: event.pointerId };
+    try { node.setPointerCapture(event.pointerId); } catch { /* not held */ }
+    node.classList.add('is-dragging');
+  });
+  line.addEventListener('pointermove', (event) => {
+    if (!drag || event.pointerId !== drag.id) return;
+    const steps = Math.trunc((drag.y - event.clientY) / 8);
+    if (steps) { nudge(drag.node, steps); drag.y = event.clientY; }
+  });
+  const release = () => { drag?.node.classList.remove('is-dragging'); drag = null; };
+  line.addEventListener('pointerup', release);
+  line.addEventListener('pointercancel', release);
+  line.addEventListener('keydown', (event) => {
+    const node = event.target.closest('.spell-number.is-scrub');
+    if (!node || !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    nudge(node, (event.key === 'ArrowUp' ? 1 : -1) * (event.shiftKey ? 10 : 1));
+  });
+}
+
+/*
+ * ⧉: copy the spell as clean Spw, nothing but the spell (no glosses, no buttons), and where it
+ * came from as a #from annotation, so a paste elsewhere knows what it holds (pie-game.mjs pasteSpell).
+ */
+function copyButton(textOf, from) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'spell-copy';
+  button.textContent = '⧉';
+  button.title = 'Copy this spell';
+  button.setAttribute('aria-label', 'Copy this spell as Spw');
+  button.addEventListener('click', async () => {
+    const text = from ? `${textOf()}\n#from["${from}"]` : textOf();
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = '✓';
+    } catch {
+      button.textContent = '!';
+    }
+    setTimeout(() => { button.textContent = '⧉'; }, 1400);
+  });
+  return button;
+}
+
+/* ▶: the spell played, each atom lit as it sounds (spw-sound.mjs, loaded only when pressed). */
+function playButton(text, line) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'spell-play';
+  button.textContent = '▶';
+  button.title = 'Play this spell';
+  button.setAttribute('aria-label', 'Play this spell as music');
+  let stop = null;
+  const atoms = () => [...line.querySelectorAll('.spell-atom')];
+  const end = () => {
+    stop = null;
+    button.textContent = '▶';
+    button.classList.remove('is-playing');
+    atoms().forEach((a) => a.classList.remove('is-sounding'));
+  };
+  button.addEventListener('click', async () => {
+    if (stop) { stop(); return; }
+    const sound = await import('./spw-sound.mjs?v=2026_11_08.K').catch(() => null);
+    if (!sound) return;
+    button.textContent = '■';
+    button.classList.add('is-playing');
+    const all = atoms();
+    stop = sound.playSpell(text, {
+      onAtom: (i) => {
+        const a = all[i];
+        if (!a) return;
+        a.classList.add('is-sounding');
+        setTimeout(() => a.classList.remove('is-sounding'), 420);
+      },
+      onEnd: end
+    });
+  });
+  return button;
 }
 
 /* Written in light the first time it is seen (or at once, where nothing watches). */

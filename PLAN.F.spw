@@ -104,6 +104,18 @@
   upstream: "the language is made in spw-workbench; lore.land is its heaviest reader, and sends back what it learns"
 }
 
+^premium{
+  .note: "plans, not yet built; written so that what is free stays free"
+  never: "the story is whole and free: no room, chapter, ending, palette or card is ever behind a payment; the audience gate (late table, household key) is care, never commerce; no ads, no tracking, no streaks, no points to buy"
+  for_tables: "a table that changes the game together: named rule sets and tunings kept and synced across devices, a shared QA log of card notes, proposals gathered for the maker (f6), all of it exportable as Spw so nothing is locked in"
+  for_keepers: "printed cards and folio prints that carry their spell and provenance, read back by the parser; a printed deck is the same deck the reader turned"
+  for_makers: "the engine with its checks and tools as a starter for another book (L18), with the rules dialect, rooms and the loom"
+  patronage: "patrons are credited in a release note line by their own words; a patron may hear a room the evening before it opens, never instead of anyone"
+  pricing: "every price is a spell anyone can read and audit (folio value, f8): what was measured, what moved it, within -25% to +15%"
+  data: "marks stay in the reader browser unless they choose to carry or sync them; a sync is a Spw card the reader can read before it goes anywhere"
+  test: "a premium feature passes only if a reader who never pays loses nothing they had, and a reader who pays can say in one sentence what they got"
+}
+
 !"increments"[
   f1: { dimension: [prose, structure], release: "2026_11_08.J", note: "rooms as a unit: a Spw signature and an air for every room, a personality by kind, progress by room, room by room as a trial, and releasing a room at a time (status drafting, due)" }
   f2: { dimension: [rules, valence, grammar], release: "2026_11_08.J", note: "the game reads its rules with the real parser (tune, knocks, powers, lean), dispatches references, and stress-tests the language; cards show their spells, lit" }
@@ -113,6 +125,9 @@
   f6: { dimension: [tables], release: "next", done_when: "a link of rules or a telling can be saved as a proposal in .spw/state/proposals.spw, read by the parser, and accepted with credit" }
   f7: { dimension: [marks], release: "next", done_when: "a reader can carry their marks to another device as one Spw card they copy and paste, read back by the parser, never sent anywhere" }
   f8: { dimension: [world], release: "next", done_when: "the folio value spell (formula only, %fulfill, -25% to +15%) is auditable from a carry provenance card" }
+  f9: { dimension: [structure, world, rules], release: "2026_11_08.K", note: "the sigil × chapter audit plan, generated from the canon (npm run spw:sigil-audit → .spw/audits/sigil-chapter-audit.spw): rooms by sigil and kind, wonders first met, materials, harmonies, and the four lenses (components, creatures, ecology, interaction) for every sigil" }
+  f10: { dimension: [rules, tables, grammar], release: "2026_11_08.K", note: "Spw as play: spells heard (spw-sound), turned (scrubbable dials, the tuning desk), copied with #from and pasted where they belong, read aloud by the card interpreter, worn as textures; stories as spells woven on the loom; whimsy and scenes in the rules; card sections open to a design table (?design); what this repository asks of the workbench" }
+  f11: { dimension: [tables, marks], release: "next", done_when: "the first premium feature (named rule sets kept and synced for a table) passes the premium test: nobody who never pays loses anything they had" }
 ]
 
 ?open{

@@ -24,7 +24,8 @@
     "spw:lint": "tsx .spw/tools/spw-lint.mjs",
     "spw:seed-bundle": "node book/scripts/tools/bundle-spw-seed.mjs",
     "spw:seed-bundle:verify": "node book/scripts/tools/bundle-spw-seed.mjs --verify",
-    "spw:trope-prompt": "node .spw/tools/trope-prompt.mjs"
+    "spw:trope-prompt": "node .spw/tools/trope-prompt.mjs",
+    "spw:sigil-audit": "node .spw/tools/sigil-audit.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",

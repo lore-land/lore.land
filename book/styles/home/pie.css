@@ -2573,3 +2573,99 @@ html:not([data-chrome-hidden='true']) .pie-index {
   line-height: 1.4;
   color: var(--hub-muted);
 }
+
+/* ─── The tuning desk: the game's dials, every number scrubbable ─── */
+.pie-desk {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 0.8rem;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 50%, var(--hub-line));
+  border-radius: 0.7rem;
+  background:
+    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 60%),
+    var(--hub-panel);
+}
+
+.pie-desk-lede {
+  max-width: 60ch;
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.92rem;
+  color: var(--hub-ink);
+}
+
+.pie-paste-note {
+  margin: 0 0 0.8rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+/* The card interpreter: the lanes read the card aloud, atom by atom. */
+.pie-cardface-reading {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.8rem;
+  color: var(--hub-ink);
+}
+
+.pie-cardface-reading li {
+  max-width: none;
+  margin: 0;
+  animation: pie-read-in 300ms ease both;
+}
+
+@keyframes pie-read-in {
+  from { opacity: 0; transform: translateX(-0.3rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.spell-atom.is-read {
+  background: color-mix(in srgb, var(--role, var(--hub-gold)) 22%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--role, var(--hub-gold)) 55%, transparent), 0 0 1em color-mix(in srgb, var(--role, var(--hub-gold)) 35%, transparent);
+}
+
+.pie-cardface.is-flashed {
+  box-shadow: 0 0 0 3px var(--hub-gold), 0 0 2rem color-mix(in srgb, var(--hub-gold) 45%, transparent);
+  transition: box-shadow 300ms ease;
+}
+
+.pie-card-pasted {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+/* ?design: each section of a card named, outlined, and noted in Spw for a design table. */
+.pie-cardface.is-designable .is-design-part {
+  outline: 1px dashed color-mix(in srgb, var(--hub-accent) 55%, transparent);
+  outline-offset: 2px;
+  border-radius: 0.2rem;
+}
+
+.pie-design-tag {
+  justify-self: start;
+  grid-column: 1 / -1;
+  margin: 0.2rem 0 -0.1rem;
+  padding: 0 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--hub-accent) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-accent) 10%, var(--hub-panel));
+  color: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-ink));
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-cardface-reading li { animation: none; }
+}

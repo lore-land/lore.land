@@ -1,0 +1,191 @@
+/*
+ * loom.css — the loom of stories (story-loom.mjs): user stories as spells, one row each, one column
+ * a dimension (? asks · ~ might · ! does · = tunes · % measures · ^ becomes · & with · . where ·
+ * $ made of · * values). Each column's head says how much its stories rhyme; a touched value lights
+ * every story that shares it. Role inks come from spell.css.
+ */
+
+body[data-surface='monument'] .story-loom {
+  scroll-margin-top: 5rem;
+}
+
+body[data-surface='monument'] .story-loom-body {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.loom-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.7rem;
+  background: var(--hub-panel);
+}
+
+.loom-grid {
+  display: grid;
+  min-width: 62rem;
+}
+
+.loom-row {
+  display: grid;
+  grid-template-columns: 8.5rem repeat(10, minmax(0, 1fr));
+  border-top: 1px solid var(--hub-line);
+  transition: background-color 200ms ease, opacity 200ms ease;
+}
+
+.loom-row:first-child {
+  border-top: 0;
+}
+
+.loom-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: color-mix(in srgb, var(--hub-paper) 92%, transparent);
+}
+
+.loom-grid.is-selecting .loom-row:not(.loom-head):not(.is-lit) {
+  opacity: 0.45;
+}
+
+.loom-row.is-lit {
+  background: color-mix(in srgb, var(--hub-gold) 10%, transparent);
+}
+
+.loom-who {
+  align-self: stretch;
+  padding: 0.45rem 0.6rem;
+  border: 0;
+  border-right: 1px solid var(--hub-line);
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.loom-head .loom-who {
+  cursor: default;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.loom-dim {
+  --rhyme: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  padding: 0.4rem 0.2rem 0.5rem;
+  border-right: 1px solid var(--hub-line);
+  background: linear-gradient(0deg, color-mix(in srgb, var(--role, var(--hub-gold)) calc(var(--rhyme) * 30%), transparent), transparent);
+}
+
+.loom-dim b {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--role, var(--hub-gold)) 70%, var(--hub-ink));
+  text-shadow: 0 0 0.5em color-mix(in srgb, var(--role, var(--hub-gold)) 40%, transparent);
+}
+
+.loom-dim small {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.loom-cell {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.2rem;
+  padding: 0.35rem 0.25rem;
+  border-right: 1px solid var(--hub-line);
+}
+
+.loom-value {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--role, var(--hub-gold)) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--role, var(--hub-gold)) 8%, transparent);
+  color: color-mix(in srgb, var(--role, var(--hub-ink)) 45%, var(--hub-ink));
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.74rem;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+}
+
+.loom-value:hover,
+.loom-value:focus-visible,
+.loom-value.is-picked {
+  border-color: color-mix(in srgb, var(--role, var(--hub-gold)) 80%, var(--hub-ink));
+  background: color-mix(in srgb, var(--role, var(--hub-gold)) 22%, transparent);
+  box-shadow: 0 0 0.8em color-mix(in srgb, var(--role, var(--hub-gold)) 30%, transparent);
+}
+
+/* The role hues, as in spell.css, for the loom's own columns. */
+.loom-row .op-probe { --role: #2f6688; }
+.loom-row .op-potential { --role: #2c8b86; }
+.loom-row .op-action { --role: #c0392b; }
+.loom-row .op-config { --role: #2b5aa6; }
+.loom-row .op-measure { --role: #3d7a3a; }
+.loom-row .op-integration { --role: #8a4fb0; }
+.loom-row .op-confluence { --role: #b0602a; }
+.loom-row .op-ground { --role: #5d6a73; }
+.loom-row .op-substrate { --role: #7a5a44; }
+.loom-row .op-value { --role: #c4922e; }
+
+.loom-panel {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-gold) 55%, var(--hub-line));
+  border-radius: 0.6rem;
+}
+
+.loom-panel-title {
+  margin: 0;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.1rem;
+  color: var(--hub-ink);
+}
+
+.loom-panel-body {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.loom-lede {
+  max-width: 70ch;
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  color: var(--hub-ink);
+}
+
+.loom-rhymes-title {
+  margin: 0;
+  font-family: var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  color: var(--hub-ink);
+}
+
+.loom-rhymes {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--hub-ink);
+}
+
+.loom-rhymes li {
+  max-width: none;
+}

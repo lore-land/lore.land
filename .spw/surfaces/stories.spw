@@ -1,0 +1,37 @@
+# Lore.Land stories
+# Who the site is for, written as Spw spells: one spell a person, each atom a dimension of what
+# they need. Read by the loom in the scriptorium (/scriptorium/#loom: book/scripts/modules/story-loom.mjs),
+# which lays the stories side by side so the dimensions they share show as patterns, and plays any
+# of them as music (spw-sound.mjs). A story is a requirement, a test, and a tune at once.
+#>lore_land_surfaces_stories
+#:surface #!canon
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  A user story is usually a sentence: as someone, I want something, so that something follows. Written as a spell it becomes a shape with many dimensions at once: who it is (@), what they ask (?), what might be the case (~), what they do (!), what they tune (=), what is measured (%), what it becomes (^), who or what is with them (&), where they stand (.at), what it is made of ($), what they value (*), and what is said (#). Laid side by side, stories rhyme along some dimensions and not others; that rhyme is the pattern a maker can build for once and serve many times.
+}
+
+^grammar{
+  who: "@name{ … } is the person, named by what they are doing, never by who they are"
+  dimensions: "? asks · ~ might · ! does · = tunes · % measures · ^ becomes · & with · .at[place] where · $ made of · * values · #says[…] the story in plain words"
+  care: "a story never names a child as its subject; a household story is told by the grown-up who chooses"
+}
+
+^stories[
+  @commuter{ ?find[last_place] ~offline .at[desk] %minutes[12] ^returns[tomorrow] *quiet $ink #says["As someone reading on a train, I want the book to remember where I stopped and to work without signal, so that twelve minutes is enough to be back inside it."] }
+  @household{ ?choose[what_a_child_sees] =audience[pg] &child .at[late_table] ^trust *care $oak #says["As a grown-up reading with a child, I want to choose what they meet, so that the book can be shared without worry and the late themes wait for a key I hold."] }
+  @night_reader{ ?read[in_the_dark] =binding[slate] ~lamp .at[nook] ^rest *quiet $steam #says["As someone reading before sleep, I want a dark cover and a warm lamp that are easy on the eyes, so that a chapter ends the day instead of starting it again."] }
+  @regular{ ?keep[my_way_of_reading] ~new_release !notice[what_changed] .at[desk] ^continuity *trust $ink #says["As someone who has read every stone, I want each release to keep my way of reading and tell me what changed, so that coming back feels like coming home."] }
+  @maker{ !release[a_room] %evenings[1] ?know[what_changed_in_meaning] .at[scriptorium] ^stone *sustain $ink #says["As the maker, I want to set one room on an ordinary evening and have the checks tell me it is whole, so that the serial keeps its promise without costing me the week."] }
+  @qa_table{ ?compare[a_feeling] &tester !note[qa] %tilt[1] .at[lanes] ^shared_numbers *candor $glass #says["As someone testing the game with others, I want every card to carry how it felt and the numbers of the moment, so that a table can argue about the same thing."] }
+  @designer{ ?reskin[the_lanes] !copy[asset_sheet] &table .at[design_table] ^new_level *craft $brass #says["As a designer, I want every background and sprite on one sheet with what it does, so that a new level or a new skin starts from the real thing."] }
+  @tuner{ =tune[aim_step] !pass[a_link] &friend .at[bench] ^rules_changed *play $flour #says["As someone who likes to change the rules, I want to retune the lanes in a few words and send them to a friend, so that we can play each other's versions."] }
+  @musician{ !play[a_room] ?hear[its_shape] ~music .at[rooms] ^a_tune *wonder $brass #says["As someone who hears before they read, I want to play a room's signature and hear its shape, so that the book has a sound as well as a look."] }
+  @collector{ ?keep[a_palette] !finish[a_chapter] %layers[3] .at[almanac] ^the_chapter_wears_it *beauty $berry #says["As someone who likes to keep things, I want finishing a chapter to give me its colours, so that the book looks more like my own the more I live in it."] }
+  @scribe{ ?learn[spw] !cast[a_spell] ~mistakes .at[scriptorium] ^fluency *play $ink #says["As someone curious about the notation, I want to cast small spells and see what each part does, so that the language becomes a toy before it becomes a tool."] }
+  @folio_buyer{ ?know[why_this_price] !audit[a_spell] %value[1] .at[folio_house] ^trust *fairness $glass #says["As someone buying a folio, I want to read why it costs what it costs, so that the price is something I can check rather than something I take."] }
+  @newcomer{ !spill[a_pie] ?follow[a_door] ~curious .at[lanes] ^first_chapter *wonder $flour #says["As someone who found the game first, I want the spill to point me to the passage it happened in, so that a game becomes a way into the book."] }
+  @language_maker{ ?find[where_spw_breaks] !fuzz[the_rules] %findings[7] .at[stress] ^upstream_issue *rigor $frost #says["As someone making the language, I want a real book to lean on it and say where it gives, so that the grammar is tested by use and not only by examples."] }
+  @boof_friend{ ?meet[boof] &boof ~harmony .at[field] ^map_of_what_keeps_what *care $berry #says["As someone who came for the dog, I want to follow what she notices, so that the land makes sense the way she knows it, by nose and by habit."] }
+]

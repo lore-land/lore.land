@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.K",
+      "date": "2026-11-08",
+      "notes": [
+        "Every spell can be played now: press ▶ and it sounds its shape, each sigil a voice (a question rises, a measure ticks, a body holds a low note under everything inside it), each part lighting as it sounds. A spell made of glass or frost or flour sounds and looks like it.",
+        "In Exactly One Pie the numbers in a spell are dials: scroll over one, or drag it, and the lanes retune at once. The tuning desk under the game holds every dial, including how far a swipe goes and how much staying ahead is worth. Copy any spell and paste it anywhere on the page and the lanes read it; every card is read aloud as it turns; impacts pop and splat a good deal more.",
+        "In the Scriptorium, the loom of stories: everyone the book is for, written as a spell, laid side by side so you can see, and hear, what they share."
+      ]
+    },
+    {
       "release": "2026_11_08.J",
       "date": "2026-11-08",
       "notes": [

@@ -6,7 +6,7 @@ import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.J';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.H';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.J';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.K';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).

@@ -192,3 +192,103 @@ main.chapter .projection-spell-lines li.is-visit .spell {
 main.chapter .projection-spell-lines li.is-carries .spell {
   border-color: color-mix(in srgb, var(--color-berry, #5b3a6e) 55%, transparent);
 }
+
+/* ▶: the spell played (spw-sound.mjs); each atom lights as it sounds. */
+.spell {
+  position: relative;
+}
+
+.spell-play {
+  float: right;
+  margin: -0.15rem -0.25rem 0.1rem 0.4rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid color-mix(in srgb, var(--spell-gold) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spell-gold) 10%, var(--spell-paper));
+  color: color-mix(in srgb, var(--spell-gold) 55%, var(--spell-ink));
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spell-play:hover,
+.spell-play:focus-visible {
+  border-color: var(--spell-gold);
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--spell-gold) 30%, transparent);
+}
+
+.spell-play.is-playing {
+  background: color-mix(in srgb, var(--spell-gold) 26%, var(--spell-paper));
+}
+
+.spell-atom.is-sounding {
+  background: color-mix(in srgb, var(--role, var(--spell-gold)) 26%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--role, var(--spell-gold)) 60%, transparent), 0 0 1.2em color-mix(in srgb, var(--role, var(--spell-gold)) 40%, transparent);
+}
+
+.spell-atom.is-sounding .spell-sigil {
+  text-shadow: 0 0 0.8em var(--role, var(--spell-gold)), 0 0 0.2em var(--role, var(--spell-gold));
+}
+
+/* Made of something: a spell that names a material wears its ground and sheen (materials.css). */
+.spell.has-material {
+  background:
+    var(--mat-sheen, none),
+    color-mix(in srgb, var(--mat-ground, var(--spell-paper)) 85%, transparent);
+  border-color: color-mix(in srgb, var(--mat-edge, var(--spell-gold)) 55%, transparent);
+}
+
+/* ⧉: copy the spell, clean. */
+.spell-copy {
+  float: right;
+  margin: -0.15rem -0.1rem 0.1rem 0.3rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid color-mix(in srgb, var(--spell-ink) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spell-paper) 90%, transparent);
+  color: color-mix(in srgb, var(--spell-ink) 75%, transparent);
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spell-copy:hover,
+.spell-copy:focus-visible {
+  border-color: var(--spell-gold);
+  outline: none;
+}
+
+/* A number that is a dial: dotted underline, a ruler cursor; it jumps a little as it turns. */
+.spell-number.is-scrub {
+  padding: 0 0.12em;
+  border-radius: 0.2rem;
+  border-bottom: 1px dotted color-mix(in srgb, var(--spell-gold) 75%, var(--spell-ink));
+  cursor: ns-resize;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.spell-number.is-scrub:hover,
+.spell-number.is-scrub:focus-visible,
+.spell-number.is-scrub.is-dragging {
+  background: color-mix(in srgb, var(--spell-gold) 22%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spell-gold) 55%, transparent);
+}
+
+.spell-number.is-nudged {
+  animation: spell-nudge 220ms ease-out;
+}
+
+@keyframes spell-nudge {
+  0% { text-shadow: 0 0 0.6em var(--spell-gold); }
+  100% { text-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spell-number.is-nudged { animation: none; }
+}

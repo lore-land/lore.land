@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.J" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.K" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -46,14 +46,14 @@
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.J&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.K&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.J&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.K&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.J"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.J"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.K"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -314,6 +314,14 @@
           <h2 id="powers-title">Every gift is a spell you can change</h2>
           <p>Each power-up is the land doing in the lanes what it does in the book, and each is written as one short Spw spell: <code>~</code> for what lasts, <code>%</code> for how much, <code>*</code> for charges, <code>!</code> for what happens at once, <code>&amp;with</code> and <code>&amp;without</code> for how the land answers, <code>#says</code> for what is said under the screen. Copy one into the bench, change it, and carry with it for this visit; or copy a link, and whoever opens it carries with your spells. The bench also takes <code>=tune{ =aim_step[0.2] }</code> to change how the lanes feel and <code>!knocks{ *wasps{ %tilt[0.1] } }</code> to change what a knock costs. Their own game stays theirs. Numbers are held to a range, so a spell can change the game but never break it.</p>
         </div>
+        <div class="pie-desk" data-pie-desk>
+          <p class="pie-desk-lede"><strong>The tuning desk.</strong> Every number here is a dial: scroll over it, drag it up or down, or focus it and use the arrow keys (shift for ten). The lanes retune at once, for this visit; ⧉ copies the spell to pass along, ▶ plays it.</p>
+          <div class="pie-desk-spell" data-pie-desk-tune></div>
+          <div class="pie-desk-spell" data-pie-desk-lean></div>
+          <div class="pie-desk-spell" data-pie-desk-scenes></div>
+          <p class="pie-bench-actions"><button type="button" class="pie-tool" data-pie-desk-reset>Back to the book’s own tuning</button></p>
+        </div>
+        <p class="pie-paste-note" data-pie-paste-note role="status">Paste any spell anywhere on this page (copied from a card, the desk, a carry or a chapter) and the lanes will read it.</p>
         <div class="pie-bench-body">
           <ol class="pie-bench-list" data-pie-bench-list></ol>
           <div class="pie-bench-edit">

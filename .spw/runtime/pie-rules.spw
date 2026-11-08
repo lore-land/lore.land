@@ -22,12 +22,16 @@
   =flinch_chance[0.22]
   =flinch_tilt[0.16]
   =in_kind[0.9]
+  =swipe_across[0.5]
+  =swipe_along[40]
+  =ahead_bonus[0.18]
+  =drama[1]
 }
 
 =lean{
   &fairy_tale{ %satisfied[1] %shared[1] %kept[1] %egg[1] %sighting[0.6] %sweetened[0.6] %boof[0.5] %boonberry[0.4] %furrow[0.3] %boonwap[0.3] }
   &absurd_reality{ %knocked[1] %scheme_ran[1] %boxed[0.8] %foretold[0.8] %bane_fed[0.6] %flinched[0.6] %let_past[0.3] }
-  &low_magic{ %perfect[1] %over_mimes[1] %foiled[1] %ramp[0.6] %deft[0.6] %boneberry[0.6] %hop_clear[0.5] %caught[0.5] %squashed[0.4] }
+  &low_magic{ %perfect[1] %over_mimes[1] %foiled[1] %ramp[0.6] %deft[0.6] %boneberry[0.6] %hop_clear[0.5] %caught[0.5] %squashed[0.4] %ahead[0.3] }
 }
 
 !knocks{
@@ -71,4 +75,26 @@
   *boonberry{ %filling[0.3] ~glimpse[3.5] ^card[berry] !sound[berry] @voice[boon] ~"book/chapter/01#when-a-berry-remembers" #says["A little borrowed summer, and a glimpse: the clear way up the lanes, a breath before you need it."] }
   *boneberry{ %crust[0.12] %filling[0.12] ~fed[6] ^card[boneberry] !sound[bone] @voice[wonder] ~"book/chapter/10" #says["A whole meal in a berry, grown, not raised. Your steps tilt less for a while, and the pie settles sooner."] }
   *beaver{ ~lag[4.5] &with[berry] ^card[beaver] !sound[beaver] @voice[wonder] ~"book/chapter/08" #says["A slow beaver keeps its own time and lends it. The land goes at its pace; the berries it planted come up behind it."] }
+}
+
+!whimsy{
+  *clown{ #pop["WAP!", "SPLAT!", "SPLORP!", "WAPPED!", "SPLOOSH!"] *bits[juice] %drama[1] }
+  *perfect{ #pop["PERFECT!!", "BULLSEYE!", "SPLENDID!"] *bits[stars] %drama[1.4] }
+  *combo{ #pop["COMBO!"] *bits[confetti] %drama[1.2] }
+  *post{ #pop["BWONG!", "DOINK!"] *bits[stars] %drama[1] }
+  *pane{ #pop["TINK!", "CRACK!"] *bits[glass] %drama[1.1] }
+  *wasps{ #pop["BZZT!", "OW OW OW!"] *bits[crumbs] %drama[0.9] }
+  *pigeon{ #pop["PECK!", "COO?!"] *bits[feathers] %drama[0.9] }
+  *mime{ #pop["(silently) OOF"] *bits[none] %drama[0.7] }
+  *switch{ #pop["FOILED!", "CLICK!"] *bits[stars] %drama[1.3] }
+  *spill{ #pop["SPLAT!!", "EXACTLY ONE."] *bits[juice] %drama[1.8] }
+}
+
+!scenes{
+  *field{ $frost %drama[0.9] }
+  *gate{ $steam %drama[1] }
+  *lanes{ $brass %drama[1.1] }
+  *plaza{ $flour %drama[1.3] }
+  *court{ $glass %drama[1.2] }
+  *table{ $oak %drama[1] }
 }

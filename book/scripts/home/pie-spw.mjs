@@ -92,10 +92,10 @@ const sliceOf = (source, span) => (span?.start && span?.end ? source.slice(span.
 /** Rules from a parse: tune, knocks, powers (each with its own source text), and what was odd. */
 function rulesFromTree(ast, source) {
   const quirks = new Set();
-  const rules = { tune: {}, knocks: {}, powers: {}, spells: {}, knockSpells: {}, lean: {}, errors: [] };
+  const rules = { tune: {}, knocks: {}, powers: {}, spells: {}, knockSpells: {}, lean: {}, whimsy: {}, scenes: {}, errors: [] };
   topOperations(ast).forEach((op) => {
     const label = op.operatorLabel?.value;
-    const read = ['tune', 'knocks', 'powers', 'lean'].includes(label);
+    const read = ['tune', 'knocks', 'powers', 'lean', 'whimsy', 'scenes'].includes(label);
     const children = read ? atomsOf(op.body?.sequence, quirks, source) : [];
     if (op.operator?.value === '=' && label === 'tune') {
       children.forEach((a) => { if (a.sigil === '=' && Number.isFinite(Number(a.args[0]))) rules.tune[a.word] = Number(a.args[0]); });
@@ -108,6 +108,32 @@ function rulesFromTree(ast, source) {
           if (a.sigil === '%' && a.word && Number.isFinite(Number(a.args[0]))) rules.lean[a.word] = [WAYS[way.word], Math.max(0, Math.min(3, Number(a.args[0])))];
           else rules.errors.push(`=lean &${way.word}: ${a.sigil}${a.word || ''} is not a weight (use %event[n]).`);
         });
+      });
+    } else if (label === 'whimsy') {
+      // How an impact looks and sounds, by sprite: *kind{ #pop["BONK!", …] *bits[crumbs] !sound[knock] %drama[1] }
+      const BITS = ['juice', 'crumbs', 'feathers', 'glass', 'confetti', 'stars', 'flour', 'none'];
+      children.filter((a) => a.sigil === '*' && a.body).forEach((k) => {
+        const w = {};
+        atomsOf(k.body, quirks, source).forEach((a) => {
+          if (a.sigil === '#' && a.word === 'pop') w.pops = a.args.map((x) => String(x).slice(0, 18)).filter(Boolean).slice(0, 8);
+          else if (a.sigil === '*' && a.word === 'bits' && BITS.includes(String(a.args[0]))) w.bits = String(a.args[0]);
+          else if (a.sigil === '!' && a.word === 'sound') w.sound = String(a.args[0] || '');
+          else if (a.sigil === '%' && a.word === 'drama' && Number.isFinite(Number(a.args[0]))) w.drama = Math.max(0, Math.min(3, Number(a.args[0])));
+          else rules.errors.push(`!whimsy *${k.word}: ${a.sigil}${a.word || ''} is not a whimsy the lanes know.`);
+        });
+        rules.whimsy[k.word] = w;
+      });
+    } else if (label === 'scenes') {
+      // Each place's own drama and texture: *field{ $frost %drama[0.9] }
+      const MATERIALS = ['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak'];
+      children.filter((a) => a.sigil === '*' && a.body).forEach((k) => {
+        const w = {};
+        atomsOf(k.body, quirks, source).forEach((a) => {
+          if (a.sigil === '$' && MATERIALS.includes(a.word)) w.material = a.word;
+          else if (a.sigil === '%' && a.word === 'drama' && Number.isFinite(Number(a.args[0]))) w.drama = Math.max(0, Math.min(3, Number(a.args[0])));
+          else rules.errors.push(`!scenes *${k.word}: ${a.sigil}${a.word || ''} is not a scene word the lanes know.`);
+        });
+        rules.scenes[k.word] = w;
       });
     } else if (label === 'knocks') {
       children.filter((a) => a.sigil === '*' && a.body).forEach((k) => {
