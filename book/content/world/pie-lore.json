@@ -1,5 +1,5 @@
 {
-  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · perfects · foils · reached (furthest level index: 0 gate … 4 table).",
+  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · satisfied (clowns satisfied) · perfects · foils · reached (the furthest chapter a carry has reached, 1–15).",
   "speakers": {
     "boon": {
       "name": "Mr. BoonWAP",
@@ -100,9 +100,9 @@
       "speaker": "boon",
       "unlock": {
         "kind": "reached",
-        "n": 4
+        "n": 13
       },
-      "hint": "Carry the pie as far as the long table.",
+      "hint": "Carry the pie as far as Chapter Thirteen, the long table.",
       "line": "The second place is not for whoever sits in it. It is for whoever it was set for. In my experience those are rarely the same guest.",
       "ground": {
         "chapter": 15,
@@ -146,6 +146,16 @@
       },
       "hint": "Throw five perfect slices.",
       "line": "There are five of us, you know. Everyone counts four and stops."
+    },
+    {
+      "id": "boon-mimes",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "satisfied",
+        "n": 5
+      },
+      "hint": "Satisfy five clowns.",
+      "line": "The mimes are against me, I am told. Silently, and with great feeling. I have never felt so understood."
     },
     {
       "id": "bane-wind",
@@ -214,9 +224,9 @@
       "speaker": "bane",
       "unlock": {
         "kind": "reached",
-        "n": 3
+        "n": 11
       },
-      "hint": "Carry the pie into the rented court.",
+      "hint": "Carry the pie as far as Chapter Eleven, the rented court.",
       "line": "Mx. BoneWAP built me a machine that measures a scheme's chances. It says no in a very kind voice.",
       "ground": {
         "chapter": 15,
@@ -272,6 +282,24 @@
       },
       "hint": "Hear twenty tellings.",
       "line": "I tried telling the story my way. There were already five ways, and none of them were mine."
+    },
+    {
+      "id": "bane-mimes",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "foils",
+        "n": 2
+      },
+      "hint": "Foil Mr. BaneWAP twice.",
+      "line": "Mimes Against WAP are not mine. They agree with me in silence, which is the only way anyone has ever agreed with me."
+    },
+    {
+      "id": "bane-baneberries",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "always"
+      },
+      "line": "I am made of baneberries. Bitter is a flavour, not a failing. The mimes understand this. They gather for me, and ask nothing, and say less."
     }
   ]
 }

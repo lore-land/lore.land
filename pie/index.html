@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_07.F" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_07.H" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Exactly One Pie · Lore.Land</title>
-  <meta name="description" content="Someone is destined to spill exactly one pie. A small game from Lore.Land: carry one pie, level, up the lanes of Bonk City, stepping across a city that streams the other way — and give the clowns WAP.">
+  <meta name="description" content="Someone is destined to spill exactly one pie. A small game from Lore.Land: carry one pie, level, through the whole book, chapter by chapter, while the story streams past — keep its wonders, and give the clowns WAP.">
   <meta name="theme-color" content="#f3ede1">
   <link rel="canonical" href="https://lore.land/pie/">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -48,11 +48,11 @@
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_07.C&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_07.F&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_07.H&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.A"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_07.F"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_07.H"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -72,25 +72,40 @@
     <main id="main-content" class="hub-main pie-main">
       <section class="pie-stage" aria-labelledby="pie-title">
         <div class="pie-copy">
-          <p class="hub-eyebrow">A small game · the lanes of Bonk City</p>
+          <div class="pie-copy-lead">
+          <p class="hub-eyebrow">A small game · the whole book, carried</p>
           <h1 id="pie-title">Exactly One Pie</h1>
+          </div>
+          <div class="pie-copy-text">
           <p class="pie-lede">Someone is destined to spill exactly one pie. The prophecy has been very clear about the number and no help at all about the name.</p>
-          <p>Someone in a hat carries it, level, up the lanes of Bonk City while the city streams down at them. They never go the way the city goes. They step across it, a lane at a time.</p>
+          <p>Someone in a hat carries it, level, through the book, chapter by chapter, while the land streams down at them and the chapter’s own words go by on either side. Its wonders wait up the lanes; step ahead to keep them.</p>
           <p class="pie-whisper">The prophecy always holds. What changes is who carried it, how far, and how many clowns went home happy.</p>
+          </div>
+          <div class="pie-copy-how">
           <ol class="pie-keys" aria-label="How to play">
-            <li><kbd>←</kbd><kbd>→</kbd> <span>step a lane</span></li>
-            <li><kbd>↑</kbd> <span>throw along the needle</span></li>
+            <li><kbd>←</kbd><kbd>→</kbd> <span>step across</span></li>
+            <li><kbd>↑</kbd><kbd>↓</kbd> <span>step ahead, or back</span></li>
+            <li><kbd>Space</kbd> <span>hop over low things</span></li>
+            <li><kbd>X</kbd> <span>throw along the needle (or click where)</span></li>
             <li><kbd>Esc</kbd> <span>pause</span></li>
           </ol>
-          <p class="pie-keys-touch">On a phone: tap either side of the lanes to step; swipe up to throw, in the direction you swipe.</p>
+          <p class="pie-keys-touch">On a phone: swipe to step, any way; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
           <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
+          </div>
         </div>
 
+        <div class="pie-voyage">
+        <div class="pie-flow pie-flow-prose">
+          <p class="pie-flow-head"><a data-pie-flow-chapter href="/book/chapter/01/">Chapter One</a> <span data-pie-flow-title>Dawn in Boon.land</span></p>
+          <div class="pie-flow-window" aria-hidden="true">
+            <ol class="pie-flow-list" data-pie-flow-list></ol>
+          </div>
+        </div>
         <div class="pie-cabinet" data-pie-game>
           <a class="pie-return" data-pie-return hidden></a>
           <div class="pie-screen">
-            <canvas width="360" height="560" role="img" aria-label="Exactly One Pie: someone in a hat carries a pie up five lanes of Bonk City while the city comes down them"></canvas>
+            <canvas width="360" height="560" role="img" aria-label="Exactly One Pie: someone in a hat carries a pie up five lanes, through the book chapter by chapter, while the land comes down them"></canvas>
             <div class="pie-card" data-pie-card>
               <p class="pie-card-title" data-pie-card-title></p>
               <p class="pie-card-line" data-pie-card-line></p>
@@ -104,16 +119,26 @@
             </div>
           </div>
           <div class="pie-caption" data-pie-toast data-voice="" aria-hidden="true">
-            <p class="pie-toast-title" data-pie-toast-title>Bonk City</p>
+            <p class="pie-toast-title" data-pie-toast-title>The book, carried</p>
             <p class="pie-toast-line" data-pie-toast-line>Places, and what the pies say, are told here, under the carry.</p>
           </div>
           <div class="pie-steps">
-            <button type="button" class="pie-step" data-pie-step="-1" aria-label="Step left">◀ step</button>
+            <button type="button" class="pie-step" data-pie-step="-1" aria-label="Step left">◀</button>
+            <button type="button" class="pie-step" data-pie-climb="-1" aria-label="Step back">▼</button>
             <button type="button" class="pie-step pie-throw" data-pie-throw aria-label="Throw a slice">✦ throw</button>
-            <button type="button" class="pie-step" data-pie-step="1" aria-label="Step right">step ▶</button>
+            <button type="button" class="pie-step pie-jump" data-pie-jump aria-label="Hop">⤒ hop</button>
+            <button type="button" class="pie-step" data-pie-climb="1" aria-label="Step ahead">▲</button>
+            <button type="button" class="pie-step" data-pie-step="1" aria-label="Step right">▶</button>
           </div>
           <button type="button" class="pie-sound" data-pie-sound aria-pressed="true">♪ WAP sounds: on</button>
           <p class="visually-hidden pie-live" data-pie-live role="status" aria-live="polite"></p>
+        </div>
+        <div class="pie-flow pie-flow-wonders">
+          <p class="pie-flow-head">Waiting in this chapter</p>
+          <ul class="pie-flow-wonder-list" data-pie-flow-wonders></ul>
+          <p class="pie-flow-kept" data-pie-flow-kept>Steer into a wonder, up the lanes, to keep it.</p>
+          <p class="pie-flow-note">Each one, kept, goes into <a href="/almanac/">your almanac</a> and gives the carry something: light, echoes, a honk, a moment unkept.</p>
+        </div>
         </div>
       </section>
 
@@ -121,42 +146,57 @@
         <div class="pie-section-head">
           <p class="hub-eyebrow">What everything is</p>
           <h2 id="legend-title">In the lanes</h2>
-          <p>The city comes in rows, and every row leaves a way through, never more than a step from the last. Every step tilts the pie, hurried steps most; let it settle. The level under the screen shows how far it has tipped.</p>
-          <p>The pie in hand stays whole because an aura keeps replenishing it, and the aura needs two ingredients: flour for the crust, boonberries for the filling. Every slice you throw draws on both; a slice that reaches nobody costs more. Run either dry and no new slices come, and a thin pie tips more easily. The two levels at the foot of the screen show what is left.</p>
+          <p>The land comes in rows, and every row leaves a way through, never more than a step from the last. Step across, or ahead and back: four steps up the lanes, where the wonders wait and what is coming comes sooner. Or hop: low things pass under you, and a slice thrown at the top of a hop is lofted like one off a ramp.</p>
+          <p>The tilt is what is at stake. Every step tilts the pie a little, hurried steps more; a knock tilts it a lot. It settles if you let it. The red ring beside the pie, and the level under the screen, show how far it has tipped. Full, it spills.</p>
+          <p>The pie in hand stays whole because an aura keeps replenishing it, and the aura needs two ingredients: flour for the crust, boonberries for the filling. Every slice you throw draws on both; a slice that reaches nobody costs more. Run either dry and the slices go without it (the clowns are not particular), and a thin pie tips more easily. Keep both high and the pies grow: the pie in hand swells, and every slice is bigger, reaches wider, and satisfies more. The two levels at the foot of the screen show what is left.</p>
+          <p>Flour in the air feeds the two pies of the quinary five: a burst bag, a slice into a bag, a kicked-up pile, a march of Mimes Against WAP shaking out their placards. It brings them sooner, and makes whichever is here stronger.</p>
         </div>
         <div class="pie-legend-groups">
           <section class="pie-legend-group tone-hazard" aria-labelledby="lg-clear">
-            <h3 id="lg-clear"><span aria-hidden="true">✕</span> Keep clear</h3>
-            <p>Touch one and the pie goes. Exactly once.</p>
+            <h3 id="lg-clear"><span aria-hidden="true">✕</span> Knocks the pie</h3>
+            <p>A red zone at the foot; it pulses when it is coming down your lane. A knock tilts the pie by the amount shown (the porter takes it best, a clown worst), and some take something more. Then a breath of grace, while the carrier blinks. Tilted to the top, it spills: exactly once. Low things marked ⤒ can be hopped clear.</p>
             <ul>
-              <li><canvas data-pie-sprite="post" width="64" height="64" aria-hidden="true"></canvas><div><strong>Bronze post</strong><span>Curves for everyone. A thrown slice bends round it.</span></div></li>
-              <li><canvas data-pie-sprite="snail" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pane-snail</strong><span>Was there first.</span></div></li>
-              <li><canvas data-pie-sprite="spool" width="64" height="64" aria-hidden="true"></canvas><div><strong>Spool</strong><span>Rolls a little, in its own lane.</span></div></li>
-              <li><canvas data-pie-sprite="pigeon" width="64" height="64" aria-hidden="true"></canvas><div><strong>Gate-pigeon</strong><span>Flaps, drifts, never leaves its lane, and takes any slice thrown past it.</span></div></li>
-              <li><canvas data-pie-sprite="clerk" width="64" height="64" aria-hidden="true"></canvas><div><strong>Feast clerk</strong><span>Carries a DAMAGE slip.</span></div></li>
-              <li><canvas data-pie-sprite="wasps" width="64" height="64" aria-hidden="true"></canvas><div><strong>Crown-wasps</strong><span>Zig, zag, sweet-seeking: they snatch a thrown slice.</span></div></li>
-              <li><canvas data-pie-sprite="chair" width="64" height="64" aria-hidden="true"></canvas><div><strong>Chair</strong><span>Pulled out for someone else.</span></div></li>
-              <li><canvas data-pie-sprite="throne" width="64" height="64" aria-hidden="true"></canvas><div><strong>Rented throne</strong><span>The rented court. Gilt over pine.</span></div></li>
-              <li><canvas data-pie-sprite="subject" width="64" height="64" aria-hidden="true"></canvas><div><strong>Subject</strong><span>Halfway through an errand.</span></div></li>
-              <li><canvas data-pie-sprite="dividers" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pie-dividers</strong><span>Two children, two lanes.</span></div></li>
-              <li><canvas data-pie-sprite="table" width="64" height="64" aria-hidden="true"></canvas><div><strong>Long table · banner</strong><span>A whole row with one way through. At the table, the empty place.</span></div></li>
+              <li><canvas data-pie-sprite="post" width="64" height="64" aria-hidden="true"></canvas><div><strong>Bronze post · tilt +50%</strong><span>Curves for everyone. A thrown slice bends round it.</span></div></li>
+              <li><canvas data-pie-sprite="stone" width="64" height="64" aria-hidden="true"></canvas><div><strong>Field stone · tilt +60% · ⤒</strong><span>Older than the furrow. Has never moved for anyone. Hop it.</span></div></li>
+              <li><canvas data-pie-sprite="hole" width="64" height="64" aria-hidden="true"></canvas><div><strong>A hole · tilt +55%, a step back · ⤒</strong><span>Freshly dug, in the field; a cobble gone, in the lanes. In and out again, a step further down the lanes. Hop it.</span></div></li>
+              <li><canvas data-pie-sprite="ditch" width="64" height="64" aria-hidden="true"></canvas><div><strong>A ditch · tilt +60%, a step back · ⤒</strong><span>Across every lane, in the field and at the gate. No way round: only over. Time the hop.</span></div></li>
+              <li><canvas data-pie-sprite="pane" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pane of Bonk glass · tilt +45%</strong><span>It remembers being struck. A thrown slice banks off it, and a banked slice can be Perfect.</span></div></li>
+              <li><canvas data-pie-sprite="wasps" width="64" height="64" aria-hidden="true"></canvas><div><strong>Crown-wasps · tilt +25%, − filling</strong><span>They knew sweetness before anyone. Sting the filling, and snatch a thrown slice.</span></div></li>
+              <li><canvas data-pie-sprite="pigeon" width="64" height="64" aria-hidden="true"></canvas><div><strong>Gate-pigeon · tilt +25%, − crust</strong><span>Pecks the crust, and takes any slice thrown past it.</span></div></li>
+              <li><canvas data-pie-sprite="spool" width="64" height="64" aria-hidden="true"></canvas><div><strong>Spool · tilt +30%, tripped · ⤒</strong><span>Rolls a little in its own lane, and trips you a lane over.</span></div></li>
+              <li><canvas data-pie-sprite="dividers" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pie-dividers · tilt +30%, − both</strong><span>Two children, two lanes, measuring. It comes out even. It never does.</span></div></li>
+              <li><canvas data-pie-sprite="mime" width="64" height="64" aria-hidden="true"></canvas><div><strong>A mime · tilt +30%</strong><span>In the lanes, the plaza and the court. Silent. A slice thrown at one is caught in an invisible box.</span></div></li>
+              <li><canvas data-pie-sprite="mimewall" width="64" height="64" aria-hidden="true"></canvas><div><strong>The wall it is miming · tilt +45%</strong><span>Beside every mime, a lane over: invisible, and also there. A shimmer and two gloves show where. It boxes slices too.</span></div></li>
+              <li><canvas data-pie-sprite="march" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mimes Against WAP · tilt +45%</strong><span>A silent protest across the lanes, placards blank but one. One gap. Any slice thrown into them is boxed; through the gap, or over them off a hop or a ramp. Mr. BaneWAP likes to say he organised them.</span></div></li>
+              <li><canvas data-pie-sprite="snail" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pane-snail · tilt +35% · ⤒</strong><span>Was there first.</span></div></li>
+              <li><canvas data-pie-sprite="clerk" width="64" height="64" aria-hidden="true"></canvas><div><strong>Feast clerk · tilt +35%</strong><span>Carries a DAMAGE slip.</span></div></li>
+              <li><canvas data-pie-sprite="subject" width="64" height="64" aria-hidden="true"></canvas><div><strong>Subject · tilt +40%</strong><span>Halfway through an errand.</span></div></li>
+              <li><canvas data-pie-sprite="chair" width="64" height="64" aria-hidden="true"></canvas><div><strong>Chair · tilt +45%</strong><span>Pulled out for someone else.</span></div></li>
+              <li><canvas data-pie-sprite="throne" width="64" height="64" aria-hidden="true"></canvas><div><strong>Rented throne · tilt +55%</strong><span>The rented court. Gilt over pine.</span></div></li>
+              <li><canvas data-pie-sprite="table" width="64" height="64" aria-hidden="true"></canvas><div><strong>Long table · banner · tilt +45–60%</strong><span>A whole row with one way through. At the table, the empty place. A fallen banner can be hopped; the table cannot.</span></div></li>
             </ul>
           </section>
           <section class="pie-legend-group tone-slow" aria-labelledby="lg-slow">
-            <h3 id="lg-slow"><span aria-hidden="true">~</span> Slows you</h3>
-            <p>Not a spill, but not nothing.</p>
+            <h3 id="lg-slow"><span aria-hidden="true">~</span> Slips and setbacks</h3>
+            <p>A blue zone, dashed. Not a knock, but not nothing. All of them can be hopped clear.</p>
             <ul>
-              <li><canvas data-pie-sprite="sack" width="64" height="64" aria-hidden="true"></canvas><div><strong>Bag of flour</strong><span>Crust for the aura. It also slows the carry and pushes you back in the story; the track under the score shows how far along you are. Throw a slice at a bag and it bursts into a pile.</span></div></li>
-              <li><canvas data-pie-sprite="pile" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pile of flour</strong><span>A little crust, a little slower, no setback. And a ramp: a slice thrown over a pile is lofted clean over whatever is next. Piles in a row loft it further.</span></div></li>
-              <li><canvas data-pie-sprite="puddle" width="64" height="64" aria-hidden="true"></canvas><div><strong>Puddle</strong><span>The pie slides; it tilts a good deal.</span></div></li>
+              <li><canvas data-pie-sprite="sack" width="64" height="64" aria-hidden="true"></canvas><div><strong>Bag of flour · story set back</strong><span>Crust for the aura, and it pushes you back in the story: the track at the top shows where. It never slows the carrier. Throw a slice at a bag and it bursts into a pile.</span></div></li>
+              <li><canvas data-pie-sprite="puddle" width="64" height="64" aria-hidden="true"></canvas><div><strong>Puddle · tilt +36%</strong><span>The pie slides.</span></div></li>
+              <li><canvas data-pie-sprite="frost" width="64" height="64" aria-hidden="true"></canvas><div><strong>Frost · the next step slides</strong><span>In the field. Your next step across goes a lane further than you meant.</span></div></li>
             </ul>
           </section>
           <section class="pie-legend-group tone-friend" aria-labelledby="lg-friend">
             <h3 id="lg-friend"><span aria-hidden="true">✦</span> Go toward</h3>
             <p>These glow.</p>
             <ul>
-              <li><canvas data-pie-sprite="clown" width="64" height="64" aria-hidden="true"></canvas><div><strong>Clown</strong><span>Clowns love WAP: a pie in the eye. Step into one, or throw: the needle sweeps from the pie, and when it lines up with a clown’s face the ring turns gold. Dead centre, off a wall, or off a ramp is Perfect and counts twice.</span></div></li>
+              <li><canvas data-pie-sprite="clown" width="64" height="64" aria-hidden="true"></canvas><div><strong>Clown</strong><span>Clowns love WAP: a pie in the eye. Each wants so much pie, shown as pips over its head: a whole slice fills one (more, the richer your aura), a Perfect twice that, a slice short of crust or filling half, crumbs a quarter. Satisfied, it goes home delighted and tosses back whatever your aura is shortest of; wanting more, it follows the pie. Step into one, or throw: the needle sweeps from the pie, and when it lines up with a clown’s face the ring turns gold (or click or tap right where to throw). Dead centre, off a wall, off the glass, or off a ramp is Perfect and counts twice. WAPs close together are a combo: the pie steadies, and from three a slice is ready at once. </span></div></li>
+              <li><canvas data-pie-sprite="wonder" width="64" height="64" aria-hidden="true"></canvas><div><strong>A wonder</strong><span>One of the land’s own, from this chapter: it waits a moment up the lanes, then goes about its business. Step ahead and into it to keep it in your almanac, and it gives the carry something. Torch-ants light the way through; echo-wrens echo your throws; the lag-stag lags the land; jazz-geese honk the way clear; the hob-deer and the page-fox leave you unkept for a moment.</span></div></li>
+              <li><canvas data-pie-sprite="baneberry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Baneberries</strong><span>Plum-black, a cold violet sheen, a ring of violet dashes: what Mr. BaneWAP is made of. Mimes gather them for him, and while he is here any that get past you are his; each one makes his scheme last longer. Step on them to keep them from him.</span></div></li>
+              <li><canvas data-pie-sprite="beaver" width="64" height="64" aria-hidden="true"></canvas><div><strong>A slow beaver</strong><span>In no hurry. Steer into one and for a while the land goes at its pace, and you do not: easier to step through. (The lag-stag does the same.)</span></div></li>
+              <li><canvas data-pie-sprite="furrow" width="64" height="64" aria-hidden="true"></canvas><div><strong>A warm furrow</strong><span>In the field. Something keeps it warm from underneath: a little crust, a little filling, a little steadier.</span></div></li>
+              <li><canvas data-pie-sprite="egg" width="64" height="64" aria-hidden="true"></canvas><div><strong>Something warm, egg-shaped</strong><span>Now and then, at the very top of the lanes. It is not for taking. Pass close, and the pie settles faster for a while, and the next knock is forgiven.</span></div></li>
               <li><canvas data-pie-sprite="berry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boonberries</strong><span>Teal and amber, lit from within: the filling for the aura. Step through them.</span></div></li>
+              <li><canvas data-pie-sprite="pile" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pile of flour</strong><span>A little crust underfoot. And a ramp: a slice thrown over a pile is lofted clean over whatever is next. Piles in a row loft it further.</span></div></li>
               <li><canvas data-pie-sprite="boof" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boof</strong><span>Crosses the lanes on her own business. Brush past her and the pie steadies.</span></div></li>
               <li><canvas data-pie-sprite="switch" width="64" height="64" aria-hidden="true"></canvas><div><strong>Off switch</strong><span>Mr. BaneWAP always leaves one. Step on it, or hit it with a slice, and he is foiled. His rented wind drifts slices too.</span></div></li>
             </ul>
@@ -165,13 +205,13 @@
             <h3 id="lg-five"><span aria-hidden="true">◎</span> Two of the quinary five</h3>
             <p>They come and go, never together, and they talk.</p>
             <ul>
-              <li><canvas data-pie-sprite="boon" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mr. BoonWAP</strong><span>A sentient pie who means well. While he holds court, clowns flock, every pie finds an eye, he pours filling back into your aura and catches any slice you waste, and he says one true thing about the land.</span></div></li>
-              <li><canvas data-pie-sprite="bane" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mr. BaneWAP</strong><span>His foil. A rented wind, a tax on every step, the lanes re-let. Foiled, he says more than he means to.</span></div></li>
+              <li><canvas data-pie-sprite="boon" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mr. BoonWAP</strong><span>A sentient pie who means well. While he holds court, clowns flock, every pie finds an eye, he pours filling back into your aura and catches any slice you waste, and he says one true thing about the land. Flour in the air feeds him: he throws faster, pours crust, and stays longer.</span></div></li>
+              <li><canvas data-pie-sprite="bane" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mr. BaneWAP</strong><span>His foil, made of baneberries: the more he is brought, the fuller he sits and the longer his schemes run. A rented wind, a tax on every step, the lanes re-let, a march of Mimes Against WAP. Flour in the air feeds him too: his scheme quickens and lasts. Foiled, he says more than he means to.</span></div></li>
             </ul>
           </section>
           <section class="pie-legend-group tone-carrier" aria-labelledby="lg-hat">
             <h3 id="lg-hat"><span aria-hidden="true">⌒</span> Under the hat</h3>
-            <p>It is not always him. The hat settles on someone, and at a change of place it may move on.</p>
+            <p>It is not always him. The hat settles on someone, and at a new chapter it may move on.</p>
             <ul>
               <li><canvas data-pie-sprite="carrier-figure" width="64" height="64" aria-hidden="true"></canvas><div><strong>The figure in plain lines</strong><span>The one the hat was made for, perhaps.</span></div></li>
               <li><canvas data-pie-sprite="carrier-porter" width="64" height="64" aria-hidden="true"></canvas><div><strong>The porter</strong><span>Steady, slow, broad.</span></div></li>
