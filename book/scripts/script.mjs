@@ -52,6 +52,7 @@ import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_06.F';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_06.F';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_06.F';
+import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_07.D';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_07.A';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_06.A';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
@@ -181,6 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroySceneLight = initSceneLight({ chapterData, announce });
     const destroyTellings = initTellings({ chapterData, announce });
     const destroyStory = initStoryDirections();
+    const destroyPieSegues = initPieSegues({ chapterData });
     const destroyBeginAgain = initBeginAgain({ chapterData, latest: TOTAL_CHAPTERS });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
@@ -274,6 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroySceneLight) destroySceneLight();
       if (destroyTellings) destroyTellings();
       if (destroyStory) destroyStory();
+      if (destroyPieSegues) destroyPieSegues();
       if (destroyBeginAgain) destroyBeginAgain();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();

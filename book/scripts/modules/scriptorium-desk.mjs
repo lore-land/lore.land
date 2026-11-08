@@ -293,7 +293,7 @@ export async function initScriptoriumDesk() {
         go('/folios/');
       } else if (/^(pie|game|play)$/i.test(handle)) {
         say(op, el('p', {}, 'Someone is destined to spill exactly one pie. Off to the lanes.'));
-        go('/pie/');
+        go('/pie/?from=%2Fscriptorium%2F');
       } else if (home) {
         say(op, el('p', {}, 'Stepping back to the entrance.'));
         go('/');

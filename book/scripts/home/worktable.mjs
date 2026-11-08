@@ -27,6 +27,11 @@ function el(tag, attrs = {}, ...children) {
   return node;
 }
 
+/* A door into the game remembers which wall it was found on. */
+const nearHref = (piece) => (piece.near.href.startsWith('/pie/')
+  ? `/pie/?from=${encodeURIComponent(`${location.pathname}#worktable`)}`
+  : piece.near.href);
+
 function card(piece) {
   const img = el('img', {
     src: piece.thumb,
@@ -44,7 +49,7 @@ function card(piece) {
     el('div', { className: 'worktable-text' },
       el('p', { className: 'worktable-title' }, piece.title),
       piece.asks ? el('p', { className: 'worktable-asks' }, `It asks: ${piece.asks}`) : null,
-      el('p', { className: 'worktable-near' }, 'Stands near ', el('a', { href: piece.near.href }, piece.near.label)),
+      el('p', { className: 'worktable-near' }, 'Stands near ', el('a', { href: nearHref(piece) }, piece.near.label)),
       el('a', { className: 'worktable-origin', href: piece.href, rel: 'noopener' }, 'See it where it was made →')));
 }
 

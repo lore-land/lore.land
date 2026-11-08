@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.D",
+      "date": "2026-11-07",
+      "notes": [
+        "Exactly One Pie: Mr. BoonWAP, a sentient pie, holds court at the head of the lanes — clowns flock and every pie finds an eye — and Mr. BaneWAP meddles with announced schemes. He always leaves an off switch.",
+        "You can throw now: a slice up your lane. When the ring on a clown turns gold, a throw counts twice and steadies the pie.",
+        "Flour no longer spills the pie. It slows you down and pushes you back in the story.",
+        "The city comes in rows, and every row leaves a way through. Things are larger, quieter cobbles let them read first, and the lane you are in is lit.",
+        "Chapters Six, Eleven and Fifteen have doors into the game where its places happen, and the game sends you back to the very page you came from."
+      ]
+    },
+    {
       "release": "2026_11_07.C",
       "date": "2026-11-07",
       "notes": [

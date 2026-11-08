@@ -271,7 +271,7 @@ body[data-surface='monument'] .pie-main {
  * not a card across it. Play goes on underneath. */
 .pie-toast {
   position: absolute;
-  top: 2.1rem;
+  top: 3.6rem;
   left: 50%;
   width: max-content;
   max-width: 86%;
@@ -319,4 +319,88 @@ body[data-surface='monument'] .pie-main {
     transform: translate(-50%, 0);
     transition: opacity 200ms ease;
   }
+}
+
+/* The way back to where the game was found. */
+.pie-return {
+  justify-self: start;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+.pie-return[hidden] {
+  display: none;
+}
+
+/* Doors out of a card: into the chapter, or home. */
+.pie-card-links {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.pie-card-links:empty {
+  display: none;
+}
+
+.pie-card-link {
+  color: #e9d7a8;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  text-underline-offset: 3px;
+}
+
+.pie-card-link:hover,
+.pie-card-link:focus-visible {
+  color: #fff4d6;
+}
+
+/* Who is speaking in a toast: Mr. BoonWAP warm, Mr. BaneWAP theatrical, flour pale. */
+.pie-toast[data-voice='boon'] {
+  border-color: #f2c14e;
+  background: rgba(60, 36, 8, 0.86);
+}
+
+.pie-toast[data-voice='bane'] {
+  border-color: #d6473e;
+  background: rgba(40, 10, 14, 0.88);
+}
+
+.pie-toast[data-voice='flour'] {
+  border-color: #f3ead6;
+  background: rgba(90, 84, 72, 0.86);
+}
+
+.pie-steps {
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.pie-throw {
+  padding-inline: 1rem;
+  border-color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-line));
+  color: var(--hub-ink);
+  font-weight: 700;
+}
+
+.pie-meter {
+  height: 0.5rem;
+  overflow: visible;
+}
+
+.pie-meter span {
+  overflow: hidden;
+}
+
+.pie-meter em {
+  position: absolute;
+  right: calc(100% + 0.4rem);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
 }

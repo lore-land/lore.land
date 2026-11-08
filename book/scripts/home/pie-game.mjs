@@ -29,7 +29,27 @@
  *              under the hat, how far they carried it, and how many clowns got WAP.
  *              The hat does not fall. It never has.
  *   sound      a WAP is heard (synthesized: a splat and a horn); the toggle remembers.
- *   ?scene=    gate | lanes | plaza | table — a link can start the carry in that place.
+ *   presences  two of the quinary five come and go. Mr. BoonWAP, a sentient pie who means
+ *              well, holds court at the head of the lanes: clowns flock, every pie finds an
+ *              eye, and he flings slices of himself into theirs (he is never smaller). Mr.
+ *              BaneWAP, his foil, meddles: he announces a scheme — a rented wind, a tax on
+ *              every step, the lanes re-let — and, being a proper cartoon villain, leaves a
+ *              visible off switch in one lane. Step on it and he is foiled. They never share
+ *              the stage. (spwashi.com, RPG Wednesday: the quinary story bible.)
+ *   flour      a sack of flour does not spill the pie: it slows the carry, and pushes it
+ *              back in the story — back along this place, or, early on, back to the last.
+ *              The track at the top shows where in the story the carry is.
+ *   throw      ↑ W, Space, a swipe up or the throw button: a slice flies up the lane (the pie on
+ *              the plate is never smaller; the next slice takes a moment). A clown or Mr.
+ *              BaneWAP's off switch in the lane wears a ring that turns gold in the moment to
+ *              throw: a throw in that moment is Perfect — the WAP counts twice, the pie
+ *              steadies, and a switch is foiled from afar. Point-blank still lands, and jostles.
+ *   rows       the city comes in rows, and every row leaves a way through no more than one
+ *              step from the last; things that drift stay near their own lane; the start is
+ *              gentle, and the pace builds by the place and the minute.
+ *   ?scene=    gate | lanes | plaza | court | table — a link can start the carry in that place;
+ *   ?from=     and remember where the reader found the game, to send them back there
+ *              (pie-segues.mjs: the doors in the chapters, and the way out of each level).
  *
  * Drawn on a canvas in the page's own colours (the reader's binding: --hub-*),
  * except the figure, who is always the same plain ink drawing — he sticks out
@@ -41,6 +61,8 @@
  * no flying clowns; every control the same.
  */
 
+import { segueFor, storyHref, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_07.D';
+
 const KEY = 'lore.pie.v1';
 const W = 360;
 const H = 560;
@@ -48,23 +70,42 @@ const LANES = 5;
 const LANE_W = W / LANES;
 const PLAYER_Y = H - 92;
 const COBBLE = 24;            // px of scroll per cobble
+const PRESENCE_Y = 150;       // where Mr. BoonWAP and Mr. BaneWAP float: below the toasts, above the carry
 const SCENE_LENGTH = 300;     // cobbles per scene
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
 const SCENES = Object.freeze([
-  { id: 'gate', card: 'The parcel gate, in a storm.', tint: 'night', rain: true, kinds: ['sack', 'sack', 'puddle', 'puddle', 'pigeon', 'post'] },
-  { id: 'lanes', card: 'The lanes, which curve for everyone.', tint: 'bronze', rain: false, kinds: ['post', 'post', 'snail', 'spool', 'puddle', 'pigeon', 'clown'] },
-  { id: 'plaza', card: 'The plaza, where the pie holds court.', tint: 'ember', rain: false, kinds: ['dividers', 'clerk', 'wasps', 'post', 'spool', 'banner', 'clown', 'clown'] },
-  { id: 'table', card: 'The long table. A second place is set.', tint: 'gold', rain: false, kinds: ['table', 'clerk', 'chair', 'chair', 'wasps', 'dividers', 'clown'] }
+  { id: 'gate', card: 'The parcel gate, in a storm.', tint: 'night', rain: true, kinds: ['sack', 'sack', 'pigeon', 'post'] },
+  { id: 'lanes', card: 'The lanes, which curve for everyone.', tint: 'bronze', rain: false, kinds: ['post', 'post', 'snail', 'spool', 'pigeon'] },
+  { id: 'plaza', card: 'The plaza, where the pie holds court.', tint: 'ember', rain: false, kinds: ['clerk', 'wasps', 'post', 'spool', 'dividers', 'banner'], presence: 'boon' },
+  { id: 'court', card: 'The rented court, arriving in pieces.', tint: 'berry', rain: false, kinds: ['throne', 'subject', 'wasps', 'post', 'banner'], presence: 'bane' },
+  { id: 'table', card: 'The long table. A second place is set.', tint: 'gold', rain: false, kinds: ['chair', 'chair', 'clerk', 'dividers', 'wasps', 'table'] }
 ]);
+const WIDE = new Set(['banner', 'table']);
+
+/* Mr. BaneWAP's schemes: each announced, each with an off switch. */
+const SCHEMES = Object.freeze({
+  wind: {
+    says: '“Behold: a rented wind! Let us see how level your little pie stays.”',
+    foiled: '“Curses. The wind was only rented anyway.”'
+  },
+  tax: {
+    says: '“Every step shall be taxed. Every. Single. Step.”',
+    foiled: '“Untaxed! Again! Do you know what a ledger costs?”'
+  },
+  relet: {
+    says: '“These lanes are hereby re-let. Under new management. Mine.”',
+    foiled: '“The lease is void? Who reads a lease?”'
+  }
+});
 
 /* Who the hat settles on. Each carries the pie their own way. */
 const CARRIERS = Object.freeze([
-  { id: 'figure', name: 'the figure in plain lines', weight: 4, step: 0.09, wobble: 0.22, hurried: 0.36, settle: 0.42, width: 26 },
-  { id: 'porter', name: 'the porter from the parcel gate', weight: 2, step: 0.14, wobble: 0.14, hurried: 0.26, settle: 0.5, width: 32, says: 'Steady as a sack of flour, and as quick.' },
-  { id: 'clerk', name: 'a feast clerk', weight: 1.5, step: 0.065, wobble: 0.28, hurried: 0.44, settle: 0.38, width: 20, says: 'Quick, precise, and nervous about the paperwork.' },
-  { id: 'genie', name: 'the Genie, off-season', weight: 1.5, step: 0.17, wobble: 0.2, hurried: 0.3, settle: 0.62, width: 26, says: 'Glides. Settles a pie the way he settles a price.' },
-  { id: 'clown', name: 'a clown', weight: 1, step: 0.09, wobble: 0.3, hurried: 0.46, settle: 0.34, width: 26, says: 'A clown, carrying a pie. Everyone is nervous.' }
+  { id: 'figure', name: 'the figure in plain lines', weight: 4, step: 0.09, wobble: 0.18, hurried: 0.3, settle: 0.5, width: 24 },
+  { id: 'porter', name: 'the porter from the parcel gate', weight: 2, step: 0.13, wobble: 0.12, hurried: 0.22, settle: 0.56, width: 28, says: 'Steady as a sack of flour, and as quick.' },
+  { id: 'clerk', name: 'a feast clerk', weight: 1.5, step: 0.065, wobble: 0.23, hurried: 0.36, settle: 0.46, width: 19, says: 'Quick, precise, and nervous about the paperwork.' },
+  { id: 'genie', name: 'the Genie, off-season', weight: 1.5, step: 0.15, wobble: 0.16, hurried: 0.26, settle: 0.7, width: 24, says: 'Glides. Settles a pie the way he settles a price.' },
+  { id: 'clown', name: 'a clown', weight: 1, step: 0.09, wobble: 0.25, hurried: 0.4, settle: 0.42, width: 24, says: 'A clown, carrying a pie. Everyone is nervous.' }
 ]);
 const carrierById = (id) => CARRIERS.find((carrier) => carrier.id === id) || CARRIERS[0];
 function drawCarrierLot(not = null) {
@@ -80,7 +121,7 @@ function drawCarrierLot(not = null) {
 /* What happened, said the way the land would say it. */
 const CAUSES = Object.freeze({
   post: 'A bronze post curves for everyone. It did not curve this time.',
-  sack: 'A sack of flour does not move for anyone. That is what makes it flour.',
+  sack: 'Flour, everywhere. It does not spill a pie; it only slows one down.',
   snail: 'A pane-snail was there first. They always are.',
   spool: 'A spool rolled in from a chapter nobody here was in.',
   pigeon: 'A gate-pigeon rose. So, briefly, did the pie.',
@@ -90,6 +131,8 @@ const CAUSES = Object.freeze({
   banner: 'A banner in colours nobody ordered came down across the lane.',
   table: 'Straight into the long table. The second place stayed set.',
   chair: 'Somebody had pulled out a chair for someone else.',
+  throne: 'A rented throne, gilt over pine, set down exactly where it was not wanted.',
+  subject: 'A subject halfway through an errand. Neither of them had meant to be in an empire.',
   wobble: 'Too much, too soon. The pie had opinions about that.',
   'wobble-clown': 'A clown cannot hold a pie that long. WAP: its own face. It counts as a spill; it was also a delight.'
 });
@@ -255,6 +298,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const left = root.querySelector('[data-pie-step="-1"]');
   const right = root.querySelector('[data-pie-step="1"]');
   const soundToggle = root.querySelector('[data-pie-sound]');
+  const cardLinks = card.querySelector('[data-pie-card-links]');
+  const returnLink = document.querySelector('[data-pie-return]');
 
   let colors = palette();
   let record = readRecord();
@@ -308,12 +353,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     wobble: 0,
     phase: 0,
     speed: 150,
+    drag: 1,
     scroll: 0,
     sceneIndex: firstScene,
     sceneStart: 0,
     things: [],
-    spawnIn: 0.9,
+    rowIn: 1.6,
+    rows: 0,
+    safe: 2,
     boofIn: rand(9, 14),
+    boon: null,
+    bane: null,
+    lastPresence: null,
+    nextPresence: rand(13, 18),
+    pendingSwitch: false,
+    slices: [],
+    throws: [],
+    sliceReady: 1,
+    perfects: 0,
+    puffs: [],
+    tags: [],
+    foils: 0,
+    floured: 0,
+    setbacks: 0,
     boof: null,
     drops: [],
     hat: { x: laneX(2), y: PLAYER_Y - 62, vx: 0, vy: 0 },
@@ -325,59 +387,110 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const cobbles = () => Math.floor((run?.scroll || 0) / COBBLE);
   const scene = () => SCENES[run.sceneIndex % SCENES.length];
 
-  /* ─── Things in the lanes ─── */
-  const spawn = () => {
-    const kind = pick(scene().kinds);
-    const lane = Math.floor(Math.random() * LANES);
-    const y = -40;
-    const thing = { kind, y, lane, x: laneX(lane), w: 30, h: 30, fatal: true, born: run.t };
+  /* ─── Things in the lanes: they come in rows, and every row leaves a way through ─── */
+  const difficulty = () => clamp(run.t / 110 + (run.sceneIndex % SCENES.length) * 0.06 + Math.floor(run.sceneIndex / SCENES.length) * 0.25, 0, 1);
+
+  const makeThing = (kind, lane) => {
+    const thing = { kind, y: -44, lane, x: laneX(lane), home: laneX(lane), w: 30, h: 30, fatal: true, born: run.t };
     switch (kind) {
-      case 'post': thing.w = 22; thing.h = 22; break;
-      case 'sack': thing.w = 46; thing.h = 34; break;
-      case 'puddle': thing.w = 52; thing.h = 18; thing.fatal = false; break;
-      case 'snail': thing.w = 22; thing.h = 14; thing.vx = rand(-8, 8); break;
-      case 'spool': thing.w = 16; thing.h = 16; thing.vx = pick([-1, 1]) * rand(38, 64); break;
-      case 'pigeon': thing.w = 22; thing.h = 14; thing.vx = pick([-1, 1]) * rand(20, 40); thing.flap = rand(0, 6); break;
-      case 'clerk': thing.w = 26; thing.h = 30; thing.vx = pick([-1, 1]) * 26; break;
+      case 'post': thing.w = 24; thing.h = 24; break;
+      case 'sack': thing.w = 48; thing.h = 34; thing.fatal = false; break;   // flour slows; it does not spill
+      case 'puddle': thing.w = 54; thing.h = 18; thing.fatal = false; break;
+      case 'snail': thing.w = 24; thing.h = 16; thing.vx = rand(-6, 6); break;
+      case 'spool': thing.w = 18; thing.h = 18; thing.vx = pick([-1, 1]) * rand(30, 46); break;
+      case 'pigeon': thing.w = 24; thing.h = 16; thing.vx = pick([-1, 1]) * rand(20, 34); thing.flap = rand(0, 6); break;
+      case 'clerk': thing.w = 26; thing.h = 32; thing.vx = pick([-1, 1]) * 22; break;
       case 'wasps': thing.w = 26; thing.h = 22; thing.zig = rand(0, 6); break;
       case 'chair': thing.w = 30; thing.h = 26; break;
+      case 'throne': thing.w = 34; thing.h = 36; break;
+      case 'subject': thing.w = 24; thing.h = 32; thing.loaf = Math.random() < 0.6; break;
       case 'clown': thing.w = 26; thing.h = 32; thing.fatal = false; thing.vx = 0; thing.honk = rand(0, 6); break;
-      case 'dividers': {
-        // Two children and a brass divider across two lanes; one lane beside them is clear.
-        const start = Math.floor(Math.random() * (LANES - 1));
-        thing.lanes = [start, start + 1];
-        thing.x = (laneX(start) + laneX(start + 1)) / 2;
-        thing.w = LANE_W * 2 - 10;
-        thing.h = 22;
-        break;
-      }
-      case 'banner':
-      case 'table': {
-        // Across every lane but one: the gap is the way through (at the table, the empty place).
-        const gap = Math.floor(Math.random() * LANES);
-        thing.gap = gap;
-        thing.x = W / 2;
-        thing.w = W;
-        thing.h = kind === 'table' ? 34 : 18;
-        break;
-      }
+      case 'switch': thing.w = 30; thing.h = 30; thing.fatal = false; break;
       default: break;
     }
-    run.things.push(thing);
+    // Things that drift stay near their own lane: the way through is never taken back.
+    thing.range = LANE_W * 0.2;
+    return thing;
   };
 
+  const spawnRow = () => {
+    const d = difficulty();
+    const s = scene();
+    const lanes = [...Array(LANES).keys()];
+    // The way through: never more than one step from the last.
+    run.safe = clamp(run.safe + pick([-1, 0, 0, 1]), 0, LANES - 1);
+    // Mr. BaneWAP's off switch rides on the way through, where it can always be reached.
+    if (run.pendingSwitch && run.bane) {
+      run.things.push(makeThing('switch', run.safe));
+      run.pendingSwitch = false;
+    }
+    // Now and then a whole row with one opening, on the way through (at the table, the empty place).
+    const wide = s.kinds.filter((kind) => WIDE.has(kind));
+    if (wide.length && run.rows > 4 && Math.random() < 0.1 + d * 0.12) {
+      const thing = makeThing(pick(wide), run.safe);
+      thing.gap = run.safe;
+      thing.x = W / 2;
+      thing.w = W;
+      thing.h = thing.kind === 'table' ? 34 : 18;
+      run.things.push(thing);
+      run.rows += 1;
+      return;
+    }
+    const most = run.rows < 4 ? 1 : d < 0.3 ? 1 : d < 0.65 ? 2 : 3;
+    const count = 1 + Math.floor(Math.random() * most);
+    const open = lanes.filter((lane) => lane !== run.safe).sort(() => Math.random() - 0.5);
+    const blocked = new Set();
+    for (const lane of open) {
+      if (blocked.size >= count) break;
+      if (blocked.has(lane)) continue;
+      let kind = pick(s.kinds.filter((k) => !WIDE.has(k)));
+      if (kind === 'dividers') {
+        const pair = [lane + 1, lane - 1].find((other) => other >= 0 && other < LANES && other !== run.safe && !blocked.has(other));
+        if (pair == null) {
+          kind = 'post';
+        } else {
+          const thing = makeThing('dividers', Math.min(lane, pair));
+          thing.lanes = [Math.min(lane, pair), Math.max(lane, pair)];
+          thing.x = (laneX(thing.lanes[0]) + laneX(thing.lanes[1])) / 2;
+          thing.w = LANE_W * 2 - 14;
+          thing.h = 22;
+          run.things.push(thing);
+          blocked.add(lane);
+          blocked.add(pair);
+          continue;
+        }
+      }
+      run.things.push(makeThing(kind, lane));
+      blocked.add(lane);
+    }
+    // Puddles and clowns in what is left; a puddle may lie on the way through — it only slips.
+    const free = lanes.filter((lane) => !blocked.has(lane));
+    if (Math.random() < 0.14 + d * 0.12) run.things.push(makeThing('puddle', pick(free)));
+    const clowns = (run.boon ? 0.62 : 0.14) * (s.id === 'plaza' ? 1.4 : 1);
+    if (Math.random() < clowns) {
+      const lane = pick(free);
+      const clown = makeThing('clown', lane);
+      clown.y -= 30;
+      run.things.push(clown);
+    }
+    run.rows += 1;
+  };
+
+  /* Forgiving by design: a near miss is a miss. Friends reach a little further. */
   const hits = (thing) => {
     const py = PLAYER_Y - 18;   // the pie rides at chest height
-    const ph = 40;
-    const pw = run.carrier.width;
-    const overlapY = Math.abs(thing.y - py) < (thing.h + ph) / 2;
+    const ph = 34;
+    const pw = run.carrier.width * 0.85;
+    const friendly = !thing.fatal;
+    const reach = thing.kind === 'clown' ? (run.boon ? 1.7 : 1.15) : friendly ? 1 : 0.76;
+    const overlapY = Math.abs(thing.y - py) < (thing.h * reach + ph) / 2;
     if (!overlapY) return false;
-    if (thing.kind === 'banner' || thing.kind === 'table') {
-      const gapLeft = thing.gap * LANE_W + 6;
-      const gapRight = (thing.gap + 1) * LANE_W - 6;
+    if (WIDE.has(thing.kind)) {
+      const gapLeft = thing.gap * LANE_W - 4;
+      const gapRight = (thing.gap + 1) * LANE_W + 4;
       return run.x - pw / 2 < gapLeft || run.x + pw / 2 > gapRight;
     }
-    return Math.abs(thing.x - run.x) < (thing.w + pw) / 2;
+    return Math.abs(thing.x - run.x) < (thing.w * reach + pw) / 2;
   };
 
   /* ─── Stepping: across the scene, a lane at a time ─── */
@@ -398,21 +511,82 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.moveT = 0;
     run.dir = dir;
     run.lastStep = run.t;
-    run.wobble = Math.min(1.2, run.wobble + (hurried ? run.carrier.hurried : run.carrier.wobble));
+    const taxed = run.bane?.id === 'tax' ? 1.8 : 1;
+    run.wobble = Math.min(1.2, run.wobble + (hurried ? run.carrier.hurried : run.carrier.wobble) * taxed);
+    if (taxed > 1) run.tags.push({ x: run.x, y: PLAYER_Y - 76, t: 0, text: 'TAX' });
+  };
+
+  /* An involuntary step: Mr. BaneWAP's rented wind. */
+  const shove = (dir) => {
+    const next = clamp(run.lane + dir, 0, LANES - 1);
+    if (next === run.lane) {
+      run.wobble = Math.min(1.2, run.wobble + 0.12);
+      return;
+    }
+    run.from = run.x;
+    run.lane = next;
+    run.moveT = 0;
+    run.dir = dir;
+    run.wobble = Math.min(1.2, run.wobble + 0.1);
+  };
+
+  /* ─── Throwing: a slice up the lane; the pie on the plate is never smaller ─── */
+  const SWEET = [120, 230];   // px above the pie: the moment to throw
+  const inLane = (thing) => Math.abs(thing.x - run.x) < LANE_W * 0.55;
+  const targetAhead = () => run.things
+    .filter((thing) => (thing.kind === 'clown' || thing.kind === 'switch') && !thing.wapped && !thing.targeted && inLane(thing) && thing.y < PLAYER_Y - 20)
+    .sort((a, b) => b.y - a.y)[0] || null;
+  const throwSlice = () => {
+    if (state !== 'running') return;
+    if (run.sliceReady < 1) {
+      run.wobble = Math.min(1.2, run.wobble + 0.04); // reaching for a slice that is not there yet
+      return;
+    }
+    run.sliceReady = 0;
+    const target = targetAhead();
+    const gap = target ? PLAYER_Y - 18 - target.y : Infinity;
+    const perfect = target && gap >= SWEET[0] && gap <= SWEET[1];
+    const blank = target && gap < SWEET[0];
+    if (target) target.targeted = true;
+    run.throws.push({ x: run.x, y: PLAYER_Y - 30, target, perfect, t: 0 });
+    run.wobble = Math.min(1.2, run.wobble + (blank ? 0.16 : perfect ? 0 : 0.07));
   };
 
   /* ─── WAP: a clown gets the pie, square, and the pie on the plate is no smaller ─── */
-  const wap = (thing) => {
+  const wap = (thing, how = 'plate') => {
     thing.wapped = true;
     thing.wapT = 0;
     thing.spin = pick([-1, 1]);
-    run.waps += 1;
-    run.wobble = Math.min(1.2, run.wobble + 0.2);
-    run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: 1 + Math.min(run.waps, 6) * 0.06 });
+    const perfect = how === 'perfect';
+    run.waps += perfect ? 2 : 1;
+    if (perfect) {
+      run.perfects += 1;
+      run.wobble = Math.max(0, run.wobble - 0.3);
+      run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'PERFECT' });
+    } else if (how === 'plate') {
+      run.wobble = Math.min(1.2, run.wobble + 0.18);
+    }
+    run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: (perfect ? 1.25 : 1) + Math.min(run.waps, 6) * 0.05 });
     if (record.sound) wapSound();
+    const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : '';
     say(run.waps === 1
-      ? 'WAP. A clown got the pie in the face, and loved it. The pie on the plate is no smaller.'
-      : `WAP. ${run.waps} clowns, and still one pie.`);
+      ? `WAP. A clown got the pie in the eye, and loved it. The pie on the plate is no smaller.${by}`
+      : `WAP. ${run.waps} for the clowns, and still one pie.${by}`);
+  };
+
+  /* Mr. BaneWAP's off switch: every scheme has one. */
+  const foil = (thing, perfect = false) => {
+    if (!run.bane) return;
+    const scheme = SCHEMES[run.bane.id];
+    thing.wapped = true;
+    thing.wapT = 0;
+    thing.spin = 1;
+    run.bane = null;
+    run.foils += 1;
+    run.nextPresence = rand(15, 22);
+    if (perfect) run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'FOILED FROM AFAR' });
+    showToast('Foiled.', `Mr. BaneWAP: ${scheme.foiled}`, 2600, 'bane');
+    say(`Foiled. ${scheme.foiled}`);
   };
 
   /* ─── Title cards: the prophecy and the cuts, like a silent film ─── */
@@ -423,13 +597,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     cardAction.hidden = !action;
     card.hidden = false;
   };
-  const hideCard = () => { card.hidden = true; };
+  const hideCard = () => {
+    card.hidden = true;
+    cardLinks?.replaceChildren();
+  };
 
   /* A toast: where we are now, and who is under the hat. Play does not stop for it. */
-  const showToast = (title, line, ms = 2600) => {
+  const showToast = (title, line, ms = 2600, voice = '') => {
     if (!toast) return;
     toastTitle.textContent = title;
     toastLine.textContent = line || '';
+    toast.dataset.voice = voice;
     toast.classList.remove('is-in');
     void toast.offsetWidth;
     toast.classList.add('is-in');
@@ -439,6 +617,49 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const hideToast = () => {
     clearTimeout(toastTimer);
     toast?.classList.remove('is-in');
+  };
+
+  /* Where the reader found the game, to send them back there (pie-segues.mjs). */
+  const from = (() => {
+    try {
+      const given = safeReturn(new URLSearchParams(window.location.search).get('from'));
+      if (given) {
+        window.sessionStorage.setItem('lore.pie.from', given);
+        return given;
+      }
+      const kept = safeReturn(window.sessionStorage.getItem('lore.pie.from'));
+      if (kept) return kept;
+      const ref = document.referrer ? new URL(document.referrer) : null;
+      return ref && ref.origin === window.location.origin && ref.pathname !== window.location.pathname ? safeReturn(ref.pathname + ref.hash) : null;
+    } catch {
+      return null;
+    }
+  })();
+  let lastCarry = null;
+  const goBack = () => {
+    if (!from) return;
+    leaveBackNote({
+      path: from,
+      place: lastCarry ? segueFor(lastCarry.scene)?.place : null,
+      cobbles: lastCarry?.cobbles ?? null,
+      waps: lastCarry?.waps || 0,
+      carrier: lastCarry?.carrier || null
+    });
+  };
+  if (returnLink && from) {
+    returnLink.href = from;
+    returnLink.textContent = `↩ Back to ${describeReturn(from)}`;
+    returnLink.hidden = false;
+    returnLink.addEventListener('click', goBack);
+  }
+  const returnAnchor = () => {
+    if (!from) return null;
+    const a = document.createElement('a');
+    a.href = from;
+    a.className = 'pie-card-link';
+    a.textContent = `↩ Back to ${describeReturn(from)}`;
+    a.addEventListener('click', goBack);
+    return a;
   };
 
   const start = () => {
@@ -454,13 +675,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     loop();
   };
 
-  const cutTo = (index) => {
+  const cutTo = (index, { back = false } = {}) => {
     run.prevScene = run.sceneIndex;
     run.sceneT = 0;
     run.sceneIndex = index;
     run.sceneStart = cobbles();
     // A beat with nothing new in the lanes, so the next place can arrive.
-    run.spawnIn = Math.max(run.spawnIn, 1.3);
+    run.rowIn = Math.max(run.rowIn, 1.2);
+    if (back) {
+      showToast(`Pushed back in the story: ${scene().card.replace(/\.$/, '')}`, 'The flour got everywhere. You will have to come through here again.', 2800, 'flour');
+      say(`Pushed back in the story. ${scene().card}`);
+      return;
+    }
     const again = index >= SCENES.length ? 'Again, and faster.' : '';
     // The title floats, like the hat: at a change of place it may settle on someone else.
     let moved = '';
@@ -491,41 +717,159 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.carriers[run.carrier.id] = (record.carriers[run.carrier.id] || 0) + 1;
     record.waps += run.waps;
     record.bestWaps = Math.max(record.bestWaps, run.waps);
+    lastCarry = { scene: scene().id, cobbles: distance, waps: run.waps, carrier: run.carrier.name };
     const best = distance > record.best;
     if (best) record.best = distance;
     writeRecord(record);
     paintBest();
     const served = run.waps
-      ? ` Clowns given WAP on the way: ${run.waps}. The pie was never smaller.`
+      ? ` Clowns given WAP on the way: ${run.waps}${run.perfects ? ` (${run.perfects} perfectly timed)` : ''}. The pie was never smaller.`
       : '';
+    const foiled = run.foils ? ` Mr. BaneWAP foiled ${run.foils === 1 ? 'once' : `${run.foils} times`}.` : '';
     setTimeout(() => {
       state = 'over';
-      showCard('Exactly one.', `${CAUSES[cause]} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}.${served} The hat did not fall.`, 'Carry another pie');
+      showCard('Exactly one.', `${CAUSES[cause]} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}.${served}${foiled} The hat did not fall.`, 'Carry another pie');
+      // The way out: into the chapter where this place happens, or home to where the game was found.
+      const segue = segueFor(scene().id);
+      const links = [];
+      if (segue && storyHref(segue) !== from) {
+        const read = document.createElement('a');
+        read.href = storyHref(segue);
+        read.className = 'pie-card-link';
+        read.textContent = `Read ${segue.place} in ${chapterWords(segue.chapter)} →`;
+        read.addEventListener('click', () => leaveBackNote({ path: storyHref(segue), place: segue.place, cobbles: distance, waps: run.waps, carrier: run.carrier.name }));
+        links.push(read);
+      }
+      const home = returnAnchor();
+      if (home) links.push(home);
+      cardLinks?.replaceChildren(...links);
       say(`Spilled. ${CAUSES[cause]} ${run.carrier.name}, ${distance} cobbles.${served}`);
       cardAction.focus({ preventScroll: true });
     }, reduced?.matches ? 300 : 1100);
   };
 
   /* ─── The world moving ─── */
+  const progress = () => clamp((cobbles() - run.sceneStart) / SCENE_LENGTH, 0, 1);
+
+  /* Flour: it slows the carry and pushes it back in the story. */
+  const flour = (thing) => {
+    thing.floured = true;
+    run.floured = 1.6;
+    run.drag = 0.45;
+    run.setbacks += 1;
+    run.wobble = Math.min(1.2, run.wobble + 0.05);
+    for (let i = 0; i < 16; i += 1) run.puffs.push({ x: run.x + rand(-14, 14), y: PLAYER_Y - 20 + rand(-10, 10), vx: rand(-60, 60), vy: rand(-70, -10), t: 0 });
+    const back = 70;
+    if (cobbles() - run.sceneStart >= back || run.sceneIndex === 0) {
+      run.sceneStart = Math.min(cobbles(), run.sceneStart + back);
+      showToast('Flour.', 'Everything slows, and the story slips back a little.', 1800, 'flour');
+      say('Flour. Everything slows, and the story slips back a little.');
+    } else {
+      cutTo(run.sceneIndex - 1, { back: true });
+      run.sceneStart = cobbles() - Math.round(SCENE_LENGTH * 0.6);
+    }
+  };
+
+  /* Two of the quinary five, one at a time. */
+  const holdCourt = () => {
+    run.boon = { t: 0, dur: 8.5, lobIn: 0.9 };
+    run.lastPresence = 'boon';
+    showToast('Mr. BoonWAP holds court.', 'A sentient pie of the quinary five. Clowns flock to him, and every pie finds an eye.', 3200, 'boon');
+    say('Mr. BoonWAP holds court. Clowns flock to him, and every pie finds an eye.');
+  };
+  const scheme = () => {
+    const id = pick(Object.keys(SCHEMES));
+    run.bane = { id, t: 0, dur: 9, beat: id === 'relet' ? 2.4 : 1.8, nextBeat: 1.6, dir: pick([-1, 1]) };
+    run.pendingSwitch = true;
+    run.lastPresence = 'bane';
+    showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.`, 3400, 'bane');
+    say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.`);
+  };
+
   const update = (dt) => {
     run.t += dt;
     if (state === 'running') {
-      run.speed = Math.min(430, run.speed + dt * (5 + run.sceneIndex * 1.5));
+      // The pace: gentle at first, building by the place and the minute; flour drags it back.
+      run.drag = Math.min(1, run.drag + dt * 0.35);
+      const pace = Math.min(350, 150 + run.t * 2.2 + (run.sceneIndex % SCENES.length) * 14 + Math.floor(run.sceneIndex / SCENES.length) * 40);
+      run.speed = pace * run.drag;
       run.scroll += run.speed * dt;
       if (cobbles() - run.sceneStart >= SCENE_LENGTH) {
         cutTo(run.sceneIndex + 1);
         return;
       }
-      run.spawnIn -= dt;
-      if (run.spawnIn <= 0) {
-        spawn();
-        run.spawnIn = clamp(rand(0.55, 1.05) * (190 / run.speed) * 1.6, 0.32, 1.2);
+      run.rowIn -= dt;
+      if (run.rowIn <= 0) {
+        spawnRow();
+        // Rows a set distance apart, so the time to react holds as the pace builds.
+        const gap = clamp(270 - difficulty() * 120, 150, 270);
+        run.rowIn = gap / Math.max(run.speed, 90);
       }
       run.boofIn -= dt;
       if (run.boofIn <= 0 && !run.boof) {
-        const from = pick([-1, 1]);
-        run.boof = { x: from < 0 ? -40 : W + 40, y: rand(80, 200), vx: -from * rand(60, 80), touched: false };
+        const side = pick([-1, 1]);
+        run.boof = { x: side < 0 ? -40 : W + 40, y: rand(80, 200), vx: -side * rand(60, 80), touched: false };
         run.boofIn = rand(12, 18);
+      }
+      // Presences: Mr. BoonWAP and Mr. BaneWAP never share the stage.
+      if (!run.boon && !run.bane) {
+        run.nextPresence -= dt;
+        if (run.nextPresence <= 0) {
+          const lean = scene().presence;
+          const boon = lean === 'boon' ? Math.random() < 0.75 : lean === 'bane' ? Math.random() < 0.2 : run.lastPresence !== 'boon';
+          if (boon) holdCourt(); else scheme();
+        }
+      }
+      if (run.boon) {
+        const b = run.boon;
+        b.t += dt;
+        b.lobIn -= dt;
+        if (b.lobIn <= 0) {
+          const target = run.things
+            .filter((thing) => thing.kind === 'clown' && !thing.wapped && !thing.targeted && thing.y > 40 && thing.y < PLAYER_Y - 50)
+            .sort((a, c) => Math.abs(a.x - W / 2) - Math.abs(c.x - W / 2))[0];
+          if (target) {
+            target.targeted = true;
+            run.slices.push({ x0: W / 2, y0: PRESENCE_Y + 14, target, t: 0 });
+          }
+          b.lobIn = 1.05;
+        }
+        if (b.t >= b.dur) {
+          run.boon = null;
+          run.nextPresence = scene().presence === 'boon' ? rand(9, 13) : rand(15, 22);
+          showToast('Mr. BoonWAP keeps talking.', 'The room has moved on. He has not noticed.', 2200, 'boon');
+        }
+      }
+      if (run.bane) {
+        const b = run.bane;
+        b.t += dt;
+        if (b.id !== 'tax') {
+          b.nextBeat -= dt;
+          if (b.nextBeat <= 0) {
+            if (b.id === 'wind') shove(b.dir);
+            if (b.id === 'relet') {
+              // Re-let: the lanes ahead shift over; the way through goes with them.
+              run.things.forEach((thing) => {
+                if (thing.wapped || WIDE.has(thing.kind) || thing.y > PLAYER_Y - 120 || thing.kind === 'switch' || thing.lanes) return;
+                const lane = thing.lane + b.dir;
+                if (lane < 0 || lane >= LANES) return;
+                thing.lane = lane;
+                thing.home += b.dir * LANE_W;
+                thing.shift = { from: thing.x, t: 0 };
+              });
+              run.safe = clamp(run.safe + b.dir, 0, LANES - 1);
+            }
+            b.nextBeat = b.beat;
+            if (Math.random() < 0.35) b.dir *= -1;
+          }
+        }
+        if (b.t >= b.dur && run.bane) {
+          run.bane = null;
+          run.pendingSwitch = false;
+          run.things = run.things.filter((thing) => thing.kind !== 'switch' || thing.wapped);
+          run.nextPresence = scene().presence === 'bane' ? rand(8, 12) : rand(15, 22);
+          showToast('Mr. BaneWAP withdraws.', '“This is not over.” It is, for now.', 2200, 'bane');
+        }
       }
     }
     // Stepping: a line segment, quickly drawn.
@@ -535,11 +879,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.wobble = Math.max(0, run.wobble - dt * run.carrier.settle);
     run.phase += dt * (6 + run.wobble * 10);
     if (run.steadied > 0) run.steadied -= dt;
+    if (run.floured > 0) run.floured -= dt;
+    run.sliceReady = Math.min(1, run.sliceReady + dt / 1.0);
 
     if (state === 'running') {
       run.things.forEach((thing) => {
         if (thing.wapped) {
-          // Delighted, and briefly airborne.
+          // Delighted (or foiled), and briefly airborne.
           thing.wapT += dt;
           if (!reduced?.matches) {
             thing.y -= 150 * dt;
@@ -548,32 +894,69 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           return;
         }
         thing.y += run.speed * dt;
+        if (thing.shift) {
+          thing.shift.t = Math.min(1, thing.shift.t + dt / 0.3);
+          thing.x = thing.shift.from + (thing.home - thing.shift.from) * thing.shift.t;
+          if (thing.shift.t >= 1) thing.shift = null;
+          return;
+        }
         // Clowns love WAP: they drift toward the pie while there is still time to get in front of it.
         if (thing.kind === 'clown' && thing.y < PLAYER_Y - 70) {
-          thing.vx = clamp((run.x - thing.x) * 0.9, -48, 48);
-        } else if (thing.kind === 'clown') {
-          thing.vx = 0;
-        }
-        if (thing.vx) {
+          const pull = run.boon ? 70 : 42;
+          thing.x += clamp((run.x - thing.x) * 0.9, -pull, pull) * dt;
+        } else if (thing.vx) {
           thing.x += thing.vx * dt;
-          if (thing.x < 14 || thing.x > W - 14) thing.vx *= -1;
+          if (Math.abs(thing.x - thing.home) > thing.range) {
+            thing.x = thing.home + Math.sign(thing.x - thing.home) * thing.range;
+            thing.vx *= -1;
+          }
         }
-        if (thing.kind === 'wasps') thing.x = laneX(thing.lane) + Math.sin((run.t + thing.zig) * 4) * LANE_W * 0.55;
+        if (thing.kind === 'wasps') thing.x = thing.home + Math.sin((run.t + thing.zig) * 4) * thing.range;
         if (thing.kind === 'pigeon') thing.flap += dt * 14;
       });
       run.things = run.things.filter((thing) => thing.y < H + 60 && !(thing.wapped && thing.wapT > 1.1));
+
+      // Slices in flight: Mr. BoonWAP's, and the carrier's.
+      run.slices.forEach((slice) => { slice.t += dt / 0.6; });
+      run.slices = run.slices.filter((slice) => {
+        if (slice.t < 1) return true;
+        if (!slice.target.wapped && run.things.includes(slice.target)) wap(slice.target, 'boon');
+        return false;
+      });
+      run.throws.forEach((shot) => {
+        shot.t += dt;
+        shot.y -= 560 * dt;
+        if (shot.target && !shot.target.wapped && run.things.includes(shot.target)) {
+          shot.x += (shot.target.x - shot.x) * Math.min(1, dt * 10);
+          if (shot.y <= shot.target.y + 6) {
+            if (shot.target.kind === 'switch') foil(shot.target, shot.perfect);
+            else wap(shot.target, shot.perfect ? 'perfect' : 'throw');
+            shot.done = true;
+          }
+        }
+      });
+      run.throws = run.throws.filter((shot) => !shot.done && shot.y > -30);
+
       for (const thing of run.things) {
         if (thing.wapped || !hits(thing)) continue;
         if (thing.kind === 'clown') {
           wap(thing);
           continue;
         }
+        if (thing.kind === 'switch') {
+          foil(thing);
+          continue;
+        }
         if (thing.kind === 'puddle') {
           if (!thing.slipped) {
             thing.slipped = true;
-            run.wobble = Math.min(1.2, run.wobble + 0.42);
+            run.wobble = Math.min(1.2, run.wobble + 0.36);
             say('A puddle. The pie slides.');
           }
+          continue;
+        }
+        if (thing.kind === 'sack') {
+          if (!thing.floured) flour(thing);
           continue;
         }
         spill(thing.kind);
@@ -582,7 +965,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (run.boof) {
         run.boof.y += run.speed * dt * 0.55;
         run.boof.x += run.boof.vx * dt;
-        if (!run.boof.touched && Math.abs(run.boof.x - run.x) < 30 && Math.abs(run.boof.y - (PLAYER_Y - 10)) < 34) {
+        if (!run.boof.touched && Math.abs(run.boof.x - run.x) < 32 && Math.abs(run.boof.y - (PLAYER_Y - 10)) < 36) {
           run.boof.touched = true;
           run.wobble = 0;
           run.steadied = 1.6;
@@ -613,6 +996,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run.spill) run.spill.t += dt;
     run.bursts.forEach((burst) => { burst.t += dt; });
     run.bursts = run.bursts.filter((burst) => burst.t < 0.9);
+    run.puffs.forEach((puff) => { puff.t += dt; puff.x += puff.vx * dt; puff.y += puff.vy * dt; puff.vy += 60 * dt; });
+    run.puffs = run.puffs.filter((puff) => puff.t < 1.1);
+    run.tags.forEach((tag) => { tag.t += dt; });
+    run.tags = run.tags.filter((tag) => tag.t < 1);
     if (scene().rain && !reduced?.matches) {
       while (run.drops.length < 70) run.drops.push({ x: rand(0, W), y: rand(-H, 0), v: rand(420, 620) });
       run.drops.forEach((drop) => {
@@ -630,7 +1017,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   /* A place's light: the paper, tinted. Between places, one crosses into the next. */
   const skyFor = (s) => {
-    const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold }[s.tint];
+    const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold, berry: colors.berry }[s.tint];
     return [mix(colors.paper, tint, s.tint === 'night' ? 0.32 : 0.16), mix(colors.deep, tint, s.tint === 'night' ? 0.22 : 0.08)];
   };
   const drawScene = () => {
@@ -648,7 +1035,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.fillRect(0, 0, W, H);
     // Cobbles, scrolling with the scene.
     const offset = (run?.scroll || 0) % 32;
-    ctx.strokeStyle = mix(colors.muted, colors.paper, 0.72);
+    // Quiet enough that what is in the lanes reads first.
+    ctx.strokeStyle = mix(colors.muted, colors.paper, 0.86);
     ctx.lineWidth = 1;
     for (let y = -32 + offset; y < H; y += 32) {
       for (let lane = 0; lane < LANES; lane += 1) {
@@ -668,12 +1056,125 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.stroke();
     }
     ctx.setLineDash([]);
+    // The lane being carried in, lit a little: where you are is never in doubt.
+    if (run && state !== 'title') {
+      const glow = ctx.createLinearGradient(0, 0, 0, H);
+      glow.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      glow.addColorStop(1, mix(colors.paper, 'rgb(255, 255, 255)', 0.5).replace('rgb(', 'rgba(').replace(')', ', 0.28)'));
+      ctx.fillStyle = glow;
+      ctx.fillRect(run.x - LANE_W / 2, 0, LANE_W, H);
+    }
   };
 
+  /* A ring on what can be thrown at, in the carrier's lane: gold in the moment to throw. */
+  const drawAim = () => {
+    if (!run || state !== 'running') return;
+    const target = targetAhead();
+    if (!target) return;
+    const gap = PLAYER_Y - 18 - target.y;
+    const sweet = gap >= SWEET[0] && gap <= SWEET[1];
+    ctx.save();
+    ctx.strokeStyle = sweet ? '#f2c14e' : mix(colors.ink, colors.paper, 0.45);
+    ctx.lineWidth = sweet ? 3 : 1.5;
+    ctx.setLineDash(sweet ? [] : [4, 4]);
+    ctx.beginPath();
+    ctx.arc(target.x, target.y - 4, 24, 0, Math.PI * 2);
+    ctx.stroke();
+    if (sweet) {
+      ctx.fillStyle = '#f2c14e';
+      ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(run.sliceReady >= 1 ? 'THROW' : '…', target.x, target.y - 34);
+    }
+    ctx.restore();
+  };
+
+  const HAZARD_SCALE = 1.2;
   const drawThing = (thing) => {
     const { x, y } = thing;
     ctx.save();
+    // Every thing touches the ground: a shadow under it, and hazards drawn a size larger.
+    if (!WIDE.has(thing.kind) && thing.kind !== 'puddle' && !thing.wapped) {
+      ctx.fillStyle = 'rgba(20, 16, 10, 0.18)';
+      ctx.beginPath();
+      ctx.ellipse(x, y + thing.h * 0.55, thing.w * 0.55, 4, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (thing.fatal && !WIDE.has(thing.kind)) {
+      ctx.translate(x, y);
+      ctx.scale(HAZARD_SCALE, HAZARD_SCALE);
+      ctx.translate(-x, -y);
+    }
+    // Friends glow: go toward these.
+    if ((thing.kind === 'clown' || thing.kind === 'switch') && !thing.wapped) {
+      const halo = ctx.createRadialGradient(x, y - 4, 4, x, y - 4, 30);
+      halo.addColorStop(0, 'rgba(255, 214, 102, 0.45)');
+      halo.addColorStop(1, 'rgba(255, 214, 102, 0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(x, y - 4, 30, 0, Math.PI * 2);
+      ctx.fill();
+    }
     switch (thing.kind) {
+      case 'throne':
+        ctx.fillStyle = '#c9a23a';
+        ctx.strokeStyle = '#6a4e14';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(x - 14, y - 18, 28, 14, 4);          // back
+        ctx.rect(x - 15, y - 4, 30, 9);                     // seat
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#8a3a3a';
+        ctx.fillRect(x - 11, y - 3, 22, 5);                  // cushion
+        ctx.fillStyle = '#b8935a';
+        ctx.fillRect(x - 13, y + 5, 4, 10);
+        ctx.fillRect(x + 9, y + 5, 4, 10);
+        ctx.fillStyle = '#6a4e14';
+        ctx.font = '600 6px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('RENTED', x, y - 9);
+        break;
+      case 'subject':
+        ctx.fillStyle = '#5a6b52';
+        ctx.beginPath();
+        ctx.roundRect(x - 9, y - 6, 18, 22, 6);
+        ctx.fill();
+        ctx.fillStyle = '#e2b48c';
+        ctx.beginPath();
+        ctx.arc(x, y - 12, 7, 0, Math.PI * 2);
+        ctx.fill();
+        if (thing.loaf) {
+          ctx.fillStyle = '#c98a3e';
+          ctx.beginPath();
+          ctx.ellipse(x + 10, y + 2, 7, 4, -0.3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
+      case 'switch': {
+        // Mr. BaneWAP's off switch: every scheme has one, in plain view.
+        if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - thing.wapT * 1.5);
+        ctx.fillStyle = '#2b2b30';
+        ctx.beginPath();
+        ctx.roundRect(x - 13, y - 6, 26, 18, 4);
+        ctx.fill();
+        ctx.strokeStyle = '#d6473e';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x, y + 2);
+        ctx.lineTo(x + (thing.wapped ? -9 : 9), y - 14);
+        ctx.stroke();
+        ctx.fillStyle = '#d6473e';
+        ctx.beginPath();
+        ctx.arc(x + (thing.wapped ? -9 : 9), y - 14, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#f3ead6';
+        ctx.font = '700 6px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(thing.wapped ? 'OFF' : 'ON', x, y + 7);
+        break;
+      }
       case 'post': {
         const g = ctx.createRadialGradient(x - 4, y - 4, 2, x, y, 13);
         g.addColorStop(0, '#f0c97a');
@@ -689,6 +1190,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'sack':
+        if (thing.floured) ctx.globalAlpha = 0.45;
         ctx.fillStyle = '#e8dcc0';
         ctx.strokeStyle = '#a89870';
         ctx.lineWidth = 1.5;
@@ -928,6 +1430,148 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
   };
 
+  /* Mr. BoonWAP: a sentient pie, golden, enormous, pleased with himself. */
+  const drawBoonWAP = () => {
+    const b = run?.boon;
+    if (!b) return;
+    const enter = Math.min(1, b.t / 0.5, (b.dur - b.t) / 0.5);
+    const x = W / 2;
+    const y = PRESENCE_Y + (reduced?.matches ? 0 : Math.sin(run.t * 2) * 3) - (1 - enter) * 60;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, enter);
+    const halo = ctx.createRadialGradient(x, y, 10, x, y, 64);
+    halo.addColorStop(0, 'rgba(255, 210, 120, 0.55)');
+    halo.addColorStop(1, 'rgba(255, 210, 120, 0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath(); ctx.arc(x, y, 64, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e9e2d4';
+    ctx.beginPath(); ctx.ellipse(x, y + 14, 40, 8, 0, 0, Math.PI * 2); ctx.fill();          // his own plate
+    const crust = ctx.createLinearGradient(0, y - 22, 0, y + 14);
+    crust.addColorStop(0, '#f1bd6a');
+    crust.addColorStop(1, '#b06a2a');
+    ctx.fillStyle = crust;
+    ctx.beginPath(); ctx.ellipse(x, y, 34, 18, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(110, 50, 14, 0.55)';
+    ctx.lineWidth = 1.2;
+    for (let i = -3; i <= 3; i += 1) { ctx.beginPath(); ctx.moveTo(x + i * 8 - 3, y - 12); ctx.lineTo(x + i * 8 + 3, y + 8); ctx.stroke(); }
+    ctx.fillStyle = '#2a160a';                                                                  // a face: delighted with itself
+    ctx.beginPath(); ctx.arc(x - 10, y - 4, 2.6, 0, Math.PI * 2); ctx.arc(x + 10, y - 4, 2.6, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#2a160a';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(x, y + 1, 8, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+    if (!reduced?.matches) {                                                                    // steam
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.lineWidth = 1.5;
+      for (let i = -1; i <= 1; i += 1) {
+        ctx.beginPath();
+        ctx.moveTo(x + i * 12, y - 20);
+        ctx.quadraticCurveTo(x + i * 12 + Math.sin(run.t * 3 + i) * 5, y - 32, x + i * 12, y - 42);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  };
+
+  /* Mr. BaneWAP: banker's crust, a monocle, a hollow paper crown; theatrical about it. */
+  const drawBaneWAP = () => {
+    const b = run?.bane;
+    if (!b) return;
+    const enter = Math.min(1, b.t / 0.5, (b.dur - b.t) / 0.5);
+    const x = W / 2 + (reduced?.matches ? 0 : Math.sin(run.t * 7) * 2);
+    const y = PRESENCE_Y - (1 - enter) * 60;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, enter);
+    ctx.fillStyle = 'rgba(80, 20, 30, 0.28)';
+    ctx.beginPath(); ctx.arc(x, y, 58, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#d9d2c4';
+    ctx.beginPath(); ctx.ellipse(x, y + 14, 38, 7, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6e5038';                                                                  // banker's crust, cracking
+    ctx.beginPath(); ctx.ellipse(x, y, 32, 17, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#2e1e12';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(x - 20, y - 6); ctx.lineTo(x - 12, y + 2); ctx.lineTo(x - 16, y + 9); ctx.stroke();
+    ctx.fillStyle = '#b8b2a0';                                                                  // the crown: paper, hollow, occupied
+    ctx.beginPath();
+    ctx.moveTo(x - 16, y - 14); ctx.lineTo(x - 16, y - 28); ctx.lineTo(x - 8, y - 20); ctx.lineTo(x, y - 32); ctx.lineTo(x + 8, y - 20); ctx.lineTo(x + 16, y - 28); ctx.lineTo(x + 16, y - 14);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#1d1d22';
+    ctx.beginPath(); ctx.arc(x - 9, y - 4, 2.4, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#e2c46a';                                                                // the monocle
+    ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.arc(x + 9, y - 4, 4.5, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#1d1d22';
+    ctx.beginPath(); ctx.arc(x + 9, y - 4, 1.8, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#1d1d22';                                                                // a moustache, twirled
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x - 10, y + 10, x - 16, y + 2); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x + 10, y + 10, x + 16, y + 2); ctx.stroke();
+    ctx.restore();
+    // The scheme, shown before it happens: wind streaks, or the lanes' new lease.
+    const soon = b.id !== 'tax' && b.nextBeat < 0.7;
+    if (b.id === 'wind' || b.id === 'relet') {
+      ctx.save();
+      ctx.globalAlpha = soon ? 0.9 : 0.35;
+      ctx.strokeStyle = b.id === 'wind' ? mix(colors.ink, colors.paper, 0.4) : '#d6473e';
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.lineWidth = 2.5;
+      const ay = b.id === 'wind' ? PLAYER_Y - 40 : 170;
+      for (let i = 0; i < 3; i += 1) {
+        const ax = W / 2 + b.dir * (i * 26 - 26);
+        ctx.beginPath();
+        ctx.moveTo(ax - b.dir * 10, ay - 9);
+        ctx.lineTo(ax + b.dir * 4, ay);
+        ctx.lineTo(ax - b.dir * 10, ay + 9);
+        ctx.stroke();
+      }
+      ctx.font = '700 10px "JetBrainsMono", ui-monospace, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(b.id === 'wind' ? 'RENTED WIND' : 'LANES RE-LET', W / 2, ay - 16);
+      ctx.restore();
+    }
+  };
+
+  const drawFlight = () => {
+    if (!run) return;
+    // Mr. BoonWAP's slices: lobbed, arcing, into an eye.
+    run.slices.forEach((slice) => {
+      const t = Math.min(1, slice.t);
+      const tx = slice.target.x;
+      const ty = slice.target.y - 10;
+      const x = slice.x0 + (tx - slice.x0) * t;
+      const y = slice.y0 + (ty - slice.y0) * t - Math.sin(t * Math.PI) * 50;
+      drawWedge(x, y, t * 8);
+    });
+    // The carrier's throws: straight up the lane.
+    run.throws.forEach((shot) => drawWedge(shot.x, shot.y, shot.t * 14, shot.perfect));
+    // Flour, everywhere.
+    run.puffs.forEach((puff) => {
+      ctx.fillStyle = `rgba(250, 246, 236, ${Math.max(0, 0.85 - puff.t * 0.8)})`;
+      ctx.beginPath(); ctx.arc(puff.x, puff.y, 4 + puff.t * 6, 0, Math.PI * 2); ctx.fill();
+    });
+    // Tags: TAX, PERFECT, FOILED.
+    run.tags.forEach((tag) => {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - tag.t);
+      ctx.fillStyle = tag.text === 'TAX' ? '#d6473e' : '#b8860b';
+      ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(tag.text, tag.x, tag.y - tag.t * 20);
+      ctx.restore();
+    });
+  };
+
+  function drawWedge(x, y, spin, gold = false) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(spin);
+    ctx.fillStyle = '#e0a95a';
+    ctx.strokeStyle = gold ? '#f2c14e' : '#8a4a1a';
+    ctx.lineWidth = gold ? 2 : 1;
+    ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(8, 6); ctx.lineTo(-8, 6); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = colors.berry;
+    ctx.fillRect(-6, 3, 12, 2.5);
+    ctx.restore();
+  }
+
   const drawBoof = () => {
     const b = run?.boof;
     if (!b) return;
@@ -1036,6 +1680,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.stroke();
     ctx.restore();
     if (!spilled) drawPie(px, py, tilt);
+    if (run?.floured > 0) {
+      ctx.save();
+      ctx.globalAlpha = Math.min(0.55, run.floured * 0.4);
+      ctx.fillStyle = '#fbf8f0';
+      ctx.beginPath(); ctx.ellipse(x, y - 24, 16, 30, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
     drawHat();
   };
 
@@ -1183,27 +1834,69 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.globalAlpha = 1;
   };
 
+  /* The HUD: plain pills, readable on any binding; and the track of the story. */
+  const pill = (text, x, y, align, color = colors.ink) => {
+    ctx.font = '700 12px "JetBrainsMono", ui-monospace, monospace';
+    const w = ctx.measureText(text).width + 14;
+    const left = align === 'left' ? x : align === 'right' ? x - w : x - w / 2;
+    ctx.fillStyle = mix(colors.paper, 'rgb(255, 255, 255)', 0.3).replace('rgb(', 'rgba(').replace(')', ', 0.86)');
+    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.75);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(left, y - 12, w, 19, 9);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, left + 7, y - 2);
+    ctx.textBaseline = 'alphabetic';
+  };
+
   const drawHud = () => {
     if (!run) return;
-    ctx.fillStyle = colors.ink;
-    ctx.font = '600 12px "JetBrainsMono", ui-monospace, monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText(`${cobbles()} cobbles`, 10, 20);
-    ctx.textAlign = 'right';
-    ctx.fillText(`best ${Math.max(record.best, 0)}`, W - 10, 20);
-    if (run.waps) {
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#d6473e';
-      ctx.fillText(`WAP ×${run.waps}`, W / 2, 20);
-    }
+    pill(`${cobbles()} cobbles`, 8, 20, 'left');
+    pill(`best ${Math.max(record.best, 0)}`, W - 8, 20, 'right', colors.muted);
+    if (run.waps) pill(`WAP ×${run.waps}`, W / 2, 20, 'center', '#c0392b');
+    // The story so far: five places, this one filling; flour pushes it back.
+    const n = SCENES.length;
+    const span = 150;
+    const x0 = W / 2 - span / 2;
+    const y = 42;
+    const at = run.sceneIndex % n;
+    ctx.save();
+    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.6);
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + span, y); ctx.stroke();
+    const step = span / (n - 1);
+    ctx.strokeStyle = colors.gold;
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + step * (at + Math.min(1, progress())), y); ctx.stroke();
+    SCENES.forEach((entry, i) => {
+      ctx.fillStyle = i < at ? colors.gold : i === at ? colors.ink : mix(colors.ink, colors.paper, 0.6);
+      ctx.beginPath(); ctx.arc(x0 + step * i, y, i === at ? 5 : 3.5, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.restore();
+    // The next slice: a small ring that fills.
+    ctx.save();
+    ctx.strokeStyle = run.sliceReady >= 1 ? colors.gold : mix(colors.ink, colors.paper, 0.6);
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(run.x + 30, PLAYER_Y - 18, 6, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * run.sliceReady);
+    ctx.stroke();
+    ctx.restore();
   };
 
   function draw() {
     if (!canvas.width) return;
     drawScene();
+    drawBoonWAP();
+    drawBaneWAP();
     run?.things.forEach(drawThing);
+    drawAim();
     drawBoof();
     drawFigure();
+    drawFlight();
     drawSpill();
     drawBursts();
     drawRain();
@@ -1226,7 +1919,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const pause = () => {
     if (state !== 'running') return;
     state = 'paused';
-    showCard('A pause.', 'He holds the pie very still. The city waits, politely.', 'Carry on');
+    showCard('A pause.', 'The pie is held very still. The city waits, politely.', 'Carry on');
+    const home = returnAnchor();
+    if (home) cardLinks?.replaceChildren(home);
     say('Paused.');
   };
   const resume = () => {
@@ -1245,8 +1940,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const steering = state === 'running' || root.contains(document.activeElement);
     if ((key === 'ArrowLeft' || key === 'a' || key === 'A') && steering) { event.preventDefault(); step(-1); }
     else if ((key === 'ArrowRight' || key === 'd' || key === 'D') && steering) { event.preventDefault(); step(1); }
+    else if ((key === 'ArrowUp' || key === 'w' || key === 'W' || key === ' ') && state === 'running') { event.preventDefault(); throwSlice(); }
     else if (key === ' ' || key === 'Enter') {
       if (!root.contains(document.activeElement) && document.activeElement !== document.body) return;
+      if (event.target.closest?.('a, button')) return;
       event.preventDefault();
       if (state === 'paused') resume();
       else if (state === 'running') pause();
@@ -1260,14 +1957,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     step(event.clientX - box.left < box.width / 2 ? -1 : 1);
   };
   let touchX = null;
-  const onTouchStart = (event) => { touchX = event.touches[0]?.clientX ?? null; };
+  let touchY = null;
+  const onTouchStart = (event) => {
+    touchX = event.touches[0]?.clientX ?? null;
+    touchY = event.touches[0]?.clientY ?? null;
+  };
   const onTouchEnd = (event) => {
     const endX = event.changedTouches[0]?.clientX;
-    if (touchX != null && endX != null && Math.abs(endX - touchX) > 28) {
+    const endY = event.changedTouches[0]?.clientY;
+    if (touchY != null && endY != null && touchY - endY > 34 && Math.abs(endX - touchX) < touchY - endY) {
+      event.preventDefault();
+      throwSlice();   // a swipe up throws
+    } else if (touchX != null && endX != null && Math.abs(endX - touchX) > 28) {
       event.preventDefault();
       step(endX < touchX ? -1 : 1);
     }
     touchX = null;
+    touchY = null;
   };
   const onVisibility = () => { if (document.hidden) pause(); };
   const onAction = () => {
@@ -1280,6 +1986,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   canvas.addEventListener('touchend', onTouchEnd);
   left?.addEventListener('click', () => step(-1));
   right?.addEventListener('click', () => step(1));
+  root.querySelector('[data-pie-throw]')?.addEventListener('click', () => {
+    if (state === 'title' || state === 'over') start();
+    else throwSlice();
+  });
   cardAction.addEventListener('click', onAction);
   card.addEventListener('click', (event) => { if (event.target === card && (state === 'title' || state === 'over')) start(); });
   document.addEventListener('keydown', onKey);
@@ -1302,7 +2012,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   paintBest();
   paintSound();
-  showCard('Someone is destined to spill exactly one pie.', 'Nobody has said who. Through the lanes of Bonk City, someone in a hat is carrying one, level, in both hands. It is not always the same someone.', 'Carry the pie');
+  // Found in the story? Say where the carry begins.
+  const entry = (() => {
+    try { return segueFor(new URLSearchParams(window.location.search).get('scene')); } catch { return null; }
+  })();
+  showCard('Someone is destined to spill exactly one pie.',
+    entry && from
+      ? `From ${/\/book\/chapter\/(\d{2})\//.test(from) ? chapterWords(Number(/\/book\/chapter\/(\d{2})\//.exec(from)[1])) : describeReturn(from)}: someone in a hat is carrying one, level, through ${entry.place}. It is not always the same someone.`
+      : 'Nobody has said who. Through the lanes of Bonk City, someone in a hat is carrying one, level, in both hands. It is not always the same someone.',
+    entry ? entry.door : 'Carry the pie');
+  if (from) {
+    const home = returnAnchor();
+    if (home) cardLinks?.replaceChildren(home);
+  }
   root.classList.add('is-ready');
   fit();
 
