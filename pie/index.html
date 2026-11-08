@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_07.A" data-cache-context="pie" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Exactly One Pie · Lore.Land</title>
+  <meta name="description" content="Someone is destined to spill exactly one pie. A small game from Lore.Land: carry one pie, level, up the lanes of Bonk City, stepping across a city that streams the other way.">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="canonical" href="https://lore.land/pie/">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Exactly One Pie · Lore.Land">
+  <meta property="og:description" content="Someone is destined to spill exactly one pie. Carry it as far as you can.">
+  <meta property="og:url" content="https://lore.land/pie/">
+  <meta property="og:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="628">
+  <meta property="og:image:alt" content="LORE . LAND in gold capitals over a dark teal lake at night; a bare sapling stands on a small island beneath a gold seed-bud sigil.">
+  <meta property="og:site_name" content="Lore.Land">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Exactly One Pie · Lore.Land">
+  <meta name="twitter:description" content="Someone is destined to spill exactly one pie. Carry it as far as you can.">
+  <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <script>
+    /* The cover the binder put on this copy (home/bindery.mjs), before first paint. */
+    try {
+      const covers = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
+      const asCover = { rag: 'paper', glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' };
+      const q = new URLSearchParams(location.search);
+      const story = q.get('story') === 'mine' ? {} : JSON.parse(sessionStorage.getItem('lore.story.v1') || '{}') || {};
+      let cover = asCover[q.get('binding')] || asCover[story.binding] || localStorage.getItem('lore.monument.theme');
+      if (!covers.includes(cover)) {
+        const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+        cover = asCover[nook.binding] || '';
+      }
+      if (cover) document.documentElement.dataset.theme = cover;
+    } catch { /* the default cover */ }
+  </script>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_06.E&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_07.A&ctx=pie:game">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.A"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_07.A"></script>
+</head>
+<body data-surface="monument" data-presence="threshold" data-current-scene="pie">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/almanac/">Almanac</a>
+        <a href="/scriptorium/">Scriptorium</a>
+        <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="hub-main pie-main">
+      <section class="pie-stage" aria-labelledby="pie-title">
+        <div class="pie-copy">
+          <p class="hub-eyebrow">A small game · the lanes of Bonk City</p>
+          <h1 id="pie-title">Exactly One Pie</h1>
+          <p>Someone is destined to spill exactly one pie. The prophecy has been very clear about the number and no help at all about the name.</p>
+          <p>Through the lanes of Bonk City, a figure in a hat is carrying one, level, in both hands. The city streams down at him: bronze posts, flour sacks, pane-snails, feast clerks with their DAMAGE slips. He does not go the way the city goes. He steps across it, a lane at a time.</p>
+          <p class="pie-whisper">The prophecy always holds. What changes is how far he carries it.</p>
+          <dl class="pie-how">
+            <div><dt>Step</dt><dd>← → or A D · tap either side of the lanes · swipe</dd></div>
+            <div><dt>Mind the pie</dt><dd>Every step tilts it, steps in a hurry most of all; puddles slip it. Let it settle.</dd></div>
+            <div><dt>Boof</dt><dd>Now and then she crosses the lanes on her own business. Brush past her and the pie steadies.</dd></div>
+            <div><dt>Pause</dt><dd>Space or Esc</dd></div>
+          </dl>
+          <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
+          <p class="pie-doors"><a href="/book/chapter/15/">Read where the city decides who will spill it →</a> <a href="/book/chapter/14/#the-hat-above-the-furrow">See the hat first →</a></p>
+        </div>
+
+        <div class="pie-cabinet" data-pie-game>
+          <div class="pie-screen">
+            <canvas width="360" height="560" role="img" aria-label="Exactly One Pie: a figure in a hat carries a pie up five lanes of Bonk City while obstacles come down them"></canvas>
+            <div class="pie-card" data-pie-card>
+              <p class="pie-card-title" data-pie-card-title></p>
+              <p class="pie-card-line" data-pie-card-line></p>
+              <button type="button" class="pie-card-action" data-pie-card-action>Carry the pie</button>
+            </div>
+            <div class="pie-meter" data-pie-meter aria-hidden="true"><span></span></div>
+          </div>
+          <div class="pie-steps">
+            <button type="button" class="pie-step" data-pie-step="-1" aria-label="Step left">◀ step</button>
+            <button type="button" class="pie-step" data-pie-step="1" aria-label="Step right">step ▶</button>
+          </div>
+          <p class="visually-hidden" data-pie-live role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="hub-footer">
+      <p>Raised by <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a> · your furthest carry lives in this browser</p>
+      <p class="hub-footer-note">Story first · process in the grain · marks stay marked</p>
+    </footer>
+  </div>
+</body>
+</html>

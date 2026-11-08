@@ -40,6 +40,7 @@ export default defineConfig({
                 zine: resolve(__dirname, 'zine/index.html'),
                 folios: resolve(__dirname, 'folios/index.html'),
                 almanac: resolve(__dirname, 'almanac/index.html'),
+                pie: resolve(__dirname, 'pie/index.html'),
                 // SW precaches offline.html — it must exist in dist or install rejects
                 offline: resolve(__dirname, 'book/pwa/offline.html'),
                 ...chapterInputs,

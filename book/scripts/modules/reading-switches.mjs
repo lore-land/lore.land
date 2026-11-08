@@ -20,6 +20,7 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_05.B';
+import { visitSwitches, dropSwitch } from './story-directions.mjs?v=2026_11_06.F';
 import { chapterPath } from './chapter-links.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
@@ -402,7 +403,8 @@ async function showReturnNotes(state, map) {
 
 export function initReadingSwitches({ announce } = {}) {
   const state = resolveState();
-  let map = resolvedMap(state);
+  // A link's ?with= / ?without= (story-directions.mjs) hold for the visit; only the reader's own are saved.
+  let map = visitSwitches(resolvedMap(state));
   applySwitches(map);
   persist(state);
 
@@ -472,7 +474,8 @@ export function initReadingSwitches({ announce } = {}) {
       input.checked = map[entry.id] === 'on';
       input.addEventListener('change', () => {
         state.choices[entry.id] = input.checked ? 'on' : 'off';
-        map = resolvedMap(state);
+        dropSwitch(entry.id);
+        map = visitSwitches(resolvedMap(state));
         applySwitches(map);
         persist(state);
         react();

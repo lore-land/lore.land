@@ -26,9 +26,15 @@
  *   lore:telling {node, index}   a reader turned one phrase; it holds until the clock is dialed
  *   lore:stage-clock {at}        the hour dial set the page's clock (a Date, 'canon', or null for now)
  * and every turn is told back as lore:told {node, index, by} (clock, reader, dial).
+ *
+ * Story directions (story-directions.mjs): ?edition=7 gives every phrase in
+ * the book that edition's telling — no clock, the same words for everyone
+ * — and ?tell=kitchen-smell.3 pins one phrase on this page, as if a reader
+ * had turned it there.
  */
 import { loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
-import { readStage } from './stage-directions.mjs?v=2026_11_06.D';
+import { readStage } from './stage-directions.mjs?v=2026_11_06.F';
+import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_06.F';
 
 const PERIOD = Object.freeze({ minute: 60_000, hour: 3_600_000, day: 86_400_000 });
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -66,13 +72,20 @@ export function initLiving({ chapterData } = {}) {
 
   const stage = readStage();
   const pinned = stage.at instanceof Date ? stage.at : null;
+  const edition = readStory().edition || null;
+  const tells = readTells();
   let dial = null; // the hour dial's clock (tellings.mjs): a Date, 'canon', or null for the page's own
   const on = () => {
     if (dial === 'canon') return false;
     if (dial instanceof Date) return true;
     if (stage.phrases === 'still' || stage.at === 'canon') return false;
-    if (stage.phrases === 'turn' || pinned) return true;
+    if (stage.phrases === 'turn' || pinned || edition) return true;
     return root.getAttribute('data-switch-living') === 'on';
+  };
+  /* The telling a slot shows now: the dial's hour, else the edition's, else the clock's. */
+  const tellingFor = (slot, now) => {
+    if (edition && !(dial instanceof Date)) return slot.variants[editionIndex(edition, salt, slot.name, slot.variants.length)];
+    return variantFor(slot.name, slot.clock, slot.variants, now, salt);
   };
   const clockNow = () => (dial instanceof Date ? dial : pinned) || new Date();
   // Stage directions turn phrases on without touching the reader's switch; the glints follow.
@@ -121,7 +134,7 @@ export function initLiving({ chapterData } = {}) {
 
   const schedule = () => {
     clearTimeout(timer);
-    if (pinned || dial) return; // a pinned or dialed clock does not tick
+    if (pinned || dial || edition) return; // a pinned or dialed clock, or an edition, does not tick
     timer = setTimeout(() => tick({ animate: true }), PERIOD.minute - (Date.now() % PERIOD.minute) + 40);
   };
 
@@ -134,11 +147,12 @@ export function initLiving({ chapterData } = {}) {
   const tick = ({ animate = false, band = animate, by = 'clock' } = {}) => {
     if (!on()) return;
     const now = clockNow();
-    // The moment the phrases show, for "Copy stage link" (scene-light.mjs).
-    root.dataset.stageClock = new Date(Math.floor(now.getTime() / PERIOD.minute) * PERIOD.minute).toISOString();
+    // The moment the phrases show, for "Copy stage link" (scene-light.mjs); an edition carries its own words.
+    if (edition && !(dial instanceof Date)) delete root.dataset.stageClock;
+    else root.dataset.stageClock = new Date(Math.floor(now.getTime() / PERIOD.minute) * PERIOD.minute).toISOString();
     slots.forEach((slot) => {
       if (slot.held) return;
-      const text = variantFor(slot.name, slot.clock, slot.variants, now, salt);
+      const text = tellingFor(slot, now);
       if (text === slot.node.textContent) return;
       if (band && inReadingBand(slot.node)) {
         slot.waiting = text;
@@ -175,7 +189,9 @@ export function initLiving({ chapterData } = {}) {
     if (dial === 'canon') root.dataset.stageClock = 'canon';
     else delete root.dataset.stageClock;
     slots.forEach((slot) => {
+      if (slot.linked && by !== 'dial') return; // a link's pin outlasts the clock; only the dial clears it
       slot.held = false;
+      slot.linked = false;
       turn(slot, slot.variants[0], animate, by, animate ? ripple(slot) : 0);
     });
   };
@@ -202,7 +218,7 @@ export function initLiving({ chapterData } = {}) {
   const onStageClock = (event) => {
     const at = event.detail?.at;
     dial = at instanceof Date || at === 'canon' ? at : null;
-    slots.forEach((slot) => { slot.held = false; });
+    slots.forEach((slot) => { slot.held = false; slot.linked = false; });
     if (dial instanceof Date || staged) root.setAttribute('data-stage-phrases', 'turn');
     else root.removeAttribute('data-stage-phrases');
     if (on()) {
@@ -214,6 +230,15 @@ export function initLiving({ chapterData } = {}) {
   };
 
   const onVisible = () => { if (document.visibilityState === 'visible') tick({ animate: true }); };
+  /* ?tell= pins: those phrases open on the telling the link names, held like a reader's turn. */
+  slots.forEach((slot) => {
+    const index = tells[slot.name];
+    if (index == null || slot.variants[index] == null) return;
+    slot.held = true;
+    slot.linked = true;
+    turn(slot, slot.variants[index], false, 'reader');
+  });
+
   const watcher = new MutationObserver(apply);
   watcher.observe(root, { attributes: true, attributeFilter: ['data-switch-living'] });
   window.addEventListener('scroll', onScroll, { passive: true });

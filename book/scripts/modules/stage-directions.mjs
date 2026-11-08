@@ -16,8 +16,8 @@
  *                              light stands, its warmth and its glow
  *   &glow=0.8 &warmth=0.7 &ink=34 &grain=0.3 &edge=0.5   knobs, turned past the cue
  *   &motif=egg                 light the scene as this motif does
- *   &binding=glass             bind the book in this paper and ink for the visit:
- *                              rag, glass, salt, ember, slate or starfield
+ *   &binding=glass             the book's paper and ink — a story direction now
+ *                              (story-directions.mjs), carried for the visit
  *   &phrases=turn|still        do phrases turn with the clock on this visit
  *   &at=19:00 | &at=2026-11-13T19:00 | &at=canon
  *                              the stage clock: which words the turning phrases show
@@ -26,6 +26,8 @@
  *   &controls=off              no frame controls, for a clean automated capture
  *
  * The older ?try=living still turns phrases on (reading-switches.mjs).
+ * How the book is read across a visit — an edition, a lens, the room, the
+ * binding, switches — is story-directions.mjs; Copy stage link carries both.
  */
 
 const ASPECTS = ['story', 'square', 'card'];

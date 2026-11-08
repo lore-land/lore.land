@@ -25,8 +25,9 @@ import {
   withViewTransition
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
-import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_06.D';
-import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.E';
+import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_07.A';
+import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
+import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -488,8 +489,10 @@ function initMonumentEntrance() {
   const destroyArtifactCircuit = initArtifactCircuit();
 
   const state = {
-    // A cover chosen in a chapter's nook binds this page too, until one is chosen here.
-    theme: readPref(THEME_KEY, THEMES, coverForBinding(nookBinding())?.theme || document.documentElement.dataset.theme || 'paper'),
+    // A link's ?binding= binds the visit (story-directions.mjs); else the cover chosen here,
+    // else one chosen in a chapter's nook.
+    theme: coverForBinding(readStory().binding)?.theme
+      || readPref(THEME_KEY, THEMES, coverForBinding(nookBinding())?.theme || document.documentElement.dataset.theme || 'paper'),
     wonder: readPref(WONDER_KEY, WONDERS, document.documentElement.dataset.wonder || 'rich'),
     lighting: readPref(LIGHTING_KEY, LIGHTINGS, document.documentElement.dataset.lighting || 'raking')
   };

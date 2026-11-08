@@ -12,11 +12,14 @@
  * Stored with the reader's room (lore.nook.v1 → genre {boon,bane,bone}, and
  * lens for the dominant land); the template's head script applies both
  * before first paint. Balanced is the default: nothing is weighted.
+ * A link's ?lens= or ?genre= (story-directions.mjs) reads the visit that
+ * way without saving it; setting the lens yourself lets the link's go.
  */
 
 import { settle } from './settled.mjs?v=2026_11_05.B';
 
 import { LENSES, lensById } from './valence-lens.mjs?v=2026_09_27.A';
+import { readStory, dropStory } from './story-directions.mjs?v=2026_11_06.F';
 
 const NOOK_KEY = 'lore.nook.v1';
 const BALANCED = Object.freeze({ boon: 1 / 3, bane: 1 / 3, bone: 1 / 3 });
@@ -136,7 +139,8 @@ export function initLensControl({ announce } = {}) {
   const menu = control.querySelector('.chapter-lens-menu') || control;
   const toggle = control.querySelector('.chapter-lens-toggle');
   const current = control.querySelector('.chapter-lens-current');
-  let genre = readGenre();
+  const story = readStory();
+  let genre = story.genre ? normalizeGenre(story.genre) : readGenre();
 
   const shortName = () => {
     if (isBalanced(genre)) {
@@ -221,6 +225,7 @@ export function initLensControl({ announce } = {}) {
     genre = normalizeGenre(next);
     applyGenre(genre);
     writeNook({ genre, lens: dominant(genre) });
+    if (readStory().genre) dropStory('genre');
     render();
     if (dominant(genre) === 'boon') {
       document.querySelectorAll('main.chapter details.scene-sketch').forEach((details) => { details.open = true; });

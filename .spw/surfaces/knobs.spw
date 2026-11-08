@@ -47,6 +47,18 @@
   why_cues: "A light is named, not plotted: a link says dusk, not 20,20. Copy stage link writes the nearest cue and only the knobs a reader turned."
 }
 
+^"story_directions"{
+  .note: "How the book is read across a visit (book/scripts/modules/story-directions.mjs). Unlike stage directions they carry from chapter to chapter in the tab, until let go; they lie over the reader's own settings and are never saved as theirs unless the reader chooses Keep as mine."
+  edition: "edition=7 | edition=winter | edition=first — every turning phrase in the book takes that edition's telling, the same words for everyone who opens the link; first is the book's own"
+  reading: "lens=boon|bane|bone|balanced · genre=boon:2,bone:1"
+  room: "room=day|dusk|lamp · cozy=0.6–1.5 · texture=0–1 · binding=rag|glass|salt|ember|slate|starfield"
+  switches: "with=living,focus-line · without=wonders,sightings"
+  tellings: "tell=kitchen-smell.3,field-birds.2 — one page only: pin phrases to a telling (.1 is the book's own)"
+  let_go: "story=mine — every direction goes; the notice's Let go does the same"
+  notice: "a chapter opened with story directions says so under its title in plain words (edition winter · read as bone · lamplight), with Keep as mine and Let go; turning any control yourself drops that one direction"
+  write_back: "Copy this telling (Other tellings) writes the edition, lens, binding and every turned phrase; Copy stage link carries the visit's story with the stage"
+}
+
 ~"guards"{
   reading: "Nothing here moves text. Light, grain and edge sit over or behind the page; the words stay where they are."
   motion: "Reduced motion: no glide, no flare, no carried trail — every knob still works."

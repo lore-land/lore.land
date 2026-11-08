@@ -19,11 +19,16 @@
  * (lore.tellings.v1: {"14:kitchen-smell": [0, 2]}); the rail and the home
  * page count them against the book's total (semantic.json `tellings`).
  *
+ * Copy this telling: a link that opens the chapter with these words —
+ * every phrase turned away from the book's own (or from the edition's) is
+ * pinned with ?tell=, with the edition, lens and binding being read in.
+ *
  * living.mjs does the turning; this module asks by event (lore:telling,
  * lore:stage-clock) and listens for lore:told. Switch: `tellings` (stable, on).
  * Reduced motion: no roll, no flip; every telling is still a tap away.
  */
 import { settle } from './settled.mjs?v=2026_11_05.B';
+import { readStory, storyLink, editionIndex, describeStory } from './story-directions.mjs?v=2026_11_06.F';
 
 const HEARD_KEY = 'lore.tellings.v1';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -472,6 +477,35 @@ export function initTellings({ chapterData, announce } = {}) {
       return el('li', {}, chip);
     }));
 
+    const copy = el('button', { type: 'button', className: 'tellings-copy' }, 'Copy this telling');
+    copy.addEventListener('click', async () => {
+      const story = readStory();
+      ['room', 'cozy', 'texture', 'with', 'without'].forEach((key) => delete story[key]);
+      // The look being read in travels with the words: the lens, the binding.
+      const root = document.documentElement;
+      if (!story.genre && root.hasAttribute('data-genre-tuned')) {
+        story.genre = Object.fromEntries(['boon', 'bane', 'bone'].map((id) => [id, Number(root.style.getPropertyValue(`--w-${id}`)) || 0]));
+        if (root.dataset.lens) story.lens = root.dataset.lens;
+      }
+      if (!story.binding && root.dataset.binding) story.binding = root.dataset.binding;
+      const tells = {};
+      slots.forEach((slot) => {
+        const index = indexOf(slot);
+        const base = story.edition ? editionIndex(story.edition, chapter, slot.name, slot.variants.length) : 0;
+        if (index !== base) tells[slot.name] = index;
+      });
+      const link = storyLink({ story, tells });
+      try {
+        await navigator.clipboard.writeText(link);
+        copy.textContent = 'Telling copied';
+        setTimeout(() => { copy.textContent = 'Copy this telling'; }, 2400);
+      } catch {
+        window.prompt?.call(window, 'This telling', link);
+      }
+      const pinned = Object.keys(tells).length;
+      const what = [pinned ? `${pinned} phrase${pinned === 1 ? '' : 's'} pinned` : 'every phrase as the book has it', ...describeStory(story)];
+      settle({ sigil: '✦', title: 'This telling, as a link', detail: `Anyone who opens it reads these words: ${what.join(', ')}.`, at: copy });
+    });
     const back = el('button', { type: 'button', className: 'tellings-now' }, 'Back to now');
     const canon = el('button', { type: 'button', className: 'tellings-canon' }, 'The book’s own words');
     back.addEventListener('click', () => {
@@ -490,7 +524,7 @@ export function initTellings({ chapterData, announce } = {}) {
       el('p', { className: 'tellings-count' }),
       dial,
       el('p', { className: 'tellings-dial-note' }, 'Turn the hour: the phrases and the light follow it. Past midnight it is the next day.'),
-      el('div', { className: 'tellings-actions' }, back, canon),
+      el('div', { className: 'tellings-actions' }, back, canon, copy),
       list);
     const nav = aside.querySelector('.ebook-nav-panel');
     if (nav) nav.insertAdjacentElement('afterend', panel);

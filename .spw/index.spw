@@ -7,7 +7,7 @@
   purpose: "Long-form Spw references for chapter extension, storytelling semantics, and platform ship direction."
   ethos_bridge: "book/scripts/modules/spw-ethos.mjs"
   prose_sot: "book/content/chapters/*.json"
-  audit_active: "@spw/audits/alignment-probes-2026-11-06.spw"
+  audit_active: "@spw/audits/alignment-probes-2026-11-07.spw"
 }
 
 &surfaces{
@@ -38,7 +38,7 @@
   ethos: "PLAN.B.spw"
   shadow_chrome: "PLAN.C.spw"
   houdini_firefox: "PLAN.D.spw"
-  living_book: "PLAN.E.spw (direction + curriculum L01–L26)"
+  living_book: "PLAN.E.spw (direction + curriculum L01–L28)"
   platform_ship: "@spw/surfaces/platform.spw"
   editorial_desk: "@spw/surfaces/editorial.spw"
   atelier_production: "@spw/surfaces/atelier.spw"

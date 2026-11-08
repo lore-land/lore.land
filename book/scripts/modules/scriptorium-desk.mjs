@@ -17,10 +17,11 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.D';
-import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.D';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_06.D';
-import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.E';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.F';
+import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.F';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_07.A';
+import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.F';
+import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_06.F';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
@@ -123,12 +124,14 @@ export const SPELLBOOK = Object.freeze([
   { op: '~', example: '~[resume]', does: 'Pick up where you left off.' },
   { op: '@', example: '@05', does: 'Open a chapter. @[chapter/05]{section} opens a chamber.' },
   { op: '@', example: '@[folios]', does: 'Step over to the folio wall: pages under glass, seasoning.' },
+  { op: '@', example: '@[pie]', does: 'Exactly One Pie: carry it up the lanes of Bonk City and try not to spill it.' },
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
   { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
   { op: '?', example: '?[living]', does: 'What breathes in the book: how many phrases turn by the minute, the hour and the day.' },
   { op: '?', example: '?[tellings]', does: 'How many of the book’s other tellings you have heard.' },
+  { op: '?', example: '?[links]', does: 'What a link can carry to set the story: an edition, a lens, the room, a binding, pinned tellings.' },
   { op: '&', example: '&[thread]{motif}', does: 'Where a thread runs: every chamber that carries it. Also &[motif]{unspent-wish}, &[trope]{…}, &[lean]{bone}, &[voice]{fool}.' },
   { op: '&', example: '&[threads]', does: 'The whole weave: every thread and mark, with how far each runs.' },
   { op: '%', example: '%[read]', does: 'Count what you have read.' },
@@ -288,6 +291,9 @@ export async function initScriptoriumDesk() {
       if (/^folios?$/i.test(handle)) {
         say(op, el('p', {}, 'Stepping over to the folio wall.'));
         go('/folios/');
+      } else if (/^(pie|game|play)$/i.test(handle)) {
+        say(op, el('p', {}, 'Someone is destined to spill exactly one pie. Off to the lanes.'));
+        go('/pie/');
       } else if (home) {
         say(op, el('p', {}, 'Stepping back to the entrance.'));
         go('/');
@@ -333,6 +339,19 @@ export async function initScriptoriumDesk() {
             el('p', {}, `The book breathes in ${total} places: ${slots.minute} by the minute, ${slots.hour} by the hour, ${slots.day} by the day. The words you read first are always its own.`),
             el('p', {}, on ? 'Phrases turn with the clock for you.' : 'Phrases hold still for you. =[living]{on} lets them turn; for one visit, open a chapter with ?phrases=turn, or ?at=19:00 to read the words of that hour.')));
         }
+      } else if (handle === 'links' || handle === 'story') {
+        const story = readStory();
+        const row = (code, words) => el('li', {}, el('code', {}, code), ` ${words}`);
+        say(op, el('div', {},
+          el('p', {}, hasStory(story) ? `This visit is following a link: ${describeStory(story).join(', ')}. Add ?story=mine to any chapter to let it go.` : 'Any chapter link can carry how the book is read, for a whole visit:'),
+          el('ul', { className: 'spell-reply-list' },
+            row('?edition=7', 'every turning phrase takes edition 7’s telling, the same for everyone (any word works: ?edition=winter; ?edition=first is the book’s own)'),
+            row('?lens=bone', 'or ?genre=boon:2,bone:1, read as one land or a blend'),
+            row('?room=lamp', 'daylight, dusk or lamplight; ?cozy=0.8 and ?texture=0.2 for the page itself'),
+            row('?binding=slate', 'rag, glass, salt, ember, slate or starfield'),
+            row('?with=living', 'and ?without=wonders, switches for the visit'),
+            row('?tell=kitchen-smell.3', 'one page: pin a phrase to a telling (.1 is the book’s own)')),
+          el('p', {}, 'Other tellings in any chapter has Copy this telling, which writes one for you.')));
       } else if (handle === 'tellings' || handle === 'told') {
         const totals = await loadTellingTotals();
         const heard = heardCount(readHeard());

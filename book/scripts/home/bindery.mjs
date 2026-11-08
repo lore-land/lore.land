@@ -18,7 +18,11 @@
  * here binds the chapters too (lore.nook.v1 binding, reading-nook.mjs), and
  * a cover chosen in a chapter's nook binds this page (lore.monument.theme):
  * one book, one binding. The top bar only says what it is bound in.
+ * A link's ?binding= (story-directions.mjs) binds the visit until a cover is
+ * chosen here.
  */
+
+import { readStory, dropStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
 
 export const COVERS = Object.freeze([
   { theme: 'paper', binding: 'rag', words: 'rag', name: 'Rag paper', from: 'from the mill', says: 'Rag, then. It was a miller’s shirt once; it has heard worse than anything in here.' },
@@ -130,7 +134,11 @@ export function initBindery({ state, choose, announce } = {}) {
     const option = CHOICES[name].find((entry) => entry.value === value);
     if (!option || state[name] === value) return;
     choose(name, value);
-    if (name === 'theme') bindChapters(option);
+    if (name === 'theme') {
+      bindChapters(option);
+      // Choosing a cover here outlasts a link's: the visit lets its binding go.
+      if (readStory().binding) dropStory('binding');
+    }
     paint();
     roll(section.querySelector(`.bindery-phrase[data-choice="${name}"]`));
     says.textContent = option.says;

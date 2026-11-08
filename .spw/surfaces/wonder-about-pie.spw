@@ -63,6 +63,18 @@
   extend: "a later sighting adds no strokes — nine is whole. New sightings can redraw (a moved line, a missing dot) once the story earns a choice."
 }
 
+^"exactly_one_pie"{
+  .note: "A small game at /pie/ (book/scripts/home/pie-game.mjs, book/styles/home/pie.css; PLAN.E L28). The prophecy as a thing you can hold."
+  premise: "Someone is destined to spill exactly one pie. A figure in a hat carries one, level, up the lanes of Bonk City while the city streams down at him."
+  orthogonal: "He never goes the way the scene goes; he steps across it, one lane-length at a time — a line segment, with the ghost of where he was (story-boonhonk.spw#trope_physics orthogonal_motion, quest)"
+  drawing: "always the same plain ink drawing, in every binding: one circle, one rectangle, four lines, two dots; the hat lags behind him and never falls, not even at the spill"
+  wobble: "every step tilts the pie, steps in a hurry most; puddles slip it; it settles if left alone — feeling as tilt and spacing, not as a face"
+  boof: "crosses the lanes on her own business now and then; brushing past her steadies the pie. She is the materially specific animal beside the drawn figure; she works for the land, and helps in passing"
+  cuts: "silent-film title cards between places: the parcel gate in a storm; the lanes, which curve for everyone; the plaza, where the pie holds court; the long table, where a second place is set — the empty place is the only way through"
+  the_end: "always exactly one spill; the card says EXACTLY ONE., what the land would say about the cause, and how far he carried it. The prophecy holds; the distance is the reader's"
+  naming: "he is never named on the page; the game calls him a figure in a hat"
+}
+
 ?"open"[
   "Who receives the good coincidence the small wish owed a stranger?"
   "What does the hat remember?"

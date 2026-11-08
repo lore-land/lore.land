@@ -57,7 +57,12 @@
       /* The cover the binder put on this copy (home/bindery.mjs), before first paint:
          chosen here, else the binding a chapter's Reading nook chose. */
       const covers = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
-      let cover = localStorage.getItem('lore.monument.theme');
+      const asCover = { rag: 'paper', glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' };
+      /* A link's ?binding= (story-directions.mjs) binds the visit, here as in the chapters. */
+      const q = new URLSearchParams(location.search);
+      const story = q.get('story') === 'mine' ? {} : JSON.parse(sessionStorage.getItem('lore.story.v1') || '{}') || {};
+      const told = asCover[q.get('binding')] || asCover[story.binding];
+      let cover = told || localStorage.getItem('lore.monument.theme');
       if (!covers.includes(cover)) {
         const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
         cover = { glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' }[nook.binding] || '';
@@ -77,7 +82,7 @@
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.C&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_09_27.C&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_06.E"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.A"></script>
   <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_06.E">
   <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_05.C">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
@@ -280,6 +285,7 @@
               <div class="wonder-sketch" data-sightings-sketch hidden></div>
               <a href="/book/chapter/14/#the-hat-above-the-furrow">Stand at the furrow in Chapter Fourteen →</a>
               <a href="/book/chapter/15/#three-receipts">Read the three records in Chapter Fifteen →</a>
+              <a href="/pie/">Carry the pie he is carrying, and try not to spill it →</a>
             </div>
           </details>
         </div>

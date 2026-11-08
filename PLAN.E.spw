@@ -201,6 +201,18 @@
     increment: "the home page's theme leaves the top bar for a scene: the binder at the folio house by the parcel gate keeps six covers on pegs, and one sentence holds every choice — She binds it in [rag], sets the lamp [low, at a slant], and leaves the shutters [open] — each phrase turned like a telling, each choice answered in her own words; the top bar only says what the copy is bound in"
     done_when: "no settings form on any page with the home top bar; the cover chosen at the folio house binds the chapters and a cover chosen in a chapter's nook binds the home page (one book, one binding); the home page wears its cover before first paint"
   }
+  ^lesson[L27]{
+    #name: "a link can set the story"
+    prerequisites: [L21, L24, L25]
+    increment: "story directions: ?edition= (every turning phrase in the book takes that edition's telling, the same for everyone; any word names an edition, first is the book's own), ?lens= / ?genre=, ?room= ?cozy= ?texture=, ?binding=, ?with= / ?without= — carried through the tab's visit, never saved as the reader's own; ?tell=slot.N pins a phrase on one page; ?story=mine lets them go. A notice under the title says what a link set, with Keep as mine and Let go; turning a control yourself drops that one direction; Copy this telling writes a link for the words on the page"
+    done_when: "the head script and story-directions.mjs read the same parameters; no story direction ever reaches localStorage except through Keep as mine; stage links carry the visit's story; the desk's ?[links] lists the vocabulary"
+  }
+  ^lesson[L28]{
+    #name: "the prophecy as a thing you can hold"
+    prerequisites: [L22, L25]
+    increment: "Exactly One Pie (/pie/): an obstacle-dodging game in which a figure in a hat carries one pie up Bonk City's lanes, stepping across the scene at a right angle while it streams at him; the pie wobbles with hurried steps and puddles, Boof steadies it in passing, scenes cut like silent-film cards, and every run ends in exactly one spill"
+    done_when: "the game reads the trope physics (orthogonal motion, line segments, a hat that never falls, feeling as tilt) rather than borrowing a genre's look; it wears the reader's binding; keyboard, tap, swipe and buttons all play it; it never names him"
+  }
   ^lesson[L18]{
     #name: "an engine for the next book"
     prerequisites: [L08, L13]
@@ -239,7 +251,8 @@
     "fixed overlays live in the top layer (body carries perspective)",
     "story-voice elements swallow bubbling clicks: bind interactive marks directly",
     "one module owns a mutable surface (living.mjs turns slots); others ask by event (lore:telling, lore:stage-clock) and listen (lore:told)",
-    "a dark room is variables, not selectors: --room-* with the lamp's values as fallback"
+    "a dark room is variables, not selectors: --room-* with the lamp's values as fallback",
+    "a link's directions lie over the reader's own settings (shown = own + visit); only the reader's own are ever saved"
   ]
 }
 
@@ -258,6 +271,8 @@
   i5b: { lessons: [L19, L20, L21, L22], release: "2026_11_06.B", note: "at the table; hold the light; frame it; the sayings" }
   i5c: { lessons: [L23, L24, L25], release: "2026_11_06.D", note: "begin again; other tellings and the hour dial; bindings; the page and rail set as a pair on wide screens" }
   i5d: { lessons: [L26], release: "2026_11_06.E", note: "the binder at the folio house: the home page's look as a scene" }
+  i5e: { lessons: [L27], release: "2026_11_06.F", note: "story directions: a link sets an edition, a lens, the room, the binding, the switches, and pins tellings" }
+  i5f: { lessons: [L28], release: "2026_11_07.A", note: "Exactly One Pie: the prophecy as a small game" }
   i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
 ]
 

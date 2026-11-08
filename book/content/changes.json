@@ -2,6 +2,23 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.A",
+      "date": "2026-11-07",
+      "notes": [
+        "Exactly One Pie, a small game: someone is destined to spill exactly one pie, and a figure in a hat is carrying one up the lanes of Bonk City. Step across the city as it streams at you; hurry and the pie tilts; Boof steadies it if you pass her. Find it under the hat on the home page, or at the desk with @[pie]."
+      ]
+    },
+    {
+      "release": "2026_11_06.F",
+      "date": "2026-11-06",
+      "notes": [
+        "A link can set how the story is read for your whole visit: ?edition=winter gives every changing phrase in the book one edition's words, the same for anyone who opens it; ?lens=bone, ?room=lamp, ?binding=slate and ?without=wonders set the rest.",
+        "A chapter opened from such a link says so under its title, with Keep as mine and Let go. Nothing a link sets becomes yours unless you keep it.",
+        "Other tellings has Copy this telling: a link that opens the chapter with exactly the words you turned to.",
+        "At the desk, ?[links] lists everything a link can carry."
+      ]
+    },
+    {
       "release": "2026_11_06.E",
       "date": "2026-11-06",
       "notes": [

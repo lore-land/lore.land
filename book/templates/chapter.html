@@ -66,10 +66,35 @@
       if (['stone', 'opal', 'amber'].includes(smoothStyle)) document.documentElement.dataset.eggStyle = smoothStyle;
       if (eggStyle === 'thorn') localStorage.setItem('lore-egg-style-v1', 'amber');
     } catch { /* Storage is optional. */ }
+    { /* one block, so nothing here leaks into the page's global scope */
+    /* Story directions (modules/story-directions.mjs): a link can set how
+       the book is read for a visit, carried through this tab until let go.
+       Same rules as parseStory(); this copy runs before first paint. */
+    let story = {};
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('story') !== 'mine') story = JSON.parse(sessionStorage.getItem('lore.story.v1') || '{}') || {};
+      const lens = q.get('lens');
+      if (['boon', 'bane', 'bone', 'balanced'].includes(lens)) story.genre = lens === 'balanced' ? { boon: 1, bane: 1, bone: 1 } : { [lens]: 1 };
+      const weights = {};
+      (q.get('genre') || '').toLowerCase().replace(/(boon|bane|bone)\s*[:=]?\s*(\d*\.?\d+)?/g, (_, id, n) => { weights[id] = (weights[id] || 0) + (n ? Number(n) : 1); return ''; });
+      if (Object.keys(weights).length) story.genre = weights;
+      if (['day', 'dusk', 'lamp'].includes(q.get('room'))) story.room = q.get('room');
+      const cozy = Number(q.get('cozy')), texture = Number(q.get('texture'));
+      if (q.has('cozy') && cozy >= 0.6 && cozy <= 1.5) story.cozy = cozy;
+      if (q.has('texture') && texture >= 0 && texture <= 1) story.texture = texture;
+      if (q.get('binding')) story.binding = q.get('binding');
+      ['with', 'without'].forEach((key) => { if (q.get(key)) story[key] = q.get(key).split(',').map((id) => id.trim()); });
+    } catch (error) { story = {}; }
     /* The reading nook (modules/reading-nook.mjs) before first paint:
        coziness and texture are the room, and the room should not move. */
     try {
-      const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+      const nook = Object.assign(JSON.parse(localStorage.getItem('lore.nook.v1') || '{}'),
+        story.genre ? { genre: story.genre } : {},
+        story.room ? { light: { day: 0, dusk: 0.5, lamp: 1 }[story.room] } : {},
+        story.cozy != null ? { cozy: story.cozy } : {},
+        story.texture != null ? { texture: story.texture } : {},
+        story.binding ? { binding: story.binding } : {});
       const root = document.documentElement;
       if (Number.isFinite(nook.cozy)) root.style.setProperty('--cozy', String(nook.cozy));
       const texture = Number.isFinite(nook.texture) ? nook.texture : 0.6;
@@ -77,10 +102,9 @@
       root.dataset.nookTexture = texture < 0.15 ? 'plain' : texture > 0.8 ? 'lively' : 'soft';
       const light = Number.isFinite(nook.light) ? nook.light : 0;
       root.dataset.nookLight = light < 0.25 ? 'day' : light < 0.75 ? 'dusk' : 'lamp';
-      /* The binding (reading-nook.mjs BINDINGS): ?binding= for one visit, else the reader's own. */
+      /* The binding (reading-nook.mjs BINDINGS): a story direction for the visit, else the reader's own. */
       const tones = { glass: 'light', salt: 'light', ember: 'light', slate: 'dark', starfield: 'dark' };
-      const staged = new URLSearchParams(location.search).get('binding');
-      const binding = tones[staged] ? staged : tones[nook.binding] ? nook.binding : '';
+      const binding = tones[nook.binding] ? nook.binding : '';
       if (binding) {
         root.dataset.binding = binding;
         root.dataset.bindingTone = tones[binding];
@@ -115,9 +139,11 @@
         localStorage.setItem('lore.switches.v1', JSON.stringify(sw));
       }
       const tried = (new URLSearchParams(location.search).get('try') || '').split(',').filter(Boolean);
-      const resolved = Object.assign({}, sw.resolved, Object.fromEntries(tried.map((id) => [id, 'on'])));
+      const resolved = Object.assign({}, sw.resolved, Object.fromEntries(tried.map((id) => [id, 'on'])),
+        Object.fromEntries((story.with || []).map((id) => [id, 'on'])), Object.fromEntries((story.without || []).map((id) => [id, 'off'])));
       Object.entries(resolved).forEach(([id, value]) => { if (value === 'on') root.setAttribute('data-switch-' + id, 'on'); });
     } catch (error) { /* storage blocked: defaults */ }
+    }
   </script>
   <script>
     /* Page turns read forward or back: later chapter slides in from the

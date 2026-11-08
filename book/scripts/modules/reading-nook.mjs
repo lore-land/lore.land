@@ -8,7 +8,11 @@
  *   binding   data-binding    rag · glass · salt · ember · slate · starfield
  *             the book's paper and ink, chosen from a shelf of spines (PLAN.E L25);
  *             lamplight takes a light binding into the dark, the dark ones keep
- *             their own night. ?binding=glass binds it for one visit.
+ *             their own night.
+ *
+ * A link's story directions (story-directions.mjs: ?room=lamp, ?cozy=,
+ * ?texture=, ?binding=) lie over the reader's own room for the visit and are
+ * never saved as theirs; turning a dial drops that one direction.
  *
  * State lives in localStorage (lore.nook.v1). The chapter template's head
  * script applies coziness and texture before first paint so a returning
@@ -17,6 +21,7 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_05.B';
+import { readStory, dropStory } from './story-directions.mjs?v=2026_11_06.F';
 
 const NOOK_KEY = 'lore.nook.v1';
 const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0, binding: 'rag' });
@@ -89,13 +94,20 @@ export function lightBand(value) {
   return value < 0.25 ? 'day' : value < 0.75 ? 'dusk' : 'lamp';
 }
 
-/** The binding on show: a stage direction (?binding=) for this visit, else the reader's own. */
+/** The binding on show: the room as shown (the reader's own, with any story direction over it). */
 function shownBinding(state) {
-  try {
-    const staged = new URLSearchParams(window.location.search).get('binding');
-    if (BINDINGS.some((binding) => binding.id === staged)) return staged;
-  } catch { /* no URL */ }
   return bindingFor(state.binding).id;
+}
+
+/* A link's story directions, as nook values; and which direction each dial answers to. */
+const STORY_FOR = Object.freeze({ light: 'room', cozy: 'cozy', texture: 'texture', binding: 'binding' });
+function visitRoom(story) {
+  const visit = {};
+  if (story.room) visit.light = { day: 0, dusk: 0.5, lamp: 1 }[story.room];
+  if (story.cozy != null) visit.cozy = story.cozy;
+  if (story.texture != null) visit.texture = story.texture;
+  if (BINDINGS.some((binding) => binding.id === story.binding)) visit.binding = story.binding;
+  return visit;
 }
 
 /** Same writes the template's head script makes, kept in one place here. */
@@ -260,9 +272,16 @@ function createHearth() {
 /* ─── Panel ─────────────────────────────────────────────────────────── */
 
 export function initReadingNook({ announce } = {}) {
-  const state = readNook();
+  const state = readNook();   // the reader's own room: the only thing ever saved
   DIALS.forEach((dial) => { state[dial.id] = clampDial(dial, state[dial.id]); });
-  applyRoom(state);
+  const visit = visitRoom(readStory());   // a link's directions, for this visit
+  const shown = () => ({ ...state, ...visit });
+  const yieldVisit = (key) => {
+    if (!(key in visit)) return;
+    delete visit[key];
+    dropStory(STORY_FOR[key]);
+  };
+  applyRoom(shown());
 
   const aside = document.querySelector('aside');
   let hearth = null;
@@ -299,18 +318,19 @@ export function initReadingNook({ announce } = {}) {
     input.min = String(dial.min);
     input.max = String(dial.max);
     input.step = String(dial.step);
-    input.value = String(state[dial.id]);
-    input.setAttribute('aria-valuetext', wordFor(dial, state[dial.id]));
+    input.value = String(shown()[dial.id]);
+    input.setAttribute('aria-valuetext', wordFor(dial, shown()[dial.id]));
 
     input.addEventListener('input', () => {
       const value = clampDial(dial, input.value);
       state[dial.id] = value;
+      yieldVisit(dial.id);
       readout.textContent = wordFor(dial, value);
       input.setAttribute('aria-valuetext', readout.textContent);
       if (dial.id === 'hearth') {
         ensureHearth()?.set(value);
       } else {
-        applyRoom(state);
+        applyRoom(shown());
       }
     });
     input.addEventListener('change', () => {
@@ -319,7 +339,7 @@ export function initReadingNook({ announce } = {}) {
       settle({ sigil: '.', title: `${dial.label}: ${readout.textContent}`, detail: dial.effect?.(state[dial.id]) || '', at: input, region: dial.id === 'hearth' ? null : 'main.chapter' });
     });
 
-    readout.textContent = wordFor(dial, state[dial.id]);
+    readout.textContent = wordFor(dial, shown()[dial.id]);
     row.append(name, readout, input);
     panel.append(row);
   });
@@ -339,10 +359,10 @@ export function initReadingNook({ announce } = {}) {
   const says = document.createElement('p');
   says.className = 'binding-says';
   const paintShelf = () => {
-    const current = shownBinding(state);
+    const current = shownBinding(shown());
     const binding = bindingFor(current);
     shelfReadout.textContent = binding.name;
-    says.textContent = binding.says + (binding.tone !== 'dark' && lightBand(state.light) === 'lamp' ? ' Lamplight takes it into the dark.' : '');
+    says.textContent = binding.says + (binding.tone !== 'dark' && lightBand(shown().light) === 'lamp' ? ' Lamplight takes it into the dark.' : '');
     spines.querySelectorAll('.binding-spine').forEach((spine) => {
       const on = spine.dataset.binding === current;
       spine.setAttribute('aria-checked', on ? 'true' : 'false');
@@ -366,10 +386,11 @@ export function initReadingNook({ announce } = {}) {
     stamp.textContent = binding.spine;
     spine.append(stamp);
     spine.addEventListener('click', () => {
-      if (state.binding === binding.id && shownBinding(state) === binding.id) return;
+      if (state.binding === binding.id && shownBinding(shown()) === binding.id) return;
       state.binding = binding.id;
+      yieldVisit('binding');
       rebind(() => {
-        // A chosen binding outlasts a stage direction's: drop ?binding= from this page's address.
+        // A chosen binding outlasts a link's: drop ?binding= from this page's address.
         try {
           const url = new URL(window.location.href);
           if (url.searchParams.has('binding')) {
@@ -377,7 +398,7 @@ export function initReadingNook({ announce } = {}) {
             window.history.replaceState(window.history.state, '', url);
           }
         } catch { /* keep the address */ }
-        applyRoom(state);
+        applyRoom(shown());
         paintShelf();
       });
       writeNook(state);
@@ -409,6 +430,7 @@ export function initReadingNook({ announce } = {}) {
   reset.textContent = 'Back to the usual room';
   reset.addEventListener('click', () => {
     Object.assign(state, DEFAULTS);
+    Object.keys(STORY_FOR).forEach(yieldVisit);
     panel.querySelectorAll('.reading-nook-dial').forEach((row) => {
       const dial = DIALS.find((entry) => entry.id === row.dataset.dial);
       const input = row.querySelector('input');
@@ -416,7 +438,7 @@ export function initReadingNook({ announce } = {}) {
       readouts[dial.id].textContent = wordFor(dial, state[dial.id]);
     });
     rebind(() => {
-      applyRoom(state);
+      applyRoom(shown());
       paintShelf();
     });
     hearth?.set(0);

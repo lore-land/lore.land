@@ -29,8 +29,9 @@
  * Reduced motion: no gliding, no flare; every knob still works.
  * Switch: `scene-light` (default on).
  */
-import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.D';
-import { cueForHour } from './tellings.mjs?v=2026_11_06.D';
+import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.F';
+import { cueForHour } from './tellings.mjs?v=2026_11_06.F';
+import { readStory, storyParams } from './story-directions.mjs?v=2026_11_06.F';
 
 const KNOBS_URL = '/book/content/world/knobs.json';
 const NUMERIC = ['x', 'y', 'glow', 'warmth', 'ink', 'grain', 'edge'];
@@ -126,7 +127,10 @@ export function initSceneLight({ chapterData, announce } = {}) {
     };
   };
   const copyStage = async (button, extra) => {
-    const link = stageLink(currentStage(extra));
+    // The visit's story directions (an edition, a lens…) ride along with the stage's.
+    const here = new URL(window.location.href);
+    storyParams(readStory(), here.searchParams);
+    const link = stageLink(currentStage(extra), here.toString());
     try {
       await navigator.clipboard.writeText(link);
       button.textContent = 'Stage link copied';
