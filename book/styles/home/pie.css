@@ -1343,3 +1343,481 @@ body[data-surface='monument'] .pie-main {
     grid-column: 2;
   }
 }
+
+/* ─── Under the screen: sound, the story beside it, zen, fullscreen ───── */
+.pie-tools {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.pie-tools .pie-sound {
+  justify-self: auto;
+}
+
+.pie-tool {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.pie-tool[aria-pressed='true'] {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 14%, var(--hub-panel));
+}
+
+/* Story off: the narrative beside the screen folds away. Zen: nothing pops up. */
+.pie-voyage.is-story-off .pie-flow {
+  display: none;
+}
+
+.pie-voyage.is-zen .pie-caption {
+  display: none;
+}
+
+/* ─── The start card: carry, or from the beginning with introductions ── */
+.pie-card-modes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.pie-card-modes[hidden] {
+  display: none;
+}
+
+.pie-card-mode {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 45%, var(--hub-line));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.pie-card-mode.is-active {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 18%, transparent);
+}
+
+/* ─── A card, turned (pie-cards.mjs) ──────────────────────────────────
+ * Over the screen while the carry waits; in the deck below, smaller. The
+ * edge says what it is: gold a character, red a knock, blue a slip, teal
+ * something to go toward, violet a power-up. */
+.pie-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  padding: 0.8rem;
+  overflow: auto;
+  background: color-mix(in srgb, var(--hub-paper) 62%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.pie-intro[hidden] {
+  display: none;
+}
+
+.pie-cardface {
+  --card-edge: var(--hub-gold);
+  display: grid;
+  justify-items: start;
+  gap: 0.35rem;
+  width: min(100%, 22rem);
+  padding: 0.85rem 0.95rem 0.95rem;
+  border: 1px solid var(--hub-line);
+  border-top: 4px solid var(--card-edge);
+  border-radius: 0.8rem;
+  background: var(--hub-panel);
+  box-shadow: 0 1rem 2.4rem color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  color: var(--hub-ink);
+  text-align: left;
+  animation: pie-card-turn 420ms ease-out;
+}
+
+.pie-cardface.type-knock { --card-edge: #c0392b; }
+.pie-cardface.type-slip { --card-edge: #2f6688; }
+.pie-cardface.type-friend { --card-edge: #2c6f69; }
+.pie-cardface.type-power { --card-edge: #7a3f9a; }
+
+@keyframes pie-card-turn {
+  from { transform: perspective(40rem) rotateY(70deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.pie-cardface-type {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--card-edge);
+}
+
+.pie-cardface-sprite {
+  justify-self: center;
+  width: 6rem;
+  height: 6rem;
+}
+
+.pie-cardface-name {
+  margin: 0;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+:is(.pie-cardface-story, .pie-cardface-lanes, .pie-cardface-book, .pie-cardface-moment) {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+:is(.pie-cardface-story, .pie-cardface-lanes) > span {
+  display: block;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-cardface-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.pie-cardface-chips span {
+  padding: 0.05rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--card-edge) 50%, var(--hub-line));
+  border-radius: 999px;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.64rem;
+}
+
+.pie-cardface-book {
+  color: var(--hub-muted);
+  font-style: italic;
+}
+
+.pie-cardface-moment {
+  padding: 0.35rem 0.5rem;
+  border-left: 3px solid var(--card-edge);
+  background: color-mix(in srgb, var(--card-edge) 7%, transparent);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+}
+
+.pie-cardface-qa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed var(--hub-line);
+  width: 100%;
+}
+
+.pie-cardface-qa-label {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+:is(.pie-cardface-feel, .pie-cardface-copy, .pie-deck-copy) {
+  padding: 0.12rem 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.64rem;
+  cursor: pointer;
+}
+
+.pie-cardface-feel[aria-pressed='true'] {
+  border-color: var(--card-edge);
+  background: color-mix(in srgb, var(--card-edge) 15%, transparent);
+}
+
+.pie-cardface-status,
+.pie-deck-status {
+  margin: 0;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--hub-accent-deep);
+  word-break: break-word;
+}
+
+.pie-cardface-status:empty,
+.pie-deck-status:empty {
+  display: none;
+}
+
+.pie-intro-go {
+  justify-self: end;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--hub-gold);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-gold) 18%, var(--hub-panel));
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.pie-cardface.is-compact {
+  width: 100%;
+  box-shadow: none;
+  animation: none;
+}
+
+.pie-cardface.is-compact .pie-cardface-sprite {
+  width: 4rem;
+  height: 4rem;
+}
+
+.pie-cardface.is-compact .pie-cardface-name {
+  font-size: 1.05rem;
+}
+
+/* ─── The deck ─────────────────────────────────────────────────────────── */
+.pie-deck,
+.pie-assets {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.pie-deck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-deck-slot {
+  display: grid;
+  max-width: none;
+  margin: 0;
+}
+
+.pie-cardback {
+  --card-edge: var(--hub-gold);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.25rem;
+  min-height: 9rem;
+  border: 1px dashed color-mix(in srgb, var(--card-edge) 55%, var(--hub-line));
+  border-radius: 0.8rem;
+  background: repeating-linear-gradient(135deg, transparent 0 8px, color-mix(in srgb, var(--card-edge) 6%, transparent) 8px 9px);
+  color: var(--hub-muted);
+}
+
+.pie-cardback.type-knock { --card-edge: #c0392b; }
+.pie-cardback.type-slip { --card-edge: #2f6688; }
+.pie-cardback.type-friend { --card-edge: #2c6f69; }
+.pie-cardback.type-power { --card-edge: #7a3f9a; }
+
+.pie-cardback-mark {
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 2rem;
+  color: var(--card-edge);
+}
+
+.pie-cardback-type {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pie-cardback-hint {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.pie-deck-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.8rem 0 0;
+}
+
+/* ─── The asset sheet ──────────────────────────────────────────────────── */
+.pie-assets > summary {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.8rem;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.2rem;
+}
+
+.pie-assets h3 {
+  margin: 1.2rem 0 0.5rem;
+  font-family: var(--hub-display, Georgia, serif);
+  font-weight: 400;
+}
+
+.pie-assets-grounds,
+.pie-assets-sprites {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-assets-grounds {
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+}
+
+.pie-assets-sprites {
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+}
+
+.pie-asset {
+  display: grid;
+  gap: 0.2rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+  font-size: 0.8rem;
+}
+
+.pie-asset-ground {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 360 / 560;
+  border-radius: 0.4rem;
+}
+
+.pie-asset-sprite {
+  width: 4rem;
+  height: 4rem;
+}
+
+.pie-asset strong {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.78rem;
+}
+
+.pie-asset-line {
+  font-style: italic;
+}
+
+.pie-asset-meta {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  color: var(--hub-muted);
+  line-height: 1.4;
+}
+
+.pie-assets-steps {
+  display: grid;
+  gap: 0.2rem;
+  padding-left: 1.2rem;
+}
+
+/* ─── Fullscreen: the whole voyage on the whole display ──────────────── */
+html.pie-immersive {
+  overflow: hidden;
+}
+
+.pie-voyage:is(.is-full, .is-immersive) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: clamp(0.5rem, 1.6vw, 1.2rem);
+  overflow: auto;
+  background: var(--hub-paper);
+  align-items: start;
+}
+
+.pie-voyage.is-immersive {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.pie-voyage:is(.is-full, .is-immersive) .pie-cabinet {
+  position: static;
+  max-width: min(100%, calc((100dvh - 12.5rem) * 0.643));
+  justify-self: center;
+  width: 100%;
+}
+
+@media (min-width: 62rem) {
+  .pie-voyage:is(.is-full, .is-immersive) {
+    grid-template-columns: minmax(0, 1fr) clamp(18rem, calc((100dvh - 12.5rem) * 0.643), 44rem) minmax(0, 1fr);
+  }
+
+  .pie-voyage:is(.is-full, .is-immersive) .pie-cabinet {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-cardface {
+    animation: none;
+  }
+}
+
+/* A tighter face: the sprite beside the name, every line in the binding's own ink. */
+.pie-cardface {
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.7rem;
+  font-size: 0.82rem;
+}
+
+.pie-cardface > * {
+  grid-column: 1 / -1;
+}
+
+.pie-cardface > .pie-cardface-sprite {
+  grid-column: 1;
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.pie-cardface > .pie-cardface-name {
+  grid-column: 2;
+  align-self: center;
+}
+
+.pie-cardface :is(.pie-cardface-name, .pie-cardface-story, .pie-cardface-lanes, .pie-cardface-moment) {
+  color: var(--hub-ink);
+}
+
+.pie-cardface :is(.pie-cardface-story, .pie-cardface-lanes) {
+  font-size: 0.8rem;
+}
+
+.pie-intro .pie-cardface {
+  max-height: 100%;
+  overflow: auto;
+}

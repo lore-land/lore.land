@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.E",
+      "date": "2026-11-08",
+      "notes": [
+        "Exactly One Pie has cards now: the first time you meet a character, an obstacle or a power-up, its card turns, telling who or what it is in the story, what it does in the lanes, and where the book first has it. Choose From the beginning, with introductions to meet everyone in order from Chapter One.",
+        "Under the screen: fold the story beside it away, switch on Zen for a carry with nothing popping up, or go fullscreen.",
+        "For anyone testing or redrawing the game: every card can carry a note of how it felt, and the page has an asset sheet of every background and sprite."
+      ]
+    },
+    {
       "release": "2026_11_08.D",
       "date": "2026-11-08",
       "notes": [

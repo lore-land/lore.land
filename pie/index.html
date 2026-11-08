@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_07.H" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.E" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -48,11 +48,11 @@
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_07.C&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.B&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.E&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.D"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.D"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.E"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -88,10 +88,11 @@
             <li><kbd>Space</kbd> <span>hop over low things</span></li>
             <li><kbd>X</kbd> <span>throw along the needle (or click where)</span></li>
             <li><kbd>Esc</kbd> <span>pause</span></li>
+            <li><span>Under the screen: the story beside it, zen, fullscreen</span></li>
           </ol>
           <p class="pie-keys-touch">On a phone: swipe to step, any way; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
-          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
+          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-deck">The deck ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
           </div>
         </div>
 
@@ -109,10 +110,12 @@
             <div class="pie-card" data-pie-card>
               <p class="pie-card-title" data-pie-card-title></p>
               <p class="pie-card-line" data-pie-card-line></p>
+              <div class="pie-card-modes" data-pie-card-modes hidden aria-label="How to carry it"></div>
               <div class="pie-card-chapters" data-pie-card-chapters hidden aria-label="Start chapter"></div>
               <button type="button" class="pie-card-action" data-pie-card-action>Carry the pie</button>
               <p class="pie-card-links" data-pie-card-links></p>
             </div>
+            <div class="pie-intro" data-pie-intro hidden aria-live="polite"></div>
             <div class="pie-meter" data-pie-meter aria-hidden="true"><span></span><i class="pie-meter-lean" data-pie-lean></i><em>tilt</em></div>
             <div class="pie-aura" data-pie-aura aria-hidden="true">
               <p><em>flour</em><span class="pie-aura-crust"></span></p>
@@ -131,7 +134,12 @@
             <button type="button" class="pie-step" data-pie-climb="1" aria-label="Step ahead">▲</button>
             <button type="button" class="pie-step" data-pie-step="1" aria-label="Step right">▶</button>
           </div>
-          <button type="button" class="pie-sound" data-pie-sound aria-pressed="true">♪ WAP sounds: on</button>
+          <div class="pie-tools">
+            <button type="button" class="pie-sound" data-pie-sound aria-pressed="true">♪ WAP sounds: on</button>
+            <button type="button" class="pie-tool" data-pie-toggle="story" aria-pressed="true">◫ Story beside: on</button>
+            <button type="button" class="pie-tool" data-pie-toggle="zen" aria-pressed="false">◌ Zen: off</button>
+            <button type="button" class="pie-tool" data-pie-fullscreen aria-pressed="false">⛶ Fullscreen</button>
+          </div>
           <p class="visually-hidden pie-live" data-pie-live role="status" aria-live="polite"></p>
         </div>
         <div class="pie-flow pie-flow-wonders">
@@ -166,7 +174,7 @@
               <li><canvas data-pie-sprite="wasps" width="64" height="64" aria-hidden="true"></canvas><div><strong>Crown-wasps · tilt +25%, − filling</strong><span>They knew sweetness before anyone. Sting the filling, and snatch a thrown slice.</span></div></li>
               <li><canvas data-pie-sprite="pigeon" width="64" height="64" aria-hidden="true"></canvas><div><strong>Gate-pigeon · tilt +25%, − crust</strong><span>Pecks the crust, and takes any slice thrown past it.</span></div></li>
               <li><canvas data-pie-sprite="spool" width="64" height="64" aria-hidden="true"></canvas><div><strong>Spool · tilt +30%, tripped · ⤒</strong><span>Rolls a little in its own lane, and trips you a lane over.</span></div></li>
-              <li><canvas data-pie-sprite="dividers" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pie-dividers · tilt +30%, − both</strong><span>Two children, two lanes, measuring. It comes out even. It never does.</span></div></li>
+              <li><canvas data-pie-sprite="dividers" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pie-dividers · tilt +30%, − both</strong><span>Two night-school pupils, two lanes, measuring for luck. It comes out even. It never does.</span></div></li>
               <li><canvas data-pie-sprite="mime" width="64" height="64" aria-hidden="true"></canvas><div><strong>A mime · tilt +30%</strong><span>In the lanes, the plaza and the court. Silent. A slice thrown at one is caught in an invisible box; a lofted slice sails over it.</span></div></li>
               <li><canvas data-pie-sprite="mimewall" width="64" height="64" aria-hidden="true"></canvas><div><strong>The wall it is miming · tilt +45%</strong><span>Beside every mime, a lane over: invisible, and also there. A shimmer and two gloves show where. It boxes low slices too.</span></div></li>
               <li><canvas data-pie-sprite="march" width="64" height="64" aria-hidden="true"></canvas><div><strong>Mimes Against WAP · tilt +45%</strong><span>A silent protest across the lanes, placards blank but one. One gap. Any slice thrown into them is boxed; through the gap, or over them off a hop or a ramp. Mr. BaneWAP likes to say he organised them.</span></div></li>
@@ -224,6 +232,23 @@
           </section>
         </div>
       </section>
+
+      <section class="pie-deck" id="pie-deck" data-pie-deck aria-labelledby="deck-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">The deck · and the QA table</p>
+          <h2 id="deck-title">Everyone and everything you have met</h2>
+          <p>The first time you meet a character, an obstacle or a power-up, its card turns: what it is in the story, what it does in the lanes in the game’s own numbers, and where the book first has it. With the story beside the screen, a new card pauses the carry; choose <em>From the beginning, with introductions</em> on the start card and every first meeting of the carry pauses on its card. Zen turns them quietly.</p>
+          <p>For a QA table: every card asks how it felt, and copies a note in Spw with the moment it was met (chapter, carrier, row, speed, tilt), so a team can talk about the same numbers. Add <code>?qa</code> to the address to lay every card face-up.</p>
+          <p class="pie-carries-lede" data-pie-deck-lede></p>
+        </div>
+        <div data-pie-deck-body></div>
+      </section>
+
+      <details class="pie-assets" id="pie-assets" data-pie-assets>
+        <summary><span class="hub-eyebrow">For a design table</span> <strong>The asset sheet: every background and sprite</strong></summary>
+        <p>Drawn by the game’s own hand, in the page’s own colours: each place’s ground and light, and every sprite with its hitbox, what it does, where it appears and the chapter it arrives in. Copy the level manifest to plan a new level or a reskin.</p>
+        <div data-pie-assets-body></div>
+      </details>
 
       <section class="pie-carries" id="pie-carries" data-pie-carries aria-labelledby="carries-title">
         <div class="pie-section-head">

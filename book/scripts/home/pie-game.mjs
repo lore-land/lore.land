@@ -133,6 +133,7 @@ import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterLis
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
+import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.E';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -225,7 +226,7 @@ const MEET = Object.freeze({
   baneberry: ['A baneberry', 'Mr. BaneWAP is made of these. Step on it to keep it from him, or throw a slice over it to sweeten it.'],
   mime: ['A mime, and its wall', 'Both knock; both box a flat slice. A lofted slice sails over.'],
   clerk: ['A feast clerk', 'Knocks with a DAMAGE slip; share a whole slice and it is SETTLED.'],
-  dividers: ['Pie-dividers', 'Two children, two lanes: knocks, and measures off a little of both.'],
+  dividers: ['Pie-dividers', 'Two night-school pupils, two lanes: knocks, and measures off a little of both.'],
   chair: ['A chair', 'Pulled out for someone else. Knocks.'],
   table: ['The long table', 'A whole row; the empty place is the only way through.'],
   march: ['Mimes Against WAP', 'Through the gap, or over. If they out-do the pie in a chapter, they hold it: harder to wonder about pie there.']
@@ -283,7 +284,7 @@ const CAUSES = Object.freeze({
   snail: 'A pane-snail was there first. They always are.',
   spool: 'A spool rolled in from a chapter nobody here was in.',
   pigeon: 'A gate-pigeon rose. So, briefly, did the pie.',
-  dividers: 'Two children measured the pie with brass dividers. It came out even. It never does.',
+  dividers: 'Two night-school pupils measured the pie with brass dividers, for luck. It came out even. It never does.',
   clerk: 'A feast clerk wrote DAMAGE at the top, and under that, a line for the cause.',
   wasps: 'The crown-wasps knew sweetness before anyone.',
   banner: 'A banner in colours nobody ordered came down across the lane.',
@@ -324,10 +325,13 @@ function readRecord() {
       kept: Number(parsed.kept) || 0,
       lore: Array.isArray(parsed.lore) ? parsed.lore : [],
       met: Array.isArray(parsed.met) ? parsed.met : [],
+      cards: Array.isArray(parsed.cards) ? parsed.cards : [],
+      qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
+      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true },
       sound: parsed.sound !== false
     };
   } catch {
-    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], sound: true };
+    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false }, sound: true };
   }
 }
 
@@ -693,6 +697,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     slideT: 0,
     ways: [],
     hurtT: 0,
+    intro: false,
+    seenCards: new Set(),
+    revealQueue: [],
     tally: null,
     breath: 0,
     rules: [],
@@ -1636,7 +1643,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!cardChapters) return;
     const found = discoveries(record);
     const maxChap = clamp(Math.max(record.reached || 1, firstChapter, activeChap || 1, ...(found.visited || [1])), 1, TOTAL_CHAPTERS);
-    if (maxChap <= 1) {
+    if (maxChap <= 1 || introMode) {
       cardChapters.hidden = true;
       cardChapters.replaceChildren();
       return;
@@ -1682,12 +1689,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const hideCard = () => {
     card.hidden = true;
     if (cardChapters) cardChapters.hidden = true;
+    if (cardModes) cardModes.hidden = true;
     cardLinks?.replaceChildren();
   };
 
   /* A toast: where we are now, and who is under the hat. Play does not stop for it. */
   const showToast = (title, line, ms = 2600, voice = '') => {
-    if (!toast) return;
+    if (!toast || record.view.zen) return;   // zen: nothing pops up; the live region still says it
     toastTitle.textContent = title;
     toastLine.textContent = line || '';
     toast.dataset.voice = voice;
@@ -1921,6 +1929,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.swapT = 0;
       run.carrier = drawCarrierLot(run.carrier.id);
       moved = `The hat moved on. Under it now: ${run.carrier.name}.`;
+      turnCard(`carrier-${run.carrier.id}`);
     }
     const who = first ? `Under the hat: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}` : '';
     const held = run.tally.held ? 'The mimes hold this chapter: out-do them before it ends to win it back.' : '';
@@ -1933,9 +1942,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     colors = palette();
     if (record.sound) primeAudio();
     run = fresh();
+    run.intro = introMode;
     hideCard();
     state = 'running';
     enterChapter(run.chapter, { first: true });
+    turnCard(`carrier-${run.carrier.id}`);
     last = performance.now();
     loop();
   };
@@ -1995,6 +2006,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       showCard('Exactly one.', `${CAUSES[cause]} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${served}${foiled}${carried}${firsts} The hat did not fall.`, chosenStartChapter > 1 ? `Carry another pie from ${chapterWords(chosenStartChapter)}` : 'Carry another pie');
       paintCarries();
       paintCardChapters(run.chapter);
+      paintCardModes();
       // The way out: into the chapter where this place happens, or home to where the game was found.
       const links = [];
       if (lastCarry.href !== from) {
@@ -2503,6 +2515,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Two of the quinary five, one at a time. */
   const holdCourt = () => {
     run.boon = { t: 0, dur: 8.5, lobIn: 0.9 };
+    turnCard('boon');
     run.wobble = Math.max(0, run.wobble - 0.25);   // a steadying word, first
     run.lastPresence = 'boon';
     tally('boon');
@@ -2523,6 +2536,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!met('bane')) { record.met.push('bane'); writeRecord(record); }
     const fed = Math.min(5, run.baneStore || 0);
     run.baneStore = 0;
+    turnCard('bane');
     run.bane = { id, t: 0, dur: 9 + fed * 1.2, fed, beat: id === 'relet' ? 2.4 : id === 'march' ? 3.2 : 1.8, nextBeat: 1.6, dir: pick([-1, 1]) };
     run.pendingSwitch = true;
     run.lastPresence = 'bane';
@@ -2531,6 +2545,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   const update = (dt) => {
+    if (state === 'running' && run.revealQueue.length) {
+      openReveal(run.revealQueue.shift());
+      return;
+    }
     run.t += dt;
     if (state === 'running') {
       // The pace: gentle at first, building by the chapter and the minute. (A lag-stag lags the city, not the carrier.)
@@ -2558,6 +2576,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (run.boofIn <= 0 && !run.boof) {
         const side = pick([-1, 1]);
         run.boof = { x: side < 0 ? -40 : W + 40, y: rand(80, 200), vx: -side * rand(60, 80), touched: false };
+        turnCard('boof');
         run.boofIn = rand(12, 18);
       }
       // Presences: Mr. BoonWAP and Mr. BaneWAP never share the stage.
@@ -2811,7 +2830,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.rules = run.rules.filter((rule) => rule.y < H + 20);
       // First meetings: said under the screen once per visitor, with what the thing does.
       if (run.meetCool <= 0) {
-        const fresh = run.things.find((thing) => !thing.wapped && thing.y > 12 && thing.y < run.y && MEET[thing.kind] && !met(thing.kind));
+        // Every first sight of a kind in this carry turns its card (pausing on it in Story, or for Introductions).
+        run.things.forEach((thing) => { if (!thing.wapped && thing.y > 12 && thing.y < run.y && CARDS[thing.kind]) turnCard(thing.kind); });
+        const fresh = run.revealQueue.length ? null : run.things.find((thing) => !thing.wapped && thing.y > 12 && thing.y < run.y && MEET[thing.kind] && !met(thing.kind));
         if (fresh) {
           const [name, line] = MEET[fresh.kind];
           record.met.push(fresh.kind);
@@ -4770,7 +4791,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!canvas.width) return;
     ctx.save();
     // A knock shakes the screen a little (not under reduced motion; the red edge says it instead).
-    if (run?.shake > 0 && !reduced?.matches) ctx.translate(rand(-4, 4) * run.shake * 3.5, rand(-3, 3) * run.shake * 3.5);
+    if (run?.shake > 0 && !reduced?.matches && !record.view.zen) ctx.translate(rand(-4, 4) * run.shake * 3.5, rand(-3, 3) * run.shake * 3.5);
     drawScene();
     drawRules();
     drawBoonWAP();
@@ -4790,7 +4811,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.fillRect(0, 0, W, H);
     }
     ctx.restore();
-    if (run?.hurtT > 0) {
+    if (run?.hurtT > 0 && !record.view.zen) {
       const edge = ctx.createRadialGradient(W / 2, H / 2, H * 0.32, W / 2, H / 2, H * 0.62);
       edge.addColorStop(0, 'rgba(200, 50, 36, 0)');
       edge.addColorStop(1, `rgba(200, 50, 36, ${0.32 * Math.min(1, run.hurtT / 0.9)})`);
@@ -4807,7 +4828,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       last = now;
       if (state === 'running' || state === 'spilling') update(dt);
       draw();
-      if (state !== 'paused' && state !== 'title' && state !== 'over') frame = requestAnimationFrame(tick);
+      if (state !== 'paused' && state !== 'title' && state !== 'over' && state !== 'revealing') frame = requestAnimationFrame(tick);
       else if (state === 'over') draw();
     };
     frame = requestAnimationFrame(tick);
@@ -4836,8 +4857,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     puddle: { scale: 1 }, pile: { scale: 1.2 }, beaver: { scale: 1.4 }, baneberry: { scale: 1.9 }, berry: { scale: 2 }, clown: { scale: 1.4 }, switch: { scale: 1.5 }, dividers: { scale: 0.42 }, table: { scale: 0.18 }, banner: { scale: 0.18 },
     stone: { scale: 1.5 }, hole: { scale: 1.4 }, mime: { scale: 1.4 }, mimewall: { scale: 1.1 }, march: { scale: 0.18 }, ditch: { scale: 0.18 }, pane: { scale: 1.4 }, frost: { scale: 1.1 }, furrow: { scale: 1 }, egg: { scale: 1.3 }, wonder: { scale: 1.6 }
   };
-  function drawSprite(target, kind) {
-    const size = 64;
+  function drawSprite(target, kind, size = 64) {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     target.width = size * ratio;
     target.height = size * ratio;
@@ -4937,10 +4957,392 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
   }
 
+  /* ─── Cards: everyone and everything in the lanes, turned at first meeting (pie-cards.mjs) ───
+   * Story on and Zen off: a new card pauses the carry; Introductions (from the beginning) pauses on
+   * every first meeting of the carry. Zen turns cards silently. Each card can carry a QA note. */
+  const voyage = root.closest('.pie-voyage');
+  const introOut = root.querySelector('[data-pie-intro]');
+  const cardModes = card.querySelector('[data-pie-card-modes]');
+  const deckOut = document.querySelector('[data-pie-deck]');
+  const assetsOut = document.querySelector('[data-pie-assets]');
+  const qaAll = (() => { try { return new URLSearchParams(location.search).has('qa'); } catch { return false; } })();
+  const buildId = document.documentElement.dataset.cacheRelease || 'local';
+  const pct = (v) => `${Math.round(v * 100)}%`;
+  const round2 = (v) => Math.round(v * 100) / 100;
+  const nodeOf = (tag, className, text) => { const n = document.createElement(tag); if (className) n.className = className; if (text != null) n.textContent = text; return n; };
+
+  function momentOf() {
+    if (!run) return null;
+    return { chapter: run.chapter, carrier: run.carrier.id, row: run.row + 1, lane: run.lane + 1, speed: Math.round(run.speed), tilt: round2(run.wobble), crust: round2(run.aura), filling: round2(run.filling), cobbles: cobbles() };
+  }
+  function turnCard(kind) {
+    if (!run || !CARDS[kind] || run.seenCards.has(kind)) return;
+    run.seenCards.add(kind);
+    const isNew = !record.cards.includes(kind);
+    if (isNew) {
+      record.cards.push(kind);
+      writeRecord(record);
+      paintDeck();
+    }
+    const pause = record.view.story && !record.view.zen && (run.intro || isNew);
+    if (pause) run.revealQueue.push({ kind, isNew, moment: momentOf() });
+    else if (isNew) run.tags.push({ x: W / 2, y: 98, t: 0, text: `✦ CARD · ${CARDS[kind].name.toUpperCase()}` });
+  }
+  function chipsFor(kind) {
+    const chips = [];
+    const knock = KNOCKS[kind];
+    if (knock) {
+      chips.push(`tilt +${pct(knock.tilt)}`);
+      if (knock.crust) chips.push(`− crust ${knock.crust}`);
+      if (knock.filling) chips.push(`− filling ${knock.filling}`);
+      if (knock.shove) chips.push('trips a lane');
+      if (knock.drop) chips.push('a step back');
+    }
+    if (LOW.has(kind)) chips.push('⤒ a hop clears it');
+    if (SLIPS.has(kind)) chips.push('slips');
+    const from = INTRO[kind] || INTRO[kind.replace('carrier-', '')];
+    if (from) chips.push(`in the lanes from Chapter ${from}`);
+    return chips;
+  }
+  function qaNote(kind, feel = null, moment = null) {
+    const knock = KNOCKS[kind];
+    const lines = [
+      '^"qa_note"{',
+      `  $build[${buildId}]`,
+      `  .card[${kind}]`,
+      `  #feel[${feel || 'unrated'}]@tester`,
+      moment ? `  %moment{ ${Object.entries(moment).map(([k, v]) => `${k}: ${v}`).join(' ')} }@game` : null,
+      `  %mechanics{ ${[knock ? `tilt: ${knock.tilt}` : null, knock?.crust ? `crust: -${knock.crust}` : null, knock?.filling ? `filling: -${knock.filling}` : null, `low: ${LOW.has(kind) ? 'yes' : 'no'}`, `slip: ${SLIPS.has(kind) ? 'yes' : 'no'}`].filter(Boolean).join(' ')} }`,
+      `  =view{ story: ${record.view.story ? 'on' : 'off'} zen: ${record.view.zen ? 'on' : 'off'} intro: ${run?.intro ? 'on' : 'off'} }`,
+      '  #note: ""',
+      '}'
+    ];
+    return lines.filter(Boolean).join('\n');
+  }
+  async function copyText(text, status) {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (status) status.textContent = 'Copied as Spw. Paste it into the thread; the numbers are the game’s own.';
+    } catch {
+      if (status) status.textContent = text;
+    }
+  }
+  /** A card's face: what it is in the story, what it does in the lanes, where the book has it; and, live, the moment it was met. */
+  function renderCard(kind, { moment = null, isNew = false, live = false, compact = false } = {}) {
+    const c = CARDS[kind];
+    const face = nodeOf('article', `pie-cardface type-${c.type}${compact ? ' is-compact' : ''}`);
+    const sprite = document.createElement('canvas');
+    sprite.className = 'pie-cardface-sprite';
+    sprite.setAttribute('aria-hidden', 'true');
+    drawSprite(sprite, c.sprite, compact ? 64 : 96);
+    const chips = nodeOf('p', 'pie-cardface-chips');
+    chipsFor(kind).forEach((chip) => chips.append(nodeOf('span', '', chip)));
+    const book = nodeOf('p', 'pie-cardface-book');
+    if (c.chapter) {
+      const a = nodeOf('a', '', `Chapter ${chapterWords(c.chapter).replace('Chapter ', '')}`);
+      a.href = `/book/chapter/${pad2(c.chapter)}/`;
+      if (live) { a.target = '_blank'; a.rel = 'noopener'; }
+      book.append('First in the book: ', a);
+    } else {
+      book.textContent = 'Only in the lanes, so far.';
+    }
+    face.append(
+      nodeOf('p', 'pie-cardface-type', `${CARD_TYPES[c.type]}${isNew ? ' · new to your deck' : ''}`),
+      sprite,
+      nodeOf('h3', 'pie-cardface-name', c.name),
+      (() => { const p = nodeOf('p', 'pie-cardface-story'); p.append(nodeOf('span', '', 'In the story'), ` ${c.story}`); return p; })(),
+      (() => { const p = nodeOf('p', 'pie-cardface-lanes'); p.append(nodeOf('span', '', 'In the lanes'), ` ${c.lanes}`); return p; })(),
+      chips,
+      book);
+    if (moment) {
+      face.append(nodeOf('p', 'pie-cardface-moment', `Met in ${chapterWords(moment.chapter)}, under ${carrierById(moment.carrier).name}, row ${moment.row} of ${ROWS}, lane ${moment.lane}, at ${moment.speed} px/s, tilt ${pct(moment.tilt)}.`));
+    }
+    // The QA team's common ground: how it felt, and a note with the game's own numbers.
+    const qa = nodeOf('div', 'pie-cardface-qa');
+    const status = nodeOf('p', 'pie-cardface-status');
+    status.setAttribute('role', 'status');
+    let chosen = null;
+    qa.append(nodeOf('span', 'pie-cardface-qa-label', 'How did it feel?'));
+    ['too easy', 'just right', 'too hard', 'unclear', 'delightful'].forEach((feel) => {
+      const b = nodeOf('button', 'pie-cardface-feel', feel);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () => {
+        chosen = feel.replace(' ', '-');
+        qa.querySelectorAll('.pie-cardface-feel').forEach((other) => other.setAttribute('aria-pressed', other === b ? 'true' : 'false'));
+        record.qa.push({ kind, feel: chosen, moment, view: { ...record.view, intro: Boolean(run?.intro) }, build: buildId, at: new Date().toISOString() });
+        record.qa = record.qa.slice(-200);
+        writeRecord(record);
+        status.textContent = `Noted in this browser: ${feel}.`;
+      });
+      qa.append(b);
+    });
+    const copy = nodeOf('button', 'pie-cardface-copy', 'Copy a QA note');
+    copy.type = 'button';
+    copy.addEventListener('click', () => copyText(qaNote(kind, chosen, moment), status));
+    qa.append(copy);
+    face.append(qa, status);
+    if (live) {
+      const go = nodeOf('button', 'pie-intro-go', 'Carry on ▸');
+      go.type = 'button';
+      go.addEventListener('click', closeReveal);
+      face.append(go);
+    }
+    return face;
+  }
+  function openReveal(item) {
+    if (!introOut || !CARDS[item.kind]) return;
+    state = 'revealing';
+    introOut.replaceChildren(renderCard(item.kind, { moment: item.moment, isNew: item.isNew, live: true }));
+    introOut.hidden = false;
+    introOut.querySelector('.pie-intro-go')?.focus({ preventScroll: true });
+    const c = CARDS[item.kind];
+    say(`${CARD_TYPES[c.type]}: ${c.name}. ${c.story} In the lanes: ${c.lanes}`);
+  }
+  function closeReveal() {
+    if (state !== 'revealing') return;
+    introOut.hidden = true;
+    introOut.replaceChildren();
+    state = 'running';
+    last = performance.now();
+    loop();
+  }
+  /** The deck on the page: cards turned face-up, the rest face-down (all face-up with ?qa). */
+  function paintDeck() {
+    if (!deckOut) return;
+    const body = deckOut.querySelector('[data-pie-deck-body]');
+    const lede = deckOut.querySelector('[data-pie-deck-lede]');
+    const kinds = Object.keys(CARDS);
+    const turned = kinds.filter((k) => record.cards.includes(k)).length;
+    if (lede) lede.textContent = `${turned} of ${kinds.length} cards turned${qaAll ? ' · QA view: every card face-up' : ''}. ${record.qa.length ? `${record.qa.length} QA note${record.qa.length === 1 ? '' : 's'} kept in this browser.` : ''}`;
+    if (!body) return;
+    const grid = nodeOf('ul', 'pie-deck-grid');
+    kinds.forEach((kind) => {
+      const li = nodeOf('li', 'pie-deck-slot');
+      if (qaAll || record.cards.includes(kind)) li.append(renderCard(kind, { compact: true }));
+      else {
+        const back = nodeOf('div', `pie-cardback type-${CARDS[kind].type}`);
+        back.append(nodeOf('span', 'pie-cardback-mark', '?'), nodeOf('span', 'pie-cardback-type', CARD_TYPES[CARDS[kind].type]), nodeOf('span', 'pie-cardback-hint', 'Not met yet'));
+        li.append(back);
+      }
+      grid.append(li);
+    });
+    const copyAll = nodeOf('button', 'pie-deck-copy', 'Copy every QA note');
+    copyAll.type = 'button';
+    const status = nodeOf('p', 'pie-deck-status');
+    copyAll.addEventListener('click', () => copyText(record.qa.length ? record.qa.map((n) => qaNote(n.kind, n.feel, n.moment)).join('\n\n') : '# no QA notes yet', status));
+    body.replaceChildren(grid, nodeOf('p', 'pie-deck-actions'), status);
+    body.querySelector('.pie-deck-actions').append(copyAll);
+  }
+
+  /* ─── Modes on the start card: carry, or from the beginning with introductions ─── */
+  let introMode = false;
+  function paintCardModes() {
+    if (!cardModes) return;
+    const make = (intro, label) => {
+      const b = nodeOf('button', `pie-card-mode${introMode === intro ? ' is-active' : ''}`, label);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', introMode === intro ? 'true' : 'false');
+      b.addEventListener('click', (event) => {
+        event.stopPropagation();
+        introMode = intro;
+        if (intro) chosenStartChapter = 1;
+        paintCardModes();
+        paintCardChapters(chosenStartChapter);
+        cardAction.textContent = intro ? 'Carry the pie from the beginning' : chosenStartChapter > 1 ? `Carry the pie from ${chapterWords(chosenStartChapter)}` : 'Carry the pie';
+        prepareLeg(chosenStartChapter).then((leg) => { if (state === 'title' || state === 'over') paintFlows(leg); });
+      });
+      return b;
+    };
+    cardModes.replaceChildren(make(false, 'Carry'), make(true, 'From the beginning, with introductions'));
+    cardModes.hidden = false;
+  }
+
+  /* ─── Story and Zen: the narrative beside the screen, collapsible; nothing popping up, in zen ─── */
+  const applyView = () => {
+    voyage?.classList.toggle('is-story-off', !record.view.story);
+    voyage?.classList.toggle('is-zen', record.view.zen);
+    root.querySelectorAll('[data-pie-toggle]').forEach((btn) => {
+      const key = btn.dataset.pieToggle;
+      const on = Boolean(record.view[key]);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.textContent = key === 'story' ? `◫ Story beside: ${on ? 'on' : 'off'}` : `◌ Zen: ${on ? 'on' : 'off'}`;
+    });
+    requestAnimationFrame(fit);
+  };
+  root.querySelectorAll('[data-pie-toggle]').forEach((btn) => btn.addEventListener('click', () => {
+    const key = btn.dataset.pieToggle;
+    record.view[key] = !record.view[key];
+    writeRecord(record);
+    applyView();
+    say(key === 'story'
+      ? (record.view.story ? 'The story flows beside the screen again, and new cards pause the carry.' : 'The story beside the screen is folded away.')
+      : (record.view.zen ? 'Zen: nothing pops up or pauses; cards turn quietly into your deck.' : 'Zen is off.'));
+  }));
+
+  /* ─── Fullscreen: the whole voyage, screen and story, on the whole display ─── */
+  const fullBtn = root.querySelector('[data-pie-fullscreen]');
+  const isFull = () => Boolean(voyage) && (document.fullscreenElement === voyage || voyage.classList.contains('is-immersive'));
+  const paintFull = () => {
+    if (!fullBtn) return;
+    fullBtn.textContent = isFull() ? '⛶ Leave fullscreen' : '⛶ Fullscreen';
+    fullBtn.setAttribute('aria-pressed', isFull() ? 'true' : 'false');
+  };
+  const immersive = (on) => {
+    voyage?.classList.toggle('is-immersive', on);
+    document.documentElement.classList.toggle('pie-immersive', on);
+    paintFull();
+    requestAnimationFrame(fit);
+  };
+  function setFull(on) {
+    if (!voyage) return;
+    if (on) {
+      if (document.fullscreenEnabled && voyage.requestFullscreen) voyage.requestFullscreen().catch(() => immersive(true));
+      else immersive(true);
+    } else {
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+      immersive(false);
+    }
+  }
+  fullBtn?.addEventListener('click', () => setFull(!isFull()));
+  const onFullChange = () => {
+    voyage?.classList.toggle('is-full', document.fullscreenElement === voyage);
+    paintFull();
+    requestAnimationFrame(fit);
+  };
+  document.addEventListener('fullscreenchange', onFullChange);
+
+  /* ─── The asset sheet: every background and sprite, drawn by the game, for design review ─── */
+  function drawBackdrop(target, sceneId, width = 168) {
+    const height = Math.round((width * H) / W);
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    target.width = width * ratio;
+    target.height = height * ratio;
+    const c = target.getContext('2d');
+    const saved = { ctx, run, state };
+    ctx = c;
+    run = null;
+    state = 'title';
+    try {
+      c.setTransform((ratio * width) / W, 0, 0, (ratio * height) / H, 0, 0);
+      const s = SCENES.find((entry) => entry.id === sceneId) || SCENES[2];
+      const [top, bottom] = skyFor(s);
+      const sky = c.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, top);
+      sky.addColorStop(1, bottom);
+      c.fillStyle = sky;
+      c.fillRect(0, 0, W, H);
+      drawGroundFor(sceneId, 0, 1);
+      c.strokeStyle = mix(colors.muted, colors.paper, 0.6);
+      c.setLineDash([6, 10]);
+      for (let lane = 1; lane < LANES; lane += 1) { c.beginPath(); c.moveTo(lane * LANE_W, 0); c.lineTo(lane * LANE_W, H); c.stroke(); }
+      c.setLineDash([]);
+    } finally {
+      ctx = saved.ctx;
+      run = saved.run;
+      state = saved.state;
+    }
+  }
+  function assetManifest() {
+    const saved = run;
+    run = fresh();
+    try {
+      const sprites = Object.keys(SPRITES).map((kind) => {
+        const t = makeThing(kind, 2);
+        return {
+          id: kind,
+          hitbox: { w: WIDE.has(kind) ? W : t.w, h: t.h },
+          knocks: Boolean(KNOCKS[kind]),
+          tilt: KNOCKS[kind]?.tilt ?? null,
+          low: LOW.has(kind),
+          slip: SLIPS.has(kind),
+          wide: WIDE.has(kind),
+          from_chapter: INTRO[kind] || 1,
+          scenes: SCENES.filter((s) => s.kinds.includes(kind) || (s.low || []).includes(kind)).map((s) => s.id),
+          card: CARDS[kind] ? CARDS[kind].name : null
+        };
+      });
+      return {
+        manifest: 'exactly-one-pie/assets',
+        build: buildId,
+        canvas: { width: W, height: H, lanes: LANES, rows: ROWS, lane_width: LANE_W },
+        palette_tokens: ['--hub-paper', '--hub-paper-deep', '--hub-ink', '--hub-muted', '--hub-accent', '--hub-gold', '--hub-hearth', '--hub-berry', '--hub-night'],
+        scenes: SCENES.map((s) => ({ id: s.id, card: s.card, tint: s.tint, rain: Boolean(s.rain), kinds: s.kinds, low: s.low || ['puddle'], presence: s.presence || null, chapters: Object.entries(CHAPTER_SCENE).filter(([, id]) => id === s.id).map(([n]) => Number(n)) })),
+        sprites,
+        figures: ['carrier-figure', 'carrier-porter', 'carrier-clerk', 'carrier-genie', 'carrier-clown', 'boon', 'bane', 'boof'],
+        to_add_a_level: [
+          'a scene: id, card line, tint (a --hub-* mix), rain or not',
+          'a ground: drawGroundFor(scene) — the ground pattern under the lanes, drawn at any scroll',
+          'kinds: which sprites come up the lanes there (and low things for the ground)',
+          'a presence lean (boon or bane) if the place belongs to one of the pies',
+          'chapters: CHAPTER_SCENE, or a door (pie-segues.mjs) and a passage cue',
+          'a card for anything new (pie-cards.mjs): story, lanes in exact numbers, first chapter'
+        ]
+      };
+    } finally {
+      run = saved;
+    }
+  }
+  function paintAssets() {
+    if (!assetsOut || assetsOut.dataset.painted) return;
+    assetsOut.dataset.painted = 'yes';
+    const body = assetsOut.querySelector('[data-pie-assets-body]');
+    if (!body) return;
+    const manifest = assetManifest();
+    const grounds = nodeOf('ul', 'pie-assets-grounds');
+    manifest.scenes.forEach((scene) => {
+      const li = nodeOf('li', 'pie-asset');
+      const cv = document.createElement('canvas');
+      cv.className = 'pie-asset-ground';
+      cv.setAttribute('aria-hidden', 'true');
+      drawBackdrop(cv, scene.id);
+      li.append(cv, nodeOf('strong', '', scene.id), nodeOf('span', 'pie-asset-line', scene.card),
+        nodeOf('span', 'pie-asset-meta', `tint ${scene.tint}${scene.rain ? ' · rain' : ''}${scene.presence ? ` · leans ${scene.presence}` : ''} · chapters ${scene.chapters.join(', ') || '—'}`),
+        nodeOf('span', 'pie-asset-meta', `up the lanes: ${scene.kinds.join(', ')} · underfoot: ${scene.low.join(', ')}`));
+      grounds.append(li);
+    });
+    const sprites = nodeOf('ul', 'pie-assets-sprites');
+    [...manifest.figures.map((id) => ({ id, figure: true })), ...manifest.sprites].forEach((sp) => {
+      const li = nodeOf('li', 'pie-asset');
+      const cv = document.createElement('canvas');
+      cv.className = 'pie-asset-sprite';
+      cv.setAttribute('aria-hidden', 'true');
+      drawSprite(cv, sp.id, 64);
+      const meta = sp.figure
+        ? 'figure (drawn by drawFigure / drawBoonWAP / drawBaneWAP / drawBoof)'
+        : [`hitbox ${sp.hitbox.w}×${sp.hitbox.h}`, sp.knocks ? `knocks +${pct(sp.tilt)}` : null, sp.low ? 'low' : null, sp.slip ? 'slip' : null, sp.wide ? 'wide row' : null, `from ch ${sp.from_chapter}`, sp.scenes.length ? `in ${sp.scenes.join(', ')}` : 'spawned by rule'].filter(Boolean).join(' · ');
+      li.append(cv, nodeOf('strong', '', sp.id), nodeOf('span', 'pie-asset-meta', meta));
+      sprites.append(li);
+    });
+    const copy = nodeOf('button', 'pie-deck-copy', 'Copy the level manifest (JSON)');
+    copy.type = 'button';
+    const status = nodeOf('p', 'pie-deck-status');
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(JSON.stringify(manifest, null, 2)); status.textContent = 'Copied: scenes, sprites, hitboxes, flags, palette tokens, and what a new level needs.'; } catch { status.textContent = JSON.stringify(manifest); }
+    });
+    const steps = nodeOf('ol', 'pie-assets-steps');
+    manifest.to_add_a_level.forEach((line) => steps.append(nodeOf('li', '', line)));
+    body.replaceChildren(nodeOf('h3', '', 'Backgrounds: one ground and light for each place'), grounds,
+      nodeOf('h3', '', 'Sprites: everyone and everything in the lanes'), sprites,
+      nodeOf('h3', '', 'To add a level, or reskin one'), steps,
+      nodeOf('p', 'pie-deck-actions'), status);
+    body.querySelector('.pie-deck-actions').append(copy);
+  }
+  assetsOut?.addEventListener('toggle', () => { if (assetsOut.open) paintAssets(); });
+
   /* ─── Controls ─── */
   const onKey = (event) => {
     if (event.target.closest?.('input, textarea, select, [contenteditable]')) return;
     const key = event.key;
+    if (state === 'revealing' && (key === ' ' || key === 'Enter' || key === 'Escape')) {
+      event.preventDefault();
+      closeReveal();
+      return;
+    }
+    if (key === 'Escape' && voyage?.classList.contains('is-immersive') && state !== 'running') {
+      setFull(false);
+      return;
+    }
     // Mid-run the arrows always steer; otherwise they start a run only from inside the game.
     const steering = state === 'running' || root.contains(document.activeElement);
     const lower = key.length === 1 ? key.toLowerCase() : key;
@@ -5074,6 +5476,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   root.classList.add('is-ready');
   fit();
   paintLegend();
+  paintCardModes();
+  applyView();
+  paintFull();
+  paintDeck();
   loadLore().then((data) => {
     lore = data;
     paintLore();
