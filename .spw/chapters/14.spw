@@ -30,18 +30,24 @@
     handle: "section/01"
     type: "section"
     title: "The Wrong Quiet"
+    room: ?{kitchen_door}@boof
+    air: "Frost, loam, the berry rows asleep, and nobody at all behind the kitchen door."
     excerpt: "Dawn smelled of frost and wet fur, and of nothing else at all. Boof put her nose to the ground and read the field the way she read it every morning. Frost on the furrows. Loam under the frost. The berry rows asleep be..."
     route: ^[chapter/14/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
+    room: .[frost_lane]@boof
+    air: "A dog keeps mornings, not weeks. Hob-deer crop the verge on a day nobody kept."
     excerpt: "Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. Keep the morning, not the week, the shepher..."
     route: ^[chapter/14/s02]{open}
   >
   s03: <
     handle: "custom-boonberry/03"
     type: "custom-boonberry"
+    room: =[quarter_turn]@the_berries
+    air: "Every light under the ice turns a quarter, square to the furrow, as if something can only be seen from the side."
     excerpt: "The berries noticed first. They always did; noticing is most of what a boonberry is for. Every morning since the wish, the little lights under the ice had leaned toward the warm furrow, the way a sleeper turns to the ..."
     route: ^[chapter/14/s03]{open}
   >
@@ -49,12 +55,16 @@
     handle: "section/04"
     type: "section"
     title: "The Hat Above the Furrow"
+    room: @{warm_furrow}@boof
+    air: "The furrow steams as it always does now. The ant-streets run ruled and straight, and a hat waits at head height."
     excerpt: "The warm furrow was steaming when she reached it. It always steamed now. That was the wish: one furrow kept open, always, for whatever arrived next — an open brace in the field, with no close. The frost drew back from..."
     route: ^[chapter/14/s04]{open}
   }
   s05: <
     handle: "custom-boof/05"
     type: "custom-boof"
+    room: *[ant_torch]@boof
+    air: "One ant holds up a torch gone out, and the arm that lights it comes back a torch-length shorter."
     excerpt: "She went to see what he was looking at, because that is what a dog does with somebody else's attention. It was an ant. One ant, at the very end of the ruled street, holding up a torch that had gone out — a splinter of..."
     route: ^[chapter/14/s05]{open}
   >
@@ -67,6 +77,8 @@
   s07: <
     handle: "custom-path/07"
     type: "custom-path"
+    room: &<bent_lane>@boof
+    air: "All that Thursday they cross the land two ways, his straight and hers bent, with nobody in it but the land at work."
     excerpt: "When he moved, he did not walk. He was in one place, and then in the next place along, as if the day were being told in pictures and somebody had skipped the ones in between. Then a pause. Then the next picture. Boof ..."
     route: ^[chapter/14/s07]{open}
   >
@@ -74,12 +86,16 @@
     handle: "section/08"
     type: "section"
     title: "Friday"
+    room: !(crier_cart)@the_crier
+    air: "Latches lift, a bell comes up the road, and somebody writes down that she saw a hat."
     excerpt: "It was Friday before Boof had finished blinking. Below the rise, in the farms along the road, latches lifted. Smoke stood up from {{chimneys}} at once. A bucket knocked a well and somebody swore at the cold — cheerful..."
     route: ^[chapter/14/s08]{open}
   }
   s09: <
     handle: "custom-boof/09"
     type: "custom-boof"
+    room: =<field_edge>@boof
+    air: "The road goes to the feast, where the story means to happen. She goes where it has not said."
     excerpt: "The cart went on toward Bonk City with its bell, and the road went with it, in its usual bends. The figure went a quarter turn off the road, straight into the field. Boof sat in the road with the warm slice in her tee..."
     route: ^[chapter/14/s09]{open}
   >

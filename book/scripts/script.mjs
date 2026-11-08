@@ -1,8 +1,8 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_09_07.A';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.J';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_06.D';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS } from './modules/book-extent.mjs';
 import {
   bootstrapExperience,
@@ -18,7 +18,7 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_05.A';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_08.J';
 import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_05.B';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
@@ -52,22 +52,23 @@ import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_06.F';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_06.F';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_06.F';
-import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.D';
-import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.D';
-import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.B';
-import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.D';
+import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.J';
+import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.J';
+import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
+import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.J';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.A';
-import { initCollection } from './modules/collection.mjs?v=2026_11_08.H';
+import { initCollection } from './modules/collection.mjs?v=2026_11_08.J';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_06.F';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_06.F';
-import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_09_27.A';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.J';
+import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_06.F';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_05.B';
-import { initConstellation } from './modules/constellation.mjs?v=2026_11_05.A';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.J';
+import { initConstellation } from './modules/constellation.mjs?v=2026_11_08.J';
 import { initSettled } from './modules/settled.mjs?v=2026_11_05.B';
+import { initRooms } from './modules/rooms.mjs?v=2026_11_08.J';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
@@ -176,6 +177,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroySettled = initSettled();
     const destroyNook = initReadingNook({ announce });
     const destroySwitches = initReadingSwitches({ announce });
+    // Rooms: progress by room, and the room-by-room trial (after the switches, so its attribute is set).
+    const destroyRooms = initRooms({ chapterData, nav: ebookNav, announce });
     const destroyResonance = initResonanceLayer();
     const destroyLens = initLensControl({ announce });
     const destroyXray = initXrayReading({ announce });
@@ -275,6 +278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyNook) destroyNook();
       if (destroySettled) destroySettled();
       if (destroySwitches) destroySwitches();
+      if (destroyRooms) destroyRooms();
       if (destroyResonance) destroyResonance();
       if (destroyLens) destroyLens();
       if (destroyXray) destroyXray();

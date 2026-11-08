@@ -119,6 +119,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "?{signal_stones}@boof",
+        "air": "Two whale-roads almost meeting under the salt, and a ring of skinks pointing where to dig."
+      },
       "data-mood": "paradox",
       "data-motif": "egg",
       "climate": {
@@ -196,6 +200,10 @@
     },
     {
       "type": "custom-paradox",
+      "room": {
+        "spw": "!(green_bottle)@genie",
+        "air": "Steam finds sleeves, and a closed practice unfolds a desk with one drawer marked Thursdays."
+      },
       "scene": {
         "vantage": "crouched on the crest of a wind-ribbed dune, looking down at a green bottle lying across two tracks of gold fire",
         "light": "raking sunset light setting the dune crests ablaze; gold lines crossing under the dust",
@@ -234,6 +242,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "*<dune_ridge>@the_fool",
+        "air": "Somebody walks backward down the dune, turning an old song over. His prints fill behind him."
+      },
       "data-trope": "genie-in-the-bottle",
       "data-mask": "off-season",
       "scene": {
@@ -270,6 +282,10 @@
     {
       "type": "section",
       "title": "The Seam in the Sand",
+      "room": {
+        "spw": "%{sand_seam}@genie",
+        "air": "Brass pans, a glass for wants bigger than a loaf, and a needle that cannot find hers."
+      },
       "data-motif": "small-want",
       "content": [
         {
@@ -354,6 +370,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "&<one_turn>@boof",
+        "air": "Her weight in the seam, and two old roads settle into one turn. No miracle asked."
+      },
       "data-motif": "small-want",
       "scene": {
         "vantage": "looking ahead from the crest of the final dune toward a stormy hill on the horizon, a folded figure walking at heel",

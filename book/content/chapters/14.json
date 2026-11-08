@@ -135,6 +135,10 @@
     {
       "type": "section",
       "title": "The Wrong Quiet",
+      "room": {
+        "spw": "?{kitchen_door}@boof",
+        "air": "Frost, loam, the berry rows asleep, and nobody at all behind the kitchen door."
+      },
       "data-motif": "missing-thursday",
       "data-foreshadow": "hat",
       "climate": {
@@ -195,6 +199,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": ".[frost_lane]@boof",
+        "air": "A dog keeps mornings, not weeks. Hob-deer crop the verge on a day nobody kept."
+      },
       "climate": {
         "tempo": "dawn",
         "tint": "hearth",
@@ -244,6 +252,10 @@
     },
     {
       "type": "custom-boonberry",
+      "room": {
+        "spw": "=[quarter_turn]@the_berries",
+        "air": "Every light under the ice turns a quarter, square to the furrow, as if something can only be seen from the side."
+      },
       "climate": {
         "tempo": "morning",
         "tint": "berry",
@@ -268,6 +280,10 @@
     {
       "type": "section",
       "title": "The Hat Above the Furrow",
+      "room": {
+        "spw": "@{warm_furrow}@boof",
+        "air": "The furrow steams as it always does now. The ant-streets run ruled and straight, and a hat waits at head height."
+      },
       "data-motif": "hat",
       "data-trope": "arrival-without-receipt",
       "climate": {
@@ -335,6 +351,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "*[ant_torch]@boof",
+        "air": "One ant holds up a torch gone out, and the arm that lights it comes back a torch-length shorter."
+      },
       "data-motif": "torch",
       "climate": {
         "tempo": "morning",
@@ -385,6 +405,10 @@
     },
     {
       "type": "custom-path",
+      "room": {
+        "spw": "&<bent_lane>@boof",
+        "air": "All that Thursday they cross the land two ways, his straight and hers bent, with nobody in it but the land at work."
+      },
       "climate": {
         "tempo": "day",
         "tint": "teal",
@@ -481,6 +505,10 @@
     {
       "type": "section",
       "title": "Friday",
+      "room": {
+        "spw": "!(crier_cart)@the_crier",
+        "air": "Latches lift, a bell comes up the road, and somebody writes down that she saw a hat."
+      },
       "data-motif": "bell",
       "data-foreshadow": "feast",
       "climate": {
@@ -579,6 +607,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "=<field_edge>@boof",
+        "air": "The road goes to the feast, where the story means to happen. She goes where it has not said."
+      },
       "data-motif": "unspent-wish",
       "climate": {
         "tempo": "day",

@@ -105,12 +105,16 @@ function makeSigil(sigil) {
 function apply() {
   PLACEMENTS.forEach(({ selector, sigil }) => {
     document.querySelectorAll(selector).forEach((host) => {
-      if (host.querySelector(':scope > .resonance')) {
+      // A mark is itself a button: its sigil sits beside it, never inside (a button in a button
+      // swallows clicks, and an opened note would stretch the chip).
+      const beside = host.matches('button, a, .mark');
+      if (beside ? host.nextElementSibling?.classList.contains('resonance') : host.querySelector(':scope > .resonance')) {
         return;
       }
       const node = makeSigil(sigil);
       if (node) {
-        host.append(node);
+        if (beside) host.after(node);
+        else host.append(node);
       }
     });
   });

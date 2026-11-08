@@ -158,6 +158,10 @@
     {
       "type": "section",
       "title": "The Warm Furrow",
+      "room": {
+        "spw": "~{warm_furrow}@boof",
+        "air": "Frost everywhere but here. The ground is keeping something warm, and it hums."
+      },
       "data-motif": "unspent-wish",
       "content": [
         {
@@ -261,6 +265,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": ".[furrow_rim]@boof",
+        "air": "A candle just blown out, where only ant-warmth should be. She would have preferred a trail."
+      },
       "data-mood": "boon",
       "valence": "boon",
       "climate": {
@@ -286,6 +294,10 @@
     {
       "type": "section",
       "title": "When a Berry Remembers",
+      "room": {
+        "spw": "=[berry_row]@the_berries",
+        "air": "One berry wakes with a gold seam, and row by row the field leans toward the trees."
+      },
       "data-motif": "berry-memory",
       "content": [
         {
@@ -357,6 +369,10 @@
     {
       "type": "section",
       "title": "The Maps That Look Away",
+      "room": {
+        "spw": "#{map_house}@the_archivist",
+        "air": "Ink beads and rolls off the page. Only a pencilled tilde will hold."
+      },
       "data-motif": "ledger",
       "data-foreshadow": "genie",
       "content": [
@@ -451,6 +467,10 @@
     {
       "type": "section",
       "title": "Following the Hum",
+      "room": {
+        "spw": "!<sloe_hedge>@boof",
+        "air": "Down the slope with a warm thing at her chest, past a baneberry very sure of itself."
+      },
       "data-motif": "unspent-wish",
       "data-foreshadow": "genie",
       "content": [
@@ -497,6 +517,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "&(grove_mouth)@boof",
+        "air": "One bent honk out of the trees, nine geese a beat behind, and the egg humming in time."
+      },
       "climate": {
         "tempo": "sunset",
         "tint": "ember",

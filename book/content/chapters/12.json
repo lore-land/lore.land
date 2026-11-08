@@ -122,6 +122,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "*{plank_bridge}@boof",
+        "air": "Two springs share one bed without forgetting, and the wish is small enough to hold in a mouth."
+      },
       "data-mood": "path",
       "data-motif": "small-want",
       "climate": {
@@ -216,6 +220,10 @@
     },
     {
       "type": "custom-path",
+      "room": {
+        "spw": "^<far_furrow>@the_land",
+        "air": "Far upcountry one furrow stays warm, and a beetle cold since autumn finds a lit street."
+      },
       "scene": {
         "vantage": "waterline angle looking down the two-toned river channel as the wish begins to grant",
         "light": "sunlight skimming across swirling eddies of dark indigo and milky white, a warmth spreading upstream against the current",
@@ -246,6 +254,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "~<upstream_grove>@genie",
+        "air": "Spent to the last of himself, the Genie walks upstream to become an echo you can visit."
+      },
       "data-trope": "last-wish",
       "data-mask": "path",
       "scene": {
@@ -282,6 +294,10 @@
     {
       "type": "section",
       "title": "Both Receipts Posted",
+      "room": {
+        "spw": "&(bridge_deck)@boof",
+        "air": "Every thread comes down the road at once. A bitter pie splits clean down the crimp and is received warm."
+      },
       "data-motif": "berry-memory",
       "data-foreshadow": "ninth-honk",
       "content": [
@@ -386,6 +402,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "~<moon_lane>@boof",
+        "air": "A spent wish stays and becomes a place you can stand. The moon lane is only for going through."
+      },
       "data-motif": "ninth-honk",
       "data-foreshadow": "readers-wish",
       "scene": {

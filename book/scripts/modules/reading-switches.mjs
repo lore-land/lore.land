@@ -110,6 +110,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'room-by-room', attribute: 'data-switch-room-by-room', stage: 'trial', label: 'Room by room',
+    hint: 'A chapter opens one room at a time: the room you are in stands whole, rooms you have read fold to their signature, and the rest are doors until you reach them. Each room’s end has a door to the next.',
+    effect: { on: 'One room at a time; a door at the end of each opens the next.', off: 'The whole chapter is open again; the rooms keep their signatures.' }, region: 'main.chapter',
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', label: 'Reading line',
     hint: 'Paragraphs you are not reading dim a little.',
     effect: { on: 'Paragraphs you are not reading dim a little.', off: 'Every paragraph at full strength.' }, region: 'main.chapter',

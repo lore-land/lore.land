@@ -111,6 +111,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "={arched_hall}@boof",
+        "air": "Two slips lean toward the egg, the egg leans toward neither, and the floor hums under both."
+      },
       "data-mood": "song",
       "data-motif": "egg",
       "data-foreshadow": "bane-wish",
@@ -191,6 +195,10 @@
     },
     {
       "type": "custom-song",
+      "room": {
+        "spw": "^<note_stair>@the_song",
+        "air": "One note for a wish shared out, one for a wish locked away, and a sound you feel in your teeth."
+      },
       "scene": {
         "vantage": "inches from the open ledger, watching the silver bodkins vibrate",
         "light": "amber lamplight casting long dual shadows from the two pinned slips",
@@ -228,6 +236,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "$<split_desk>@the_floor",
+        "air": "A tuning fork against the split desk, and it is the wood that sings, in a key older than the room."
+      },
       "data-trope": "two-receipts",
       "data-mask": "song",
       "scene": {
@@ -264,6 +276,10 @@
     {
       "type": "section",
       "title": "Wish-Physics Over the Crack",
+      "room": {
+        "spw": "%{crack_gauge}@genie",
+        "air": "Calipers that measure in notes. Listen before you mend."
+      },
       "data-motif": "egg",
       "content": [
         {
@@ -339,6 +355,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "^<archway>@boof",
+        "air": "A map of what keeps what, her own nose in the middle, and the avenue toward Bonk City."
+      },
       "scene": {
         "vantage": "trotting through the counting house archway into the cobblestone avenue leading toward Bonk City",
         "light": "late afternoon shadows lengthening across the cobbles; the egg glowing warm gold in the sling",

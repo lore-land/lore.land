@@ -29,12 +29,16 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: =(oath_stone)@boof
+    air: "One blueberry on the oath-scale, the whole square hushed, and moths that settle only on a true promise."
     excerpt: "Boof smelled the market before she saw it: cut cress, wet wool, the chandler's warm tallow, {{cheese-stall}}, last autumn's apples gone wrinkled and crumb-sweet in the dark of a cart. Under all of it lay the sharp blu..."
     route: ^[chapter/07/s01]{open}
   >
   s02: <
     handle: "custom-shadow/02"
     type: "custom-shadow"
+    room: #[oath_shadow]@genie
+    air: "Every oath sworn at noon casts one: the clause nobody reads aloud, and a stranger it lands on."
     excerpt: "But every oath sworn in noon light casts one. The shadow lay across the grooves, dog-shaped, egg-shaped, cold, and it was not BaneWAP's — it was the oath's own dark half, the clause nobody reads aloud. The moths sat o..."
     handles: ["shadow-intro"]
     route: ^[chapter/07/s02]{open}
@@ -42,6 +46,8 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: *<awning_beam>@the_fool
+    air: "Kings swear on swords. Here it is one berry, and the clause the old songs always skip."
     excerpt: "From the dried-fruit stall's crossbeam, among strings of shrivelled berries, he laid it out like a set: the hero's vow, sampled from every saga that ever rattled a mead-hall — swords kissed, blood mingled, thrones pro..."
     route: ^[chapter/07/s03]{open}
   >
@@ -55,12 +61,16 @@
     handle: "section/05"
     type: "section"
     title: "The Shadow Price"
+    room: .{cooling_stone}@boof
+    air: "She stays until the stone cools and the crowd becomes people again."
     excerpt: "After the crowd thinned, Boof stayed, chin against the granite. Purple juice dried beside older stains, and the moths kept their places along it like a grey stitch in blue cloth. Somewhere, a stranger would be late be..."
     route: ^[chapter/07/s05]{open}
   }
   s06: <
     handle: "custom-fool/06"
     type: "custom-fool"
+    room: ~<long_alley>@the_stranger
+    air: "Stalls fold into barrows, and far away a cart keeps someone waiting."
     excerpt: "His voice thinned with the market bell. {{closing-up}}, shadows lengthened, and far away a cart kept someone waiting. No one in the square heard its driver call."
     route: ^[chapter/07/s06]{open}
   >

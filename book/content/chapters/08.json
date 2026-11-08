@@ -118,6 +118,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": ".[folded_faces]@the_well",
+        "air": "The water shows an older face first, and under it every face it has kept, folded like linen."
+      },
       "data-mood": "game",
       "data-motif": "berry-memory",
       "climate": {
@@ -199,6 +203,10 @@
     },
     {
       "type": "custom-game",
+      "room": {
+        "spw": "%(taproom)@genie",
+        "air": "Name a want and hear what it costs. An empire is easy. Supper everyone agrees on is not."
+      },
       "scene": {
         "vantage": "the tavern floor above the well, looking down the long table where the Genie sits pricing wishes like a card dealer",
         "light": "amber lamplight, brass instruments glinting, a needle on a karmic gauge that will not settle",
@@ -267,6 +275,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "=<trapdoor>@the_fool",
+        "air": "Boots over the shaft, a tap on the iron ring, and the tavern song handed back on-key."
+      },
       "data-trope": "tavern-game",
       "data-mask": "game",
       "scene": {
@@ -303,6 +315,10 @@
     {
       "type": "section",
       "title": "The Unpriceable Want",
+      "room": {
+        "spw": "#{well_rim}@the_well",
+        "air": "The needle comes back blank, the glass finds only the potboy, and the water names what nobody can read."
+      },
       "data-motif": "small-want",
       "content": [
         {
@@ -370,6 +386,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "~<rocky_ridge>@boof",
+        "air": "Up the ridge with the well’s answer warm against her ribs, listening for the ninth note."
+      },
       "data-motif": "ninth-honk",
       "data-foreshadow": "ninth-honk",
       "scene": {

@@ -33,7 +33,7 @@
  * ?fold= in the address asks it on arrival, so an expression can be shared.
  */
 
-import { semanticIndex } from './constellation.mjs?v=2026_11_05.A';
+import { semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 
 const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
 const pad = (n) => String(n).padStart(2, '0');

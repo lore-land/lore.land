@@ -29,6 +29,8 @@
     handle: "section/01"
     type: "section"
     title: "The Warm Furrow"
+    room: ~{warm_furrow}@boof
+    air: "Frost everywhere but here. The ground is keeping something warm, and it hums."
     excerpt: "Dawn smelled of {{dawn-smell}}. Boof put her nose to the ground and read the field the way she read it every morning: loam-dark under the rime, burr-rough along the fence-foot. Everything was where it belonged. The la..."
     route: ^[chapter/01/s01]{open}
   }
@@ -36,6 +38,8 @@
     handle: "custom-boof/02"
     type: "custom-boof"
     valence: "boon"
+    room: .[furrow_rim]@boof
+    air: "A candle just blown out, where only ant-warmth should be. She would have preferred a trail."
     excerpt: "Ant-warmth smelled earthy and even, like bread left under a cloth. This was sharper. A candle just blown out. Boof knew the paths to the kitchens, the mill with its flour-pale doorstep, and the grove nobody liked to n..."
     route: ^[chapter/01/s02]{open}
   >
@@ -43,6 +47,8 @@
     handle: "section/03"
     type: "section"
     title: "When a Berry Remembers"
+    room: =[berry_row]@the_berries
+    air: "One berry wakes with a gold seam, and row by row the field leans toward the trees."
     excerpt: "Every boonberry had been a blueberry once. A wish had passed over it on the way to being granted, leaving a little of its light behind. Most slept through everything: snow, crows, harvest. The town used them for suppe..."
     route: ^[chapter/01/s03]{open}
   }
@@ -56,6 +62,8 @@
     handle: "section/05"
     type: "section"
     title: "The Maps That Look Away"
+    room: #{map_house}@the_archivist
+    air: "Ink beads and rolls off the page. Only a pencilled tilde will hold."
     excerpt: "Before the frost was off the fences, Boof had carried the egg to the map-house in an old feed-sack. It was warm as a loaf and considerably heavier. She set it on the reading table. The archivist fetched a book. The ma..."
     route: ^[chapter/01/s05]{open}
   }
@@ -63,12 +71,16 @@
     handle: "section/06"
     type: "section"
     title: "Following the Hum"
+    room: !<sloe_hedge>@boof
+    air: "Down the slope with a warm thing at her chest, past a baneberry very sure of itself."
     excerpt: "Outside, the berries still leaned toward the grove, every row combed one way like wet fur. Boof had spent the morning asking a book. The field had been pointing all along. She settled the feed-sack against her chest, ..."
     route: ^[chapter/01/s06]{open}
   }
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
+    room: &(grove_mouth)@boof
+    air: "One bent honk out of the trees, nine geese a beat behind, and the egg humming in time."
     excerpt: "Evening laid long light across the field. Boof was hungry; somewhere uphill a kitchen was {{supper-smell}}, and the smell followed her like a dog that had not been told to stay. The egg was warm. For a while, that was..."
     route: ^[chapter/01/s07]{open}
   >

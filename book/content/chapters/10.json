@@ -120,6 +120,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": ".{timber_hall}@boof",
+        "air": "Nothing painted, nothing glued: a caret where a beam lifts, a dot where it stands, and the sling set on the dot."
+      },
       "data-mood": "bonk",
       "climate": {
         "tempo": "day",
@@ -215,6 +219,10 @@
     },
     {
       "type": "custom-bonk",
+      "room": {
+        "spw": "?{sill_beam}@bonewap",
+        "air": "A felt mallet asks the beam a question, and the answer comes up through the wood in gold."
+      },
       "data-motif": "small-want",
       "scene": {
         "vantage": "inches from the trestle table where the egg rests on a mortise dot cut into the sill beam, small brass load-bells hanging overhead",
@@ -257,6 +265,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "!<collar_beam>@the_fool",
+        "air": "Plaster sneezes. Oak does not. One knock from overhead, and the pie below signs it."
+      },
       "data-trope": "honest-audit",
       "data-mask": "bonk",
       "scene": {
@@ -293,6 +305,10 @@
     {
       "type": "section",
       "title": "What the Frame Would Bear",
+      "room": {
+        "spw": "^(anchor_stones)@the_valley",
+        "air": "Struck true, the hall is heard in every kitchen, and the saying softens at its edges the way told things do."
+      },
       "data-motif": "small-want",
       "data-foreshadow": "bane-wish",
       "content": [
@@ -388,6 +404,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "~<rear_archway>@boof",
+        "air": "The slice from Bonk City is still warm in its paper. She does not know why she carries it, and goes carefully."
+      },
       "scene": {
         "vantage": "stepping through the rear archway of Bone.land onto a stone terrace overlooking the long road down the valley",
         "light": "hard clear noon; far down the valley, a bruise-dark smudge of crust and hurry moving up the road",

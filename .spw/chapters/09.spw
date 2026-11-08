@@ -29,12 +29,16 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: #{roof_ridge}@boof
+    air: "Eight shards ring back to eight geese. The ninth honk passes over and finds nothing to answer it."
     excerpt: "The Fool had an art, and on the ridge above the town he finally showed Boof its bones. He laid his set out on the slates shard by shard — a lineage in nine pieces — for the unit of the art is the honk: a trope sampled..."
     route: ^[chapter/09/s01]{open}
   >
   s02: <
     handle: "custom-puzzle/02"
     type: "custom-puzzle"
+    room: &(eight_shards)@boof
+    air: "Eight pieces of a nine-piece combine are not a smaller combine. They are a heap that hums."
     excerpt: "The Fool laid out the shards. Three wishes; a trickster in a tree; a genie lately out of business. A vizier, baked bitter. Two claims splitting a floor. Glass streets, a blueberry oath, a tavern game that couldn't pri..."
     handles: ["puzzle-intro"]
     route: ^[chapter/09/s02]{open}
@@ -42,6 +46,8 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: ~<chimney_rim>@the_fool
+    air: "Amber steam through an empty mouthpiece. Not sound. Not yet."
     excerpt: "On the chimney rim he breathed through an empty mouthpiece of dark horn. Steam came out, amber. Not sound. Not yet."
     route: ^[chapter/09/s03]{open}
   >
@@ -55,12 +61,16 @@
     handle: "section/05"
     type: "section"
     title: "The Shape with One Hole"
+    room: ^{shard_ring}@boof
+    air: "The egg fits without a push, and from up here the whole field shows lit from underneath."
     excerpt: "The egg fitted without a push, and the heap stopped being a heap: eight shards answered together, their separate sounds drawing into one hum. Boof felt it through her nose. Here were the places she had walked, close e..."
     route: ^[chapter/09/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
+    room: =<pass_road>@boof
+    air: "The others can sing to the chimneys. This one needs walking."
     excerpt: "Down the ridge, past {{ridge-sights}}, Boof carried the unsounded note against her ribs. The others could stay on the roof and sing to the chimneys. This one needed walking. She had promised to wait until the want was..."
     route: ^[chapter/09/s06]{open}
   >

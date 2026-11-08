@@ -131,6 +131,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "!{round_archive}@the_land",
+        "air": "The ninth honk rolls out over the whole land at once, and the maps finally take the ink."
+      },
       "data-mood": "reflection",
       "data-motif": "ninth-honk",
       "climate": {
@@ -279,6 +283,10 @@
     },
     {
       "type": "custom-reflection",
+      "room": {
+        "spw": "#[great_book]@the_book",
+        "air": "A brace that closes is a finished record. On the desk, the shell: empty, light, still warm."
+      },
       "data-motif": "egg",
       "scene": {
         "vantage": "chin rested on the white oak desk, looking at the open vellum ledger as the canon writes itself",
@@ -320,6 +328,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": ".<starlight_aisle>@the_fool",
+        "air": "For once nothing clever. Each borrowed thing goes back where it belongs, never in a gap."
+      },
       "data-trope": "happily-ever-after",
       "data-mask": "boonhonk",
       "scene": {
@@ -361,6 +373,10 @@
     {
       "type": "section",
       "title": "The Blank Last Line",
+      "room": {
+        "spw": "~{last_line}@boof",
+        "air": "An open brace and no close: a room with one wall unbuilt that anybody might walk into."
+      },
       "data-motif": "unspent-wish",
       "content": [
         {
@@ -418,6 +434,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "!<shell_door>@boof",
+        "air": "Through the shell-shaped arch, into a morning that smells of gravel, grain, and places not yet visited."
+      },
       "data-motif": "egg",
       "scene": {
         "vantage": "looking through the luminous cracked eggshell door out onto a vast golden mountain dawn",

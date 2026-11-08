@@ -10,6 +10,9 @@
  *   slots      placeholders ↔ slots, clocks, variants, no wonder terms (c024)
  *   bracework  expression + gloss; read by the Spw interpreter (c025) — prose
  *              fallbacks are reported as notes, not errors
+ *   rooms      every section of the flow has a room: a signature the Spw
+ *              parser reads as op + one of the four containers + name +
+ *              @keeper, a one-line air; status set|drafting, due a real day
  *   almanac    each wonder's shape; its terms appear in its home and echoes
  *   sightings  the anchor phrases the sightings loop listens for
  *   canon      compass words, wages, the withheld name
@@ -20,10 +23,11 @@ import { readFile, readdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  LEANS, CONTENT_TYPES, CANON_REFUSALS, canonicalText, termPattern, checkParagraphSlots, checkWonder
+  LEANS, CONTENT_TYPES, CANON_REFUSALS, ROOM_STATUSES, ROOM_AIR_MAX, canonicalText, termPattern, checkParagraphSlots, checkWonder, isCalendarDay
 } from '../../schema/book-types.mjs';
 import { CUSTOM_ELEMENT_TYPES } from '../modules/story-lexicon.mjs';
 import { SIGHTINGS } from '../modules/sightings.mjs';
+import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = async (path) => JSON.parse(await readFile(resolve(ROOT, path), 'utf8'));
@@ -41,12 +45,42 @@ const almanac = await read('book/content/world/almanac.json');
 const serial = await read('book/content/serial.json');
 const wonderTerms = almanac.wonders.flatMap((w) => w.terms.map(termPattern));
 const SECTION_TYPES = new Set(['section', 'figure', ...CUSTOM_ELEMENT_TYPES]);
+const isRoomBlock = (section) => section?.type === 'section' || CUSTOM_ELEMENT_TYPES.includes(section?.type);
+const isPublished = (section) => section?.status !== 'drafting';
 
 let parse = null;
 try {
   ({ parse } = await import('../vendor/spw-seed.mjs'));
 } catch {
-  notes.push('Spw interpreter unavailable; bracework is checked for shape only.');
+  notes.push('Spw interpreter unavailable; bracework and room signatures are checked for shape only.');
+}
+
+/* Rooms (.spw/surfaces/rooms.spw): the signature, the air, and how it is released. */
+function checkRoom(section, at, names) {
+  const room = section.room;
+  if (!room || typeof room !== 'object') {
+    error(at, 'every section is a room: add "room": { "spw": "~{name}@keeper", "air": "…" }');
+    return;
+  }
+  const reading = readRoom(room.spw);
+  if (!reading) {
+    error(at, `room.spw "${room.spw ?? ''}" is not a room signature — one sigil, then [ ] { } ( ) or < > around a snake_case name, then @keeper`);
+  } else {
+    if (!ROOM_KINDS[reading.kind]) error(at, `room.spw ${room.spw}: the container must be one of [ ] { } ( ) < >`);
+    const problems = parse
+      ? roomShapeProblems(reading, parse(room.spw, { lexProfile: 'prose' }))
+      : roomShapeProblems(reading, { success: true, ast: {} }).filter((p) => !p.startsWith('the parser'));
+    problems.forEach((p) => error(at, `room.spw ${room.spw}: ${p}`));
+    if (names.has(reading.label)) error(at, `room.spw ${room.spw}: another room in this chapter is already called ${reading.label}`);
+    names.add(reading.label);
+  }
+  if (typeof room.air !== 'string' || !room.air.trim()) error(at, 'room.air: one line of the room’s air');
+  else if (/[\r\n]/.test(room.air)) error(at, 'room.air must be one line');
+  else if (room.air.length > ROOM_AIR_MAX) warn(at, `room.air is ${room.air.length} characters — an air is one breath (≤ ${ROOM_AIR_MAX})`);
+  if (section.status != null && !ROOM_STATUSES.includes(section.status)) error(at, `status must be ${ROOM_STATUSES.join(' | ')}`);
+  if (section.due != null && !isCalendarDay(section.due)) error(at, `due "${section.due}" must be a calendar day, YYYY-MM-DD`);
+  if (section.status === 'drafting' && section.due == null) error(at, 'a drafting room needs "due": "YYYY-MM-DD" — its door says the day it opens');
+  if (section.due != null && section.status !== 'drafting') notes.push(`${at}: due ${section.due} on a room already set (only a drafting door shows it)`);
 }
 
 const chapters = [];
@@ -67,9 +101,12 @@ for (const file of files) {
   ['title', 'description'].forEach((key) => { if (!data[key]) error(where, `missing ${key}`); });
   if (!Array.isArray(data.sections) || !data.sections.length) error(where, 'no sections');
 
+  const roomNames = new Set();
   (data.sections || []).forEach((section, i) => {
     const at = `${where} §${i + 1}`;
     if (!SECTION_TYPES.has(section.type)) error(at, `unknown section type ${section.type}`);
+    if (isRoomBlock(section)) checkRoom(section, at, roomNames);
+    else if (section.room || section.status || section.due) error(at, 'a plate hangs in a room and is not one: room, status and due belong on a section or a voice');
     if (section.type === 'figure') return;
     (section.content || []).forEach((item, j) => {
       const here = `${at}.${j + 1}`;
@@ -118,20 +155,23 @@ for (const file of files) {
     });
   }
 
-  const prose = JSON.stringify(data.sections.map((s) => ({ ...s, content: (s.content || []).map((c) => (c.type === 'paragraph' ? { ...c, text: canonicalText(c), slots: undefined } : c)) })));
+  const proseOfSections = (sections) => JSON.stringify(sections.map((s) => ({ ...s, content: (s.content || []).map((c) => (c.type === 'paragraph' ? { ...c, text: canonicalText(c), slots: undefined } : c)) })));
+  // Canon holds for drafts too; sightings must be on the page, so drafting rooms do not count for them.
+  const prose = proseOfSections(data.sections);
+  const pageProse = proseOfSections(data.sections.filter(isPublished));
   CANON_REFUSALS.forEach((refusal) => {
     const match = prose.match(refusal.pattern);
     if (match) error(where, `"${match[0]}" — ${refusal.why}`);
   });
   SIGHTINGS.filter((s) => s.chapter === n && s.phrase).forEach((s) => {
-    if (!prose.includes(s.phrase)) error(where, `sighting anchor removed: "${s.phrase}"`);
+    if (!pageProse.includes(s.phrase)) error(where, `sighting anchor removed: "${s.phrase}"`);
   });
 }
 
 /* The almanac: shape, and every wonder named in its home and each echo. */
 const ids = new Set();
 const proseOf = Object.fromEntries(chapters.map((c) => [c.chapterNumber,
-  c.sections.flatMap((s) => (s.content || []).filter((x) => x.type === 'paragraph').map((x) => `${canonicalText(x)} ${(x.children || []).map((k) => k.text || '').join(' ')}`)).join(' ')]));
+  c.sections.filter(isPublished).flatMap((s) => (s.content || []).filter((x) => x.type === 'paragraph').map((x) => `${canonicalText(x)} ${(x.children || []).map((k) => k.text || '').join(' ')}`)).join(' ')]));
 almanac.wonders.forEach((wonder) => {
   if (ids.has(wonder.id)) error('almanac', `duplicate id ${wonder.id}`);
   ids.add(wonder.id);

@@ -28,6 +28,8 @@
   s01: <
     handle: "custom-labyrinth/01"
     type: "custom-labyrinth"
+    room: =<back_lane>@the_city
+    air: "Every lane bends to see your face. A straight line comes out low, at the back wall."
     excerpt: "Bonk City has no straight streets. Its lanes curl like the inside of a shell. Its bronze posts lean together to {{post-talk}}. Every road into it bends at least twice on the way in, so that whichever gate you came by,..."
     route: ^[chapter/15/s01]{open}
   >
@@ -35,18 +37,24 @@
     handle: "section/02"
     type: "section"
     title: "The Parcel Gate"
+    room: ^<parcel_gate>@the_porter
+    air: "One rule kept thirty years, the gate before the storm, and tonight he holds it up anyway."
     excerpt: "The porter was hauling the gate shut when they came. He was a broad man with a lantern on a hook at his belt and the face of someone who has been told by a great many storms exactly what they think of open gates. The ..."
     route: ^[chapter/15/s02]{open}
   }
   s03: <
     handle: "custom-boof/03"
     type: "custom-boof"
+    room: @[horn_button]@boof
+    air: "A horn button with two holes. For a moment it is hard to say who is looking at whom."
     excerpt: "Boof shook the rain out of her ears and went to see what he was holding. It was a button: horn, a little scuffed, round, with two holes in it. Boof knew it. She had been under BoonWAP's table on the wet night somebody..."
     route: ^[chapter/15/s03]{open}
   >
   s04: <
     handle: "custom-reflection/04"
     type: "custom-reflection"
+    room: #{three_records}@the_city
+    air: "Written down three times by three careful hands, and every one of them right."
     excerpt: "That night the city wrote him down three times. The porter wrote him in the gate-book, in the columns the gate-book has. Received: one, at dusk, by hand. Shape: rectangular, with handle (separate). Condition: dry, whi..."
     route: ^[chapter/15/s04]{open}
   >
@@ -60,12 +68,16 @@
     handle: "section/06"
     type: "section"
     title: "Three Receipts"
+    room: &[arrivals_board]@bonewap
+    air: "Three records pinned side by side, sources named, and one more box ruled for what nobody knows."
     excerpt: "By breakfast the records office had all three, and the records office does not like a stranger to be three things. It sent for Mx. BoneWAP. BoneWAP came up from the lower town clean-boiled and exact, crust laid like a..."
     route: ^[chapter/15/s06]{open}
   }
   s07: <
     handle: "custom-boof/07"
     type: "custom-boof"
+    room: =(long_table)@the_city
+    air: "The city decides it was the dog and sets her at the second place, which was never for whoever sits in it."
     excerpt: "None of which was what the city was talking about. By noon the word had gone round every curve of Bonk City, as word does there, bouncing off the glass: the crier's notice had been right. Someone had come in at the pa..."
     route: ^[chapter/15/s07]{open}
   >

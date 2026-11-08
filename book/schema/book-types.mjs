@@ -55,6 +55,20 @@
  */
 
 /**
+ * A room (.spw/surfaces/rooms.spw): every section of a chapter's flow — a
+ * titled section or a voice — is one, read and released on its own. Its
+ * signature is one Spw expression: a motion (one of the twelve sigils), a
+ * container that says what kind of room it is, its name, and its keeper.
+ *   ~{warm_furrow}@boof   [ ] window · { } room · ( ) gathering · < > passage
+ * Read and checked by book/scripts/modules/room-signature.mjs.
+ * @typedef {'window'|'room'|'gathering'|'passage'} RoomKind
+ * @typedef {'set'|'drafting'} RoomStatus — a drafting room ships as its door (signature, air, due)
+ * @typedef {object} Room
+ * @property {string} spw — the signature: op + container(name) + @keeper
+ * @property {string} air — its personality, one line in the house voice
+ */
+
+/**
  * A chapter's "At the table" page (PLAN.E L19): the place as an RPG location.
  * @typedef {object} Table
  * @property {string} place
@@ -96,6 +110,16 @@ export const BEATS = Object.freeze(['!', '?', '~', '@', '&', '*', '^']);
 export const CONTENT_TYPES = Object.freeze(['paragraph', 'pull', 'bracework']);
 export const SLOT_PATTERN = /\{\{([a-z0-9-]+)\}\}/g;
 export const SLOT_VARIANTS = Object.freeze({ min: 3, max: 6 });
+export const ROOM_STATUSES = Object.freeze(['set', 'drafting']);
+export const ROOM_AIR_MAX = 140;
+
+/** A calendar day written YYYY-MM-DD that exists (no 30 February). */
+export function isCalendarDay(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value || ''))) return false;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
 
 /** Words the land never uses (canon): compass points, wages, the withheld name. */
 export const CANON_REFUSALS = Object.freeze([

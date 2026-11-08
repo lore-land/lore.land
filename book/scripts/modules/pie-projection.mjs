@@ -16,7 +16,7 @@
  * plainly (it holds for every chapter) and a door back into the carry.
  */
 
-import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.D';
+import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.J';
 import { applyGenre, readGenre } from './lens-control.mjs?v=2026_11_06.F';
 import { readStory } from './story-directions.mjs?v=2026_11_06.F';
 
@@ -128,7 +128,7 @@ export function initPieProjection({ chapterData } = {}) {
     } else {
       lines.push(mine
         ? `You have carried the pie through Chapter ${WORDS[n] || n} ${times}. Your own lens is set, so the carry does not lean it.`
-        : `You have carried the pie through Chapter ${WORDS[n] || n} ${times}, and the carry ${describeLean(entry.lean)}: the paragraphs lean that way a little.`);
+        : `You have carried the pie through Chapter ${WORDS[n] || n} ${times}, and the carry ${describeLean(entry.lean)}: the paragraphs lean that way a little.${entry.why ? ` (${entry.why}.)` : ''}`);
       if (held) lines.push(`Mimes Against WAP out-did the pie here, so it is harder to wonder about pie: ${spans.length || 'its'} pie word${spans.length === 1 ? ' has' : 's have'} gone quiet. Tap one to peek.`);
       else if (entry.maw === 'back') lines.push('You won this chapter back from the mimes.');
     }

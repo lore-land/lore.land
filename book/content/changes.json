@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.J",
+      "date": "2026-11-08",
+      "notes": [
+        "Every section of every chapter is a room now, with a name, a kind and a line of its own air: a window you may only look in, a room to stand in, a gathering where everything arrives together, a passage you go through. Each is written as a small Spw signature at its door, and a strip at the head of the chapter lights the rooms you have read. Try reading one room at a time with ?try=room-by-room.",
+        "In Exactly One Pie every card shows the spell it runs on, lit: each sigil in its own colour, each bracket knowing its pair, and what each part does said as you touch it. The game reads its rules from one Spw file now, and the chapters lean toward fairy tale, absurd reality or low magic by what you actually did, which each chapter page will tell you.",
+        "The game is also a test of the language it is written in: on its page, the rules can be compared, round-tripped and roughed up on purpose, and what turns up is written down for the workbench."
+      ]
+    },
+    {
       "release": "2026_11_08.I",
       "date": "2026-11-08",
       "notes": [

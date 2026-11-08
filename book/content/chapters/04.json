@@ -111,6 +111,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "&(council_table)@boof",
+        "air": "Seven weathercocks disagreeing make the weather. A law cut in the pine keeps both sides at one table."
+      },
       "data-mood": "mirror",
       "data-motif": "key",
       "climate": {
@@ -218,6 +222,10 @@
     },
     {
       "type": "custom-mirror",
+      "room": {
+        "spw": "@[weather_pane]@the_mirror",
+        "air": "Not your face in the glass, but what your wanting is becoming."
+      },
       "scene": {
         "vantage": "gazing into the upright glass pane on the table at eye level",
         "light": "the glass shimmers with trapped storm-clouds and sudden flashes of gold lightning",
@@ -247,6 +255,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "!<tabletop>@the_fool",
+        "air": "A hot hand-pie set down with a bow. In Boon.land the vizier is baked goods."
+      },
       "data-trope": "vizier-at-court",
       "data-mask": "councilor",
       "scene": {
@@ -283,6 +295,10 @@
     {
       "type": "section",
       "title": "No Key Covers the Egg",
+      "room": {
+        "spw": "?{key_rack}@boof",
+        "air": "Every civic key tried, and none fits. From under the table, the hem shows the vote first."
+      },
       "data-motif": "egg",
       "content": [
         {
@@ -366,6 +382,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "~<hill_stairs>@boof",
+        "air": "Down steps dished by boots that disagreed, toward two claims pinned side by side."
+      },
       "data-motif": "key",
       "data-foreshadow": "bane-wish",
       "scene": {

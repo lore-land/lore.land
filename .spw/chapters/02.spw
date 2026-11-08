@@ -30,18 +30,24 @@
     handle: "section/01"
     type: "section"
     title: "A Beat Late"
+    room: ?{hollow_cedar}@boof
+    air: "Everything here arrives twice, and the wren in the cedar is sure you are the one who is late."
     excerpt: "By the second morning, warmth had worked through sack and strap and settled against Boof's ribs. Behind her, the town maps still showed an ordinary field. Ahead, the berries' remembered route ran into birch and fern a..."
     route: ^[chapter/02/s01]{open}
   }
   s02: <
     handle: "custom-boof/02"
     type: "custom-boof"
+    room: $[listening_thicket]@boof
+    air: "Half a lullaby underfoot. Whatever a town will not say aloud drains downhill to here."
     excerpt: "The leaning berries had led her here—the grove beyond the last honest furrow, a place the town labeled as reserve growth and the workers called the listening thicket. Every step pressed an unfinished fragment out of t..."
     route: ^[chapter/02/s02]{open}
   >
   s03: <
     handle: "custom-boonberry/03"
     type: "custom-boonberry"
+    room: %[wild_vines]@the_berries
+    air: "Wild cousins of the field rows, brighter whenever an echo tastes of a future they remember."
     excerpt: "The berries here did not shine for the harvest. They were the wild cousins of the field rows: blueberries a wish had passed over long ago, each holding its drop of the granting. In the thicket they pulsed like grains ..."
     handles: ["grove"]
     route: ^[chapter/02/s03]{open}
@@ -49,6 +55,8 @@
   s04: <
     handle: "custom-echo/04"
     type: "custom-echo"
+    room: ~<forked_path>@the_echo
+    air: "Her own younger voice says follow me, and the path forks only to meet itself again."
     excerpt: "\"Follow me,\" said an echo that used Boof's own pitch from years earlier—the careful, hopeful voice she had used back when she still asked for things instead of working for them. The path forked around an ancient hollo..."
     route: ^[chapter/02/s04]{open}
   >
@@ -62,12 +70,16 @@
     handle: "section/06"
     type: "section"
     title: "What the Echo Keeps"
+    room: *{mossy_stone}@boof
+    air: "A whole day of tries, and only one held: the warm one on the stone, drying the moss pale."
     excerpt: "Boof paced the fork, nose to moss, while the grove offered {{offered-futures}}. Each future fitted nearly. That was the trouble. The wish stayed warm through all of them, and the hum kept coming back for another try. ..."
     route: ^[chapter/02/s06]{open}
   }
   s07: <
     handle: "custom-fool/07"
     type: "custom-fool"
+    room: ^<cedar_fork>@boof
+    air: "Someone in a cedar counts wishes wrong. Boof writes the note on the air and trots past."
     excerpt: "He leaned out of a cedar where no door had been cut, pollen on mismatched sleeves and {{collar-litter}} in his collar, one hand cupped to his mouth like a brass bell. He'd been the honk in the treeline, of course. He ..."
     route: ^[chapter/02/s07]{open}
   >

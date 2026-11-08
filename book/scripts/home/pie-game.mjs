@@ -64,6 +64,10 @@
  *   powers     every gift is a Spw spell (pie-powers.mjs): ~ what lasts, % how much, * charges,
  *              ! at once, &with / &without how the land answers. A visit can carry other spells
  *              (?powers=, or the bench on the page); each spill writes a provenance card in Spw.
+ *   rules      .spw/runtime/pie-rules.spw, read by the real Spw parser when the page is quiet
+ *              (pie-spw.mjs): =tune{} (TUNE), !knocks{} (over KNOCKS), *powers{} with the references
+ *              each dispatches (^card, !sound, @voice, a quoted path). The game is a stress test of
+ *              the language too: reads measured, readers compared, rules fuzzed (#pie-stress).
  *   berries    three kinds of foretelling (berries.json). Boonberries foresee kindly: filling,
  *              and a glimpse of the clear way, in teal. Baneberries foretell chaos that comes
  *              because it was said: let one past and its lane is posted in violet, and the knock
@@ -146,14 +150,16 @@
  * no rain, no bob, no shake, no flying clowns; every control the same.
  */
 
-import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.D';
-import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.D';
+import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.J';
+import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.H';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.H';
-import { POWER_SPELLS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.H';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.J';
+import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.J';
+import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.J';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.J';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -915,6 +921,43 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return { boon: 0, bane: 0, bone: 0, wap: 0, maw: held ? 2 : 0, mawSeen: held, held };
   };
   const tally = (key, k = 1) => { if (run?.tally) run.tally[key] += k; };
+  /* The three ways a chapter develops, and what moves it each way (=lean{} in pie-rules.spw; these
+   * defaults until the rules are read). Each event leans its category by its weight and is counted,
+   * so the chapter can say why it leans the way it does. Contest tallies (wap, maw) stay apart. */
+  const LEAN_DEFAULTS = Object.freeze({
+    satisfied: ['boon', 1], shared: ['boon', 1], kept: ['boon', 1], egg: ['boon', 1], sweetened: ['boon', 0.6],
+    boonberry: ['boon', 0.4], furrow: ['boon', 0.3], sighting: ['boon', 0.6], boonwap: ['boon', 0.3], boof: ['boon', 0.5],
+    knocked: ['bane', 1], boxed: ['bane', 0.8], bane_fed: ['bane', 0.6], scheme_ran: ['bane', 1], foretold: ['bane', 0.8],
+    flinched: ['bane', 0.6], let_past: ['bane', 0.3],
+    perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
+    caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4]
+  });
+  const LEAN_WORDS = Object.freeze({
+    satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
+    boonberry: 'boonberries', furrow: 'warm furrows', sighting: 'strokes noticed', boonwap: 'Mr. BoonWAP held court', boof: 'brushes past Boof',
+    knocked: 'knocks', boxed: 'slices boxed', bane_fed: 'baneberries fed to him', scheme_ran: 'schemes run', foretold: 'foretellings come true',
+    flinched: 'flinches', let_past: 'baneberries let past',
+    perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
+    caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid'
+  });
+  let leanRules = {};
+  const lean = (event, n = 1) => {
+    const [cat, w] = leanRules[event] || LEAN_DEFAULTS[event] || [];
+    if (!cat || !run?.tally) return;
+    tally(cat, w * n);
+    run.leanWhy = run.leanWhy || {};
+    run.leanWhy[event] = (run.leanWhy[event] || 0) + n;
+  };
+  /* The land answers in kind: the more a chapter has leaned one way, the more of that way's own
+   * things come up the lanes (boonberries for the fairy tale, baneberries for absurd reality,
+   * ramps of flour for low magic). Gentle, and held between 0.8× and 1.4×. */
+  const inKind = (cat) => {
+    const t = run?.tally;
+    if (!t) return 1;
+    const sum = t.boon + t.bane + t.bone;
+    if (sum < 3) return 1;
+    return clamp(0.8 + (t[cat] / sum) * TUNE.in_kind, 0.8, 1.4);
+  };
   const mawAhead = () => Boolean(run?.tally?.mawSeen && run.tally.maw > run.tally.wap + 0.5);
   const met = (kind) => record.met.includes(kind);
   const allowed = (kind) => !(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind);
@@ -1051,14 +1094,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.things.push(egg);
     }
     // Piles of flour: a little crust underfoot, and a ramp for a thrown slice.
-    if (Math.random() < 0.16 + d * 0.06) {
+    if (Math.random() < (0.16 + d * 0.06) * inKind('bone')) {
       const pile = makeThing('pile', pick(free));
       pile.y -= 20;
       run.things.push(pile);
     }
     // Baneberries: what Mr. BaneWAP is made of. Thicker on the ground while he is about, and where mimes are.
     const mimesAbout = run.things.some((other) => !other.wapped && (other.kind === 'mime' || other.kind === 'march'));
-    if (allowed('baneberry') && Math.random() < 0.05 + (run.bane ? 0.16 : 0) + (mimesAbout ? 0.14 : 0)) {
+    if (allowed('baneberry') && Math.random() < (0.05 + (run.bane ? 0.16 : 0) + (mimesAbout ? 0.14 : 0)) * inKind('bane')) {
       const bane = makeThing('baneberry', pick(free));
       bane.y -= 50;
       run.things.push(bane);
@@ -1070,7 +1113,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.things.push(beaver);
     }
     // Boonberries, the filling: more often when the filling runs low.
-    if (Math.random() < (run.filling < 0.3 ? 0.34 : 0.2)) {
+    if (Math.random() < (run.filling < 0.3 ? 0.34 : 0.2) * inKind('boon')) {
       const berry = makeThing('berry', pick(free));
       berry.y -= 60;
       run.things.push(berry);
@@ -1143,6 +1186,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.tags.push({ x: laneX(next), y: run.y - 84, t: 0, text: 'CAUGHT · STEADIED' });
       spawnRing(laneX(next), run.y - 18, 28, colors.gold);
       sfx('catch');
+      lean('caught');
       if (!run.caughtSaid) {
         run.caughtSaid = true;
         say('Caught the tilt: stepping under the lean steadies the plate.');
@@ -1229,11 +1273,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const SLICE_SPEED = 520;
   const SLICE_REACH = 430;
   const throwFrom = () => ({ x: run.x, y: run.y - 30 - jumpLift() });
-  const AIM_STEP = 0.13;
+  /* What the game is tuned by: these defaults, then =tune{} in .spw/runtime/pie-rules.spw, then a
+   * visit's own (the bench, ?powers=). Each value is held to a range, so a tune can change the feel
+   * of the lanes but never break them. */
+  const TUNE_RANGE = Object.freeze({
+    aim_step: [0.04, 0.4], knock_swing: [0, 0.4], pad_pace: [0.5, 1], slow_land: [0.3, 0.9],
+    foretell_after: [1, 8], flinch_chance: [0, 0.6], flinch_tilt: [0, 0.4], in_kind: [0, 1.5]
+  });
+  const TUNE = { aim_step: 0.13, knock_swing: 0.12, pad_pace: 0.85, slow_land: 0.55, foretell_after: 3.2, flinch_chance: 0.22, flinch_tilt: 0.16, in_kind: 0.9 };
+  const tuneWith = (values = {}) => Object.entries(values).forEach(([key, value]) => {
+    const range = TUNE_RANGE[key];
+    if (range && Number.isFinite(value)) TUNE[key] = clamp(value, range[0], range[1]);
+  });
+  /* What each knock costs, from !knocks{} when the rules are read (the code's KNOCKS until then). */
+  let knockRules = {};
   /** Turn the needle a notch (Q/E, [ ]); it holds there until something turns it again. */
   const turnAim = (dir) => {
     if (!run) return;
-    run.aim.a = clamp(run.aim.a + dir * AIM_STEP, -AIM_MAX, AIM_MAX);
+    run.aim.a = clamp(run.aim.a + dir * TUNE.aim_step, -AIM_MAX, AIM_MAX);
   };
   const whole = () => run.aura >= SLICE_COST && run.filling >= SLICE_COST;   // both ingredients on hand
   /* The pies grow with the aura: plenty of flour and boonberries make a bigger slice, and a more satisfying one. */
@@ -1449,7 +1506,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         sfx('ramp');
         spawnRing(thing.x, thing.y, 24, '#e0a95a', 0.45);
         run.tags.push({ x: shot.x, y: shot.y - 12, t: 0, text: shot.ramped.size > 1 ? `RAMP ×${shot.ramped.size}` : 'RAMP' });
-        tally('bone', 0.5);
+        lean('ramp');
         continue;
       }
       if (shot.loft > 0 && thing.kind !== 'clown' && thing.kind !== 'switch') {
@@ -1458,7 +1515,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           shot.ramped.add('mimes');
           run.tags.push({ x: shot.x, y: shot.y - 18, t: 0, text: 'OVER THE MIMES' });
           tally('wap');
-          tally('bone');
+          lean('over_mimes');
         }
         continue;   // lofted: over it
       }
@@ -1471,7 +1528,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         spawnRing(thing.x, thing.y, 26, '#f2c14e', 0.5);
         run.tags.push({ x: thing.x, y: thing.y - 22, t: 0, text: 'SWEETENED' });
         tally('wap');
-        tally('boon', 0.5);
+        lean('sweetened');
         if (!run.sweetSaid) {
           run.sweetSaid = true;
           say('A warm slice passed over a baneberry and sweetened its core. Mimes will leave it alone; step on it for filling.');
@@ -1481,7 +1538,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (WIDE.has(thing.kind)) {
         const inGap = shot.x > thing.gap * LANE_W && shot.x < (thing.gap + 1) * LANE_W;
         if (Math.abs(thing.y - shot.y) < thing.h * 0.5 + 4 && !inGap) {
-          if (thing.kind === 'march') { tally('maw'); tally('bane'); }
+          if (thing.kind === 'march') { tally('maw'); lean('boxed'); }
           return splat(shot, thing.kind === 'march' ? 'boxed by mimes' : 'splat');
         }
         continue;
@@ -1605,7 +1662,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         thing.wapT = 0.25;
         thing.spin = 0;
         run.shared += 1;
-        tally('boon');
+        lean('shared');
         shot.done = true;
         sfx('share');
         spawnRing(thing.x, thing.y, 26, colors.gold, 0.5);
@@ -1628,7 +1685,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       if (thing.kind === 'mime' || thing.kind === 'mimewall') {   // caught in an invisible box
         tally('maw');
-        tally('bane');
+        lean('boxed');
         return splat(shot, 'boxed');
       }
       if (thing.kind === 'wasps' || thing.kind === 'pigeon') return splat(shot, thing.kind === 'wasps' ? 'snatched by wasps' : 'a pigeon took it');
@@ -1673,7 +1730,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Baneberries reaching Mr. BaneWAP: here, his scheme lasts and quickens; away, he comes sooner and stays longer. */
   function feedBane(n, from) {
     run.baneStore = (run.baneStore || 0) + n;
-    tally('bane', n);
+    lean('bane_fed', n);
     if (run.bane) {
       run.bane.dur = Math.min(16, run.bane.dur + 1.2 * n);
       run.bane.nextBeat = Math.max(0.2, run.bane.nextBeat - 0.4 * n);
@@ -1719,7 +1776,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       thing.wapT = 0;
       thing.spin = pick([-1, 1]);
       run.satisfied += 1;
-      tally('boon');
+      lean('satisfied');
       tally('wap', 0.5);
       thanks(thing);
     } else {
@@ -1746,7 +1803,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     if (perfect) {
       run.perfects += 1;
-      tally('bone');
+      lean('perfect');
       run.wobble = Math.max(0, run.wobble - 0.3);
       spawnRing(thing.x, thing.y - 10, 32, '#f2c14e', 0.5);
       run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'PERFECT' });
@@ -1772,6 +1829,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.presenceEnded = run.t;
     run.foils += 1;
     tally('wap', 2);
+    lean('foiled');
     sfx('foil');
     spawnRing(thing.x, thing.y, 38, '#d6473e', 0.6);
     // His march goes home with him: Mimes Against WAP never stay for a foiled man.
@@ -2009,7 +2067,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!run?.leg || !run.tally) return '';
     const n = run.chapter;
     const t = run.tally;
-    const outcome = keepCarry(n, t);
+    const outcome = keepCarry(n, { ...t, why: leanWhyText().replace(/^Why: /, '').replace(/\.$/, '') });
     const lean = describeLean({ boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone });
     run.outcomes.push({ n, outcome, lean });
     if (outcome === 'won') return `Mimes Against WAP take ${chapterWords(n)}: it will be harder to wonder about pie there until you win it back.`;
@@ -2148,7 +2206,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       berries: { boon: run.berriesEaten.boon, squashed: run.squashed || 0, bone: run.berriesEaten.bone },
       powers: Object.entries(run.powersUsed).map(([id, whose]) => ({ id, whose })),
       cause,
-      spells: play.replaced.length ? visitSpells() : ''
+      spells: play.replaced.length || Object.keys(visitRead?.tune || {}).length || Object.keys(visitRead?.knocks || {}).length ? visitSpells() : '',
+      reader: bookRules?.reader || 'built-in',
+      parseMs: bookRules?.stats?.ms ?? null,
+      tune: visitRead?.tune || null
     }));
     record.reached = Math.max(record.reached, run.chapter);
     // Most of a chapter carried counts for it, spilled or not.
@@ -2231,7 +2292,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function knock(thing) {
     thing.knocked = true;
     if (run.hurtT > 0) return false;   // still steadying from the last one
-    const cost = KNOCKS[thing.kind] || { tilt: 0.45 };
+    const cost = { ...(KNOCKS[thing.kind] || { tilt: 0.45 }), ...(knockRules[thing.kind] || {}) };
     // How a carrier takes a knock: the porter barely, the clerk and the clown badly.
     let tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3);
     if (run.frill > 0) {
@@ -2243,13 +2304,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.stillT = 0;
     run.tiltDir = clamp(run.tiltDir + (thing.x < run.x ? 0.65 : -0.65), -1, 1);
     // A knock turns the carrier, and the needle turns with them, away from what hit.
-    run.aim.a = clamp(run.aim.a + (thing.x < run.x ? 0.12 : -0.12), -AIM_MAX, AIM_MAX);
+    run.aim.a = clamp(run.aim.a + (thing.x < run.x ? TUNE.knock_swing : -TUNE.knock_swing), -AIM_MAX, AIM_MAX);
     run.hurtT = 0.9;
     run.rattled = 0.6;
     run.shake = 0.28;
     run.knockT = 1.6;
     run.lastKnock = thing.kind;
-    tally('bane');
+    lean('knocked');
     if (thing.kind === 'mime' || thing.kind === 'mimewall' || thing.kind === 'march') tally('maw');
     sfx('knock');
     const lines = [`${cost.label || 'KNOCK'} · TILT +${Math.round(tilt * 100)}%`];
@@ -2301,6 +2362,28 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * the book. A visit may carry other spells (?powers=, or the bench on the page). */
   takePowersFromAddress();
   let play = powersInPlay();
+  /* The book's rules, read by the real Spw parser once the page is quiet (pie-spw.mjs), and a
+   * visit's own read the same way over them. Until they arrive the built-in spells play. */
+  let bookRules = null;
+  let visitRead = null;
+  const compose = () => {
+    const own = bookRules?.powers && Object.keys(bookRules.powers).length ? bookRules.powers : powersInPlay().powers;
+    const visitPowers = visitRead?.powers || {};
+    play = { powers: { ...own, ...visitPowers }, replaced: Object.keys(visitPowers).filter((id) => id in own), errors: visitRead?.errors || [] };
+    Object.assign(TUNE, { aim_step: 0.13, knock_swing: 0.12, pad_pace: 0.85, slow_land: 0.55, foretell_after: 3.2, flinch_chance: 0.22, flinch_tilt: 0.16, in_kind: 0.9 });
+    tuneWith(bookRules?.tune);
+    tuneWith(visitRead?.tune);
+    knockRules = { ...(bookRules?.knocks || {}), ...(visitRead?.knocks || {}) };
+    leanRules = { ...(bookRules?.lean || {}), ...(visitRead?.lean || {}) };
+  };
+  const readVisit = async () => { visitRead = visitSpells() ? await readRules(visitSpells()) : null; compose(); };
+  const whenQuiet = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 2500 }) : setTimeout(fn, 600));
+  whenQuiet(async () => {
+    bookRules = await loadRules();
+    await readVisit();
+    paintBench?.();
+    paintStress?.();
+  });
   const powerFor = (id) => play.powers[String(id).replace(/-/g, '_')] || null;
 
   /** Whether this carry is running on the book's own spell for a power, or a visit's replacement. */
@@ -2356,9 +2439,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     let what = 'berry';
     if (!kindly) {
       const knocks = ['wasps', 'spool', 'pigeon', 'stone', 'puddle'].filter(allowed);
-      what = Math.random() < 0.22 || !knocks.length ? 'flinch' : pick(knocks);
+      what = Math.random() < TUNE.flinch_chance || !knocks.length ? 'flinch' : pick(knocks);
     }
-    run.prophecies.push({ lane, what, kindly, t: 3.2, dur: 3.2 });
+    run.prophecies.push({ lane, what, kindly, t: TUNE.foretell_after, dur: TUNE.foretell_after });
     if (kindly) run.foretold.kind += 1;
     else run.foretold.said += 1;
     sfx(kindly ? 'sweet' : 'foretell', 0, laneX(lane));
@@ -2374,9 +2457,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (p.what === 'flinch') {
         // Self-fulfilling: whoever waits for it in that lane flinches, because they were waiting.
         if (laneAt(run.x) === p.lane) {
-          run.wobble = Math.min(1.2, run.wobble + 0.16);
+          run.wobble = Math.min(1.2, run.wobble + TUNE.flinch_tilt);
           run.foretold.came += 1;
-          tally('bane');
+          lean('flinched');
           sfx('fulfil', 0, x);
           run.tags.push({ x: run.x, y: run.y - 100, t: 0, text: 'FORETOLD · YOU FLINCHED' });
         } else {
@@ -2387,7 +2470,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const thing = makeThing(p.what, p.lane);
       thing.foretold = true;
       run.things.push(thing);
-      if (!p.kindly) run.foretold.came += 1;
+      if (!p.kindly) { run.foretold.came += 1; lean('foretold'); }
       sfx(p.kindly ? 'berry' : 'fulfil', 0, x);
       run.tags.push({ x, y: 60, t: 0, text: p.kindly ? 'AS FORETOLD, KINDLY' : 'AS FORETOLD' });
     });
@@ -2434,6 +2517,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     power.with.forEach((kind) => run.ecology.push({ kind, t: lasts, next: 0.5 }));
     power.without.forEach(quiet);
     run.powersUsed[power.id] = whosePower(power.id);
+    // References the spell dispatches: its card turns (the first time), wherever it was applied.
+    if (power.refs?.card && CARDS[power.refs.card]) turnCard(power.refs.card);
   }
   function keep(thing) {
     const w = thing.wonder;
@@ -2443,8 +2528,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.kept = true;
     run.kept += 1;
     (run.keptIds ||= []).push(w.id);
-    tally('boon');
-    sfx('wonder', w.kind);
+    lean('kept');
+    sfx(powerFor(w.id)?.refs?.sound || 'wonder', w.kind);
     spawnRing(thing.x, thing.y, 34, colors.gold, 0.55);
     let isNew = false;
     try { isNew = Boolean(collectWonder(w.id, run.chapter)?.isNew); } catch { /* kept in the run, if not the almanac */ }
@@ -2456,7 +2541,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.escort = { id: gift?.id || w.id, t: 3.5 };
     const sigil = KIND_SIGIL[w.kind] || '@';
     run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()}` });
-    showToast(`${sigil} ${w.name}${isNew ? ' · new to your almanac' : ' · kept'}`, gift.says, 3200, 'wonder');
+    showToast(`${sigil} ${w.name}${isNew ? ' · new to your almanac' : ' · kept'}`, gift?.says || '', 3200, gift?.refs?.voice || 'wonder');
     say(`${w.name}, kept${isNew ? ', and new to your almanac' : ''}. ${gift.says}`);
     markWonder(w.id, 'kept');
   }
@@ -2464,7 +2549,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.met = true;
     run.warm = 9;
     run.shield = true;
-    tally('boon');
+    lean('egg');
     sfx('egg');
     spawnRing(thing.x, thing.y, 40, '#f0ad58', 0.65);
     record.eggs = (record.eggs || 0) + 1;
@@ -2562,6 +2647,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         giftSpan.className = 'pie-flow-gift';
         giftSpan.textContent = giftText;
         li.append(sigil, name, note, giftSpan);
+        // The gift's spell says where the book has it (a quoted path, dispatched here as a link).
+        const where = (powerFor(w.id))?.refs?.path;
+        if (where) {
+          const link = document.createElement('a');
+          link.className = 'pie-flow-where';
+          link.href = `/${where.replace(/(chapter\/\d+)(#|$)/, '$1/$2')}`;
+          link.textContent = 'where the book has it →';
+          li.append(link);
+        }
         li.addEventListener('pointerenter', () => {
           flowProse?.querySelectorAll(`[data-term="${w.id}"]`).forEach((m) => m.classList.add('is-peek'));
         });
@@ -2638,6 +2732,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
     return bar;
   };
+  /** Why this chapter leans as it does: the two strongest reasons in each way it has moved. */
+  function leanWhyText() {
+    const why = run?.leanWhy || {};
+    const parts = ['boon', 'bane', 'bone'].map((cat) => {
+      const reasons = Object.entries(why)
+        .filter(([event]) => ((leanRules[event] || LEAN_DEFAULTS[event]) || [])[0] === cat)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 2)
+        .map(([event, n]) => `${Math.round(n)} ${LEAN_WORDS[event] || event.replace(/_/g, ' ')}`);
+      return reasons.length ? `${LEAN_NAMES[cat]}: ${reasons.join(', ')}` : null;
+    }).filter(Boolean);
+    return parts.length ? `Why: ${parts.join(' · ')}.` : 'Nothing has leaned it yet.';
+  }
   function paintNow(idleChap = chosenStartChapter) {
     if (!flowNow) return;
     if (state !== 'running' || !run?.tally) {
@@ -2681,7 +2788,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       span('pie-flow-now-head', `${chapterWords(run.chapter)}, so far`),
       span('pie-flow-now-ties', whoParts.join(' · ')),
       span('pie-flow-now-line', `Its reading ${describeLean(lean)}. (${LEAN_NAMES.boon}: ${Math.round(t.boon)} · ${LEAN_NAMES.bane}: ${Math.round(t.bane)} · ${LEAN_NAMES.bone}: ${Math.round(t.bone)})`),
-      bar
+      bar,
+      span('pie-flow-now-why', leanWhyText())
     ];
     if (t.mawSeen) {
       rows.push(span(`pie-flow-now-contest${ahead ? ' is-mimes' : ''}`, `Pie ${Math.round(t.wap)} · Mimes ${Math.round(t.maw)} — ${t.held
@@ -2748,7 +2856,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         run.strokes = res.count;
         if (res.isNew) {
           run.wobble = Math.max(0, run.wobble - 0.18);
-          tally('boon');
+          lean('sighting');
           run.tags.push({ x: run.x, y: run.y - 98, t: 0, text: '✦ STROKE NOTICED' });
           showToast(
             res.count === res.total ? 'The drawing is whole · 9 of 9' : `A sighting in the passage · ${res.count} of ${res.total}`,
@@ -2795,7 +2903,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     turnCard('boon');
     run.wobble = Math.max(0, run.wobble - 0.25);   // a steadying word, first
     run.lastPresence = 'boon';
-    tally('boon');
+    lean('boonwap');
     if (!met('boon')) { record.met.push('boon'); writeRecord(record); }
     if (mawAhead()) {
       // The mimes have the floor: harder to wonder about pie. He mimes his one true thing instead.
@@ -2830,7 +2938,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (state === 'running') {
       // The pace: gentle at first, building by the chapter and the minute. (A lag-stag lags the city, not the carrier.)
       const pace = Math.min(350, 150 + run.t * 2.2 + (run.chapter - 1) * 5 + run.lap * 40);
-      run.speed = pace * (run.lag > 0 ? 0.55 : 1);
+      run.speed = pace * (run.lag > 0 ? TUNE.slow_land : 1);
       run.scroll += run.speed * dt;
       if (progress() >= 1 && run.leg) {
         const note = closeLeg();
@@ -2931,7 +3039,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           run.things = run.things.filter((thing) => thing.kind !== 'switch' || thing.wapped);
           run.nextPresence = scene().presence === 'bane' ? rand(8, 12) : rand(15, 22);
           // Unfoiled, a scheme counts for him; a march run its course counts for the mimes.
-          tally('bane');
+          lean('scheme_ran');
           if (b.id === 'march') tally('maw', 2);
           showToast('Mr. BaneWAP withdraws.', '“This is not over.” It is, for now.', 2200, 'bane');
         }
@@ -2948,6 +3056,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         run.jumpCool = 0.22;
         if (run.deftHop || run.hopClears >= 2) {
           sfx('deft');
+          lean('deft');
           spawnRing(run.x, run.y + 10, 26, colors.gold, 0.45);
           run.wobble = Math.max(0, run.wobble - 0.12 * Math.max(1, run.hopClears || 1));
           run.sliceReady = Math.min(1, run.sliceReady + 0.35);
@@ -3002,8 +3111,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     // The pad's target: the carrier walks there a step at a time, at its own pace (no hurried steps).
     if (state === 'running' && run.target) {
-      if (run.target.lane !== run.lane && run.moveT >= 0.85) step(Math.sign(run.target.lane - run.lane));
-      else if (run.target.lane === run.lane && run.target.row !== run.row && run.moveT >= 0.85 && run.moveYT >= 0.85) climb(Math.sign(run.target.row - run.row));
+      if (run.target.lane !== run.lane && run.moveT >= TUNE.pad_pace) step(Math.sign(run.target.lane - run.lane));
+      else if (run.target.lane === run.lane && run.target.row !== run.row && run.moveT >= TUNE.pad_pace && run.moveYT >= TUNE.pad_pace) climb(Math.sign(run.target.row - run.row));
       else if (run.target.lane === run.lane && run.target.row === run.row && !run.target.held) run.target = null;
     }
     if (state === 'running') {
@@ -3084,6 +3193,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // Let past the pie, it foretells something for its lane, and saying it is what brings it.
           if (!thing.wapped && !thing.foretelling && thing.y > run.y + 18) {
             thing.foretelling = true;
+            lean('let_past');
             foretell(laneAt(thing.x));
           }
         }
@@ -3171,7 +3281,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           if (thing.fatal || SLIPS.has(thing.kind)) {
             thing.cleared = true;
             run.cleared += 1;
-            tally('bone', 0.5);
+            lean('hop_clear');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
             run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: 'CLEARED' });
@@ -3209,6 +3319,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             run.squashed = (run.squashed || 0) + 1;
             run.foretold.unsaid += 1;
             tally('wap');
+            lean('squashed');
             sfx('squash');
             run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: 'SQUASHED · UNSAID' });
             if (run.foretold.unsaid === 1) say('Squashed before it could say anything. Whatever it would have foretold will not come because of it.');
@@ -3221,7 +3332,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           thing.wapT = 0.6;
           thing.spin = 0;
           applyPower(powerFor('beaver'));
-          sfx('beaver');
+          sfx(powerFor('beaver')?.refs?.sound || 'beaver');
           run.tags.push({ x: thing.x, y: thing.y - 28, t: 0, text: 'SLOW BEAVER · BERRIES BEHIND IT' });
           if (!run.beaverSaid) {
             run.beaverSaid = true;
@@ -3248,7 +3359,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (thing.kind === 'furrow') {
           if (!thing.warmed) {
             thing.warmed = true;
-            tally('boon', 0.5);
+            lean('furrow');
             run.aura = Math.min(1, run.aura + 0.12);
             run.filling = Math.min(1, run.filling + 0.08);
             run.wobble = Math.max(0, run.wobble - 0.15);
@@ -3283,11 +3394,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           thing.wapped = true;
           thing.wapT = 0.7;
           thing.spin = 0;
-          sfx('berry', run.berriesEaten.boon);
+          sfx(powerFor('boonberry')?.refs?.sound || 'berry', run.berriesEaten.boon);
           spawnRing(thing.x, thing.y, 24, '#4d9f97', 0.45);
           applyPower(powerFor('boonberry'));
           run.berriesEaten.boon += 1;
-          tally('boon', 0.3);
+          lean('boonberry');
           run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: '+ FILLING · A GLIMPSE' });
           // Kindly foretelling: whether the berry showed it or you remembered it, the lane does not say.
           if (run.berriesEaten.boon === 1 || run.berriesEaten.boon % 4 === 0) say(pick(BOON_GLIMPSES));
@@ -3297,11 +3408,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           thing.wapped = true;
           thing.wapT = 0.7;
           thing.spin = 0;
-          sfx('bone');
+          sfx(powerFor('boneberry')?.refs?.sound || 'bone');
           spawnRing(thing.x, thing.y, 24, '#c9a99a', 0.45);
           applyPower(powerFor('boneberry'));
           run.berriesEaten.bone += 1;
-          tally('bone', 0.3);
+          lean('boneberry');
           const taste = boneFlavour();
           run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: `+ BOTH · FED · ${taste.toUpperCase()}` });
           if (run.berriesEaten.bone === 1 || run.berriesEaten.bone % 3 === 0) {
@@ -3339,6 +3450,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         run.boof.x += run.boof.vx * dt;
         if (!run.boof.touched && Math.abs(run.boof.x - run.x) < 32 && Math.abs(run.boof.y - (run.y - 10)) < 36) {
           run.boof.touched = true;
+          lean('boof');
           run.wobble = 0;
           run.tiltDir = 0;
           run.steadied = 1.6;
@@ -5509,6 +5621,58 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
   }
   /** A card's face: what it is in the story, what it does in the lanes, where the book has it; and, live, the moment it was met. */
+  /* A card's spell: a knock's line from !knocks{}, or the power its thing gives (pie-rules.spw). */
+  const CARD_POWER = Object.freeze({ berry: 'boonberry', boneberry: 'boneberry', beaver: 'beaver', wonder: 'creature' });
+  function spellFor(kind) {
+    const knock = bookRules?.knockSpells?.[kind];
+    if (knock) return { text: knock, kind: 'knock' };
+    if (KNOCKS[kind]) {
+      const k = { ...KNOCKS[kind], ...(knockRules[kind] || {}) };
+      const parts = [`%tilt[${k.tilt}]`, k.crust && `%crust[${k.crust}]`, k.filling && `%filling[${k.filling}]`, k.drop && '!drop', k.tax && '!tax', k.shove && '!shove', k.label && `#says["${k.label}"]`].filter(Boolean);
+      return { text: `*${kind}{ ${parts.join(' ')} }`, kind: 'knock' };
+    }
+    const id = CARD_POWER[kind];
+    const spells = bookRules?.spells || POWER_SPELLS;
+    if (id && spells[id]) return { text: spells[id], kind: 'power' };
+    if (id && play.powers[id]) return { text: writePower(play.powers[id]), kind: 'power' };
+    return null;
+  }
+  /** What an atom does, in plain words, for the spell's gloss. */
+  const explainAtom = (context) => (text, sigil, label) => {
+    const n = Number((/\[(-?\d+(?:\.\d+)?)\]/.exec(text) || [])[1]);
+    const arg = (/\[([^\]]*)\]/.exec(text) || [])[1];
+    const pctText = Number.isFinite(n) ? `${Math.round(n * 100)}%` : '';
+    if (context === 'knock') {
+      if (label === 'tilt') return `It tilts the pie ${pctText}.`;
+      if (label === 'crust' || label === 'filling') return `It takes ${pctText} of the ${label}.`;
+      if (label === 'drop') return 'It drops you a step back down the lanes.';
+      if (label === 'tax') return 'It taxes the next steps: they tilt more.';
+      if (label === 'shove') return 'It trips you a lane over.';
+    }
+    if (label === 'says') return `Said under the screen: ${arg || ''}`;
+    if (label === 'card') return `It turns the ${arg} card.`;
+    if (label === 'sound') return `It sounds like a ${arg}.`;
+    if (label === 'voice') return `Said in the ${arg} voice.`;
+    if (label === 'with') return `The land answers: ${arg} comes up the lanes.`;
+    if (label === 'without') return `The land answers: ${arg} ahead goes quiet.`;
+    if (label && WORDS[label]) return sigil === '~' ? `For ${n} s, ${WORDS[label]}.` : sigil === '%' ? `+${pctText} ${WORDS[label]}.` : sigil === '*' ? `${WORDS[label]}, ×${n}.` : `${WORDS[label]}.`;
+    if (sigil === '~' && /^"/.test(text.slice(1))) return 'Where the book has it.';
+    if (sigil === '*') return `${label || 'This'}: a thing with a spell of its own.`;
+    return '';
+  };
+  const bookLink = (path) => `/${String(path).replace(/(chapter\/\d+)(#|$)/, '$1/$2')}`;
+  function sendToBench(text) {
+    const area = document.querySelector('[data-pie-bench-spells]');
+    if (!area) return;
+    const label = (/^[!*]([a-z_]+)\{/.exec(text.trim()) || [])[1];
+    const kept = label ? area.value.replace(new RegExp(`\\*${label}\\s*\\{[^{}]*\\}`, 'g'), '').trim() : area.value.trim();
+    // A knock's line goes in as !knocks{ … }, so the bench reads it as a knock.
+    const entry = /^\*/.test(text.trim()) && KNOCKS[label] ? `!knocks{ ${text.trim()} }` : text.trim();
+    area.value = [kept, entry].filter(Boolean).join('\n');
+    area.dispatchEvent(new Event('input'));
+    area.closest('section')?.scrollIntoView({ block: 'start', behavior: reduced?.matches ? 'auto' : 'smooth' });
+    area.focus({ preventScroll: true });
+  }
   function renderCard(kind, { moment = null, isNew = false, live = false, compact = false } = {}) {
     const c = CARDS[kind];
     const face = nodeOf('article', `pie-cardface type-${c.type}${compact ? ' is-compact' : ''}`);
@@ -5535,6 +5699,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       (() => { const p = nodeOf('p', 'pie-cardface-lanes'); p.append(nodeOf('span', '', 'In the lanes'), ` ${c.lanes}`); return p; })(),
       chips,
       book);
+    // Its spell: the rule it runs on, from .spw/runtime/pie-rules.spw, lit; and a way to change it.
+    const spell = spellFor(kind);
+    if (spell) {
+      const box = nodeOf('div', 'pie-cardface-spell');
+      box.append(nodeOf('span', 'pie-cardface-spell-label', 'Its spell'), renderSpell(spell.text, { explain: explainAtom(spell.kind), link: bookLink, cast: !compact, label: `The spell for ${c.name}` }));
+      const change = nodeOf('button', 'pie-cardface-change', '✎ change it on the bench');
+      change.type = 'button';
+      change.addEventListener('click', () => sendToBench(spell.text));
+      box.append(change);
+      face.append(box);
+    }
     if (moment) {
       face.append(nodeOf('p', 'pie-cardface-moment', `Met in ${chapterWords(moment.chapter)}, under ${carrierById(moment.carrier).name}, row ${moment.row} of ${ROWS}, lane ${moment.lane}, at ${moment.speed} px/s, tilt ${pct(moment.tilt)}.`));
     }
@@ -5647,24 +5822,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const benchArea = bench?.querySelector('[data-pie-bench-spells]');
   const benchRead = bench?.querySelector('[data-pie-bench-read]');
   const benchStatus = bench?.querySelector('[data-pie-bench-status]');
-  function paintBenchRead() {
+  // The visit's spells, read as they are written: by the real parser when it has loaded (else the small reader).
+  let benchTimer = null;
+  async function paintBenchRead() {
     if (!benchRead) return;
-    const { powers, errors } = readSpells(benchArea.value);
-    const items = Object.values(powers).map((power) => {
-      const li = nodeOf('li', power.id in POWER_SPELLS ? '' : 'is-new');
-      li.append(nodeOf('code', '', `*${power.id}`), nodeOf('span', '', ` — ${describePower(power)}${power.id in POWER_SPELLS ? '' : ' (a new name: nothing in the lanes gives it yet)'}`));
+    const text = benchArea.value;
+    const read = text.trim() ? await readRules(text) : { powers: {}, errors: [], tune: {}, knocks: {}, quirks: [], reader: 'none' };
+    if (text !== benchArea.value) return;   // written over while it was being read
+    const known = bookRules?.powers || powersInPlay().powers;
+    const items = Object.values(read.powers).map((power) => {
+      const li = nodeOf('li', power.id in known ? '' : 'is-new');
+      li.append(nodeOf('code', '', `*${power.id}`), nodeOf('span', '', ` — ${describePower(power)}${power.id in known ? '' : ' (a new name: nothing in the lanes gives it yet)'}`));
       return li;
     });
-    errors.forEach((err) => items.push(nodeOf('li', 'is-error', err)));
+    Object.entries(read.tune || {}).forEach(([key, value]) => items.push(nodeOf('li', key in TUNE ? '' : 'is-new', `=${key}[${value}]${key in TUNE ? ` — tunes ${key.replace(/_/g, ' ')} (now ${TUNE[key]})` : ' — nothing is tuned by that name'}`)));
+    Object.keys(read.knocks || {}).forEach((kind) => items.push(nodeOf('li', KNOCKS[kind] ? '' : 'is-new', `!knocks *${kind} — ${Object.entries(read.knocks[kind]).map(([k, v]) => `${k} ${v}`).join(', ')}`)));
+    Object.entries(read.lean || {}).forEach(([event, [cat, w]]) => items.push(nodeOf('li', LEAN_DEFAULTS[event] ? '' : 'is-new', `=lean ${LEAN_NAMES[cat]} %${event}[${w}]${LEAN_DEFAULTS[event] ? ` — ${LEAN_WORDS[event]} lean ${LEAN_NAMES[cat]} by ${w}` : ' — nothing in the lanes is called that'}`)));
+    [...read.errors, ...(read.quirks || []).map((q) => `the parser: ${q}`)].forEach((err) => items.push(nodeOf('li', 'is-error', err)));
+    if (read.stats) items.push(nodeOf('li', 'is-meta', `read by ${read.reader} in ${read.stats.ms} ms${read.stats.complete ? '' : ' · not whole'}`));
     benchRead.replaceChildren(...items);
   }
   function paintBench() {
     if (!bench) return;
     const list = bench.querySelector('[data-pie-bench-list]');
-    const own = readSpells(Object.values(POWER_SPELLS).join('\n')).powers;
-    list?.replaceChildren(...Object.entries(POWER_SPELLS).map(([id, spell]) => {
+    const spells = bookRules?.spells && Object.keys(bookRules.spells).length ? bookRules.spells : POWER_SPELLS;
+    const own = bookRules?.powers && Object.keys(bookRules.powers).length ? bookRules.powers : readSpells(Object.values(POWER_SPELLS).join('\n')).powers;
+    list?.replaceChildren(...Object.entries(spells).map(([id, spell]) => {
       const li = nodeOf('li', play.replaced.includes(id) ? 'is-replaced' : '');
-      const code = nodeOf('code', 'pie-bench-spell', spell);
+      const code = renderSpell(spell, { explain: explainAtom('power'), link: bookLink, cast: false });
+      code.classList.add('pie-bench-spell', 'is-compact');
       const what = nodeOf('p', 'pie-bench-what', describePower(own[id]) + (play.replaced.includes(id) ? ' · replaced this visit' : ''));
       const take = nodeOf('button', 'pie-tool', 'Change this');
       take.type = 'button';
@@ -5680,32 +5866,89 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (benchArea && !benchArea.value) benchArea.value = visitSpells();
     paintBenchRead();
   }
-  benchArea?.addEventListener('input', paintBenchRead);
-  bench?.querySelector('[data-pie-bench-apply]')?.addEventListener('click', () => {
-    const { powers, errors } = readSpells(benchArea.value);
-    setVisitSpells(Object.keys(powers).length ? benchArea.value : '');
-    play = powersInPlay();
+  benchArea?.addEventListener('input', () => { clearTimeout(benchTimer); benchTimer = setTimeout(paintBenchRead, 350); });
+  bench?.querySelector('[data-pie-bench-apply]')?.addEventListener('click', async () => {
+    const read = benchArea.value.trim() ? await readRules(benchArea.value) : null;
+    const any = read && (Object.keys(read.powers).length || Object.keys(read.tune).length || Object.keys(read.knocks).length || Object.keys(read.lean || {}).length);
+    setVisitSpells(any ? benchArea.value : '');
+    await readVisit();
     paintBench();
-    benchStatus.textContent = play.replaced.length
-      ? `This visit carries with your spell${play.replaced.length === 1 ? '' : 's'} for ${play.replaced.join(', ')}.${errors.length ? ' Some words were not read; see above.' : ''} Your own game is unchanged.`
-      : 'Nothing here replaces a power in the lanes yet: use a name from the list.';
+    const parts = [
+      play.replaced.length && `your spell${play.replaced.length === 1 ? '' : 's'} for ${play.replaced.join(', ')}`,
+      Object.keys(visitRead?.tune || {}).length && `your tuning of ${Object.keys(visitRead.tune).join(', ').replace(/_/g, ' ')}`,
+      Object.keys(visitRead?.knocks || {}).length && `your knocks for ${Object.keys(visitRead.knocks).join(', ')}`,
+      Object.keys(visitRead?.lean || {}).length && `your weighing of ${Object.keys(visitRead.lean).map((e) => e.replace(/_/g, ' ')).join(', ')}`
+    ].filter(Boolean);
+    benchStatus.textContent = parts.length
+      ? `This visit carries with ${parts.join('; ')}.${read?.errors?.length ? ' Some words were not read; see above.' : ''} Your own game is unchanged.`
+      : 'Nothing here changes the lanes yet: use a name from the list, =tune{ … }, or !knocks{ … }.';
   });
   bench?.querySelector('[data-pie-bench-link]')?.addEventListener('click', async () => {
     if (!benchArea.value.trim()) { benchStatus.textContent = 'Write or change a spell first.'; return; }
     const link = powersLink(benchArea.value);
     try {
       await navigator.clipboard.writeText(link);
-      benchStatus.textContent = 'Copied. Whoever opens it carries with these spells for their visit; their own game stays theirs.';
+      benchStatus.textContent = 'Copied. Whoever opens it carries with these rules for their visit; their own game stays theirs.';
     } catch {
       benchStatus.textContent = link;
     }
   });
-  bench?.querySelector('[data-pie-bench-reset]')?.addEventListener('click', () => {
+  bench?.querySelector('[data-pie-bench-reset]')?.addEventListener('click', async () => {
     setVisitSpells('');
     benchArea.value = '';
-    play = powersInPlay();
+    await readVisit();
     paintBench();
-    benchStatus.textContent = 'Back to the book’s own spells.';
+    benchStatus.textContent = 'Back to the book’s own rules.';
+  });
+
+  /* ─── The stress test: what the game has learned about Spw (pie-spw.mjs) ─── */
+  const stressOut = document.querySelector('[data-pie-stress]');
+  let stressCross = [];
+  let stressFuzz = [];
+  function paintStress() {
+    if (!stressOut || !bookRules) return;
+    const s = bookRules.stats;
+    const lede = stressOut.querySelector('[data-pie-stress-lede]');
+    if (lede) {
+      lede.textContent = s
+        ? `The rules (${s.bytes} characters of Spw) were read by ${bookRules.reader} in ${s.ms} ms: ${s.complete ? 'whole' : 'not whole'}${s.proseFallback ? ', falling back to prose' : ''}, ${s.errors} error${s.errors === 1 ? '' : 's'}, ${s.warnings} warning${s.warnings === 1 ? '' : 's'}, ${s.gaps} gaps.`
+        : `The rules were read by the ${bookRules.reader} reader; the parser could not be loaded here.`;
+    }
+    const list = stressOut.querySelector('[data-pie-stress-list]');
+    const rows = [
+      ...(bookRules.quirks || []).map((q) => ['quirk', q]),
+      ...stressCross.map((f) => ['cross', f]),
+      ...stressFuzz.map((f) => ['fuzz', `${f.name}: ${f.complete ? 'read whole' : f.proseFallback ? 'fell back to prose' : 'not whole'}, ${f.errors} errors, ${f.warnings} warnings, ${f.ms} ms${f.quiet ? ' — reported success anyway' : ''}`])
+    ];
+    list?.replaceChildren(...(rows.length ? rows : [['ok', 'Nothing odd yet. Cross-read and fuzz to look harder.']]).map(([kind, text]) => {
+      const li = nodeOf('li', `is-${kind}`);
+      li.append(nodeOf('b', '', kind), nodeOf('span', '', ` ${text}`));
+      return li;
+    }));
+    const report = stressOut.querySelector('[data-pie-stress-report]');
+    if (report) {
+      report.dataset.text = stressReport({ read: bookRules, crossFindings: stressCross, fuzzed: stressFuzz });
+      report.replaceChildren(renderSpell(report.dataset.text, { cast: false }));
+    }
+  }
+  stressOut?.querySelector('[data-pie-stress-cross]')?.addEventListener('click', async (event) => {
+    if (!bookRules) return;
+    event.target.disabled = true;
+    stressCross = await crossRead(bookRules);
+    if (!stressCross.length) stressCross = ['every power read the same by both readers, and every one survived a round trip'];
+    event.target.disabled = false;
+    paintStress();
+  });
+  stressOut?.querySelector('[data-pie-stress-fuzz]')?.addEventListener('click', async (event) => {
+    if (!bookRules?.source) return;
+    event.target.disabled = true;
+    stressFuzz = [...stressFuzz, ...(await fuzz(bookRules.source, 8))].slice(-24);
+    event.target.disabled = false;
+    paintStress();
+  });
+  stressOut?.querySelector('[data-pie-stress-copy]')?.addEventListener('click', async (event) => {
+    const text = stressOut.querySelector('[data-pie-stress-report]')?.dataset.text || '';
+    try { await navigator.clipboard.writeText(text); event.target.textContent = 'Copied'; } catch { event.target.textContent = 'Select it and copy'; }
   });
 
   /* ─── Provenance: each carry written back as a Spw card (kept in this browser, the last five) ─── */
@@ -5723,7 +5966,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!body || !list.length) return;
     body.replaceChildren(...list.map((card, i) => {
       const box = nodeOf('div', `pie-provenance-card${i ? '' : ' is-latest'}`);
-      const pre = nodeOf('pre', '', card);
+      const pre = renderSpell(card, { explain: explainAtom('carry'), cast: i === 0 });
       const copy = nodeOf('button', 'pie-tool', i ? 'Copy' : 'Copy the latest');
       copy.type = 'button';
       copy.addEventListener('click', async () => {

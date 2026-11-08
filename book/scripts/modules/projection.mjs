@@ -34,7 +34,8 @@
  */
 
 import { readStory, storyLink } from './story-directions.mjs?v=2026_11_06.F';
-import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.D';
+import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_08.J';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
@@ -273,7 +274,12 @@ export function initProjectionSpell({ chapterData } = {}) {
     }
   });
   const peekText = () => clauses.filter((c) => c.source !== 'book' && c.key !== 'chapter').map(clauseText).join(' ') || '@reader{ the book’s own }';
-  const lineItems = () => clauses.map((c) => el('li', { className: `is-${c.source}` }, el('code', {}, clauseText(c)), el('span', {}, ` — ${clauseGloss(c)}`)));
+  // Each line lit as a spell: its sigils in their roles, and what it does said as it is touched.
+  const lineItems = () => clauses.map((c) => {
+    const spell = renderSpell(clauseText(c), { cast: false, explain: () => clauseGloss(c) });
+    spell.classList.add('is-compact');
+    return el('li', { className: `is-${c.source}` }, spell, el('span', {}, ` — ${clauseGloss(c)}`));
+  });
   const peek = el('code', { className: 'projection-spell-peek' }, peekText());
   const lines = el('ol', { className: 'projection-spell-lines' }, ...lineItems());
   const details = el('details', { className: 'projection-spell' },

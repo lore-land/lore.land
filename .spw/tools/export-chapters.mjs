@@ -185,6 +185,23 @@ function emitSection(section, chapterNumber, index) {
     lines.push(`    image: "${section.img.src}"`);
   }
 
+  /* The room's signature (.spw/surfaces/rooms.spw), unquoted like route:
+     a real Spw expression, checked by book:check against the parser. */
+  if (typeof section?.room?.spw === 'string' && section.room.spw.trim()) {
+    lines.push(`    room: ${section.room.spw.trim()}`);
+  }
+
+  if (typeof section?.room?.air === 'string' && section.room.air.trim()) {
+    lines.push(`    air: "${oneLine(section.room.air, 200).replace(/"/g, '\\"')}"`);
+  }
+
+  if (section?.status === 'drafting') {
+    lines.push('    status: "drafting"');
+    if (section.due) {
+      lines.push(`    due: "${section.due}"`);
+    }
+  }
+
   if (excerpt) {
     lines.push(`    excerpt: "${excerpt.replace(/"/g, '\\"')}"`);
   }

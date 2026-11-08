@@ -77,7 +77,9 @@ export function keepCarry(n, tally) {
     maw = 'won';
     outcome = 'won';
   }
-  all[n] = { carried: (prev.carried || 0) + 1, lean, maw, wonBack, at: new Date().toISOString().slice(0, 10) };
+  // Why it leans: the strongest reasons of the last carry, in words (pie-game.mjs leanWhyText).
+  const why = typeof tally.why === 'string' && tally.why && !/^Nothing/.test(tally.why) ? tally.why.slice(0, 220) : prev.why || null;
+  all[n] = { carried: (prev.carried || 0) + 1, lean, maw, wonBack, why, at: new Date().toISOString().slice(0, 10) };
   writeCarries(all);
   return outcome;
 }

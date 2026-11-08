@@ -50,6 +50,8 @@ Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html`
 | `sections` | Structured prose (paragraphs, figures, custom elements) |
 | `sections[].scene` | Optional sketch: `vantage` · `light` · `scent` · `edges[]` · `hint` |
 | `sections[].climate` | Optional copy hook: `tempo` · `tint` · `hook` · `strength` (drives scroll lighting) |
+| `sections[].room` | Required on every section and voice: `{ "spw": "~{warm_furrow}@boof", "air": "…" }`, the room's Spw signature and its one-line air (see Rooms below) |
+| `sections[].status`, `sections[].due` | `"drafting"` + `"YYYY-MM-DD"`: the room ships as a sealed door (signature, air, the day it opens) until it is set |
 | `lore.loreItems` | Field notes for the aside collector |
 
 Render order in `book/scripts/script.mjs`: **logline → title → epigraph → byline → pillars → topics → sections → related routes**.
@@ -66,6 +68,20 @@ Tempos: `night` · `dawn` · `morning` · `day` · `dusk` · `sunset` · `lampli
 Tints: `gold` · `teal` · `ember` · `archive` · `hearth` · `berry` · `night` · `brass` · `paper`.
 If omitted, the builder infers tempo from `scene.light` text.
 
+### Rooms
+
+Every section of a chapter (a titled section or a voice; plates are not rooms) is a **room**, read and released on its own. Its signature is one Spw expression that the real parser reads (`book:check` holds it to the shape): a motion, a container that says what kind of room it is, its name, and its keeper.
+
+```text
+~{warm_furrow}@boof      op · container(name) · @keeper
+[ ] window   look in        { } room       stand in it a minute
+( ) gathering all at once   < > passage    go through, never stay
+```
+
+The doorplate (signature, air, "room n of m") is set in each room at build time, with a strip of chips under the chapter title; `book/styles/components/rooms.css` gives each kind its reading personality and each motion an accent. `modules/rooms.mjs` lights the rooms a reader has finished (`lore.rooms.v1`) and runs the **Room by room** trial switch (`?try=room-by-room`): one room whole, read rooms folded to their signature, the rest doors, and at each room's end a door named by the next kind. Canon: `.spw/surfaces/rooms.spw`.
+
+**Releasing a room at a time.** Write the room in its chapter JSON with its `room`, and mark it `"status": "drafting", "due": "YYYY-MM-DD"`; the build publishes only its door, and its prose stays out of the page, `#chapter-data`, `search.json` and `semantic.json`. When it is ready, delete `status` and `due`, run `npm run book:check`, then `npm run chapters:build` (and `npm run spw:export`). A room that names a wonder for the first time must be set before the almanac can point to it.
+
 Editorial surface plan (scriptorium desk, seal checklist, phases): `.spw/surfaces/editorial.spw`.  
 Platform ship plan (PWA, social meta, Vite entries, canon-sync): `.spw/surfaces/platform.spw`.  
 Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
@@ -73,7 +89,7 @@ Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_11_08.I` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current cache release token: `2026_11_08.J` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
 
 ## Spw-Workbench Integration
 
@@ -241,7 +257,7 @@ Chapter `.spw` mirrors are long-form references for extension and semantic diffi
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_11_08.I` (single source: `cache-context.mjs` + `build-chapters.mjs`)
+- release token: `2026_11_08.J` (single source: `cache-context.mjs` + `build-chapters.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`

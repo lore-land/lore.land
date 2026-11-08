@@ -218,8 +218,17 @@ function extractReferenceHandles(node, source) {
   return handles;
 }
 
+/* A room's doorplate (chapter-render.mjs, rooms.css) is its signature, not
+   its prose: the handle reading and the perspectives look past it, so a
+   room's @keeper is never mistaken for a dangling reference. */
+function proseText(node) {
+  const text = node.textContent || '';
+  const plate = node.querySelector(':scope > .room-head')?.textContent || '';
+  return plate ? text.replace(plate, '') : text;
+}
+
 function classifySection(node, label, parseInfo = null) {
-  const text = `${label} ${node.textContent || ''}`;
+  const text = `${label} ${proseText(node)}`;
   const hasHeading = Boolean(node.querySelector('h2, h3, h4'));
   const hasQuestion = /\?/.test(text);
   const hasReference = Boolean(node.querySelector('[data-content_id], a[href^="#"]')) || /#>|@\[/.test(text);
@@ -365,7 +374,7 @@ export function initEbookNavigation(chapterData, options = {}) {
     }
 
     const label = labelFromSection(node, index);
-    const source = node.textContent || '';
+    const source = proseText(node);
     const parseInfo = parseSpwExpressions(source);
     const classification = classifySection(node, label, parseInfo);
     const primaryHandle = sanitizeHandle(

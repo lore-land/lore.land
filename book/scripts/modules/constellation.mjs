@@ -248,7 +248,9 @@ export function initConstellation({ announce } = {}) {
     document.querySelectorAll('main.chapter .section-marks .mark[data-mark]:not([data-constellation])').forEach((chip) => {
       const kind = ['motif', 'trope', 'foreshadow'].find((k) => chip.classList.contains(`mark--${k}`));
       if (!kind) return;
-      const button = el('button', { type: 'button', className: chip.className, dataset: { mark: chip.dataset.mark, constellation: `${kind}:${chip.dataset.mark}` }, title: `${chip.title} — where else it runs` }, chip.textContent);
+      // The chip's own words only: a resonance note (resonance-layer.mjs) is never part of its label.
+      const label = [...chip.childNodes].filter((n) => !(n.nodeType === 1 && n.classList.contains('resonance'))).map((n) => n.textContent).join('').trim();
+      const button = el('button', { type: 'button', className: chip.className, dataset: { mark: chip.dataset.mark, constellation: `${kind}:${chip.dataset.mark}` }, title: `${chip.title} — where else it runs` }, label);
       chip.replaceWith(button);
       bind(button);
     });

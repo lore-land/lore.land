@@ -67,8 +67,40 @@ export const WORDS = Object.freeze({
 });
 
 const clampTo = (n, max) => Math.max(0, Math.min(max, Number(n) || 0));
+/* References a power dispatches when it is applied: its card, its sound, whose voice says it, where the book has it. */
+const SOUNDS = Object.freeze(['berry', 'bone', 'beaver', 'wonder', 'sweet', 'egg', 'catch', 'deft']);
+const VOICES = Object.freeze(['boon', 'bane', 'wonder', 'flour', 'egg']);
 
-/** One spell (or several), read. Returns { powers: { id: power }, errors: [] }. */
+/**
+ * A power from its atoms, whichever reader found them: { sigil, word, args: [string|number], path? }.
+ * The one place ranges and vocabulary are held, so the small reader here and the real Spw parser
+ * (pie-spw.mjs) build the same thing from the same spell, and any difference is the readers'.
+ */
+export function buildPower(rawId, atoms, { says = '' } = {}) {
+  const id = String(rawId).toLowerCase().replace(/-/g, '_');
+  const power = { id, timed: {}, amounts: {}, charges: {}, acts: [], with: [], without: [], says: String(says).trim().slice(0, 240), refs: {} };
+  const errors = [];
+  atoms.forEach(({ sigil, word, args = [], path, whole }) => {
+    const key = String(word || '').toLowerCase();
+    const arg = args[0];
+    const name = whole || `${sigil}${key}${args.length ? `[${args.join(', ')}]` : ''}`;
+    if (path != null) power.refs.path = String(path);
+    else if (sigil === '#' && key === 'says') power.says = String(arg ?? '').trim().slice(0, 240);
+    else if (sigil === '~' && key in TIMED) power.timed[key] = clampTo(arg, TIMED[key]);
+    else if (sigil === '%' && key in AMOUNTS) power.amounts[key] = clampTo(arg, AMOUNTS[key]);
+    else if (sigil === '*' && key in CHARGES) power.charges[key] = Math.round(clampTo(arg, CHARGES[key]));
+    else if (sigil === '!' && ACTS.includes(key)) power.acts.push(key);
+    else if (sigil === '!' && key === 'sound' && SOUNDS.includes(String(arg))) power.refs.sound = String(arg);
+    else if (sigil === '@' && key === 'voice' && VOICES.includes(String(arg))) power.refs.voice = String(arg);
+    else if (sigil === '^' && key === 'card' && /^[a-z][a-z-]*$/.test(String(arg))) power.refs.card = String(arg);
+    else if (sigil === '&' && key === 'with' && WITH.includes(String(arg).trim())) power.with.push(String(arg).trim());
+    else if (sigil === '&' && key === 'without' && WITHOUT.includes(String(arg).trim())) power.without.push(String(arg).trim());
+    else errors.push(`*${id}: ${name} is not a word the lanes know.`);
+  });
+  return { power, errors };
+}
+
+/** One spell (or several), read by the small reader. Returns { powers: { id: power }, errors: [] }. */
 export function readSpells(text) {
   const powers = {};
   const errors = [];
@@ -76,25 +108,19 @@ export function readSpells(text) {
   const blocks = [...src.matchAll(/\*([a-z][a-z0-9_-]*)\s*\{([^{}]*)\}/gi)];
   if (!blocks.length && src.trim()) errors.push('No power found: a power is *name{ … }.');
   blocks.forEach(([, rawId, body]) => {
-    const id = rawId.toLowerCase().replace(/-/g, '_');
-    const power = { id, timed: {}, amounts: {}, charges: {}, acts: [], with: [], without: [], says: '' };
     const says = /#says\[\s*"([^"]*)"\s*\]/i.exec(body);
-    if (says) power.says = says[1].trim().slice(0, 240);
-    const rest = body.replace(/#says\[\s*"[^"]*"\s*\]/gi, ' ');
-    const atoms = [...rest.matchAll(/([~%*!&#])([a-z][a-z_]*)(?:\[([^\]]*)\])?/gi)];
-    atoms.forEach(([whole, sigil, word, arg]) => {
-      const key = word.toLowerCase();
-      if (sigil === '~' && key in TIMED) power.timed[key] = clampTo(arg, TIMED[key]);
-      else if (sigil === '%' && key in AMOUNTS) power.amounts[key] = clampTo(arg, AMOUNTS[key]);
-      else if (sigil === '*' && key in CHARGES) power.charges[key] = Math.round(clampTo(arg, CHARGES[key]));
-      else if (sigil === '!' && ACTS.includes(key)) power.acts.push(key);
-      else if (sigil === '&' && key === 'with' && WITH.includes(String(arg).trim())) power.with.push(String(arg).trim());
-      else if (sigil === '&' && key === 'without' && WITHOUT.includes(String(arg).trim())) power.without.push(String(arg).trim());
-      else errors.push(`*${id}: ${whole} is not a word the lanes know.`);
+    let rest = body.replace(/#says\[\s*"[^"]*"\s*\]/gi, ' ');
+    const atoms = [];
+    rest = rest.replace(/~"([^"]*)"/g, (_, path) => { atoms.push({ sigil: '~', path }); return ' '; });
+    const ATOM = /([~%*!&#^@])([a-z][a-z_]*)(?:\[([^\]]*)\])?/gi;
+    [...rest.matchAll(ATOM)].forEach(([whole, sigil, word, arg]) => {
+      atoms.push({ sigil, word, whole, args: arg == null ? [] : arg.split(',').map((a) => a.trim()) });
     });
-    const leftover = rest.replace(/([~%*!&#])([a-z][a-z_]*)(?:\[([^\]]*)\])?/gi, '').trim();
-    if (leftover) errors.push(`*${id}: “${leftover.slice(0, 40)}” was not read.`);
-    powers[id] = power;
+    const built = buildPower(rawId, atoms, { says: says ? says[1] : '' });
+    powers[built.power.id] = built.power;
+    errors.push(...built.errors);
+    const leftover = rest.replace(ATOM, '').trim();
+    if (leftover) errors.push(`*${built.power.id}: “${leftover.slice(0, 40)}” was not read.`);
   });
   return { powers, errors };
 }
@@ -132,10 +158,11 @@ export function setVisitSpells(text) {
 export function takePowersFromAddress() {
   try {
     const url = new URL(location.href);
-    const given = url.searchParams.get('powers');
+    const given = url.searchParams.get('powers') || url.searchParams.get('rules');
     if (!given) return;
     setVisitSpells(given);
     url.searchParams.delete('powers');
+    url.searchParams.delete('rules');
     history.replaceState(history.state, '', url.toString());
   } catch { /* no address to read */ }
 }
@@ -177,6 +204,9 @@ export function carryProvenance(c) {
     `  *powers{ ${c.powers.length ? c.powers.map((p) => `${p.id}: ${p.whose}`).join(' ') : 'none used'} }`,
     `  ^spilled[${c.cause}]`
   ];
+  // How the rules were read, and any tuning the visit carried.
+  if (c.reader) lines.push(`  %rules{ reader: ${c.reader}${c.parseMs != null ? ` parse_ms: ${c.parseMs}` : ''} }`);
+  if (c.tune && Object.keys(c.tune).length) lines.push(`  =tune{ ${Object.entries(c.tune).map(([k, v]) => `=${k}[${v}]`).join(' ')} }`);
   // The visit's own spells, when it carried with any: nested as written, so the card can be carried with again.
   if (c.spells) lines.push('  &spells{', ...c.spells.split('\n').map((line) => line.trim()).filter(Boolean).map((line) => `    ${line}`), '  }');
   lines.push('}');

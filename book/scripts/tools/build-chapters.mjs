@@ -11,7 +11,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_08.I';
+const RELEASE = '2026_11_08.J';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
@@ -45,8 +45,18 @@ const serial = JSON.parse(await readFile(SERIAL_PATH, 'utf8'));
 const almanac = JSON.parse(await readFile(ALMANAC_PATH, 'utf8'));
 const wonders = (almanac.wonders || []).map(({ id, kind, terms }) => ({ id, kind, terms }));
 const wonderNames = Object.fromEntries((almanac.wonders || []).map((w) => [w.id, w.name]));
+/* Releasing the story a room at a time (.spw/surfaces/rooms.spw): a section
+ * marked "status": "drafting" is published as its door — type, signature,
+ * air and due date — and nothing else. Its title and prose stay out of the
+ * page, #chapter-data, search.json and semantic.json until the maker sets it. */
+const publishedChapter = (chapter) => ({
+  ...chapter,
+  sections: (chapter.sections || []).map((section) => (section.status === 'drafting'
+    ? { type: section.type, status: 'drafting', due: section.due, room: section.room }
+    : section))
+});
 const chapters = await Promise.all(filenames.map(async (filename) => (
-  JSON.parse(await readFile(resolve(CONTENT_DIR, filename), 'utf8'))
+  publishedChapter(JSON.parse(await readFile(resolve(CONTENT_DIR, filename), 'utf8')))
 )));
 /* Which chapters name each wonder (canonical text, slots resolved), so a
  * chapter's colophon can say where else its wonders live. */
@@ -260,6 +270,8 @@ for (const chapter of chapters) {
         id = titled;
       }
     }
+    // A drafting room keeps its place in the count (its door is a section on the page) but nothing else.
+    if (block.status === 'drafting') continue;
     // A voice's name alone repeats down a list; its opening words tell chambers apart.
     const opening = (paragraphsOf(block)[0]?.text || '').trim().split(/\s+/).slice(0, 4).join(' ').replace(/[,.;:!?]+$/, '');
     const kicker = storyVoiceFor(block.type)?.kicker || block.type.replace('custom-', '');

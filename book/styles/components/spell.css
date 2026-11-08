@@ -1,0 +1,194 @@
+/*
+ * spell.css — a Spw expression shown as a spell (spw-spell.mjs).
+ *
+ * Every sigil carries its role's ink, leaned toward the page's own ink so it reads on any cover
+ * (a light cover darkens the hue, a dark one lightens it). An atom lit by hover or focus glows in
+ * its role; a bracket lit lights its pair. On first sight the spell is written in light, glyph by
+ * glyph (--i), and its sigils flare once. Reduced motion: written at once, still lit on hover.
+ */
+
+.spell {
+  --spell-ink: var(--hub-ink, var(--color-text-main, #1d1d22));
+  --spell-muted: var(--hub-muted, var(--color-text-alt, #5b6472));
+  --spell-paper: var(--hub-panel, var(--color-background-panel, #fbf7ef));
+  --spell-gold: var(--hub-gold, var(--color-gold, #c4922e));
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--spell-gold) 35%, transparent);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--spell-gold) 9%, transparent), transparent 60%),
+    color-mix(in srgb, var(--spell-paper) 88%, var(--spell-ink) 3%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 18%, transparent);
+}
+
+.spell-line {
+  display: block;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: var(--spell-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: none;
+}
+
+/* The twelve roles, each a hue; type leans it toward the ink. */
+.spell .op-probe { --role: #2f6688; }
+.spell .op-potential { --role: #2c8b86; }
+.spell .op-perspective { --role: #7a4f8e; }
+.spell .op-confluence { --role: #b0602a; }
+.spell .op-value { --role: #c4922e; }
+.spell .op-integration { --role: #8a4fb0; }
+.spell .op-action { --role: #c0392b; }
+.spell .op-annotation { --role: #9a7a20; }
+.spell .op-ground { --role: #5d6a73; }
+.spell .op-config { --role: #2b5aa6; }
+.spell .op-measure { --role: #3d7a3a; }
+.spell .op-substrate { --role: #7a5a44; }
+
+.spell-atom {
+  border-radius: 0.3rem;
+  transition: background-color 160ms ease, box-shadow 160ms ease;
+  outline: none;
+}
+
+.spell-sigil {
+  font-weight: 700;
+  color: color-mix(in srgb, var(--role, var(--spell-gold)) 72%, var(--spell-ink));
+  text-shadow: 0 0 0.45em color-mix(in srgb, var(--role, var(--spell-gold)) 40%, transparent);
+}
+
+.spell-label {
+  color: color-mix(in srgb, var(--role, var(--spell-ink)) 38%, var(--spell-ink));
+}
+
+.spell-atom.is-lit,
+.spell-atom:focus-visible {
+  background: color-mix(in srgb, var(--role, var(--spell-gold)) 14%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--role, var(--spell-gold)) 45%, transparent), 0 0 0.9em color-mix(in srgb, var(--role, var(--spell-gold)) 22%, transparent);
+}
+
+.spell-atom.is-lit .spell-sigil,
+.spell-atom:focus-visible .spell-sigil {
+  text-shadow: 0 0 0.6em color-mix(in srgb, var(--role, var(--spell-gold)) 70%, transparent), 0 0 0.15em color-mix(in srgb, var(--role, var(--spell-gold)) 60%, transparent);
+}
+
+.spell-bracket {
+  color: color-mix(in srgb, var(--spell-ink) 55%, transparent);
+  transition: color 120ms ease, text-shadow 120ms ease;
+}
+
+.spell-bracket.is-paired {
+  color: color-mix(in srgb, var(--spell-gold) 70%, var(--spell-ink));
+  text-shadow: 0 0 0.5em color-mix(in srgb, var(--spell-gold) 60%, transparent);
+}
+
+.spell-string {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  font-size: 1.05em;
+  color: color-mix(in srgb, var(--spell-ink) 82%, var(--spell-muted));
+}
+
+.spell-number {
+  color: color-mix(in srgb, var(--spell-gold) 55%, var(--spell-ink));
+  font-weight: 600;
+}
+
+.spell-path {
+  color: color-mix(in srgb, var(--hub-accent, var(--color-accent-main, #246270)) 70%, var(--spell-ink));
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.spell-word {
+  color: color-mix(in srgb, var(--spell-ink) 85%, transparent);
+}
+
+.spell-gloss {
+  max-width: none;
+  min-height: 1.3em;
+  margin: 0.25rem 0 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--spell-muted);
+}
+
+.spell-gloss:empty::before {
+  content: "Touch a sigil to hear what it does.";
+  opacity: 0.85;
+}
+
+/* Written in light: each glyph inks in after the one before, and the sigils flare once. */
+.spell.is-uncast :is(.spell-sigil, .spell-label, .spell-bracket, .spell-string, .spell-path, .spell-number, .spell-word, .spell-other) {
+  opacity: 0;
+}
+
+.spell.is-casting :is(.spell-sigil, .spell-label, .spell-bracket, .spell-string, .spell-path, .spell-number, .spell-word, .spell-other) {
+  animation: spell-ink 420ms ease both;
+  animation-delay: calc(min(var(--i, 0), 120) * 14ms);
+}
+
+.spell.is-casting .spell-sigil {
+  animation: spell-ink 420ms ease both, spell-flare 900ms ease-out both;
+  animation-delay: calc(min(var(--i, 0), 120) * 14ms), calc(min(var(--i, 0), 120) * 14ms);
+}
+
+@keyframes spell-ink {
+  from { opacity: 0; filter: blur(3px); transform: translateY(0.15em); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+@keyframes spell-flare {
+  0% { text-shadow: 0 0 0 transparent; }
+  35% { text-shadow: 0 0 0.9em color-mix(in srgb, var(--role, var(--spell-gold)) 85%, transparent), 0 0 0.2em var(--role, var(--spell-gold)); }
+  100% { text-shadow: 0 0 0.45em color-mix(in srgb, var(--role, var(--spell-gold)) 40%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spell.is-uncast :is(.spell-sigil, .spell-label, .spell-bracket, .spell-string, .spell-path, .spell-number, .spell-word, .spell-other) {
+    opacity: 1;
+  }
+
+  .spell.is-casting :is(.spell-sigil, .spell-label, .spell-bracket, .spell-string, .spell-path, .spell-number, .spell-word, .spell-other) {
+    animation: none;
+  }
+}
+
+/* A compact spell: inline in a card or a list, no box of its own. */
+.spell.is-compact {
+  padding: 0.3rem 0.45rem;
+  border-style: dashed;
+  background: color-mix(in srgb, var(--spell-paper) 70%, transparent);
+}
+
+.spell.is-compact .spell-line {
+  font-size: 0.7rem;
+}
+
+.spell.is-compact .spell-gloss {
+  font-size: 0.76rem;
+}
+
+/* In a chapter's projection: each line a small spell, inline with what it does; where it came
+ * from (a link's visit, a carry) marks its edge. */
+main.chapter .projection-spell-lines .spell {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+main.chapter .projection-spell-lines .spell-gloss {
+  display: none;
+}
+
+main.chapter .projection-spell-lines li.is-visit .spell {
+  border-color: color-mix(in srgb, var(--color-accent-main, #246270) 55%, transparent);
+}
+
+main.chapter .projection-spell-lines li.is-carries .spell {
+  border-color: color-mix(in srgb, var(--color-berry, #5b3a6e) 55%, transparent);
+}

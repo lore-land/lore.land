@@ -29,18 +29,24 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: ${kiln_gate}@boof
+    air: "Every pane was once a blow. The kiln melts the hurt out and pours it off clear."
     excerpt: "Boof trotted into Bonk City the way you step into the acoustic chamber of a struck bell. The streets did not follow straight surveyor lines; they formed a Fool’s Labyrinth of curving bronze posts, rain-slick arches, a..."
     route: ^[chapter/06/s01]{open}
   >
   s02: <
     handle: "custom-labyrinth/02"
     type: "custom-labyrinth"
+    room: .<mirrored_alley>@the_labyrinth
+    air: "Panes hung backward show you yourself. Follow the silver loops the snails have cleared."
     excerpt: "“Every pane will offer you your own warmth,” said a voice behind the glass. Boof turned. Three reflections turned with her. “Very flattering. Very little supper.” In the corner of every pane a glazier had etched two m..."
     route: ^[chapter/06/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: ^<lamp_ladder>@the_fool
+    air: "One tap of a brass bell into a dent, and the post remembers heat."
     excerpt: "From the top rung of the lamplighter’s lamp-ladder he tapped the brass bell into a crease, and the post remembered heat. Old impact, sampled; returned as light, with interest. That, he remarked to no one and everyone,..."
     route: ^[chapter/06/s03]{open}
   >
@@ -54,12 +60,16 @@
     handle: "section/05"
     type: "section"
     title: "The Pie at the Table"
+    room: ?(round_plaza)@boonwap
+    air: "Eleven slices out and the pie still whole, and one question she cannot answer yet."
     excerpt: "Every street eventually arrived at a round plaza. At its center, on an oak table, a warm boonberry pie held court. Rain had followed them into the plaza in the folds of coats and the soles of shoes. It steamed from th..."
     route: ^[chapter/06/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
+    room: ~<iron_gate>@boof
+    air: "A slice kept warm in waxed paper, saved for she cannot say what, and wheel-tracks that smell of hoarding."
     excerpt: "Boof paused at the last curb of the labyrinth and shook the rain from her ears. She carried a slice of BoonWAP wrapped in waxed paper, and the pie behind her was exactly as large as before, and her wish was still word..."
     route: ^[chapter/06/s06]{open}
   >

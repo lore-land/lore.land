@@ -29,18 +29,24 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: !{round_archive}@the_land
+    air: "The ninth honk rolls out over the whole land at once, and the maps finally take the ink."
     excerpt: "The round room at the end of the river path was smaller and quieter than any map had promised. The seam-otters that had swum beside Boof down the bank turned back at its steps, where the rivers blended and left them n..."
     route: ^[chapter/13/s01]{open}
   >
   s02: <
     handle: "custom-reflection/02"
     type: "custom-reflection"
+    room: #[great_book]@the_book
+    air: "A brace that closes is a finished record. On the desk, the shell: empty, light, still warm."
     excerpt: "The great book lay open on a cloth from the crosswind loom, whose weave still shifted color in the draught from the door. No one stood over it. An oath. An apology. A genie's whole reserve, and one Thursday besides. T..."
     route: ^[chapter/13/s02]{open}
   >
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: .<starlight_aisle>@the_fool
+    air: "For once nothing clever. Each borrowed thing goes back where it belongs, never in a gap."
     excerpt: "The Boonberry Fool bowed, and for once said nothing clever. He set each borrowed thing back where it belonged: the found egg, warmer; the greedy wish, sweeter; the echo, somewhere you can visit; the small wish, a furr..."
     route: ^[chapter/13/s03]{open}
   >
@@ -54,12 +60,16 @@
     handle: "section/05"
     type: "section"
     title: "The Blank Last Line"
+    room: ~{last_line}@boof
+    air: "An open brace and no close: a room with one wall unbuilt that anybody might walk into."
     excerpt: "Boof looked from the book to the open shell-shaped door. The first map had refused her egg. This one held the road she had walked, all the way back to the warm furrow. She followed it with her nose. Grove, gate, river..."
     route: ^[chapter/13/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
+    room: !<shell_door>@boof
+    air: "Through the shell-shaped arch, into a morning that smells of gravel, grain, and places not yet visited."
     excerpt: "Boof rested her chin beside the shell. Its warmth reached through the wood. Outside, a cart rattled past. A bell rang once. She lifted an ear. Nearby, this time. It stayed nearby. Morning spread across the farms. Smok..."
     route: ^[chapter/13/s06]{open}
   >

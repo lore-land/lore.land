@@ -1,0 +1,74 @@
+# Exactly One Pie: the rules of the lanes, as Spw
+# Read at runtime by the real parser (book/scripts/vendor/spw-seed.mjs) through
+# book/scripts/home/pie-spw.mjs; the game keeps its own defaults and these tune them.
+# A visit can carry other rules (the bench on /pie/, or ?rules= in a link). The game is
+# also a stress test for the language: every read is measured and compared with the
+# small reader in pie-powers.mjs, and the findings are kept in .spw/surfaces/spw-stress.spw.
+#>lore_land_runtime_pie_rules
+#:surface #!runtime
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  The rules of a game are a kind of canon. Written as Spw they can be read by anyone at the table, changed for one visit, passed along as a link, and compared. The three ways a chapter develops are weighed in =lean, named for their genres: fairy tale for kindness given and wonder kept, absurd reality for knocks taken and foretellings let come true, low magic for what is done exactly and honestly. Each sigil keeps its role: = tunes a value, % measures an amount, ~ lasts a while, * is a charge or a named thing, ! happens at once, & is how the land answers, # is what gets said, ^ binds a thing to its card, @ says whose voice it is, and a quoted path is where the book has it.
+}
+
+=tune{
+  =aim_step[0.13]
+  =knock_swing[0.12]
+  =pad_pace[0.85]
+  =slow_land[0.55]
+  =foretell_after[3.2]
+  =flinch_chance[0.22]
+  =flinch_tilt[0.16]
+  =in_kind[0.9]
+}
+
+=lean{
+  &fairy_tale{ %satisfied[1] %shared[1] %kept[1] %egg[1] %sighting[0.6] %sweetened[0.6] %boof[0.5] %boonberry[0.4] %furrow[0.3] %boonwap[0.3] }
+  &absurd_reality{ %knocked[1] %scheme_ran[1] %boxed[0.8] %foretold[0.8] %bane_fed[0.6] %flinched[0.6] %let_past[0.3] }
+  &low_magic{ %perfect[1] %over_mimes[1] %foiled[1] %ramp[0.6] %deft[0.6] %boneberry[0.6] %hop_clear[0.5] %caught[0.5] %squashed[0.4] }
+}
+
+!knocks{
+  *post{ %tilt[0.5] }
+  *stone{ %tilt[0.6] }
+  *hole{ %tilt[0.55] !drop #says["IN A HOLE"] }
+  *ditch{ %tilt[0.6] !drop #says["IN THE DITCH"] }
+  *pane{ %tilt[0.45] #says["GLASS"] }
+  *mime{ %tilt[0.3] #says["MIMED AT"] }
+  *mimewall{ %tilt[0.45] #says["INVISIBLE WALL"] }
+  *march{ %tilt[0.45] #says["MIMES AGAINST WAP"] }
+  *throne{ %tilt[0.55] }
+  *chair{ %tilt[0.45] }
+  *table{ %tilt[0.6] }
+  *banner{ %tilt[0.45] }
+  *subject{ %tilt[0.4] }
+  *snail{ %tilt[0.35] }
+  *clerk{ %tilt[0.35] !tax #says["DAMAGE"] }
+  *dividers{ %tilt[0.3] %crust[0.15] %filling[0.15] #says["MEASURED"] }
+  *spool{ %tilt[0.3] !shove #says["TRIPPED"] }
+  *pigeon{ %tilt[0.25] %crust[0.3] #says["PECKED"] }
+  *wasps{ %tilt[0.25] %filling[0.3] #says["STUNG"] }
+}
+
+*powers{
+  *torch_ants{ ~lit[7] &with[furrow] &without[frost] ^card[wonder] !sound[wonder] @voice[wonder] ~"book/chapter/01#the-warm-furrow" #says["Torch-ants keep lit streets along the berry roots all winter. Tonight one runs up your lane, and the furrows ahead come up warm."] }
+  *salt_whales{ ~lit[7] &without[puddle] ^card[wonder] @voice[wonder] ~"book/chapter/03#chapter-03-section-01" #says["Their old roads glow under the crust. The way through glows with them, and the puddles drain down into their roof."] }
+  *echo_wrens{ *echoes[3] ^card[wonder] @voice[wonder] ~"book/chapter/02#a-beat-late" #says["The grove says everything again, a beat late. So will your next three throws."] }
+  *lag_stag{ ~lag[5] ^card[wonder] @voice[wonder] ~"book/chapter/02#what-the-echo-keeps" #says["Its hoofprints land a beat after it has passed. For a while the whole land lands a beat late, and you do not."] }
+  *jazz_geese{ !honk ^card[wonder] @voice[wonder] ~"book/chapter/01#chapter-01-section-06" #says["Nine geese, honking in uneven time. What was ahead of you swings out of the way."] }
+  *hob_deer{ ~unkept[4.5] ^card[wonder] @voice[wonder] ~"book/chapter/02#chapter-02-section-02" #says["A deer no taller than a boot, from a day nobody kept. For a moment nothing in the lanes can keep you either."] }
+  *page_fox{ ~unkept[4.5] !ready ^card[wonder] @voice[wonder] ~"book/chapter/13#chapter-13-section-01" #says["A fox the colour of an unturned page, late for something. You are unkept for a moment, and a slice is ready, as if a page had turned."] }
+  *pane_snails{ !level &without[pane] ^card[wonder] @voice[wonder] ~"book/chapter/06#chapter-06-section-02" #says["They graze the city glass clear by night. The panes ahead are forgiven, and the pie forgets it was ever tipped."] }
+  *remainder_moths{ ~true_aim[6] ^card[wonder] @voice[wonder] ~"book/chapter/15#chapter-15-section-01" #says["They go round a flame and never land twice in the same place. For a while they lead your needle to the nearest face, as if it were a lamp."] }
+  *frill_lichen{ *frill[2] ^card[wonder] @voice[wonder] ~"book/chapter/14#chapter-14-section-06" #says["More edge than room. Your next two knocks land on the ruffle, and only half of each reaches the pie."] }
+  *sliver_tin{ *tin[3] ^card[wonder] @voice[wonder] ~"book/chapter/15#chapter-15-section-04" #says["Always filling, never full. Your next three slices fill half again as much appetite."] }
+  *creature{ %crust[0.12] %filling[0.12] ^card[wonder] @voice[wonder] #says["A creature of the land, kept. The aura is fed a little, crust and filling."] }
+  *contrivance{ %crust[0.24] ^card[wonder] @voice[wonder] #says["Something made with care, kept. The crust is fed."] }
+  *bracework{ %filling[0.18] !ready ^card[wonder] @voice[wonder] #says["Written before it was built, kept. A slice is ready, and the filling is fed."] }
+  *saying{ !level ^card[wonder] @voice[wonder] #says["A saying the makers keep. The pie steadies, the way a rule does."] }
+  *boonberry{ %filling[0.3] ~glimpse[3.5] ^card[berry] !sound[berry] @voice[boon] ~"book/chapter/01#when-a-berry-remembers" #says["A little borrowed summer, and a glimpse: the clear way up the lanes, a breath before you need it."] }
+  *boneberry{ %crust[0.12] %filling[0.12] ~fed[6] ^card[boneberry] !sound[bone] @voice[wonder] ~"book/chapter/10" #says["A whole meal in a berry, grown, not raised. Your steps tilt less for a while, and the pie settles sooner."] }
+  *beaver{ ~lag[4.5] &with[berry] ^card[beaver] !sound[beaver] @voice[wonder] ~"book/chapter/08" #says["A slow beaver keeps its own time and lends it. The land goes at its pace; the berries it planted come up behind it."] }
+}

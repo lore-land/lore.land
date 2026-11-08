@@ -4,8 +4,9 @@
 // from this browser's own shelf; nothing is sent anywhere.
 import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.H';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.J';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.H';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.J';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -158,7 +159,8 @@ function paletteCard(data, p, state) {
   const title = p.chapter ? data.titleOf(p.chapter) : 'Won back';
   const source = p.folio || p.plate;
   const extraction = paletteExtraction(p);
-  const spw = el('code', { className: 'palette-extract-code' }, extraction.spw);
+  const spw = renderSpell(extraction.spw, { cast: false });
+  spw.classList.add('is-compact');
   const css = el('pre', { className: 'palette-extract-code' }, extraction.css);
   const copySpw = el('button', { type: 'button', className: 'palette-copy' }, 'Copy the Spw atom');
   const copyCss = el('button', { type: 'button', className: 'palette-copy' }, 'Copy the CSS tokens');

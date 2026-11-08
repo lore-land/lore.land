@@ -1,4 +1,4 @@
-import { withCacheContext } from './cache-context.mjs?v=2026_02_28.I';
+import { withCacheContext } from './cache-context.mjs?v=2026_11_08.J';
 import { createLoadLifecycle } from './load-lifecycle.mjs?v=2026_07_23.B';
 import { CHAPTER_FLOW_SELECTOR, CUSTOM_ELEMENTS_SELECTOR } from './story-lexicon.mjs?v=2026_09_07.A';
 import {
@@ -12,7 +12,7 @@ import {
   registerStoryServiceWorker
 } from './experience-core.mjs?v=2026_08_27.A';
 import { initSpwLanguageRuntime } from './spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_11_05.A';
+import { initEbookNavigation } from './ebook-navigation.mjs?v=2026_11_08.J';
 import { deriveChapterLinks } from './chapter-links.mjs?v=2026_11_05.A';
 import { initSpwEthosIntegration } from './spw-ethos.mjs?v=2026_08_27.A';
 import { registerCustomElements } from '../custom/register.mjs?v=2026_09_07.B';

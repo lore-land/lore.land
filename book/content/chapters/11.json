@@ -114,6 +114,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "!(bloom_garden)@banewap",
+        "air": "Every bud opens at once, for him, with a sound like a drawer pulled out. The empire arrives in pieces."
+      },
       "data-mood": "awakening",
       "data-motif": "egg",
       "climate": {
@@ -238,6 +242,10 @@
     },
     {
       "type": "custom-awakening",
+      "room": {
+        "spw": "*[split_crust]@banewap",
+        "air": "Deep under the bitter crust a berry wakes, and he tastes what he kept from everyone: sweet, all along."
+      },
       "data-motif": "berry-memory",
       "scene": {
         "vantage": "snout-level with BaneWAP's split crust, where a single hoarded berry has begun to glow through the bitter filling",
@@ -283,6 +291,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "$<throne_step>@the_fool",
+        "air": "One tap on the rented throne. Hollow, gilt over pine."
+      },
       "data-trope": "midas-touch",
       "data-mask": "bloom",
       "scene": {
@@ -319,6 +331,10 @@
     {
       "type": "section",
       "title": "The Wish That Would Not Finish",
+      "room": {
+        "spw": "~{quince_rise}@boof",
+        "air": "Spent and unspent at once, the egg rolls back down through petals that opened too soon."
+      },
       "data-motif": "egg",
       "data-foreshadow": "ninth-honk",
       "content": [
@@ -389,6 +405,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "=<blackthorn_gap>@boof",
+        "air": "Past the last blackthorn, toward two rivers that have not agreed to forget their springs."
+      },
       "data-trope": "midas-touch",
       "data-mask": "beginning",
       "scene": {

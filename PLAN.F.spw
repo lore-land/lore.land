@@ -1,0 +1,122 @@
+#>plan_f
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  Plan F asks how lore.land keeps changing without wearing out its maker, its readers, or its
+  meaning. A serial is a publishing ecosystem: prose, structure, world, rules and the language
+  itself all evolve at different speeds, and readers leave marks that evolve with them. Each of
+  these is a dimension of narrative semantic evolution. The plan names each one, gives it a unit
+  small enough to ship on an ordinary evening, a file that carries it, a check that guards it, and
+  a way for its change to be read back as meaning rather than as a diff. The scarce resource is
+  the attention of the person making the book; every tool here should cost less of it than it saves.
+}
+
+^meta{
+  source: "PLAN.F.spw (written 2026-11-08)"
+  dialect: spw_native
+  style: dimensions_and_increments
+  normative_voice: direction
+  &reader: "the maker of lore.land, a writing table helping them, or a future book poured into the engine"
+  &follows: ~"PLAN.E.spw#plan_e"
+  &rooms: ~".spw/surfaces/rooms.spw"
+  &stress: ~".spw/surfaces/spw-stress.spw#lore_land_surfaces_spw_stress"
+  &rules: ~".spw/runtime/pie-rules.spw#lore_land_runtime_pie_rules"
+}
+
+&plan_contracts{
+  small_stones: "the unit of release is the smallest thing a reader can finish: a room, a palette, a card, a rule; a chapter is a set of rooms released over several stones"
+  meaning_first: "every release says what changed in meaning (rooms set, wonders added, leans moved, rules retuned) before it says what files changed"
+  readers_keep_theirs: "nothing a reader has kept (marks, carries, palettes, cards, provenance) is lost or reinterpreted by a release; a rule change applies forward"
+  canon_in_text: "everything that evolves is text the maker can read and diff: JSON for prose, Spw for structure, rules and canon"
+  cheap_checks: "every dimension has a check that runs in under a minute and needs no network: book:check, spw:lint, spw:probes, dist:verify"
+  #invariant: the_attention_of_the_maker_is_the_budget
+}
+
+^"dimensions"{
+  .note: "Each dimension: what evolves, its unit, the file that carries it, the check that guards it, and how its change is read back."
+  prose: {
+    evolves: "the words of the book, variant zero first, tellings after"
+    unit: "a room (one section), released by flipping its status from drafting to set"
+    carrier: ~"book/content/chapters"
+    check: "book:check (rooms, slots, signatures), the prerender, search and semantic rebuilt"
+    read_back: "a room set is named in the release note by its signature and its air"
+  }
+  structure: {
+    evolves: "how the book is shaped: rooms, chapters, books, the order a reader meets them"
+    unit: "a room signature in Spw (its container, its motion, its observer)"
+    carrier: ~".spw/surfaces/rooms.spw"
+    check: "every signature parses with the vendored parser; container is one of the four"
+    read_back: "the room strip on each chapter; a structural change shows as a changed signature, never a silent move"
+  }
+  valence: {
+    evolves: "how chapters lean among fairy tale, absurd reality and low magic, by the book and by each reader"
+    unit: "a weight in =lean{} (pie-rules.spw) or a lean on a paragraph"
+    carrier: ~".spw/runtime/pie-rules.spw"
+    check: "the bench reads it; the stress panel compares readers; a carry says why a chapter leans"
+    read_back: "each chapter page says why it leans, in the reader words of what they did"
+  }
+  world: {
+    evolves: "the nouns and places: wonders, materials, palettes, berries, harmonies, plates, folios"
+    unit: "one entry (a wonder, a palette, a harmony, a card)"
+    carrier: "book/content/world/*.json and their canon surfaces"
+    check: "book:check (wonders), probes (plates), lint (canon)"
+    read_back: "the almanac shelves and Boof map grow by entry; a new entry is said in the release note"
+  }
+  rules: {
+    evolves: "how the game plays: tuning, knocks, powers, the lean weights"
+    unit: "one spell in pie-rules.spw"
+    carrier: ~".spw/runtime/pie-rules.spw"
+    check: "the real parser reads it whole; the small reader agrees; every power survives a round trip"
+    read_back: "cards show the spell they run on; provenance cards say which rules a carry ran on and whose"
+  }
+  grammar: {
+    evolves: "Spw itself, upstream in spw-workbench"
+    unit: "a finding (stress), a pin bump (submodule), a re-bundled parser"
+    carrier: ~".spw/surfaces/spw-stress.spw"
+    check: "spw:seed-bundle:verify; lint stays at its known warnings; the game stress panel stays quiet"
+    read_back: "findings travel upstream as issues; a pin bump lists which findings it answers"
+  }
+  marks: {
+    evolves: "what each reader has kept: carries, cards, palettes, sightings, tellings, provenance"
+    unit: "a mark in the reader browser"
+    carrier: "localStorage keys named lore.*.v1"
+    check: "begin again clears them on request; a release never rewrites them"
+    read_back: "the almanac, the deck, the keepsakes at a chapter end, the projection spell"
+  }
+  tables: {
+    evolves: "what other people propose: a telling, a spell, a rule, a QA note"
+    unit: "a link (?spell=, ?rules=) or a copied Spw note"
+    carrier: "the reader visit (sessionStorage), then the maker inbox"
+    check: "a proposal is read by the same parser as the canon before anyone reads it by eye"
+    read_back: "a proposal accepted into canon is credited in the release note by its table"
+  }
+}
+
+^"ecosystem"{
+  cadence: "stones on the 13th and 26th stay the promise; a stone may be a room, a palette, a rule or a chapter, and a chapter completes over several stones. Missing a stone is allowed; breaking a promise to a reader is not"
+  release_protocol: "write → set the room (or add the entry) → npm run chapters:build → book:check, spw:lint, spw:probes, build, dist:verify → one line of meaning in changes.json → commit → push"
+  semantic_ledger: "each release keeps a small snapshot of meaning (rooms set, wonders, leans, rules) so the next release can say what changed in meaning, not only in files"
+  provenance: "the folio archive lives on spwashi.com; lore.land links and never copies; every carry, palette and card can say where it came from"
+  continuity: "returning readers keep their way of reading: new modes are trials or switches (c019), and the default read is unchanged unless they choose"
+  sustenance: "the work is sustained by folios (originals with a low chance of fulfilment, interpretations, prints), priced by an auditable spell, never by ledgering the land in the story"
+  durability: "static pages, no runtime services, offline reading, print; the canon is text in a git repository; a parser that cannot load falls back to a smaller one"
+  upstream: "the language is made in spw-workbench; lore.land is its heaviest reader, and sends back what it learns"
+}
+
+!"increments"[
+  f1: { dimension: [prose, structure], release: "2026_11_08.J", note: "rooms as a unit: a Spw signature and an air for every room, a personality by kind, progress by room, room by room as a trial, and releasing a room at a time (status drafting, due)" }
+  f2: { dimension: [rules, valence, grammar], release: "2026_11_08.J", note: "the game reads its rules with the real parser (tune, knocks, powers, lean), dispatches references, and stress-tests the language; cards show their spells, lit" }
+  f3: { dimension: [valence], release: "next", done_when: "a release note can say for each chapter which way readers carried it, from counts the reader chose to share, never from tracking" }
+  f4: { dimension: [prose, world, rules], release: "next", done_when: "npm run book:meaning compares this release with the last (rooms set, wonders, palettes, harmonies, rules) and writes the first draft of its changes.json line" }
+  f5: { dimension: [grammar], release: "next", done_when: "every finding in spw-stress.spw has an upstream issue drafted, and a pin bump says which it answers" }
+  f6: { dimension: [tables], release: "next", done_when: "a link of rules or a telling can be saved as a proposal in .spw/state/proposals.spw, read by the parser, and accepted with credit" }
+  f7: { dimension: [marks], release: "next", done_when: "a reader can carry their marks to another device as one Spw card they copy and paste, read back by the parser, never sent anywhere" }
+  f8: { dimension: [world], release: "next", done_when: "the folio value spell (formula only, %fulfill, -25% to +15%) is auditable from a carry provenance card" }
+]
+
+~"open"{
+  room_cadence: "is a stone a room, or a chapter in rooms? the plan allows both and watches which the maker can keep"
+  shared_counts: "how to let readers share what their carries did without tracking them (f3)"
+  proposal_trust: "how a table proposal is reviewed before it reaches a reader (f6)"
+}

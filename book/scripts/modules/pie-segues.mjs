@@ -20,7 +20,7 @@
  * and the way out (pie-game.mjs).
  */
 import { settle } from './settled.mjs?v=2026_11_05.B';
-import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_08.D';
+import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_08.J';
 
 const BACK_KEY = 'lore.pie.back';
 const pad = (n) => String(n).padStart(2, '0');

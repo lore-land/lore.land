@@ -2462,3 +2462,114 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-section-head p:not(.hub-eyebrow) + p {
   margin-top: 0.6rem;
 }
+
+/* ─── Spw, tested: what the lanes have learned about the language (pie-spw.mjs) ─── */
+.pie-stress {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.pie-stress-list {
+  display: grid;
+  gap: 0.3rem;
+  margin: 1rem 0 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-stress-list li {
+  max-width: none;
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-left: 3px solid var(--stress-edge, var(--hub-line));
+  border-radius: 0.4rem;
+  background: var(--hub-panel);
+  font-size: 0.86rem;
+  color: var(--hub-ink);
+}
+
+.pie-stress-list li b {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--stress-edge, var(--hub-muted)) 55%, var(--hub-ink));
+}
+
+.pie-stress-list li.is-quirk { --stress-edge: #b0602a; }
+.pie-stress-list li.is-cross { --stress-edge: var(--hub-accent); }
+.pie-stress-list li.is-fuzz { --stress-edge: #7a3f9a; }
+.pie-stress-list li.is-ok { --stress-edge: var(--hub-gold); }
+
+.pie-stress-report {
+  max-height: 22rem;
+  margin: 0.6rem 0 0;
+  overflow: auto;
+  border-radius: 0.5rem;
+}
+
+.pie-bench-read li.is-meta {
+  color: var(--hub-muted);
+  font-style: italic;
+}
+
+.pie-flow-where {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+}
+
+/* ─── A card's spell: the rule it runs on, lit (spw-spell.mjs) ─── */
+.pie-cardface-spell {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.pie-cardface-spell-label {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--card-edge, var(--hub-gold)) 55%, var(--hub-ink));
+}
+
+.pie-cardface-spell .spell {
+  border-color: color-mix(in srgb, var(--card-edge, var(--hub-gold)) 40%, transparent);
+}
+
+.pie-cardface-change {
+  justify-self: start;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  cursor: pointer;
+}
+
+.pie-cardface-change:hover,
+.pie-cardface-change:focus-visible {
+  border-color: var(--hub-gold);
+}
+
+.pie-bench-list .spell {
+  grid-column: 1 / -1;
+}
+
+.pie-provenance-card .spell-line {
+  font-size: 0.7rem;
+}
+
+/* Why the chapter leans as it does, under its bar. */
+.pie-flow-now-why {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--hub-muted);
+}

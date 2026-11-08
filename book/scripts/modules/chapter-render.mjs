@@ -21,6 +21,7 @@ import {
 } from './story-lexicon.mjs?v=2026_09_26.A';
 import { applySectionClimateAttributes } from './copy-climate.mjs?v=2026_11_06.D';
 import { LENSES, leanFor } from './valence-lens.mjs?v=2026_09_27.A';
+import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.J';
 
 const NUMBER_WORDS = Object.freeze([
   '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
@@ -98,6 +99,130 @@ function humanizeMarkValue(value) {
   return String(value).split('-').join(' ');
 }
 
+/* ─── Rooms: each section of the flow, by its Spw signature ───────────── */
+
+/** A room is a section of the flow: a titled section or a voice. Plates are hung in rooms, not rooms. */
+export function isRoomBlock(section) {
+  return section?.type === 'section' || isCustomElementType(section?.type);
+}
+
+/** The anchor ebook-navigation.mjs gives a room with no title of its own: chapter-01-section-03. */
+export function positionalRoomId(chapterNumber, n) {
+  return `chapter-${padChapterNumber(chapterNumber)}-section-${String(n).padStart(2, '0')}`;
+}
+
+/**
+ * The chapter's rooms, aligned with its sections (null for plates): each
+ * room's place ("room 3 of 6"), its anchor, its signature read, its air.
+ * A drafting room keeps only what its door shows: no title, no prose.
+ * @param {Object} data - chapter JSON
+ * @param {Set<string>} [usedIds] - ids already taken on the page
+ */
+export function planRooms(data, usedIds = new Set(['chapter-title', 'chapter-content'])) {
+  const sections = Array.isArray(data?.sections) ? data.sections : [];
+  const total = sections.filter(isRoomBlock).length;
+  let n = 0;
+  return sections.map((section) => {
+    if (!isRoomBlock(section)) {
+      return null;
+    }
+    n += 1;
+    const drafting = section.status === 'drafting';
+    const slug = !drafting && section.type === 'section' && section.title ? sectionSlug(section.title) : '';
+    const id = slug && !usedIds.has(slug) ? slug : positionalRoomId(data.chapterNumber, n);
+    usedIds.add(id);
+    return {
+      n,
+      of: total,
+      id,
+      reading: readRoom(section.room?.spw),
+      air: String(section.room?.air || ''),
+      title: drafting ? '' : String(section.title || ''),
+      drafting,
+      due: drafting ? String(section.due || '') : ''
+    };
+  });
+}
+
+/** The signature with each part in its own span, so the sigils can be tinted by role. */
+function renderSignature(h, reading, className) {
+  return h('code', { className, 'aria-hidden': 'true' },
+    h('span', { className: 'room-sig-op' }, reading.op),
+    h('span', { className: 'room-sig-brace' }, reading.open),
+    h('span', { className: 'room-sig-label' }, reading.label),
+    h('span', { className: 'room-sig-brace' }, reading.close),
+    h('span', { className: 'room-sig-at' }, '@'),
+    h('span', { className: 'room-sig-who' }, reading.who));
+}
+
+/** The room's doorplate: signature, its place in the chapter, and its air. */
+function renderRoomHead(h, room) {
+  if (!room?.reading) {
+    return null;
+  }
+  return h('div', { className: 'room-head' },
+    h('div', { className: 'room-doorplate', title: roomSentence(room.reading) },
+      renderSignature(h, room.reading, 'room-sig'),
+      h('span', { className: 'sr-only' }, `${roomSentence(room.reading)} `),
+      h('span', { className: 'room-count' }, `room ${room.n} of ${room.of}`)),
+    room.air ? h('div', { className: 'room-air' }, room.air) : null);
+}
+
+/** Classes say what kind of room it is (rooms.css styles classes, never new attributes). */
+function dressRoom(elem, room) {
+  if (!room) {
+    return;
+  }
+  elem.setAttribute('id', room.id);
+  const classes = room.reading ? ['room', `room--${room.reading.kind}`, `room-motion--${room.reading.motion}`] : ['room'];
+  if (room.drafting) {
+    classes.push('is-drafting');
+  }
+  elem.className = [elem.className, ...classes].filter(Boolean).join(' ');
+}
+
+/**
+ * A room still being written: a sealed door with its signature, its air and
+ * the day it opens. Always a <section>, so the rooms after it keep their
+ * places in the chapter and in ebook navigation.
+ */
+function renderDraftingDoor(h, room) {
+  const door = h('section');
+  dressRoom(door, room);
+  // The heading names the door, not the room: its title is part of what is still being written.
+  door.append(h('h2', { className: 'room-drafting-title' }, 'Still being written'));
+  const head = renderRoomHead(h, room);
+  if (head) {
+    door.append(head);
+  }
+  const day = stoneDay(room.due);
+  door.append(h('div', { className: 'room-drafting-note', dataset: { due: room.due } },
+    h('span', { className: 'room-drafting-day' }, day ? `This room opens ${day}.` : 'This room opens when it is ready.')));
+  return door;
+}
+
+/** A strip of the chapter's rooms, under the title: one signature chip per room. */
+function renderRoomStrip(h, rooms) {
+  const list = (rooms || []).filter(Boolean);
+  if (!list.some((room) => room.reading)) {
+    return null;
+  }
+  return h('nav', { className: 'room-strip', 'aria-label': `Rooms in this chapter, ${list.length} in all`, dataset: { component: 'room-strip' } },
+    h('ol', { className: 'room-strip-list' }, ...list.map((room) => {
+      const kind = room.reading ? ` room-chip--${room.reading.kind} room-motion--${room.reading.motion}` : '';
+      const name = room.title || (room.reading ? `The ${room.reading.place}` : `Room ${room.n}`);
+      return h('li', { className: 'room-strip-item' },
+        h('a', {
+          className: `room-chip${kind}${room.drafting ? ' is-drafting' : ''}`,
+          href: `#${room.id}`,
+          dataset: { roomIndex: String(room.n) },
+          title: `${room.n}. ${name}${room.drafting ? ' (still being written)' : ''}`,
+          'aria-label': `Room ${room.n} of ${room.of}: ${name}${room.drafting ? ', still being written' : ''}`
+        },
+          room.reading ? renderSignature(h, room.reading, 'room-chip-sig') : h('span', { 'aria-hidden': 'true' }, String(room.n))));
+    })));
+}
+
 /**
  * Renders the chapter's body into `container` (appends; the caller clears):
  * head, prose, end mark, and the turn toward the next chapter.
@@ -115,16 +240,17 @@ export function renderChapterBody(container, data, options = {}) {
   const withBase = options.withBase || ((href) => href);
   const h = createFactory(doc);
   const usedIds = new Set(['chapter-title', 'chapter-content']);
+  const rooms = planRooms(data, usedIds);
 
-  container.append(renderHead(h, data, options.inWhich));
+  container.append(renderHead(h, data, options.inWhich, rooms));
 
   const stamp = `Chamber ${padChapterNumber(data.chapterNumber)} · ${data.title}`;
   // Wonders (book/content/world/almanac.json): the first time each is named in
   // a chapter it is marked, so a reader can collect it (modules/almanac.mjs).
   const wonders = Array.isArray(options.wonders) ? options.wonders : [];
   const marked = options.markedOut instanceof Set ? options.markedOut : new Set();
-  (Array.isArray(data.sections) ? data.sections : []).forEach((section) => {
-    const node = renderBlock(h, section, { stamp, usedIds, wonders, marked });
+  (Array.isArray(data.sections) ? data.sections : []).forEach((section, index) => {
+    const node = renderBlock(h, section, { stamp, usedIds, wonders, marked, room: rooms[index] });
     if (node) {
       container.append(node);
     }
@@ -291,7 +417,7 @@ function renderPlatePrompts(h, data) {
 
 /* ─── Head: kicker + title, in-which, epigraph. Story first. ─────────── */
 
-function renderHead(h, data, inWhich) {
+function renderHead(h, data, inWhich, rooms = []) {
   const head = h('header', { className: 'chapter-head', dataset: { component: 'chapter-head' } });
   // Returning readers knew the logline above the title; the "logline"
   // switch (reading-switches.mjs) keeps it for them. Hidden otherwise.
@@ -314,6 +440,11 @@ function renderHead(h, data, inWhich) {
 
   if (data.epigraph) {
     head.append(h('p', { className: 'chapter-epigraph', dataset: { component: 'chapter-epigraph' } }, data.epigraph));
+  }
+  // The chapter's rooms, one chip each (modules/rooms.mjs lights the ones read).
+  const strip = renderRoomStrip(h, rooms);
+  if (strip) {
+    head.append(strip);
   }
   // Read as boon, bane or bone (lens-control.mjs wakes this; hidden without script).
   head.append(h('div', { className: 'chapter-lens', hidden: '' },
@@ -340,6 +471,9 @@ function renderHead(h, data, inWhich) {
 function renderBlock(h, section, context = {}) {
   if (!section || !section.type) {
     return null;
+  }
+  if (context.room?.drafting) {
+    return renderDraftingDoor(h, context.room);
   }
   switch (section.type) {
     case 'paragraph':
@@ -556,13 +690,22 @@ function renderSectionMeta(h, elem, scene, section) {
 
 function renderSection(h, section, context) {
   const sec = h('section');
-  if (section.title) {
+  if (context.room) {
+    // The room plan (planRooms) already chose the anchor: the title's slug, or its place.
+    dressRoom(sec, context.room);
+  } else if (section.title) {
     const slug = sectionSlug(section.title);
     if (slug && context.usedIds && !context.usedIds.has(slug)) {
       context.usedIds.add(slug);
       sec.setAttribute('id', slug);
     }
+  }
+  if (section.title) {
     sec.append(h('h2', {}, section.title));
+  }
+  const roomHead = renderRoomHead(h, context.room);
+  if (roomHead) {
+    sec.append(roomHead);
   }
 
   applySectionClimateAttributes(sec, section);
@@ -570,8 +713,10 @@ function renderSection(h, section, context) {
 
   sec.append(renderSectionMeta(h, sec, section.scene, section));
 
+  // Content blocks are not rooms; only the section itself is.
+  const inner = { ...context, room: null };
   (section.content || []).forEach((item) => {
-    const node = renderBlock(h, item, context);
+    const node = renderBlock(h, item, inner);
     if (node) {
       sec.append(node);
     }
@@ -611,6 +756,11 @@ function renderVoice(h, section, context) {
     // no-JS page and the first paint identical to the hydrated one.
     elem.append(h('div', { className: 'voice-kicker', 'aria-hidden': 'true' }, kicker));
   }
+  dressRoom(elem, context.room);
+  const roomHead = renderRoomHead(h, context.room);
+  if (roomHead) {
+    elem.append(roomHead);
+  }
 
   const marks = renderMarks(h, elem);
   if (marks) {
@@ -618,8 +768,9 @@ function renderVoice(h, section, context) {
   }
   elem.append(readTimeChip(h, section));
 
+  const inner = { ...context, room: null };
   (section.content || []).forEach((item) => {
-    const node = renderBlock(h, item, context);
+    const node = renderBlock(h, item, inner);
     if (node) {
       elem.append(node);
     }

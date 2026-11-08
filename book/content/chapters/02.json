@@ -123,6 +123,10 @@
     {
       "type": "section",
       "title": "A Beat Late",
+      "room": {
+        "spw": "?{hollow_cedar}@boof",
+        "air": "Everything here arrives twice, and the wren in the cedar is sure you are the one who is late."
+      },
       "data-motif": "unspent-wish",
       "content": [
         {
@@ -201,6 +205,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "$[listening_thicket]@boof",
+        "air": "Half a lullaby underfoot. Whatever a town will not say aloud drains downhill to here."
+      },
       "data-mood": "grove",
       "content": [
         {
@@ -261,6 +269,10 @@
     },
     {
       "type": "custom-boonberry",
+      "room": {
+        "spw": "%[wild_vines]@the_berries",
+        "air": "Wild cousins of the field rows, brighter whenever an echo tastes of a future they remember."
+      },
       "content": [
         {
           "type": "paragraph",
@@ -296,6 +308,10 @@
     },
     {
       "type": "custom-echo",
+      "room": {
+        "spw": "~<forked_path>@the_echo",
+        "air": "Her own younger voice says follow me, and the path forks only to meet itself again."
+      },
       "scene": {
         "vantage": "the mouth of the inner ring, the egg small and bright, the second egg only in the air",
         "light": "green noon; gold pollen rings; the ghost-egg a beat behind",
@@ -331,6 +347,10 @@
     {
       "type": "section",
       "title": "What the Echo Keeps",
+      "room": {
+        "spw": "*{mossy_stone}@boof",
+        "air": "A whole day of tries, and only one held: the warm one on the stone, drying the moss pale."
+      },
       "data-motif": "unspent-wish",
       "data-foreshadow": "genie",
       "content": [
@@ -402,6 +422,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "^<cedar_fork>@boof",
+        "air": "Someone in a cedar counts wishes wrong. Boof writes the note on the air and trots past."
+      },
       "data-trope": "three-wishes",
       "data-mask": "goose-that-learned-jazz",
       "content": [

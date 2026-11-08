@@ -123,6 +123,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "${kiln_gate}@boof",
+        "air": "Every pane was once a blow. The kiln melts the hurt out and pours it off clear."
+      },
       "data-mood": "labyrinth",
       "data-motif": "egg",
       "climate": {
@@ -231,6 +235,10 @@
     },
     {
       "type": "custom-labyrinth",
+      "room": {
+        "spw": ".<mirrored_alley>@the_labyrinth",
+        "air": "Panes hung backward show you yourself. Follow the silver loops the snails have cleared."
+      },
       "scene": {
         "vantage": "standing in a narrow alley between two mirrored bay windows reflecting endless corridors of light",
         "light": "endless recursive golden reflections bouncing between glass panes",
@@ -283,6 +291,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "^<lamp_ladder>@the_fool",
+        "air": "One tap of a brass bell into a dent, and the post remembers heat."
+      },
       "data-trope": "labyrinth-city",
       "data-mask": "labyrinth",
       "scene": {
@@ -319,6 +331,10 @@
     {
       "type": "section",
       "title": "The Pie at the Table",
+      "room": {
+        "spw": "?(round_plaza)@boonwap",
+        "air": "Eleven slices out and the pie still whole, and one question she cannot answer yet."
+      },
       "data-motif": "small-want",
       "content": [
         {
@@ -448,6 +464,10 @@
     },
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "~<iron_gate>@boof",
+        "air": "A slice kept warm in waxed paper, saved for she cannot say what, and wheel-tracks that smell of hoarding."
+      },
       "data-motif": "berry-memory",
       "data-foreshadow": "bane-wish",
       "scene": {

@@ -114,6 +114,10 @@
   "sections": [
     {
       "type": "custom-boof",
+      "room": {
+        "spw": "=(oath_stone)@boof",
+        "air": "One blueberry on the oath-scale, the whole square hushed, and moths that settle only on a true promise."
+      },
       "data-mood": "shadow",
       "data-motif": "small-want",
       "climate": {
@@ -217,6 +221,10 @@
     },
     {
       "type": "custom-shadow",
+      "room": {
+        "spw": "#[oath_shadow]@genie",
+        "air": "Every oath sworn at noon casts one: the clause nobody reads aloud, and a stranger it lands on."
+      },
       "scene": {
         "vantage": "low against the flagstones, watching the shadow stretch toward the mouth of a dark alleyway",
         "light": "cold, flat silhouette refusing the bright noon sun overhead",
@@ -248,6 +256,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "*<awning_beam>@the_fool",
+        "air": "Kings swear on swords. Here it is one berry, and the clause the old songs always skip."
+      },
       "data-trope": "sworn-oath",
       "data-mask": "shadow",
       "scene": {
@@ -284,6 +296,10 @@
     {
       "type": "section",
       "title": "The Shadow Price",
+      "room": {
+        "spw": ".{cooling_stone}@boof",
+        "air": "She stays until the stone cools and the crowd becomes people again."
+      },
       "data-motif": "egg",
       "data-foreshadow": "bane-wish",
       "content": [
@@ -341,6 +357,10 @@
     },
     {
       "type": "custom-fool",
+      "room": {
+        "spw": "~<long_alley>@the_stranger",
+        "air": "Stalls fold into barrows, and far away a cart keeps someone waiting."
+      },
       "data-trope": "sworn-oath",
       "data-mask": "shadow",
       "scene": {

@@ -24,7 +24,7 @@
  * Spw atom: =palette[id] (the projection spell names the one being worn).
  */
 import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_08.H';
-import { readCarries } from './pie-carries.mjs?v=2026_11_08.D';
+import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
 import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
 import { settle } from './settled.mjs?v=2026_11_05.B';
 

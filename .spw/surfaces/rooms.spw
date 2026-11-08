@@ -1,0 +1,112 @@
+# Lore.Land Rooms
+# Every section of a chapter is a room: read, kept and released one at a time,
+# each with a Spw signature that says what kind of room it is and whose.
+#>lore_land_surfaces_rooms
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  A chapter is long and a reader is not always. The story moves in smaller
+  steps already: a field, a hedge, a grove mouth, a table. Naming those steps
+  as rooms gives each one a door, a personality and a place in the chapter,
+  so a reader can stop at a door and come back to it, and the maker can
+  release the story a room at a time between stones. The signature is real
+  Spw, read by the same parser as the canon, so the grammar a scribe learns
+  at the desk is the grammar the rooms are built in. The container says how
+  to be in the room; the operator says what moves in it; the keeper says
+  whose eyes it is seen through. Nothing is scored. A room read is lit in the
+  strip and that is all.
+}
+
+^"model"{
+  .unit: "a room is one section of the flow: a titled section or a voice block; plates (figures) hang in the room they introduce and are not rooms"
+  .source: "book/content/chapters/NN.json sections[].room = { spw, air }; sections[].status (set | drafting) and sections[].due (YYYY-MM-DD)"
+  .count: "81 rooms across 15 chapters at seeding (2026-11-08), five to eight a chapter; room n of m counts every room, drafting doors included, so places never shift when a room is set"
+  &reader: ~"book/scripts/modules/room-signature.mjs"
+  &renderer: ~"book/scripts/modules/chapter-render.mjs"
+  &runtime: ~"book/scripts/modules/rooms.mjs"
+  &styles: ~"book/styles/components/rooms.css"
+  &check: ~"book/scripts/tools/book-check.mjs"
+  &bench: ~"book/scripts/home/almanac-page.mjs"
+}
+
+^"kinds"{
+  .note: "the four containers of the almanac bench, read as kinds of room"
+  window: "[ ] you may only look in: a view, a description, a glimpse through glass"
+  room: "{ } you may stand in it for a minute: a scene with a floor and a light"
+  gathering: "( ) everything in it has to arrive together: a table, a council, voices at once"
+  passage: "< > you may go through it, never stay: a slope, a stair, a road out"
+}
+
+^"signature"{
+  grammar: "op + container(name) + @keeper, as in ~{warm_furrow}@boof"
+  op: "one of the twelve sigils, the motion of the room: ~ potential, & confluence, ! action, ? probe, ^ integration, # annotation, . ground, = lean, * value, % measure, $ substrate, @ perspective"
+  container: "one of [ ] { } ( ) < >, the kind of room"
+  name: "snake_case, a place or thing that reads after the word the: warm_furrow, long_table, moon_lane"
+  keeper: "postfix @, the observer whose room it is: boof, genie, the_land, the_city, the_berries"
+  air: "one line in the house voice: what it is like to be in the room, never a summary of the plot"
+  chosen_by: "reading each section; never by type, never by position"
+  examples: [
+    "~{warm_furrow}@boof · Frost everywhere but here. The ground is keeping something warm, and it hums."
+    "#{map_house}@the_archivist · Ink beads and rolls off the page. Only a pencilled tilde will hold."
+    "?(round_plaza)@boonwap · Eleven slices out and the pie still whole, and one question she cannot answer yet."
+    "~<moon_lane>@boof · A spent wish stays and becomes a place you can stand. The moon lane is only for going through."
+    "@{warm_furrow}@boof · the same furrow in Book Two, now seen: a hat waits at head height."
+  ]
+  care: "no child is ever a name or a keeper; the figure under the hat is never named; the Egg keeps no room of its own; the Fool keeps passages, at the side; no compass words, no wages, no ledger words in an air"
+}
+
+^"personality"{
+  window: "framed glass and a narrower measure; a sheen in the top corner, a second hairline inside the frame"
+  room: "a warm full panel, lamp-lit from above; rounder corners, more air at top and foot"
+  gathering: "rounded ends drawn like ( ); paragraphs set apart with no indent, so the voices have room"
+  passage: "a narrow corridor; a rule that runs on and ends in an arrowhead; tighter leading and a quicker arrival"
+  accent: "the operator tints the section rail and its own sigil; braces take the hue of the kind, @ the hue of perspective"
+  colour: "inks are mixed with each binding text colour, so every doorplate clears 4.5:1 in rag, glass, salt, ember, slate, starfield, dusk and lamplight; bindings keep the paper"
+  motion: "arrivals animate only without prefers-reduced-motion; a passage arrives in half the time"
+  classes: "room room--kind room-motion--motion, and states is-current is-folded is-sealed is-read is-arriving is-drafting; no new data attributes in CSS"
+}
+
+^"progress"{
+  storage: "localStorage lore.rooms.v1 = { chapterNumber: [room numbers read] }"
+  read_when: "the end of the room comes into view and stays a moment, after the reader has moved the page; a door opened at the end counts too"
+  strip: "under the title, one chip per room in its signature (the keeper drops away on a phone); lit when read, ringed where the reader is, a link to the room through ebook navigation"
+  mark: "when the last room of a chapter is read, one settled card says so; nothing else announces"
+}
+
+^"room_by_room"{
+  switch: "trial room-by-room, off for everyone by default (continuity promise); ?try=room-by-room hands it to a reader"
+  current: "the room in the address, else the room the reader is in when they switch it on, else the first room not yet read"
+  folded: "a room read folds to its signature, with a way back in"
+  sealed: "a room not yet reached is a door: its title, signature and air, and a latch"
+  doors: "at the end of the open room, a door named by the next kind: Up to the [ ] window on the berry row; Into the { } room of the map house; Into the ( ) gathering at the long table; Through the < > passage to the moon lane"
+  ebook: "Next, Back, [ and ], swipes, the contents and the strip all open the room they land on; stepping steps from the open room"
+  findable: "sealed prose is hidden until-found, so find-in-page and text-fragment links still reach it, and a match opens its room"
+  plates: "a plate shows with the room it introduces"
+}
+
+!"release_a_room"[
+  "write the room in its chapter JSON with its room signature and air, and mark it status drafting with a due day: the build ships only its door"
+  "npm run book:check (the signature must read; due must be a real day)"
+  "when it is ready: delete status and due (or set status to set)"
+  "npm run chapters:build, then npm run spw:export; the prose enters the page, search.json and semantic.json together"
+  "a room that names a wonder for the first time must be set before the almanac can point to it; book:check says so"
+]
+
+?parser_notes[
+  "postfix @keeper is not attached to the room by the parser: ~{warm_furrow}@boof reads as a sequence of the operation and a separate reference; the observer reading is the book convention"
+  "? before < > and # before ( ) or < > swallow the rest of the line as prose; the parse succeeds but holds no room, so book:check refuses those pairs"
+  "& ! . = * % $ @ before < > make a medial capsule, the operator its left arm and the keeper its right; ~ and ^ before < > make a shell capsule held by the operation"
+  "( ) after an operator attaches to the expression, not to the operation, unlike [ ] and { }"
+  "the valence words read as modifiers only when whole: bone_yard is a name, bone is not"
+  "a capsule records its name twice, as tag and as channel"
+  "the same swallow reaches block heads: ? or # before a quoted name and an open bracket take the line as prose and orphan the close, so this block is ?parser_notes[ with a bare name"
+]
+
+&canon{
+  bench: "@spw/surfaces/almanac.spw"
+  collecting: "@spw/surfaces/collecting.spw"
+  stress: "@spw/surfaces/spw-stress.spw"
+  continuity: "reading-switches.mjs trials, contract c019"
+}

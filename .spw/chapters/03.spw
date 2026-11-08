@@ -29,12 +29,16 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: ?{signal_stones}@boof
+    air: "Two whale-roads almost meeting under the salt, and a ring of skinks pointing where to dig."
     excerpt: "The grove fell away behind her into a vast, wind-scoured plain of dry salt and baked earth, rime-white where the crust was thin. Boof stood at the edge of the Fool's Paradox . The crust forked and would not be two pla..."
     route: ^[chapter/03/s01]{open}
   >
   s02: <
     handle: "custom-paradox/02"
     type: "custom-paradox"
+    room: !(green_bottle)@genie
+    air: "Steam finds sleeves, and a closed practice unfolds a desk with one drawer marked Thursdays."
     excerpt: "The stopper turned. Steam rose, folded, found sleeves. Out came the Off-Season Genie, neat as a handkerchief and dressed like a clerk on his first day without a desk, smelling faintly of tea and brass polish. He looke..."
     handles: ["paradox-intro"]
     route: ^[chapter/03/s02]{open}
@@ -42,6 +46,8 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: *<dune_ridge>@the_fool
+    air: "Somebody walks backward down the dune, turning an old song over. His prints fill behind him."
     excerpt: "The Fool trotted backward down the dune, spinning an empty brass lamp on one finger, salt crusting the hems of his patchwork. He had sampled the old song of genies, and he handed it back changed. It was never three wi..."
     route: ^[chapter/03/s03]{open}
   >
@@ -55,12 +61,16 @@
     handle: "section/05"
     type: "section"
     title: "The Seam in the Sand"
+    room: %{sand_seam}@genie
+    air: "Brass pans, a glass for wants bigger than a loaf, and a needle that cannot find hers."
     excerpt: "The Genie set the desk square on the sand and laid his instruments out on its baize: the wish-scale, its brass pans balanced against coincidences instead of weights, each one stamped small; the resolution glass, long ..."
     route: ^[chapter/03/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
+    room: &<one_turn>@boof
+    air: "Her weight in the seam, and two old roads settle into one turn. No miracle asked."
     excerpt: "Boof huffed and walked between the routes, paws in the seam, her weight enough to give their leaning somewhere to go. Under her pads the crust shivered; far down, two long notes found each other. Behind her the two li..."
     route: ^[chapter/03/s06]{open}
   >

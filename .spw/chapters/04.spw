@@ -29,12 +29,16 @@
   s01: <
     handle: "custom-boof/01"
     type: "custom-boof"
+    room: &(council_table)@boof
+    air: "Seven weathercocks disagreeing make the weather. A law cut in the pine keeps both sides at one table."
     excerpt: "Council Hill kept a great slab of split pine that refused to pick a side, and it was there, under crosswind weather, that Boof brought the egg to be argued over. She slipped beneath the trestle, chin on the timber, an..."
     route: ^[chapter/04/s01]{open}
   >
   s02: <
     handle: "custom-mirror/02"
     type: "custom-mirror"
+    room: @[weather_pane]@the_mirror
+    air: "Not your face in the glass, but what your wanting is becoming."
     excerpt: "The Fool’s Mirror shimmered with the fury of the split sky. It whispered in a tone like wind through eaves: \"What you see is not what is, but what your wanting is becoming.\" The delegates looked, one by one. The boon-..."
     handles: ["mirror-intro"]
     route: ^[chapter/04/s02]{open}
@@ -42,6 +46,8 @@
   s03: <
     handle: "custom-fool/03"
     type: "custom-fool"
+    room: !<tabletop>@the_fool
+    air: "A hot hand-pie set down with a bow. In Boon.land the vizier is baked goods."
     excerpt: "One-footed on the unsigned auction ledger, the Fool produced a small hot hand-pie from nowhere polite — clove and windfall apple — and set it before Mr. BaneWAP with a bow. The whisperer-at-the-throne, the schemer in ..."
     route: ^[chapter/04/s03]{open}
   >
@@ -55,12 +61,16 @@
     handle: "section/05"
     type: "section"
     title: "No Key Covers the Egg"
+    room: ?{key_rack}@boof
+    air: "Every civic key tried, and none fits. From under the table, the hem shows the vote first."
     excerpt: "Boof watched the argument cross the pine grain like weather. Boon and bane sat under one shared squall and bargained without declaring war; that was the table's whole genius. But when the clerks brought out the rack o..."
     route: ^[chapter/04/s05]{open}
   }
   s06: <
     handle: "custom-boof/06"
     type: "custom-boof"
+    room: ~<hill_stairs>@boof
+    air: "Down steps dished by boots that disagreed, toward two claims pinned side by side."
     excerpt: "Boof left the hill with the wish she had never asked to hold, down hill-slate steps dished by centuries of boots that had come down still disagreeing. Finder, the clerk had written, as if finding were a small thing a ..."
     route: ^[chapter/04/s06]{open}
   >

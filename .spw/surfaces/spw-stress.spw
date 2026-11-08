@@ -1,0 +1,36 @@
+# Lore.Land Spw stress
+# What the site has learned about the language by running on it: Exactly One Pie reads its
+# rules (.spw/runtime/pie-rules.spw) with the vendored parser at runtime, compares that read
+# with its own small reader, round-trips every power, and fuzzes the rules on purpose
+# (book/scripts/home/pie-spw.mjs; the findings panel at /pie/#pie-stress). Each finding here is
+# meant to travel upstream to spw-workbench as an issue or a proposal.
+#>lore_land_surfaces_spw_stress
+#:surface #!audit
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  A language earns trust by being leaned on. The game leans on Spw for real things: tuning how the lanes feel, what each knock costs, what each gift does and which references it calls on. When the parser and the small reader agree, and every power survives a round trip, the grammar is carrying weight. When they do not, or when a broken spell is called a success, that is worth knowing before a reader finds it.
+}
+
+%"findings"[
+  quiet_prose_fallback: { measured: "2026-11-08, spw-seed edbc550, lexProfile prose" seen: "a dropped closing brace, a dropped opening bracket, or an emoji in a label: parse() returns success true, errors 0, warnings 1, with completeness.complete false and completeness.proseFallback true" why: "a consumer that checks success alone takes a broken rule set as read" proposal: "under a structured reading, report success false (or a structural flag) when the root falls back to prose; or emit an error rather than a warning" }
+  unclosed_string_cliff: { measured: "5.6 KB of rules" seen: "an unclosed string inside #says[...] takes about 1 s to parse, against about 0.3 s for the whole file read clean" why: "one typo on the bench stalls the page" proposal: "stop a string at the end of the line (strings are one line in this canon already), then recover" }
+  cold_parse_cost: { measured: "node 22 and Chrome, cold" seen: "about 300 to 430 ms for the 5.6 KB rules file; 10 to 40 ms for a single 100-character spell; the bundle is 634 KB" why: "a runtime reader has to stay off the first paint (the game reads its rules when the page is idle)" proposal: "export a smaller runtime entry (lite.ts exists) for reading rules, without the whole workbench" }
+  reference_frame_asymmetry: { seen: "@voice[wonder] parses as Reference { raw: voice } with the @ sigil not kept on the node, and its frame on the enclosing Expression; ~lit[7] parses as Operation { operator, operatorLabel, frame } with the frame on the term" why: "a walker needs a special case for @, and a reader cannot tell @voice[x] from voice[x] by the node alone" proposal: "keep the sigil on Reference nodes (perspective prefix), and attach the frame to the same term as for operations" }
+  valence_words_reserved: { seen: "!honk parses as an Operation with no label and a ModifierChain [honk]; [boon] or [bone] inside a frame parse as an empty Expression carrying a ModifierChain" why: "everyday words of this book (and of the game: a goose honks, a berry is a boneberry) cannot be labels or values without a workaround" proposal: "the upstream change already under way: let a valence word be an identifier where an identifier is expected, and a modifier only where a modifier can stand" }
+  silent_acceptance: { seen: "a doubled operator (~~lit[7]) and a number with two points (1.0.5) both read whole, with no warnings" why: "a tuning typo changes the game without anyone being told" proposal: "warn on a doubled sigil and on a malformed number literal" }
+  probe_list_newline: { seen: "?name[ … ] and #name[ … ] (and ?name{ … } bodies) read whole on one line but degrade the whole surface to prose when they span lines; the other ten sigils read the same multi-line list or body whole (found three times: this file as ?findings, PLAN.F as ?open, and dragon-egg.spw as ?probes, the pattern .spw/CLAUDE.md recommends; a bare ?name[ … ] without quotes reads whole)" why: "found by writing this file as ?findings[ … ] (now %findings, a measure); the probe and the annotation are the two sigils a findings list reaches for first" proposal: "let ? and # open a multi-line frame like the others, or warn with the line and the sigil" }
+  postfix_observer_detached: { seen: "a room signature ~{warm_furrow}@boof parses as two expressions side by side, the operation and a separate Reference; the postfix @ observer is not attached to what it observes" why: "found writing 81 room signatures; the observer reading is a convention of the reader, not of the tree" proposal: "attach a postfix @ to the expression it follows, as the spirit sequence describes" }
+  silent_swallow: { seen: "?<…>, #(…) and #<…> return success with the operator swallowing the rest of the line as prose; no room is in the tree" why: "book:check now checks the shape of the tree, not success, and refuses those pairs" proposal: "the same as quiet_prose_fallback: a structured read that does not find structure should say so" }
+  capsule_attachment_varies: { seen: "before < >, the sigils & ! . = * % $ @ make a capsule standing between the operator and what follows, while ~ and ^ make a capsule held by the operation; after an operator ( ) hangs on the expression, where [ ] and { } hang on the operation; a capsule stores its name twice, as tag and as channel" why: "a walker needs a case for each pairing of sigil and container" proposal: "one attachment rule for all four containers after any operator" }
+  gaps_meaning: { seen: "a clean, complete read of the rules reports 913 gaps" why: "the number is not interpretable from outside, so it cannot be used as a health measure" proposal: "document what a gap is, or report gaps that matter (unread spans) separately from whitespace" }
+]
+
+^"how_the_game_tests"{
+  reads: "pie-spw.mjs readRules(): the real parser (lazily imported), walked into tune, knocks and powers; the small reader in pie-powers.mjs when the parser cannot be had or does not read the rules whole"
+  compares: "both readers build powers through one buildPower(), so a difference between them is a difference in reading; each power is written back out (writePower) and read again"
+  fuzzes: "eight mutations: a dropped brace, a dropped bracket, an unclosed string, a swapped sigil, a doubled operator, a malformed number, an emoji in a label, an apostrophe in prose"
+  reports: "stressReport() writes ?stress[exactly_one_pie]{ %parse quirks cross fuzz } for the workbench"
+  dispatches: "the rules call on references the game acts on: ^card turns a card, !sound picks a sound, @voice colours the caption, and a quoted path becomes a link to where the book has it"
+}
