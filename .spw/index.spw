@@ -32,6 +32,7 @@
   rooms: "@spw/surfaces/rooms.spw"
   spw_stress: "@spw/surfaces/spw-stress.spw"
   stories: "@spw/surfaces/stories.spw"
+  characters: "@spw/surfaces/characters.spw"
   spw_play: "@spw/surfaces/spw-play.spw"
   sigil_audit: "@spw/audits/sigil-chapter-audit.spw"
   pie_rules: "@spw/runtime/pie-rules.spw"

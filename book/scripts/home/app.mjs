@@ -30,7 +30,8 @@ import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.L';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.L';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.M';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.M';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -82,6 +83,40 @@ function markCurrentChapterInIndex() {
       link.setAttribute('aria-current', 'true');
     }
   });
+}
+
+/* The cast, with portraits (characters.mjs): met in colour, not yet met as a silhouette with where to meet them. */
+const CAST_IDS = Object.freeze({ boof: 'boof', ants: 'ants', genie: 'genie', bane: 'bane', boon: 'boon', bone: 'bonewap', hat: 'figure' });
+function paintCastPortraits() {
+  const cards = document.querySelectorAll('.cast-list .cast-card[data-cast]');
+  if (!cards.length) return;
+  let met = 0;
+  cards.forEach((card) => {
+    const id = CAST_IDS[card.dataset.cast];
+    const c = CHARACTERS[id];
+    const link = card.querySelector('a');
+    if (!c || !link || link.querySelector('.cast-portrait')) return;
+    const known = hasMet(id) || id === 'boof';
+    if (known) met += 1;
+    const portrait = document.createElement('span');
+    portrait.className = 'cast-portrait lore-portrait';
+    portrait.innerHTML = portraitSVG(id, { size: 64, met: known });
+    link.prepend(portrait);
+    card.classList.toggle('is-unmet', !known);
+    if (!known && c.first) {
+      const hint = document.createElement('span');
+      hint.className = 'cast-hint';
+      hint.textContent = `Not met yet: their name first comes up in Chapter ${c.first}, and their card turns when it does.`;
+      link.append(hint);
+    }
+  });
+  const lede = document.querySelector('.cast-board .hub-section-lede');
+  if (lede && !lede.querySelector('.cast-count')) {
+    const count = document.createElement('span');
+    count.className = 'cast-count';
+    count.textContent = ` You have met ${met} of ${cards.length}.`;
+    lede.append(count);
+  }
 }
 
 /* Kept palettes (collection.mjs): a chapter finished into its palette shows it along the foot of its plate. */
@@ -543,6 +578,7 @@ function initMonumentEntrance() {
   initCarryBand();
   markCurrentChapterInIndex();
   paintPaletteRibbons();
+  paintCastPortraits();
   enhancePrimaryCta();
   addBeginAgain();
   renderChamberSeals(document);

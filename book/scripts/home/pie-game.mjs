@@ -156,9 +156,10 @@ import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.L';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.M';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.J';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
+import { CHARACTERS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.M';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.L';
 
 const KEY = 'lore.pie.v1';
@@ -6681,6 +6682,32 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     pasteSpell(text);
   });
 
+  /* ─── Portraits, to take anywhere (characters.mjs): copy or download each as a standalone SVG ─── */
+  function paintPortraits() {
+    const list = document.querySelector('[data-pie-portraits]');
+    if (!list) return;
+    const copyInto = async (text, button) => {
+      const label = button.textContent;
+      try { await navigator.clipboard.writeText(text); button.textContent = 'Copied'; } catch { button.textContent = 'Could not copy'; }
+      setTimeout(() => { button.textContent = label; }, 1400);
+    };
+    list.replaceChildren(...Object.entries(CHARACTERS).map(([id, c]) => {
+      const li = nodeOf('li', 'pie-portrait');
+      const art = nodeOf('span', 'lore-portrait');
+      art.innerHTML = portraitSVG(id, { size: 96, standalone: true });
+      const copy = nodeOf('button', 'pie-tool', 'Copy SVG');
+      copy.type = 'button';
+      copy.addEventListener('click', () => copyInto(portraitSVG(id, { size: 512, standalone: true }), copy));
+      const save = nodeOf('a', 'pie-tool', 'Download');
+      save.download = `lore-land-${id}.svg`;
+      save.href = URL.createObjectURL(new Blob([portraitSVG(id, { size: 512, standalone: true })], { type: 'image/svg+xml' }));
+      li.append(art, nodeOf('strong', '', c.name), nodeOf('span', 'pie-portrait-first', c.first ? `first in Chapter ${c.first}` : 'in the lanes'), renderSpell(characterSpell(id), { cast: false, copy: `lore.land/characters#${id}` }), nodeOf('span', 'pie-portrait-actions'));
+      li.querySelector('.pie-portrait-actions').append(copy, ' ', save);
+      return li;
+    }));
+    document.querySelector('[data-pie-portraits-json]')?.addEventListener('click', (event) => copyInto(JSON.stringify(charactersSheet(), null, 2), event.target));
+  }
+
   /* ─── The stress test: what the game has learned about Spw (pie-spw.mjs) ─── */
   const stressOut = document.querySelector('[data-pie-stress]');
   let stressCross = [];
@@ -7264,6 +7291,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   paintBench();
   paintProvenance();
   paintDesk();
+  paintPortraits();
   loadLore().then((data) => {
     lore = data;
     paintLore();

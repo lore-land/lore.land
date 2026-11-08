@@ -1,0 +1,54 @@
+/*
+ * characters-portraits.css — portraits of everyone in the book (characters.mjs), in one medallion
+ * style. A character not yet met is a silhouette with a question mark: the shape is a promise, the
+ * colours wait to be earned by meeting them (in a chapter, or in the lanes).
+ */
+
+.lore-portrait {
+  display: inline-block;
+  line-height: 0;
+  vertical-align: middle;
+}
+
+.lore-portrait-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.lore-portrait-svg.is-unmet {
+  --lp-ground: #ece6dc;
+  --lp-a: #3a3540;
+  --lp-b: #3a3540;
+  --lp-c: #3a3540;
+  --lp-d: #3a3540;
+  --lp-accent: #9a93a0;
+}
+
+.lore-portrait-svg .lore-portrait-q {
+  fill: #f6f1e8;
+  font-weight: 700;
+}
+
+html:is([data-theme='night'], [data-theme='slate'], [data-binding-tone='dark']) .lore-portrait-svg.is-unmet {
+  --lp-ground: #262b36;
+  --lp-a: #0f1218;
+  --lp-b: #0f1218;
+  --lp-c: #0f1218;
+  --lp-d: #0f1218;
+  --lp-accent: #5a6070;
+}
+
+/* A portrait met for the first time arrives with a turn. */
+.lore-portrait.is-fresh .lore-portrait-svg {
+  animation: lore-portrait-turn 700ms ease-out both;
+}
+
+@keyframes lore-portrait-turn {
+  from { transform: rotateY(90deg) scale(0.8); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lore-portrait.is-fresh .lore-portrait-svg { animation: none; }
+}

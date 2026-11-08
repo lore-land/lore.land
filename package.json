@@ -25,7 +25,8 @@
     "spw:seed-bundle": "node book/scripts/tools/bundle-spw-seed.mjs",
     "spw:seed-bundle:verify": "node book/scripts/tools/bundle-spw-seed.mjs --verify",
     "spw:trope-prompt": "node .spw/tools/trope-prompt.mjs",
-    "spw:sigil-audit": "node .spw/tools/sigil-audit.mjs"
+    "spw:sigil-audit": "node .spw/tools/sigil-audit.mjs",
+    "spw:characters": "node .spw/tools/characters-canon.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",

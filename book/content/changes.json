@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.M",
+      "date": "2026-11-08",
+      "notes": [
+        "Everyone in the book now has a portrait, in one style, wherever they turn up: on the cast on the front page, on their card in the almanac, in the notice when you first meet them in a chapter, and at the end of the chapter where you did. Someone you have not met yet is a silhouette with a question mark, and the cast says where their name first comes up.",
+        "The portraits travel: on the game's design table each one copies or downloads as a standalone picture, with who they are as a Spw spell, and the whole set copies as one file for prints, other pages or a design tool."
+      ]
+    },
+    {
       "release": "2026_11_08.L",
       "date": "2026-11-08",
       "notes": [

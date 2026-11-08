@@ -794,3 +794,27 @@ body[data-surface='monument'] .wonder-drawer.is-mimed:not([open]) summary {
 body[data-surface='monument'] .wonder-drawer.is-mimed:not([open]) .wonder-object img {
   filter: grayscale(0.55) contrast(0.9);
 }
+
+/* Portraits on the cast (characters.mjs): met in colour; not yet met, a silhouette and where to meet them. */
+body[data-surface='monument'] .cast-card .cast-portrait {
+  align-self: flex-start;
+  margin-bottom: 0.15rem;
+}
+
+body[data-surface='monument'] .cast-card.is-unmet a {
+  border-style: dashed;
+  border-top-style: dashed;
+}
+
+body[data-surface='monument'] .cast-hint {
+  margin-top: 0.2rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: color-mix(in srgb, var(--cast-accent) 45%, var(--hub-ink));
+}
+
+body[data-surface='monument'] .cast-count {
+  font-style: italic;
+  color: var(--hub-ink);
+}

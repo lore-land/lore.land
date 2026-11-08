@@ -270,3 +270,14 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .keepsake-name {
     display: none;
   }
 }
+
+/* A card's character, in miniature (characters.mjs). */
+.keepsake-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.keepsake-portrait {
+  flex: none;
+}

@@ -4,8 +4,9 @@
 // from this browser's own shelf; nothing is sent anywhere.
 import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.L';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.M';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
+import { CHARACTERS, portraitSVG } from '../modules/characters.mjs?v=2026_11_08.M';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.L';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
@@ -204,6 +205,15 @@ async function paintPalettes(data) {
   $('[data-palettes]').replaceChildren(...ordered.map((p) => paletteCard(data, p, state)));
 }
 
+/* A character card wears its portrait: in colour once met, a silhouette with a question mark before. */
+const portraitFor = (kind, met) => {
+  const who = Object.keys(CHARACTERS).find((id) => CHARACTERS[id].card === kind);
+  if (!who) return null;
+  const span = el('span', { className: 'deck-portrait lore-portrait' });
+  span.innerHTML = portraitSVG(who, { size: 72, met });
+  return span;
+};
+
 function paintDeck() {
   const cards = allCards();
   const shelf = readCards();
@@ -217,9 +227,10 @@ function paintDeck() {
     const card = cards[kind];
     const kept = shelf[kind];
     if (!turned.has(kind)) {
+      const silhouette = portraitFor(kind, false);
       return el('li', { className: `deck-card is-face-down type-${card.type}` },
         el('p', { className: 'almanac-card-kicker' }, CARD_TYPES[card.type] || card.type),
-        el('p', { className: 'deck-card-back' }, '?'),
+        silhouette || el('p', { className: 'deck-card-back' }, '?'),
         el('p', { className: 'deck-card-hint' }, card.chapter ? `Somewhere from ${chapterName(card.chapter)} on` : 'Only in the lanes'));
     }
     const where = kept?.how === 'lanes'
@@ -227,6 +238,7 @@ function paintDeck() {
       : kept?.chapter ? `Met reading ${chapterName(kept.chapter)}` : 'Met in the lanes';
     return el('li', { className: `deck-card type-${card.type}` },
       el('p', { className: 'almanac-card-kicker' }, CARD_TYPES[card.type] || card.type),
+      portraitFor(kind, true),
       el('h3', {}, card.name),
       el('p', {}, card.story),
       el('p', { className: 'deck-card-lanes' }, card.lanes),

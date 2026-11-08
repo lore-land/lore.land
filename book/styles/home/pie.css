@@ -2690,3 +2690,49 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-cabinet.is-asking .pie-screen canvas {
   cursor: help;
 }
+
+/* Portraits, to take anywhere (characters.mjs). */
+.pie-portraits-title {
+  margin: 1.2rem 0 0.3rem;
+  font-family: var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  color: var(--hub-ink);
+}
+
+.pie-portraits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 0.7rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-portrait {
+  display: grid;
+  justify-items: start;
+  gap: 0.3rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+}
+
+.pie-portrait-first {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-portrait .spell {
+  justify-self: stretch;
+}
+
+.pie-portrait-actions .pie-tool {
+  text-decoration: none;
+}

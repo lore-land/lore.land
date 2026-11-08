@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.L" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.M" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -47,13 +47,14 @@
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.L&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.M&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.L&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.M&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.L"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.L"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.M"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.M"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -373,6 +374,10 @@
         <summary><span class="hub-eyebrow">For a design table</span> <strong>The asset sheet: every background and sprite</strong></summary>
         <p>Drawn by the game’s own hand, in the page’s own colours: each place’s ground and light, and every sprite with its hitbox, what it does, where it appears and the chapter it arrives in. Copy the level manifest to plan a new level or a reskin.</p>
         <div data-pie-assets-body></div>
+        <h3 class="pie-portraits-title">Portraits, to take anywhere</h3>
+        <p>Everyone in the book in one medallion style, drawn in vectors from the same plain lines as the game. Each copies or downloads as a standalone SVG, with who they are as a Spw spell; the whole set copies as JSON for another page, a print, or a design file.</p>
+        <p class="pie-bench-actions"><button type="button" class="pie-tool" data-pie-portraits-json>Copy the whole set as JSON</button></p>
+        <ul class="pie-portraits" data-pie-portraits></ul>
       </details>
 
       <div class="worktable pie-worktable" data-worktable data-near="/pie/" hidden>
