@@ -30,6 +30,7 @@ import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.D';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.D';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.G';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -80,6 +81,36 @@ function markCurrentChapterInIndex() {
       link.dataset.resume = 'true';
       link.setAttribute('aria-current', 'true');
     }
+  });
+}
+
+/* Kept palettes (collection.mjs): a chapter finished into its palette shows it along the foot of its plate. */
+async function paintPaletteRibbons() {
+  const links = document.querySelectorAll('.hub-chapter-list a[href*="/book/chapter/"]');
+  if (!links.length) {
+    return;
+  }
+  const palettes = await loadPalettes();
+  await reconcile(palettes, { wonders: false });
+  const state = readPaletteState();
+  links.forEach((link) => {
+    const n = Number(link.getAttribute('href').match(/chapter\/(\d+)/)?.[1]);
+    const palette = palettes.find((p) => p.chapter === n);
+    const layers = palette ? layersOf(palette.id, state) : [];
+    const thumb = link.querySelector('.hub-ch-thumb');
+    if (!layers.length || !thumb) {
+      return;
+    }
+    const ribbon = document.createElement('span');
+    ribbon.className = `hub-ch-palette is-${layers.length}-of-3`;
+    ribbon.title = `${palette.name}: ${layers.join(', ')} kept`;
+    ribbon.setAttribute('aria-hidden', 'true');
+    ['ground', 'ink', 'accent', 'glow', 'edge'].forEach((key) => {
+      const cell = document.createElement('i');
+      cell.style.background = palette.colors[key];
+      ribbon.append(cell);
+    });
+    thumb.append(ribbon);
   });
 }
 
@@ -511,6 +542,7 @@ function initMonumentEntrance() {
   initStorySpark();
   initCarryBand();
   markCurrentChapterInIndex();
+  paintPaletteRibbons();
   enhancePrimaryCta();
   addBeginAgain();
   renderChamberSeals(document);

@@ -1,0 +1,406 @@
+{
+  "note": "Collectible palettes (book/scripts/modules/collection.mjs; canon .spw/surfaces/collecting.spw). Each is named for a place, mixed by hand from the maker's own description of a laminated folio (or, where no folio fits yet, from the chapter's own plate) (spwashi.com, where the folio lives and is linked from here; lore.land never copies or claims it). A palette carries its colour (ground, ink, accent, glow, edge) and its type (the lettering the folio wears, projected onto the four type roles the site has: display serif, body serif, mono, and case/tracking/style). A chapter's palette is earned by finishing that chapter in any dimension (reading to its end, carrying the pie through it, keeping its own wonders) and, once earned, the chapter wears it: headings, drop caps, rules and a faint wash take its colours, and its headings its type. The mime wash is earned by winning a chapter back from Mimes Against WAP. Spw atom: =palette[id].",
+  "palettes": [
+    {
+      "id": "pool",
+      "name": "The pool",
+      "chapter": 1,
+      "gloss": "Where the berries' light collects at night, and Boof checks it on her rounds.",
+      "colors": {
+        "ground": "#efe9f6",
+        "ink": "#352d52",
+        "accent": "#3f78b5",
+        "glow": "#fbfaff",
+        "edge": "#a598c8"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0.01em",
+        "weight": 400,
+        "from": "a curling word card"
+      },
+      "folio": {
+        "title": "Boof and the Boonberry Pool",
+        "href": "https://spwashi.com/design/folios/#folio-03"
+      }
+    },
+    {
+      "id": "grove-echo",
+      "name": "The grove",
+      "chapter": 2,
+      "gloss": "Moss and leaf-dark green with a straw-pale light: the grove that answers a beat late.",
+      "colors": {
+        "ground": "#e9eee3",
+        "ink": "#1f2f26",
+        "accent": "#5f7a4e",
+        "glow": "#f2f1dc",
+        "edge": "#999869"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0.02em",
+        "weight": 400,
+        "from": "an answer, a beat late"
+      },
+      "plate": {
+        "title": "Chapter Two's plate",
+        "href": "/book/chapter/02/"
+      }
+    },
+    {
+      "id": "legal-pad",
+      "name": "The legal pad",
+      "chapter": 3,
+      "gloss": "A yellow pad and a pen: signals written down before they are argued.",
+      "colors": {
+        "ground": "#f8eeb0",
+        "ink": "#1f2a44",
+        "accent": "#2b5aa6",
+        "glow": "#fffbe0",
+        "edge": "#c9b45a"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "pen on a legal pad"
+      },
+      "folio": {
+        "title": "Honk about a pie, legal pad",
+        "href": "https://spwashi.com/design/folios/#folio-0927-16"
+      }
+    },
+    {
+      "id": "announce",
+      "name": "The announcement",
+      "chapter": 4,
+      "gloss": "Purple paint and a kraft card: the council's crier steering what everyone hears.",
+      "colors": {
+        "ground": "#e9e0f0",
+        "ink": "#3d2457",
+        "accent": "#b98a55",
+        "glow": "#f3e7d6",
+        "edge": "#7d5a9e"
+      },
+      "type": {
+        "family": "mono",
+        "case": "upper",
+        "style": "normal",
+        "tracking": "0.08em",
+        "weight": 700,
+        "from": "kraft-card capitals"
+      },
+      "folio": {
+        "title": "Bonk announce, steering",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-03"
+      }
+    },
+    {
+      "id": "rift",
+      "name": "The rift",
+      "chapter": 5,
+      "gloss": "Deep teal water and two slips of brass: two harvests trying to be one.",
+      "colors": {
+        "ground": "#e4ecea",
+        "ink": "#162a2c",
+        "accent": "#9a7b3c",
+        "glow": "#f1ead6",
+        "edge": "#2f4a4b"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.06em",
+        "weight": 400,
+        "from": "two slips, side by side"
+      },
+      "plate": {
+        "title": "Chapter Five's plate",
+        "href": "/book/chapter/05/"
+      }
+    },
+    {
+      "id": "kiln",
+      "name": "The kiln",
+      "chapter": 6,
+      "gloss": "Purple and rust, where old knocks are forgiven into new glass.",
+      "colors": {
+        "ground": "#ece2ee",
+        "ink": "#3a1f45",
+        "accent": "#a8462b",
+        "glow": "#f6e3d8",
+        "edge": "#7b3f6e"
+      },
+      "type": {
+        "family": "display",
+        "case": "upper",
+        "style": "normal",
+        "tracking": "0.04em",
+        "weight": 400,
+        "from": "tall outlined letters"
+      },
+      "folio": {
+        "title": "Bonk",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-09"
+      }
+    },
+    {
+      "id": "oath",
+      "name": "The oath",
+      "chapter": 7,
+      "gloss": "Blue going teal going slate: an oath paid in fruit, and kept.",
+      "colors": {
+        "ground": "#e3ebee",
+        "ink": "#16252b",
+        "accent": "#2a5f8f",
+        "glow": "#eef3f4",
+        "edge": "#2a4d56"
+      },
+      "type": {
+        "family": "display",
+        "case": "small-caps",
+        "style": "normal",
+        "tracking": "0.05em",
+        "weight": 400,
+        "from": "words one swears to"
+      },
+      "plate": {
+        "title": "Chapter Seven's plate",
+        "href": "/book/chapter/07/"
+      }
+    },
+    {
+      "id": "watering-eye",
+      "name": "The watering eye",
+      "chapter": 8,
+      "gloss": "A pale pink field, a brown iris that reflects a window, one teal tear.",
+      "colors": {
+        "ground": "#f6e4e6",
+        "ink": "#4a3226",
+        "accent": "#2f8e8a",
+        "glow": "#fff5f6",
+        "edge": "#c99aa0"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "no lettering at all"
+      },
+      "folio": {
+        "title": "Eye, teal tear, dress form",
+        "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-00"
+      }
+    },
+    {
+      "id": "clown-downtown",
+      "name": "Clown downtown",
+      "chapter": 9,
+      "gloss": "Olive and lavender under a teal sign: the headline honked across the skyline.",
+      "colors": {
+        "ground": "#e8e9d9",
+        "ink": "#3b3f24",
+        "accent": "#2d8a8a",
+        "glow": "#ebe4f4",
+        "edge": "#8c8f55"
+      },
+      "type": {
+        "family": "mono",
+        "case": "upper",
+        "style": "normal",
+        "tracking": "0.12em",
+        "weight": 700,
+        "from": "a sign-painter's HEADLINE"
+      },
+      "folio": {
+        "title": "Headline honk in clown downtown",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-06"
+      }
+    },
+    {
+      "id": "land-tree",
+      "name": "The land tree",
+      "chapter": 10,
+      "gloss": "Violet and magenta: three lands branching from one trunk.",
+      "colors": {
+        "ground": "#f1e4f3",
+        "ink": "#3b1d4a",
+        "accent": "#c2347c",
+        "glow": "#f7e6f1",
+        "edge": "#7a3f9a"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.02em",
+        "weight": 400,
+        "from": "tags hung on branches"
+      },
+      "folio": {
+        "title": "Boon, bane, bone land tree",
+        "href": "https://spwashi.com/design/folios/#folio-0927-22"
+      }
+    },
+    {
+      "id": "pale-moon",
+      "name": "The pale moon",
+      "chapter": 11,
+      "gloss": "Maroon under a pale moon and a grey crescent: the colour of a rented empire.",
+      "colors": {
+        "ground": "#f0ebe6",
+        "ink": "#4b1a24",
+        "accent": "#8a2c3f",
+        "glow": "#efe9d8",
+        "edge": "#9b9696"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0",
+        "weight": 400,
+        "from": "a moon's quiet"
+      },
+      "folio": {
+        "title": "Pale moon, maroon",
+        "href": "https://spwashi.com/design/folios/#panel-faces"
+      }
+    },
+    {
+      "id": "rain-bonk",
+      "name": "The rain",
+      "chapter": 12,
+      "gloss": "Mint, pink, a yellow sun and two red tulips: water going round, where two rivers meet.",
+      "colors": {
+        "ground": "#e8f5ee",
+        "ink": "#2f3a2a",
+        "accent": "#e0507a",
+        "glow": "#fff3b8",
+        "edge": "#d8423a"
+      },
+      "type": {
+        "family": "display",
+        "case": "upper",
+        "style": "normal",
+        "tracking": "0.06em",
+        "weight": 400,
+        "from": "transfer lettering"
+      },
+      "folio": {
+        "title": "Bonk and the water cycle",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-03"
+      }
+    },
+    {
+      "id": "shell-swirl",
+      "name": "The shell",
+      "chapter": 13,
+      "gloss": "Teal and grey-green swirled in a wide circle, two white arcs: the shape a door can take.",
+      "colors": {
+        "ground": "#e3eeea",
+        "ink": "#23423f",
+        "accent": "#2c8b86",
+        "glow": "#ffffff",
+        "edge": "#6f5a7a"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "no lettering, only arcs"
+      },
+      "folio": {
+        "title": "Teal swirl with white arcs",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-00"
+      }
+    },
+    {
+      "id": "hill-moon",
+      "name": "The hill",
+      "chapter": 14,
+      "gloss": "A lilac sky, a dark green hill, a grey moon, and a tall shape standing where somebody is missing.",
+      "colors": {
+        "ground": "#ece4f2",
+        "ink": "#1f3326",
+        "accent": "#5d6a73",
+        "glow": "#f4f2ee",
+        "edge": "#1b1b1b"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "a sign seen backwards through the sheet"
+      },
+      "folio": {
+        "title": "Moon over a green hill",
+        "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-07"
+      }
+    },
+    {
+      "id": "three-stools",
+      "name": "Three stools",
+      "chapter": 15,
+      "gloss": "A teal night, a moon, a dark saucer, and three white stools: three records side by side.",
+      "colors": {
+        "ground": "#d6e6e5",
+        "ink": "#123a3e",
+        "accent": "#1d5a60",
+        "glow": "#f2f0e6",
+        "edge": "#0f2a2e"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "white shapes on a night"
+      },
+      "folio": {
+        "title": "Teal night, moon, three stools",
+        "href": "https://spwashi.com/design/folios/#panel-faces"
+      }
+    },
+    {
+      "id": "mime-wash",
+      "name": "The mime wash",
+      "chapter": null,
+      "earn": "won-back",
+      "gloss": "Blue-grey nearly covering an older page that still shows through. Earned by winning a chapter back from Mimes Against WAP.",
+      "colors": {
+        "ground": "#dfe3ea",
+        "ink": "#3c4555",
+        "accent": "#8a95a8",
+        "glow": "#eef0f4",
+        "edge": "#6c5a8e"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0",
+        "weight": 400,
+        "from": "a page washed over"
+      },
+      "folio": {
+        "title": "Mimes Against WAP, blue wash",
+        "href": "https://spwashi.com/design/folios/#folio-30"
+      }
+    }
+  ]
+}

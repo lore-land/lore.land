@@ -134,6 +134,7 @@ import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.E';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.G';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -4982,6 +4983,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (isNew) {
       record.cards.push(kind);
       writeRecord(record);
+      // The site's shelf too (collection.mjs): the almanac and the chapters keep the same deck.
+      shelveCard(kind, { chapter: run.chapter, how: 'lanes' });
       paintDeck();
     }
     const pause = record.view.story && !record.view.zen && (run.intro || isNew);
@@ -5113,13 +5116,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const body = deckOut.querySelector('[data-pie-deck-body]');
     const lede = deckOut.querySelector('[data-pie-deck-lede]');
     const kinds = Object.keys(CARDS);
-    const turned = kinds.filter((k) => record.cards.includes(k)).length;
+    // A card turned while reading a chapter is face-up here too.
+    const shelf = cardsTurned();
+    const isTurned = (k) => record.cards.includes(k) || shelf.has(k);
+    const turned = kinds.filter(isTurned).length;
     if (lede) lede.textContent = `${turned} of ${kinds.length} cards turned${qaAll ? ' · QA view: every card face-up' : ''}. ${record.qa.length ? `${record.qa.length} QA note${record.qa.length === 1 ? '' : 's'} kept in this browser.` : ''}`;
     if (!body) return;
     const grid = nodeOf('ul', 'pie-deck-grid');
     kinds.forEach((kind) => {
       const li = nodeOf('li', 'pie-deck-slot');
-      if (qaAll || record.cards.includes(kind)) li.append(renderCard(kind, { compact: true }));
+      if (qaAll || isTurned(kind)) li.append(renderCard(kind, { compact: true }));
       else {
         const back = nodeOf('div', `pie-cardback type-${CARDS[kind].type}`);
         back.append(nodeOf('span', 'pie-cardback-mark', '?'), nodeOf('span', 'pie-cardback-type', CARD_TYPES[CARDS[kind].type]), nodeOf('span', 'pie-cardback-hint', 'Not met yet'));

@@ -1,0 +1,255 @@
+/*
+ * collection.css — a chapter wearing the palette it was finished into (collection.mjs).
+ *
+ * A palette is a place's colours and lettering, mixed from a laminated folio.
+ * It arrives as tokens on main.chapter (--pal-ground, --pal-ink, --pal-accent,
+ * --pal-glow, --pal-edge, --pal-type-*) and in three layers, one for each way
+ * the chapter was finished:
+ *
+ *   .pal-colour  read to its end           headings, kicker, drop cap, rules
+ *   .pal-type    carried through the lanes the title and section headings' lettering
+ *   .pal-light   its own wonders kept      a faint wash over the sections
+ *
+ * Every colour is mixed with the binding's own, never laid over it, so a palette
+ * reads as the chapter's mood in every binding; in a dark binding the ink gives
+ * way to the palette's glow and accent. The keepsakes panel at the chapter's end
+ * always shows the whole palette, earned or not, so you can see what is to come.
+ */
+
+/* ─── Colour ───────────────────────────────────────────────────────── */
+
+main.chapter.wears-palette.pal-colour .chapter-head .chapter-title-text,
+main.chapter.wears-palette.pal-colour section > h2 {
+  color: color-mix(in srgb, var(--pal-ink) 78%, var(--color-text-main, currentColor));
+}
+
+main.chapter.wears-palette.pal-colour .chapter-head .chapter-kicker {
+  color: color-mix(in srgb, var(--pal-accent) 80%, var(--color-text-alt, currentColor));
+}
+
+main.chapter.wears-palette.pal-colour .chapter-head .chapter-in-which {
+  color: color-mix(in srgb, var(--pal-ink) 45%, var(--color-text-alt, currentColor));
+}
+
+main.chapter.wears-palette.pal-colour .chapter-head .chapter-epigraph {
+  border-top-color: color-mix(in srgb, var(--pal-edge) 60%, transparent);
+}
+
+main.chapter.wears-palette.pal-colour > section:first-of-type p:first-of-type::first-letter,
+main.chapter.wears-palette.pal-colour > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter {
+  color: color-mix(in srgb, var(--pal-accent) 82%, var(--pal-ink));
+}
+
+main.chapter.wears-palette.pal-colour > .chapter-end-mark {
+  color: var(--pal-accent);
+}
+
+main.chapter.wears-palette.pal-colour blockquote {
+  border-left-color: color-mix(in srgb, var(--pal-accent) 60%, transparent);
+}
+
+/* A dark binding brings its own night: the palette lends its glow and accent. */
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour .chapter-head .chapter-title-text,
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour section > h2 {
+  color: color-mix(in srgb, var(--pal-glow) 62%, var(--pal-accent));
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour .chapter-head .chapter-in-which {
+  color: color-mix(in srgb, var(--pal-glow) 55%, var(--color-text-alt, currentColor));
+}
+
+/* ─── Type ─────────────────────────────────────────────────────────── */
+
+main.chapter.wears-palette.pal-type .chapter-head .chapter-title-text,
+main.chapter.wears-palette.pal-type section > h2 {
+  font-family: var(--pal-type-family);
+  font-style: var(--pal-type-style);
+  font-variant: var(--pal-type-variant);
+  letter-spacing: var(--pal-type-tracking);
+  text-transform: var(--pal-type-case);
+}
+
+main.chapter.wears-palette.pal-type section > h2 {
+  font-weight: var(--pal-type-weight);
+}
+
+/* ─── Light ────────────────────────────────────────────────────────── */
+
+main.chapter.wears-palette.pal-light > [data-ebook-section] {
+  background-image:
+    radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--pal-glow) 34%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--pal-ground) 26%, transparent), transparent 85%);
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-light > [data-ebook-section] {
+  background-image:
+    radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--pal-accent) 14%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--pal-edge) 10%, transparent), transparent 85%);
+}
+
+/* ─── The keepsakes, at the chapter's end ──────────────────────────── */
+
+main.chapter > .chapter-keepsakes {
+  max-width: var(--flow-width, 66ch);
+  margin: 1.2rem auto 0;
+  padding: clamp(0.9rem, 3vw, 1.3rem);
+  border: 1px solid color-mix(in srgb, var(--pal-edge, #a598c8) 45%, transparent);
+  border-radius: var(--border-radius-main, 0.8rem);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--pal-ground, #efe9f6) 55%, transparent), transparent 70%),
+    var(--theme-paper, transparent);
+  font-size: 0.92rem;
+  text-indent: 0;
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter > .chapter-keepsakes {
+  border-color: color-mix(in srgb, var(--pal-accent, #3f78b5) 40%, transparent);
+  background:
+    radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--pal-accent, #3f78b5) 16%, transparent), transparent 70%),
+    var(--room-section, transparent);
+}
+
+.chapter-keepsakes p,
+.chapter-keepsakes li {
+  max-width: none;
+  margin: 0;
+  text-indent: 0;
+}
+
+.chapter-keepsakes .keepsake-title {
+  margin: 0 0 0.7rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--pal-accent, #3f78b5) 70%, var(--color-text-alt, currentColor));
+}
+
+.keepsake-palette {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.keepsake-swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1.1rem);
+  gap: 3px;
+}
+
+.keepsake-swatch {
+  display: block;
+  height: 2.6rem;
+  border-radius: 3px;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.keepsake-name {
+  font-family: var(--pal-type-family, var(--font-family-heading));
+  font-style: var(--pal-type-style, normal);
+  font-variant: var(--pal-type-variant, normal);
+  letter-spacing: var(--pal-type-tracking, 0);
+  text-transform: var(--pal-type-case, none);
+  font-size: 1.2rem;
+  color: color-mix(in srgb, var(--pal-ink, currentColor) 80%, var(--color-text-main, currentColor));
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .keepsake-name {
+  color: color-mix(in srgb, var(--pal-glow, #fff) 65%, var(--pal-accent, currentColor));
+}
+
+.keepsake-gloss {
+  font-style: italic;
+}
+
+.keepsake-source {
+  margin-top: 0.3rem !important;
+  font-size: 0.82rem;
+  color: var(--color-text-alt, inherit);
+}
+
+.keepsake-layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.keepsake-layers li {
+  padding: 0.2rem 0.6rem;
+  border: 1px dashed color-mix(in srgb, var(--pal-edge, #999) 55%, transparent);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--color-text-alt, inherit);
+}
+
+.keepsake-layers li.is-kept {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--pal-accent, #3f78b5) 65%, transparent);
+  background: color-mix(in srgb, var(--pal-accent, #3f78b5) 12%, transparent);
+  color: inherit;
+}
+
+.keepsake-layers li.is-kept::before {
+  content: "✓ ";
+  color: var(--pal-accent, currentColor);
+}
+
+.keepsake-wear {
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--pal-accent, #3f78b5) 55%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.keepsake-wear[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--pal-accent, #3f78b5) 14%, transparent);
+}
+
+.keepsake-cards-lede {
+  margin-top: 0.9rem !important;
+  font-size: 0.82rem;
+  color: var(--color-text-alt, inherit);
+}
+
+.keepsake-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.keepsake-card {
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--pal-ground, #eee) 60%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pal-edge, #999) 40%, transparent);
+  font-size: 0.8rem;
+}
+
+.keepsake-card span {
+  color: var(--color-text-alt, inherit);
+}
+
+.keepsake-more {
+  margin-top: 0.8rem !important;
+  font-size: 0.82rem;
+}
+
+@media print {
+  main.chapter > .chapter-keepsakes {
+    display: none;
+  }
+}

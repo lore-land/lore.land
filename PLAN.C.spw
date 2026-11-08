@@ -85,6 +85,71 @@
   refs: [".spw/state/alignment-ledger.spw#AL-005", ".spw/surfaces/atelier.spw#wonder_budget"]
 }
 
+^roots_overlay_2026_11_08{
+  source: "code read 2026-11-08: grep for attachShadow, shadowRoot, adoptedStyleSheets, ::part, exportparts, slot, shadowrootmode, customElements.define, delegatesFocus, attachInternals, composedPath, popover and startViewTransition across book/, index.html and the doors (node_modules, dist, .spw and vendor excluded)"
+  vocabulary: "live: in code, file cited · prototype: built, outside the live path · proposed: written in a plan, not built · imagined: no plan line yet"
+  .note: "Every phase's own artifact is proposed: book/audits/shadow-dom/ and book/audits/chrome-updates/ do not exist, and book/audits/ holds only 09b-vite-public-entries.spw. Each root says where the phase's subject stands in the code."
+  prior_priorities: "all three of 2026-07-16's prioritize_next_milestones are live: cross-document view transitions turn pages (chapter/reading.css @view-transition), popover carries seven modules (invokers unused), container queries sit in 9 files and content-visibility in 3"
+  epoch_notes: "the epoch notes were written from memory, not ingest. Two read early: CSS nesting first shipped in M112 (fixed in place; M120 relaxed its syntax), and declarative shadow DOM's first form, the shadowroot attribute, shipped in M90, before this window; M111 standardized shadowrootmode. Confirm both when M111 and M112 are ingested."
+  shadow_dom: [
+    ^root[01]{ !state:live %hosts:3 .file:"book/scripts/modules/chapter-sigil.mjs" reading:"three live root classes, all open, all attached by script: chapter-sigil.mjs:378 (fifteen chapter-NN-sigil hosts, one per book/chapter/NN/sigil.mjs, appended to the aside), story-spark.mjs:164 (story-spark, home page only), spw-interactions.mjs:255 (spw-registers, in the handle inspector). One prototype: book/scripts/index.mjs, custom-* voices on a shadow base with slots, imported by nothing. No closed or declarative roots and no third-party components; the fifteen story voices are light-DOM custom elements (custom/story-voice.mjs)." }
+    ^root[02]{ !state:live &ledger:"AL-012" .file:"book/scripts/custom/story-voice.mjs" reading:"the boundary is already drawn by kind. Prose is light DOM: on 2026-09-07 (38d136b) the voices left their shadow roots after AL-012 found them collapsing chamber prose behind a click, injecting a quiz and replacing copy with 'Bonked!'. Instruments stayed in shadow, where AL-005 still stands for the sigil's mirrored styles." }
+    ^root[03]{ !state:prototype .file:"book/scripts/index.mjs" reading:"the only slot elements left in the tree are in index.mjs, which no page imports; the live hosts slot nothing and build their own content. Slot distribution was the voices' shape until 38d136b." }
+    ^root[04]{ !state:live &ledger:"AL-005" .file:"book/scripts/modules/chapter-sigil.mjs" reading:"each live root carries an inline style with :host. The book's look enters only through var() reads with literal fallbacks (--color-text-main, --font-family-body, --hub-ink); literal panels do not follow a binding (rgba(255, 255, 255, 0.76) behind the sigil, #142036 under its phrase). No ::part, exportparts or adoptedStyleSheets anywhere." }
+    ^root[05]{ !state:live %target_reads:92 %composed_path:0 reading:"92 .target reads across 31 files in book/scripts (vendor excluded) and no composedPath; composed:true events leave spw-component-binding.mjs and spw-advanced-runtime.mjs. No prose sits inside a root, so retargeting has had none of the story's words to rename." }
+    ^root[06]{ !state:proposed reading:"no delegatesFocus anywhere. The sigil's reinterpret button and route link sit in an open root and keep their place in tab order; story voices strip their own tabindex (story-voice.mjs), since AL-012 found block chambers acting as tabindex=0 buttons." }
+    ^root[07]{ !state:live .file:"book/scripts/modules/chapter-sigil.mjs" reading:"names stay inside each root: the sigil panel is a role=group with its own aria-label and a role=status prompt, and the spark's text is aria-live; no aria-labelledby or aria-describedby crosses a boundary." }
+    ^root[08]{ !state:imagined reading:"no attachInternals or formAssociated anywhere, and no custom element takes part in a form." }
+    ^root[09]{ !state:proposed reading:"no shadowrootmode in any page or template. Both halves of a built root exist unjoined: chapters:build prerenders prose with one renderer for build and browser (c016), and chamber-seals.mjs is pure string construction that can stamp at build time." }
+    ^root[10]{ !state:proposed reading:"nothing measured. The live roots are one sigil per chapter page and one spark on the home page, so cost waits until a root wraps prose or repeats per card." }
+    ^root[11]{ !state:proposed reading:"no browser test runner in package.json; book:check, spw:probes and dist:verify read files, and none of them sees inside a root. A file-level probe can still read every attachShadow template as text." }
+    ^root[12]{ !state:proposed reading:"no blueprint written, though the history already shows an order: prose left the shadow (38d136b) and instruments stayed." }
+    ^root[13]{ !state:proposed &ledger:"AL-005" reading:"no master report; AL-005 waits on this track (resolution: revisit at shadow-dom phase 02)." }
+  ]
+  chrome_milestones: [
+    ^root["M94-M100"]{ !state:live reading:"@layer (M99) orders the cascade in 14 files, among them chapter/panels.css (root.*) and home/hero.css (home.*)." }
+    ^root["M101-M110"]{ !state:live reading:":has() in 14 files and container queries in 9, both from M105." }
+    ^root["M111-M120"]{ !state:live reading:"popover in seven modules (tellings, scene-light, begin-again, almanac, settled, constellation; ebook-navigation sets popovertarget), animation-timeline in home/atmosphere.css, @starting-style in components/gestures.css and home/motion.css; no declarative shadow root." }
+    ^root["M121-M130"]{ !state:live reading:"cross-document view transitions (M126) turn pages: chapter/reading.css sets @view-transition navigation auto, names chapter-bar and reads :active-view-transition-type(back); no anchor positioning." }
+    ^root["M131-M140"]{ !state:proposed reading:"no feature in code is pinned to this window yet; same-document startViewTransition (reading-nook.mjs, interaction-surface.mjs) predates it and waits behind reduced motion." }
+    ^root["M141-M145"]{ !state:proposed reading:"nothing in code cites this window; &verified_sources holds M145's notes alone." }
+  ]
+}
+
+~branches{
+  .note: "grown 2026-11-08: ways Plan C could go, each named by the axis it varies. None is chosen; ^relay says how a session moves one."
+  light_book: "axis: where encapsulation lives. A shadow root per component, or a light-DOM book whose prose stays readable, searchable and citable with scripts off (c016, line-share.mjs). The book already leans light for words (AL-012) and sealed for instruments; this branch asks whether the line holds for cards, plates and folios."
+  lens_layer: "axis: what a root is for. A shadow root as a reader's lens over prerendered prose: one default slot passes the paragraph through untouched, while glints, leans and dials live around it in the shadow, where xray-reading.mjs today wraps and unwraps text nodes (L04). The lens frames the words and never holds them."
+  built_or_mounted: "axis: when the boundary is drawn. Attached by script at mount, as all three live roots are, or written by chapters:build as a template with shadowrootmode, which needs no server on Pages and keeps one renderer for build and browser."
+  tokens_parts_or_sheets: "axis: how the binding crosses. Tokens only (weather in, furniture sealed), ::part names for the seams a binding may dress, or one constructed sheet adopted by every root, which would retire the AL-005 mirror."
+  open_or_sealed: "axis: who may look inside. Open roots keep the workshop veil liftable, as inspectable craft asks; a closed root would make a seal a story device, a folio no tool on the page can open, at the cost of the scribe's view. Closed is a fiction, not a lock: devtools still open it."
+  feature_first: "axis: how the sweep walks. Fifty-two uniform milestone phases, or start from the features the code already uses (@layer, :has(), container queries, popover, @starting-style, scroll timelines, view transitions), walk each back to its milestone, then forward to what would help a root."
+  rolling_window: "axis: which window. M94–M145 kept as a dated record of the season the plan was written in, or a rolling latest 52 that moves with each stone; a rolling window renumbers phases, so it would key them by milestone rather than by index."
+  registry_scope: "axis: who names elements. One global registry today (fifteen voices, fifteen chapter sigils, story-spark, spw-registers), or a registry per book, so a book poured into the engine (PLAN.E L18) cannot collide with the engine's names; scoped registries are a question for the milestones after M145."
+}
+
+^aspiration{
+  .note: "What Plan C makes possible for lore.land as a living book and as a model for future books (PLAN.E north_star). Grown 2026-11-08 at the creator's ask to develop the domain's theory and creative utility."
+  theory: {
+    words_are_common_ground: "A book's words belong to every reader and every tool a reader brings: search, find in page, a text fragment, a screen reader, print, a quote card. In the DOM that commons is the light tree. Encapsulation is for what the book holds about itself, its instruments and apparatus, and never for the story."
+    slot_is_a_promise: "A root that slots prose holds the words without owning them, and also holds the power not to paint them: an unassigned child does not render. The old voices used a root's power over their words (AL-012: a collapse behind a click, a quiz, a replaced line) and gave it back on 2026-09-07. For a book, a slot is a promise to pass the words through; a lens may frame them but never withhold them."
+    veil_made_literal: "Dual-register reading (index.spw keep: adventure surface, workshop veil) has a DOM form: the shadow boundary is where the workshop begins. The chapter sigils already sit behind the scribe's desk (reader tier, chapter/reading.css §6), and open mode keeps the veil liftable."
+    binding_is_weather: "Custom properties inherit across the boundary, so a binding (bindings.css restating the base tokens) reaches every root that reads a token and stops at every literal. A boundary is porous to weather and sealed to furniture, and a book chooses which of its looks are weather."
+    specimen_or_mark: "Retargeting reports an event from inside a root as the host, so an instrument answers as one thing. That is the difference between a mark, whose parts a reader touches one by one, and a specimen, handled whole; which of lore.land's things are marks and which are specimens is a reading of the story as much as an engineering choice."
+    engine_seam: "PLAN.E separates content from engine so another book can be poured in (L18). A sealed component is the engine's half of that seam made physical: it brings its own structure and style and asks the host book only for words (slotted) and weather (tokens). Content is light, apparatus is sealed, the binding is tokens."
+  }
+  creative_utility: {
+    chapters: "Chapters that carry their own instruments, already begun: fifteen sigil.mjs files give each chapter its own phrase, prompts and route. Written into the page by chapters:build, a chapter would arrive holding its tools before any script runs, and a maker adds an instrument to one chapter by adding one file beside it."
+    pie: "Exactly One Pie draws on a canvas (pie-game.mjs) and turns a card for every character, obstacle and power-up (pie-cards.mjs). A card as a sealed element would wear one face in the game, the almanac and the desk: a maker draws a creature once and every room that meets it shows the same specimen."
+    almanac: "A wonder card (almanac.mjs, a top-layer popover) as one element: its name, note and places stay light, so search and find in page keep them, while its kind ink, sigil and screenshot face (PLAN.E L11, L12) live sealed inside and dress only in the binding's tokens."
+    folios: "A folio is a page pressed under glass, a new layer over the sealed one (folios.spw). A sealed folio slots the scan and its caption and keeps the glass in the shadow, its seasoning (liquid until a stone has passed, then clear, folio-wall.mjs) held as the element's own state, so the wall shows ages of glass without any stylesheet knowing how glass is made."
+    plates: "Plates that mount like specimens: the image and its alt stay light, and the mount carries the label in a shadow root: chamber seal (chamber-seals.mjs), call number (shelf-list.json) and gate state (plates-manifest.spw !state), so plates 14 and 15 wear a study pin until they graduate."
+    bindery_and_desk: "The bindery (bindery.mjs, bindings.css) is the one force that should cross every boundary, as tokens; the desk (scriptorium-desk.mjs) is where a scribe lifts the veil. A desk spell could list a page's roots, their mode, what each slots and which literals refuse the binding: an inspect-rung on-ramp (c014) that teaches encapsulation by reading the book's own."
+    cauldron: "/cauldron/ is an empty directory, unchanged since 2026-09-27, and nothing in the tree names it: imagined. If it fills, sealed specimens (wonders, sayings, cards) are ingredients that can be stirred together without their styles running into each other."
+  }
+  boldest: "A book whose story is never behind a boundary and whose every instrument is a specimen that can be lifted out whole: written into the page by the build, worn in the reader's binding, opened on the scribe's desk, and carried into the next book by copying one file."
+}
+
 &verified_sources{
   release_notes_145: "https://developer.chrome.com/release-notes/145"
   stable_promotion_145: "https://chromereleases.googleblog.com/2026/02/stable-channel-update-for-desktop_10.html"
@@ -537,7 +602,7 @@
   }
 
   ~<epoch["M111-M120: Declarative Shadow DOM and Popover Era"]>{
-    .note: "Declarative shadow DOM ships (M111), popover API ships (M114), CSS nesting ships (M120).
+    .note: "Declarative shadow DOM ships (M111), popover API ships (M114), CSS nesting ships (M112; relaxed syntax M120).
             This epoch is the inflection point for shadow DOM adoption — declarative mode eliminates
             the JavaScript-only construction constraint; popover introduces a new top-layer model
             that interacts with shadow boundaries in non-obvious ways."
@@ -642,7 +707,7 @@
       @findings: extract_high_signal_deltas
       @evidence: record_primary_source_citations_with_dates
       @decision: classify_adopt_monitor_reject
-      #signal: "M120 — CSS nesting ships; nesting within shadow-scoped stylesheets
+      #signal: "M120 — relaxed CSS nesting ships (nesting itself shipped M112); nesting within shadow-scoped stylesheets
                 changes the authoring model for component-internal styles"
     }
     ={ "book/audits/chrome-updates/M120.spw" }
@@ -958,4 +1023,76 @@
   .note: "milestone range M94-M145 covers September 2021 through February 2026 —
           this window captures the full lifecycle of modern shadow DOM features
           from origin trial through stable shipping"
+}
+
+#>wonder_plan_c_binding_through_sigil
+?["Does a dark binding leave a chapter sigil light on light?"]{
+  #:depth #!material
+  ~#lens: "weather through a boundary"
+  ~#expect: "Under slate and starfield the sigil's title and meaning turn near-white (--color-text-main follows --text-color-main, #ebe8de and #eef3ff) over the literal white panel and fall below AA; the phrase block keeps its own #142036 night and reads."
+  ~#probe(read)
+  !probe{ "Read createTemplate's style in chapter-sigil.mjs against the slate and starfield blocks in chapter/bindings.css, then open a chapter with ?binding=starfield and the scribe's desk on, and measure the sigil's ink against its panel." }
+  $%[ink.contrast, panel.literals, tokens.read]
+}
+
+#>wonder_plan_c_lens_keeps_citation
+?["If a paragraph wore a shadow lens, would line-share still cite it?"]{
+  #:depth #!experiential
+  ~#lens: "the words as common ground"
+  ~#expect: "Yes while the words are slotted: they stay in the light tree, so PROSE_SELECTOR, window.getSelection and a text fragment all still reach them. Words moved inside the root drop out of line-share and may not take a fragment at all."
+  ~#probe(read)
+  !probe{ "In an untracked scratch page, put one paragraph slotted through a lens and one written inside a root; select each, build its #:~:text= link the way line-share.mjs does, open it, and try find in page." }
+  $%[cite.slotted, cite.inside, find.slotted, find.inside]
+}
+
+#>wonder_plan_c_built_sigil
+?["Can chapters:build write a chapter's sigil into the page without a second renderer?"]{
+  #:depth #!structural
+  ~#lens: "one renderer for build and browser"
+  ~#expect: "Yes, once createTemplate builds a string the way chamber-seals.mjs does: the build stamps a shadowrootmode template into the aside, the browser keeps only the reinterpret handler, the reader tier still hides it with scripts off (the whitelist is CSS), and the AL-005 mirror moves into built HTML where a diff can see it drift."
+  ~#probe(read)
+  !probe{ "Read where build-chapters.mjs and chapter-render.mjs write the aside, and count what createTemplate builds with el() that a string would have to say." }
+  $%[renderers, el_calls, aside_writers]
+}
+
+#>wonder_plan_c_slot_withholding
+?["Can a probe tell a lens that frames prose from one that can withhold it?"]{
+  #:depth #!educational
+  ~#lens: "a slot as a promise"
+  ~#expect: "Yes, by reading templates as text: a root that passes prose through one default slot with no rule hiding it cannot withhold words, while named slots, a slot inside a toggled container, or display none on a slot or ::slotted mark one that can. Run on the parent of 38d136b, it would have flagged the voices AL-012 caught by hand."
+  ~#probe(read)
+  !probe{ "Read every attachShadow template in book/scripts, and the old voices with git show 38d136b^:book/scripts/custom; count default slots, named slots, slots inside a toggled container, and rules that hide a slot." }
+  $%[slot.default, slot.named, slot.toggled, slot.hidden]
+}
+
+#>wonder_plan_c_window_drift
+?["How far has Chrome stable moved since M145?"]{
+  #:depth #!temporal
+  ~#lens: "the window as a dated record"
+  ~#expect: "About nine milestones: at the four-week cadence from M145 on 2026-02-10, stable on 2026-11-08 is near M154, so a rolling 52 would read M103–M154 and let M94–M102 go."
+  ~#probe(read)
+  !probe{ "After the local files, read the Chrome Releases stable-channel posts since February 2026 and record the latest stable major and its date in ^verified_context's shape." }
+  $%[stable.latest, milestones.since_145]
+}
+
+#>plan_c_relay
+^relay{
+  .note: "How the next session takes a turn on Plan C. Claude or any other model may take it; the creator closes branches."
+  rungs: ["seed: said once, worth keeping", "sketch: worked through, its strains named", "probe: a check exists that reads or runs", "landed: in code or canon, in a commit the creator asked for"]
+  turn: [
+    "Pick one branch from ~branches and say the axis it varies.",
+    "Move one claim one step (seed, sketch, probe, landed) and say where it is rooted: live, proposed, prototype or imagined, citing the file you read.",
+    "Read and grep the code before writing a root; a root from memory is a seed.",
+    "Leave the other branches standing; a branch closes by the creator's word or a probe's receipt.",
+    "Add a dated line to turns."
+  ]
+  keep: [
+    "Plan C stays audit-only (^acceptance_criteria implementation_code: excluded); a probe that reads files is not implementation.",
+    "lore.land commits only when the creator asks; scripts that write tracked files (build, chapters:build, spw:export, spw:probes, assets:*) wait for a turn that is asked to run them.",
+    "spw:lint walks .spw/ only, so parse this file by hand in the prose profile. The plan's 59 wrapped strings are its 118 standing errors; reflowing each onto one line is a turn of its own."
+  ]
+  &neighbors: ["PLAN.E.spw (L11 faces, L18 engine)", ".spw/state/alignment-ledger.spw#AL-005", ".spw/state/alignment-ledger.spw#AL-012", ".spw/surfaces/folios.spw", "PLAN.D.spw"]
+  turns: [
+    "2026-11-08 — sketch — a Claude session, at the creator's ask to grow the plan's theory generatively: roots read from code for all 13 shadow phases and six epochs, eight branches by axis, the aspiration, five wonders with guesses, and this relay; CSS nesting's first milestone set to M112 on its two lines."
+  ]
 }

@@ -15,6 +15,8 @@
  *     ~carries{ c6: bane held · c14: boon }   what the carries did (pie-carries.mjs)
  *     %carries{ carried: 2 held: 1 won_back: 0 }   recorded measures: counted, never chosen
  *     !plain[carries]                 read without the carries' lean
+ *     =palette[pool]{ colour type }   the palette the chapter wears, a layer for each way it was finished (collection.mjs)
+ *     %kept{ cards: 12 palettes: 3 layers: 5 }   what has been kept across the site: counted, never chosen
  *     .chapter[15]                    where it is being read
  *     ^projects[chapter, game, folio_value]
  *   }
@@ -37,6 +39,7 @@ import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_0
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
 const PLAIN_VISIT_KEY = 'lore.pie.projection.visit';
+const PALETTE_VISIT_KEY = 'lore.palettes.visit';
 const LENSES = ['boon', 'bane', 'bone', 'balanced'];
 const ROOMS = ['day', 'dusk', 'lamp'];
 const BINDINGS = ['rag', 'glass', 'salt', 'ember', 'slate', 'starfield'];
@@ -60,7 +63,7 @@ export function readAudience() {
 }
 
 /** The reader's projection now, clause by clause, with where each clause came from. */
-export function readProjection({ chapter = 0 } = {}) {
+export function readProjection({ chapter = 0, palette = null } = {}) {
   const nook = readJSON(local(), NOOK_KEY);
   const story = readStory();
   const clauses = [];
@@ -97,6 +100,9 @@ export function readProjection({ chapter = 0 } = {}) {
     });
     if (!projectionOn()) clauses.push({ key: 'plain', value: 'carries', source: session()?.getItem(PLAIN_VISIT_KEY) === 'off' ? 'visit' : 'yours' });
   }
+  if (palette?.wearing) clauses.push({ key: 'palette', value: { id: palette.id, layers: palette.layers }, source: 'kept' });
+  else if (palette?.layers?.length) clauses.push({ key: 'plain', value: 'palette', source: session()?.getItem(PALETTE_VISIT_KEY) === 'off' ? 'visit' : 'yours' });
+  if (palette?.kept && (palette.kept.cards || palette.kept.palettes)) clauses.push({ key: 'kept', value: palette.kept, source: 'kept' });
   if (chapter) clauses.push({ key: 'chapter', value: chapter, source: 'page' });
   clauses.push({ key: 'projects', value: ['chapter', 'game', 'folio_value'], source: 'book' });
   return clauses.filter((c) => c.value != null && c.value !== '');
@@ -122,6 +128,8 @@ export function clauseText(clause) {
     case 'carries': return `~carries{ ${v.map((c) => `c${c.n}: ${c.lean}${c.held ? ' held' : c.back ? ' won-back' : ''}`).join(' · ')} }`;
     case 'measures': return `%carries{ ${Object.entries(v).map(([k, n]) => `${k}: ${n}`).join(' ')} }`;
     case 'plain': return `!plain[${v}]`;
+    case 'palette': return `=palette[${v.id}]{ ${v.layers.join(' ')} }`;
+    case 'kept': return `%kept{ ${Object.entries(v).map(([k, n]) => `${k}: ${n}`).join(' ')} }`;
     case 'chapter': return `.chapter[${v}]`;
     case 'projects': return `^projects[${v.join(', ')}]`;
     default: return '';
@@ -131,7 +139,7 @@ export function clauseText(clause) {
 /** What a clause does, in plain words. */
 export function clauseGloss(clause) {
   const v = clause.value;
-  const who = { yours: 'your own setting', visit: 'from a link, for this visit', carries: 'what your carries did', book: 'the book’s own', page: 'this page' }[clause.source] || '';
+  const who = { yours: 'your own setting', visit: 'from a link, for this visit', carries: 'what your carries did', kept: 'what you have kept', book: 'the book’s own', page: 'this page' }[clause.source] || '';
   const said = {
     lens: v === 'balanced' ? 'every paragraph at full presence' : `paragraphs that lean ${v} come forward`,
     genre: 'paragraphs weighted by the three lands',
@@ -143,7 +151,9 @@ export function clauseGloss(clause) {
     without: `switched off: ${Array.isArray(v) ? v.join(', ') : v}`,
     carries: 'each carried chapter leans its reading a little; where the mimes hold one, its pie words go quiet',
     measures: 'recorded measures: what was counted, not chosen; a spell from a link cannot change them',
-    plain: 'read without the carries’ lean',
+    plain: v === 'palette' ? 'read in the binding’s own colours, without the palette you earned' : 'read without the carries’ lean',
+    palette: `the chapter wears the palette it was finished into, in ${Array.isArray(v?.layers) ? v.layers.join(', ') : ''}; earned, never chosen, so a link cannot lend it`,
+    kept: 'recorded measures: cards turned, palettes begun and their layers, across the whole site',
     chapter: 'where it is being read',
     projects: 'what this projection is bound into: the chapters, the game, a folio’s value'
   }[clause.key] || '';
@@ -188,17 +198,19 @@ export function parseSpell(text) {
   return {
     story,
     audience: one('audience', AUDIENCES),
-    plain: /!plain\[carries\]/i.test(src)
+    plain: /!plain\[carries\]/i.test(src),
+    plainPalette: /!plain\[palette\]/i.test(src)
   };
 }
 
 /** Read this page through a spell: a link of story directions (never saved), the audience only lowered. */
 export function spellHref(text, href = location.href) {
-  const { story, audience, plain } = parseSpell(text);
+  const { story, audience, plain, plainPalette } = parseSpell(text);
   const url = new URL(storyLink({ story, href }));
   url.searchParams.delete('spell');
   if (audience === 'pg') url.searchParams.set('audience', 'pg');
-  if (plain) url.searchParams.set('plain', 'carries');
+  const plains = [plain && 'carries', plainPalette && 'palette'].filter(Boolean);
+  if (plains.length) url.searchParams.set('plain', plains.join(','));
   return url.toString();
 }
 
@@ -214,8 +226,12 @@ export function takeSpellFromAddress() {
   if (url.searchParams.get('audience') === 'pg') {
     try { session()?.setItem(AUDIENCE_KEY, JSON.stringify({ level: 'pg' })); } catch { /* this page only */ }
   }
-  if (url.searchParams.get('plain') === 'carries') {
+  const plains = (url.searchParams.get('plain') || '').split(',');
+  if (plains.includes('carries')) {
     try { session()?.setItem(PLAIN_VISIT_KEY, 'off'); } catch { /* this page only */ }
+  }
+  if (plains.includes('palette')) {
+    try { session()?.setItem(PALETTE_VISIT_KEY, 'off'); } catch { /* this page only */ }
   }
   return false;
 }
@@ -238,10 +254,9 @@ export function initProjectionSpell({ chapterData } = {}) {
   const first = main?.querySelector(':scope > [data-ebook-section]');
   if (!main || !first) return () => {};
   const n = Number(chapterData?.chapterNumber || document.body.dataset.chapter || 0);
-  const clauses = readProjection({ chapter: n });
-  const spell = projectionSpell(clauses);
+  let clauses = readProjection({ chapter: n });
   const area = el('textarea', { className: 'projection-spell-edit', rows: String(clauses.length + 2), spellcheck: 'false', 'aria-label': 'A spell to read this chapter through' });
-  area.value = spell;
+  area.value = projectionSpell(clauses);
   const status = el('p', { className: 'projection-spell-status', role: 'status' });
   const read = el('button', { type: 'button', className: 'projection-spell-go' }, 'Read it this way');
   read.addEventListener('click', () => { location.href = spellHref(area.value); });
@@ -257,18 +272,36 @@ export function initProjectionSpell({ chapterData } = {}) {
       status.textContent = url.toString();
     }
   });
+  const peekText = () => clauses.filter((c) => c.source !== 'book' && c.key !== 'chapter').map(clauseText).join(' ') || '@reader{ the book’s own }';
+  const lineItems = () => clauses.map((c) => el('li', { className: `is-${c.source}` }, el('code', {}, clauseText(c)), el('span', {}, ` — ${clauseGloss(c)}`)));
+  const peek = el('code', { className: 'projection-spell-peek' }, peekText());
+  const lines = el('ol', { className: 'projection-spell-lines' }, ...lineItems());
   const details = el('details', { className: 'projection-spell' },
     el('summary', {},
       el('span', { className: 'projection-spell-sigil', 'aria-hidden': 'true' }, '@'),
       ' Read this way because… ',
-      el('code', { className: 'projection-spell-peek' }, clauses.filter((c) => c.source !== 'book' && c.key !== 'chapter').map(clauseText).join(' ') || '@reader{ the book’s own }')),
+      peek),
     el('div', { className: 'projection-spell-body' },
-      el('p', {}, 'This chapter is projected from the book through one Spw spell: what you set, what a link gave this visit, and what your carries did. Each line says where it came from. Change a line and read it again; pass it along and someone else reads it your way, for their visit only.'),
-      el('ol', { className: 'projection-spell-lines' },
-        ...clauses.map((c) => el('li', { className: `is-${c.source}` }, el('code', {}, clauseText(c)), el('span', {}, ` — ${clauseGloss(c)}`)))),
+      el('p', {}, 'This chapter is projected from the book through one Spw spell: what you set, what a link gave this visit, what your carries did, and what you have kept. Each line says where it came from. Change a line and read it again; pass it along and someone else reads it your way, for their visit only.'),
+      lines,
       area,
       el('p', { className: 'projection-spell-actions' }, read, ' ', copy),
       status));
   main.insertBefore(details, first);
-  return () => details.remove();
+  // The palette arrives after the page (collection.mjs): the spell says so when it does.
+  const onPalette = (event) => {
+    const edited = area.value !== projectionSpell(clauses);
+    clauses = readProjection({ chapter: n, palette: event.detail });
+    peek.textContent = peekText();
+    lines.replaceChildren(...lineItems());
+    if (!edited) {
+      area.value = projectionSpell(clauses);
+      area.rows = clauses.length + 2;
+    }
+  };
+  document.addEventListener('lore:palette', onPalette);
+  return () => {
+    document.removeEventListener('lore:palette', onPalette);
+    details.remove();
+  };
 }

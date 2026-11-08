@@ -103,6 +103,55 @@
   .note: "an audience that audits seams is served by the same rigor that gates these phases"
 }
 
+^roots_overlay_2026_11_08{
+  source: "read from the code on 2026-11-08, not from the status lines below"
+  .note: "!state is live (cited) | prototype | proposed | imagined; the relay reads these as landed | probe | sketch | seed"
+  foundation_00_05: {
+    !state: proposed
+    evidence: "book/audits/ holds only 09b on main, though phase 00 says completed; book:check (c026) and spw:probes do neighbouring work. spw-interactions.mjs runs 1423 lines against phase 04's 400."
+  }
+  vite_06b: {
+    !state: live
+    &source: ~"vite.config.js"
+    evidence: "zine and offline ship, with folios, almanac, pie, scriptorium and more; charm/ and book/timeline.html stay out, so open question three stands."
+  }
+  vite_06_08: {
+    !state: proposed
+    evidence: "No resolve.alias, no typescript; tsx already runs workbench TypeScript for spw:lint, phase 07's goal by another road."
+  }
+  adapters_09_12: {
+    !state: prototype
+    &source: ~"book/scripts/modules/spw-interactions.mjs"
+    evidence: "OPERATOR_ROLES and CONTAINER_ROLES are hand-authored, exported to resonance-layer.mjs, and given a literary register in spw-resonance.mjs (c021). Nothing derives them from the workbench, and container charge is signed (+tension, -discharge) where phase 11 says accumulate and discharge."
+  }
+  parser_selector_13_14: {
+    !state: prototype
+    &source: ~"book/scripts/vendor/spw-seed.mjs"
+    evidence: "The selector parser stays lore-local; the workbench parser arrived beside it, read by bracework.mjs (c025) and book-check.mjs."
+  }
+  register_bank_15_17: {
+    !state: proposed
+    evidence: "spw-register-bank.mjs is lore's own; the workbench keeps spw-runtime/src/state/register-bank.ts."
+  }
+  module_moves_18_20: {
+    !state: proposed
+    evidence: "Nothing has moved. PLAN.B milestone A shipped at the old path, so phase 19 no longer gates B."
+  }
+  css_and_entries_21_23: {
+    !state: proposed
+    evidence: "No module imports CSS; chapter 01 links 28 stylesheets, which c012 and c016 need with scripts off. 171 ?v= specifiers remain."
+  }
+  mastery_24: {
+    !state: proposed
+    &source: ~"book/scripts/modules/cache-context.mjs"
+    evidence: "The release token is live (c010), so the deprecation question is answered: keep."
+  }
+  mastery_25: {
+    !state: imagined
+    evidence: "Nothing scores the phases yet."
+  }
+}
+
 ?["plan_a_integrity_gate"]{
   require: phases_defined_in_blocks
   require: phase_total_26
@@ -123,6 +172,34 @@
   "§adapters assumes workbench exports are stable — if submodule updates introduce breaking
    changes to operator_affinities shape, what is the rollback procedure?"
   "Should charm/ and book/timeline.html remain public Vite entries, or archive out of production dist?"
+]
+
+?"branches"[
+  {
+    axis: "where the role tables are born"
+    held: "derived from workbench affinities by pure adapters"
+    open: "lore's tables stay canon with a drift probe, so the book may lead the spec where a story needs a sigil to mean more"
+  }
+  {
+    axis: "what the parser swap replaces"
+    held: "the selector parser, in one move"
+    open: "nothing at once: features adopt vendor/spw-seed.mjs as they need it, and the selector parser retires with its last caller"
+  }
+  {
+    axis: "where a style dependency is declared"
+    held: "in JS imports, link tags removed"
+    open: "link tags stay for whatever a reader sees with scripts off; only scribe-tier instruments colocate"
+  }
+  {
+    axis: "what a moved module is sorted by"
+    held: "a book/scripts/spw/ tree by layer of the Spw stack"
+    open: "PLAN.E's layers (content, schema, engine, tools, canon), so each move steps toward L18, an engine for the next book"
+  }
+  {
+    axis: "tempo"
+    held: "linear, region by region"
+    open: "pulled by lessons: an increment that touches a module does its Plan A phase in the same release"
+  }
 ]
 
 ^resolved_from_platform_audit{
@@ -698,4 +775,61 @@
   css_colocation: "book/audits/23-css-colocation.spw"
   mastery: "book/audits/26-mastery.spw"
   %total: 12
+}
+
+^"aspiration"{
+  theory: "lore.land is a book whose grammar bears load: the sigil a joiner uses in a chapter, the spell a reader casts at the desk and the token the interpreter parses can be one row of one table. Plan A turns three copies of that table into one source."
+  utility: "A maker of the next book pours in chapters, an almanac and canon and gets the desk, the probes and the living page without forking a module; a reader who learns ^ in a chapter casts it at the desk and watches the real parser read it."
+  ties: {
+    chapters: "six bracework plates go through the workbench bundle; with one table, a plate read as prose is a finding with an address"
+    desk: "SPELLBOOK joins OPERATOR_RESONANCE by sigil; through an adapter a spell's reading, role and parse share one row"
+    pie: "pie-carries.mjs has no DOM at import and serves game, chapters and entrance: the adapter's shape, taught by example"
+    almanac: "bracework is an in-world craft; one table lets a bracework wonder carry its sigils' readings without a copy"
+    bindery: "a binding is a cover over content; once engine and content separate, the binder can bind another book"
+  }
+  boldest: "An engine another book can be poured into, whose grammar is one table in the story, at the desk and in the workbench: spwashi.com, the three lands and a stranger's book import the roles, and none forks the meaning."
+}
+
+#>wonder_plan_a_one_table
+?["Can one row hold a sigil's role, its story reading and its parse without any of them bending?"]{
+  #:depth #!mathematical
+  ~#lens: "formal structure"
+  ~#expect: "Eleven of twelve fit; @ is positional, so OPERATOR_SEQUENCE leaves it out and its row needs a field the workbench may lack."
+  &[@story, @desk, @workbench] %row_disagreement
+  !probe{ "Join OPERATOR_ROLES, OPERATOR_RESONANCE and the workbench affinities by sigil in a scratch script; count rows where a shared field disagrees." }
+  $%row_disagreement
+}
+
+#>wonder_plan_a_starter_book
+?["How many of lore.land's nouns does the engine still know by heart?"]{
+  #:depth #!educational
+  ~#lens: "ecological zone"
+  ~#expect: "Dozens, mostly in desk spells and the pie game; that count is the debt a mastery report should carry."
+  @engine $[nouns] *{starter_book}
+  !probe{ "Grep book/scripts/modules for almanac ids and character and land names, per module; the modules at zero are ready for another book." }
+  $%hardcoded_nouns
+}
+
+#>wonder_plan_a_scripts_off
+?["Which component styles does a reader with scripts off ever see?"]{
+  #:depth #!experiential
+  ~#lens: "material grain"
+  ~#expect: "Most; only rules matching script-made elements (claim chips, desk replies) are colocation's honest scope."
+  @reader !{scripts_off} *{styled_page}
+  !probe{ "Take CSS coverage on a chapter with scripts off, then on; rules matched only the second time are the ones phase 21 may move." }
+  $%script_only_rules
+}
+
+~<relay>{
+  .note: "how a session takes a turn on Plan A; roots follow the overlays, branches the open questions"
+  turn: [
+    "pick one branch and begin your log line with its axis"
+    "move one root one step: seed (imagined), sketch (proposed), probe (prototype), landed (live)"
+    "read or grep the code before changing a !state, and cite the file in &source"
+    "answer a wonder by keeping its guess and adding what the probe found"
+    "leave one dated line at the end of log; never edit an earlier one"
+  ]
+  log: [
+    "2026-11-08 · no axis taken · roots read from code; branches, aspiration, wonders and this relay grown; no phase moved"
+  ]
 }

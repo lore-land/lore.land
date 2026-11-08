@@ -503,3 +503,240 @@ body[data-surface='monument'] .almanac-card-craft span {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* ─── Palettes: a chapter's colours and lettering, kept a layer at a time ───
+ * Each card carries its palette as tokens (collection.mjs paletteTokens) and
+ * projects them: the specimen is the chapter's title set in the palette's
+ * lettering, ink on its own ground. An unbegun palette shows its colours
+ * faintly, as a promise; the layers say how to keep them. */
+
+body[data-surface='monument'] .almanac-keepsakes { --kind-ink: var(--hub-berry); }
+body[data-surface='monument'] .almanac-deck { --kind-ink: var(--hub-gold); }
+
+body[data-surface='monument'] .almanac-palettes,
+body[data-surface='monument'] .almanac-deck-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 0.8rem;
+}
+
+body[data-surface='monument'] .palette-card {
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--pal-edge) 45%, var(--hub-line));
+  border-top: 3px solid var(--pal-accent);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--pal-ground) 30%, var(--hub-panel));
+}
+
+body[data-surface='monument'] .palette-card p { margin: 0; }
+
+body[data-surface='monument'] .palette-card h3 {
+  margin: 0;
+  font-family: var(--hub-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .palette-swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+
+body[data-surface='monument'] .palette-swatch {
+  display: block;
+  height: 2.2rem;
+  border-radius: 3px;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+body[data-surface='monument'] .palette-specimen {
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.3rem;
+  background:
+    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--pal-glow) 70%, transparent), transparent 70%),
+    var(--pal-ground);
+  color: var(--pal-ink);
+  font-family: var(--pal-type-family);
+  font-style: var(--pal-type-style);
+  font-variant: var(--pal-type-variant);
+  font-weight: var(--pal-type-weight);
+  letter-spacing: var(--pal-type-tracking);
+  text-transform: var(--pal-type-case);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  border-left: 4px solid var(--pal-accent);
+}
+
+body[data-surface='monument'] .palette-gloss {
+  font-family: var(--hub-display);
+  font-style: italic;
+}
+
+body[data-surface='monument'] :is(.palette-type-note, .palette-source) {
+  color: var(--hub-muted);
+  font-size: 0.82rem;
+}
+
+body[data-surface='monument'] .palette-layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .palette-layers li {
+  max-width: none;
+  margin: 0;
+  padding: 0.12rem 0.5rem;
+  border: 1px dashed color-mix(in srgb, var(--pal-edge) 55%, var(--hub-line));
+  border-radius: 999px;
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+}
+
+body[data-surface='monument'] .palette-layers li.is-kept {
+  border-style: solid;
+  border-color: var(--pal-accent);
+  background: color-mix(in srgb, var(--pal-accent) 14%, transparent);
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .palette-layers li.is-kept::before { content: '✓ '; }
+
+/* Unbegun: the colours are a promise, the lettering not yet lent. */
+body[data-surface='monument'] .palette-card.is-unbegun {
+  border-style: dashed;
+  border-top-style: dashed;
+  background: transparent;
+}
+
+body[data-surface='monument'] .palette-card.is-unbegun .palette-swatches { opacity: 0.3; filter: saturate(0.4); }
+body[data-surface='monument'] .palette-card:not(.has-type) .palette-specimen {
+  font-family: var(--hub-display);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body[data-surface='monument'] .palette-card.is-unbegun .palette-specimen {
+  background: color-mix(in srgb, var(--hub-ink) 5%, transparent);
+  color: var(--hub-muted);
+  border-left-color: var(--hub-line);
+}
+
+body[data-surface='monument'] .palette-extract summary {
+  cursor: pointer;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+body[data-surface='monument'] .palette-extract-code {
+  display: block;
+  margin: 0.4rem 0 0.25rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--hub-ink) 6%, transparent);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body[data-surface='monument'] .palette-copy {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--pal-accent) 55%, var(--hub-line));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+/* ─── Cards: everyone and everything, one deck for the chapters and the lanes ─── */
+
+body[data-surface='monument'] .deck-card {
+  --card-ink: var(--hub-gold);
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--hub-line);
+  border-top: 2px solid var(--card-ink);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--card-ink) 6%, var(--hub-panel));
+}
+
+body[data-surface='monument'] .deck-card.type-knock,
+body[data-surface='monument'] .deck-card.type-slip { --card-ink: var(--hub-berry); }
+body[data-surface='monument'] .deck-card.type-friend { --card-ink: var(--hub-accent); }
+body[data-surface='monument'] .deck-card.type-power { --card-ink: color-mix(in srgb, var(--hub-gold) 60%, var(--hub-accent)); }
+
+body[data-surface='monument'] .deck-card p { margin: 0; }
+
+body[data-surface='monument'] .deck-card h3 {
+  margin: 0;
+  font-family: var(--hub-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .deck-card-lanes {
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+body[data-surface='monument'] .deck-card.is-face-down {
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+  border-style: dashed;
+  border-top-style: dashed;
+  background:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--card-ink) 7%, transparent) 0 6px, transparent 6px 12px),
+    transparent;
+  text-align: center;
+}
+
+body[data-surface='monument'] .deck-card-back {
+  font-family: var(--hub-display);
+  font-size: 2rem;
+  color: color-mix(in srgb, var(--card-ink) 70%, var(--hub-muted));
+}
+
+body[data-surface='monument'] .deck-card-hint {
+  color: var(--hub-muted);
+  font-size: 0.8rem;
+}
+
+/* Headings take the page's own ink in every cover (night and slate were inheriting a paper heading colour). */
+body[data-surface='monument'] .almanac-main :is(h1, h2, h3) {
+  color: var(--hub-ink);
+}
+
+/* Night covers: a palette lends its accent to the dark, not its pale ground. */
+html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .palette-card:not(.is-unbegun) {
+  background:
+    radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--pal-accent) 18%, transparent), transparent 70%),
+    var(--hub-panel);
+}

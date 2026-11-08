@@ -4,6 +4,8 @@
 // from this browser's own shelf; nothing is sent anywhere.
 import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.G';
+import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.E';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -131,6 +133,103 @@ function paintShelves(data) {
   $('[data-almanac-tally]').textContent = kept
     ? `${kept} of ${data.wonders.length} kept · found in ${placesFound} of ${placesTotal} places they live.`
     : `Nothing kept yet. ${data.wonders.length} wonders live in the chapters; the dotted words are doors.`;
+}
+
+/* ─── Palettes and cards (collection.mjs) ───────────────────────────── */
+
+const CHAPTER_WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+const chapterName = (n) => `Chapter ${CHAPTER_WORDS[n] || n}`;
+
+async function copyText(button, text, done) {
+  try {
+    await navigator.clipboard.writeText(text);
+    button.textContent = done;
+  } catch {
+    button.textContent = 'Select and copy it above';
+  }
+}
+
+function paletteCard(data, p, state) {
+  const layers = layersOf(p.id, state);
+  const begun = layers.length > 0;
+  const li = el('li', { className: `palette-card${begun ? '' : ' is-unbegun'}` });
+  Object.entries(paletteTokens(p)).forEach(([name, value]) => li.style.setProperty(name, value));
+  LAYERS.forEach((layer) => li.classList.toggle(`has-${layer}`, layers.includes(layer)));
+  const title = p.chapter ? data.titleOf(p.chapter) : 'Won back';
+  const source = p.folio || p.plate;
+  const extraction = paletteExtraction(p);
+  const spw = el('code', { className: 'palette-extract-code' }, extraction.spw);
+  const css = el('pre', { className: 'palette-extract-code' }, extraction.css);
+  const copySpw = el('button', { type: 'button', className: 'palette-copy' }, 'Copy the Spw atom');
+  const copyCss = el('button', { type: 'button', className: 'palette-copy' }, 'Copy the CSS tokens');
+  copySpw.addEventListener('click', () => copyText(copySpw, extraction.spw, 'Copied the atom'));
+  copyCss.addEventListener('click', () => copyText(copyCss, extraction.css, 'Copied the tokens'));
+  li.append(...[
+    el('div', { className: 'palette-swatches', 'aria-hidden': 'true' },
+      ...['ground', 'ink', 'accent', 'glow', 'edge'].map((key) => {
+        const chip = el('i', { className: `palette-swatch is-${key}`, title: `${key} ${p.colors[key]}` });
+        chip.style.setProperty('--swatch', p.colors[key]);
+        return chip;
+      })),
+    // The type, projected: the chapter's own title in the palette's lettering, ink on its ground.
+    el('p', { className: 'palette-specimen' }, title || p.name),
+    el('p', { className: 'almanac-card-kicker' }, p.chapter ? chapterName(p.chapter) : 'Mimes Against WAP'),
+    el('h3', {}, p.name),
+    el('p', { className: 'palette-gloss' }, p.gloss),
+    el('p', { className: 'palette-type-note' }, `Lettering: ${p.type?.from || 'the book’s own'}.`),
+    el('ul', { className: 'palette-layers' },
+      ...LAYERS.map((layer) => el('li', { className: layers.includes(layer) ? 'is-kept' : '' },
+        el('b', {}, layer), ` · ${p.earn === 'won-back' ? 'win a chapter back' : LAYER_WAYS[layer]}`))),
+    source ? el('p', { className: 'palette-source' }, p.folio ? 'From the folio ' : 'From ',
+      el('a', { href: source.href, ...(p.folio ? { rel: 'noopener' } : {}) }, source.title),
+      p.folio ? ' on spwashi.com' : '') : null,
+    begun ? el('details', { className: 'palette-extract' },
+      el('summary', {}, 'Carry it away'),
+      spw, el('p', {}, copySpw),
+      css, el('p', {}, copyCss)) : null].filter(Boolean));
+  return li;
+}
+
+async function paintPalettes(data) {
+  const palettes = await loadPalettes();
+  if (!palettes.length) return;
+  await reconcile(palettes);
+  const state = readPaletteState();
+  const begun = palettes.filter((p) => layersOf(p.id, state).length);
+  const layerCount = palettes.reduce((sum, p) => sum + layersOf(p.id, state).length, 0);
+  $('[data-palette-count]').textContent = `${begun.length} of ${palettes.length} begun · ${layerCount} of ${palettes.length * LAYERS.length} layers`;
+  const ordered = [...begun, ...palettes.filter((p) => !begun.includes(p))];
+  $('[data-palettes]').replaceChildren(...ordered.map((p) => paletteCard(data, p, state)));
+}
+
+function paintDeck() {
+  const cards = allCards();
+  const shelf = readCards();
+  const turned = cardsTurned();
+  const kinds = Object.keys(cards);
+  $('[data-deck-count]').textContent = `${kinds.filter((k) => turned.has(k)).length} of ${kinds.length} turned`;
+  // Turned first; then the rest in the order the book meets them, the lanes' own last.
+  const unturned = kinds.filter((k) => !turned.has(k)).sort((a, b) => (cards[a].chapter || 99) - (cards[b].chapter || 99));
+  const ordered = [...kinds.filter((k) => turned.has(k)), ...unturned];
+  $('[data-deck]').replaceChildren(...ordered.map((kind) => {
+    const card = cards[kind];
+    const kept = shelf[kind];
+    if (!turned.has(kind)) {
+      return el('li', { className: `deck-card is-face-down type-${card.type}` },
+        el('p', { className: 'almanac-card-kicker' }, CARD_TYPES[card.type] || card.type),
+        el('p', { className: 'deck-card-back' }, '?'),
+        el('p', { className: 'deck-card-hint' }, card.chapter ? `Somewhere from ${chapterName(card.chapter)} on` : 'Only in the lanes'));
+    }
+    const where = kept?.how === 'lanes'
+      ? `Met in the lanes${kept.chapter ? `, ${chapterName(kept.chapter)}` : ''}`
+      : kept?.chapter ? `Met reading ${chapterName(kept.chapter)}` : 'Met in the lanes';
+    return el('li', { className: `deck-card type-${card.type}` },
+      el('p', { className: 'almanac-card-kicker' }, CARD_TYPES[card.type] || card.type),
+      el('h3', {}, card.name),
+      el('p', {}, card.story),
+      el('p', { className: 'deck-card-lanes' }, card.lanes),
+      el('p', { className: 'almanac-card-first' }, `${where}${kept?.first ? ` · ${kept.first}` : ''}`));
+  }));
 }
 
 /* ─── The bench ─────────────────────────────────────────────────────── */
@@ -261,5 +360,7 @@ loadAlmanac().then((data) => {
     return;
   }
   paintShelves(data);
+  paintPalettes(data);
   initBench(data);
 });
+paintDeck();

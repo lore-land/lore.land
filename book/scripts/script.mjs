@@ -57,7 +57,8 @@ import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.D';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.B';
 import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.D';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.A';
-import { initBracework } from './modules/bracework.mjs?v=2026_11_06.A';
+import { initCollection } from './modules/collection.mjs?v=2026_11_08.G';
+import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_06.F';
@@ -191,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let destroyMaterialPaths = null;
     initMaterialPaths({ chapterData }).then((destroy) => { destroyMaterialPaths = destroy; });
     const destroyBeginAgain = initBeginAgain({ chapterData, latest: TOTAL_CHAPTERS });
+    const destroyCollection = initCollection({ chapterData, announce });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -288,6 +290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroySpell) destroySpell();
       if (destroyMaterialPaths) destroyMaterialPaths();
       if (destroyBeginAgain) destroyBeginAgain();
+      if (destroyCollection) destroyCollection();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

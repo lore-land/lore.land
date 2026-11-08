@@ -113,6 +113,19 @@
   refs: [".spw/state/alignment-ledger.spw#complaint_route", ".spw/claims/chapter-claims.spw"]
 }
 
+^roots_overlay_2026_11_08{
+  source: "read from spw-ethos.mjs and its neighbours on 2026-11-08"
+  .note: "!state is the wiring's (live, cited | prototype | proposed | imagined), never a claim's status"
+  hydration: { !state: live &source: ~"book/scripts/modules/spw-ethos.mjs" evidence: "canon fetch with a ten-claim fallback, shipped at the old path" }
+  diagnostics: { !state: prototype evidence: "untested to active only; errorCount is 0; no ring buffer; lore:ethos-diagnostic never sent; acoustics-profile, preference-change and spw-runtime-cycle fire unheard" }
+  panel: { !state: prototype evidence: "scribe-tier rail chips (c017), so readers never meet a claim; the home atlas is styled, never mounted" }
+  styling: { !state: live &source: ~"book/styles/components/cards.css" evidence: "four states styled; two unreachable" }
+  claims_c001_c004: { !state: live evidence: "moved by SIGNAL_CLAIM_MAP" }
+  claims_c003_c005_c006_c007: { !state: prototype &source: ~".spw/tools/alignment-probes.mjs" evidence: "spw:probes findings name them; no status follows" }
+  claim_c008: { !state: imagined evidence: "complaint_route is ledger prose; ^[slip]{NN} opens an outside page" }
+  claims_c009_c010: { !state: proposed evidence: "no signal, no probe" }
+}
+
 ?<open_questions>[
   "Should claim status transitions be reversible? (e.g., can a 'confirmed' claim
    revert to 'active' if new contradictory evidence arrives in the same session?)"
@@ -121,6 +134,14 @@
   "If the remote spw source is unavailable and fallback constants are used, should
    the diagnostics engine annotate all subsequent claim statuses as 'degraded-source'?"
   "Should platform claims (offline honesty, share intrigue) appear in the chapter rail ethos panel, or only in seal-keeper tooling?"
+]
+
+?"branches"[
+  { axis: "where evidence comes from" held: "session signals" open: "dated spw:probes runs, which already name four claims" }
+  { axis: "memory" held: "absorbing states, reset on reload" open: "glassed like a folio, each transition legible under the next" }
+  { axis: "who meets a claim" held: "scribes, in the rail" open: "readers, one wager per chapter colophon" }
+  { axis: "who may author a claim" held: "the maker" open: "a reader's slip, filed as a theory with a falsification line" }
+  { axis: "what refutes" held: "error_count past a threshold" open: "one witnessed counterexample, as hum crickets go silent once" }
 ]
 
 ^phases["Ethos Integration Rollout"]{
@@ -381,4 +402,53 @@
   .note: "session-scoped status means all claim states reset on page reload —
           persistence across sessions would require IndexedDB or localStorage integration,
           which is explicitly out of scope for this rollout"
+}
+
+^"aspiration"{
+  theory: "lore.land is a book that bets in public: each claim says what would prove it wrong, and the bets stay in view as the book grows. Its domain is the story plus the wagers the story and its engine make about readers."
+  utility: "Makers keep a register of what the book promises and what held; readers become witnesses whose play, slips and noticing move a claim in front of them."
+  ties: {
+    almanac: "oath moths settle on a true promise, hum crickets hush near a lie, load beetles click past a load: confirmers, refuters, thresholds"
+    pie: "Exactly One Pie is a prophecy tested by play; pie-carries keeps each chapter's outcome"
+    folios: "a page glassed over the last keeps the older lines legible: a history that never erases"
+    plates: "plates-manifest graduates draft to public under a probe gate, a status machine already"
+    desk: "^[slip]{NN} asks for a theory about the Egg; a ?[claims] spell could show the wagers"
+    boonhonk: "story-boonhonk's wonders end in !probe lines; a claim is such a probe with counters"
+    cauldron: "imagined: an empty cauldron/ folder where kept wonders brew into a reader's claim"
+  }
+  boldest: "A reader meets a hypothesis as they meet a creature: named in a chapter, tested by play, settled in front of them and kept in the almanac, so the next book inherits a practice of being wrong in public."
+}
+
+#>wonder_plan_b_oath_moth
+?["Which claims could settle on one witnessed act, as an oath moth does?"]{
+  #:depth #!experiential
+  ~#lens: "ecological zone"
+  ~#expect: "About four of ten; offline honesty turns on one act, brace symmetry needs counts."
+  @witness !{act} *{settled}
+  !probe{ "Sort the ten falsification lines in chapter-claims.spw by whether one act could meet each." }
+  $%single_witness_claims
+}
+
+#>wonder_plan_b_one_spill
+?["Is Exactly One Pie a claim or a law?"]{
+  #:depth #!mathematical
+  ~#lens: "formal structure"
+  ~#expect: "A law, since every run ends in one spill; the claim is the reader's, that a carry leans a chapter as they meant."
+  @carry #chapter *{lean}
+  !probe{ "Read the spill rule in pie-game.mjs, then write one falsification line a carry could meet." }
+  $%testable_by_play
+}
+
+~<relay>{
+  .note: "a turn moves the work on a claim, and only evidence moves its status; roots follow the overlays, branches the open questions"
+  turn: [
+    "pick one branch and begin your log line with its axis"
+    "move one claim or root one step: seed, sketch, probe, landed"
+    "grep the signal or probe before calling a claim wired; cite the file"
+    "answer a wonder by keeping its guess and adding what the probe found"
+    "leave one dated line at the end of log; never edit an earlier one"
+  ]
+  log: [
+    "2026-11-08 · no axis taken · roots read from code; branches, aspiration, wonders, relay grown; no claim moved"
+  ]
 }

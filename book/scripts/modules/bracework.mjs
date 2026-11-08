@@ -48,6 +48,11 @@ export function readTree(ast) {
       tokens.push({ kind: 'thing', text: node.token?.value || '' });
       return;
     }
+    // Valence words (boon, bane, bone, bonk, honk) the parser keeps as modifiers, wherever they sit.
+    if (node.type === 'MODIFIER') {
+      tokens.push({ kind: 'thing', text: node.value || '' });
+      return;
+    }
     if (node.type === 'Reference') {
       tokens.push({ kind: 'sigil', text: '@' });
       const value = JSON.stringify(node).match(/"type":"IDENTIFIER","value":"([^"]+)"/);

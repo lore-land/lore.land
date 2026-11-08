@@ -19,7 +19,7 @@
   dialect: spw_native
   style: curriculum_lessons
   normative_voice: direction
-  lesson_count: 22
+  lesson_count: 28
   dependency_model: lessons_with_prerequisites
   &curriculum_reader: "a future maker of lore.land, or of another book built on its engine"
   &workspace: ~".spw/workspace.spw#lore_land_workspace"
@@ -42,6 +42,27 @@
   legible: "Everything that moves can be explained in one sentence on the desk, switched off, and read back as Spw."
   screenshot: "Every unique element has a face worth capturing: a wonder card, a bracework plate, a quote card, a chapter card — each sized and composed to survive being shared out of context."
   linked: "Nothing is a dead end. A wonder links to every place it lives; a place to every wonder in it; a chapter to its threads, its wonders, its sightings and its shelf."
+}
+
+^"aspiration"{
+  .source: "the maker, 2026-11-08: 'lore.land has plans that ideally would be able to aspirationally develop the theory and creative utility of that domain'; theory is grown here, not corrected"
+  .note: "Theory says what lore.land is; creative utility, what makers and readers can do with it. Each line stands on a surface that exists; %roots says where a line reaches past the site."
+  ^"theory"{
+    show_and_book: "A show that is also a book. Book One is thirteen chapters, a season's length; each is set like an episode, a stone on serial.json's cadence (the 13th and the 26th), and stays as a room in the monument."
+    two_directions: "Reading moves the reader through the book; watching moves the book past the reader. Both exist: the page scrolls, and the voyage at /pie/ streams the same words past a still cabinet while the carrier steps across them."
+    neither_lesser: "A watched chapter keeps every word: variant zero goes by, and a section break is a breath in the lanes. A read chapter keeps the show's light, hour and frame (?stage=, ?light=, ?at=). Neither is the lesser mode."
+    three_clocks: "Episodic pacing runs over durable structure. The calendar's stones, the page's tellings by minute, hour and day, and the reader's own unlocks all run over one still ground: variant zero and the almanac's terms, held by book:check."
+    monument: "A worldbuilding monument: places, nouns and materials before plot. The almanac keeps 57 wonders and 15 sayings; the round map folds the index so nothing falls off its rim (topics #fold)."
+    model: "A model for future books because it shows its joints: content, schema, engine and canon sit apart, and the curriculum reads each joint back as a lesson. The plan has already crossed into the story once, as the sayings (L22)."
+  }
+  ^"creative_utility"{
+    instrument: "A book is an instrument. A reader turns a telling, drags the sun, binds the copy and leans it, and the chapter says why it reads that way as one spell (projection.mjs)."
+    marks: "Readers leave marks that stay theirs: strokes of the plain drawing, kept wonders and combines, heard tellings, carries that lean a chapter, a QA note on a card, a slip to the scribes, a folio sent to the wall."
+    tools: "Lessons become someone else's tools: a plate prompt to paint from (L10), a frame to screenshot (L21), a link that sets a friend's telling (L27), an asset sheet to redraw the lanes from (L28)."
+    way_in: "The pie is a way in: a newcomer meets the people as cards, reads the words going by, and a door sends them to the passage they spilled in (pie-segues.mjs). Walked back by prerequisites, the pie stands on seven lessons: L28 → L22, L25 → L07, L20 → L01, L02."
+    pour: "Makers can pour a book: writing teams through the scriptorium's offices, or the maker's own moon-engineer seed (story-boonhonk) as the first pour, once a book can name itself (L18)."
+    reel: "The boldest reach: cut a chapter as an episode without a camera. A reel is an ordered list of stage links over variant zero. Played, it is a show; paused anywhere, it is the page, open on the words it shows. It passes along like a spell and holds no new prose."
+  }
 }
 
 ^"curriculum"{
@@ -213,6 +234,12 @@
     increment: "Exactly One Pie (/pie/): an obstacle-dodging game in which a figure in a hat carries one pie up Bonk City's lanes, stepping across the scene at a right angle while it streams at him; the pie wobbles with hurried steps and puddles, Boof steadies it in passing, scenes cut like silent-film cards, and every run ends in exactly one spill"
     done_when: "the game reads the trope physics (orthogonal motion, line segments, a hat that never falls, feeling as tilt) rather than borrowing a genre's look; it wears the reader's binding; keyboard, tap, swipe and buttons all play it; it never names him; the hat settles on whoever it likes (chosen_one), and clowns get WAP while the pie stays whole (one pie that remains whole after being served)"
   }
+  ^lesson[L29]{
+    #name: "a chapter finished is a chapter coloured"
+    prerequisites: [L09, L25, L28]
+    increment: "every chapter keeps a palette mixed from a laminated folio (or its plate), named for a place, with colour and lettering; finishing the chapter keeps a layer of it, one for each way of finishing (read to its end: colour; carried through the lanes: type; its wonders kept: light), and the chapter wears what is kept, mixed with its binding; cards for everyone in the book turn where they are first met, in the prose or the lanes, into one deck; the almanac shelves both, and a kept palette can be carried away as a Spw atom or CSS tokens"
+    done_when: "no points, streaks or totals for their own sake; every keeping says so where it happens; the projection spell names the palette worn (=palette[id]{ layers }) and the counts (%kept{}); a link can set a palette aside for a visit but never lend one; every chapter reads at AA wearing its palette in light and dark bindings"
+  }
   ^lesson[L18]{
     #name: "an engine for the next book"
     prerequisites: [L08, L13]
@@ -274,6 +301,7 @@
   i5e: { lessons: [L27], release: "2026_11_06.F", note: "story directions: a link sets an edition, a lens, the room, the binding, the switches, and pins tellings" }
   i5f: { lessons: [L28], release: "2026_11_07.A", note: "Exactly One Pie: the prophecy as a small game" }
   i5g: { lessons: [L28], release: "2026_11_07.B", note: "under the hat it is not always him; clowns love WAP" }
+  i5p: { lessons: [L29], release: "2026_11_08.G", note: "palettes and cards kept across the site: a palette layer for each way a chapter is finished, worn by the chapter; cards turned in the prose or the lanes into one deck; the almanac shelves both with Spw and CSS extractions; ribbons on the contents; =palette and %kept in the projection spell" }
   i5o: { lessons: [L28], release: "2026_11_08.E", note: "cards for every character, obstacle and power-up, turned at first meeting (Introductions mode from Chapter One), each a QA device with a Spw note; Story and Zen switches; fullscreen; the asset sheet and level manifest for a design table" }
   i5n: { lessons: [L27, L28], release: "2026_11_08.D", note: "the reader's projection as one Spw spell: shown on each chapter line by line with where each line came from, editable, passable as ?spell= (visit only, audience lowered only); % for recorded measures; next the audience gate (late table + household key) and formula-only folio value with %fulfill" }
   i5m: { lessons: [L28, L19, L22], release: "2026_11_08.B", note: "the round map that will not lie flat (a hyperbolic fold of the semantic index, asked in Spw, its gradient written as tokens); materials as threads, tokens and chapter doors; Book Two's mathematical undercurrent in three wonders; held chapters reach the entrance, the doors and the desk; the copy read through for story" }
@@ -285,6 +313,63 @@
   i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
 ]
 
+~"root_vocabulary"{
+  live: "in the site now; .at cites the file or route"
+  prototype: "partly in the site; the note says which part is not"
+  proposed: "named with a done_when; nothing in the site yet"
+  imagined: "a reach with no increment yet"
+}
+
+%"roots"{
+  .note: "Where each lesson and direction stands, read from code and pages on 2026-11-08. A root is read, never chosen; a turn that changes the site moves it (!relay)."
+  ^root[L01]{ !state: live .at: "chapter-render.mjs" note: "fifteen chapters prerendered" }
+  ^root[L02]{ !state: live .at: "reading-switches.mjs" note: "a return note for every release (changes.json)" }
+  ^root[L03]{ !state: live .at: "valence-lens.mjs" note: "a lens at the head of every chapter" }
+  ^root[L04]{ !state: live .at: "xray-reading.mjs" }
+  ^root[L05]{ !state: live .at: "semantic.json" note: "folded by lore-fold.mjs" }
+  ^root[L06]{ !state: live .at: "sightings.mjs" note: "nine strokes, no name" }
+  ^root[L07]{ !state: live .at: "/almanac/" note: "57 wonders, 15 sayings" }
+  ^root[L08]{ !state: live .at: "serial.json" note: "next stone 2026-11-13" }
+  ^root[L09]{ !state: prototype .at: "chapter-render.mjs" note: "Wonders here on every colophon; no dead-end probe (c027)" }
+  ^root[L10]{ !state: live .at: "almanac-page.mjs" note: "57 of 57 wonders carry a prompt" }
+  ^root[L11]{ !state: prototype .at: "stage-directions.mjs" note: "Frame this is live; the wonder card has no snapshot face" }
+  ^root[L12]{ !state: prototype .at: "book/styles/chapter/reading.css" note: "an ink per kind; no breath, no tick" }
+  ^root[L13]{ !state: live .at: "book/schema/book-types.mjs" note: "book:check in CI" }
+  ^root[L14]{ !state: live .at: "bracework.mjs" note: "six plates" }
+  ^root[L15]{ !state: live .at: "living.mjs" note: "a trial, ?try=living" }
+  ^root[L16]{ !state: live .at: "reading.css" note: "soil-glint rides the living trial" }
+  ^root[L17]{ !state: proposed .at: "trope-prompt.mjs" note: "no spw:scene-seed in package.json" }
+  ^root[L18]{ !state: proposed note: "no book.config.json, no starter book" }
+  ^root[L19]{ !state: live .at: "book/content/chapters/*.json" note: "a table in all fifteen" }
+  ^root[L20]{ !state: live .at: "scene-light.mjs" note: "knobs.json" }
+  ^root[L21]{ !state: live .at: "stage-directions.mjs" note: "?stage=story|square|card" }
+  ^root[L22]{ !state: live .at: "/almanac/" note: "fifteen sayings on their own shelf" }
+  ^root[L23]{ !state: live .at: "begin-again.mjs" }
+  ^root[L24]{ !state: live .at: "tellings.mjs" note: "tap, hold, the hour dial" }
+  ^root[L25]{ !state: live .at: "bindings.css" note: "six bindings" }
+  ^root[L26]{ !state: live .at: "bindery.mjs" }
+  ^root[L27]{ !state: live .at: "story-directions.mjs" note: "and ?spell= (projection.mjs)" }
+  ^root[L28]{ !state: live .at: "/pie/" note: "cards, carries, segues; 29 lore lines" }
+  ^root[north_star]{ !state: prototype note: "alive while read is live; an engine to pour into waits on L18" }
+  ^root[living]{ !state: live .at: "living.mjs" }
+  ^root[model]{ !state: prototype .at: "book/scripts/modules/" note: "10 of 63 modules still mention Boof, BoonWAP or Bonk" }
+  ^root[legible]{ !state: live .at: "/scriptorium/#desk" note: "?[living], ?[pie], ?[links], and each chapter's spell" }
+  ^root[screenshot]{ !state: prototype note: "frames, share cards, the pie asset sheet; no wonder card face" }
+  ^root[linked]{ !state: prototype .at: "material-paths.mjs" note: "doors lead onward; dead ends uncounted" }
+  ^root[audience_gate]{ !state: prototype .at: "projection.mjs" note: "reads a late table and a household key; nothing offers either" }
+  ^root[folio_value]{ !state: proposed .at: "projection.spw" note: "no %fulfill in the code" }
+  ^root[reel]{ !state: imagined note: "stands on L21, L24, L27, L28" }
+}
+
+~"branches"[
+  { axis: "the curriculum, a path or a field" path: "L01 to L28 in number order" field: "places on the round map, entered at a maker's need and walked back by prerequisites" now: "a path on paper walked as a field: L19–L28 landed while L09, L11, L12, L17 and L18 waited" }
+  { axis: "the making, taught or hidden" taught: "the scriptorium's offices in a chapter thread" hidden: "the workshop kept off the page" told: "the making as the land's craft, as the sayings do" now: "veiled: How the book is made, in the Scriptorium, for whoever lifts the veil (c017)" }
+  { axis: "the serial's clock" weekly: "a stone a week" by_chapter: "a stone when it is ready" by_reader: "the book opens at each reader's pace, as lore lines already unlock" now: "the 13th and the 26th; at that rate Chapter Nineteen is set on 2026-12-26, near the Turning of the Year the feast is foretold for" }
+  { axis: "who the model is for" creator: "the maker's next book" collaborators: "writing teams who bring a land in the engine's grammar" readers: "readers who make a book of their marks" now: "^meta: a future maker of lore.land, or of another book on its engine" }
+  { axis: "where a reader's marks live" browser: "kept in this browser" link: "carried in a link, like ?spell=" wall: "sent in by hand and hung" now: "browser first; links for a visit; folios by slip" }
+  { axis: "how long Book Two runs" season: "thirteen again, 14 to 26; at two stones a month Twenty-Six is set on 2027-04-13" open: "no last chapter" now: "open: serial.json gives Book Two no last chapter" }
+]
+
 ?"open"[
   "Should living graduate from trial to default once returning readers have had it for two stones?"
   "Does soil ever move a component, or only light it? (L16 says light only, for now.)"
@@ -293,3 +378,48 @@
   "Should a telling heard every way unlock anything beyond its double underline?"
   "Does the binder have a name, and does she appear in a chapter?"
 ]
+
+#>wonder_plan_e_watched_chapter
+?["Can a chapter be watched without losing a word?"]{
+  #:depth #!experiential
+  ~#lens: "show and book"
+  ~#expect: "Mostly. With Story beside and Zen on, variant zero goes by whole, and section breaks are breaths. What watching can lose is the end: every carry ends in one spill, so an episode may stop before its chapter, and the watcher keeps the passage it spilled in."
+  ~#probe(read)
+  !probe{ "Carry Fourteen at /pie/?chapter=14 with Story beside and Zen on, then read /book/chapter/14/. Say each remainder in one line and compare them." }
+  $%[watched.same_remainder, watched.thinner_remainder, watched.another_remainder]
+}
+
+#>wonder_plan_e_way_in
+?["Where does the pie lead someone who has not read a page?"]{
+  #:depth #!educational
+  ~#lens: "the curriculum as a field"
+  ~#expect: "To a chapter first. The way home from a spill is a door to the passage going by (pie-segues.mjs); the almanac comes third, through a wonder the carry kept."
+  ~#probe(read)
+  !probe{ "In a private window, carry at /pie/ until the first spill and follow only what the page offers. Name the first three pages in order." }
+  $%[way_in.chapter_first, way_in.almanac_first, way_in.stays_in_the_lanes]
+}
+
+#>wonder_plan_e_reader_folio
+?["Can a reader's marks be glassed into a folio of their own?"]{
+  #:depth #!experiential
+  ~#lens: "a book as an instrument"
+  ~#expect: "As a recipe, not an object. The spell already carries lens, binding, edition and carries; a line for the latest kept combine would make a copy passable whole. The glassing stays hand work: the magic is the process (folios.spw)."
+  ~#probe(read)
+  !probe{ "Keep a combine on the almanac bench, copy a chapter's spell, add the combine as one line, and ask whether the folio wall's Make one could take it as a slip." }
+  $%[folio.spell_as_slip, folio.combine_as_charm_only, folio.stays_in_the_browser]
+}
+
+!"relay"{
+  .note: "How the next session takes a turn: one branch, one claim, one step."
+  steps: [
+    "Name the branch's axis first."
+    "Pick one claim it touches: a root, an aspiration line, or a wonder's guess."
+    "Read the file or route the root cites before moving anything."
+    "Move the claim one step: seed (named), sketch (a shape in canon or a lesson block), probe (a check that could fail, run once, its result beside it), landed (in the site, cited)."
+    "If the site changed, move the root in %roots. Keep every line; name any slip fixed. Commit only when the maker asks."
+    "Leave a dated line under turns: date · axis · claim · from → to · next."
+  ]
+  turns: [
+    "2026-11-08 · axis: none, a ground turn · roots read from code and pages; aspiration, six branches and three wonders seeded; lesson_count 22 → 28 · next: sketch the reel as a lesson, or run the way-in probe"
+  ]
+}

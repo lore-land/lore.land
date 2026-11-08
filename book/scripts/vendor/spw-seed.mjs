@@ -612,6 +612,8 @@ var DEFAULT_OPERATOR_MAP = {
 var DEFAULT_CONNECTOR_MAP = {
   "..": "..",
   "->": "->",
+  "~>": "~>",
+  // project-join: movement between distinct stations
   // Longer digraphs first (createConnectorMatcher sorts by length).
   "||": "||",
   // parallel schedule inside <<>> / flow CA
@@ -685,10 +687,10 @@ function buildConnectorMap(profile) {
 // .spw/_workbench/packages/spw-seed/src/lexer/matchers/operators.ts
 function createOperatorMatcher(operatorMap = DEFAULT_OPERATOR_MAP) {
   const tokens = Object.keys(operatorMap).sort((a, b) => b.length - a.length);
-  return function* matchOperator2(state, depth) {
+  return function* matchOperator3(state, depth) {
     const start = getPosition(state);
     const char = peek(state);
-    if (char === "~" && peek(state, 1) === "#") {
+    if (char === "~" && (peek(state, 1) === "#" || peek(state, 1) === ">")) {
       return null;
     }
     if (char === "." && peek(state, 1) === ".") {
@@ -745,7 +747,7 @@ var defaultMatcher = createOperatorMatcher();
 // .spw/_workbench/packages/spw-seed/src/lexer/matchers/connectors.ts
 function createConnectorMatcher(connectorMap = DEFAULT_CONNECTOR_MAP) {
   const tokens = Object.keys(connectorMap).sort((a, b) => b.length - a.length);
-  return function* matchConnector2(state, depth) {
+  return function* matchConnector3(state, depth) {
     const start = getPosition(state);
     for (const tokenValue2 of tokens) {
       if (tokenValue2.length === 1) {
@@ -1327,6 +1329,97 @@ function* matchComparison(state, depth) {
   return null;
 }
 
+// .spw/_workbench/packages/spw-seed/src/lexer/stream-entry.ts
+function readEntryMarker(state, streamDepth) {
+  if (streamDepth > 0 || !state.input.startsWith(">>[", state.offset)) return null;
+  const lineStart = state.input.lastIndexOf("\n", state.offset - 1) + 1;
+  if (!/^[\t ]*$/.test(state.input.slice(lineStart, state.offset))) return null;
+  const start = getPosition(state);
+  advance(state, 2);
+  return { type: "STREAM_CLOSE", kind: ">>", value: ">>", span: { start, end: getPosition(state) } };
+}
+function entryLineEnd(input, offset) {
+  let end = offset;
+  while (end < input.length && input[end] !== "\n" && input[end] !== "\r") end++;
+  return end;
+}
+var FIGURE_SIGILS = "~?.%=&!#*^$@";
+var WORD_BREAK = /[\s(\[{"'`,;]/;
+var NAME_START = /[A-Za-z_]/;
+var NAME_BODY = /[A-Za-z0-9_-]/;
+var GROUP_SAFE = /[A-Za-z0-9_\-.:,=~#!?$%&*^ ]/;
+var CLOSERS = { "[": "]", "(": ")", "{": "}" };
+function figureEnd(input, i, bodyStart, lineEnd) {
+  const sigil = input[i];
+  if (!FIGURE_SIGILS.includes(sigil)) return null;
+  if (i > bodyStart && !WORD_BREAK.test(input[i - 1])) return null;
+  let j = i + 1;
+  if (sigil === "~" && input[j] === '"') return closingQuote(input, j, lineEnd);
+  if (sigil === "#" && (input[j] === ">" || input[j] === ":" || input[j] === "!")) {
+    return NAME_START.test(input[j + 1] ?? "") ? nameEnd(input, j + 1, lineEnd) : null;
+  }
+  if (sigil === "~" && input[j] === "#") j++;
+  if (sigil === "$" && input[j] === "{") return groupEnd(input, j, lineEnd);
+  const named3 = sigil !== "." && NAME_START.test(input[j] ?? "");
+  if (named3) j = nameEnd(input, j, lineEnd);
+  if (named3 && sigil === "@") {
+    while (input[j] === "/" && NAME_BODY.test(input[j + 1] ?? "")) j = nameEnd(input, j + 1, lineEnd);
+  }
+  let k = j;
+  while (k < lineEnd && CLOSERS[input[k]]) {
+    const close = groupEnd(input, k, lineEnd);
+    if (close === null) return null;
+    k = close;
+  }
+  return named3 || k > j ? k : null;
+}
+function nameEnd(input, j, lineEnd) {
+  while (j < lineEnd) {
+    if (NAME_BODY.test(input[j])) j++;
+    else if (input[j] === "." && NAME_BODY.test(input[j + 1] ?? "")) j++;
+    else break;
+  }
+  return j;
+}
+function groupEnd(input, k, lineEnd) {
+  const open = input[k];
+  const close = CLOSERS[open];
+  let depth = 0;
+  for (let j = k; j < lineEnd; j++) {
+    const ch = input[j];
+    if (ch === open) depth++;
+    else if (ch === close) {
+      depth--;
+      if (depth === 0) return j + 1;
+    } else if (!GROUP_SAFE.test(ch)) return null;
+  }
+  return null;
+}
+function closingQuote(input, j, lineEnd) {
+  for (let k = j + 1; k < lineEnd; k++) {
+    if (input[k] === "\\") k++;
+    else if (input[k] === '"') return k + 1;
+  }
+  return null;
+}
+
+// .spw/_workbench/packages/spw-seed/src/lexer/commit-ref.ts
+var SCENE_HASH = /^[0-9a-f]{7,40}(?=\))/;
+function readCommitRef(state) {
+  if (state.input[state.offset - 1] !== "(") return null;
+  const match = SCENE_HASH.exec(state.input.slice(state.offset, state.offset + 41));
+  if (!match) return null;
+  const start = getPosition(state);
+  advance(state, match[0].length);
+  return {
+    type: "IDENTIFIER",
+    kind: "commit_ref",
+    value: match[0],
+    span: { start, end: getPosition(state) },
+    identifier: { segments: [match[0]], qualified: false }
+  };
+}
+
 // .spw/_workbench/packages/spw-seed/src/lexer/tokenize.ts
 function* tokenize(input, depth = 0, options = {}) {
   const state = createLexerState(input);
@@ -1335,6 +1428,7 @@ function* tokenize(input, depth = 0, options = {}) {
   const operatorMatcher = createOperatorMatcher(buildOperatorMap(lexProfile));
   const connectorMatcher = createConnectorMatcher(buildConnectorMap(lexProfile));
   const stringMatcher = createStringMatcher(lexProfile.stringQuotes);
+  let streamDepth = 0;
   const matchers = [
     matchWhitespace,
     matchLineComment,
@@ -1369,8 +1463,23 @@ function* tokenize(input, depth = 0, options = {}) {
     timestamp: performance.now(),
     depth
   };
-  while (!isAtEnd(state)) {
-    let matched = false;
+  function* push2(token2, rule) {
+    tokens.push(token2);
+    yield {
+      type: "token",
+      rule,
+      position: token2.span.start,
+      data: { token: token2 },
+      timestamp: performance.now(),
+      depth
+    };
+  }
+  function* lexOne() {
+    const commitRef = options.planStream ? readCommitRef(state) : null;
+    if (commitRef) {
+      yield* push2(commitRef, "commitRef");
+      return;
+    }
     for (const matcher of matchers) {
       const gen = matcher(state, depth + 1);
       let result = gen.next();
@@ -1380,45 +1489,61 @@ function* tokenize(input, depth = 0, options = {}) {
       }
       if (result.value !== null) {
         tokens.push(result.value);
-        matched = true;
-        break;
+        if (result.value.type === "STREAM_OPEN") streamDepth++;
+        if (result.value.type === "STREAM_CLOSE") streamDepth = Math.max(0, streamDepth - 1);
+        return;
       }
     }
-    if (!matched) {
-      const pos = getPosition(state);
-      const char = state.input[state.offset];
-      if (lexProfile.unknownAsText) {
-        advance(state);
-        const token2 = {
-          type: "TEXT",
-          value: char,
-          span: { start: pos, end: getPosition(state) }
-        };
-        tokens.push(token2);
-        yield {
-          type: "token",
-          rule: "text",
-          position: pos,
-          data: { token: token2 },
-          timestamp: performance.now(),
-          depth
-        };
-      } else {
-        yield {
-          type: "error",
-          rule: "tokenize",
-          position: pos,
-          data: {
-            message: `Unexpected character: ${char}`,
-            found: char,
-            recoverable: true
-          },
-          timestamp: performance.now(),
-          depth
-        };
-        advance(state);
-      }
+    const pos = getPosition(state);
+    const char = state.input[state.offset];
+    if (lexProfile.unknownAsText) {
+      advance(state);
+      yield* push2({ type: "TEXT", value: char, span: { start: pos, end: getPosition(state) } }, "text");
+    } else {
+      yield {
+        type: "error",
+        rule: "tokenize",
+        position: pos,
+        data: {
+          message: `Unexpected character: ${char}`,
+          found: char,
+          recoverable: true
+        },
+        timestamp: performance.now(),
+        depth
+      };
+      advance(state);
     }
+  }
+  function* lexEntryBody() {
+    const lineEnd = entryLineEnd(state.input, state.offset);
+    const bodyStart = state.offset;
+    let text = getPosition(state);
+    const flushText = function* () {
+      if (state.offset === text.offset) return;
+      const value = state.input.slice(text.offset, state.offset);
+      yield* push2({ type: "TEXT", value, span: { start: text, end: getPosition(state) } }, "streamEntry");
+    };
+    while (state.offset < lineEnd) {
+      const end = figureEnd(state.input, state.offset, bodyStart, lineEnd);
+      if (end === null) {
+        advance(state);
+        continue;
+      }
+      yield* flushText();
+      while (state.offset < end) yield* lexOne();
+      text = getPosition(state);
+    }
+    yield* flushText();
+  }
+  while (!isAtEnd(state)) {
+    const marker = readEntryMarker(state, streamDepth);
+    if (marker) {
+      yield* push2(marker, "streamEntry");
+      yield* lexEntryBody();
+      continue;
+    }
+    yield* lexOne();
   }
   const eofToken = {
     type: "EOF",
@@ -3542,27 +3667,85 @@ var termNode = lazy(() => named(
     return fallbackStep.value;
   }
 ));
+function isNounPostfixOpener(token2) {
+  return token2.value === "[" || token2.value === "{" || token2.value === "(" && token2.type === "CONTAINER_OPEN";
+}
+function chargeEndsExpression(token2, chargeLine) {
+  if (token2.span.start.line !== chargeLine) return true;
+  if (token2.type === "EOF" || token2.type === "CONTAINER_CLOSE" || token2.type === "CAPSULE_CLOSE" || token2.type === "STREAM_CLOSE" || token2.type === "NRANGE_CLOSE" || token2.type === "COMMA" || token2.type === "ARROW" || token2.type === "COLON") return true;
+  return isScheduleSeparator(token2);
+}
 var expressionImpl = named(
   "expression",
   function* expressionParser(stream, depth) {
     const startPos = getPosition2(stream);
     skipWhitespace(stream);
-    const firstGen = termNode(stream, depth + 1);
-    let firstStep = firstGen.next();
-    while (!firstStep.done) {
-      yield firstStep.value;
-      firstStep = firstGen.next();
+    const origin = stream.position;
+    let charge;
+    let chargeConsumed = 0;
+    if (current(stream).type === "MODIFIER") {
+      const modGen = modifierChain(stream, depth + 1);
+      let modStep = modGen.next();
+      while (!modStep.done) {
+        yield modStep.value;
+        modStep = modGen.next();
+      }
+      if (modStep.value.success) {
+        skipWhitespace(stream);
+        const next = current(stream);
+        const interval = next.type === "CONNECTOR" && next.value === "..";
+        if (next.type === "OPERATOR" || interval) {
+          stream.position = origin;
+        } else {
+          charge = modStep.value.value;
+          chargeConsumed = modStep.value.consumed;
+        }
+      } else {
+        stream.position = origin;
+      }
     }
-    if (!firstStep.value.success) {
-      return { success: false, consumed: 0, error: firstStep.value.error };
+    const chargeLine = charge?.span.end.line;
+    const heldForPostfix = charge !== void 0 && chargeLine !== void 0 && current(stream).span.start.line === chargeLine && isNounPostfixOpener(current(stream));
+    const chargeOnly = charge !== void 0 && chargeLine !== void 0 && !heldForPostfix && chargeEndsExpression(current(stream), chargeLine);
+    let headTerm;
+    let consumed = chargeConsumed;
+    if (!heldForPostfix && !chargeOnly) {
+      const firstGen = termNode(stream, depth + 1);
+      let firstStep = firstGen.next();
+      while (!firstStep.done) {
+        yield firstStep.value;
+        firstStep = firstGen.next();
+      }
+      if (!firstStep.value.success) {
+        const stalled = current(stream);
+        if (charge && chargeLine !== void 0 && chargeEndsExpression(stalled, chargeLine)) {
+        } else {
+          stream.position = origin;
+          return { success: false, consumed: 0, error: firstStep.value.error };
+        }
+      } else {
+        headTerm = firstStep.value.value;
+        consumed += firstStep.value.consumed;
+      }
     }
-    let headTerm = firstStep.value.value;
-    let consumed = firstStep.value.consumed;
+    if (!headTerm && !charge) {
+      stream.position = origin;
+      return {
+        success: false,
+        consumed: 0,
+        error: {
+          message: "Expected an expression",
+          expected: ["Expression"],
+          found: current(stream).type,
+          recoverable: true
+        }
+      };
+    }
     let postfixFrame;
     let postfixBody;
     let postfixScope;
     let postfixCapsule;
-    const headLine = headTerm.span.end.line;
+    const headLine = headTerm?.span.end.line ?? chargeLine;
     while (true) {
       const saved = stream.position;
       skipWhitespace(stream);
@@ -3631,7 +3814,7 @@ var expressionImpl = named(
       stream.position = saved;
       break;
     }
-    while (!(postfixFrame || postfixBody || postfixScope || postfixCapsule)) {
+    while (headTerm && !(postfixFrame || postfixBody || postfixScope || postfixCapsule)) {
       const saved = stream.position;
       skipWhitespace(stream);
       if (current(stream).type !== "CAPSULE_OPEN") {
@@ -3681,10 +3864,10 @@ var expressionImpl = named(
       };
       headTerm = medial;
     }
-    const terms = [headTerm];
+    const terms = headTerm ? [headTerm] : [];
     const connectors = [];
     skipWhitespace(stream);
-    if (current(stream).type === "COLON") {
+    if (headTerm && current(stream).type === "COLON") {
       const colonGen = colon(stream, depth + 1);
       let colonStep = colonGen.next();
       while (!colonStep.done) {
@@ -3718,6 +3901,7 @@ var expressionImpl = named(
         span: { start: startPos, end: endPos2 },
         terms: [binding],
         connectors: [],
+        ...charge ? { modifiers: charge } : {},
         frame: postfixFrame,
         body: postfixBody,
         scope: postfixScope,
@@ -3725,10 +3909,11 @@ var expressionImpl = named(
       };
       return { success: true, value: node2, consumed };
     }
-    while (true) {
+    while (headTerm) {
       skipWhitespace(stream);
       const connTok = current(stream);
       if (connTok.type !== "CONNECTOR") break;
+      if (isScheduleSeparator(connTok)) break;
       if (connTok.span.start.line !== lastSignificantLine(stream)) break;
       const connGen = connector(stream, depth + 1);
       let connStep = connGen.next();
@@ -3757,6 +3942,7 @@ var expressionImpl = named(
       span: { start: startPos, end: endPos },
       terms,
       connectors,
+      ...charge ? { modifiers: charge } : {},
       frame: postfixFrame,
       body: postfixBody,
       scope: postfixScope,
@@ -3767,9 +3953,32 @@ var expressionImpl = named(
 );
 var SEQUENCE_SEPARATOR_TYPES = ["COMMA", "ARROW"];
 var SEQUENCE_SEPARATOR_SET = new Set(SEQUENCE_SEPARATOR_TYPES);
-function isSequenceSeparator(token2) {
-  return SEQUENCE_SEPARATOR_SET.has(token2.type);
+var SCHEDULE_SEPARATOR_VALUES = /* @__PURE__ */ new Set([";", "||"]);
+function isScheduleSeparator(token2) {
+  return token2.type === "CONNECTOR" && SCHEDULE_SEPARATOR_VALUES.has(token2.value);
 }
+function isSequenceSeparator(token2) {
+  return SEQUENCE_SEPARATOR_SET.has(token2.type) || isScheduleSeparator(token2);
+}
+var scheduleSeparator = named(
+  "scheduleSeparator",
+  function* scheduleSeparatorParser(stream, depth) {
+    const tok = current(stream);
+    if (!isScheduleSeparator(tok)) {
+      return {
+        success: false,
+        consumed: 0,
+        error: {
+          message: `Expected ; or ||, found ${tok.type}:${tok.value}`,
+          expected: [";", "||"],
+          found: tok.value,
+          recoverable: true
+        }
+      };
+    }
+    return yield* connector(stream, depth + 1);
+  }
+);
 var sequenceImpl = named(
   "sequence",
   function* sequenceParser(stream, depth) {
@@ -3887,7 +4096,7 @@ var frameContent = named(
       literalNode,
       operationNode
     ),
-    comma
+    choice(comma, scheduleSeparator)
   )
 );
 var frameNode = named(
@@ -5391,6 +5600,20 @@ var SYNTAX_CATALOG = [
     summary: "Phrase rewrite optimization under fixity laws + OptCacheIR key"
   },
   {
+    id: "phrase.line_item",
+    status: "proposed",
+    docs: "docs/theory/spw/line-items.spw",
+    runtimeHook: "parse",
+    summary: "Line item: a line-start .. or >> marker, an optional [mode], and a body that runs to the newline"
+  },
+  {
+    id: "phrase.mixed_reading",
+    status: "proposed",
+    docs: "docs/theory/spw/line-items.spw",
+    runtimeHook: "parse",
+    summary: "A body read as prose and expressions; the marker chooses the ground (>> prose-first, .. expression-first)"
+  },
+  {
     id: "regional.ocean_o",
     status: "proposed",
     dialect: "Spw.o",
@@ -5556,11 +5779,13 @@ function runSourcePipeline(input, options, controls) {
   let dialect;
   let dialectSource;
   let dialectPreprocessed = false;
+  let planStream = false;
   if (auto || opts.dialect || opts.path) {
     const explicit = opts.dialect && isDialectId(opts.dialect) ? opts.dialect : void 0;
     const stack = resolveSurfaceProfile(input, { dialect: explicit, path: opts.path });
     dialect = stack.dialect;
     dialectSource = stack.dialectSource;
+    planStream = stack.metasyntax.planStream;
     if (!opts.contextMode || options.contextMode === void 0) opts.contextMode = stack.contextMode;
     if (!opts.lexProfile) {
       opts.lexProfile = stack.lex === "prose" || stack.metasyntax.unknownAsText ? "prose" : stack.lex;
@@ -5586,7 +5811,7 @@ function runSourcePipeline(input, options, controls) {
     }
   }
   const lexProfile = resolveLexProfile(opts.lexProfile);
-  const lexGen = tokenize(preparedSource, 0, { profile: lexProfile });
+  const lexGen = tokenize(preparedSource, 0, { profile: lexProfile, planStream });
   let lexStep = lexGen.next();
   while (!lexStep.done) {
     observeEvent(lexStep.value);
@@ -6571,6 +6796,130 @@ function createStreamHooks(options) {
   };
 }
 
+// .spw/_workbench/packages/spw-seed/src/canonical/content-hash.ts
+var encoder = new TextEncoder();
+function utf8ByteLength(text) {
+  return encoder.encode(text).length;
+}
+var K = new Uint32Array([
+  1116352408,
+  1899447441,
+  3049323471,
+  3921009573,
+  961987163,
+  1508970993,
+  2453635748,
+  2870763221,
+  3624381080,
+  310598401,
+  607225278,
+  1426881987,
+  1925078388,
+  2162078206,
+  2614888103,
+  3248222580,
+  3835390401,
+  4022224774,
+  264347078,
+  604807628,
+  770255983,
+  1249150122,
+  1555081692,
+  1996064986,
+  2554220882,
+  2821834349,
+  2952996808,
+  3210313671,
+  3336571891,
+  3584528711,
+  113926993,
+  338241895,
+  666307205,
+  773529912,
+  1294757372,
+  1396182291,
+  1695183700,
+  1986661051,
+  2177026350,
+  2456956037,
+  2730485921,
+  2820302411,
+  3259730800,
+  3345764771,
+  3516065817,
+  3600352804,
+  4094571909,
+  275423344,
+  430227734,
+  506948616,
+  659060556,
+  883997877,
+  958139571,
+  1322822218,
+  1537002063,
+  1747873779,
+  1955562222,
+  2024104815,
+  2227730452,
+  2361852424,
+  2428436474,
+  2756734187,
+  3204031479,
+  3329325298
+]);
+var H0 = [1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600822924, 528734635, 1541459225];
+function rotr(x, n) {
+  return x >>> n | x << 32 - n;
+}
+function sha256HexBytes(bytes) {
+  const padded = new Uint8Array(Math.ceil((bytes.length + 9) / 64) * 64);
+  padded.set(bytes);
+  padded[bytes.length] = 128;
+  const view = new DataView(padded.buffer);
+  const bitLength = bytes.length * 8;
+  view.setUint32(padded.length - 8, Math.floor(bitLength / 4294967296));
+  view.setUint32(padded.length - 4, bitLength >>> 0);
+  const h = Uint32Array.from(H0);
+  const w = new Uint32Array(64);
+  for (let block = 0; block < padded.length; block += 64) {
+    for (let i = 0; i < 16; i++) w[i] = view.getUint32(block + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ w[i - 15] >>> 3;
+      const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ w[i - 2] >>> 10;
+      w[i] = w[i - 16] + s0 + w[i - 7] + s1 >>> 0;
+    }
+    let a = h[0], b = h[1], c = h[2], d = h[3], e = h[4], f = h[5], g = h[6], k = h[7];
+    for (let i = 0; i < 64; i++) {
+      const t1 = k + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + (e & f ^ ~e & g) + K[i] + w[i] >>> 0;
+      const t2 = (rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + (a & b ^ a & c ^ b & c) >>> 0;
+      k = g;
+      g = f;
+      f = e;
+      e = d + t1 >>> 0;
+      d = c;
+      c = b;
+      b = a;
+      a = t1 + t2 >>> 0;
+    }
+    h[0] = h[0] + a >>> 0;
+    h[1] = h[1] + b >>> 0;
+    h[2] = h[2] + c >>> 0;
+    h[3] = h[3] + d >>> 0;
+    h[4] = h[4] + e >>> 0;
+    h[5] = h[5] + f >>> 0;
+    h[6] = h[6] + g >>> 0;
+    h[7] = h[7] + k >>> 0;
+  }
+  return Array.from(h, (word) => word.toString(16).padStart(8, "0")).join("");
+}
+function sha256Hex(text) {
+  return sha256HexBytes(encoder.encode(text));
+}
+var TEXT_HASH_LENGTH = 16;
+function textHash(text, length = TEXT_HASH_LENGTH) {
+  return sha256Hex(text).slice(0, length);
+}
+
 // .spw/_workbench/packages/spw-seed/src/canonical/canonicalize.ts
 var FORMAT_PROFILES = {
   /** Whitespace hygiene only (CLI default historically) */
@@ -6963,12 +7312,7 @@ function canonicalize(input, options = {}) {
   };
 }
 function hashString(value) {
-  let hash = 2166136261;
-  for (let i = 0; i < value.length; i++) {
-    hash ^= value.charCodeAt(i);
-    hash = hash * 16777619 >>> 0;
-  }
-  return hash.toString(16).padStart(8, "0");
+  return textHash(value);
 }
 
 // .spw/_workbench/packages/spw-seed/src/canonical/authority.ts
@@ -7229,7 +7573,7 @@ function measureMass(text) {
   }
   return {
     lines,
-    bytes: Buffer.byteLength(text, "utf8")
+    bytes: utf8ByteLength(text)
   };
 }
 function reconcileMass(declaration, measured) {
@@ -9085,6 +9429,18 @@ function probeMutationTopography(source, config = { profile: "layout_canonical",
 
 // .spw/_workbench/packages/spw-seed/src/canonical/apposition-scan.ts
 var APPOSITION_SCAN_VERSION = "spw.apposition.scan/1";
+function pushCell(cells, raw, start, name, body, form) {
+  cells.push({
+    name,
+    body,
+    raw,
+    span: { start, end: start + raw.length },
+    mask: hashString(raw),
+    bodyMask: hashString(body),
+    anonymous: name == null,
+    form
+  });
+}
 function scanAppositions(source, options = {}) {
   const cells = [];
   const len = source.length;
@@ -9096,47 +9452,49 @@ function scanAppositions(source, options = {}) {
     }
     let ahead = i + 2;
     while (ahead < len && /[a-zA-Z0-9_-]/.test(source[ahead])) ahead++;
-    if (ahead >= len || source[ahead] !== "(") {
-      i++;
-      continue;
-    }
-    const start = i;
-    let raw = source.slice(i, ahead + 1);
-    i = ahead + 1;
-    let depth = 1;
-    let closed = false;
-    while (i < len) {
-      const ch = source[i];
-      if (ch === "\n") break;
-      raw += ch;
-      i++;
-      if (ch === "(") depth++;
-      else if (ch === ")") {
-        depth--;
-        if (depth === 0) {
-          closed = true;
-          break;
+    const name = source.slice(i + 2, ahead) || null;
+    if (ahead < len && source[ahead] === "(") {
+      const start = i;
+      let raw = source.slice(i, ahead + 1);
+      i = ahead + 1;
+      let depth = 1;
+      let closed = false;
+      while (i < len) {
+        const ch = source[i];
+        if (ch === "\n") break;
+        raw += ch;
+        i++;
+        if (ch === "(") depth++;
+        else if (ch === ")") {
+          depth--;
+          if (depth === 0) {
+            closed = true;
+            break;
+          }
         }
       }
-    }
-    if (!closed) {
-      if (options.strict) {
-        break;
+      if (!closed) {
+        if (options.strict) {
+          break;
+        }
+        if (i === start) i = start + 2;
+        continue;
       }
-      if (i === start) i = start + 2;
+      const parts = appositionParts(raw);
+      pushCell(cells, raw, start, parts.name, parts.body, "paren");
       continue;
     }
-    const parts = appositionParts(raw);
-    const end = start + raw.length;
-    cells.push({
-      name: parts.name,
-      body: parts.body,
-      raw,
-      span: { start, end },
-      mask: hashString(raw),
-      bodyMask: hashString(parts.body),
-      anonymous: parts.name == null
-    });
+    if (ahead < len && source[ahead] === ":" && name) {
+      const start = i;
+      let end = ahead + 1;
+      while (end < len && source[end] !== "\n") end++;
+      const raw = source.slice(start, end);
+      const body = source.slice(ahead + 1, end).trim();
+      pushCell(cells, raw, start, name, body, "colon");
+      i = end;
+      continue;
+    }
+    i++;
   }
   const names = new Set(cells.map((c) => c.name).filter((n) => n != null));
   return {
@@ -9145,7 +9503,9 @@ function scanAppositions(source, options = {}) {
     cells,
     namedCount: cells.filter((c) => !c.anonymous).length,
     anonymousCount: cells.filter((c) => c.anonymous).length,
-    distinctNames: names.size
+    distinctNames: names.size,
+    parenCount: cells.filter((c) => c.form === "paren").length,
+    colonCount: cells.filter((c) => c.form === "colon").length
   };
 }
 function appositionMasksEqual(a, b) {
@@ -9164,6 +9524,8 @@ function appositionSpectrum(lattice) {
     named: lattice.namedCount,
     anonymous: lattice.anonymousCount,
     distinctNames: lattice.distinctNames,
+    paren: lattice.parenCount,
+    colon: lattice.colonCount,
     byName
   };
 }
@@ -9188,6 +9550,119 @@ function diffAppositionLattices(before, after) {
     if (a) remasked.push({ name: r.name, before: r, after: a });
   }
   return { added, removed, remasked, stableMasks };
+}
+
+// .spw/_workbench/packages/spw-seed/src/canonical/fingerprint.ts
+var FINGERPRINT_VERSION = "spw.fingerprint/1";
+function countsFromAst(ast) {
+  const map2 = countNodeTypes(ast);
+  const byType = Object.fromEntries([...map2.entries()].sort(([a], [b]) => a.localeCompare(b)));
+  const total = [...map2.values()].reduce((sum, n) => sum + n, 0);
+  return { byType, total, signature: formatFingerprintSignature(byType) };
+}
+function formatFingerprintSignature(byType) {
+  return Object.entries(byType).sort(([a], [b]) => a.localeCompare(b)).map(([type, count]) => `${type}=${count}`).join(" ");
+}
+function fingerprintSource(source, options = {}) {
+  const output = options.expression ? parseExpression(source) : parse(source);
+  const ast = output.ast;
+  const counted = ast ? countsFromAst(ast) : { byType: {}, total: 0, signature: "" };
+  return {
+    version: FINGERPRINT_VERSION,
+    ...counted,
+    success: output.success,
+    complete: output.completeness.complete,
+    proseFallback: output.completeness.proseFallback,
+    actualRootKind: output.completeness.actualRootKind,
+    expectedRootKind: output.completeness.expectedRootKind,
+    warningCount: output.warnings.length,
+    errorCount: output.errors.length
+  };
+}
+
+// .spw/_workbench/packages/spw-seed/src/canonical/resolve-citation.ts
+var CITATION_RESOLVE_VERSION = "spw.citation/1";
+function splitFragment(raw) {
+  const hash = raw.lastIndexOf("#");
+  if (hash <= 0) return { targetPath: raw, fragment: null };
+  const targetPath = raw.slice(0, hash);
+  const fragment = raw.slice(hash + 1);
+  return { targetPath, fragment: fragment.length > 0 ? fragment : null };
+}
+function classifyCitation(raw) {
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    return {
+      version: CITATION_RESOLVE_VERSION,
+      raw,
+      targetPath: "",
+      fragment: null,
+      kind: "malformed"
+    };
+  }
+  const { targetPath, fragment } = splitFragment(trimmed);
+  const looksLikePath = /[A-Za-z0-9._/~]/.test(targetPath);
+  if (!targetPath || targetPath.startsWith("#") || !looksLikePath) {
+    return {
+      version: CITATION_RESOLVE_VERSION,
+      raw: trimmed,
+      targetPath: looksLikePath ? targetPath : "",
+      fragment,
+      kind: "malformed"
+    };
+  }
+  let kind = "file";
+  if (/^[a-z][a-z0-9+.-]*:/i.test(targetPath)) kind = "external";
+  else if (targetPath.startsWith("/")) kind = "route";
+  else if (targetPath.endsWith("/")) kind = "directory";
+  return {
+    version: CITATION_RESOLVE_VERSION,
+    raw: trimmed,
+    targetPath,
+    fragment,
+    kind
+  };
+}
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+function sourceDeclaresAnchor(source, fragment) {
+  if (!fragment) return false;
+  const name = escapeRegExp(fragment);
+  const patterns = [
+    new RegExp(`#>${name}(?:\\b|$)`),
+    new RegExp(`\\^\\["${name}"\\]`),
+    new RegExp(`\\^"${name}"\\s*\\{`),
+    new RegExp(`\\^${name}\\[`),
+    new RegExp(`(?:^|\\n)\\s*${name}\\s*[:=]`, "m")
+  ];
+  return patterns.some((pattern) => pattern.test(source));
+}
+
+// .spw/_workbench/packages/spw-seed/src/canonical/annotation-lint.ts
+var ANNOTATION_LINT_VERSION = "spw.annotation.lint/1";
+function scanMalformedAxes(source) {
+  const { tokens } = lex(source);
+  const significant = tokens.filter(isSignificantToken);
+  const findings = [];
+  for (let i = 0; i < significant.length; i++) {
+    const token2 = significant[i];
+    if (token2.type !== "PARTICLE" || token2.kind !== ":") continue;
+    const next = significant[i + 1];
+    if (!next || next.type !== "IDENTIFIER") continue;
+    if (next.span.start.line !== token2.span.start.line) continue;
+    const axis = token2.value.slice(2);
+    findings.push({
+      version: ANNOTATION_LINT_VERSION,
+      kind: "malformed-axis",
+      line: next.span.start.line,
+      column: next.span.start.column,
+      axis,
+      value: next.value,
+      expected: `#!${next.value}`
+    });
+  }
+  return findings;
 }
 
 // .spw/_workbench/packages/spw-seed/src/canonical/spw-card.ts
@@ -9261,7 +9736,7 @@ function collectFacetKeys(parts) {
   return keys;
 }
 function emitParts(parts, indentUnit, depth, align, maxKeyPad) {
-  const pad2 = " ".repeat(indentUnit * depth);
+  const pad = " ".repeat(indentUnit * depth);
   const facetKeys = collectFacetKeys(parts);
   const keyWidth = align ? Math.min(maxKeyPad, Math.max(0, ...facetKeys.map((k) => k.length))) : 0;
   const lines = [];
@@ -9271,14 +9746,14 @@ function emitParts(parts, indentUnit, depth, align, maxKeyPad) {
       continue;
     }
     if (isGroup(part)) {
-      lines.push(`${pad2}^["${escapeStr(part.group)}"]{`);
+      lines.push(`${pad}^["${escapeStr(part.group)}"]{`);
       lines.push(...emitParts(part.parts, indentUnit, depth + 1, align, maxKeyPad));
-      lines.push(`${pad2}}`);
+      lines.push(`${pad}}`);
       continue;
     }
     if (isFacet(part)) {
       const key = align ? part.key.padEnd(keyWidth) : part.key;
-      lines.push(`${pad2}~#${key}: ${renderValue(part)}`);
+      lines.push(`${pad}~#${key}: ${renderValue(part)}`);
     }
   }
   return lines;
@@ -9333,184 +9808,11 @@ var facet = {
   })
 };
 
-// book/scripts/tools/crypto-browser-shim.mjs
-function createHash(algorithm) {
-  if (algorithm !== "sha256") {
-    throw new Error(`[crypto-browser-shim] unsupported algorithm: ${algorithm}`);
-  }
-  const parts = [];
-  return {
-    update(data) {
-      if (typeof data === "string") {
-        parts.push(data);
-      } else if (data instanceof Uint8Array) {
-        parts.push(new TextDecoder().decode(data));
-      } else if (ArrayBuffer.isView(data)) {
-        parts.push(new TextDecoder().decode(data));
-      } else {
-        parts.push(String(data ?? ""));
-      }
-      return this;
-    },
-    digest(encoding) {
-      const hex = sha256hex(parts.join(""));
-      if (encoding === "hex" || encoding == null) {
-        return hex;
-      }
-      const bytes = new Uint8Array(hex.length / 2);
-      for (let i = 0; i < bytes.length; i += 1) {
-        bytes[i] = Number.parseInt(hex.slice(i * 2, i * 2 + 2), 16);
-      }
-      return bytes;
-    }
-  };
-}
-function sha256hex(message) {
-  const bytes = new TextEncoder().encode(message);
-  const padded = pad(bytes);
-  const H = new Uint32Array([
-    1779033703,
-    3144134277,
-    1013904242,
-    2773480762,
-    1359893119,
-    2600822924,
-    528734635,
-    1541459225
-  ]);
-  const W = new Uint32Array(64);
-  for (let i = 0; i < padded.length; i += 64) {
-    for (let t = 0; t < 16; t += 1) {
-      const o = i + t * 4;
-      W[t] = (padded[o] << 24 | padded[o + 1] << 16 | padded[o + 2] << 8 | padded[o + 3]) >>> 0;
-    }
-    for (let t = 16; t < 64; t += 1) {
-      const s0 = rotr(W[t - 15], 7) ^ rotr(W[t - 15], 18) ^ W[t - 15] >>> 3;
-      const s1 = rotr(W[t - 2], 17) ^ rotr(W[t - 2], 19) ^ W[t - 2] >>> 10;
-      W[t] = W[t - 16] + s0 + W[t - 7] + s1 >>> 0;
-    }
-    let a = H[0];
-    let b = H[1];
-    let c = H[2];
-    let d = H[3];
-    let e = H[4];
-    let f = H[5];
-    let g = H[6];
-    let h = H[7];
-    for (let t = 0; t < 64; t += 1) {
-      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
-      const ch = e & f ^ ~e & g;
-      const temp1 = h + S1 + ch + K[t] + W[t] >>> 0;
-      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
-      const maj = a & b ^ a & c ^ b & c;
-      const temp2 = S0 + maj >>> 0;
-      h = g;
-      g = f;
-      f = e;
-      e = d + temp1 >>> 0;
-      d = c;
-      c = b;
-      b = a;
-      a = temp1 + temp2 >>> 0;
-    }
-    H[0] = H[0] + a >>> 0;
-    H[1] = H[1] + b >>> 0;
-    H[2] = H[2] + c >>> 0;
-    H[3] = H[3] + d >>> 0;
-    H[4] = H[4] + e >>> 0;
-    H[5] = H[5] + f >>> 0;
-    H[6] = H[6] + g >>> 0;
-    H[7] = H[7] + h >>> 0;
-  }
-  return [...H].map((n) => n.toString(16).padStart(8, "0")).join("");
-}
-function pad(bytes) {
-  const bitLen = bytes.length * 8;
-  const withOne = bytes.length + 1;
-  const paddedLen = withOne + 8 + 63 & ~63;
-  const out = new Uint8Array(paddedLen);
-  out.set(bytes);
-  out[bytes.length] = 128;
-  const view = new DataView(out.buffer);
-  view.setUint32(paddedLen - 4, bitLen >>> 0);
-  view.setUint32(paddedLen - 8, Math.floor(bitLen / 4294967296));
-  return out;
-}
-function rotr(n, x) {
-  return (n >>> x | n << 32 - x) >>> 0;
-}
-var K = new Uint32Array([
-  1116352408,
-  1899447441,
-  3049323471,
-  3921009573,
-  961987163,
-  1508970993,
-  2453635748,
-  2870763221,
-  3624381080,
-  310598401,
-  607225278,
-  1426881987,
-  1925078388,
-  2162078206,
-  2614888103,
-  3248222580,
-  3835390401,
-  4022224774,
-  264347078,
-  604807628,
-  770255983,
-  1249150122,
-  1555081692,
-  1996064986,
-  2554220882,
-  2821834349,
-  2952996808,
-  3210313671,
-  3336571891,
-  3584528711,
-  113926993,
-  338241895,
-  666307205,
-  773529912,
-  1294757372,
-  1396182291,
-  1695183700,
-  1986661051,
-  2177026350,
-  2456956037,
-  2730485921,
-  2820302411,
-  3259730800,
-  3345764771,
-  3516065817,
-  3600352804,
-  4094571909,
-  275423344,
-  430227734,
-  506948616,
-  659060556,
-  883997877,
-  958139571,
-  1322822218,
-  1537002063,
-  1747873779,
-  1955562222,
-  2024104815,
-  2227730452,
-  2361852424,
-  2428436474,
-  2756734187,
-  3204031479,
-  3329325298
-]);
-
 // .spw/_workbench/packages/spw-seed/src/canonical/nest-path.ts
 var NEST_PATH_VERSION = "spw.nest_path/1";
 var NEST_PATH_ALPHABET = "<>(){}[]";
 function shortHash(s) {
-  return createHash("sha256").update(s).digest("hex").slice(0, 12);
+  return sha256Hex(s).slice(0, 12);
 }
 function tokenValue(tok) {
   if (!tok || typeof tok !== "object") return void 0;
@@ -10015,7 +10317,7 @@ function formatChangeReportSpw(report) {
 var STENCIL_VERSION = "spw.stencil/1";
 var STENCIL_SCHEMA = "spw.stencil/1";
 function shortId(parts) {
-  return createHash("sha256").update(parts).digest("hex").slice(0, 12);
+  return sha256Hex(parts).slice(0, 12);
 }
 function buildStencilMask(source, options = {}) {
   const nest = scanNestPaths(source);
@@ -11282,7 +11584,7 @@ var PATCH_VERSION = "spw.patch/1";
 var PATCH_SCHEMA = "spw.patch/1";
 var PATCH_PRODUCER = "seed.patch";
 function hashSource(s) {
-  return createHash("sha256").update(s).digest("hex");
+  return sha256Hex(s);
 }
 function shortHash2(s) {
   return hashSource(s).slice(0, 16);
@@ -11993,15 +12295,6 @@ function resolveWeightScheme(id) {
   if (typeof id === "object") return id;
   return WEIGHT_SCHEMES[id] ?? WEIGHT_SCHEME_DEFAULT;
 }
-function portableHash(text) {
-  let h = 0xcbf29ce484222325n;
-  const prime = 0x100000001b3n;
-  for (let i = 0; i < text.length; i++) {
-    h ^= BigInt(text.charCodeAt(i));
-    h = h * prime & 0xffffffffffffffffn;
-  }
-  return h.toString(16).padStart(16, "0");
-}
 function topOperators(report, n = 8) {
   return report.operators.map((r) => ({ op: r.sigil, count: r.count })).filter((r) => r.count > 0).sort((a, b) => b.count - a.count).slice(0, n);
 }
@@ -12025,7 +12318,7 @@ function compileGeometryBytecode(source, options = {}) {
   const opVector = SIGIL_CHARS.map((s) => opCounts[s] ?? 0);
   return {
     version: "spw.geometry.bc/1",
-    contentHash: portableHash(source),
+    contentHash: textHash(source),
     opCounts,
     opVector,
     braceKinds: braceKindsMap(geometry),
@@ -13257,6 +13550,55 @@ function resolveStepApply(step, ctx) {
   return (s) => s;
 }
 
+// .spw/_workbench/packages/spw-seed/src/normalize-construction.ts
+var POSTFIX_KINDS = ["frame", "body", "scope", "capsule"];
+function copySpan(span) {
+  return { start: { ...span.start }, end: { ...span.end } };
+}
+function preserveExpressionConstruction(expression, head, normalize) {
+  const attachments = POSTFIX_KINDS.flatMap((kind) => {
+    const node = expression[kind];
+    return node ? [{ kind, node }] : [];
+  }).sort((a, b) => a.node.span.start.offset - b.node.span.start.offset);
+  if (attachments.length === 0) return head;
+  const first = expression.terms[0];
+  const last = expression.terms[expression.terms.length - 1];
+  const construction = {
+    version: "spw.onf.construction/1",
+    // These spans belong to the caller's AST/source, not an invented file revision.
+    source: copySpan(expression.span),
+    head: copySpan(first && last ? { start: first.span.start, end: last.span.end } : expression.span),
+    attachments: attachments.map(({ kind, node }) => ({ kind, source: copySpan(node.span) }))
+  };
+  return {
+    sigil: "_",
+    args: [head, ...attachments.map(({ node }) => normalize(node))],
+    frames: { reg: "construction", construction }
+  };
+}
+function projectONFForValue(node) {
+  const omissions = [];
+  function project(current2, path) {
+    const construction = current2.frames.construction;
+    if (current2.frames.reg === "construction" && construction?.version === "spw.onf.construction/1") {
+      const head = current2.args[0];
+      if (!head || current2.args.length !== construction.attachments.length + 1) {
+        throw new Error("Invalid ONF construction: head/attachment arity mismatch");
+      }
+      omissions.push({
+        path,
+        source: copySpan(construction.source),
+        attachments: construction.attachments.map(({ kind, source }) => ({ kind, source: copySpan(source) })),
+        reason: "postfix-attachments-not-evaluated"
+      });
+      return project(head, [...path, 0]);
+    }
+    const args = current2.args.map((arg, index) => project(arg, [...path, index]));
+    return args.every((arg, index) => arg === current2.args[index]) ? current2 : { ...current2, args };
+  }
+  return { node: project(node, []), receipt: { profile: "spw.onf.value/1", omissions } };
+}
+
 // .spw/_workbench/packages/spw-seed/src/normalize.ts
 function desugar(source) {
   let out = source;
@@ -13331,28 +13673,44 @@ function extractValence(op) {
   }
   return modifiers.map((modifier2) => modifier2.value).filter((modifier2) => typeof modifier2 === "string");
 }
+function stampExpressionCharge(expr, node) {
+  const valence = extractValence(expr);
+  if (!valence || valence.length === 0) return node;
+  return { ...node, frames: { ...node.frames, valence } };
+}
 function normalizeToONF(node) {
   switch (node.type) {
     case "Seed":
       return normalizeToONF(node.expression);
     case "Expression": {
       const expr = node;
+      let normalized;
       if (!expr.connectors || expr.connectors.length === 0) {
-        if (expr.terms && expr.terms.length > 0) return normalizeToONF(expr.terms[0]);
-        return { sigil: "_", args: [], frames: { reg: "empty" } };
+        if (expr.terms && expr.terms.length > 0) {
+          normalized = preserveExpressionConstruction(expr, normalizeToONF(expr.terms[0]), normalizeToONF);
+        } else {
+          const hole = {
+            sigil: "_",
+            args: [],
+            frames: { reg: expr.modifiers ? "charge" : "empty" }
+          };
+          normalized = preserveExpressionConstruction(expr, hole, normalizeToONF);
+        }
+      } else {
+        let current2 = normalizeToONF(expr.terms[0]);
+        for (let i = 0; i < expr.connectors.length; i++) {
+          const connector2 = expr.connectors[i].value;
+          const right = normalizeToONF(expr.terms[i + 1]);
+          const reg = connector2 === "/" ? "proj" : "conn";
+          current2 = {
+            sigil: connector2,
+            args: [current2, right],
+            frames: { reg }
+          };
+        }
+        normalized = preserveExpressionConstruction(expr, current2, normalizeToONF);
       }
-      let current2 = normalizeToONF(expr.terms[0]);
-      for (let i = 0; i < expr.connectors.length; i++) {
-        const connector2 = expr.connectors[i].value;
-        const right = normalizeToONF(expr.terms[i + 1]);
-        const reg = connector2 === "/" ? "proj" : "conn";
-        current2 = {
-          sigil: connector2,
-          args: [current2, right],
-          frames: { reg }
-        };
-      }
-      return current2;
+      return stampExpressionCharge(expr, normalized);
     }
     case "Operation": {
       const op = node;
@@ -14481,7 +14839,7 @@ function applyInteriorToFacet(source, label) {
 function applyFacetsToHeader(source, label) {
   const trimmed = source.trim();
   const re = new RegExp(
-    `^\\.\\{\\s*${escapeRegExp(label)}\\s*:\\s*([\\s\\S]*)\\}\\s*$`
+    `^\\.\\{\\s*${escapeRegExp2(label)}\\s*:\\s*([\\s\\S]*)\\}\\s*$`
   );
   const m = trimmed.match(re);
   if (m) {
@@ -14496,7 +14854,7 @@ function applyFacetsToHeader(source, label) {
 function applyHeaderToFacet(source, label) {
   const trimmed = source.trim();
   const re = new RegExp(
-    `^\\^\\[\\s*"${escapeRegExp(label)}"\\s*\\]\\s*\\{([\\s\\S]*)\\}\\s*$`
+    `^\\^\\[\\s*"${escapeRegExp2(label)}"\\s*\\]\\s*\\{([\\s\\S]*)\\}\\s*$`
   );
   const m = trimmed.match(re);
   if (m) {
@@ -14531,7 +14889,7 @@ function applyFreeToPairLabels(source, label) {
 function pairLabelInterior(source, label) {
   const trimmed = source.trim();
   const re = new RegExp(
-    `^\\{\\s*_${escapeRegExp(label)}\\s*([\\s\\S]*?)\\s*\\}_${escapeRegExp(label)}\\s*$`
+    `^\\{\\s*_${escapeRegExp2(label)}\\s*([\\s\\S]*?)\\s*\\}_${escapeRegExp2(label)}\\s*$`
   );
   const m = trimmed.match(re);
   if (!m) return null;
@@ -14548,14 +14906,14 @@ function applyInhabitedPairLabelsToBody(source, label) {
 function applyPairLabelsToHeader(source, label) {
   const trimmed = source.trim();
   const re = new RegExp(
-    `^\\{\\s*_${escapeRegExp(label)}\\s*([\\s\\S]*?)\\s*\\}_${escapeRegExp(label)}\\s*$`
+    `^\\{\\s*_${escapeRegExp2(label)}\\s*([\\s\\S]*?)\\s*\\}_${escapeRegExp2(label)}\\s*$`
   );
   const m = trimmed.match(re);
   if (!m) return null;
   const interior = m[1].trim();
   return `^["${label}"]{${interior}}`;
 }
-function escapeRegExp(s) {
+function escapeRegExp2(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 var MOBILITY_RULES = [
@@ -15461,7 +15819,7 @@ function formatFormContour(contour) {
 var FRAGMENT_LINE = /^#:L(\d+)(?:C(\d+))?(?:-L(\d+)(?:C(\d+))?)?$/i;
 var FRAGMENT_OFFSET = /^#@offset=(\d+)\.\.(\d+)$/i;
 function contentHash(source) {
-  return hashString(source).slice(0, 16);
+  return textHash(source);
 }
 function parseRangeFragment(fragment) {
   const f = fragment.trim();
@@ -15603,8 +15961,8 @@ function planSpanTransform(resolved, transform, options = {}) {
   let newSlice;
   switch (transform) {
     case "indent_lines": {
-      const pad2 = " ".repeat(size);
-      newSlice = lines.map((l) => l.length ? pad2 + l : l).join("\n");
+      const pad = " ".repeat(size);
+      newSlice = lines.map((l) => l.length ? pad + l : l).join("\n");
       break;
     }
     case "outdent_lines": {
@@ -16008,7 +16366,7 @@ function partitionOverlaps(proposed) {
   const edits = [];
   const conflicts = [];
   let group = [];
-  let groupEnd = -1;
+  let groupEnd2 = -1;
   const flush = () => {
     if (group.length === 1) edits.push(group[0]);
     else if (group.length > 1) {
@@ -16020,14 +16378,14 @@ function partitionOverlaps(proposed) {
     group = [];
   };
   for (const edit of ordered) {
-    if (group.length > 0 && edit.start < groupEnd) {
+    if (group.length > 0 && edit.start < groupEnd2) {
       group.push(edit);
-      groupEnd = Math.max(groupEnd, edit.end);
+      groupEnd2 = Math.max(groupEnd2, edit.end);
       continue;
     }
     flush();
     group = [edit];
-    groupEnd = edit.end;
+    groupEnd2 = edit.end;
   }
   flush();
   return { edits, conflicts };
@@ -16078,6 +16436,169 @@ function renameParticle(aim, from, to) {
       };
     }
   };
+}
+
+// .spw/_workbench/packages/spw-seed/src/query/presets.ts
+var PATH_REFS = { sigil: "~", nodeType: "PathRef" };
+var REFERENCES = { sigil: "@", nodeType: "Reference" };
+var NAVIGABLE = or(PATH_REFS, REFERENCES);
+var DOMAIN_ROOTS = { sigil: "^", withBoundaries: ["frame"] };
+var DOMAIN_ROOTS_FULL = {
+  sigil: "^",
+  withBoundaries: ["frame", "body"]
+};
+var HYDRATE_OPS = { sigil: "!", nodeType: "Operation" };
+var DEFER_OPS = { sigil: "~", nodeType: "Operation" };
+var QUERY_OPS = { sigil: "?", nodeType: "Operation" };
+var CONFIG_OPS = { sigil: "=", nodeType: "Operation" };
+var BIAS = { sigil: "=", product: "bias" };
+var PARTICLES = { nodeType: "Particle" };
+var ANCHORS = { nodeType: "Particle", aim: ">" };
+var ANNOTATION_OPS = { sigil: "#", nodeType: "Operation" };
+var OPS_WITH_FRAMES = {
+  nodeType: "Operation",
+  withBoundaries: ["frame"]
+};
+var OPS_WITH_BODIES = {
+  nodeType: "Operation",
+  withBoundaries: ["body"]
+};
+var SCOPES = { nodeType: "Scope", boundary: "scope" };
+var BOON_OPS = { sigil: "!", nodeType: "Operation", modifier: "boon" };
+var BONE_OPS = { sigil: "!", nodeType: "Operation", modifier: "bone" };
+var ANY = { any: true };
+
+// .spw/_workbench/packages/spw-seed/src/canonical/path-rename.ts
+function normalizePath(p) {
+  const absolute = p.startsWith("/");
+  const out = [];
+  for (const part of p.split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") {
+      if (out.length > 0 && out[out.length - 1] !== "..") out.pop();
+      else if (!absolute) out.push("..");
+      continue;
+    }
+    out.push(part);
+  }
+  return (absolute ? "/" : "") + out.join("/");
+}
+function joinPath(dir, rel) {
+  return normalizePath(`${dir}/${rel}`);
+}
+function dirnameOf(p) {
+  const cut = p.lastIndexOf("/");
+  return cut <= 0 ? "/" : p.slice(0, cut);
+}
+function relativePath(fromDir, to) {
+  const a = normalizePath(fromDir).split("/").filter(Boolean);
+  const b = normalizePath(to).split("/").filter(Boolean);
+  let shared = 0;
+  while (shared < a.length && shared < b.length && a[shared] === b[shared]) shared += 1;
+  return [...a.slice(shared).map(() => ".."), ...b.slice(shared)].join("/");
+}
+function isAtOrUnder(p, dir) {
+  return p === dir || p.startsWith(dir.endsWith("/") ? dir : `${dir}/`);
+}
+function mapThroughMoves(p, moves) {
+  for (const move of moves) {
+    if (isAtOrUnder(p, move.from)) return move.to + p.slice(move.from.length);
+  }
+  return p;
+}
+function normalizeMoves(moves) {
+  return moves.map((move) => ({ from: normalizePath(move.from), to: normalizePath(move.to) }));
+}
+function formOf(pathText) {
+  if (pathText.startsWith("/")) return "route";
+  if (pathText === "." || pathText === ".." || pathText.startsWith("./") || pathText.startsWith("../")) return "relative";
+  return "bare";
+}
+function candidates(pathText, form, citingDir, root) {
+  if (form === "route") return [["root", joinPath(root, pathText.slice(1))]];
+  const byFile = joinPath(citingDir, pathText);
+  const byRoot = joinPath(root, pathText);
+  if (byFile === byRoot) return [[form === "bare" ? "root" : "file", byFile]];
+  return [["file", byFile], ["root", byRoot]];
+}
+function resolveCitation(pathText, form, moves, context, root, citingFile) {
+  const now = candidates(pathText, form, dirnameOf(citingFile), root);
+  for (const [basis, target] of now) {
+    if (context.exists(target)) return { target, basis };
+  }
+  for (const [basis, target] of now) {
+    if (moves.some((move) => isAtOrUnder(target, move.from))) return { target, basis };
+  }
+  return null;
+}
+function express(target, form, basis, nextCitingDir, root, trailingSlash) {
+  const rel = relativePath(basis === "root" ? root : nextCitingDir, target);
+  let text;
+  if (form === "route") text = `/${rel}`;
+  else if (form === "relative") text = rel === "" ? "." : rel.startsWith("..") ? rel : `./${rel}`;
+  else text = rel === "" ? "." : rel;
+  return trailingSlash && !text.endsWith("/") ? `${text}/` : text;
+}
+function literalRange(node, source) {
+  const start = node.path.span.start.offset;
+  const end = node.path.span.end.offset;
+  const open = source[start];
+  const quoted = end - start >= 2 && (open === '"' || open === "'" || open === "`") && source[end - 1] === open;
+  if (quoted) return { start: start + 1, end: end - 1, open, close: open };
+  const bounded = source[start - 1] === "<";
+  return { start, end, open: bounded ? "<" : "", close: bounded ? ">" : "" };
+}
+function rewriteCitationForMoves(node, source, moves, context) {
+  const range = literalRange(node, source);
+  const raw = source.slice(range.start, range.end);
+  if (!raw || raw.includes("*") || /\s/.test(raw)) return null;
+  const kind = classifyCitation(raw).kind;
+  if (kind === "external" || kind === "malformed") return null;
+  const hash = raw.lastIndexOf("#");
+  const pathText = hash > 0 ? raw.slice(0, hash) : raw;
+  const fragment = hash > 0 ? raw.slice(hash) : "";
+  if (pathText.startsWith("~")) return null;
+  const normalized = normalizeMoves(moves);
+  const root = normalizePath(context.consumerRoot);
+  const citingFile = normalizePath(context.citingFile);
+  const nextCitingDir = dirnameOf(mapThroughMoves(citingFile, normalized));
+  const form = formOf(pathText);
+  const resolved = resolveCitation(pathText, form, normalized, context, root, citingFile);
+  if (!resolved) return null;
+  const nextTarget = mapThroughMoves(resolved.target, normalized);
+  const base = form === "route" || resolved.basis === "root" ? root : nextCitingDir;
+  const readable = form === "route" ? pathText.slice(1) : pathText;
+  if (joinPath(base, readable) === nextTarget) return null;
+  const nextPath = express(nextTarget, form, resolved.basis, nextCitingDir, root, pathText.endsWith("/"));
+  if (nextPath === pathText) return null;
+  const newText = `${nextPath}${fragment}`;
+  return {
+    range: { start: range.start, end: range.end },
+    newText,
+    reason: `~${range.open}${raw}${range.close} \u2192 ~${range.open}${newText}${range.close}`
+  };
+}
+function renamePaths(moves, context) {
+  const root = normalizePath(context.consumerRoot);
+  const label = normalizeMoves(moves).map((move) => `${relativePath(root, move.from) || "."}\u2192${relativePath(root, move.to) || "."}`).join(", ");
+  return {
+    id: `rename_path:${label}`,
+    description: `Re-aim citations for ${label}`,
+    select: PATH_REFS,
+    stratum: "reference",
+    effectGrade: "effect.l2.workspace",
+    rewrite(node, source) {
+      return rewriteCitationForMoves(node, source, moves, context);
+    }
+  };
+}
+function mayCitePathMoves(source, citingFile, moves) {
+  const file = normalizePath(citingFile);
+  return normalizeMoves(moves).some((move) => {
+    if (isAtOrUnder(file, move.from)) return true;
+    const segment = move.from.slice(move.from.lastIndexOf("/") + 1);
+    return segment.length > 0 && source.includes(segment);
+  });
 }
 
 // .spw/_workbench/packages/spw-seed/src/canonical/derived-marks.ts
@@ -16182,7 +16703,7 @@ function countOps(frameLabel2, operator2) {
     return String(count);
   };
 }
-var TIMESTAMP = /\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/g;
+var ENTRY_STAMP = />>\[\s*"?(\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2})?)/g;
 function findFrameRegionByTokens(source, label) {
   const sig = significantTokens(parse(source).tokens);
   for (let i = 0; i < sig.length; i += 1) {
@@ -16214,9 +16735,9 @@ function latestTimestamp(frameLabel2) {
     const region = findFrameRegionByTokens(source, frameLabel2);
     if (!region) return null;
     const text = source.slice(region.start, region.end);
-    const stamps = text.match(TIMESTAMP);
-    if (!stamps || stamps.length === 0) return null;
-    return stamps.map((s) => s.replace("T", " ")).sort().at(-1) ?? null;
+    const stamps = [...text.matchAll(ENTRY_STAMP)].map((m) => m[1].replace("T", " "));
+    if (stamps.length === 0) return null;
+    return stamps.sort().at(-1) ?? null;
   };
 }
 
@@ -17100,7 +17621,7 @@ function analyzeTopography(links, opts = {}) {
       }
     }
   }
-  const strands = buildStrands(links, opts.signals ?? [], sigilHistogram);
+  const strands = buildStrands(links, opts.signals ?? [], sigilHistogram, opts.rootShelves);
   return {
     files: known?.size ?? new Set(links.map((l) => l.from)).size,
     links: links.length,
@@ -17115,7 +17636,7 @@ function analyzeTopography(links, opts = {}) {
     sigilHistogram
   };
 }
-function buildStrands(links, signals, sigils) {
+function buildStrands(links, signals, sigils, rootShelves) {
   const strands = [];
   const baseCount = /* @__PURE__ */ new Map();
   for (const l of links) {
@@ -17155,21 +17676,29 @@ function buildStrands(links, signals, sigils) {
       detail: `${paths} path refs across ${signals.length} files`
     });
   }
-  const roots = /* @__PURE__ */ new Map();
-  for (const l of links) {
-    if (l.kind !== "root") continue;
-    const root = l.to.split("/")[0] || l.to;
-    roots.set(root, (roots.get(root) ?? 0) + 1);
+  const roots = new Map(rootShelves ? Object.entries(rootShelves) : []);
+  if (!rootShelves) {
+    for (const l of links) {
+      if (l.kind !== "root") continue;
+      const written = l.label?.startsWith("@") ? l.label.slice(1) : l.to;
+      const root = rootShelfName(written);
+      roots.set(root, (roots.get(root) ?? 0) + 1);
+    }
   }
   if (roots.size) {
     const top = [...roots.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
+    let tallied = 0;
+    for (const count of roots.values()) tallied += count;
     strands.push({
       id: "root_shelves",
-      score: top[0][1] / Math.max(1, links.length),
+      score: top[0][1] / Math.max(1, links.length, tallied),
       detail: top.map(([r, c]) => `@${r}\xD7${c}`).join(", ")
     });
   }
   return strands;
+}
+function rootShelfName(written) {
+  return written.split("/")[0] || written;
 }
 function compareFamiliarity(a, b) {
   const basesA = new Set(
@@ -17242,7 +17771,7 @@ function heuristicFrameCount(source) {
 function heuristicAnnotationHints(source) {
   return (source.match(/#:[A-Za-z_]|#![\w]|#>/g) ?? []).length;
 }
-var CORPUS_PRODUCT_VERSION = "spw.corpus/1";
+var CORPUS_PRODUCT_VERSION = "spw.corpus/2";
 var CORPUS_PRODUCT_SCHEMA = "spw.corpus/1";
 function topSigils(sigils, n = 3) {
   return Object.entries(sigils).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, n).map(([k, v]) => `${k}${v}`).join(" ");
@@ -18325,6 +18854,10 @@ function buildRefactorPlanCard(input) {
   if (!input.write && input.totalEdits > 0 && input.renameSpecs?.length) {
     next.push(`spw refactor . ${input.renameSpecs.map((spec) => `--rename ${spec}`).join(" ")} --write`);
   }
+  const moves = input.moves ?? [];
+  for (const move of moves) {
+    if (move.state === "pending") next.push(move.command);
+  }
   return {
     surface: REFACTOR_PLAN_SURFACE,
     mode,
@@ -18336,7 +18869,9 @@ function buildRefactorPlanCard(input) {
     totalConflicts: input.totalConflicts,
     omitted: [...REFACTOR_PLAN_OMISSIONS],
     next,
-    report: input.report
+    report: input.report,
+    moves,
+    unowned: input.unowned ?? []
   };
 }
 
@@ -18352,36 +18887,6 @@ spwq.fromSource = function spwqFromSource(source, selector) {
   if (!output.ast) return [];
   return matchAll(output.ast, selector);
 };
-
-// .spw/_workbench/packages/spw-seed/src/query/presets.ts
-var PATH_REFS = { sigil: "~", nodeType: "PathRef" };
-var REFERENCES = { sigil: "@", nodeType: "Reference" };
-var NAVIGABLE = or(PATH_REFS, REFERENCES);
-var DOMAIN_ROOTS = { sigil: "^", withBoundaries: ["frame"] };
-var DOMAIN_ROOTS_FULL = {
-  sigil: "^",
-  withBoundaries: ["frame", "body"]
-};
-var HYDRATE_OPS = { sigil: "!", nodeType: "Operation" };
-var DEFER_OPS = { sigil: "~", nodeType: "Operation" };
-var QUERY_OPS = { sigil: "?", nodeType: "Operation" };
-var CONFIG_OPS = { sigil: "=", nodeType: "Operation" };
-var BIAS = { sigil: "=", product: "bias" };
-var PARTICLES = { nodeType: "Particle" };
-var ANCHORS = { nodeType: "Particle", aim: ">" };
-var ANNOTATION_OPS = { sigil: "#", nodeType: "Operation" };
-var OPS_WITH_FRAMES = {
-  nodeType: "Operation",
-  withBoundaries: ["frame"]
-};
-var OPS_WITH_BODIES = {
-  nodeType: "Operation",
-  withBoundaries: ["body"]
-};
-var SCOPES = { nodeType: "Scope", boundary: "scope" };
-var BOON_OPS = { sigil: "!", nodeType: "Operation", modifier: "boon" };
-var BONE_OPS = { sigil: "!", nodeType: "Operation", modifier: "bone" };
-var ANY = { any: true };
 
 // .spw/_workbench/packages/spw-seed/src/query/selector-expr.ts
 var SelectorParseError = class extends Error {
@@ -18809,17 +19314,807 @@ function tryParseSelector(input) {
     return null;
   }
 }
+
+// .spw/_workbench/packages/spw-seed/src/learn/readers.ts
+var OPERATOR_READER_NAMES = Object.freeze({
+  "~": "potential",
+  "#": "vibration",
+  ".": "ground",
+  "?": "wonder",
+  "!": "action",
+  "*": "value",
+  "&": "subject",
+  "@": "perspective",
+  "^": "ascension",
+  $: "substrate",
+  "%": "measure",
+  "=": "configuration",
+  "<>": "coupling"
+});
+var CONTAINER_READER_NAMES = Object.freeze({
+  "< >": "concept",
+  "()": "scene",
+  "[]": "mode",
+  "{}": "definition"
+});
+function readMarks(root) {
+  const operators = [];
+  const containers = [];
+  if (!root) return { operators: [], containers: [] };
+  walkAST(root, (node) => {
+    const offset = node.span?.start?.offset ?? 0;
+    switch (node.type) {
+      case "Operation":
+        operators.push({ offset, mark: node.operator.value });
+        break;
+      case "PathRef":
+        operators.push({ offset, mark: node.operator.value });
+        break;
+      case "Reference":
+        operators.push({ offset, mark: "@" });
+        break;
+      case "Particle":
+        operators.push({ offset, mark: "#" });
+        break;
+      case "Annotation":
+        operators.push({ offset, mark: "~" }, { offset: offset + 1, mark: "#" });
+        break;
+      case "Frame":
+        containers.push({ offset, mark: "[]" });
+        break;
+      case "Body":
+        containers.push({ offset, mark: "{}" });
+        break;
+      case "Scope":
+        containers.push({ offset, mark: "()" });
+        break;
+      case "Capsule":
+        if (node.open) containers.push({ offset, mark: "< >" });
+        break;
+    }
+  });
+  return {
+    operators: named2(operators, OPERATOR_READER_NAMES),
+    containers: named2(containers, CONTAINER_READER_NAMES)
+  };
+}
+function named2(hits, names) {
+  const seen = /* @__PURE__ */ new Set();
+  const out = [];
+  for (const hit of [...hits].sort((a, b) => a.offset - b.offset)) {
+    const name = names[hit.mark];
+    if (!name || seen.has(hit.mark)) continue;
+    seen.add(hit.mark);
+    out.push({ mark: hit.mark, name });
+  }
+  return out;
+}
+function formatLineReading(reading) {
+  const parts = [...reading.operators, ...reading.containers].map((m) => `${m.mark} ${m.name}`);
+  return parts.length > 0 ? parts.join(", ") : "words only";
+}
+
+// .spw/_workbench/packages/spw-seed/src/learn/quest.ts
+var QuestFormatError = class extends Error {
+  constructor(message) {
+    super(`quest: ${message}`);
+    this.name = "QuestFormatError";
+  }
+};
+var STEP_FIELDS = ["try", "reads", "notice", "check", "grow"];
+var WORD_OPERATORS = /* @__PURE__ */ new Set(["~", "?", "!", "*", ".", "^", "#", "&", "=", "%", "$"]);
+var QUEST_CHECKS = Object.freeze({
+  parses: { kind: "shape", shape: () => true },
+  operation_before_word: { kind: "shape", shape: hasOperationBeforeWord },
+  frame_and_body: { kind: "shape", shape: hasFrameAndBody },
+  frame_address_and_binding: {
+    kind: "shape",
+    shape: { try: hasDeixisParticle, then: hasOperation("=") }
+  },
+  path_ref: { kind: "shape", shape: hasCitedReference },
+  wonder_with_probe: { kind: "shape", shape: hasWonderWithProbe },
+  commands_pass: { kind: "commands" }
+});
+function loadQuest(source) {
+  const output = parse(source);
+  if (!output.success || !output.ast) {
+    throw new QuestFormatError(`quest.spw does not parse (${errorMessages(output).join("; ") || "no tree"})`);
+  }
+  const top = sequenceTerms(output.ast.expression);
+  const stepsFrame = frameNamed(top, "steps");
+  if (!stepsFrame) throw new QuestFormatError('missing ^["steps"] frame');
+  const checks = stringFields(frameNamed(top, "checks"));
+  const hosts = stringFields(frameNamed(top, "hosts"));
+  const steps = readSteps(stepsFrame);
+  for (const step of steps) {
+    if (!(step.check in QUEST_CHECKS)) {
+      throw new QuestFormatError(`step ${step.id} names check "${step.check}", which no host implements`);
+    }
+    if (!(step.check in checks)) {
+      throw new QuestFormatError(`step ${step.id} names check "${step.check}", which ^["checks"] does not describe`);
+    }
+  }
+  const frames = {};
+  for (const term of top) {
+    const name = frameName(term);
+    if (!name || name === "steps" || name === "checks" || name === "hosts") continue;
+    const fields = stringFields(term);
+    if (Object.keys(fields).length > 0) frames[name] = fields;
+  }
+  const anchor = top.find((t) => t.type === "Particle" && t.aim === ">");
+  return { name: anchor?.name.value ?? null, steps, checks, hosts, frames };
+}
+function readSteps(stepsFrame) {
+  const steps = [];
+  for (const term of sequenceTerms(stepsFrame.body?.sequence)) {
+    if (term.type !== "Binding") continue;
+    const binding = term;
+    if (binding.key.type !== "Identifier") continue;
+    const id = binding.key.token.value;
+    const facet2 = binding.value.terms.find(
+      (t) => t.type === "Operation" && t.operator.value === "."
+    );
+    if (!facet2?.body) throw new QuestFormatError(`step ${id} is not a .{ } facet`);
+    const fields = assignments(sequenceTerms(facet2.body.sequence));
+    const missing = STEP_FIELDS.filter((field) => typeof fields.get(field) !== "string");
+    if (missing.length > 0) {
+      throw new QuestFormatError(`step ${id} is missing ${missing.join(", ")}`);
+    }
+    const then = fields.get("then");
+    steps.push({
+      id,
+      try: fields.get("try"),
+      then: Array.isArray(then) ? then : typeof then === "string" ? [then] : [],
+      reads: fields.get("reads"),
+      notice: fields.get("notice"),
+      check: fields.get("check"),
+      grow: fields.get("grow"),
+      ...panelFields(fields),
+      fields: Object.fromEntries(fields)
+    });
+  }
+  if (steps.length === 0) throw new QuestFormatError('^["steps"] holds no steps');
+  return steps;
+}
+var PANEL_FIELDS = ["scene", "speaker", "bubble", "layer"];
+function panelFields(fields) {
+  const out = {};
+  for (const key of PANEL_FIELDS) {
+    const value = fields.get(key);
+    if (typeof value === "string") out[key] = value;
+  }
+  return out;
+}
+function frameNamed(terms, name) {
+  return terms.find((term) => frameName(term) === name);
+}
+function frameName(term) {
+  if (term.type !== "Operation") return null;
+  if (term.operator.value !== "^" || !term.frame || !term.body) return null;
+  const first = term.frame.content[0];
+  if (first?.type !== "Parameter" || first.value.type !== "Literal") return null;
+  return literalText(first.value.token.value);
+}
+function stringFields(frame) {
+  const out = {};
+  if (!frame?.body) return out;
+  for (const [key, value] of assignments(sequenceTerms(frame.body.sequence))) {
+    if (typeof value === "string") out[key] = value;
+  }
+  return out;
+}
+function assignments(terms) {
+  const out = /* @__PURE__ */ new Map();
+  for (let i = 0; i + 2 < terms.length; i++) {
+    const key = terms[i];
+    const eq = terms[i + 1];
+    const value = terms[i + 2];
+    if (key?.type !== "Identifier") continue;
+    if (eq?.type !== "Operation" || eq.operator.value !== "=" || eq.operatorLabel) continue;
+    const read = valueOf(value);
+    if (read === void 0) continue;
+    out.set(key.token.value, read);
+    i += 2;
+  }
+  return out;
+}
+function valueOf(term) {
+  if (!term) return void 0;
+  if (term.type === "Literal") return literalText(term.token.value);
+  if (term.type === "Operation" && term.operator.value === "#" && term.frame) {
+    const items = [];
+    for (const part of term.frame.content) {
+      if (part.type === "Parameter" && part.value.type === "Literal") items.push(literalText(part.value.token.value));
+    }
+    return items;
+  }
+  return void 0;
+}
+function sequenceTerms(node) {
+  if (!node) return [];
+  if (node.type === "Expression") return node.terms;
+  if (node.type !== "Sequence") return [];
+  return node.expressions.flatMap((expression) => expression.terms);
+}
+function literalText(raw) {
+  const open = raw[0];
+  if ((open === '"' || open === "'" || open === "`") && raw.length >= 2 && raw.endsWith(open)) {
+    return raw.slice(1, -1).replace(/\\(.)/g, "$1");
+  }
+  return raw;
+}
+function checkStep(quest, stepId, line, options = {}) {
+  const step = quest.steps.find((candidate) => candidate.id === stepId);
+  if (!step) {
+    throw new QuestFormatError(`no step "${stepId}" (steps: ${quest.steps.map((s) => s.id).join(", ")})`);
+  }
+  return { step: step.id, ...checkLine(step.check, line, options) };
+}
+function checkLine(checkName, line, options = {}) {
+  const check = QUEST_CHECKS[checkName];
+  if (!check) throw new QuestFormatError(`unknown check "${checkName}"`);
+  if (check.kind === "commands") {
+    return {
+      check: checkName,
+      line,
+      pass: false,
+      parsed: false,
+      errors: [],
+      host: "commands",
+      reading: { operators: [], containers: [] }
+    };
+  }
+  const output = parse(line);
+  const parsed = output.success && !!output.ast;
+  const errors = errorMessages(output);
+  const reading = readMarks(output.ast);
+  const base = { check: checkName, line, parsed, errors, reading };
+  if (!parsed || !output.ast) return { ...base, pass: false };
+  const ast = output.ast;
+  if (typeof check.shape === "function") {
+    return { ...base, pass: check.shape(ast) };
+  }
+  const roles = options.role ? [options.role] : ["try", "then"];
+  const shapes = check.shape;
+  const matched = roles.find((role) => shapes[role](ast));
+  return matched ? { ...base, pass: true, matched } : { ...base, pass: false };
+}
+function errorMessages(output) {
+  return output.errors.map((event) => {
+    const data = event.data;
+    return typeof data?.message === "string" ? data.message : event.type;
+  });
+}
+function some(root, test) {
+  let found = false;
+  walkAST(root, (node) => {
+    if (found) return false;
+    if (test(node)) {
+      found = true;
+      return false;
+    }
+    return void 0;
+  });
+  return found;
+}
+function isOperation(node, sigil) {
+  return node.type === "Operation" && (sigil === void 0 || node.operator.value === sigil);
+}
+function hasOperationBeforeWord(ast) {
+  return some(ast, (node) => {
+    if (node.type === "Reference") return true;
+    if (!isOperation(node) || !WORD_OPERATORS.has(node.operator.value)) return false;
+    return !!node.operatorLabel || node.subject?.type === "Identifier";
+  });
+}
+function hasFrameAndBody(ast) {
+  return some(ast, (node) => {
+    if (node.type !== "Expression") return false;
+    const { frame, body } = node;
+    if (!frame || !body) return false;
+    return frame.content.some((part) => part.type === "Parameter") && body.sequence.expressions.length >= 2;
+  });
+}
+function hasDeixisParticle(ast) {
+  return some(ast, (node) => node.type === "Particle" && node.aim === ">");
+}
+function hasOperation(sigil) {
+  return (ast) => some(ast, (node) => isOperation(node, sigil));
+}
+function hasCitedReference(ast) {
+  return some(ast, (node) => {
+    if (node.type !== "Binding") return false;
+    const binding = node;
+    return binding.key.type === "Reference" && some(binding.value, (inner) => inner.type === "PathRef");
+  });
+}
+function hasWonderWithProbe(ast) {
+  return some(ast, (node) => {
+    if (!isOperation(node, "?") || !node.frame || !node.body) return false;
+    return some(node.body, (inner) => isOperation(inner, "!") && inner.operatorLabel?.value === "probe");
+  });
+}
+
+// .spw/_workbench/packages/spw-seed/src/lite/scan.ts
+var SPW_OPERATORS = [
+  "<>",
+  "!",
+  "^",
+  "~",
+  "?",
+  "*",
+  "=",
+  "@",
+  "#",
+  ".",
+  "&",
+  "$",
+  "%"
+];
+var SPW_PARTICLE_AIMS = [">", ":", "!"];
+var SPW_BOUNDS = [
+  ["<<", ">>", "stream"],
+  ["((", "))", "nrange"],
+  ["(", ")", "scope"],
+  ["[", "]", "frame"],
+  ["{", "}", "body"],
+  ["<", ">", "capsule"]
+];
+var CONNECTORS = ["..", "->", "~>", "|", "/", "+"];
+var IDENT_START = /[A-Za-z_]/;
+var IDENT_BODY = /[A-Za-z0-9_.-]/;
+var PARTICLE_BODY = /[A-Za-z0-9_-]/;
+var DIGIT = /[0-9]/;
+var SPACE = /\s/;
+function scan(source) {
+  const out = [];
+  const n = source.length;
+  let i = 0;
+  let streams = 0;
+  const push2 = (kind, start, end, bound) => {
+    const tok = { kind, value: source.slice(start, end), start, end };
+    if (bound) tok.bound = bound;
+    out.push(tok);
+  };
+  while (i < n) {
+    const ch = source[i];
+    const start = i;
+    if (SPACE.test(ch)) {
+      while (i < n && SPACE.test(source[i])) i++;
+      push2("space", start, i);
+      continue;
+    }
+    if (ch === ">" && source.startsWith(">>[", i) && streams === 0 && atLineStart(source, i)) {
+      i += 2;
+      push2("close", start, i, "stream");
+      const text = i;
+      while (i < n && source[i] !== "\n" && source[i] !== "\r") i++;
+      push2("text", text, i);
+      continue;
+    }
+    if (ch === "/" && source[i + 1] === "/") {
+      while (i < n && source[i] !== "\n") i++;
+      push2("comment", start, i);
+      continue;
+    }
+    if (ch === "#") {
+      const next = source[i + 1];
+      if (next === void 0 || next === " " || next === "	" || next === "\n" || next === "\r") {
+        i++;
+        while (i < n && source[i] !== "\n") i++;
+        push2("comment", start, i);
+        continue;
+      }
+    }
+    if (ch === '"' || ch === "'") {
+      i = scanQuoted(source, i, ch);
+      push2("string", start, i);
+      continue;
+    }
+    if (ch === "`") {
+      i = scanQuoted(source, i, "`");
+      push2("phrase", start, i);
+      continue;
+    }
+    if (ch === "=" && source[i + 1] === ">") {
+      i += 2;
+      push2("arrow", start, i);
+      continue;
+    }
+    if (ch === "~" && source[i + 1] === "#" && IDENT_START.test(source[i + 2] ?? "")) {
+      i += 2;
+      while (i < n && PARTICLE_BODY.test(source[i])) i++;
+      push2("annotation", start, i);
+      continue;
+    }
+    if (ch === "#" && isParticleAt(source, i)) {
+      i += 2;
+      while (i < n && PARTICLE_BODY.test(source[i])) i++;
+      push2("particle", start, i);
+      continue;
+    }
+    const op = matchOperator2(source, i);
+    if (op) {
+      i += op.length;
+      push2("operator", start, i);
+      continue;
+    }
+    const bound = matchBound(source, i);
+    if (bound) {
+      i += bound.text.length;
+      if (bound.kind === "stream") streams = Math.max(0, streams + (bound.closing ? -1 : 1));
+      push2(bound.closing ? "close" : "open", start, i, bound.kind);
+      continue;
+    }
+    const conn = matchConnector2(source, i);
+    if (conn) {
+      i += conn.length;
+      push2("connector", start, i);
+      continue;
+    }
+    if (DIGIT.test(ch)) {
+      while (i < n && (DIGIT.test(source[i]) || source[i] === ".")) i++;
+      push2("number", start, i);
+      continue;
+    }
+    if (IDENT_START.test(ch)) {
+      while (i < n && IDENT_BODY.test(source[i])) i++;
+      push2("identifier", start, i);
+      continue;
+    }
+    i++;
+    push2("other", start, i);
+  }
+  return out;
+}
+function scanQuoted(source, from, quote) {
+  let i = from + 1;
+  while (i < source.length) {
+    const c = source[i];
+    if (c === "\\") {
+      i += 2;
+      continue;
+    }
+    if (c === quote) return i + 1;
+    if (c === "\n") return i;
+    i++;
+  }
+  return i;
+}
+function isParticleAt(source, i) {
+  const aim = source[i + 1];
+  if (!aim || !SPW_PARTICLE_AIMS.includes(aim)) return false;
+  const next = source[i + 2];
+  return next !== void 0 && IDENT_START.test(next);
+}
+function matchBound(source, i) {
+  for (const [open, close, kind] of SPW_BOUNDS) {
+    if (source.startsWith(open, i)) return { text: open, kind, closing: false };
+    if (source.startsWith(close, i)) return { text: close, kind, closing: true };
+  }
+  return null;
+}
+function matchOperator2(source, i) {
+  for (const op of SPW_OPERATORS) {
+    if (source.startsWith(op, i)) return op;
+  }
+  return null;
+}
+function matchConnector2(source, i) {
+  for (const conn of CONNECTORS) {
+    if (source.startsWith(conn, i)) return conn;
+  }
+  return null;
+}
+function atLineStart(source, i) {
+  let j = i;
+  while (j > 0 && (source[j - 1] === " " || source[j - 1] === "	")) j--;
+  return j === 0 || source[j - 1] === "\n";
+}
+
+// .spw/_workbench/packages/spw-seed/src/line/names.ts
+var SLOT_KEYS = ["word", "mode", "body", "scene", "concept"];
+var PAIRS = Object.freeze({
+  mode: { open: "[", close: "]", bound: "frame" },
+  body: { open: "{", close: "}", bound: "body" },
+  scene: { open: "(", close: ")", bound: "scope" },
+  concept: { open: "<", close: ">", bound: "capsule" }
+});
+var PAIR_OF_BOUND = Object.freeze({
+  frame: "mode",
+  body: "body",
+  scope: "scene",
+  capsule: "concept"
+});
+var SLOT_NAMES = Object.freeze({
+  word: { pair: null, reader: "word", site: "subject" },
+  mode: { pair: "[]", reader: "mode", site: "mode" },
+  body: { pair: "{}", reader: "definition", site: "body" },
+  scene: { pair: "()", reader: "scene", site: "scope" },
+  concept: { pair: "< >", reader: "concept", site: "projection" }
+});
+var JOIN_MARKS = ["~", "^", "&", "@"];
+var BONDS = Object.freeze({
+  "~": "potential",
+  "^": "ascension",
+  "&": "subject",
+  "@": "perspective"
+});
+var SEPARATORS = [";", ",", "~>", "."];
+var VALENCE_WORDS = ["bone", "boon", "bane", "bonk", "honk"];
+
+// .spw/_workbench/packages/spw-seed/src/line/read.ts
+var WORD_CHAR = /[A-Za-z0-9_]/;
+var SPACE2 = /\s/;
+var CHARGE = new RegExp(`^((?:${VALENCE_WORDS.join("|")})(?:\\.(?:${VALENCE_WORDS.join("|")}))*)(?:\\s+|(?=\\[))`);
+function readLine(text) {
+  const newline = text.indexOf("\n");
+  const reading = readRange(text, 0, newline < 0 ? text.length : newline);
+  const rest = text.slice(reading.restStart);
+  return { ...reading, rest, whole: reading.whole && !rest.trim() };
+}
+function readAt(text, path) {
+  let reading = readLine(text);
+  for (const step of path) {
+    if (!reading) return null;
+    if (step === "a" || step === "b") reading = step === "a" ? reading.compound?.left : reading.compound?.right;
+    else reading = reading.parts[step]?.reading;
+  }
+  return reading ?? null;
+}
+function readRange(source, start, end) {
+  const tokens = tokensOf(source, start, end);
+  const compound = joinOf(source, start, end, tokens);
+  if (compound) return compound;
+  let at = skipSpace(source, start, end);
+  const reading = {
+    source,
+    start,
+    end,
+    charge: [],
+    lead: [],
+    word: { text: "", start: at, end: at, innerStart: at, innerEnd: at },
+    slots: {},
+    order: [],
+    parts: [],
+    separator: "",
+    rest: "",
+    restStart: end,
+    whole: true
+  };
+  const charge = CHARGE.exec(source.slice(at, end));
+  if (charge) {
+    reading.charge = charge[1].split(".");
+    reading.chargeSpan = { start: at, end: at + charge[1].length };
+    at = skipSpace(source, at + charge[0].length, end);
+  }
+  for (; ; ) {
+    const pair = pairAt(source, at, end, tokens);
+    if (!pair || pair.key !== "scene" && pair.key !== "concept" || reading.slots[pair.key]) break;
+    reading.slots[pair.key] = pair.span;
+    reading.lead.push(pair.key);
+    reading.order.push(pair.key);
+    at = skipSpace(source, pair.span.end, end);
+  }
+  let wordEnd = at;
+  while (wordEnd < end && !"[{<(".includes(source[wordEnd]) && !SPACE2.test(source[wordEnd])) wordEnd++;
+  reading.word = { text: source.slice(at, wordEnd), start: at, end: wordEnd, innerStart: at, innerEnd: wordEnd };
+  if (wordEnd > at) reading.order.push("word");
+  let read = wordEnd;
+  for (; ; ) {
+    const next = skipSpace(source, read, end);
+    const pair = pairAt(source, next, end, tokens);
+    if (!pair || reading.slots[pair.key]) break;
+    if (pair.key === "concept" && WORD_CHAR.test(source[pair.span.end] ?? "") && pair.span.end < end) break;
+    reading.slots[pair.key] = pair.span;
+    reading.order.push(pair.key);
+    read = pair.span.end;
+  }
+  const body = reading.slots.body;
+  if (body) {
+    const { separator, parts } = partsOf(source, body.innerStart, body.innerEnd);
+    reading.separator = separator;
+    reading.parts = parts;
+  }
+  reading.restStart = read;
+  reading.rest = source.slice(read, end);
+  reading.whole = !reading.rest.trim();
+  return reading;
+}
+function tokensOf(source, start, end) {
+  const masked = source.slice(start, end).replace(/'/g, "_");
+  return scan(masked).map((token2) => ({ ...token2, start: token2.start + start, end: token2.end + start }));
+}
+function skipSpace(source, at, end) {
+  while (at < end && SPACE2.test(source[at])) at++;
+  return at;
+}
+function pairAt(source, at, end, tokens) {
+  const index = tokens.findIndex((token2) => token2.start === at);
+  const open = tokens[index];
+  const key = open?.kind === "open" && open.bound ? PAIR_OF_BOUND[open.bound] : void 0;
+  if (!open || !key) return null;
+  const stack = [];
+  for (let i = index; i < tokens.length; i++) {
+    const token2 = tokens[i];
+    if (token2.end > end) break;
+    if (token2.kind === "open" && token2.bound) stack.push(token2.bound);
+    else if (token2.kind === "close" && token2.bound && token2.bound === stack[stack.length - 1]) {
+      stack.pop();
+      if (!stack.length) {
+        const innerStart = skipSpace(source, open.end, token2.start);
+        let innerEnd = token2.start;
+        while (innerEnd > innerStart && SPACE2.test(source[innerEnd - 1])) innerEnd--;
+        return {
+          key,
+          span: { text: source.slice(innerStart, innerEnd), start: open.start, end: token2.end, innerStart, innerEnd }
+        };
+      }
+    }
+  }
+  return null;
+}
+function topLevel(start, end, tokens) {
+  const covered = new Uint8Array(end - start);
+  let depth = 0;
+  for (const token2 of tokens) {
+    if (token2.end > end) break;
+    const inside = depth > 0 || token2.kind === "string" || token2.kind === "phrase";
+    if (token2.kind === "open" && token2.bound) depth++;
+    else if (token2.kind === "close" && token2.bound) depth = Math.max(0, depth - 1);
+    if (inside || token2.kind === "open" || token2.kind === "close") covered.fill(1, token2.start - start, token2.end - start);
+  }
+  return (offset) => offset >= start && offset < end && covered[offset - start] === 0;
+}
+function joinOf(source, start, end, tokens) {
+  const top = topLevel(start, end, tokens);
+  let mark2;
+  for (const token2 of tokens) {
+    if (token2.kind !== "operator" || !JOIN_MARKS.includes(token2.value) || !top(token2.start)) continue;
+    const before = source.slice(start, token2.start);
+    const after = source.slice(token2.end, end);
+    if (!before.trim() || !after.trim()) continue;
+    if (SPACE2.test(before[before.length - 1]) !== SPACE2.test(after[0])) continue;
+    mark2 = token2;
+  }
+  if (!mark2) return null;
+  let leftEnd = mark2.start;
+  while (leftEnd > start && SPACE2.test(source[leftEnd - 1])) leftEnd--;
+  const left = readRange(source, start, leftEnd);
+  const right = readRange(source, mark2.end, end);
+  const value = mark2.value;
+  const at = skipSpace(source, start, end);
+  return {
+    source,
+    start,
+    end,
+    charge: [],
+    lead: [],
+    word: { text: "", start: at, end: at, innerStart: at, innerEnd: at },
+    slots: {},
+    order: [],
+    parts: [],
+    separator: "",
+    compound: { mark: value, bond: BONDS[value], spaced: SPACE2.test(source[mark2.end] ?? ""), at: mark2.start, left, right },
+    rest: right.rest,
+    restStart: right.restStart,
+    whole: left.whole && right.whole
+  };
+}
+function partsOf(source, start, end) {
+  if (start >= end) return { separator: "", parts: [] };
+  const top = topLevel(start, end, tokensOf(source, start, end));
+  for (const separator of SEPARATORS) {
+    const cuts = [];
+    for (let i = start; i <= end - separator.length; i++) {
+      const range = separator === "." && (source[i + 1] === "." || source[i - 1] === ".");
+      if (top(i) && source.startsWith(separator, i) && !range) {
+        cuts.push(i);
+        i += separator.length - 1;
+      }
+    }
+    if (!cuts.length) continue;
+    const parts2 = [];
+    let from = start;
+    for (const cut of [...cuts, end]) {
+      pushPart(source, from, cut, parts2);
+      from = cut + separator.length;
+    }
+    return { separator, parts: parts2 };
+  }
+  const parts = [];
+  pushPart(source, start, end, parts);
+  return { separator: "", parts };
+}
+function pushPart(source, from, to, parts) {
+  const start = skipSpace(source, from, to);
+  let end = to;
+  while (end > start && SPACE2.test(source[end - 1])) end--;
+  if (end > start) parts.push({ text: source.slice(start, end), start, end, reading: readRange(source, start, end) });
+}
+
+// .spw/_workbench/packages/spw-seed/src/canonical/slot-hash.ts
+var UNIT = 2 ** 32;
+function slotHash(input, options = {}) {
+  const reading = typeof input === "string" ? readLine(input) : input;
+  const seed = options.seed ?? "";
+  const length = Math.max(1, options.length ?? 8);
+  const components = {};
+  const unit = {};
+  for (const key of SLOT_KEYS) {
+    const text = key === "word" ? reading.word.text || null : reading.slots[key]?.text ?? null;
+    if (text === null) {
+      components[key] = null;
+      unit[key] = null;
+      continue;
+    }
+    const full = textHash(`${seed}\0${key}\0${text}`, Math.max(8, length));
+    components[key] = full.slice(0, length);
+    unit[key] = parseInt(full.slice(0, 8), 16) / UNIT;
+  }
+  return {
+    seed,
+    order: [...reading.order],
+    components,
+    unit,
+    vector: SLOT_KEYS.map((key) => unit[key] ?? 0.5)
+  };
+}
+
+// .spw/_workbench/packages/spw-seed/src/line/write.ts
+var PAIR_ORDER = ["mode", "body", "scene", "concept"];
+function joinParts(parts, separator) {
+  const mark2 = separator || ".";
+  const glue = mark2 === "." ? "." : mark2 === "~>" ? " ~> " : `${mark2} `;
+  return parts.join(glue);
+}
+function writeLine(reading, change = {}) {
+  const { source } = reading;
+  const splices = [];
+  const first = Math.min(reading.word.start, ...Object.values(reading.slots).map((span) => span.start));
+  if (change.charge !== void 0) {
+    const span = reading.chargeSpan;
+    if (span && change.charge === null) splices.push({ start: span.start, end: first, text: "", rank: 0 });
+    else if (span) splices.push({ start: span.start, end: span.end, text: change.charge ?? "", rank: 0 });
+    else if (change.charge) splices.push({ start: first, end: first, text: `${change.charge} `, rank: -1 });
+  }
+  const word = change.slots?.word;
+  if (word !== void 0) splices.push({ start: reading.word.start, end: reading.word.end, text: word ?? "", rank: 0 });
+  PAIR_ORDER.forEach((key, rank) => {
+    const value = key === "body" && change.slots?.body === void 0 && change.parts ? joinParts(change.parts, reading.separator) : change.slots?.[key];
+    if (value === void 0) return;
+    const span = reading.slots[key];
+    if (value === null) {
+      if (span) splices.push({ start: span.start, end: span.end, text: "", rank });
+    } else if (span) {
+      splices.push({ start: span.innerStart, end: span.innerEnd, text: value, rank });
+    } else {
+      const { open, close } = PAIRS[key];
+      splices.push({ start: reading.restStart, end: reading.restStart, text: `${open}${value}${close}`, rank });
+    }
+  });
+  splices.sort((a, b) => b.start - a.start || b.rank - a.rank);
+  let out = source;
+  for (const splice of splices) out = out.slice(0, splice.start) + splice.text + out.slice(splice.end);
+  return out;
+}
+function writeAt(text, path, change) {
+  const reading = readAt(text, path);
+  return reading ? writeLine(reading, change) : text;
+}
 export {
   $domain,
   $frame,
   $layer,
   $register,
   ANCHORS,
+  ANNOTATION_LINT_VERSION,
   ANNOTATION_OPS,
   ANY,
   APPOSITION_SCAN_VERSION,
   AUTHORITY_FACETS,
   BIAS,
+  BONDS,
   BONE_OPS,
   BOON_OPS,
   BOUNDARY_AXIS_IMPLICATIONS,
@@ -18829,8 +20124,10 @@ export {
   CACHE_LAYER_SURFACE,
   CACHE_PLANES,
   CHANGE_REPORT_VERSION,
+  CITATION_RESOLVE_VERSION,
   COMPOSITION_FORM_VERSION,
   CONFIG_OPS,
+  CONTAINER_READER_NAMES,
   CORE_SNIPPETS,
   CORPUS_PRODUCT_SCHEMA,
   CORPUS_PRODUCT_VERSION,
@@ -18851,6 +20148,7 @@ export {
   EVIDENCE_DOMAINS,
   EVIDENCE_ROLES,
   EventStream,
+  FINGERPRINT_VERSION,
   FORMAT_CAPABILITIES,
   FORMAT_PROFILES,
   FORMULA_CATALOG,
@@ -18865,6 +20163,7 @@ export {
   INDEX_TRADEOFFS,
   IR_EDGE_KINDS,
   IR_KINDS,
+  JOIN_MARKS,
   LayerId,
   MASS_FAMILY,
   MEASURABLE_KEYS,
@@ -18877,9 +20176,11 @@ export {
   NEST_PATH_VERSION,
   OPERATIONAL_SEQUENCES,
   OPERATOR_LADDERS,
+  OPERATOR_READER_NAMES,
   OPS_WITH_BODIES,
   OPS_WITH_FRAMES,
   PAIRED_BOUNDARY_KINDS,
+  PAIRS,
   PARSE_EVENT_POLICIES,
   PARTICLES,
   PATCH_PRODUCER,
@@ -18890,13 +20191,18 @@ export {
   PROSE_LEX_PROFILE,
   PatchMemoryBank,
   QUERY_OPS,
+  QUEST_CHECKS,
+  QuestFormatError,
   REFACTOR_PLAN_OMISSIONS,
   REFACTOR_PLAN_SURFACE,
   REFERENCES,
   REFERENCE_PROGRESSIONS,
   RegisterId,
   SCOPES,
+  SEPARATORS,
   SIGIL_SNIPPET_CATALOG,
+  SLOT_KEYS,
+  SLOT_NAMES,
   SOURCE_PRODUCT_DEPTHS,
   SOURCE_PRODUCT_IDS,
   SPW_GEN_KINDS,
@@ -18907,7 +20213,9 @@ export {
   SYNTAX_CATALOG,
   SelectorParseError,
   TEMPLATE_SLOTS,
+  TEXT_HASH_LENGTH,
   VALENCE_PARTICLES,
+  VALENCE_WORDS,
   WEIGHT_SCHEMES,
   WEIGHT_SCHEME_AGENT,
   WEIGHT_SCHEME_DEFAULT,
@@ -18973,7 +20281,10 @@ export {
   capture,
   cascadeChain,
   castToBrand,
+  checkLine,
+  checkStep,
   choice,
+  classifyCitation,
   classifyGap,
   classifyMutationUsefulness,
   classifyPayload,
@@ -19043,6 +20354,7 @@ export {
   findNodeAtOffset,
   findNodePathAtOffset,
   findNodes,
+  fingerprintSource,
   fixedPoint,
   flux,
   foldEdits,
@@ -19054,6 +20366,7 @@ export {
   formatChangeReportSpw,
   formatCompositionSpw,
   formatCorpusProductSpw,
+  formatFingerprintSignature,
   formatFlowProtocolSummary,
   formatFormContour,
   formatGeometryFieldAsSpw,
@@ -19061,6 +20374,7 @@ export {
   formatGeometryReport,
   formatGranularityAsSpw,
   formatHigherOrderForms,
+  formatLineReading,
   formatMathIdioms,
   formatMatrix,
   formatMobilityRules,
@@ -19113,6 +20427,7 @@ export {
   isSignificantToken,
   isSlashLineComment,
   isSpwSelector,
+  joinParts,
   jsonFormatter,
   labelSiteGraph,
   latestTimestamp,
@@ -19128,17 +20443,20 @@ export {
   listSyntaxCatalog,
   literalNode,
   loadMeasureContextFromSpw,
+  loadQuest,
   logisticOrbit,
   makeLens,
   many,
   many1,
   map,
+  mapThroughMoves,
   massConserved,
   matchAll,
   matchAt,
   matrixByStratum,
   matrixFromVectors,
   matrixTranspose,
+  mayCitePathMoves,
   measureMass,
   migrateSlashCommentsToHash,
   mixFields,
@@ -19192,13 +20510,18 @@ export {
   produceSourceProducts,
   productConstraint,
   projectCouplingSemantics,
+  projectONFForValue,
   pushEffect,
   putNode,
   rangeFold,
+  readAt,
   readAuthorityDeclarations,
   readBias,
   readCouplingFrame,
+  readLine,
+  readMarks,
   readMassDeclarations,
+  readRange,
   recognizeCompositionSequence,
   recognizeCompositionSource,
   reconcileAuthority,
@@ -19211,6 +20534,7 @@ export {
   registerLexProfile,
   renameMark,
   renameParticle,
+  renamePaths,
   residual,
   resolveCitedCatalogEntries,
   resolveFamily,
@@ -19228,6 +20552,8 @@ export {
   resolveWeightScheme,
   restoreFormContour,
   retainsParseEvent,
+  rewriteCitationForMoves,
+  rootShelfName,
   rulesByMotion,
   rulesByStatus,
   rulesFrom,
@@ -19240,6 +20566,7 @@ export {
   scanExperimentalRefs,
   scanFlowProtocol,
   scanFormulas,
+  scanMalformedAxes,
   scanNestPaths,
   scopeNode,
   seedNode,
@@ -19248,13 +20575,17 @@ export {
   seq,
   sequence,
   sequenceNode,
+  sha256Hex,
+  sha256HexBytes,
   shortestPath,
   shouldSkipCorpusSurface,
   significantTokens,
+  slotHash,
   snapshotTopography,
   snippetSource,
   solveLinearSystem,
   sortPopulation,
+  sourceDeclaresAnchor,
   sourceSurfaceOf,
   spanToOffsets,
   splitPathFragment,
@@ -19262,6 +20593,7 @@ export {
   stencilToAutomataConfig,
   summarizeFormulaHits,
   textFormatter,
+  textHash,
   toVscodeSnippets,
   token,
   tokenize,
@@ -19273,6 +20605,7 @@ export {
   transformEdit,
   transformEditList,
   tryParseSelector,
+  utf8ByteLength,
   validateCouplingSemanticsProfile,
   vectorMagnitude,
   walkAST,
@@ -19280,5 +20613,7 @@ export {
   walkReferenceProgression,
   withCoupling,
   wrapWords,
+  writeAt,
+  writeLine,
   zeros
 };

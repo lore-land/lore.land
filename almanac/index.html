@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_06.B" data-cache-context="almanac" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.G" data-cache-context="almanac" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Almanac · Lore.Land</title>
-  <meta name="description" content="Your almanac of Boon.land: the creatures, contrivances and bracework you have found in the chapters, where else each one lives, and a bench for combining them into small realms.">
+  <meta name="description" content="Your almanac of Boon.land: the creatures, contrivances and bracework you have found in the chapters, the palettes and cards you have kept, and a bench for combining found things into small realms.">
   <meta name="theme-color" content="#f3ede1">
   <link rel="canonical" href="https://lore.land/almanac/">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -30,12 +30,12 @@
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_07.C&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.G&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_06.B&ctx=almanac:page">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.D"></script>
-  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_06.B"></script>
+  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_08.G&ctx=almanac:page">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.G"></script>
+  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_08.G"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="almanac">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -113,6 +113,32 @@
           travels from place to place, and each has a second reading, in the workshop where this book is made.
         </p>
         <ul class="almanac-cards" data-shelf="saying"></ul>
+      </section>
+
+      <section class="almanac-shelf almanac-keepsakes" id="keepsakes" aria-labelledby="keepsakes-title">
+        <div class="almanac-shelf-head">
+          <h2 id="keepsakes-title"><span class="almanac-sigil" aria-hidden="true">=</span> Palettes</h2>
+          <p class="almanac-shelf-count" data-palette-count></p>
+        </div>
+        <p class="almanac-shelf-lede">
+          Every chapter has its own colours and lettering, mixed from a laminated folio (or from its plate, where no folio
+          fits yet). Finish a chapter and you keep a layer of its palette, one for each way of finishing it: read to its
+          end for the colour, carry the pie through it for the type, keep its own wonders for the light. The chapter wears
+          what you have kept. Each palette can be carried away as a Spw atom or as CSS tokens.
+        </p>
+        <ul class="almanac-palettes" data-palettes></ul>
+      </section>
+
+      <section class="almanac-shelf almanac-deck" id="cards" aria-labelledby="cards-title">
+        <div class="almanac-shelf-head">
+          <h2 id="cards-title"><span class="almanac-sigil" aria-hidden="true">@</span> Cards</h2>
+          <p class="almanac-shelf-count" data-deck-count></p>
+        </div>
+        <p class="almanac-shelf-lede">
+          Everyone and everything in the book has a card. A card turns the first time its name comes into view in a chapter,
+          or the first time you meet it in the lanes of <a href="/pie/#pie-deck">Exactly One Pie</a>; both keep the same deck.
+        </p>
+        <ul class="almanac-deck-grid" data-deck></ul>
       </section>
 
       <section class="almanac-bench" id="bench" aria-labelledby="bench-title">

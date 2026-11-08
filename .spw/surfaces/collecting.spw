@@ -1,0 +1,43 @@
+# Lore.Land Collecting
+# Cards and palettes, kept across the whole site: who you have met, and how each
+# chapter looks once you have finished it.
+#>lore_land_surfaces_collecting
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  A reward on lore.land is the chapter itself, a little more its own. Every
+  chapter has a palette mixed from a laminated folio, a place with colours and a
+  kind of lettering; finishing the chapter in any way keeps a layer of it, and
+  the chapter wears what is kept. The three ways to finish are the three
+  dimensions a reader lives in a chapter: reading it, carrying the pie through
+  it, keeping its wonders. Cards are the people and things of the book, turned
+  where they are first met, in the prose or in the lanes, and kept in one deck.
+  Nothing is scored: no points, no streaks, no totals that rise for their own
+  sake. A kept thing changes how the book looks or what it remembers, and says
+  so where it happens.
+}
+
+^"palettes"{
+  .note: "book/content/world/palettes.json (one per chapter, plus the mime wash) → book/scripts/modules/collection.mjs → book/styles/components/collection.css (chapter) · home/almanac.css (shelf) · home/hub.css (ribbons)"
+  sources: "named for a place and mixed by hand from the maker's own account of a laminated folio on spwashi.com, linked, never copied; where no folio fits yet (Two, Five, Seven) from the chapter plate"
+  carries: "colour (ground, ink, accent, glow, edge) and type (family, case, style, tracking, weight, and what lettering it comes from)"
+  layers: "colour by reading to the end (headings, kicker, drop cap, rules) · type by carrying the pie through the chapter (the title and section headings take the lettering) · light by keeping three of the wonders first met there (a faint wash of ground and glow)"
+  mime_wash: "blue-grey over an older page; all three layers at once, by winning any chapter back from Mimes Against WAP"
+  wearing: "a chapter wears the layers kept, mixed with the binding, never laid over it; dark bindings take glow and accent instead of ink; the keepsakes panel at the end of the chapter shows the whole palette, kept or not, and a switch to set it aside"
+  projected: "the projection spell names it: =palette[pool]{ colour type } (earned, never chosen, so a link cannot lend one) and !plain[palette] (a link may ask for one visit in the binding's own colours)"
+  extracted: "the almanac lets a kept palette be carried away as a Spw atom or as CSS tokens (--pal-ground, --pal-ink, --pal-accent, --pal-glow, --pal-edge, --pal-type-*)"
+  home: "a kept palette runs along the foot of its chapter plate in the contents, taller the more of it is kept"
+}
+
+^"cards"{
+  .note: "book/scripts/home/pie-cards.mjs CARDS (everyone in the lanes) + collection.mjs SITE_CARDS (the torch-ants, BoneWAP: the chapters only)"
+  turning: "a name crossing the middle of the screen in a chapter turns its card, one notice at a time; meeting it in the lanes turns it too; both keep one shelf (lore.cards.v1, with the game record lore.pie.v1 cards)"
+  showing: "the almanac deck (face-down cards say where the book first has them), the game deck (a card met while reading is face-up there), and the keepsakes panel at the end of each chapter (cards first turned there)"
+  care: "children are never cards; the figure is never named; the Egg is not explained"
+}
+
+%kept{
+  .note: "recorded measures, counted and never chosen: %kept{ cards: n palettes: n layers: n } in the projection spell"
+}

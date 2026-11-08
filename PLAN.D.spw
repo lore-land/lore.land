@@ -137,6 +137,30 @@
   refs: [".spw/state/alignment-ledger.spw", ".spw/surfaces/atelier.spw#refinement_model"]
 }
 
+^aspiration_overlay_2026_11_08{
+  source: "the creator, 2026-11-08: lore.land's plans should aspirationally develop the theory and creative utility of the domain; theory is grown here, not corrected"
+  bearing: "Houdini as the book's material layer: what the page is made of, typed, seeded and shown. Plan D still writes no implementation code; each line below is a door a PLAN.E lesson can walk through once a phase artifact says the floor holds."
+  theory: [
+    "Textures as meaning. A texture is a sign in PLAN.E's sense: its signifier is the grain, its signified the material a binding claims (rag, Bonk glass, salt, hearth clay, slate, night cloth), its interpretant what the reader's hand expects next time. A seeded paper holds the sign still, so a texture can be cited like a word.",
+    "Typing is a claim about kind. A registered <number> says warmth is a quantity, a <color> says ink is a hue, a <time> says a reveal waits. The book types already say what a wonder and a slot are; typed tokens carry that semiotics down into what the page is made of.",
+    "Interpolation is narration. A cover that glides from rag to clay shows the binder at work (bindery.mjs); a swap only reports that she was there. Where the story is discrete, a door, a stone, a turned page, the step stays discrete on purpose.",
+    "Engine difference is a register. A chapter in a browser without paint() reads on a plainer binding, accounted in the ledger (lore-c008), the way bone is a reception of boon and not its failure (story-boonhonk.spw)."
+  ]
+  utility: [
+    "plates: a chamber plate paints its paper from a seed beneath the painted study, so plates 14 and 15 (!state study in .spw/state/plates-manifest.spw) grow a sheet while they wait for paint",
+    "the hour dial: it already walks registered light tokens (tellings.mjs dispatches lore:stage-clock, scene-light.mjs writes --light-x and --light-y); a typed hour could turn the paper's tone as well, so a reader at dusk reads on dusk paper",
+    "the pie game: crust, filling, wobble and lean (home/pie.css meters, written by home/pie-game.mjs) registered as <number>s glide instead of jump, and a painted crust browns with the aura the carry holds",
+    "the bindery and the nook: each of the six covers becomes a material with tooth, gilt and foxing, chosen at the bench and carried into every chapter (bindery.mjs; reading-nook.mjs BINDINGS already name paper, ink and band)",
+    "folios: liquid glass is two SVG filters, liquid or still (folio-wall.mjs); a typed setting could ease a folio from liquid to clear across its stone, so seasoning is seen as it happens",
+    "the almanac: a kept wonder's card carries a sheet painted from the wonder's id, so a reader's almanac becomes a sheaf of distinct papers (almanac.mjs)",
+    "the desk: the scribe's desk shows each token's type and value in Spw, and a spell sets a seed or a binding, so makers tune paper the way they turn knobs (scriptorium-desk.mjs, c022)",
+    "chapters: a chapter's paper takes its seed from its number and its stone date, so each chapter is a different sheet of the same stock",
+    "the cauldron: it lives on spwashi.com (public/js/modules/media/cauldron.js), not in lore.land; seeded paper and typed tokens could reach it as a strain under c020 once they root here",
+    "a Firefox-faithful reading edition: a cover that shows the book as Firefox renders it, offered to readers who want the plain sheet, so the cross-engine floor is something chosen and not only fallen back on"
+  ]
+  model_for_books: "PLAN.E L18 has a next book name its palette in book.config.json; it could name its stock there too (a seed, its materials, which covers glide) and inherit the paper as one host-neutral module plus contract (c020). None of the six strains in .spw/surfaces/inoculant.spw carries a material yet."
+}
+
 
 ^phases["Houdini APIs Exploration"]{
 
@@ -144,6 +168,13 @@
     .note: "establish boundaries: what is in scope for Houdini adoption, what browser
             support matrix is required, and what risk tolerance applies to features
             with partial cross-browser implementation"
+    ^root[phase_artifacts]{ !state: proposed note: "none of the artifacts named in the phases' ={ } lines exists yet; book/audits/ holds only 09b-vite-public-entries.spw" }
+    ^root[shipped_ahead]{ !state: live .at: "book/styles/core/tokens.css" note: "@property was in tokens.css and motifs.css by 2026-02-28 (6477477), two days before this plan's baseline, and grew on 2026-11-06 (a228510): the code ran ahead of the audit" }
+    ~"branches"[
+      { axis: "which way the matrix reads" forward: "classify each API from specs and support tables, then adopt" backward: "read the matrix back from what shipped, as PLAN.E reads L01–L08 back from what exists" now: "forward on paper, backward in practice" }
+      { axis: "whose browsers weigh" engines: "count implementations, as phase 02's multi_engine_apis does" readers: "weight by the browsers lore.land's readers bring; the noticer browses Firefox too (production overlay)" now: "engines; the book runs no analytics, so a reader weighting would be asked, not measured" }
+      { axis: "what the risk tolerance protects" one_floor: "every register gets the same floor, so nothing engine-only ships" per_register: "the adventure surface may lean Houdini-first while the workshop veil, print and reduced motion keep a floor every engine reaches" now: "one floor, held by @supports and reduced-motion gates (resolved_direction_2026_07_16)" }
+    ]
   }
 
   ^phase["Scope Constraints"]{
@@ -188,6 +219,16 @@
             This sub-domain audits the existing custom property inventory, defines registration
             conventions, and runs a pilot registration on theme tokens.
             Spec reference: CSS Properties & Values API Level 1 (W3C CR)"
+    ^root[at_property]{ !state: live .at: "book/styles/core/tokens.css" note: "28 @property rules in six stylesheets, all declarative: core/tokens.css 13, chapter/reading.css 6, components/motifs.css 5, home/hero.css 2, chapter/typography.css 1, home/hub.css 1" }
+    ^root[light_glide]{ !state: live .at: "book/styles/chapter/reading.css" note: "the field light's six tokens are registered <number>s, five with 700–900ms transitions behind prefers-reduced-motion, so a moved sun glides (scene-light.mjs, PLAN.E L20–L21)" }
+    ^root[register_property_js]{ !state: imagined note: "no CSS.registerProperty in book/scripts; phase 10 was answered by practice: @property only, loaded with the CSS" }
+    ^root[theme_token_pilot]{ !state: proposed .at: "book/styles/core/tokens.css" note: "the 29 tokens ember and cosmos each set are unregistered, so a change of theme swaps at once; the typed colors are the five in motifs.css" }
+    ^root[theme_parity]{ !state: live .at: ".spw/audits/alignment-probes-2026-11-07.spw" note: "58 keys checked, 0 findings, so the CLAUDE.md open item reads as closed for the pair it reads: ember and cosmos, which the 2026-02-28 seeds page still offers; the bindery's covers are paper, glass, salt, ember, slate and night (home/app.mjs)" }
+    ~"branches"[
+      { axis: "what a theme is" palette: "values swapped at once, as now" material: "typed paper, ink and band, the fields reading-nook.mjs BINDINGS already names, gliding so the reader watches the binder change the cover" now: "palette" }
+      { axis: "what parity guards" pair: "ember against cosmos, as theme_parity reads today" covers: "every registered token set by each of the six covers, since a registered property always has a value and a var() fallback never fires for it" now: "pair" }
+      { axis: "which quantities glide" registered: "light, shader, heat and motif tokens, as now" felt: "every felt 0–1 number too: --nook-texture and --cozy (reading-nook.mjs), --wobble, --lean, --crust and --filling (pie-game.mjs)" now: "registered" }
+    ]
   }
 
   ^phase["Repo Css Baseline"]{
@@ -435,6 +476,13 @@
             replace string parsing with typed objects. This sub-domain evaluates migration
             feasibility from string CSSOM to Typed OM for runtime style manipulation.
             Spec reference: CSS Typed OM Level 1 (W3C Working Draft)"
+    ^root[typed_om]{ !state: imagined note: "no attributeStyleMap, computedStyleMap or CSS.number() in book/scripts" }
+    ^root[string_cssom]{ !state: live .at: "book/scripts/modules/scene-light.mjs" note: "119 style.setProperty writes in 25 files and 6 getComputedStyle reads in 4; scene-light writes registered <number>s as strings and parses them back with parseFloat" }
+    ~"branches"[
+      { axis: "where a migration begins" scene_light: "the one module that writes and reads back the same registered tokens, so a typed write and a typed read would meet" hot_paths: "the most frequent writes first, whichever phase 23's harness finds" now: "neither; phase 17 has six reads to read, phase 18 has 119 writes" }
+      { axis: "reach" typed_with_floor: "a typed write where Typed OM exists and the string write beside it elsewhere" maker_only: "Typed OM only in tools a maker runs, never in the reader's path" now: "strings everywhere; a wonder below guesses what each engine returns" }
+      { axis: "shown or used" used: "typed values kept inside the code" shown: "the scribe's desk prints a token as CSS.number(0.6) beside the reader's dial, so the workshop veil reads the type the page is made of (c017)" now: "neither" }
+    ]
   }
 
   ^phase["Typed Om Read Audit"]{
@@ -556,6 +604,14 @@
             evaluates architecture, implementation constraints, and the critical limitation
             that Firefox has no implementation.
             Spec reference: CSS Painting API Level 1 (W3C CR)"
+    ^root[paint_worklet]{ !state: imagined note: "no registerPaint, CSS.paintWorklet or CSS paint() in book/styles or book/scripts; the paint() calls in scripts are local functions of that name" }
+    ^root[paper_grain]{ !state: live .at: "book/styles/chapter/reading.css" note: "the grain and edge overlay is an feTurbulence SVG data URI weighted by --knob-grain and --knob-edge, the very case phase 05 names for a worklet" }
+    ^root[seeded_choice]{ !state: live .at: "book/scripts/modules/living.mjs" note: "living slots choose a variant by hash(salt:name) per clock bucket, a working precedent for phase 28's seeded determinism" }
+    ~"branches"[
+      { axis: "what the paint is" ornament: "dividers, motif backgrounds and depth shadows, as phase 05 lists" paper_and_ink: "the book's paper and ink: grain, foxing, deckle and the band's gilt drawn from the binding's tokens, so each cover is a material" now: "ornament, on paper only" }
+      { axis: "who holds the seed" visit: "a seed per page load, so the paper shifts between visits" book: "a seed from chapter number, stone date and binding, so two readers in one binding hold the same sheet and a new stone grows a new one" now: "phase 28 requires a seed and does not say whose" }
+      { axis: "progressive or Houdini-first" progressive: "the SVG grain is the floor every engine gets, and paint() a richer sheet where it exists (adopt-with-fallbacks)" houdini_first: "the worklet is the look and plain paper the declared floor, written in the ledger (lore-c008)" now: "progressive (resolved_direction_2026_07_16)" }
+    ]
   }
 
   ^phase["Painting Api Architecture"]{
@@ -722,6 +778,13 @@
             (and future layout/animation worklets). This sub-domain audits lifecycle,
             loading, error handling, debugging, and operational concerns.
             Spec reference: Worklets Level 1 (W3C Working Draft)"
+    ^root[worklets]{ !state: imagined note: "no addModule of any kind in book/scripts; the hearth is synthesized Web Audio with no AudioWorklet (reading-nook.mjs)" }
+    ^root[lazy_module]{ !state: live .at: "book/scripts/modules/bracework.mjs" note: "spw-seed is imported only when a bracework block nears the viewport (IntersectionObserver, c025), a loading shape addModule could copy" }
+    ~"branches"[
+      { axis: "when the worklet loads" eager: "with the stylesheet, on every page" near: "when a papered surface nears the viewport, as spw-seed loads near a bracework block" now: "phase 36 asks; bracework has answered once already" }
+      { axis: "offline" network: "fetched when needed, so an offline reader gets plain paper" precached: "listed in sw.js so a kept chapter keeps its paper offline, within c006's rule that precache lists only what exists at HEAD" now: "unasked; phase 36 names GitHub Pages caching and not the service worker" }
+      { axis: "what travels" local: "a lore.land module" strain: "a worklet has no DOM and is host-neutral by construction, so it could travel under c020 to boon.land or spwashi.com once it roots here" now: "local" }
+    ]
   }
 
   ^phase["Worklet Lifecycle Model"]{
@@ -880,6 +943,11 @@
             Painting API, and Worklets into cross-cutting concerns: API composition,
             end-to-end demonstrations, regression strategy, documentation, and the
             final adoption decision matrix"
+    ^root[hour_dial_chain]{ !state: live .at: "book/scripts/modules/scene-light.mjs" note: "no phase 47 demo exists, but the hour dial runs the chain in strings: tellings.mjs dispatches lore:stage-clock, scene-light.mjs writes registered <number>s through setProperty, the CSS glides them; Typed OM would take the middle step and paint() would add the last" }
+    ~"branches"[
+      { axis: "which scenes demonstrate" built: "components made for the demo" found: "scenes the book already has: the hour dial walking the light, the pie's crust and filling meters, a plate's paper under a chosen binding" now: "unchosen; phase 47 draws two or three from phase 05" }
+      { axis: "where the decision lives" report: "a master report filed beside the book (phase 52)" ledger: "each adopt or reject written as a ledger entry (c011), an intention a reader can find" now: "report" }
+    ]
   }
 
   ^phase["Integrate Properties Typed Om"]{
@@ -1012,6 +1080,15 @@
           lore.land's cross-browser development posture. Unlike the Houdini track,
           these phases are not sequential — each is independently evaluable."
   %track_invariant: each_phase_addresses_distinct_feature_area
+  ^root[view_transitions]{ !state: live .at: "book/styles/chapter/reading.css" note: "@view-transition { navigation: auto } turns chapter pages, and startViewTransition is feature-tested in reading-nook.mjs and interaction-surface.mjs, so an engine without them turns pages plainly (c012)" }
+  ^root[storage]{ !state: live .at: "book/scripts/modules/reading-nook.mjs" note: "phase 57 asks whether lore.land uses storage: localStorage in 29 modules under 34 lore.* key strings, and the Cache API in sw.js" }
+  ^root[top_layer]{ !state: live .at: "book/scripts/modules/scene-light.mjs" note: "popovers or dialogs in six modules and Escape handlers in nine are what phase 58's CloseWatcher would serve" }
+  ^root[tool_runs]{ !state: proposed note: "no recorded run of the Firefox Profiler, grid inspector or accessibility inspector" }
+  ~"branches"[
+    { axis: "survey or edition" survey: "tooling notes for the maker, as written" edition: "a Firefox-faithful reading edition: the book as Firefox renders it, offered at the bindery like a cover" now: "survey" }
+    { axis: "privacy as a promise" compliance: "check that ETP and Total Cookie Protection break nothing" promise: "say plainly in a colophon that the nook keeps its state in the reader's browser, once phase 56 confirms nothing leaves" now: "compliance" }
+    { axis: "whose instrument" maker: "Firefox's grid and accessibility inspectors as the maker's tools" scribe: "named on the scribe's desk as the way to inspect the page being read" now: "maker" }
+  ]
 
   ^phase["Devtools Grid Flex"]{
     @slug: devtools_grid_flex
@@ -1243,4 +1320,87 @@
   plan_mode: documentation_artifact_only
   .note: "Plan D is the most forward-looking of the four plans — its findings inform
           implementation work that may span multiple release cycles"
+}
+
+#>wonder_plan_d_color_read
+?["When a registered <color> is read back through computedStyleMap, what comes back?"]{
+  #:depth #!computational
+  ~#lens: "typed values"
+  ~#expect: "In Chromium a plain CSSStyleValue, not the CSSColorValue phase 45 expects, since phase 21 already doubts CSSColorValue ships; in Firefox computedStyleMap is missing, so phases 17 and 45 meet a floor there before they meet a type."
+  ~#probe(read)
+  !probe{ "On any chapter, in a Chromium console: document.documentElement.computedStyleMap().get('--motif-color').constructor.name; then in Firefox: typeof document.documentElement.computedStyleMap." }
+  $%[color_read.css_color_value, color_read.css_style_value, color_read.css_unparsed_value, color_read.absent]
+}
+
+#>wonder_plan_d_parity_covers
+?["Which covers does theme_parity guard, and which go unpaired?"]{
+  #:depth #!experiential
+  ~#lens: "typed tokens as the hinge between covers"
+  ~#expect: "It guards the seeds page's pair. Ember and cosmos are what /seeds/2026-02-28/ offers beside paper (book/scripts/seeds/app.mjs), while the bindery binds in paper, glass, salt, ember, slate and night (home/app.mjs), and night and slate are styled outside the one file the probe reads; phase 15's pilot would meet five covers the probe never pairs."
+  ~#probe(read)
+  !probe{ "rg -l data-theme=.night book/styles; rg -l data-theme=.slate book/styles; rg -n tokens.css .spw/tools/alignment-probes.mjs" }
+  $%[parity.seeds_pair_only, parity.all_six_covers, parity.mixed]
+}
+
+#>wonder_plan_d_dpr_source
+?["Where does a paint worklet learn the device pixel ratio?"]{
+  #:depth #!computational
+  ~#lens: "the worklet boundary"
+  ~#expect: "On the worklet's global scope (devicePixelRatio on PaintWorkletGlobalScope), with PaintSize carrying only width and height; phase 30's intent has it arriving through PaintSize, so that phase would open by reading the IDL."
+  ~#probe(read)
+  !probe{ "Read the PaintWorkletGlobalScope and PaintSize IDL in the draft at sources.css_painting_api_spec, and set it beside phase 30's @intent." }
+  $%[dpr.global_scope, dpr.paint_size, dpr.both]
+}
+
+#>wonder_plan_d_one_seed
+?["Can one seed drive a chapter's living sentences and its painted paper without the two drifting apart?"]{
+  #:depth #!mathematical
+  ~#lens: "seeded determinism"
+  ~#expect: "Yes, if the paper reads the same clock the sentences do. hash is a pure FNV-1a a worklet could share once lifted out of living.mjs (it is not exported, and living.mjs imports DOM-side modules), but paint() must not read time itself (phase 28), so the page writes the bucket as a registered input; drift would come from two clocks, the wall's and the hour dial's (lore:stage-clock), not from two hashes."
+  ~#probe(read)
+  !probe{ "rg -n 'stage-clock|dial' book/scripts/modules/living.mjs book/scripts/modules/scene-light.mjs, and check that both follow the dial's clock when it is set and the wall's when it is not." }
+  $%[one_seed.import_as_is, one_seed.lift_two_functions, one_seed.cannot_share]
+}
+
+#>wonder_plan_d_firefox_edition
+?["What does a chapter lose in Firefox today, and would a reader name it?"]{
+  #:depth #!experiential
+  ~#lens: "engine difference as a register"
+  ~#expect: "Nothing from Houdini: paint() and Typed OM are unused, and @property reached Firefox in 128 (this plan's first open question), so the light glides there too. Whatever differs sits in what is already gated, page turns and popovers, which makes a Firefox-faithful edition nearly free to offer now and dearer with each worklet."
+  ~#probe(read)
+  !probe{ "Open one chapter in Firefox and in a Chromium browser. Move the sun, turn the hour dial, change the cover and follow a chapter link; for each, write whether it glides, steps or is missing." }
+  $%[firefox.nothing_named, firefox.a_texture, firefox.a_motion, firefox.a_page_turn]
+}
+
+#>wonder_plan_d_first_strain
+?["Which leaves lore.land first as a strain: typed tokens or seeded paper?"]{
+  #:depth #!educational
+  ~#lens: "a model for future books"
+  ~#expect: "Typed tokens. They are live, need no worklet, and can travel as @property rules plus one contract (every cover sets every registered token); seeded paper waits until a worklet roots here and is proven on readers (c020)."
+  ~#probe(read)
+  !probe{ "rg -n '#id' .spw/surfaces/inoculant.spw, and for each strain ask whether a typed token or a sheet of paper would ride with it." }
+  $%[first_strain.typed_tokens, first_strain.seeded_paper, first_strain.together]
+}
+
+!"relay"{
+  .note: "How the next session takes a turn here. A turn is small: one branch, one claim, one step."
+  root_vocabulary: "live: in code now, .at cites the file · prototype: partly in code, the note says which part is not · proposed: named in a phase, nothing in code · imagined: a reach no phase names yet"
+  rungs: [
+    "seed: said once here, worth keeping",
+    "sketch: worked through in this plan or a phase artifact, its strains named",
+    "probe: a check that could fail, run once, its result written beside it",
+    "landed: in the site through another plan or lesson, cited by file, committed when the creator asks"
+  ]
+  steps: [
+    "Pick one branch from a sub-domain's ~branches, or the Firefox track's, and write its axis first.",
+    "Pick one claim the branch touches: a root, an aspiration line, or a wonder's guess.",
+    "Read the code before you move it; a root is read, never assumed.",
+    "Move the claim one rung and no further; if the site changed, move its ^root and say so.",
+    "Answer a wonder with a dated ~#probed line under its guess; never rewrite the ~#expect.",
+    "Keep every line you found; fix only plain slips, and name them. Plan D still writes no implementation code.",
+    "Leave a dated line under turns: date · axis · claim · from → to · what the next turn might try."
+  ]
+  turns: [
+    "2026-11-08 · axis: none, a ground turn · roots read from code for six sub-domains and the Firefox track; branches, an aspiration overlay and six wonders seeded; no phase line changed · next: run the parity-covers or color-read wonder, or sketch paper and ink as phase 05's first shortlisted case"
+  ]
 }

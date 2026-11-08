@@ -566,6 +566,26 @@
     aspect-ratio: 16 / 9;
   }
 
+  /* A kept palette (collection.mjs) along the foot of the plate: taller the more of it is kept. */
+  .hub-ch-thumb:has(.hub-ch-palette) {
+    position: relative;
+  }
+
+  .hub-ch-palette {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    height: 4px;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.18);
+  }
+
+  .hub-ch-palette.is-2-of-3 { height: 6px; }
+  .hub-ch-palette.is-3-of-3 { height: 8px; }
+
+  .hub-ch-palette i {
+    flex: 1;
+  }
+
   .hub-ch-thumb img {
     display: block;
     width: 100%;
