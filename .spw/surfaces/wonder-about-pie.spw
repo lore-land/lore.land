@@ -90,6 +90,15 @@
   segues: "pie-segues.mjs: where a chapter reaches a level's place, a door at the section's end carries the pie from there (?scene= &from=); the ending points into the chapter where the level happens, and the way back returns to the very section the game was found in, where a note says how the carry went"
 }
 
+^"pie_voices"{
+  .note: "How Mr. BoonWAP and Mr. BaneWAP speak, in the chapters and in Exactly One Pie, so that each line they say can carry a piece of the land's lore (canon of the quinary five: spwashi.com play/rpg-wednesday, the quinary story bible)."
+  boonwap: "talks past the room: answers questions nobody asked, takes a nod for agreement, beams a long way; and in every speech one true thing about the land. He misses what the room is telling him — the server's wrist, the washing-up — and the prose lets the reader see it (ch6). He is generous without noticing what it costs or what it fixed (ch12)."
+  banewap: "announces: a scheme is not a scheme until it is declared to someone who did not ask. Every scheme carries its off switch — a clause he wrote himself and never reads (ch11). Foiled, he always says one thing more than he means to (“The crown was wasps.”). Re-sweetened at the bridge, he schemes from habit, and asks, in the form of a threat, to be treated kindly (ch12)."
+  in_the_chapters: "ch6 the pie at the table (never smaller: only arithmetic); ch11 the announcement and the clause, the blurt; ch12 the bridge (I have always said so; bitter starting tomorrow unless); ch15 the long table (the second place is for whoever it was set for)"
+  in_the_game: "the game's lore lines (book/content/world/pie-lore.json) are what they say off the page in the same shapes: BoonWAP's while he holds court, BaneWAP's when foiled; each line grounds itself in the chapter where its shape, or its fact, can be read"
+  rule: "neither of them decodes anything: the Egg stays a mystery, the figure under the hat is unnamed, the warm slice unexplained; the nearest either comes is BoonWAP's 'there are five of us; everyone counts four'"
+}
+
 ?"open"[
   "Who receives the good coincidence the small wish owed a stranger?"
   "What does the hat remember?"

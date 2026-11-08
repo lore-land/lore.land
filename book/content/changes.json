@@ -2,6 +2,13 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.G",
+      "date": "2026-11-07",
+      "notes": [
+        "Mr. BoonWAP and Mr. BaneWAP say a little more in Chapters Six, Eleven, Twelve and Fifteen: BoonWAP talks past the room and says one true thing; BaneWAP announces his schemes, and, foiled, says one thing more than he means to. What they let slip in Exactly One Pie now points back to where you can read it."
+      ]
+    },
+    {
       "release": "2026_11_07.F",
       "date": "2026-11-07",
       "notes": [

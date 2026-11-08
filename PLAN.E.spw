@@ -274,6 +274,7 @@
   i5e: { lessons: [L27], release: "2026_11_06.F", note: "story directions: a link sets an edition, a lens, the room, the binding, the switches, and pins tellings" }
   i5f: { lessons: [L28], release: "2026_11_07.A", note: "Exactly One Pie: the prophecy as a small game" }
   i5g: { lessons: [L28], release: "2026_11_07.B", note: "under the hat it is not always him; clowns love WAP" }
+  i5j: { lessons: [L28, L22], release: "2026_11_07.G", note: "the pies' voices in the chapters (6, 11, 12, 15) shaped so the game's lore lines read as more of the same talk" }
   i5i: { lessons: [L28], release: "2026_11_07.F", note: "the pies let slip lore as the visitor finds the land; captions under the carry; aimed throws; the aura of flour and boonberries; piles as composable ramps; a legend drawn by the game" }
   i5h: { lessons: [L28], release: "2026_11_07.D", note: "Mr. BoonWAP holds court and Mr. BaneWAP meddles; throws with a gold moment; flour slows and sets the story back; rows with a way through; doors between the levels and the chapters, and the way home" }
   i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
