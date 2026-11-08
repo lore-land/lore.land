@@ -137,34 +137,38 @@ body[data-surface='monument'] .pie-main {
 
 .pie-flow-para {
   max-width: 34rem;
-  padding-left: 0.7rem;
+  padding: 0.25rem 0.55rem 0.25rem 0.7rem;
   border-left: 2px solid transparent;
+  border-radius: 0 0.4rem 0.4rem 0;
   font-family: var(--font-family-body, Georgia, serif);
   font-size: 0.9rem;
   line-height: 1.55;
   color: color-mix(in srgb, var(--hub-ink) 52%, transparent);
-  transition: color 400ms ease, border-color 400ms ease;
+  transition: color 400ms ease, border-color 400ms ease, background-color 400ms ease;
 }
 
 .pie-flow-para.is-passing {
   border-left-color: var(--hub-gold);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--hub-gold) 11%, transparent), transparent 85%);
   color: var(--hub-ink);
 }
 
 /* A wonder's own words in the passage: they light while it waits up the lanes, and stay lit once kept. */
 .pie-flow-term {
-  padding: 0 0.1em;
+  padding: 0 0.14em;
   border-radius: 0.2em;
   background: transparent;
   color: inherit;
   text-decoration: underline dotted color-mix(in srgb, var(--hub-gold) 70%, transparent);
   text-underline-offset: 0.2em;
-  transition: background-color 300ms ease, color 300ms ease;
+  transition: background-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
 }
 
-.pie-flow-term.is-lit {
+.pie-flow-term.is-lit,
+.pie-flow-term.is-peek {
   background: color-mix(in srgb, var(--hub-gold) 32%, transparent);
   color: var(--hub-ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--hub-gold) 24%, transparent);
 }
 
 .pie-flow-term.is-kept {
@@ -200,11 +204,16 @@ body[data-surface='monument'] .pie-main {
   border: 1px solid var(--hub-line);
   border-radius: 0.6rem;
   background: var(--hub-panel);
-  transition: border-color 300ms ease, background-color 300ms ease, opacity 400ms ease;
+  transition: border-color 300ms ease, background-color 300ms ease, opacity 400ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+.pie-flow-wonder:not(.is-quiet):hover {
+  border-color: color-mix(in srgb, var(--hub-gold) 65%, var(--hub-line));
+  transform: translateY(-1px);
 }
 
 .pie-flow-sigil {
-  grid-row: span 2;
+  grid-row: span 3;
   display: grid;
   place-items: center;
   width: 1.9rem;
@@ -214,6 +223,7 @@ body[data-surface='monument'] .pie-main {
   font-family: var(--font-family-heading, monospace);
   font-weight: 700;
   color: var(--hub-accent-deep);
+  transition: background-color 250ms ease, color 250ms ease, transform 250ms ease;
 }
 
 .pie-flow-wonder strong {
@@ -221,6 +231,14 @@ body[data-surface='monument'] .pie-main {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.2;
+}
+
+.pie-flow-gift {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.78rem;
+  font-style: italic;
+  line-height: 1.25;
+  color: color-mix(in srgb, var(--hub-ink) 74%, transparent);
 }
 
 .pie-flow-state {
@@ -360,24 +378,54 @@ body[data-surface='monument'] .pie-main {
 
 /* The cabinet: a little theatre for the screen. */
 .pie-cabinet {
+  --cabinet-glow: color-mix(in srgb, var(--hub-gold) 45%, var(--hub-line));
   position: sticky;
   top: 4.5rem;
   display: grid;
   gap: 0.7rem;
   padding: 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--hub-gold) 45%, var(--hub-line));
+  border: 1px solid var(--cabinet-glow);
   border-radius: 1.1rem;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--hub-gold) 12%, transparent), transparent 32%),
     var(--hub-panel);
-  box-shadow: 0 18px 40px rgba(12, 16, 24, 0.14);
+  box-shadow:
+    0 20px 44px rgba(12, 16, 24, 0.16),
+    inset 0 1px 0 color-mix(in srgb, #ffffff 35%, transparent);
+  transition: border-color 350ms ease, box-shadow 350ms ease;
+}
+
+.pie-cabinet[data-cabinet-mood='boon'] {
+  --cabinet-glow: #e0a23a;
+  box-shadow: 0 20px 48px rgba(224, 162, 58, 0.22), 0 0 0 2px rgba(224, 162, 58, 0.25);
+}
+
+.pie-cabinet[data-cabinet-mood='bane'] {
+  --cabinet-glow: #b04558;
+  box-shadow: 0 20px 48px rgba(140, 36, 56, 0.24), 0 0 0 2px rgba(176, 69, 88, 0.26);
+}
+
+.pie-cabinet[data-cabinet-mood='warm'] {
+  --cabinet-glow: #f0ad58;
+  box-shadow: 0 20px 48px rgba(240, 173, 88, 0.22), 0 0 0 2px rgba(240, 173, 88, 0.25);
+}
+
+.pie-cabinet[data-cabinet-mood='poise'] {
+  --cabinet-glow: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-gold));
+}
+
+.pie-cabinet[data-cabinet-mood='danger'] {
+  --cabinet-glow: #c0392b;
+  box-shadow: 0 20px 48px rgba(192, 57, 43, 0.26), 0 0 0 2px rgba(192, 57, 43, 0.32);
 }
 
 .pie-screen {
   position: relative;
   overflow: hidden;
   border-radius: 0.7rem;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--hub-ink) 20%, transparent),
+    inset 0 2px 8px rgba(10, 12, 16, 0.12);
 }
 
 .pie-screen canvas {
@@ -392,16 +440,19 @@ body[data-surface='monument'] .pie-main {
 /* The card: a silent-film title over the screen. */
 .pie-card {
   position: absolute;
-  inset: 12% 9%;
+  inset: 9% 7%;
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 0.9rem;
-  padding: 1.4rem 1.2rem;
+  gap: 0.75rem;
+  padding: 1.25rem 1.1rem;
   border: 2px solid #d9c38a;
-  outline: 1px solid #d9c38a;
-  outline-offset: -8px;
-  background: rgba(12, 12, 14, 0.88);
+  outline: 1px solid rgba(217, 195, 138, 0.65);
+  outline-offset: -7px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(217, 195, 138, 0.1), transparent 65%),
+    rgba(12, 12, 14, 0.9);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
   color: #f3ead6;
   text-align: center;
 }
@@ -413,18 +464,20 @@ body[data-surface='monument'] .pie-main {
 .pie-card-title {
   margin: 0;
   font-family: var(--hub-display, Georgia, serif);
-  font-size: clamp(1.15rem, 3.4vw, 1.45rem);
+  font-size: clamp(1.1rem, 3.2vw, 1.4rem);
   letter-spacing: 0.06em;
-  line-height: 1.3;
+  line-height: 1.28;
   text-transform: uppercase;
 }
 
 .pie-card-line {
   margin: 0;
+  max-height: 10.5rem;
+  overflow-y: auto;
   font-family: var(--font-family-body, Georgia, serif);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.48;
   color: #e0d4b8;
 }
 
@@ -432,65 +485,97 @@ body[data-surface='monument'] .pie-main {
   display: none;
 }
 
+/* Chapter leg picker inside the silent-film card. */
+.pie-card-chapters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.28rem;
+  max-width: 100%;
+  padding: 0.2rem 0.1rem;
+}
+
+.pie-card-chapters[hidden] {
+  display: none;
+}
+
+.pie-card-chapters-label {
+  width: 100%;
+  margin-bottom: 0.1rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(233, 215, 168, 0.78);
+}
+
+.pie-card-chapter-btn {
+  padding: 0.18rem 0.48rem;
+  border: 1px solid rgba(217, 195, 138, 0.42);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e0d4b8;
+  cursor: pointer;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.pie-card-chapter-btn:hover,
+.pie-card-chapter-btn:focus-visible {
+  border-color: #d9c38a;
+  background: rgba(217, 195, 138, 0.18);
+  color: #fff4d6;
+}
+
+.pie-card-chapter-btn.is-active {
+  border-color: #f2c14e;
+  background: rgba(242, 193, 78, 0.25);
+  color: #fff8e6;
+  font-weight: 700;
+}
+
 .pie-card-action {
-  padding: 0.45rem 1.1rem;
+  padding: 0.48rem 1.2rem;
   border: 1px solid #d9c38a;
   border-radius: 999px;
-  background: transparent;
+  background: rgba(217, 195, 138, 0.1);
   box-shadow: none;
   color: #f3ead6;
   cursor: pointer;
   font-family: var(--font-family-body, Georgia, serif);
   font-size: 1rem;
+  transition: background-color 180ms ease, transform 150ms ease;
 }
 
 .pie-card-action:hover,
 .pie-card-action:focus-visible {
-  background: rgba(217, 195, 138, 0.18);
+  background: rgba(217, 195, 138, 0.24);
   outline: 2px solid #d9c38a;
   outline-offset: 2px;
 }
 
-/* How far the pie is tilting: a small level along the screen's foot. */
-.pie-meter {
-  --wobble: 0;
-  position: absolute;
-  left: 50%;
-  bottom: 0.6rem;
-  width: 42%;
-  height: 0.38rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--hub-ink) 14%, transparent);
-  transform: translateX(-50%);
-  overflow: hidden;
-}
-
-.pie-meter span {
-  display: block;
-  width: calc(var(--wobble) * 100%);
-  height: 100%;
-  border-radius: inherit;
-  background: color-mix(in srgb, var(--hub-gold) calc((1 - var(--wobble)) * 100%), var(--hub-hearth));
-}
-
 .pie-steps {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
+  grid-template-columns: 0.8fr 0.8fr 1.2fr 1.2fr 0.8fr 0.8fr;
+  gap: 0.35rem;
 }
 
 .pie-step {
-  padding: 0.7rem 0.5rem;
+  padding: 0.68rem 0.45rem;
   border: 1px solid var(--hub-line);
   border-radius: 0.7rem;
-  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
-  box-shadow: none;
+  background: color-mix(in srgb, var(--hub-paper) 75%, transparent);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--hub-line) 75%, transparent);
   color: var(--hub-ink);
   cursor: pointer;
   font-family: var(--font-family-heading, monospace);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   letter-spacing: 0.04em;
   touch-action: manipulation;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 100ms ease;
 }
 
 .pie-step:hover,
@@ -499,7 +584,26 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-step:active {
-  background: color-mix(in srgb, var(--hub-gold) 18%, transparent);
+  background: color-mix(in srgb, var(--hub-gold) 20%, transparent);
+  transform: translateY(1px);
+}
+
+.pie-jump {
+  border-color: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-line));
+  font-weight: 700;
+}
+
+.pie-throw {
+  padding-inline: 0.85rem;
+  border-color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-line));
+  color: var(--hub-ink);
+  font-weight: 700;
+}
+
+.pie-keys-touch {
+  display: none;
+  font-size: 0.86rem !important;
+  color: var(--hub-muted);
 }
 
 @media (max-width: 61.99rem) {
@@ -516,9 +620,12 @@ body[data-surface='monument'] .pie-main {
     order: -1;
   }
 
-  .pie-keys,
-  .pie-keys-touch {
+  .pie-keys {
     display: none;
+  }
+
+  .pie-keys-touch {
+    display: block;
   }
 }
 
@@ -540,29 +647,6 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-ink);
   border-color: color-mix(in srgb, var(--hub-gold) 60%, var(--hub-line));
 }
-
-.pie-toast-title {
-  margin: 0;
-  font-family: var(--hub-display, Georgia, serif);
-  font-size: 0.84rem;
-  letter-spacing: 0.05em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-.pie-toast-line {
-  margin: 0.2rem 0 0;
-  font-family: var(--font-family-body, Georgia, serif);
-  font-size: 0.78rem;
-  font-style: italic;
-  line-height: 1.35;
-  color: #e0d4b8;
-}
-
-.pie-toast-line:empty {
-  display: none;
-}
-
 
 /* The way back to where the game was found. */
 .pie-return {
@@ -599,46 +683,6 @@ body[data-surface='monument'] .pie-main {
   color: #fff4d6;
 }
 
-.pie-steps {
-  grid-template-columns: 0.8fr 0.8fr 1.2fr 1.2fr 0.8fr 0.8fr;
-  gap: 0.35rem;
-}
-
-.pie-jump {
-  border-color: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-line));
-  font-weight: 700;
-}
-
-.pie-throw {
-  padding-inline: 1rem;
-  border-color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-line));
-  color: var(--hub-ink);
-  font-weight: 700;
-}
-
-.pie-meter {
-  height: 0.5rem;
-  overflow: visible;
-}
-
-.pie-meter span {
-  overflow: hidden;
-}
-
-.pie-meter em {
-  position: absolute;
-  right: calc(100% + 0.4rem);
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-family-heading, monospace);
-  font-size: 0.6rem;
-  font-style: normal;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--hub-muted);
-}
-
-
 /* ─── The caption: places and the pies' words, under the carry ──────────
  * Like subtitles: never across the screen. A line stays, quieter, until
  * the next, so it can be read again. Who is speaking colours its edge. */
@@ -649,15 +693,17 @@ body[data-surface='monument'] .pie-main {
   border-left: 4px solid var(--hub-gold);
   border-radius: 0.6rem;
   background: var(--hub-panel);
-  opacity: 0.62;
-  transition: opacity 400ms ease, border-color 300ms ease;
+  opacity: 0.68;
+  transition: opacity 400ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
 .pie-caption.is-in {
   opacity: 1;
+  box-shadow: 0 4px 14px rgba(12, 16, 24, 0.06);
 }
 
-.pie-caption .pie-toast-title {
+.pie-toast-title {
+  margin: 0;
   font-family: var(--font-family-heading, monospace);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
@@ -665,8 +711,8 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-accent-deep);
 }
 
-.pie-caption .pie-toast-line {
-  margin-top: 0.25rem;
+.pie-toast-line {
+  margin: 0.25rem 0 0;
   font-family: var(--font-family-body, Georgia, serif);
   font-size: 1rem;
   font-style: normal;
@@ -674,9 +720,15 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-ink);
 }
 
+.pie-toast-line:empty {
+  display: none;
+}
+
 .pie-caption[data-voice='boon'] { border-left-color: #e0a23a; }
 .pie-caption[data-voice='bane'] { border-left-color: #c0392b; }
 .pie-caption[data-voice='flour'] { border-left-color: var(--hub-muted); }
+.pie-caption[data-voice='wonder'] { border-left-color: var(--hub-accent); }
+.pie-caption[data-voice='egg'] { border-left-color: #f0ad58; }
 
 /* Keys, plainly. */
 .pie-lede {
@@ -711,11 +763,6 @@ body[data-surface='monument'] .pie-main {
   font-family: var(--font-family-heading, monospace);
   font-size: 0.8rem;
   text-align: center;
-}
-
-.pie-keys-touch {
-  font-size: 0.86rem !important;
-  color: var(--hub-muted);
 }
 
 /* ─── The legend: what everything is ──────────────────────────────────── */
@@ -927,11 +974,22 @@ body[data-surface='monument'] .pie-main {
   --crust: 0.6;
   --filling: 0.6;
   position: absolute;
-  left: 0.7rem;
-  bottom: 0.45rem;
+  left: 0.55rem;
+  bottom: 0.42rem;
   display: grid;
-  gap: 0.18rem;
+  gap: 0.16rem;
+  padding: 0.24rem 0.45rem 0.24rem 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 14%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-paper) 78%, transparent);
+  backdrop-filter: blur(4px);
   pointer-events: none;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.pie-aura.is-rich {
+  border-color: color-mix(in srgb, var(--hub-gold) 65%, transparent);
+  box-shadow: 0 0 10px rgba(224, 169, 90, 0.25);
 }
 
 .pie-aura p {
@@ -942,9 +1000,9 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-aura em {
-  width: 3.4rem;
+  width: 3.1rem;
   font-family: var(--font-family-heading, monospace);
-  font-size: 0.56rem;
+  font-size: 0.55rem;
   font-style: normal;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -957,8 +1015,19 @@ body[data-surface='monument'] .pie-main {
   width: 4.2rem;
   height: 0.38rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--hub-ink) 14%, transparent);
+  background: color-mix(in srgb, var(--hub-ink) 16%, transparent);
   overflow: hidden;
+}
+
+.pie-aura span::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg,
+      transparent 13.5%, rgba(22, 29, 43, 0.35) 14%, transparent 14.5%,
+      transparent 84.5%, rgba(255, 255, 255, 0.55) 85%, transparent 85.5%);
+  z-index: 2;
 }
 
 .pie-aura span::after {
@@ -966,11 +1035,12 @@ body[data-surface='monument'] .pie-main {
   position: absolute;
   inset: 0 auto 0 0;
   border-radius: inherit;
+  transition: width 120ms linear;
 }
 
 .pie-aura-crust::after {
   width: calc(var(--crust) * 100%);
-  background: #e4cf9a;
+  background: linear-gradient(90deg, #d8be82, #f1dc9e);
 }
 
 .pie-aura-filling::after {
@@ -980,12 +1050,58 @@ body[data-surface='monument'] .pie-main {
 
 .pie-aura.is-thin em {
   color: #c0392b;
+  font-weight: 700;
 }
 
-/* The tilt sits to the right of the ingredients. */
+/* How far the pie is tilting: a small level along the screen's foot, to the right of the ingredients. */
 .pie-meter {
-  left: auto;
-  right: 0.8rem;
-  width: 34%;
-  transform: none;
+  --wobble: 0;
+  --lean: 0;
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.55rem;
+  width: 33%;
+  height: 0.52rem;
+  padding: 1px;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 78%, transparent);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.pie-meter span {
+  display: block;
+  width: calc(var(--wobble) * 100%);
+  height: 100%;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--hub-gold) calc((1 - var(--wobble)) * 100%), #c0392b);
+  transition: width 80ms linear;
+}
+
+.pie-meter-lean {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + var(--lean) * 42%);
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 1.5px solid var(--hub-ink);
+  border-radius: 50%;
+  background: var(--hub-paper);
+  transform: translate(-50%, -50%);
+  opacity: calc(min(1, var(--wobble) * 2.5));
+  transition: left 90ms ease-out, opacity 180ms ease;
+}
+
+.pie-meter em {
+  position: absolute;
+  right: calc(100% + 0.38rem);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.56rem;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
 }

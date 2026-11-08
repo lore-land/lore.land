@@ -1,5 +1,5 @@
 {
-  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · satisfied (clowns satisfied) · perfects · foils · reached (the furthest chapter a carry has reached, 1–15).",
+  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · satisfied (clowns satisfied) · shared (slices shared with clerks or subjects) · sweetened (baneberries sweetened) · perfects · foils · reached (the furthest chapter a carry has reached, 1–15).",
   "speakers": {
     "boon": {
       "name": "Mr. BoonWAP",
@@ -158,6 +158,21 @@
       "line": "The mimes are against me, I am told. Silently, and with great feeling. I have never felt so understood."
     },
     {
+      "id": "boon-shared",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "shared",
+        "n": 3
+      },
+      "hint": "Share three slices with a feast clerk or a subject on an errand.",
+      "line": "A clerk with a DAMAGE slip only wants to write down that something happened. Give him a slice and he writes SETTLED, which is shorter and leaves more afternoon.",
+      "ground": {
+        "chapter": 15,
+        "anchor": "the-parcel-gate",
+        "label": "the damage signed in his own name"
+      }
+    },
+    {
       "id": "bane-wind",
       "speaker": "bane",
       "unlock": {
@@ -300,6 +315,20 @@
         "kind": "always"
       },
       "line": "I am made of baneberries. Bitter is a flavour, not a failing. The mimes understand this. They gather for me, and ask nothing, and say less."
+    },
+    {
+      "id": "bane-sweetened",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "sweetened",
+        "n": 3
+      },
+      "hint": "Sweeten three baneberry clusters with a thrown slice.",
+      "line": "Stop throwing warm pie through my baneberries! They come back sweet at the core, and a sweetened berry refuses to scheme properly.",
+      "ground": {
+        "chapter": 12,
+        "label": "bitter starting tomorrow, unless"
+      }
     }
   ]
 }
