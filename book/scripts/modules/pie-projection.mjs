@@ -16,7 +16,7 @@
  * plainly (it holds for every chapter) and a door back into the carry.
  */
 
-import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.A';
+import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.D';
 import { applyGenre, readGenre } from './lens-control.mjs?v=2026_11_06.F';
 import { readStory } from './story-directions.mjs?v=2026_11_06.F';
 

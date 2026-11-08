@@ -2,6 +2,21 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.D",
+      "date": "2026-11-08",
+      "notes": [
+        "Each chapter now says why it reads the way it does, as one small spell at the top: “Read this way because…”. Every line says where it came from (your own setting, a link you followed, your carries, the book’s own). Change a line and read the chapter again, or copy a link that reads it your way for whoever opens it."
+      ]
+    },
+    {
+      "release": "2026_11_08.C",
+      "date": "2026-11-08",
+      "notes": [
+        "Chapter Fifteen is now Pupil, Parcel, or Door: the night school the stranger turns up at is where grown-ups learn their letters after the day’s work, and he is written on its roll as a pupil.",
+        "At BoonWAP’s table in Chapter Six, the porter showing a glassed folio is showing it to his own children."
+      ]
+    },
+    {
       "release": "2026_11_08.B",
       "date": "2026-11-08",
       "notes": [
@@ -166,7 +181,7 @@
       "release": "2026_11_05.A",
       "date": "2026-11-05",
       "notes": [
-        "Book Two begins: two new chapters, The Thursday Nobody Kept and Child, Parcel, or Door. The next stone is set Friday 13 November.",
+        "Book Two begins: two new chapters, The Thursday Nobody Kept and Pupil, Parcel, or Door. The next stone is set Friday 13 November.",
         "Something has come through the warm furrow without a receipt. It is under a hat.",
         "The home page now says what is new, who is in the story, and the story so far for anyone arriving partway.",
         "The ring of berries has a second, inner ring for Book Two, and Book Two's seals begin a new day at dawn gold.",

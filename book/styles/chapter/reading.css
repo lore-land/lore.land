@@ -4580,3 +4580,104 @@ main.chapter .pie-mimed.is-peek {
     color: color-mix(in srgb, var(--color-text-main, #2a2a30) 40%, transparent);
   }
 }
+
+/* ─── Read this way because… (projection.mjs) ────────────────────────────
+ * The reader's projection as one Spw spell, line by line, each saying where
+ * it came from: yours, this visit's, your carries', the book's own. */
+main.chapter > .projection-spell {
+  margin-block: 0 1rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 35%, transparent);
+  border-radius: 0.6rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  color: var(--color-text-alt, currentColor);
+}
+
+main.chapter > .projection-spell > summary {
+  cursor: pointer;
+  list-style: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+main.chapter > .projection-spell > summary::-webkit-details-marker {
+  display: none;
+}
+
+main.chapter .projection-spell-sigil {
+  color: var(--sigil-gold, #a67c38);
+  font-weight: 700;
+}
+
+main.chapter .projection-spell-peek {
+  opacity: 0.75;
+}
+
+main.chapter .projection-spell-body {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.6rem;
+  white-space: normal;
+}
+
+main.chapter .projection-spell-body > p {
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+main.chapter .projection-spell-lines {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+main.chapter .projection-spell-lines li {
+  max-width: none;
+}
+
+main.chapter .projection-spell-lines li.is-visit code {
+  color: var(--color-accent-main);
+}
+
+main.chapter .projection-spell-lines li.is-carries code {
+  color: color-mix(in srgb, #7a3f9a 70%, currentColor);
+}
+
+main.chapter .projection-spell-edit {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--color-background-main, #fff) 85%, transparent);
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+main.chapter .projection-spell-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+main.chapter :is(.projection-spell-go, .projection-spell-copy) {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 50%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+main.chapter .projection-spell-status:empty {
+  display: none;
+}

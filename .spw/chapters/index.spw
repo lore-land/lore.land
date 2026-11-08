@@ -74,7 +74,7 @@
     sections: 9
   }
   c15: {
-    title: "Child, Parcel, or Door"
+    title: "Pupil, Parcel, or Door"
     &file: @spw/chapters/15.spw
     sections: 7
   }

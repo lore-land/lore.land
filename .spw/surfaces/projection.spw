@@ -1,0 +1,39 @@
+# Lore.Land Projection
+# The reader's projection as one Spw spell: the source every surface reads,
+# shown on the page, editable, and passable as a link (book/scripts/modules/projection.mjs).
+#>lore_land_surfaces_projection
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  The book is one canon projected many ways: a lens, a cover, a room's light,
+  an edition, what a reader's carries did. Until now those were settings in
+  different drawers. Said as one Spw expression they become a thing a reader
+  can read, change, and pass along, and the grammar becomes the projection's
+  source rather than its decoration. Each line says where it came from, so a
+  reader can always see why their page reads the way it does.
+}
+
+^"spell"{
+  .note: "@reader{ … } — one line per clause; the chapter shows it under 'Read this way because…' with each line's source (yours · this visit's · your carries' · the book's own)"
+  lens: "=lens[boon|bane|bone|balanced] or =genre{ boon: 50 bane: 30 bone: 20 } — the reading lens (lens-control.mjs weights)"
+  audience: "=audience[pg|pg13] — what this copy shows; pg13 only once the late table and the household allow it; a spell from a link can only lower it"
+  room_binding_edition: "=room[day|dusk|lamp] · =binding[rag|glass|salt|ember|slate|starfield] · =edition[…] — story directions (story-directions.mjs)"
+  switches: "=with[…] · =without[…]"
+  carries: "~carries{ c6: bane held · c14: boon } — what each carried chapter leans, and which the mimes hold (pie-carries.mjs)"
+  measures: "%carries{ carried: 2 held: 1 won_back: 0 } — recorded measures use %, the measure sigil: counted, never chosen, never set by a link"
+  plain: "!plain[carries] — read without the carries' lean (from a link: this visit only)"
+  ground: ".chapter[15] — where it is being read"
+  integration: "^projects[chapter, game, folio_value] — what the projection is bound into"
+}
+
+^"passing_it_along"{
+  link: "?spell=<the spell> — on arrival it becomes this visit's story directions (never saved as the reader's own unless they keep it), ?audience=pg (lower only) and ?plain=carries (this visit)"
+  safety: "a spell from a link can never raise the audience, set a measure, or overwrite the reader's own settings"
+}
+
+^"next"{
+  audience_gate: "PG-13-leaning themes live only in tagged variants (=audience[pg13]) with a PG twin that book:check requires; they open through the late table (an in-world invitation after Book One, answered with a question a grown-up answers easily) and a household key (set in the binder's room, lockable with a word only the grown-up knows)"
+  folio_value: "a folio's ask is formula-only: the tier's working ask (October drop as Seeds, $35) moved by the play spell within −25% to +15%; play arrives as % measures (%carried, %satisfied, %wonders, %held, %won_back, %foils…); each original records %fulfill[p], the chance it can be delivered as it is — fulfilling an original is the premium form, otherwise the order is the maker's interpretation of its inspirational process, or a print; the spell recomputes under the published policy and an auditor checks the play is a reachable game state, so the reason for a price can be discussed and checked"
+}

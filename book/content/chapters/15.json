@@ -1,10 +1,10 @@
 {
   "chapterNumber": 15,
-  "title": "Child, Parcel, or Door",
+  "title": "Pupil, Parcel, or Door",
   "logline": "A straight line across Boon.land comes out at Bonk City's parcel gate, where a porter holds off a storm for a stranger — and by morning three honest records disagree about what came through.",
   "epigraph": "Every record of him was correct. That was the trouble.",
   "inWhich": "one stranger is written down three ways, and all three are right",
-  "description": "Chapter 15 of Lore.Land: Child, Parcel, or Door. A straight line across Boon.land comes out where no road arrives — at Bonk City's low parcel gate, at dusk, with a storm behind it. The porter holds the gate for a figure whose hat will not fit under the lintel, and signs for the spoiled feast flour in his own name. By morning the gate-book has the stranger as a parcel, the carpenter's log as a door, the night school's roll as a child, and Mx. BoneWAP pins all three side by side. By one o'clock, the city has decided the destined one is the dog.",
+  "description": "Chapter 15 of Lore.Land: Pupil, Parcel, or Door. A straight line across Boon.land comes out where no road arrives — at Bonk City's low parcel gate, at dusk, with a storm behind it. The porter holds the gate for a figure whose hat will not fit under the lintel, and signs for the spoiled feast flour in his own name. By morning the gate-book has the stranger as a parcel, the carpenter's log as a door, the night school's roll as a pupil, and Mx. BoneWAP pins all three side by side. By one o'clock, the city has decided the destined one is the dog.",
   "mood": "labyrinth",
   "period": "winter",
   "pillars": [
@@ -110,7 +110,7 @@
         "form",
         "parcel",
         "door",
-        "child",
+        "pupil",
         "door-rule",
         "rail-pins",
         "listening mallet",
@@ -374,15 +374,15 @@
         },
         {
           "type": "paragraph",
-          "text": "In the morning the night school's mistress found him at the back of her room. Her pupils were practicing for the feast, as they did every winter, walking brass pie-dividers round paper pies to cut them into even slices for luck. Pie-dividers never come out even; the sliver left over is the luck. The mistress keeps the slivers in the sliver tin on her windowsill. Each winter’s slivers fill half the room the last winter left, so the tin is always filling and has never once been full."
+          "text": "In the morning the night school's mistress found him at the back of her room. Her pupils, porters and lamplighters and laundresses who come after the day’s work to learn their letters, were practicing for the feast, as they did every winter, walking brass pie-dividers round paper pies to cut them into even slices for luck. Pie-dividers never come out even; the sliver left over is the luck. The mistress keeps the slivers in the sliver tin on her windowsill. Each winter’s slivers fill half the room the last winter left, so the tin is always filling and has never once been full."
         },
         {
           "type": "paragraph",
-          "text": "After pies came combines. Each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box warmed between mittens. If the nouns agreed, the box fogged into a small weather. It teaches a child what will hold together before anything is built. Chalk is cheaper than oak, the mistress tells them, and a box that will not fog has cost nobody a beam."
+          "text": "After pies came combines. Each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box warmed between mittens. If the nouns agreed, the box fogged into a small weather. It teaches a pair of hands what will hold together before anything is built. Chalk is cheaper than oak, the mistress tells them, and a box that will not fog has cost nobody a beam."
         },
         {
           "type": "paragraph",
-          "text": "One girl's {frost & hearth} snowed warm, and the front bench caught the hearth-drift on their tongues. A boy's <river ~ moon> ran pale and would not stay. On the window the warm snow fogged the . face, the inside one; the # face, out to the lane, stayed clear."
+          "text": "One laundress's {frost & hearth} snowed warm, and the front bench caught the hearth-drift on their tongues. A lamplighter's <river ~ moon> ran pale and would not stay. On the window the warm snow fogged the . face, the inside one; the # face, out to the lane, stayed clear."
         },
         {
           "type": "paragraph",
@@ -394,7 +394,7 @@
         },
         {
           "type": "paragraph",
-          "text": "She called on him. He did not say anything. She wrote him on her roll — one pupil, new, quiet, hand up — and left the space for his name blank, because you do not fill in a child's name for them."
+          "text": "She called on him. He did not say anything. She wrote him on her roll — one pupil, new, quiet, hand up — and left the space for his name blank, because you do not fill in anyone’s name for them."
         },
         {
           "type": "paragraph",
@@ -409,7 +409,7 @@
         "alt": "A page from the parcel gate's book: a plain pencil figure under a floating black bowler hat, a parcel tag on one arm and a horn button in the other hand, measured in red pencil as a door; the gate-book's columns on the left end in 'parcel', the night school's roll on the right ends in 'one pupil, new, quiet, hand up' with the name left blank, and a damage slip is signed in a scribble.",
         "loading": "lazy"
       },
-      "figcaption": "Child, Parcel, or Door: one stranger, three honest records on one page."
+      "figcaption": "Pupil, Parcel, or Door: one stranger, three honest records on one page."
     },
     {
       "type": "section",
@@ -440,12 +440,12 @@
         },
         {
           "type": "paragraph",
-          "text": "“Lean on any of them,” said BoneWAP, “and see if it holds.” They tapped the board. “A parcel is a thing someone is responsible for until it arrives. A door is a thing someone is responsible for keeping in good order. A child is both of those, for a great deal longer.” They stepped back. “I would not take any of them down. When the archive's glassing press has them, it can press all three, one over another.”",
+          "text": "“Lean on any of them,” said BoneWAP, “and see if it holds.” They tapped the board. “A parcel is a thing someone is responsible for until it arrives. A door is a thing someone is responsible for keeping in good order. A pupil is both of those, for as long as the lessons take.” They stepped back. “I would not take any of them down. When the archive's glassing press has them, it can press all three, one over another.”",
           "lean": "bone"
         },
         {
           "type": "paragraph",
-          "text": "“Glass over, never scrape,” said the clerk; every child in Bonk City copies it at the night school."
+          "text": "“Glass over, never scrape,” said the clerk; everyone who has sat a winter at the night school has copied it."
         },
         {
           "type": "paragraph",
@@ -454,11 +454,11 @@
         },
         {
           "type": "paragraph",
-          "text": "Before lunch the clerk had one, headed in a careful hand: [child, parcel, door]. A window of a form: three boxes to look into, none to stand in."
+          "text": "Before lunch the clerk had one, headed in a careful hand: [pupil, parcel, door]. A window of a form: three boxes to look into, none to stand in."
         },
         {
           "type": "bracework",
-          "spw": "[child, parcel, door]",
+          "spw": "[pupil, parcel, door]",
           "gloss": "A window of a form: three boxes to look into and none to stand in, so the city can keep all three records side by side without choosing among them.",
           "maker": "the records office clerk"
         },
@@ -542,7 +542,7 @@
         "description": "Under the gate the figure retrieves a horn button lost in the plaza long ago: round, with two holes."
       },
       {
-        "description": "Three honest records: the gate-book says parcel, the carpenter's log says door (opens inward), the night school's roll says child (name left blank)."
+        "description": "Three honest records: the gate-book says parcel, the carpenter's log says door (opens inward), the night school's roll says pupil (name left blank)."
       },
       {
         "description": "Mx. BoneWAP pins all three side by side and will not take any of them down."
@@ -563,13 +563,13 @@
         "description": "The night school cuts paper pies with pie-dividers that never come out even (the sliver is the luck) and plays combines: two nouns from a hat, a sigil and a container, and a brace-box warmed between mittens fogs into a small weather. {frost & hearth} snows warm."
       },
       {
-        "description": "The records clerk's new form is headed [child, parcel, door]: a window of a form, three boxes to look into and none to stand in."
+        "description": "The records clerk's new form is headed [pupil, parcel, door]: a window of a form, three boxes to look into and none to stand in."
       },
       {
-        "description": "Under [child, parcel, door] the clerk ruled one more box with no heading: a good form needs a box for what you do not know, left honestly open, or the next thing through the gate must be cut down to fit the last. BoneWAP tapped it and it held. By one o’clock the city, which kept no such box, had decided it was the dog."
+        "description": "Under [pupil, parcel, door] the clerk ruled one more box with no heading: a good form needs a box for what you do not know, left honestly open, or the next thing through the gate must be cut down to fit the last. BoneWAP tapped it and it held. By one o’clock the city, which kept no such box, had decided it was the dog."
       },
       {
-        "description": "The night school’s copybook lines: write it before you argue it; one shard at a time; keep the morning, not the week. Chalk is cheaper than oak, the mistress tells pupils whose brace-boxes will not fog; every child in Bonk City copies glass over, never scrape there, the clerk included."
+        "description": "The night school’s copybook lines: write it before you argue it; one shard at a time; keep the morning, not the week. Chalk is cheaper than oak, the mistress tells pupils whose brace-boxes will not fog; everyone who sits a winter there copies glass over, never scrape, the clerk included."
       }
     ]
   },
@@ -590,7 +590,7 @@
       {
         "name": "the night school’s mistress",
         "want": "every raised hand called on",
-        "voice": "round hand, warm room; never fills in a child’s name for them"
+        "voice": "round hand, warm room; never fills in anyone’s name for them"
       },
       {
         "name": "the records clerk",

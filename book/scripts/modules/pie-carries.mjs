@@ -84,10 +84,17 @@ export function keepCarry(n, tally) {
 
 /** The reader's switch: may the carries lean the reading? On unless turned off. */
 export function projectionOn() {
-  try { return window.localStorage.getItem(PROJECTION_KEY) !== 'off'; } catch { return true; }
+  try {
+    // A spell can ask for this visit to read plainly (projection.mjs, ?plain=carries); the reader's own switch otherwise.
+    if (window.sessionStorage.getItem('lore.pie.projection.visit') === 'off') return false;
+    return window.localStorage.getItem(PROJECTION_KEY) !== 'off';
+  } catch { return true; }
 }
 export function setProjection(on) {
-  try { window.localStorage.setItem(PROJECTION_KEY, on ? 'on' : 'off'); } catch { /* this visit */ }
+  try {
+    window.sessionStorage.removeItem('lore.pie.projection.visit');
+    window.localStorage.setItem(PROJECTION_KEY, on ? 'on' : 'off');
+  } catch { /* this visit */ }
 }
 export function forgetCarries() {
   try { window.localStorage.removeItem(KEY); } catch { /* nothing kept */ }

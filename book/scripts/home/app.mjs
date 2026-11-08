@@ -28,8 +28,8 @@ import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.
 import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.A';
 import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
-import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.B';
-import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.A';
+import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.D';
+import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.D';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';

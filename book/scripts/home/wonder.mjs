@@ -3,7 +3,7 @@
 // the land riffles through them before it chooses, and the hat drawer keeps
 // the drawing of every sighting the reader has noticed in the chapters.
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { readCarries, carriesSummary, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.A';
+import { readCarries, carriesSummary, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.D';
 
 const FOUND_KEY = 'lore.home.curiosities.v1';
 const cabinet = document.querySelector('.wonder-cabinet');

@@ -52,9 +52,10 @@ import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_06.F';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_06.F';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_06.F';
-import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.B';
-import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.A';
+import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.D';
+import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.D';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.B';
+import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.D';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.A';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_06.A';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
@@ -184,6 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroySceneLight = initSceneLight({ chapterData, announce });
     const destroyTellings = initTellings({ chapterData, announce });
     const destroyStory = initStoryDirections();
+    const destroySpell = initProjectionSpell({ chapterData });
     const destroyPieSegues = initPieSegues({ chapterData });
     const destroyPieProjection = initPieProjection({ chapterData });
     let destroyMaterialPaths = null;
@@ -283,6 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyStory) destroyStory();
       if (destroyPieSegues) destroyPieSegues();
       if (destroyPieProjection) destroyPieProjection();
+      if (destroySpell) destroySpell();
       if (destroyMaterialPaths) destroyMaterialPaths();
       if (destroyBeginAgain) destroyBeginAgain();
       if (ebookNav?.destroy) ebookNav.destroy();
