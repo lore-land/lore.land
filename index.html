@@ -82,9 +82,9 @@
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.C&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_09_27.C&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.A"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.H"></script>
   <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_06.E">
-  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_05.C">
+  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_07.H">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
   <link rel="stylesheet" href="/book/styles/home/bindery.css?v=2026_11_06.E">
   <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_11_05.B"></script>
@@ -214,6 +214,44 @@
         </details>
       </section>
 
+      <section class="carry-band" id="carry" data-region="carry" aria-labelledby="carry-title">
+        <figure class="carry-figure" aria-hidden="true">
+          <svg viewBox="26 20 108 148" focusable="false">
+            <g class="carry-lanes" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 7" opacity="0.28">
+              <path d="M40 20 V168"/><path d="M120 20 V168"/>
+            </g>
+            <g class="carry-wonder">
+              <circle cx="114" cy="38" r="10" fill="none" stroke="#c4922e" stroke-width="2.2"/>
+              <text x="114" y="42.5" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="700" fill="currentColor">@</text>
+            </g>
+            <g class="carry-hat" fill="currentColor">
+              <ellipse cx="80" cy="76" rx="13" ry="3"/>
+              <path d="M72 76 V70 A8 7 0 0 1 88 70 V76 Z"/>
+            </g>
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="80" cy="96" r="9"/>
+              <rect x="72" y="107" width="16" height="26"/>
+              <path d="M76 133 L73 156 M84 133 L87 156 M72 110 L62 124 M88 110 L98 124"/>
+            </g>
+            <g fill="currentColor"><circle cx="77" cy="95" r="1.3"/><circle cx="83" cy="95" r="1.3"/></g>
+            <ellipse cx="80" cy="125" rx="21" ry="5" fill="#e9e2d4"/>
+            <ellipse cx="80" cy="121" rx="17" ry="6.5" fill="#c98a4a"/>
+            <path d="M70 118 l3 6 M76 117 l3 7 M82 117 l3 7 M88 118 l2 5" stroke="#7a3f18" stroke-width="0.8" opacity="0.6"/>
+          </svg>
+        </figure>
+        <div class="carry-copy">
+          <p class="hub-eyebrow">Between stones · a small game</p>
+          <h2 id="carry-title">Exactly One Pie</h2>
+          <p class="hub-section-lede">Someone is destined to spill exactly one pie. Carry it, level, through the whole book: the chapters go by on either side, their wonders wait up the lanes, clowns want their share, and Mimes Against WAP would rather you didn’t. It is not always the same someone under the hat.</p>
+          <ul class="carry-doors">
+            <li><a href="/pie/?chapter=1&amp;from=%2F%23carry">Carry it from Chapter One</a></li>
+            <li><a href="/pie/?chapter=14&amp;from=%2F%23carry">Carry it into Book Two</a></li>
+            <li><a href="/pie/?scene=table&amp;from=%2F%23carry">To the long table, where the next stone is set</a></li>
+          </ul>
+          <p class="carry-record" data-carry-record></p>
+        </div>
+      </section>
+
       <section class="bindery" id="bindery" data-region="bindery" data-cover="paper" aria-labelledby="bindery-title">
         <div class="bindery-copy">
           <p class="hub-eyebrow">At the folio house · how your copy is bound</p>
@@ -275,6 +313,7 @@
               <p class="wonder-whisper">The remainder is where the next story begins.</p>
               <a href="/book/chapter/06/">Meet the pie beneath Bonk City's lanterns →</a>
               <a href="/topics/#motif">Trace the things that keep returning →</a>
+              <a href="/pie/?from=%2F%23curiosity-pie">Carry exactly one through the book, and count your own →</a>
             </div>
           </details>
           <details class="wonder-drawer" id="curiosity-hat">
@@ -367,7 +406,7 @@
       </section>
 
       <nav class="route-rail" id="routes" data-region="routes" aria-label="Ways through Lore.Land">
-        <p class="route-rail-label">Choose a route <span>Nine ways into the same land</span></p>
+        <p class="route-rail-label">Choose a route <span>Ten ways into the same land</span></p>
         <a class="route-rail-card" href="/book/chapter/01/" data-priority="primary" data-route="read">
           <span class="route-rail-index" aria-hidden="true">01</span>
           <span class="route-rail-kicker">Read</span>
@@ -422,6 +461,12 @@
           <span class="route-rail-title">Almanac</span>
           <span class="route-rail-note">Keep the creatures and contrivances you find.</span>
         </a>
+        <a class="route-rail-card" href="/pie/?from=%2F%23routes" data-route="pie">
+          <span class="route-rail-index" aria-hidden="true">10</span>
+          <span class="route-rail-kicker">Play</span>
+          <span class="route-rail-title">Exactly One Pie</span>
+          <span class="route-rail-note">Carry the book, level, and spill it once.</span>
+        </a>
       </nav>
 
       <section class="hub-aside-band hub-spark" id="spark" data-region="spark" data-climate="ember" aria-labelledby="spark-title">
@@ -453,6 +498,7 @@
               <li><a href="/folios/">Folios · pages under glass, liquid until they season</a></li>
           <li><a href="/scriptorium/#patron-seals">Patron seals · marked funding</a></li>
           <li><a href="/zine/">Boonberry Broadside · a zine you fold from one sheet</a></li>
+          <li><a href="/pie/">Exactly One Pie · the prophecy, carried through the book</a></li>
           <li><a href="/seeds/2026-02-28/">Visual seed archive</a></li>
           <li><a href="https://spwashi.com/town/" rel="noopener noreferrer">Town Atlas</a></li>
         </ul>

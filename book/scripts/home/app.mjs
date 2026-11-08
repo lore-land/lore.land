@@ -28,6 +28,7 @@ import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.
 import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_07.A';
 import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
+import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_07.D';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -463,6 +464,31 @@ function initArtifactCircuit() {
   };
 }
 
+/* Exactly One Pie, between stones: a door from where the reader stopped, and their own furthest carry. */
+function initCarryBand() {
+  const band = document.getElementById('carry');
+  if (!band) return;
+  const resume = readResumeChapter();
+  const doors = band.querySelector('.carry-doors');
+  if (doors && resume > 1 && resume !== 14) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'is-yours';
+    a.href = `/pie/?chapter=${resume}&from=${encodeURIComponent('/#carry')}`;
+    a.textContent = `Carry it from ${chapterWords(resume)}, where you stopped`;
+    li.append(a);
+    doors.prepend(li);
+  }
+  const out = band.querySelector('[data-carry-record]');
+  if (!out) return;
+  let record = null;
+  try { record = JSON.parse(window.localStorage.getItem('lore.pie.v1') || 'null'); } catch { record = null; }
+  if (!record || !Number(record.runs)) return;
+  const reached = Number(record.reached) >= 1 && Number(record.reached) <= TOTAL_CHAPTERS ? `, as far as ${chapterWords(Number(record.reached))}` : '';
+  const waps = Number(record.waps) ? ` Clowns given WAP: ${record.waps}${Number(record.satisfied) ? `, ${record.satisfied} satisfied` : ''}.` : '';
+  out.textContent = `Your furthest carry: ${Number(record.best) || 0} cobbles${reached}.${waps} Exactly one pie spilled each time; the hat has not fallen.`;
+}
+
 function initMonumentEntrance() {
   if (!document.body || document.body.dataset.surface !== 'monument') {
     return;
@@ -480,6 +506,7 @@ function initMonumentEntrance() {
   injectSvgFilters(document);
   enhanceLazyImages({ root: document });
   initStorySpark();
+  initCarryBand();
   markCurrentChapterInIndex();
   enhancePrimaryCta();
   addBeginAgain();

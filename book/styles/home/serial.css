@@ -650,10 +650,134 @@ body[data-surface='monument'] .serial-stone-count {
   letter-spacing: 0.06em;
 }
 
-/* Nine routes sit as a three-by-three field guide on wide screens. */
+/* Ten routes sit as a five-by-two field guide on wide screens. */
 body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='almanac'] { --route-accent: var(--hub-berry); }
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-route='pie'] { --route-accent: var(--hub-gold); }
 @media (min-width: 64rem) {
   body[data-surface='monument'] .route-rail[data-region='routes'] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ─── Exactly One Pie, between stones ─────────────────────────────
+ * The figure as the game draws him — one circle, one rectangle, four
+ * lines, two dots, in the page's own ink — with the hat a breath above
+ * his head and the pie level in both hands. Doors start the carry where
+ * the book is: the beginning, Book Two, or the long table where the next
+ * stone is set. A returning carrier sees their own furthest carry. */
+body[data-surface='monument'] .carry-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem 1.6rem;
+  align-items: center;
+  scroll-margin-top: 6rem;
+  padding: clamp(1.1rem, 3vw, 2rem);
+  border: 1px solid var(--hub-line);
+  border-left: 3px solid var(--hub-gold);
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(ellipse at 0% 50%, color-mix(in srgb, var(--hub-gold) 12%, transparent), transparent 60%),
+    var(--hub-panel);
+}
+
+body[data-surface='monument'] .carry-figure {
+  justify-self: center;
+  width: min(9rem, 40vw);
+  margin: 0;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .carry-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+body[data-surface='monument'] .carry-hat {
+  animation: carry-hat 4.2s ease-in-out infinite;
+}
+
+@keyframes carry-hat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+body[data-surface='monument'] .carry-copy h2 {
+  margin: 0.3rem 0 0.5rem;
+  font-family: var(--hub-display);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .carry-copy .hub-section-lede {
+  max-width: 44rem;
+}
+
+body[data-surface='monument'] .carry-doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  margin: 0.95rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .carry-doors li {
+  max-width: none;
+  margin: 0;
+}
+
+body[data-surface='monument'] .carry-doors a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 50%, var(--hub-line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-gold) 8%, var(--hub-panel));
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+body[data-surface='monument'] .carry-doors a:hover,
+body[data-surface='monument'] .carry-doors a:focus-visible {
+  border-color: var(--hub-gold);
+  transform: translateY(-1px);
+}
+
+body[data-surface='monument'] .carry-doors a.is-yours {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 18%, var(--hub-panel));
+}
+
+body[data-surface='monument'] .carry-record {
+  margin: 0.8rem 0 0;
+  font-family: var(--hub-display);
+  font-style: italic;
+  color: var(--hub-accent-deep);
+}
+
+body[data-surface='monument'] .carry-record:empty {
+  display: none;
+}
+
+@media (min-width: 44rem) {
+  body[data-surface='monument'] .carry-band {
+    grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr);
+  }
+  body[data-surface='monument'] .carry-figure {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] .carry-hat {
+    animation: none;
   }
 }
