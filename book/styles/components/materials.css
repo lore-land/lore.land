@@ -1,0 +1,203 @@
+/*
+ * materials.css — what the land is made of, as tokens (materials.mjs).
+ *
+ * A component that is made of something says so with data-material, and
+ * reads its look from four tokens instead of a fixed accent:
+ *
+ *   --mat-ink     the material's own colour, for sigils and kickers
+ *   --mat-edge    its edge: borders, rules, the accent a card is drawn with
+ *   --mat-ground  what it sits on: a tint of the page mixed with the material
+ *   --mat-sheen   its surface: glass shines, flour dusts, oak has a grain
+ *
+ * So a route card made of glass looks like Bonk glass in every binding (the
+ * tokens mix with the page's own --hub-* / --color-* values), and the reading
+ * lens can lean on them too: when a chapter is tuned toward a land (--w-boon,
+ * --w-bane, --w-bone, lens-control.mjs), a material card warms, sours or
+ * steadies a little with it. .mat-card is the shared surface.
+ */
+
+:root {
+  --mat-paper: var(--hub-panel, var(--color-background-panel, #fbf7ef));
+}
+
+[data-material='glass'] {
+  --mat-ink: #2f6b78;
+  --mat-edge: #7fb4c0;
+  --mat-ground: color-mix(in srgb, #cfeaf0 26%, var(--mat-paper));
+  /* Bonk glass keeps every knock: a hairline crack across the shine. */
+  --mat-sheen:
+    linear-gradient(118deg, transparent 47%, rgba(255, 255, 255, 0.55) 48%, transparent 49.5%),
+    linear-gradient(64deg, transparent 61%, rgba(47, 107, 120, 0.18) 61.6%, transparent 62.4%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.45), transparent 38%);
+}
+
+[data-material='flour'] {
+  --mat-ink: #8a7448;
+  --mat-edge: #d9c9a2;
+  --mat-ground: color-mix(in srgb, #f6efe0 55%, var(--mat-paper));
+  /* A dusting, never a stain. */
+  --mat-sheen:
+    radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.9) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 72% 64%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 44% 82%, rgba(255, 255, 255, 0.8) 0 1.4px, transparent 2.2px),
+    radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.8px);
+}
+
+[data-material='berry'] {
+  --mat-ink: #2c6f69;
+  --mat-edge: #4d9f97;
+  --mat-ground: color-mix(in srgb, #dff0ec 30%, var(--mat-paper));
+  /* Teal and amber, lit from within. */
+  --mat-sheen: radial-gradient(circle at 85% 20%, rgba(244, 178, 92, 0.38), transparent 42%);
+}
+
+[data-material='frost'] {
+  --mat-ink: #4a6d86;
+  --mat-edge: #b7cfdd;
+  --mat-ground: color-mix(in srgb, #eef5f9 50%, var(--mat-paper));
+  --mat-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.7), transparent 30%);
+}
+
+[data-material='ink'] {
+  --mat-ink: var(--hub-ink, var(--color-text-main, #1d1d22));
+  --mat-edge: color-mix(in srgb, var(--hub-ink, #1d1d22) 55%, transparent);
+  --mat-ground: var(--mat-paper);
+  /* Plain lines: ruled, like a copybook. */
+  --mat-sheen: repeating-linear-gradient(180deg, transparent 0 1.35rem, color-mix(in srgb, var(--hub-ink, #1d1d22) 7%, transparent) 1.35rem calc(1.35rem + 1px));
+}
+
+[data-material='brass'] {
+  --mat-ink: #7a5a1c;
+  --mat-edge: #c49a3a;
+  --mat-ground: color-mix(in srgb, #f3e6c4 30%, var(--mat-paper));
+  --mat-sheen: linear-gradient(100deg, transparent 20%, rgba(255, 236, 180, 0.5) 32%, transparent 44%);
+}
+
+[data-material='steam'] {
+  --mat-ink: #9a4f22;
+  --mat-edge: #e0a35e;
+  --mat-ground: color-mix(in srgb, #fbe9d6 34%, var(--mat-paper));
+  --mat-sheen: radial-gradient(ellipse at 50% 120%, rgba(240, 160, 90, 0.3), transparent 60%);
+}
+
+[data-material='oak'] {
+  --mat-ink: #6a4426;
+  --mat-edge: #a87a50;
+  --mat-ground: color-mix(in srgb, #efe1cf 32%, var(--mat-paper));
+  /* The grain runs the long way. */
+  --mat-sheen: repeating-linear-gradient(92deg, transparent 0 9px, rgba(106, 68, 38, 0.05) 9px 10px, transparent 10px 23px);
+}
+
+/* The shared surface: anything made of a material. */
+.mat-card[data-material] {
+  border: 1px solid var(--mat-edge);
+  background: var(--mat-sheen, none), var(--mat-ground);
+  /* The reading lens leans a material card a little: warmer toward boon, sharper toward bone. */
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #d9a23a calc((var(--w-boon, 0.333) - 0.333) * 60%), transparent),
+    0 0.6rem 1.4rem color-mix(in srgb, var(--mat-ink) 10%, transparent);
+}
+
+/* ─── Chapters: follow what this chapter is made of (material-paths.mjs) ── */
+main.chapter > .material-paths {
+  margin: 1.4rem auto 0;
+  max-width: var(--flow-width, 66ch);
+}
+
+main.chapter .material-paths-label {
+  margin: 0 0 0.6rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-alt, currentColor);
+}
+
+main.chapter .material-paths-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+main.chapter .material-path {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  column-gap: 0.5rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.6rem;
+}
+
+main.chapter .material-path-sigil {
+  grid-row: span 3;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--mat-ink);
+}
+
+main.chapter .material-path-name {
+  font-family: var(--font-family-heading, Georgia, serif);
+  font-size: 1rem;
+  color: var(--mat-ink);
+}
+
+main.chapter .material-path-gloss {
+  font-style: italic;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+main.chapter .material-path-doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+  margin-top: 0.4rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+}
+
+main.chapter .material-path-door {
+  color: var(--mat-ink);
+}
+
+main.chapter .material-path-door.is-back {
+  opacity: 0.75;
+}
+
+main.chapter .material-path-door.is-last {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ─── The entrance and the rooms: route cards wear their material ──────── */
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-material] {
+  --route-accent: var(--mat-edge);
+  --route-ink: var(--mat-ink);
+  background:
+    var(--mat-sheen, none),
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--mat-edge) 16%, transparent), transparent 55%),
+    var(--mat-ground);
+}
+
+body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card[data-material] .route-rail-title {
+  color: var(--mat-ink);
+}
+
+body[data-surface='monument'] .topic-board .topic-card[data-material] {
+  border-color: var(--mat-edge);
+  background: var(--mat-sheen, none), var(--mat-ground);
+}
+
+body[data-surface='monument'] .topic-board .topic-card[data-material] h2 {
+  color: var(--mat-ink);
+}
+
+@media (prefers-contrast: more) {
+  [data-material] {
+    --mat-sheen: none;
+  }
+}

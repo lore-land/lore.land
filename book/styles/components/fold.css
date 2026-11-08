@@ -1,0 +1,289 @@
+/*
+ * fold.css — the map that will not lie flat (lore-fold.mjs).
+ *
+ * A Poincaré disk in the page's own ink: the rim a line, the families in
+ * their sigils' colours, everything shrinking toward the edge without falling
+ * off it. The question's gradient arrives as tokens: --fold-w on each node,
+ * chapter cell and topic card; --fold-boon / --fold-bane / --fold-bone and
+ * --fold-heat on the map, which tint its ground toward the lands it lit.
+ */
+
+.lore-fold {
+  --fold-boon: 0;
+  --fold-bane: 0;
+  --fold-bone: 0;
+  --fold-heat: 0;
+  --fold-gold: var(--hub-gold, #c4922e);
+  scroll-margin-top: 5rem;
+  margin: clamp(1.4rem, 4vw, 2.6rem) 0;
+  padding: clamp(1rem, 3vw, 1.8rem);
+  border: 1px solid var(--hub-line, rgba(0, 0, 0, 0.12));
+  border-radius: 0.8rem;
+  background:
+    radial-gradient(circle at 20% 15%, color-mix(in srgb, #d9a23a calc(var(--fold-boon) * 22%), transparent), transparent 55%),
+    radial-gradient(circle at 85% 80%, color-mix(in srgb, #7a3f9a calc(var(--fold-bane) * 20%), transparent), transparent 55%),
+    radial-gradient(circle at 80% 10%, color-mix(in srgb, #9aa3ad calc(var(--fold-bone) * 26%), transparent), transparent 50%),
+    var(--hub-panel, #fbf7ef);
+  transition: background 600ms ease;
+}
+
+.lore-fold[hidden] {
+  display: none;
+}
+
+.lore-fold h2 {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.lore-fold .hub-section-lede {
+  max-width: 46rem;
+}
+
+.lore-fold-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 56rem) {
+  .lore-fold-body {
+    grid-template-columns: minmax(18rem, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.fold-stage {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fold-disk {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 1;
+  justify-self: center;
+  color: var(--hub-ink, #1d1d22);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fold-rim {
+  fill: color-mix(in srgb, var(--hub-paper, #f3ede1) 70%, transparent);
+  stroke: currentColor;
+  stroke-width: 0.006;
+  opacity: 0.9;
+}
+
+.fold-edges path {
+  fill: none;
+  stroke: color-mix(in srgb, currentColor 22%, transparent);
+  stroke-width: 0.0025;
+}
+
+.fold-edges path.is-trunk {
+  stroke-width: 0.004;
+  stroke: color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.fold-edges path.is-lit {
+  stroke: color-mix(in srgb, var(--fold-gold) 75%, transparent);
+  stroke-width: 0.004;
+}
+
+.fold-links path {
+  fill: none;
+  stroke: var(--fold-gold);
+  stroke-width: 0.004;
+  stroke-dasharray: 0.012 0.01;
+  opacity: 0.8;
+}
+
+.fold-node circle {
+  fill: color-mix(in srgb, currentColor 30%, transparent);
+  transition: fill 300ms ease;
+}
+
+.fold-node text {
+  fill: currentColor;
+  font-family: var(--font-family-heading, Georgia, serif);
+  paint-order: stroke;
+  stroke: color-mix(in srgb, var(--hub-paper, #f3ede1) 85%, transparent);
+  stroke-width: 0.006;
+  pointer-events: none;
+}
+
+.fold-node.is-root circle { fill: currentColor; }
+.fold-node.is-hub circle { fill: color-mix(in srgb, currentColor 60%, transparent); }
+.fold-node.is-chapter circle { fill: #2f6b78; }
+.fold-node.is-thread circle { fill: #4d9f97; }
+.fold-node:is(.is-motif, .is-trope, .is-foreshadow) circle { fill: #b0602a; }
+.fold-node.is-voice circle { fill: #5b3a6e; }
+.fold-node.is-lean circle { fill: #9aa3ad; }
+.fold-node.is-material circle { fill: #a87a50; }
+.fold-node.is-wonder circle { fill: #c4922e; }
+
+/* The question's gradient: lit things warm toward gold, by how much. */
+.fold-node.is-lit circle {
+  fill: color-mix(in srgb, var(--fold-gold) calc(40% + var(--fold-w) * 60%), currentColor);
+  stroke: var(--fold-gold);
+  stroke-width: calc(var(--fold-w) * 0.008);
+}
+
+.fold-node.is-seed circle {
+  stroke: currentColor;
+  stroke-width: 0.006;
+}
+
+.fold-node.is-focus circle {
+  stroke: currentColor;
+  stroke-width: 0.008;
+}
+
+.fold-focus {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.fold-ask {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fold-ask-label {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted, #5b6472);
+}
+
+.fold-ask-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.fold-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--hub-line, rgba(0, 0, 0, 0.18));
+  border-radius: 0.5rem;
+  background: var(--hub-paper, #fff);
+  color: var(--hub-ink, #1d1d22);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 1rem;
+}
+
+.fold-input:focus-visible {
+  outline: 2px solid var(--fold-gold);
+  outline-offset: 1px;
+}
+
+.fold-go,
+.fold-example {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--fold-gold) 55%, var(--hub-line, #ccc));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fold-gold) 8%, var(--hub-panel, #fff));
+  color: var(--hub-ink, #1d1d22);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.fold-example {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.72rem;
+}
+
+.fold-examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--hub-muted, #5b6472);
+}
+
+.fold-said {
+  margin: 0;
+  font-style: italic;
+  color: var(--hub-accent-deep, #18484f);
+}
+
+/* Chapter by chapter: the heat of the question. */
+.fold-chapters {
+  display: grid;
+  grid-template-columns: repeat(15, minmax(0, 1fr));
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fold-chapter {
+  max-width: none;
+  margin: 0;
+}
+
+.fold-chapter a {
+  display: grid;
+  place-items: center;
+  min-height: 2.2rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--fold-gold) calc(var(--fold-w, 0) * 85%), color-mix(in srgb, var(--hub-ink, #000) 6%, transparent));
+  color: var(--hub-ink, #1d1d22);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  text-decoration: none;
+}
+
+.fold-chapter small {
+  font-size: 0.55rem;
+  opacity: 0.8;
+}
+
+.fold-chapter:not(.is-warm) a {
+  opacity: 0.55;
+}
+
+.fold-places {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.92rem;
+}
+
+.fold-places li.is-first {
+  font-weight: 600;
+}
+
+.fold-place-why {
+  color: var(--hub-muted, #5b6472);
+  font-size: 0.82rem;
+}
+
+/* Projected onto the page: topic cards lean with the question. */
+.topic-card {
+  transition: box-shadow 400ms ease, transform 400ms ease;
+}
+
+.topic-card.is-folded-in {
+  box-shadow: 0 0 0 calc(1px + var(--fold-w, 0) * 3px) color-mix(in srgb, var(--hub-gold, #c4922e) calc(35% + var(--fold-w, 0) * 65%), transparent);
+  transform: translateY(calc(var(--fold-w, 0) * -3px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lore-fold,
+  .topic-card {
+    transition: none;
+  }
+}

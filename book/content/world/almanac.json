@@ -1760,6 +1760,82 @@
         13
       ],
       "craft": "Types that admit the unclassified: a schema with room for what it cannot name yet is a schema that lasts."
+    },
+    {
+      "id": "remainder-moths",
+      "name": "Remainder-moths",
+      "kind": "creature",
+      "region": "the lamp-lit lanes of Bonk City",
+      "terms": [
+        "remainder-moths",
+        "remainder-moth"
+      ],
+      "note": "They fly round a flame in laps that never close: each circle comes round a little past where it began, so no remainder-moth has ever landed on the same spot twice. Count their laps and the count never comes out even.",
+      "hint": "A circle that does not quite come home.",
+      "prompt": {
+        "vantage": "low on the wet cobbles of a back lane at dusk, nose tipped up toward a dent-lantern just lit",
+        "light": "storm-green dusk; one new flame in a dented lantern, warm amber, the glass around it humming",
+        "scent": "lamp-oil, wet slate, singed dust, rain on cold glass",
+        "edges": [
+          "pale moths circling the flame in loops that each overshoot the last, a spirograph of near-misses",
+          "a lamplighter's ladder folded into a staff against the wall",
+          "a pane-snail clamped flat to the lantern glass",
+          "dust-marks on the glass where no two moths ever touched the same place"
+        ],
+        "hint": "a dented Bonk City lantern at storm-green dusk, pale remainder-moths circling the new flame in loops that never quite close, each lap landing a little past the last like a spirograph, dust-marks on the glass never repeating, wet cobbles, lamp-oil haze, painterly, quiet, mathematical wonder"
+      },
+      "home": 15,
+      "echoes": []
+    },
+    {
+      "id": "frill-lichen",
+      "name": "Frill-lichen",
+      "kind": "creature",
+      "region": "old stones beside the lanes",
+      "terms": [
+        "frill-lichen"
+      ],
+      "note": "Grows round cut letters on any stone that has been read aloud: a grey-green ruffle with more edge than room. It folds and folds and never once runs out of edge, the way a crocheted reef does.",
+      "hint": "More edge than room.",
+      "prompt": {
+        "vantage": "nose to a weathered field stone at the height a hand rests, the carved words close enough to breathe on",
+        "light": "low frost-white morning, sun raking across the stone so every fold of the lichen throws a shadow",
+        "scent": "cold stone, iron from the ring, damp lichen, many hands",
+        "edges": [
+          "a grey-green ruffle of lichen crowding the edges of carved letters, folded back on itself over and over",
+          "an iron ring set in the stone, rubbed bright where hands have rested",
+          "frost in the cut grooves of the words",
+          "the ruffle denser at the margins than in the middle, as if edge were the point"
+        ],
+        "hint": "macro view of a weathered field stone with carved words, grey-green frill-lichen crowding the letters in ever-folding hyperbolic ruffles like crocheted coral, more edge than area, frost in the grooves, an iron ring rubbed bright, raking winter morning light, painterly, exact, quiet wonder"
+      },
+      "home": 14,
+      "echoes": []
+    },
+    {
+      "id": "sliver-tin",
+      "name": "The sliver tin",
+      "kind": "contrivance",
+      "region": "the night school, Bonk City",
+      "terms": [
+        "sliver tin"
+      ],
+      "note": "Where the night school keeps the slivers its pie-dividers leave over. Each winter's slivers fill half the room the last winter left, so the tin is always filling and has never once been full.",
+      "hint": "Always filling, never full.",
+      "prompt": {
+        "vantage": "chin on the night school's windowsill, among chalk dust and cold glass",
+        "light": "early winter morning through frosted panes; the tin catching a thin stripe of gold",
+        "scent": "chalk, cold tin, paper pies, a little old crust",
+        "edges": [
+          "a round tin on the sill, lid ajar, slivers of paper pie inside in rings that get thinner toward the top",
+          "brass pie-dividers resting open beside it",
+          "a slate with a sum chalked on it that keeps adding halves",
+          "frost ferns on the pane behind"
+        ],
+        "hint": "a round tin on a frosted night-school windowsill holding paper pie slivers stacked in thinning rings, each layer half the last, never reaching the brim, brass pie-dividers open beside it, a chalk slate of halves, early winter light, painterly, cozy, mathematical"
+      },
+      "home": 15,
+      "echoes": []
     }
   ]
 }

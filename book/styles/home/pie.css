@@ -1147,6 +1147,39 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-ink);
 }
 
+.pie-flow-now-ties {
+  font-size: 0.76rem;
+  color: var(--hub-muted);
+}
+
+.pie-flow-slot {
+  border-bottom: 1px dotted color-mix(in srgb, var(--hub-ink) 40%, transparent);
+  cursor: pointer;
+  transition: color 220ms ease, border-color 220ms ease;
+}
+
+.pie-flow-slot.is-turned {
+  color: var(--hub-accent-deep);
+  border-bottom-color: var(--hub-gold);
+}
+
+.pie-carries-ties {
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.48;
+  color: var(--hub-muted);
+}
+
+.pie-carries-ties code {
+  padding: 0.06rem 0.36rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.3rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.8em;
+}
+
 .pie-flow-now-lean,
 .pie-carries-lean {
   display: flex;

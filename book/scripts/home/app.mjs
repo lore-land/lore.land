@@ -16,7 +16,7 @@ import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_11_06.D';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
-import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_05.A';
+import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_08.B';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
@@ -28,7 +28,8 @@ import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.
 import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.A';
 import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
-import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_07.D';
+import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.B';
+import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.A';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -484,9 +485,11 @@ function initCarryBand() {
   let record = null;
   try { record = JSON.parse(window.localStorage.getItem('lore.pie.v1') || 'null'); } catch { record = null; }
   if (!record || !Number(record.runs)) return;
+  const sum = carriesSummary(readCarries());
   const reached = Number(record.reached) >= 1 && Number(record.reached) <= TOTAL_CHAPTERS ? `, as far as ${chapterWords(Number(record.reached))}` : '';
   const waps = Number(record.waps) ? ` Clowns given WAP: ${record.waps}${Number(record.satisfied) ? `, ${record.satisfied} satisfied` : ''}.` : '';
-  out.textContent = `Your furthest carry: ${Number(record.best) || 0} cobbles${reached}.${waps} Exactly one pie spilled each time; the hat has not fallen.`;
+  const chapters = sum.carried ? ` Chapters carried through: ${sum.carried}.${sum.held.length ? ` Mimes Against WAP hold ${sum.held.length === 1 ? 'Chapter' : 'Chapters'} ${chapterList(sum.held)} (harder to wonder about pie there until won back).` : ''}` : '';
+  out.textContent = `Your furthest carry: ${Number(record.best) || 0} cobbles${reached}.${waps}${chapters} Exactly one pie spilled each time; the hat has not fallen.`;
 }
 
 function initMonumentEntrance() {

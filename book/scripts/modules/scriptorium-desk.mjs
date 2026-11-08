@@ -26,6 +26,7 @@ import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_0
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
 import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_06.B';
+import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.A';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -129,6 +130,7 @@ export const SPELLBOOK = Object.freeze([
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
   { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
+  { op: '?', example: '?[pie]', does: 'Your carries: how far, how many clowns got WAP, each chapter’s reading lean, and any chapter Mimes Against WAP hold.' },
   { op: '?', example: '?[living]', does: 'What breathes in the book: how many phrases turn by the minute, the hour and the day.' },
   { op: '?', example: '?[tellings]', does: 'How many of the book’s other tellings you have heard.' },
   { op: '?', example: '?[links]', does: 'What a link can carry to set the story: an edition, a lens, the room, a binding, pinned tellings.' },
@@ -385,8 +387,25 @@ export async function initScriptoriumDesk() {
         say(op, el('div', { className: 'desk-sightings' }, sketch,
           el('div', {}, el('p', {}, line),
             found.length ? el('ul', {}, found.map((s) => el('li', {}, el('a', { href: `/book/chapter/${pad(s.chapter)}/` }, `${pad(s.chapter)} · ${s.title}`)))) : null)));
+      } else if (handle === 'pie' || handle === 'carries') {
+        const record = readJSON('lore.pie.v1', {}) || {};
+        const all = readCarries();
+        const sum = carriesSummary(all);
+        const lines = Object.entries(all)
+          .sort((a, b) => Number(a[0]) - Number(b[0]))
+          .map(([n, entry]) => el('li', {},
+            el('a', { href: `/book/chapter/${pad(Number(n))}/` }, `${pad(Number(n))} · ${titleOf(Number(n))}`),
+            ` — ${describeLean(entry.lean)}${entry.maw === 'won' ? ' · held by the mimes' : entry.maw === 'back' ? ' · won back' : ''}`));
+        const said = Array.isArray(record.lore) ? record.lore.length : 0;
+        say(op, el('div', {},
+          el('p', {}, Number(record.runs)
+            ? `Furthest carry: ${Number(record.best) || 0} cobbles. Pies spilled: ${record.runs}, exactly one each time. Clowns given WAP: ${Number(record.waps) || 0}.${said ? ` Lines the pies let slip: ${said}.` : ''}`
+            : 'Nobody has carried it yet. @[pie] goes to the lanes.'),
+          sum.held.length ? el('p', {}, `Mimes Against WAP hold ${sum.held.length === 1 ? 'Chapter' : 'Chapters'} ${chapterList(sum.held)}: it is harder to wonder about pie there until you carry it through and out-do them.`) : null,
+          lines.length ? el('ul', {}, lines) : null,
+          el('p', {}, el('a', { href: '/pie/?from=%2Fscriptorium%2F#pie-carries' }, 'Every chapter’s mark, and the switch →'))));
       } else {
-        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf], ?[sightings], ?[almanac] or ?[find]{words}.`));
+        say(op, el('p', {}, `The desk does not know ?[${handle}] yet. Try ?[next], ?[new], ?[shelf], ?[sightings], ?[almanac], ?[pie] or ?[find]{words}.`));
       }
     } else if (op === '&') {
       const kinds = ['thread', 'motif', 'trope', 'foreshadow', 'lean', 'voice'];

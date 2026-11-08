@@ -271,7 +271,7 @@ function setupPrimaryAction(data, announce) {
   }
 
   const links = deriveChapterLinks(data);
-  primaryActionBtn.textContent = `Continue to Chapter ${String(links.next).padStart(2, '0')}`;
+  primaryActionBtn.textContent = `Carry on to Chapter ${String(links.next).padStart(2, '0')}`;
   delete primaryActionBtn.dataset.spwExpression;
   primaryActionBtn.setAttribute('aria-label', `Advance to chapter ${links.next}`);
   primaryActionBtn.addEventListener('click', () => {

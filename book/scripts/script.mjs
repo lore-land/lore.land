@@ -52,8 +52,9 @@ import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_06.F';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_06.F';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_06.F';
-import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_07.D';
+import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.B';
 import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.A';
+import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.B';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.A';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_06.A';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
@@ -185,6 +186,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyStory = initStoryDirections();
     const destroyPieSegues = initPieSegues({ chapterData });
     const destroyPieProjection = initPieProjection({ chapterData });
+    let destroyMaterialPaths = null;
+    initMaterialPaths({ chapterData }).then((destroy) => { destroyMaterialPaths = destroy; });
     const destroyBeginAgain = initBeginAgain({ chapterData, latest: TOTAL_CHAPTERS });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
@@ -280,6 +283,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyStory) destroyStory();
       if (destroyPieSegues) destroyPieSegues();
       if (destroyPieProjection) destroyPieProjection();
+      if (destroyMaterialPaths) destroyMaterialPaths();
       if (destroyBeginAgain) destroyBeginAgain();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
@@ -1008,7 +1012,7 @@ function setupPrimaryAction(data) {
     return;
   }
 
-  primaryActionButton.textContent = `Continue to Chapter ${String(links.next).padStart(2, '0')}`;
+  primaryActionButton.textContent = `Carry on to Chapter ${String(links.next).padStart(2, '0')}`;
   primaryActionButton.setAttribute('aria-label', `Advance to chapter ${links.next}`);
 
   primaryActionButton.addEventListener('click', () => {

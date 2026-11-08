@@ -53,6 +53,7 @@
   <link rel="stylesheet" href="/book/styles/chapter/reading.css?v={{RELEASE}}&ctx=chapter:reading">
   <link rel="stylesheet" href="/book/styles/chapter/bindings.css?v={{RELEASE}}&ctx=chapter:bindings">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v={{RELEASE}}&ctx=chapter:again">
+  <link rel="stylesheet" href="/book/styles/components/materials.css?v={{RELEASE}}&ctx=canon:materials">
   <link rel="stylesheet" href="/book/chapter/{{CHAPTER_SLUG}}/style.css?v={{RELEASE}}">
   <link id="period-styles" rel="stylesheet">
   <link id="mood-styles" rel="stylesheet">
@@ -199,16 +200,16 @@
     <ul id="lore-collector" aria-label="Lore collector" aria-live="polite"></ul>
     <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Open field notes</button>
     <nav class="additional-links" aria-labelledby="monument-doors-label">
-      <p class="additional-links-label" id="monument-doors-label">Explore the story</p>
+      <p class="additional-links-label" id="monument-doors-label">Doors out of this chapter</p>
       <a href="/" class="hub-return">Home</a>
-      <a href="/topics/" class="topics-link">Themes & motifs</a>
+      <a href="/topics/" class="topics-link">Threads that come back</a>
       <a href="/world/civic-magic.html" class="civic-magic">Civic magic</a>
-      <a href="/scriptorium/" class="scriptorium-link">Behind the story</a>
+      <a href="/scriptorium/" class="scriptorium-link">How the book is made</a>
       <a href="/characters/boof.html" class="character-profile">Boof · dog of the land</a>
-      <a href="/zine/" class="zine-link">Printable zine</a>
-      <a href="/book/timeline.html" class="story-timeline">Story Timeline</a>
+      <a href="/zine/" class="zine-link">Fold a broadside</a>
+      <a href="/book/timeline.html" class="story-timeline">Every chapter, in order</a>
     </nav>
-    <a class="primary-action" href="{{NEXT_HREF}}" rel="next">Continue to Chapter {{NEXT_NUMBER}} <span aria-hidden="true">→</span></a>
+    <a class="primary-action" href="{{NEXT_HREF}}" rel="next">Carry on to Chapter {{NEXT_NUMBER}} <span aria-hidden="true">→</span></a>
   </aside>
 
   <script type="application/json" id="chapter-data">{{CHAPTER_DATA}}</script>

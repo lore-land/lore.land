@@ -11,7 +11,7 @@
   &boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
   rule: "The world believes its impossible premises completely. A wonder has a habit, a cost, and someone who misreads it."
-  data: "book/content/world/almanac.json (54 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes)"
+  data: "book/content/world/almanac.json (72 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes)"
   runtime: "chapter-render.mjs marks the first naming of each wonder per chapter (.wonder-mark); almanac.mjs collects on tap (lore.almanac.v1); /almanac/ shows the collection and the combining bench; desk ?[almanac]; switch wonders"
   revisit: "Every wonder has a home chapter and at least one echo; a reader's entry fills in place by place."
 }
@@ -45,6 +45,8 @@
   hob_deer: "deer no taller than a boot that graze between frost-ruts only on days nobody keeps; an unkept creature"
   page_fox: "a fox the colour of an unturned page, seen only on unkept days, trotting as if late for something"
   gate_pigeons: "sleep on the parcel gate's counterweight and ride it up and down all night without waking"
+  frill_lichen: "grows round cut letters on any stone read aloud: a ruffle with more edge than room, folding and folding and never running out of edge (Book Two's undercurrent: hyperbolic, like a crocheted reef)"
+  remainder_moths: "fly round a new flame in laps that never close, each a little past the last, so none lands on the same spot twice (the undercurrent: a turn by an amount that never comes out even, like π)"
 }
 
 ^"contrivances"{
@@ -74,6 +76,7 @@
   door_rule: "the carpenter's folding rule; it has a hinge for every size of door"
   pie_dividers: "brass compasses the night school uses to divide paper pies evenly; they never come out even"
   brace_boxes: "small glass boxes with sigil-etched lids, sold in Bonk City; each holds a pocket realm combined from two nouns and a sigil"
+  sliver_tin: "the night school's tin for the slivers the pie-dividers leave over; each winter's fill half the room the last left, so it is always filling and never full (the undercurrent: halves that sum toward one and never arrive)"
 }
 
 ^"bracework"{

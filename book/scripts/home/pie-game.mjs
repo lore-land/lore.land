@@ -128,7 +128,7 @@
  * no rain, no bob, no shake, no flying clowns; every control the same.
  */
 
-import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_07.D';
+import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.B';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.A';
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
@@ -1231,8 +1231,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.filling = Math.max(0, run.filling - SLICE_COST);   // crust and filling both
     const a = angle == null ? run.aim.a : clamp(angle, -AIM_MAX * 1.4, AIM_MAX * 1.4);
     const from = throwFrom();
-    const shot = (heading, echo = false) => ({ x: from.x, y: from.y, vx: Math.sin(heading) * SLICE_SPEED, vy: -Math.cos(heading) * SLICE_SPEED, reach: SLICE_REACH + (wasPoised ? 45 : 0), bounces: 0, t: 0, bent: new Set(), ramped: new Set(), loft: 0, missing, echo, poised: wasPoised, helping: missing ? 1 : helping(rich), size: missing ? 0.85 : 0.9 + rich * 0.6 });
+    const shot = (heading, echo = false) => ({ x: from.x, y: from.y, vx: Math.sin(heading) * SLICE_SPEED, vy: -Math.cos(heading) * SLICE_SPEED, reach: SLICE_REACH + (wasPoised ? 45 : 0), bounces: 0, t: 0, bent: new Set(), ramped: new Set(), loft: 0, missing, echo, poised: wasPoised, helping: missing ? 1 : helping(rich) + (run.tin > 0 ? 0.5 : 0), size: missing ? 0.85 : 0.9 + rich * 0.6 });
     const first = shot(a);
+    if (run.tin > 0 && !missing) run.tin -= 1;   // the sliver tin: half again, three times
     sfx('throw');
     // Thrown from the top of a hop, a slice is lofted as if off a ramp.
     if (airborne()) {
@@ -2047,7 +2048,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run.hurtT > 0) return false;   // still steadying from the last one
     const cost = KNOCKS[thing.kind] || { tilt: 0.45 };
     // How a carrier takes a knock: the porter barely, the clerk and the clown badly.
-    const tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3);
+    let tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3);
+    if (run.frill > 0) {
+      // Frill-lichen: more edge than room, and a knock lands on the edge.
+      tilt *= 0.5;
+      run.frill -= 1;
+    }
     run.wobble = Math.min(1.2, run.wobble + tilt);
     run.stillT = 0;
     run.tiltDir = clamp(run.tiltDir + (thing.x < run.x ? 0.65 : -0.65), -1, 1);
@@ -2112,7 +2118,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     'jazz-geese': { honk: true, says: 'A honk, and the way ahead clears.' },
     'hob-deer': { unkept: 4.5, says: 'Unkept, for a moment: nothing in the lanes can hold you.' },
     'page-fox': { unkept: 4.5, says: 'Unkept, for a moment: nothing in the lanes can hold you.' },
-    'pane-snails': { level: true, says: 'The pie forgets it was ever tipped.' }
+    'pane-snails': { level: true, says: 'The pie forgets it was ever tipped.' },
+    // Book Two's mathematical undercurrent: a circle that never closes, more edge than room, halves that never fill.
+    'remainder-moths': { steadyAim: 6, says: 'They never land twice in the same place: the aim needle slows for a while.' },
+    'frill-lichen': { frill: 2, says: 'More edge than room: your next two knocks land soft.' },
+    'sliver-tin': { tin: 3, says: 'Half again: your next three slices fill half as much more appetite.' }
   });
   const KIND_GIFT = Object.freeze({
     creature: { crust: 0.12, filling: 0.12, says: 'A little more aura, crust and filling.' },
@@ -2132,15 +2142,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     spawnRing(thing.x, thing.y, 34, colors.gold, 0.55);
     let isNew = false;
     try { isNew = Boolean(collectWonder(w.id, run.chapter)?.isNew); } catch { /* kept in the run, if not the almanac */ }
+    // A wonder already in your almanac knows you and gives a little more; a [window] charm extends its light.
+    const boost = w.known ? 1.2 : 1;
+    const charmLit = run.charm?.bracket === '[]' ? 1.5 : 0;
     const gift = POWERS[w.id] || KIND_GIFT[w.kind] || KIND_GIFT.creature;
-    if (gift.lit) run.lit = gift.lit;
+    if (gift.lit) run.lit = gift.lit * boost + charmLit;
     if (gift.echoes) run.echoes = gift.echoes;
-    if (gift.lag) run.lag = gift.lag;
-    if (gift.unkept) run.unkept = gift.unkept;
+    if (gift.lag) run.lag = gift.lag * boost;
+    if (gift.unkept) run.unkept = gift.unkept * boost;
     if (gift.level) { run.wobble = 0; run.tiltDir = 0; run.steadied = 1.2; }
-    if (gift.crust) run.aura = Math.min(1, run.aura + gift.crust);
-    if (gift.filling) run.filling = Math.min(1, run.filling + gift.filling);
+    if (gift.crust) run.aura = Math.min(1, run.aura + gift.crust * boost);
+    if (gift.filling) run.filling = Math.min(1, run.filling + gift.filling * boost);
     if (gift.ready) run.sliceReady = 1;
+    if (gift.steadyAim) run.steadyAim = gift.steadyAim;
+    if (gift.frill) run.frill = (run.frill || 0) + gift.frill;
+    if (gift.tin) run.tin = (run.tin || 0) + gift.tin;
     if (gift.honk) {
       run.things.forEach((other) => {
         if (other.wapped || !other.fatal || WIDE.has(other.kind) || other.y > run.y || Math.abs(other.x - run.x) > LANE_W * 1.6) return;
@@ -2179,6 +2195,32 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let flowAt = -1;
   let flowShift = null;
   let flowMeasure = [];
+  function renderParaContent(para, leg) {
+    para.slotNodes = [];
+    if (!para.slots || !para.rawText || !/\{\{([a-z0-9-]+)\}\}/i.test(para.rawText)) {
+      return marked(para.text, leg.wonders);
+    }
+    const parts = para.rawText.split(/\{\{([a-z0-9-]+)\}\}/gi);
+    return parts.flatMap((part, idx) => {
+      if (idx % 2 === 0) return marked(part, leg.wonders);
+      const variants = para.slots[part]?.variants || [];
+      if (variants.length <= 1) return marked(variants[0] ?? '', leg.wonders);
+      const slotNode = document.createElement('span');
+      slotNode.className = 'pie-flow-slot';
+      slotNode.title = `Another telling (${variants.length} ways) — turns with the carry’s lean, or tap to turn`;
+      slotNode.replaceChildren(...marked(variants[0] ?? '', leg.wonders));
+      const recordSlot = { node: slotNode, name: part, variants, index: 0 };
+      para.slotNodes.push(recordSlot);
+      slotNode.addEventListener('click', (event) => {
+        event.stopPropagation();
+        recordSlot.index = (recordSlot.index + 1) % variants.length;
+        slotNode.replaceChildren(...marked(variants[recordSlot.index] ?? '', leg.wonders));
+        slotNode.classList.toggle('is-turned', recordSlot.index > 0);
+        recordHeardTelling(leg.n, part, recordSlot.index);
+      });
+      return [slotNode];
+    });
+  }
   function paintFlows(leg) {
     flowAt = -1;
     flowShift = null;
@@ -2189,6 +2231,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (flowTitle) flowTitle.textContent = leg.title;
     if (flowProse) {
       let voice = null;
+      flowProse.classList.toggle('is-mimed', state === 'running' ? mawAhead() : mimesHold(leg.n));
       flowProse.replaceChildren(...leg.paras.map((para) => {
         const li = document.createElement('li');
         li.className = 'pie-flow-para';
@@ -2199,7 +2242,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           li.append(who);
         }
         voice = para.voice;
-        li.append(...marked(para.text, leg.wonders));
+        li.append(...renderParaContent(para, leg));
         return li;
       }));
       flowMeasure = [...flowProse.children].map((li) => ({ top: li.offsetTop, h: li.offsetHeight }));
@@ -2246,6 +2289,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
     }
     paintKept();
+    paintNow(leg.n);
   }
   /* A wonder's own words in the passage, marked: they light when it is up the lanes, and stay lit once kept. */
   /* Pie words, so that they can go quiet while the mimes lead. */
@@ -2293,25 +2337,60 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const flowNow = document.querySelector('[data-pie-flow-now]');
   let nowKey = '';
   const span = (className, text) => { const node = document.createElement('span'); node.className = className; if (text != null) node.textContent = text; return node; };
-  function paintNow() {
-    if (!flowNow || !run?.tally) return;
-    const t = run.tally;
-    const ahead = mawAhead();
-    const key = [t.boon, t.bane, t.bone, t.wap, t.maw, t.mawSeen, ahead, run.chapter].map((v) => (typeof v === 'number' ? Math.round(v * 2) : v)).join('|');
-    if (key === nowKey) return;
-    nowKey = key;
-    const lean = { boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone };
-    const total = lean.boon + lean.bane + lean.bone;
+  const makeLeanBar = (lean) => {
+    const total = (lean.boon || 0) + (lean.bane || 0) + (lean.bone || 0) || 1;
     const bar = span('pie-flow-now-lean');
     bar.setAttribute('aria-hidden', 'true');
     ['boon', 'bane', 'bone'].forEach((id) => {
       const seg = document.createElement('i');
       seg.className = `is-${id}`;
-      seg.style.flexGrow = String(Math.round((lean[id] / total) * 100));
+      seg.style.flexGrow = String(Math.round(((lean[id] || 0) / total) * 100));
       bar.append(seg);
     });
+    return bar;
+  };
+  function paintNow(idleChap = chosenStartChapter) {
+    if (!flowNow) return;
+    if (state !== 'running' || !run?.tally) {
+      const chap = idleChap || chosenStartChapter || 1;
+      const saved = carryFor(chap);
+      const ties = readLoreTies();
+      const key = ['idle', chap, saved?.carried || 0, saved?.maw || '', ties.wonders, ties.sightings, ties.tellings, ties.combine?.expr || ''].join('|');
+      if (key === nowKey) return;
+      nowKey = key;
+      const rows = [span('pie-flow-now-head', `${chapterWords(chap)} · kept in this browser`)];
+      if (saved) {
+        rows.push(
+          span('pie-flow-now-line', `Carried ${saved.carried === 1 ? 'once' : `${saved.carried} times`}: its reading ${describeLean(saved.lean)}.${saved.maw === 'won' ? ' Held by Mimes Against WAP.' : saved.maw === 'back' ? ' Won back from the mimes.' : ''}`),
+          makeLeanBar(saved.lean)
+        );
+      } else {
+        rows.push(span('pie-flow-now-line', 'Not carried through yet. Finish this chapter in the lanes and how you carried it will gently lean its reading on the chapter page.'));
+      }
+      const tieParts = [
+        `${ties.wonders} almanac wonder${ties.wonders === 1 ? '' : 's'}`,
+        `${ties.sightings}/9 figure strokes`,
+        ties.combine ? `charm ${ties.combine.expr} (${ties.combine.note})` : null,
+        ties.tellings ? `${ties.tellings} telling${ties.tellings === 1 ? '' : 's'} heard` : null
+      ].filter(Boolean);
+      rows.push(span('pie-flow-now-ties', `In play from your shelves: ${tieParts.join(' · ')}.`));
+      flowNow.replaceChildren(...rows);
+      return;
+    }
+    const t = run.tally;
+    const ahead = mawAhead();
+    const key = ['live', t.boon, t.bane, t.bone, t.wap, t.maw, t.mawSeen, ahead, run.chapter, run.carrier.id, run.strokes].map((v) => (typeof v === 'number' ? Math.round(v * 2) : v)).join('|');
+    if (key === nowKey) return;
+    nowKey = key;
+    const lean = { boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone };
+    const bar = makeLeanBar(lean);
+    const whoParts = [
+      `Under the hat: ${run.carrier.name}${run.carrier.id === 'figure' && run.strokes ? ` (${run.strokes}/9 strokes steadying)` : ''}`,
+      run.charm ? `charm ${run.charm.expr}` : null
+    ].filter(Boolean);
     const rows = [
       span('pie-flow-now-head', `${chapterWords(run.chapter)}, so far`),
+      span('pie-flow-now-ties', whoParts.join(' · ')),
       span('pie-flow-now-line', `Its reading ${describeLean(lean)}. (${LEAN_NAMES.boon}: ${Math.round(t.boon)} · ${LEAN_NAMES.bane}: ${Math.round(t.bane)} · ${LEAN_NAMES.bone}: ${Math.round(t.bone)})`),
       bar
     ];
@@ -2364,7 +2443,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return { text: line.line, isNew: Boolean(unsaid) };
   };
 
-  /* The words going by cue the lanes. */
+  /* The words going by cue the lanes, and the carry cues the words going by. */
   function onPassage(para) {
     if (para.scene && para.scene !== run.sceneId) {
       // A door's place begins where its section does: the colours cross over, play goes on.
@@ -2372,6 +2451,38 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.sceneId = para.scene;
       run.sceneT = 0;
       showToast(`${chapterWords(run.chapter)} · ${scene().card.replace(/\.$/, '')}`, 'Where the words beside you say so.', 2800);
+    }
+    // A prose sighting passed in the carry notices a stroke for the figure under the hat.
+    if (para.sighting) {
+      const res = recordSighting(para.sighting.id);
+      if (res) {
+        run.strokes = res.count;
+        if (res.isNew) {
+          run.wobble = Math.max(0, run.wobble - 0.18);
+          tally('boon');
+          run.tags.push({ x: run.x, y: run.y - 98, t: 0, text: '✦ STROKE NOTICED' });
+          showToast(
+            res.count === res.total ? 'The drawing is whole · 9 of 9' : `A sighting in the passage · ${res.count} of ${res.total}`,
+            `${res.entry.title} — a stroke for the figure under the hat.`,
+            3600,
+            'wonder'
+          );
+        }
+      }
+    }
+    // Living slots in the passage turn toward the carry's lean, and are kept in lore.tellings.v1.
+    if (para.slotNodes?.length && run.tally && run.leg) {
+      const leanId = leanOf({ boon: 1 + run.tally.boon, bane: 1 + run.tally.bane, bone: 1 + run.tally.bone });
+      const offset = { boon: 1, bane: 2, bone: 3 }[leanId] || 0;
+      para.slotNodes.forEach((slot) => {
+        const idx = offset ? (offset % slot.variants.length || 1) : 0;
+        if (idx !== slot.index && slot.variants[idx]) {
+          slot.index = idx;
+          slot.node.replaceChildren(...marked(slot.variants[idx], run.leg.wonders));
+          slot.node.classList.toggle('is-turned', idx > 0);
+        }
+        recordHeardTelling(run.chapter, slot.name, slot.index);
+      });
     }
     // A new section is a breath: a row or two with nothing to knock, and a rule across the lanes.
     if (run.lastSection !== undefined && para.sec !== run.lastSection) {
@@ -2570,7 +2681,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // The pie settles if you let it.
     // A knock rattles it for a moment; after that it settles, faster with something warm close by or when held in poise.
     if (!(run.rattled > 0)) {
-      run.wobble = Math.max(0, run.wobble - dt * run.carrier.settle * (run.warm > 0 ? 1.8 : 1) * (poised() ? 1.65 : 1));
+      run.wobble = Math.max(0, run.wobble - dt * carrierSettle() * (run.warm > 0 ? 1.8 : 1) * (poised() ? 1.65 : 1));
+    }
+    if (state === 'running' && run.wobble > 0.44 && Math.abs(run.tiltDir) >= 0.35 && run.hurtT <= 0) {
+      teach('catch', 'Catching the tilt');
     }
     run.tiltDir *= Math.max(0, 1 - dt * (run.wobble < 0.08 ? 6 : 1.8));
     run.phase += dt * (6 + run.wobble * 10);
@@ -2578,7 +2692,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run.floured > 0) run.floured -= dt;
     run.sliceReady = Math.min(1, run.sliceReady + dt / (whole() ? 1.0 : 1.6));
     // The aim needle sweeps, side to side, slower under reduced motion.
-    run.aim.a += run.aim.dir * (reduced?.matches ? 0.8 : 1.5) * dt;
+    if (run.steadyAim > 0) run.steadyAim = Math.max(0, run.steadyAim - dt);
+    run.aim.a += run.aim.dir * (reduced?.matches ? 0.8 : 1.5) * (run.steadyAim > 0 ? 0.45 : 1) * dt;
     if (Math.abs(run.aim.a) > AIM_MAX) {
       run.aim.a = Math.sign(run.aim.a) * AIM_MAX;
       run.aim.dir *= -1;
@@ -4623,6 +4738,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.echoes > 0 && `echoes ${Math.ceil(run.echoes)}`,
       run.lag > 0 && `slow ${Math.ceil(run.lag)}`,
       run.unkept > 0 && `unkept ${Math.ceil(run.unkept)}`,
+      run.steadyAim > 0 && `steady aim ${Math.ceil(run.steadyAim)}`,
+      run.frill > 0 && `soft ×${run.frill}`,
+      run.tin > 0 && `half again ×${run.tin}`,
       run.dust > 0.25 && 'flour in the air',
       (run.warm > 0 || run.shield) && 'warm'
     ].filter(Boolean);

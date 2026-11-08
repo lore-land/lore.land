@@ -171,7 +171,7 @@ class StorySparkElement extends HTMLElement {
     const text = document.createElement('p');
     text.className = 'spark-text';
     text.setAttribute('aria-live', 'polite');
-    text.textContent = 'Gathering canon…';
+    text.textContent = 'Striking…';
 
     const button = document.createElement('button');
     button.type = 'button';
@@ -190,7 +190,7 @@ class StorySparkElement extends HTMLElement {
       }
       plateText = await response.text();
     } catch {
-      text.textContent = 'The canon is resting — try reloading to spark again.';
+      text.textContent = 'The tinder is damp. Reload and strike again.';
       return;
     }
 

@@ -1,0 +1,45 @@
+# Lore.Land Fold & Materials
+# The round map that will not lie flat (a hyperbolic fold of the semantic index,
+# asked in Spw), and the materials the land is made of (vocabulary, tokens, paths).
+#>lore_land_surfaces_fold_and_materials
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  Lore folds. A book with threads, marks, voices, leans, wonders and materials
+  running through fifteen chapters has more edge than room, like frill-lichen on
+  a read stone, so its map is drawn in the plane that has room for that: a
+  Poincaré disk, where whatever you look at opens out and everything else folds
+  toward the rim without falling off. The map-house keeps it as its one round map.
+  A Spw expression is the source of a question; its answer is a gradient over the
+  semantic space, and the gradient is written as tokens, so the page's own
+  components lean with the question. Materials are the land told before its
+  morals: glass, flour, berries, frost, ink, brass, warmth, oak.
+}
+
+^"fold"{
+  .note: "book/scripts/modules/lore-fold.mjs + book/styles/components/fold.css; topics page #fold; reads semantic.json via constellation.mjs"
+  geometry: "a hyperbolic tree on the Poincaré disk: the book at the middle, families a step out, their keys beyond; a crowded family folds in rows; touching a place turns it to the middle by a Möbius turn; edges are geodesics (arcs meeting the rim square-on); a place's size is the conformal factor (1 − |z|²), so room runs out toward the rim and nothing falls off"
+  sigils: "# marks (annotation) · @ voices (perspective) · ~ threads (potential) · = leans (config, the bias) · * wonders (value, the concrete) · $ materials (substrate) · . chapters (ground) · bare words search everything"
+  combinators: "juxtaposition superposes (sum) · &[a, b] confluence: only the chapters where all run together, at the weakest strength · ^ integration lifts to the chapters and turns to the strongest · % measure shows the numbers · ! action offers the strongest place first"
+  gradient: "seeds (what the expression names) → the chapters they run through, warmed by how much → everything sharing those chapters, warmed a little after them"
+  tokens: "--fold-w on each lit node, chapter cell and topic card (a thread's card takes its thread's weight); --fold-boon / --fold-bane / --fold-bone / --fold-heat on the map, which tint its ground toward the lands the question lit"
+  address: "?fold=<expression> asks it on arrival; asking writes the expression back to the address, so a question can be passed along"
+}
+
+^"materials"{
+  .note: "book/scripts/modules/materials.mjs (vocabulary; shared by the build and the browser) → semantic.json materials (per chapter: hits, strongest chamber); components/materials.css (tokens); material-paths.mjs (chapter doors)"
+  materials: "glass ◇ every knock, kept · flour ∴ what the story is baked from, and set back by · berry ● a little borrowed summer · frost ❄ the field held still · ink ∕ what is written down, and what will not be · brass ◎ things that ring, and things that measure · steam ≈ the hearth under everything · oak ⌂ what bears the load"
+  tokens: "a component made of something says data-material and reads --mat-ink, --mat-edge, --mat-ground, --mat-sheen; .mat-card is the shared surface; the reading lens's --w-boon warms a material card a little"
+  paths: "at a chapter's end, after Wander off the page: follow what this chapter is made of — its three strongest materials (relative to how much each usually appears), each a door to the next chapter where it returns strongest, to the very chamber, and a way back"
+  wearing: "the entrance's route cards and the topic board wear materials: Read steam, Boof frost, the round map ink, the commons berry, civic magic brass, the scriptorium oak, folios and the almanac glass, the broadside ink, Exactly One Pie flour"
+}
+
+^"undercurrent"{
+  .note: "Book Two (Wonder About Pi(e)) runs on mathematics without saying so; three wonders carry it, each named in the prose and kept in the almanac"
+  frill_lichen: "Fourteen, the old stone with the iron ring: more edge than room (hyperbolic growth, the crocheted reef)"
+  remainder_moths: "Fifteen, the lamplighters at the parcel gate: laps that never close (a turn by an amount that never comes out even)"
+  sliver_tin: "Fifteen, the night school: each winter's slivers fill half the room the last left (halves that sum toward one and never arrive)"
+  in_the_lanes: "remainder-moths slow the aim needle; frill-lichen softens the next two knocks; the sliver tin makes the next three slices half again as satisfying"
+}

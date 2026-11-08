@@ -3,6 +3,7 @@
 // the land riffles through them before it chooses, and the hat drawer keeps
 // the drawing of every sighting the reader has noticed in the chapters.
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
+import { readCarries, carriesSummary, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.A';
 
 const FOUND_KEY = 'lore.home.curiosities.v1';
 const cabinet = document.querySelector('.wonder-cabinet');
@@ -64,7 +65,7 @@ if (cabinet) {
         ? `${total} curiosities, ${total} beginnings. Which thread will you follow?`
         : 'Every drawer has been opened. The hat drawer keeps your sightings.';
     } else if (n) {
-      status.textContent = `${n} of ${total} curiosities found. The land has more to tell.`;
+      status.textContent = `${n} of ${total} curiosities found. The rest are still ajar.`;
     }
   };
 
@@ -94,6 +95,33 @@ if (cabinet) {
   if (drawers.every((d) => found.has(d.id))) cabinet.classList.add('is-complete');
   say(false);
 
+  // If Mimes Against WAP hold any chapter, it is harder to wonder about pie here too:
+  // the pie drawer resists the first knock with an invisible wall, and says where to win it back.
+  const pieDrawer = cabinet.querySelector('#curiosity-pie');
+  const mimesHeld = carriesSummary(readCarries()).held;
+  if (pieDrawer && mimesHeld.length) {
+    pieDrawer.classList.add('is-mimed');
+    let knockedThrough = false;
+    pieDrawer.querySelector('summary')?.addEventListener('click', (event) => {
+      if (pieDrawer.open || knockedThrough) return;
+      event.preventDefault();
+      knockedThrough = true;
+      if (status) {
+        status.textContent = `An invisible wall has been mimed across the pie drawer by Mimes Against WAP (${mimesHeld.length === 1 ? 'Chapter' : 'Chapters'} ${chapterList(mimesHeld)}) — knock once more to part it.`;
+      }
+    });
+    const secret = pieDrawer.querySelector('.wonder-secret');
+    if (secret) {
+      const note = document.createElement('p');
+      note.className = 'wonder-whisper';
+      note.textContent = `Mimes Against WAP hold ${mimesHeld.length === 1 ? 'Chapter' : 'Chapters'} ${chapterList(mimesHeld)}: it is harder to wonder about pie until you carry it through again and out-do them.`;
+      const winBack = document.createElement('a');
+      winBack.href = `/pie/?chapter=${mimesHeld[0]}&from=%2F%23curiosity-pie`;
+      winBack.textContent = `Win Chapter ${chapterList([mimesHeld[0]])} back from the mimes →`;
+      secret.append(note, winBack);
+    }
+  }
+
   const open = (chosen) => {
     drawers.forEach((drawer) => { drawer.open = drawer === chosen; });
     last = chosen;
@@ -105,7 +133,10 @@ if (cabinet) {
   button.hidden = false;
   button.addEventListener('click', () => {
     if (riffling) return;
-    if (!remaining.length) remaining = drawers.filter((drawer) => drawer !== last);
+    if (!remaining.length) {
+      const pool = drawers.filter((drawer) => drawer !== last && !(mimesHeld.length && drawer.id === 'curiosity-pie'));
+      remaining = pool.length ? pool : drawers.filter((drawer) => drawer !== last);
+    }
     const [chosen] = remaining.splice(Math.floor(Math.random() * remaining.length), 1);
     if (reduced) {
       open(chosen);

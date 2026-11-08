@@ -20,6 +20,7 @@
  * and the way out (pie-game.mjs).
  */
 import { settle } from './settled.mjs?v=2026_11_05.B';
+import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_08.A';
 
 const BACK_KEY = 'lore.pie.back';
 const pad = (n) => String(n).padStart(2, '0');
@@ -96,15 +97,20 @@ export function initPieSegues({ chapterData } = {}) {
   const n = Number(chapterData?.chapterNumber || document.body.dataset.chapter || 0);
   const sections = [...main.querySelectorAll('[data-ebook-section]')];
   const added = [];
+  const held = mimesHold(n);
   SEGUES.filter((segue) => segue.chapter === n).forEach((segue) => {
     const section = segue.anchor
       ? document.getElementById(segue.anchor)
       : sections.find((candidate) => plain(candidate.textContent).includes(plain(segue.find)));
     if (!section) return;
     const here = segue.anchor ? `${location.pathname}#${segue.anchor}` : `${location.pathname}#:~:text=${encodeURIComponent(segue.find)}`;
-    const door = el('a', { className: 'pie-door', href: gameHref(segue, here), title: `Exactly One Pie, from ${segue.place}` },
+    const door = el('a', {
+      className: `pie-door${held ? ' is-held' : ''}`,
+      href: gameHref(segue, here),
+      title: `Exactly One Pie, from ${segue.place}${held ? ' · held by Mimes Against WAP' : ''}`
+    },
       el('span', { className: 'pie-door-sigil', 'aria-hidden': 'true' }, '◎'),
-      ` ${segue.door}`);
+      ` ${segue.door}${held ? ' · held by the mimes — win it back' : ''}`);
     const row = el('p', { className: 'pie-door-row' }, door);
     section.append(row);
     added.push(row);
@@ -118,11 +124,19 @@ export function initPieSegues({ chapterData } = {}) {
   } catch { note = null; }
   if (note && note.path && location.pathname === note.path.split('#')[0]) {
     const waps = note.waps ? ` ${note.waps} clown${note.waps === 1 ? '' : 's'} got WAP.` : '';
+    const carry = carryFor(n);
+    const mark = carry
+      ? (carry.maw === 'won'
+        ? ' Mimes Against WAP hold this chapter now.'
+        : carry.maw === 'back'
+          ? ' Won back from the mimes.'
+          : ` This chapter’s reading now ${describeLean(carry.lean)}.`)
+      : '';
     setTimeout(() => settle({
       sigil: '◎',
       title: `Back from ${note.place || 'the lanes'}`,
       detail: note.cobbles != null
-        ? `${note.carrier ? `${note.carrier.charAt(0).toUpperCase()}${note.carrier.slice(1)}` : 'Someone'} carried it ${note.cobbles} cobbles.${waps} Exactly one pie, as promised.`
+        ? `${note.carrier ? `${note.carrier.charAt(0).toUpperCase()}${note.carrier.slice(1)}` : 'Someone'} carried it ${note.cobbles} cobbles.${waps}${mark} Exactly one pie, as promised.`
         : 'The pie is still level. The page is where you left it.',
       region: 'main.chapter',
       lifetime: 5600

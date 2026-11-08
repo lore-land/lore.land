@@ -31,7 +31,10 @@
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_08_27.A&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_27.A&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_08_27.A&ctx=home:climate">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.A"></script>
+  <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.B&ctx=canon:materials">
+  <link rel="stylesheet" href="/book/styles/components/fold.css?v=2026_11_08.B&ctx=topics:fold">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.B"></script>
+  <script defer type="module" src="/book/scripts/modules/lore-fold.mjs?v=2026_11_08.B"></script>
 </head>
 <body data-surface="monument">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -53,9 +56,8 @@
           <p class="hub-eyebrow">Discovery · portable handles</p>
           <h1 id="topics-title">Topics of the land</h1>
           <p class="hub-lede">
-            A topic is a handle you can carry between chambers: promise, voice, who receives warmth,
-            what returns as echo. The fantasy names keep the path playable; the pattern underneath
-            is how a public identity learns to hold together over time.
+            A topic is a thread you can pull from one chapter into the next: a promise, a voice, who
+            gets warm, what comes back as an echo. Pick one up and see where it runs.
           </p>
           <div class="chip-row" aria-label="Jump to topic axes">
             <a class="chip" href="#promise">Promise</a>
@@ -99,6 +101,13 @@
         </div>
       </section>
 
+      <section class="lore-fold" id="fold" data-lore-fold aria-labelledby="fold-title" hidden>
+        <p class="hub-eyebrow">At the map-house · the round map</p>
+        <h2 id="fold-title">The map that will not lie flat</h2>
+        <p class="hub-section-lede">The map-house keeps one map for things that will not lie flat: every thread, mark, voice, lean, wonder and material in the book, folded onto a disk the way frill-lichen folds onto a stone, with more edge than room. Whatever you look at opens out at the middle; everything else folds toward the rim and never falls off it. Touch a place to turn it to the middle, or ask the map in Spw, and watch the question run through the chapters, and through the cards below.</p>
+        <div class="lore-fold-body" data-lore-fold-body></div>
+      </section>
+
       <section class="topic-board" aria-label="Topic axes">
         <article class="topic-card" id="promise" data-material="wax">
           <p class="topic-kicker">Public promise</p>
@@ -113,10 +122,10 @@
 
         <article class="topic-card" id="voice" data-material="mask">
           <p class="topic-kicker">Voice &amp; register</p>
-          <h2>Fool’s register · wonder</h2>
+          <h2>Voices · wonder</h2>
           <p>
-            How the tale is allowed to sound: grave, playful, administrative, interruptive.
-            The Fool is a trickster of honest masks who keeps a neat room from closing in on itself, and whose trope can still grow a new face.
+            How the tale is allowed to sound: grave, playful, official, interrupted. Mr. BaneWAP
+            announces; Mr. BoonWAP talks past the room; the crier writes down only what she saw.
           </p>
           <ul class="trail-list">
             <li><a href="/world/civic-magic.html#fool">Boonberry Fool</a></li>
@@ -174,7 +183,7 @@
         <article class="topic-card" id="cadence" data-material="calendar">
           <p class="topic-kicker">Release rhythm</p>
           <h2>Stones on the 13th &amp; 26th</h2>
-          <p>Trust through return: a calendar the audience can count on.</p>
+          <p>New stones on the 13th and the 26th. Come back and something has been set.</p>
           <ul class="trail-list">
             <li><a href="/scriptorium/#seed-rite">How a chamber is seeded</a></li>
             <li><a href="/#chambers">Chamber index</a></li>
@@ -207,7 +216,7 @@
         <article class="topic-card" id="wonder" data-material="commons">
           <p class="topic-kicker">Regenerative value</p>
           <h2>Wonder in circulation</h2>
-          <p>How present need, productive reserves, shared resilience, and protected experiment remain visible on one living balance sheet.</p>
+          <p>How tonight’s stove, next spring’s seed, a shared store and a share kept for wonder all sit at one table, and none pretends to be the whole harvest.</p>
           <ul class="trail-list">
             <li><a href="/world/boonberry-commons.html">Boonberry commons · operating model</a></li>
             <li><a href="/book/chapter/01/">Chamber 01 · six measures</a></li>
@@ -229,7 +238,7 @@
         <article class="topic-card" id="guide" data-material="dog">
           <p class="topic-kicker">Guide figure</p>
           <h2>Boof the dog</h2>
-          <p>Spwashi’s dog in fantasy dress: blueberry-motivated, pack-loyal, dangerous to varnish seals.</p>
+          <p>A working dog. Works for the land, trusts an honest scent, and appreciates a blueberry more than she enjoys one.</p>
           <ul class="trail-list">
             <li><a href="/characters/boof.html">Boof profile</a></li>
             <li><a href="/book/chapter/01/">Chamber 01</a></li>

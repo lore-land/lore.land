@@ -4505,6 +4505,13 @@ main.chapter .pie-door-sigil {
   color: var(--sigil-gold, #a67c38);
 }
 
+/* Held by Mimes Against WAP: the door is drawn with a mimed, dashed edge. */
+main.chapter .pie-door.is-held {
+  border-style: dashed;
+  border-color: color-mix(in srgb, #7a3f9a 60%, transparent);
+  font-style: italic;
+}
+
 
 /* ─── A chapter read the way your carry went (pie-projection.mjs) ────────
  * The note says how the carry leans the reading and why; where Mimes

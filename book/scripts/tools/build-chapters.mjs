@@ -4,13 +4,14 @@ import { fileURLToPath } from 'node:url';
 import { renderChapterBody, renderChapterCoda, padChapterNumber, chapterOrdinal, sectionSlug, wonderTermPattern, resolveSlots } from '../modules/chapter-render.mjs';
 import { isCustomElementType, storyVoiceFor } from '../modules/story-lexicon.mjs';
 import { leanFor } from '../modules/valence-lens.mjs';
+import { MATERIALS, materialScores } from '../modules/materials.mjs';
 import { createMiniDocument } from './mini-dom.mjs';
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_08.A';
+const RELEASE = '2026_11_08.B';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
@@ -215,7 +216,9 @@ const semantic = {
   slots: { minute: 0, hour: 0, day: 0, chapters: {} },
   // Other tellings (PLAN.E L24): how many ways each slot is told, by chapter.
   tellings: { total: 0, chapters: {} },
-  voices: {}
+  voices: {},
+  // Materials (materials.mjs): what each chamber is made of, by chapter — the strongest place for each.
+  materials: Object.fromEntries(MATERIALS.map((m) => [m.id, { label: m.label, sigil: m.sigil, verb: m.verb, gloss: m.gloss, chapters: {} }]))
 };
 const paragraphsOf = (block) => {
   const out = [];
@@ -301,6 +304,14 @@ for (const chapter of chapters) {
     const counts = { boon: 0, bane: 0, bone: 0 };
     paragraphsOf(block).forEach((p) => { const lean = leanFor(p.text, p.lean); if (lean) counts[lean] += 1; });
     Object.entries(counts).forEach(([lean, n]) => { if (n) semantic.leans[lean].push({ ...where, n }); });
+    // materials: hits per material; each chapter keeps its total and its strongest chamber
+    Object.entries(materialScores(paragraphsOf(block).map((p) => p.text).join(' '))).forEach(([material, n]) => {
+      if (!n) return;
+      const key = String(chapter.chapterNumber);
+      const entry = semantic.materials[material].chapters[key] || (semantic.materials[material].chapters[key] = { n: 0, id, label, best: 0 });
+      entry.n += n;
+      if (n > entry.best) Object.assign(entry, { id, label, best: n });
+    });
     // threads: word hits per lexicon group
     lexicon.forEach((group) => {
       const n = termHits(text, group.terms || []);

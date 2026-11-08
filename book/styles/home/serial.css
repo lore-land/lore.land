@@ -781,3 +781,14 @@ body[data-surface='monument'] .carry-record:empty {
     animation: none;
   }
 }
+
+/* Mimes Against WAP hold a chapter (pie-carries.mjs): the pie drawer wears an invisible wall,
+ * a dashed, faintly violet edge, and resists the first knock (wonder.mjs). */
+body[data-surface='monument'] .wonder-drawer.is-mimed:not([open]) summary {
+  outline: 1px dashed color-mix(in srgb, #7a3f9a 55%, transparent);
+  outline-offset: -4px;
+}
+
+body[data-surface='monument'] .wonder-drawer.is-mimed:not([open]) .wonder-object img {
+  filter: grayscale(0.55) contrast(0.9);
+}

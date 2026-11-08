@@ -26,6 +26,7 @@
   story_boonhonk: "@spw/story-boonhonk.spw"
   book_two: "@spw/surfaces/wonder-about-pie.spw"
   almanac: "@spw/surfaces/almanac.spw"
+  fold_and_materials: "@spw/surfaces/fold-and-materials.spw"
   knobs: "@spw/surfaces/knobs.spw"
   tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
