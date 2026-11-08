@@ -348,11 +348,11 @@ function readRecord() {
       met: Array.isArray(parsed.met) ? parsed.met : [],
       cards: Array.isArray(parsed.cards) ? parsed.cards : [],
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
-      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true },
+      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right' },
       sound: parsed.sound !== false
     };
   } catch {
-    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false }, sound: true };
+    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false, hand: 'right' }, sound: true };
   }
 }
 
@@ -751,7 +751,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   });
   const paintSound = () => {
     if (!soundToggle) return;
-    soundToggle.textContent = record.sound ? '♪ WAP sounds: on' : '♪ WAP sounds: off';
+    soundToggle.textContent = '♪ Sound';
+    soundToggle.title = record.sound ? 'WAP sounds are on' : 'WAP sounds are off';
     soundToggle.setAttribute('aria-pressed', record.sound ? 'true' : 'false');
   };
 
@@ -2998,6 +2999,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const want = clamp(Math.atan2(face.x - from.x, from.y - (face.y - 8)), -AIM_MAX, AIM_MAX);
         run.aim.a += (want - run.aim.a) * Math.min(1, dt * 5);
       }
+    }
+    // The pad's target: the carrier walks there a step at a time, at its own pace (no hurried steps).
+    if (state === 'running' && run.target) {
+      if (run.target.lane !== run.lane && run.moveT >= 0.85) step(Math.sign(run.target.lane - run.lane));
+      else if (run.target.lane === run.lane && run.target.row !== run.row && run.moveT >= 0.85 && run.moveYT >= 0.85) climb(Math.sign(run.target.row - run.row));
+      else if (run.target.lane === run.lane && run.target.row === run.row && !run.target.held) run.target = null;
     }
     if (state === 'running') {
       tickForetold(dt);
@@ -5284,6 +5291,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawHud();
   }
 
+  let paintPadHook = () => {};   // the thumbs' pad (set once the pad is built, further down)
   function loop() {
     cancelAnimationFrame(frame);
     const tick = (now) => {
@@ -5291,6 +5299,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       last = now;
       if (state === 'running' || state === 'spilling') update(dt);
       draw();
+      paintPadHook();
       if (state !== 'paused' && state !== 'title' && state !== 'over' && state !== 'revealing') frame = requestAnimationFrame(tick);
       else if (state === 'over') draw();
     };
@@ -5379,6 +5388,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const paintLegend = () => {
     document.querySelectorAll('canvas[data-pie-sprite]').forEach((target) => drawSprite(target, target.dataset.pieSprite));
   };
+  // A browser may drop a canvas's drawing while the tab is away; draw the sprites again when it gives it back.
+  document.querySelectorAll('canvas[data-pie-sprite]').forEach((target) => target.addEventListener('contextrestored', () => drawSprite(target, target.dataset.pieSprite)));
+  // The index's link to the asset sheet opens it.
+  document.querySelectorAll('a[href="#pie-assets"]').forEach((link) => link.addEventListener('click', () => {
+    const sheet = document.getElementById('pie-assets');
+    if (sheet && !sheet.open) sheet.open = true;
+  }));
 
   /* The shelf of what the pies let slip: said, unsaid, and how to unlock the rest. */
   function paintLore() {
@@ -5718,6 +5734,124 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }));
   }
 
+  /* ─── Thumbs: controls for a phone held in two hands ───
+   * The pad is the lanes in small (five across, four up): touch or slide to where you want to
+   * stand and the carrier walks there at its own pace, so no step is hurried and none is lost.
+   * Hop and throw sit under the other thumb; slide along throw to turn the needle, let go to
+   * throw. Each column shows what is coming down that lane. Shown on touch screens (or as soon
+   * as a touch is used); ⇄ swaps the pad and the buttons for the other hand. */
+  const thumbs = root.querySelector('[data-pie-thumbs]');
+  const padGrid = root.querySelector('[data-pie-pad-grid]');
+  const padCells = [];
+  if (padGrid) {
+    for (let r = ROWS - 1; r >= 0; r -= 1) {
+      for (let lane = 0; lane < LANES; lane += 1) {
+        const cell = document.createElement('span');
+        cell.className = 'pie-pad-cell';
+        padGrid.append(cell);
+        padCells.push({ cell, lane, row: r });
+      }
+    }
+  }
+  const buzz = (ms) => { try { if (!reduced?.matches) navigator.vibrate?.(ms); } catch { /* no buzz here */ } };
+  const padAt = (event) => {
+    const box = padGrid.getBoundingClientRect();
+    const lane = clamp(Math.floor(((event.clientX - box.left) / box.width) * LANES), 0, LANES - 1);
+    const row = clamp(ROWS - 1 - Math.floor(((event.clientY - box.top) / box.height) * ROWS), 0, ROWS - 1);
+    return { lane, row };
+  };
+  let padPointer = null;
+  const padAim = (event, held) => {
+    if (state === 'title' || state === 'over') { start(); return; }
+    if (state !== 'running' || !run) return;
+    const at = padAt(event);
+    if (!run.target || run.target.lane !== at.lane || run.target.row !== at.row) buzz(4);
+    run.target = { ...at, held };
+  };
+  padGrid?.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    padPointer = event.pointerId;
+    try { padGrid.setPointerCapture(event.pointerId); } catch { /* not held */ }
+    root.classList.add('is-thumbs');
+    padAim(event, true);
+  });
+  padGrid?.addEventListener('pointermove', (event) => { if (event.pointerId === padPointer) padAim(event, true); });
+  const padRelease = (event) => {
+    if (event.pointerId !== padPointer) return;
+    padPointer = null;
+    if (run?.target) run.target.held = false;
+  };
+  padGrid?.addEventListener('pointerup', padRelease);
+  padGrid?.addEventListener('pointercancel', padRelease);
+
+  const throwThumb = root.querySelector('[data-pie-thumb-throw]');
+  let aimThumb = null;
+  throwThumb?.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    if (state === 'title' || state === 'over') { start(); return; }
+    if (state !== 'running' || !run) return;
+    try { throwThumb.setPointerCapture(event.pointerId); } catch { /* not held */ }
+    aimThumb = { id: event.pointerId, x: event.clientX, a: run.aim.a };
+    throwThumb.classList.add('is-aiming');
+  });
+  throwThumb?.addEventListener('pointermove', (event) => {
+    if (!aimThumb || event.pointerId !== aimThumb.id || !run) return;
+    // A thumb's width of travel turns the needle about a third of its swing.
+    run.aim.a = clamp(aimThumb.a + ((event.clientX - aimThumb.x) / 110) * AIM_MAX, -AIM_MAX, AIM_MAX);
+  });
+  const throwRelease = (event) => {
+    if (!aimThumb || event.pointerId !== aimThumb.id) return;
+    aimThumb = null;
+    throwThumb.classList.remove('is-aiming');
+    if (event.type === 'pointerup' && state === 'running') throwSlice(run.aim.a);
+  };
+  throwThumb?.addEventListener('pointerup', throwRelease);
+  throwThumb?.addEventListener('pointercancel', throwRelease);
+  root.querySelector('[data-pie-thumb-hop]')?.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    if (state === 'title' || state === 'over') { start(); return; }
+    jump();
+    buzz(8);
+  });
+  // A touch anywhere on the cabinet brings the thumbs, even on a screen that also has a mouse.
+  root.addEventListener('pointerdown', (event) => { if (event.pointerType === 'touch') root.classList.add('is-thumbs'); }, { passive: true });
+
+  /** The pad, each frame: where the carrier stands, where it is going, and what is coming down each lane. */
+  let padSeen = '';
+  function paintPad() {
+    if (!padCells.length || !thumbs || thumbs.offsetParent === null) return;
+    const danger = new Array(LANES).fill(0);
+    if (run && state === 'running') {
+      run.things.forEach((t) => {
+        if (t.wapped || !t.fatal || t.y > run.y || run.y - t.y > 300) return;
+        const near = 1 - (run.y - t.y) / 300;
+        if (WIDE.has(t.kind)) { for (let lane = 0; lane < LANES; lane += 1) if (lane !== t.gap) danger[lane] = Math.max(danger[lane], near); }
+        else danger[laneAt(t.x)] = Math.max(danger[laneAt(t.x)], near);
+      });
+    }
+    const key = run ? `${run.lane}.${run.row}.${run.target?.lane}.${run.target?.row}.${danger.map((d) => Math.round(d * 4)).join('')}` : '';
+    if (key === padSeen) return;
+    padSeen = key;
+    padCells.forEach(({ cell, lane, row }) => {
+      cell.classList.toggle('is-here', Boolean(run) && run.lane === lane && run.row === row);
+      cell.classList.toggle('is-target', Boolean(run?.target) && run.target.lane === lane && run.target.row === row);
+      cell.style.setProperty('--coming', danger[lane].toFixed(2));
+    });
+  }
+  paintPadHook = paintPad;
+  const handBtn = root.querySelector('[data-pie-hand]');
+  const applyHand = () => {
+    root.classList.toggle('is-left-handed', record.view.hand === 'left');
+    handBtn?.setAttribute('aria-pressed', record.view.hand === 'left' ? 'true' : 'false');
+  };
+  handBtn?.addEventListener('click', () => {
+    record.view.hand = record.view.hand === 'left' ? 'right' : 'left';
+    writeRecord(record);
+    applyHand();
+    say(record.view.hand === 'left' ? 'The pad is under your right thumb now, hop and throw under your left.' : 'The pad is under your left thumb, hop and throw under your right.');
+  });
+  applyHand();
+
   /* ─── Story and Zen: the narrative beside the screen, collapsible; nothing popping up, in zen ─── */
   const applyView = () => {
     voyage?.classList.toggle('is-story-off', !record.view.story);
@@ -5726,7 +5860,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const key = btn.dataset.pieToggle;
       const on = Boolean(record.view[key]);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      btn.textContent = key === 'story' ? `◫ Story beside: ${on ? 'on' : 'off'}` : `◌ Zen: ${on ? 'on' : 'off'}`;
+      btn.textContent = key === 'story' ? '◫ Story' : '◌ Zen';
+      btn.title = key === 'story'
+        ? (on ? 'The story flows beside the screen' : 'The story beside the screen is folded away')
+        : (on ? 'Zen: nothing pops up, and the screen takes the room' : 'Zen is off');
     });
     requestAnimationFrame(fit);
   };
@@ -5747,7 +5884,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const isFull = () => Boolean(voyage) && (document.fullscreenElement === voyage || voyage.classList.contains('is-immersive'));
   const paintFull = () => {
     if (!fullBtn) return;
-    fullBtn.textContent = isFull() ? '⛶ Leave fullscreen' : '⛶ Fullscreen';
+    fullBtn.textContent = isFull() ? '⛶ Leave' : '⛶ Full';
+    fullBtn.title = isFull() ? 'Leave fullscreen' : 'Fullscreen';
     fullBtn.setAttribute('aria-pressed', isFull() ? 'true' : 'false');
   };
   const immersive = (on) => {
@@ -5967,12 +6105,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     const dx = at.x - press.ox;
     const dy = at.y - press.oy;
-    if (Math.abs(dx) >= STEP_ACROSS && Math.abs(dx) >= Math.abs(dy)) {
+    // The first clear movement decides the axis, and the drag keeps it: no stray steps from a wobbly thumb.
+    if (!press.axis && Math.hypot(dx, dy) > 10) press.axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+    if (press.axis === 'x' && Math.abs(dx) >= STEP_ACROSS) {
       step(dx < 0 ? -1 : 1);
       press.ox += Math.sign(dx) * STEP_ACROSS;
       press.oy = at.y;
       press.steps += 1;
-    } else if (Math.abs(dy) >= STEP_ALONG && Math.abs(dy) > Math.abs(dx)) {
+    } else if (press.axis === 'y' && Math.abs(dy) >= STEP_ALONG) {
       climb(dy < 0 ? 1 : -1);
       press.oy += Math.sign(dy) * STEP_ALONG;
       press.ox = at.x;

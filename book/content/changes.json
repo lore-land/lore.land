@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.I",
+      "date": "2026-11-08",
+      "notes": [
+        "Exactly One Pie on a phone: under the screen now sits a pad that is the lanes in small. Touch or slide to where you want to stand and the carrier walks there, and each column warms red as something comes down that lane. Hop and throw sit under your other thumb; slide along throw to turn the needle. A switch swaps them for the other hand.",
+        "The page under the game is in three parts now, Playing, Keeping and Making, with an index that stays in reach, and every label on it reads in every cover."
+      ]
+    },
+    {
       "release": "2026_11_08.H",
       "date": "2026-11-08",
       "notes": [

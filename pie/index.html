@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.H" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.I" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -48,11 +48,11 @@
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.H&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.I&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.H"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.H"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -91,9 +91,8 @@
             <li><kbd>Esc</kbd> <span>pause</span></li>
             <li><span>Under the screen: the story beside it, zen, fullscreen</span></li>
           </ol>
-          <p class="pie-keys-touch">On a phone: drag in the lanes to step (a lane for every half-lane you drag, any way); drag from the pie to turn the needle and let go to throw; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
+          <p class="pie-keys-touch">On a phone, under the screen: the pad is the lanes in small; touch or slide to where you want to stand and the carrier walks there. Hop and throw sit under your other thumb; slide along throw to turn the needle, and let go. In the lanes themselves a drag still steps and a tap still throws.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
-          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-deck">The deck ↓</a> <a href="#pie-powers">The power-up bench ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
           </div>
         </div>
 
@@ -135,11 +134,22 @@
             <button type="button" class="pie-step" data-pie-climb="1" aria-label="Step ahead">▲</button>
             <button type="button" class="pie-step" data-pie-step="1" aria-label="Step right">▶</button>
           </div>
+          <div class="pie-thumbs" data-pie-thumbs aria-hidden="true">
+            <div class="pie-pad" data-pie-pad>
+              <div class="pie-pad-grid" data-pie-pad-grid></div>
+              <p class="pie-pad-label">touch where to stand</p>
+            </div>
+            <div class="pie-thumb-actions">
+              <button type="button" class="pie-thumb pie-thumb-throw" data-pie-thumb-throw tabindex="-1"><b>✦ throw</b><small>slide to aim</small></button>
+              <button type="button" class="pie-thumb pie-thumb-hop" data-pie-thumb-hop tabindex="-1"><b>⤒ hop</b></button>
+            </div>
+          </div>
           <div class="pie-tools">
-            <button type="button" class="pie-sound" data-pie-sound aria-pressed="true">♪ WAP sounds: on</button>
-            <button type="button" class="pie-tool" data-pie-toggle="story" aria-pressed="true">◫ Story beside: on</button>
-            <button type="button" class="pie-tool" data-pie-toggle="zen" aria-pressed="false">◌ Zen: off</button>
-            <button type="button" class="pie-tool" data-pie-fullscreen aria-pressed="false">⛶ Fullscreen</button>
+            <button type="button" class="pie-sound" data-pie-sound aria-pressed="true">♪ Sound</button>
+            <button type="button" class="pie-tool" data-pie-toggle="story" aria-pressed="true">◫ Story</button>
+            <button type="button" class="pie-tool" data-pie-toggle="zen" aria-pressed="false">◌ Zen</button>
+            <button type="button" class="pie-tool" data-pie-fullscreen aria-pressed="false">⛶ Full</button>
+            <button type="button" class="pie-tool pie-tool-hand" data-pie-hand aria-pressed="false" title="Swap the pad and the buttons, for the other hand">⇄ Hands</button>
           </div>
           <p class="visually-hidden pie-live" data-pie-live role="status" aria-live="polite"></p>
         </div>
@@ -153,14 +163,31 @@
         </div>
       </section>
 
+      <nav class="pie-index" aria-label="On this page">
+        <p class="pie-index-part"><span>I</span> Playing</p>
+        <a href="#pie-legend">What everything is</a>
+        <p class="pie-index-part"><span>II</span> Keeping</p>
+        <a href="#pie-deck">The deck</a>
+        <a href="#pie-carries">Your carries</a>
+        <a href="#pie-lore">What the pies let slip</a>
+        <p class="pie-index-part"><span>III</span> Making</p>
+        <a href="#pie-powers">The bench</a>
+        <a href="#pie-provenance">Provenance</a>
+        <a href="#pie-assets">Asset sheet</a>
+      </nav>
+
+      <p class="pie-part" aria-hidden="true"><span>I</span> Playing <em>what everything in the lanes is, and what it costs</em></p>
+
       <section class="pie-legend" id="pie-legend" aria-labelledby="legend-title">
         <div class="pie-section-head">
           <p class="hub-eyebrow">What everything is</p>
           <h2 id="legend-title">In the lanes</h2>
-          <p>The land comes in rows, and every row leaves a way through, never more than a step from the last. Step across, or ahead and back: four steps up the lanes, where the wonders wait and what is coming comes sooner. Or hop: low things pass under you, and a slice thrown at the top of a hop is lofted like one off a ramp.</p>
-          <p>The tilt is what is at stake. Every step tilts the pie a little, hurried steps more; a knock tilts it a lot. Step under the direction it is tipping to catch the balance, or hold your lane a breath to poise the plate: a poised throw costs no tilt and widens the gold window. A deft hop just as something low reaches your feet steadies the landing. The red ring beside the pie, and the level under the screen, show how far it has tipped. Full, it spills.</p>
-          <p>The pie in hand stays whole because an aura keeps replenishing it, and the aura needs two ingredients: flour for the crust, boonberries for the filling. Every slice you throw draws on both; a slice that reaches nobody costs more. Run either dry and the slices go without it (the clowns are not particular), and a thin pie tips more easily. Keep both high and the pies grow: the pie in hand swells, and every slice is bigger, reaches wider, and satisfies more. The two levels at the foot of the screen show what is left.</p>
-          <p>Flour in the air feeds the two pies of the quinary five: a burst bag, a slice into a bag, a kicked-up pile, a march of Mimes Against WAP shaking out their placards. It brings them sooner, and makes whichever is here stronger.</p>
+        </div>
+        <div class="pie-rules">
+          <p><b class="pie-rule-name">The way through</b> The land comes in rows, and every row leaves a way through, never more than a step from the last. Step across, or ahead and back: four steps up the lanes, where the wonders wait and what is coming comes sooner. Or hop: low things pass under you, and a slice thrown at the top of a hop is lofted like one off a ramp.</p>
+          <p><b class="pie-rule-name">The tilt</b> The tilt is what is at stake. Every step tilts the pie a little, hurried steps more; a knock tilts it a lot. Step under the direction it is tipping to catch the balance, or hold your lane a breath to poise the plate: a poised throw costs no tilt and widens the gold window. A deft hop just as something low reaches your feet steadies the landing. The red ring beside the pie, and the level under the screen, show how far it has tipped. Full, it spills.</p>
+          <p><b class="pie-rule-name">The aura</b> The pie in hand stays whole because an aura keeps replenishing it, and the aura needs two ingredients: flour for the crust, boonberries for the filling. Every slice you throw draws on both; a slice that reaches nobody costs more. Run either dry and the slices go without it (the clowns are not particular), and a thin pie tips more easily. Keep both high and the pies grow: the pie in hand swells, and every slice is bigger, reaches wider, and satisfies more. The two levels at the foot of the screen show what is left.</p>
+          <p><b class="pie-rule-name">Flour in the air</b> Flour in the air feeds the two pies of the quinary five: a burst bag, a slice into a bag, a kicked-up pile, a march of Mimes Against WAP shaking out their placards. It brings them sooner, and makes whichever is here stronger.</p>
         </div>
         <div class="pie-legend-groups">
           <section class="pie-legend-group tone-hazard" aria-labelledby="lg-clear">
@@ -235,6 +262,8 @@
         </div>
       </section>
 
+      <p class="pie-part" aria-hidden="true"><span>II</span> Keeping <em>what this browser remembers of your carries</em></p>
+
       <section class="pie-deck" id="pie-deck" data-pie-deck aria-labelledby="deck-title">
         <div class="pie-section-head">
           <p class="hub-eyebrow">The deck · and the QA table</p>
@@ -246,11 +275,36 @@
         <div data-pie-deck-body></div>
       </section>
 
-      <details class="pie-assets" id="pie-assets" data-pie-assets>
-        <summary><span class="hub-eyebrow">For a design table</span> <strong>The asset sheet: every background and sprite</strong></summary>
-        <p>Drawn by the game’s own hand, in the page’s own colours: each place’s ground and light, and every sprite with its hitbox, what it does, where it appears and the chapter it arrives in. Copy the level manifest to plan a new level or a reskin.</p>
-        <div data-pie-assets-body></div>
-      </details>
+      <section class="pie-carries" id="pie-carries" data-pie-carries aria-labelledby="carries-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">Kept in this browser</p>
+          <h2 id="carries-title">What your carries have done to the book</h2>
+          <p>Every chapter you carry the pie through keeps a mark. How the carry went leans that chapter’s reading a little: toward fairy tale where clowns were satisfied and wonders kept, toward absurd reality where you were knocked about and Mr. BaneWAP was fed, toward low magic where you hopped clean and threw true. Where Mimes Against WAP out-did the pie, they hold the chapter, and it is harder to wonder about pie there: its pie words go quiet, on the page and in the passage, until you carry it through again and win it back. Each chapter page says so at the top, with a switch to read it plainly.</p>
+          <p class="pie-carries-lede" data-pie-carries-lede></p>
+        </div>
+        <div data-pie-carries-body></div>
+      </section>
+
+      <section class="pie-lore" id="pie-lore" data-pie-lore aria-labelledby="lore-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">Unlockables</p>
+          <h2 id="lore-title">What the pies let slip</h2>
+          <p>Mr. BoonWAP says one true thing about the land each time he holds court. Mr. BaneWAP, foiled, blurts one. More of it opens as you find more of the land: chapters read, wonders kept in your almanac, the figure under the hat noticed, tellings heard, and what you do in the lanes.</p>
+          <p class="pie-lore-count" data-pie-lore-count></p>
+        </div>
+        <div class="pie-lore-columns">
+          <section aria-labelledby="lore-boon">
+            <h3 id="lore-boon"><canvas data-pie-sprite="boon" width="64" height="64" aria-hidden="true"></canvas> Mr. BoonWAP, holding court</h3>
+            <ol class="pie-lore-list" data-pie-lore-list="boon"></ol>
+          </section>
+          <section aria-labelledby="lore-bane">
+            <h3 id="lore-bane"><canvas data-pie-sprite="bane" width="64" height="64" aria-hidden="true"></canvas> Mr. BaneWAP, foiled</h3>
+            <ol class="pie-lore-list" data-pie-lore-list="bane"></ol>
+          </section>
+        </div>
+      </section>
+
+      <p class="pie-part" aria-hidden="true"><span>III</span> Making <em>for a table changing the game together</em></p>
 
       <section class="pie-powers" id="pie-powers" data-pie-bench aria-labelledby="powers-title">
         <div class="pie-section-head">
@@ -283,34 +337,11 @@
         <div class="pie-provenance-body" data-pie-provenance-body><p class="pie-carries-lede">No carry yet. The first spill writes the first card.</p></div>
       </section>
 
-      <section class="pie-carries" id="pie-carries" data-pie-carries aria-labelledby="carries-title">
-        <div class="pie-section-head">
-          <p class="hub-eyebrow">Kept in this browser</p>
-          <h2 id="carries-title">What your carries have done to the book</h2>
-          <p>Every chapter you carry the pie through keeps a mark. How the carry went leans that chapter’s reading a little: toward fairy tale where clowns were satisfied and wonders kept, toward absurd reality where you were knocked about and Mr. BaneWAP was fed, toward low magic where you hopped clean and threw true. Where Mimes Against WAP out-did the pie, they hold the chapter, and it is harder to wonder about pie there: its pie words go quiet, on the page and in the passage, until you carry it through again and win it back. Each chapter page says so at the top, with a switch to read it plainly.</p>
-          <p class="pie-carries-lede" data-pie-carries-lede></p>
-        </div>
-        <div data-pie-carries-body></div>
-      </section>
-
-      <section class="pie-lore" id="pie-lore" data-pie-lore aria-labelledby="lore-title">
-        <div class="pie-section-head">
-          <p class="hub-eyebrow">Unlockables</p>
-          <h2 id="lore-title">What the pies let slip</h2>
-          <p>Mr. BoonWAP says one true thing about the land each time he holds court. Mr. BaneWAP, foiled, blurts one. More of it opens as you find more of the land: chapters read, wonders kept in your almanac, the figure under the hat noticed, tellings heard, and what you do in the lanes.</p>
-          <p class="pie-lore-count" data-pie-lore-count></p>
-        </div>
-        <div class="pie-lore-columns">
-          <section aria-labelledby="lore-boon">
-            <h3 id="lore-boon"><canvas data-pie-sprite="boon" width="64" height="64" aria-hidden="true"></canvas> Mr. BoonWAP, holding court</h3>
-            <ol class="pie-lore-list" data-pie-lore-list="boon"></ol>
-          </section>
-          <section aria-labelledby="lore-bane">
-            <h3 id="lore-bane"><canvas data-pie-sprite="bane" width="64" height="64" aria-hidden="true"></canvas> Mr. BaneWAP, foiled</h3>
-            <ol class="pie-lore-list" data-pie-lore-list="bane"></ol>
-          </section>
-        </div>
-      </section>
+      <details class="pie-assets" id="pie-assets" data-pie-assets>
+        <summary><span class="hub-eyebrow">For a design table</span> <strong>The asset sheet: every background and sprite</strong></summary>
+        <p>Drawn by the game’s own hand, in the page’s own colours: each place’s ground and light, and every sprite with its hitbox, what it does, where it appears and the chapter it arrives in. Copy the level manifest to plan a new level or a reskin.</p>
+        <div data-pie-assets-body></div>
+      </details>
 
       <div class="worktable pie-worktable" data-worktable data-near="/pie/" hidden>
         <p class="hub-eyebrow">On the maker’s worktable</p>

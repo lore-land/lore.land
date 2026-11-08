@@ -1493,7 +1493,8 @@ body[data-surface='monument'] .pie-main {
   font-size: 0.62rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--card-edge);
+  /* The edge's hue, leaned toward the page's ink so a small label reads on any cover. */
+  color: color-mix(in srgb, var(--card-edge) 55%, var(--hub-ink));
 }
 
 .pie-cardface-sprite {
@@ -2020,4 +2021,444 @@ html.pie-immersive {
 
 .pie-provenance-card .pie-tool {
   justify-self: start;
+}
+
+/* ─── Thumbs: controls for a phone held in two hands (pie-game.mjs) ──────
+ * The pad is the lanes in small: five across, four up. Touch or slide to where
+ * the carrier should stand and it walks there at its own pace. Each column
+ * warms red as something comes down that lane. Hop and throw sit under the
+ * other thumb; throw is slid along to turn the needle. Shown on touch screens,
+ * or once a touch is used; the step row stays for screen readers. */
+.pie-thumbs {
+  display: none;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-areas: 'pad act';
+  gap: 0.6rem;
+  align-items: stretch;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.pie-cabinet.is-left-handed .pie-thumbs {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  grid-template-areas: 'act pad';
+}
+
+.pie-cabinet.is-thumbs .pie-thumbs {
+  display: grid;
+}
+
+/* The step row, kept for screen readers and keyboards, folds out of sight under the thumbs. */
+.pie-cabinet.is-thumbs .pie-steps {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (pointer: coarse) {
+  .pie-cabinet .pie-thumbs {
+    display: grid;
+  }
+
+  .pie-cabinet .pie-steps {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.pie-pad {
+  grid-area: pad;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.pie-pad-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  aspect-ratio: 5 / 4;
+  padding: 5px;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  border-radius: 0.85rem;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), color-mix(in srgb, var(--hub-ink) 10%, transparent) calc(20% - 1px) 20%),
+    color-mix(in srgb, var(--hub-paper) 80%, var(--hub-ink) 6%);
+  box-shadow: inset 0 2px 6px rgba(10, 12, 16, 0.12);
+  touch-action: none;
+  cursor: pointer;
+}
+
+.pie-pad-cell {
+  --coming: 0;
+  position: relative;
+  border-radius: 0.4rem;
+  background:
+    linear-gradient(180deg, rgba(200, 56, 40, calc(var(--coming) * 0.6)), rgba(200, 56, 40, calc(var(--coming) * 0.12))),
+    color-mix(in srgb, var(--hub-panel) 70%, transparent);
+  transition: background-color 120ms ease;
+}
+
+.pie-pad-cell.is-target {
+  outline: 2px dashed color-mix(in srgb, var(--hub-gold) 85%, var(--hub-ink));
+  outline-offset: -2px;
+}
+
+.pie-pad-cell.is-here {
+  background:
+    radial-gradient(circle at 50% 55%, var(--hub-gold) 0 34%, transparent 36%),
+    linear-gradient(180deg, rgba(200, 56, 40, calc(var(--coming) * 0.6)), transparent),
+    color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--hub-gold) 70%, var(--hub-ink));
+}
+
+.pie-pad-label {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-thumb-actions {
+  grid-area: act;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.pie-thumb {
+  display: grid;
+  place-content: center;
+  gap: 0.1rem;
+  min-height: 3.4rem;
+  padding: 0.4rem;
+  border: 1px solid var(--thumb-edge);
+  border-radius: 1rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #fff 18%, transparent), transparent 55%),
+    color-mix(in srgb, var(--thumb-tone) 22%, var(--hub-panel));
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent), 0 8px 18px rgba(10, 12, 16, 0.12);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  touch-action: none;
+  cursor: pointer;
+  transition: transform 90ms ease, box-shadow 90ms ease;
+}
+
+.pie-thumb b {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.pie-thumb small {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-thumb:active,
+.pie-thumb.is-aiming {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent);
+}
+
+.pie-thumb-throw {
+  --thumb-tone: var(--hub-gold);
+  --thumb-edge: color-mix(in srgb, var(--hub-gold) 75%, var(--hub-ink));
+}
+
+.pie-thumb-throw.is-aiming {
+  background: color-mix(in srgb, var(--hub-gold) 38%, var(--hub-panel));
+}
+
+.pie-thumb-hop {
+  --thumb-tone: var(--hub-accent);
+  --thumb-edge: color-mix(in srgb, var(--hub-accent) 70%, var(--hub-ink));
+}
+
+/* ─── The start card's choices: its own ink, since the card is always night ─── */
+.pie-card .pie-card-mode {
+  border-color: rgba(217, 195, 138, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f3ead6;
+}
+
+.pie-card .pie-card-mode:hover,
+.pie-card .pie-card-mode:focus-visible {
+  border-color: #d9c38a;
+  background: rgba(217, 195, 138, 0.16);
+}
+
+.pie-card .pie-card-mode.is-active {
+  border-color: #f2c14e;
+  background: rgba(242, 193, 78, 0.24);
+  color: #fff8e6;
+}
+
+/* ─── Under the screen: one bar of switches, its state shown, not spelled ─── */
+.pie-cabinet .pie-tools {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 0;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.7rem;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+}
+
+.pie-cabinet .pie-tools > button {
+  position: relative;
+  margin: 0;
+  padding: 0.45rem 0.3rem 0.5rem;
+  border: 0;
+  border-inline-start: 1px solid var(--hub-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.pie-cabinet .pie-tools > button:first-child {
+  border-inline-start: 0;
+}
+
+.pie-cabinet .pie-tools > button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hub-gold) 16%, transparent);
+}
+
+/* A lit bar under a switch that is on. */
+.pie-cabinet .pie-tools > button[aria-pressed='true']::after {
+  content: '';
+  position: absolute;
+  inset: auto 22% 0.18rem;
+  height: 2px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--hub-gold) 80%, var(--hub-ink));
+}
+
+.pie-cabinet .pie-tools > button:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: -3px;
+}
+
+/* The hands switch only matters with the thumbs. */
+.pie-tool-hand {
+  display: none;
+}
+
+.pie-cabinet.is-thumbs .pie-tool-hand {
+  display: block;
+}
+
+@media (pointer: coarse) {
+  .pie-tool-hand {
+    display: block;
+  }
+}
+
+/* ─── The caption: quieter between lines by colour, never by fading the box ─── */
+.pie-caption {
+  opacity: 1;
+}
+
+.pie-caption:not(.is-in) .pie-toast-line {
+  color: var(--hub-muted);
+}
+
+/* The way back, as a chip at the head of the cabinet. */
+.pie-cabinet .pie-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.65rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+  color: var(--hub-ink);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.pie-cabinet .pie-return:hover,
+.pie-cabinet .pie-return:focus-visible {
+  border-color: var(--hub-gold);
+}
+
+/* ─── The page below the game: an index that stays in reach, and three parts ───
+ * Playing (what everything is), Keeping (what this browser remembers), Making
+ * (for a table changing the game together). */
+.pie-index {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: clamp(1.6rem, 4vw, 2.6rem) 0 0;
+  padding: 0.5rem 0.2rem;
+  overflow-x: auto;
+  border-block: 1px solid var(--hub-line);
+  background: color-mix(in srgb, var(--hub-paper) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  scrollbar-width: none;
+  transition: top 220ms ease;
+}
+
+html:not([data-chrome-hidden='true']) .pie-index {
+  top: 3.3rem;
+}
+
+.pie-index::-webkit-scrollbar {
+  display: none;
+}
+
+.pie-index-part {
+  flex: none;
+  margin: 0 0 0 0.6rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+  white-space: nowrap;
+}
+
+.pie-index-part:first-child {
+  margin-left: 0;
+}
+
+.pie-index-part span {
+  color: color-mix(in srgb, var(--hub-gold) 45%, var(--hub-ink));
+}
+
+.pie-index a {
+  flex: none;
+  padding: 0.22rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pie-index a:hover,
+.pie-index a:focus-visible {
+  border-color: var(--hub-gold);
+}
+
+.pie-index ~ section,
+.pie-index ~ details {
+  scroll-margin-top: 7rem;
+}
+
+.pie-part {
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.8rem;
+  margin: clamp(2.4rem, 6vw, 4rem) 0 -0.6rem;
+  padding-top: 0.9rem;
+  border-top: 2px solid color-mix(in srgb, var(--hub-gold) 45%, var(--hub-line));
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hub-ink);
+}
+
+.pie-part span {
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.6rem;
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-ink));
+}
+
+.pie-part em {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--hub-muted);
+}
+
+/* The rules of the lanes, as four cards rather than one wall of words. */
+.pie-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: 0.7rem;
+  margin: 0.4rem 0 0;
+}
+
+.pie-rules p {
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--hub-ink);
+}
+
+.pie-rule-name {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--hub-accent) 65%, var(--hub-ink));
+}
+
+/* On a touch screen the controls sit right under the screen and the caption follows them, so
+ * the screen, the pad and the buttons fit the window together (the cabinet is sized from the
+ * window's height: the screen is 0.643 as wide as it is tall, after ~13rem of controls). */
+.pie-pad-grid {
+  aspect-ratio: 5 / 3.4;
+}
+
+@media (pointer: coarse) {
+  .pie-cabinet .pie-screen { order: 1; }
+  .pie-cabinet .pie-thumbs { order: 2; }
+  .pie-cabinet .pie-tools { order: 3; }
+  .pie-cabinet .pie-caption { order: 4; min-height: 0; }
+  .pie-cabinet .pie-steps { order: 5; }
+
+  .pie-voyage .pie-cabinet,
+  .pie-voyage.is-zen .pie-cabinet {
+    justify-self: center;
+    width: 100%;
+    max-width: min(100%, calc((100dvh - 13rem) * 0.643 + 1.5rem));
+  }
+}
+
+/* Paragraphs under a section's title keep a breath between them. */
+.pie-section-head p:not(.hub-eyebrow) + p {
+  margin-top: 0.6rem;
 }
