@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.B",
+      "date": "2026-11-07",
+      "notes": [
+        "Exactly One Pie: it is not always him under the hat. Each carry the hat settles on someone — the porter, a feast clerk, the Genie, now and then a clown — and at a change of scene it may move on.",
+        "Clowns love WAP: a pie in the face. Step into one and it gets the pie, square, with a WAP you can hear; the pie on the plate is no smaller. A toggle under the game turns the sound off."
+      ]
+    },
+    {
       "release": "2026_11_07.A",
       "date": "2026-11-07",
       "notes": [

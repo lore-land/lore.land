@@ -211,7 +211,7 @@
     #name: "the prophecy as a thing you can hold"
     prerequisites: [L22, L25]
     increment: "Exactly One Pie (/pie/): an obstacle-dodging game in which a figure in a hat carries one pie up Bonk City's lanes, stepping across the scene at a right angle while it streams at him; the pie wobbles with hurried steps and puddles, Boof steadies it in passing, scenes cut like silent-film cards, and every run ends in exactly one spill"
-    done_when: "the game reads the trope physics (orthogonal motion, line segments, a hat that never falls, feeling as tilt) rather than borrowing a genre's look; it wears the reader's binding; keyboard, tap, swipe and buttons all play it; it never names him"
+    done_when: "the game reads the trope physics (orthogonal motion, line segments, a hat that never falls, feeling as tilt) rather than borrowing a genre's look; it wears the reader's binding; keyboard, tap, swipe and buttons all play it; it never names him; the hat settles on whoever it likes (chosen_one), and clowns get WAP while the pie stays whole (one pie that remains whole after being served)"
   }
   ^lesson[L18]{
     #name: "an engine for the next book"
@@ -273,6 +273,7 @@
   i5d: { lessons: [L26], release: "2026_11_06.E", note: "the binder at the folio house: the home page's look as a scene" }
   i5e: { lessons: [L27], release: "2026_11_06.F", note: "story directions: a link sets an edition, a lens, the room, the binding, the switches, and pins tellings" }
   i5f: { lessons: [L28], release: "2026_11_07.A", note: "Exactly One Pie: the prophecy as a small game" }
+  i5g: { lessons: [L28], release: "2026_11_07.B", note: "under the hat it is not always him; clowns love WAP" }
   i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
 ]
 
