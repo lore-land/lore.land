@@ -13,7 +13,7 @@ function pad(num) {
    The Fool is a trickster of honest masks: the person is stable, the face
    a chamber may add is not — guest voices and new masks plug in here. */
 const VOICE_REGISTERS = {
-  boof: 'dog of the Commons Scale; her repair ledger’s ink refuses to dry until the wrong it names is mended',
+  boof: 'working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what',
   fool: 'trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed',
   boonberry: 'lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law',
   echo: 'an old scent re-lit; a summons wearing a borrowed voice, never proof',

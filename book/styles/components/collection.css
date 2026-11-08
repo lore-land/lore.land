@@ -24,7 +24,7 @@ main.chapter.wears-palette.pal-colour section > h2 {
 }
 
 main.chapter.wears-palette.pal-colour .chapter-head .chapter-kicker {
-  color: color-mix(in srgb, var(--pal-accent) 80%, var(--color-text-alt, currentColor));
+  color: color-mix(in srgb, var(--pal-accent) 60%, var(--color-text-main, currentColor));
 }
 
 main.chapter.wears-palette.pal-colour .chapter-head .chapter-in-which {
@@ -56,6 +56,23 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears
 
 html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour .chapter-head .chapter-in-which {
   color: color-mix(in srgb, var(--pal-glow) 55%, var(--color-text-alt, currentColor));
+}
+
+/* On a dark ground a palette's accent can be as dark as the night it sits on: type leans to the
+ * palette's glow and the binding's own ink instead, so every hue stays readable. */
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour .chapter-head .chapter-kicker,
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour > .chapter-end-mark {
+  color: color-mix(in srgb, var(--pal-glow) 45%, color-mix(in srgb, var(--pal-accent) 35%, var(--color-text-main, currentColor)));
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour > section:first-of-type p:first-of-type::first-letter,
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter.wears-palette.pal-colour > [data-ebook-section="true"]:first-of-type p:first-of-type::first-letter {
+  color: color-mix(in srgb, var(--pal-glow) 55%, var(--pal-accent));
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-keepsakes .keepsake-title,
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-keepsakes .keepsake-layers li.is-kept::before {
+  color: color-mix(in srgb, var(--pal-glow, #fff) 50%, var(--color-text-main, currentColor));
 }
 
 /* ─── Type ─────────────────────────────────────────────────────────── */
@@ -123,7 +140,7 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter > .ch
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--pal-accent, #3f78b5) 70%, var(--color-text-alt, currentColor));
+  color: color-mix(in srgb, var(--pal-accent, #3f78b5) 55%, var(--color-text-main, currentColor));
 }
 
 .keepsake-palette {
@@ -197,7 +214,7 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .keepsake-name {
 
 .keepsake-layers li.is-kept::before {
   content: "✓ ";
-  color: var(--pal-accent, currentColor);
+  color: color-mix(in srgb, var(--pal-accent, currentColor) 60%, var(--color-text-main, currentColor));
 }
 
 .keepsake-wear {

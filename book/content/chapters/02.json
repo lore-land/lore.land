@@ -143,6 +143,11 @@
         },
         {
           "type": "paragraph",
+          "text": "Boof had been here before. Not here exactly: at the end of a berry, in the field, for less time than a sniff. Trees. The sack warm against her ribs. Nothing wrong. Now it was all round her, real enough to sneeze at, and she could not tell whether the berry had seen it coming or the grove was only saying it back. In a place that answers a beat late, it is hard to be sure which came first. She decided, as dogs do, that it did not much matter, since nothing was wrong.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
           "text": "She laid the egg on a mossy stone. Pollen hung in rings between the trunks, catching the light; her breath went out and came back thin, a little late. Then the hum returned. Again. Each time it carried something different: {{rehearsed-futures}}. The grove was trying out futures. None had happened yet.",
           "slots": {
             "rehearsed-futures": {

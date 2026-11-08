@@ -48,7 +48,7 @@ body[data-surface='monument'] .hub-hero-media figcaption {
   font-style: italic;
 }
 body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-hero-media figcaption {
-  color: var(--hub-muted);
+  color: var(--hub-ink);
   opacity: 1;
 }
 body[data-surface='monument'] .egg-style-picker:not([hidden]) {
@@ -560,11 +560,10 @@ body[data-surface='monument'] .hub-shell {
   width: min(100%, 88rem);
 }
 
+/* The entrance's bar sits outside the shell; it keeps the shell's wider
+ * measure (hub.css "The land's edge" gives it the window's full reach). */
 body[data-surface='monument'] .hub-topbar {
-  width: 100%;
-  margin-inline: 0;
-  padding: 0.8rem max(var(--hub-gutter), calc((100vw - 88rem) / 2 + var(--hub-gutter))) 0;
-  border-radius: 0;
+  padding-inline: max(var(--hub-gutter), calc((100cqw - 88rem) / 2 + var(--hub-gutter)));
 }
 
 body[data-surface='monument'] .hub-nav {

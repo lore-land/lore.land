@@ -82,6 +82,27 @@
   initial-value: 0;
 }
 
+/*
+ * One light. Every source that lights a page writes these on <html>: the
+ * hub's lighting modes (home/app.mjs, html[data-lighting]), the tempo of a
+ * passage (copy-climate.mjs), the sun a reader drags (scene-light.mjs), the
+ * lamp and the dark bindings (reading.css, bindings.css). Grounds, edges and
+ * surfaces read the light, never its sources. Registered, so a moved light
+ * glides instead of jumping.
+ *   --light-x, --light-y  where it stands over the window, 0–100
+ *   --light-height        0 raking … 1 overhead: how far shadows run
+ *   --light-warmth        0 window blue … 1 hearth amber
+ *   --light-strength      0 unlit … 1 full
+ */
+@property --light-x { syntax: '<number>'; inherits: true; initial-value: 50; }
+@property --light-y { syntax: '<number>'; inherits: true; initial-value: 16; }
+@property --light-height { syntax: '<number>'; inherits: true; initial-value: 0.55; }
+@property --light-warmth { syntax: '<number>'; inherits: true; initial-value: 0.45; }
+@property --light-strength { syntax: '<number>'; inherits: true; initial-value: 0.6; }
+@property --tempo-warmth { syntax: '<number>'; inherits: true; initial-value: 0.45; }
+/* Derived, typed so a browser without atan2() keeps the initial angle. */
+@property --light-angle { syntax: '<angle>'; inherits: true; initial-value: 214deg; }
+
 :root {
   /*
    * Contrast contract (paper / ember on light grounds; cosmos on dark):
@@ -198,6 +219,38 @@
   /* Spacing aliases retained for older chapter CSS tokens. */
   --padding-small: var(--spacing-small);
   --padding-medium: var(--spacing-medium);
+}
+
+/* The light, read. Declared on the root, where the sources write, so every
+ * derived value follows a moved light. Readers take these, not the inputs:
+ *   --light-color   the light's own colour, window blue → hearth amber
+ *   --light-angle   the way it falls across the page (a gradient angle)
+ *   --light-shadow  a box-shadow cast away from it, long when it rakes
+ *   --light-shade   what a shadow is made of on this ground
+ *   --ground-tone   light | dark — the page's ground; a style query reads it */
+:root {
+  --light-warmth: var(--tempo-warmth, 0.45);
+  --ground-tone: light;
+  --light-color: color-mix(in oklab, #b7d9ec, #f4b55e calc(var(--light-warmth) * 100%));
+  --light-cast-x: calc((50 - var(--light-x)) / 50);
+  --light-cast-y: calc((50 - var(--light-y)) / 50);
+  --light-reach: calc(1 - var(--light-height));
+  --light-angle: atan2(var(--light-cast-x), calc(var(--light-cast-y) * -1));
+  --light-shade: #2c2116;
+  /* The land's edge (hub.css, reading.css): the berry roots under a ground
+   * line, as a mask — the surface colours it. Root line at y 3.5 of 14. */
+  --edge-roots: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14'><g fill='none' stroke='%23000' stroke-linecap='round'><path stroke-width='1.1' d='M0 3.5c18-1.2 30 1 52 .4S92 2.2 118 3.4s48-1 72 0S226 4.2 240 3.5'/><path stroke-width='.6' d='M52 3.9c.8 2.2-1.2 3.6-.4 6.2.3 1-.6 1.8-.2 2.6M55 4c1.6 1 2.2 2.4 3.6 2.8M131 3.6c-.4 1.8 1.2 3-.2 5.4M196 3.8c1.4 1.4.6 3.4 2.2 5.2.6.7.4 1.6.9 2.4M20 3.2c-.6 1.4.4 2.2-.2 3.4M88 3.1c.5 1.3-.3 2.5.3 3.6'/></g></svg>");
+  --light-shadow:
+    calc(var(--light-cast-x) * var(--light-reach) * 0.9rem)
+    calc(var(--light-cast-y) * var(--light-reach) * 0.9rem + 0.2rem)
+    calc(0.7rem + var(--light-reach) * 1.1rem)
+    color-mix(in srgb, var(--light-shade) calc(7% + var(--light-strength) * 12%), transparent);
+}
+
+@supports (color: light-dark(#000, #fff)) {
+  :root {
+    --light-shade: light-dark(#2c2116, #000);
+  }
 }
 
 html[data-theme="ember"] {

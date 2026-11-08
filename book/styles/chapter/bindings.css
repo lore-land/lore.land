@@ -25,7 +25,7 @@ html[data-binding="glass"]:not([data-nook-light="lamp"]) {
   --color-parchment-base: #dbe8e2;
   --accent-color-main: #1d6a61;
   --accent-color-alt: #0e4741;
-  --accent-gradient: linear-gradient(130deg, #2a8a7e 0%, #135a52 100%);
+  --accent-gradient: linear-gradient(130deg, #1f7a6f 0%, #135a52 100%); /* white type ≥4.9:1 at both stops */
   --text-color-main: #10302b;
   --text-color-alt: #3b5d57;
   --focus-outline-color: #a3501f;
@@ -64,7 +64,7 @@ html[data-binding="salt"]:not([data-nook-light="lamp"]) {
   --color-parchment-base: #f2f4f1;
   --accent-color-main: #2f6187;
   --accent-color-alt: #234a69;
-  --accent-gradient: linear-gradient(130deg, #4a82ad 0%, #2a5a80 100%);
+  --accent-gradient: linear-gradient(130deg, #3b72a0 0%, #2a5a80 100%); /* white type ≥4.9:1 at both stops */
   --text-color-main: #222b35;
   --text-color-alt: #56616d;
   --hover-bg-color: rgba(47, 97, 135, 0.1);
@@ -190,7 +190,7 @@ html[data-binding="starfield"] {
   --color-parchment-base: #0e1526;
   --accent-color-main: #7ed0ff;
   --accent-color-alt: #c4e4ff;
-  --accent-gradient: linear-gradient(130deg, #3f88c5 0%, #6a4fbf 100%);
+  --accent-gradient: linear-gradient(130deg, #2f6fa8 0%, #6a4fbf 100%); /* white type ≥5:1 at both stops */
   --text-color-main: #eef3ff;
   --text-color-alt: #c5d2f0;
   --text-color-content: #f7fbff;
@@ -231,6 +231,17 @@ html[data-binding="starfield"] {
     radial-gradient(60rem 40rem at 72% -10%, rgba(70, 105, 168, 0.34), transparent 70%),
     radial-gradient(40rem 30rem at 8% 110%, rgba(106, 79, 191, 0.18), transparent 70%),
     linear-gradient(180deg, #0f1830, #080d1a);
+}
+
+/* A dark binding's ground is dark at any light; its light is its own:
+ * chalk-room daylight on slate, moonlight overhead on the starfield. */
+html[data-binding-tone="dark"] {
+  --ground-tone: dark;
+}
+
+html[data-binding="starfield"]:not([data-nook-light="lamp"]) {
+  --light-warmth: calc(var(--tempo-warmth) * 0.3);
+  --light-height: 0.8;
 }
 
 /* ─── A dark binding's own room (lamplight brings the nook's instead) ─── */

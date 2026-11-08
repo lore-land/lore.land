@@ -32,7 +32,7 @@
 }
 
 [data-material='flour'] {
-  --mat-ink: #8a7448;
+  --mat-ink: #6f5c34; /* 5.9:1 on its ground (was #8a7448, 4.1) */
   --mat-edge: #d9c9a2;
   --mat-ground: color-mix(in srgb, #f6efe0 55%, var(--mat-paper));
   /* A dusting, never a stain. */
@@ -59,11 +59,12 @@
 }
 
 [data-material='ink'] {
-  --mat-ink: var(--hub-ink, var(--color-text-main, #1d1d22));
-  --mat-edge: color-mix(in srgb, var(--hub-ink, #1d1d22) 55%, transparent);
+  /* Fixed, not the cover's ink: a card restates --hub-ink from --mat-ink below. */
+  --mat-ink: #1d1d22;
+  --mat-edge: color-mix(in srgb, #1d1d22 55%, transparent);
   --mat-ground: var(--mat-paper);
   /* Plain lines: ruled, like a copybook. */
-  --mat-sheen: repeating-linear-gradient(180deg, transparent 0 1.35rem, color-mix(in srgb, var(--hub-ink, #1d1d22) 7%, transparent) 1.35rem calc(1.35rem + 1px));
+  --mat-sheen: repeating-linear-gradient(180deg, transparent 0 1.35rem, color-mix(in srgb, #1d1d22 7%, transparent) 1.35rem calc(1.35rem + 1px));
 }
 
 [data-material='brass'] {
@@ -96,6 +97,40 @@
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, #d9a23a calc((var(--w-boon, 0.333) - 0.333) * 60%), transparent),
     0 0.6rem 1.4rem color-mix(in srgb, var(--mat-ink) 10%, transparent);
+}
+
+/* A card made of something is its own ground: the material's paper, light
+ * unless the page's ground is dark (below). Inside it the cover's inks are
+ * restated from the material, so a child reading --hub-ink, --hub-muted or
+ * --color-text-* stays legible on the card in every binding: tokens in
+ * (--mat-*), legible text out. */
+:is(.mat-card, .route-rail-card, .topic-board .topic-card)[data-material]:not([data-material='night']) {
+  --mat-text: color-mix(in oklab, var(--mat-ink) 30%, #1d1b18);
+  --mat-text-alt: color-mix(in oklab, var(--mat-ink) 40%, #3a362f);
+  --hub-ink: var(--mat-text);
+  --hub-muted: var(--mat-text-alt);
+  --color-text-main: var(--mat-text);
+  --color-text-alt: var(--mat-text-alt);
+}
+
+/* On a dark ground (night, slate, the lamp, a dark binding) the card takes
+ * the cover's panel, tinted by its edge, and its ink is the edge lifted to
+ * read on it. A style query, so the card asks the ground it sits on; where
+ * the browser cannot ask, the card stays light paper with dark ink. */
+@container style(--ground-tone: dark) {
+  :is(.mat-card, .route-rail-card, .topic-board .topic-card)[data-material]:not([data-material='night']) {
+    --mat-paper: var(--hub-panel, var(--room-chip, var(--color-bg-content, #1b2420)));
+    --mat-ground: color-mix(in srgb, var(--mat-edge) 12%, var(--mat-paper));
+    --mat-ink: color-mix(in oklab, var(--mat-edge) 50%, #fff);
+    --mat-text: #ece9e1;
+    --mat-text-alt: #c9c4b8;
+  }
+
+  @supports (color: oklch(from red l c h)) {
+    :is(.mat-card, .route-rail-card, .topic-board .topic-card)[data-material]:not([data-material='night']) {
+      --mat-ink: oklch(from var(--mat-edge) max(l, 0.84) min(c, 0.1) h / 1);
+    }
+  }
 }
 
 /* ─── Chapters: follow what this chapter is made of (material-paths.mjs) ── */
@@ -164,13 +199,14 @@ main.chapter .material-path-door {
   color: var(--mat-ink);
 }
 
+/* Quieter than the way on, but still a link: the card's muted ink, not a fade. */
 main.chapter .material-path-door.is-back {
-  opacity: 0.75;
+  color: var(--mat-text-alt, var(--color-text-alt));
 }
 
 main.chapter .material-path-door.is-last {
   font-style: italic;
-  opacity: 0.7;
+  color: var(--mat-text-alt, var(--color-text-alt));
 }
 
 /* ─── The entrance and the rooms: route cards wear their material ──────── */
@@ -187,12 +223,15 @@ body[data-surface='monument'] .route-rail[data-region='routes'] .route-rail-card
   color: var(--mat-ink);
 }
 
-body[data-surface='monument'] .topic-board .topic-card[data-material] {
+/* Night is not a material here but the wonder card's own sky (hub.css,
+ * .topic-card--wonder): it keeps its ground, or it would lose it to an
+ * undefined --mat-ground and leave pale words on pale paper. */
+body[data-surface='monument'] .topic-board .topic-card[data-material]:not([data-material='night']) {
   border-color: var(--mat-edge);
   background: var(--mat-sheen, none), var(--mat-ground);
 }
 
-body[data-surface='monument'] .topic-board .topic-card[data-material] h2 {
+body[data-surface='monument'] .topic-board .topic-card[data-material]:not([data-material='night']) h2 {
   color: var(--mat-ink);
 }
 

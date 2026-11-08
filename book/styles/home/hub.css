@@ -29,6 +29,8 @@
   --hub-hearth-ink: var(--color-hearth-ink, #8a4014);
   --hub-night: var(--color-night, #12394a);
   --region-accent: var(--hub-accent);
+  /* Written on <html> by home/app.mjs as the reader descends; read, never redeclared below. */
+  --scroll-glow: 0;
 }
 
 @layer home.base {
@@ -36,25 +38,10 @@
     margin: 0;
     min-height: 100vh;
     color: var(--hub-ink);
+    /* Flat paper; the light and the laid lines are drawn under "The ground". */
     background-color: var(--hub-paper);
-    background-image:
-      radial-gradient(ellipse 90% 48% at 50% -8%, color-mix(in srgb, var(--hub-accent) 18%, transparent), transparent 58%),
-      radial-gradient(ellipse 52% 40% at 100% 6%, color-mix(in srgb, var(--hub-hearth) 18%, transparent), transparent 52%),
-      radial-gradient(ellipse 42% 34% at 0% 72%, color-mix(in srgb, var(--hub-berry) 11%, transparent), transparent 50%),
-      radial-gradient(ellipse 36% 28% at 70% 100%, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 55%),
-      url('/book/media/aesthetics/celestial_sun_motif_1772426750991.png');
-    background-size: auto, auto, auto, auto, min(92vw, 42rem);
-    background-position: center top, right top, left bottom, center bottom, 108% -8%;
-    background-repeat: no-repeat;
-    background-blend-mode: normal, normal, normal, normal, multiply;
     font-family: var(--font-family-body, Georgia, 'Times New Roman', serif);
     line-height: 1.55;
-  }
-
-  html[data-wonder='quiet'] body[data-surface='monument'] {
-    background-image:
-      radial-gradient(ellipse 90% 50% at 50% -10%, color-mix(in srgb, var(--hub-accent) 10%, transparent), transparent 60%);
-    background-blend-mode: normal;
   }
 
   .skip-link {
@@ -64,7 +51,7 @@
     z-index: 100;
     padding: 0.5rem 0.85rem;
     background: var(--hub-ink);
-    color: #fff;
+    color: var(--hub-paper);
     border-radius: 0.25rem;
   }
 
@@ -79,6 +66,7 @@
     padding-bottom: 3rem;
   }
 
+  /* The bar's edge-to-edge reach, roots and torches: "The land's edge" below. */
   .hub-topbar {
     position: sticky;
     top: 0;
@@ -88,13 +76,10 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem 1.25rem;
-    padding: 0.85rem 0 0;
-    margin-inline: calc(var(--hub-gutter) * -0.15);
-    padding-inline: calc(var(--hub-gutter) * 0.15);
+    padding-block: 0.85rem 0.8rem;
     background: color-mix(in srgb, var(--hub-paper) 86%, #fff);
     backdrop-filter: blur(10px) saturate(1.1);
     -webkit-backdrop-filter: blur(10px) saturate(1.1);
-    border-bottom: 1px solid color-mix(in srgb, var(--hub-accent) 16%, var(--hub-line));
     transition:
       padding 180ms ease,
       box-shadow 200ms ease,
@@ -103,25 +88,8 @@
       opacity 180ms ease;
   }
 
-  .hub-topbar::after {
-    content: '';
-    display: block;
-    flex-basis: 100%;
-    height: 2px;
-    margin-top: 0.65rem;
-    background: linear-gradient(90deg, var(--hub-accent), var(--hub-gold), var(--hub-hearth));
-    opacity: 0.38;
-  }
-
   html[data-scroll-compact='true'] .hub-topbar {
-    padding-top: 0.55rem;
-    box-shadow: 0 10px 28px color-mix(in srgb, var(--hub-accent-deep) 8%, transparent);
-    background: color-mix(in srgb, var(--hub-paper) 92%, #fff);
-  }
-
-  html[data-scroll-compact='true'] .hub-topbar::after {
-    margin-top: 0.45rem;
-    opacity: 0.5;
+    padding-block: 0.55rem 0.5rem;
   }
 
   /* Mid-page scroll-down tucks the topbar for more reading canvas */
@@ -330,7 +298,8 @@
 
   .hub-hero-media figcaption {
     margin-top: 0.5rem;
-    color: var(--hub-muted);
+    /* On the plate's tinted mat, not the page: muted leaned to the ink. */
+    color: color-mix(in srgb, var(--hub-muted) 55%, var(--hub-ink));
     font-family: var(--font-family-heading, system-ui, sans-serif);
     font-size: 0.72rem;
     letter-spacing: 0.04em;
@@ -417,8 +386,9 @@
     background:
       linear-gradient(180deg, color-mix(in srgb, #fff 16%, transparent), transparent 48%),
       var(--hub-accent-deep);
-    /* Core typography ships unlayered link colors; this must remain legible on the dark action. */
-    color: #f7fbff !important;
+    /* Core typography ships unlayered link colors; this must remain legible on the action.
+     * A token, because a layered !important outranks any unlayered theme override. */
+    color: var(--hub-cta-ink, #f7fbff) !important;
     border-color: color-mix(in srgb, var(--hub-accent-deep) 80%, #000);
     box-shadow:
       0 1px 0 color-mix(in srgb, #000 14%, transparent),
@@ -442,7 +412,6 @@
   .hub-cta-sub {
     font-size: 0.72rem;
     font-weight: 400;
-    opacity: 0.82;
     letter-spacing: 0.02em;
   }
 
@@ -717,10 +686,9 @@
     text-underline-offset: 0.16em;
   }
 
+  /* Its ground and root line: "The land's edge" below. */
   .hub-footer {
     margin-top: 2.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--hub-line);
     font-size: 0.88rem;
     color: var(--hub-muted);
   }
@@ -732,7 +700,6 @@
   .hub-footer-note {
     margin: 0.35rem 0 0;
     font-size: 0.8rem;
-    opacity: 0.85;
   }
 
   .hub-footer p {
@@ -1186,7 +1153,7 @@
   padding: 0.75rem 0.85rem;
   border: 1px solid var(--hub-line);
   border-radius: 0.65rem;
-  background: color-mix(in srgb, #fff 40%, transparent);
+  background: color-mix(in srgb, var(--hub-panel) 60%, transparent);
   text-decoration: none;
   color: inherit;
   transition: border-color 140ms ease, background 140ms ease;
@@ -1301,7 +1268,8 @@
 }
 
 [data-region='threshold'] .hub-hero-media figcaption {
-  color: color-mix(in srgb, var(--hub-hearth-ink) 48%, var(--hub-muted));
+  /* Sits on the plate's tinted mat, not the page: lean to the ink. */
+  color: color-mix(in srgb, var(--hub-hearth-ink) 40%, var(--hub-ink));
 }
 
 [data-region='theme'] {
@@ -1344,7 +1312,8 @@
 }
 
 [data-region='index'] {
-  --region-accent: #6a5a4a;
+  /* Archive brown, mixed from the cover so it holds on night cloth too. */
+  --region-accent: color-mix(in oklab, var(--hub-muted) 70%, var(--hub-gold-ink));
 }
 
 [data-region='index'] .hub-chapter-list {
@@ -1681,7 +1650,8 @@
   padding: 0.12rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--persona-color, #28798c) 10%, transparent);
-  color: var(--persona-color, var(--hub-accent));
+  /* The lens colour leaned to the cover's ink, so it reads on paper and cloth. */
+  color: color-mix(in oklab, var(--persona-color, var(--hub-accent)) 58%, var(--hub-ink));
   font-size: 0.78rem;
   letter-spacing: 0.02em;
 }
@@ -2275,7 +2245,7 @@ body[data-current-scene='artifacts'] .reading-compass {
 
 .artifact-card .topic-kicker {
   margin: 0 0 0.25rem;
-  color: var(--artifact-accent);
+  color: color-mix(in oklab, var(--artifact-accent) 52%, var(--hub-ink));
   font-size: 0.68rem;
 }
 
@@ -2379,65 +2349,79 @@ body[data-current-scene='artifacts'] .reading-compass {
   text-underline-offset: 0.18em;
 }
 
-/* ─── Climate toggle · theme depth · dynamic lighting ───────── */
+/* ─── The ground: paper under glass, one light ─────────────────
+ * A monument page is a laminated folio: flat paper with its laid and
+ * chain lines (body::before), sealed under glass, lit by one light (the
+ * model in core/tokens.css). The light stands in the room, not on the
+ * page, so it is drawn on html::before, fixed to the window: one pool
+ * where it lands, in its own colour, and one band of glare where it
+ * crosses the laminate. No other colour washes; the land's edge (below)
+ * carries the character. The lighting modes only place the light. */
 
-body[data-surface='monument'] {
+html[data-lighting='raking'] {
+  --light-x: 78;
+  --light-y: 8;
+  --light-height: 0.2;
+}
+
+html[data-lighting='still'] {
   --light-x: 48;
-  --light-y: 14;
-  --light-strength: 0.58;
-  --scroll-glow: 0;
-  --light-teal: color-mix(in srgb, var(--hub-accent) calc(var(--light-strength) * 42%), transparent);
-  --light-hearth: color-mix(in srgb, var(--hub-hearth) calc(var(--light-strength) * 36%), transparent);
-  --light-gold: color-mix(in srgb, var(--hub-gold) calc(var(--light-strength) * 40%), transparent);
-  --light-berry: color-mix(in srgb, var(--hub-berry) calc(var(--light-strength) * 28%), transparent);
-  transition: background-color 280ms ease, color 280ms ease;
+  --light-y: 12;
+  --light-height: 0.72;
+}
+
+html[data-lighting='live'] {
+  --light-height: 0.48;
+}
+
+/* How much of the light the ground gives back (read by html::before, so
+ * set on html): quiet wonder dims it, deep wonder lifts it. */
+html:has(> body[data-surface='monument']) {
+  --ground-light: 0.2;
+  --ground-glare: 0.07;
+}
+
+html[data-wonder='quiet']:has(> body[data-surface='monument']) {
+  --ground-light: 0.1;
+  --ground-glare: 0;
+}
+
+html[data-wonder='deep']:has(> body[data-surface='monument']) {
+  --ground-light: 0.3;
+  --ground-glare: 0.11;
 }
 
 body[data-surface='monument'] {
-  background-image:
-    radial-gradient(
-      ellipse 72% 54% at calc(var(--light-x) * 1%) calc(var(--light-y) * 1%),
-      var(--light-gold),
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse 58% 46% at calc((var(--light-x) * 0.55 + 30) * 1%) calc((var(--light-y) * 0.4 + 8) * 1%),
-      var(--light-teal),
-      transparent 62%
-    ),
-    radial-gradient(
-      ellipse 48% 40% at calc((100 - var(--light-x) * 0.35) * 1%) calc((70 + var(--scroll-glow) * 20) * 1%),
-      var(--light-hearth),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 40% 34% at calc((20 + var(--scroll-glow) * 30) * 1%) calc((78 - var(--light-y) * 0.2) * 1%),
-      var(--light-berry),
-      transparent 58%
-    ),
-    url('/book/media/aesthetics/celestial_sun_motif_1772426750991.png');
-  background-size: auto, auto, auto, auto, min(92vw, 42rem);
-  background-position:
-    center,
-    center,
-    center,
-    center,
-    calc(90% + (var(--light-x) - 50) * 0.35%) calc(-6% + (var(--light-y) - 20) * 0.2%);
+  transition: background-color 280ms ease, color 280ms ease;
+  /* Unlayered: reset.css's body shorthand would otherwise leave the
+   * paper cover on a white canvas. */
+  background-color: var(--hub-paper);
+  /* The entrance keeps the sun motif; the rooms drop it (end of file). */
+  background-image: url('/book/media/aesthetics/celestial_sun_motif_1772426750991.png');
+  background-size: min(92vw, 42rem);
+  background-position: calc(90% + (var(--light-x) - 50) * 0.35%) -1.5rem;
   background-repeat: no-repeat;
-  background-blend-mode: screen, normal, normal, normal, multiply;
+  background-blend-mode: multiply;
 }
 
-/* Wonder depth */
-html[data-wonder='quiet'] body[data-surface='monument'],
-body[data-surface='monument'][data-wonder='quiet'] {
-  --light-strength: 0.36;
-  background-blend-mode: soft-light, normal, normal, normal, multiply;
-}
-
-html[data-wonder='deep'] body[data-surface='monument'],
-body[data-surface='monument'][data-wonder='deep'] {
-  --light-strength: 0.84;
-  background-blend-mode: screen, soft-light, normal, normal, multiply;
+html:has(> body[data-surface='monument'])::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      var(--light-angle),
+      transparent 18%,
+      color-mix(in oklab, var(--light-color) calc(var(--light-strength) * var(--ground-glare) * 100%), transparent) 30%,
+      transparent 44%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at calc(var(--light-x) * 1%) calc(var(--light-y) * 1%),
+      color-mix(in oklab, var(--light-color) calc(var(--light-strength) * var(--ground-light) * 100%), transparent),
+      transparent 70%
+    );
 }
 
 html[data-wonder='deep'] body[data-surface='monument'] .topic-card,
@@ -2481,9 +2465,19 @@ body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) {
   --hub-hearth: #e0894a;
   --hub-berry: #c47bb8;
   --hub-night: #090f1f;
+  /* Inks for type on a dark cover; the paper inks are brown on brown here. */
+  --hub-gold-ink: #f0c45a;
+  --hub-hearth-ink: #f0a46a;
+  --ground-tone: dark;
+  color-scheme: dark;
+  /* Shared components' glass, as night cloth rather than white film. */
+  --glass-bg: color-mix(in srgb, var(--hub-panel) 72%, transparent);
+  --glass-bg-strong: var(--hub-panel);
+  --glass-border: var(--hub-line);
+  --color-text-content: var(--hub-paper);
   color: var(--hub-ink);
   background-color: var(--hub-paper);
-  background-blend-mode: screen, soft-light, soft-light, screen, soft-light;
+  background-blend-mode: soft-light;
 }
 
 /* The binder's other covers (home/bindery.mjs; chapters: chapter/bindings.css).
@@ -2540,12 +2534,51 @@ body[data-surface='monument'][data-theme='slate'] {
   --hub-hearth: #f2a38a;
   --hub-berry: #c9a6e0;
   --hub-night: #0f1314;
+  --hub-gold-ink: #f0d46a;
+  --hub-hearth-ink: #f2a38a;
 }
 
-html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-topbar,
-body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-topbar {
-  background: color-mix(in srgb, var(--hub-paper) 88%, #000);
-  border-bottom-color: color-mix(in srgb, var(--hub-accent) 24%, transparent);
+html:is([data-theme='night'], [data-theme='slate']):has(> body[data-surface='monument']) {
+  color-scheme: dark;
+  --ground-tone: dark;
+  --ground-light: 0.16;
+}
+
+/* Core tokens follow the cover. Components shared with the chapters
+ * (interactive.css, sections.css, reset.css; footer, links, buttons) read
+ * --color-*, which tokens.css sets for paper on <html>. On a monument page
+ * they say what the hub's cover says, so a dark cover never leaves a
+ * paper-ink heading or footer on night cloth. */
+body[data-surface='monument'] {
+  --color-text-main: var(--hub-ink);
+  --color-text-alt: var(--hub-muted);
+  --color-accent-main: var(--hub-accent);
+  --color-accent-alt: var(--hub-accent-deep);
+  --color-bg-main: var(--hub-paper);
+  --color-bg-content: var(--hub-panel);
+  --color-bg-content-strong: color-mix(in srgb, var(--hub-panel) 70%, var(--hub-paper));
+  --color-parchment-base: var(--hub-paper);
+  --color-celestial-teal: var(--hub-accent);
+  --color-gold: var(--hub-gold);
+  --color-gold-ink: var(--hub-gold-ink);
+  --color-hearth: var(--hub-hearth);
+  --color-hearth-ink: var(--hub-hearth-ink);
+  --color-berry: var(--hub-berry);
+  --color-night: var(--hub-night);
+  --region-accent: var(--hub-accent);
+  --color-focus-outline: var(--hub-hearth-ink);
+  --border-color-main: var(--hub-line);
+  --text-color-main: var(--hub-ink);
+  --text-color-alt: var(--hub-muted);
+  --accent-color-main: var(--hub-accent);
+  --accent-color-alt: var(--hub-accent-deep);
+  --bg-color-main: var(--hub-paper);
+  --bg-color-content-strong: var(--color-bg-content-strong);
+  /* reset.css paints bare buttons with these (unlayered, so they win). */
+  --color-accent-gradient: linear-gradient(130deg, var(--hub-accent) 0%, var(--hub-accent-deep) 100%);
+  --interactive-bg-hover: linear-gradient(130deg, var(--hub-accent-deep) 0%, var(--hub-accent-deep) 100%);
+  --interactive-outline: var(--color-focus-outline);
+  --active-bg-color: var(--hub-accent-deep);
 }
 
 html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-hero h1,
@@ -2555,8 +2588,8 @@ body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hu
 
 html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'] .hub-cta-primary,
 body[data-surface='monument']:is([data-theme='night'], [data-theme='slate']) .hub-cta-primary {
+  --hub-cta-ink: #071018;
   background: color-mix(in srgb, var(--hub-accent) 82%, #0a1528);
-  color: #071018 !important;
   border-color: color-mix(in srgb, var(--hub-accent) 60%, #fff);
 }
 
@@ -2585,11 +2618,11 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media img {
     0 0 0 1px color-mix(in srgb, var(--hub-accent) 14%, transparent);
 }
 
+/* Cards cast their shadow away from the one light, long when it rakes and
+ * short when it stands overhead (--light-shadow, core/tokens.css). */
 body[data-surface='monument'][data-lighting='live'] .topic-card,
 body[data-surface='monument'][data-lighting='raking'] .topic-card {
-  box-shadow:
-    calc((50 - var(--light-x)) * 0.03px) calc((var(--light-y) - 30) * 0.05px) 1.2rem
-      color-mix(in srgb, var(--material-accent, var(--hub-accent)) calc(var(--light-strength) * 22%), transparent);
+  box-shadow: var(--light-shadow);
 }
 
 /* The cover, said in the top bar (home/bindery.mjs). The look is chosen in
@@ -2625,21 +2658,22 @@ body[data-surface='monument'][data-lighting='raking'] .topic-card {
   }
 }
 
-/* Scroll-linked vignette depth */
+/* The folio's paper: laid lines from the mould's wires, chain lines where
+ * the wires were tied. Page-sized (body carries perspective), so the paper
+ * scrolls with the page while the light (html::before) stays in the room. */
 body[data-surface='monument']::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: calc(0.12 + var(--scroll-glow) * 0.22);
   background:
-    radial-gradient(
-      ellipse 120% 80% at 50% 120%,
-      color-mix(in srgb, var(--hub-night) 35%, transparent),
-      transparent 55%
-    );
-  transition: opacity 200ms ease;
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--hub-ink) 2%, transparent) 0 1px, transparent 1px 5.75rem),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--hub-ink) 1.4%, transparent) 0 1px, transparent 1px 4px);
+}
+
+html[data-wonder='quiet'] body[data-surface='monument']::before {
+  opacity: 0.5;
 }
 
 body[data-surface='monument'] > .hub-shell {
@@ -2885,7 +2919,6 @@ body[data-surface='monument'] .hub-section-lede {
 body[data-surface='monument'] .hub-eyebrow {
   letter-spacing: 0.16em;
   font-size: 0.68rem;
-  opacity: 0.92;
 }
 
 body[data-surface='monument'] .hub-meta {
@@ -2930,7 +2963,6 @@ body[data-surface='monument'] .hub-hero-media figcaption {
   padding-inline: 0.1rem;
   letter-spacing: 0.05em;
   font-size: 0.68rem;
-  opacity: 0.88;
 }
 
 /* Cards: paper tooth + optical edge */
@@ -3002,23 +3034,149 @@ body[data-surface='monument'] .hub-cta-quiet {
   letter-spacing: 0.02em;
 }
 
-/* Topbar hairline: thinner, softer fade */
-body[data-surface='monument'] .hub-topbar::after {
-  height: 1px;
-  opacity: 0.45;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--hub-accent) 12%,
-    var(--hub-gold) 50%,
-    var(--hub-hearth) 88%,
-    transparent 100%
-  );
+/* ─── The land's edge: the page perimeter ─────────────────────
+ * A monument page is the field seen in section. The top bar is the
+ * dawnward edge: the field's surface, glassed like the folio and run from
+ * window edge to window edge; where the light stands over it, its sealed
+ * edge catches. Under its ground line hang the berry roots, and along
+ * them the torch-ants keep their lit street: the only lights in the book
+ * that are not the sun, so they show more as the field's light falls.
+ * The footer is the hearthward edge: the same root line, then the soil
+ * the book is set on. Between the two, plain laid paper under one light.
+ *
+ * Reach: body is the inline-size container, so 100cqw is the window less
+ * its scrollbar. A bar or footer inside .hub-shell steps out by half the
+ * difference and pads back by the same, so its words keep the shell's
+ * measure while its ground runs to both edges. No markup, and the bar on
+ * the entrance (a body child) takes the same rule. */
+
+body[data-surface='monument'] {
+  padding: 0;
+  container-type: inline-size;
+  /* Roots are earth, not ink: the cover's gold-ink, faded into the paper. */
+  --edge-root: color-mix(in srgb, color-mix(in oklab, var(--hub-gold-ink) 70%, var(--hub-ink)) 46%, transparent);
+  --edge-torch: var(--hub-gold);
+  --edge-torch-core: color-mix(in oklab, var(--edge-torch) 82%, var(--hub-ink));
+  --edge-torch-glow: calc(24% + (1 - var(--light-strength)) * 34%);
+}
+
+@supports (color: light-dark(#000, #fff)) {
+  body[data-surface='monument'] {
+    --edge-torch-core: light-dark(
+      color-mix(in oklab, var(--edge-torch) 82%, var(--hub-ink)),
+      color-mix(in oklab, var(--edge-torch) 60%, #fff)
+    );
+  }
+}
+
+body[data-surface='monument'] .hub-topbar,
+body[data-surface='monument'] .hub-footer {
+  position: relative;
+  margin-inline: calc((100% - 100cqw) / 2);
+  padding-inline: max(var(--hub-gutter), calc((100cqw - 100%) / 2));
 }
 
 body[data-surface='monument'] .hub-topbar {
+  position: sticky;
+  background:
+    radial-gradient(
+      ellipse 30% 180% at calc(var(--light-x) * 1%) 0%,
+      color-mix(in oklab, var(--light-color) calc(var(--light-strength) * 24%), transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--hub-paper) 84%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent);
   backdrop-filter: blur(14px) saturate(1.12);
   -webkit-backdrop-filter: blur(14px) saturate(1.12);
+}
+
+html[data-scroll-compact='true'] body[data-surface='monument'] .hub-topbar {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent),
+    var(--light-shadow);
+}
+
+/* The hearthward edge: the soil under the field, a shade deeper than the
+ * paper, reaching the foot of the window. */
+body[data-surface='monument'] .hub-footer {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-block: 1.6rem max(1.75rem, env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--hub-paper-deep) 72%, var(--hub-paper));
+}
+
+body[data-surface='monument'] .hub-shell:has(> .hub-footer:last-child) {
+  padding-bottom: 0;
+}
+
+/* The root line is the ground line: it runs along the bar's foot and the
+ * footer's head, rootlets hanging down into the soil; torches ride it. */
+body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::before,
+body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 3.5px);
+  height: 14px;
+  margin: 0;
+  pointer-events: none;
+}
+
+body[data-surface='monument'] .hub-footer::before,
+body[data-surface='monument'] .hub-footer::after {
+  top: -3.5px;
+}
+
+body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::before {
+  background: var(--edge-root);
+  -webkit-mask: var(--edge-roots) 0 0 / 15rem 14px repeat-x;
+  mask: var(--edge-roots) 0 0 / 15rem 14px repeat-x;
+}
+
+body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after {
+  /* Declared here, not on body, so the style query below can brighten it. */
+  --edge-halo: color-mix(in oklab, var(--edge-torch) var(--edge-torch-glow), transparent);
+  background:
+    radial-gradient(circle at 2.25rem 3.5px, var(--edge-torch-core) 0 1.2px, var(--edge-halo) 1.8px, transparent 5px) 0 0 / 15rem 14px repeat-x,
+    radial-gradient(circle at 9.4rem 3.5px, var(--edge-torch-core) 0 1.1px, var(--edge-halo) 1.7px, transparent 4.5px) 0 0 / 23rem 14px repeat-x,
+    radial-gradient(circle at 4.1rem 3.5px, var(--edge-torch-core) 0 1px, var(--edge-halo) 1.6px, transparent 4px) 0 0 / 37rem 14px repeat-x;
+}
+
+/* On a dark ground the roots are pale and the street burns brighter. A
+ * style query, so the edge reads the ground it sits on rather than a list
+ * of covers; browsers without one keep the daylight edge, still legible. */
+@container style(--ground-tone: dark) {
+  body[data-surface='monument'] .hub-topbar {
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent);
+  }
+
+  body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::before {
+    background: color-mix(in srgb, var(--hub-ink) 30%, transparent);
+  }
+
+  body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after {
+    --edge-torch-glow: calc(40% + (1 - var(--light-strength)) * 36%);
+  }
+}
+
+html[data-wonder='quiet'] body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after {
+  opacity: 0.55;
+}
+
+/* The ants walk their rounds as the reader walks the page: half of them
+ * dawnward, half hearthward. Scroll-driven, so the street is still when the
+ * reader is, and absent for anyone who asked for less motion. */
+@keyframes edge-ants {
+  to { background-position: 30rem 0, -46rem 0, 37rem 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    html:not([data-wonder='quiet']) body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after {
+      animation: edge-ants linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
 }
 
 /* Selection + focus: belonging to the palette */
@@ -3046,7 +3204,6 @@ body[data-surface='monument'] [data-region='grain'] {
 /* Route rail: quieter label, stronger primary */
 body[data-surface='monument'] .route-rail-label {
   letter-spacing: 0.14em;
-  opacity: 0.8;
 }
 
 body[data-surface='monument'] .route-rail-card {
@@ -3079,11 +3236,9 @@ body[data-surface='monument'] .wonder-threshold {
   border-radius: 1.2rem;
 }
 
-/* Footer: last quiet note */
+/* Footer: last quiet note (its ground: "The land's edge" above) */
 body[data-surface='monument'] .hub-footer {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
   letter-spacing: 0.01em;
-  opacity: 0.92;
 }
 
 body[data-surface='monument'] .hub-footer-note {
@@ -3094,8 +3249,11 @@ body[data-surface='monument'] .hub-footer-note {
 
 /* Print: strip atmosphere, keep structure */
 @media print {
+  html:has(> body[data-surface='monument'])::before,
   body[data-surface='monument']::before,
   body[data-surface='monument']::after,
+  body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::before,
+  body[data-surface='monument'] :is(.hub-topbar, .hub-footer)::after,
   body[data-surface='monument'] .bindery-mark {
     display: none !important;
   }
@@ -3186,11 +3344,7 @@ body[data-surface='monument'] .hub-cta {
 
   body[data-surface='monument'] .hub-topbar {
     gap: 0.5rem;
-    padding-top: 0.65rem;
-  }
-
-  body[data-surface='monument'] .hub-topbar::after {
-    margin-top: 0.35rem;
+    padding-block: 0.65rem 0.6rem;
   }
 
   /* Keep every appearance control available without letting three stacked
@@ -3371,7 +3525,8 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
   }
 
   body[data-surface='monument'] .hub-shell {
-    padding-inline: clamp(0.9rem, 4vw, 1.25rem);
+    --hub-gutter: clamp(1rem, 4vw, 1.25rem);
+    padding-inline: var(--hub-gutter);
     border-radius: 0;
   }
 }
@@ -3381,5 +3536,5 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
  * background layer — lands on a mid-width window and covers the words. The
  * rooms keep the light and drop the picture; the entrance keeps both. */
 html body[data-surface='monument'][data-current-scene] {
-  background-size: auto, auto, auto, auto, 0 0;
+  background-image: none;
 }

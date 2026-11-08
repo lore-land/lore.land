@@ -3,6 +3,8 @@
 
 .production-flow {
   --flow-gold: var(--color-gold, #c4922e);
+  /* Gold is a border colour; type in gold takes the cover's gold ink. */
+  --flow-gold-ink: var(--color-gold-ink, #6b5010);
   --flow-ink: var(--hub-ink, var(--color-text-main, #161d2b));
   --flow-muted: var(--hub-muted, var(--color-text-alt, #3a455c));
   --flow-line: var(--hub-line, var(--border-color-main, rgba(29, 49, 78, 0.26)));
@@ -72,7 +74,7 @@
   font-family: var(--font-family-heading, system-ui, sans-serif);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
-  color: var(--flow-gold);
+  color: var(--flow-gold-ink);
 }
 
 .production-stage-verb {

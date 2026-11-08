@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.G" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.H" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -41,18 +41,18 @@
   </script>
   <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.G&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.E&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.H&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.G"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.G"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.H"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.H"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -87,12 +87,13 @@
             <li><kbd>↑</kbd><kbd>↓</kbd> <span>step ahead, or back</span></li>
             <li><kbd>Space</kbd> <span>hop over low things</span></li>
             <li><kbd>X</kbd> <span>throw along the needle (or click where)</span></li>
+            <li><kbd>Q</kbd><kbd>E</kbd> <span>turn the needle; it stays where you leave it</span></li>
             <li><kbd>Esc</kbd> <span>pause</span></li>
             <li><span>Under the screen: the story beside it, zen, fullscreen</span></li>
           </ol>
-          <p class="pie-keys-touch">On a phone: swipe to step, any way; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
+          <p class="pie-keys-touch">On a phone: drag in the lanes to step (a lane for every half-lane you drag, any way); drag from the pie to turn the needle and let go to throw; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
-          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-deck">The deck ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
+          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-deck">The deck ↓</a> <a href="#pie-powers">The power-up bench ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
           </div>
         </div>
 
@@ -199,13 +200,14 @@
             <h3 id="lg-friend"><span aria-hidden="true">✦</span> Go toward</h3>
             <p>These glow.</p>
             <ul>
-              <li><canvas data-pie-sprite="clown" width="64" height="64" aria-hidden="true"></canvas><div><strong>Clown</strong><span>Clowns love WAP: a pie in the eye. Each wants so much pie, shown as pips over its head: a whole slice fills one (more, the richer your aura), a Perfect twice that, a slice short of crust or filling half, crumbs a quarter. Satisfied, it goes home delighted and tosses back whatever your aura is shortest of; wanting more, it follows the pie. Step into one, or throw: the needle sweeps from the pie, and when it lines up with a clown’s face the ring turns gold (or click or tap right where to throw). Dead centre, off a wall, off the glass, or off a ramp is Perfect and counts twice. WAPs close together are a combo: the pie steadies, and from three a slice is ready at once. </span></div></li>
-              <li><canvas data-pie-sprite="wonder" width="64" height="64" aria-hidden="true"></canvas><div><strong>A wonder</strong><span>One of the land’s own, from this chapter: it waits a moment up the lanes, then goes about its business. Step ahead and into it to keep it in your almanac, and it gives the carry something. Torch-ants light the way through; echo-wrens echo your throws; the lag-stag lags the land; jazz-geese honk the way clear; the hob-deer and the page-fox leave you unkept for a moment.</span></div></li>
-              <li><canvas data-pie-sprite="baneberry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Baneberries</strong><span>Plum-black, a cold violet sheen, a ring of violet dashes: what Mr. BaneWAP is made of. Mimes gather them for him, and while he is here any that get past you are his; each one makes his scheme last longer. Step on them to keep them from him, or pass a thrown slice through one to sweeten its core.</span></div></li>
-              <li><canvas data-pie-sprite="beaver" width="64" height="64" aria-hidden="true"></canvas><div><strong>A slow beaver</strong><span>In no hurry. Steer into one and for a while the land goes at its pace, and you do not: easier to step through. (The lag-stag does the same.)</span></div></li>
+              <li><canvas data-pie-sprite="clown" width="64" height="64" aria-hidden="true"></canvas><div><strong>Clown</strong><span>Clowns love WAP: a pie in the eye. Each wants so much pie, shown as pips over its head: a whole slice fills one (more, the richer your aura), a Perfect twice that, a slice short of crust or filling half, crumbs a quarter. Satisfied, it goes home delighted and tosses back whatever your aura is shortest of; wanting more, it follows the pie. Step into one, or throw along the needle from the pie. It holds where you leave it: turn it with Q and E, point at a face, drag it round from the pie, or tap right where to throw. When it lines up with a clown’s face the ring turns gold. Dead centre, off a wall, off the glass, or off a ramp is Perfect and counts twice. WAPs close together are a combo: the pie steadies, and from three a slice is ready at once. </span></div></li>
+              <li><canvas data-pie-sprite="wonder" width="64" height="64" aria-hidden="true"></canvas><div><strong>A wonder</strong><span>One of the land’s own, from this chapter: it waits a moment up the lanes, then goes about its business. Step ahead and into it to keep it in your almanac, and it does in the lanes what it does in the book, keeping you company while it lasts. Torch-ants light your lane the way they light the roots, and the furrows ahead come up warm; echo-wrens perch on the pie and say your throws again; the lag-stag’s prints land a beat late, and so does the land; remainder-moths lead the needle to the nearest face; pane-snails forgive the panes ahead. Every gift is a Spw spell you can read and change on <a href="#pie-powers">the bench</a>.</span></div></li>
+              <li><canvas data-pie-sprite="baneberry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Baneberries · they foretell</strong><span>Plum-black, a cold violet sheen: what Mr. BaneWAP is made of, and a prophecy that keeps itself. Let one past the pie and it foretells something for its lane (wasps, a spool, a stone), posted at the top in violet, and it comes because it was said; one foretells a flinch, and whoever waits for it in that lane flinches. Step on one and it never says. Pass a thrown slice through one to sweeten it: then it foretells boonberries. Mimes gather them for Mr. BaneWAP, and each makes his scheme last longer.</span></div></li>
+              <li><canvas data-pie-sprite="beaver" width="64" height="64" aria-hidden="true"></canvas><div><strong>A slow beaver</strong><span>In no hurry. Steer into one and for a while the land goes at its pace, and you do not, and everything sounds a little muffled, as if heard through slow time. Boonberries it planted come up behind it.</span></div></li>
               <li><canvas data-pie-sprite="furrow" width="64" height="64" aria-hidden="true"></canvas><div><strong>A warm furrow</strong><span>In the field. Something keeps it warm from underneath: a little crust, a little filling, a little steadier.</span></div></li>
               <li><canvas data-pie-sprite="egg" width="64" height="64" aria-hidden="true"></canvas><div><strong>Something warm, egg-shaped</strong><span>Now and then, at the very top of the lanes. It is not for taking. Pass close, and the pie settles faster for a while, and the next knock is forgiven.</span></div></li>
-              <li><canvas data-pie-sprite="berry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boonberries</strong><span>Teal and amber, lit from within: the filling for the aura. Step through them.</span></div></li>
+              <li><canvas data-pie-sprite="berry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boonberries · they foresee</strong><span>Teal and amber, lit from within: the filling, and a kindly foretelling. Step through them and for a moment the clear way up the lanes shows in teal, before you need it. Whether the berry showed it or you remembered it, the lane does not say.</span></div></li>
+              <li><canvas data-pie-sprite="boneberry" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boneberries · they feed</strong><span>Bone-white, a dusk-red blush, a faint smoke. Savoury: they taste of the place they grow (burnt ends in Bonk City, rib tips in Bone.land, falafel at the parcel gate). Grown, not raised. Crust and filling both, and for a while your steps tilt less.</span></div></li>
               <li><canvas data-pie-sprite="pile" width="64" height="64" aria-hidden="true"></canvas><div><strong>Pile of flour</strong><span>A little crust underfoot. And a ramp: a slice thrown over a pile is lofted clean over whatever is next. Piles in a row loft it further.</span></div></li>
               <li><canvas data-pie-sprite="boof" width="64" height="64" aria-hidden="true"></canvas><div><strong>Boof</strong><span>Crosses the lanes on her own business. Brush past her and the pie steadies.</span></div></li>
               <li><canvas data-pie-sprite="switch" width="64" height="64" aria-hidden="true"></canvas><div><strong>Off switch</strong><span>Mr. BaneWAP always leaves one. Step on it, or hit it with a slice, and he is foiled. His rented wind drifts slices too.</span></div></li>
@@ -249,6 +251,37 @@
         <p>Drawn by the game’s own hand, in the page’s own colours: each place’s ground and light, and every sprite with its hitbox, what it does, where it appears and the chapter it arrives in. Copy the level manifest to plan a new level or a reskin.</p>
         <div data-pie-assets-body></div>
       </details>
+
+      <section class="pie-powers" id="pie-powers" data-pie-bench aria-labelledby="powers-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">The power-up bench · Spw</p>
+          <h2 id="powers-title">Every gift is a spell you can change</h2>
+          <p>Each power-up is the land doing in the lanes what it does in the book, and each is written as one short Spw spell: <code>~</code> for what lasts, <code>%</code> for how much, <code>*</code> for charges, <code>!</code> for what happens at once, <code>&amp;with</code> and <code>&amp;without</code> for how the land answers, <code>#says</code> for what is said under the screen. Copy one into the bench, change it, and carry with it for this visit; or copy a link, and whoever opens it carries with your spells. Their own game stays theirs. Numbers are held to a range, so a spell can change the game but never break it.</p>
+        </div>
+        <div class="pie-bench-body">
+          <ol class="pie-bench-list" data-pie-bench-list></ol>
+          <div class="pie-bench-edit">
+            <label for="pie-bench-spells"><strong>This visit’s spells</strong> <span>(empty: the book’s own)</span></label>
+            <textarea id="pie-bench-spells" data-pie-bench-spells rows="6" spellcheck="false" placeholder="*torch_ants{ ~lit[10] &amp;with[berry] #says[&quot;…&quot;] }"></textarea>
+            <ul class="pie-bench-read" data-pie-bench-read aria-live="polite"></ul>
+            <p class="pie-bench-actions">
+              <button type="button" class="pie-tool" data-pie-bench-apply>Carry with these</button>
+              <button type="button" class="pie-tool" data-pie-bench-link>Copy a link with these</button>
+              <button type="button" class="pie-tool" data-pie-bench-reset>Back to the book’s own</button>
+            </p>
+            <p class="pie-bench-status" data-pie-bench-status role="status"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pie-provenance" id="pie-provenance" data-pie-provenance aria-labelledby="provenance-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">Provenance · Spw</p>
+          <h2 id="provenance-title">How each pie came to be where it spilled</h2>
+          <p>Every carry is written back as a card in Spw, from the carrier’s point of view: where it went, what was counted, what it kept and what was foretold, which spells it ran on and whose they were, and what spilled it. Pass one along to compare a carry, or to show a QA table exactly what happened.</p>
+        </div>
+        <div class="pie-provenance-body" data-pie-provenance-body><p class="pie-carries-lede">No carry yet. The first spill writes the first card.</p></div>
+      </section>
 
       <section class="pie-carries" id="pie-carries" data-pie-carries aria-labelledby="carries-title">
         <div class="pie-section-head">

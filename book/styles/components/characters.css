@@ -104,7 +104,8 @@ custom-fool[data-voice-shape="block"]::before {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-indent: 0;
-  color: color-mix(in srgb, var(--voice-mark, var(--theme-accent-alt, #1c4f63)) 70%, var(--theme-text-alt, #4a5564));
+  /* The voice's mark leaned to the ink: the marks mix in gold, too bright for type. */
+  color: color-mix(in srgb, var(--voice-mark, var(--theme-accent-alt, #1c4f63)) 62%, var(--theme-text-main, #1a2233));
 }
 
 [data-frame="shot"] > .voice-kicker + .voice-pull {

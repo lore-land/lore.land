@@ -1381,6 +1381,37 @@ body[data-surface='monument'] .pie-main {
   display: none;
 }
 
+/* Zen gives the screen the room the words leave: the story beside it folds away and the
+ * cabinet grows to the height of the window (360 × 560, so the screen's width is 0.643 of
+ * the height it can have once the cabinet's own 12.5rem of links, steps and tools are
+ * counted; the cabinet adds its 1.5rem of padding back). */
+.pie-voyage.is-zen {
+  grid-template-columns: minmax(0, 1fr);
+  scroll-margin-top: 0.5rem;
+}
+
+.pie-voyage.is-zen .pie-flow {
+  display: none;
+}
+
+.pie-voyage.is-zen .pie-cabinet {
+  scroll-margin-top: 0.5rem;
+  position: static;
+  justify-self: center;
+  width: 100%;
+  max-width: min(100%, calc((100dvh - 12.5rem) * 0.643 + 1.5rem));
+}
+
+@media (min-width: 62rem) {
+  .pie-voyage.is-zen {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pie-voyage.is-zen .pie-cabinet {
+    max-width: min(48rem, calc((100dvh - 12.5rem) * 0.643 + 1.5rem));
+  }
+}
+
 /* ─── The start card: carry, or from the beginning with introductions ── */
 .pie-card-modes {
   display: flex;
@@ -1820,4 +1851,173 @@ html.pie-immersive {
 .pie-intro .pie-cardface {
   max-height: 100%;
   overflow: auto;
+}
+
+/* ─── The power-up bench: every gift as a Spw spell (pie-powers.mjs) ─────
+ * The book's own spells on the left, as code a reader can take; the visit's
+ * spells on the right, read back line by line as they are written. */
+.pie-powers,
+.pie-provenance {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.pie-bench-body {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 62rem) {
+  .pie-bench-body {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .pie-bench-edit {
+    position: sticky;
+    top: 5rem;
+  }
+}
+
+.pie-bench-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-bench-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.6rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.5rem;
+  background: var(--hub-panel);
+}
+
+.pie-bench-list li.is-replaced {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 10%, var(--hub-panel));
+}
+
+.pie-bench-spell {
+  grid-column: 1 / -1;
+  display: block;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--hub-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.pie-bench-what {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--hub-muted);
+}
+
+.pie-bench-list .pie-tool {
+  align-self: center;
+}
+
+.pie-bench-edit {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-gold) 55%, var(--hub-line));
+  border-radius: 0.6rem;
+}
+
+.pie-bench-edit label span {
+  color: var(--hub-muted);
+  font-size: 0.85rem;
+}
+
+.pie-bench-edit textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.4rem;
+  background: var(--hub-paper);
+  color: var(--hub-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.pie-bench-read {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+}
+
+.pie-bench-read li {
+  max-width: none;
+  margin: 0;
+}
+
+.pie-bench-read li.is-new {
+  color: var(--hub-muted);
+}
+
+.pie-bench-read li.is-error {
+  color: color-mix(in srgb, #b04558 80%, var(--hub-ink));
+}
+
+.pie-bench-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.pie-bench-status {
+  margin: 0;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--hub-accent-deep);
+}
+
+/* ─── Provenance: each carry as a Spw card ─────────────────────────────── */
+.pie-provenance-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.pie-provenance-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.5rem;
+  background: var(--hub-panel);
+}
+
+.pie-provenance-card.is-latest {
+  border-color: var(--hub-gold);
+}
+
+.pie-provenance-card pre {
+  margin: 0;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--hub-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.pie-provenance-card .pie-tool {
+  justify-self: start;
 }

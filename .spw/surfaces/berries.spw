@@ -1,0 +1,73 @@
+# Lore.Land Berries
+# The three berries of the land as three kinds of prophecy, where they sit in the
+# ecology, and how each one reads in Boof's nose. Data twin: book/content/world/berries.json.
+#>lore_land_surfaces_berries
+#:surface #!canon
+#:layer #!semantics
+#:status #!seeded
+
+~<rationale>{
+  The land is a harmony before it is a place. Torch-ants warm the roots under
+  the snow; the roots keep the berries; the berries keep a little borrowed summer
+  and let it go downhill to the pool; the beavers keep the water slow enough to
+  drink. Three berries grow in it, and each foretells in its own way. The
+  boonberry foresees kindly. The baneberry foretells chaos, and the chaos comes
+  because it was said. The boneberry foretells nothing at all and feeds you
+  honestly. A reader should feel the three as weather in the prose, never as a
+  system explained. Boof knows them by nose long before she knows their names.
+}
+
+^"berries"{
+  .note: "book/content/world/berries.json is the data the game and the pages read; this surface is the canon the prose follows"
+  boonberries: {
+    look: "teal and amber, lit from within; a blueberry a wish once passed over, keeping a drop of the granting"
+    prophecy: "kindly: a boonberry shows the way something will go well, a moment before it does, and never shows a thing going badly"
+    voice: "it does not speak; it is more as if you remember being told"
+    ambiguity: "whether a boonberry voice is a sensation, a memory, or a thing that literally happens twice is never settled; the prose keeps all three open, and nobody in the land has asked the berries"
+    scent: "cold juice, sweet skin, and the ozone of something being remembered"
+    told: "01 a berry shows Boof the grove before she reaches it · 02 the grove is the berry come true, or the grove repeating the berry · 14 the berries notice first, and turn a quarter turn"
+  }
+  baneberries: {
+    look: "plum-black with a cold violet sheen and a thorn on the stem; what Mr. BaneWAP is made of"
+    prophecy: "chaotically: a baneberry says what will go wrong, and it goes wrong because it was said"
+    self_fulfilling: "a foretelling acted on is a foretelling kept; whoever hears one and hurries to prevent it is usually the one who brings it about"
+    unsaid: "squashed underfoot, its prophecy goes unsaid; the field-hands put a paw or a boot on one and lean"
+    sweetened: "sweetened, it foretells something kind instead, and that comes true the same way"
+    scent: "cold, plum-dark, a cellar smell; Boof can smell what one is saying before she reaches it"
+    told: "01 squashed in the sloe hedge · 04 the youngest clerk is told the wind will have his cap, and takes it off to keep it safe · 11 an empire announced until it arrives · 12 re-sweetened, BaneWAP foretells kindness and gets it · 14 the deepest fold of the crier sheet · 15 the city decides the destined one is the dog"
+  }
+  boneberries: {
+    look: "bone-white with a dusk-red blush, firm as a knuckle, a faint smoke to the skin"
+    prophecy: "none: a boneberry promises nothing and feeds you exactly what it shows, a whole meal in a berry"
+    nourishment: "savoury, filling and honest; it tastes of what the region would otherwise have had to raise for the table, so nobody has to"
+    grown_not_raised: "the land says grown, not raised, and leaves it there; the prose never lectures"
+    flavours: "rib tips in Bone.land · burnt ends in Bonk City · falafel at the parcel gate · roast chestnut and sage in the dawnward field · salted flatbread in the crosswind · mushroom broth in the grove · grilled river corn at the confluence"
+    scent: "smoke, salt, the good char at an edge; a supper smell with nobody sorry at the back of it"
+    told: "06 a brazier at the plaza rim, grown on the kiln-warm walls · 10 the tubbed bushes the first joiners carried over the pass · 15 a bowl round the night school at the break"
+  }
+}
+
+^<harmonies>{
+  .note: "book/content/world/harmonies.json is Boof's map of these, node by node; the home page draws it (book/scripts/home/boof-map.mjs)"
+  roots: "the torch-ants keep their hearths along the roots all winter, so the berries never freeze"
+  summer: "the berries keep a little borrowed summer under the snow, a drop of light each"
+  pool: "what light the berries let slip runs downhill with the meltwater to the miller pond, which never freezes quite dark"
+  water: "the beavers keep the creek in slow steps, so the well under the Watering Eye never runs dry"
+  kilns: "the bonk-kiln forgives blows into glass, and its warm walls grow the city boneberries"
+  egg: "the Egg is a new coal to the ants and is never explained"
+  rule: "nothing in the land is owned; everything in it is keeping something else"
+}
+
+&"reader_registers"{
+  @boof: "keeps a map without a pen: not of roads but of what keeps what, with her own nose at the middle, where she reads it from"
+  @field_hands: "say baneberries should be stepped on and boonberries should be left alone"
+  @joiners: "eat boneberries at the bench and say grown, not raised, which is as much as they say about it"
+}
+
+~"guards"{
+  egg: "never explained, on the map or in the prose"
+  figure: "never named"
+  register: "no wages, no prices, no ledgers; the land is told as harmony, not as business"
+  boneberries: "an alternative to suffering is implied in-world only; no real brands or diets, no lecture"
+  children: "never placed among strangers, never a card or a feature"
+}

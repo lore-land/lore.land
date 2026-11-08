@@ -5,7 +5,11 @@
  * the pointer. Seasoned: still, clear glass with one quiet sheen. Layers
  * under the top scan peek out at the edge, oldest deepest. */
 
+/* The wall's two inks: glass-room green for names, brass for labels. Both
+ * are restated for a dark cover, where the paper inks sink into the cloth. */
 .folio-wall {
+  --folio-ink: #2f483a;
+  --folio-brass: #7a5c2c;
   display: grid;
   gap: 1.4rem;
   margin-block: 0.5rem 2.5rem;
@@ -17,6 +21,11 @@
   color: color-mix(in srgb, var(--hub-ink, #1d2733) 70%, transparent);
 }
 
+html:is([data-theme='night'], [data-theme='slate']) .folio-wall {
+  --folio-ink: #b9d3c2;
+  --folio-brass: #e2c48a;
+}
+
 .folio-shelf {
   display: grid;
   gap: 0.9rem;
@@ -25,7 +34,7 @@
 .folio-shelf-title {
   margin: 0;
   font-size: 1.1rem;
-  color: #2f483a;
+  color: var(--folio-ink);
 }
 
 .folio-grid {
@@ -157,7 +166,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8a6a36;
+  color: var(--folio-brass);
 }
 
 .folio-title {
@@ -166,7 +175,7 @@
   font-weight: 400;
   font-size: 1.15rem;
   line-height: 1.2;
-  color: #2f483a;
+  color: var(--folio-ink);
 }
 
 .folio-note {
@@ -196,7 +205,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8a6a36;
+  color: var(--folio-brass);
 }
 
 .folio-meta dd {
@@ -205,7 +214,7 @@
 }
 
 .folio-meta a {
-  color: #2f483a;
+  color: var(--folio-ink);
 }
 
 .folio-how {

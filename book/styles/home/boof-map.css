@@ -1,0 +1,555 @@
+/*
+ * ─── Boof's map ──────────────────────────────────────────────────
+ * What keeps what, as Boof keeps it (book/scripts/home/boof-map.mjs):
+ * dotted scent-rings for how she knows a thing (by nose, by road, by
+ * hearsay), pencil threads for the harmonies, gold where the reader has
+ * read past. Serif for what the story says, mono for what the structure
+ * says; every surface is mixed from the binding's own --hub-* tokens, so
+ * each cover (rag, glass, salt, clay, slate, night cloth) draws it in its
+ * own ink. Unlayered, like serial.css, and scoped to the entrance.
+ */
+
+body[data-surface='monument'] .boof-map {
+  --map-glow: var(--hub-gold);
+  --map-pencil: color-mix(in srgb, var(--hub-ink) 30%, transparent);
+  --map-boon: var(--hub-accent);
+  --map-bane: var(--hub-berry);
+  --map-bone: var(--hub-hearth);
+  --map-bone-skin: #efe7da;
+  container: boof-map / inline-size;
+  scroll-margin-top: 6rem;
+}
+
+body[data-surface='monument'] .boof-map-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 21rem);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+@container boof-map (max-width: 50rem) {
+  body[data-surface='monument'] .boof-map-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── The sheet: warm where her nose is, paper everywhere else ───── */
+
+body[data-surface='monument'] .boof-map-field {
+  position: relative;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 18%, var(--hub-line));
+  border-radius: 0.6rem;
+  background:
+    radial-gradient(ellipse 34% 30% at 50% 50%, color-mix(in srgb, var(--map-glow) 16%, transparent), transparent 70%),
+    radial-gradient(circle at 12% 88%, color-mix(in srgb, var(--map-boon) 7%, transparent), transparent 40%),
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--map-bane) 6%, transparent), transparent 40%),
+    color-mix(in srgb, var(--hub-panel) 86%, var(--hub-paper));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--hub-paper) 70%, transparent) inset,
+    0 0.6rem 1.5rem color-mix(in srgb, var(--hub-ink) 6%, transparent);
+  overflow: hidden;
+}
+
+body[data-surface='monument'] .boof-map-field.is-drawn {
+  aspect-ratio: 10 / 7;
+}
+
+@container boof-map (max-width: 34rem) {
+  body[data-surface='monument'] .boof-map-field.is-drawn {
+    aspect-ratio: 5 / 7.6;
+  }
+}
+
+body[data-surface='monument'] .boof-map-ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Scent-rings: how far a thing is from her nose, in how she came to know it. */
+body[data-surface='monument'] .boof-map-ring {
+  fill: none;
+  stroke: color-mix(in srgb, var(--hub-ink) 26%, transparent);
+  stroke-width: 1.3;
+  stroke-dasharray: 0.4 6.5;
+  stroke-linecap: round;
+}
+
+body[data-surface='monument'] .boof-map-ring:first-child {
+  fill: color-mix(in srgb, var(--map-glow) 5%, transparent);
+}
+
+body[data-surface='monument'] .boof-map-ring-word {
+  fill: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  paint-order: stroke;
+  stroke: color-mix(in srgb, var(--hub-panel) 90%, transparent);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+/* Threads: pencil until read past, then gold. */
+body[data-surface='monument'] .boof-map-thread,
+body[data-surface='monument'] .boof-map-thread-ghost {
+  fill: none;
+  stroke-linecap: round;
+}
+
+body[data-surface='monument'] .boof-map-thread {
+  stroke: var(--map-pencil);
+  stroke-width: 1.3;
+  stroke-dasharray: 2.5 4.5;
+}
+
+body[data-surface='monument'] .boof-map-thread-ghost {
+  stroke: color-mix(in srgb, var(--hub-ink) 10%, transparent);
+  stroke-width: 0.7;
+}
+
+body[data-surface='monument'] .boof-map-thread.is-read {
+  stroke: var(--map-glow);
+  stroke-width: 2;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 2.5px color-mix(in srgb, var(--map-glow) 65%, transparent));
+}
+
+body[data-surface='monument'] .boof-map-thread-ghost.is-read {
+  stroke: color-mix(in srgb, var(--map-glow) 30%, transparent);
+}
+
+body[data-surface='monument'] .boof-map-thread.is-near {
+  stroke-width: 2.7;
+}
+
+body[data-surface='monument'] .boof-map-thread.is-near:not(.is-read) {
+  stroke: color-mix(in srgb, var(--hub-ink) 62%, transparent);
+}
+
+body[data-surface='monument'] :is(.boof-map-thread, .boof-map-thread-ghost).is-far {
+  opacity: 0.2;
+}
+
+/* ── The things she knows ───────────────────────────────────────── */
+
+body[data-surface='monument'] .boof-map-node {
+  --dot: 0.82rem;
+  --tint: var(--hub-ink);
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.14rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.12rem 0.15rem;
+  translate: -50% calc(var(--dot) * -0.5 - 0.12rem);
+  border: 0;
+  border-radius: 0.35rem;
+  background: none;
+  box-shadow: none;
+  color: var(--hub-ink);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+body[data-surface='monument'] .boof-map-node:is(:hover, :focus-visible, :active) {
+  background: none;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+}
+
+body[data-surface='monument'] .boof-map-node:focus-visible {
+  outline: 2px solid var(--hub-accent);
+  outline-offset: 1px;
+}
+
+body[data-surface='monument'] .boof-map-dot {
+  display: block;
+  width: var(--dot);
+  height: var(--dot);
+  border: 1.5px solid var(--tint);
+  border-radius: 50%;
+  background: var(--hub-panel);
+}
+
+body[data-surface='monument'] .boof-map-word {
+  padding: 0 0.24rem;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--hub-panel) 84%, transparent);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.15;
+}
+
+body[data-surface='monument'] .boof-map-node.is-tint-boon { --tint: var(--map-boon); }
+body[data-surface='monument'] .boof-map-node.is-tint-bane { --tint: var(--map-bane); }
+body[data-surface='monument'] .boof-map-node.is-tint-bone { --tint: var(--map-bone); }
+
+/* A creature: a ring with somebody in it. */
+body[data-surface='monument'] .boof-map-node.is-kind-creature .boof-map-dot {
+  background: radial-gradient(circle, var(--tint) 0 26%, var(--hub-panel) 32%);
+}
+
+/* The ground: a clod, hatched. */
+body[data-surface='monument'] .boof-map-node.is-kind-ground .boof-map-dot {
+  border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--tint) 42%, transparent) 0 1px, var(--hub-panel) 1px 3.2px);
+}
+
+/* A place: a square of ground with a door in it. */
+body[data-surface='monument'] .boof-map-node.is-kind-place .boof-map-dot {
+  border-radius: 0.16rem;
+  background: linear-gradient(var(--hub-panel) 0 45%, color-mix(in srgb, var(--tint) 55%, transparent) 45% 100%) center / 34% 100% no-repeat, var(--hub-panel);
+}
+
+/* A made thing: a diamond, the way a joiner marks it. */
+body[data-surface='monument'] .boof-map-node.is-kind-made .boof-map-dot {
+  width: calc(var(--dot) * 0.8);
+  height: calc(var(--dot) * 0.8);
+  margin-block: calc(var(--dot) * 0.1);
+  border-radius: 0.1rem;
+  rotate: 45deg;
+  background: color-mix(in srgb, var(--tint) 16%, var(--hub-panel));
+}
+
+/* The berries, as they look. */
+body[data-surface='monument'] .boof-map-node.is-kind-berry .boof-map-dot {
+  border-color: color-mix(in srgb, var(--tint) 70%, var(--hub-ink));
+}
+
+body[data-surface='monument'] .boof-map-node.is-kind-berry.is-tint-boon .boof-map-dot {
+  background: radial-gradient(circle at 50% 56%, var(--map-glow) 0 22%, var(--map-boon) 62%);
+}
+
+body[data-surface='monument'] .boof-map-node.is-kind-berry.is-tint-bane .boof-map-dot {
+  background: radial-gradient(circle at 34% 30%, color-mix(in srgb, var(--map-bane) 45%, var(--map-bone-skin)) 0 12%, var(--map-bane) 42%, color-mix(in srgb, var(--map-bane) 55%, #000) 100%);
+}
+
+body[data-surface='monument'] .boof-map-node.is-kind-berry.is-tint-bone .boof-map-dot {
+  background: radial-gradient(circle at 66% 70%, color-mix(in srgb, var(--map-bone) 65%, transparent) 0 26%, var(--map-bone-skin) 64%);
+}
+
+/* A pie: latticed. */
+body[data-surface='monument'] .boof-map-node.is-kind-pie .boof-map-dot {
+  --dot: 0.95rem;
+  background:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--tint) 55%, transparent) 0 1.2px, transparent 1.2px 4px),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--tint) 55%, transparent) 0 1.2px, transparent 1.2px 4px),
+    color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
+}
+
+/* What she cannot explain: dashed, and left open. */
+body[data-surface='monument'] .boof-map-node.is-kind-mystery .boof-map-dot {
+  border-style: dashed;
+  background: transparent;
+}
+
+body[data-surface='monument'] .boof-map-node.is-node-egg .boof-map-dot {
+  height: calc(var(--dot) * 1.22);
+  border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+  border-color: var(--map-glow);
+  background: radial-gradient(ellipse at 50% 64%, color-mix(in srgb, var(--map-glow) 45%, transparent), transparent 70%);
+}
+
+/* Read past, or not yet. */
+body[data-surface='monument'] .boof-map-node:not(.is-read) .boof-map-dot {
+  opacity: 0.5;
+}
+
+body[data-surface='monument'] .boof-map-node:not(.is-read) .boof-map-word {
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .boof-map-node.is-read:not(.is-center) .boof-map-dot {
+  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--map-glow) 32%, transparent);
+}
+
+body[data-surface='monument'] .boof-map-node.is-selected .boof-map-dot {
+  box-shadow: 0 0 0 2.5px var(--hub-panel), 0 0 0 4.5px var(--map-glow);
+}
+
+body[data-surface='monument'] .boof-map-node.is-selected .boof-map-word {
+  text-decoration: underline wavy color-mix(in srgb, var(--map-glow) 80%, transparent);
+  text-underline-offset: 0.22em;
+}
+
+body[data-surface='monument'] .boof-map-node.is-far {
+  opacity: 0.4;
+}
+
+/* Where her nose is. */
+body[data-surface='monument'] .boof-map-node.is-center {
+  --dot: 2.6rem;
+  z-index: 2;
+  gap: 0.1rem;
+}
+
+body[data-surface='monument'] .boof-map-paw {
+  display: block;
+  width: var(--dot);
+  height: var(--dot);
+  padding: 0.42rem;
+  border: 1.5px solid color-mix(in srgb, var(--hub-hearth) 55%, var(--hub-line));
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--map-glow) 28%, var(--hub-panel)), var(--hub-panel) 72%);
+  fill: var(--hub-hearth);
+}
+
+body[data-surface='monument'] .boof-map-node.is-center.is-selected .boof-map-paw {
+  box-shadow: 0 0 0 2.5px var(--hub-panel), 0 0 0 4.5px var(--map-glow);
+}
+
+body[data-surface='monument'] .boof-map-node.is-center .boof-map-word {
+  font-size: 1.02rem;
+  font-style: normal;
+}
+
+body[data-surface='monument'] .boof-map-nose {
+  padding: 0 0.24rem;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--hub-panel) 84%, transparent);
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* A tall page: the map turns a quarter turn, and the words get smaller. */
+body[data-surface='monument'] .boof-map-field.is-tall .boof-map-node {
+  --dot: 0.7rem;
+}
+
+body[data-surface='monument'] .boof-map-field.is-tall .boof-map-node.is-center {
+  --dot: 2.1rem;
+}
+
+body[data-surface='monument'] .boof-map-field.is-tall .boof-map-word {
+  font-size: 0.78rem;
+}
+
+body[data-surface='monument'] .boof-map-field.is-tall .boof-map-node.is-center .boof-map-word {
+  font-size: 0.9rem;
+}
+
+body[data-surface='monument'] .boof-map-field.is-tall .boof-map-nose {
+  display: none;
+}
+
+/* ── What she knows of it ───────────────────────────────────────── */
+
+body[data-surface='monument'] .boof-map-note {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: 1rem 1.05rem 1.15rem;
+  border: 1px solid var(--hub-line);
+  border-top: 2px solid var(--map-glow);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-panel) 78%, transparent);
+}
+
+body[data-surface='monument'] .boof-map-note > * {
+  max-width: none;
+  margin: 0;
+}
+
+body[data-surface='monument'] .boof-map-note-kicker,
+body[data-surface='monument'] .boof-map-note-told,
+body[data-surface='monument'] .boof-map-status,
+body[data-surface='monument'] .boof-map-harmony-foot {
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+}
+
+body[data-surface='monument'] .boof-map-note-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+body[data-surface='monument'] .boof-map-note .boof-map-note-name {
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+body[data-surface='monument'] .boof-map-note-scent {
+  color: var(--hub-muted);
+  font-family: var(--hub-display, Georgia, serif);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+body[data-surface='monument'] .boof-map-note-knows {
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+body[data-surface='monument'] .boof-map-told a {
+  color: var(--hub-muted);
+  text-decoration-style: dotted;
+}
+
+body[data-surface='monument'] .boof-map-told a.is-read {
+  color: var(--hub-ink);
+  text-decoration: underline solid color-mix(in srgb, var(--map-glow) 85%, transparent);
+  text-decoration-thickness: 2px;
+}
+
+body[data-surface='monument'] .boof-map-threads {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .boof-map-harmony {
+  display: grid;
+  gap: 0.22rem;
+  max-width: none;
+  padding: 0.05rem 0 0.1rem 0.75rem;
+  border-left: 2px dotted var(--map-pencil);
+}
+
+body[data-surface='monument'] .boof-map-harmony.is-read {
+  border-left: 2px solid var(--map-glow);
+}
+
+body[data-surface='monument'] .boof-map-says {
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+body[data-surface='monument'] .boof-map-gloss {
+  color: var(--hub-muted);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+body[data-surface='monument'] .boof-map-gloss.is-pencil {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+body[data-surface='monument'] .boof-map-harmony-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 0.6rem;
+}
+
+body[data-surface='monument'] .boof-map-walk {
+  margin: 0;
+  padding: 0.08rem 0.55rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: none;
+  box-shadow: none;
+  color: var(--hub-accent);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+}
+
+body[data-surface='monument'] .boof-map-walk:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--hub-accent) 55%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-accent) 8%, transparent);
+  box-shadow: none;
+  transform: none;
+  filter: none;
+}
+
+body[data-surface='monument'] .boof-map-status {
+  margin-top: 0.7rem;
+  max-width: 58ch;
+}
+
+/* Without scripts: the harmonies in words. */
+body[data-surface='monument'] .boof-map-fallback {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  list-style: none;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* ── Motion: the threads kindle once; her nose sniffs three times ─ */
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .boof-map-thread,
+  body[data-surface='monument'] .boof-map-thread-ghost {
+    transition: stroke 300ms ease, stroke-width 300ms ease, opacity 300ms ease;
+  }
+
+  body[data-surface='monument'] .boof-map-node {
+    transition: opacity 260ms ease;
+  }
+
+  body[data-surface='monument'] .boof-map.is-kindling .boof-map-thread.is-read {
+    animation: boof-map-kindle 1.3s ease-out both;
+    animation-delay: calc(var(--i, 0) * 40ms);
+  }
+
+  body[data-surface='monument'] .boof-map.is-kindling .boof-map-node.is-center::before {
+    content: '';
+    position: absolute;
+    top: 0.12rem;
+    left: 50%;
+    width: var(--dot);
+    height: var(--dot);
+    translate: -50% 0;
+    border: 1px solid var(--map-glow);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: boof-map-sniff 2.6s ease-out 0.6s 3 both;
+  }
+}
+
+@keyframes boof-map-kindle {
+  from {
+    opacity: 0;
+    stroke-width: 0.4;
+  }
+}
+
+@keyframes boof-map-sniff {
+  from {
+    opacity: 0.7;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 1.9;
+  }
+}

@@ -138,7 +138,7 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
   font-size: 0.74rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--theme-accent-alt, #1c4f63) 82%, transparent);
+  color: var(--theme-accent-alt, #1c4f63);
   border-radius: var(--border-radius-small);
   transition: color 160ms ease, background-color 160ms ease;
 }
@@ -216,7 +216,7 @@ body[data-ebook-nav-shape="depth"] main.chapter>[data-ebook-section="true"].is-e
   letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.4;
-  color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 78%, transparent);
+  color: color-mix(in srgb, var(--theme-accent-main, #2a6f7f) 94%, transparent);
   margin-right: 0.25rem;
 }
 

@@ -204,7 +204,7 @@ body main.chapter .chapter-head h1 {
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-gold, #c4922e) 70%, var(--color-accent-main));
+  color: color-mix(in srgb, var(--color-gold-ink, #6b5010) 70%, var(--color-accent-main));
 }
 
 .chapter-head .chapter-title-text {
@@ -364,7 +364,7 @@ main.chapter > .chapter-turn {
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-gold, #c4922e) 70%, var(--color-accent-main));
+  color: color-mix(in srgb, var(--color-gold-ink, #6b5010) 70%, var(--color-accent-main));
 }
 
 .chapter-turn-in-which {
@@ -485,6 +485,137 @@ nav.chapter-navigation[data-edge="first"] a.prev {
   }
 }
 
+/* The land's edge, as on the monument pages (home/hub.css): the top bar is
+ * the dawnward edge of the field and runs from window edge to window edge,
+ * its sealed edge catching the one light (core/tokens.css) where it stands.
+ * Along its foot the berry roots hang and the torch-ants keep their lit
+ * street, brighter as the field's light falls and in a dark room. The page
+ * below keeps its hairline gutter; only the edge reaches the window. */
+
+body:has(> main.chapter) > nav.chapter-navigation {
+  --edge-root: color-mix(in srgb, var(--sigil-gold, #a67c38) 62%, transparent);
+  --edge-torch: var(--color-gold, #c4922e);
+  --edge-torch-glow: calc(26% + (1 - var(--light-strength)) * 34%);
+  --edge-torch-core: color-mix(in oklab, var(--edge-torch) 80%, var(--color-text-main, #161d2b));
+  top: 0;
+  border-radius: 0;
+  border-inline: 0;
+  border-top: 0;
+  border-bottom-color: transparent;
+}
+
+/* Only the images: the bar's colour stays the binding's (panels.css,
+ * bindings.css), and plain paper keeps no glow. */
+html:not([data-nook-texture="plain"]) body:has(> main.chapter) > nav.chapter-navigation {
+  background-image:
+    radial-gradient(
+      ellipse 30% 180% at calc(var(--light-x) * 1%) 0%,
+      color-mix(in oklab, var(--light-color) calc(var(--light-strength) * 22%), transparent),
+      transparent 70%
+    );
+}
+
+html:not([data-nook-texture="plain"], [data-binding-tone="dark"], [data-nook-light="lamp"]) body:has(> main.chapter) > nav.chapter-navigation {
+  background-image:
+    radial-gradient(
+      ellipse 30% 180% at calc(var(--light-x) * 1%) 0%,
+      color-mix(in oklab, var(--light-color) calc(var(--light-strength) * 22%), transparent),
+      transparent 70%
+    ),
+    linear-gradient(180deg, color-mix(in srgb, #fff 30%, transparent), transparent 55%);
+}
+
+@supports (color: light-dark(#000, #fff)) {
+  body:has(> main.chapter) > nav.chapter-navigation {
+    --edge-torch-core: light-dark(
+      color-mix(in oklab, var(--edge-torch) 80%, var(--color-text-main, #161d2b)),
+      color-mix(in oklab, var(--edge-torch) 60%, #fff)
+    );
+  }
+}
+
+/* The language layer re-sets the links' words in chunks, so .nav-word
+ * cannot fold away; the wordmark and pills tighten instead, and the bar
+ * stays inside a phone without scrolling sideways. */
+@media (max-width: 24rem) {
+  body:has(> main.chapter) > nav.chapter-navigation .hub-home {
+    letter-spacing: 0.16em;
+  }
+
+  body:has(> main.chapter) > nav.chapter-navigation :is(a.prev, a.next) {
+    padding-inline: 0.55rem;
+  }
+}
+
+@media (min-width: 40rem) {
+  body:has(> main.chapter) > nav.chapter-navigation {
+    width: calc(100% + var(--nook-gutter) * 2);
+    margin: calc(var(--nook-gutter) * -1) calc(var(--nook-gutter) * -1) 0;
+    padding-inline: calc(var(--nook-gutter) + 0.7rem);
+  }
+}
+
+@media (min-width: 70rem) {
+  body:has(> main.chapter):has(> aside) > nav.chapter-navigation {
+    grid-column: 1 / -1;
+    top: 0;
+    width: calc(100% + var(--nook-gutter) * 2);
+    margin: calc(var(--nook-gutter) * -1) calc(var(--nook-gutter) * -1) 0;
+  }
+}
+
+nav.chapter-navigation::before,
+nav.chapter-navigation::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 3.5px);
+  height: 14px;
+  pointer-events: none;
+}
+
+nav.chapter-navigation::before {
+  background: var(--edge-root);
+  -webkit-mask: var(--edge-roots) 0 0 / 15rem 14px repeat-x;
+  mask: var(--edge-roots) 0 0 / 15rem 14px repeat-x;
+}
+
+nav.chapter-navigation::after {
+  /* Declared here, not on the bar, so a style query below can brighten it. */
+  --edge-halo: color-mix(in oklab, var(--edge-torch) var(--edge-torch-glow), transparent);
+  background:
+    radial-gradient(circle at 2.25rem 3.5px, var(--edge-torch-core) 0 1.2px, var(--edge-halo) 1.8px, transparent 5px) 0 0 / 15rem 14px repeat-x,
+    radial-gradient(circle at 9.4rem 3.5px, var(--edge-torch-core) 0 1.1px, var(--edge-halo) 1.7px, transparent 4.5px) 0 0 / 23rem 14px repeat-x,
+    radial-gradient(circle at 4.1rem 3.5px, var(--edge-torch-core) 0 1px, var(--edge-halo) 1.6px, transparent 4px) 0 0 / 37rem 14px repeat-x;
+}
+
+@container style(--ground-tone: dark) {
+  nav.chapter-navigation::after {
+    --edge-torch-glow: calc(42% + (1 - var(--light-strength)) * 36%);
+  }
+}
+
+@keyframes chapter-edge-ants {
+  to { background-position: 30rem 0, -46rem 0, 37rem 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    nav.chapter-navigation::after {
+      animation: chapter-edge-ants linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@media print {
+  nav.chapter-navigation::before,
+  nav.chapter-navigation::after {
+    display: none;
+  }
+}
+
 aside a.primary-action {
   display: inline-flex;
   align-items: center;
@@ -590,7 +721,7 @@ html:not([data-ebook-register="engineer"]) .ebook-toc-link[aria-current="true"] 
   font-family: var(--font-family-heading);
   font-size: 0.72em;
   font-variant-numeric: tabular-nums;
-  color: color-mix(in srgb, var(--color-gold, #c4922e) 72%, var(--color-accent-main));
+  color: color-mix(in srgb, var(--color-gold-ink, #6b5010) 72%, var(--color-accent-main));
 }
 
 html:not([data-ebook-register="engineer"]) .ebook-nav-panel :is(.ebook-nav-status, .ebook-nav-controls) {
@@ -925,6 +1056,20 @@ html:not([data-nook-texture="plain"]) body main#chapter-content {
  * amber lit from within, teal kept for the second voice. Overrides the
  * base tokens, so every --color-* and --theme-* alias follows. */
 
+/* The one light (core/tokens.css) in each room: dusk is a low sun, the
+ * lamp a warm light close overhead. Each still leans with the passage's
+ * tempo (--tempo-warmth), so the sources compose instead of overwriting. */
+html[data-nook-light="dusk"] {
+  --light-warmth: calc(0.55 + var(--tempo-warmth) * 0.35);
+  --light-height: 0.15;
+}
+
+html[data-nook-light="lamp"] {
+  --light-warmth: calc(0.75 + var(--tempo-warmth) * 0.25);
+  --light-height: 0.4;
+  --ground-tone: dark;
+}
+
 html[data-nook-light="dusk"] {
   --bg-color-main: #e7dbc6;
   --bg-color-content: rgba(246, 237, 220, 0.93);
@@ -943,7 +1088,7 @@ html[data-nook-light="lamp"] {
   --bg-color-content-strong: rgba(32, 46, 38, 0.97);
   --accent-color-main: #cdaa72;
   --accent-color-alt: #e6c98f;
-  --accent-gradient: linear-gradient(130deg, #b87230 0%, #7c4a1e 100%);
+  --accent-gradient: linear-gradient(130deg, #9a5a22 0%, #7c4a1e 100%); /* cream type ≥5:1 at both stops */
   --text-color-main: #ecdfc4;
   --text-color-alt: #bcae93;
   --text-color-content: #fff4e2;
@@ -961,6 +1106,9 @@ html[data-nook-light="lamp"] {
   --color-golden-sand: #e2a553;
   --color-burnt-orange: #c8742c;
   --color-gold: #e2a553;
+  --color-gold-ink: #e8b36a;
+  --color-hearth-ink: #eaa06a;
+  --color-berry: #c9a6d8;
   --color-parchment-base: #161d16;
   --color-stone-shadow: #050907;
   --chapter-reading-ink: #e9dcc1;
@@ -1051,6 +1199,9 @@ main.chapter .scriptorium-slip::after {
 
 html {
   --sigil-gold: #a67c38;
+  /* The sigil's gold is for marks and rules; type in it leans to the ink so a
+   * wordmark or kicker clears 4.5:1 in every binding and light. */
+  --sigil-ink: color-mix(in oklab, var(--sigil-gold) 66%, var(--color-text-main, #161d2b));
 }
 
 html[data-nook-light="lamp"] {
@@ -1072,7 +1223,7 @@ nav.chapter-navigation .hub-home {
   font-size: 0.78rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--sigil-gold);
+  color: var(--sigil-ink);
 }
 
 /* ─── The nook's rooms (book/images/nook/nook-room-v1…v7) ───────────────
@@ -1535,12 +1686,12 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-stacks-it
   border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 45%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-gold, #c4922e) 8%, transparent);
-  color: color-mix(in srgb, var(--color-gold, #c4922e) 80%, var(--color-accent-main));
+  color: color-mix(in srgb, var(--color-gold-ink, #6b5010) 80%, var(--color-accent-main));
   font-family: "JetBrainsMono", "IBM Plex Mono", var(--font-family-mono, monospace);
   font-size: 0.72rem;
   line-height: 1.4;
   box-shadow: none;
-  opacity: 0.75;
+  opacity: 0.88;
   transform: none;
 }
 
@@ -1675,13 +1826,15 @@ main.chapter .chapter-lens-gloss:empty {
    the share an even third would have. Balanced sets no attribute at all. */
 html[data-genre-tuned] main.chapter [data-ebook-section] > p:not(.section-marks) {
   position: relative;
-  opacity: calc(0.4 + 0.6 * var(--w-none, 1));
+  /* Floor 0.68, not 0.4: a paragraph the lens leans away from still reads at
+   * 4.5:1 on every binding's paper (at 0.4 it fell to about 2.5). */
+  opacity: calc(0.68 + 0.32 * var(--w-none, 1));
   transition: opacity 360ms ease;
 }
 
-html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="boon"] { opacity: calc(0.4 + 0.6 * var(--w-boon, 1)); }
-html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bane"] { opacity: calc(0.4 + 0.6 * var(--w-bane, 1)); }
-html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bone"] { opacity: calc(0.4 + 0.6 * var(--w-bone, 1)); }
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="boon"] { opacity: calc(0.68 + 0.32 * var(--w-boon, 1)); }
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bane"] { opacity: calc(0.68 + 0.32 * var(--w-bane, 1)); }
+html[data-genre-tuned] main.chapter [data-ebook-section] > p[data-lean="bone"] { opacity: calc(0.68 + 0.32 * var(--w-bone, 1)); }
 
 html[data-genre-tuned] main.chapter p[data-lean]::before {
   content: "";
@@ -3542,14 +3695,11 @@ html[data-switches-ready]:not([data-switch-table='on']) .chapter-table {
 }
 
 /* ─── Hold the light (scene-light.mjs; PLAN.E L20–L21) ──────────────────
- * The field light's tokens are registered so a moved sun glides instead of
- * jumping; grain and edge are a quiet overlay above the page; the light
- * table and the frame live in the top layer. */
+ * The field light's tokens are registered with the one light model
+ * (core/tokens.css) so a moved sun glides instead of jumping; grain and
+ * edge are a quiet overlay above the page; the light table and the frame
+ * live in the top layer. */
 
-@property --light-x { syntax: '<number>'; inherits: true; initial-value: 50; }
-@property --light-y { syntax: '<number>'; inherits: true; initial-value: 16; }
-@property --light-strength { syntax: '<number>'; inherits: true; initial-value: 0.6; }
-@property --tempo-warmth { syntax: '<number>'; inherits: true; initial-value: 0.45; }
 @property --knob-grain { syntax: '<number>'; inherits: true; initial-value: 0.12; }
 @property --knob-edge { syntax: '<number>'; inherits: true; initial-value: 0.18; }
 
@@ -3595,7 +3745,7 @@ main.chapter .scene-tools {
   justify-content: flex-end;
   gap: 0.4rem;
   margin: 0.9rem 0 0;
-  opacity: 0.55;
+  opacity: 0.9;
   transition: opacity 200ms ease;
 }
 
@@ -4437,7 +4587,7 @@ main.chapter .story-directions {
 }
 
 .story-directions-kicker {
-  color: var(--sigil-gold, #a67c38);
+  color: var(--sigil-ink, #7b6034);
   font-family: "JetBrainsMono", var(--font-family-mono, monospace);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
@@ -4612,7 +4762,7 @@ main.chapter .projection-spell-sigil {
 }
 
 main.chapter .projection-spell-peek {
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
 main.chapter .projection-spell-body {
@@ -4644,8 +4794,9 @@ main.chapter .projection-spell-lines li.is-visit code {
   color: var(--color-accent-main);
 }
 
+/* Berry for a carry: the binding's own berry, so it lifts on a dark one. */
 main.chapter .projection-spell-lines li.is-carries code {
-  color: color-mix(in srgb, #7a3f9a 70%, currentColor);
+  color: color-mix(in oklab, var(--color-berry, #5b3a6e) 75%, currentColor);
 }
 
 main.chapter .projection-spell-edit {

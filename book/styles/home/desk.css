@@ -11,9 +11,22 @@
   --desk-gold: #cdaa72;
   --desk-gold-light: #e6c98f;
   --desk-ink: #1d2733;
+  /* Text inks, kept apart from the slate's surfaces so a dark cover can
+   * restate them: names in field green, labels in brass (5.3:1 on paper). */
+  --desk-name: var(--desk-field);
+  --desk-brass: #7a5c2c;
+  --desk-brass-deep: #6b5328;
   display: grid;
   gap: 0.9rem;
   margin-block: 0.5rem 2.5rem;
+}
+
+/* Night cloth and slate: the cards are the cover's panel, so the inks turn pale. */
+html:is([data-theme='night'], [data-theme='slate']) .desk {
+  --desk-ink: #e6e2d6;
+  --desk-name: #b9d3c2;
+  --desk-brass: #e2c48a;
+  --desk-brass-deep: #e2c48a;
 }
 
 .desk-fallback {
@@ -109,7 +122,7 @@
   padding: 0.9rem 1.1rem;
   border-radius: 0.9rem;
   border: 1px solid rgba(205, 170, 114, 0.45);
-  background: color-mix(in srgb, #fff 70%, var(--desk-gold) 8%);
+  background: color-mix(in srgb, var(--hub-panel, #fff) 92%, var(--desk-gold) 8%);
 }
 
 .spell-reply-sigil {
@@ -149,7 +162,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 .spell-reply-ask {
@@ -182,7 +195,7 @@
 .desk-result-where {
   font-family: "JetBrainsMono", ui-monospace, monospace;
   font-size: 0.72rem;
-  color: #6b5328;
+  color: var(--desk-brass-deep);
 }
 
 .desk-result-snippet {
@@ -205,7 +218,7 @@
   padding: 0.3rem 0.75rem;
   border: 1px solid color-mix(in srgb, var(--desk-field) 25%, transparent);
   border-radius: 999px;
-  color: var(--desk-field);
+  color: var(--desk-name);
   font-size: 0.85rem;
   text-decoration: none;
 }
@@ -217,7 +230,7 @@
 
 .desk-index-sigil {
   font-family: "JetBrainsMono", ui-monospace, monospace;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 /* ─── Cards ─────────────────────────────────────────────────────────── */
@@ -279,7 +292,7 @@
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.35rem;
   line-height: 1.2;
-  color: var(--desk-field);
+  color: var(--desk-name);
 }
 
 .desk-quiet {
@@ -292,7 +305,7 @@
   border: 1px solid rgba(205, 170, 114, 0.7);
   border-radius: 999px;
   background: radial-gradient(circle at 50% 0%, rgba(205, 170, 114, 0.22), rgba(205, 170, 114, 0.08));
-  color: #6b5328;
+  color: var(--desk-brass-deep);
   font-family: "JetBrainsMono", "IBM Plex Mono", ui-monospace, monospace;
   font-size: 0.78rem;
   cursor: pointer;
@@ -336,11 +349,11 @@
 .desk-book-num {
   font-family: "JetBrainsMono", ui-monospace, monospace;
   font-size: 0.72rem;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 .desk-book-mark {
-  color: var(--desk-field);
+  color: var(--desk-name);
   text-align: right;
 }
 
@@ -348,7 +361,7 @@
   padding-left: 1.8rem;
   font-size: 0.8rem;
   font-style: italic;
-  color: color-mix(in srgb, var(--desk-ink) 60%, transparent);
+  color: color-mix(in srgb, var(--desk-ink) 74%, transparent);
 }
 
 .desk-book li:not(.is-opened) .desk-book-title {
@@ -396,12 +409,12 @@
 
 .desk-trial {
   font-size: 0.72rem;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 .desk-switch-spell {
   font-size: 0.68rem;
-  color: color-mix(in srgb, var(--desk-ink) 50%, transparent);
+  color: color-mix(in srgb, var(--desk-ink) 72%, transparent);
 }
 
 .desk-spells {
@@ -424,7 +437,7 @@
   display: block;
   font-size: 0.74rem;
   font-style: italic;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 .spell-practice {
@@ -459,7 +472,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8a6a36;
+  color: var(--desk-brass);
 }
 
 .desk-weave {

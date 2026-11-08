@@ -1,0 +1,519 @@
+{
+  "note": "Boof's map of the land's harmonies (canon: .spw/surfaces/berries.spw#harmonies). Not roads: what keeps what, as she knows it by scent and habit, with her own nose at the middle. Nodes are things she knows; harmonies are how one keeps another, each with her gloss and the chapters that tell it. Positions are hand-placed on a map with no top: x runs -1..1, y runs -0.72..0.72, and a tall page turns the map a quarter turn. Rings are how she came to know a thing; a ring angle is where its word sits, in degrees, clear of the things on it (tallAngle when the map is turned). Read by book/scripts/home/boof-map.mjs. The Egg is on the map and is never explained.",
+  "center": "boof",
+  "rings": [
+    { "r": 0.4, "label": "by nose", "angle": 340, "tallAngle": 60 },
+    { "r": 0.72, "label": "by road", "angle": 160, "tallAngle": 180 },
+    { "r": 1.0, "label": "by hearsay", "angle": 175, "tallAngle": 250 }
+  ],
+  "nodes": [
+    {
+      "id": "boof",
+      "word": "Boof",
+      "name": "Boof",
+      "kind": "nose",
+      "ring": "where her nose is",
+      "at": [0, 0],
+      "scent": "Frost and wet fur, every morning.",
+      "knows": "A working dog. She works for the land wherever the fences stand, and nobody pays her. She keeps this map without a pen: not roads, but what keeps what, read from the middle, because that is where she reads it from.",
+      "chapters": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    },
+    {
+      "id": "egg",
+      "word": "the Egg",
+      "name": "The Egg",
+      "kind": "mystery",
+      "ring": "by nose",
+      "at": [0.1, -0.26],
+      "scent": "A candle just blown out. Warm as a loaf, heavier than one.",
+      "knows": "She dug it out of a frozen furrow, warm, and carried it the length of the land against her ribs. The ants took it for a new coal. What it is, she has never said, and neither has anyone else.",
+      "chapters": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    },
+    {
+      "id": "torch-ants",
+      "word": "ants",
+      "name": "The torch-ants",
+      "kind": "creature",
+      "ring": "by nose",
+      "at": [-0.27, 0.15],
+      "scent": "Bread left under a cloth.",
+      "knows": "They keep little hearths along the roots all winter, and they are very particular about torches. They have never once asked her for anything.",
+      "chapters": [1, 2, 3, 5, 8, 11, 12, 13, 14]
+    },
+    {
+      "id": "roots",
+      "word": "roots",
+      "name": "The roots",
+      "kind": "ground",
+      "ring": "by nose",
+      "at": [-0.47, 0.36],
+      "scent": "Loam, and a warmth that is not the sun's.",
+      "knows": "Roots follow water and the ants follow roots, so the little lights have always run in curls. Except once, for an arm's length, on a Thursday nobody kept.",
+      "chapters": [1, 2, 12, 14]
+    },
+    {
+      "id": "frost",
+      "word": "frost",
+      "name": "Frost",
+      "kind": "ground",
+      "ring": "by nose",
+      "at": [-0.07, 0.36],
+      "scent": "Rime, and loam under the rime.",
+      "knows": "Frost on top and warmth underneath. The field keeps both and neither wins. Where the ants are given more to work with, the frost draws back a hand's width.",
+      "chapters": [1, 11, 12, 14]
+    },
+    {
+      "id": "boonberries",
+      "word": "boonberries",
+      "name": "Boonberries",
+      "kind": "berry",
+      "tint": "boon",
+      "ring": "by nose",
+      "at": [-0.55, -0.04],
+      "scent": "Cold juice, sweet skin, and something being remembered.",
+      "knows": "Blueberries a wish once passed over, each keeping a drop of light. Put her nose to one and she remembers being told something kind. Whether it was a memory or the thing itself arriving twice, she has not decided, and the berry is not saying.",
+      "chapters": [1, 2, 6, 11, 13, 14]
+    },
+    {
+      "id": "baneberries",
+      "word": "baneberries",
+      "name": "Baneberries",
+      "kind": "berry",
+      "tint": "bane",
+      "ring": "by nose",
+      "at": [0.33, -0.36],
+      "scent": "Cold, plum-dark, a cellar smell, and under it something being said.",
+      "knows": "They say what will go wrong, and it goes wrong because they said it. Put a paw on one and lean, and it says nothing more. Sweeten one and it says something kind instead. Mr. BaneWAP is made of them.",
+      "chapters": [1, 4, 11, 12, 14, 15]
+    },
+    {
+      "id": "boneberries",
+      "word": "boneberries",
+      "name": "Boneberries",
+      "kind": "berry",
+      "tint": "bone",
+      "ring": "by road",
+      "at": [0.42, 0.12],
+      "scent": "Smoke, salt, the good char at an edge.",
+      "knows": "They promise nothing and feed you exactly what they show: rib tips in Bone.land, burnt ends in Bonk City, falafel at the parcel gate. Grown, not raised, people say, and leave it there.",
+      "chapters": [6, 10, 13, 15]
+    },
+    {
+      "id": "pool",
+      "word": "the pond",
+      "name": "The miller's pond",
+      "kind": "ground",
+      "ring": "by nose",
+      "at": [-0.3, -0.33],
+      "scent": "A tin cup of cold water with a little light in it.",
+      "knows": "What light the berry rows let slip runs downhill to it with the meltwater, so it never freezes quite dark. She drank from it every morning of her life before she saw, from a ridge, that it was lit.",
+      "chapters": [1, 9, 13, 14]
+    },
+    {
+      "id": "flour",
+      "word": "flour",
+      "name": "Flour",
+      "kind": "made",
+      "ring": "by nose",
+      "at": [-0.04, -0.47],
+      "scent": "The mill's pale doorstep.",
+      "knows": "The pond turns the mill and the mill makes the doorstep pale. The city takes its flour in at the parcel gate. On the day nobody kept, the wheel stood still and the water ran on under it.",
+      "chapters": [1, 6, 14, 15]
+    },
+    {
+      "id": "grove",
+      "word": "the grove",
+      "name": "The grove",
+      "kind": "place",
+      "ring": "by road",
+      "at": [-0.83, -0.33],
+      "scent": "Wet bark, and air that seems to have been breathed twice.",
+      "knows": "Everything there comes back a beat late, and the woodcutters say it is only trying things again, a little changed. No torch-ants live there, so its wild berries flicker instead of holding.",
+      "chapters": [1, 2, 12, 14]
+    },
+    {
+      "id": "geese",
+      "word": "geese",
+      "name": "The jazz-geese",
+      "kind": "creature",
+      "ring": "by hearsay",
+      "at": [-0.6, -0.62],
+      "scent": "Cold sky and an argument.",
+      "knows": "Nine at a time, honking a little behind where a sensible goose would put it. She heard their long bent note in a berry before she heard it in the sky.",
+      "chapters": [1, 9, 14]
+    },
+    {
+      "id": "whales",
+      "word": "whales",
+      "name": "The salt-whales",
+      "kind": "creature",
+      "ring": "by hearsay",
+      "at": [-0.9, 0.38],
+      "scent": "Old cold brine: a sea that moved downstairs.",
+      "knows": "Their roads run under the salt crust, too big for any map. On the roof, you do not stamp. Where two roads wanted one turn, she walked the seam, and now a single line bends.",
+      "chapters": [3, 9]
+    },
+    {
+      "id": "beavers",
+      "word": "beavers",
+      "name": "The beavers",
+      "kind": "creature",
+      "ring": "by road",
+      "at": [-0.42, 0.64],
+      "scent": "Willow bark and creek mud.",
+      "knows": "They wish slowly enough to build the thing themselves. They hold the creek back in steps, pond over pond, and nobody asked them to.",
+      "chapters": [8, 13, 14]
+    },
+    {
+      "id": "well",
+      "word": "the well",
+      "name": "The Watering Eye",
+      "kind": "place",
+      "ring": "by road",
+      "at": [-0.02, 0.66],
+      "scent": "A tin cup left in a stream.",
+      "knows": "A well that folds every face it has held, under a tavern that leans over it like a drinker over a confession. Because the creek comes down slow, it has never run dry.",
+      "chapters": [8, 10]
+    },
+    {
+      "id": "crickets",
+      "word": "crickets",
+      "name": "The hum-crickets",
+      "kind": "creature",
+      "ring": "by road",
+      "at": [0.32, 0.56],
+      "scent": "Slate dust and seed-cake crumbs.",
+      "knows": "They keep the crack's note in the hall of arches so it can be heard out, the way a choir keeps a note for a singer who has stepped away. They edged up toward the egg like old men toward a stove.",
+      "chapters": [5, 13]
+    },
+    {
+      "id": "oak",
+      "word": "oak",
+      "name": "Bone.land oak",
+      "kind": "made",
+      "ring": "by hearsay",
+      "at": [0.66, 0.5],
+      "scent": "Oak cut that week, quarry chalk, tallow on the ropes.",
+      "knows": "Nothing painted, nothing glued, and nothing grows there that was not carried in. The beams say out loud what they will bear.",
+      "chapters": [9, 10]
+    },
+    {
+      "id": "kilns",
+      "word": "the kiln",
+      "name": "The bonk-kiln",
+      "kind": "made",
+      "ring": "by road",
+      "at": [0.72, 0.13],
+      "scent": "A hot coin.",
+      "knows": "Anything struck goes in and comes out as glass that remembers and does not mind. Its walls stay warm all winter, and boneberries grow on them.",
+      "chapters": [6, 15]
+    },
+    {
+      "id": "glass",
+      "word": "glass",
+      "name": "Bonk glass",
+      "kind": "made",
+      "ring": "by road",
+      "at": [0.9, -0.12],
+      "scent": "Rain on panes, and chalk where the snails have been.",
+      "knows": "Old blows forgiven clear. It hums when weather is coming, because it remembers being struck and would rather not be again.",
+      "chapters": [5, 6, 13, 15]
+    },
+    {
+      "id": "parcel-gate",
+      "word": "the gate",
+      "name": "The parcel gate",
+      "kind": "place",
+      "ring": "by hearsay",
+      "at": [0.93, 0.36],
+      "scent": "Wet flour sacks, lamp-oil, pigeon-down.",
+      "knows": "Low, built for boxes, at the back wall where the city takes in its flour. A vine over it feeds the night school. Whatever comes through goes in the porter's book.",
+      "chapters": [6, 15]
+    },
+    {
+      "id": "boonwap",
+      "word": "BoonWAP",
+      "name": "Mr. BoonWAP",
+      "kind": "pie",
+      "tint": "boon",
+      "ring": "by road",
+      "at": [0.64, -0.33],
+      "scent": "Boonberries baking, rising over the roofs like a second dusk.",
+      "knows": "A warm pie who serves himself in slices and is never smaller. She carried a slice of him a very long way and has not eaten it.",
+      "chapters": [6, 10, 12, 14, 15]
+    },
+    {
+      "id": "banewap",
+      "word": "BaneWAP",
+      "name": "Mr. BaneWAP",
+      "kind": "pie",
+      "tint": "bane",
+      "ring": "by road",
+      "at": [0.5, -0.62],
+      "scent": "Burnt sugar gone sour, and iron filings.",
+      "knows": "Made of baneberries. Everything he announced came true the bad way, because he announced it. Then a berry in him woke, and he foretold something kind, and that came true too.",
+      "chapters": [4, 5, 6, 11, 12]
+    },
+    {
+      "id": "hat",
+      "word": "a hat",
+      "name": "A hat",
+      "kind": "mystery",
+      "ring": "by hearsay",
+      "at": [0.86, -0.6],
+      "scent": "Nothing at all.",
+      "knows": "It rests on nothing at the height of a person's head. She cannot smell who is under it. She can smell that someone is.",
+      "chapters": [13, 14, 15]
+    }
+  ],
+  "harmonies": [
+    {
+      "id": "ants-roots",
+      "from": "torch-ants",
+      "to": "roots",
+      "says": "The ants warm the roots.",
+      "gloss": "Bread under a cloth, all winter, all the way down: the ants keeping the roots from freezing.",
+      "chapters": [1, 12, 13, 14]
+    },
+    {
+      "id": "roots-boonberries",
+      "from": "roots",
+      "to": "boonberries",
+      "says": "Warm roots keep the berries in their light.",
+      "gloss": "Where the roots are warm the light holds. Where they are cold, as in the grove, it flickers.",
+      "chapters": [1, 2, 12]
+    },
+    {
+      "id": "boonberries-pool",
+      "from": "boonberries",
+      "to": "pool",
+      "says": "The berries let their light run down to the pond.",
+      "gloss": "What the rows let slip goes downhill with the meltwater, and the pond keeps it under the ice.",
+      "chapters": [1, 9, 13, 14]
+    },
+    {
+      "id": "pool-boof",
+      "from": "pool",
+      "to": "boof",
+      "says": "The pond lights a dog's morning drink.",
+      "gloss": "Ants to roots, roots to berries, berries to the pond, and the pond to her. She only saw it from the ridge.",
+      "chapters": [9]
+    },
+    {
+      "id": "pool-flour",
+      "from": "pool",
+      "to": "flour",
+      "says": "The pond turns the mill.",
+      "gloss": "Water under the wheel, flour on the doorstep. On the Thursday nobody kept, the wheel stood still and the water ran on.",
+      "chapters": [1, 14]
+    },
+    {
+      "id": "frost-ants",
+      "from": "frost",
+      "to": "torch-ants",
+      "says": "The frost holds still while the ants work under it.",
+      "gloss": "Frost on top, warmth underneath. Give the ants more to work with and the frost draws back a hand's width.",
+      "chapters": [1, 11, 12, 14]
+    },
+    {
+      "id": "egg-ants",
+      "from": "egg",
+      "to": "torch-ants",
+      "says": "The ants take the egg for a new coal.",
+      "gloss": "They gathered round it the way they gather at a hearth when a new coal is laid. What the coal is, nobody says.",
+      "chapters": [1, 11]
+    },
+    {
+      "id": "egg-boonberries",
+      "from": "egg",
+      "to": "boonberries",
+      "says": "The berries remember the egg's hum.",
+      "gloss": "Every row combed one way like wet fur. Long ago the hum had passed them going the other way.",
+      "chapters": [1, 2]
+    },
+    {
+      "id": "egg-boof",
+      "from": "egg",
+      "to": "boof",
+      "says": "The egg rides against her ribs.",
+      "gloss": "Warm as a loaf, the length of the land. She never once said what it was, and nobody made her.",
+      "chapters": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    },
+    {
+      "id": "boonberries-boof",
+      "from": "boonberries",
+      "to": "boof",
+      "says": "A boonberry foresees kindly.",
+      "gloss": "Nose to a berry: trees, the sack warm, nothing wrong. A memory, or the thing itself arriving twice; the berry is not saying.",
+      "chapters": [1, 2, 14]
+    },
+    {
+      "id": "baneberries-boof",
+      "from": "baneberries",
+      "to": "boof",
+      "says": "A baneberry says what will go wrong.",
+      "gloss": "Cold and very sure of itself. Put a paw on one and lean, and it says nothing. Nobody stepped on the one in the crier's sheet.",
+      "chapters": [1, 14, 15]
+    },
+    {
+      "id": "baneberries-banewap",
+      "from": "baneberries",
+      "to": "banewap",
+      "says": "Mr. BaneWAP is made of baneberries.",
+      "gloss": "A berry off his lattice told a clerk the wind would have his cap, so he took it off to keep it safe. An empire went the same way.",
+      "chapters": [4, 11]
+    },
+    {
+      "id": "banewap-boonwap",
+      "from": "banewap",
+      "to": "boonwap",
+      "says": "Sweetened, a baneberry foretells kindness.",
+      "gloss": "He said he would be bitter unless somebody was kind to him first. Somebody was. Plum-dark at the bottom, sweet all the way up.",
+      "chapters": [11, 12]
+    },
+    {
+      "id": "boonberries-boonwap",
+      "from": "boonberries",
+      "to": "boonwap",
+      "says": "A boonberry pie is never smaller.",
+      "gloss": "The knife goes in, a slice comes out, the pie stays whole. She is still carrying the slice.",
+      "chapters": [6, 10, 12, 14, 15]
+    },
+    {
+      "id": "kilns-glass",
+      "from": "kilns",
+      "to": "glass",
+      "says": "The kiln forgives blows into glass.",
+      "gloss": "A hot-coin smell at the gate. What was struck goes in and comes out clear, remembering, not minding.",
+      "chapters": [6, 15]
+    },
+    {
+      "id": "kilns-boneberries",
+      "from": "kilns",
+      "to": "boneberries",
+      "says": "Boneberries grow on the warm kiln walls.",
+      "gloss": "Burnt ends off a brazier at the plaza rim. Grown, not raised, the brazier-man said, as proud as any glazier.",
+      "chapters": [6]
+    },
+    {
+      "id": "boneberries-boof",
+      "from": "boneberries",
+      "to": "boof",
+      "says": "A boneberry promises nothing, and feeds you.",
+      "gloss": "A whole supper in a mouthful, and nobody sorry at the back of it.",
+      "chapters": [6, 10, 15]
+    },
+    {
+      "id": "oak-boneberries",
+      "from": "oak",
+      "to": "boneberries",
+      "says": "The joiners carried the bushes over the pass.",
+      "gloss": "Nothing grows in Bone.land that has not been carried in. Rib tips at the bench, off the tubbed bushes by the anchor stones.",
+      "chapters": [10]
+    },
+    {
+      "id": "beavers-well",
+      "from": "beavers",
+      "to": "well",
+      "says": "The beavers keep the water slow.",
+      "gloss": "Pond over pond up the creek, so the well never runs dry and its faces lie still. The tavern leaves them the bark off its firewood.",
+      "chapters": [8, 14]
+    },
+    {
+      "id": "beavers-ants",
+      "from": "beavers",
+      "to": "torch-ants",
+      "says": "Slow work, like the ants.",
+      "gloss": "Nobody in a hurry, and the whole valley drinking from it. She files them side by side.",
+      "chapters": [8, 13]
+    },
+    {
+      "id": "whales-ants",
+      "from": "whales",
+      "to": "torch-ants",
+      "says": "Roads too big for maps; streets too small for them.",
+      "gloss": "Whale-roads under the salt, ant-streets under the berry rows. Both smell of somebody patient going home.",
+      "chapters": [3]
+    },
+    {
+      "id": "grove-ants",
+      "from": "grove",
+      "to": "torch-ants",
+      "says": "Torch-ants will not settle where a light comes back twice.",
+      "gloss": "A torch that answers itself is a torch nobody can be particular about. So the grove's roots are cold all the way down.",
+      "chapters": [2]
+    },
+    {
+      "id": "geese-grove",
+      "from": "geese",
+      "to": "grove",
+      "says": "The geese answer the grove a beat behind.",
+      "gloss": "A long bent note out of the trees, nine geese replying. She had heard it once already, in a berry.",
+      "chapters": [1, 9]
+    },
+    {
+      "id": "crickets-egg",
+      "from": "crickets",
+      "to": "egg",
+      "says": "The crickets keep the crack's note, and sit near the warmth.",
+      "gloss": "They hold the note so it can be heard out before anyone mends it, and edge toward the egg like old men toward a stove.",
+      "chapters": [5]
+    },
+    {
+      "id": "oak-crickets",
+      "from": "oak",
+      "to": "crickets",
+      "says": "The crack's note and the frame's note keep one law.",
+      "gloss": "A clerk carried the crack-gauge up the pass. Across the tie-beam it hummed the note back cleaner: a younger floor, nothing owed yet.",
+      "chapters": [10]
+    },
+    {
+      "id": "oak-well",
+      "from": "oak",
+      "to": "well",
+      "says": "The frame's note reaches the well.",
+      "gloss": "Struck true, the hall was heard in every kitchen of the valley, and down the well the folded faces rose to listen.",
+      "chapters": [10]
+    },
+    {
+      "id": "flour-gate",
+      "from": "flour",
+      "to": "parcel-gate",
+      "says": "The city takes its flour in at the parcel gate.",
+      "gloss": "Wet sacks and lamp-oil. The porter held the gate for a stranger, let the feast flour spoil, and wrote his own name for the cause.",
+      "chapters": [15]
+    },
+    {
+      "id": "gate-boneberries",
+      "from": "parcel-gate",
+      "to": "boneberries",
+      "says": "The vine over the gate feeds the night school.",
+      "gloss": "Flour carts brush it on the way in; the lantern-heat keeps the frost off. Falafel at the break, and the bowl comes back empty.",
+      "chapters": [15]
+    },
+    {
+      "id": "glass-gate",
+      "from": "glass",
+      "to": "parcel-gate",
+      "says": "The glass hums before a storm, and the gate comes down.",
+      "gloss": "It remembers being struck and would rather not be again, so the gate comes down before the storm does. Except once.",
+      "chapters": [15]
+    },
+    {
+      "id": "hat-ants",
+      "from": "hat",
+      "to": "torch-ants",
+      "says": "A torch is lit with a little of his arm.",
+      "gloss": "One ant-street ran straight, and at its end burned a torch that had been, until that morning, a little of somebody's arm.",
+      "chapters": [14]
+    },
+    {
+      "id": "hat-boonberries",
+      "from": "hat",
+      "to": "boonberries",
+      "says": "The berries turn a quarter turn to see him.",
+      "gloss": "Noticing is most of what a boonberry is for. They looked at him from the side, the only way he can be looked at.",
+      "chapters": [14]
+    }
+  ]
+}

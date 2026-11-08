@@ -22,56 +22,24 @@
   --copy-tempo-berry: #6b3a72;
 }
 
-/* Soft field light that tracks active tempo (chapter + hub) */
+/* Tempo changes the paper's tint and the light's warmth; let both settle. */
 html[data-copy-climate] body {
-  --climate-gold: color-mix(
-    in srgb,
-    var(--copy-tempo-gold) calc(var(--tempo-warmth) * 55%),
-    transparent
-  );
-  --climate-cool: color-mix(
-    in srgb,
-    var(--copy-tempo-teal) calc(var(--tempo-cool) * 48%),
-    transparent
-  );
-  --climate-ember: color-mix(
-    in srgb,
-    var(--copy-tempo-ember) calc(var(--tempo-warmth) * 40%),
-    transparent
-  );
-  --climate-deep: color-mix(
-    in srgb,
-    var(--copy-tempo-night) calc(var(--tempo-cool) * 36%),
-    transparent
-  );
   transition:
     background-color 480ms ease,
     color 360ms ease;
 }
 
-/* Chapter pages: full temporal wash (hub keeps its own field-light stack). */
+/* Chapter pages: the passage's tempo tints the paper, and the one light
+ * (core/tokens.css; copy-climate.mjs moves it) lands as a single pool in
+ * its own colour, warmer as the tempo warms. No other washes: the page's
+ * edge (reading.css, "The land's edge") carries the character. */
 html[data-copy-climate] body:has(> main.chapter),
 html[data-copy-climate] body.chapter-climate-ready:not([data-surface='monument']) {
   background-image:
     radial-gradient(
       ellipse 70% 52% at calc(var(--light-x, 50) * 1%) calc(var(--light-y, 16) * 1%),
-      var(--climate-gold),
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse 58% 46% at calc((100 - var(--light-x, 50) * 0.4) * 1%) calc((18 + var(--copy-scroll) * 30) * 1%),
-      var(--climate-cool),
-      transparent 62%
-    ),
-    radial-gradient(
-      ellipse 48% 40% at calc((30 + var(--copy-scroll) * 40) * 1%) calc((70 + var(--light-y, 16) * 0.3) * 1%),
-      var(--climate-ember),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 80% 60% at 50% 110%,
-      var(--climate-deep),
-      transparent 55%
+      color-mix(in oklab, var(--light-color, #f0d8a8) calc(var(--light-strength, 0.6) * 26%), transparent),
+      transparent 64%
     );
   /* scroll attachment avoids fixed-bg paint cost on long chapters */
   background-attachment: scroll;
@@ -90,7 +58,8 @@ html[data-copy-climate] body.chapter-climate-ready:not([data-surface='monument']
 
 /* Tempo theme biases for paper readers only (respect user night/ember) */
 html[data-tempo-theme='gold'] {
-  --accent-color-main: color-mix(in srgb, #2a6f7f 55%, #c4922e 45%);
+  /* Teal leaning to brass, deep enough for links on paper (5.7:1; was 3.7). */
+  --accent-color-main: color-mix(in srgb, #1f5e6c 60%, #8a6a1e 40%);
   --accent-color-alt: color-mix(in srgb, #1c4f63 70%, #a67c2d 30%);
   --color-accent-main: var(--accent-color-main);
   --color-accent-alt: var(--accent-color-alt);
@@ -190,17 +159,36 @@ html[data-climate-pulse] {
 
 [data-tempo='dawn'] .scene-sketch summary,
 [data-tempo='morning'] .scene-sketch summary {
-  color: color-mix(in srgb, var(--copy-tempo-gold) 70%, var(--theme-accent-alt, #1c4f63));
+  --sketch-ink: color-mix(in srgb, var(--copy-tempo-gold) 50%, var(--theme-accent-alt, #1c4f63));
 }
 
 [data-tempo='dusk'] .scene-sketch summary,
 [data-tempo='night'] .scene-sketch summary {
-  color: color-mix(in srgb, var(--copy-tempo-archive) 65%, var(--theme-accent-alt, #1c4f63));
+  --sketch-ink: color-mix(in srgb, var(--copy-tempo-archive) 65%, var(--theme-accent-alt, #1c4f63));
 }
 
 [data-tempo='sunset'] .scene-sketch summary,
 [data-tempo='lamplight'] .scene-sketch summary {
-  color: color-mix(in srgb, var(--copy-tempo-ember) 70%, var(--theme-accent-alt, #1c4f63));
+  --sketch-ink: color-mix(in srgb, var(--copy-tempo-ember) 60%, var(--theme-accent-alt, #1c4f63));
+}
+
+.scene-sketch summary {
+  color: var(--sketch-ink, var(--theme-accent-alt, #1c4f63));
+}
+
+/* The tempo tints are mixed for paper. On a dark ground (lamp, a dark
+ * binding) the label lifts its own tint until it reads; asked of the
+ * ground with a style query, so no binding has to list it. */
+@container style(--ground-tone: dark) {
+  .scene-sketch summary {
+    color: color-mix(in oklab, var(--sketch-ink, var(--theme-accent-alt, #1c4f63)) 45%, #fff);
+  }
+
+  @supports (color: oklch(from red l c h)) {
+    .scene-sketch summary {
+      color: oklch(from var(--sketch-ink, var(--theme-accent-alt, #1c4f63)) max(l, 0.8) c h);
+    }
+  }
 }
 
 /* Reading progress bar picks up tempo hue */

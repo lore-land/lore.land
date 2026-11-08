@@ -11,7 +11,8 @@
  */
 
 .zine-hero .hub-eyebrow {
-  color: #8a6b3f;
+  /* Press-office brown, leaned to the cover's ink so it holds on paper and cloth. */
+  color: color-mix(in oklab, #8a6b3f 70%, var(--hub-ink));
 }
 
 /* ————— The sheet ————— */
@@ -116,7 +117,7 @@
   text-align: center;
   font-family: var(--font-family-heading, monospace);
   font-size: 0.72em;
-  color: color-mix(in srgb, #232a35 60%, transparent);
+  color: color-mix(in srgb, #232a35 74%, transparent);
 }
 
 /* Epigraph panel */

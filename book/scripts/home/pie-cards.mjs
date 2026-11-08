@@ -118,8 +118,11 @@ export const CARDS = Object.freeze({
     story: 'Fine flour stamped for the Feast of the Uneven Slice. Three sacks were spoiled through.',
     lanes: '+0.38 crust, and the story is set back 70 cobbles (or into the last chapter, early on). Never slows the carrier. A slice thrown into it bursts it into a ramp.' },
   berry: { name: 'Boonberries', type: 'friend', sprite: 'berry', chapter: 1,
-    story: 'Teal and amber, lit from within: a little borrowed summer, kept under the snow by the ants.',
-    lanes: '+0.3 filling. The pie’s filling: with crust, it keeps the pie whole, and plenty of both makes bigger slices.' },
+    story: 'Teal and amber, lit from within: a little borrowed summer, kept under the snow by the ants. They foresee kindly. Whether a boonberry shows you the way or you remember it, nobody has settled.',
+    lanes: '+0.3 filling, and a glimpse: for 3.5 s the clear way up the lanes shows in teal. Spell: *boonberry{ %filling[0.3] ~glimpse[3.5] }.' },
+  boneberry: { name: 'Boneberries', type: 'friend', sprite: 'boneberry', chapter: 10,
+    story: 'Bone-white with a dusk-red blush, a faint smoke to the skin. Savoury, and they taste of the place they grow: burnt ends in Bonk City, rib tips in Bone.land, falafel at the parcel gate. Grown, not raised.',
+    lanes: '+0.12 crust, +0.12 filling, and fed for 6 s: steps tilt 40% less and the pie settles a quarter sooner. Commonest in Bone.land. Spell: *boneberry{ %crust[0.12] %filling[0.12] ~fed[6] }.' },
   pile: { name: 'A pile of flour', type: 'friend', sprite: 'pile', chapter: null,
     story: 'What a burst bag leaves, heaped like a ramp.',
     lanes: '+0.18 crust underfoot. A slice thrown over it is lofted (110 px) clean over the next thing; piles in a row stack the loft; a ramped slice is Perfect.' },
@@ -127,11 +130,11 @@ export const CARDS = Object.freeze({
     story: 'Something keeps the field warm from underneath: torches along the roots.',
     lanes: '+0.12 crust, +0.08 filling, tilt −15%.' },
   beaver: { name: 'A slow beaver', type: 'power', sprite: 'beaver', chapter: null,
-    story: 'In no hurry. Keeps its own time, and lends it.',
-    lanes: 'For 4.5 s the land runs at 0.55× and you do not: easier to step through. From Chapter Two.' },
+    story: 'In no hurry. Keeps its own time, and lends it. Plants as it goes: where a beaver has been, boonberries come up behind.',
+    lanes: 'For 4.5 s the land runs at 0.55× and you do not (and everything sounds muffled, heard through slow time); boonberries come up the lanes behind it. From Chapter Two. Spell: *beaver{ ~lag[4.5] &with[berry] }.' },
   wonder: { name: 'A wonder', type: 'power', sprite: 'wonder', chapter: null,
     story: 'One of the land’s own, named in the chapter going by: a creature, a contrivance, a bracework, a saying.',
-    lanes: 'Waits up the lanes ~2.8 s, then goes about its business. Steer into it to keep it in your almanac; each gives a gift (torch-ants light the way 7 s, echo-wrens echo 3 throws, the lag-stag lags the land 5 s, jazz-geese honk the way clear…). Already kept: a fifth more.' },
+    lanes: 'Waits up the lanes ~2.8 s, then goes about its business. Steer into it to keep it in your almanac, and it does in the lanes what it does in the book, keeping you company while it lasts: torch-ants light your lane 7 s and warm the furrows ahead; echo-wrens perch on the pie and echo 3 throws; the lag-stag lags the land 5 s; remainder-moths lead the needle to the nearest face 6 s; pane-snails forgive the panes ahead. Already kept: a fifth more. Every gift is a Spw spell on the bench.' },
   egg: { name: 'Something warm, egg-shaped', type: 'power', sprite: 'egg', chapter: 1,
     story: 'It is not explained.',
     lanes: 'At the very top of the lanes, now and then. Not for taking. Pass close: the pie settles 1.8× faster for 9 s, and the next knock is forgiven.' },
@@ -139,8 +142,8 @@ export const CARDS = Object.freeze({
     story: 'Every scheme of his has one. It is in his contract. He wrote his contract. Badly.',
     lanes: 'Rides the way through while he schemes. Step on it or hit it with a slice and he is foiled (+2 for the pie against the mimes).' },
   baneberry: { name: 'A baneberry', type: 'friend', sprite: 'baneberry', chapter: null,
-    story: 'Plum-black, a cold violet sheen, a thorn on the stem: what Mr. BaneWAP is made of.',
-    lanes: 'Mimes gather them for him; each that reaches him adds 1.2 s to his scheme. Step on it to keep it from him, or throw a slice over it to sweeten it (+0.22 filling when stepped on after).' }
+    story: 'Plum-black, a cold violet sheen, a thorn on the stem: what Mr. BaneWAP is made of. They foretell chaos, and what they foretell comes because it was said.',
+    lanes: 'Let one past the pie and it foretells for its lane (wasps, a spool, a pigeon, a stone, a slide), posted in violet; in 3.2 s it comes. One in five foretells a flinch: still in that lane when it is due, +16% tilt. Step on it and it never says. Throw a slice over it to sweeten it: stepped on, +0.22 filling, and it foretells boonberries. Mimes gather them for him; each that reaches him adds 1.2 s to his scheme.' }
 });
 
 export const cardFor = (kind) => CARDS[kind] || null;

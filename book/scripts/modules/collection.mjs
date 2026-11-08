@@ -23,7 +23,7 @@
  * met, and every keeping says so where it happens (settled.mjs).
  * Spw atom: =palette[id] (the projection spell names the one being worn).
  */
-import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_08.E';
+import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_08.H';
 import { readCarries } from './pie-carries.mjs?v=2026_11_08.D';
 import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
 import { settle } from './settled.mjs?v=2026_11_05.B';
@@ -56,6 +56,8 @@ export const allCards = () => ({ ...CARDS, ...SITE_CARDS });
 const NAMED = Object.freeze([
   ['boof', /\bBoof\b/],
   ['berry', /\bboonberr(?:y|ies)\b/i],
+  ['baneberry', /\bbaneberr(?:y|ies)\b/i],
+  ['boneberry', /\bboneberr(?:y|ies)\b/i],
   ['egg', /\bthe Egg\b/],
   ['ants', /\btorch-ants?\b/i],
   ['furrow', /\bfurrow\b/i],

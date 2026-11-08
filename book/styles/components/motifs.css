@@ -155,7 +155,8 @@ html[data-egg-style='amber'] {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.4;
-  color: color-mix(in srgb, var(--mark-color) 78%, var(--theme-text-main, #1a2233) 22%);
+  /* Marks are tinted by motif; type leans to the ink so gold and violet still read. */
+  color: color-mix(in srgb, var(--mark-color) 45%, var(--theme-text-main, #1a2233) 55%);
   background: color-mix(in srgb, var(--mark-color) 8%, transparent 92%);
   transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
 }

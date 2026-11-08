@@ -73,22 +73,24 @@
 
   <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_09_27.C&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_09_27.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_09_27.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_09_27.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_09_27.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_09_27.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.G&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_09_27.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_09_27.C&ctx=home:climate">
+  <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_11_08.H&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/home/readable.css?v=2026_09_27.C&ctx=home:readable">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.G"></script>
-  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_06.E">
-  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_08.B">
-  <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.B&ctx=canon:materials">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.H"></script>
+  <link rel="stylesheet" href="/book/styles/home/wonder.css?v=2026_11_08.H">
+  <link rel="stylesheet" href="/book/styles/home/serial.css?v=2026_11_08.H">
+  <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.H&ctx=canon:materials">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
   <link rel="stylesheet" href="/book/styles/home/bindery.css?v=2026_11_06.E">
+  <link rel="stylesheet" href="/book/styles/home/boof-map.css?v=2026_11_08.H">
   <script defer type="module" src="/book/scripts/home/wonder.mjs?v=2026_11_08.D"></script>
+  <script defer type="module" src="/book/scripts/home/boof-map.mjs?v=2026_11_08.H"></script>
   <script defer type="module" src="/book/scripts/home/play.mjs?v=2026_11_05.B"></script>
   <script defer type="module" src="/book/scripts/home/egg-style.mjs?v=2026_11_05.B"></script>
   <script defer type="module" src="/book/scripts/home/readable.mjs?v=2026_09_27.C"></script>
@@ -143,10 +145,10 @@
         </figure>
         <div class="hub-hero-details">
           <p class="hub-lede">
-            On the coldest morning of the year, a working dog digs an egg out of a frozen furrow, and it is warm. No nest. No tracks. No map will write it down. Inside is a wish nobody has spent, and somewhere behind it all a prophecy is keeping count: someone is destined to spill exactly <span class="pi-mark">1pi(e)</span>, and a pie, like π, never comes out even.
+            On the coldest morning of the year, a working dog reads her field the way she reads it every morning, by nose: torch-ants keeping their hearths along the roots, boonberries asleep under the ice with a drop of light apiece, a pond that never freezes quite dark. One furrow is too warm. In it is an egg, and in the egg a wish nobody has spent, and no map will write it down. Somewhere behind it all a prophecy is keeping count: someone is destined to spill exactly <span class="pi-mark">1pi(e)</span>, and a pie, like π, never comes out even.
           </p>
           <p class="hub-opening">
-            <a href="/book/chapter/01/">Book One</a> follows <a href="/characters/boof.html">Boof</a> and the egg through thirteen chapters, until the wish is spent and the shell sits empty and still warm. <a href="/book/chapter/14/">Book Two</a> begins on a Thursday the whole week forgot, with a hat that rests on nothing and someone under it, drawn in a few plain lines.
+            <a href="/book/chapter/01/">Book One</a> follows <a href="/characters/boof.html">Boof</a> and the egg through thirteen chapters, across a land where everything is keeping something else, until the wish is spent and the shell sits empty and still warm. <a href="/book/chapter/14/">Book Two</a> begins on a Thursday the whole week forgot, with a hat that rests on nothing and someone under it, drawn in a few plain lines.
           </p>
           <a class="hub-continue" href="/scriptorium/#desk">Pick up where you left off →</a>
           <p class="hub-meta">Two books, fifteen chapters · new stones the 13th &amp; 26th · next: <time datetime="2026-11-13">Friday 13 November</time> · read in daylight, dusk or lamplight</p>
@@ -154,6 +156,7 @@
             <a class="chip" data-material="wax" href="/book/chapter/01/">Dragon's Egg</a>
             <a class="chip" data-material="night" href="/book/chapter/14/">The hat</a>
             <a class="chip" data-material="dog" href="/characters/boof.html">Boof</a>
+            <a class="chip" data-material="frost" href="#boofs-map">Boof's map</a>
             <a class="chip" data-material="berry" href="/world/boonberry-commons.html">Boonberries</a>
             <a class="chip" data-material="mask" href="/scriptorium/#desk">Your desk</a>
             <a class="chip" data-material="zine" href="/zine/">Fold a zine</a>
@@ -176,7 +179,7 @@
           <p class="hub-eyebrow">New stones · set <time datetime="2026-11-05">5 November</time></p>
           <h2 id="latest-title">Book Two: <em>Wonder About Pi(e)</em></h2>
           <p class="hub-section-lede">
-            The Genie paid for Boof's wish with everything he had left, plus one Thursday. Now that Thursday is missing from everyone's week but not from the field, and something has come through the warm furrow without a receipt.
+            The Genie paid for Boof's wish with everything he had left, plus one Thursday. Now that Thursday is missing from everyone's week but not from the field: the ants worked straight through it, the berries noticed first, and something came through the warm furrow without a receipt.
           </p>
         </div>
         <ol class="serial-stones">
@@ -206,8 +209,8 @@
         <details class="serial-recap" id="so-far">
           <summary><span class="serial-recap-kicker">New here, or back after a while?</span> <strong>The story so far</strong></summary>
           <div class="serial-recap-body">
-            <p>Boof works for the land, not for pay, and trusts an honest scent. One winter dawn she digs a warm egg out of a frozen furrow: an unspent wish that no map will write down.</p>
-            <p>She carries it through a grove that answers a beat late, a council that wants it auctioned, and a city whose patron is a pie who serves himself and is never smaller. A retired genie follows her, because her wants are too small for his instruments. Mr. BaneWAP seizes the egg, wishes huge, and gets an empire as hollow as a rented crown.</p>
+            <p>Boof works for the land, not for pay, and trusts an honest scent. She knows her field by what keeps what: the torch-ants warm the roots under the snow, the boonberries keep a drop of light each, and the pond at the bottom never freezes quite dark. One winter dawn she digs a warm egg out of a frozen furrow: an unspent wish that no map will write down.</p>
+            <p>She carries it through a grove that answers a beat late, a council where a baneberry foretells trouble and the trouble comes because it was said, and a city whose patron is a pie who serves himself and is never smaller. A retired genie follows her, because her wants are too small for his instruments. Mr. BaneWAP, who is made of baneberries, announces an empire until he seizes the egg and gets one, as hollow as a rented crown.</p>
             <p>Where two rivers meet, Boof finally knows her wish, and it is small: one warm furrow kept open, always, for whatever arrives next without a receipt. The Genie prices it honestly — everything he has left, plus one Thursday. The wish sounds over the whole land, the maps take ink at last, and the shell is set beside a blank last line, empty and still warm.</p>
             <p>On the road outside, a hat hangs in the air at the height of a person's head. Boof cannot smell who is under it. She can smell that someone is.</p>
             <p class="serial-recap-doors"><a href="/book/chapter/01/">Read Book One from the beginning →</a> <a href="/book/chapter/14/">Go on to Book Two →</a></p>
@@ -301,7 +304,7 @@
           <details class="wonder-drawer" id="curiosity-berry">
             <summary><span class="wonder-object wonder-object-berry" aria-hidden="true"><img src="/book/images/home/curiosity-berry.webp" width="960" height="538" alt="" loading="lazy" decoding="async"></span><span><small>02 · A summer under the snow</small><strong>Part the berry leaves</strong></span><span class="wonder-plus" aria-hidden="true">+</span></summary>
             <div class="wonder-secret">
-              <p>Above, the snow tucks in the field. Below, the ants keep the hearth: torches along the roots, small streets no map has room for. A berry is a little borrowed summer, passed from root to mouth.</p>
+              <p>Above, the snow tucks in the field. Below, the ants keep the hearth: torches along the roots, small streets no map has room for. A boonberry is a little borrowed summer, passed from root to mouth, and a glimpse besides: put your nose to one and you remember something kind before it has happened.</p>
               <p class="wonder-whisper">Nobody has ever eaten one warm.</p>
               <a href="/world/boonberry-commons.html#ant-hearths">Visit the ant hearths →</a>
               <a href="/book/chapter/01/#when-a-berry-remembers">Watch a berry remember →</a>
@@ -338,17 +341,39 @@
           <a class="hub-section-aside" href="/characters/boof.html">Boof's page →</a>
         </div>
         <p class="hub-section-lede">
-          A short list, so nobody has to keep notes. Everyone else is a porter, a crier, a clerk, or a beetle who found a lit street — and the land's creatures and contrivances go in <a href="/almanac/">your almanac</a> as you find them.
+          A short list, so nobody has to keep notes. Everyone else is a porter, a crier, a clerk, or a beetle who found a lit street — and the land's creatures, contrivances and three kinds of berry go in <a href="/almanac/">your almanac</a> as you find them.
         </p>
         <ul class="cast-list">
-          <li class="cast-card" data-cast="boof"><a href="/characters/boof.html"><span class="cast-first">First seen · 01</span><span class="cast-name">Boof</span><span class="cast-line">A working dog. Works for the land wherever the fences stand, and nobody pays her. Trusts an honest scent before a name.</span></a></li>
+          <li class="cast-card" data-cast="boof"><a href="/characters/boof.html"><span class="cast-first">First seen · 01</span><span class="cast-name">Boof</span><span class="cast-line">A working dog. Works for the land wherever the fences stand, and nobody pays her. Trusts an honest scent before a name, and keeps a map of what keeps what.</span></a></li>
           <li class="cast-card" data-cast="ants"><a href="/world/boonberry-commons.html#ant-hearths"><span class="cast-first">First seen · 01</span><span class="cast-name">The ants</span><span class="cast-line">Keep torch-lit streets along the roots all winter, so the berries never freeze. Very particular about torches.</span></a></li>
           <li class="cast-card" data-cast="genie"><a href="/book/chapter/03/"><span class="cast-first">First seen · 03</span><span class="cast-name">The Off-Season Genie</span><span class="cast-line">Could grant anything except a want as small as Boof's. Paid for hers with everything he had left, plus one Thursday. Now an echo in the grove.</span></a></li>
-          <li class="cast-card" data-cast="bane"><a href="/book/chapter/04/"><span class="cast-first">First seen · 04</span><span class="cast-name">Mr. BaneWAP</span><span class="cast-line">Wanted the egg filed, appraised and auctioned to himself. Wished huge, got an empire as hollow as a rented crown, and has since been re-sweetened.</span></a></li>
+          <li class="cast-card" data-cast="bane"><a href="/book/chapter/04/"><span class="cast-first">First seen · 04</span><span class="cast-name">Mr. BaneWAP</span><span class="cast-line">A pie made of baneberries: what he announces comes true the bad way, because he announced it. Wished huge, got an empire as hollow as a rented crown, and has since been re-sweetened.</span></a></li>
           <li class="cast-card" data-cast="boon"><a href="/book/chapter/06/"><span class="cast-first">First seen · 06</span><span class="cast-name">Mr. BoonWAP</span><span class="cast-line">A warm pie who holds court in Bonk City, serves himself in slices, and is never smaller.</span></a></li>
           <li class="cast-card" data-cast="bone"><a href="/book/chapter/10/"><span class="cast-first">First seen · 10</span><span class="cast-name">Mx. BoneWAP</span><span class="cast-line">Clean-boiled and exact. Reads a beam, or a record, for what it will bear.</span></a></li>
           <li class="cast-card" data-cast="hat"><a href="/book/chapter/14/"><span class="cast-first">First seen · 13</span><span class="cast-name">A hat <svg class="cast-hat" viewBox="0 0 40 22" aria-hidden="true"><path d="M4 17 Q20 20 36 17 Q20 14 4 17Z"/><path d="M10 16.5C9.5 4 30.5 4 30 16.5Z"/></svg></span><span class="cast-line">Rests on nothing, at the height of a person's head. Under it, someone in a few plain lines. Unconfirmed.</span></a></li>
         </ul>
+      </section>
+
+      <section class="boof-map" id="boofs-map" aria-labelledby="boof-map-title">
+        <div class="hub-section-head">
+          <h2 id="boof-map-title">Boof's map</h2>
+          <a class="hub-section-aside" href="/world/boonberry-commons.html">The commons →</a>
+        </div>
+        <p class="hub-section-lede">
+          Boof keeps a map without a pen. It has no roads in it, only what keeps what: the ants warm the roots, the roots keep the berries in their light, the berries let it run downhill to the pond she drinks from. Three berries grow along it and foretell three ways: a boonberry kindly, a baneberry by saying so, a boneberry not at all. Her nose is at the middle, because that is where she reads it from. Tap anything she knows; whatever you have read past glows.
+        </p>
+        <div class="boof-map-body">
+          <div class="boof-map-field">
+            <ul class="boof-map-fallback">
+              <li>The ants warm the roots, so the berries keep their light.</li>
+              <li>The berries let their light run down to the pond, and the pond lights a dog's morning drink.</li>
+              <li>A boonberry foresees kindly. A baneberry says what will go wrong, and it does, because it was said. A boneberry promises nothing, and feeds you.</li>
+              <li>The beavers keep the water slow, so the well never runs dry.</li>
+            </ul>
+          </div>
+          <div class="boof-map-note" aria-live="polite"></div>
+        </div>
+        <p class="boof-map-status" role="status"></p>
       </section>
 
       <section class="hub-chapters" id="chambers" data-region="index" data-climate="archive" aria-labelledby="chambers-title">
@@ -358,28 +383,28 @@
             <a class="hub-section-aside" href="/topics/">Browse by topic →</a>
           </div>
           <p class="hub-section-lede">
-            Two books, one serial. Book One is whole: thirteen chambers, one unspent wish carried through. Book Two is being set now, a stone at a time.
+            Two books, one serial. Book One is whole: thirteen chambers, one unspent wish carried from a furrow the ants keep warm to a door the archive keeps open. Book Two is being set now, a stone at a time, in a field that kept a day the week forgot.
           </p>
         </div>
         <h3 class="hub-book-title"><span class="hub-book-label">Book One</span> The Unspent Wish <span class="hub-book-span">01–13 · complete</span></h3>
         <ol class="hub-chapter-list" id="chapter-list">
-          <li><a href="/book/chapter/01/"><span class="hub-ch-num">01</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/01.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Dawn in Boon.land</span><span class="hub-ch-log">At dawn, Boof digs a warm egg out of a frozen furrow — an unspent wish no map will write down.</span></a></li>
+          <li><a href="/book/chapter/01/"><span class="hub-ch-num">01</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/01.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Dawn in Boon.land</span><span class="hub-ch-log">Where the ants keep the roots warm, one furrow is too warm. Boof digs out an egg — an unspent wish no map will write down.</span></a></li>
           <li><a href="/book/chapter/02/"><span class="hub-ch-num">02</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/02.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The First Echo</span><span class="hub-ch-log">The grove repeats the egg a beat late — the wish rehearsing futures it has not decided to grant.</span></a></li>
           <li><a href="/book/chapter/03/"><span class="hub-ch-num">03</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/03.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Signals in the Sand</span><span class="hub-ch-log">Two old routes want to be one turn. Boof digs up a Discount Genie who can grant anything — except see what she wants.</span></a></li>
-          <li><a href="/book/chapter/04/"><span class="hub-ch-num">04</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/04.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Crosswind Council</span><span class="hub-ch-log">A wish is the largest key there is. Mr. BaneWAP argues for an auction; no key yet covers the egg.</span></a></li>
+          <li><a href="/book/chapter/04/"><span class="hub-ch-num">04</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/04.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Crosswind Council</span><span class="hub-ch-log">A wish is the largest key there is. A baneberry off Mr. BaneWAP's crust says what will go wrong, and it does; no key yet covers the egg.</span></a></li>
           <li><a href="/book/chapter/05/"><span class="hub-ch-num">05</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/05.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The Quiet Rift</span><span class="hub-ch-log">Two claims pull at one warm egg until the floor parts. The crack is still singing an old wish.</span></a></li>
           <li><a href="/book/chapter/06/"><span class="hub-ch-num">06</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/06.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Lanterns of Bonk City</span><span class="hub-ch-log">Mr. BoonWAP holds court — a warm pie who is never smaller — and asks Boof the question she cannot answer yet.</span></a></li>
-          <li><a href="/book/chapter/07/"><span class="hub-ch-num">07</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/07.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Blueberry Oath</span><span class="hub-ch-log">An oath paid in fruit: spend the wish only when the want is true. Every spent wish owes a coincidence to a stranger.</span></a></li>
-          <li><a href="/book/chapter/08/"><span class="hub-ch-num">08</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/08.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Songs of the Watering Eye</span><span class="hub-ch-log">Over the well that folds every face, the Genie prices wishes. Boof's small asks come back unpriceable.</span></a></li>
-          <li><a href="/book/chapter/09/"><span class="hub-ch-num">09</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/09.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Shards of Nine Honks</span><span class="hub-ch-log">Eight tropes sampled and returned. The set assembles into a shape with one hole — egg-sized.</span></a></li>
-          <li><a href="/book/chapter/10/"><span class="hub-ch-num">10</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/10.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Bone.land Resonance</span><span class="hub-ch-log">A pie with its joints showing sets the Egg on the great frame and listens. The smallest wishes have the longest arcs.</span></a></li>
+          <li><a href="/book/chapter/07/"><span class="hub-ch-num">07</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/07.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Blueberry Oath</span><span class="hub-ch-log">An oath paid in a blueberry, the one berry that foretells nothing: spend the wish only when the want is true. Every spent wish owes a coincidence to a stranger.</span></a></li>
+          <li><a href="/book/chapter/08/"><span class="hub-ch-num">08</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/08.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Songs of the Watering Eye</span><span class="hub-ch-log">Over the well that folds every face, kept full by slow beavers, the Genie quotes wishes. Boof's small asks come back unpriceable.</span></a></li>
+          <li><a href="/book/chapter/09/"><span class="hub-ch-num">09</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/09.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Shards of Nine Honks</span><span class="hub-ch-log">Eight shards on the ridge make a shape with one egg-sized hole — and far off, the pond she drinks from, lit from underneath all along.</span></a></li>
+          <li><a href="/book/chapter/10/"><span class="hub-ch-num">10</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/10.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Bone.land Resonance</span><span class="hub-ch-log">A pie with its joints showing sets the Egg on the great frame and listens, and boneberries taste of rib tips. The smallest wishes have the longest arcs.</span></a></li>
           <li><a href="/book/chapter/11/"><span class="hub-ch-num">11</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/11.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Paradox Bloom</span><span class="hub-ch-log">BaneWAP wishes huge — and it grants at once, minimum-viable, an empire hollow as a rented crown.</span></a></li>
           <li><a href="/book/chapter/12/"><span class="hub-ch-num">12</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/12.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The Last Confluence</span><span class="hub-ch-log">Boof's wish is small: one warm furrow kept open, always, for whatever arrives without a receipt.</span></a></li>
           <li><a href="/book/chapter/13/"><span class="hub-ch-num">13</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/13.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The Shell-Shaped Door</span><span class="hub-ch-log">The spent wish sounds as the ninth honk. The shell waits by a blank last line — and something is on the road.</span></a></li>
         </ol>
         <h3 class="hub-book-title"><span class="hub-book-label">Book Two</span> Wonder About Pi(e) <span class="hub-book-span">14– · under way</span></h3>
         <ol class="hub-chapter-list hub-chapter-list--book-two" start="14">
-          <li><a href="/book/chapter/14/"><span class="hub-ch-num">14</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/14.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The Thursday Nobody Kept</span><span class="hub-ch-log">A Thursday goes missing from every week but the field’s. Under a hat that rests on nothing, someone drawn in a few plain lines.</span></a></li>
+          <li><a href="/book/chapter/14/"><span class="hub-ch-num">14</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/14.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">The Thursday Nobody Kept</span><span class="hub-ch-log">A Thursday goes missing from every week but the field’s, where the land keeps working with nobody in it. Under a hat that rests on nothing, someone drawn in a few plain lines.</span></a></li>
           <li><a href="/book/chapter/15/"><span class="hub-ch-num">15</span><span class="hub-ch-thumb"><img src="/book/images/thumbs/15.webp" width="384" height="216" alt="" loading="lazy" decoding="async"></span><span class="hub-ch-title">Pupil, Parcel, or Door</span><span class="hub-ch-log">A porter holds a gate against a storm for a stranger. By morning three honest records disagree about what came through.</span></a></li>
           <li class="hub-ch-upcoming"><a href="#latest"><span class="hub-ch-num">16</span><span class="hub-ch-thumb hub-ch-thumb-pending" data-chapter="16"></span><span class="hub-ch-title">Set <time datetime="2026-11-13">Friday 13 November</time></span><span class="hub-ch-log">A second place is set at the head of the table.</span></a></li>
         </ol>
@@ -412,13 +437,13 @@
           <span class="route-rail-index" aria-hidden="true">01</span>
           <span class="route-rail-kicker">Read</span>
           <span class="route-rail-title">Chapter 01</span>
-          <span class="route-rail-note">Begin at the warm furrow.</span>
+          <span class="route-rail-note">Begin where the ants keep the furrow warm.</span>
         </a>
         <a class="route-rail-card" href="/characters/boof.html" data-route="boof" data-material="frost">
           <span class="route-rail-index" aria-hidden="true">02</span>
           <span class="route-rail-kicker">Meet</span>
           <span class="route-rail-title">Boof</span>
-          <span class="route-rail-note">Follow the honest scent.</span>
+          <span class="route-rail-note">Know the land by nose, the way she does.</span>
         </a>
         <a class="route-rail-card" href="/topics/#fold" data-route="topics" data-material="ink">
           <span class="route-rail-index" aria-hidden="true">03</span>
@@ -430,7 +455,7 @@
           <span class="route-rail-index" aria-hidden="true">04</span>
           <span class="route-rail-kicker">Wander</span>
           <span class="route-rail-title">Boonberry commons</span>
-          <span class="route-rail-note">Find what keeps winter warm.</span>
+          <span class="route-rail-note">Ants, roots, berries, pond: find what keeps winter warm.</span>
         </a>
         <a class="route-rail-card" href="/world/civic-magic.html" data-route="map" data-material="brass">
           <span class="route-rail-index" aria-hidden="true">05</span>
@@ -460,7 +485,7 @@
           <span class="route-rail-index" aria-hidden="true">09</span>
           <span class="route-rail-kicker">Collect</span>
           <span class="route-rail-title">Almanac</span>
-          <span class="route-rail-note">Keep the creatures and contrivances you find.</span>
+          <span class="route-rail-note">Keep the creatures, contrivances and berries you find.</span>
         </a>
         <a class="route-rail-card" href="/pie/?from=%2F%23routes" data-route="pie" data-material="flour">
           <span class="route-rail-index" aria-hidden="true">10</span>
@@ -488,10 +513,11 @@
         </p>
         <ul class="hub-links">
           <li><a href="/characters/boof.html">Boof · dog of the land</a></li>
+          <li><a href="#boofs-map">Boof's map · what keeps what, read from her nose</a></li>
           <li><a href="/topics/#reward">Reward currents · motivation flow</a></li>
           <li><a href="/topics/">Topics · portable handles</a></li>
           <li><a href="/world/civic-magic.html">Civic magic · how the town works</a></li>
-          <li><a href="/world/boonberry-commons.html">Boonberry commons · regenerative operations, time &amp; circulation</a></li>
+          <li><a href="/world/boonberry-commons.html">Boonberry commons · ants, roots, berries and the pond: how winter is kept</a></li>
           <li><a href="/scriptorium/#experience-path">Wonder path · promise, encounter, evidence, memory &amp; return</a></li>
           <li><a href="/scriptorium/#personas">Four forces · inertia, friction, flux &amp; resonance</a></li>
           <li><a href="/scriptorium/#desk">Scriptorium · your desk: pick up, search, keep offline</a></li>

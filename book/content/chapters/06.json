@@ -327,6 +327,10 @@
         },
         {
           "type": "paragraph",
+          "text": "Before pie, the porters ate boneberries off a brazier at the plaza's rim, a paper cone each, the skins blistered black at the edges. In Bonk City they taste of burnt ends: smoke and crust and a dark sweetness that sticks to the paper. They grow on the kiln walls, where the forgiving heat comes through the brick all winter. Grown, not raised, said the brazier-man, handing Boof the last one in a cone a porter had counted wrong, and he said it the way glaziers say the glass forgives. Boof filed the smell beside the kiln's hot coin, where it belonged."
+        },
+        {
+          "type": "paragraph",
           "text": "A stall between {{stall-neighbour}} and the umbrella-mender sold brace-boxes: small glass boxes with sigil-etched lids, each fogged with a weather nobody had planned. The stall-keeper wrote every lid before she sealed it, so a box could be checked, and refused, before it was made.",
           "slots": {
             "stall-neighbour": {

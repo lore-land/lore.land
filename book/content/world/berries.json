@@ -1,0 +1,37 @@
+{
+  "note": "The three berries of the land, and what each foretells (canon: .spw/surfaces/berries.spw). Read by the game (pie-game.mjs: what a berry does in the lanes) and the pages (Boof's map, the almanac). Each berry is a kind of prophecy as much as a fruit: the boonberry foresees kindly, the baneberry foretells chaos that comes because it was said, the boneberry promises nothing and feeds you honestly. Whether a boonberry's voice is a sensation, a memory, or a thing that literally happens is never settled; the prose keeps both open.",
+  "berries": {
+    "boon": {
+      "name": "Boonberries",
+      "look": "teal and amber, lit from within; a little borrowed summer kept under the snow by the torch-ants",
+      "prophecy": "kindly: a boonberry shows the way something will go well, a moment before it does",
+      "ambiguity": "Boof cannot tell whether she remembers it or it happens to her twice; the book never says",
+      "in_the_lanes": "filling, and a glimpse: a teal way up the lanes, the clear one, before you reach it"
+    },
+    "bane": {
+      "name": "Baneberries",
+      "look": "plum-black, a cold violet sheen, a thorn on the stem; what Mr. BaneWAP is made of",
+      "prophecy": "chaotically: a baneberry says what will go wrong, and it goes wrong because it was said",
+      "self_fulfilling": "a foretelling acted on is a foretelling kept; BaneWAP's schemes are baneberry prophecies he announces until they come true",
+      "unsaid": "squashed underfoot, its prophecy goes unsaid; sweetened by a slice, it says something kind instead",
+      "in_the_lanes": "a berry that gets past the pie foretells a knock in its lane, and the knock comes because it was said; squash it and it never says; sweeten it and it foretells a boonberry"
+    },
+    "bone": {
+      "name": "Boneberries",
+      "look": "bone-white with a dusk-red blush, firm, a faint smoke to the skin",
+      "prophecy": "none: a boneberry promises nothing and feeds you exactly what it shows, a whole meal in a berry",
+      "savoury": "savoury, filling, nourishing; it tastes of what the region it grows in would otherwise have had to raise and kill, so nobody has to",
+      "flavours": {
+        "bone-land": "rib tips",
+        "bonk-city": "burnt ends",
+        "parcel-gate": "falafel",
+        "dawnward-field": "roast chestnut and sage",
+        "crosswind": "salted flatbread",
+        "the-grove": "mushroom broth",
+        "the-confluence": "grilled river corn"
+      },
+      "chapters": { "1": "dawnward-field", "2": "the-grove", "3": "dawnward-field", "4": "crosswind", "5": "the-grove", "6": "bonk-city", "7": "dawnward-field", "8": "the-grove", "9": "bonk-city", "10": "bone-land", "11": "bonk-city", "12": "the-confluence", "13": "the-confluence", "14": "bonk-city", "15": "parcel-gate" },
+      "in_the_lanes": "crust and filling both, and fed: steps tilt less and the pie settles sooner for a while"
+    }
+  }
+}

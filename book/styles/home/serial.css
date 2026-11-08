@@ -378,7 +378,8 @@ body[data-surface='monument'] .cast-card a:focus-visible {
 }
 
 body[data-surface='monument'] .cast-first {
-  color: color-mix(in srgb, var(--cast-accent) 55%, var(--hub-muted));
+  /* Leans to the ink, not the muted grey: gold and hearth accents are bright. */
+  color: color-mix(in srgb, var(--cast-accent) 50%, var(--hub-ink));
   font-family: var(--font-family-mono, monospace);
   font-size: 0.64rem;
   letter-spacing: 0.1em;
@@ -464,8 +465,9 @@ body[data-surface='monument'] .hub-book-span {
   letter-spacing: 0.06em;
 }
 
+/* Not yet coloured in: the stone keeps its tone, its words keep their contrast. */
 body[data-surface='monument'] .hub-ch-upcoming a {
-  opacity: 0.82;
+  filter: grayscale(0.55);
 }
 
 body[data-surface='monument'] .hub-ch-upcoming .hub-ch-thumb-pending {

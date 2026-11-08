@@ -29,6 +29,7 @@
   fold_and_materials: "@spw/surfaces/fold-and-materials.spw"
   projection: "@spw/surfaces/projection.spw"
   collecting: "@spw/surfaces/collecting.spw"
+  berries: "@spw/surfaces/berries.spw"
   knobs: "@spw/surfaces/knobs.spw"
   tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"

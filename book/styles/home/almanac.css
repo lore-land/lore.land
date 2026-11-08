@@ -104,7 +104,8 @@ body[data-surface='monument'] .almanac-sigil {
   margin-right: 0.25rem;
   border-radius: 50%;
   background: color-mix(in srgb, var(--kind-ink, var(--hub-gold)) 16%, transparent);
-  color: var(--kind-ink, var(--hub-gold));
+  /* The kind's colour leaned to the ink: gold alone is a border colour, not a glyph's. */
+  color: color-mix(in srgb, var(--kind-ink, var(--hub-gold)) 55%, var(--hub-ink));
   font-family: var(--font-family-mono, monospace);
   font-size: 0.95rem;
   vertical-align: 0.15em;
@@ -161,7 +162,7 @@ body[data-surface='monument'] .almanac-card p {
 }
 
 body[data-surface='monument'] .almanac-card-kicker {
-  color: color-mix(in srgb, var(--kind-ink) 60%, var(--hub-muted));
+  color: color-mix(in srgb, var(--kind-ink) 50%, var(--hub-ink));
   font-family: var(--font-family-mono, monospace);
   font-size: 0.64rem;
   letter-spacing: 0.08em;
@@ -428,7 +429,7 @@ body[data-surface='monument'] .almanac-prompt {
 
 body[data-surface='monument'] .almanac-prompt summary {
   cursor: pointer;
-  color: color-mix(in srgb, var(--kind-ink) 70%, var(--hub-ink));
+  color: color-mix(in srgb, var(--kind-ink) 50%, var(--hub-ink));
   font-family: var(--font-family-mono, monospace);
   font-size: 0.66rem;
   letter-spacing: 0.1em;
