@@ -1,5 +1,5 @@
 {
-  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · satisfied (clowns satisfied) · shared (slices shared with clerks or subjects) · sweetened (baneberries sweetened) · perfects · foils · reached (the furthest chapter a carry has reached, 1–15).",
+  "note": "What the pies let slip (home/pie-game.mjs; canon .spw/surfaces/wonder-about-pie.spw#exactly_one_pie). Mr. BoonWAP says one of these while he holds court; Mr. BaneWAP blurts one when he is foiled. A line can be said once it is unlocked by what the visitor has found — chapters read, wonders kept, sightings noticed, tellings heard — or done in the game. Each says one true thing about the land and grounds it in a chapter where it can be read. Rules: the Egg stays a mystery; the figure under the hat is never named; the warm slice is never explained. Unlock kinds: always · chapters (count read) · chapter (that chapter read) · wonders · sightings · tellings · waps · satisfied (clowns satisfied) · shared (slices shared with clerks or subjects) · sweetened (baneberries sweetened) · perfects · foils · reached (the furthest chapter a carry has reached, 1–15) · carried (chapters carried through) · wonback (chapters won back from Mimes Against WAP) · mimes (chapters the mimes have ever taken).",
   "speakers": {
     "boon": {
       "name": "Mr. BoonWAP",
@@ -173,6 +173,31 @@
       }
     },
     {
+      "id": "boon-carried",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "carried",
+        "n": 5
+      },
+      "hint": "Carry the pie through five chapters.",
+      "line": "Five chapters carried, and not one of them smaller. A book is a pie too, you know. I have checked the arithmetic.",
+      "ground": {
+        "chapter": 6,
+        "anchor": "the-pie-at-the-table",
+        "label": "never smaller"
+      }
+    },
+    {
+      "id": "boon-wonback",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "wonback",
+        "n": 1
+      },
+      "hint": "Win a chapter back from Mimes Against WAP.",
+      "line": "You won a chapter back from the mimes. I heard it. Well, I saw it. They were very expressive about it."
+    },
+    {
       "id": "bane-wind",
       "speaker": "bane",
       "unlock": {
@@ -328,6 +353,20 @@
       "ground": {
         "chapter": 12,
         "label": "bitter starting tomorrow, unless"
+      }
+    },
+    {
+      "id": "bane-held",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "mimes",
+        "n": 1
+      },
+      "hint": "Let Mimes Against WAP take a chapter.",
+      "line": "The mimes have taken a chapter for me. They will not tell me which. They never tell anyone anything. It is the best service I have ever had.",
+      "ground": {
+        "chapter": 11,
+        "label": "a clause he never read"
       }
     }
   ]

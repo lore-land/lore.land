@@ -19,7 +19,7 @@
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
 import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_06.F';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.F';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_07.A';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_08.A';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.F';
 import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_06.F';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_05.A';

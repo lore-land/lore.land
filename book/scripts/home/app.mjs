@@ -25,7 +25,7 @@ import {
   withViewTransition
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
-import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_07.A';
+import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.A';
 import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_07.D';

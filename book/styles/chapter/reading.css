@@ -4504,3 +4504,72 @@ main.chapter .pie-door:focus-visible {
 main.chapter .pie-door-sigil {
   color: var(--sigil-gold, #a67c38);
 }
+
+
+/* ─── A chapter read the way your carry went (pie-projection.mjs) ────────
+ * The note says how the carry leans the reading and why; where Mimes
+ * Against WAP hold the chapter, its pie words are drawn hollow, as if
+ * mimed, and a tap peeks at one. */
+main.chapter .pie-carry-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 1.1rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px dashed color-mix(in srgb, var(--sigil-gold, #a67c38) 55%, transparent);
+  border-radius: 0.6rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--color-text-alt, currentColor);
+}
+
+main.chapter .pie-carry-sigil {
+  color: var(--sigil-gold, #a67c38);
+}
+
+main.chapter .pie-carry-text {
+  flex: 1 1 22rem;
+}
+
+main.chapter .pie-carry-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  align-items: baseline;
+}
+
+main.chapter .pie-carry-toggle {
+  padding: 0.12rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+main.chapter .pie-carry-door {
+  color: var(--color-accent-main);
+}
+
+main.chapter .pie-mimed {
+  color: transparent;
+  -webkit-text-stroke: 0.6px color-mix(in srgb, var(--color-text-main, #2a2a30) 70%, transparent);
+  text-decoration: underline dotted color-mix(in srgb, #7a3f9a 65%, transparent);
+  text-underline-offset: 0.2em;
+  cursor: help;
+  transition: color 300ms ease;
+}
+
+main.chapter .pie-mimed.is-peek {
+  color: inherit;
+  -webkit-text-stroke: 0;
+}
+
+@supports not (-webkit-text-stroke: 1px black) {
+  main.chapter .pie-mimed {
+    color: color-mix(in srgb, var(--color-text-main, #2a2a30) 40%, transparent);
+  }
+}

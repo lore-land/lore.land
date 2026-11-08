@@ -1105,3 +1105,208 @@ body[data-surface='monument'] .pie-main {
   text-transform: uppercase;
   color: var(--hub-muted);
 }
+
+
+/* ─── Where the mimes lead: the passage's pie words go quiet ─────────────
+ * Harder to wonder about pie: drawn hollow, as if mimed. (pie-carries.mjs) */
+.pie-flow-pie {
+  transition: color 300ms ease;
+}
+
+.pie-flow-list.is-mimed .pie-flow-pie,
+.pie-lore-line.is-mimed .pie-flow-pie {
+  color: transparent;
+  -webkit-text-stroke: 0.6px color-mix(in srgb, var(--hub-ink) 55%, transparent);
+  text-decoration: underline dotted color-mix(in srgb, #7a3f9a 60%, transparent);
+}
+
+/* This chapter, so far: how it will be kept, and the contest with the mimes. */
+.pie-flow-now {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px dashed var(--hub-line);
+  border-radius: 0.6rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.pie-flow-now:empty {
+  display: none;
+}
+
+.pie-flow-now-head {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-flow-now-line {
+  color: var(--hub-ink);
+}
+
+.pie-flow-now-lean,
+.pie-carries-lean {
+  display: flex;
+  height: 0.4rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-ink) 10%, transparent);
+}
+
+:is(.pie-flow-now-lean, .pie-carries-lean) i {
+  display: block;
+  min-width: 2px;
+}
+
+:is(.pie-flow-now-lean, .pie-carries-lean) .is-boon { background: #d9a23a; }
+:is(.pie-flow-now-lean, .pie-carries-lean) .is-bane { background: #7a3f9a; }
+:is(.pie-flow-now-lean, .pie-carries-lean) .is-bone { background: #9aa3ad; }
+
+.pie-flow-now-contest {
+  color: var(--hub-accent-deep);
+}
+
+.pie-flow-now-contest.is-mimes {
+  color: #7a3f9a;
+  font-style: italic;
+}
+
+/* The start card: chapters the mimes hold wear a dashed edge. */
+.pie-card-chapter-btn.is-held {
+  border-style: dashed;
+  border-color: #7a3f9a;
+}
+
+/* ─── What your carries have done to the book ─────────────────────────── */
+.pie-carries {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.pie-carries-lede {
+  font-style: italic;
+  color: var(--hub-accent-deep);
+}
+
+.pie-carries-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-carries-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) minmax(5rem, 9rem);
+  gap: 0.7rem;
+  align-items: center;
+  max-width: none;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.55rem;
+  background: var(--hub-panel);
+  font-size: 0.92rem;
+}
+
+.pie-carries-row.is-uncarried {
+  grid-template-columns: 2rem minmax(0, 1fr);
+  color: var(--hub-muted);
+  background: transparent;
+  border-style: dashed;
+}
+
+.pie-carries-pending {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.8rem 0 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted);
+}
+
+.pie-carries-pending-n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  border: 1px dashed var(--hub-line);
+  border-radius: 999px;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  color: var(--hub-muted);
+  text-decoration: none;
+}
+
+.pie-carries-pending-n:hover,
+.pie-carries-pending-n:focus-visible {
+  border-color: var(--hub-gold);
+  color: var(--hub-ink);
+}
+
+.pie-carries-row.is-held {
+  border-color: color-mix(in srgb, #7a3f9a 55%, var(--hub-line));
+}
+
+.pie-carries-n {
+  font-family: var(--font-family-heading, monospace);
+  font-weight: 700;
+  color: var(--hub-muted);
+}
+
+.pie-carries-chip {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+}
+
+.pie-carries-chip.is-mimes {
+  border: 1px dashed #7a3f9a;
+  color: #7a3f9a;
+}
+
+.pie-carries-chip.is-back {
+  border: 1px solid var(--hub-gold);
+  color: var(--hub-accent-deep);
+}
+
+.pie-carries-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.9rem 0 0;
+}
+
+:is(.pie-carries-toggle, .pie-carries-forget) {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.74rem;
+  cursor: pointer;
+}
+
+.pie-carries-toggle[aria-pressed='true'] {
+  border-color: var(--hub-gold);
+}
+
+.pie-carries-forget:hover {
+  border-color: #c0392b;
+}
+
+@media (max-width: 40rem) {
+  .pie-carries-row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+  .pie-carries-row .pie-carries-lean {
+    grid-column: 2;
+  }
+}

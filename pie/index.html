@@ -48,11 +48,11 @@
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_07.C&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_07.H&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.A&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_07.H"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_07.H"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.A"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.A"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -91,7 +91,7 @@
           </ol>
           <p class="pie-keys-touch">On a phone: swipe to step, any way; tap the carrier to hop; tap the lanes to throw toward the tap.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
-          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
+          <p class="pie-doors"><a href="#pie-legend">What everything is ↓</a> <a href="#pie-carries">What your carries have done ↓</a> <a href="#pie-lore">What the pies let slip ↓</a></p>
           </div>
         </div>
 
@@ -138,6 +138,7 @@
           <p class="pie-flow-head">Waiting in this chapter</p>
           <ul class="pie-flow-wonder-list" data-pie-flow-wonders></ul>
           <p class="pie-flow-kept" data-pie-flow-kept>Steer into a wonder, up the lanes, to keep it.</p>
+          <div class="pie-flow-now" data-pie-flow-now aria-live="off"></div>
           <p class="pie-flow-note">Each one, kept, goes into <a href="/almanac/">your almanac</a> and gives the carry something: light, echoes, a honk, a moment unkept.</p>
         </div>
         </div>
@@ -222,6 +223,16 @@
             </ul>
           </section>
         </div>
+      </section>
+
+      <section class="pie-carries" id="pie-carries" data-pie-carries aria-labelledby="carries-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">Kept in this browser</p>
+          <h2 id="carries-title">What your carries have done to the book</h2>
+          <p>Every chapter you carry the pie through keeps a mark. How the carry went leans that chapter’s reading a little: toward fairy tale where clowns were satisfied and wonders kept, toward absurd reality where you were knocked about and Mr. BaneWAP was fed, toward low magic where you hopped clean and threw true. Where Mimes Against WAP out-did the pie, they hold the chapter, and it is harder to wonder about pie there: its pie words go quiet, on the page and in the passage, until you carry it through again and win it back. Each chapter page says so at the top, with a switch to read it plainly.</p>
+          <p class="pie-carries-lede" data-pie-carries-lede></p>
+        </div>
+        <div data-pie-carries-body></div>
       </section>
 
       <section class="pie-lore" id="pie-lore" data-pie-lore aria-labelledby="lore-title">
