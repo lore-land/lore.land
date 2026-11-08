@@ -115,7 +115,7 @@
   f8: { dimension: [world], release: "next", done_when: "the folio value spell (formula only, %fulfill, -25% to +15%) is auditable from a carry provenance card" }
 ]
 
-~"open"{
+?open{
   room_cadence: "is a stone a room, or a chapter in rooms? the plan allows both and watches which the maker can keep"
   shared_counts: "how to let readers share what their carries did without tracking them (f3)"
   proposal_trust: "how a table proposal is reviewed before it reaches a reader (f6)"

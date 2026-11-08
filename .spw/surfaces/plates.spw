@@ -646,7 +646,7 @@
   }
 ]
 
-?"decision_clearings"{
+?decision_clearings{
   .note: "questions arranged by the scale of world they alter; mosey from weather to object before answering — a local choice may reveal itself as a series law"
 
   ?series_weather[

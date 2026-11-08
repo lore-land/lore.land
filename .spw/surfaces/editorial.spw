@@ -224,7 +224,7 @@
   "Fantasy dress on public; plain tools in the desk"
 ]
 
-?"success_probes"{
+?success_probes{
   reader: "Chamber 01 reads cleanly with JS disabled"
   explorer: "Opt-in language marks show promise/reward/pack threads; focus resonates family"
   scribe: "editorial-check reports lexicon hits + missing scene sections without blocking draft"

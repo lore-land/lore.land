@@ -174,7 +174,7 @@
   "Should charm/ and book/timeline.html remain public Vite entries, or archive out of production dist?"
 ]
 
-?"branches"[
+?branches[
   {
     axis: "where the role tables are born"
     held: "derived from workbench affinities by pure adapters"

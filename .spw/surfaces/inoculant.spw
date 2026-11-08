@@ -52,7 +52,7 @@
   { stage: "fruit" where: "the land grows a variant lore.land could not have" proof: "the variant returns to lore.land as a ledger entry, and sometimes as a new strain" }
 ]
 
-?"strains"[
+?strains[
   {
     #id: "prerendered-page"
     grammar: "the work is in the page before any script; one renderer, two hosts"
@@ -139,7 +139,7 @@
   honk: "the announcement — the return note that says something grew"
 }
 
-?"open_questions"[
+?open_questions[
   "Does a strain carry its own trial switch into the new land, or must every land re-earn its readers' trust from germ?"
   "What does bane.land do with the continuity promise when a kept default is itself the harm?"
   "Is bone.land where retired strains go to be studied, and can a fossil be re-cultured?"

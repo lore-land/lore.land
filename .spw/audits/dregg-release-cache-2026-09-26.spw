@@ -198,7 +198,7 @@
   goodie_note: "Maintainer post 2026-09-26 20:41 UTC, status 2103947995230404685 — passwap announced; offer and passphrase deliberately not cached"
 }
 
-?"reread"[
+?reread[
   "The dregg README names a public server."
   "Hosted Hermes is advertised to a reader who is not on the maintainer's machines."
   "DreggNet Cloud answers on a URL a stranger can open."

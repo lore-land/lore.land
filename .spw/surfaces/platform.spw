@@ -255,7 +255,7 @@
   "dist/.spw excludes _workbench and tools"
 ]
 
-?"success_probes"{
+?success_probes{
   offline: "Airplane mode after first visit: offline.html and last-viewed chapter if cached"
   share: "Paste /book/chapter/01/ in a messenger — art + logline visible"
   canon: "export-chapters is dry-run clean against current HTML"

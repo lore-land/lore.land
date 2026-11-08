@@ -13,7 +13,7 @@
   A language earns trust by being leaned on. The game leans on Spw for real things: tuning how the lanes feel, what each knock costs, what each gift does and which references it calls on. When the parser and the small reader agree, and every power survives a round trip, the grammar is carrying weight. When they do not, or when a broken spell is called a success, that is worth knowing before a reader finds it.
 }
 
-%"findings"[
+?findings[
   quiet_prose_fallback: { measured: "2026-11-08, spw-seed edbc550, lexProfile prose" seen: "a dropped closing brace, a dropped opening bracket, or an emoji in a label: parse() returns success true, errors 0, warnings 1, with completeness.complete false and completeness.proseFallback true" why: "a consumer that checks success alone takes a broken rule set as read" proposal: "under a structured reading, report success false (or a structural flag) when the root falls back to prose; or emit an error rather than a warning" }
   unclosed_string_cliff: { measured: "5.6 KB of rules" seen: "an unclosed string inside #says[...] takes about 1 s to parse, against about 0.3 s for the whole file read clean" why: "one typo on the bench stalls the page" proposal: "stop a string at the end of the line (strings are one line in this canon already), then recover" }
   cold_parse_cost: { measured: "node 22 and Chrome, cold" seen: "about 300 to 430 ms for the 5.6 KB rules file; 10 to 40 ms for a single 100-character spell; the bundle is 634 KB" why: "a runtime reader has to stay off the first paint (the game reads its rules when the page is idle)" proposal: "export a smaller runtime entry (lite.ts exists) for reading rules, without the whole workbench" }

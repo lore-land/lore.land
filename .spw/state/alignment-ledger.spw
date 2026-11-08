@@ -172,7 +172,7 @@
   &claim: ".spw/claims/chapter-claims.spw#lore-c008-accounted-alignment"
 }
 
-?"probes"[
+?probes[
   "theme-switch flash: cosmos ↔ ember with no intermediate frame"
   "share-card parity: card art/title/logline match the landed page"
   "reduced-motion parity: signature moments have a calm cut"

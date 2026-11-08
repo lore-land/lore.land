@@ -136,7 +136,7 @@
   "Should platform claims (offline honesty, share intrigue) appear in the chapter rail ethos panel, or only in seal-keeper tooling?"
 ]
 
-?"branches"[
+?branches[
   { axis: "where evidence comes from" held: "session signals" open: "dated spw:probes runs, which already name four claims" }
   { axis: "memory" held: "absorbing states, reset on reload" open: "glassed like a folio, each transition legible under the next" }
   { axis: "who meets a claim" held: "scribes, in the rail" open: "readers, one wager per chapter colophon" }

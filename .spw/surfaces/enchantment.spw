@@ -36,7 +36,7 @@
   #invariant: an_enchantment_never_hides_prose
 }
 
-?"enchantments"[
+?enchantments[
   {
     name: "section"
     json: "{ type: section, title, content: [...] }"

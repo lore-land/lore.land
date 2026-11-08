@@ -61,7 +61,7 @@
   }
 }
 
-?"readings"[
+?readings[
   { sigil: "!" story: "the event" stacks: "accession" machine: "actuator, trigger" signal: "an impulse" }
   { sigil: "?" story: "the question" stacks: "the reference interview" machine: "sensor, probe" signal: "a measurement" }
   { sigil: "~" story: "the unspent" stacks: "on order, not yet shelved" machine: "stored energy, a wound spring" signal: "the continuous wave before sampling" }
@@ -140,7 +140,7 @@
   literacy: "the brush is the play: sweep a sentence and it names its own parts; sweep two and the book says where they rhyme"
 }
 
-?"open_questions"[
+?open_questions[
   "Which spwashi.com demo shows a sigil's engineering reading first, and hands the reader to lore.land for its story?"
   "Should a scene, not just a chapter, carry its own shelf-mate?"
   "Can a returning reader leave a call number on a scribes' slip — a book the chapter reminded them of — and have it join the shelf list?"

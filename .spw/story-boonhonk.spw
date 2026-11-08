@@ -182,7 +182,7 @@
   reader_reward: "Recognition adds depth, but ignorance does not create a gap."
 }
 
-?"open_questions"[
+?open_questions[
   "When does WAPboy first make a choice that cannot be explained by the drawing?"
   "What does the floating bowler hat remember?"
   "Is Wonder About Pi(e) a school, a superstition, a profession, or a reader's habit?"
@@ -284,7 +284,7 @@
     local_plot: "State what this universe expects to happen next."
     divergence: "State what occupies WAPboy's attention and why it crosses that expectation."
   }
-  ?"contact"[
+  ?contact[
     "Which prop, boundary, or convention encounters the origin material?"
     "What becomes physically possible or difficult because of that encounter?"
     "Who benefits, who pays, and who misunderstands the same change?"
@@ -333,7 +333,7 @@
 }
 
 #>boonhonk_trope_wonder
-?"wonder_about_tropes"[
+?wonder_about_tropes[
   { trope: "chosen one" question: "Does a prophecy recognize a person, or train everyone else to overlook the people beside them?" foothold: "A second place set at a ceremonial table." }
   { trope: "portal" question: "Does a door owe the traveler the destination they imagined?" foothold: "A threshold worn on only one side." }
   { trope: "bottomless feast" question: "If the pie never shrinks, why does the person serving it still get tired?" foothold: "An untouched slice beside the server's cold cup." }
@@ -611,7 +611,7 @@ $"substrate_physics"{
     { setting: "low resistance" reading: "The drawn gap influences the gate's clearance. The passage opens, but the closure must be checked before the storm." }
     { setting: "high persistence" reading: "A later traveler encounters the changed gate after WAPboy leaves; responsibility outlasts the gag." }
   ]
-  ?"tuning_record"[
+  ?tuning_record[
     "Which input changed, and what stayed fixed?"
     "Which visible action or prop demonstrates the change?"
     "What prevents the same formula from solving every obstacle?"
@@ -630,7 +630,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_development_probes
-?"development_probes"[
+?development_probes[
   "Can the scene be understood through a want and an object before its abstract vocabulary is explained?"
   "Does each participant have a defensible reading and something they could learn?"
   "Is the material-to-trope connection observable, including its limits?"
