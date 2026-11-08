@@ -2,6 +2,18 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_07.F",
+      "date": "2026-11-07",
+      "notes": [
+        "In Exactly One Pie, Mr. BoonWAP and Mr. BaneWAP now let slip the land's lore: one true thing when BoonWAP holds court, one blurted secret when BaneWAP is foiled. More opens as you find more of the land — chapters, wonders, sightings, tellings — and the game page keeps every line.",
+        "What the pies say appears under the game now, like subtitles, never across it.",
+        "Throws are aimed: a needle sweeps from the pie. Posts bend a slice, walls bounce it, wasps and pigeons snatch it.",
+        "The pie is kept whole by an aura of flour and boonberries. Every slice draws on both, and a wasted slice costs more. Mr. BoonWAP tops it up.",
+        "Flour comes in bags and piles. A pile is a ramp for a thrown slice; throw at a bag and it bursts into one.",
+        "The game page shows what everything is, drawn by the game itself."
+      ]
+    },
+    {
       "release": "2026_11_07.D",
       "date": "2026-11-07",
       "notes": [

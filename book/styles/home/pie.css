@@ -246,6 +246,11 @@ body[data-surface='monument'] .pie-main {
   .pie-stage .pie-cabinet {
     order: -1;
   }
+
+  .pie-keys,
+  .pie-keys-touch {
+    display: none;
+  }
 }
 
 .pie-sound {
@@ -265,31 +270,6 @@ body[data-surface='monument'] .pie-main {
 .pie-sound[aria-pressed='true'] {
   color: var(--hub-ink);
   border-color: color-mix(in srgb, var(--hub-gold) 60%, var(--hub-line));
-}
-
-/* A change of place, said in passing: a toast at the top of the screen,
- * not a card across it. Play goes on underneath. */
-.pie-toast {
-  position: absolute;
-  top: 3.6rem;
-  left: 50%;
-  width: max-content;
-  max-width: 86%;
-  padding: 0.45rem 0.85rem 0.5rem;
-  border: 1px solid #d9c38a;
-  border-radius: 0.6rem;
-  background: rgba(12, 12, 14, 0.78);
-  color: #f3ead6;
-  text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -0.6rem);
-  transition: opacity 420ms ease, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.pie-toast.is-in {
-  opacity: 1;
-  transform: translate(-50%, 0);
 }
 
 .pie-toast-title {
@@ -314,12 +294,6 @@ body[data-surface='monument'] .pie-main {
   display: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .pie-toast {
-    transform: translate(-50%, 0);
-    transition: opacity 200ms ease;
-  }
-}
 
 /* The way back to where the game was found. */
 .pie-return {
@@ -356,22 +330,6 @@ body[data-surface='monument'] .pie-main {
   color: #fff4d6;
 }
 
-/* Who is speaking in a toast: Mr. BoonWAP warm, Mr. BaneWAP theatrical, flour pale. */
-.pie-toast[data-voice='boon'] {
-  border-color: #f2c14e;
-  background: rgba(60, 36, 8, 0.86);
-}
-
-.pie-toast[data-voice='bane'] {
-  border-color: #d6473e;
-  background: rgba(40, 10, 14, 0.88);
-}
-
-.pie-toast[data-voice='flour'] {
-  border-color: #f3ead6;
-  background: rgba(90, 84, 72, 0.86);
-}
-
 .pie-steps {
   grid-template-columns: 1fr auto 1fr;
 }
@@ -403,4 +361,356 @@ body[data-surface='monument'] .pie-main {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--hub-muted);
+}
+
+
+/* ─── The caption: places and the pies' words, under the carry ──────────
+ * Like subtitles: never across the screen. A line stays, quieter, until
+ * the next, so it can be read again. Who is speaking colours its edge. */
+.pie-caption {
+  min-height: 4.8rem;
+  padding: 0.55rem 0.8rem 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-left: 4px solid var(--hub-gold);
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+  opacity: 0.62;
+  transition: opacity 400ms ease, border-color 300ms ease;
+}
+
+.pie-caption.is-in {
+  opacity: 1;
+}
+
+.pie-caption .pie-toast-title {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep);
+}
+
+.pie-caption .pie-toast-line {
+  margin-top: 0.25rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.45;
+  color: var(--hub-ink);
+}
+
+.pie-caption[data-voice='boon'] { border-left-color: #e0a23a; }
+.pie-caption[data-voice='bane'] { border-left-color: #c0392b; }
+.pie-caption[data-voice='flour'] { border-left-color: var(--hub-muted); }
+
+/* Keys, plainly. */
+.pie-lede {
+  font-size: 1.18rem !important;
+}
+
+.pie-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin: 1rem 0 0.3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-keys li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.95rem;
+}
+
+.pie-keys kbd {
+  min-width: 1.8rem;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid var(--hub-line);
+  border-bottom-width: 3px;
+  border-radius: 0.35rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.pie-keys-touch {
+  font-size: 0.86rem !important;
+  color: var(--hub-muted);
+}
+
+/* ─── The legend: what everything is ──────────────────────────────────── */
+.pie-legend,
+.pie-lore {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: clamp(1.5rem, 4vw, 2.6rem);
+}
+
+.pie-section-head h2 {
+  margin: 0.2rem 0 0.5rem;
+  color: var(--hub-ink);
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+  font-weight: 400;
+}
+
+.pie-section-head p:not(.hub-eyebrow) {
+  max-width: 44rem;
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.55;
+  color: var(--hub-muted);
+}
+
+.pie-legend-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1rem;
+}
+
+.pie-legend-group {
+  --tone: var(--hub-line);
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--hub-line);
+  border-top: 4px solid var(--tone);
+  border-radius: 0.8rem;
+  background: var(--hub-panel);
+}
+
+.pie-legend-group.tone-hazard { --tone: #b0453a; grid-row: span 2; }
+.pie-legend-group.tone-slow { --tone: var(--hub-muted); }
+.pie-legend-group.tone-friend { --tone: #d9a23a; }
+.pie-legend-group.tone-presence { --tone: var(--hub-berry); }
+.pie-legend-group.tone-carrier { --tone: var(--hub-ink); }
+
+.pie-legend-group h3 {
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--hub-ink);
+}
+
+.pie-legend-group h3 span {
+  color: var(--tone);
+}
+
+.pie-legend-group > p {
+  margin: 0.2rem 0 0.7rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+.pie-legend-group ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-legend-group li {
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.pie-legend-group canvas,
+.pie-lore h3 canvas {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+}
+
+.pie-legend-group li strong {
+  display: block;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.95rem;
+  color: var(--hub-ink);
+}
+
+.pie-legend-group li span {
+  display: block;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--hub-muted);
+}
+
+/* ─── What the pies let slip ──────────────────────────────────────────── */
+.pie-lore-count {
+  font-family: var(--font-family-heading, monospace) !important;
+  font-size: 0.76rem !important;
+  letter-spacing: 0.06em;
+  color: var(--hub-accent-deep) !important;
+}
+
+.pie-lore-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1rem;
+}
+
+.pie-lore-columns > section {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.8rem;
+  background: var(--hub-panel);
+}
+
+.pie-lore h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.6rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--hub-ink);
+}
+
+.pie-lore-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-lore-line {
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.45;
+}
+
+.pie-lore-line.is-said {
+  border-left: 3px solid var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-paper) 60%, transparent);
+  color: var(--hub-ink);
+}
+
+.pie-lore-line.is-said q {
+  display: block;
+  font-size: 0.98rem;
+}
+
+.pie-lore-ground {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+}
+
+.pie-lore-line.is-ready {
+  border: 1px dashed var(--hub-gold);
+  color: var(--hub-accent-deep);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+.pie-lore-line.is-locked {
+  border: 1px dashed var(--hub-line);
+  color: var(--hub-muted);
+  font-size: 0.86rem;
+}
+
+.pie-lore-line.is-locked::before {
+  content: 'Locked · ';
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Spoken, not shown: the live region for screen readers. */
+.pie-cabinet .pie-live {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.pie-copy p {
+  margin: 0 0 0.75rem;
+}
+
+/* The aura's two ingredients, at the foot of the screen beside the tilt. */
+.pie-aura {
+  --crust: 0.6;
+  --filling: 0.6;
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.45rem;
+  display: grid;
+  gap: 0.18rem;
+  pointer-events: none;
+}
+
+.pie-aura p {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+}
+
+.pie-aura em {
+  width: 3.4rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.56rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+  text-align: right;
+}
+
+.pie-aura span {
+  position: relative;
+  width: 4.2rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-ink) 14%, transparent);
+  overflow: hidden;
+}
+
+.pie-aura span::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+}
+
+.pie-aura-crust::after {
+  width: calc(var(--crust) * 100%);
+  background: #e4cf9a;
+}
+
+.pie-aura-filling::after {
+  width: calc(var(--filling) * 100%);
+  background: linear-gradient(90deg, #4d9f97, #f4b25c);
+}
+
+.pie-aura.is-thin em {
+  color: #c0392b;
+}
+
+/* The tilt sits to the right of the ingredients. */
+.pie-meter {
+  left: auto;
+  right: 0.8rem;
+  width: 34%;
+  transform: none;
 }
