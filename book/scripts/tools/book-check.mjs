@@ -29,6 +29,7 @@ import { CUSTOM_ELEMENT_TYPES } from '../modules/story-lexicon.mjs';
 import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 import { packProblems } from '../modules/packs.mjs';
+import { readLevels } from '../home/pie-rhythm.mjs';
 import { existsSync } from 'node:fs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -193,6 +194,95 @@ almanac.wonders.forEach((wonder) => {
   });
 });
 await Promise.all(plateChecks);
+
+/* The levels as the Spw interpreter reads them, in the small reader's shape, so the two reads can be compared: the
+ * game reads the file with the small reader (at once, no parser to wait for), and this holds it to the grammar. */
+function parsedLevels(text) {
+  const result = parse(text, { lexProfile: 'prose' });
+  if (!result?.completeness?.complete || result.completeness.proseFallback) return null;
+  const exprs = (body) => body?.sequence?.expressions || [];
+  const unquote = (s) => String(s ?? '').replace(/^"(.*)"$/s, '$1');
+  const valueOf = (p) => {
+    const v = p?.value;
+    if (v?.type === 'Literal') return unquote(v.token?.value);
+    // The valence words (bone boon bane bonk honk) are modifiers in the grammar: [honk] is a modifier, not a name.
+    if (v?.type === 'Expression') return [...(v.terms || []).map((t) => t.token?.value ?? t.raw ?? ''), ...(v.modifiers?.modifiers || []).map((x) => x.value)].join(' ');
+    return '';
+  };
+  const fieldsOf = (body) => {
+    const out = {};
+    exprs(body).forEach((e) => e.terms.forEach((t) => {
+      if (t.type === 'PathRef') { out['~'] = [unquote(t.path?.token?.value)]; return; }
+      // An @label[...] reads as a reference whose frame sits on its expression; the other sigils as operations.
+      const op = t.type === 'Reference' ? '@' : t.operator?.value;
+      const label = t.type === 'Reference' ? t.raw : t.operatorLabel?.value;
+      if (op && label) out[op + label] = ((t.frame || e.frame)?.content || []).map(valueOf);
+    }));
+    return out;
+  };
+  const blocks = {};
+  exprs(result.ast?.expression ? { sequence: result.ast.expression } : null).forEach((e) => e.terms.forEach((t) => {
+    if (t.type === 'Operation' && t.operator?.value === '!' && t.operatorLabel) {
+      blocks[t.operatorLabel.value] = exprs(t.body).flatMap((x) => x.terms).filter((x) => x.operatorLabel).map((x) => [x.operatorLabel.value, fieldsOf(x.body)]);
+    }
+  }));
+  const levels = {};
+  (blocks.levels || []).forEach(([id, f]) => {
+    const n = Number(id.replace(/\D/g, ''));
+    if (!n) return;
+    levels[n] = {
+      tempo: Number(f['%tempo']?.[0]) || null,
+      root: Number(f['%root']?.[0]) || null,
+      motif: (f['~motif'] || []).map(Number).filter(Number.isFinite),
+      theme: f['@theme']?.[0] ?? null,
+      rhythm: f['*rhythm']?.[0] ?? null,
+      room: f['.room']?.[0] ?? null
+    };
+  });
+  const rhythms = {};
+  (blocks.rhythms || []).forEach(([id, f]) => {
+    rhythms[id] = {
+      steps: f['.steps']?.[0] ?? '',
+      voice: f['!voice']?.[0] ?? 'tock',
+      chapter: Number(f['&chapter']?.[0]) || null,
+      name: f['#name']?.[0] ?? id,
+      says: f['#says']?.[0] ?? '',
+      ref: f['~']?.[0] ?? null
+    };
+  });
+  return { levels, rhythms };
+}
+
+/* The game's levels (.spw/runtime/pie-levels.spw; pie-rhythm.mjs): every chapter has one, every level's rhythm
+ * exists and is sixteen steps, the room it hides in is a room of that chapter, and the game's small reader reads
+ * the file as the Spw interpreter does. */
+{
+  const levelsText = await readFile(resolve(ROOT, '.spw/runtime/pie-levels.spw'), 'utf8');
+  const { levels, rhythms } = readLevels(levelsText);
+  if (parse) {
+    const parsed = parsedLevels(levelsText);
+    if (!parsed) error('levels', 'pie-levels.spw does not read whole with the Spw interpreter (it fell back to prose)');
+    else {
+      const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      new Set([...Object.keys(levels), ...Object.keys(parsed.levels)]).forEach((n) => {
+        if (!same(levels[n], parsed.levels[n])) error('levels', `ch${pad(Number(n))}: the game's reader and the Spw interpreter read this level differently (${JSON.stringify(levels[n])} vs ${JSON.stringify(parsed.levels[n])})`);
+      });
+      new Set([...Object.keys(rhythms), ...Object.keys(parsed.rhythms)]).forEach((id) => {
+        const mine = rhythms[id] && { steps: rhythms[id].steps, voice: rhythms[id].voice, chapter: rhythms[id].chapter, name: rhythms[id].name, says: rhythms[id].says, ref: rhythms[id].ref };
+        if (!same(mine, parsed.rhythms[id])) error('levels', `rhythm ${id}: the game's reader and the Spw interpreter read it differently (${JSON.stringify(mine)} vs ${JSON.stringify(parsed.rhythms[id])})`);
+      });
+    }
+  }
+  chapters.forEach((c) => {
+    const level = levels[c.chapterNumber];
+    if (!level) { warn('levels', `chapter ${c.chapterNumber} has no level (its lanes keep the game's defaults)`); return; }
+    if (!level.tempo || !level.root) error('levels', `ch${pad(c.chapterNumber)}: a level needs a %tempo and a %root`);
+    if (level.rhythm && !rhythms[level.rhythm]) error('levels', `ch${pad(c.chapterNumber)}: rhythm ${level.rhythm} is not under !rhythms (or its steps are not sixteen of X x .)`);
+    const rooms = (c.sections || []).map((sec) => sec.room?.spw).filter(Boolean);
+    if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);
+  });
+  notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find`);
+}
 
 /* Packs (book/content/packs/; .spw/surfaces/texture-website.spw): every pack where its route says, its sources
  * linked where they live, its files there, a maker's scheme and curriculum whole. */

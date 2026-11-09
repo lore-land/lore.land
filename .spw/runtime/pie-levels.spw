@@ -1,0 +1,50 @@
+# Exactly One Pie: the levels — each chapter's music, and the rhythm hidden in it
+# Read at runtime (book/scripts/home/pie-rhythm.mjs reads it at once with a small reader); npm run book:check
+# reads it again with the Spw interpreter (book/scripts/vendor/spw-seed.mjs) and holds the two reads to agree.
+# A level is the lanes of one chapter: the tempo they keep, the key they sing in, the motif every catch
+# spells out, and the rhythm the land keeps in one of its rooms. The game keeps its own defaults; these
+# tune them. A new level is a new *chNN{} block; a new rhythm, a new block under !rhythms.
+#>lore_land_runtime_pie_levels
+#:surface #!runtime
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  A chapter has a voice in the book and a sound in the lanes, and they should rhyme. Each level gives its chapter a tempo (the rows arrive on its beats), a key (a root in hertz, sung pentatonic), a motif (the melody that catches spell out, in semitones above the root), whose theme it carries, and the rhythm the land keeps in one of its rooms. A rhythm is found by playing it: in its room the land keeps it softly, and steps, hops and throws in time with its hits find it. A rhythm found is kept, and plays under the carry from then on (Setup, Music and rhythm). The steps of a rhythm are sixteen to the bar: X a strong hit, x a hit, . a rest.
+}
+
+!levels{
+  *ch01{ %tempo[96] %root[293.66] ~motif[0 2 4 7 9 7] @theme[boof] *rhythm[torch_march] .room["warm_furrow"] }
+  *ch02{ %tempo[92] %root[261.63] ~motif[7 4 7 4 2 0] @theme[echo] *rhythm[echo_wrens] .room["forked_path"] }
+  *ch03{ %tempo[104] %root[329.63] ~motif[0 7 9 7 4 2] @theme[genie] *rhythm[sand_signals] .room["signal_stones"] }
+  *ch04{ %tempo[88] %root[311.13] ~motif[4 2 4 7 4 0] @theme[council] *rhythm[crosswind] .room["weather_pane"] }
+  *ch05{ %tempo[100] %root[277.18] ~motif[9 7 4 2 4 7] @theme[rift] *rhythm[quiet_rift] .room["crack_gauge"] }
+  *ch06{ %tempo[108] %root[349.23] ~motif[0 4 7 12 7 4] @theme[clowns] *rhythm[lantern_glass] .room["lamp_ladder"] }
+  *ch07{ %tempo[96] %root[293.66] ~motif[2 4 7 4 2 0] @theme[oath] *rhythm[oath_fruit] .room["oath_stone"] }
+  *ch08{ %tempo[92] %root[261.63] ~motif[0 0 2 2 4 2] @theme[well] *rhythm[well_drips] .room["well_rim"] }
+  *ch09{ %tempo[112] %root[392] ~motif[7 9 12 9 7 4] @theme[honks] *rhythm[nine_honks] .room["eight_shards"] }
+  *ch10{ %tempo[84] %root[220] ~motif[0 2 7 9 12 9] @theme[hall] *rhythm[bone_hall] .room["timber_hall"] }
+  *ch11{ %tempo[100] %root[246.94] ~motif[4 7 9 7 4 2] @theme[bloom] *rhythm[early_bloom] .room["bloom_garden"] }
+  *ch12{ %tempo[104] %root[329.63] ~motif[0 4 2 7 4 9] @theme[rivers] *rhythm[confluence] .room["bridge_deck"] }
+  *ch13{ %tempo[96] %root[293.66] ~motif[2 4 7 9 7 4] @theme[door] *rhythm[shell_door] .room["shell_door"] }
+  *ch14{ %tempo[90] %root[261.63] ~motif[7 4 2 0] @theme[thursday] *rhythm[kept_thursday] .room["frost_lane"] }
+  *ch15{ %tempo[108] %root[349.23] ~motif[0 7 4 7 0 9] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] }
+}
+
+!rhythms{
+  *torch_march{ .steps["X...x...X...x..."] !voice[tock] &chapter[1] #name["The torch-ant march"] #says["Four to the bar, under the frost: the torch-ants keep their streets lit by keeping time."] ~"book/chapter/01#the-warm-furrow" }
+  *echo_wrens{ .steps["X..x....X..x...."] !voice[kalimba] &chapter[2] #name["The echo wrens"] #says["A call, and the grove answering a beat late, and not swearing to it."] ~"book/chapter/02#a-beat-late" }
+  *sand_signals{ .steps["X.x.....X.x....."] !voice[shaker] &chapter[3] #name["Two roads, one step"] #says["Two signals so close they could be one, and are not."] ~"book/chapter/03" }
+  *crosswind{ .steps["X..x..x.X...x..."] !voice[tock] &chapter[4] #name["The crosswind's gusts"] #says["Three, three and two: the wind that files the keys smaller."] ~"book/chapter/04" }
+  *quiet_rift{ .steps["X.......X.x....."] !voice[marimba] &chapter[5] #name["Two slips, one harvest"] #says["A long rest, then two slips that try to be one."] ~"book/chapter/05" }
+  *lantern_glass{ .steps["X.x.x...X.x.x..."] !voice[glass] &chapter[6] #name["Lantern glass"] #says["Bonk City's glass rings in threes, a light it does not own."] ~"book/chapter/06" }
+  *oath_fruit{ .steps["X..x..x...x..x.."] !voice[vibes] &chapter[7] #name["An oath paid in fruit"] #says["Counted out berry by berry, never quite even."] ~"book/chapter/07" }
+  *well_drips{ .steps["X.......x......."] !voice[drip] &chapter[8] #name["Drips at the well's rim"] #says["The well keeps a face and a slow time, and steals neither."] ~"book/chapter/08" }
+  *nine_honks{ .steps["X.x.x.x.x.x.x.x."] !voice[honk] &chapter[9] #name["Nine honks, the ninth missing"] #says["Eight honks and a warm place where the ninth should be."] ~"book/chapter/09" }
+  *bone_hall{ .steps["X.....x.....x..."] !voice[bass] &chapter[10] #name["A hall that tells the truth"] #says["Three long beats in a bar of four: the hall's weight, telling."] ~"book/chapter/10" }
+  *early_bloom{ .steps["..x...x...x...X."] !voice[musicbox] &chapter[11] #name["Before the seed"] #says["Every hit a little before the beat, the way the garden blooms before its seed arrives."] ~"book/chapter/11" }
+  *confluence{ .steps["X..x..x.X..x..x."] !voice[kalimba] &chapter[12] #name["Rivers that remember"] #says["Two currents in one bar, each keeping its own name."] ~"book/chapter/12" }
+  *shell_door{ .steps["X...x.x.X...x.x."] !voice[vibes] &chapter[13] #name["The door that stays open"] #says["It knocks, and leaves room after the knock."] ~"book/chapter/13" }
+  *kept_thursday{ .steps["X..............."] !voice[tock] &chapter[14] #name["The Thursday nobody kept"] #says["One beat to the bar, and the rest of the week missing. The field keeps it anyway."] ~"book/chapter/14" }
+  *parcel_knock{ .steps["X..x..X........."] !voice[tock] &chapter[15] #name["The porter's knock"] #says["One stranger, knocked three ways. All three are right."] ~"book/chapter/15" }
+}

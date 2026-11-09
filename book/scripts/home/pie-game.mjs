@@ -167,7 +167,8 @@ import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell 
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.I';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.F';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, markBeat, rhythmHit, rhythmFound, chapterIncipit, leitmotif, setMusicBed } from './pie-sound.mjs?v=2026_11_09.K';
+import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.K';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
@@ -424,7 +425,10 @@ function readRecord() {
         doubleTap: ['none', 'hop', 'throw', 'go'].includes(parsed.view?.doubleTap) ? parsed.view.doubleTap : undefined,
         swipeUp: ['step', 'hop'].includes(parsed.view?.swipeUp) ? parsed.view.swipeUp : (Number(parsed.runs) ? undefined : 'hop'),
         panels: ['auto', 'manual'].includes(parsed.view?.panels) ? parsed.view.panels : (Number(parsed.runs) ? undefined : 'auto'),
-        cardPace: ['at-once', 'breath', 'quiet'].includes(parsed.view?.cardPace) ? parsed.view.cardPace : (Number(parsed.runs) ? undefined : 'breath') },
+        cardPace: ['at-once', 'breath', 'quiet'].includes(parsed.view?.cardPace) ? parsed.view.cardPace : (Number(parsed.runs) ? undefined : 'breath'),
+        // Music and rhythm: someone new hears the rhythms they find; a regular keeps the lanes as they knew them.
+        music: ['quiet', 'groove', 'full'].includes(parsed.view?.music) ? parsed.view.music : (Number(parsed.runs) ? undefined : 'groove'),
+        glow: ['off', 'beat', 'bar'].includes(parsed.view?.glow) ? parsed.view.glow : undefined },
       sound: parsed.sound !== false
     };
   } catch {
@@ -630,6 +634,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   // ... and back by how far up the lanes it is: at the carrier, near; at the top of the lanes, far.
   const depthOf = (y) => (Number.isFinite(y) ? clamp((PLAYER_Y - y) / (PLAYER_Y - 40), 0, 1) : 0);
   const sfx = (kind, param, x, y) => { if (record.sound) playTone(kind, param, panOf(x), depthOf(y)); };
+  /* The lanes keep time (pie-rhythm.mjs): each chapter's level (.spw/runtime/pie-levels.spw) sets its tempo, key
+   * and motif; rows come on its beats; one room keeps a rhythm, found by playing along. */
+  let levelData = { levels: {}, rhythms: {} };
+  const conductor = createConductor({ onFound: (r) => foundRhythm(r) });
+  loadLevels().then((data) => {
+    levelData = data;
+    conductor.setLevels(data);
+    if (run?.chapter) conductor.setChapter(run.chapter, data.levels[run.chapter]);
+  });
+  const heardAct = (kind) => {
+    const heard = conductor.act(kind);
+    if (heard?.on && heard.onCount >= 3 && run) run.tags.push({ x: run.x, y: run.y - 40, t: 0, text: '♪'.repeat(Math.min(3, heard.onCount - 2)) });
+  };
+  function foundRhythm(r) {
+    if (record.sound) rhythmFound(r);
+    showToast(`♪ A rhythm found · ${r.name}`, `${r.says} It plays under the carry from now on (⚙ Setup › Music and rhythm).`, 5200, 'wonder', 2);
+    if (run) run.tags.push({ x: W / 2, y: 120, t: 0, text: `♪ ${r.name.toUpperCase()} ♪` });
+    beat();
+  }
+  // The lanes glow with the music (⚙ Setup › Glow): on every beat, or on the first of each bar.
+  let glowTimer = 0;
+  const glow = (strong) => {
+    if (reduced?.matches || record.view.zen) return;
+    cabinetEl.classList.remove('is-pulse', 'is-pulse-strong');
+    void cabinetEl.offsetWidth;
+    cabinetEl.classList.add(strong ? 'is-pulse-strong' : 'is-pulse');
+    clearTimeout(glowTimer);
+    glowTimer = setTimeout(() => cabinetEl.classList.remove('is-pulse', 'is-pulse-strong'), 420);
+  };
   const paintBest = () => {
     if (!bestOut) return;
     bestOut.textContent = record.runs
@@ -1048,6 +1081,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const r = roomNow();
     if (!r || !r.n) return;
     setSoundRoom(r.sigil);
+    // The room that keeps the chapter's rhythm: said once, the first time, if it has not been found.
+    if (conductor.setRoom(r.sig) && conductor.rhythm && !foundRhythms()[conductor.rhythm.id]) {
+      showToast('Something here keeps time', 'Listen for it. Step, hop or throw along with it, and it is yours.', 3400, 'wonder', 1);
+    }
     const key = `${r.chapter}:${r.n}`;
     if (key === roomShown) return;
     roomShown = key;
@@ -2024,6 +2061,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     run.tiltDir = clamp(run.tiltDir * 0.55 + dir * 0.55, -1, 1);
     sfx('step', dir);
+    heardAct('step');
     jostle(1);
   };
 
@@ -2044,6 +2082,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.moveYT = 0;
     run.stillT = 0;
     sfx('step', dir);
+    heardAct('step');
     jostle(0.8);
   };
 
@@ -2057,6 +2096,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return;
     }
     if (state !== 'running' || run.jumpT > 0 || run.jumpCool > 0) return;
+    heardAct('hop');
     // A deft hop right as a low hazard reaches the carrier lands steadier and readies a slice.
     const grazing = run.things.some((th) => !th.wapped && !th.cleared && !th.knocked && LOW.has(th.kind) && (th.fatal || SLIPS.has(th.kind))
       && Math.abs(th.y - run.y) < 42
@@ -2298,6 +2338,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     first.sure = run.aimLock > 0;   // thrown on an arrow (or in a parade): Perfect wherever it lands on a face
     if (run.tin > 0 && !missing) run.tin -= 1;   // the sliver tin: half again, three times
     sfx('throw');
+    heardAct('throw');
     // Thrown from the top of a hop, a slice is lofted as if off a ramp.
     if (airborne()) {
       first.loft = 120;
@@ -3178,7 +3219,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       lapped = true;
     }
     n = Math.max(1, n);
-    setSoundPlace({ chapter: n, held: mimesHold(n) });
+    setSoundPlace({ chapter: n, held: mimesHold(n), level: levelData.levels[n] || null });
+    conductor.setChapter(n, levelData.levels[n] || null);
+    if (record.sound) chapterIncipit();
     run.prevScene = run.sceneId;
     run.sceneT = first ? 1 : 0;
     run.chapter = n;
@@ -3259,7 +3302,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   const start = () => {
     colors = palette();
-    if (record.sound) primeAudio();
+    if (record.sound) { primeAudio(); setMusicBed(setting('music') === 'full'); }
     run = fresh();
     run.intro = introMode;
     show.reset();
@@ -4221,18 +4264,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         run.paraAt = at.i;
         onPassage(at.para);
       }
-      run.rowIn -= dt;
-      if (run.rowIn <= 0) {
-        spawnRow();
-        // Rows a set distance apart, so the time to react holds as the pace builds.
-        const gap = clamp(270 - difficulty() * 120, 150, 270);
-        run.rowIn = gap / Math.max(run.speed, 90);
+      // Rows a set distance apart, so the time to react holds as the pace builds; with a level, they are let in
+      // so that they reach the carrier on its beats (pie-rhythm.mjs), and the music keeps the same time.
+      const gap = clamp(270 - difficulty() * 120, 150, 270);
+      const music = conductor.tick(dt, { speed: Math.max(run.speed, 60), travel: (run.y + 44) / Math.max(run.speed, 60), gap });
+      if (Object.keys(levelData.levels).length) {
+        if (music.row) spawnRow();
+      } else {
+        run.rowIn -= dt;
+        if (run.rowIn <= 0) {
+          spawnRow();
+          run.rowIn = gap / Math.max(run.speed, 90);
+        }
+      }
+      if (music.beat) markBeat();
+      if (music.steps.length) {
+        const glowAt = setting('glow');
+        if ((glowAt === 'beat' && music.beat) || (glowAt === 'bar' && music.bar)) glow(music.bar);
+        if (record.sound) {
+          // The land keeps its rhythm softly in its room; rhythms found play under the carry (⚙ Setup › Music).
+          conductor.hitsIn(music.steps).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35 }));
+          if (setting('music') !== 'quiet') conductor.groove(music.steps).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0 }));
+        }
       }
       run.boofIn -= dt;
       if (run.boofIn <= 0 && !run.boof) {
         const side = pick([-1, 1]);
         run.boof = { x: side < 0 ? -40 : W + 40, y: rand(80, 200), vx: -side * rand(60, 80), touched: false };
         turnCard('boof');
+        if (record.sound) leitmotif('boof', side * 0.6);
         run.boofIn = rand(12, 18);
       }
       // Presences: Mr. BoonWAP and Mr. BaneWAP never share the stage.
@@ -7085,6 +7145,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['swipeUp', 'A quick swipe up', [['step', 'Steps ahead'], ['hop', 'Hops (a slow drag steps)']], 'step'],
     ['panels', 'Panels', [['auto', 'Arranged for this screen'], ['manual', 'As set below']], 'manual'],
     ['cardPace', 'New cards', [['at-once', 'Open at once'], ['breath', 'Wait for a breath'], ['quiet', 'Never pause']], 'at-once'],
+    ['music', 'Music', [['quiet', 'Only what happens'], ['groove', 'Rhythms you have found, softly'], ['full', 'Rhythms and the room’s chord, held']], 'quiet'],
+    ['glow', 'Glow', [['off', 'Off'], ['beat', 'On every beat'], ['bar', 'On the first of each bar']], 'off'],
     ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
     ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
@@ -7103,7 +7165,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['controls', 'Buttons and arrows', 'controls', ['controls', 'controlsAt', 'arrows', 'controlsPlace', 'buttons', 'buttonsSwap', 'controlsSize']],
     ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
     ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
-    ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']]
+    ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']],
+    ['music', 'Music and rhythm', 'sound', ['music', 'glow']]
   ]);
   const openGroups = new Set(['screen']);
   /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
@@ -7213,6 +7276,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
 
   function applySetup({ replan = true } = {}) {
+    setMusicBed(record.sound && setting('music') === 'full');
     if (replan) panelPlan = planNow();
     const plan = panelPlan;
     const fitMode = setting('size') === 'fit';
@@ -7447,6 +7511,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         head.append(mark, nodeOf('span', 'pie-setup-group-title', title), nodeOf('span', 'pie-setup-group-now', now));
         const body = nodeOf('div', 'pie-setup-group-body');
         body.append(...keys.map((key) => rowOf.get(key)).filter(Boolean));
+        // The rhythms found so far, under the music: what the groove has to play.
+        if (id === 'music') {
+          const found = Object.keys(foundRhythms()).map((rid) => levelData.rhythms[rid]?.name).filter(Boolean);
+          const total = Object.keys(levelData.rhythms).length;
+          body.append(nodeOf('p', 'pie-setup-rhythms', found.length
+            ? `Rhythms you have found: ${found.length}${total ? ` of ${total}` : ''} — ${found.join(', ')}. Each chapter keeps one in a room; play along with it to find it.`
+            : `No rhythms found yet${total ? ` (there are ${total})` : ''}. Each chapter keeps one in a room: when the lanes say something here keeps time, step, hop or throw along with it.`));
+        }
         box.append(head, body);
         box.addEventListener('toggle', () => { if (box.open) openGroups.add(id); else openGroups.delete(id); });
         return box;
@@ -9294,6 +9366,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.sound = !record.sound;
     writeRecord(record);
     paintSound();
+    if (!record.sound) setMusicBed(false);
     if (record.sound) {
       primeAudio();
       wapSound();

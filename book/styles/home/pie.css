@@ -4840,3 +4840,29 @@ html:not([data-chrome-hidden='true']) .pie-index {
 html.pie-settling .pie-voyage {
   visibility: hidden;
 }
+
+/* ─── Glow with the music (⚙ Setup › Glow): the screen's edge breathes on the beat, or on each bar ───
+ * A glow, not a flash: soft, short, in the lanes' own gold; the first of a bar a little brighter. */
+@keyframes pie-pulse {
+  from { box-shadow: 0 0 0 1px color-mix(in srgb, var(--hub-gold) 60%, transparent), 0 0 18px 2px color-mix(in srgb, var(--hub-gold) 38%, transparent); }
+  to { box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent; }
+}
+
+@keyframes pie-pulse-strong {
+  from { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hub-gold) 75%, transparent), 0 0 28px 5px color-mix(in srgb, var(--hub-gold) 50%, transparent); }
+  to { box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pie-cabinet.is-pulse .pie-screen { animation: pie-pulse 380ms ease-out; }
+  .pie-cabinet.is-pulse-strong .pie-screen { animation: pie-pulse-strong 420ms ease-out; }
+}
+
+/* The rhythms found, under the music in ⚙ Setup. */
+.pie-setup-rhythms {
+  grid-column: 1 / -1;
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}

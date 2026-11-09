@@ -26,6 +26,18 @@
  *                its bar's odd partials, a hop a plucked string climbing the chord, the clowns'
  *                honks kazoos a chord tone higher for each WAP in a combo, over the room's bass
  *
+ * Its themes and its time (pie-levels.spw, read in pie-rhythm.mjs):
+ *   a motif      each chapter's level gives it a tune; the line spells it out as things are caught, in the
+ *                chapter's key (fallen to the minor while the mimes hold it), turned backwards every third time
+ *                round so it never wears thin, and heard once, softly, as the chapter begins
+ *   the beat     the lanes keep the level's tempo (the rows arrive on its beats); every answer that waits for
+ *                the pulse waits for the game's own beat (markBeat), so the music and the lanes keep one time
+ *   rhythms      each chapter hides one, kept softly by the land in one room (a whisper); a rhythm found plays
+ *                under the carry in its own voice (groove), louder as a streak runs, and the found moment is
+ *                its bar played through, then the chapter's motif
+ *   a bed        on request (Setup, Music: full), the room's chord held low under everything
+ *   leitmotifs   Boof's three notes when Boof crosses the lanes
+ *
  * Made to be heard the hundredth time, since a carry is hundreds of steps, catches and knocks:
  *   never twice the same   each sound is nudged a little in pitch, level, colour and place, and
  *                          its noise is read from a different part of one shared buffer
@@ -39,7 +51,7 @@
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, ground: 'field', muffled: false, thin: false, pulse: 96 };
+const sound = { root: 293.66, minor: false, ground: 'field', muffled: false, thin: false, pulse: 96, motif: null };
 const ROOTS = [293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23];
 const PULSES = [96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108];
 const MAJOR = [0, 2, 4, 7, 9];
@@ -117,7 +129,24 @@ const sungFrom = (semi, dir = 1) => {
 };
 /** The line's next note: `steps` on through the key the way it is heading, landing on the chord;
  *  at the top or bottom of its range it turns; after a rest it starts again near the middle. */
+const fallen = (semi) => {
+  if (!sound.minor) return semi;
+  const pc = ((semi % 12) + 12) % 12;
+  return semi - pc + (FALLS[pc] ?? pc);
+};
 function nextNote(now, steps = 1) {
+  // A chapter with a motif: the line spells it out, from its start after a rest, backwards every third time round.
+  if (sound.motif?.length) {
+    if (now - line.last > 3.5) line.motifAt = 0;
+    const len = sound.motif.length;
+    const round = Math.floor((line.motifAt || 0) / len);
+    const i = (line.motifAt || 0) % len;
+    const semi = sound.motif[round % 3 === 2 ? len - 1 - i : i];
+    line.motifAt = (line.motifAt || 0) + steps;
+    line.at = fallen(semi) + (semi < 0 ? 12 : 0);
+    line.last = now;
+    return line.at;
+  }
   if (now - line.last > 3.5) {
     line.at = sungNear(7 + [-3, 0, 2, 5][Math.floor(Math.random() * 4)]);
     line.dir = 1;
@@ -138,8 +167,14 @@ function nextNote(now, steps = 1) {
 /* ─── The pulse: answers land on it ───────────────────────────────────── */
 
 const sixteenth = () => 60 / sound.pulse / 4;
-/** Seconds from t to the chapter pulse's next sixteenth at least `after` away. */
-const toPulse = (t, after = 0.045) => Math.ceil((t + after) / sixteenth()) * sixteenth() - t;
+/* The game's own beat: the lanes say when a beat falls (markBeat), and every answer waits for that grid. */
+let beatAnchor = 0;
+export function markBeat() { if (audio) beatAnchor = audio.currentTime; }
+/** Seconds from t to the pulse's next sixteenth at least `after` away, on the game's beat. */
+const toPulse = (t, after = 0.045) => {
+  const s = sixteenth();
+  return Math.ceil((t + after - beatAnchor) / s) * s + beatAnchor - t;
+};
 
 /* ─── The bus, and the room around it ─────────────────────────────────── */
 
@@ -239,9 +274,11 @@ function regroundRoom() {
 }
 
 /** Where the carry is: the chapter's key, pulse and ground, and whether the mimes hold it. */
-export function setSoundPlace({ chapter = 1, held = false } = {}) {
-  sound.root = ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
-  sound.pulse = PULSES[(chapter - 1) % PULSES.length] || 96;
+export function setSoundPlace({ chapter = 1, held = false, level = null } = {}) {
+  sound.root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
+  sound.pulse = level?.tempo || PULSES[(chapter - 1) % PULSES.length] || 96;
+  sound.motif = Array.isArray(level?.motif) && level.motif.length ? level.motif : null;
+  line.motifAt = 0;
   sound.minor = held;
   sound.ground = chapter <= 3 || chapter === 7 || chapter === 14 ? 'field' : 'city';
   line.last = -9;
@@ -537,15 +574,34 @@ const holdAt = (param, now) => {
   param.setValueAtTime(param.value, now);
 };
 
+/* The bed (Setup, Music: full): the pad never falls below a low floor, so the room's chord is always there. */
+const bed = { on: false, level: 0.007 };
+const floorOf = () => (bed.on ? bed.level : 0.0001);
+export function setMusicBed(on) {
+  bed.on = Boolean(on);
+  if (!audio || audio.state !== 'running') return;
+  const now = audio.currentTime;
+  if (bed.on) {
+    ensurePad();
+    holdAt(pad.out.gain, now);
+    pad.out.gain.setTargetAtTime(Math.max(bed.level, pad.out.gain.value), now, 0.8);
+  } else if (pad.voices) {
+    holdAt(pad.out.gain, now);
+    pad.out.gain.setTargetAtTime(0.0001, now, 0.6);
+    clearTimeout(pad.timer);
+    pad.timer = setTimeout(stopPad, 9000);
+  }
+}
+
 function swellPad(now, worth) {
   pad.momentum = pad.momentum * 0.5 ** ((now - pad.at) / 2.5) + worth;
   pad.at = now;
-  if (pad.momentum < 2.5 && !pad.voices) return;
+  if (pad.momentum < 2.5 && !pad.voices && !bed.on) return;
   ensurePad();
   const lift = clamp((pad.momentum - 2) / 8, 0, 1);
   holdAt(pad.out.gain, now);
-  pad.out.gain.setTargetAtTime(0.0001 + 0.028 * lift, now, 0.5);
-  pad.out.gain.setTargetAtTime(0.0001, now + 1.5, 1.4);
+  pad.out.gain.setTargetAtTime(Math.max(floorOf(), 0.0001 + 0.028 * lift), now, 0.5);
+  pad.out.gain.setTargetAtTime(floorOf(), now + 1.5, 1.4);
   pad.tone.frequency.setTargetAtTime(600 + 2000 * lift, now, 0.4);
   clearTimeout(pad.timer);
   pad.timer = setTimeout(stopPad, 9000);
@@ -557,16 +613,88 @@ function hushPad(now) {
   pad.at = now;
   if (!pad.voices) return;
   holdAt(pad.out.gain, now);
-  pad.out.gain.setTargetAtTime(0.0001, now, 0.15);
+  pad.out.gain.setTargetAtTime(floorOf(), now, 0.15);
 }
 
 function stopPad() {
-  if (!pad.voices) return;
+  if (!pad.voices || bed.on) return;
   if (audio.currentTime - pad.at < 8) { pad.timer = setTimeout(stopPad, 3000); return; }
   pad.voices.flat().forEach((osc) => osc.stop());
   pad.bass.stop();
   pad.out.disconnect();
   pad.voices = null;
+}
+
+/* ─── Rhythm and theme: the land's rhythms, the found moment, a chapter's motif, Boof's three notes ─── */
+
+/** One voice of a rhythm at a moment: each a soft thing, in the room's chord where it is pitched. */
+function rhythmVoice(k, voice, strong, vol, delay = 0) {
+  const { tone, hiss, celesta, marimba, vibes, kalimba, musicBox, honk, tock } = k;
+  switch (voice) {
+    case 'kalimba': kalimba(hz(sungTone(strong ? 2 : 3)), 0.25, 0.034 * vol, delay); break;
+    case 'shaker': hiss(6200, 4600, 0.05, 0.026 * vol, 2.2, delay, 'bandpass', 0.15); break;
+    case 'marimba': marimba(hz(sungTone(strong ? 0 : 1)), 0.25, 0.042 * vol, delay); break;
+    case 'glass': celesta(hz(sungTone(strong ? 4 : 5) + 12), 0.3, 0.022 * vol, delay); break;
+    case 'vibes': vibes(hz(sungTone(strong ? 2 : 4)), 0.35, 0.03 * vol, delay); break;
+    case 'drip': tone('sine', strong ? 1500 : 1250, strong ? 720 : 610, 0.06, 0.03 * vol, delay, { attack: 0.002 }); break;
+    case 'honk': honk(hz(sungTone(strong ? 2 : 3)), 0.08, 0.034 * vol, delay); break;
+    case 'bass': tone('sine', hz(bassLow()), 0, 0.3, 0.075 * vol, delay, { attack: 0.01, cents: 0 }); break;
+    case 'musicbox': musicBox(hz(sungTone(strong ? 4 : 5) + 12), 0.3, 0.026 * vol, delay); break;
+    default: tock(strong ? 620 : 740, strong ? 440 : 530, 0.06 * vol, delay); break;
+  }
+}
+
+/** A hit of a rhythm, now: found (groove) under the carry, louder as a streak runs; or the land keeping it
+ *  softly in its room (whisper), farther off and more of the room. */
+export function rhythmHit({ voice = 'tock', strong = false, level = 1, whisper = false, pan = 0 } = {}) {
+  try {
+    if (!audio || audio.state !== 'running') return;
+    const t = audio.currentTime + 0.005;
+    const heat = hear(`${whisper ? 'whisper' : 'groove'}:${voice}`, t);
+    if (heat === null) return;
+    const lift = whisper ? 0.55 : clamp(0.5 + pad.momentum / 12, 0.5, 1);
+    const k = kit(outlet(heat * 0.3, { depth: whisper ? 0.55 : 0.15, air: whisper ? 0.55 : 0.22 }), t, pan + jitter(0.06));
+    rhythmVoice(k, voice, strong, level * lift * (strong ? 1 : 0.72));
+  } catch { /* a rhythm kept silently is still kept */ }
+}
+
+/** A rhythm found: its bar played through, a little quicker, then the chapter's motif on a music box. */
+export function rhythmFound(rhythm) {
+  try {
+    if (!audio || audio.state !== 'running' || !rhythm) return;
+    const t = audio.currentTime + 0.02;
+    const s = sixteenth() * 0.8;
+    const k = kit(outlet(0, { air: 0.35 }), t, 0);
+    rhythm.hits.forEach((h) => rhythmVoice(k, rhythm.voice, rhythm.steps[h] === 'X', 1.3, h * s));
+    const after = 16 * s + 0.05;
+    (sound.motif || [0, 4, 7, 12]).forEach((semi, i, all) => k.musicBox(hz(fallen(semi) + 12), i === all.length - 1 ? 0.8 : 0.35, 0.04, after + i * s * 2, (i - 1.5) * 0.12));
+  } catch { /* found, if unheard */ }
+}
+
+/** The chapter's motif, once, softly, as it begins. */
+export function chapterIncipit() {
+  try {
+    if (!audio || audio.state !== 'running' || !sound.motif?.length) return;
+    const t = audio.currentTime + 0.05;
+    const s = sixteenth();
+    const k = kit(outlet(0, { air: 0.45, depth: 0.25 }), t, 0);
+    sound.motif.forEach((semi, i, all) => k.musicBox(hz(fallen(semi) + 12), i === all.length - 1 ? 0.9 : 0.4, 0.028, i * s * 2, (i - (all.length - 1) / 2) * 0.08));
+  } catch { /* the chapter begins all the same */ }
+}
+
+/* Leitmotifs: the land's own, heard when they come. */
+const LEITMOTIFS = Object.freeze({ boof: { voice: 'marimba', notes: [0, 7, 4], gap: 2 } });
+export function leitmotif(who, pan = 0) {
+  try {
+    const m = LEITMOTIFS[who];
+    if (!m || !audio || audio.state !== 'running') return;
+    const t = audio.currentTime + 0.01;
+    const heat = hear(`motif:${who}`, t);
+    if (heat === null || heat > 2) return;
+    const k = kit(outlet(heat, { air: 0.3 }), t, pan);
+    const start = toPulse(t, 0.02);
+    m.notes.forEach((semi, i) => k.marimba(hz(fallen(semi) - 12), 0.28, 0.05, start + i * sixteenth() * m.gap, pan * 0.3));
+  } catch { /* Boof crosses quietly */ }
 }
 
 /* ─── The sounds ──────────────────────────────────────────────────── */
