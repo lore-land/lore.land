@@ -1,0 +1,59 @@
+# Lore.Land business and brand, as architecture — what the book affords, where it lives, what holds it
+# The reader-facing pages say the story; the business and the brand of the book live in its structure: a
+# registry that can hold a mark, structured data that says who made a page, a client file the post reads,
+# mechanics that unlock by weight, a share card for every chapter. Each affordance below names where it lives
+# and what checks it. The design lenses and workshop readings that once sat on the Scriptorium page are kept
+# here too, as the canon a team reads, not the page a reader turns. (Moved 2026-11-09, release L.)
+#>lore_land_surfaces_affordances
+#:surface #!architecture
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  A reader came to the Scriptorium for the desk, the projection and how the book is made; the patron pedestals, the persona lenses and the brand readings spoke to someone else. Business and brand are real dimensions of the book, so they are kept where they do their work: in registries, in structured data, in files other services read, in checks that fail when a promise is broken. A page shows a mark only when there is one, and says so plainly when there is none.
+}
+
+^affordances{
+  patronage: { lives: ~"book/content/marks.json", shown_by: "build-chapters.mjs: a marked line under the slip and schema.org sponsor on the pages a mark names", held_by: "book:check (who, what, since, routes that exist, https, words of 120 characters at most)", page: "the Scriptorium keeps one short section, Marks stay marked (#patron-seals)", today: "no marks; nothing in the book is paid for" }
+  brand: { lives: "book/styles/core/tokens.css (colour), book/styles/core/fonts.css (type), manifest.webmanifest (name, icons, shortcuts), book/images/og/ (a share card per chapter, npm run assets:brand)", said_by: "schema.org on every chapter (Chapter, author, isPartOf the Book, isAccessibleForFree) and the home page (WebSite)", voice: ~".spw/surfaces/editorial.spw" }
+  authorship: { lives: "link rel=author on the hub pages; the footer credit on every page (Raised by Spwashi)", note: "the commission path is the maker himself, one link away, never a pitch on a reader page" }
+  feedback: { lives: ~".well-known/autonomous-feedback.json", held_by: "book:check (feedback-client.mjs clientProblems: what the post keeps)", canon: ~".spw/surfaces/autonomous-feedback.spw" }
+  premium: { lives: ~".spw/runtime/mechanics.spw", shown_by: "pie/unlocks/ (a landing page per mechanic, npm run unlocks:build)", held_by: "book:check (one sentence, measures named, page built, placed in layers.spw, read the same by the Spw interpreter)", key: "the weights leave room for a key that adds weight; none is issued" }
+  layers: { lives: ~".spw/surfaces/layers.spw", held_by: "spw:probes premium_floor (nothing on the ground is ever an unlock)" }
+  maker: { lives: "the engine itself (rules dialect, rooms, the loom, the checks and tools)", note: "a starter for another book is the maker layer (engine_starter), not a page" }
+}
+
+# The design lenses once shown on the Scriptorium as Four forces. Each is a Spw expression: the operator is the
+# move it makes, the frame its trope, the body the physics it exerts. A team holds all four at once.
+^lenses{
+  steward: { spell: "^[steward]{inertia}", physics: "inertia, the tendency to keep a heading: continuity is a kind of mass", asks: "Is this useful to the work I am responsible for?", needs: "a fast map, credible evidence, a next decision", leaves_with: "language for a promise and the system required to keep it" }
+  keeper: { spell: "&[keeper]{friction}", physics: "friction, the force where two surfaces meet: a promise touching the ground", asks: "What changes after someone believes the promise?", needs: "traceable flows, edge cases, ownership, repair routes", leaves_with: "a shared story for aligning message and delivery" }
+  chorus: { spell: "?[chorus]{flux}", physics: "flux, what actually passes through a surface: value measured where it arrives", asks: "Was this made with people like me in the count?", needs: "plain routes, visible provenance, respect, a way to answer back", leaves_with: "enough agency to trust, question, share or decline" }
+  apprentice: { spell: "~[apprentice]{resonance}", physics: "resonance, a system answering a frequency it already holds", asks: "How is this made, and where could I connect?", needs: "reusable handles, boundaries, examples, marked thresholds", leaves_with: "a route into collaboration rather than a vague invitation" }
+}
+
+# The workshop readings once folded under each artifact in the cabinet: what each object asks of a team.
+^workshop_readings{
+  seal: "State a promise clearly enough to test. Keep its origin visible, then show how the claim behaves under pressure."
+  berry: "Treat feedback as a relationship, not a command. A living signal may complicate the plan without becoming a product feature."
+  ledger: "Measure recovery as seriously as delivery. Operational truth includes the work required when an experience fails."
+  soil: "Reserve time, cash, soil and attention for renewal. Capacity is not waste merely because it has not yet become output."
+  glass: "Infrastructure turns wonder into dependable value. Make the return cadence and its distribution legible to everyone affected."
+  wonder_path: "Each major page should reveal its promise quickly, identify who experiences the consequence, offer evidence at the depth the visitor chooses, and provide one clear next route."
+}
+
+# The first experience commitments, and the signals that would show them kept; each names what answers it.
+^commitments{
+  two_entrances: { says: "Story-first visitors enter a chamber; operator-first visitors enter through topics, the commons, or the workshop map.", answered_by: "the canonical nav (Read first) and the Scriptorium making part" }
+  depth_by_choice: { says: "The primary layer carries meaning alone; details and second readings add craft language without becoming prerequisites.", answered_by: "layers.spw (the ground is whole) and spw:probes premium_floor" }
+  consequence_first: { says: "Every concept points toward a person, place, decision or resource that changes when the promise succeeds or fails.", answered_by: "by eye, in the editorial pass" }
+  one_continuation: { says: "Primary navigation uses familiar language; each page offers a clear next route while quieter paths remain.", answered_by: "featured.mjs (one thing worth a look per page) and the route rails" }
+}
+
+?signals[
+  "Can an owner state the public promise and its operational consequence after one short visit?"
+  "Can a visitor identify who receives value, and who bears failure, without opening every veil?"
+  "Can each lens find a relevant next route without learning the internal vocabulary first?"
+  "Can a returning reader recognize a motif and use it to recover where they left off?"
+  "Are patronage, evidence and speculative worldbuilding distinguishable without breaking immersion? (marks.json: a mark is legible as patronage, never narration)"
+]

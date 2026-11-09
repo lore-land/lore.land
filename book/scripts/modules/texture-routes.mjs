@@ -13,6 +13,10 @@
  * % how many, ^ up to, ? a pass through spw.quest (quest-middleware.mjs). A route is state
  * you can read aloud and pass along: the page writes what you do back into it. The root page hands any ?/ address
  * to /texture/ and the address bar keeps the route as given. Portable: no DOM.
+ *
+ * autonomous.feedback, the post the Scriptorium reads, is played through the same door: ?/autonomous.feedback/@lore.land
+ * reads the book's own client file (/.well-known/autonomous-feedback.json), *subject narrows it to one, and every
+ * door opens the post itself. An address here carries no words a reader writes: those go on the card.
  */
 
 export const ROUTE_OPS = Object.freeze({
@@ -31,6 +35,14 @@ export const ROUTE_OPS = Object.freeze({
 
 const SURFACE = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/i;
 
+/* A surface may say what its own parts mean; the operator keeps its role. */
+export const SURFACE_READS = Object.freeze({
+  'autonomous.feedback': {
+    '@': 'whose post: the site whose client file it reads',
+    '*': 'one subject on it: what a card is about'
+  }
+});
+
 /* A segment in an address: % and # and / and + would break it, spaces travel as +. */
 const encodeSegment = (text) => String(text).replace(/%/g, '%25').replace(/\+/g, '%2B').replace(/#/g, '%23').replace(/\//g, '%2F').replace(/"/g, '%22').replace(/ /g, '+');
 const decodeSegment = (text) => { try { return decodeURIComponent(text.replace(/\+/g, ' ')); } catch { return text.replace(/\+/g, ' '); } };
@@ -48,6 +60,8 @@ export function readRoute(search = '') {
     if (ROUTE_OPS[op]) return { op, role: ROUTE_OPS[op].role, name: '', reads: ROUTE_OPS[op].reads };
     return { op: '', role: 'path', name: decoded, reads: 'a step along the way' };
   });
+  const own = SURFACE_READS[parts.find((p) => p.role === 'surface')?.name];
+  if (own) parts.forEach((p) => { if (own[p.op]) p.reads = own[p.op]; });
   const first = (role) => parts.find((p) => p.role === role)?.name ?? null;
   const all = (role) => parts.filter((p) => p.role === role && p.name).map((p) => p.name);
   return {
@@ -86,6 +100,7 @@ export function writeRoute({ surface, perspective, value, action, config, motif,
 /** The pack a route lands on: the one whose own route (/surface/@maker) it begins with. */
 export function resolveRoute(route, packs = []) {
   if (!route) return { kind: 'none' };
+  if (route.surface === 'autonomous.feedback') return { kind: 'post', host: route.perspective || 'lore.land', subject: route.value || null };
   const pack = packs.find((p) => {
     const own = readRoute(`?${p.route || ''}`);
     return own && own.surface === route.surface && (own.perspective || null) === (route.perspective || null);
@@ -113,5 +128,8 @@ export const TRY = Object.freeze([
   ['?/texture.website/@spwashi/!Boof/=~9+@40/?align', 'through spw.quest: put in range, with a receipt'],
   ['?/texture.website/@spwashi/!Boof/?mutate', 'through spw.quest: a variation, every time'],
   ['?/texture.website/@spwashi/.word:moon/.material:wash/?edit', 'through spw.quest: an edit written in the address'],
-  ['?/texture.website/@spwashi/!pie+and+egg/?clarify/?resonate', 'through spw.quest: what it means, and what echoes it']
+  ['?/texture.website/@spwashi/!pie+and+egg/?clarify/?resonate', 'through spw.quest: what it means, and what echoes it'],
+  ['?/autonomous.feedback/@lore.land', 'the post the Scriptorium reads: every subject, and a door in each'],
+  ['?/autonomous.feedback/@lore.land/*charms', 'one subject: a charm to ask the land for'],
+  ['?/autonomous.feedback/@lore.land/*game', 'one subject: the game, with what is already answered']
 ]);

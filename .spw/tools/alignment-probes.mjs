@@ -287,14 +287,14 @@ function probeAttributeParity() {
 /* ── premium_floor ──────────────────────────────────────────────────────── */
 /* The story is whole and free (PLAN.F.spw ^premium). Every feature placed in
  * .spw/surfaces/layers.spw names its layer and a premium word (never, floor,
- * plan); anything on the ground layer must be `never`. The meme registers in
+ * unlock); anything on the ground layer must be `never`. The meme registers in
  * .spw/runtime/bias.spw may answer only response slots (the families
  * spw-bias.mjs accepts), never story prose. Line-shaped reads, like the
  * canon's own one-line records; a placement the regex cannot read is a defect
  * too, so the check cannot pass by reading nothing. */
 const LAYERS_FILE = '.spw/surfaces/layers.spw';
 const BIAS_FILE = '.spw/runtime/bias.spw';
-const PREMIUM_WORDS = new Set(['never', 'floor', 'plan']);
+const PREMIUM_WORDS = new Set(['never', 'floor', 'unlock']);
 const RESPONSE_FAMILIES = new Set(['pop', 'toast', 'tag', 'spill', 'reveal', 'points', 'settle']);
 const REGISTER_FIELDS = new Set(['title', 'line', 'cast']);
 
@@ -318,7 +318,7 @@ function probePremiumFloor() {
       } else if (!layers.has(layer)) {
         file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} is placed in ${layer}, which is not a layer`);
       } else if (!PREMIUM_WORDS.has(premium)) {
-        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} has premium: ${premium}; the words are never, floor, plan`);
+        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} has premium: ${premium}; the words are never, floor, unlock`);
       } else if (layer === 'ground' && premium !== 'never') {
         file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} is on the ground (the story, free and whole) but is marked premium: ${premium}`);
       }

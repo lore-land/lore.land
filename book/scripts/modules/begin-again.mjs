@@ -17,7 +17,7 @@
  * The page that opens after a restart says so (a settle card), because a
  * change should leave a visible mark.
  */
-import { settle } from './settled.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
 
 const KEPT_KEY = 'lore.again.kept.v1';
 const JUST_KEY = 'lore.again.just';
@@ -36,6 +36,7 @@ export const READING_MARKS = Object.freeze([
   'lore.tellings.v1',
   'lore.pie.v1',
   'lore.pie.chapters.v1',
+  'lore.pie.rhythms.v1',
   'lore.desk.spells.v1',
   'lore.home.curiosities.v1',
   'lore.chamber.receipts.v1',

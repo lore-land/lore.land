@@ -30,8 +30,8 @@
  * Switch: `scene-light` (default on).
  */
 import { readStage, stageLink } from './stage-directions.mjs?v=2026_11_06.F';
-import { cueForHour } from './tellings.mjs?v=2026_11_08.N';
-import { readStory, storyParams } from './story-directions.mjs?v=2026_11_08.N';
+import { cueForHour } from './tellings.mjs?v=2026_11_09.L';
+import { readStory, storyParams } from './story-directions.mjs?v=2026_11_09.L';
 
 const KNOBS_URL = '/book/content/world/knobs.json';
 const NUMERIC = ['x', 'y', 'glow', 'warmth', 'ink', 'grain', 'edge'];

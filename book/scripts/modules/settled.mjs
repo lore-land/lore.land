@@ -24,7 +24,7 @@
  * changes.
  */
 
-import { biased } from './spw-bias.mjs?v=2026_11_08.N';
+import { biased } from './spw-bias.mjs?v=2026_11_09.L';
 
 const LIFETIME = 2600;
 const SWEEP = 900;

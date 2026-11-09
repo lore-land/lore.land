@@ -1,0 +1,160 @@
+/* ─── /pie/unlocks/: the game's mechanics, each on a page of its own (build-unlocks.mjs) ──────────────────
+ * A landing page says one thing plainly: what the mechanic does, how it unlocks, what nobody loses. Story serif
+ * for what is said; mono for the structure (the weights, the spell, the counts). The meter fills with the
+ * reader's own weight; an open mechanic wears the accent, a locked one stays paper. */
+
+body[data-surface='monument'] .unlocks-main {
+  --unlock-ink: var(--hub-ink, #161d2b);
+  --unlock-accent: var(--hub-accent, #246270);
+  --unlock-line: var(--hub-line, rgba(90, 74, 58, 0.26));
+  --unlock-panel: var(--hub-panel, #fffaf2);
+}
+
+/* The hero reads top to bottom: there is no picture beside it to make room for. */
+body[data-surface='monument'] .unlock-hero {
+  display: block;
+}
+
+body[data-surface='monument'] .unlock-hero .hub-lede {
+  max-width: 44rem;
+}
+
+body[data-surface='monument'] .unlock-hero h1 {
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.08;
+}
+
+body[data-surface='monument'] .unlock-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  align-items: center;
+  margin-top: 1.2rem;
+}
+
+body[data-surface='monument'] .unlock-try {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--unlock-accent);
+  border-radius: 999px;
+  background: var(--unlock-accent);
+  color: #fffaf2;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+body[data-surface='monument'] .unlock-try:hover,
+body[data-surface='monument'] .unlock-try:focus-visible {
+  background: var(--hub-accent-deep, #184456);
+}
+
+body[data-surface='monument'] .unlock-section {
+  max-width: 44rem;
+  margin-block: 1.6rem;
+}
+
+body[data-surface='monument'] .unlock-spell {
+  overflow-x: auto;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--unlock-line);
+  border-radius: 0.4rem;
+  background: var(--unlock-panel);
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body[data-surface='monument'] .unlock-standing {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--unlock-line);
+  border-radius: 0.5rem;
+  background: var(--unlock-panel);
+}
+
+body[data-surface='monument'] .unlock-measures {
+  margin: 0.4rem 0 0.6rem;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.8rem;
+}
+
+body[data-surface='monument'] .unlock-measures li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
+  padding-block: 0.2rem;
+  border-bottom: 1px dotted var(--unlock-line);
+}
+
+body[data-surface='monument'] .unlock-measures li > span:first-child {
+  flex: 1 1 12rem;
+}
+
+body[data-surface='monument'] .unlock-weight {
+  color: color-mix(in srgb, var(--unlock-ink) 60%, transparent);
+}
+
+/* The meter: a hairline that fills with the reader's weight toward the unlock. */
+body[data-surface='monument'] .unlock-meter {
+  height: 0.3rem;
+  margin: 0.4rem 0 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--unlock-line) 70%, transparent);
+}
+
+body[data-surface='monument'] .unlock-meter > span {
+  display: block;
+  width: calc(var(--unlock-fill, 0) * 100%);
+  height: 100%;
+  background: var(--unlock-accent);
+  transition: width 600ms ease;
+}
+
+body[data-surface='monument'] [data-unlock][data-open='true'] .unlock-meter > span {
+  width: 100%;
+}
+
+body[data-surface='monument'] .unlock-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .unlock-card {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--unlock-line);
+  border-radius: 0.6rem;
+  background: var(--unlock-panel);
+}
+
+body[data-surface='monument'] .unlock-card[data-open='true'] {
+  border-color: color-mix(in srgb, var(--unlock-accent) 50%, var(--unlock-line));
+}
+
+body[data-surface='monument'] .unlock-card h3 {
+  margin: 0 0 0.3rem;
+}
+
+body[data-surface='monument'] .unlock-how {
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.76rem;
+  color: color-mix(in srgb, var(--unlock-ink) 70%, transparent);
+}
+
+body[data-surface='monument'] .unlock-standing-words:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] .unlock-meter > span {
+    transition: none;
+  }
+}

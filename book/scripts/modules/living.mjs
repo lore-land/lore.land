@@ -34,7 +34,7 @@
  */
 import { loadAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { readStage } from './stage-directions.mjs?v=2026_11_06.F';
-import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_08.N';
+import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_09.L';
 
 const PERIOD = Object.freeze({ minute: 60_000, hour: 3_600_000, day: 86_400_000 });
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;

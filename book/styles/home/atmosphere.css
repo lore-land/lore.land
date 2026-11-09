@@ -403,8 +403,7 @@
     .wonder-path-steps li,
     .artifact-card,
     .route-rail-card,
-    .hub-chapter-list li,
-    .persona-card {
+    .hub-chapter-list li {
       animation: atmo-settle linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 80%;

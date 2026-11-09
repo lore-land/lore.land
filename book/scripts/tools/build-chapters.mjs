@@ -14,13 +14,14 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_09.K';
+const RELEASE = '2026_11_09.L';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
 const ALMANAC_PATH = resolve(ROOT, 'book/content/world/almanac.json');
 const EXTENT_PATH = resolve(ROOT, 'book/scripts/modules/book-extent.mjs');
 const WORLD_DIR = resolve(ROOT, 'book/content/world');
+const MARKS_PATH = resolve(ROOT, 'book/content/marks.json');
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -34,6 +35,25 @@ const render = (template, values) => Object.entries(values).reduce(
 );
 
 const template = await readFile(TEMPLATE_PATH, 'utf8');
+
+/* Marks stay marked (book/content/marks.json): a mark stands beside the pages its routes name, as a marked line
+ * under the slip and as schema.org sponsor in the page's structured data. Nothing in the book is paid for today. */
+const MARKS = JSON.parse(await readFile(MARKS_PATH, 'utf8')).marks || [];
+const marksOn = (path) => MARKS.filter((m) => (m.routes || []).includes(path));
+const renderMarks = (marks) => marks.map((m) => `    <p class="patron-mark" data-mark="${escapeAttribute(m.id)}">Marked · <a href="${escapeAttribute(m.url)}" rel="sponsored noopener">${escapeAttribute(m.words)}</a> · ${escapeAttribute(m.who)}, for ${escapeAttribute(m.what)}, since ${escapeAttribute(m.since)}</p>\n`).join('');
+/* The chapter as structured data: who made it, the book it belongs to, free to read, and any mark beside it. */
+const structuredData = ({ title, number, url, description, marks }) => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Chapter',
+  name: title,
+  position: number,
+  url,
+  description,
+  author: { '@type': 'Person', name: 'Spwashi', url: 'https://spwashi.com' },
+  isPartOf: { '@type': 'Book', name: 'Lore.Land', url: 'https://lore.land/' },
+  isAccessibleForFree: true,
+  ...(marks.length ? { sponsor: marks.map((m) => ({ '@type': 'Organization', name: m.who, url: m.url })) } : {})
+}).replaceAll('<', '\\u003c');
 const filenames = (await readdir(CONTENT_DIR))
   .filter((name) => /^\d{2}\.json$/.test(name))
   .sort();
@@ -413,6 +433,8 @@ for (const [index, filename] of filenames.entries()) {
     CHAPTER_NUMBER: String(expectedNumber),
     // The chapter rides along explicitly, so the slip knows where the reader was even without a Referer.
     FEEDBACK_URL: `https://autonomous.feedback/lore.land?at=/book/chapter/${slug}/`,
+    STRUCTURED_DATA: structuredData({ title: data.title, number: expectedNumber, url: canonicalUrl, description: data.description, marks: marksOn(`/book/chapter/${slug}/`) }),
+    MARKS: renderMarks(marksOn(`/book/chapter/${slug}/`)),
     MOOD: escapeAttribute(data.mood || 'boon'),
     PREV_HREF: chapterHref(previous.chapterNumber),
     PREV_NUMBER: padChapterNumber(previous.chapterNumber),

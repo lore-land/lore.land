@@ -1,0 +1,26 @@
+# Exactly One Pie: the mechanics a reader unlocks — each easy to say, each with a page of its own
+# Read at runtime by book/scripts/modules/unlocks.mjs (a small reader); npm run unlocks:build writes a landing
+# page for each (pie/unlocks/<page>/) and book:check reads the file again with the Spw interpreter.
+#>lore_land_runtime_mechanics
+#:surface #!runtime
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  The premium of the game is a handful of mechanics, each one sentence long, each with a page that says what it does, how it unlocks and what nobody loses. A mechanic unlocks by weight: what a reader has read, met, found and carried in the land, each measure weighted for that mechanic, adds up toward its unlock. Reading counts most; carries count a little and only so far. Any mechanic can be tried for a visit from a link (?try=its-page), and a link someone passes along plays as it was cast. An unlock is kept in the browser of the reader, and kept when they begin again. Nothing anyone had before an unlock existed is taken away: a reader who was here first keeps what was open to them. No payment exists anywhere in the book; a key that adds weight is an affordance the registry leaves room for, and none is issued.
+}
+
+# The measures an unlock may weigh: each is counted from what the reader already keeps, never set from a link.
+!measures{
+  *rooms{ #says["rooms read in any chapter"] ~"lore.rooms.v1" }
+  *wonders{ #says["wonders kept in the almanac"] ~"lore.almanac.v1" }
+  *cards{ #says["cards turned"] ~"lore.cards.v1" }
+  *rhythms{ #says["rhythms found in the lanes"] ~"lore.pie.rhythms.v1" }
+  *carries{ #says["carries finished"] %cap[12] ~"lore.pie.v1" }
+}
+
+!mechanics{
+  *two_registers{ #name["Two registers at once"] #says["Choose two registers at the desk and the lanes answer in both, the later one asked first."] %unlock[8] %weigh{ %rooms[1] %wonders[1] %rhythms[2] %carries[0.5] } &before[open] .page["two-registers"] #floor["One register for a visit is free, always, and a link with two still plays both."] ~"/pie/#pie-bias" }
+  *groove{ #name["The rhythm groove"] #says["Rhythms you have found play softly under every carry."] %unlock[1] %weigh{ %rhythms[1] } &before[open] .page["groove"] #floor["Every carry keeps its own sound; the groove only adds what you found."] ~"/pie/" }
+  *in_the_pocket{ #name["In the pocket"] #says["Steps, hops and throws on the beat of a chapter's found rhythm count a little toward low magic."] %unlock[4] %weigh{ %rhythms[2] %rooms[0.5] %carries[0.25] } &before[locked] .page["in-the-pocket"] #floor["Every other way to score stays as it was; the pocket only adds."] ~"/pie/" }
+}

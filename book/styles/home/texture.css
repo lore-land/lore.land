@@ -926,3 +926,61 @@ body[data-surface='monument'] .texture-hero .texture-title {
   display: inline-block;
   line-height: 1.5;
 }
+
+/* ─── autonomous.feedback, played through: a subject to a card, its answered questions, a door in each ─── */
+body[data-surface='monument'] .texture-post-subjects {
+  display: grid;
+  gap: 1rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .texture-post-subject {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+}
+
+body[data-surface='monument'] .texture-post-subject h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.3rem;
+}
+
+body[data-surface='monument'] .texture-post-subject h2 code {
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .texture-post-example {
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .texture-post-answered {
+  margin: 0.6rem 0;
+  padding-left: 0.8rem;
+  border-left: 2px solid color-mix(in srgb, var(--hub-accent) 40%, transparent);
+}
+
+body[data-surface='monument'] .texture-post-answered dt {
+  font-weight: 600;
+}
+
+body[data-surface='monument'] .texture-post-answered dd {
+  margin: 0 0 0.5rem;
+}
+
+body[data-surface='monument'] .texture-post-doors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.8rem;
+}
+
+body[data-surface='monument'] .texture-post-door {
+  font-weight: 700;
+}

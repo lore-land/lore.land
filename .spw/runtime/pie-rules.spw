@@ -119,6 +119,7 @@
   knocked{ ?clears %tilt }
   hop_clear{ ?clears %lift }
   in_time{ ?timing %phase }
+  pocket{ ?groove %hits }
   boxed{ ?through %gap }
   kept{ ?reach %rows }
   read{ ?underfoot %words }

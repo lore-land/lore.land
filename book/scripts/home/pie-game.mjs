@@ -154,13 +154,13 @@
  * no rain, no bob, no shake, no flying clowns; every control the same.
  */
 
-import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.N';
+import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_09.L';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.G';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_09.I';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_09.L';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.W';
@@ -168,10 +168,11 @@ import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.I';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, markBeat, rhythmHit, rhythmFound, chapterIncipit, leitmotif, setMusicBed } from './pie-sound.mjs?v=2026_11_09.K';
-import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.K';
+import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.L';
+import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
-import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
+import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -646,12 +647,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const heardAct = (kind) => {
     const heard = conductor.act(kind);
     if (heard?.on && heard.onCount >= 3 && run) run.tags.push({ x: run.x, y: run.y - 40, t: 0, text: '♪'.repeat(Math.min(3, heard.onCount - 2)) });
+    // In the pocket (an unlock): on a hit of the chapter's own found rhythm, anywhere in the chapter.
+    if (run && state === 'running' && unlockOpen('in_the_pocket') && conductor.pocket()) {
+      lean('pocket');
+      run.tags.push({ x: run.x + 18, y: run.y - 58, t: 0, text: '♪' });
+    }
   };
+  // Mechanics unlocked by weight (unlocks.mjs): said once, when kept.
+  const unlockSaid = (list) => list.forEach((m, i) => setTimeout(() => showToast(`Unlocked · ${m.name}`, `${m.says} (lore.land/pie/unlocks/${m.page}/)`, 5200, 'wonder', 2), i * 5600));
+  loadMechanics().then(() => { unlockSaid(earn()); paintBias(); });
   function foundRhythm(r) {
     if (record.sound) rhythmFound(r);
     showToast(`♪ A rhythm found · ${r.name}`, `${r.says} It plays under the carry from now on (⚙ Setup › Music and rhythm).`, 5200, 'wonder', 2);
     if (run) run.tags.push({ x: W / 2, y: 120, t: 0, text: `♪ ${r.name.toUpperCase()} ♪` });
     beat();
+    setTimeout(() => unlockSaid(earn()), 5600);
   }
   // The lanes glow with the music (⚙ Setup › Glow): on every beat, or on the first of each bar.
   let glowTimer = 0;
@@ -868,7 +878,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
     caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
-    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], read: ['boon', 0.2], cast: ['bone', 0.5]
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], pocket: ['bone', 0.3], read: ['boon', 0.2], cast: ['bone', 0.5]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -877,7 +887,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
     caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
-    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', read: 'words read underfoot', cast: 'rooms cast'
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', pocket: 'moves in the pocket', read: 'words read underfoot', cast: 'rooms cast'
   });
   let leanRules = {};
   const lean = (event, n = 1) => {
@@ -913,7 +923,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'a knock', boxed: 'a slice boxed', bane_fed: 'a baneberry fed to him', scheme_ran: 'a scheme run', foretold: 'a foretelling come true',
     flinched: 'a flinch', let_past: 'a baneberry let past', perfect: 'a perfect throw', over_mimes: 'over the mimes', ramp: 'off a ramp',
     hop_clear: 'a clean hop', deft: 'a deft landing', caught: 'a tilt caught', boneberry: 'a boneberry', foiled: 'Mr. BaneWAP foiled',
-    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', read: 'a word read underfoot', cast: 'a room cast'
+    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', pocket: 'in the pocket', read: 'a word read underfoot', cast: 'a room cast'
   });
   /* The contest with Mimes Against WAP: what scores for the pie, and what for the mimes. */
   const CONTEST = Object.freeze({
@@ -1113,7 +1123,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
   /* An outcome as Spw: what it asked, what it measured, the bias it returns, and where it happened. */
   const OUTCOME = Object.freeze({
-    satisfied: ['appetite', 'pips'], perfect: ['aim', 'bounces'], knocked: ['clears', 'tilt'], hop_clear: ['clears', 'lift'], in_time: ['timing', 'phase'],
+    satisfied: ['appetite', 'pips'], perfect: ['aim', 'bounces'], knocked: ['clears', 'tilt'], hop_clear: ['clears', 'lift'], in_time: ['timing', 'phase'], pocket: ['groove', 'hits'],
     boxed: ['through', 'gap'], kept: ['reach', 'rows'], read: ['underfoot', 'words'], foiled: ['switch', 'schemes'], over_mimes: ['loft', 'height'],
     sweetened: ['kindness', 'foretold'], ahead: ['nerve', 'rows'], shared: ['company', 'slices'], caught: ['lean', 'tilt'], cast: ['room', 'verb'],
     aimed: ['needle', 'arrows'], boonberry: ['sweetness', 'berries'], furrow: ['warmth', 'furrows'], boneberry: ['savour', 'berries'], deft: ['landing', 'hops'],
@@ -3386,6 +3396,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (best) record.best = distance;
     writeRecord(record);
     paintBest();
+    setTimeout(() => unlockSaid(earn()), 2400);
     const served = run.waps
       ? ` Clowns given WAP on the way: ${run.waps}${run.perfects ? ` (${run.perfects} perfectly timed)` : ''}${run.bestCombo >= 2 ? `, ${run.bestCombo} in a row at best` : ''}; clowns satisfied: ${run.satisfied}. The pie was never smaller.`
       : '';
@@ -4284,7 +4295,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (record.sound) {
           // The land keeps its rhythm softly in its room; rhythms found play under the carry (⚙ Setup › Music).
           conductor.hitsIn(music.steps).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35 }));
-          if (setting('music') !== 'quiet') conductor.groove(music.steps).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0 }));
+          if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.steps).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0 }));
         }
       }
       run.boofIn -= dt;
@@ -7518,6 +7529,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           body.append(nodeOf('p', 'pie-setup-rhythms', found.length
             ? `Rhythms you have found: ${found.length}${total ? ` of ${total}` : ''} — ${found.join(', ')}. Each chapter keeps one in a room; play along with it to find it.`
             : `No rhythms found yet${total ? ` (there are ${total})` : ''}. Each chapter keeps one in a room: when the lanes say something here keeps time, step, hop or throw along with it.`));
+          // The music's unlocks (unlocks.mjs): where the reader stands with each, and its page.
+          const said = ['groove', 'in_the_pocket'].map((uid) => [unlockMechanics()[uid], standing(uid)]).filter(([m]) => m);
+          if (said.length) {
+            const line = nodeOf('p', 'pie-setup-rhythms');
+            said.forEach(([m, st], i) => {
+              const a = nodeOf('a', '', m.name);
+              a.href = `/pie/unlocks/${m.page}/`;
+              line.append(i ? ' · ' : 'Unlocks: ', a, st.open ? ' (open)' : ` (${st.have} of ${st.need})`);
+            });
+            body.append(line);
+          }
         }
         box.append(head, body);
         box.addEventListener('toggle', () => { if (box.open) openGroups.add(id); else openGroups.delete(id); });
@@ -8848,14 +8870,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
 
   /* ─── Answer in a register (spw-bias.mjs): a spell that biases how the lanes answer, never the story ───
-   * One register, for the visit, is free. Two or more layered is a combination: the premium plan, open
-   * to everyone as a trial for now. Pasting a =meme[…]{…} spell anywhere on the page casts it too. */
+   * One register, for the visit, is free; so is any spell a link or a paste brings, however many it layers.
+   * Choosing two at once at the desk is a mechanic unlocked by weight (unlocks.mjs: two_registers); until it
+   * is, the later choice answers alone and the desk says how far the reader stands. */
   const biasOut = document.querySelector('[data-pie-bias]');
   let biasRegisters = {};
   function castRegisters(ids) {
+    let held = '';
+    if (ids.length > 1 && !unlockOpen('two_registers')) {
+      const s = standing('two_registers');
+      held = ` Two registers at once unlocks by weight: ${s.have} of ${s.need} so far (lore.land/pie/unlocks/two-registers/). For now the later one answers alone.`;
+      ids = ids.slice(-1);
+    }
     const result = setBias(ids.length ? ids.map((id) => `=meme[${id}]{ }`).join(' ') : null, { from: 'desk' });
     paintBias();
-    say(ids.length ? `${biasLayerNote(result)} The lanes answer in ${ids.map((id) => biasRegisters[id]?.title || id).join(', then ')}, now and then.` : 'Every answer is plain again.');
+    say(ids.length ? `${biasLayerNote(result)} The lanes answer in ${ids.map((id) => biasRegisters[id]?.title || id).join(', then ')}, now and then.${held}` : 'Every answer is plain again.');
   }
   function paintBias() {
     if (!biasOut) return;

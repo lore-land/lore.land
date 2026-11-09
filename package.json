@@ -6,7 +6,8 @@
   "scripts": {
     "predev": "npm run chapters:build",
     "dev": "vite",
-    "chapters:build": "node book/scripts/tools/build-chapters.mjs",
+    "chapters:build": "node book/scripts/tools/build-chapters.mjs && node book/scripts/tools/build-unlocks.mjs && node book/scripts/tools/feedback-client.mjs",
+    "unlocks:build": "node book/scripts/tools/build-unlocks.mjs",
     "spw:export": "node .spw/tools/export-chapters.mjs",
     "spw:project": "node .spw/tools/project-public-spw.mjs",
     "spw:verify": "node .spw/tools/project-public-spw.mjs --verify",

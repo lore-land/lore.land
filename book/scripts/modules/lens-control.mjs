@@ -16,10 +16,10 @@
  * way without saving it; setting the lens yourself lets the link's go.
  */
 
-import { settle } from './settled.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
 
 import { LENSES, lensById } from './valence-lens.mjs?v=2026_09_27.A';
-import { readStory, dropStory } from './story-directions.mjs?v=2026_11_08.N';
+import { readStory, dropStory } from './story-directions.mjs?v=2026_11_09.L';
 
 const NOOK_KEY = 'lore.nook.v1';
 const BALANCED = Object.freeze({ boon: 1 / 3, bane: 1 / 3, bone: 1 / 3 });

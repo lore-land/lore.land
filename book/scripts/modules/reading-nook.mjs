@@ -20,8 +20,8 @@
  * and the sound. Sound only ever starts from the reader's own gesture.
  */
 
-import { settle } from './settled.mjs?v=2026_11_08.N';
-import { readStory, dropStory } from './story-directions.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
+import { readStory, dropStory } from './story-directions.mjs?v=2026_11_09.L';
 
 const NOOK_KEY = 'lore.nook.v1';
 const DEFAULTS = Object.freeze({ cozy: 1, texture: 0.6, light: 0, hearth: 0, binding: 'rag' });

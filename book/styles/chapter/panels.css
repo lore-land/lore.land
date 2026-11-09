@@ -1,5 +1,5 @@
 /*
- * Layer stack for chapter and charm pages.
+ * Layer stack for chapter pages.
  * Appends to the global stack declared in baseline.css.
  *
  *   root.layout     — page-level structure (main, aside, nav)
@@ -9,7 +9,7 @@
 @layer root.layout, root.components, root.states;
 
 /* styles/fixtures/root.css */
-/* Chapter + charm page styles layered on top of fixtures/baseline.css. */
+/* Chapter page styles layered on top of fixtures/baseline.css. */
 
 :root {
   /* Composable variables for interaction states */

@@ -1,0 +1,50 @@
+# autonomous.feedback, from lore.land — the post the Scriptorium reads, and the home of charms
+# autonomous.feedback is a post: a reader writes a card at autonomous.feedback/<host>, keeps a copy, and the
+# site that published a client file reads it. Its worker lives in spwashi.com (workers/autonomous-feedback);
+# lore.land is one of its clients. Here lore.land keeps its client file, sends charms to it, and plays it
+# through the route lab beside texture.website, so a reader can see what the post asks before going there.
+#>autonomous_feedback
+#:canon #:architecture #!working
+
+^"autonomous_feedback"{
+  .client: ~".well-known/autonomous-feedback.json"
+  .tool: ~"book/scripts/tools/feedback-client.mjs"
+  .charm: ~"charm/index.html"
+  .route_lab: ~"book/scripts/home/texture-page.mjs"
+  .grammar: ~"book/scripts/modules/texture-routes.mjs"
+  .checked_by: "npm run book:check (clientProblems: within what the post keeps, every route a page that exists)"
+  &domains: ~".spw/surfaces/domains.spw"
+  &texture_website: ~".spw/surfaces/texture-website.spw#texture_website"
+  &worker: "spwashi.com workers/autonomous-feedback (config.js SUBJECT_LIMITS; .spw/slices/feedback-desk-flow)"
+  rule: "A card holds only the words a reader chose to write. lore.land never asks for a name or an email, and an address on lore.land never carries what a reader writes: the doors open the post, and the words go on the card."
+}
+
+^"client"{
+  .note: "the client file the post reads: kinds, labels, subjects (each with paths, a prompt, kinds, asks and threads, some answered with a stance and a link), routes that name a page, and the desk it asks for"
+  limits: "the post keeps 20 routes, 12 subjects, and per subject 8 paths, 8 kinds, 3 asks and 6 threads; more is dropped without a word, so book:check refuses it"
+  routes: "written by feedback-client.mjs from the catalog on every chapters:build: the entrance, Chapter One and the newest chapters, then the rooms of the site; a chapter left out is still known by the ?at= its own slip door passes"
+  subjects: "entrance, chapters, world, characters, scriptorium, topics, zine, game, almanac, folios, texture, charms: twelve, the most the post keeps"
+  answered: "a thread with a stance is a question already answered (where to start, is Boof real, how unlocks work, what happens to a charm); the post shows it before a reader writes, and so does the route lab"
+}
+
+^"charms"{
+  .page: ~"charm/index.html"
+  was: "an old form at /charm/ asking for a name, an email and a description, posting to a host lore.land does not use, so nothing sent from it ever arrived"
+  is: "a page that says what a charm is and opens the post at the charms subject (?at=/charm/); the card asks only for words"
+  charm: "something small a reader would like the land to hold: a wonder to meet, a rhythm or a sound for the lanes, a recipe beside the story, a line kept for someone, unnamed, or a name for something in the margins"
+  promise: "the scribes read every card; some charms find their way into the margins, the almanac or the lanes, credited only as the writer asks; none is promised, and no one is ever named in the book"
+}
+
+^"routes"{
+  .note: "played through the route lab (lore.land/?/…), read by texture-routes.mjs, answered by texture-page.mjs paintPost"
+  "?/autonomous.feedback": "the post, and the hosts it is read for here (lore.land only)"
+  "?/autonomous.feedback/@lore.land": "every subject in the book's client file, its answered questions, and a door in each"
+  "?/autonomous.feedback/@lore.land/*charms": "one subject; its kinds as doors (autonomous.feedback/lore.land/<kind>?at=/charm/)"
+  "?/autonomous.feedback/@other.site": "pointed to that site's own post; lore.land reads only its own client file"
+}
+
+?next{
+  thread_doors: "a door that opens the post on one thread (a charm for someone), if the post comes to read a thread from its address"
+  answered_in_place: "the answered questions shown where they are asked: the game's unlock pages, the almanac, the Scriptorium, each reading its subject from the client file"
+  charms_kept: "a charm the scribes take up, marked where it lands (margins, almanac, lanes) with the words its writer chose for credit"
+}

@@ -46,16 +46,16 @@
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.J&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.L&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.W&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/components/likeness.css?v=2026_11_08.W&ctx=canon:likeness">
   <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.W&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_09.K&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_09.L&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_09.L&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.L"></script>
   <script>
     /* Settling: the voyage is laid out for this screen (pie-panels.mjs) before it is shown; the game lifts this
        once its first arrangement holds, and it lifts itself regardless after a moment. */
@@ -63,7 +63,7 @@
     setTimeout(() => document.documentElement.classList.remove('pie-settling'), 6000);
   </script>
   <noscript><style>.pie-voyage { visibility: visible !important; }</style></noscript>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_09.K"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_09.L"></script>
   <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
@@ -358,6 +358,22 @@
 
       <p class="pie-part" aria-hidden="true"><span>III</span> Making <em>for a table changing the game together</em></p>
 
+      <section class="pie-unlocks" id="pie-unlocks" aria-labelledby="unlocks-title">
+        <div class="pie-section-head">
+          <p class="hub-eyebrow">Unlocks · by weight</p>
+          <h2 id="unlocks-title">What the game unlocks</h2>
+          <p>A few mechanics, each one sentence long, each with a page that says how it unlocks. Rooms read, wonders kept, rhythms found and carries finished all count toward them, reading most. Any of them can be tried for a visit from its page, and nothing anyone has is taken away.</p>
+        </div>
+        <ul class="pie-unlock-list">
+        <!-- unlocks: written by build-unlocks.mjs -->
+        <li><a href="/pie/unlocks/two-registers/">Two registers at once</a> · Choose two registers at the desk and the lanes answer in both, the later one asked first.</li>
+        <li><a href="/pie/unlocks/groove/">The rhythm groove</a> · Rhythms you have found play softly under every carry.</li>
+        <li><a href="/pie/unlocks/in-the-pocket/">In the pocket</a> · Steps, hops and throws on the beat of a chapter's found rhythm count a little toward low magic.</li>
+        <!-- /unlocks -->
+        </ul>
+        <p><a href="/pie/unlocks/">Every unlock, and where you stand</a></p>
+      </section>
+
       <section class="pie-powers" id="pie-powers" data-pie-bench aria-labelledby="powers-title">
         <div class="pie-section-head">
           <p class="hub-eyebrow">The power-up bench · Spw</p>
@@ -369,8 +385,8 @@
           <div class="pie-desk-spell" data-pie-desk-tune></div>
           <div class="pie-desk-spell" data-pie-desk-lean></div>
           <div class="pie-desk-spell" data-pie-desk-scenes></div>
-          <div class="pie-bias" data-pie-bias>
-            <p class="pie-desk-lede"><strong>Answer in a register.</strong> A register is a spell that leans how the lanes answer: the pops, the captions, the stills in the show, the card at the spill. Never the story. One register for your visit is free; layer two or more and it is a combination, the premium plan, open to everyone as a trial for now. A <code>=meme[…]{ … }</code> spell pasted anywhere on this page casts it too.</p>
+          <div class="pie-bias" id="pie-bias" data-pie-bias>
+            <p class="pie-desk-lede"><strong>Answer in a register.</strong> A register is a spell that leans how the lanes answer: the pops, the captions, the stills in the show, the card at the spill. Never the story. One register for your visit is free, and so is any spell a link or a paste brings: a <code>=meme[…]{ … }</code> pasted anywhere on this page casts it. Choosing <a href="/pie/unlocks/two-registers/">two registers at once</a> here is an unlock.</p>
             <div class="pie-bias-registers" data-pie-bias-registers aria-label="House registers"></div>
             <div class="pie-bias-spell" data-pie-bias-spell></div>
             <p class="pie-bias-note" data-pie-bias-note role="status"></p>

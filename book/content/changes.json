@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.L",
+      "date": "2026-11-09",
+      "notes": [
+        "Exactly One Pie unlocks a few things as you read and play, each one sentence long, each with a page of its own at lore.land/pie/unlocks/: two registers at once, the rhythm groove, and a new one, In the pocket, where moving on the beat of a rhythm you have found counts toward low magic. Rooms read, wonders kept, rhythms found and carries finished all count toward them, reading most. Any of them can be tried for a visit from its page, and nothing you already had is taken away.",
+        "Ask the land for a charm at lore.land/charm/: a wonder to meet, a rhythm for the lanes, a recipe beside the story, a line kept for someone without their name. It opens autonomous.feedback, the post the Scriptorium reads, and asks for no name or email. The old form there never reached anyone; if you wrote one, the scribes would be glad of it again.",
+        "The Scriptorium is about your desk and how the book is made. Who supports the book is one short line now: nothing here is paid for, and if anything ever is, it will wear a mark beside the story, never in it."
+      ]
+    },
+    {
       "release": "2026_11_09.K",
       "date": "2026-11-09",
       "notes": [

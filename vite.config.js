@@ -12,6 +12,14 @@ const chapterInputs = Object.fromEntries(
         ])
 );
 
+// The game's unlock pages (build-unlocks.mjs): the index and one page per mechanic.
+const unlockInputs = Object.fromEntries([
+    ['unlocks', resolve(__dirname, 'pie/unlocks/index.html')],
+    ...readdirSync(resolve(__dirname, 'pie/unlocks'), { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => [`unlock-${entry.name}`, resolve(__dirname, `pie/unlocks/${entry.name}/index.html`)]),
+]);
+
 export default defineConfig({
     // Serve from root — the site is a static MPA
     root: '.',
@@ -42,9 +50,11 @@ export default defineConfig({
                 almanac: resolve(__dirname, 'almanac/index.html'),
                 pie: resolve(__dirname, 'pie/index.html'),
                 texture: resolve(__dirname, 'texture/index.html'),
+                charm: resolve(__dirname, 'charm/index.html'),
                 // SW precaches offline.html — it must exist in dist or install rejects
                 offline: resolve(__dirname, 'book/pwa/offline.html'),
                 ...chapterInputs,
+                ...unlockInputs,
             },
             output: {
                 // Keep heavy Spw tooling out of the critical path when possible.
@@ -52,7 +62,7 @@ export default defineConfig({
                     if (id.includes('spw-interactions') || id.includes('spw-register-bank') || id.includes('spw-selector-parser')) {
                         return 'spw-runtime';
                     }
-                    if (id.includes('ebook-navigation') || id.includes('ebook.mjs')) {
+                    if (id.includes('ebook-navigation')) {
                         return 'ebook';
                     }
                     if (id.includes('scroll-coordinator') || id.includes('reading-chrome') || id.includes('copy-climate')) {

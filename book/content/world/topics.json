@@ -10,7 +10,7 @@
       "links": [
         { "href": "/book/chapter/01/", "label": "Chamber 01 · Dawn" },
         { "href": "/world/civic-magic.html#commons-scale", "label": "Commons Scale" },
-        { "href": "/scriptorium/#patron-seals", "label": "Patron seals" }
+        { "href": "/scriptorium/#patron-seals", "label": "Marks stay marked" }
       ]
     },
     {
@@ -85,9 +85,8 @@
       "fantasy": "Patron seals",
       "blurb": "How support appears in public without claiming ownership of the canon.",
       "links": [
-        { "href": "/scriptorium/#patron-seals", "label": "Open pedestals" },
-        { "href": "/world/civic-magic.html#seals", "label": "Seals office" },
-        { "href": "https://spwashi.com/services/?from=lore.land-topics", "label": "Atelier door" }
+        { "href": "/scriptorium/#patron-seals", "label": "Marks stay marked" },
+        { "href": "/world/civic-magic.html#seals", "label": "Seals office" }
       ]
     },
     {
@@ -120,8 +119,8 @@
       "blurb": "How claims, lived moments, evidence, memory, and continuation remain connected as a public identity develops.",
       "links": [
         { "href": "/scriptorium/#experience-path", "label": "Wonder path · five movements" },
-        { "href": "/scriptorium/#personas", "label": "Persona lenses" },
-        { "href": "/scriptorium/#ux-commitments", "label": "UX commitments" }
+        { "href": "/scriptorium/#loom", "label": "The loom of stories" },
+        { "href": "/scriptorium/#making", "label": "How the book is made" }
       ]
     },
     {

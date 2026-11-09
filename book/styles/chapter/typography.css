@@ -224,6 +224,16 @@
     color: var(--color-text-alt);
   }
 
+  /* A mark (book/content/marks.json): who it is from, set beside the story under a rule, never in its type. */
+  .patron-mark {
+    margin-top: 1.4rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed color-mix(in srgb, var(--color-text-alt) 40%, transparent);
+    font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+    font-size: 0.74rem;
+    color: var(--color-text-alt);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .scriptorium-slip-door:hover,
     .scriptorium-slip-door:focus-visible { transform: none; }

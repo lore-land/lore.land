@@ -26,6 +26,7 @@
   <meta name="twitter:title" content="{{PAGE_TITLE}}">
   <meta name="twitter:description" content="{{DESCRIPTION}}">
   <meta name="twitter:image" content="{{OG_IMAGE}}">
+  <script type="application/ld+json">{{STRUCTURED_DATA}}</script>
 
   <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/book/fonts/LoreLand-Display.otf" as="font" type="font/otf" crossorigin>
@@ -198,7 +199,7 @@
       <p><a class="scriptorium-slip-door" href="{{FEEDBACK_URL}}" referrerpolicy="no-referrer-when-downgrade">Write a slip for Chapter {{CHAPTER_NUMBER}} <span aria-hidden="true">→</span></a></p>
       <p class="scriptorium-slip-note">Opens autonomous.feedback, the Scriptorium's post. You keep a card either way.</p>
     </div>
-{{CHAPTER_CODA}}
+{{MARKS}}{{CHAPTER_CODA}}
   </main>
 
   <div class="section-navigation" aria-label="Section navigation">

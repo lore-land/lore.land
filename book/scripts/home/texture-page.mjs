@@ -14,7 +14,7 @@
  * and pass along. The address bar shows the route as lore.land/?/…, the way it was given.
  */
 import { loadPacks, schemeParts, PLAN_STATES } from '../modules/packs.mjs?v=2026_11_09.H';
-import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_09.H';
+import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_09.L';
 import { MATERIALS, PHYSICS, factshiftAddress, physicsDelta } from '../modules/texture-materials.mjs?v=2026_11_09.H';
 import { VERBS, passThrough } from '../modules/quest-middleware.mjs?v=2026_11_09.H';
 import { readTuning, DIALS, DEFAULT_TUNING, noise } from '../modules/spwashi-hand.mjs?v=2026_11_09.H';
@@ -460,6 +460,39 @@ const DIALS_BY_OP = DIALS;
 let packsCache = [];
 let findingsCache = null;
 
+/* ─── autonomous.feedback, played through: lore.land's client file, a door in every subject ───
+ * The doors open the post itself (autonomous.feedback/lore.land[/kind]?at=page); nothing a reader writes rides in
+ * an address here. A host other than lore.land is pointed to its own post: the book reads only its own file. */
+let clientCache = null;
+async function paintPost({ host, subject }) {
+  const list = $('[data-post-subjects]');
+  if (host !== 'lore.land') {
+    list.replaceChildren(el('li', {}, 'lore.land reads only its own client file here. ',
+      el('a', { href: `https://autonomous.feedback/${encodeURIComponent(host)}` }, `autonomous.feedback/${host}`), ' is that site\u2019s own post.'));
+    return;
+  }
+  clientCache = clientCache || await fetch('/.well-known/autonomous-feedback.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  if (!clientCache) { list.replaceChildren(el('li', {}, 'The book\u2019s client file did not load; the post is at ', el('a', { href: 'https://autonomous.feedback/lore.land' }, 'autonomous.feedback/lore.land'), '.')); return; }
+  const every = `/${writeRoute({ surface: 'autonomous.feedback', perspective: 'lore.land' })}`;
+  const subjects = (clientCache.subjects || []).filter((s) => !subject || s.id === subject);
+  if (!subjects.length) { list.replaceChildren(el('li', {}, `No subject here is called ${subject}. `, el('a', { href: every }, 'Every subject'))); return; }
+  const labels = clientCache.labels || {};
+  const door = (path, kind) => `https://autonomous.feedback/lore.land${kind ? `/${kind}` : ''}?at=${path}`;
+  list.replaceChildren(...subjects.map((s) => {
+    const path = s.paths?.[0] === '/' ? '/' : `${s.paths?.[0] || ''}/`;
+    const here = `/${writeRoute({ surface: 'autonomous.feedback', perspective: 'lore.land', value: s.id })}`;
+    const answered = (s.threads || []).filter((t) => t.stance);
+    return el('li', { className: 'texture-post-subject' },
+      el('h2', {}, subject ? s.name : el('a', { href: here }, s.name), ' ', el('code', {}, `*${s.id}`)),
+      el('p', {}, s.prompt || clientCache.intro || ''),
+      s.example ? el('p', { className: 'texture-post-example' }, `For example: \u201c${s.example}\u201d`) : null,
+      answered.length ? el('dl', { className: 'texture-post-answered' }, ...answered.map((t) => [el('dt', {}, t.name), el('dd', {}, t.stance, t.link ? [' ', el('a', { href: t.link }, 'See it')] : [])])) : null,
+      el('p', { className: 'texture-post-doors' },
+        el('a', { className: 'texture-post-door', href: door(path), referrerpolicy: 'no-referrer-when-downgrade' }, 'Write a card'),
+        ...(s.kinds || []).map((k) => [' ', el('a', { href: door(path, k), referrerpolicy: 'no-referrer-when-downgrade' }, labels[k]?.title || k)]).flat()));
+  }), ...(subject ? [el('li', { className: 'texture-post-every' }, el('a', { href: every }, 'Every subject the post knows for lore.land'))] : []));
+}
+
 /** Read the address and show what answers it. */
 function paint() {
   // A ? part passes the address through spw.quest first: what changes the line leaves the address changed.
@@ -477,7 +510,9 @@ function paint() {
   $('[data-maker-hero]').hidden = answer.kind !== 'pack';
   $('[data-surface-view]').hidden = answer.kind !== 'surface';
   $('[data-unknown-view]').hidden = answer.kind !== 'unknown' && answer.kind !== 'none';
-  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
+  $('[data-post-view]').hidden = answer.kind !== 'post';
+  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : answer.kind === 'post' ? `autonomous.feedback · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
+  if (answer.kind === 'post') { paintPost(answer); return; }
   if (answer.kind === 'surface') paintSurface(answer.packs, findingsCache);
   if (answer.kind !== 'pack') return;
   // The words and the tuning come from the address (or a letter named in it); otherwise the page's own.

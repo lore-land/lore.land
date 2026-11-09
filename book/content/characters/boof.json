@@ -84,16 +84,16 @@
   "treatPath": {
     "id": "boof-treats",
     "label": "Boof’s treat path",
-    "blurb": "Blueberries she can smell, recipes a kitchen can share, snack pediments that fund return without rewriting the chamber.",
+    "blurb": "Blueberries she can smell, recipes a kitchen can share, and a snack pediment left empty on purpose: anything paid for would wear a mark, never rewrite the chamber.",
     "links": [
       {
-        "label": "Snack pediment · open",
+        "label": "How a mark would show",
         "href": "/scriptorium/#patron-seals",
-        "kicker": "Patronage"
+        "kicker": "Marks"
       },
       {
-        "label": "Recipe leaf · open",
-        "href": "/scriptorium/#patron-seals",
+        "label": "Ask for a recipe",
+        "href": "/charm/",
         "kicker": "Kitchen"
       },
       {

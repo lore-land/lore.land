@@ -18,9 +18,9 @@
  * story prose: biased() refuses any slot outside RESPONSE_FAMILIES. Lines are plain text; render
  * them with textContent. With no bias active, biased() returns its fallback at once.
  *
- * One house register for a visit is free (the language is free). A combination of several, a
- * register of your own, keeping or syncing them and sharing them with a table is the premium
- * plan, open to everyone as a trial for now: nothing here checks for payment or locks anything.
+ * One house register for a visit is free (the language is free), and so is any spell a link or a
+ * paste brings. Choosing two at the desk is a mechanic the game unlocks by weight (unlocks.mjs,
+ * .spw/runtime/mechanics.spw: two_registers); this module reads and plays any number and locks nothing.
  *
  * State: the visit's bias lives in sessionStorage (lore.bias.visit), never saved as the reader's
  * own. The registers are read once from /.spw/runtime/bias.spw by a small line reader; the
@@ -233,10 +233,10 @@ function toLayer(edge, notes) {
   const register = edge.axis || (named ? edge.label : '');
   if (!register || !ID.test(register)) { notes.push('A meme spell names its register in the frame: =meme[pov]{ }.'); return null; }
   if (registers && !registers[register]) {
-    notes.push(`No house register is called ${register}. Registers of your own are the premium plan, not open yet.`);
+    notes.push(`No house register is called ${register}. Registers of your own are not written yet.`);
     return null;
   }
-  if (edge.literal) notes.push('Lines written into a spell are the premium plan (registers of your own), not open yet; the house lines answer instead.');
+  if (edge.literal) notes.push('Lines written into a spell are not read yet (lines of your own are next); the house lines answer instead.');
   const targets = [];
   edge.targets.forEach((target) => {
     const family = target.split('.')[0];
@@ -425,5 +425,5 @@ export function biasLayerNote(result) {
   const n = result?.layers?.length || 0;
   if (!n) return 'No register is cast: every answer is plain.';
   if (n === 1) return 'One house register, for this visit: free.';
-  return `A combination of ${NUMBER_WORDS[n] || n} registers: the premium plan, open as a trial for now.`;
+  return `${(NUMBER_WORDS[n] || String(n)).replace(/^./, (c) => c.toUpperCase())} registers at once: the later is asked first.`;
 }

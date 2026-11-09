@@ -6,7 +6,7 @@
  * downloads, two instances, two copies of its state (story-lexicon.mjs was instantiated four times on a chapter).
  * A stylesheet linked with different tokens on different pages is downloaded once per spelling. This gives every
  * file one token: the release's own (cache-context.mjs) for a file changed since the last commit or new, otherwise
- * the newest token any reference already uses. Generated pages (the chapters, book/timeline.html) carry the build's
+ * the newest token any reference already uses. Generated pages (the chapters, book/timeline.html, pie/unlocks/) carry the build's
  * release token and are left to chapters:build. --check reports drift and exits 1 without writing.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -19,8 +19,8 @@ const CHECK = process.argv.includes('--check');
 const RELEASE = readFileSync(resolve(ROOT, 'book/scripts/modules/cache-context.mjs'), 'utf8').match(/DEFAULT_CACHE_RELEASE = '([^']+)'/)[1];
 
 const git = (...args) => execFileSync('git', args, { cwd: ROOT }).toString().split('\n').filter(Boolean);
-const tracked = git('ls-files').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^(dist|node_modules|\.spw\/_workbench)\//.test(f) && !/^book\/chapter\/\d\d\//.test(f) && f !== 'book/timeline.html');
-const untracked = git('ls-files', '--others', '--exclude-standard').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^book\/chapter\/\d\d\//.test(f) && f !== 'book/timeline.html');
+const tracked = git('ls-files').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^(dist|node_modules|\.spw\/_workbench)\//.test(f) && !/^book\/chapter\/\d\d\//.test(f) && !/^pie\/unlocks\//.test(f) && f !== 'book/timeline.html');
+const untracked = git('ls-files', '--others', '--exclude-standard').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^book\/chapter\/\d\d\//.test(f) && !/^pie\/unlocks\//.test(f) && f !== 'book/timeline.html');
 const files = [...new Set([...tracked, ...untracked])].filter((f) => existsSync(resolve(ROOT, f)));
 const changed = new Set([...git('diff', '--name-only', 'HEAD'), ...untracked]);
 

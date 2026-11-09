@@ -763,6 +763,7 @@ body[data-surface='monument'] .pie-main {
 
 /* ─── The legend: what everything is ──────────────────────────────────── */
 .pie-legend,
+.pie-unlocks,
 .pie-lore {
   display: grid;
   gap: 1.2rem;
@@ -4865,4 +4866,26 @@ html.pie-settling .pie-voyage {
   font-size: 0.82rem;
   font-style: italic;
   color: var(--hub-muted);
+}
+
+/* ─── Unlocks: the mechanics the game unlocks by weight, each with its page (pie/unlocks/) ─── */
+.pie-unlock-list {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 44rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-family-body, Georgia, serif);
+  line-height: 1.5;
+}
+
+.pie-unlock-list a {
+  font-weight: 600;
+}
+
+.pie-unlocks > p {
+  margin: 0;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 0.82rem;
 }

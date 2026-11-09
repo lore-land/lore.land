@@ -105,19 +105,20 @@
 }
 
 ^premium{
-  .note: "plans, with one mechanic open as a trial (bias spells, f12) and nothing locked; written so that what is free stays free"
+  .note: "the premium is a handful of game mechanics, each one sentence with a landing page, unlocked by weight (f13); written so that what is free stays free"
   &layers: ~".spw/surfaces/layers.spw#lore_land_surfaces_layers"
   &registers: ~".spw/runtime/bias.spw#lore_land_runtime_bias"
   never: "the story is whole and free: no room, chapter, ending, palette or card is ever behind a payment; the audience gate (late table, household key) is care, never commerce; no ads, no tracking, no streaks, no points to buy"
-  mechanic: "Spw spells that bias how the land answers: a reader casts a meme register as a bias edge (=meme[pov]{ pop toast %often[0.5] }) and the game pops, toasts, tags, spills, reveals, points and settle receipts may answer in it, never the story (book/scripts/modules/spw-bias.mjs). Casting one house register for a visit is free, because the language is free; composing several into a layered combination, writing your own registers, keeping or syncing them and sharing them with a table is the premium plan, open to everyone as a trial for now"
-  layering: "features stack in layers from the floor up (ground, reader, visit, trial, table, bias, keeper, maker); each says what it may touch, what it never touches, how it is undone and where it is kept, and the premium plan is written as combinations of bias with another layer, each with its free floor (layers.spw); spw:probes premium_floor fails if anything on the ground is marked premium"
+  mechanic: "Spw spells that bias how the land answers: a reader casts a meme register as a bias edge (=meme[pov]{ pop toast %often[0.5] }) and the game pops, toasts, tags, spills, reveals, points and settle receipts may answer in it, never the story (book/scripts/modules/spw-bias.mjs). One house register for a visit is free, and so is any spell a link or a paste brings; choosing two at the desk is the first unlock (two_registers)"
+  unlocks: "the premium is mechanics, not a plan: each is easy to say in one sentence and has a landing page (pie/unlocks/<page>/, written from .spw/runtime/mechanics.spw by npm run unlocks:build) saying what it does, how it unlocks and what nobody loses. A mechanic unlocks by weight: rooms read, wonders kept, cards turned, rhythms found and carries finished, each weighted for that mechanic (carries capped, so reading counts most). Any mechanic can be tried for a visit from a link (?try=its-page); whoever had carried a pie before it became an unlock keeps it (book/scripts/modules/unlocks.mjs)"
+  layering: "features stack in layers from the floor up (ground, reader, visit, trial, table, bias, keeper, maker); each says what it may touch, what it never touches, how it is undone and where it is kept; every mechanic is placed with premium: unlock, and the combinations of bias with another layer are candidates for more mechanics, each with its free floor (layers.spw); spw:probes premium_floor fails if anything on the ground is marked premium"
   for_tables: "a table that changes the game together: named rule sets, tunings and a table’s own meme registers kept and synced across devices, a shared QA log of card notes, proposals gathered for the maker (f6), all of it exportable as Spw so nothing is locked in"
   for_keepers: "printed cards and folio prints that carry their spell and provenance, read back by the parser; a printed deck is the same deck the reader turned"
   for_makers: "the engine with its checks and tools as a starter for another book (L18), with the rules dialect, rooms and the loom"
   patronage: "patrons are credited in a release note line by their own words; a patron may hear a room the evening before it opens, never instead of anyone"
   pricing: "every price is a spell anyone can read and audit (folio value, f8): what was measured, what moved it, within -25% to +15%"
   data: "marks stay in the reader browser unless they choose to carry or sync them; a sync is a Spw card the reader can read before it goes anywhere"
-  test: "a premium feature passes only if a reader who never pays loses nothing they had, and a reader who pays can say in one sentence what they got"
+  test: "a mechanic passes only if a reader can say in one sentence what it does and how it unlocks, and nobody loses anything they had"
 }
 
 !"increments"[
@@ -133,6 +134,7 @@
   f10: { dimension: [rules, tables, grammar], release: "2026_11_08.K", note: "Spw as play: spells heard (spw-sound), turned (scrubbable dials, the tuning desk), copied with #from and pasted where they belong, read aloud by the card interpreter, worn as textures; stories as spells woven on the loom; whimsy and scenes in the rules; card sections open to a design table (?design); what this repository asks of the workbench" }
   f11: { dimension: [tables, marks], release: "next", done_when: "the first premium feature (named rule sets and meme registers kept and synced for a table) passes the premium test: nobody who never pays loses anything they had" }
   f12: { dimension: [rules, tables, grammar], release: "2026_11_08.N", note: "the bias layer: eight house meme registers (bias.spw), each with a palette, a material and a sigil of its own, cast as Spw bias edges that lean how the land answers (pops, toasts, tags, spills, reveals, points, receipts) and never the story; one house register for a visit is free, a combination is the premium plan, open to everyone as a trial (the bias switch, ?bias=); every feature placed in a layer and the premium combinations written with their free floor (layers.spw); spw:probes premium_floor guards the ground; three parser findings logged in spw-stress.spw" }
+  f13: { dimension: [rules, marks, pages], release: "2026_11_09.L", note: "premium as mechanics, not a plan: three mechanics (two registers at once, the rhythm groove, in the pocket), each one sentence with a landing page under pie/unlocks/, unlocked by weight from what a reader already keeps (mechanics.spw, unlocks.mjs); tried for a visit by ?try=, kept by anyone who had carried before; layers.spw premium words never, floor, unlock" }
 ]
 
 ?open{

@@ -107,7 +107,7 @@ function keepFound(id, chapter) {
 export function createConductor({ onFound = () => {} } = {}) {
   const c = {
     tempo: 96, t: 0, step: -1, level: null, rhythm: null, rhythms: {}, chapter: 1,
-    lastRowStep: -999, inRoom: false, heard: [], whispered: false
+    lastRowStep: -999, inRoom: false, heard: [], whispered: false, lastPocket: null
   };
   const sixteenth = () => 60 / c.tempo / 4;
 
@@ -186,6 +186,18 @@ export function createConductor({ onFound = () => {} } = {}) {
       c.heard = [];
     }
     return { on, onCount, kind };
+  };
+
+  /** In the pocket (an unlock, unlocks.mjs): an action on a hit of the chapter's own rhythm, once found, anywhere
+   * in the chapter. Once per hit, so a flurry of steps on one hit counts once. */
+  c.pocket = () => {
+    if (!c.rhythm || !foundRhythms()[c.rhythm.id]) return false;
+    const d = offHit();
+    if (d === null || Math.abs(d) > WINDOW) return false;
+    const hit = Math.round((c.t - d) / sixteenth());
+    if (hit === c.lastPocket) return false;
+    c.lastPocket = hit;
+    return true;
   };
 
   /** The hidden rhythm's hits in the steps just passed (for the land to keep it softly), and whether it is found. */

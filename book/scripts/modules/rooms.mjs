@@ -26,7 +26,7 @@
  * (signature, air, the day it opens); nothing here can open it.
  */
 import { readRoom, roomDoor, ROOM_KINDS } from './room-signature.mjs?v=2026_11_08.W';
-import { settle } from './settled.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
 
 const ROOMS_KEY = 'lore.rooms.v1';
 const SWITCH = 'data-switch-room-by-room';

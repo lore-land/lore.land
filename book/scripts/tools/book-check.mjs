@@ -30,6 +30,8 @@ import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
+import { readMechanics } from '../modules/unlocks.mjs';
+import { CLIENT, clientProblems } from './feedback-client.mjs';
 import { existsSync } from 'node:fs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -195,9 +197,9 @@ almanac.wonders.forEach((wonder) => {
 });
 await Promise.all(plateChecks);
 
-/* The levels as the Spw interpreter reads them, in the small reader's shape, so the two reads can be compared: the
- * game reads the file with the small reader (at once, no parser to wait for), and this holds it to the grammar. */
-function parsedLevels(text) {
+/* A runtime .spw file as the Spw interpreter reads it: each !block{} as [id, fields] pairs, a field keyed by its sigil
+ * and label (%tempo, @theme, ~ for a path) and holding its frame's values, or the fields of its own body. */
+function spwBlocks(text) {
   const result = parse(text, { lexProfile: 'prose' });
   if (!result?.completeness?.complete || result.completeness.proseFallback) return null;
   const exprs = (body) => body?.sequence?.expressions || [];
@@ -216,7 +218,9 @@ function parsedLevels(text) {
       // An @label[...] reads as a reference whose frame sits on its expression; the other sigils as operations.
       const op = t.type === 'Reference' ? '@' : t.operator?.value;
       const label = t.type === 'Reference' ? t.raw : t.operatorLabel?.value;
-      if (op && label) out[op + label] = ((t.frame || e.frame)?.content || []).map(valueOf);
+      if (!op || !label) return;
+      const frame = t.frame || e.frame;
+      out[op + label] = !frame && t.body ? fieldsOf(t.body) : (frame?.content || []).map(valueOf);
     }));
     return out;
   };
@@ -226,6 +230,14 @@ function parsedLevels(text) {
       blocks[t.operatorLabel.value] = exprs(t.body).flatMap((x) => x.terms).filter((x) => x.operatorLabel).map((x) => [x.operatorLabel.value, fieldsOf(x.body)]);
     }
   }));
+  return blocks;
+}
+
+/* The levels as the Spw interpreter reads them, in the small reader's shape, so the two reads can be compared: the
+ * game reads the file with the small reader (at once, no parser to wait for), and this holds it to the grammar. */
+function parsedLevels(text) {
+  const blocks = spwBlocks(text);
+  if (!blocks) return null;
   const levels = {};
   (blocks.levels || []).forEach(([id, f]) => {
     const n = Number(id.replace(/\D/g, ''));
@@ -282,6 +294,69 @@ function parsedLevels(text) {
     if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);
   });
   notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find`);
+}
+
+/* Marks stay marked (book/content/marks.json): each says who, for what and since when, stands beside pages that
+ * exist, links through a marked threshold, and keeps its words short; build-chapters shows it, this holds it. */
+{
+  const registry = JSON.parse(await readFile(resolve(ROOT, 'book/content/marks.json'), 'utf8'));
+  const marks = registry.marks || [];
+  if (!(registry.policy || []).length) error('marks', 'marks.json has no policy');
+  const ids = new Set();
+  marks.forEach((m) => {
+    const at = `mark ${m.id || '(no id)'}`;
+    if (!/^[a-z0-9-]+$/.test(m.id || '')) error('marks', `${at}: an id of lowercase letters, digits and hyphens`);
+    if (ids.has(m.id)) error('marks', `${at}: the id is used twice`);
+    ids.add(m.id);
+    ['who', 'what', 'words'].forEach((k) => { if (!String(m[k] || '').trim()) error('marks', `${at}: says no ${k}`); });
+    if (m.what && registry.kinds && !registry.kinds[m.what]) error('marks', `${at}: what should be one of the kinds (${Object.keys(registry.kinds).join(', ')})`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(m.since || '')) error('marks', `${at}: since should be a date, YYYY-MM-DD`);
+    if (!/^https:\/\//.test(m.url || '')) error('marks', `${at}: its link should be https`);
+    if (String(m.words || '').length > 120) error('marks', `${at}: words of 120 characters or fewer`);
+    if (!(m.routes || []).length) error('marks', `${at}: names no page to stand beside`);
+    (m.routes || []).forEach((r) => { if (!/^\/.*\/$/.test(r) || !existsSync(resolve(ROOT, `.${r}`, 'index.html'))) error('marks', `${at}: ${r} is not a page`); });
+  });
+  notes.push(`marks: ${marks.length ? `${marks.length} mark(s), each shown where it stands` : 'nothing in the book is paid for'}`);
+}
+
+/* lore.land's client file for autonomous.feedback: within what the post keeps, every route a page that exists. */
+{
+  const client = JSON.parse(await readFile(CLIENT, 'utf8'));
+  clientProblems(client).forEach((p) => error('feedback', p));
+  notes.push(`feedback: ${(client.routes || []).length} routes, ${(client.subjects || []).length} subjects for autonomous.feedback`);
+}
+
+/* The game's mechanics (.spw/runtime/mechanics.spw; unlocks.mjs): each is one sentence with a landing page, unlocks
+ * by measures the registry names, is placed in layers.spw as an unlock, and reads the same with the Spw interpreter. */
+{
+  const mechText = await readFile(resolve(ROOT, '.spw/runtime/mechanics.spw'), 'utf8');
+  const layersText = await readFile(resolve(ROOT, '.spw/surfaces/layers.spw'), 'utf8');
+  const { measures, mechanics } = readMechanics(mechText);
+  const list = Object.values(mechanics);
+  if (!list.length) error('unlocks', 'no mechanics read from .spw/runtime/mechanics.spw');
+  for (const m of list) {
+    const at = `unlock ${m.id}`;
+    if (!/^[A-Z][^]*\.$/.test(m.says) || /[.!?]\s+[A-Z]/.test(m.says) || m.says.length > 140) error('unlocks', `${at}: #says should be one sentence of 140 characters or fewer`);
+    if (!(m.unlock > 0)) error('unlocks', `${at}: %unlock should be a weight above zero`);
+    if (!Object.keys(m.weigh).length) error('unlocks', `${at}: %weigh{} names no measure`);
+    Object.keys(m.weigh).forEach((k) => { if (!measures[k]) error('unlocks', `${at}: weighs ${k}, which is not under !measures`); });
+    if (!['open', 'locked'].includes(m.before)) error('unlocks', `${at}: &before should be open or locked`);
+    if (!m.floor) error('unlocks', `${at}: #floor should say what nobody loses`);
+    if (!existsSync(resolve(ROOT, 'pie/unlocks', m.page, 'index.html'))) error('unlocks', `${at}: pie/unlocks/${m.page}/ is not built (npm run unlocks:build)`);
+    if (!new RegExp(`premium: unlock, where: "[^"]*unlocks\\.mjs[^"]*\\b${m.id}\\b`).test(layersText)) error('unlocks', `${at}: not placed in .spw/surfaces/layers.spw as premium: unlock (where naming unlocks.mjs ${m.id})`);
+  }
+  if (parse) {
+    const blocks = spwBlocks(mechText);
+    if (!blocks) error('unlocks', 'mechanics.spw does not read whole with the Spw interpreter (it fell back to prose)');
+    else {
+      const read = Object.fromEntries((blocks.mechanics || []).map(([id, f]) => [id, { unlock: Number(f['%unlock']?.[0]) || 0, weigh: Object.fromEntries(Object.entries(f['%weigh'] || {}).map(([k, v]) => [k.replace(/^%/, ''), Number(v?.[0])])), page: f['.page']?.[0] ?? null }]));
+      new Set([...Object.keys(mechanics), ...Object.keys(read)]).forEach((id) => {
+        const mine = mechanics[id] && { unlock: mechanics[id].unlock, weigh: mechanics[id].weigh, page: mechanics[id].page };
+        if (JSON.stringify(mine) !== JSON.stringify(read[id])) error('unlocks', `unlock ${id}: the game's reader and the Spw interpreter read it differently (${JSON.stringify(mine)} vs ${JSON.stringify(read[id])})`);
+      });
+    }
+  }
+  notes.push(`unlocks: ${list.length} mechanics, each with its page (${list.map((m) => m.page).join(', ')})`);
 }
 
 /* Packs (book/content/packs/; .spw/surfaces/texture-website.spw): every pack where its route says, its sources

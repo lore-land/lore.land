@@ -1,9 +1,9 @@
 # Lore.Land feature layers
 # How the book's features stack, from the story (the floor) up to the engine as a starter for
 # another book: what each layer may touch, what it never touches, how it is undone, and where it
-# is kept. Every real feature is placed in one layer, and the premium plan is written here as
-# combinations: the bias mechanic (.spw/runtime/bias.spw, book/scripts/modules/spw-bias.mjs)
-# layered with another layer, each with what anyone keeps for nothing.
+# is kept. Every real feature is placed in one layer. The premium is a handful of game mechanics,
+# each one sentence with a page of its own, unlocked by weight (.spw/runtime/mechanics.spw,
+# book/scripts/modules/unlocks.mjs); the combinations below are candidates for more of them.
 # Checked by npm run spw:probes (premium_floor): nothing on the ground is ever marked premium.
 #>lore_land_surfaces_layers
 #:surface #!layers
@@ -11,7 +11,7 @@
 #:status #!working
 
 ~<rationale>{
-  A feature is easier to keep honest when it knows where it stands. The story is the floor, and everything else stands on it: how a reader likes to read, what a link sets for one visit, what is being tried, what a table shares, how the land answers, what is kept in a hand, and what another maker could build. A higher layer may lean on a lower one; it never lifts one up and takes it away. The premium plan lives in the combinations, so the floor of each is written beside it.
+  A feature is easier to keep honest when it knows where it stands. The story is the floor, and everything else stands on it: how a reader likes to read, what a link sets for one visit, what is being tried, what a table shares, how the land answers, what is kept in a hand, and what another maker could build. A higher layer may lean on a lower one; it never lifts one up and takes it away. The premium is a few mechanics unlocked by weight, each with its page, and the combinations are where more may come from, each with its floor written beside it.
 }
 
 ^meta{
@@ -26,9 +26,9 @@
 
 ^premium_words{
   .note: "the premium field on every placement and combination, in three words"
-  never: "free, always, and never part of any plan"
+  never: "free, always, and never an unlock"
   floor: "free, always; a combination may add to it and never takes it away"
-  plan: "the premium plan: open to everyone as a trial for now, never a lock, and no payment exists anywhere in the book"
+  unlock: "a mechanic with a page of its own, unlocked by weight (mechanics.spw): tried for any visit from a link, kept once reached, kept by anyone who had it before it was an unlock, and no payment exists anywhere in the book"
 }
 
 ^layers[
@@ -36,14 +36,14 @@
   reader: { order: 1, touches: "how this reader reads: the stable switches, the nook dials, the lens, the reader scale, the game view, the marks they keep", never: "the words of the story, another reader, or anything outside this browser", undo: "turn it back in the drawer, the nook, the desk or the game; begin again clears all of it on request", store: "localStorage lore.*.v1 (lore.switches.v1, lore.nook.v1, lore.pie.v1, lore.almanac.v1 and the rest)" }
   visit: { order: 2, touches: "how the book is read for one visit: ?edition ?lens ?genre ?room ?cozy ?texture ?binding ?with ?without, ?tell for one page, ?powers and ?rules for the game, ?spell for a projection, ?bias for the answers", never: "the reader’s own settings, unless they choose Keep as mine; it never follows them to another tab or another day", undo: "Let go, ?story=mine, ?bias=off, turning that control themselves (which drops that one direction), or closing the tab", store: "sessionStorage (lore.story.v1, lore.pie.powers.visit, lore.palettes.visit, lore.pie.projection.visit, lore.bias.visit)" }
   trial: { order: 3, touches: "features still being tried: a ?try= link, and the trials drawer that opens after three chapters", never: "a default for anyone who did not choose it, or the way a returning reader already reads (cohort defaults hold)", undo: "the same switch, off; a trial may change or leave, and says so", store: "lore.switches.v1 (choices and tried)" }
-  table: { order: 4, touches: "what a group shares on purpose: rule sets and tunings passed as links, QA notes on cards, the design table, proposals for the maker", never: "one reader’s marks without their own copy and paste; the canon, until the maker accepts a proposal with credit", undo: "a link is simply not opened; a rule set is let go at the bench; a note is only text", store: "links and copied Spw today; .spw/state/proposals.spw when f6 lands; a synced table store is the premium plan" }
+  table: { order: 4, touches: "what a group shares on purpose: rule sets and tunings passed as links, QA notes on cards, the design table, proposals for the maker", never: "one reader’s marks without their own copy and paste; the canon, until the maker accepts a proposal with credit", undo: "a link is simply not opened; a rule set is let go at the bench; a note is only text", store: "links and copied Spw today; .spw/state/proposals.spw when f6 lands; a synced table store would be an unlock" }
   bias: { order: 5, touches: "the words of answers only: game pops, captions, toasts, tags, spill lines, card reveals, points, settle receipts", never: "story prose, tellings, room text, the words of a card, the audience gate; never a line that punches down, mocks a real group, borrows a dialect, casts children or names a real person", undo: "?bias=off, the trial switch off, or closing the tab: the plain answers return, and nothing kept is reinterpreted", store: "sessionStorage lore.bias.visit; the house registers in .spw/runtime/bias.spw" }
   keeper: { order: 6, touches: "things made to be kept in a hand: the zine, a chapter printed, printed cards with their spell and provenance, folio prints", never: "the story’s reach: the zine and the print views stay free; a print never carries a reader’s marks unless they put them there", undo: "a print is a thing in a hand; the page it came from is unchanged", store: "paper; the folio archive on spwashi.com, linked and never copied" }
   maker: { order: 7, touches: "the engine as a starter for another book: the rules dialect, rooms, the loom, the checks and tools", never: "the canon or the characters of lore.land in another book; the language, which is free and made upstream", undo: "a fork is a book of its own", store: "a repository of its own" }
 ]
 
 ^placement{
-  .note: "every real feature in one layer; premium is one of never, floor, plan (premium_words); spw:probes fails if anything on the ground is not never"
+  .note: "every real feature in one layer; premium is one of never, floor, unlock (premium_words); spw:probes fails if anything on the ground is not never"
   story_prose: { layer: ground, premium: never, where: "book/content/chapters/*.json, prerendered by chapter-render.mjs", note: "every room, chapter and ending, for everyone, never switchable away" }
   rooms: { layer: ground, premium: never, where: ".spw/surfaces/rooms.spw, rooms.mjs", note: "each room with its signature and air; released a room at a time, never sold a room at a time" }
   exactly_one_pie: { layer: ground, premium: never, where: "/pie/, book/scripts/home/pie-game.mjs", note: "the game, its lanes, and every card it turns" }
@@ -94,39 +94,43 @@
   qa_notes: { layer: table, premium: floor, where: "pie-game.mjs ?qa, record.qa", note: "how a card felt, with the game’s own numbers, copied as Spw" }
   design_table: { layer: table, premium: floor, where: "pie-game.mjs ?design", note: "every section of a card named, and a note for it copied as Spw" }
   proposals: { layer: table, premium: floor, where: ".spw/state/proposals.spw (f6, next)", note: "a link of rules or a telling saved as a proposal, read by the parser, accepted with credit" }
-  named_rule_sets: { layer: table, premium: plan, where: "f11, next", note: "rule sets and tunings named, kept and synced across a table’s devices, exportable as Spw" }
-  shared_qa_log: { layer: table, premium: plan, where: "next", note: "a table’s QA notes gathered in one place, exportable as Spw" }
+  named_rule_sets: { layer: table, premium: unlock, where: "f11, next", note: "rule sets and tunings named, kept and synced across a table’s devices, exportable as Spw" }
+  shared_qa_log: { layer: table, premium: unlock, where: "next", note: "a table’s QA notes gathered in one place, exportable as Spw" }
   house_register: { layer: bias, premium: floor, where: "spw-bias.mjs, ?bias=pov, .spw/runtime/bias.spw", note: "one house register cast for a visit: the language is free" }
-  register_combination: { layer: bias, premium: plan, where: "spw-bias.mjs readBias (combination true)", note: "several bias spells layered; the later is asked first" }
-  own_registers: { layer: bias, premium: plan, where: "next", note: "registers a reader or a table writes, read by the parser before anyone sees them" }
-  kept_registers: { layer: bias, premium: plan, where: "next", note: "registers and combinations kept past the visit and synced, as a Spw card the reader can read before it goes anywhere" }
+  register_combination: { layer: bias, premium: unlock, where: "spw-bias.mjs readBias (combination true); chosen at the desk, unlocks.mjs two_registers", note: "several bias spells layered, the later asked first; any number from a link or a paste, two chosen at the desk once unlocked" }
+  rhythm_groove: { layer: reader, premium: unlock, where: "pie-rhythm.mjs groove, unlocks.mjs groove", note: "rhythms found in the lanes play under every carry; unlocked by the first one found" }
+  in_the_pocket: { layer: reader, premium: unlock, where: "pie-rhythm.mjs pocket, unlocks.mjs in_the_pocket", note: "moves on the beat of a chapter found rhythm lean toward low magic" }
+  unlock_pages: { layer: ground, premium: never, where: "pie/unlocks/, build-unlocks.mjs", note: "every mechanic says what it does, how it unlocks and what nobody loses, for anyone" }
+  own_registers: { layer: bias, premium: unlock, where: "next", note: "registers a reader or a table writes, read by the parser before anyone sees them" }
+  kept_registers: { layer: bias, premium: unlock, where: "next", note: "registers and combinations kept past the visit and synced, as a Spw card the reader can read before it goes anywhere" }
   zine: { layer: keeper, premium: never, where: "/zine/", note: "the broadside, free to print" }
   print_context: { layer: keeper, premium: never, where: "print-context.mjs", note: "a chapter as readable prose, for printing or copying" }
   folio_wall: { layer: keeper, premium: never, where: "folio-wall.mjs, /folios/", note: "links to the folio archive on spwashi.com" }
-  printed_cards: { layer: keeper, premium: plan, where: "next", note: "printed cards that carry their spell and provenance; a printed deck is the deck the reader turned" }
-  folio_prints: { layer: keeper, premium: plan, where: "folios, priced by an auditable spell (f8)", note: "prints of the folios, with their spell" }
+  printed_cards: { layer: keeper, premium: unlock, where: "next", note: "printed cards that carry their spell and provenance; a printed deck is the deck the reader turned" }
+  folio_prints: { layer: keeper, premium: unlock, where: "folios, priced by an auditable spell (f8)", note: "prints of the folios, with their spell" }
   story_loom: { layer: maker, premium: never, where: "story-loom.mjs, /scriptorium/#loom", note: "user stories as spells, woven side by side" }
   spw_stress: { layer: maker, premium: never, where: "pie-spw.mjs, /pie/#pie-stress, .spw/surfaces/spw-stress.spw", note: "what the site learns about the language, sent upstream" }
   sigil_audit: { layer: maker, premium: never, where: "npm run spw:sigil-audit" }
-  engine_starter: { layer: maker, premium: plan, where: "L18, next", note: "the engine with its checks and tools as a starter for another book" }
+  engine_starter: { layer: maker, premium: unlock, where: "L18, next", note: "the engine with its checks and tools as a starter for another book" }
 }
 
 ^floor{
   free: "casting one house register for a visit is free, from a link (?bias=pov) or the trial switch: the language is free"
-  plan: "composing several bias spells into a layered combination, writing your own registers, keeping or syncing them, and sharing them with a table is the premium plan"
-  now: "the whole plan is a trial, open to everyone, and nothing is locked; there is no payment anywhere in the book"
-  test: "a reader who never pays loses nothing they had, and a reader who pays can say in one sentence what they got"
+  unlock: "the premium is a handful of mechanics, each one sentence, each with its page (pie/unlocks/), each unlocked by weight: rooms read, wonders kept, cards turned, rhythms found and carries finished, weighted for that mechanic, reading most"
+  now: "any mechanic can be tried for a visit from a link; whoever had carried a pie before a mechanic became an unlock keeps it; nothing anyone had is locked; there is no payment anywhere in the book"
+  key: "the weights leave room for a key that adds weight (a table, a patron); none is issued, and a key could only add weight, never take it away"
+  test: "a mechanic passes when a reader can say in one sentence what it does and how it unlocks, and nobody loses anything they had"
   answers_only: "a register answers; it never replaces a word of the story, and the plain answer is always one step away"
 }
 
 &combinations{
-  .note: "the premium plan: the bias mechanic layered with one other layer; each keeps a free floor"
-  bias_table: { with: [bias, table], premium_word: plan, free_floor: "anyone at a table can cast one house register from a link and play in it for the visit", premium: "a table’s own register: lines the table writes together, layered over the house registers, kept and synced across the table’s devices, exported as Spw", test: "A reader who never pays still plays in any house register a link casts; a table that pays can say: our own lines, on all our devices.", never: "a table register never reaches a reader outside the table, never reaches a page from a link without being read first, never names a real person, never touches story prose" }
-  bias_keeper: { with: [bias, keeper], premium_word: plan, free_floor: "every card prints plainly from the page, with its spell; the zine and the print views stay free", premium: "printed cards and folio prints wearing their biased captions, with the bias spell and its provenance printed on the back, read back by the parser", test: "A reader who never pays still prints any card in its own words; a keeper who pays can say: our cards, in our register, with the spell on the back.", never: "a biased caption never replaces the card’s own words, only sits beside them; no made-up scarcity; a print never carries story prose rewritten" }
-  bias_show: { with: [bias, ground], premium_word: plan, free_floor: "every pop, spill and reveal as it happens, in one house register if a reader casts one", premium: "an instant replay of a run’s best moments in the show view, captioned in a layered register, kept as a Spw card that replays the same way for anyone it is passed to", test: "A reader who never pays still sees every moment, in a house register if they cast one; a reader who pays can say: our replays, captioned in our register.", never: "a replay holds only the game’s own moments: no camera, no voice, no names of other readers, and it never ranks one reader against another" }
-  bias_rooms: { with: [bias, ground], premium_word: plan, free_floor: "every settle receipt says what changed, plainly, and with one house register cast it also answers in it", premium: "room receipts (a room read, a door opened, a room set in a release) answering in a layered register a table chose, carried into the release note the table reads", test: "A reader who never pays still gets every receipt that says what changed; a reader who pays can say: our rooms answer us in our register.", never: "a receipt never stops saying what changed; the register sits beside the plain words, never instead of them; the room’s own text never changes" }
-  bias_desk: { with: [bias, visit, table], premium_word: plan, free_floor: "a tuning passed as a link (?powers=) and one house register (?bias=) can ride on one link for a visit", premium: "a named rule set and a layered register kept together as one spell, synced for a table and passed as one link: how the lanes feel and how they answer, together", test: "A reader who never pays can still pass any tuning and any one register by link; a table that pays can say: our game, its feel and its voice, in one link.", never: "a link never changes what the opener has kept, never counts or follows the opener, and the opener’s own game stays theirs" }
-  bias_likeness: { with: [bias, table, ground], premium_word: plan, free_floor: "find similar within the story is discovery and stays on the ground: any story thing shows its likeness seal (palette, sigil, container kind, material, chapter, characters, valence) and the things that look and sit like it, read from the canon alone", premium: "a table’s biased moments, cards and replays carry their register’s likeness seal (its palette, material and sigil, from bias.spw), so the moments a table shares gather with similar ones by look and by where they sit in the story", test: "A reader who never pays still finds what is like anything in the story; a table that pays can say: our moments gather with the ones that look and sit like them.", never: "no tracking, no feeds ranked by engagement, no counts of other readers, and no cluster formed from personal data; likeness comes from the canon and the register, never from behaviour" }
+  .note: "the bias mechanic layered with one other layer, each with its free floor: candidates for mechanics, each written here until it is one sentence and a page in mechanics.spw"
+  bias_table: { with: [bias, table], premium_word: unlock, free_floor: "anyone at a table can cast one house register from a link and play in it for the visit", premium: "a table’s own register: lines the table writes together, layered over the house registers, kept and synced across the table’s devices, exported as Spw", test: "A reader who has unlocked nothing still plays in any house register a link casts; a table that has unlocked it can say: our own lines, on all our devices.", never: "a table register never reaches a reader outside the table, never reaches a page from a link without being read first, never names a real person, never touches story prose" }
+  bias_keeper: { with: [bias, keeper], premium_word: unlock, free_floor: "every card prints plainly from the page, with its spell; the zine and the print views stay free", premium: "printed cards and folio prints wearing their biased captions, with the bias spell and its provenance printed on the back, read back by the parser", test: "A reader who has unlocked nothing still prints any card in its own words; a keeper who has unlocked it can say: our cards, in our register, with the spell on the back.", never: "a biased caption never replaces the card’s own words, only sits beside them; no made-up scarcity; a print never carries story prose rewritten" }
+  bias_show: { with: [bias, ground], premium_word: unlock, free_floor: "every pop, spill and reveal as it happens, in one house register if a reader casts one", premium: "an instant replay of a run’s best moments in the show view, captioned in a layered register, kept as a Spw card that replays the same way for anyone it is passed to", test: "A reader who has unlocked nothing still sees every moment, in a house register if they cast one; a reader who has unlocked it can say: our replays, captioned in our register.", never: "a replay holds only the game’s own moments: no camera, no voice, no names of other readers, and it never ranks one reader against another" }
+  bias_rooms: { with: [bias, ground], premium_word: unlock, free_floor: "every settle receipt says what changed, plainly, and with one house register cast it also answers in it", premium: "room receipts (a room read, a door opened, a room set in a release) answering in a layered register a table chose, carried into the release note the table reads", test: "A reader who has unlocked nothing still gets every receipt that says what changed; a reader who has unlocked it can say: our rooms answer us in our register.", never: "a receipt never stops saying what changed; the register sits beside the plain words, never instead of them; the room’s own text never changes" }
+  bias_desk: { with: [bias, visit, table], premium_word: unlock, free_floor: "a tuning passed as a link (?powers=) and one house register (?bias=) can ride on one link for a visit", premium: "a named rule set and a layered register kept together as one spell, synced for a table and passed as one link: how the lanes feel and how they answer, together", test: "A reader who has unlocked nothing can still pass any tuning and any one register by link; a table that has unlocked it can say: our game, its feel and its voice, in one link.", never: "a link never changes what the opener has kept, never counts or follows the opener, and the opener’s own game stays theirs" }
+  bias_likeness: { with: [bias, table, ground], premium_word: unlock, free_floor: "find similar within the story is discovery and stays on the ground: any story thing shows its likeness seal (palette, sigil, container kind, material, chapter, characters, valence) and the things that look and sit like it, read from the canon alone", premium: "a table’s biased moments, cards and replays carry their register’s likeness seal (its palette, material and sigil, from bias.spw), so the moments a table shares gather with similar ones by look and by where they sit in the story", test: "A reader who has unlocked nothing still finds what is like anything in the story; a table that has unlocked it can say: our moments gather with the ones that look and sit like them.", never: "no tracking, no feeds ranked by engagement, no counts of other readers, and no cluster formed from personal data; likeness comes from the canon and the register, never from behaviour" }
 }
 
 ?open{

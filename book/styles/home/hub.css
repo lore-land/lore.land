@@ -776,64 +776,6 @@
     margin-top: 0.45rem;
   }
 
-  .seal-grid {
-    list-style: none;
-    margin: 1.25rem 0 0;
-    padding: 0;
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  @media (min-width: 40rem) {
-    .seal-grid {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-
-  .seal-card {
-    margin: 0;
-    padding: 1rem 1.05rem;
-    border: 1px dashed color-mix(in srgb, var(--hub-accent) 35%, var(--hub-line));
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
-    min-height: 8rem;
-  }
-
-  .seal-card[data-status='example'] {
-    border-style: solid;
-    background: var(--hub-panel);
-  }
-
-  .seal-status {
-    margin: 0 0 0.35rem;
-    font-family: var(--font-family-heading, system-ui, sans-serif);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--hub-accent);
-  }
-
-  .seal-card h3 {
-    margin: 0 0 0.35rem;
-    font-family: var(--font-family-heading, system-ui, sans-serif);
-    font-size: 0.95rem;
-    color: var(--hub-ink);
-  }
-
-  .seal-card p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--hub-muted);
-  }
-
-  .seal-card a {
-    display: inline-block;
-    margin-top: 0.55rem;
-    color: var(--hub-accent-deep);
-    font-family: var(--font-family-heading, system-ui, sans-serif);
-    font-size: 0.88rem;
-  }
-
   .seal-policy {
     max-width: var(--hub-measure);
     margin-top: 1.1rem;
@@ -846,8 +788,7 @@
   .hub-chapter-list a:focus-visible,
   .hub-links a:focus-visible,
   .hub-mark:focus-visible,
-  .lexicon-veil summary:focus-visible,
-  .seal-card a:focus-visible {
+  .lexicon-veil summary:focus-visible {
     outline: 2px solid var(--focus-outline-color, #b0602a);
     outline-offset: 3px;
   }
@@ -1589,101 +1530,6 @@
   }
 }
 
-.persona-gallery,
-.ux-constellation {
-  max-width: var(--hub-wide);
-}
-
-.persona-board {
-  counter-reset: persona;
-}
-
-.persona-card {
-  counter-increment: persona;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding-top: 4.2rem;
-  min-height: 20rem;
-  background:
-    linear-gradient(155deg, color-mix(in srgb, var(--persona-color, #28798c) 15%, #fff), var(--hub-panel) 46%);
-  box-shadow: 0 0.65rem 1.6rem color-mix(in srgb, var(--persona-color, #28798c) 11%, transparent);
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-}
-
-.persona-card::before {
-  content: counter(persona, decimal-leading-zero);
-  position: absolute;
-  top: 0.85rem;
-  left: 1rem;
-  color: var(--persona-color, var(--hub-accent));
-  font-family: var(--font-family-heading, system-ui, sans-serif);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-}
-
-.persona-card::after {
-  content: '';
-  position: absolute;
-  width: 7rem;
-  aspect-ratio: 1;
-  right: -2.2rem;
-  top: -2.6rem;
-  z-index: -1;
-  border-radius: 44% 56% 58% 42%;
-  border: 1px solid color-mix(in srgb, var(--persona-color, #28798c) 40%, transparent);
-  background:
-    radial-gradient(circle at 36% 62%, color-mix(in srgb, var(--persona-color, #28798c) 42%, transparent), transparent 48%),
-    conic-gradient(from 70deg, transparent, color-mix(in srgb, var(--persona-color, #28798c) 22%, transparent), transparent 72%);
-  transform: rotate(18deg);
-}
-
-/* Lenses are named as Spw expressions: operator = the move, frame = the
-   trope, body = the physics it exerts (scriptorium persona gallery). */
-.persona-name {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.persona-expression {
-  justify-self: start;
-  padding: 0.12rem 0.5rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--persona-color, #28798c) 10%, transparent);
-  /* The lens colour leaned to the cover's ink, so it reads on paper and cloth. */
-  color: color-mix(in oklab, var(--persona-color, var(--hub-accent)) 58%, var(--hub-ink));
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-}
-
-.persona-physics {
-  font-size: 0.9rem;
-  font-style: italic;
-  color: color-mix(in srgb, var(--persona-color, #28798c) 55%, var(--hub-ink, #1d2733));
-}
-
-.persona-card[data-persona='owner'] { --persona-color: #a4497f; }
-.persona-card[data-persona='operator'] { --persona-color: #28798c; }
-.persona-card[data-persona='community'] { --persona-color: #b7672e; }
-.persona-card[data-persona='builder'] { --persona-color: #667849; }
-
-.persona-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--persona-color) 45%, var(--hub-line));
-  box-shadow: 0 1rem 2.1rem color-mix(in srgb, var(--persona-color) 18%, transparent);
-}
-
-.persona-card .trail-list {
-  font-size: 0.86rem;
-}
-
-.ux-constellation .hub-pillar-grid li {
-  position: relative;
-  overflow: hidden;
-  border-top: 3px solid color-mix(in srgb, var(--hub-accent) 60%, #d79a43);
-  box-shadow: 0 0.45rem 1.2rem color-mix(in srgb, var(--hub-accent) 8%, transparent);
-}
-
 /* ─── Material topic cards ───────────────────────────────────── */
 
 .topic-card {
@@ -2322,7 +2168,6 @@ body[data-current-scene='artifacts'] .reading-compass {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .persona-card,
   .artifact-card,
   .topic-card,
   .wonder-path-art img,
@@ -2330,7 +2175,6 @@ body[data-current-scene='artifacts'] .reading-compass {
     transition: none;
   }
 
-  .persona-card:hover,
   .topic-card:hover,
   .topic-card:focus-within {
     transform: none;
@@ -2970,7 +2814,6 @@ body[data-surface='monument'] .topic-card,
 body[data-surface='monument'] .hub-pillar-grid li,
 body[data-surface='monument'] .callout,
 body[data-surface='monument'] .lexicon-card,
-body[data-surface='monument'] .seal-card,
 body[data-surface='monument'] .route-rail-card {
   backdrop-filter: blur(6px) saturate(1.04);
   -webkit-backdrop-filter: blur(6px) saturate(1.04);

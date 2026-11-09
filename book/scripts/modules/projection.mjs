@@ -33,7 +33,7 @@
  * the reader's own unless they keep it) and can only ever lower the audience.
  */
 
-import { readStory, storyLink } from './story-directions.mjs?v=2026_11_08.N';
+import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_09.I';
 

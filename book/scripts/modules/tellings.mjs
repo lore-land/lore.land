@@ -27,8 +27,8 @@
  * lore:stage-clock) and listens for lore:told. Switch: `tellings` (stable, on).
  * Reduced motion: no roll, no flip; every telling is still a tap away.
  */
-import { settle } from './settled.mjs?v=2026_11_08.N';
-import { readStory, storyLink, editionIndex, describeStory } from './story-directions.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
+import { readStory, storyLink, editionIndex, describeStory } from './story-directions.mjs?v=2026_11_09.L';
 
 const HEARD_KEY = 'lore.tellings.v1';
 const SEMANTIC_URL = '/book/content/semantic.json';

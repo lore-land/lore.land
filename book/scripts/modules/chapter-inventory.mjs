@@ -24,10 +24,10 @@
 
 import { renderSpell } from './spw-spell.mjs?v=2026_11_09.I';
 import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.W';
-import { roomsRead } from './rooms.mjs?v=2026_11_09.I';
+import { roomsRead } from './rooms.mjs?v=2026_11_09.L';
 import { readAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_08.W';
-import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_09.I';
+import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_09.L';
 import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_09.I';
 
 const PROGRESS_KEY = 'lore.chapter.progress.v1';

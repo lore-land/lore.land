@@ -36,7 +36,7 @@
 import { leanFor } from './valence-lens.mjs?v=2026_09_27.A';
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
 import { semanticIndex } from './constellation.mjs?v=2026_11_08.J';
-import { settle } from './settled.mjs?v=2026_11_08.N';
+import { settle } from './settled.mjs?v=2026_11_09.L';
 
 const SWITCH_ATTRIBUTE = 'data-switch-xray';
 const NOOK_KEY = 'lore.nook.v1';

@@ -55,6 +55,7 @@
   bonk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
   honk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
   texture_website: { pipeline: "probe", selector: "lore.land/?/texture.website/…", canon: ~".spw/surfaces/texture-website.spw" }
+  autonomous_feedback: { pipeline: "probe", selector: "lore.land/?/autonomous.feedback/@lore.land/*subject", canon: ~".spw/surfaces/autonomous-feedback.spw" }
 }
 
 ^"neighbours"{
@@ -62,5 +63,6 @@
   texture_website: "grain: material, texture, the tactile side of making and publishing; a lab for routes and URL structure, played through lore.land (trope_knowledge_commons)"
   trope_wiki: "tropes as a commons: tropes.json is portable for it (trope_knowledge_commons); no route yet"
   spw_quest: "the reader that keeps state in the address; as middleware, the ? passes in a route (quest-middleware.mjs: edit, enhance, clarify, align, mutate, ground, resonate), each with a receipt"
+  autonomous_feedback: "the post the Scriptorium reads: a reader writes a card and keeps a copy; lore.land is a client (/.well-known/autonomous-feedback.json, held to what the post keeps by book:check), the home of charms (/charm/), and played through the route lab with a door in every subject"
   factshift_center: "the canvas that turns a line toward motion (a d3 force simulation); texture.website's materials ground in its own address (alpha … linkStrength, ?spw=) through &factshift.center/?ground"
 }

@@ -25,12 +25,12 @@ import {
   withViewTransition
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
-import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.N';
-import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_08.N';
-import { readStory } from '../modules/story-directions.mjs?v=2026_11_08.N';
-import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.N';
+import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_09.L';
+import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_09.L';
+import { readStory } from '../modules/story-directions.mjs?v=2026_11_09.L';
+import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_09.L';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_09.I';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_09.L';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.W';
 import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_09.I';
 

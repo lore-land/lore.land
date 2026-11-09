@@ -1,0 +1,26 @@
+{
+  "about": "Marks stay marked. Anything paid for wears a mark that says who, what and since when: beside the story, never in it. A mark buys a place, not a word. build-chapters.mjs shows each mark on the pages its routes name (a marked line under the slip, and schema.org sponsor in the page's structured data); book:check holds every mark to the policy. Nothing in the book is paid for today. It replaces patron-seals.json, whose open pedestals were pitches; an empty pedestal is now simply no mark.",
+  "policy": [
+    "A mark is legible as patronage, never disguised as narration.",
+    "A mark keeps its provenance: who, for what, and since when.",
+    "A mark buys a place beside the story, never a word in it; editorial judgment stays with the scriptorium.",
+    "A mark's link is a marked threshold (rel=\"sponsored\"), never a hidden door.",
+    "A mark never reaches the story's words, the audience gate, or a reader's own marks."
+  ],
+  "kinds": {
+    "chapter": "a chapter's printing, or a return route into one",
+    "route": "a tool route or a page beside the story",
+    "snack": "a treat Boof would approve, with a true label: who made it, what it costs, why it belongs near a working dog",
+    "recipe": "a blueberry or boonberry recipe people can cook and share; food the story can stand next to"
+  },
+  "fields": {
+    "id": "a short name, lowercase with hyphens",
+    "who": "who it is from, as they would be named",
+    "what": "what it is for, one of the kinds: chapter, route, snack, recipe",
+    "since": "the date it was set, YYYY-MM-DD",
+    "routes": "the pages it stands beside, as paths (a chapter: /book/chapter/05/)",
+    "url": "where its link goes, https only",
+    "words": "the line shown beside the story, 120 characters at most"
+  },
+  "marks": []
+}

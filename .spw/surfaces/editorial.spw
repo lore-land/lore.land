@@ -206,7 +206,8 @@
 
   ^phase[06: "Patron seal honesty lane"]{
     task: "Editorial checklist item for sponsorship copy; never auto-insert patron text into prose"
-    refs: ["book/content/scriptorium/patron-seals.json"]
+    refs: ["book/content/marks.json"]
+    status: "2026_11_09.L: marks.json (who, what, since, routes, words) set beside the story by build-chapters and held to its policy by book:check; patron-seals.json and its pitches retired"
   }
 
   ^phase[07: "Optional write path (later)"]{
