@@ -19,30 +19,34 @@
   <meta name="twitter:image" content="https://lore.land/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp">
 <link rel="canonical" href="https://lore.land/scriptorium/">
   <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
   <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
 
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_08_27.A&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_08_27.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_08_27.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_08_27.A&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.M&ctx=canon:characters">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_08_27.A&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_27.A&ctx=home:atmosphere">
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.I&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.W&ctx=canon:characters">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_11_08.H&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/components/production-flow.css?v=2026_11_08.H&ctx=home:flow">
-  <link rel="stylesheet" href="/book/styles/home/desk.css?v=2026_11_08.W&ctx=scriptorium:desk">
+  <link rel="stylesheet" href="/book/styles/home/desk.css?v=2026_11_09.I&ctx=scriptorium:desk">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
   <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.K&ctx=canon:materials">
-  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.T&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.W&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/home/loom.css?v=2026_11_08.K&ctx=scriptorium:loom">
   <link rel="stylesheet" href="/book/styles/components/spw-disk.css?v=2026_11_08.W&ctx=scriptorium:disk">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.S"></script>
-  <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_11_09.G"></script>
-  <script defer type="module" src="/book/scripts/modules/story-loom.mjs?v=2026_11_08.N"></script>
-  <script defer type="module" src="/book/scripts/modules/spw-projection-disk.mjs?v=2026_11_08.W"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/story-loom.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/spw-projection-disk.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -50,18 +54,20 @@
     <header class="hub-topbar">
       <a class="hub-mark" href="/">Lore.Land</a>
       <nav class="hub-nav" aria-label="Primary">
-        <a href="/book/chapter/01/">Enter</a>
-        <a href="/#chambers">Chambers</a>
-        <a href="/topics/">Topics</a>
-        <a href="/world/civic-magic.html">Civic magic</a>
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/pie/">Play</a>
+        <a href="/almanac/">Almanac</a>
         <a href="/scriptorium/" aria-current="page">Scriptorium</a>
         <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
       </nav>
     </header>
 
     <main id="main-content" class="hub-main">
       <section class="hub-hero scriptorium-hero" aria-labelledby="script-title">
-        <p class="hub-eyebrow">Your desk in the monument</p>
+        <p class="hub-eyebrow">Your desk · your place, the whole book offline, and how it is made</p>
         <h1 id="script-title">Scriptorium</h1>
         <p class="hub-lede">
           The room where the serial keeps your place. Pick up where you stopped, keep the whole book
@@ -70,6 +76,7 @@
           by tapping it, then cast by typing.
         </p>
       </section>
+      <aside class="featured" data-featured="scriptorium" aria-label="Featured"></aside>
 
       <section class="desk" id="desk" aria-label="Your desk">
         <!-- Without script the desk is a plain list of doors; scriptorium-desk.mjs replaces it. -->

@@ -276,13 +276,16 @@ function paintGlyphs(face = 'hand') {
   if (here) requestAnimationFrame(() => here.scrollIntoView({ block: 'center', behavior: 'smooth' }));
 }
 
+/* The literacy ladder in plain words (packs.mjs RUNGS). */
+const RUNG_WORDS = { read: 'read it', notice: 'notice', explore: 'try it', operate: 'play with it', inspect: 'look closely', author: 'make your own' };
+
 /* ─── The pack: scheme, curriculum, findings, sources ─── */
 function paintPack(pack, findings) {
   $('[data-scheme]').textContent = pack.scheme;
   $('[data-reads]').replaceChildren(...schemeParts(pack).flatMap(({ part, says }) => [el('dt', {}, el('code', {}, part)), el('dd', {}, says)]));
   $('[data-plans]').replaceChildren(...(pack.curriculum || []).map((plan) => el('li', { className: `texture-plan is-${plan.state}` },
-    el('p', { className: 'texture-plan-head' }, el('span', { className: 'texture-plan-id' }, plan.id), ` ${plan.title}`,
-      el('span', { className: 'texture-plan-state' }, `${PLAN_STATES[plan.state]} · ${plan.rung}`)),
+    el('p', { className: 'texture-plan-head', title: plan.id }, plan.title,
+      el('span', { className: 'texture-plan-state' }, `${PLAN_STATES[plan.state]} · ${RUNG_WORDS[plan.rung] || plan.rung}`)),
     el('p', { className: 'texture-plan-make' }, plan.make),
     el('p', { className: 'texture-plan-ask' }, el('span', {}, 'Ask · '), plan.ask),
     el('p', { className: 'texture-plan-ages' }, el('span', {}, 'For · '), plan.ages))));
@@ -471,9 +474,10 @@ function paint() {
   paintRoute();
   const answer = resolveRoute(route, packsCache);
   $('[data-maker-view]').hidden = answer.kind !== 'pack';
+  $('[data-maker-hero]').hidden = answer.kind !== 'pack';
   $('[data-surface-view]').hidden = answer.kind !== 'surface';
   $('[data-unknown-view]').hidden = answer.kind !== 'unknown' && answer.kind !== 'none';
-  document.title = `${route?.raw || '?/'} · Lore.Land`;
+  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
   if (answer.kind === 'surface') paintSurface(answer.packs, findingsCache);
   if (answer.kind !== 'pack') return;
   // The words and the tuning come from the address (or a letter named in it); otherwise the page's own.
@@ -504,7 +508,7 @@ async function start() {
   $('[data-route-try]').replaceChildren(...TRY.map(([r, says]) => el('li', {}, el('a', { href: `/${r}` }, el('code', {}, r)), ` ${says}`)));
   const [packs, handData] = await Promise.all([
     loadPacks(),
-    fetch('/book/fonts/spwashi/hand.json').then((r) => r.json())
+    fetch('/book/fonts/spwashi/hand.json').then((r) => { if (!r.ok) throw new Error(`hand.json ${r.status}`); return r.json(); })
   ]);
   hand = handData;
   packsCache = packs;
@@ -534,7 +538,13 @@ async function start() {
 }
 
 start().catch((err) => {
-  const stage = $('[data-stage]');
-  if (stage) stage.textContent = 'The hand did not load. The faces are in book/fonts/spwashi/.';
+  // Said where it can be seen: the views that need the hand stay folded, and the page says why.
+  ['[data-maker-view]', '[data-maker-hero]', '[data-surface-view]'].forEach((sel) => { const node = $(sel); if (node) node.hidden = true; });
+  const unknown = $('[data-unknown-view]');
+  if (unknown) {
+    unknown.hidden = false;
+    unknown.replaceChildren(el('h1', { className: 'texture-title' }, 'The hand did not load'),
+      el('p', { className: 'hub-lede' }, navigator.onLine === false ? 'You are offline, and this page has not been kept yet. Open it once while online and it will be here next time.' : 'Something went wrong while fetching it. Reloading the page usually helps.'));
+  }
   console.error(err);
 });

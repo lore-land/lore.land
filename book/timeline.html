@@ -1,52 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" data-cache-release="2026_02_28.I" data-cache-context="canon">
+<html lang="en" data-cache-release="2026_11_09.I" data-cache-context="timeline" data-theme="paper">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f3ede1">
-    <link rel="manifest" href="/manifest.webmanifest">
-    <title>Lore.Land Timeline</title>
-    <meta name="description" content="Canonical chapter timeline for Lore.Land.">
-    <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_02_28.I&ctx=canon:fonts">
-    <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_02_28.I&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_02_28.I&ctx=canon:baseline">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Every chapter, in order · Lore.Land</title>
+  <meta name="description" content="Every chapter of Lore.Land in order, each with the line that says what happens in it. New chapters are set on the 13th and 26th of each month.">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="canonical" href="https://lore.land/book/timeline.html">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.I&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.I&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.I&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.I&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.I&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.I&ctx=home:hub">
+  <style>
+    .timeline-list { padding-left: 1.6rem; }
+    .timeline-list li { margin: 0.35rem 0; max-width: 44rem; }
+    .timeline-title { font-weight: 600; }
+    .timeline-in-which { color: var(--hub-muted, #5a5a5a); font-style: italic; }
+  </style>
 </head>
-<body>
-    <div class="page-shell">
-        <header class="page-panel">
-            <p class="page-meta">Canonical Sequence</p>
-            <h1>Lore.Land Timeline</h1>
-            <p>Thirteen chapters organized as a single Spw narrative flow.</p>
-            <div class="page-links">
-                <a href="/">Home</a>
-                <a href="/book/chapter/01/">Start at Chapter 01</a>
-            </div>
-        </header>
-
-        <main class="page-panel" aria-label="Chapter timeline">
-            <ol>
-                <li><a href="/book/chapter/01/">01. Boof and the Boonberry Fool</a></li>
-                <li><a href="/book/chapter/02/">02. Echoes of the Baneberries</a></li>
-                <li><a href="/book/chapter/03/">03. Bonk's Puzzle of Possibilities</a></li>
-                <li><a href="/book/chapter/04/">04. Boof and the Betraying Mirror</a></li>
-                <li><a href="/book/chapter/05/">05. The Song of the Infinite Fool</a></li>
-                <li><a href="/book/chapter/06/">06. Shadows in Bonk.city</a></li>
-                <li><a href="/book/chapter/07/">07. The Puzzle of Nine Honks</a></li>
-                <li><a href="/book/chapter/08/">08. The Resonance of Bone.land</a></li>
-                <li><a href="/book/chapter/09/">09. The Last Puzzle Piece</a></li>
-                <li><a href="/book/chapter/10/">10. The Awakening of the Fool</a></li>
-                <li><a href="/book/chapter/11/">11. The Path to Bane.land</a></li>
-                <li><a href="/book/chapter/12/">12. Reflections in the Watering Eye</a></li>
-                <li><a href="/book/chapter/13/">13. The Neverending Song</a></li>
-            </ol>
-        </main>
-
-        <footer>
-            this site was crafted by <a href="https://spwashi.com/?from=lore.land">spwashi</a>
-        </footer>
-    </div>
+<body data-surface="monument" data-current-scene="timeline">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/pie/">Play</a>
+        <a href="/almanac/">Almanac</a>
+        <a href="/scriptorium/">Scriptorium</a>
+        <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
+      </nav>
+    </header>
+    <main id="main-content" class="hub-main">
+      <section class="hub-hero" aria-labelledby="timeline-title">
+        <p class="hub-eyebrow">The book, from the first page</p>
+        <h1 id="timeline-title">Every chapter, in order</h1>
+        <p class="hub-lede">New chapters are set on the 13th and 26th of each month. Chapter 16 is set for 13 November.</p>
+      </section>
+      <section class="timeline-book" aria-labelledby="book-1">
+        <h2 id="book-1">Book One · The Unspent Wish</h2>
+        <ol class="timeline-list" start="1">
+          <li><a href="/book/chapter/01/"><span class="timeline-title">Dawn in Boon.land</span></a> <span class="timeline-in-which">in which a dog finds an egg the maps will not admit</span></li>
+          <li><a href="/book/chapter/02/"><span class="timeline-title">The First Echo</span></a> <span class="timeline-in-which">in which the grove answers a beat late, and will not swear to it</span></li>
+          <li><a href="/book/chapter/03/"><span class="timeline-title">Signals in the Sand</span></a> <span class="timeline-in-which">in which two roads claim the same step</span></li>
+          <li><a href="/book/chapter/04/"><span class="timeline-title">Crosswind Council</span></a> <span class="timeline-in-which">in which keys are filed smaller, and none of them fit</span></li>
+          <li><a href="/book/chapter/05/"><span class="timeline-title">The Quiet Rift</span></a> <span class="timeline-in-which">in which two slips try to be one harvest</span></li>
+          <li><a href="/book/chapter/06/"><span class="timeline-title">Lanterns of Bonk City</span></a> <span class="timeline-in-which">in which glass shows a light it does not own</span></li>
+          <li><a href="/book/chapter/07/"><span class="timeline-title">Blueberry Oath</span></a> <span class="timeline-in-which">in which an oath is paid in fruit</span></li>
+          <li><a href="/book/chapter/08/"><span class="timeline-title">Songs of the Watering Eye</span></a> <span class="timeline-in-which">in which water keeps a face without stealing it</span></li>
+          <li><a href="/book/chapter/09/"><span class="timeline-title">Shards of Nine Honks</span></a> <span class="timeline-in-which">in which the ninth honk is missing, and warms</span></li>
+          <li><a href="/book/chapter/10/"><span class="timeline-title">Bone.land Resonance</span></a> <span class="timeline-in-which">in which a hall tells the truth with its weight</span></li>
+          <li><a href="/book/chapter/11/"><span class="timeline-title">Paradox Bloom</span></a> <span class="timeline-in-which">in which a garden blooms before its seed arrives</span></li>
+          <li><a href="/book/chapter/12/"><span class="timeline-title">The Last Confluence</span></a> <span class="timeline-in-which">in which rivers meet and remember their names</span></li>
+          <li><a href="/book/chapter/13/"><span class="timeline-title">The Shell-Shaped Door</span></a> <span class="timeline-in-which">in which the last door is shaped like a shell, and stays open</span></li>
+        </ol>
+      </section>
+      <section class="timeline-book" aria-labelledby="book-2">
+        <h2 id="book-2">Book Two · Wonder About Pi(e)</h2>
+        <ol class="timeline-list" start="14">
+          <li><a href="/book/chapter/14/"><span class="timeline-title">The Thursday Nobody Kept</span></a> <span class="timeline-in-which">in which a day goes missing from the week, and the field keeps it anyway</span></li>
+          <li><a href="/book/chapter/15/"><span class="timeline-title">Pupil, Parcel, or Door</span></a> <span class="timeline-in-which">in which one stranger is written down three ways, and all three are right</span></li>
+        </ol>
+      </section>
+    </main>
+    <footer class="hub-footer">
+      <p>Raised by <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a></p>
+      <p class="hub-footer-note">Story first · process in the grain · marks stay marked</p>
+    </footer>
+  </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { CHAPTER_FLOW_SELECTOR } from './story-lexicon.mjs?v=2026_02_28.I';
+import { CHAPTER_FLOW_SELECTOR } from './story-lexicon.mjs?v=2026_09_26.A';
 import { parseSpwExpressions } from './spw-expression-index.mjs?v=2026_03_01.A';
 import { el } from './dom.mjs';
 

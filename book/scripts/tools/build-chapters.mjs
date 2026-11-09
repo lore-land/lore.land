@@ -14,7 +14,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_09.H';
+const RELEASE = '2026_11_09.I';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
@@ -143,6 +143,79 @@ const catalog = {
   }))
 };
 await writeFile(resolve(ROOT, 'book/content/catalog.json'), `${JSON.stringify(catalog, null, 2)}\n`);
+
+/* Every chapter, in order (book/timeline.html): written from the catalog with every build, so the list a
+ * chapter's rail, the desk and the contents send readers to is never older than the book. */
+const escHtml = (text) => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const timelineBooks = catalog.books.map((book) => {
+  const list = catalog.chapters.filter((c) => c.number >= book.first && (book.last == null || c.number <= book.last));
+  return `      <section class="timeline-book" aria-labelledby="book-${book.number}">
+        <h2 id="book-${book.number}">Book ${book.number === 1 ? 'One' : book.number === 2 ? 'Two' : book.number} · ${escHtml(book.title)}</h2>
+        <ol class="timeline-list" start="${book.first}">
+${list.map((c) => `          <li><a href="${c.href}"><span class="timeline-title">${escHtml(c.title)}</span></a>${c.inWhich ? ` <span class="timeline-in-which">in which ${escHtml(c.inWhich)}</span>` : ''}</li>`).join('\n')}
+        </ol>
+      </section>`;
+}).join('\n');
+const nextLine = catalog.next ? `Chapter ${catalog.next.chapter} is set for ${new Date(`${catalog.next.date}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' })}.` : '';
+await writeFile(resolve(ROOT, 'book/timeline.html'), `<!DOCTYPE html>
+<html lang="en" data-cache-release="${RELEASE}" data-cache-context="timeline" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Every chapter, in order · Lore.Land</title>
+  <meta name="description" content="Every chapter of Lore.Land in order, each with the line that says what happens in it. ${escHtml(catalog.cadence)}">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="canonical" href="https://lore.land/book/timeline.html">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=${RELEASE}&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=${RELEASE}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=${RELEASE}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=${RELEASE}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=${RELEASE}&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=${RELEASE}&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=${RELEASE}&ctx=home:hub">
+  <style>
+    .timeline-list { padding-left: 1.6rem; }
+    .timeline-list li { margin: 0.35rem 0; max-width: 44rem; }
+    .timeline-title { font-weight: 600; }
+    .timeline-in-which { color: var(--hub-muted, #5a5a5a); font-style: italic; }
+  </style>
+</head>
+<body data-surface="monument" data-current-scene="timeline">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/pie/">Play</a>
+        <a href="/almanac/">Almanac</a>
+        <a href="/scriptorium/">Scriptorium</a>
+        <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
+      </nav>
+    </header>
+    <main id="main-content" class="hub-main">
+      <section class="hub-hero" aria-labelledby="timeline-title">
+        <p class="hub-eyebrow">The book, from the first page</p>
+        <h1 id="timeline-title">Every chapter, in order</h1>
+        <p class="hub-lede">${escHtml(catalog.cadence)} ${escHtml(nextLine)}</p>
+      </section>
+${timelineBooks}
+    </main>
+    <footer class="hub-footer">
+      <p>Raised by <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a></p>
+      <p class="hub-footer-note">Story first · process in the grain · marks stay marked</p>
+    </footer>
+  </div>
+</body>
+</html>
+`);
 
 /* The book's extent, for runtime modules that count chambers (navigation,
  * the constellation, seals, the desk, the offline shelf). Imported without a
@@ -317,7 +390,7 @@ for (const [index, filename] of filenames.entries()) {
     throw new Error(`${filename} does not satisfy the chapter content contract.`);
   }
 
-  const pageTitle = `${data.title} | Lore.Land`;
+  const pageTitle = `${data.title} · Lore.Land`;
   const canonicalUrl = `https://lore.land/book/chapter/${slug}/`;
   const logline = data.logline || data.description;
   const chapterDir = resolve(ROOT, `book/chapter/${slug}`);

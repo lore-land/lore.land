@@ -25,7 +25,7 @@
  * A room still being written arrives from the build as its door alone
  * (signature, air, the day it opens); nothing here can open it.
  */
-import { readRoom, roomDoor, ROOM_KINDS } from './room-signature.mjs?v=2026_11_08.J';
+import { readRoom, roomDoor, ROOM_KINDS } from './room-signature.mjs?v=2026_11_08.W';
 import { settle } from './settled.mjs?v=2026_11_08.N';
 
 const ROOMS_KEY = 'lore.rooms.v1';

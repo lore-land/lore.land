@@ -160,11 +160,11 @@ import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.G
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.O';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_09.I';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
-import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.O';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
+import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.W';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.I';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.F';
@@ -1672,7 +1672,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function sceneTexture(id) {
     const material = sceneWhimsy(id).material;
     if (!record.sound || !material) return;
-    import('../modules/spw-sound.mjs?v=2026_11_08.N').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
+    import('../modules/spw-sound.mjs?v=2026_11_09.I').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
   }
   const drawWhimsy = () => {
     if (!run) return;
@@ -3542,7 +3542,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     };
   };
   const readVisit = async () => { visitRead = visitSpells() ? await readRules(visitSpells()) : null; compose(); };
-  const whenQuiet = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 2500 }) : setTimeout(fn, 600));
+  // The rules are read by the real parser (650 KB): it loads when someone first reaches for the game (a touch, a
+  // key), or after a while on the page, never just for passing through; until then the lanes run on their defaults.
+  const whenQuiet = (fn) => {
+    let done = false;
+    const go = () => { if (done) return; done = true; ['pointerdown', 'keydown'].forEach((t) => document.removeEventListener(t, go, true)); fn(); };
+    ['pointerdown', 'keydown'].forEach((t) => document.addEventListener(t, go, { capture: true, passive: true }));
+    setTimeout(() => (window.requestIdleCallback ? window.requestIdleCallback(go, { timeout: 4000 }) : go()), 12000);
+  };
   whenQuiet(async () => {
     bookRules = await loadRules();
     await readVisit();
@@ -7294,7 +7301,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         panelPlan = settled;
         applySetup({ replan: false });
         if (setupOut && !setupOut.hidden) paintSetup();
+        return;
       }
+      // The arrangement holds: the voyage is shown as laid out (pie/index.html set it settling).
+      document.documentElement.classList.remove('pie-settling');
     });
   }
   heightsPanel?.addEventListener('toggle', () => requestAnimationFrame(() => { fitCabinet(); requestAnimationFrame(fit); }));
@@ -8813,7 +8823,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintLore();
   }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_08.O').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_09.I').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();

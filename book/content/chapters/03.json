@@ -275,7 +275,9 @@
       "img": {
         "src": "/book/images/03.png",
         "alt": "A lamp-dark cracked egg on a dune beside a half-buried green bottle, two gold routes under the sand converging toward them.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The flats: two signals, one turn, one retired genie."
     },

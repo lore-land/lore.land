@@ -308,7 +308,9 @@
       "img": {
         "src": "/book/images/08.png",
         "alt": "A tavern leaning over a stone well at night; faces folded under black water, a genie pricing wishes above, the cracked egg warming the rim.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The Watering Eye: the tavern names the wants; the water names the debts."
     },

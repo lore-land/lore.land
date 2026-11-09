@@ -17,7 +17,7 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_09.F';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_09.I';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_08.N';
 import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_08.N';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_08.N';
@@ -308,7 +308,7 @@ export async function initScriptoriumDesk() {
       }
     } else if (op === '~') {
       if (!state.resume) {
-        say(op, el('p', {}, 'Nothing is waiting yet: you have not opened a chapter here. @01 begins.'));
+        say(op, el('p', {}, 'Nothing is waiting yet: you have not opened a chapter here. Chapter One begins it.'));
       } else {
         const anchor = state.place?.sectionId ? `#${state.place.sectionId}` : '';
         say(op, el('p', {}, `Picking up Chapter ${pad(state.resume)}: ${titleOf(state.resume)}${state.place?.sectionIndex ? `, §${pad(state.place.sectionIndex)}` : ''}.`));
@@ -400,7 +400,7 @@ export async function initScriptoriumDesk() {
         say(op, el('div', {},
           el('p', {}, Number(record.runs)
             ? `Furthest carry: ${Number(record.best) || 0} cobbles. Pies spilled: ${record.runs}, exactly one each time. Clowns given WAP: ${Number(record.waps) || 0}.${said ? ` Lines the pies let slip: ${said}.` : ''}`
-            : 'Nobody has carried it yet. @[pie] goes to the lanes.'),
+            : 'Nobody has carried it yet. The game is a tap away.'),
           sum.held.length ? el('p', {}, `Mimes Against WAP hold ${sum.held.length === 1 ? 'Chapter' : 'Chapters'} ${chapterList(sum.held)}: it is harder to wonder about pie there until you carry it through and out-do them.`) : null,
           lines.length ? el('ul', {}, lines) : null,
           el('p', {}, el('a', { href: '/pie/?from=%2Fscriptorium%2F#pie-carries' }, 'Every chapter’s mark, and the switch →'))));

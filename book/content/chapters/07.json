@@ -289,7 +289,9 @@
       "img": {
         "src": "/book/images/07.png",
         "alt": "A worn market stone with blueberry juice in its grooves, a coal-dark egg as witness, and a long cold shadow lying across the oath.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The oath-stone: public words, private fruit, one warm witness — and the clause in shadow."
     },

@@ -1,3 +1,3 @@
-import { StoryVoiceElement } from './story-voice.mjs?v=2026_09_07.A';
+import { StoryVoiceElement } from './story-voice.mjs?v=2026_11_09.I';
 
 export class CustomPuzzle extends StoryVoiceElement {}

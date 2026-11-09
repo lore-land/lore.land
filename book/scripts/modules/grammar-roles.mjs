@@ -6,7 +6,7 @@
  * kickers, motion, and this module cannot drift.
  */
 
-import { STORY_VOICES } from './story-lexicon.mjs?v=2026_09_07.A';
+import { STORY_VOICES } from './story-lexicon.mjs?v=2026_09_26.A';
 
 const SECTION_ROLES = Object.freeze({
   section: { grammar: 'predicate', voice: 'environment' },

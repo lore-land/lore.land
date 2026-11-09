@@ -24,20 +24,22 @@
   <meta name="twitter:title" content="Folios · Lore.Land">
   <meta name="twitter:description" content="Pages pressed under glass: the maker's folios and readers' folios, liquid until they season, then clear.">
   <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_09_27.D&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_09_27.D&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_09_27.D&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_09_27.D&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_09_27.D&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_09_27.D&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/folios.css?v=2026_11_08.H&ctx=folios:wall">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.S"></script>
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.I&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/home/folios.css?v=2026_11_09.I&ctx=folios:wall">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.I"></script>
   <script defer type="module" src="/book/scripts/modules/folio-wall.mjs?v=2026_09_27.D"></script>
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
+  <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="folios">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -47,10 +49,12 @@
       <nav class="hub-nav" aria-label="Primary">
         <a href="/book/chapter/01/">Read</a>
         <a href="/#chambers">Chapters</a>
-        <a href="/topics/">Topics</a>
+        <a href="/pie/">Play</a>
+        <a href="/almanac/">Almanac</a>
         <a href="/scriptorium/">Scriptorium</a>
         <a href="/folios/" aria-current="page">Folios</a>
         <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
       </nav>
     </header>
 
@@ -64,9 +68,10 @@
           is glassed: it seasons, liquid, until a stone day passes — the 13th or the 26th — and then it goes clear.
         </p>
       </section>
+      <aside class="featured" data-featured="folios" aria-label="Featured"></aside>
 
       <section class="folio-wall" id="folio-wall" aria-label="Folios">
-        <p class="folio-status">Loading the wall…</p>
+        <p class="folio-status">Hanging the wall…</p>
       </section>
 
       <section class="worktable" id="worktable" data-worktable aria-labelledby="worktable-title" hidden>
@@ -78,7 +83,7 @@
         <ul class="worktable-list"></ul>
       </section>
 
-      <p class="folio-texture"><a href="/?/texture.website/@spwashi">?/texture.website/@spwashi →</a> spwashi's own hand, lettered on a ruled sheet and traced into type: write in it, hear its sounds, see where each letter came from.</p>
+      <p class="folio-texture"><a href="/?/texture.website/@spwashi">spwashi’s hand →</a> spwashi's own hand, lettered on a ruled sheet and traced into type: write in it, hear its sounds, see where each letter came from.</p>
 
       <section class="folio-how" id="make-one" aria-labelledby="make-title">
         <h2 id="make-title">Make one</h2>

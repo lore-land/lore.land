@@ -1,4 +1,4 @@
-import { VALENCE_PENTAD, describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
+import { VALENCE_PENTAD, describeLoadStage } from './story-lexicon.mjs?v=2026_09_26.A';
 import { el } from './dom.mjs';
 
 export const LOAD_STAGES = Object.freeze([...VALENCE_PENTAD]);

@@ -298,7 +298,9 @@
       "img": {
         "src": "/book/images/10.png",
         "alt": "A great load-bearing wooden frame, gold seams along honest joints; on a trestle table, a plain pie audits the cracked egg against an open ledger.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Bone.land: the small constitution, load-bearing, and listening."
     },

@@ -21,7 +21,7 @@ import {
 } from './story-lexicon.mjs?v=2026_09_26.A';
 import { applySectionClimateAttributes } from './copy-climate.mjs?v=2026_11_06.D';
 import { LENSES, leanFor } from './valence-lens.mjs?v=2026_09_27.A';
-import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.J';
+import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.W';
 
 const NUMBER_WORDS = Object.freeze([
   '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',

@@ -362,7 +362,9 @@
       "img": {
         "src": "/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp",
         "alt": "Studies from the dawnward field—frost, berry-light, and the warm furrow where the unspent wish surfaced.",
-        "loading": "eager"
+        "loading": "eager",
+        "width": 2048,
+        "height": 2048
       },
       "figcaption": "Dawnward field studies, the morning the unspent wish came up humming."
     },

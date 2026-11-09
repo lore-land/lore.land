@@ -340,7 +340,9 @@
       "img": {
         "src": "/book/images/02.png",
         "alt": "The Grove of Echoes: concentric gold pollen rings around a lamp-dark cracked egg, a second egg-shape rehearsing a beat late.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The Grove of Echoes: a wish rehearsing is not a wish granted."
     },

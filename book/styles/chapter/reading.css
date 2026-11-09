@@ -1440,14 +1440,21 @@ html[data-switch-focus-line="on"] main.chapter [data-ebook-section] > p:not(.is-
   opacity: 0.45;
 }
 
-/* Return notes. */
+/* Return notes: a card in the page's corner (the top layer), so the chapter never moves when it arrives. */
 .return-notes {
+  position: fixed;
+  inset: auto 1rem max(1rem, env(safe-area-inset-bottom, 0px)) auto;
+  z-index: 80;
   display: grid;
   gap: 0.4rem;
   justify-items: start;
-  max-width: 34rem;
-  margin-top: 0.9rem;
+  width: min(28rem, calc(100vw - 2rem));
+  max-height: min(60vh, 34rem);
+  overflow: auto;
+  margin: 0;
   padding: 0.8rem 1rem;
+  box-shadow: 0 14px 34px color-mix(in srgb, #0b1627 22%, transparent);
+  color: var(--color-text-main, #1d2733);
   border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 45%, transparent);
   border-radius: 0.7rem;
   background: color-mix(in srgb, var(--color-gold, #c4922e) 8%, var(--theme-paper, #fffcf6));
@@ -1464,7 +1471,7 @@ html[data-switch-focus-line="on"] main.chapter [data-ebook-section] > p:not(.is-
   color: var(--color-accent-main);
 }
 
-main.chapter .return-notes ul {
+.return-notes ul {
   margin: 0;
   padding-inline-start: 1.1rem;
   font-size: 0.9rem;
@@ -1474,6 +1481,12 @@ main.chapter .return-notes ul {
 .return-notes-close {
   padding: 0.25rem 0.8rem;
   font-size: 0.74rem;
+}
+
+.return-notes-more summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--color-accent-main);
 }
 
 /* The drawer itself. */
@@ -4901,4 +4914,24 @@ main.chapter .projection-spell-status:empty {
   border-radius: 0.35rem;
   border: 1px solid color-mix(in srgb, var(--wonder-ink) 40%, transparent);
   background: #0b1310;
+}
+
+
+/* Settling, in the rail: on a desk-wide screen the rail's instruments arrive after first paint, above the doors
+ * (order 1–2 before 6–7). A reserve holds the rail's first screen until the contents panel is in, so the doors
+ * start where they will end — below the rail's fold — and never jump. */
+aside > .rail-reserve {
+  display: none;
+}
+
+@media (min-width: 70rem) and (scripting: enabled) {
+  aside > .rail-reserve {
+    display: block;
+    order: 1;
+    min-height: calc(100dvh - var(--scroll-pad-top, 4.75rem));
+  }
+
+  aside:has(> .ebook-nav-panel) > .rail-reserve {
+    display: none;
+  }
 }

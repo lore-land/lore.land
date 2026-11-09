@@ -891,3 +891,11 @@ body[data-surface='monument'] .almanac-card:has(.almanac-card-plate) > .almanac-
   from { filter: grayscale(1) brightness(0.4) blur(2px); }
   to { filter: none; }
 }
+
+/* Settling: the spell of where you are keeps its room while it is written (about 19rem laid out), so the
+ * figure and the shelves under the hero never jump. */
+@media (scripting: enabled) {
+  .almanac-progress {
+    min-height: 18.5rem;
+  }
+}

@@ -1,8 +1,8 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.W';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_09.I';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_11_09.I';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_09.I';
 import { TOTAL_CHAPTERS } from './modules/book-extent.mjs';
 import {
   bootstrapExperience,
@@ -18,14 +18,14 @@ import {
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_11_08.N';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
-import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_08.J';
+import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_09.I';
 import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_08.R';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
+import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_11_09.I';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
-import { registerCustomElements } from './custom/register.mjs?v=2026_09_07.B';
-import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_09_07.A';
+import { registerCustomElements } from './custom/register.mjs?v=2026_11_09.I';
+import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_11_09.I';
 import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_09_26.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
 import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
@@ -55,22 +55,22 @@ import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_08
 import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.N';
 import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.N';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
-import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.N';
+import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_09.I';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.N';
-import { initCollection } from './modules/collection.mjs?v=2026_11_08.O';
-import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_08.W';
-import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_08.W';
+import { initCollection } from './modules/collection.mjs?v=2026_11_09.I';
+import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_09.I';
+import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_09.I';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_08.N';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_09.F';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_09.I';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_08.N';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.N';
 import { initConstellation } from './modules/constellation.mjs?v=2026_11_08.J';
 import { initSettled } from './modules/settled.mjs?v=2026_11_08.N';
-import { initRooms } from './modules/rooms.mjs?v=2026_11_08.N';
+import { initRooms } from './modules/rooms.mjs?v=2026_11_09.I';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyReveal = initProgressiveReveal({ root: document });
     enhanceLazyImages({ root: chapterContent || document });
     const destroyPassAlong = initPassAlong({
-      title: `${chapterData.title} | Lore.Land`,
+      title: `${chapterData.title} · Lore.Land`,
       text: chapterData.logline || chapterData.description || chapterData.title,
       url: typeof location !== 'undefined' ? location.href : '',
       announce
@@ -338,23 +338,28 @@ function initializeStyles(data) {
 
   const period = data.period;
   const mood = data.mood;
+  // Only sheets that exist are linked (a missing one is a 404 on every chapter); the attribute is set either way.
+  const PERIOD_SHEETS = new Set();
+  const MOOD_SHEETS = new Set(['tldr']);
 
-  if (period) {
+  if (period && PERIOD_SHEETS.has(period)) {
     periodStylesLink.href = withCacheContext(`/book/styles/periods/${period}.css`, {
       channel: `period-${period}`
     });
     body.setAttribute('data-period', period);
   } else {
-    periodStylesLink.disabled = true; // Disable if no period is set
+    if (period) body.setAttribute('data-period', period);
+    periodStylesLink.disabled = true; // Disable if no period sheet
   }
 
-  if (mood) {
+  if (mood && MOOD_SHEETS.has(mood)) {
     moodStylesLink.href = withCacheContext(`/book/styles/moods/${mood}.css`, {
       channel: `mood-${mood}`
     });
     body.setAttribute('data-mood', mood);
   } else {
-    moodStylesLink.disabled = true; // Disable if no mood is set
+    if (mood) body.setAttribute('data-mood', mood);
+    moodStylesLink.disabled = true; // Disable if no mood sheet
   }
 }
 
@@ -368,7 +373,7 @@ function populateMetadata(data) {
   const chapterLabel = `Chapter ${padChapterNumber(data.chapterNumber)}: ${data.title}`;
 
   if (titleElement) {
-    titleElement.textContent = `${data.title} | Lore.Land`;
+    titleElement.textContent = `${data.title} · Lore.Land`;
   }
 
   if (descriptionElement) {
@@ -376,7 +381,7 @@ function populateMetadata(data) {
     descriptionElement.setAttribute('content', description);
   }
 
-  document.title = `${data.title} | Lore.Land`;
+  document.title = `${data.title} · Lore.Land`;
 }
 
 /**

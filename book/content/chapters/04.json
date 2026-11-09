@@ -288,7 +288,9 @@
       "img": {
         "src": "/book/images/04.png",
         "alt": "A council table under storm-light: filed keys, a coal-dark cracked egg no key covers, and a bitter pie in a banker's crust arguing for an auction.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Crosswind Council: keys narrow in the open; a wish is too large to file."
     },

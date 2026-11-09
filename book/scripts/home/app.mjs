@@ -16,7 +16,7 @@ import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
 import { initHubTemporalClimate } from '../modules/copy-climate.mjs?v=2026_11_06.D';
 import { onScrollFrame } from '../modules/scroll-coordinator.mjs?v=2026_08_27.A';
-import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_08.B';
+import { initStorySpark } from '../modules/story-spark.mjs?v=2026_11_09.I';
 import {
   initPassAlong,
   initServiceWorkerUpdate,
@@ -30,9 +30,9 @@ import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_08.N';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.N';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.O';
-import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.O';
-import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_08.O';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_09.I';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.W';
+import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_09.I';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';

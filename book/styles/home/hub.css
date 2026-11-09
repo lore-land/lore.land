@@ -3538,3 +3538,102 @@ body[data-surface='monument'][data-lighting='live'] .hub-hero-media::before {
 html body[data-surface='monument'][data-current-scene] {
   background-image: none;
 }
+
+/* ─── Settling: a page is laid out before its footer is seen ───
+ * The main column is at least a screen tall, so a footer never starts in view and then gets pushed down
+ * while the page's own scripts fill it in (each page's regions keep their settled room in its own sheet). */
+body[data-surface='monument'] .hub-main {
+  min-height: 100svh;
+  /* The room is held at the end, not shared among the rows: a short page's sections keep their own height. */
+  align-content: start;
+}
+
+/* ─── Featured: one thing worth opening, under each page's hero (featured.mjs) ───
+ * The slot keeps a card's room while it is filled, so nothing under it moves; an empty slot folds away. */
+.featured {
+  display: block;
+  max-width: 44rem;
+  min-height: 5.8rem;
+}
+
+.featured.is-empty {
+  display: none;
+}
+
+@media (scripting: none) {
+  .featured { display: none; }
+}
+
+.featured-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--hub-line, #d8cfbd);
+  border-left: 3px solid var(--hub-gold, #c9a76a);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--hub-panel, #fffaf0) 82%, transparent);
+}
+
+.featured-card.has-art {
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+}
+
+.featured-art img {
+  display: block;
+  width: 7.5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.featured-words p {
+  margin: 0;
+}
+
+.featured-kicker {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep, #246270);
+}
+
+.featured-title {
+  margin-top: 0.15rem !important;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.12rem;
+  line-height: 1.3;
+}
+
+.featured-title a {
+  color: inherit;
+}
+
+.featured-line,
+.featured-more {
+  margin-top: 0.2rem !important;
+  font-size: 0.88rem;
+  color: var(--hub-muted, #5a5a5a);
+}
+
+.featured-quote {
+  margin: 0.2rem 0 0;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.35rem;
+  font-style: italic;
+}
+
+@media (max-width: 30rem) {
+  .featured-card.has-art { grid-template-columns: 5.5rem minmax(0, 1fr); }
+  .featured-art img { width: 5.5rem; height: 3.7rem; }
+}
+
+/* Settling, on a phone: the nav starts as it will end, folded behind its menu (reading-chrome.mjs adds the toggle
+ * in the same row), instead of wrapping to three rows and then folding away under the reader. */
+@media (max-width: 52rem) and (scripting: enabled) {
+  .hub-topbar:not(.hub-topbar--enhanced) .hub-nav {
+    display: none;
+  }
+}

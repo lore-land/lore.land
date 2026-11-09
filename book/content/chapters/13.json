@@ -366,7 +366,9 @@
       "img": {
         "src": "/book/images/13.png",
         "alt": "An open night archive, a cracked-eggshell door leaking gold light, the empty eggshell set on a small reading desk beside a ledger's blank last line.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The Shell-Shaped Door: the ninth honk sounded; the shell set out for the next wish."
     },

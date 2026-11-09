@@ -5,11 +5,11 @@
 import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_09.G';
 import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.F';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.O';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_09.I';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.O';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
-import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_08.O';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.W';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.I';
+import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_09.I';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -76,9 +76,19 @@ function placeChips(data, wonder, kept) {
 }
 
 /* A kept wonder offers its plate prompt (PLAN.E L10): the scene in words, ready to paint from. */
+/* Plate prompts are a maker's tool: shown, as in the chapters, only to a reader who has tried them
+ * (reading-switches.mjs 'prompts', or ?try=prompts). */
+const promptsOn = (() => {
+  try {
+    if ((new URLSearchParams(location.search).get('try') || '').split(',').includes('prompts')) return true;
+    const sw = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null');
+    return sw?.choices?.prompts === 'on' || sw?.resolved?.prompts === 'on';
+  } catch { return false; }
+})();
+
 function promptBlock(wonder) {
   const prompt = wonder.prompt;
-  if (!prompt?.hint) return null;
+  if (!promptsOn || !prompt?.hint) return null;
   const line = `${prompt.hint}, ${PLATE_STYLE} ${PLATE_FLAGS}`;
   const copy = el('button', { type: 'button', className: 'almanac-prompt-copy' }, 'Copy');
   copy.addEventListener('click', async () => {
@@ -428,7 +438,7 @@ function paintKept() {
   const list = readCombines();
   const box = $('[data-kept]');
   if (!list.length) {
-    box.replaceChildren(el('li', { className: 'almanac-kept-empty' }, 'None yet. A kept combine stays here, in this browser.'));
+    box.replaceChildren(el('li', { className: 'almanac-kept-empty' }, 'Nothing kept yet. A kept combine stays here, in this browser.'));
     return;
   }
   box.replaceChildren(...list.map((item, index) => el('li', { className: 'almanac-kept-item' },

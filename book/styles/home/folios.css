@@ -250,3 +250,10 @@ html:is([data-theme='night'], [data-theme='slate']) .folio-wall {
     transition: none;
   }
 }
+
+/* Settling: the wall keeps a screen's room while its folios come in, so what is under it waits below. */
+@media (scripting: enabled) {
+  .folio-wall {
+    min-height: 100svh;
+  }
+}

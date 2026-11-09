@@ -399,7 +399,9 @@
       "img": {
         "src": "/book/images/14.png",
         "alt": "A lone tree on a golden slope under a teal storm sky; a stream bends below, and a plain pencil-drawn figure — circle head, rectangle body, line limbs, one arm shorter — walks straight up the hill beneath a black bowler hat floating clear of his head.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "The Thursday Nobody Kept: the lane bends; the hat goes straight."
     },

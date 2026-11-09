@@ -35,7 +35,7 @@ export const SWITCHES = Object.freeze([
   {
     id: 'return-notes', attribute: 'data-switch-return-notes', stage: 'stable', layer: 'reader', label: 'Notes on what changed',
     hint: 'When you come back after a new release, a short card says what is new.',
-    effect: { on: 'Next release, a card at the top says what changed.', off: 'No card next release; the notes still live at /changes.' },
+    effect: { on: 'Next release, a card says what changed.', off: 'No card next release; the notes still live on your desk (Scriptorium, What changed).' },
     defaults: { returning: 'on', new: 'on' }
   },
   {
@@ -400,44 +400,82 @@ function bindPromptCopy(announce) {
 async function showReturnNotes(state, map) {
   const current = document.documentElement.dataset.cacheRelease || '';
   let seen = '';
+  const markSeen = () => { try { window.localStorage.setItem(SEEN_RELEASE_KEY, current); } catch { /* fine */ } };
   try {
     seen = window.localStorage.getItem(SEEN_RELEASE_KEY) || '';
-    window.localStorage.setItem(SEEN_RELEASE_KEY, current);
   } catch {
     return null;
   }
-  // New readers have nothing to compare against; the card is for people who were here.
-  if (map['return-notes'] !== 'on' || state.cohort !== 'returning' || !current || seen === current) {
-    return null;
-  }
-  const changes = await fetch(CHANGES_URL).then((res) => (res.ok ? res.json() : null)).catch(() => null);
-  const releases = (changes?.releases || []).filter((entry) => !seen || entry.release > seen);
-  if (!releases.length) {
-    return null;
-  }
-  // Not an <aside>: a dozen modules find the rail with querySelector('aside'),
-  // and this card sits earlier in the document than the rail does.
+  if (!current || seen === current) return null;
+  // A first visit, or notes switched off: there is nothing to tell, so this release is simply seen.
+  if (!seen || map['return-notes'] !== 'on') { markSeen(); return null; }
+  // Anyone who was here before has a release on record; the card is for them, whatever their cohort. The
+  // release counts as seen only once its notes are shown: a failed or stale fetch leaves it for next time.
+  const changes = await fetch(CHANGES_URL, { cache: 'no-cache' }).then((res) => (res.ok ? res.json() : null)).catch(() => null);
+  if (!changes?.releases?.some((entry) => entry.release === current)) return null;
+  const releases = changes.releases.filter((entry) => entry.release > seen && entry.release <= current);
+  if (!releases.length) { markSeen(); return null; }
+  markSeen();
+  // Not an <aside>: a dozen modules find the rail with querySelector('aside'). It floats over the page's
+  // corner rather than joining the head, so the chapter never moves under the reader when it arrives.
   const card = document.createElement('div');
   card.className = 'return-notes';
   card.setAttribute('role', 'note');
   card.setAttribute('aria-label', 'What changed since your last visit');
   const kicker = document.createElement('p');
   kicker.className = 'return-notes-kicker';
-  kicker.textContent = 'Since you were last here';
-  const list = document.createElement('ul');
-  releases.slice(0, 2).forEach((entry) => (entry.notes || []).forEach((note) => {
-    const item = document.createElement('li');
-    item.textContent = note;
-    list.append(item);
-  }));
+  kicker.textContent = releases.length > 1 ? `Since you were last here · ${releases.length} releases` : 'Since you were last here';
+  const listOf = (entries) => {
+    const list = document.createElement('ul');
+    entries.forEach((entry) => (entry.notes || []).forEach((note) => {
+      const item = document.createElement('li');
+      item.append(...linkedText(note));
+      list.append(item);
+    }));
+    return list;
+  };
+  card.append(kicker, listOf(releases.slice(0, 2)));
+  if (releases.length > 2) {
+    const more = document.createElement('details');
+    more.className = 'return-notes-more';
+    const summary = document.createElement('summary');
+    summary.textContent = `and ${releases.length - 2} earlier release${releases.length - 2 === 1 ? '' : 's'}`;
+    more.append(summary, listOf(releases.slice(2)));
+    card.append(more);
+  }
   const close = document.createElement('button');
   close.type = 'button';
   close.className = 'return-notes-close';
   close.textContent = 'Thanks';
   close.addEventListener('click', () => card.remove());
-  card.append(kicker, list, close);
-  document.querySelector('main.chapter .chapter-head')?.append(card);
+  card.append(close);
+  // The body carries perspective (reset.css), so a card that floats belongs in the top layer.
+  if ('showPopover' in HTMLElement.prototype) {
+    card.setAttribute('popover', 'manual');
+    document.body.append(card);
+    card.showPopover();
+  } else {
+    document.documentElement.append(card);
+  }
   return card;
+}
+
+/* A note's addresses become doors: lore.land/?/… and site paths (/almanac/, /pie/) are linked, the rest is text. */
+function linkedText(note) {
+  const out = [];
+  const pattern = /(?:lore\.land)?(\/\?\/[^\s,;)]+|\/(?:almanac|pie|folios|scriptorium|zine|texture|topics|seeds)\/[^\s,;)]*)/g;
+  let last = 0;
+  for (const m of note.matchAll(pattern)) {
+    const href = m[1].replace(/[.:]+$/, '');
+    if (m.index > last) out.push(note.slice(last, m.index));
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = m[0].replace(/[.:]+$/, '');
+    out.push(a);
+    last = m.index + m[0].replace(/[.:]+$/, '').length;
+  }
+  if (last < note.length) out.push(note.slice(last));
+  return out;
 }
 
 /* ─── Panel ─────────────────────────────────────────────────────────── */

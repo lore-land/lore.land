@@ -502,3 +502,11 @@ label.spell-label {
   margin: 0.4rem 0 0;
   padding-left: 1.1rem;
 }
+
+/* Settling: the desk keeps a screen's room while its spells are laid out, so the sections under it
+ * (the loom, the projection) never start in view and get pushed down. */
+@media (scripting: enabled) {
+  .desk {
+    min-height: 100svh;
+  }
+}

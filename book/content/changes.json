@@ -2,6 +2,16 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.I",
+      "date": "2026-11-09",
+      "notes": [
+        "Pages hold still while they load. Chapters, the desk, the almanac, the folios and the game used to jump a little as their pieces arrived; now each keeps the room it will need, so the line you started reading stays where it is.",
+        "Every page has the same menu now, and Play is in it. Each page also opens on one thing worth a look: what is new if you have been here before, a way in if you have not — today's wonder to look for, the newest chapter to carry the pie through, a saying for the fold.",
+        "If you have been here before, a small card in the corner says what changed since your last visit — every release you missed, not just the last two — and any page it names is a link. Every chapter, in order lists the whole book again, Book Two included.",
+        "Keeping the book for reading offline now keeps everything each page needs to work, and it lasts past the next release. The game and spwashi's hand can be kept too. Text no longer waits on a font from elsewhere, and the game's rule reader loads when you start to play."
+      ]
+    },
+    {
       "release": "2026_11_09.H",
       "date": "2026-11-09",
       "notes": [
@@ -10,7 +20,7 @@
         "Words can be made on something: paper, a wash, a drip, hatching, honey, glass or a storm, each with its own ground, its own way of setting the hand, and its own physics — the letters become things you can pick up and throw, and they come back as the material says. Add &factshift.center/?ground to the address and the same physics is said in factshift.center's terms, ready to open there.",
         "A ? in the address passes it through spw.quest: ?clarify reads it to you, ?align tidies it, ?mutate varies it, ?edit makes changes written into it, ?enhance fills in what is missing, ?resonate finds what echoes it on the folios. Each one leaves a receipt saying what it did.",
         "Where the sheet had no letter (numbers, marks, the Spw sigils), a pen measured from the hand draws one, in a dashed box that says it was penned. A line of Spw tunes how the hand is shown — wandering, leaning, bouncing, as scanned, or with its measure showing — and the page always says what was changed on purpose.",
-        "spwashi's hand comes with a curriculum: eight plans, each something to make and a question to ask about how pictures and words are made, written for readers of different ages to do together. It also reads spwashi's folios for textures, figures and sayings, each linked to the piece it came from on spwashi.com."
+        "spwashi's hand comes with a curriculum: ten plans, each something to make and a question to ask about how pictures and words are made, written for readers of different ages to do together. It also reads spwashi's folios for textures, figures and sayings, each linked to the piece it came from on spwashi.com."
       ]
     },
     {

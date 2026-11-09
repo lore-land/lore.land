@@ -123,7 +123,7 @@ function probeShareParity() {
       }
     }
 
-    const titleStem = title.split('|')[0].trim();
+    const titleStem = title.split('|')[0].replace(/\s*·\s*Lore\.Land\s*$/, '').trim();
     if (ogTitle && titleStem && !ogTitle.includes(titleStem)) {
       file('share_parity', 'linguistic', 'defect', page,
         `og:title "${ogTitle}" does not carry page title stem "${titleStem}"`);

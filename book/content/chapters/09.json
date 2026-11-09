@@ -270,7 +270,9 @@
       "img": {
         "src": "/book/images/09.png",
         "alt": "Eight glowing shards of the Fool's set assembled on a night ridge into one shape with one egg-sized hole; the coal-dark egg waits beside it.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Nine honks: eight tropes sampled and returned, and one note still folded warm inside its shell."
     },

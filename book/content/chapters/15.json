@@ -427,7 +427,9 @@
       "img": {
         "src": "/book/images/15.png",
         "alt": "A page from the parcel gate's book: a plain pencil figure under a floating black bowler hat, a parcel tag on one arm and a horn button in the other hand, measured in red pencil as a door; the gate-book's columns on the left end in 'parcel', the night school's roll on the right ends in 'one pupil, new, quiet, hand up' with the name left blank, and a damage slip is signed in a scribble.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Pupil, Parcel, or Door: one stranger, three honest records on one page."
     },

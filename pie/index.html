@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_09.G" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_09.I" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -39,23 +39,32 @@
       if (cover) document.documentElement.dataset.theme = cover;
     } catch { /* the default cover */ }
   </script>
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.F&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.I&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.W&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/components/likeness.css?v=2026_11_08.W&ctx=canon:likeness">
   <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.W&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_09.G&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_09.I&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.W"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_09.G"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.I"></script>
+  <script>
+    /* Settling: the voyage is laid out for this screen (pie-panels.mjs) before it is shown; the game lifts this
+       once its first arrangement holds, and it lifts itself regardless after a moment. */
+    document.documentElement.classList.add('pie-settling');
+    setTimeout(() => document.documentElement.classList.remove('pie-settling'), 6000);
+  </script>
+  <noscript><style>.pie-voyage { visibility: visible !important; }</style></noscript>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -65,10 +74,12 @@
       <nav class="hub-nav" aria-label="Primary">
         <a href="/book/chapter/01/">Read</a>
         <a href="/#chambers">Chapters</a>
+        <a href="/pie/" aria-current="page">Play</a>
         <a href="/almanac/">Almanac</a>
         <a href="/scriptorium/">Scriptorium</a>
         <a href="/folios/">Folios</a>
         <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
       </nav>
     </header>
 
@@ -97,6 +108,7 @@
           </ol>
           <p class="pie-keys-touch">On a phone, under the screen: the pad is the lanes in small; touch or slide to where you want to stand and the carrier walks there. Hop and throw sit under your other thumb; slide along throw to turn the needle, and let go. In the lanes themselves a drag still steps and a tap still throws. ⚙ Setup puts arrows on the screen instead (in a row, either side, or a cross; under the screen, at its edges, or over it), says what a tap and a double tap do, and lets a quick swipe up hop.</p>
           <p class="pie-best" data-pie-best>Nobody has carried it yet.</p>
+          <aside class="featured" data-featured="pie" aria-label="Featured"></aside>
           </div>
         </div>
 

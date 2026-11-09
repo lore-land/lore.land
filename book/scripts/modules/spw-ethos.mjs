@@ -1,4 +1,4 @@
-import { describeLoadStage } from './story-lexicon.mjs?v=2026_02_28.I';
+import { describeLoadStage } from './story-lexicon.mjs?v=2026_09_26.A';
 import { el } from './dom.mjs';
 import { normalizeSpwSource, resolvePathRefHref } from './spw-routing.mjs?v=2026_03_02.A';
 

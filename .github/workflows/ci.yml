@@ -29,6 +29,9 @@ jobs:
       - name: book:check (chapters, slots, bracework, almanac, anchors — c026)
         run: npm run book:check
 
+      - name: One version token per file (no module loaded twice)
+        run: npm run tokens:align -- --check
+
       - name: build (chapters:build -> spw:export -> vite build -> spw:project -> dist:static)
         run: npm run build
 

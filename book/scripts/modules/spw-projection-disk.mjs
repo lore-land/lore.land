@@ -39,12 +39,12 @@
  *
  * Canon: .spw/surfaces/spw-architecture.spw (why linked Spw is hyperbolic, and which loops it has).
  */
-import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_08.W';
+import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_09.I';
 import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-signature.mjs?v=2026_11_08.W';
 import {
   loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,
   SIGILS, DIMENSIONS, SET_VALENCE, chapterName
-} from './likeness.mjs?v=2026_11_08.W';
+} from './likeness.mjs?v=2026_11_09.I';
 import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_08.W';
 import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_09.G';
 

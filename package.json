@@ -23,6 +23,7 @@
     "assets:brand": "node book/scripts/tools/assets/brand-assets.mjs",
     "assets:studies": "node book/scripts/tools/assets/artifact-studies.mjs",
     "book:check": "node book/scripts/tools/book-check.mjs",
+    "tokens:align": "node book/scripts/tools/align-tokens.mjs",
     "spw:probes": "node .spw/tools/alignment-probes.mjs",
     "spw:plates": "node .spw/tools/plates-manifest.mjs",
     "spw:lint": "tsx .spw/tools/spw-lint.mjs",

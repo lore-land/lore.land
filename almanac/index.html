@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_09.G" data-cache-context="almanac" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_09.I" data-cache-context="almanac" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Almanac · Lore.Land</title>
-  <meta name="description" content="Your almanac of Boon.land: the creatures, antiques, artifacts, contrivances and bracework you have found in the chapters, the palettes and cards you have kept, and a bench for combining found things into small realms.">
+  <meta name="description" content="Your almanac of Boon.land: the creatures, old things, things left behind, contrivances, bracework and sayings you find in the chapters, the palettes and cards you keep, and a bench for combining them.">
   <meta name="theme-color" content="#f3ede1">
   <link rel="canonical" href="https://lore.land/almanac/">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Almanac · Lore.Land">
-  <meta property="og:description" content="Creatures, antiques, artifacts, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
+  <meta property="og:description" content="Creatures, old things, things left behind, contrivances, bracework and sayings found in the chapters of Lore.Land — and a bench for combining them.">
   <meta property="og:url" content="https://lore.land/almanac/">
   <meta property="og:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,21 +24,23 @@
   <meta name="twitter:title" content="Almanac · Lore.Land">
   <meta name="twitter:description" content="Creatures, antiques, artifacts, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
   <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
-  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
-  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.F&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
-  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.I&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.W&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.W&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_09.G&ctx=almanac:page">
+  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_09.I&ctx=almanac:page">
   <link rel="stylesheet" href="/book/styles/components/likeness.css?v=2026_11_08.W&ctx=canon:likeness">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.W"></script>
-  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_09.G"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="almanac">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -48,26 +50,30 @@
       <nav class="hub-nav" aria-label="Primary">
         <a href="/book/chapter/01/">Read</a>
         <a href="/#chambers">Chapters</a>
+        <a href="/pie/">Play</a>
         <a href="/almanac/" aria-current="page">Almanac</a>
         <a href="/scriptorium/">Scriptorium</a>
         <a href="/folios/">Folios</a>
         <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
       </nav>
     </header>
 
     <main id="main-content" class="hub-main almanac-main">
       <section class="hub-hero almanac-hero" aria-labelledby="almanac-title">
-        <p class="hub-eyebrow">Your almanac · creatures, antiques, artifacts, contrivances, bracework</p>
+        <p class="hub-eyebrow">Your almanac · creatures, old things, things left behind, contrivances, bracework, sayings</p>
         <h1 id="almanac-title">What you have found in Boon.land</h1>
         <p class="hub-lede">
-          Every chapter names things worth keeping: creatures of the wild places, contrivances of the built ones, and
-          bracework — the makers' habit of writing what they mean to make in sigils and braces. The first time a chapter
+          Every chapter names things worth keeping: creatures of the wild places, old things the land keeps, things a
+          scene leaves behind, contrivances of the built places, bracework — the makers' habit of writing what they
+          mean to make in sigils and braces — and the sayings they live by. The first time a chapter
           names one, it is marked with a dotted line. Tap it, and it comes here. Most of them live in more than one
           place; finding one again somewhere new is how the almanac fills in.
         </p>
         <p class="almanac-tally" data-almanac-tally>Opening the almanac…</p>
         <div class="almanac-progress" data-almanac-progress aria-label="Where you are, as a spell"></div>
       </section>
+      <aside class="featured" data-featured="almanac" aria-label="Featured"></aside>
 
       <section class="almanac-figure" aria-labelledby="figure-title">
         <span class="almanac-figure-art" data-almanac-sketch aria-hidden="true"></span>
@@ -146,7 +152,7 @@
           Every chapter has its own colours and lettering, mixed from a laminated folio (or from its plate, where no folio
           fits yet). Finish a chapter and you keep a layer of its palette, one for each way of finishing it: read to its
           end for the colour, carry the pie through it for the type, keep its own wonders for the light. The chapter wears
-          what you have kept. Each palette can be carried away as a Spw atom or as CSS tokens.
+          what you have kept. Each palette can be copied, for a painter or for a web page.
         </p>
         <ul class="almanac-palettes" data-palettes></ul>
       </section>

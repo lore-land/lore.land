@@ -324,7 +324,9 @@
       "img": {
         "src": "/book/images/11.png",
         "alt": "A hollow instant empire assembling around a bitter crusted pie whose hoarded berries wake in gold seams; the coal-dark egg still warm at the center of the grant.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Paradox Bloom: the empire arrives; the wish does not finish."
     },

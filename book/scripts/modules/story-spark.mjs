@@ -176,7 +176,7 @@ class StorySparkElement extends HTMLElement {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'spark-conjure';
-    button.textContent = 'Conjure another spark';
+    button.textContent = 'Strike another spark';
     button.disabled = true;
 
     panel.append(text, button);

@@ -27,6 +27,8 @@
   <meta name="twitter:description" content="{{DESCRIPTION}}">
   <meta name="twitter:image" content="{{OG_IMAGE}}">
 
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/book/fonts/LoreLand-Display.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="/book/styles/core/fonts.css?v={{RELEASE}}&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v={{RELEASE}}&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/tokens.css?v={{RELEASE}}&ctx=canon:baseline">
@@ -175,7 +177,9 @@
   }
   </script>
 </head>
-<body data-mood="{{MOOD}}" data-chapter="{{CHAPTER_SLUG}}">
+<!-- The reading band and density are what the acoustics check (load-lifecycle.mjs) finds for every chapter, so they
+     are set before first paint: the measure never narrows under the reader when the check runs. -->
+<body data-mood="{{MOOD}}" data-chapter="{{CHAPTER_SLUG}}" data-acoustics="dense" data-readability-band="tight">
   <a class="skip-link" href="#chapter-content">Skip to chapter</a>
   <nav class="chapter-navigation" aria-label="Chapters" data-edge="{{CHAPTER_EDGE}}">
     <a href="/" class="hub-home" aria-label="Return to the Lore.Land entrance">Lore.Land</a>
@@ -203,18 +207,22 @@
   </div>
 
   <aside aria-label="Reading tools">
+    <div class="rail-reserve" aria-hidden="true"></div>
     <div class="chamber-seal-mount" data-chamber-seal="{{CHAPTER_SLUG}}" aria-hidden="true"></div>
     <ul id="lore-collector" aria-label="Lore collector" aria-live="polite"></ul>
     <button id="lore-button" aria-controls="lore-collector" aria-expanded="false">Open field notes</button>
     <nav class="additional-links" aria-labelledby="monument-doors-label">
       <p class="additional-links-label" id="monument-doors-label">Doors out of this chapter</p>
       <a href="/" class="hub-return">Home</a>
-      <a href="/topics/" class="topics-link">Threads that come back</a>
-      <a href="/world/civic-magic.html" class="civic-magic">Civic magic</a>
-      <a href="/scriptorium/" class="scriptorium-link">How the book is made</a>
-      <a href="/characters/boof.html" class="character-profile">Boof · dog of the land</a>
-      <a href="/zine/" class="zine-link">Fold a broadside</a>
       <a href="/book/timeline.html" class="story-timeline">Every chapter, in order</a>
+      <a href="/pie/" class="pie-link">Play: carry the pie through the book</a>
+      <a href="/almanac/" class="almanac-link">Your almanac of what you have found</a>
+      <a href="/topics/" class="topics-link">Threads that come back</a>
+      <a href="/characters/boof.html" class="character-profile">Boof · dog of the land</a>
+      <a href="/world/civic-magic.html" class="civic-magic">The world: civic magic</a>
+      <a href="/folios/" class="folios-link">Folios: pages under glass</a>
+      <a href="/scriptorium/" class="scriptorium-link">Your desk, and how the book is made</a>
+      <a href="/zine/" class="zine-link">Fold a broadside</a>
     </nav>
     <a class="primary-action" href="{{NEXT_HREF}}" rel="next">Carry on to Chapter {{NEXT_NUMBER}} <span aria-hidden="true">→</span></a>
   </aside>

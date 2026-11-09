@@ -3,7 +3,7 @@ import {
   STORY_VOICE_READ_BEHAVIOR,
   storyVoiceFor,
   voiceKickerWithMask
-} from '../modules/story-lexicon.mjs?v=2026_09_07.B';
+} from '../modules/story-lexicon.mjs?v=2026_09_26.A';
 
 /**
  * Shared custom-element base for story voices.

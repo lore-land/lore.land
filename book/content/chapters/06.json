@@ -324,7 +324,9 @@
       "img": {
         "src": "/book/images/06.png",
         "alt": "Night streets of glass lanterns leaning toward a coal-warm cracked egg, and a wide warm pie holding court at the center of the labyrinth.",
-        "loading": "lazy"
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
       },
       "figcaption": "Bonk City: the glass shows the light. The pie is never smaller."
     },

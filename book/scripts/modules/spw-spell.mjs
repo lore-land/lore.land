@@ -425,7 +425,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_08.N').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_09.I').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

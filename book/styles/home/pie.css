@@ -4835,3 +4835,8 @@ html:not([data-chrome-hidden='true']) .pie-index {
   border-bottom: 1px solid color-mix(in srgb, var(--hub-ink) 14%, transparent);
   margin-bottom: 0.6rem;
 }
+
+/* Settling: until its first arrangement holds, the voyage is laid out unseen (no panel jumps into place). */
+html.pie-settling .pie-voyage {
+  visibility: hidden;
+}

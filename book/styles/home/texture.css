@@ -7,6 +7,15 @@
   font-display: swap;
 }
 
+/* The same hand for headings, under a name that never swaps in late: a title set in it either has the hand from
+ * the first frame (it is preloaded) or keeps its fallback for the visit, so it never re-wraps under the reader.
+ * The alphabet, which is there to show the hand, uses the name that swaps. One file, one download. */
+@font-face {
+  font-family: 'Spwashi Hand Display';
+  src: url('/book/fonts/spwashi/SpwashiHand.otf') format('opentype');
+  font-display: optional;
+}
+
 @font-face {
   font-family: 'Spwashi Outline';
   src: url('/book/fonts/spwashi/SpwashiOutline.otf') format('opentype');
@@ -26,7 +35,7 @@ body[data-surface='monument'] .texture-hero {
 }
 
 body[data-surface='monument'] .texture-title {
-  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-family: 'Spwashi Hand Display', var(--hub-display, Georgia, serif);
   font-weight: 400;
   font-size: clamp(2.4rem, 7vw, 4.2rem);
   letter-spacing: 0.01em;
@@ -68,7 +77,7 @@ body[data-surface='monument'] .texture-title {
 }
 
 .texture-section h2 {
-  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-family: 'Spwashi Hand Display', var(--hub-display, Georgia, serif);
   font-weight: 400;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   margin: 0 0 0.4rem;
@@ -895,3 +904,25 @@ body[data-surface='monument'] .texture-main > *,
 
 .texture-svg[data-ground='storm'] .texture-ink { fill: #f1ead8; stroke: #f1ead8; }
 .texture-svg[data-ground='storm'] .texture-box { stroke: rgba(241, 234, 216, 0.55); }
+
+/* Settling: the address's parts and the verbs keep their room while the address is read. */
+@media (scripting: enabled) {
+  .texture-route-parts:empty { min-height: 3.4rem; }
+  .texture-verbs:empty { min-height: 1.9rem; }
+}
+
+/* Settling, in the hero: the same height whichever face is showing (the hand arrives a moment after the page).
+ * The title keeps to one line, and the scheme's line height is set, not taken from the font. */
+body[data-surface='monument'] .texture-hero .texture-title {
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.texture-scheme {
+  line-height: 1.5;
+}
+
+.texture-scheme code {
+  display: inline-block;
+  line-height: 1.5;
+}

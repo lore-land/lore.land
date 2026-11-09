@@ -15,7 +15,7 @@ import { seedManifest, seedSets } from '../home/seeds.mjs?v=2026_11_08.N';
 import {
   DIMENSIONS, MOTIONS, SIGILS, CONTAINERS, chapterName,
   loadLikeness, discoveryOf, refreshDiscovery, dressAsset, findSimilar, likenessMark
-} from '../modules/likeness.mjs?v=2026_11_08.O';
+} from '../modules/likeness.mjs?v=2026_11_09.I';
 
 const KEEP_LIMIT = 3;
 const SEED_STORAGE_KEY = 'lore.experience.seed-adopted';
