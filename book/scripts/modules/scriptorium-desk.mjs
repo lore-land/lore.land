@@ -17,7 +17,7 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_08.S';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_09.F';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_08.N';
 import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_08.N';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_08.N';
@@ -25,7 +25,7 @@ import { readStory, describeStory, hasStory } from './story-directions.mjs?v=202
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
-import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_06.B';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_09.F';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
 
 const CATALOG_URL = '/book/content/catalog.json';
@@ -129,7 +129,7 @@ export const SPELLBOOK = Object.freeze([
   { op: '?', example: '?[next]', does: 'Ask when the next chapter lands. Also ?[new], ?[shelf].' },
   { op: '?', example: '?[find]{berries remember}', does: 'Search the whole book. Plain words work too.' },
   { op: '?', example: '?[sightings]', does: 'The figure under the hat: what you have noticed, and his drawing so far.' },
-  { op: '?', example: '?[almanac]', does: 'The creatures, contrivances and bracework you have kept, and how many are still out there.' },
+  { op: '?', example: '?[almanac]', does: 'The creatures, antiques, artifacts, contrivances and bracework you have kept, and how many are still out there.' },
   { op: '?', example: '?[pie]', does: 'Your carries: how far, how many clowns got WAP, each chapter’s reading lean, and any chapter Mimes Against WAP hold.' },
   { op: '?', example: '?[living]', does: 'What breathes in the book: how many phrases turn by the minute, the hour and the day.' },
   { op: '?', example: '?[tellings]', does: 'How many of the book’s other tellings you have heard.' },
@@ -372,7 +372,7 @@ export async function initScriptoriumDesk() {
         const total = data.wonders.filter((w) => kept[w.id]).length;
         say(op, el('div', {},
           el('p', {}, total ? `${total} of ${data.wonders.length} wonders kept.` : 'Nothing kept yet. In any chapter, the dotted words are doors: tap one to keep it.'),
-          el('ul', {}, line('creature', 'Creatures'), line('contrivance', 'Contrivances'), line('bracework', 'Bracework')),
+          el('ul', {}, line('creature', 'Creatures'), line('antique', 'Antiques'), line('artifact', 'Artifacts'), line('contrivance', 'Contrivances'), line('bracework', 'Bracework')),
           el('p', {}, el('a', { href: '/almanac/' }, 'Open your almanac →'))));
       } else if (handle === 'sightings' || handle === 'hat') {
         const seen = readSightings();

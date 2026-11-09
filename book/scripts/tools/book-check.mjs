@@ -177,6 +177,8 @@ almanac.wonders.forEach((wonder) => {
   ids.add(wonder.id);
   checkWonder(wonder, { totalChapters: chapters.length }).forEach((p) => error('almanac', p));
   if (!wonder.prompt && wonder.kind !== 'saying') warn('almanac', `${wonder.id}: no plate prompt yet (PLAN.E L10)`);
+  // Made in the lanes (an artifact a carry's deed makes), a wonder is not named in the prose: it is kept by play.
+  if (wonder.made_in === 'lanes') return;
   [wonder.home, ...(wonder.echoes || [])].forEach((n) => {
     if (only.length && !only.includes(n)) return;
     const text = proseOf[n] || '';

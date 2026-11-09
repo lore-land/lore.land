@@ -48,7 +48,7 @@ import {
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_11_09.E';
 import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
-import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
+import { initAlmanac } from './modules/almanac.mjs?v=2026_11_09.F';
 import { initLiving } from './modules/living.mjs?v=2026_11_08.N';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_08.N';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_08.N';
@@ -64,7 +64,7 @@ import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_08.N';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.S';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_09.F';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_08.N';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.N';

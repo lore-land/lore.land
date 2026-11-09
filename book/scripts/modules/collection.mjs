@@ -23,9 +23,9 @@
  * met, and every keeping says so where it happens (settled.mjs).
  * Spw atom: =palette[id] (the projection spell names the one being worn).
  */
-import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_08.L';
+import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_09.F';
 import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
-import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
+import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_09.F';
 import { settle } from './settled.mjs?v=2026_11_08.N';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_08.O';
 

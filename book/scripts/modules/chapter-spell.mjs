@@ -35,6 +35,7 @@
 
 import { planRooms, resolveSlots, padChapterNumber, chapterOrdinal } from './chapter-render.mjs?v=2026_11_08.J';
 import { storyVoiceFor } from './story-lexicon.mjs?v=2026_09_26.A';
+import { KIND_SIGIL } from './kinds.mjs?v=2026_11_09.F';
 import { ROOM_KINDS, ROOM_RESERVED_WORDS, roomSentence, readRoom } from './room-signature.mjs?v=2026_11_08.J';
 
 /* ─── Words ──────────────────────────────────────────────────────────── */
@@ -115,8 +116,9 @@ export function glossFor(gloss, isFound = () => true) {
 
 /* ─── The world the chapter is read against ──────────────────────────── */
 
-export const KIND_SIGIL = Object.freeze({ creature: '@', contrivance: '$', bracework: '&', saying: '#' });
-const KIND_WORD = Object.freeze({ creature: 'a creature', contrivance: 'a contrivance', bracework: 'bracework', saying: 'a saying' });
+// The kinds and their sigils are the land's (kinds.mjs); the words here carry their articles, for sentences.
+export { KIND_SIGIL };
+const KIND_WORD = Object.freeze({ creature: 'a creature', antique: 'an antique', artifact: 'an artifact', contrivance: 'a contrivance', bracework: 'bracework', saying: 'a saying' });
 
 const VOICE_WORDS = Object.freeze({
   narrator: 'the narrator', boof: 'Boof', boonberry: 'the boonberries', fool: 'the Fool', bonk: 'the bonk',

@@ -2,8 +2,9 @@
  * almanac.mjs — the wonders a reader collects.
  *
  * Boon.land is full of things worth keeping: creatures of the wild places,
- * contrivances of the built ones, and bracework — the makers' habit of
- * writing what they mean to make in sigils and braces. The first time a
+ * antiques the land keeps, artifacts a scene leaves behind, contrivances of
+ * the built ones, and bracework — the makers' habit of writing what they mean
+ * to make in sigils and braces. Kinds, sigils, inks and badges: kinds.mjs. The first time a
  * chapter names one, the build marks it (`.wonder-mark[data-wonder]`,
  * chapter-render.mjs). Tap it and it goes into the reader's almanac, with
  * the chapter it was found in. Most wonders live in more than one place;
@@ -21,8 +22,9 @@ const KEY = 'lore.almanac.v1';
 const DATA_URL = '/book/content/world/almanac.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
 
-export const KIND_SIGIL = Object.freeze({ creature: '@', contrivance: '$', bracework: '&', saying: '#' });
-export const KIND_WORD = Object.freeze({ creature: 'creature', contrivance: 'contrivance', bracework: 'bracework', saying: 'saying' });
+import { KIND_SIGIL, KIND_WORD, kindBadgeNode, kindLines } from './kinds.mjs?v=2026_11_09.F';
+
+export { KIND_SIGIL, KIND_WORD };
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -197,12 +199,14 @@ export function initAlmanac({ chapterData, announce } = {}) {
       'aria-label': `${wonder.name}, ${KIND_WORD[wonder.kind] || wonder.kind}`
     },
       el('div', { className: 'wonder-card-head' },
-        el('span', { className: 'wonder-card-sigil', 'aria-hidden': 'true' }, KIND_SIGIL[wonder.kind] || '·'),
+        el('span', { className: 'wonder-card-sigil', 'aria-hidden': 'true' }, kindBadgeNode(wonder.kind, { size: 26 })),
         el('span', { className: 'wonder-card-kind' }, `${KIND_WORD[wonder.kind] || wonder.kind} · ${wonder.region}`),
         el('button', { type: 'button', className: 'wonder-card-close', 'aria-label': 'Close' }, '×')),
       el('p', { className: 'wonder-card-name' }, wonder.name),
       el('p', { className: 'wonder-card-note' }, wonder.note),
       wonder.craft ? el('p', { className: 'wonder-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
+      // Its kind's own lines: how a creature moves and who misreads it; an antique's provenance; an artifact's residue.
+      ...kindLines(wonder).map(([label, text]) => el('p', { className: 'wonder-card-line' }, el('span', {}, `${label} · `), text)),
       el('p', { className: 'wonder-card-status' }, statusLine(result, livesIn, count, data.wonders.length)),
       livesIn.length > 1 ? el('nav', { className: 'wonder-card-places', 'aria-label': `Where ${wonder.name} lives` },
         el('span', { className: 'wonder-card-places-label' }, 'Lives in'), ...doors) : null,

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.W" data-cache-context="almanac" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_09.F" data-cache-context="almanac" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Almanac · Lore.Land</title>
-  <meta name="description" content="Your almanac of Boon.land: the creatures, contrivances and bracework you have found in the chapters, the palettes and cards you have kept, and a bench for combining found things into small realms.">
+  <meta name="description" content="Your almanac of Boon.land: the creatures, antiques, artifacts, contrivances and bracework you have found in the chapters, the palettes and cards you have kept, and a bench for combining found things into small realms.">
   <meta name="theme-color" content="#f3ede1">
   <link rel="canonical" href="https://lore.land/almanac/">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Almanac · Lore.Land">
-  <meta property="og:description" content="Creatures, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
+  <meta property="og:description" content="Creatures, antiques, artifacts, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
   <meta property="og:url" content="https://lore.land/almanac/">
   <meta property="og:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
   <meta property="og:image:width" content="1200">
@@ -22,11 +22,11 @@
   <meta property="og:site_name" content="Lore.Land">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Almanac · Lore.Land">
-  <meta name="twitter:description" content="Creatures, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
+  <meta name="twitter:description" content="Creatures, antiques, artifacts, contrivances and bracework found in the chapters of Lore.Land — and a bench for combining them into small realms.">
   <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
   <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_05.C&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_05.C&ctx=canon:baseline">
-  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_08.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.F&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
@@ -35,10 +35,10 @@
   <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.W&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_08.W&ctx=almanac:page">
+  <link rel="stylesheet" href="/book/styles/home/almanac.css?v=2026_11_09.F&ctx=almanac:page">
   <link rel="stylesheet" href="/book/styles/components/likeness.css?v=2026_11_08.W&ctx=canon:likeness">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.W"></script>
-  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_08.W"></script>
+  <script defer type="module" src="/book/scripts/home/almanac-page.mjs?v=2026_11_09.F"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="almanac">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -57,7 +57,7 @@
 
     <main id="main-content" class="hub-main almanac-main">
       <section class="hub-hero almanac-hero" aria-labelledby="almanac-title">
-        <p class="hub-eyebrow">Your almanac · creatures, contrivances, bracework</p>
+        <p class="hub-eyebrow">Your almanac · creatures, antiques, artifacts, contrivances, bracework</p>
         <h1 id="almanac-title">What you have found in Boon.land</h1>
         <p class="hub-lede">
           Every chapter names things worth keeping: creatures of the wild places, contrivances of the built ones, and
@@ -86,12 +86,30 @@
         <ul class="almanac-cards" data-shelf="creature"></ul>
       </section>
 
+      <section class="almanac-shelf" id="antiques" data-kind="antique" aria-labelledby="antiques-title">
+        <div class="almanac-shelf-head">
+          <h2 id="antiques-title"><span class="almanac-sigil" aria-hidden="true">.</span> Antiques</h2>
+          <p class="almanac-shelf-count" data-shelf-count="antique"></p>
+        </div>
+        <p class="almanac-shelf-lede">Old made things the land keeps: who made each one, who keeps it now, and what it remembers. Some were made in one chapter and are kept in another.</p>
+        <ul class="almanac-cards" data-shelf="antique"></ul>
+      </section>
+
+      <section class="almanac-shelf" id="artifacts" data-kind="artifact" aria-labelledby="artifacts-title">
+        <div class="almanac-shelf-head">
+          <h2 id="artifacts-title"><span class="almanac-sigil" aria-hidden="true">*</span> Artifacts</h2>
+          <p class="almanac-shelf-count" data-shelf-count="artifact"></p>
+        </div>
+        <p class="almanac-shelf-lede">What a scene leaves behind, marked by what happened in it, and what it asks of whoever picks it up. Some are found in the chapters; some are made in the lanes, by what a carry does.</p>
+        <ul class="almanac-cards" data-shelf="artifact"></ul>
+      </section>
+
       <section class="almanac-shelf" id="contrivances" data-kind="contrivance" aria-labelledby="contrivances-title">
         <div class="almanac-shelf-head">
           <h2 id="contrivances-title"><span class="almanac-sigil" aria-hidden="true">$</span> Contrivances</h2>
           <p class="almanac-shelf-count" data-shelf-count="contrivance"></p>
         </div>
-        <p class="almanac-shelf-lede">Where people build, they build things that help a little and cost a little: kilns, needles, bells, presses.</p>
+        <p class="almanac-shelf-lede">Where people build, they build things that help a little and cost a little, and use them still: needles, ladders, rules, dividers, boxes.</p>
         <ul class="almanac-cards" data-shelf="contrivance"></ul>
       </section>
 

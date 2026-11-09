@@ -1,4 +1,4 @@
-# The Almanac of Boon.land — creatures, contrivances, and bracework
+# The Almanac of Boon.land — creatures, antiques, artifacts, contrivances, and bracework
 # Worldbuilding canon for the 2026-11 chapter pass. Nouns and adjectives the land keeps.
 # Every entry must DO something in a scene (cost, help, misread, remember) — no catalogue dumps.
 # Lowercase compound nouns by preference; proper names are rare and earned.
@@ -11,7 +11,8 @@
   &boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
   rule: "The world believes its impossible premises completely. A wonder has a habit, a cost, and someone who misreads it."
-  data: "book/content/world/almanac.json (72 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes)"
+  data: "book/content/world/almanac.json (81 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes; a creature's motion and misread, an antique's provenance, an artifact's residue and made_by)"
+  kinds: "book/scripts/modules/kinds.mjs — the one registry every feature reads (sigil, shelf, ink token, motion in the lanes, how it is found, art fields, badge); how the kinds live across the site: .spw/surfaces/ecology.spw"
   runtime: "chapter-render.mjs marks the first naming of each wonder per chapter (.wonder-mark); almanac.mjs collects on tap (lore.almanac.v1); /almanac/ shows the collection and the combining bench; desk ?[almanac]; switch wonders"
   revisit: "Every wonder has a home chapter and at least one echo; a reader's entry fills in place by place."
 }
@@ -77,6 +78,19 @@
   pie_dividers: "brass compasses the night school uses to divide paper pies evenly; they never come out even"
   brace_boxes: "small glass boxes with sigil-etched lids, sold in Bonk City; each holds a pocket realm combined from two nouns and a sigil"
   sliver_tin: "the night school's tin for the slivers the pie-dividers leave over; each winter's fill half the room the last left, so it is always filling and never full (the undercurrent: halves that sum toward one and never arrive)"
+}
+
+^"antiques"{
+  .note: "Old made things the land keeps, moved out of the contrivances (2026_11_09.F): each has a provenance — who made it, who keeps it, what it remembers. A contrivance is used; an antique is kept. In the lanes it stays, waiting longest by its lane, and keeping it steadies the pie the way old things do."
+  members: "press_stones, bonk_kiln, dent_lanterns, chime_gutters, oath_scale, well_winch, shard_rack, load_bells, glassing_press, storm_weight, crosswind_loom, ferry_bell"
+  rule: "Its provenance is a small history, never a plot: it may name a maker, a keeper and a memory, and a chapter it was made or kept in; it never explains the Egg or names the figure."
+}
+
+^"artifacts"{
+  .note: "What a scene leaves behind, marked by what happened in it (story-boonhonk.spw#residue_after_departure: a remainder the next scene can inherit), and what it asks of whoever picks it up. Some are found in the chapters, named in the words of the scene that left them; some are made in the lanes, by what a carry does, and come to the almanac on their own."
+  found: "horn_button (Fifteen, lost in Six), waxed_slice (Six, Ten, Fourteen), gate_book_entry and damage_slip (Fifteen), relit_torch and criers_note (Fourteen), bridge_receipts (Twelve, Fifteen)"
+  made_in_the_lanes: "stacked_plate (the first WAP of any carry), found_line (five words kept from the road)"
+  rule: "Terms are the scene's own phrase, not a common word (a torch that had gone out, both receipts, saw a hat), so an artifact is marked where it was left and nowhere it merely shares a noun."
 }
 
 ^"bracework"{

@@ -8,12 +8,15 @@
  * against them; generators (spw:trope-prompt, a future spw:scene-seed) read
  * them to propose seeds, never prose.
  *
- * Plain ES module, no dependencies: importable by Node tools and the browser.
+ * Plain ES module, importable by Node tools and the browser; the kinds of wonder come from the one
+ * registry every feature reads (book/scripts/modules/kinds.mjs, also dependency-free).
  */
+
+import { KIND_ORDER, kindProblems } from '../scripts/modules/kinds.mjs';
 
 /** @typedef {'boon'|'bane'|'bone'} Lean — how a paragraph weighs (c023). */
 /** @typedef {'minute'|'hour'|'day'} Clock — how often a living slot turns (c024). */
-/** @typedef {'creature'|'contrivance'|'bracework'|'saying'} WonderKind — a saying carries a piece of the makers' philosophy (PLAN.E as theme). */
+/** @typedef {'creature'|'antique'|'artifact'|'contrivance'|'bracework'|'saying'} WonderKind — kinds.mjs; a saying carries a piece of the makers' philosophy (PLAN.E as theme). */
 /** @typedef {'!'|'?'|'~'|'@'|'&'|'*'|'^'} Beat — what a section does (the spirit sequence). */
 
 /**
@@ -105,7 +108,7 @@
 
 export const LEANS = Object.freeze(['boon', 'bane', 'bone']);
 export const CLOCKS = Object.freeze(['minute', 'hour', 'day']);
-export const WONDER_KINDS = Object.freeze(['creature', 'contrivance', 'bracework', 'saying']);
+export const WONDER_KINDS = KIND_ORDER;
 export const BEATS = Object.freeze(['!', '?', '~', '@', '&', '*', '^']);
 export const CONTENT_TYPES = Object.freeze(['paragraph', 'pull', 'bracework']);
 export const SLOT_PATTERN = /\{\{([a-z0-9-]+)\}\}/g;
@@ -186,6 +189,7 @@ export function checkWonder(wonder, { totalChapters = Infinity } = {}) {
     if (typeof wonder?.[key] !== 'string' || !wonder[key].trim()) problems.push(`${wonder?.id || '?'}: missing ${key}`);
   });
   if (!WONDER_KINDS.includes(wonder?.kind)) problems.push(`${wonder?.id}: kind must be ${WONDER_KINDS.join(' | ')}`);
+  else problems.push(...kindProblems(wonder));
   if (!Array.isArray(wonder?.terms) || !wonder.terms.length) problems.push(`${wonder?.id}: needs terms`);
   const inBook = (n) => Number.isInteger(n) && n >= 1 && n <= totalChapters;
   if (!inBook(wonder?.home)) problems.push(`${wonder?.id}: home ${wonder?.home} is not a chapter`);

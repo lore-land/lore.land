@@ -43,6 +43,8 @@ export const POWER_SPELLS = Object.freeze({
   // A wonder without a gift of its own gives by its kind.
   creature: '*creature{ %crust[0.12] %filling[0.12] #says["A creature of the land, kept. The aura is fed a little, crust and filling."] }',
   contrivance: '*contrivance{ %crust[0.24] #says["Something made with care, kept. The crust is fed."] }',
+  antique: '*antique{ !level %crust[0.12] #says["Something old the land kept, kept again. The pie steadies, the way old things do, and the crust is fed."] }',
+  artifact: '*artifact{ !ready %filling[0.12] #says["Something a scene left behind, picked up. A slice is ready, and the filling is fed."] }',
   bracework: '*bracework{ %filling[0.18] !ready #says["Written before it was built, kept. A slice is ready, and the filling is fed."] }',
   saying: '*saying{ !level #says["A saying the makers keep. The pie steadies, the way a rule does."] }',
   // The field: the three berries, each a kind of foretelling (berries.json), and a slow beaver.

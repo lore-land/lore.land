@@ -787,3 +787,42 @@ body[data-surface='monument'] .almanac-shelf .likeness-atlas-strip-list {
   justify-self: start;
   font-size: 0.9rem;
 }
+
+/* ─── Antiques and artifacts (kinds.mjs), and every card's badge ─── */
+body[data-surface='monument'] .almanac-shelf[data-kind='antique'] { --kind-ink: color-mix(in oklab, var(--hub-ink) 55%, var(--hub-gold)); }
+body[data-surface='monument'] .almanac-shelf[data-kind='artifact'] { --kind-ink: color-mix(in oklab, var(--hub-berry) 60%, var(--hub-hearth)); }
+
+.almanac-card-kicker .kind-badge {
+  margin-right: 0.25rem;
+  color: var(--kind-ink, currentColor);
+}
+
+.almanac-card.is-unfound .kind-badge {
+  opacity: 0.55;
+}
+
+.kind-badge .kind-badge-fill {
+  fill: color-mix(in srgb, currentColor 13%, transparent);
+  stroke: none;
+}
+
+/* A clue for the hunt (unrecorded), and a kind's own lines (kept). */
+.almanac-card-clue,
+.almanac-card-line {
+  margin: 0.3rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.almanac-card-clue > span,
+.almanac-card-line > span {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--kind-ink, var(--hub-muted));
+}
+
+.almanac-card-clue a {
+  white-space: nowrap;
+}

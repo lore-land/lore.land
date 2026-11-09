@@ -1,7 +1,9 @@
 {
-  "note": "The almanac of Boon.land — wonders a reader can collect (book/scripts/modules/almanac.mjs). Canon: .spw/surfaces/almanac.spw. `terms` are matched in the prose, case-insensitively; `home` is where each is first met, `echoes` where it returns.",
+  "note": "The almanac of Boon.land — wonders a reader can collect (book/scripts/modules/almanac.mjs; kinds in book/scripts/modules/kinds.mjs). Canon: .spw/surfaces/almanac.spw and .spw/surfaces/ecology.spw. `terms` are matched in the prose, case-insensitively; `home` is where each is first met, `echoes` where it returns. A creature has a `motion` and someone who `misread`s it; an antique a `provenance` (made, kept, remembers); an artifact a `residue` (left_by, obliges), and, when it is made in the lanes, `made_by` (a deed the carries keep, at_least so many).",
   "kinds": {
     "creature": "Bestiary",
+    "antique": "Antiques",
+    "artifact": "Artifacts",
     "contrivance": "Contrivances",
     "bracework": "Bracework",
     "saying": "Sayings"
@@ -36,7 +38,9 @@
         8,
         12,
         14
-      ]
+      ],
+      "motion": "burrows",
+      "misread": "Frost-watchers take the warmth under the field for the field's own, and thank the field."
     },
     {
       "id": "echo-wrens",
@@ -65,7 +69,9 @@
       "echoes": [
         12,
         14
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Travellers answer them, are answered a beat late, and think the grove is mocking them."
     },
     {
       "id": "lag-stag",
@@ -92,7 +98,9 @@
       "home": 2,
       "echoes": [
         14
-      ]
+      ],
+      "motion": "lags",
+      "misread": "Hunters follow the prints and arrive exactly where the stag has already not been."
     },
     {
       "id": "rehearsal-moths",
@@ -121,7 +129,9 @@
       "echoes": [
         11,
         13
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Farmers read tomorrow off their wings, and blame the moths when the smudge was their own."
     },
     {
       "id": "salt-whales",
@@ -149,7 +159,9 @@
       "home": 3,
       "echoes": [
         9
-      ]
+      ],
+      "motion": "burrows",
+      "misread": "Surveyors map the glowing roads as streams, and cannot think why they turn."
     },
     {
       "id": "signal-skinks",
@@ -177,7 +189,9 @@
       "home": 3,
       "echoes": [
         9
-      ]
+      ],
+      "motion": "stays",
+      "misread": "Signallers think the skinks are answering them. It is the stones they answer."
     },
     {
       "id": "weathercocks",
@@ -205,7 +219,9 @@
       "home": 4,
       "echoes": [
         7
-      ]
+      ],
+      "motion": "stays",
+      "misread": "Visitors take the turning for wind; the council takes it for a vote."
     },
     {
       "id": "hum-crickets",
@@ -233,7 +249,9 @@
       "home": 5,
       "echoes": [
         13
-      ]
+      ],
+      "motion": "burrows",
+      "misread": "A liar takes their silence for peace."
     },
     {
       "id": "pane-snails",
@@ -262,7 +280,9 @@
       "echoes": [
         13,
         15
-      ]
+      ],
+      "motion": "stays",
+      "misread": "The glaziers believe the panes clear themselves overnight."
     },
     {
       "id": "gate-pigeons",
@@ -290,7 +310,9 @@
       "home": 15,
       "echoes": [
         6
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Porters coming early think the gate has been rising on its own all night."
     },
     {
       "id": "oath-moths",
@@ -318,7 +340,9 @@
       "home": 7,
       "echoes": [
         12
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Merchants swear louder, as if the moths could be brought by volume."
     },
     {
       "id": "remembrancers",
@@ -346,7 +370,9 @@
       "home": 8,
       "echoes": [
         10
-      ]
+      ],
+      "motion": "swims",
+      "misread": "The grieving think the well keeps their faces whole. The fish are folding them to fit."
     },
     {
       "id": "jazz-geese",
@@ -375,7 +401,9 @@
       "echoes": [
         1,
         14
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Everyone who counts them counts eight, and stops."
     },
     {
       "id": "chimney-swifts",
@@ -403,7 +431,9 @@
       "home": 9,
       "echoes": [
         10
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Gossips blame the next village for hearing what was only said here."
     },
     {
       "id": "load-beetles",
@@ -431,7 +461,9 @@
       "home": 10,
       "echoes": [
         12
-      ]
+      ],
+      "motion": "burrows",
+      "misread": "Joiners think the beams are complaining, and plane them."
     },
     {
       "id": "crown-wasps",
@@ -459,7 +491,9 @@
       "home": 11,
       "echoes": [
         12
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Pretenders rent the crowns, and think them solid."
     },
     {
       "id": "early-bees",
@@ -487,7 +521,9 @@
       "home": 11,
       "echoes": [
         13
-      ]
+      ],
+      "motion": "flies",
+      "misread": "Every flower they wait at thinks it is late."
     },
     {
       "id": "seam-otters",
@@ -515,7 +551,9 @@
       "home": 12,
       "echoes": [
         13
-      ]
+      ],
+      "motion": "swims",
+      "misread": "Swimmers try to follow them down the seam, and wet both springs."
     },
     {
       "id": "ink-herons",
@@ -543,7 +581,9 @@
       "home": 12,
       "echoes": [
         14
-      ]
+      ],
+      "motion": "stays",
+      "misread": "Painters think the bank was drawn that way on purpose."
     },
     {
       "id": "shelf-owls",
@@ -571,7 +611,9 @@
       "home": 13,
       "echoes": [
         1
-      ]
+      ],
+      "motion": "stays",
+      "misread": "Archivists fill the gaps the owls keep, and the owls leave, offended."
     },
     {
       "id": "hob-deer",
@@ -598,7 +640,9 @@
       "home": 14,
       "echoes": [
         2
-      ]
+      ],
+      "motion": "roams",
+      "misread": "Nobody misreads them. Nobody is there on the day."
     },
     {
       "id": "page-fox",
@@ -625,12 +669,14 @@
       "home": 14,
       "echoes": [
         13
-      ]
+      ],
+      "motion": "roams",
+      "misread": "Readers think a page turned by itself."
     },
     {
       "id": "press-stones",
       "name": "Press-stones",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the map-house",
       "terms": [
         "press-stones",
@@ -653,7 +699,12 @@
       "home": 1,
       "echoes": [
         13
-      ]
+      ],
+      "provenance": {
+        "made": "river stones, flattened by the river long before anyone thought to hold a map down with them",
+        "kept": "the archivist of the map-house, who counts them every morning and is always one short",
+        "remembers": "the crease of every map they ever held, and where the missing one went"
+      }
     },
     {
       "id": "drying-line",
@@ -821,7 +872,7 @@
     {
       "id": "crosswind-loom",
       "name": "The crosswind loom",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "Council Hill",
       "terms": [
         "crosswind loom"
@@ -843,7 +894,12 @@
       "home": 4,
       "echoes": [
         13
-      ]
+      ],
+      "provenance": {
+        "made": "by the hill's weavers, to make the council's tablecloth out of the two winds",
+        "kept": "the council, who sit at it and argue",
+        "remembers": "every vote the hill has taken, each as a change of colour in the weave"
+      }
     },
     {
       "id": "crack-gauge",
@@ -875,7 +931,7 @@
     {
       "id": "bonk-kiln",
       "name": "The bonk-kiln",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "Bonk City",
       "terms": [
         "bonk-kiln"
@@ -897,12 +953,17 @@
       "home": 6,
       "echoes": [
         15
-      ]
+      ],
+      "provenance": {
+        "made": "by Bonk City's first glaziers, out of the first thing in the city ever struck",
+        "kept": "the glaziers, each passing it to the next with the fire still in it",
+        "remembers": "every blow it melted out of something, and forgave into glass"
+      }
     },
     {
       "id": "dent-lanterns",
       "name": "Dent-lanterns",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "Bonk City",
       "terms": [
         "dent-lanterns",
@@ -926,12 +987,17 @@
       "echoes": [
         9,
         15
-      ]
+      ],
+      "provenance": {
+        "made": "hammered from the dented brass the kiln would not take",
+        "kept": "the lamplighters, who will not straighten a single dent",
+        "remembers": "each dent as a street the light once took"
+      }
     },
     {
       "id": "chime-gutters",
       "name": "Chime-gutters",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "Bonk City",
       "terms": [
         "chime-gutters",
@@ -954,7 +1020,12 @@
       "home": 6,
       "echoes": [
         15
-      ]
+      ],
+      "provenance": {
+        "made": "by roofers who could not climb in the rain and wanted to hear where to go",
+        "kept": "the whole street, by ear",
+        "remembers": "which roofs leaked in which years, as a tune the street still hums"
+      }
     },
     {
       "id": "lamp-ladders",
@@ -1070,7 +1141,7 @@
     {
       "id": "oath-scale",
       "name": "The oath-scale",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the market stone",
       "terms": [
         "oath-scale"
@@ -1092,12 +1163,17 @@
       "home": 7,
       "echoes": [
         12
-      ]
+      ],
+      "provenance": {
+        "made": "for the market stone, before anyone had sworn anything by it",
+        "kept": "the market, in common",
+        "remembers": "the weight of every oath paid in fruit, and never once the hand that paid"
+      }
     },
     {
       "id": "well-winch",
       "name": "The well-winch",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the Watering Eye",
       "terms": [
         "well-winch"
@@ -1119,12 +1195,17 @@
       "home": 8,
       "echoes": [
         10
-      ]
+      ],
+      "provenance": {
+        "made": "by whoever first let a bucket down into the Watering Eye and waited",
+        "kept": "the well's neighbours, a night each, by turns",
+        "remembers": "the faces the water has kept, which come up on still nights"
+      }
     },
     {
       "id": "shard-rack",
       "name": "The shard-rack",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the ridge",
       "terms": [
         "shard-rack"
@@ -1146,7 +1227,12 @@
       "home": 9,
       "echoes": [
         13
-      ]
+      ],
+      "provenance": {
+        "made": "by the Fool, for nine honk shards, before he had nine",
+        "kept": "the ridge, which has never once been asked",
+        "remembers": "the ninth honk, in an egg-shaped slot nobody has filled"
+      }
     },
     {
       "id": "listening-mallet",
@@ -1178,7 +1264,7 @@
     {
       "id": "load-bells",
       "name": "Load-bells",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "Bone.land",
       "terms": [
         "load-bells",
@@ -1201,7 +1287,12 @@
       "home": 10,
       "echoes": [
         12
-      ]
+      ],
+      "provenance": {
+        "made": "by Bone.land's first joiners, who wanted the house to say when it was carrying too much",
+        "kept": "the joists themselves",
+        "remembers": "every weight that passed over, and which one was too much"
+      }
     },
     {
       "id": "rail-pins",
@@ -1234,7 +1325,7 @@
     {
       "id": "ferry-bell",
       "name": "The ferry-bell",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the confluence",
       "terms": [
         "ferry-bell"
@@ -1256,12 +1347,17 @@
       "home": 12,
       "echoes": [
         13
-      ]
+      ],
+      "provenance": {
+        "made": "for the confluence, when the seam was first left unblended",
+        "kept": "the ferry folk at the bridge",
+        "remembers": "every crossing it called that kept both springs dry"
+      }
     },
     {
       "id": "glassing-press",
       "name": "The glassing press",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the Round Archive",
       "terms": [
         "glassing press"
@@ -1283,12 +1379,17 @@
       "home": 13,
       "echoes": [
         15
-      ]
+      ],
+      "provenance": {
+        "made": "for the Round Archive by the folio-makers, to keep pages flat and warm",
+        "kept": "the archive, which has never run it on the last page",
+        "remembers": "every page it ever pressed, and the shape of the one it has not"
+      }
     },
     {
       "id": "storm-weight",
       "name": "The storm-weight",
-      "kind": "contrivance",
+      "kind": "antique",
       "region": "the parcel gate",
       "terms": [
         "storm-weight"
@@ -1310,7 +1411,12 @@
       "home": 15,
       "echoes": [
         6
-      ]
+      ],
+      "provenance": {
+        "made": "iron, cast for a gate meant to be lifted by three",
+        "kept": "the porter of the parcel gate, alone",
+        "remembers": "the storm night the porter held the gate and signed for the spoiled flour"
+      }
     },
     {
       "id": "door-rule",
@@ -1785,7 +1891,9 @@
         "hint": "a dented Bonk City lantern at storm-green dusk, pale remainder-moths circling the new flame in loops that never quite close, each lap landing a little past the last like a spirograph, dust-marks on the glass never repeating, wet cobbles, lamp-oil haze, painterly, quiet, mathematical wonder"
       },
       "home": 15,
-      "echoes": []
+      "echoes": [],
+      "motion": "flies",
+      "misread": "Anyone who counts their laps thinks one more will close the circle."
     },
     {
       "id": "frill-lichen",
@@ -1810,7 +1918,9 @@
         "hint": "macro view of a weathered field stone with carved words, grey-green frill-lichen crowding the letters in ever-folding hyperbolic ruffles like crocheted coral, more edge than area, frost in the grooves, an iron ring rubbed bright, raking winter morning light, painterly, exact, quiet wonder"
       },
       "home": 14,
-      "echoes": []
+      "echoes": [],
+      "motion": "stays",
+      "misread": "Stonecutters scrape it off the letters, and read them wrong for ever after."
     },
     {
       "id": "sliver-tin",
@@ -1836,6 +1946,281 @@
       },
       "home": 15,
       "echoes": []
+    },
+    {
+      "id": "horn-button",
+      "name": "The horn button",
+      "kind": "artifact",
+      "region": "under the parcel gate",
+      "terms": [
+        "a button",
+        "the button"
+      ],
+      "note": "Horn, a little scuffed, round, with two holes in it. Somebody in the plaza lost it; it turned up under the parcel gate, in a hand made of one line.",
+      "hint": "Something small that somebody in the plaza went home without.",
+      "home": 15,
+      "echoes": [
+        6
+      ],
+      "residue": {
+        "left_by": "somebody at the plaza table, who lost it in the talk (Six); retrieved from under the parcel gate (Fifteen)",
+        "obliges": "someone to come looking for it, or someone to bring it back"
+      },
+      "prompt": {
+        "vantage": "a dog's height at the parcel gate's threshold, the gap under the gate wet with storm-light",
+        "light": "lantern amber through rain, a cold blue gap under the gate",
+        "scent": "wet iron, horn, flour gone to paste",
+        "hint": "a small round button with two holes, held in a hand that is only a line",
+        "edges": [
+          "two thread-holes catching the lantern",
+          "the scuff where it was trodden in the plaza",
+          "the gate's iron threshold, rain running along it"
+        ]
+      }
+    },
+    {
+      "id": "waxed-slice",
+      "name": "The slice in waxed paper",
+      "kind": "artifact",
+      "region": "carried out of Bonk City",
+      "terms": [
+        "waxed paper"
+      ],
+      "note": "A slice of Mr. BoonWAP, wrapped in waxed paper at the plaza table, carried a long way, never eaten, and still warm. Nobody has said why.",
+      "hint": "Something warm through paper that the dog has not eaten.",
+      "home": 6,
+      "echoes": [
+        10,
+        14
+      ],
+      "residue": {
+        "left_by": "Mr. BoonWAP, serving himself at the plaza table and no smaller for it",
+        "obliges": "to be carried, and not explained"
+      },
+      "prompt": {
+        "vantage": "close on a shelf by a cold stove, a dog's nose at the edge",
+        "light": "grey morning on a cold kitchen, one warm amber glow through waxed paper",
+        "scent": "pastry, boonberry, cold ash",
+        "hint": "a folded paper parcel, warm in a cold room",
+        "edges": [
+          "waxed folds gone soft at the corners",
+          "a faint berry stain through the paper",
+          "steam that should not still be rising"
+        ]
+      }
+    },
+    {
+      "id": "gate-book-entry",
+      "name": "The gate-book entry",
+      "kind": "artifact",
+      "region": "the parcel gate",
+      "terms": [
+        "gate-book"
+      ],
+      "note": "Received: one, at dusk, by hand. Sender: none. Receipt: none. Under remarks, after some thought, the porter wrote parcel.",
+      "hint": "A record that is correct, and disagrees with two others.",
+      "home": 15,
+      "echoes": [],
+      "residue": {
+        "left_by": "the porter, writing a stranger in at dusk in the columns the gate-book has",
+        "obliges": "the repair log and the night-school roll to disagree with it, all three correct"
+      },
+      "prompt": {
+        "vantage": "over the porter's shoulder at the gate-desk, the ledger open under a hooded lamp",
+        "light": "a hooded lamp's small gold circle; storm-dark beyond the wicket",
+        "scent": "ink, wet wool, lamp oil",
+        "hint": "a ledger line with a careful hand and one word under remarks",
+        "edges": [
+          "ruled columns with one row filled",
+          "a pencil worn to the ferrule",
+          "rain-spots on the margin"
+        ]
+      }
+    },
+    {
+      "id": "damage-slip",
+      "name": "The signed DAMAGE slip",
+      "kind": "artifact",
+      "region": "the parcel gate",
+      "terms": [
+        "damage"
+      ],
+      "note": "The feast clerks' slip for spoiled flour, DAMAGE at the top and a line for the cause. The porter put his own name on the line.",
+      "hint": "A form with a line for the cause, and a name where the cause should be.",
+      "home": 15,
+      "echoes": [],
+      "residue": {
+        "left_by": "the storm, the spoiled feast flour, and a porter who would not blame a stranger",
+        "obliges": "a clerk with a SETTLED slip, if anyone shares a slice"
+      },
+      "prompt": {
+        "vantage": "on the gate-desk beside the flour sacks, a dog's eye level with the slip",
+        "light": "lamp-gold on white flour paste, storm-blue at the window",
+        "scent": "wet flour, ink, iron",
+        "hint": "a slip stamped DAMAGE with a name written where the cause goes",
+        "edges": [
+          "the stamp's smudged red letters",
+          "flour paste drying on the corner",
+          "a signature that pressed through to the desk"
+        ]
+      }
+    },
+    {
+      "id": "relit-torch",
+      "name": "The relit torch",
+      "kind": "artifact",
+      "region": "the field that kept the Thursday",
+      "terms": [
+        "a torch that had gone out"
+      ],
+      "note": "A splinter of root-pith no longer than a barley-awn, gone out at the end of a ruled ant-street, lit again from the end of a drawn arm. The arm stays shorter.",
+      "hint": "A light at the end of a straight street, and what it cost.",
+      "home": 14,
+      "echoes": [],
+      "residue": {
+        "left_by": "the figure in plain lines, lighting an ant's dead torch from the end of a line arm",
+        "obliges": "a straight street to be kept lit, and an arm to stay a little shorter"
+      },
+      "prompt": {
+        "vantage": "cheek to the frost at the end of a ruled ant-street",
+        "light": "frost-grey dawn; one ember point at the street's end, a line arm's warm tip beside it",
+        "scent": "frost, loam, a struck match that is not a match",
+        "hint": "a tiny torch relit from the end of a pencil line",
+        "edges": [
+          "the ruled street running dead straight",
+          "the arm's line ending a little early",
+          "one ant holding the light up"
+        ]
+      }
+    },
+    {
+      "id": "criers-note",
+      "name": "The crier's note",
+      "kind": "artifact",
+      "region": "the field that kept the Thursday",
+      "terms": [
+        "saw a hat"
+      ],
+      "note": "The crier meant to write down the one destined to spill the pie. She wrote that she saw a hat, and the ink stayed.",
+      "hint": "A note that was meant to name someone, and names a hat.",
+      "home": 14,
+      "echoes": [],
+      "residue": {
+        "left_by": "the crier on the cart with the bell, announcing the feast on the day after the Thursday",
+        "obliges": "the city to look for a hat, and not for a face"
+      },
+      "prompt": {
+        "vantage": "beside the crier's cart at a field gate, the bell overhead",
+        "light": "Friday's clean daylight, the bell's brass catching it",
+        "scent": "mule, ink, cold field air",
+        "hint": "a crier's pad with one line on it: a hat",
+        "edges": [
+          "a coat with too many buttons",
+          "the bell mid-swing",
+          "the ink still wet on one line"
+        ]
+      }
+    },
+    {
+      "id": "bridge-receipts",
+      "name": "Two receipts on the rail",
+      "kind": "artifact",
+      "region": "the confluence",
+      "terms": [
+        "both receipts",
+        "Receipt: none"
+      ],
+      "note": "Mx. BoneWAP posted both on the rail pins for any traveller to read: one slice given in apology, one slice given in thanks.",
+      "hint": "Two slips on a bridge rail that the pies did not read.",
+      "home": 12,
+      "echoes": [
+        15
+      ],
+      "residue": {
+        "left_by": "two slices given at the confluence, one for each reason",
+        "obliges": "any traveller to read them, and the pies not to"
+      },
+      "prompt": {
+        "vantage": "at the bridge rail over the unblended seam",
+        "light": "berry-dark water below, chalk-pale water beside it, brass pins catching the light",
+        "scent": "river, brass, pastry",
+        "hint": "two paper slips pinned side by side on a bridge rail",
+        "edges": [
+          "brass pins worn bright",
+          "the seam of two waters underneath",
+          "handwriting nobody present is reading"
+        ]
+      }
+    },
+    {
+      "id": "stacked-plate",
+      "name": "A plate from the stack",
+      "kind": "artifact",
+      "region": "beyond the frame",
+      "terms": [
+        "plate from the stack"
+      ],
+      "note": "One of the plates the delighted clowns left. The stack by the cold spring water is taller than the meal could have been; nobody saw who washed them.",
+      "hint": "Made in the lanes: every WAP leaves one.",
+      "home": 13,
+      "echoes": [
+        6
+      ],
+      "made_in": "lanes",
+      "made_by": {
+        "deed": "waps",
+        "at_least": 1,
+        "says": "the first WAP of any carry leaves one"
+      },
+      "residue": {
+        "left_by": "a WAP in the lanes: a clown, delighted, and a plate",
+        "obliges": "the washer-up nobody thanks, beyond the frame"
+      },
+      "prompt": {
+        "vantage": "low beside a bowl of cold spring water, a stack of plates at the edge of the frame",
+        "light": "clean starlight from an oculus, one warm smear of berry on a rim",
+        "scent": "cold water, pastry, soap that is not there",
+        "hint": "a stack of plates taller than a meal",
+        "edges": [
+          "a berry smear on one rim",
+          "the stack leaning a little",
+          "a dish-cloth nobody is holding"
+        ]
+      }
+    },
+    {
+      "id": "found-line",
+      "name": "A found line",
+      "kind": "artifact",
+      "region": "the road",
+      "terms": [
+        "found line"
+      ],
+      "note": "Five words kept from the road, in the order they were kept: read, marked by a hop, fed by a slice. It is a line nobody wrote.",
+      "hint": "Made in the lanes: five words kept from the road.",
+      "home": 14,
+      "echoes": [],
+      "made_in": "lanes",
+      "made_by": {
+        "deed": "found",
+        "at_least": 1,
+        "says": "five words kept from the road with the story on it"
+      },
+      "residue": {
+        "left_by": "words taken from the road, word by word, by someone carrying a pie",
+        "obliges": "a reader to say it aloud once"
+      },
+      "prompt": {
+        "vantage": "down at the road, the words painted on the cobbles coming at you",
+        "light": "low lamplight raking across painted letters, five of them gold",
+        "scent": "wet stone, paint, frost",
+        "hint": "five gold words in a line on a cobbled road",
+        "edges": [
+          "one word boxed in ink",
+          "one with a berry stain beside it",
+          "one underlined in gold"
+        ]
+      }
     }
   ]
 }

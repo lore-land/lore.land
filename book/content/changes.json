@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.F",
+      "date": "2026-11-09",
+      "notes": [
+        "Your almanac has two new shelves. Antiques are the old things the land keeps, the forgiving kiln, the storm weight, the press stones and others, each with who made it, who keeps it, and what it remembers (they were contrivances before; anything you kept is still kept). Artifacts are what a scene leaves behind: the horn button, the slice in waxed paper, the gate-book entry, the signed DAMAGE slip, the relit torch, the crier's note, two receipts on the bridge rail. Two artifacts are made in the lanes rather than found in the chapters: a plate from the stack, and a found line.",
+        "Every creature in the bestiary now says how it moves and who misreads it, and things you have not found yet let slip a clue: how a creature moves, who keeps an antique, what left an artifact. In Exactly One Pie the land's own behave by their kind: fliers ride at hat height and are kept only from a hop, burrowers only from the ground, roamers wander across the lanes, antiques wait longest, artifacts lie on the road close by; each wears its kind's own frame, as on its new badge in the almanac and in the chapters."
+      ]
+    },
+    {
       "release": "2026_11_09.E",
       "date": "2026-11-09",
       "notes": [

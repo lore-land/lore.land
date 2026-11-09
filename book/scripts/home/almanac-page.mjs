@@ -2,10 +2,11 @@
 // each thing lives, and a bench for combining found things into small
 // realms (the night school's game; bracework as a toy). Everything is read
 // from this browser's own shelf; nothing is sent anywhere.
-import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
+import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_09.F';
+import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.F';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.O';
-import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
+import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_08.O';
@@ -105,34 +106,60 @@ const likenessSeal = (id) => {
 };
 const likenessFind = (id) => (likenessItem(id) ? el('p', { className: 'almanac-likeness' }, findSimilar(id)) : null);
 
+/* What an unrecorded wonder lets slip, by its kind: a clue for the hunt, in the book or the lanes. A creature
+ * says how it moves (look up for a flier, down for a burrower); an antique, who keeps it; an artifact, what left
+ * it; one made in the lanes, the deed that makes it. */
+function clueFor(wonder) {
+  if (wonder.made_by) return el('p', { className: 'almanac-card-clue' }, el('span', {}, 'Made in the lanes · '), `${wonder.made_by.says}. `, el('a', { href: '/pie/' }, 'Carry the pie →'));
+  if (wonder.kind === 'creature' && wonder.motion) return el('p', { className: 'almanac-card-clue' }, el('span', {}, 'It moves · '), MOTIONS[wonder.motion] || wonder.motion);
+  if (wonder.kind === 'antique' && wonder.provenance?.kept) return el('p', { className: 'almanac-card-clue' }, el('span', {}, 'Kept by · '), wonder.provenance.kept);
+  if (wonder.kind === 'artifact' && wonder.residue?.left_by) return el('p', { className: 'almanac-card-clue' }, el('span', {}, 'Left by · '), wonder.residue.left_by);
+  return null;
+}
+
 function card(data, wonder, kept) {
   const chips = placeChips(data, wonder, kept);
   const id = `wonder:${wonder.id}`;
+  const badge = kindBadgeNode(wonder.kind, { size: 30, label: KINDS[wonder.kind]?.word || wonder.kind });
   if (!kept) {
-    return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}` },
+    return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}`, 'data-kind': wonder.kind },
       likenessSeal(id),
-      el('p', { className: 'almanac-card-kicker' }, `Unrecorded · ${wonder.region}`),
+      el('p', { className: 'almanac-card-kicker' }, badge, ` Unrecorded · ${wonder.region}`),
       el('p', { className: 'almanac-card-hint' }, wonder.hint),
+      clueFor(wonder),
       chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null,
       likenessFind(id));
   }
-  return el('li', { className: 'almanac-card is-found', id: `wonder-${wonder.id}` },
+  return el('li', { className: 'almanac-card is-found', id: `wonder-${wonder.id}`, 'data-kind': wonder.kind },
     likenessSeal(id),
-    el('p', { className: 'almanac-card-kicker' }, `${KIND_SIGIL[wonder.kind] || '·'} ${wonder.region}`),
+    el('p', { className: 'almanac-card-kicker' }, badge, ` ${wonder.region}`),
     el('p', { className: 'almanac-card-name' }, wonder.name),
     el('p', { className: 'almanac-card-note' }, wonder.note),
     wonder.craft ? el('p', { className: 'almanac-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
+    ...kindLines(wonder).map(([label, text]) => el('p', { className: 'almanac-card-line' }, el('span', {}, `${label} · `), text)),
     chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, chips.length > 1 ? 'Lives in' : 'Found in'), ...chips) : null,
     promptBlock(wonder),
     el('p', { className: 'almanac-card-first' }, `First kept ${kept.first}`),
     likenessFind(id));
 }
 
+/* Artifacts made in the lanes: deeds the carries kept (lore.pie.deeds.v1) make them, here as in the game. */
+function makeFromDeeds(data) {
+  let deeds = {};
+  try { deeds = JSON.parse(localStorage.getItem('lore.pie.deeds.v1') || '{}') || {}; } catch { deeds = {}; }
+  const total = (key) => Object.values(deeds).reduce((sum, d) => sum + (d?.[key] || 0), 0);
+  const state = readAlmanac();
+  data.wonders.filter((w) => w.made_by && !state[w.id] && total(w.made_by.deed) >= w.made_by.at_least)
+    .forEach((w) => { try { collectWonder(w.id, w.home); } catch { /* the shelf is blocked: seen, not kept */ } });
+}
+
 function paintShelves(data) {
+  makeFromDeeds(data);
   const state = readAlmanac();
   let placesTotal = 0;
   let placesFound = 0;
-  ['creature', 'contrivance', 'bracework', 'saying'].forEach((kind) => {
+  KIND_ORDER.forEach((kind) => {
+    if (!$(`[data-shelf="${kind}"]`)) return;
     const list = data.wonders.filter((w) => w.kind === kind);
     // Found first, in the order the book meets them; then the unrecorded.
     const ordered = [...list.filter((w) => state[w.id]), ...list.filter((w) => !state[w.id])];
@@ -312,7 +339,7 @@ function paintDeck() {
 
 /* Each shelf shows the studies of its sigil from the seed atlas, and links into it. */
 function placeAtlasStrips() {
-  [['#bestiary', '@'], ['#contrivances', '$'], ['#bracework', '&'], ['#sayings', '#'], ['#keepsakes', '='], ['#cards', '@!']]
+  [['#bestiary', '@'], ['#antiques', '.'], ['#artifacts', '*'], ['#contrivances', '$'], ['#bracework', '&'], ['#sayings', '#'], ['#keepsakes', '='], ['#cards', '@!']]
     .forEach(([selector, sigils]) => {
       const lede = document.querySelector(`${selector} .almanac-shelf-lede`);
       if (!lede || lede.nextElementSibling?.classList.contains('likeness-atlas-strip')) return;

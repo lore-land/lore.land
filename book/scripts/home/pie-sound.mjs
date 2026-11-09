@@ -670,7 +670,7 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       case 'flour': hiss(640, 170, 0.18, 0.085, 0.8, 0, 'bandpass', 0.25); break;
       // A wonder: a music box playing the room's chord, its shape by kind.
       case 'wonder': {
-        const shape = param === 'contrivance' ? [0, 1, 2, 3] : param === 'bracework' ? [0, 2, 1, 3] : param === 'saying' ? [3, 2, 1, 0] : [0, 1, 3, 2];
+        const shape = param === 'contrivance' ? [0, 1, 2, 3] : param === 'antique' ? [0, 0, 2, 1] : param === 'artifact' ? [2, 0, 3, 1] : param === 'bracework' ? [0, 2, 1, 3] : param === 'saying' ? [3, 2, 1, 0] : [0, 1, 3, 2];
         shape.forEach((i, k) => musicBox(hz(sungTone(i + 3)), k === shape.length - 1 ? 0.7 : 0.35, 0.042, k * s32, (k - 1.5) * 0.12));
         break;
       }

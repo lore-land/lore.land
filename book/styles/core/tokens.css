@@ -126,6 +126,16 @@
   --color-berry: #5b3a6e;
   --color-night: #12394a;
 
+  /* The kinds of the land (book/scripts/modules/kinds.mjs): one ink each, wherever a wonder is drawn —
+   * the chapter's marks and cards, the almanac's shelves and badges. Derived from the palette, so every
+   * binding and theme carries them. Consumers keep a literal fallback for pages on an older token sheet. */
+  --kind-creature: var(--color-gold-ink, #6b5010);
+  --kind-antique: color-mix(in oklab, var(--color-stone-shadow, #5a4a3a) 70%, var(--color-gold, #c4922e));
+  --kind-artifact: color-mix(in oklab, var(--color-berry, #5b3a6e) 55%, var(--color-hearth, #b0602a));
+  --kind-contrivance: var(--color-accent-main, #246270);
+  --kind-bracework: var(--color-berry, #5b3a6e);
+  --kind-saying: var(--color-hearth, #b0602a);
+
   /* Legacy-compatible base tokens (older mood files can override these). */
   --bg-color-main: #f3ede1;
   --bg-color-content: rgba(255, 252, 246, 0.92);

@@ -156,18 +156,18 @@
 
 import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.N';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
+import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.F';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
-import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
+import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
 import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.O';
-import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.J';
+import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.B';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.F';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
 
@@ -1886,6 +1886,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const wonder = makeThing('wonder', pick(free));
       wonder.wonder = run.wonderQueue.shift();
       if (wonder.wonder.known) wonder.stay = 3.5;
+      // Its kind (kinds.mjs): an antique waits longest; a creature that stays, longer; an artifact lies on the road
+      // in the near rows, where a step can reach it.
+      const wk = wonder.wonder.kind;
+      if (wk === 'antique') wonder.stay *= 1.8;
+      else if (wonder.wonder.motion === 'stays') wonder.stay *= 1.5;
+      if (wk === 'artifact') wonder.hover = rowY(pick([0, 1, 1])) - 10;
       wonder.y -= 50;
       run.things.push(wonder);
       markWonder(wonder.wonder.id, 'here');
@@ -2999,6 +3005,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     almanacData = almanacData || fetch('/book/content/world/almanac.json').then((res) => (res.ok ? res.json() : null)).catch(() => null);
     return almanacData;
   };
+  /* Artifacts made in the lanes (almanac.json made_by; kinds.mjs): when the carries' deeds reach one, it is made
+   * and kept in the almanac, with the chapter it was made in, and said; the almanac's shelf of artifacts fills
+   * by play as well as by reading. */
+  function makeFromDeeds(n) {
+    loadAlmanacData().then((data) => {
+      const deeds = readStore(DEEDS_KEY);
+      const total = (key) => Object.values(deeds).reduce((sum, d) => sum + (d?.[key] || 0), 0);
+      const shelf = readStore('lore.almanac.v1');
+      (data?.wonders || []).filter((w) => w.made_by && !shelf[w.id] && total(w.made_by.deed) >= w.made_by.at_least).forEach((w) => {
+        try { collectWonder(w.id, n); } catch { /* made, if not shelved */ }
+        showToast(`* ${w.name} · made in the lanes`, `${w.note} Kept in your almanac.`, 4200, 'wonder');
+        say(`${w.name}, made in the lanes, and kept in your almanac.`);
+      });
+    }).catch(() => {});
+  }
   const legs = new Map();
   const voiceName = (type) => (/^custom-/.test(type || '') ? type.replace(/^custom-/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase()) : null);
   async function loadLeg(n) {
@@ -3044,7 +3065,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     let known = {};
     try { known = JSON.parse(window.localStorage.getItem('lore.almanac.v1') || '{}') || {}; } catch { known = {}; }
     const wonders = (almanac?.wonders || [])
-      .filter((w) => w.home === n || (w.echoes || []).includes(n))
+      .filter((w) => w.made_in !== 'lanes' && (w.home === n || (w.echoes || []).includes(n)))
       .map((w) => ({ w, rank: (w.home === n ? 0 : 2) + (known[w.id] ? 1 : 0) }))
       .sort((a, b) => a.rank - b.rank)
       .slice(0, 6)
@@ -3061,6 +3082,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         id: w.id,
         name: w.name,
         kind: w.kind,
+        motion: w.motion || null,
         terms: w.terms || [w.name],
         known: Boolean(known[w.id]),
         said,
@@ -3102,7 +3124,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const n = run.chapter;
     const t = run.tally;
     const outcome = keepCarry(n, { ...t, why: leanWhyText().replace(/^Why: /, '').replace(/\.$/, '') });
-    keepDeeds(n, { ...run.legEvents, waps: run.waps - (run.legFrom?.waps || 0), satisfied: run.satisfied - (run.legFrom?.satisfied || 0) });
+    keepDeeds(n, { ...run.legEvents, waps: run.waps - (run.legFrom?.waps || 0), satisfied: run.satisfied - (run.legFrom?.satisfied || 0), found: (run.foundLines?.length || 0) - (run.legFrom?.found || 0) });
+    makeFromDeeds(n);
     const lean = describeLean({ boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone });
     run.outcomes.push({ n, outcome, lean });
     if (outcome === 'won') return `Mimes Against WAP take ${chapterWords(n)}: it will be harder to wonder about pie there until you win it back.`;
@@ -3127,7 +3150,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.sceneT = first ? 1 : 0;
     run.chapter = n;
     run.tally = newTally(n);
-    run.legFrom = { waps: run.waps || 0, satisfied: run.satisfied || 0 };
+    run.legFrom = { waps: run.waps || 0, satisfied: run.satisfied || 0, found: run.foundLines?.length || 0 };
     run.legEvents = {};
     run.marginAt = run.t + 8;   // after the room has said its name, the margins say what was heard of here
     run.marginSaid = false;
@@ -3629,6 +3652,65 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.powersUsed[power.id] = whosePower(power.id);
     // References the spell dispatches: its card turns (the first time), wherever it was applied.
     if (power.refs?.card && CARDS[power.refs.card]) turnCard(power.refs.card);
+  }
+  /* Each kind's frame, as the badges draw it (kinds.mjs): a ring for a creature, a plaque for an antique, a tag
+   * for an artifact, a cog for a contrivance, braces for bracework, a ribbon for a saying. */
+  function medallionPath(kind, x, y) {
+    ctx.beginPath();
+    switch (kind) {
+      case 'antique': ctx.roundRect(x - 15, y - 11, 30, 22, 3); break;
+      case 'artifact': ctx.moveTo(x - 14, y - 10); ctx.lineTo(x + 8, y - 10); ctx.lineTo(x + 16, y); ctx.lineTo(x + 8, y + 10); ctx.lineTo(x - 14, y + 10); ctx.closePath(); break;
+      case 'contrivance':
+        for (let i = 0; i < 20; i += 1) {
+          const a = (i / 20) * Math.PI * 2;
+          const r = i % 2 ? 11.5 : 15;
+          if (i) ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); else ctx.moveTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
+        }
+        ctx.closePath();
+        break;
+      case 'bracework': ctx.roundRect(x - 12, y - 14, 24, 28, 7); break;
+      case 'saying': ctx.moveTo(x - 17, y - 8); ctx.lineTo(x + 17, y - 8); ctx.lineTo(x + 13, y); ctx.lineTo(x + 17, y + 8); ctx.lineTo(x - 17, y + 8); ctx.lineTo(x - 13, y); ctx.closePath(); break;
+      default: ctx.arc(x, y, 13, 0, Math.PI * 2);
+    }
+  }
+  /* How the land's own move while they wait (kinds.mjs MOTIONS): a roamer wanders across the lanes, a swimmer
+   * keeps to the seam between two, a lagger comes to where the carrier was a beat ago, a contrivance hums, an
+   * antique or an artifact keeps still; the rest sway a little. */
+  function wonderSway(thing, dt) {
+    const w = thing.wonder || {};
+    if (reduced?.matches) return 0;
+    const t = run.t + thing.born;
+    switch (w.motion) {
+      case 'roams': return Math.sin(t * 0.9) * LANE_W * 0.7;
+      case 'swims': return LANE_W / 2 * (Math.sin(t * 1.6) > 0 ? 1 : -1) + Math.sin(t * 5) * 2;
+      case 'flies': return Math.sin(t * 2.6) * 10;
+      case 'burrows': return Math.sin(t * 1.2) * 3;
+      case 'lags': {
+        // It drifts toward where the carrier was a beat ago.
+        thing.lagX = thing.lagX ?? thing.home;
+        thing.lagX += ((run.lastX ?? run.x) - thing.lagX) * Math.min(1, dt * 0.9);
+        run.lastX = (run.lastX ?? run.x) + (run.x - (run.lastX ?? run.x)) * Math.min(1, dt * 1.2);
+        return clamp(thing.lagX - thing.home, -LANE_W * 1.5, LANE_W * 1.5);
+      }
+      case 'stays': return 0;
+      default: break;
+    }
+    if (w.kind === 'contrivance') return Math.sin(t * 40) * 1.2;   // it hums
+    if (w.kind === 'antique' || w.kind === 'artifact') return 0;
+    return Math.sin(t * 2) * 6;
+  }
+  /* Whether it can be kept from where the carrier is: a flier only from a hop, a burrower only from the ground. */
+  function reachable(thing) {
+    const motion = thing.wonder?.motion;
+    const up = airborne();
+    if ((motion === 'flies' && !up) || (motion === 'burrows' && up)) {
+      if (!thing.saidHow) {
+        thing.saidHow = true;
+        run.tags.push({ x: thing.x, y: thing.y - 34, t: 0, text: motion === 'flies' ? 'IT FLIES · HOP TO KEEP' : 'IT BURROWS · KEEP YOUR FEET' });
+      }
+      return false;
+    }
+    return true;
   }
   function keep(thing) {
     const w = thing.wonder;
@@ -4305,7 +4387,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           if (!thing.leaving && thing.y >= thing.hover) {
             thing.y = thing.hover;
             thing.stay -= dt;
-            thing.x = thing.home + Math.sin(run.t * 2 + thing.born) * 6;
+            thing.x = thing.home + wonderSway(thing, dt);
             if (thing.stay <= 0) {
               if (thing.kind === 'egg') thing.hover = null;   // the Egg stays where it is; the carry goes on
               else thing.leaving = thing.x < W / 2 ? -1 : 1;
@@ -4502,7 +4584,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           continue;
         }
         if (thing.kind === 'wonder') {
-          keep(thing);
+          if (reachable(thing)) keep(thing);
           continue;
         }
         if (thing.kind === 'baneberry') {
@@ -5329,11 +5411,28 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           ctx.scale(1 + t * 0.8, 1 + t * 0.8);
           ctx.translate(-x, -y);
         }
-        const bob = reduced?.matches ? 0 : Math.sin(run.t * 3 + thing.born) * 2;
+        const wk = thing.wonder?.kind;
+        const motion = thing.wonder?.motion;
+        // A flier rides higher, with its shadow on the road; a burrower shows half above the road.
+        const lift = motion === 'flies' ? -14 : 0;
+        const bob = lift + ((reduced?.matches || wk === 'antique' || wk === 'artifact') ? 0 : Math.sin(run.t * 3 + thing.born) * 2);
+        if (lift) {
+          ctx.save();
+          ctx.globalAlpha *= 0.25;
+          ctx.fillStyle = colors.ink;
+          ctx.beginPath(); ctx.ellipse(x, y + 10, 11, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        }
         ctx.fillStyle = mix(colors.paper, 'rgb(255, 255, 255)', 0.4);
         ctx.strokeStyle = colors.gold;
         ctx.lineWidth = 2.5;
-        ctx.beginPath(); ctx.arc(x, y + bob, 13, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        medallionPath(wk, x, y + bob);
+        ctx.fill();
+        ctx.stroke();
+        if (motion === 'burrows') {
+          ctx.fillStyle = mix(colors.paper, colors.ink, 0.25);
+          ctx.fillRect(x - 16, y + bob + 3, 32, 12);
+        }
         ctx.fillStyle = colors.accent;
         ctx.font = '800 14px "JetBrainsMono", ui-monospace, monospace';
         ctx.textAlign = 'center';

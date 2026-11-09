@@ -4845,3 +4845,46 @@ main.chapter :is(.projection-spell-go, .projection-spell-copy) {
 main.chapter .projection-spell-status:empty {
   display: none;
 }
+
+/* ─── The kinds of the land (book/scripts/modules/kinds.mjs; core/tokens.css --kind-*) ───
+ * One ink per kind wherever a wonder is drawn (its mark in the prose, its chip, its card), and its badge:
+ * a frame of its own (ring, plaque, tag, cog, braces, ribbon) with its sigil at the heart. */
+.wonder-mark[data-kind='creature'], .chapter-wonder-chip[data-kind='creature'], .wonder-card.is-creature { --wonder-ink: var(--kind-creature, #6b5010); }
+.wonder-mark[data-kind='antique'], .chapter-wonder-chip[data-kind='antique'], .wonder-card.is-antique { --wonder-ink: var(--kind-antique, #6e5a3a); }
+.wonder-mark[data-kind='artifact'], .chapter-wonder-chip[data-kind='artifact'], .wonder-card.is-artifact { --wonder-ink: var(--kind-artifact, #84444c); }
+.wonder-mark[data-kind='contrivance'], .chapter-wonder-chip[data-kind='contrivance'], .wonder-card.is-contrivance { --wonder-ink: var(--kind-contrivance, #246270); }
+.wonder-mark[data-kind='bracework'], .chapter-wonder-chip[data-kind='bracework'], .wonder-card.is-bracework { --wonder-ink: var(--kind-bracework, #5b3a6e); }
+.wonder-mark[data-kind='saying'], .chapter-wonder-chip[data-kind='saying'], .wonder-card.is-saying { --wonder-ink: var(--kind-saying, #b0602a); }
+
+.kind-badge {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  overflow: visible;
+  color: var(--wonder-ink, var(--kind-ink, currentColor));
+}
+
+.kind-badge .kind-badge-fill {
+  fill: color-mix(in srgb, currentColor 13%, transparent);
+  stroke: none;
+}
+
+.wonder-card-sigil:has(.kind-badge) {
+  display: inline-grid;
+  place-items: center;
+  font-size: 0;
+}
+
+.wonder-card-line {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.wonder-card-line > span {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--wonder-ink, currentColor);
+}

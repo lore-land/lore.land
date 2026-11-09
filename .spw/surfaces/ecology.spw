@@ -1,0 +1,59 @@
+# Ecology — how the kinds of the land live across the site
+# Every wonder belongs to a kind (book/scripts/modules/kinds.mjs), and every kind lives in every feature
+# that shows it: the chapter's marks and cards, the almanac's shelves, the lanes, the cards of the game,
+# the desk, the projection, the build's chapter spells, the checks. One registry, so a new kind (or a
+# change to one) is made in one place and reaches all of them; this surface is what each kind does there.
+#>ecology
+#:canon #:architecture #!working
+
+^"ecology"{
+  .registry: ~"book/scripts/modules/kinds.mjs"
+  .data: ~"book/content/world/almanac.json"
+  .tokens: "core/tokens.css --kind-creature … --kind-saying (consumers keep a literal fallback)"
+  .checked_by: "npm run book:check (book/schema/book-types.mjs reads WONDER_KINDS and kindProblems from the registry)"
+  &almanac: ~".spw/surfaces/almanac.spw#almanac"
+  &tropes: ~".spw/surfaces/tropes.spw#tropes"
+  rule: "A kind is a role in every feature at once: how it is drawn, how it is found, how it moves in the lanes, what it gives, what an artist needs to paint it, and what it carries along the track between the book and the lanes."
+}
+
+^"kinds"{
+  creature: "@ ring · the bestiary · found where it lives in the prose, or steered into in the lanes · moves by its motion (roams, flies, burrows, swims, lags, stays): a flier is kept only from a hop, a burrower only from the ground · gives crust and filling, or its own gift · art: vantage, light, scent, edges · has someone who misreads it"
+  antique: ". plaque · old made things kept · found where it is kept · stays, waiting longest · steadies the pie and feeds the crust · art: vantage, light, scent, edges · has a provenance (made, kept, remembers)"
+  artifact: "* tag · what a scene leaves · found where it was left, or made in the lanes by a deed (lore.pie.deeds.v1) · lies on the road in the near rows · readies a slice and feeds the filling · art: vantage, light, edges · has a residue (left by, asks)"
+  contrivance: "$ cog · made things in use · found where it is used · hums in its lane · feeds the crust"
+  bracework: "& braces · written before it is built · found where makers write; combined on the bench · readies a slice"
+  saying: "# ribbon · the makers' philosophy in a phrase · said in the prose · steadies the pie · has its craft reading"
+}
+
+~"discovery"{
+  .note: "How a reader comes to find things: every wonder has a door in the book (its dotted word), most have one in the lanes, and the almanac lets each unrecorded one slip a clue by its kind."
+  clues: "an unrecorded creature says how it moves (look up the lanes for a flier, from a hop); an antique, who keeps it; an artifact, what left it; one made in the lanes, the deed that makes it, with a door to the pie"
+  made: "artifacts made in the lanes are kept when the carries' deeds reach them, said in the lanes and filled in on the shelf: the almanac fills by play as well as by reading"
+  echoes: "a wonder's card says where else it lives, so a reader has a reason to go back; an antique made in one chapter and kept in another is a trail"
+}
+
+~"physics"{
+  .note: "In the lanes the land's own wait a moment up the lanes, then go about their business; their kind and motion say how (pie-game.mjs wonderSway, reachable, medallionPath)."
+  height: "a flier rides at hat height with its shadow on the road (kept from a hop); a burrower shows half above the road (kept from the ground); the rest at the carrier's height"
+  motion: "roams across the lanes · swims on the seam between two · lags toward where the carrier was a beat ago · stays · hums (contrivance) · keeps still (antique, artifact)"
+  frames: "the medallion takes its kind's frame, as the badges draw it, so a kind is read at a glance in the lanes and on the page alike"
+}
+
+~"art_hooks"{
+  .note: "Every wonder can carry a plate prompt (vantage, light, scent, hint, edges); the almanac card shows it and copies it in the series look. The kinds say which fields each needs (kinds.mjs art), and each kind's frame is a template for its plate's border."
+  next: "plates for the artifacts first (each is one object in one light); antiques as still lifes with their keepers' hands; the bestiary as field studies at a dog's height"
+}
+
+!"architecture"[
+  { step: "registry" does: "kinds.mjs holds every kind's sigil, word, shelf, token, motion vocabulary, discovery, art fields, frame and badge; almanac.mjs, chapter-spell.mjs, the almanac page and the game read it; book-types.mjs validates against it" }
+  { step: "tokens" does: "each kind's ink is a CSS token derived from the palette, so a binding or theme carries it; consumers keep a literal fallback" }
+  { step: "data" does: "almanac.json carries the per-kind fields; book:check holds them (kindProblems) and holds the terms to the prose" }
+  { step: "track" does: "a kind's crossings between the book and the lanes are tropes.json crossings; deeds (lore.pie.deeds.v1) are the lanes' side of every count" }
+]
+
+?long_horizon[
+  "A new kind: add it to kinds.mjs (sigil, shelf, token, frame), a token in core/tokens.css, a shelf in /almanac/, a default gift in pie-powers.mjs, an arpeggio shape in pie-sound.mjs; book:check then holds its fields."
+  "Should the bestiary's motions shape the creatures' plates (a flier painted from below, a burrower from the furrow's lip)?"
+  "Should an antique's maker and keeper be people the characters registry knows, so its provenance is a door to them?"
+  "Should artifacts made in the lanes be giftable: a found line passed in a link, the way spells are?"
+]

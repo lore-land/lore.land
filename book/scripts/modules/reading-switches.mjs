@@ -88,7 +88,7 @@ export const SWITCHES = Object.freeze([
   },
   {
     id: 'wonders', attribute: 'data-switch-wonders', stage: 'stable', layer: 'reader', label: 'Wonders in the prose',
-    hint: 'Creatures, contrivances and bracework are marked where a chapter first names them. Tap one to keep it in your almanac and see where else it lives.',
+    hint: 'Creatures, antiques, artifacts, contrivances and bracework are marked where a chapter first names them. Tap one to keep it in your almanac and see where else it lives.',
     effect: { on: 'Wonders are marked; tap one to keep it.', off: 'The prose is unmarked; your almanac keeps what you found.' }, region: 'main.chapter',
     defaults: { returning: 'on', new: 'on' }
   },

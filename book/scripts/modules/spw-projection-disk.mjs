@@ -46,7 +46,7 @@ import {
   SIGILS, DIMENSIONS, SET_VALENCE, chapterName
 } from './likeness.mjs?v=2026_11_08.W';
 import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_08.W';
-import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_08.W';
+import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_09.F';
 
 export const STORE_KEY = 'lore.disk.loops.v1';
 export const STEP = 1.2;        // hyperbolic distance between rings

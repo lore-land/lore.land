@@ -142,7 +142,7 @@ export const CARDS = Object.freeze({
     story: 'In no hurry. Keeps its own time, and lends it. Plants as it goes: where a beaver has been, boonberries come up behind.',
     lanes: 'For 4.5 s the land runs at 0.55× and you do not (and everything sounds muffled, heard through slow time); boonberries come up the lanes behind it. From Chapter Two. Spell: *beaver{ ~lag[4.5] &with[berry] }.' },
   wonder: { name: 'A wonder', type: 'power', sprite: 'wonder', chapter: null,
-    story: 'One of the land’s own, named in the chapter going by: a creature, a contrivance, a bracework, a saying.',
+    story: 'One of the land’s own, named in the chapter going by: a creature, an antique, an artifact a scene left, a contrivance, a bracework, a saying.',
     lanes: 'Waits up the lanes ~2.8 s, then goes about its business. Steer into it to keep it in your almanac, and it does in the lanes what it does in the book, keeping you company while it lasts: torch-ants light your lane 7 s and warm the furrows ahead; echo-wrens perch on the pie and echo 3 throws; the lag-stag lags the land 5 s; remainder-moths lead the needle to the nearest face 6 s; pane-snails forgive the panes ahead. Already kept: a fifth more. Every gift is a Spw spell on the bench.' },
   egg: { name: 'Something warm, egg-shaped', type: 'power', sprite: 'egg', chapter: 1,
     story: 'It is not explained.',
