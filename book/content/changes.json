@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.T",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie, ⚙ Setup opens over the screen instead of pushing it down, and a tap outside it or Escape puts it away without pausing the game.",
+        "A tidying pass behind the scenes: the game's styles were folded together where they had been layered over one another, its own colours (the mimes' violet, a knock's red, the silent-film card's gold) now have names, and nothing you see changed except where it was meant to."
+      ]
+    },
+    {
       "release": "2026_11_08.S",
       "date": "2026-11-08",
       "notes": [

@@ -8,6 +8,18 @@
  * colours, so the game is bound in whatever cover the binder put on this copy.
  */
 
+/* The game's own inks, named once: the mimes' violet, a knock's red, the silent-film card's gold and
+ * paper, and the three ways a chapter leans (the same inks the lanes draw its chips in). */
+:root {
+  --pie-mime: #7a3f9a;
+  --pie-knock: #c0392b;
+  --pie-film-gold: #d9c38a;
+  --pie-film-paper: #f3ead6;
+  --pie-way-boon: #c98a1e;
+  --pie-way-bane: #8a4fb0;
+  --pie-way-bone: #5f8696;
+}
+
 body[data-surface='monument'] .pie-main {
   padding-block: clamp(1.2rem, 3vw, 2.4rem) 1rem;
 }
@@ -48,6 +60,7 @@ body[data-surface='monument'] .pie-main {
   .pie-voyage {
     grid-column: 1 / -1;
     order: 1;
+    align-items: stretch;
   }
 
   .pie-copy-text,
@@ -72,10 +85,12 @@ body[data-surface='monument'] .pie-main {
 
 @media (min-width: 62rem) {
   .pie-voyage {
-    /* The cabinet as large as the window lets the whole screen show. */
-    grid-template-columns: minmax(0, 1fr) clamp(18rem, calc((100vh - 20rem) * 0.643), 25rem) minmax(0, 1fr);
+    /* The cabinet's column scales with ⚙ Setup's size (or a pinch on its frame); Fit replaces it (is-fit). */
+    grid-template-columns:
+      minmax(0, 1fr)
+      clamp(calc(18rem * var(--cabinet-scale, 1)), calc((100vh - 20rem) * 0.643 * var(--cabinet-scale, 1)), calc(25rem * var(--cabinet-scale, 1)))
+      minmax(0, 1fr);
     gap: clamp(1rem, 2.4vw, 2rem);
-    align-items: stretch;
     justify-items: stretch;
   }
 
@@ -148,9 +163,9 @@ body[data-surface='monument'] .pie-main {
   border-left: 2px solid transparent;
   border-radius: 0 0.4rem 0.4rem 0;
   font-family: var(--font-family-body, Georgia, serif);
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--flow-scale, 1));
   line-height: 1.55;
-  color: color-mix(in srgb, var(--hub-ink) 52%, transparent);
+  color: color-mix(in srgb, var(--hub-ink) 66%, transparent);
   transition: color 400ms ease, border-color 400ms ease, background-color 400ms ease;
 }
 
@@ -158,6 +173,7 @@ body[data-surface='monument'] .pie-main {
   border-left-color: var(--hub-gold);
   background: linear-gradient(90deg, color-mix(in srgb, var(--hub-gold) 11%, transparent), transparent 85%);
   color: var(--hub-ink);
+  font-size: calc(0.94rem * var(--flow-scale, 1));
 }
 
 /* A wonder's own words in the passage: they light while it waits up the lanes, and stay lit once kept. */
@@ -338,39 +354,6 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-muted);
 }
 
-.pie-how {
-  display: grid;
-  gap: 0.45rem;
-  max-width: 36rem;
-  margin: 1.2rem 0;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--hub-line);
-  border-radius: 0.8rem;
-  background: var(--hub-panel);
-}
-
-.pie-how div {
-  display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 0.6rem;
-}
-
-.pie-how dt {
-  color: var(--hub-gold);
-  font-family: var(--font-family-heading, monospace);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding-top: 0.2rem;
-}
-
-.pie-how dd {
-  margin: 0;
-  font-family: var(--font-family-body, Georgia, serif);
-  font-size: 0.92rem;
-  line-height: 1.45;
-}
-
 .pie-best {
   font-style: italic;
   color: var(--hub-accent-deep);
@@ -400,6 +383,8 @@ body[data-surface='monument'] .pie-main {
     0 20px 44px rgba(12, 16, 24, 0.16),
     inset 0 1px 0 color-mix(in srgb, #ffffff 35%, transparent);
   transition: border-color 350ms ease, box-shadow 350ms ease;
+  --panel-ink: color-mix(in srgb, var(--hub-ink) 82%, transparent);
+  scroll-margin-top: 4.25rem;
 }
 
 .pie-cabinet[data-cabinet-mood='boon'] {
@@ -422,7 +407,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-cabinet[data-cabinet-mood='danger'] {
-  --cabinet-glow: #c0392b;
+  --cabinet-glow: var(--pie-knock);
   box-shadow: 0 20px 48px rgba(192, 57, 43, 0.26), 0 0 0 2px rgba(192, 57, 43, 0.32);
 }
 
@@ -432,7 +417,7 @@ body[data-surface='monument'] .pie-main {
   border-radius: 0.7rem;
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--hub-ink) 20%, transparent),
-    inset 0 2px 8px rgba(10, 12, 16, 0.12);
+  inset 0 2px 8px rgba(10, 12, 16, 0.12);
 }
 
 .pie-screen canvas {
@@ -449,19 +434,22 @@ body[data-surface='monument'] .pie-main {
   position: absolute;
   inset: 9% 7%;
   display: grid;
-  align-content: center;
+  align-content: safe center;
   justify-items: center;
   gap: 0.75rem;
   padding: 1.25rem 1.1rem;
-  border: 2px solid #d9c38a;
+  border: 2px solid var(--pie-film-gold);
   outline: 1px solid rgba(217, 195, 138, 0.65);
   outline-offset: -7px;
   background:
     radial-gradient(circle at 50% 18%, rgba(217, 195, 138, 0.1), transparent 65%),
     rgba(12, 12, 14, 0.9);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-  color: #f3ead6;
+  color: var(--pie-film-paper);
   text-align: center;
+  grid-auto-rows: max-content;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .pie-card[hidden] {
@@ -531,8 +519,8 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-card-chapter-btn:hover,
-.pie-card-chapter-btn:focus-visible {
-  border-color: #d9c38a;
+  .pie-card-chapter-btn:focus-visible {
+  border-color: var(--pie-film-gold);
   background: rgba(217, 195, 138, 0.18);
   color: #fff4d6;
 }
@@ -546,11 +534,11 @@ body[data-surface='monument'] .pie-main {
 
 .pie-card-action {
   padding: 0.48rem 1.2rem;
-  border: 1px solid #d9c38a;
+  border: 1px solid var(--pie-film-gold);
   border-radius: 999px;
   background: rgba(217, 195, 138, 0.1);
   box-shadow: none;
-  color: #f3ead6;
+  color: var(--pie-film-paper);
   cursor: pointer;
   font-family: var(--font-family-body, Georgia, serif);
   font-size: 1rem;
@@ -558,9 +546,9 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-card-action:hover,
-.pie-card-action:focus-visible {
+  .pie-card-action:focus-visible {
   background: rgba(217, 195, 138, 0.24);
-  outline: 2px solid #d9c38a;
+  outline: 2px solid var(--pie-film-gold);
   outline-offset: 2px;
 }
 
@@ -586,7 +574,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-step:hover,
-.pie-step:focus-visible {
+  .pie-step:focus-visible {
   border-color: var(--hub-gold);
 }
 
@@ -615,7 +603,7 @@ body[data-surface='monument'] .pie-main {
 
 @media (max-width: 61.99rem) {
   .pie-cabinet {
-    position: static;
+    position: relative;   /* not sticky on a phone; still the anchor for the setup sheet */
   }
 
   /* On a phone the game comes first; the story follows it. */
@@ -686,7 +674,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-card-link:hover,
-.pie-card-link:focus-visible {
+  .pie-card-link:focus-visible {
   color: #fff4d6;
 }
 
@@ -700,7 +688,7 @@ body[data-surface='monument'] .pie-main {
   border-left: 4px solid var(--hub-gold);
   border-radius: 0.6rem;
   background: var(--hub-panel);
-  opacity: 0.68;
+  opacity: 1;
   transition: opacity 400ms ease, border-color 300ms ease, box-shadow 300ms ease;
 }
 
@@ -732,7 +720,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-caption[data-voice='boon'] { border-left-color: #e0a23a; }
-.pie-caption[data-voice='bane'] { border-left-color: #c0392b; }
+.pie-caption[data-voice='bane'] { border-left-color: var(--pie-knock); }
 .pie-caption[data-voice='flour'] { border-left-color: var(--hub-muted); }
 .pie-caption[data-voice='wonder'] { border-left-color: var(--hub-accent); }
 .pie-caption[data-voice='egg'] { border-left-color: #f0ad58; }
@@ -1032,8 +1020,8 @@ body[data-surface='monument'] .pie-main {
   inset: 0;
   background:
     linear-gradient(90deg,
-      transparent 13.5%, rgba(22, 29, 43, 0.35) 14%, transparent 14.5%,
-      transparent 84.5%, rgba(255, 255, 255, 0.55) 85%, transparent 85.5%);
+  transparent 13.5%, rgba(22, 29, 43, 0.35) 14%, transparent 14.5%,
+  transparent 84.5%, rgba(255, 255, 255, 0.55) 85%, transparent 85.5%);
   z-index: 2;
 }
 
@@ -1056,7 +1044,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-aura.is-thin em {
-  color: #c0392b;
+  color: var(--pie-knock);
   font-weight: 700;
 }
 
@@ -1082,7 +1070,7 @@ body[data-surface='monument'] .pie-main {
   width: calc(var(--wobble) * 100%);
   height: 100%;
   border-radius: inherit;
-  background: color-mix(in srgb, var(--hub-gold) calc((1 - var(--wobble)) * 100%), #c0392b);
+  background: color-mix(in srgb, var(--hub-gold) calc((1 - var(--wobble)) * 100%), var(--pie-knock));
   transition: width 80ms linear;
 }
 
@@ -1113,7 +1101,6 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-muted);
 }
 
-
 /* ─── Where the mimes lead: the passage's pie words go quiet ─────────────
  * Harder to wonder about pie: drawn hollow, as if mimed. (pie-carries.mjs) */
 .pie-flow-pie {
@@ -1124,7 +1111,7 @@ body[data-surface='monument'] .pie-main {
 .pie-lore-line.is-mimed .pie-flow-pie {
   color: transparent;
   -webkit-text-stroke: 0.6px color-mix(in srgb, var(--hub-ink) 55%, transparent);
-  text-decoration: underline dotted color-mix(in srgb, #7a3f9a 60%, transparent);
+  text-decoration: underline dotted color-mix(in srgb, var(--pie-mime) 60%, transparent);
 }
 
 /* This chapter, so far: how it will be kept, and the contest with the mimes. */
@@ -1202,7 +1189,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 :is(.pie-flow-now-lean, .pie-carries-lean) .is-boon { background: #d9a23a; }
-:is(.pie-flow-now-lean, .pie-carries-lean) .is-bane { background: #7a3f9a; }
+:is(.pie-flow-now-lean, .pie-carries-lean) .is-bane { background: var(--pie-mime); }
 :is(.pie-flow-now-lean, .pie-carries-lean) .is-bone { background: #9aa3ad; }
 
 .pie-flow-now-contest {
@@ -1210,14 +1197,14 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-flow-now-contest.is-mimes {
-  color: #7a3f9a;
+  color: var(--pie-mime);
   font-style: italic;
 }
 
 /* The start card: chapters the mimes hold wear a dashed edge. */
 .pie-card-chapter-btn.is-held {
   border-style: dashed;
-  border-color: #7a3f9a;
+  border-color: var(--pie-mime);
 }
 
 /* ─── What your carries have done to the book ─────────────────────────── */
@@ -1251,13 +1238,6 @@ body[data-surface='monument'] .pie-main {
   font-size: 0.92rem;
 }
 
-.pie-carries-row.is-uncarried {
-  grid-template-columns: 2rem minmax(0, 1fr);
-  color: var(--hub-muted);
-  background: transparent;
-  border-style: dashed;
-}
-
 .pie-carries-pending {
   display: flex;
   flex-wrap: wrap;
@@ -1282,13 +1262,13 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-carries-pending-n:hover,
-.pie-carries-pending-n:focus-visible {
+  .pie-carries-pending-n:focus-visible {
   border-color: var(--hub-gold);
   color: var(--hub-ink);
 }
 
 .pie-carries-row.is-held {
-  border-color: color-mix(in srgb, #7a3f9a 55%, var(--hub-line));
+  border-color: color-mix(in srgb, var(--pie-mime) 55%, var(--hub-line));
 }
 
 .pie-carries-n {
@@ -1307,8 +1287,8 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-carries-chip.is-mimes {
-  border: 1px dashed #7a3f9a;
-  color: #7a3f9a;
+  border: 1px dashed var(--pie-mime);
+  color: var(--pie-mime);
 }
 
 .pie-carries-chip.is-back {
@@ -1339,7 +1319,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-carries-forget:hover {
-  border-color: #c0392b;
+  border-color: var(--pie-knock);
 }
 
 @media (max-width: 40rem) {
@@ -1482,12 +1462,15 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-ink);
   text-align: left;
   animation: pie-card-turn 420ms ease-out;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.7rem;
+  font-size: 0.82rem;
 }
 
-.pie-cardface.type-knock { --card-edge: #c0392b; }
+.pie-cardface.type-knock { --card-edge: var(--pie-knock); }
 .pie-cardface.type-slip { --card-edge: #2f6688; }
 .pie-cardface.type-friend { --card-edge: #2c6f69; }
-.pie-cardface.type-power { --card-edge: #7a3f9a; }
+.pie-cardface.type-power { --card-edge: var(--pie-mime); }
 
 @keyframes pie-card-turn {
   from { transform: perspective(40rem) rotateY(70deg); opacity: 0; }
@@ -1605,7 +1588,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-cardface-status:empty,
-.pie-deck-status:empty {
+  .pie-deck-status:empty {
   display: none;
 }
 
@@ -1670,10 +1653,10 @@ body[data-surface='monument'] .pie-main {
   color: var(--hub-muted);
 }
 
-.pie-cardback.type-knock { --card-edge: #c0392b; }
+.pie-cardback.type-knock { --card-edge: var(--pie-knock); }
 .pie-cardback.type-slip { --card-edge: #2f6688; }
 .pie-cardback.type-friend { --card-edge: #2c6f69; }
-.pie-cardback.type-power { --card-edge: #7a3f9a; }
+.pie-cardback.type-power { --card-edge: var(--pie-mime); }
 
 .pie-cardback-mark {
   font-family: var(--hub-display, Georgia, serif);
@@ -1827,11 +1810,6 @@ html.pie-immersive {
 }
 
 /* A tighter face: the sprite beside the name, every line in the binding's own ink. */
-.pie-cardface {
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: 0.7rem;
-  font-size: 0.82rem;
-}
 
 .pie-cardface > * {
   grid-column: 1 / -1;
@@ -2069,6 +2047,7 @@ html.pie-immersive {
 @media (pointer: coarse) {
   .pie-cabinet .pie-thumbs {
     display: grid;
+    order: 2;
   }
 
   .pie-cabinet .pie-steps {
@@ -2078,6 +2057,7 @@ html.pie-immersive {
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
+    order: 5;
   }
 }
 
@@ -2092,7 +2072,7 @@ html.pie-immersive {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: 3px;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 5 / 3.4;
   padding: 5px;
   border: 1px solid color-mix(in srgb, var(--hub-ink) 18%, transparent);
   border-radius: 0.85rem;
@@ -2110,7 +2090,7 @@ html.pie-immersive {
   border-radius: 0.4rem;
   background:
     linear-gradient(180deg, rgba(200, 56, 40, calc(var(--coming) * 0.6)), rgba(200, 56, 40, calc(var(--coming) * 0.12))),
-    color-mix(in srgb, var(--hub-panel) 70%, transparent);
+  color-mix(in srgb, var(--hub-panel) 70%, transparent);
   transition: background-color 120ms ease;
 }
 
@@ -2122,8 +2102,8 @@ html.pie-immersive {
 .pie-pad-cell.is-here {
   background:
     radial-gradient(circle at 50% 55%, var(--hub-gold) 0 34%, transparent 36%),
-    linear-gradient(180deg, rgba(200, 56, 40, calc(var(--coming) * 0.6)), transparent),
-    color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
+  linear-gradient(180deg, rgba(200, 56, 40, calc(var(--coming) * 0.6)), transparent),
+  color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--hub-gold) 70%, var(--hub-ink));
 }
 
@@ -2154,7 +2134,7 @@ html.pie-immersive {
   border-radius: 1rem;
   background:
     linear-gradient(180deg, color-mix(in srgb, #fff 18%, transparent), transparent 55%),
-    color-mix(in srgb, var(--thumb-tone) 22%, var(--hub-panel));
+  color-mix(in srgb, var(--thumb-tone) 22%, var(--hub-panel));
   box-shadow: 0 3px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent), 0 8px 18px rgba(10, 12, 16, 0.12);
   color: var(--hub-ink);
   font-family: var(--font-family-heading, monospace);
@@ -2176,7 +2156,7 @@ html.pie-immersive {
 }
 
 .pie-thumb:active,
-.pie-thumb.is-aiming {
+  .pie-thumb.is-aiming {
   transform: translateY(2px);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent);
 }
@@ -2199,12 +2179,12 @@ html.pie-immersive {
 .pie-card .pie-card-mode {
   border-color: rgba(217, 195, 138, 0.6);
   background: rgba(255, 255, 255, 0.04);
-  color: #f3ead6;
+  color: var(--pie-film-paper);
 }
 
 .pie-card .pie-card-mode:hover,
-.pie-card .pie-card-mode:focus-visible {
-  border-color: #d9c38a;
+  .pie-card .pie-card-mode:focus-visible {
+  border-color: var(--pie-film-gold);
   background: rgba(217, 195, 138, 0.16);
 }
 
@@ -2214,11 +2194,11 @@ html.pie-immersive {
   color: #fff8e6;
 }
 
-/* ─── Under the screen: one bar of switches, its state shown, not spelled ─── */
+/* ─── The bar of switches, its state shown, not spelled (at the top of the cabinet unless moved) ─── */
 .pie-cabinet .pie-tools {
+  order: -2;
   display: grid;
-  /* Two even rows of four: the tools never leave one alone on a row of its own. */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
   border: 1px solid var(--hub-line);
   border-radius: 0.7rem;
@@ -2281,9 +2261,6 @@ html.pie-immersive {
 }
 
 /* ─── The caption: quieter between lines by colour, never by fading the box ─── */
-.pie-caption {
-  opacity: 1;
-}
 
 .pie-caption:not(.is-in) .pie-toast-line {
   color: var(--hub-muted);
@@ -2301,10 +2278,11 @@ html.pie-immersive {
   color: var(--hub-ink);
   font-size: 0.8rem;
   text-decoration: none;
+  order: -3;
 }
 
 .pie-cabinet .pie-return:hover,
-.pie-cabinet .pie-return:focus-visible {
+  .pie-cabinet .pie-return:focus-visible {
   border-color: var(--hub-gold);
 }
 
@@ -2370,7 +2348,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-index a:hover,
-.pie-index a:focus-visible {
+  .pie-index a:focus-visible {
   border-color: var(--hub-gold);
 }
 
@@ -2446,22 +2424,20 @@ html:not([data-chrome-hidden='true']) .pie-index {
 /* On a touch screen the controls sit right under the screen and the caption follows them, so
  * the screen, the pad and the buttons fit the window together (the cabinet is sized from the
  * window's height: the screen is 0.643 as wide as it is tall, after ~13rem of controls). */
-.pie-pad-grid {
-  aspect-ratio: 5 / 3.4;
-}
 
 @media (pointer: coarse) {
   .pie-cabinet .pie-screen { order: 1; }
-  .pie-cabinet .pie-thumbs { order: 2; }
-  .pie-cabinet .pie-tools { order: 3; }
+
+  .pie-cabinet .pie-tools {
+    order: -2;
+  }
   .pie-cabinet .pie-caption { order: 4; min-height: 0; }
-  .pie-cabinet .pie-steps { order: 5; }
 
   .pie-voyage .pie-cabinet,
   .pie-voyage.is-zen .pie-cabinet {
     justify-self: center;
     width: 100%;
-    max-width: min(100%, calc((100dvh - 13rem) * 0.643 + 1.5rem));
+    max-width: min(100%, calc(((100dvh - 13rem) * 0.643 + 1.5rem) * var(--cabinet-scale, 1)));
   }
 }
 
@@ -2505,7 +2481,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 .pie-stress-list li.is-quirk { --stress-edge: #b0602a; }
 .pie-stress-list li.is-cross { --stress-edge: var(--hub-accent); }
-.pie-stress-list li.is-fuzz { --stress-edge: #7a3f9a; }
+.pie-stress-list li.is-fuzz { --stress-edge: var(--pie-mime); }
 .pie-stress-list li.is-ok { --stress-edge: var(--hub-gold); }
 
 .pie-stress-report {
@@ -2524,6 +2500,8 @@ html:not([data-chrome-hidden='true']) .pie-index {
   display: block;
   margin-top: 0.15rem;
   font-size: 0.78rem;
+  grid-column: 2;
+  justify-self: start;
 }
 
 /* ─── A card's spell: the rule it runs on, lit (spw-spell.mjs) ─── */
@@ -2558,7 +2536,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-cardface-change:hover,
-.pie-cardface-change:focus-visible {
+  .pie-cardface-change:focus-visible {
   border-color: var(--hub-gold);
 }
 
@@ -2591,7 +2569,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
   border-radius: 0.7rem;
   background:
     radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--hub-gold) 10%, transparent), transparent 60%),
-    var(--hub-panel);
+  var(--hub-panel);
 }
 
 .pie-desk-lede {
@@ -2746,11 +2724,6 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 /* A wonder's way into the book sits under its words, not in the sigil's narrow column. */
-.pie-flow-where {
-  grid-column: 2;
-  justify-self: start;
-  font-size: 0.78rem;
-}
 
 /* ─── The show (pie-show.mjs): a window beside the caption, never over the lanes ───
  * Inset: the last interaction as a still, captioned with what it was worth; between times, the
@@ -2903,11 +2876,11 @@ html:not([data-chrome-hidden='true']) .pie-index {
   white-space: nowrap;
 }
 
-:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-boon { --way: #c98a1e; }
-:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bane { --way: #8a4fb0; }
-:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bone { --way: #5f8696; }
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-boon { --way: var(--pie-way-boon); }
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bane { --way: var(--pie-way-bane); }
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bone { --way: var(--pie-way-bone); }
 :is(.pie-points-chip, .pie-show-chip).is-wap { --way: var(--hub-accent); }
-:is(.pie-points-chip, .pie-show-chip).is-maw { --way: #7a3f9a; }
+:is(.pie-points-chip, .pie-show-chip).is-maw { --way: var(--pie-mime); }
 
 .pie-points-sum {
   margin: 0.3rem 0 0.4rem;
@@ -3028,7 +3001,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-points-side.is-wap b { color: var(--hub-accent-deep); }
-.pie-points-side.is-maw b { color: #7a3f9a; }
+.pie-points-side.is-maw b { color: var(--pie-mime); }
 
 .pie-points-more {
   padding-left: 1.1rem;
@@ -3043,12 +3016,12 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-voyage[data-show='board'] .pie-screen {
   box-shadow:
     inset 0 0 0 2px color-mix(in srgb, var(--hub-accent) 40%, transparent),
-    inset 0 2px 8px rgba(10, 12, 16, 0.12);
+  inset 0 2px 8px rgba(10, 12, 16, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pie-show-still:first-child,
-  .pie-points-feed li:first-child {
+    .pie-points-feed li:first-child {
     animation: none;
   }
 }
@@ -3071,8 +3044,8 @@ html:not([data-chrome-hidden='true']) .pie-index {
   border-color: color-mix(in srgb, var(--card-edge) 40%, var(--hub-line));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--card-edge) 18%, transparent),
-    0 0 2.6rem color-mix(in srgb, var(--card-edge) 26%, transparent),
-    0 1.2rem 2.6rem color-mix(in srgb, var(--hub-ink) 22%, transparent);
+  0 0 2.6rem color-mix(in srgb, var(--card-edge) 26%, transparent),
+  0 1.2rem 2.6rem color-mix(in srgb, var(--hub-ink) 22%, transparent);
   animation: pie-card-rise 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
 }
 
@@ -3212,7 +3185,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-cardface.is-live .pie-intro-go:hover,
-.pie-cardface.is-live .pie-intro-go:focus-visible {
+  .pie-cardface.is-live .pie-intro-go:focus-visible {
   outline: none;
   background: color-mix(in srgb, var(--card-edge) 28%, var(--hub-panel));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-edge) 32%, transparent);
@@ -3221,7 +3194,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 @media (prefers-reduced-motion: reduce) {
   .pie-cardface.is-live,
   .pie-cardface.is-live::before,
-  .pie-cardface-new {
+    .pie-cardface-new {
     animation: none;
   }
 }
@@ -3267,7 +3240,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-cardface-register::before,
-.pie-show-register::before {
+  .pie-show-register::before {
   content: '= ';
   opacity: 0.6;
 }
@@ -3483,9 +3456,6 @@ html:not([data-chrome-hidden='true']) .pie-index {
  * The lanes (from above), the lane from the side (heights) and the show are panels of one page: inked
  * frames, gutters between, a narration box for the caption. On a beat their frames ink together, so
  * the eye reads them as one moment; the meanwhile panel is an inset that cuts to someone elsewhere. */
-.pie-cabinet {
-  --panel-ink: color-mix(in srgb, var(--hub-ink) 82%, transparent);
-}
 
 .pie-cabinet .pie-screen,
 .pie-heights,
@@ -3694,7 +3664,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #d9c38a;
+  color: var(--pie-film-gold);
 }
 
 .pie-card-next-line {
@@ -3707,17 +3677,17 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 .pie-card-next-line.is-primary {
   font-size: 0.9rem;
-  color: #f3ead6;
+  color: var(--pie-film-paper);
 }
 
 .pie-card-next-act {
   display: inline-block;
   margin-top: 0.2rem;
   padding: 0.12rem 0.55rem;
-  border: 1px solid #d9c38a;
+  border: 1px solid var(--pie-film-gold);
   border-radius: 999px;
   background: rgba(217, 195, 138, 0.14);
-  color: #f3ead6;
+  color: var(--pie-film-paper);
   font-family: var(--font-family-heading, monospace);
   font-size: 0.68rem;
   text-decoration: none;
@@ -3725,7 +3695,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-card-next-act:hover,
-.pie-card-next-act:focus-visible {
+  .pie-card-next-act:focus-visible {
   background: rgba(217, 195, 138, 0.3);
   outline: none;
 }
@@ -3889,12 +3859,6 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 /* The spill card reads as a prompt, top to bottom: what happened, what to try next, play again; then
  * how to play again (modes, a start chapter) and the ways out. Long, it scrolls from its top. */
-.pie-card {
-  align-content: safe center;
-  grid-auto-rows: max-content;   /* no row shrinks to nothing when the card runs long */
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
 
 .pie-card > .pie-card-title { order: 0; }
 .pie-card > .pie-card-line { order: 1; }
@@ -3908,18 +3872,12 @@ html:not([data-chrome-hidden='true']) .pie-index {
  * Pause, sound, the views and Setup sit above the screen, where a thumb or an eye finds them first.
  * On a touch screen the order is: controls, setup, screen, pad, the story under it (if chosen), heights,
  * caption, steps. */
-.pie-cabinet .pie-return { order: -3; }
-.pie-cabinet .pie-tools { order: -2; }
+
 .pie-cabinet .pie-setup { order: -1; }
 
 @media (pointer: coarse) {
-  .pie-cabinet .pie-tools { order: -2; }
   .pie-cabinet .pie-flow-prose.is-under,
   .pie-cabinet .pie-heights { order: 3; }
-}
-
-.pie-cabinet .pie-tools {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .pie-tool-pause[aria-pressed='true'] {
@@ -3931,12 +3889,21 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 .pie-setup {
+  /* A sheet over the screen, anchored to the controls (pie-game.mjs sets its top or bottom on opening):
+   * the cabinet keeps its shape while it is open, and it scrolls within itself. */
+  position: absolute;
+  z-index: 8;
+  left: 0.75rem;
+  right: 0.75rem;
+  max-height: min(72vh, 34rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: grid;
   gap: 0.45rem;
   padding: 0.6rem 0.65rem;
   border: 2px solid var(--panel-ink, var(--hub-ink));
   border-radius: 0.3rem;
-  background: var(--hub-panel);
+  background: linear-gradient(var(--hub-panel), var(--hub-panel)), var(--hub-paper);   /* opaque over the lanes */
   box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 18%, transparent);
 }
 
@@ -3990,37 +3957,13 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 /* Cabinet size (⚙ Setup, or pinch on its frame): the screen scales with it, the lanes keep their shape. */
-@media (min-width: 62rem) {
-  .pie-voyage {
-    grid-template-columns:
-      minmax(0, 1fr)
-      clamp(calc(18rem * var(--cabinet-scale, 1)), calc((100vh - 20rem) * 0.643 * var(--cabinet-scale, 1)), calc(25rem * var(--cabinet-scale, 1)))
-      minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 61.99rem) {
   .pie-voyage > .pie-cabinet {
     max-width: min(100%, calc(26rem * var(--cabinet-scale, 1)));
   }
 }
 
-@media (pointer: coarse) {
-  .pie-voyage .pie-cabinet,
-  .pie-voyage.is-zen .pie-cabinet {
-    max-width: min(100%, calc(((100dvh - 13rem) * 0.643 + 1.5rem) * var(--cabinet-scale, 1)));
-  }
-}
-
 /* The scrolling story: its words sized by ⚙ Setup or a pinch, and the ones not passing still legible. */
-.pie-flow-para {
-  font-size: calc(0.9rem * var(--flow-scale, 1));
-  color: color-mix(in srgb, var(--hub-ink) 66%, transparent);
-}
-
-.pie-flow-para.is-passing {
-  color: var(--hub-ink);
-}
 
 /* Under the screen: the story in the cabinet, a strip of a few lines that follows the carry. */
 .pie-cabinet .pie-flow-prose.is-under {
@@ -4054,9 +3997,6 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 /* ─── Fit the window (the default size): the cabinet's width is solved from the window's height ───
  * (pie-game.mjs fitCabinet: the screen takes what the rest of the cabinet leaves of the window). */
-.pie-cabinet {
-  scroll-margin-top: 4.25rem;
-}
 
 @media (min-width: 62rem) {
   .pie-voyage.is-fit {
@@ -4137,10 +4077,6 @@ html:not([data-chrome-hidden='true']) .pie-index {
 /* A passage at a time: each paragraph comes to the line and holds still while it passes. */
 .pie-flow-list.is-by-passage {
   transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.pie-flow-para.is-passing {
-  font-size: calc(0.94rem * var(--flow-scale, 1));
 }
 
 @media (prefers-reduced-motion: reduce) {

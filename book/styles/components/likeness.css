@@ -90,6 +90,8 @@ html:is([data-theme='night'], [data-theme='slate'], [data-binding-tone='dark'], 
 .likeness-asset {
   position: relative;
   isolation: isolate;
+  --lk-keyhole: circle(31% at 50% 50%);
+  --lk-keyhole-open: circle(40% at 50% 50%);
 }
 
 figure.likeness-asset {
@@ -124,10 +126,6 @@ figure.likeness-asset[data-discovery='glimpsed']::before {
 }
 
 /* The window onto a detail, cut in the shape of the kind of place. */
-.likeness-asset {
-  --lk-keyhole: circle(31% at 50% 50%);
-  --lk-keyhole-open: circle(40% at 50% 50%);
-}
 .likeness-asset[data-likeness-container='window'] {
   --lk-keyhole: inset(25% 23% 25% 23% round 2%);
   --lk-keyhole-open: inset(17% 15% 17% 15% round 2%);

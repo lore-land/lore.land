@@ -28,7 +28,8 @@
     "spw:sigil-audit": "node .spw/tools/sigil-audit.mjs",
     "spw:characters": "node .spw/tools/characters-canon.mjs",
     "spw:likeness": "node .spw/tools/likeness-index.mjs",
-    "spw:progression": "node .spw/tools/progression-audit.mjs"
+    "spw:progression": "node .spw/tools/progression-audit.mjs",
+    "css:audit": "node book/scripts/tools/css-audit.mjs"
   },
   "keywords": [],
   "author": "Sam Washington",

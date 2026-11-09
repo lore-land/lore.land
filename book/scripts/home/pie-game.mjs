@@ -6751,6 +6751,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           writeRecord(record);
           applySetup();
           paintSetup();
+          requestAnimationFrame(placeSetup);   // the controls may have moved under it
         });
         row.append(b);
       });
@@ -6759,12 +6760,30 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     setupOut.replaceChildren(...rows, nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes) to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
   }
   requestAnimationFrame(applySetup);   // after setup of the page: where the story runs, how big things are
+  const placeSetup = () => {
+    // Under the controls when they sit above the screen; over them when they sit below.
+    const below = setting('controlsAt') === 'bottom';
+    setupOut.style.top = below ? '' : `${toolsBar.offsetTop + toolsBar.offsetHeight + 6}px`;
+    setupOut.style.bottom = below ? `${root.offsetHeight - toolsBar.offsetTop + 6}px` : '';
+  };
+  const closeSetup = () => {
+    if (!setupOut || setupOut.hidden) return;
+    setupOut.hidden = true;
+    setupBtn?.setAttribute('aria-expanded', 'false');
+  };
   setupBtn?.addEventListener('click', () => {
     const open = setupOut.hidden;
     setupOut.hidden = !open;
     setupBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) paintSetup();
+    if (open) { paintSetup(); placeSetup(); setupOut.querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true }); }
   });
+  // A tap outside the sheet, or Escape, puts it away (Escape does not also pause while it is open).
+  document.addEventListener('pointerdown', (event) => {
+    if (setupOut && !setupOut.hidden && !setupOut.contains(event.target) && !setupBtn?.contains(event.target)) closeSetup();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && setupOut && !setupOut.hidden) { event.stopImmediatePropagation(); closeSetup(); setupBtn?.focus({ preventScroll: true }); }
+  }, true);
 
   /* Pinch by hand: two fingers (or Safari's own pinch, or ctrl+wheel) over the story size its words,
    * over the cabinet's frame size the cabinet. Never over the lanes or the pad, where fingers play. */

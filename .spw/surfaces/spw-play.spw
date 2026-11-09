@@ -111,6 +111,7 @@
   controls: "icons in one row (compact, the default; each keeps its words as its name) or icons and words; above the screen or below it"
   story: "a passage at a time (each paragraph comes to the line and holds still while it passes, the default) or smoothly with the carry; the passing line high, middle or low"
   immersion: "on Play the cabinet comes fully into view, measured from where it sticks; Setup can leave the page where it is"
+  sheet: "⚙ Setup is a sheet over the screen, anchored to the controls, scrolling within itself; the cabinet keeps its shape while it is open; a tap outside or Escape puts it away"
 }
 
 ^app{

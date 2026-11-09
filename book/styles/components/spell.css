@@ -8,6 +8,21 @@
  */
 
 .spell {
+  /* The twelve roles, each a hue; type leans it toward the ink. The hues are named on the spell itself
+   * so its spectrum (the roles in the order they are cast, spw-spell.mjs --spectrum) can use them. */
+  --hue-probe: #2f6688;
+  --hue-potential: #2c8b86;
+  --hue-perspective: #7a4f8e;
+  --hue-confluence: #b0602a;
+  --hue-value: #c4922e;
+  --hue-integration: #8a4fb0;
+  --hue-action: #c0392b;
+  --hue-annotation: #9a7a20;
+  --hue-ground: #5d6a73;
+  --hue-config: #2b5aa6;
+  --hue-measure: #3d7a3a;
+  --hue-substrate: #7a5a44;
+
   --spell-ink: var(--hub-ink, var(--color-text-main, #1d1d22));
   --spell-muted: var(--hub-muted, var(--color-text-alt, #5b6472));
   --spell-paper: var(--hub-panel, var(--color-background-panel, #fbf7ef));
@@ -18,6 +33,7 @@
   padding: 0.55rem 0.7rem;
   border: 1px solid color-mix(in srgb, var(--spell-gold) 35%, transparent);
   border-radius: 0.5rem;
+  position: relative;
   background:
     radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--spell-gold) 9%, transparent), transparent 60%),
     color-mix(in srgb, var(--spell-paper) 88%, var(--spell-ink) 3%);
@@ -35,23 +51,7 @@
   background: none;
 }
 
-/* The twelve roles, each a hue; type leans it toward the ink. The hues are named on the spell itself
- * so its spectrum (the roles in the order they are cast, spw-spell.mjs --spectrum) can use them. */
-.spell {
-  --hue-probe: #2f6688;
-  --hue-potential: #2c8b86;
-  --hue-perspective: #7a4f8e;
-  --hue-confluence: #b0602a;
-  --hue-value: #c4922e;
-  --hue-integration: #8a4fb0;
-  --hue-action: #c0392b;
-  --hue-annotation: #9a7a20;
-  --hue-ground: #5d6a73;
-  --hue-config: #2b5aa6;
-  --hue-measure: #3d7a3a;
-  --hue-substrate: #7a5a44;
-}
-
+/* Each role's hue, as the --role its atoms, pips and gloss read. */
 .spell .op-probe { --role: var(--hue-probe); }
 .spell .op-potential { --role: var(--hue-potential); }
 .spell .op-perspective { --role: var(--hue-perspective); }
@@ -218,10 +218,6 @@ main.chapter .projection-spell-lines li.is-carries .spell {
 }
 
 /* ▶: the spell played (spw-sound.mjs); each atom lights as it sounds. */
-.spell {
-  position: relative;
-}
-
 .spell-play {
   float: right;
   margin: -0.15rem -0.25rem 0.1rem 0.4rem;
