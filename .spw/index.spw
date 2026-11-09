@@ -35,6 +35,7 @@
   characters: "@spw/surfaces/characters.spw"
   spw_play: "@spw/surfaces/spw-play.spw"
   sigil_audit: "@spw/audits/sigil-chapter-audit.spw"
+  progression: "@spw/audits/progression.spw"
   pie_rules: "@spw/runtime/pie-rules.spw"
   layers: "@spw/surfaces/layers.spw"
   bias: "@spw/runtime/bias.spw"

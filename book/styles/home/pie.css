@@ -3478,3 +3478,197 @@ html:not([data-chrome-hidden='true']) .pie-index {
   border: 1px solid color-mix(in srgb, var(--hub-ink) 20%, transparent);
   border-radius: 2px;
 }
+
+/* ─── The cabinet as a comic page ─────────────────────────────────────────
+ * The lanes (from above), the lane from the side (heights) and the show are panels of one page: inked
+ * frames, gutters between, a narration box for the caption. On a beat their frames ink together, so
+ * the eye reads them as one moment; the meanwhile panel is an inset that cuts to someone elsewhere. */
+.pie-cabinet {
+  --panel-ink: color-mix(in srgb, var(--hub-ink) 82%, transparent);
+}
+
+.pie-cabinet .pie-screen,
+.pie-heights,
+.pie-show-inset canvas {
+  outline: 2.5px solid var(--panel-ink);
+  outline-offset: 0;
+  transition: outline-color 180ms ease, outline-width 180ms ease;
+}
+
+.pie-cabinet .pie-screen {
+  border-radius: 0.3rem;
+}
+
+.pie-cabinet.is-beat :is(.pie-screen, .pie-heights, .pie-show-inset canvas) {
+  outline-width: 3.5px;
+  outline-color: var(--hub-gold);
+}
+
+/* The caption, as a narration box. */
+.pie-cabinet .pie-caption {
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--hub-gold) 10%, var(--hub-panel));
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 22%, transparent);
+}
+
+/* ⤒ Heights: the lane from the side. */
+.pie-heights {
+  position: relative;
+  border-radius: 0.3rem;
+  background: var(--hub-panel);
+}
+
+.pie-heights summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: 0.35rem 3.9rem 0.35rem 0.55rem;   /* the far corner is the meanwhile panel's */
+  cursor: pointer;
+  list-style: none;
+}
+
+.pie-heights summary::-webkit-details-marker {
+  display: none;
+}
+
+.pie-heights-title {
+  flex: none;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep);
+}
+
+.pie-heights:not([open]) .pie-heights-title::after {
+  content: ' ▸';
+}
+
+.pie-heights-say {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--hub-ink);
+}
+
+.pie-heights-row {
+  position: relative;
+  padding: 0 0.35rem 0.35rem;
+}
+
+.pie-heights-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 300 / 112;
+  border-top: 1px dashed var(--hub-line);
+}
+
+/* Meanwhile: an inset panel over the far corner of the strip, tilted a little, as comics do. */
+.pie-meanwhile {
+  position: absolute;
+  top: -0.7rem;
+  right: 0.3rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+  width: 3.3rem;
+  margin: 0;
+  padding: 0.25rem 0.2rem 0.2rem;
+  border: 2px solid var(--panel-ink);
+  border-radius: 0.2rem;
+  background: var(--hub-panel);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 20%, transparent);
+  transform: rotate(2.5deg);
+  pointer-events: none;
+}
+
+.pie-meanwhile[hidden] {
+  display: none;
+}
+
+.pie-meanwhile.is-cut {
+  animation: pie-meanwhile-cut 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes pie-meanwhile-cut {
+  0% { opacity: 0; transform: rotate(-4deg) scale(0.8); }
+  100% { opacity: 1; transform: rotate(2.5deg); }
+}
+
+.pie-meanwhile-art svg {
+  display: block;
+  width: 2.3rem;
+  height: 2.3rem;
+}
+
+.pie-meanwhile-says {
+  position: absolute;
+  bottom: -0.75rem;
+  right: 1.6rem;
+  max-width: 4.6rem;
+  padding: 0.12rem 0.4rem;
+  border: 1.5px solid var(--panel-ink);
+  border-radius: 999px;
+  background: #fffdf6;
+  color: #1d1d22;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pie-meanwhile-says:empty {
+  display: none;
+}
+
+.pie-meanwhile figcaption {
+  order: -1;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.46rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  text-align: center;
+  color: var(--hub-muted);
+}
+
+.pie-voyage.is-zen .pie-heights {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-meanwhile.is-cut { animation: none; }
+  .pie-cabinet .pie-screen,
+  .pie-heights { transition: none; }
+}
+
+/* What the side view shows: each part a chip to turn, and how far ahead it looks. */
+.pie-heights-cfg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-top: 0.3rem;
+}
+
+.pie-heights-chip {
+  padding: 0.12rem 0.45rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: var(--hub-panel);
+  color: var(--hub-muted);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  cursor: pointer;
+}
+
+.pie-heights-chip[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--hub-accent) 55%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-accent) 10%, var(--hub-panel));
+  color: var(--hub-ink);
+}
+
+.pie-heights-chip:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: 1px;
+}

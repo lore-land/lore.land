@@ -14,7 +14,7 @@ const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_08.O';
+const RELEASE = '2026_11_08.P';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
@@ -137,6 +137,7 @@ const catalog = {
     number: chapter.chapterNumber,
     title: chapter.title,
     inWhich: inWhichFor(chapter),
+    rooms: (chapter.sections || []).filter((section) => section.room).length,
     href: chapterHref(chapter.chapterNumber),
     card: `/book/images/og/chapter-${padChapterNumber(chapter.chapterNumber)}.jpg`
   }))

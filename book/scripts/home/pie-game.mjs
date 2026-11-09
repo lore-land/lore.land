@@ -162,6 +162,7 @@ import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from 
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.N';
+import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
 
 const KEY = 'lore.pie.v1';
@@ -387,7 +388,7 @@ function readRecord() {
       met: Array.isArray(parsed.met) ? parsed.met : [],
       cards: Array.isArray(parsed.cards) ? parsed.cards : [],
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
-      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, show: ['inset', 'board'].includes(parsed.view?.show) ? parsed.view.show : 'off' },
+      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, heights: parsed.view?.heights !== false, heightsCfg: parsed.view?.heightsCfg && typeof parsed.view.heightsCfg === 'object' ? parsed.view.heightsCfg : null, show: ['inset', 'board'].includes(parsed.view?.show) ? parsed.view.show : 'off' },
       sound: parsed.sound !== false
     };
   } catch {
@@ -647,6 +648,17 @@ const loadLore = () => {
 };
 
 /** What the visitor has found across the site, and done in the game. */
+/* What the reader has read, room by room (rooms.mjs keeps it), and how many rooms each chapter has
+ * (catalog.json, fetched when the page is quiet): a chapter read whole is a chapter the pies trust. */
+const ROOM_TOTALS = {};
+const roomsReadIn = (n) => {
+  try {
+    const list = JSON.parse(window.localStorage.getItem('lore.rooms.v1') || '{}')[String(n)];
+    return Array.isArray(list) ? list.length : 0;
+  } catch { return 0; }
+};
+const roomsDone = () => Object.entries(ROOM_TOTALS).filter(([n, total]) => total > 0 && roomsReadIn(n) >= total).map(([n]) => Number(n));
+
 function discoveries(record) {
   const read = (key, fallback) => {
     try { return JSON.parse(window.localStorage.getItem(key) || 'null') ?? fallback; } catch { return fallback; }
@@ -657,6 +669,7 @@ function discoveries(record) {
   return {
     chapters: visited.length,
     visited,
+    roomsDone: roomsDone(),
     wonders: Object.keys(read('lore.almanac.v1', {}) || {}).length,
     sightings: Object.keys(read('lore.sightings.v1', {}) || {}).length,
     tellings: Object.values(tellings || {}).reduce((sum, list) => sum + (Array.isArray(list) ? list.length : 0), 0),
@@ -677,6 +690,8 @@ function discoveries(record) {
 function isUnlocked(line, found) {
   const { kind, n } = line.unlock || { kind: 'always' };
   if (kind === 'always') return true;
+  // Read every room of the chapter a line belongs to, and the pies say it whatever else is still to do.
+  if (line.ground?.chapter && found.roomsDone?.includes(Number(line.ground.chapter))) return true;
   if (kind === 'chapter') return found.visited.includes(Number(n));
   return (found[kind] ?? 0) >= Number(n);
 }
@@ -766,6 +781,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let frame = 0;
   let last = 0;
   let run = null;
+  // The side of the lane: how high everything stands and what a hop does (pie-heights.mjs).
+  const heightsPanel = root.querySelector('[data-pie-heights]');
+  const heights = createHeights({ panel: heightsPanel, config: () => record.view.heightsCfg });
   // The show: the last interactions in a window, or the lanes as a board (pie-show.mjs).
   const show = createShow({
     canvas,
@@ -952,7 +970,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const figureBonus = run.carrier.id === 'figure' ? 1 + (run.strokes || 0) * 0.025 : 1;
     const charmBonus = run.charm?.bracket === '{}' ? 1.12 : 1;
     const fedBonus = run.fed > 0 ? 1.25 : 1;   // a boneberry meal: steadier on your feet
-    return run.carrier.settle * figureBonus * charmBonus * fedBonus;
+    // Rooms read in this chapter: the pie knows the way here (up to a third steadier).
+    const knownBonus = 1 + Math.min(0.32, roomsReadIn(run.chapter) * 0.04);
+    return run.carrier.settle * figureBonus * charmBonus * fedBonus * knownBonus;
   };
   const spawnRing = (x, y, maxR = 28, color = colors.gold, dur = 0.55, dashed = false) => {
     if (!reduced?.matches && run) run.rings.push({ x, y, r: 4, maxR, t: 0, dur, color, dashed });
@@ -981,7 +1001,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
     caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
-    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6]
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -990,7 +1010,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
     caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
-    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views'
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time'
   });
   let leanRules = {};
   const lean = (event, n = 1) => {
@@ -1023,7 +1043,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'a knock', boxed: 'a slice boxed', bane_fed: 'a baneberry fed to him', scheme_ran: 'a scheme run', foretold: 'a foretelling come true',
     flinched: 'a flinch', let_past: 'a baneberry let past', perfect: 'a perfect throw', over_mimes: 'over the mimes', ramp: 'off a ramp',
     hop_clear: 'a clean hop', deft: 'a deft landing', caught: 'a tilt caught', boneberry: 'a boneberry', foiled: 'Mr. BaneWAP foiled',
-    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View'
+    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time'
   });
   /* The contest with Mimes Against WAP: what scores for the pie, and what for the mimes. */
   const CONTEST = Object.freeze({
@@ -1109,6 +1129,116 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
     ctx.restore();
   };
+  /* ─── The lane from the side (pie-heights.mjs): what the game will do, handed over each frame ─── */
+  const inLaneOf = (th) => (WIDE.has(th.kind) ? th.gap !== run.lane : Math.abs(th.x - run.x) < ((th.w || 24) + run.carrier.width) / 2);
+  function heightsSnap() {
+    if (!run || state === 'title' || state === 'over') return null;
+    const speed = Math.max(40, run.speed || 120);
+    const windowFull = TUNE.hop_window * (run.carrier.id === 'clerk' ? 1.4 : 1);
+    const sinceLand = run.t - (run.lastLand ?? -9);
+    const windowLeft = run.jumpT <= 0 && run.lastHopGood ? Math.max(0, windowFull - sinceLand) : 0;
+    const chain = run.hopChain || 0;
+    const things = run.things
+      .filter((th) => !th.wapped && !th.cleared && !th.knocked && !th.gone && th.y < run.y + 30 && inLaneOf(th))
+      .map((th) => {
+        const harmful = Boolean(th.fatal || SLIPS.has(th.kind) || KNOCKS[th.kind]);
+        return {
+          eta: (run.y - th.y) / speed,
+          cls: clearance(th.kind, { Z, LOW, HIGH_CLEARS, harmful }),
+          z: Z[th.kind] ?? 2,
+          wide: WIDE.has(th.kind),
+          name: (th.wonder?.name || CARDS[th.kind]?.name || th.kind).replace(/^(A|An|The) /, '').toLowerCase()
+        };
+      });
+    return {
+      things,
+      lift: jumpLift(),
+      highHop: Boolean(run.highHop),
+      jumpT: run.jumpT || 0,
+      jumpDur: JUMP_DUR,
+      hopLift: TUNE.hop_lift,
+      hopChainStep: TUNE.hop_chain,
+      power: run.hopPower || 1,
+      chain,
+      windowLeft,
+      windowFull,
+      canHop: run.jumpT <= 0 && !(run.jumpCool > 0),
+      nextChain: windowLeft > 0 ? Math.min(3, chain + 1) : 0
+    };
+  }
+  heightsPanel?.addEventListener('toggle', () => {
+    record.view.heights = heightsPanel.open;
+    writeRecord(record);
+    if (heightsPanel.open) heights.fit();
+  });
+  if (heightsPanel) heightsPanel.open = record.view.heights !== false;
+  /* The side view is configurable: each part on or off, and how far ahead it looks; kept in this browser.
+   * (In time it may become something earned; for now every part is there to turn.) */
+  const heightsCfgOut = root.querySelector('[data-pie-heights-cfg]');
+  const HEIGHTS_PARTS = Object.freeze([['marks', '⤒ marks in the lanes', 'Each thing in the lanes wears ⤒ (a hop clears it), ⤒⤒ (a high hop) or ▮ (too tall)'], ['arc', '◠ arc', 'The arc of a hop taken now'], ['words', '¶ words', 'What is next, in words'], ['bands', '≡ bands', 'The bands of height, labelled'], ['chain', '●●● chain', 'The chain toward a high hop'], ['meanwhile', '▣ meanwhile', 'The meanwhile panel']]);
+  function paintHeightsCfg() {
+    if (!heightsCfgOut) return;
+    const cfg = { ...HEIGHTS_DEFAULTS, ...(record.view.heightsCfg || {}) };
+    const chips = HEIGHTS_PARTS.map(([key, label, title]) => {
+      const b = nodeOf('button', 'pie-heights-chip', label);
+      b.type = 'button';
+      b.title = title;
+      b.setAttribute('aria-pressed', cfg[key] ? 'true' : 'false');
+      b.addEventListener('click', () => {
+        record.view.heightsCfg = { ...cfg, [key]: !cfg[key] };
+        writeRecord(record);
+        if (key === 'meanwhile' && cfg[key]) root.querySelector('[data-pie-meanwhile]')?.setAttribute('hidden', '');
+        paintHeightsCfg();
+      });
+      return b;
+    });
+    const reach = nodeOf('button', 'pie-heights-chip', `⟷ ${cfg.horizon} s ahead`);
+    reach.type = 'button';
+    reach.title = 'How far ahead the side view looks';
+    reach.addEventListener('click', () => {
+      const order = [1.2, 1.8, 2.4];
+      record.view.heightsCfg = { ...cfg, horizon: order[(order.indexOf(cfg.horizon) + 1) % order.length] || 1.8 };
+      writeRecord(record);
+      paintHeightsCfg();
+    });
+    heightsCfgOut.replaceChildren(...chips, reach);
+  }
+  requestAnimationFrame(paintHeightsCfg);   // after setup: its helpers are defined further down
+
+  /* ─── The page as a comic: panels on one beat, and a meanwhile ───
+   * The lanes, the side of the lane and the show are panels of one page. On a beat (an impact, a hop
+   * in time) their frames ink together, so the eye reads them as the same moment. And now and then
+   * the inset panel cuts to someone elsewhere, in a mood, with a word: meanwhile. */
+  const cabinetEl = root;
+  let beatTimer = 0;
+  function beat() {
+    if (reduced?.matches || record.view.zen) return;
+    cabinetEl.classList.remove('is-beat');
+    void cabinetEl.offsetWidth;
+    cabinetEl.classList.add('is-beat');
+    clearTimeout(beatTimer);
+    beatTimer = setTimeout(() => cabinetEl.classList.remove('is-beat'), 260);
+  }
+  const meanwhileOut = root.querySelector('[data-pie-meanwhile]');
+  let meanwhileAt = 0;
+  function meanwhile(who, mood, words, { force = false } = {}) {
+    if (!meanwhileOut || !CHARACTERS[who] || record.view.zen || record.view.heightsCfg?.meanwhile === false) return;
+    const now = performance.now();
+    if (!force && now - meanwhileAt < 2200) return;
+    meanwhileAt = now;
+    const art = meanwhileOut.querySelector('.pie-meanwhile-art');
+    const balloon = meanwhileOut.querySelector('.pie-meanwhile-says');
+    const name = meanwhileOut.querySelector('.pie-meanwhile-who');
+    if (art) art.innerHTML = portraitSVG(who, { size: 56, mood, standalone: true });
+    if (balloon) balloon.textContent = words;
+    const SHORT = { boof: 'Boof', ants: 'the ants', genie: 'the Genie', bane: 'BaneWAP', boon: 'BoonWAP', bonewap: 'BoneWAP', porter: 'the porter', clerk: 'the clerk', figure: 'the figure', clown: 'a clown', mime: 'a mime' };
+    if (name) name.textContent = SHORT[who] || CHARACTERS[who].name;
+    meanwhileOut.hidden = false;
+    meanwhileOut.classList.remove('is-cut');
+    void meanwhileOut.offsetWidth;
+    meanwhileOut.classList.add('is-cut');
+  }
+
   /* ─── Whimsy: how an impact looks and sounds, by sprite and by scene ───
    * !whimsy{ *kind{ #pop["BONK!", …] *bits[crumbs] !sound[…] %drama[1] } } and !scenes{ *field{ $frost
    * %drama[0.9] } } in pie-rules.spw, over these defaults. An impact pops a word, flings bits, gives
@@ -1150,6 +1280,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   });
   function impact(kind, x, y, { scale = 1, word = null, hurt = false } = {}) {
     if (!run) return;
+    if (kind !== 'hop' || (run.hopChain || 0) > 0) beat();
     // What moved in this moment happened here: its chip rises from here, and its still is taken here.
     const latest = run.feed[run.feed.length - 1];
     if (latest && run.t - latest.t < 0.05 && !latest.placed) { latest.x = x; latest.y = y; latest.placed = true; }
@@ -1656,7 +1787,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   /* A hop: low things pass under it. The pie lifts a little off the plate, and lands with a jostle. */
   // A hop hangs a moment at the top (the curve is flattened there), and a chain of hops goes higher.
-  const jumpLift = () => (run?.jumpT > 0 ? Math.sin(Math.PI * (1 - run.jumpT / JUMP_DUR)) ** 0.75 * TUNE.hop_lift * (run.hopPower || 1) : 0);
+  const jumpLift = () => (run?.jumpT > 0 ? Math.sin(Math.PI * clamp(1 - run.jumpT / JUMP_DUR, 0, 1)) ** 0.75 * TUNE.hop_lift * (run.hopPower || 1) : 0);
   const airborne = () => jumpLift() > 9;
   const jump = () => {
     if (state === 'title' || state === 'over') {
@@ -2233,6 +2364,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.satisfied += 1;
       run.gladT = 1.4;
       if (run.carrier.id === 'genie') run.trueAim = Math.max(run.trueAim, 2);
+      meanwhile('clown', 'glad', pick(['WAP!', 'Again!', 'Ha!']));
       lean('satisfied');
       tally('wap', 0.5, 'satisfied');
       thanks(thing);
@@ -2290,6 +2422,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.foils += 1;
     tally('wap', 2, 'foiled');
     lean('foiled');
+    meanwhile('bane', 'surprised', 'Not over!', { force: true });
     impact('switch', thing.x ?? W / 2, (thing.y ?? PRESENCE_Y) - 30);
     sfx('foil');
     spawnRing(thing.x, thing.y, 38, '#d6473e', 0.6);
@@ -2615,7 +2748,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const who = first ? `Under the hat: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}` : '';
     const held = run.tally.held ? 'The mimes hold this chapter: out-do them before it ends to win it back.' : '';
     const line = [note, lapped ? (run.lap ? 'The book again, and faster.' : 'Back to the beginning of the book.') : '', who, moved, held].filter(Boolean).join(' ');
-    showToast(place, biased('toast.chapter', line, { where: place }), note || held ? 4400 : 3200, run.tally.held ? 'bane' : '');
+    const known = roomsReadIn(n);
+    const total = ROOM_TOTALS[n] || 0;
+    const knownWords = known ? ` You have read ${known}${total ? ` of ${total}` : ''} room${known === 1 ? '' : 's'} here: the pie knows the way${total && known >= total ? ', and the pies will tell you what they know of it' : ''}.` : '';
+    showToast(place, biased('toast.chapter', `${line}${knownWords}`, { where: place }), note || held || known ? 4600 : 3200, run.tally.held ? 'bane' : '');
+    meanwhile(held ? 'mime' : 'boof', held ? 'thinking' : 'calm', held ? '…' : 'sniff.', { force: true });
     say(`${place}. ${line}`);
   };
 
@@ -2795,6 +2932,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.knockT = 1.6;
     run.lastKnock = thing.kind;
     lean('knocked');
+    meanwhile(CHARACTERS[run.carrier.id] ? run.carrier.id : 'boof', CHARACTERS[run.carrier.id] ? 'worried' : 'surprised', pick(['Oof.', 'Steady…', 'Mind it!']));
     if (thing.kind === 'mime' || thing.kind === 'mimewall' || thing.kind === 'march') tally('maw', 1, 'mime_knock');
     sfx('knock');
     impact(thing.kind, thing.x, thing.y - 26, { hurt: true });
@@ -3416,6 +3554,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.bane = { id, t: 0, dur: 9 + fed * 1.2, fed, beat: id === 'relet' ? 2.4 : id === 'march' ? 3.2 : 1.8, nextBeat: 1.6, dir: pick([-1, 1]) };
     run.pendingSwitch = true;
     run.lastPresence = 'bane';
+    meanwhile('bane', 'thinking', 'Hm. Yes.', { force: true });
     showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.`, 3400, 'bane');
     say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.`);
   };
@@ -3581,6 +3720,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           run.hopChain = 0;
         }
         run.highHop = false;
+        if (!run.hopClears) run.inTime = 0;
         if (run.deftHop || run.hopClears >= 2) {
           sfx('deft');
           lean('deft');
@@ -3818,7 +3958,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             lean('hop_clear');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
-            run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: run.highHop && !LOW.has(thing.kind) ? 'OVER THE TOP' : 'CLEARED' });
+            // In time: cleared near the top of the hop (its middle third). A run of them is a rhythm.
+            const phase = 1 - run.jumpT / JUMP_DUR;
+            const inTime = Math.abs(phase - 0.5) < 0.17;
+            if (inTime) {
+              run.inTime = (run.inTime || 0) + 1;
+              lean('in_time');
+              sfx('deft');
+              beat();
+              if (run.inTime >= 2) meanwhile('boof', 'glad', run.inTime >= 3 ? '♪ ♪' : '♪');
+            }
+            run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: inTime ? (run.inTime >= 2 ? `IN TIME ×${run.inTime}` : 'IN TIME') : run.highHop && !LOW.has(thing.kind) ? 'OVER THE TOP' : 'CLEARED' });
+            if (run.highHop && !LOW.has(thing.kind)) meanwhile('boof', 'surprised', '!');
             if (run.mini) run.mini.score += 1;
             if (run.highHop && !LOW.has(thing.kind)) impact('hop', thing.x, thing.y - 40, { scale: 0.8, word: pick(['OVER!', 'WHEEE!', 'UP AND OVER!']) });
           }
@@ -4392,7 +4543,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.fill();
         ctx.stroke();
         // Its height, said plainly: ⤒ a hop clears it · ⤒⤒ only a high hop · ▮ too tall to hop.
-        const mark = heightMark(thing);
+        const mark = record.view.heightsCfg?.marks === false ? '' : heightMark(thing);
         if (mark) {
           ctx.setLineDash([]);
           const lit = mark === '⤒⤒' ? run?.highHop : mark === '⤒';
@@ -6204,6 +6355,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawHud();
     drawPoints();
     if (show.mode !== 'off') show.frame(run, colors);
+    heights.draw(heightsSnap(), colors);
     // The board: the alternate view, drawn over the lanes once they are in the window.
     if (show.mode === 'board' && run) {
       show.drawBoard(ctx, run, colors);
@@ -6222,7 +6374,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function loop() {
     cancelAnimationFrame(frame);
     const tick = (now) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
+      // A frame's timestamp can come just before the moment play resumed: never let time run backwards.
+      const dt = clamp((now - last) / 1000, 0, 0.05);
       last = now;
       if (state === 'running' || state === 'spilling') update(dt);
       draw();
@@ -6356,7 +6509,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           li.textContent = speaker === 'boon' ? 'Ready to be said, next time he holds court.' : 'Ready to slip out, next time he is foiled.';
         } else {
           li.className = 'pie-lore-line is-locked';
-          li.textContent = line.hint || 'Not yet.';
+          // Two ways in: the line's own, or reading every room of the chapter it belongs to.
+          li.textContent = `${line.hint || 'Not yet.'}${line.ground?.chapter ? ` Or read every room of ${chapterWords(line.ground.chapter)}${ROOM_TOTALS[line.ground.chapter] ? ` (${roomsReadIn(line.ground.chapter)} of ${ROOM_TOTALS[line.ground.chapter]} read)` : ''}.` : ''}`;
         }
         return li;
       }));
@@ -7434,6 +7588,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     event.target.blur();
   });
   window.addEventListener(BIAS_EVENT, () => paintBias());
+  whenQuiet(() => fetch('/book/content/catalog.json').then((r) => r.json()).then((cat) => {
+    (cat.chapters || []).forEach((c) => { if (c.rooms) ROOM_TOTALS[c.number] = c.rooms; });
+    paintLore();
+  }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
   whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_08.O').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();

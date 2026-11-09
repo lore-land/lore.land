@@ -368,6 +368,141 @@
         "chapter": 11,
         "label": "a clause he never read"
       }
+    },
+    {
+      "id": "boon-a-beat-late",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 2
+      },
+      "hint": "Carry the pie as far as Chapter Two.",
+      "line": "The grove answers a beat late. I have counted. A beat late is still an answer, and an answer is worth waiting a beat for.",
+      "ground": {
+        "chapter": 2,
+        "anchor": "a-beat-late",
+        "label": "a beat late"
+      }
+    },
+    {
+      "id": "bane-two-roads",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 3
+      },
+      "hint": "Carry the pie as far as Chapter Three.",
+      "line": "Two roads claim the same step. I announced that one of them would win. Now both of them will, the bad way, and you will have to walk them both.",
+      "ground": {
+        "chapter": 3,
+        "anchor": "the-seam-in-the-sand",
+        "label": "two roads, one step"
+      }
+    },
+    {
+      "id": "boon-no-key",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 4
+      },
+      "hint": "Carry the pie as far as Chapter Four.",
+      "line": "Keys get filed smaller every year. Mine stays the size it is. Some doors are not for keys, and I have never once tried to slice one.",
+      "ground": {
+        "chapter": 4,
+        "anchor": "no-key-covers-the-egg",
+        "label": "no key covers it"
+      }
+    },
+    {
+      "id": "bane-the-crack",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 5
+      },
+      "hint": "Carry the pie as far as Chapter Five.",
+      "line": "Two slips trying to be one harvest. I said the crack would widen. Saying it is most of the work; the rest is gravity, which is very loyal to me.",
+      "ground": {
+        "chapter": 5,
+        "anchor": "wish-physics-over-the-crack",
+        "label": "over the crack"
+      }
+    },
+    {
+      "id": "boon-an-oath-in-fruit",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 7
+      },
+      "hint": "Carry the pie as far as Chapter Seven.",
+      "line": "An oath kept in fruit is still kept. I have kept one in pie, which is only fruit with ambitions.",
+      "ground": {
+        "chapter": 7,
+        "anchor": "the-shadow-price",
+        "label": "an oath, kept"
+      }
+    },
+    {
+      "id": "bane-the-pond",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 8
+      },
+      "hint": "Carry the pie as far as Chapter Eight.",
+      "line": "Water keeps a face without stealing it. I tried to teach it otherwise. The pond was polite about it, and did not learn.",
+      "ground": {
+        "chapter": 8,
+        "anchor": "the-unpriceable-want",
+        "label": "the pond, polite"
+      }
+    },
+    {
+      "id": "boon-the-ninth-honk",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 9
+      },
+      "hint": "Carry the pie as far as Chapter Nine.",
+      "line": "Nine honks, eight heard. The ninth is missing, and warm. I would not count it missing. I would count it kept somewhere.",
+      "ground": {
+        "chapter": 9,
+        "anchor": "the-shape-with-one-hole",
+        "label": "the ninth honk"
+      }
+    },
+    {
+      "id": "bane-the-hall",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 10
+      },
+      "hint": "Carry the pie as far as Chapter Ten.",
+      "line": "I announced the hall would tell the truth. It did. I had not asked which truth, and the beams had been waiting years to say it.",
+      "ground": {
+        "chapter": 10,
+        "anchor": "what-the-frame-would-bear",
+        "label": "the hall, weighing"
+      }
+    },
+    {
+      "id": "boon-the-blank-line",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 13
+      },
+      "hint": "Carry the pie as far as Chapter Thirteen.",
+      "line": "The last door is shaped like a shell, and stays open. I leave the last line blank as well. It is the only slice anyone ever finishes.",
+      "ground": {
+        "chapter": 13,
+        "anchor": "the-blank-last-line",
+        "label": "the blank last line"
+      }
     }
   ]
 }

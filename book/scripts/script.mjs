@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.O';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.P';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
@@ -59,6 +59,7 @@ import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.N';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.N';
 import { initCollection } from './modules/collection.mjs?v=2026_11_08.O';
 import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_08.O';
+import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_08.P';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
@@ -199,6 +200,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyCollection = initCollection({ chapterData, announce });
     // The chapter in Spw, at its end: its description spell and every expression it holds, lit by what was found.
     const destroyInventory = initChapterInventory({ chapterData });
+    // What the pies let slip in the lanes, set back beside the room it is about (and the way to what is still unheard).
+    const destroyLanesLore = initLanesLore({ chapterData });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -299,6 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyBeginAgain) destroyBeginAgain();
       if (destroyCollection) destroyCollection();
       if (destroyInventory) destroyInventory();
+      if (destroyLanesLore) destroyLanesLore();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

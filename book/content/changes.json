@@ -2,6 +2,18 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.P",
+      "date": "2026-11-08",
+      "notes": [
+        "Hopping in Exactly One Pie is easier to read: under the screen, ⤒ Heights turns the lane you stand in on its side, so you can see how high each thing stands (in the air, tall, low, underfoot) and what a hop does about it. The arc of a hop taken now is drawn over it, whatever it would clear is ticked, and a line says what is next: hop in 0.3 s, hop now, step aside, or only a high hop. Three pips show the chain toward a high hop. Both ways of seeing height are options: the ⤒ marks worn in the lanes, and the side view, whose parts (the arc, the words, the bands, the chain) each turn on or off, looking one, two or nearly three seconds ahead.",
+        "A hop that clears something at the top of its arc is in time, and a run of them is a rhythm: it leans the chapter toward low magic, and somebody notices.",
+        "The game reads like a comic page now: the lanes, the lane from the side and the show are inked panels; on a big moment their frames flash together; and a small meanwhile panel cuts away to someone elsewhere, in a mood, with a word. Boof hums along to a rhythm, Mr. BaneWAP thinks of a scheme, a clown says WAP.",
+        "Reading and playing now feed each other both ways. Rooms you have read steady the pie in their chapter, and a chapter read room by room makes the pies tell you what they know of it. What they let slip in the lanes appears beside the room it is about, in their voice, and what you have not heard yet leaves a quiet note of how to hear it. Every chapter now has something of theirs to find.",
+        "The almanac writes where you are as a spell, every collection at once (rooms read, wonders kept, cards turned, palettes begun, lore heard, people met), and names the next chapter with rooms still unread.",
+        "Fixed: a rare moment, just after a card was put away, when time in the lanes could run backwards for a frame and stop the game."
+      ]
+    },
+    {
       "release": "2026_11_08.O",
       "date": "2026-11-08",
       "notes": [

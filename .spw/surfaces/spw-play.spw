@@ -88,6 +88,35 @@
   faces: "the carrier face follows the carry: calm, focused on the needle, glad after a WAP, worried as it tilts (a bead of sweat near the top), ouch at a knock"
 }
 
+^heights{
+  .note: "pie-heights.mjs, fed a snapshot by pie-game.mjs heightsSnap; the ⤒ Heights strip under the screen"
+  view: "the carrier lane turned on its side: time to the right (1.8 s ahead), height up: air (step aside), body (⤒⤒ only a high hop clears the lighter ones), low (⤒ a hop clears), underfoot (⤒ a hop passes over)"
+  arc: "the arc of a hop taken now, higher if it would chain; what falls under it is marked ✓, and ✓♪ where it falls in the top third"
+  words: "a line says what is next and what to do about it: hop in 0.3 s, hop now, step aside, only a high hop"
+  chain: "three pips and the window to keep the chain; the third clean hop is a high hop"
+  configure: "two ways to see height, each its own option: the ⤒ ⤒⤒ ▮ marks worn in the lanes (learnable at a glance), and the side view (the strip); in the strip each part turns on or off (arc, words, bands, chain, meanwhile) and it looks 1.2, 1.8 or 2.4 s ahead; kept in this browser"
+  reward: "planned: parts of the side view earned rather than given, the arc after a first hop in time, the words after a chapter carried, a longer look after a high hop; everything stays configurable once earned, and nothing a player has now is taken away"
+}
+
+^exchange{
+  .note: "the game and the story feed each other both ways; .spw/audits/progression.spw counts it (npm run spw:progression)"
+  story_to_game: "rooms read in a chapter steady the pie there, up to a third; a chapter read room by room makes the pies say its lore; the chapter toast says how many rooms you have read"
+  game_to_story: "lore heard in the lanes is set beside its room on the chapter page (lanes-lore.mjs), in the speaker voice; unheard lore leaves a quiet note with both ways to it"
+  lore: "every chapter now has at least one line grounded in a room, so every chapter read whole gives the lanes something, and the lanes give every chapter something back"
+  progress: "the almanac writes where you are as a spell: .rooms *wonders &cards $palettes #lore @met ^next"
+}
+
+^in_time{
+  rule: "a hazard cleared in the middle third of a hop is IN TIME: it leans low magic (=lean in_time), and a run of them is a rhythm the meanwhile panel answers"
+  why: "timing nested in timing: the lanes are a rhythm the carrier keeps, and the panels keep it together"
+}
+
+^comic{
+  panels: "the cabinet is a comic page: the lanes from above, the lane from the side, the show close up, and the caption as a narration box; inked frames, gutters, a shadow like ink"
+  beat: "on an impact or a hop in time every panel frame inks gold at once, so the eye reads them as one moment"
+  meanwhile: "an inset panel that breaks the frame of the heights strip and cuts to someone elsewhere in a mood with a word: Boof glad at a rhythm, surprised at a high hop; a clown glad at a WAP; Mr. BaneWAP thinking at a scheme; a mime silent where the mimes hold the chapter; whoever is under the hat, worried at a knock"
+}
+
 ^carriers{
   figure: "fine hands: the needle turns a finer notch"
   porter: "long hold: an arrow holds the needle half as long again"

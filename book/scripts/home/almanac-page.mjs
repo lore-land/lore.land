@@ -6,7 +6,7 @@ import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.O';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
-import { CHARACTERS, portraitSVG } from '../modules/characters.mjs?v=2026_11_08.O';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_08.O';
 
@@ -148,6 +148,47 @@ function paintShelves(data) {
   $('[data-almanac-tally]').textContent = kept
     ? `${kept} of ${data.wonders.length} kept · found in ${placesFound} of ${placesTotal} places they live.`
     : `Nothing kept yet. ${data.wonders.length} wonders live in the chapters; the dotted words are doors.`;
+  paintProgress(data, kept);
+}
+
+/* ─── Where you are, as a spell: every collection at once, in the notation the book is written in ───
+ * Rooms read (.), wonders kept (*), cards turned (&), palettes begun ($), lore heard (#), people met (@),
+ * and ^next: the first chapter with rooms still unread. It plays, and it copies with where it came from. */
+async function paintProgress(data, kept) {
+  const out = $('[data-almanac-progress]');
+  if (!out) return;
+  const store = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback; } catch { return fallback; } };
+  const [catalog, lore] = await Promise.all([
+    fetch('/book/content/catalog.json').then((r) => r.json()).catch(() => ({ chapters: [] })),
+    fetch('/book/content/world/pie-lore.json').then((r) => r.json()).catch(() => ({ lines: [] }))
+  ]);
+  const roomsByChapter = store('lore.rooms.v1', {});
+  const roomsTotal = (catalog.chapters || []).reduce((sum, c) => sum + (c.rooms || 0), 0);
+  const roomsDone = Object.values(roomsByChapter).reduce((sum, list) => sum + (Array.isArray(list) ? list.length : 0), 0);
+  const next = (catalog.chapters || []).find((c) => c.rooms && (roomsByChapter[String(c.number)] || []).length < c.rooms);
+  const cards = cardsTurned();
+  const allCardKinds = Object.keys(allCards());
+  const palettesBegun = Object.keys(readPaletteState() || {}).length;
+  const heard = (store('lore.pie.v1', {}).lore || []).length;
+  const met = Object.keys(CHARACTERS).filter((id) => hasMet(id)).length;
+  const spell = `@reader{ .rooms[${roomsDone} of ${roomsTotal}] *wonders[${kept} of ${data.wonders.length}] &cards[${allCardKinds.filter((k) => cards.has(k)).length} of ${allCardKinds.length}] $palettes[${palettesBegun} of 16] #lore[${heard} of ${(lore.lines || []).length}] @met[${met} of ${Object.keys(CHARACTERS).length}] ^next[${next ? `chapter_${next.number}` : 'everywhere'}] }`;
+  const says = {
+    rooms: 'Rooms read, of every room in the book. A chapter read whole steadies the pie there, and the pies will tell you what they know of it.',
+    wonders: 'Wonders kept, of every wonder that lives in the chapters.',
+    cards: 'Cards turned, by reading or in the lanes.',
+    palettes: 'Palettes begun: a chapter read to its end, carried, or its wonders kept.',
+    lore: 'Lines the pies have let slip in Exactly One Pie; each is set beside its room on the page.',
+    met: 'People met.',
+    next: next ? `The first chapter with rooms still unread: ${chapterName(next.number)}.` : 'Every room read.'
+  };
+  out.replaceChildren(renderSpell(spell, { cast: true, play: true, copy: 'lore.land/almanac#progress', label: 'Where you are, as a spell', explain: (atom, sigil, label) => says[label] || null }));
+  if (next) {
+    const a = document.createElement('a');
+    a.className = 'almanac-progress-next';
+    a.href = `/book/chapter/${String(next.number).padStart(2, '0')}/`;
+    a.textContent = `Read on in ${chapterName(next.number)} →`;
+    out.append(a);
+  }
 }
 
 /* ─── Palettes and cards (collection.mjs) ───────────────────────────── */

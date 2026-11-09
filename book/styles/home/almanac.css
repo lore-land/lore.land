@@ -774,3 +774,16 @@ body[data-surface='monument'] .almanac-shelf .likeness-atlas-strip {
 body[data-surface='monument'] .almanac-shelf .likeness-atlas-strip-list {
   grid-template-columns: repeat(2, minmax(0, 6.5rem));
 }
+
+/* Where you are, as a spell: every collection at once (almanac-page.mjs paintProgress). */
+.almanac-progress {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 44rem;
+  margin-top: 0.8rem;
+}
+
+.almanac-progress-next {
+  justify-self: start;
+  font-size: 0.9rem;
+}

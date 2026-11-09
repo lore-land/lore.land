@@ -1,0 +1,72 @@
+/*
+ * lanes-lore.css — what the pies let slip in the lanes, beside the room it is about (lanes-lore.mjs).
+ * A heard line is a small panel in the speaker's voice; an unheard one is a quiet note of where to
+ * hear it. Theme-aware: the page's own panel and ink, the speaker's hue as an edge.
+ */
+main.chapter .lanes-lore {
+  --speaker: #c98a1e;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.2rem 0.7rem;
+  align-items: start;
+  max-width: 40rem;
+  margin: 1rem auto 1.4rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--speaker) 35%, transparent);
+  border-left: 4px solid var(--speaker);
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--speaker) 6%, var(--color-background-panel, transparent));
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--color-text-main, #1d1d22) 12%, transparent);
+  color: var(--color-text-main, inherit);
+  text-indent: 0;
+}
+
+main.chapter .lanes-lore[data-speaker='bane'] {
+  --speaker: #8a4fb0;
+}
+
+main.chapter .lanes-lore-art svg {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+main.chapter .lanes-lore-line {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+main.chapter .lanes-lore-line::before { content: '“'; }
+main.chapter .lanes-lore-line::after { content: '”'; }
+
+main.chapter .lanes-lore-cap {
+  grid-column: 2;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--speaker) 55%, var(--color-text-main, #1d1d22));
+}
+
+main.chapter .lanes-lore.is-unheard {
+  grid-template-columns: minmax(0, 1fr);
+  border-style: dashed;
+  border-left-style: solid;
+  background: transparent;
+  box-shadow: none;
+}
+
+main.chapter .lanes-lore-hint {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--color-text-alt, inherit);
+}
+
+main.chapter .lanes-lore-hint b {
+  font-weight: 600;
+  color: var(--color-text-main, inherit);
+}
