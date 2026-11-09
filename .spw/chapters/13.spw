@@ -12,6 +12,27 @@
   chapter_path: "/book/chapter/13/"
 }
 
+$[chapter/13/made_of]{
+  spell: ^chapter[13]{
+    .rooms[ !{round_archive}@the_land #[great_book]@the_book .<starlight_aisle>@the_fool
+      ~{last_line}@boof !<shell_door>@boof ]
+    @told_by[boof reflection fool narrator]
+    $ink $glass $steam
+    *wonders{ @shelf_owls #leave_room_for_the_path $glassing_press &open_brace }
+    =palette[shell_swirl]
+    ~berries{ boonberry baneberry $boneberry[grilled_river_corn] }
+    &harmonies[ <beavers torch_ants> <torch_ants roots> <boonberries pool>
+      <egg boof> ]
+  }
+  rooms: "Five rooms: two { } rooms, two < > passages and a [ ] window; two kept by Boof, the rest by the land, the book and the Fool."
+  told_by: "Told by Boof, the record, the Fool and the narrator."
+  made_of: "Made most of ink and line, then Bonk glass, then steam and warmth."
+  wonders: "First met here: shelf-owls, a saying, “Leave room for the path”, the glassing press and the open brace."
+  palette: "Its palette is the shell, earned a layer at a time: teal and grey-green swirled in a wide circle, two white arcs: the shape a door can take."
+  berries: "Here boonberries foresee and baneberries foretell; a boneberry in this chapter tastes of grilled river corn."
+  harmonies: "Slow work, like the ants. The ants warm the roots. The berries let their light run down to the pond. The egg rides against her ribs."
+}
+
 &[chapter/13/routes]{
   web: "/book/chapter/13/"
   timeline: "/book/timeline.html#chapter-13"

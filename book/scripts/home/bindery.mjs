@@ -22,7 +22,7 @@
  * chosen here.
  */
 
-import { readStory, dropStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
+import { readStory, dropStory } from '../modules/story-directions.mjs?v=2026_11_08.N';
 
 export const COVERS = Object.freeze([
   { theme: 'paper', binding: 'rag', words: 'rag', name: 'Rag paper', from: 'from the mill', says: 'Rag, then. It was a miller’s shirt once; it has heard worse than anything in here.' },

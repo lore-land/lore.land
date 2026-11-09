@@ -1,0 +1,511 @@
+/*
+ * The seed atlas page (/seeds/2026-02-28/; book/scripts/seeds/app.mjs) — the
+ * studies the book was grown from, in the monument's own voice: serif for what
+ * the story says, mono for what the structure says, every surface mixed from
+ * the binding's panel. Each study wears its chapter's palette as an accent
+ * (--seed-accent, from likeness.json) and its discovery variant
+ * (components/likeness.css). Unlayered, like almanac.css.
+ */
+
+body[data-surface='monument'] .atlas-main {
+  --hub-display: Georgia, 'Times New Roman', serif;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+body[data-surface='monument'] .atlas-hero h1 {
+  font-family: var(--hub-display);
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .atlas-hero .hub-lede {
+  max-width: 62ch;
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .atlas-lede-veil {
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .atlas-tally {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-accent) 13%, transparent);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Section heads ────────────────────────────────────────────────── */
+
+body[data-surface='monument'] :is(.atlas-key, .atlas-studies) {
+  scroll-margin-top: 5.5rem;
+}
+
+body[data-surface='monument'] .atlas-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  border-bottom: 1px solid var(--hub-line);
+}
+
+body[data-surface='monument'] .atlas-section-head h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--hub-display);
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 400;
+}
+
+body[data-surface='monument'] .atlas-section-count {
+  margin: 0;
+  color: var(--hub-muted);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .atlas-section-lede {
+  max-width: 62ch;
+  margin: 0.7rem 0 1rem;
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .atlas-section-lede code {
+  font-family: var(--font-family-mono, monospace);
+  color: var(--hub-ink);
+}
+
+/* ─── The sigil key ────────────────────────────────────────────────── */
+
+body[data-surface='monument'] .atlas-key-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.45rem 0.6rem;
+}
+
+body[data-surface='monument'] .atlas-key-row {
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+}
+
+body[data-surface='monument'] .atlas-key-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.4rem 0.6rem 0.4rem 0.4rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--hub-panel) 70%, transparent);
+  color: var(--hub-ink);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+body[data-surface='monument'] .atlas-key-item:hover,
+body[data-surface='monument'] .atlas-key-item:focus-visible,
+body[data-surface='monument'] .atlas-key-item[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--lk-hue, var(--hub-accent)) 60%, var(--hub-line));
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .atlas-key-item[aria-pressed='true'] {
+  box-shadow: inset 3px 0 0 var(--lk-hue, var(--hub-accent));
+}
+
+body[data-surface='monument'] .atlas-key-seal {
+  line-height: 0;
+}
+
+body[data-surface='monument'] .atlas-key-sigil,
+body[data-surface='monument'] .atlas-seed-sigil {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--lk-hue, var(--hub-accent)) 15%, transparent);
+  color: color-mix(in srgb, var(--lk-hue, var(--hub-accent)) 70%, var(--hub-ink));
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+body[data-surface='monument'] .atlas-key-text {
+  display: grid;
+  min-width: 0;
+}
+
+body[data-surface='monument'] .atlas-key-name {
+  font-family: var(--hub-display);
+  font-size: 1rem;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+body[data-surface='monument'] .atlas-key-gloss {
+  font-family: var(--hub-display);
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .atlas-seal-guide {
+  margin-top: 0.9rem;
+  max-width: 62ch;
+  padding: 0.6rem 0.9rem;
+  border: 1px dashed var(--hub-line);
+  border-radius: 0.45rem;
+}
+
+body[data-surface='monument'] .atlas-seal-guide summary {
+  cursor: pointer;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+}
+
+body[data-surface='monument'] .atlas-seal-guide dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 0.9rem;
+  margin: 0.7rem 0 0.2rem;
+  font-family: var(--hub-display);
+  font-size: 0.92rem;
+}
+
+body[data-surface='monument'] .atlas-seal-guide dt {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding-top: 0.2rem;
+}
+
+body[data-surface='monument'] .atlas-seal-guide dd {
+  margin: 0;
+  color: var(--hub-muted);
+}
+
+/* ─── Controls ─────────────────────────────────────────────────────── */
+
+body[data-surface='monument'] .atlas-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.7rem 1rem;
+  margin: 1rem 0 0.4rem;
+}
+
+body[data-surface='monument'] .atlas-controls > label {
+  display: grid;
+  gap: 0.2rem;
+}
+
+body[data-surface='monument'] .atlas-controls > label > span,
+body[data-surface='monument'] .atlas-view legend {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .atlas-controls select {
+  min-height: 2.2rem;
+  max-width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.35rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--hub-display);
+  font-size: 0.95rem;
+}
+
+body[data-surface='monument'] .atlas-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body[data-surface='monument'] .atlas-view legend {
+  width: 100%;
+  margin-bottom: 0.2rem;
+  padding: 0;
+}
+
+body[data-surface='monument'] .atlas-view label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.2rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  font-family: var(--hub-display);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+body[data-surface='monument'] .atlas-view label:has(input:checked) {
+  border-color: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-accent) 12%, var(--hub-panel));
+}
+
+body[data-surface='monument'] .atlas-view label:has(input:focus-visible) {
+  outline: 2px solid var(--hub-accent);
+  outline-offset: 2px;
+}
+
+body[data-surface='monument'] .atlas-view input {
+  accent-color: var(--hub-accent);
+}
+
+body[data-surface='monument'] .seed-randomize {
+  min-height: 2.2rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+body[data-surface='monument'] .seed-randomize:hover,
+body[data-surface='monument'] .seed-randomize:focus-visible {
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  border-color: color-mix(in srgb, var(--hub-accent) 55%, var(--hub-line));
+}
+
+body[data-surface='monument'] .atlas-kept {
+  max-width: 62ch;
+  margin: 0.6rem 0 1.1rem;
+  font-family: var(--hub-display);
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+/* ─── The studies ──────────────────────────────────────────────────── */
+
+body[data-surface='monument'] .atlas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+
+body[data-surface='monument'] .atlas-grid[data-atlas-layout='cinema'] {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: 1.4rem;
+}
+
+body[data-surface='monument'] .atlas-seed {
+  --seed-accent: var(--hub-accent);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--hub-line);
+  border-top: 2px solid color-mix(in srgb, var(--seed-accent) 70%, var(--hub-ink));
+  border-radius: 0.45rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--seed-accent) 10%, transparent), transparent 55%),
+    color-mix(in srgb, var(--hub-panel) 75%, transparent);
+  overflow: clip;
+  scroll-margin-top: 6rem;
+}
+
+body[data-surface='monument'] .atlas-seed[hidden] {
+  display: none;
+}
+
+body[data-surface='monument'] .atlas-seed:focus-visible {
+  outline: 2px solid var(--hub-accent);
+  outline-offset: 3px;
+}
+
+body[data-surface='monument'] .atlas-seed[data-highlight='true'] {
+  border-color: color-mix(in srgb, var(--seed-accent) 70%, var(--hub-line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--seed-accent) 30%, transparent);
+}
+
+body[data-surface='monument'] .atlas-seed-figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1;
+  border-bottom: 1px solid var(--hub-line);
+}
+
+body[data-surface='monument'] .atlas-seed-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "All whole": the variants step aside, the seals stay. */
+body[data-surface='monument'] .atlas-grid[data-atlas-view='whole'] .likeness-asset[data-discovery] > img {
+  filter: none;
+  clip-path: none;
+  transform: none;
+}
+
+body[data-surface='monument'] .atlas-grid[data-atlas-view='whole'] figure.likeness-asset[data-discovery]::before {
+  content: none;
+}
+
+body[data-surface='monument'] .atlas-seed-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  padding: 0.8rem 0.95rem 0.95rem;
+}
+
+body[data-surface='monument'] .atlas-seed-body p {
+  margin: 0;
+}
+
+body[data-surface='monument'] .atlas-seed-role {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .atlas-seed-title {
+  margin: 0.1rem 0 0;
+  font-family: var(--hub-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+body[data-surface='monument'] .atlas-seed-gloss {
+  font-family: var(--hub-display);
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+body[data-surface='monument'] .atlas-seed-where {
+  font-family: var(--hub-display);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .atlas-seed-state {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, var(--seed-accent) 45%, var(--hub-muted));
+}
+
+body[data-surface='monument'] .atlas-seed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.6rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+body[data-surface='monument'] .seed-adopt-button {
+  min-height: 2rem;
+  padding: 0.2rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--seed-accent) 45%, var(--hub-line));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+body[data-surface='monument'] .seed-adopt-button:hover,
+body[data-surface='monument'] .seed-adopt-button:focus-visible {
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+}
+
+body[data-surface='monument'] .seed-adopt-button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--seed-accent) 18%, var(--hub-panel));
+  border-color: color-mix(in srgb, var(--seed-accent) 70%, var(--hub-line));
+}
+
+body[data-surface='monument'] .atlas-seed-open {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  color: var(--hub-accent-deep);
+}
+
+body[data-surface='monument'] .atlas-seed-open[hidden] {
+  display: none;
+}
+
+/* A stream: one study to a line, the picture beside its words. */
+@media (min-width: 40rem) {
+  body[data-surface='monument'] .atlas-grid[data-atlas-layout='stream'] {
+    grid-template-columns: 1fr;
+  }
+  body[data-surface='monument'] .atlas-grid[data-atlas-layout='stream'] .atlas-seed {
+    display: grid;
+    grid-template-columns: minmax(11rem, 34%) 1fr;
+  }
+  body[data-surface='monument'] .atlas-grid[data-atlas-layout='stream'] .atlas-seed-figure {
+    border-bottom: 0;
+    border-right: 1px solid var(--hub-line);
+  }
+}
+
+@media (max-width: 40rem) {
+  body[data-surface='monument'] .atlas-controls {
+    gap: 0.6rem;
+  }
+  body[data-surface='monument'] .atlas-controls > label {
+    flex: 1 1 9rem;
+  }
+  body[data-surface='monument'] .atlas-controls select {
+    width: 100%;
+  }
+  body[data-surface='monument'] .atlas-seal-guide dl {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+  body[data-surface='monument'] .atlas-seal-guide dd {
+    margin-bottom: 0.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-surface='monument'] :is(.atlas-key-item, .seed-randomize, .seed-adopt-button) {
+    transition: none;
+  }
+}

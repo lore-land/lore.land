@@ -12,6 +12,26 @@
   chapter_path: "/book/chapter/07/"
 }
 
+$[chapter/07/made_of]{
+  spell: ^chapter[7]{
+    .rooms[ =(oath_stone)@boof #[oath_shadow]@genie *<awning_beam>@the_fool
+      .{cooling_stone}@boof ~<long_alley>@the_stranger ]
+    @told_by[boof shadow fool narrator]
+    $berry $brass $ink
+    *wonders{ @oath_moths $oath_scale #promise_the_next_stone }
+    =palette[oath]
+    ~berries{ boonberry baneberry $boneberry[roast_chestnut_and_sage] }
+    &harmonies[ <egg boof> ]
+  }
+  rooms: "Five rooms: two < > passages, a [ ] window, a { } room and a ( ) gathering; two kept by Boof, the rest by the Genie, the Fool and the stranger."
+  told_by: "Told by Boof, a shadow, the Fool and the narrator."
+  made_of: "Made most of boonberries, then brass and bronze, then ink and line."
+  wonders: "First met here: oath-moths, the oath-scale and a saying, “Promise the next stone, not the road”."
+  palette: "Its palette is the oath, earned a layer at a time: blue going teal going slate: an oath paid in fruit, and kept."
+  berries: "Here boonberries foresee and baneberries foretell; a boneberry in this chapter tastes of roast chestnut and sage."
+  harmonies: "The egg rides against her ribs."
+}
+
 &[chapter/07/routes]{
   web: "/book/chapter/07/"
   timeline: "/book/timeline.html#chapter-07"

@@ -17,11 +17,11 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_08.J';
-import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_06.F';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_08.A';
-import { BINDINGS } from './reading-nook.mjs?v=2026_11_06.F';
-import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_06.F';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_08.N';
+import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_08.N';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_08.N';
+import { BINDINGS } from './reading-nook.mjs?v=2026_11_08.N';
+import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_08.N';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';

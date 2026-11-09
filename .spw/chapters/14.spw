@@ -12,6 +12,30 @@
   chapter_path: "/book/chapter/14/"
 }
 
+$[chapter/14/made_of]{
+  spell: ^chapter[14]{
+    .rooms[ ?{kitchen_door}@boof .[frost_lane]@boof =[quarter_turn]@the_berries
+      @{warm_furrow}@boof *[ant_torch]@boof &<bent_lane>@boof
+      !(crier_cart)@the_crier =<field_edge>@boof ]
+    @told_by[narrator boof boonberry path]
+    $steam $ink $frost
+    *wonders{ @hob_deer #keep_the_morning @page_fox @frill_lichen }
+    &met[figure]
+    =palette[hill_moon]
+    ~berries{ boonberry baneberry $boneberry[burnt_ends] }
+    &harmonies[ <hat torch_ants> <hat boonberries> <pool flour>
+      <beavers well> <boonberries boof> <baneberries boof> ]
+  }
+  rooms: "Eight rooms: three [ ] windows, two { } rooms, two < > passages and a ( ) gathering; six kept by Boof, the rest by the berries and the crier."
+  told_by: "Told by the narrator, Boof, the boonberries and the path."
+  made_of: "Made most of steam and warmth, then ink and line, then frost."
+  wonders: "First met here: hob-deer, a saying, “Keep the morning, not the week”, the page-fox and frill-lichen."
+  met: "Met here for the first time: the figure in plain lines."
+  palette: "Its palette is the hill, earned a layer at a time: a lilac sky, a dark green hill, a grey moon, and a tall shape standing where somebody is missing."
+  berries: "Here boonberries foresee and baneberries foretell; a boneberry in this chapter tastes of burnt ends."
+  harmonies: "A torch is lit with a little of his arm. The berries turn a quarter turn to see him. The pond turns the mill. The beavers keep the water slow. A boonberry foresees kindly. A baneberry says what will go wrong. And four more on Boof’s map."
+}
+
 &[chapter/14/routes]{
   web: "/book/chapter/14/"
   timeline: "/book/timeline.html#chapter-14"

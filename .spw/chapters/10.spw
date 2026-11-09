@@ -12,6 +12,29 @@
   chapter_path: "/book/chapter/10/"
 }
 
+$[chapter/10/made_of]{
+  spell: ^chapter[10]{
+    .rooms[ .{timber_hall}@boof ?{sill_beam}@bonewap !<collar_beam>@the_fool
+      ^(anchor_stones)@the_valley ~<rear_archway>@boof ]
+    @told_by[boof the_bonk fool narrator]
+    $oak $ink $flour
+    *wonders{ &mortise_marks #chalk_is_cheaper_than_oak @load_beetles $listening_mallet $load_bells }
+    &met[bonewap]
+    =palette[land_tree]
+    ~berries{ $boneberry[rib_tips] }
+    &harmonies[ <oak boneberries> <oak crickets> <oak well>
+      <boneberries boof> <boonberries boonwap> <egg boof> ]
+  }
+  rooms: "Five rooms: two { } rooms, two < > passages and a ( ) gathering; two kept by Boof, the rest by Mx. BoneWAP, the Fool and the valley."
+  told_by: "Told by Boof, the bonk, the Fool and the narrator."
+  made_of: "Made most of oak and frame, then ink and line, then flour."
+  wonders: "First met here: mortise marks, a saying, “Chalk is cheaper than oak”, load-beetles, the listening mallet and load-bells."
+  met: "Met here for the first time: BoneWAP."
+  palette: "Its palette is the land tree, earned a layer at a time: violet and magenta: three lands branching from one trunk."
+  berries: "A boneberry in this chapter tastes of rib tips."
+  harmonies: "The joiners carried the bushes over the pass. The crack's note and the frame's note keep one law. The frame's note reaches the well. A boneberry promises nothing, and feeds you. A boonberry pie is never smaller. The egg rides against her ribs."
+}
+
 &[chapter/10/routes]{
   web: "/book/chapter/10/"
   timeline: "/book/timeline.html#chapter-10"

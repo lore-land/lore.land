@@ -1,0 +1,289 @@
+# Lore.Land bias registers: the house meme registers a spell can lean the land's answers toward
+# Read at runtime by book/scripts/modules/spw-bias.mjs (a small line reader; the file also reads
+# whole with the vendored spw-seed parser). A reader casts a register as a bias edge, after
+# .spw/_workbench/.spw/registries/bias-product.spw: =meme[pov]{ pop toast %often[0.5] }.
+# Biased lines answer: game pops, captions, toasts, tags, receipts. They never touch story prose.
+# Where this sits among the other layers, and what is free: .spw/surfaces/layers.spw.
+#>lore_land_runtime_bias
+#:surface #!runtime
+#:layer #!pragmatics
+#:status #!trial
+
+~<rationale>{
+  A meme is a shape a joke can be poured into, and a shape is grammar, not a picture. These registers are formats any reader already knows, written in the voice of the land: clowns who love a pie in the face, mimes behind glass that is not there, a pigeon with no shame, flour on everything. A spell leans the answers toward one of them; the story is never leaned. Each register has a look of its own (a palette, a material, a sigil), so a biased moment can be found again among moments that look and sit like it.
+}
+
+^spell{
+  .note: "how a register is cast (spw-bias.mjs readBias); = leans, and what leaning does is decided by whoever reads it"
+  form: "=meme[register]{ slots %often[n] }: the frame names the register (the axis of the edge), the body ranks the response slots it leans on, first strongest, and an empty body leans on every slot the register has words for; %often is the chance a line replaces the plain answer, 0.5 when unsaid"
+  anchored: "=meme@boof[pov]{ toast }: the anchor says who the lines are about and fills {who}; it goes before the frame, since after the frame the body no longer belongs to the spell"
+  signed: "=bane[pov]{ pop }: a register leaning away from its targets, answering every slot it has words for except these"
+  combined: "several spells side by side, =meme[pov]{ toast } =meme[plot_twist]{ spill }; where two lean on one slot the later one is asked first, and if it lets the moment pass the earlier one may answer"
+  short: "in a link, ?bias=pov or ?bias=pov+plot_twist is the same as =meme[pov]{ } =meme[plot_twist]{ }, and ?bias=off lets every register go for the visit"
+  floor: "casting one house register for a visit is free, because the language is free; layering several, writing your own, keeping and sharing them is the premium plan, open to everyone as a trial for now"
+}
+
+^slots{
+  .note: "the responses a register may answer, and only these: never story prose, tellings, room text or the words of a card"
+  pop: "a word that pops in the lanes: two or three words, all capitals (clown, perfect, combo, knock, post, stone, hole, ditch, pane, wasps, pigeon, spool, mime)"
+  toast: "a notice of one sentence: chapter, a new place ({where}), and meet, a first meeting ({who})"
+  tag: "a small label over the lanes: combo, satisfied"
+  spill: "when the pie goes down: title and line"
+  reveal: "the line under a card as it turns face up"
+  points: "one sentence for a lean earned: boon, bane, bone"
+  settle: "the receipt that says what changed, anywhere on the site ({what}); a register sits beside the plain words, never instead of them"
+}
+
+^anchors{
+  .note: "who a cast may be about; only these names, so a link can never put other words on a page"
+  pie: "the pie"
+  boof: "Boof"
+  pigeon: "the pigeon"
+  clown: "the clown"
+  mime: "the mime"
+  wasps: "the wasps"
+  goose: "the goose"
+  floor: "the floor"
+  boonwap: "Mr. BoonWAP"
+  banewap: "Mr. BaneWAP"
+}
+
+#care{
+  pg: "every line is PG, and a register never moves the audience gate"
+  kind: "never punch down, never mock a real group, never borrow a dialect as costume"
+  people: "never cast children as anything and never name a real person; the figure under the hat stays unnamed"
+  land: "no money or wages words, no cardinal directions, and the Egg is never explained"
+  prose: "a biased line answers; it never replaces a word of the story"
+  links: "a link casts only house registers and named anchors; a register a reader writes never reaches another page from a link without being read first"
+}
+
+*registers{
+  *pov{
+    #title["POV"]
+    #line["POV: you are the pie"]
+    =palette[watering-eye] $glass .sigil["@"]
+    #cast["=meme[pov]{ }"]
+    #pop["POV: AIRBORNE", "POV: PIE", "POV: WOBBLING"]
+    #pop.clown["POV: WAPPED", "POV: FROSTED", "POV: DELIGHTED CLOWN"]
+    #pop.perfect["POV: BULLSEYE", "POV: FLAWLESS"]
+    #pop.combo["POV: UNSTOPPABLE"]
+    #pop.knock["POV: BONKED", "POV: OOF"]
+    #pop.post["POV: A POST"]
+    #pop.stone["POV: A STONE"]
+    #pop.hole["POV: DOWN HERE"]
+    #pop.ditch["POV: THE DITCH"]
+    #pop.pane["POV: BONK GLASS"]
+    #pop.wasps["POV: WASPS"]
+    #pop.pigeon["POV: PIGEON", "POV: PECKED"]
+    #pop.spool["POV: TRIPPED"]
+    #pop.mime["POV: (SILENCE)"]
+    #toast.chapter["POV: you are the pie, and this is {where}.", "POV: you just carried exactly one pie into {where}."]
+    #toast.meet["POV: you are the pie, and {who} has noticed you.", "POV: you are {who}, and a pie just went by."]
+    #tag.combo["POV: COMBO"]
+    #tag.satisfied["POV: FED"]
+    #spill.title["POV: you are the floor now."]
+    #spill.line["POV: you were exactly one pie, and now you are a great many crumbs."]
+    #reveal.line["POV: you are this card, and somebody finally turned you over."]
+    #points.boon["POV: you were kind, and the land kept it."]
+    #points.bane["POV: it was foretold, and you let it come true."]
+    #points.bone["POV: you did it exactly, and nobody had to say so."]
+    #settle["POV: the page, just after you changed it."]
+  }
+  *nobody{
+    #title["nobody: / the clown:"]
+    #line["nobody: / the clown: WAP"]
+    =palette[clown-downtown] $brass .sigil["!"]
+    #cast["=meme[nobody]{ pop }"]
+    #pop["NOBODY ASKED", "UNPROMPTED"]
+    #pop.clown["NOBODY: / WAP", "UNPROMPTED WAP"]
+    #pop.perfect["NOBODY: / BULLSEYE"]
+    #pop.combo["NOBODY: / AGAIN"]
+    #pop.knock["NOBODY: / BONK"]
+    #pop.post["NOBODY: / DOINK"]
+    #pop.stone["NOBODY: / STONE"]
+    #pop.hole["NOBODY: / A HOLE"]
+    #pop.ditch["NOBODY: / DITCH"]
+    #pop.pane["NOBODY: / TINK"]
+    #pop.wasps["NOBODY: / BZZT"]
+    #pop.pigeon["NOBODY: / COO"]
+    #pop.spool["NOBODY: / SPOOL"]
+    #pop.mime["NOBODY: / (MIME)"]
+    #toast.chapter["nobody: / {where}: here I am, all at once."]
+    #toast.meet["nobody: / {who}: hello, I live here now."]
+    #tag.combo["NOBODY: / COMBO"]
+    #tag.satisfied["NOBODY: / FULL"]
+    #spill.title["nobody: / the floor: pie."]
+    #spill.line["Nobody asked the floor for pie, and the floor got a whole one."]
+    #reveal.line["nobody: / this card: hello, it is me."]
+    #points.boon["nobody: / you: being kind anyway."]
+    #points.bane["nobody: / Mr. BaneWAP: as I foretold."]
+    #points.bone["nobody: / you: exactly right, without a word."]
+    #settle["nobody: / the page: rearranges itself politely."]
+  }
+  *core_memory{
+    #title["core memory: unlocked"]
+    #line["core memory: unlocked"]
+    =palette[pool] $berry .sigil["*"]
+    #cast["=meme[core_memory]{ pop.perfect toast %often[0.8] }"]
+    #pop["CORE MEMORY", "UNLOCKED", "KEPT FOREVER"]
+    #pop.clown["CORE MEMORY: WAP"]
+    #pop.perfect["CORE MEMORY", "UNLOCKED"]
+    #pop.combo["MEMORIES STACKING"]
+    #pop.pane["GLASS REMEMBERS"]
+    #pop.pigeon["UNFORGETTABLE PIGEON"]
+    #pop.mime["SILENT MEMORY"]
+    #toast.chapter["Core memory unlocked: carrying a pie into {where} for the first time."]
+    #toast.meet["Core memory unlocked: meeting {who}."]
+    #tag.combo["CORE COMBO"]
+    #tag.satisfied["CORE MEMORY: FED"]
+    #spill.title["Core memory unlocked, and also on the floor."]
+    #spill.line["Some memories are made of pie, and this one is mostly flour on the floor."]
+    #reveal.line["Core memory unlocked: this card, the first time it turned."]
+    #points.boon["Core memory unlocked: a kindness, kept the way a berry keeps summer."]
+    #points.bane["Core memory unlocked: the knock you will tell everyone about."]
+    #points.bone["Core memory unlocked: doing it exactly right, once."]
+    #settle["Core memory unlocked: the page, the way you set it."]
+  }
+  *assignment{
+    #title["understood the assignment"]
+    #line["understood the assignment"]
+    =palette[legal-pad] $ink .sigil["#"]
+    #cast["=meme[assignment]{ pop.perfect pop.clown tag }"]
+    #pop["NAILED IT", "UNDERSTOOD"]
+    #pop.clown["ASSIGNMENT: WAP", "CLOWN UNDERSTOOD"]
+    #pop.perfect["NAILED IT", "FULL MARKS", "GOLD STAR"]
+    #pop.combo["GOLD STARS"]
+    #pop.post["POST: STOOD THERE"]
+    #pop.stone["STONE: STAYED PUT"]
+    #pop.hole["HOLE UNDERSTOOD"]
+    #pop.ditch["DITCH UNDERSTOOD"]
+    #pop.pane["GLASS UNDERSTOOD"]
+    #pop.wasps["WASPS UNDERSTOOD"]
+    #pop.pigeon["PIGEON UNDERSTOOD"]
+    #pop.spool["SPOOL UNDERSTOOD"]
+    #pop.mime["(SILENTLY) UNDERSTOOD"]
+    #toast.chapter["{where} understood the assignment."]
+    #toast.meet["{who} understood the assignment."]
+    #tag.combo["GOLD STARS"]
+    #tag.satisfied["FED: UNDERSTOOD"]
+    #spill.title["Did not understand the assignment."]
+    #spill.line["The assignment was exactly one pie, and the floor has handed in its own."]
+    #reveal.line["This card understood the assignment."]
+    #points.boon["Kindness understood the assignment."]
+    #points.bane["The foretelling understood the assignment, unfortunately."]
+    #points.bone["You understood the assignment, to the crumb."]
+    #settle["The page understood the assignment."]
+  }
+  *audacity{
+    #title["the audacity"]
+    #line["the audacity of this pigeon"]
+    =palette[kiln] $steam .sigil["^"]
+    #cast["=meme[audacity]{ pop.pigeon pop.knock spill %often[0.7] }"]
+    #pop["THE AUDACITY", "THE NERVE"]
+    #pop.clown["SHAMELESS JOY"]
+    #pop.perfect["AUDACIOUSLY PERFECT"]
+    #pop.combo["MORE AUDACITY"]
+    #pop.knock["HOW RUDE"]
+    #pop.post["THE NERVE"]
+    #pop.stone["RUDE STONE"]
+    #pop.hole["A HOLE? HERE?"]
+    #pop.ditch["THE AUDACITY"]
+    #pop.pane["BONK GLASS?!"]
+    #pop.wasps["OUTRAGEOUS"]
+    #pop.pigeon["THE AUDACITY", "THIS PIGEON"]
+    #pop.spool["WHO LEFT THIS"]
+    #pop.mime["SILENT AUDACITY"]
+    #toast.chapter["The audacity of {where}, being this far up the lanes."]
+    #toast.meet["The audacity of {who}, turning up like that."]
+    #tag.combo["THE AUDACITY"]
+    #tag.satisfied["SATISFIED, SOMEHOW"]
+    #spill.title["The audacity of the floor."]
+    #spill.line["The floor took the pie as if it had been promised one."]
+    #reveal.line["The audacity of this card, face down all this time."]
+    #points.boon["The audacity of being kind on purpose."]
+    #points.bane["The audacity of a foretelling that comes true because it was said."]
+    #points.bone["The audacity of doing it exactly right."]
+    #settle["The audacity of a page that changes when asked."]
+  }
+  *plot_twist{
+    #title["plot twist:"]
+    #line["plot twist: the pie was carrying you"]
+    =palette[shell-swirl] $oak .sigil["?"]
+    #cast["=meme[plot_twist]{ spill reveal pop.hole }"]
+    #pop["PLOT TWIST", "TWIST!"]
+    #pop.clown["TWIST: WAP"]
+    #pop.perfect["TWIST: PERFECT"]
+    #pop.combo["TWIST AGAIN"]
+    #pop.knock["PLOT TWIST"]
+    #pop.post["TWIST: POST"]
+    #pop.stone["TWIST: STONE"]
+    #pop.hole["PLOT HOLE"]
+    #pop.ditch["PLOT DITCH"]
+    #pop.pane["TWIST: GLASS"]
+    #pop.wasps["TWIST: WASPS"]
+    #pop.pigeon["TWIST: PIGEON"]
+    #pop.spool["PLOT THREAD"]
+    #pop.mime["TWIST: MIME"]
+    #toast.chapter["Plot twist: {where} was here all along."]
+    #toast.meet["Plot twist: {who} was in the lanes the whole time."]
+    #tag.combo["TWIST COMBO"]
+    #tag.satisfied["TWIST: FED"]
+    #spill.title["Plot twist: exactly zero pies."]
+    #spill.line["Plot twist: the floor was where this pie was going all along."]
+    #reveal.line["Plot twist: this card was reading you."]
+    #points.boon["Plot twist: the kind thing was also the clever thing."]
+    #points.bane["Plot twist: it was foretold, and you let it."]
+    #points.bone["Plot twist: no magic, only doing it right."]
+    #settle["Plot twist: the page listened."]
+  }
+  *also_me{
+    #title["me: … also me: …"]
+    #line["me: one pie, carefully. also me: WAP"]
+    =palette[rift] $flour .sigil["&"]
+    #cast["=meme[also_me]{ toast spill settle }"]
+    #pop["ALSO ME", "ME, AGAIN"]
+    #pop.clown["ALSO ME: WAP"]
+    #pop.perfect["ME: PERFECT"]
+    #pop.combo["ME, ME, ME"]
+    #pop.knock["ALSO ME: OOF"]
+    #pop.pane["ALSO ME: TINK"]
+    #pop.wasps["ALSO ME: OW"]
+    #pop.pigeon["ALSO ME: COO"]
+    #pop.mime["ALSO ME: (MIME)"]
+    #toast.chapter["Me: just one more chapter. Also me: {where}."]
+    #toast.meet["Me: I will keep to myself. Also me: hello, {who}."]
+    #tag.combo["ME, ME, ME"]
+    #tag.satisfied["ALSO ME: FULL"]
+    #spill.title["Me: exactly one pie. Also me: none."]
+    #spill.line["Me: careful with the pie. Also me: the floor, the flour, all of it."]
+    #reveal.line["Me: I will not turn every card. Also me: turning this one."]
+    #points.boon["Me: I will hurry. Also me: stopping to be kind."]
+    #points.bane["Me: that will never happen. Also me: it happened."]
+    #points.bone["Me: close enough. Also me: exactly."]
+    #settle["Me: I like the page as it was. Also me: changing it."]
+  }
+  *tell_me{
+    #title["tell me you … without telling me you …"]
+    #line["tell me you are a mime without telling me you are a mime"]
+    =palette[mime-wash] $frost .sigil["."]
+    #cast["=meme[tell_me]{ toast reveal points }"]
+    #pop["SAID NOTHING", "NO WORDS"]
+    #pop.clown["NO WORDS: WAP"]
+    #pop.perfect["SAID IT ALL"]
+    #pop.combo["STILL NOT TELLING"]
+    #pop.pane["(GLASS, SILENTLY)"]
+    #pop.pigeon["(PIGEON NOISES)"]
+    #pop.mime["(SAYS NOTHING)", "MIMED IT"]
+    #toast.chapter["Tell me you reached {where} without telling me you reached {where}."]
+    #toast.meet["Tell me you met {who} without telling me you met {who}."]
+    #tag.combo["NOT TELLING"]
+    #tag.satisfied["(QUIETLY FED)"]
+    #spill.title["Tell me you spilled without telling me you spilled."]
+    #spill.line["Flour on the floor, juice on your sleeve: nobody had to say a thing."]
+    #reveal.line["Tell me you turned a card without telling me: one card, turned."]
+    #points.boon["Tell me you are kind without telling me: a kindness, kept."]
+    #points.bane["Tell me it was foretold without telling me: it happened."]
+    #points.bone["Tell me you did it exactly without telling me: exactly."]
+    #settle["Tell me you changed the page without telling me: look."]
+  }
+}

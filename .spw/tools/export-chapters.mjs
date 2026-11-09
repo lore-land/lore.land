@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { describeChapter, glossFor } from '../../book/scripts/modules/chapter-spell.mjs';
 
 const ROOT = process.cwd();
 const CHAPTER_ROOT = path.join(ROOT, 'book', 'chapter');
@@ -63,6 +64,35 @@ const VOICE_RETURNS = {
 
 function voiceName(type) {
   return String(type || '').replace(/^custom-/, '');
+}
+
+/* What a chapter's Spw description is read against: the world files and the
+   semantic index the build has just written (book/content/semantic.json). */
+function readWorld() {
+  const read = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
+  return {
+    almanac: read('book/content/world/almanac.json'),
+    semantic: read('book/content/semantic.json'),
+    characters: read('book/content/world/characters.json'),
+    palettes: read('book/content/world/palettes.json'),
+    berries: read('book/content/world/berries.json'),
+    harmonies: read('book/content/world/harmonies.json')
+  };
+}
+
+/* The chapter in one spell (chapter-spell.mjs, the same one the page shows at
+   its end), unquoted: a real expression the lint parses, then each clause's
+   gloss in plain words. The canon names everything; only the page veils what
+   a reader has not yet found. $ substrate: what the chapter is made of. */
+function emitDescription(data, chapterId, world) {
+  const description = describeChapter(data, world);
+  const lines = [`$[chapter/${chapterId}/made_of]{`];
+  lines.push(`  spell: ${description.text.split('\n').join('\n  ')}`);
+  description.clauses.forEach((clause) => {
+    lines.push(`  ${clause.key}: "${oneLine(glossFor(clause.gloss), 600).replace(/"/g, '\\"')}"`);
+  });
+  lines.push('}');
+  return lines.join('\n');
 }
 
 function readChapterJson(indexHtmlPath) {
@@ -347,7 +377,7 @@ function emitMeasures(sections, chapterId) {
   ].join('\n');
 }
 
-function emitChapterSpw(data, chapterCount) {
+function emitChapterSpw(data, chapterCount, world) {
   const chapterNumber = Number(data?.chapterNumber || 0);
   const chapterId = pad(chapterNumber);
   const title = String(data?.title || `Chapter ${chapterId}`).replace(/"/g, '\\"');
@@ -377,6 +407,9 @@ function emitChapterSpw(data, chapterCount) {
   }
   lines.push(`  chapter_path: "/book/chapter/${chapterId}/"`);
   lines.push('}');
+  lines.push('');
+
+  lines.push(emitDescription(data, chapterId, world));
   lines.push('');
 
   lines.push(`&[chapter/${chapterId}/routes]{`);
@@ -437,10 +470,11 @@ function main() {
   }
 
   const summary = [];
+  const world = readWorld();
   chapterDirs.forEach((chapterId) => {
     const data = readChapterJson(path.join(CHAPTER_ROOT, chapterId, 'index.html'));
     const outputPath = path.join(OUTPUT_ROOT, `${chapterId}.spw`);
-    fs.writeFileSync(outputPath, emitChapterSpw(data, chapterDirs.length), 'utf8');
+    fs.writeFileSync(outputPath, emitChapterSpw(data, chapterDirs.length, world), 'utf8');
 
     summary.push({
       id: chapterId,

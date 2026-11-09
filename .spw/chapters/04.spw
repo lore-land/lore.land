@@ -12,6 +12,28 @@
   chapter_path: "/book/chapter/04/"
 }
 
+$[chapter/04/made_of]{
+  spell: ^chapter[4]{
+    .rooms[ &(council_table)@boof @[weather_pane]@the_mirror !<tabletop>@the_fool ?{key_rack}@boof
+      ~<hill_stairs>@boof ]
+    @told_by[boof mirror fool narrator]
+    $oak $ink $brass
+    *wonders{ @weathercocks $crosswind_loom &council_slab #write_it_before_you_argue_it $key_file_bench }
+    &met[banewap]
+    =palette[announce]
+    ~berries{ baneberry $boneberry[salted_flatbread] }
+    &harmonies[ <baneberries banewap> <egg boof> ]
+  }
+  rooms: "Five rooms: two < > passages, a [ ] window, a { } room and a ( ) gathering; three kept by Boof, the rest by the mirror and the Fool."
+  told_by: "Told by Boof, the mirror, the Fool and the narrator."
+  made_of: "Made most of oak and frame, then ink and line, then brass and bronze."
+  wonders: "First met here: the weathercocks, the crosswind loom, the council slab, a saying, “Write it before you argue it” and the key-file bench."
+  met: "Met here for the first time: Mr. BaneWAP."
+  palette: "Its palette is the announcement, earned a layer at a time: purple paint and a kraft card: the council's crier steering what everyone hears."
+  berries: "Here baneberries foretell; a boneberry in this chapter tastes of salted flatbread."
+  harmonies: "Mr. BaneWAP is made of baneberries. The egg rides against her ribs."
+}
+
 &[chapter/04/routes]{
   web: "/book/chapter/04/"
   timeline: "/book/timeline.html#chapter-04"

@@ -63,6 +63,30 @@
   scale: "=drama times the sprite own drama times the scene own; calm under reduced motion and zen"
 }
 
+^points{
+  .note: "pie-game.mjs noteFeed, captionOf, paintPoints, paintPointsRules, worthOf; the weights are =lean in pie-rules.spw"
+  ways: "every point leans the chapter one of three ways: fairy tale (boon), absurd reality (bane), low magic (bone); the sums are how the chapter will be kept, never a score to chase"
+  contest: "pie against Mimes Against WAP is the one contest: for the pie a slice over the mimes, a baneberry sweetened, a clown satisfied, Mr. BaneWAP foiled; for the mimes a slice boxed, a knock from a mime, a baneberry they brought him, a march let past or run its course"
+  said: "whatever moves in one moment is one entry, placed where its impact was: a chip rises from there in that way's ink, the panel beside the screen says it in words newest first, and the spill card says how the whole carry was scored"
+  rules: "How points work is drawn from the rules in play, so a weight tuned on the desk is marked tuned there at once"
+  cards: "a card turned in the lanes says what it can be worth before it is played"
+}
+
+^show{
+  .note: "pie-show.mjs; the ▢ Show button or V cycles off, inset, board"
+  inset: "a window beside the caption, never over the lanes: the last interaction as a still with its points; between times the board in small"
+  board: "the alternate view: the lanes as a plain board, every thing a token by what it does, its height as its edge (underfoot dashed, in the air shadowed), ⤒ where a hop clears it and ⤒⤒ where only a high hop does, its name under it; the lanes as drawn shrink into the window"
+  reel: "the last six stills, each captioned with what happened and what it was worth"
+}
+
+^spell_display{
+  .note: "spw-spell.mjs and components/spell.css"
+  verse: "a long spell is laid out a line an atom inside its bodies, indented by depth; copying still gives it exactly as written"
+  shape: "a pip an atom in its role ink heads every spell, and answers for its atom on hover"
+  spectrum: "a hairline along the top in the spell roles in the order they are cast, so spells of one shape look kin"
+  keycaps: "each sigil sits on a small tinted cap; the gloss speaks in the role of the atom it is about"
+}
+
 ^stories{
   .note: "stories.spw, read by story-loom.mjs at /scriptorium/#loom"
   pattern: "touch a value and the stories that share it light; what they share is written as one spell, with ~_ where they part, and can be played"

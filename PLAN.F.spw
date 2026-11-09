@@ -105,9 +105,13 @@
 }
 
 ^premium{
-  .note: "plans, not yet built; written so that what is free stays free"
+  .note: "plans, with one mechanic open as a trial (bias spells, f12) and nothing locked; written so that what is free stays free"
+  &layers: ~".spw/surfaces/layers.spw#lore_land_surfaces_layers"
+  &registers: ~".spw/runtime/bias.spw#lore_land_runtime_bias"
   never: "the story is whole and free: no room, chapter, ending, palette or card is ever behind a payment; the audience gate (late table, household key) is care, never commerce; no ads, no tracking, no streaks, no points to buy"
-  for_tables: "a table that changes the game together: named rule sets and tunings kept and synced across devices, a shared QA log of card notes, proposals gathered for the maker (f6), all of it exportable as Spw so nothing is locked in"
+  mechanic: "Spw spells that bias how the land answers: a reader casts a meme register as a bias edge (=meme[pov]{ pop toast %often[0.5] }) and the game pops, toasts, tags, spills, reveals, points and settle receipts may answer in it, never the story (book/scripts/modules/spw-bias.mjs). Casting one house register for a visit is free, because the language is free; composing several into a layered combination, writing your own registers, keeping or syncing them and sharing them with a table is the premium plan, open to everyone as a trial for now"
+  layering: "features stack in layers from the floor up (ground, reader, visit, trial, table, bias, keeper, maker); each says what it may touch, what it never touches, how it is undone and where it is kept, and the premium plan is written as combinations of bias with another layer, each with its free floor (layers.spw); spw:probes premium_floor fails if anything on the ground is marked premium"
+  for_tables: "a table that changes the game together: named rule sets, tunings and a table’s own meme registers kept and synced across devices, a shared QA log of card notes, proposals gathered for the maker (f6), all of it exportable as Spw so nothing is locked in"
   for_keepers: "printed cards and folio prints that carry their spell and provenance, read back by the parser; a printed deck is the same deck the reader turned"
   for_makers: "the engine with its checks and tools as a starter for another book (L18), with the rules dialect, rooms and the loom"
   patronage: "patrons are credited in a release note line by their own words; a patron may hear a room the evening before it opens, never instead of anyone"
@@ -127,7 +131,8 @@
   f8: { dimension: [world], release: "next", done_when: "the folio value spell (formula only, %fulfill, -25% to +15%) is auditable from a carry provenance card" }
   f9: { dimension: [structure, world, rules], release: "2026_11_08.K", note: "the sigil × chapter audit plan, generated from the canon (npm run spw:sigil-audit → .spw/audits/sigil-chapter-audit.spw): rooms by sigil and kind, wonders first met, materials, harmonies, and the four lenses (components, creatures, ecology, interaction) for every sigil" }
   f10: { dimension: [rules, tables, grammar], release: "2026_11_08.K", note: "Spw as play: spells heard (spw-sound), turned (scrubbable dials, the tuning desk), copied with #from and pasted where they belong, read aloud by the card interpreter, worn as textures; stories as spells woven on the loom; whimsy and scenes in the rules; card sections open to a design table (?design); what this repository asks of the workbench" }
-  f11: { dimension: [tables, marks], release: "next", done_when: "the first premium feature (named rule sets kept and synced for a table) passes the premium test: nobody who never pays loses anything they had" }
+  f11: { dimension: [tables, marks], release: "next", done_when: "the first premium feature (named rule sets and meme registers kept and synced for a table) passes the premium test: nobody who never pays loses anything they had" }
+  f12: { dimension: [rules, tables, grammar], release: "2026_11_08.N", note: "the bias layer: eight house meme registers (bias.spw), each with a palette, a material and a sigil of its own, cast as Spw bias edges that lean how the land answers (pops, toasts, tags, spills, reveals, points, receipts) and never the story; one house register for a visit is free, a combination is the premium plan, open to everyone as a trial (the bias switch, ?bias=); every feature placed in a layer and the premium combinations written with their free floor (layers.spw); spw:probes premium_floor guards the ground; three parser findings logged in spw-stress.spw" }
 ]
 
 ?open{

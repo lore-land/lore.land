@@ -25,13 +25,14 @@ import {
   withViewTransition
 } from '../modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
-import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.A';
-import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_06.F';
-import { readStory } from '../modules/story-directions.mjs?v=2026_11_06.F';
-import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.L';
+import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_08.N';
+import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_08.N';
+import { readStory } from '../modules/story-directions.mjs?v=2026_11_08.N';
+import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_08.N';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.M';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_08.N';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.M';
+import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_08.N';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';
@@ -109,6 +110,13 @@ function paintCastPortraits() {
       hint.textContent = `Not met yet: their name first comes up in Chapter ${c.first}, and their card turns when it does.`;
       link.append(hint);
     }
+    // Their likeness (likeness.mjs): the portrait in its discovery variant with its seal, and who is like them.
+    loadLikeness().then(() => {
+      const likeness = `character:${id}`;
+      if (!likenessItem(likeness) || card.querySelector('.likeness-find')) return;
+      dressAsset(portrait, likeness, { sealSize: 20 });
+      card.append(findSimilar(likeness));
+    });
   });
   const lede = document.querySelector('.cast-board .hub-section-lede');
   if (lede && !lede.querySelector('.cast-count')) {

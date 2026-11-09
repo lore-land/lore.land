@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.M" data-cache-context="pie" data-theme="paper">
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_08.N" data-cache-context="pie" data-theme="paper">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -46,15 +46,16 @@
   <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_08.H&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_05.C&ctx=home:scene">
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_08.H&ctx=home:hub">
-  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.L&ctx=canon:spell">
-  <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.M&ctx=canon:characters">
+  <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.N&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/likeness.css?v=2026_11_08.N&ctx=canon:likeness">
+  <link rel="stylesheet" href="/book/styles/components/characters-portraits.css?v=2026_11_08.N&ctx=canon:characters">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_05.C&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.M&ctx=pie:game">
+  <link rel="stylesheet" href="/book/styles/home/pie.css?v=2026_11_08.N&ctx=pie:game">
   <link rel="stylesheet" href="/book/styles/home/worktable.css?v=2026_11_07.C">
   <script defer type="module" src="/book/scripts/home/worktable.mjs?v=2026_11_07.D"></script>
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.M"></script>
-  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.M"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.N"></script>
+  <script defer type="module" src="/book/scripts/home/pie-game.mjs?v=2026_11_08.N"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="pie">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -127,6 +128,7 @@
           <div class="pie-caption" data-pie-toast data-voice="" aria-hidden="true">
             <p class="pie-toast-title" data-pie-toast-title>The book, carried</p>
             <p class="pie-toast-line" data-pie-toast-line>Watch here as you go: where you are, and what the pies let slip.</p>
+            <figure class="pie-show-inset" data-pie-show-inset hidden><canvas aria-hidden="true"></canvas><figcaption></figcaption></figure>
           </div>
           <div class="pie-steps">
             <button type="button" class="pie-step" data-pie-step="-1" aria-label="Step left">◀</button>
@@ -153,6 +155,7 @@
             <button type="button" class="pie-tool" data-pie-fullscreen aria-pressed="false">⛶ Full</button>
             <button type="button" class="pie-tool" data-pie-ask aria-pressed="false" title="Ask: the lanes slow, and a tap on anything says what it is in the story">? Ask</button>
             <button type="button" class="pie-tool" data-pie-labels aria-pressed="false" title="Labels: every thing wears its name and where the book first has it">◇ Labels</button>
+            <button type="button" class="pie-tool" data-pie-show aria-pressed="false" title="The show: what just happened, in a window (V)">▢ Show</button>
             <button type="button" class="pie-tool pie-tool-hand" data-pie-hand aria-pressed="false" title="Swap the pad and the buttons, for the other hand">⇄ Hands</button>
           </div>
           <p class="visually-hidden pie-live" data-pie-live role="status" aria-live="polite"></p>
@@ -162,6 +165,20 @@
           <ul class="pie-flow-wonder-list" data-pie-flow-wonders></ul>
           <p class="pie-flow-kept" data-pie-flow-kept>Steer into a wonder, up the lanes, to keep it.</p>
           <div class="pie-flow-now" data-pie-flow-now aria-live="off"></div>
+          <div class="pie-show-panel" data-pie-show-panel hidden>
+            <p class="pie-flow-head">The show, so far</p>
+            <ol class="pie-show-reel" data-pie-show-reel aria-label="The last things that happened in the lanes"></ol>
+            <ul class="pie-show-legend" data-pie-show-legend aria-label="The board, read"></ul>
+          </div>
+          <div class="pie-points" data-pie-points>
+            <p class="pie-flow-head">Points, as they came</p>
+            <p class="pie-points-sum" data-pie-points-sum></p>
+            <ol class="pie-points-feed" data-pie-points-feed aria-label="The latest points, newest first"></ol>
+            <details class="pie-points-rules" data-pie-points-rules>
+              <summary>How points work</summary>
+              <div data-pie-points-rules-body></div>
+            </details>
+          </div>
           <p class="pie-flow-note">Each one, kept, goes into <a href="/almanac/">your almanac</a> and gives the carry something: light, echoes, a honk, a moment unkept.</p>
         </div>
         </div>
@@ -326,6 +343,13 @@
           <div class="pie-desk-spell" data-pie-desk-tune></div>
           <div class="pie-desk-spell" data-pie-desk-lean></div>
           <div class="pie-desk-spell" data-pie-desk-scenes></div>
+          <div class="pie-bias" data-pie-bias>
+            <p class="pie-desk-lede"><strong>Answer in a register.</strong> A register is a spell that leans how the lanes answer: the pops, the captions, the stills in the show, the card at the spill. Never the story. One register for your visit is free; layer two or more and it is a combination, the premium plan, open to everyone as a trial for now. A <code>=meme[…]{ … }</code> spell pasted anywhere on this page casts it too.</p>
+            <div class="pie-bias-registers" data-pie-bias-registers aria-label="House registers"></div>
+            <div class="pie-bias-spell" data-pie-bias-spell></div>
+            <p class="pie-bias-note" data-pie-bias-note role="status"></p>
+            <p class="pie-bias-actions"><button type="button" class="pie-tool" data-pie-bias-link>⧉ Copy a link</button> <button type="button" class="pie-tool" data-pie-bias-off>Plain again</button></p>
+          </div>
           <p class="pie-bench-actions"><button type="button" class="pie-tool" data-pie-desk-reset>Back to the book’s own tuning</button></p>
         </div>
         <p class="pie-paste-note" data-pie-paste-note role="status">Paste any spell anywhere on this page (copied from a card, the desk, a carry or a chapter) and the lanes will read it.</p>

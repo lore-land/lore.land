@@ -1,0 +1,78 @@
+# Lore.Land Likeness
+# Every story thing's own visual signature, the three states of being found, and
+# "find similar": the cluster as lore.land's social device, read from the canon alone.
+#>lore_land_surfaces_likeness
+#:surface #!mechanic
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  A feed that offers more like this usually means more of what other people watched. lore.land means something else, more of what this is made of. Every room, wonder, person, palette, study and card already carries dimensions the story itself gave it, its chapter, its palette, its sigil, its kind of room, its material, its lean and who keeps it, so a likeness can be drawn from them and things that are alike look alike. A cluster of likenesses is the closest the book comes to a crowd. A room in Chapter Three, a study in the atlas and a brass contrivance stand together because they rhyme, and a reader can walk from one rhyme to the next. Nothing in it is ranked by what anyone else did, and nothing in it is for sale.
+}
+
+^"likeness"{
+  .note: "book/scripts/modules/likeness.mjs (likenessOf, likenessScore, nearest, similar, likenessMark, likenessMarkup, findSimilar, discoveryOf, dressAsset, atlasStrip) → book/styles/components/likeness.css; index book/content/world/likeness.json, built by npm run spw:likeness (.spw/tools/likeness-index.mjs)"
+  kinds: "room (each section of a chapter, room:03.2) · wonder (the almanac) · character (the cast) · palette (one per chapter, and the mime wash) · seed (the seed atlas, seed:01.wonder) · card (the lanes' cards that are not the cast's own)"
+  dimensions: "chapter (where the book first has it) · palette (the place-named colours of its chapter) · sigil (its motion, one of the twelve) · container ([ ] window, { } room, ( ) gathering, < > passage) · material (glass flour berry frost ink brass steam oak) · valence (boon, bane or bone) · characters (who keeps it)"
+  sources: "rooms from their own signatures and prose (material by the words, lean by the paragraphs); wonders from the room they are first named in; the cast from the rooms they keep; palettes from their chapter; cards from their type and story; studies from the atlas key below"
+}
+
+^"seal"{
+  .note: "a seal in the chamber seals' family (chamber-seals.mjs), drawn as plain SVG with no ids, so any number can share a page and the build can stamp them"
+  petals: "one per chapter, up to the chapter where the book first has it (counting is reading); no chapter yet, a dotted ring: not yet planted"
+  heart: "the sigil, and the petals start at that sigil's own hour, in the spirit sequence's order ! ? ~ @ & * ^ then # . = % $"
+  braces: "the kind of place round the heart, and each petal tip in the same shape: square for a window, round for a room, a ring for a gathering, a point for a passage"
+  ring: "the material as a texture round the rim: glass a double line with facets, flour a dust of dots, berries beads, frost rime ticks, ink one line with a blot, brass a dial, warmth a wave, oak pegged segments"
+  colours: "the palette: its ground as the medallion, its accent as the wax, its glow as the marks, its ink as the ring"
+  berry: "the lean, on the upper rim: a boonberry (teal and amber) for the fairy tale, a baneberry (plum-black) for the absurd and the real, a boneberry (bone-white, a dusk-red blush) for the low magic underneath"
+  pips: "who keeps it, along the lower rim, each in their own accent"
+}
+
+^atlas_key{
+  .note: "the seed atlas's dimensions, as the book reads them (likeness.mjs DIMENSIONS); twelve dimensions take the twelve sigils, integration (set 00) and ascension (set 01) are one dimension under two names"
+  action: "! brass · struck, it rings"
+  concept: "? frost · a thought held still long enough to ask it"
+  definition: "# ink · written down, so it stays"
+  ground: ". flour · what everything is baked from"
+  integration: "^ warmth · warmth rising, binding as it goes (ascension in set 01)"
+  mode: "= Bonk glass · a way of looking, laminated (the sigil palettes wear)"
+  perspective: "@ Bonk glass · a lens, and whoever holds it"
+  potential: "~ boonberries · a little borrowed summer, not spent yet"
+  scene: "$ oak · the frame a moment stands in"
+  subject: "& ink · whoever is written into it"
+  value: "* brass · what rings true when it is counted"
+  vibration: "% warmth · the hum under everything"
+  wonder: "? with an echo of * · boonberries · lit from within: a question before it is a thing, a thing made real once kept"
+  motif: "& flour · what the story keeps coming back to: a thread where chapters meet and stay themselves"
+  containers: "the spirit sequence ?~<#.>@(#.)&[#.]*{#.}^ opens a container after four motions, so ~ studies are passages, @ gatherings, & windows, * rooms, and ^ binds the room upward; the rest take the kind of room their sigil is most often signed with"
+  leans: "set 00 is the world being left (photographs, money, fashion): bane · set 01 is teal and amber lit from within, the book's own look: boon · the motif is a page laid out, the notation underneath: bone"
+  planted: "a set 01 study is the motif of the chapters home/seeds.mjs chapterSeedMap gives it (action in One and Fourteen, the motif in Four, Eight and Twelve); a study not planted takes the palette of the chapter its sigil is most at home in"
+}
+
+^discovery{
+  .note: "read from this reader's own shelves, never sent anywhere (discoveryOf)"
+  found: "a room read (lore.rooms.v1) · a wonder kept (lore.almanac.v1) · someone met (their card turned; Boof from the start) · a palette begun (lore.palettes.v1) · a card turned (lore.cards.v1, lore.pie.v1) · a study kept in the atlas (lore.experience.seed-adopted), or the chapter it is the motif of finished into its palette"
+  glimpsed: "its chapter opened (lore.chapter.progress.v1, or anything read or kept there); things only in the lanes, once the lanes have been played"
+  veiled: "otherwise"
+  assets: "veiled, the picture in its palette as a soft duotone, blurred, its seal crisp · glimpsed, a window onto a detail cut in the shape of its kind of room, over the veil, widening a little on hover or focus · found, whole, settling once the first time it is seen found; a portrait is already a silhouette until met, so it is only softened when veiled and ringed when glimpsed"
+  words: "a cluster names a wonder only once it is kept and a person only once met (before, their hint, or where to meet them); a veiled room is a window, a room, a gathering or a passage in its chapter"
+  continuity: "the atlas still shows every study whole to anyone who kept studies there before, and to anyone who chooses all whole (lore.atlas.view)"
+}
+
+^find_similar{
+  .note: "findSimilar(itemOrId) gives a button wearing the thing's own seal; it opens a dialog of the nearest likenesses: seal, kind and chapter, a name as far as it is found, and why in plain words (the same ~, both passages and frost); each opens its place, and each can be walked on to its own cluster, with the walk kept as a trail of seals"
+  scoring: "same sigil 3 (an echo 1.5) · same kind of room 2 · same material 2 · same chapter 1.5 (with its palette 2), or same palette 2, or a chapter apart 0.5 · same lean 1 · each shared keeper 1.25"
+  clusters: "the best of each kind first, then the closest, no more than three of a kind until nothing else is near, so a cluster crosses rooms, wonders, people, palettes, studies and cards; eight per thing are precomputed at build"
+  atlas_strip: "atlasStrip(chapter or sigils) shows the atlas studies that belong with a chapter (its own motif first, then its rooms' motions) or with some sigils, in their discovery variants, linking into the atlas at #seed-SET-DIMENSION; the almanac's shelves wear their sigil's studies"
+}
+
+!never[
+  "similarity from other readers: no views, no counts, no trends, no who-else-looked; the canon is the only source"
+  "a score shown to a reader: why is said in words, never in numbers"
+  "a gate on find similar: it is discovery inside the story, and it stays free"
+  "a child as an item, a card, a likeness or a cluster"
+  "the figure in plain lines named, in a title or a why"
+  "the Egg explained: it may be veiled or glimpsed, never captioned with what it is"
+  "cardinal directions in any label: dawnward and hearthward"
+  "wages: Boof works for the land"
+]

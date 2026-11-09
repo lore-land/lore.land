@@ -19,7 +19,7 @@
  * text fragment (#:~:text=). The same table drives the doors (chapter pages)
  * and the way out (pie-game.mjs).
  */
-import { settle } from './settled.mjs?v=2026_11_05.B';
+import { settle } from './settled.mjs?v=2026_11_08.N';
 import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_08.J';
 
 const BACK_KEY = 'lore.pie.back';

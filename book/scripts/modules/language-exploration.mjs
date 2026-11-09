@@ -148,7 +148,9 @@ const SKIP_SELECTOR = [
   '.chapter-epigraph',
   '.spw-language',
   '.spw-token',
-  '[data-component="scene-sketch"]'
+  '[data-component="scene-sketch"]',
+  // The chapter's Spw at its end (chapter-inventory.mjs): structure, not prose to annotate.
+  '.chapter-inventory'
 ].join(', ');
 
 /**

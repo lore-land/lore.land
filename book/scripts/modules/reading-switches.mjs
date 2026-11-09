@@ -19,10 +19,11 @@
  * the offline shelf starts on, because installing is consent to keep the book.
  */
 
-import { settle } from './settled.mjs?v=2026_11_05.B';
-import { visitSwitches, dropSwitch } from './story-directions.mjs?v=2026_11_06.F';
+import { settle } from './settled.mjs?v=2026_11_08.N';
+import { visitSwitches, dropSwitch, readStory } from './story-directions.mjs?v=2026_11_08.N';
 import { chapterPath } from './chapter-links.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
+import { activeBias, setBias, castHouseRegister, initBiasFromURL } from './spw-bias.mjs?v=2026_11_08.N';
 
 const SWITCHES_KEY = 'lore.switches.v1';
 const SEEN_RELEASE_KEY = 'lore.release.seen';
@@ -32,120 +33,151 @@ const ENGAGED_AFTER = 3;
 
 export const SWITCHES = Object.freeze([
   {
-    id: 'return-notes', attribute: 'data-switch-return-notes', stage: 'stable', label: 'Notes on what changed',
+    id: 'return-notes', attribute: 'data-switch-return-notes', stage: 'stable', layer: 'reader', label: 'Notes on what changed',
     hint: 'When you come back after a new release, a short card says what is new.',
     effect: { on: 'Next release, a card at the top says what changed.', off: 'No card next release; the notes still live at /changes.' },
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'full-rail', attribute: 'data-switch-full-rail', stage: 'stable', label: 'Every instrument in the rail',
+    id: 'full-rail', attribute: 'data-switch-full-rail', stage: 'stable', layer: 'reader', label: 'Every instrument in the rail',
     hint: 'The rail as it was: every Spw panel beside the story, desk or no desk.',
     effect: { on: 'Every Spw panel is back beside the story.', off: 'The rail keeps only what a reader uses; the panels live at the desk.' }, region: 'aside',
     defaults: { returning: 'on', new: 'off' }
   },
   {
-    id: 'logline', attribute: 'data-switch-logline', stage: 'stable', label: 'Summary above the title',
+    id: 'logline', attribute: 'data-switch-logline', stage: 'stable', layer: 'reader', label: 'Summary above the title',
     hint: 'The one-line summary at the top of each chapter.',
     effect: { on: 'The one-line summary sits above each title.', off: 'Titles stand alone again.' }, region: '.chapter-logline, main.chapter .chapter-head',
     defaults: { returning: 'on', new: 'off' }
   },
   {
-    id: 'xray', attribute: 'data-switch-xray', stage: 'stable', label: 'Structure mode',
+    id: 'xray', attribute: 'data-switch-xray', stage: 'stable', layer: 'reader', label: 'Structure mode',
     hint: 'Tap, hold or brush words, sentences and paragraphs: the threads they belong to, the way they lean, the sign they sit under.',
     effect: { on: 'Tap a word, hold it, or brush across a line — the structure shows through.', off: 'The prose is plain prose again.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'stacks', attribute: 'data-switch-stacks', stage: 'stable', label: 'Wander the stacks',
+    id: 'stacks', attribute: 'data-switch-stacks', stage: 'stable', layer: 'reader', label: 'Wander the stacks',
     hint: 'At each chapter\u2019s end: its shelf-mates in any library, by call number.',
     effect: { on: 'Each chapter ends with its shelf-mates, by call number.', off: 'Chapters end without the shelf.' }, region: '.chapter-stacks',
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'scene-light', attribute: 'data-switch-scene-light', stage: 'stable', label: 'Hold the light',
+    id: 'scene-light', attribute: 'data-switch-scene-light', stage: 'stable', layer: 'reader', label: 'Hold the light',
     hint: 'At the end of each section: hold the scene\u2019s light (drag the sun, turn its warmth, glow, ink, grain and edge, or carry it with you) and frame a passage for a screenshot.',
     effect: { on: 'Each section ends with the light table and a frame.', off: 'The scenes light themselves; no tools at the section\u2019s end.' }, region: 'main.chapter',
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'table', attribute: 'data-switch-table', stage: 'stable', label: 'At the table',
+    id: 'table', attribute: 'data-switch-table', stage: 'stable', layer: 'reader', label: 'At the table',
     hint: 'At each chapter\u2019s end, a closed page for playing in it: the place, its people, hooks, a d6, things worth carrying out, a bracework move, and the page\u2019s own dice.',
     effect: { on: 'Each chapter ends with a page for playing in it.', off: 'Chapters end without the table.' }, region: '.chapter-table',
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', label: 'Keep every chapter offline',
+    id: 'offline-shelf', attribute: 'data-switch-offline-shelf', stage: 'stable', layer: 'reader', label: 'Keep every chapter offline',
     hint: 'Every chapter stays readable with no network: on a train, in a nook, anywhere.',
     effect: { on: 'Keeping every chapter for reading with no network.', off: 'Only the chapters you have opened stay kept.' },
     defaults: { returning: 'off', new: 'off', installed: 'on' }
   },
   {
-    id: 'scenes-open', attribute: 'data-switch-scenes-open', stage: 'stable', label: 'Open every scene',
+    id: 'scenes-open', attribute: 'data-switch-scenes-open', stage: 'stable', layer: 'reader', label: 'Open every scene',
     hint: 'Scene sketches start unfolded: where to stand, the light, the smell.',
     effect: { on: 'Every scene sketch starts unfolded.', off: 'Scene sketches start folded.' }, region: 'main.chapter details.scene-sketch',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'wonders', attribute: 'data-switch-wonders', stage: 'stable', label: 'Wonders in the prose',
+    id: 'wonders', attribute: 'data-switch-wonders', stage: 'stable', layer: 'reader', label: 'Wonders in the prose',
     hint: 'Creatures, contrivances and bracework are marked where a chapter first names them. Tap one to keep it in your almanac and see where else it lives.',
     effect: { on: 'Wonders are marked; tap one to keep it.', off: 'The prose is unmarked; your almanac keeps what you found.' }, region: 'main.chapter',
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'sightings', attribute: 'data-switch-sightings', stage: 'stable', label: 'Sightings',
+    id: 'sightings', attribute: 'data-switch-sightings', stage: 'stable', layer: 'reader', label: 'Sightings',
     hint: 'When you notice the figure under the hat, a small card says so, and his drawing gains a line.',
     effect: { on: 'Each sighting gets a card and a line in the drawing.', off: 'Sightings are kept quietly, without a card.' },
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'tellings', attribute: 'data-switch-tellings', stage: 'stable', label: 'Other tellings',
+    id: 'tellings', attribute: 'data-switch-tellings', stage: 'stable', layer: 'reader', label: 'Other tellings',
     hint: 'Some phrases are told more than one way; a faint wavy line marks them. Tap one to hear its next telling, hold it to see them all, or turn the hour in the rail and watch the page change with the day.',
     effect: { on: 'Phrases with other tellings are marked; tap to turn, hold for all.', off: 'Every phrase reads as plain words; what you heard is kept.' }, region: 'main.chapter',
     defaults: { returning: 'on', new: 'on' }
   },
   {
-    id: 'living', attribute: 'data-switch-living', stage: 'trial', label: 'Phrases turn with the clock',
+    id: 'living', attribute: 'data-switch-living', stage: 'trial', layer: 'trial', label: 'Phrases turn with the clock',
     hint: 'A few phrases in every chapter turn by the minute, the hour or the day (never the one you are reading), and the marked words catch the light now and then. Off, every word is the book\u2019s own. For one visit: ?phrases=turn, or ?at=19:00 to see the words of that hour.',
     effect: { on: 'Phrases turn with the clock, away from where you are reading.', off: 'Every phrase is the book\u2019s own again.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'room-by-room', attribute: 'data-switch-room-by-room', stage: 'trial', label: 'Room by room',
+    id: 'room-by-room', attribute: 'data-switch-room-by-room', stage: 'trial', layer: 'trial', label: 'Room by room',
     hint: 'A chapter opens one room at a time: the room you are in stands whole, rooms you have read fold to their signature, and the rest are doors until you reach them. Each room’s end has a door to the next.',
     effect: { on: 'One room at a time; a door at the end of each opens the next.', off: 'The whole chapter is open again; the rooms keep their signatures.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', label: 'Reading line',
+    id: 'focus-line', attribute: 'data-switch-focus-line', stage: 'trial', layer: 'trial', label: 'Reading line',
     hint: 'Paragraphs you are not reading dim a little.',
     effect: { on: 'Paragraphs you are not reading dim a little.', off: 'Every paragraph at full strength.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'paragraph-numbers', attribute: 'data-switch-paragraph-numbers', stage: 'trial', label: 'Numbered paragraphs',
+    id: 'paragraph-numbers', attribute: 'data-switch-paragraph-numbers', stage: 'trial', layer: 'trial', label: 'Numbered paragraphs',
     hint: 'Numbers in the margin, for citing a passage in a note or a workshop.',
     effect: { on: 'Numbers in the margin of every paragraph.', off: 'The margin is clear.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'reading-time', attribute: 'data-switch-reading-time', stage: 'trial', label: 'Minutes per section',
+    id: 'reading-time', attribute: 'data-switch-reading-time', stage: 'trial', layer: 'trial', label: 'Minutes per section',
     hint: 'How long each chamber takes, at an unhurried pace.',
     effect: { on: 'Each chamber says how long it takes.', off: 'No minutes shown.' }, region: 'main.chapter .section-meta',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'resonance', attribute: 'data-switch-resonance', stage: 'trial', label: 'The grammar, faintly',
+    id: 'resonance', attribute: 'data-switch-resonance', stage: 'trial', layer: 'trial', label: 'The grammar, faintly',
     hint: 'Each part of a chapter shows the Spw sigil it enacts. Tap one for its reading in the story, the stacks, and the machine.',
     effect: { on: 'Each part shows the sigil it enacts; tap one for its readings.', off: 'The grammar steps back out of sight.' }, region: 'main.chapter',
     defaults: { returning: 'off', new: 'off' }
   },
   {
-    id: 'prompts', attribute: 'data-switch-prompts', stage: 'trial', label: 'Plate prompts',
+    id: 'prompts', attribute: 'data-switch-prompts', stage: 'trial', layer: 'trial', label: 'Plate prompts',
     hint: 'At the chapter’s end: image prompts composed from its scenes, ready to copy.',
     effect: { on: "Image prompts wait at the chapter's end.", off: 'No prompts at the end.' }, region: '.chapter-prompts, main.chapter',
     defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'bias', attribute: 'data-switch-bias', stage: 'trial', layer: 'trial', label: 'Answers in a register',
+    hint: 'The small answers (a pop in the lanes, a notice, the receipt that says what changed) now and then come back in a meme register, cast as a spell: POV, plot twist, core memory unlocked. On, it casts the house register of the day; a link with ?bias=pov casts another for the visit. One register at a time is always free; layering several is a trial for now. The story keeps every word of its own.',
+    effect: { on: 'Now and then the land answers in a register; the story keeps its own words.', off: 'Every answer is plain again; nothing you kept has changed.' },
+    defaults: { returning: 'off', new: 'off' }
   }
 ]);
+
+/* The layers the drawer is grouped by (.spw/surfaces/layers.spw): reader switches for every
+   reader, trials for readers who have earned the workshop. */
+const LAYER_GROUPS = Object.freeze([
+  { layer: 'reader', title: 'For every reader' },
+  { layer: 'trial', title: 'Trials', note: 'New things we are trying with readers who keep coming back. They may change or leave.', engaged: true }
+]);
+
+/* The bias trial (spw-bias.mjs): on, the house register of the day answers unless the visit has
+   one; off, the visit's register is let go. A ?bias= link turns it on for the visit only. */
+function reactBias(on) {
+  if (on) {
+    if (!activeBias()) castHouseRegister({ from: 'reader' });
+  } else {
+    setBias(null, { from: 'reader' });
+  }
+}
+const withVisitBias = (map) => {
+  // A link's ?without=bias wins for the visit: the register it would have answered in is let go.
+  if (readStory().without?.includes('bias')) {
+    if (activeBias()) setBias(null, { from: 'link' });
+    return map;
+  }
+  return activeBias() && map.bias !== 'on' ? { ...map, bias: 'on' } : map;
+};
 
 function readJSON(key, fallback) {
   try {
@@ -201,6 +233,7 @@ export function setSwitch(id, on) {
   state.choices[id] = on ? 'on' : 'off';
   applySwitches(resolvedMap(state));
   persist(state);
+  if (id === 'bias') reactBias(on);
   return resolvedMap(state);
 }
 
@@ -410,9 +443,13 @@ async function showReturnNotes(state, map) {
 export function initReadingSwitches({ announce } = {}) {
   const state = resolveState();
   // A link's ?with= / ?without= (story-directions.mjs) hold for the visit; only the reader's own are saved.
-  let map = visitSwitches(resolvedMap(state));
+  // A ?bias= link likewise turns the bias trial on for the visit (spw-bias.mjs, lore.bias.visit).
+  initBiasFromURL();
+  let map = withVisitBias(visitSwitches(resolvedMap(state)));
   applySwitches(map);
   persist(state);
+  // On by the reader's choice, a ?try= or a ?with=, and nothing cast yet: the house register of the day.
+  if (map.bias === 'on' && !activeBias()) castHouseRegister({ from: 'switch' });
 
   const focusLine = createFocusLine();
   let shelfStatus = null;
@@ -481,7 +518,8 @@ export function initReadingSwitches({ announce } = {}) {
       input.addEventListener('change', () => {
         state.choices[entry.id] = input.checked ? 'on' : 'off';
         dropSwitch(entry.id);
-        map = visitSwitches(resolvedMap(state));
+        if (entry.id === 'bias') reactBias(input.checked);
+        map = withVisitBias(visitSwitches(resolvedMap(state)));
         applySwitches(map);
         persist(state);
         react();
@@ -533,20 +571,23 @@ export function initReadingSwitches({ announce } = {}) {
   syncInstall();
   panel.append(install);
 
-  panel.append(group('For every reader', SWITCHES.filter((entry) => entry.stage === 'stable')));
-  shelfStatus = document.createElement('p');
-  shelfStatus.className = 'reading-switches-note reading-shelf-status';
-  shelfStatus.setAttribute('aria-live', 'polite');
-  panel.append(shelfStatus);
-  if (engaged) {
-    panel.append(group('Trials', SWITCHES.filter((entry) => entry.stage === 'trial'), 'New things we are trying with readers who keep coming back. They may change or leave.'));
-  } else {
-    const teaser = document.createElement('p');
-    teaser.className = 'reading-switches-teaser';
-    const remaining = ENGAGED_AFTER - chaptersVisited();
-    teaser.textContent = `More switches open as you read: ${remaining} more chapter${remaining === 1 ? '' : 's'} to go.`;
-    panel.append(teaser);
-  }
+  LAYER_GROUPS.forEach(({ layer, title, note, engaged: needsEngaged }) => {
+    if (needsEngaged && !engaged) {
+      const teaser = document.createElement('p');
+      teaser.className = 'reading-switches-teaser';
+      const remaining = ENGAGED_AFTER - chaptersVisited();
+      teaser.textContent = `More switches open as you read: ${remaining} more chapter${remaining === 1 ? '' : 's'} to go.`;
+      panel.append(teaser);
+      return;
+    }
+    panel.append(group(title, SWITCHES.filter((entry) => entry.layer === layer), note));
+    if (layer === 'reader') {
+      shelfStatus = document.createElement('p');
+      shelfStatus.className = 'reading-switches-note reading-shelf-status';
+      shelfStatus.setAttribute('aria-live', 'polite');
+      panel.append(shelfStatus);
+    }
+  });
 
   const aside = document.querySelector('aside');
   if (aside) {

@@ -12,6 +12,27 @@
   chapter_path: "/book/chapter/09/"
 }
 
+$[chapter/09/made_of]{
+  spell: ^chapter[9]{
+    .rooms[ #{roof_ridge}@boof &(eight_shards)@boof ~<chimney_rim>@the_fool
+      ^{shard_ring}@boof =<pass_road>@boof ]
+    @told_by[boof puzzle fool narrator]
+    $glass $berry $ink
+    *wonders{ @jazz_geese $shard_rack #one_shard_at_a_time @chimney_swifts }
+    =palette[clown_downtown]
+    ~berries{ $boneberry[burnt_ends] }
+    &harmonies[ <pool boof> <geese grove> <boonberries pool>
+      <egg boof> ]
+  }
+  rooms: "Five rooms: two { } rooms, two < > passages and a ( ) gathering; four kept by Boof, the rest by the Fool."
+  told_by: "Told by Boof, the shards, the Fool and the narrator."
+  made_of: "Made most of Bonk glass, then boonberries, then ink and line."
+  wonders: "First met here: jazz-geese, the shard-rack, a saying, “One shard at a time” and chimney-swifts."
+  palette: "Its palette is clown downtown, earned a layer at a time: olive and lavender under a teal sign: the headline honked across the skyline."
+  berries: "A boneberry in this chapter tastes of burnt ends."
+  harmonies: "The pond lights a dog's morning drink. The geese answer the grove a beat behind. The berries let their light run down to the pond. The egg rides against her ribs."
+}
+
 &[chapter/09/routes]{
   web: "/book/chapter/09/"
   timeline: "/book/timeline.html#chapter-09"

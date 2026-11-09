@@ -12,6 +12,27 @@
   chapter_path: "/book/chapter/11/"
 }
 
+$[chapter/11/made_of]{
+  spell: ^chapter[11]{
+    .rooms[ !(bloom_garden)@banewap *[split_crust]@banewap $<throne_step>@the_fool
+      ~{quince_rise}@boof =<blackthorn_gap>@boof ]
+    @told_by[boof awakening fool narrator]
+    $flour $steam $oak
+    *wonders{ @crown_wasps @early_bees #open_nothing_before_it_has_filled }
+    =palette[pale_moon]
+    ~berries{ baneberry $boneberry[burnt_ends] }
+    &harmonies[ <banewap boonwap> <egg torch_ants> <baneberries banewap>
+      <frost torch_ants> <egg boof> ]
+  }
+  rooms: "Five rooms: two < > passages, a [ ] window, a { } room and a ( ) gathering; two kept by Mr. BaneWAP, the rest by Boof and the Fool."
+  told_by: "Told by Boof, the bloom, the Fool and the narrator."
+  made_of: "Made most of flour, then steam and warmth, then oak and frame."
+  wonders: "First met here: crown-wasps, early bees and a saying, “Open nothing before it has filled”."
+  palette: "Its palette is the pale moon, earned a layer at a time: maroon under a pale moon and a grey crescent: the colour of a rented empire."
+  berries: "Here baneberries foretell; a boneberry in this chapter tastes of burnt ends."
+  harmonies: "Sweetened, a baneberry foretells kindness. The ants take the egg for a new coal. Mr. BaneWAP is made of baneberries. The frost holds still while the ants work under it. The egg rides against her ribs."
+}
+
 &[chapter/11/routes]{
   web: "/book/chapter/11/"
   timeline: "/book/timeline.html#chapter-11"

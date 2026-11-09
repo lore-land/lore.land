@@ -741,3 +741,36 @@ html:is([data-theme='night'], [data-theme='slate']) body[data-surface='monument'
     radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--pal-accent) 18%, transparent), transparent 70%),
     var(--hub-panel);
 }
+
+/* ─── Likenesses (components/likeness.css): a seal in each card's corner, and what is like it ─── */
+
+body[data-surface='monument'] :is(.almanac-card, .palette-card, .deck-card) {
+  position: relative;
+}
+
+body[data-surface='monument'] .almanac-likeness-seal {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  line-height: 0;
+}
+
+body[data-surface='monument'] .almanac-card:has(.almanac-likeness-seal) > .almanac-card-kicker {
+  padding-right: 2.6rem;
+}
+
+body[data-surface='monument'] .almanac-likeness {
+  margin: 0.45rem 0 0 !important;
+}
+
+body[data-surface='monument'] .deck-card.is-face-down .almanac-likeness {
+  margin-top: 0.3rem !important;
+}
+
+body[data-surface='monument'] .almanac-shelf .likeness-atlas-strip {
+  margin: -0.3rem 0 1rem;
+}
+
+body[data-surface='monument'] .almanac-shelf .likeness-atlas-strip-list {
+  grid-template-columns: repeat(2, minmax(0, 6.5rem));
+}

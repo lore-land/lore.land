@@ -23,7 +23,7 @@
  * that one direction for the rest of the visit. The chapter template's head
  * script reads the same parameters before first paint; keep them in step.
  */
-import { settle } from './settled.mjs?v=2026_11_05.B';
+import { settle } from './settled.mjs?v=2026_11_08.N';
 
 const STORY_KEY = 'lore.story.v1';
 const NOOK_KEY = 'lore.nook.v1';

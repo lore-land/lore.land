@@ -82,6 +82,13 @@ body[data-surface='monument'] .pie-main {
   .pie-voyage > * {
     max-width: none;
   }
+
+  /* The cabinet keeps its own height (and so stays put as the page scrolls), however long the
+   * columns beside it grow; its rows never stretch the screen. */
+  .pie-voyage > .pie-cabinet {
+    align-self: start;
+    align-content: start;
+  }
 }
 
 .pie-flow {
@@ -2210,7 +2217,8 @@ html.pie-immersive {
 /* ─── Under the screen: one bar of switches, its state shown, not spelled ─── */
 .pie-cabinet .pie-tools {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(3.6rem, 1fr));
+  /* Two even rows of four: the tools never leave one alone on a row of its own. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
   border: 1px solid var(--hub-line);
   border-radius: 0.7rem;
@@ -2735,4 +2743,603 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 .pie-portrait-actions .pie-tool {
   text-decoration: none;
+}
+
+/* A wonder's way into the book sits under its words, not in the sigil's narrow column. */
+.pie-flow-where {
+  grid-column: 2;
+  justify-self: start;
+  font-size: 0.78rem;
+}
+
+/* ─── The show (pie-show.mjs): a window beside the caption, never over the lanes ───
+ * Inset: the last interaction as a still, captioned with what it was worth; between times, the
+ * board in small. Board: the screen is the board and the window holds the lanes as drawn. */
+.pie-caption:has(.pie-show-inset:not([hidden])) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0.7rem;
+  align-items: start;
+}
+
+.pie-caption:has(.pie-show-inset:not([hidden])) > p {
+  grid-column: 1;
+}
+
+.pie-show-inset {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: grid;
+  gap: 0.2rem;
+  width: clamp(4.6rem, 22vw, 6.4rem);
+  margin: 0;
+}
+
+.pie-show-inset[hidden] {
+  display: none;
+}
+
+.pie-show-inset canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 360 / 560;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 24%, transparent);
+  border-radius: 0.4rem;
+  background: var(--hub-paper);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hub-gold) 22%, transparent);
+}
+
+.pie-show-inset figcaption {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.56rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--hub-muted);
+  overflow-wrap: anywhere;
+}
+
+.pie-show-inset[data-mode='board'] canvas {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--hub-accent) 26%, transparent);
+}
+
+/* The reel: the last stills, each with what it was worth. */
+.pie-show-panel,
+.pie-points {
+  margin-top: 0.9rem;
+}
+
+.pie-show-panel[hidden] {
+  display: none;
+}
+
+.pie-show-reel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.45rem;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-show-reel:empty::before {
+  content: 'When something happens in the lanes, a still of it lands here.';
+  grid-column: 1 / -1;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+.pie-show-still {
+  display: grid;
+  gap: 0.25rem;
+  max-width: none;
+  margin: 0;
+  padding: 0.3rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.5rem;
+  background: var(--hub-panel);
+}
+
+.pie-show-still:first-child {
+  border-color: color-mix(in srgb, var(--hub-gold) 60%, var(--hub-line));
+  animation: pie-still-in 360ms ease-out both;
+}
+
+.pie-show-still canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 184 / 138;
+  border-radius: 0.3rem;
+}
+
+.pie-show-cap {
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.74rem;
+  line-height: 1.3;
+  color: var(--hub-ink);
+}
+
+@keyframes pie-still-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.pie-show-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.64rem;
+  color: var(--hub-muted);
+}
+
+.pie-show-legend li {
+  max-width: none;
+  margin: 0;
+}
+
+.pie-show-legend b {
+  font-weight: 700;
+}
+
+/* Points: one chip per way a moment moved, in that way's ink. Legible on every cover: the ink is
+ * leaned toward the page's own, the ground toward its panel. */
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat) {
+  --way: var(--hub-gold);
+  display: inline-block;
+  padding: 0.02rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--way) 60%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--way) 12%, var(--hub-panel));
+  color: color-mix(in srgb, var(--way) 70%, var(--hub-ink));
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-boon { --way: #c98a1e; }
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bane { --way: #8a4fb0; }
+:is(.pie-points-chip, .pie-show-chip, .pie-points-cat, .pie-points-col).is-bone { --way: #5f8696; }
+:is(.pie-points-chip, .pie-show-chip).is-wap { --way: var(--hub-accent); }
+:is(.pie-points-chip, .pie-show-chip).is-maw { --way: #7a3f9a; }
+
+.pie-points-sum {
+  margin: 0.3rem 0 0.4rem;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--hub-ink);
+}
+
+.pie-points-feed {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-points-feed li {
+  max-width: none;
+  margin: 0;
+  padding: 0.25rem 0.45rem;
+  border-left: 2px solid var(--hub-line);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.pie-points-feed li:first-child {
+  border-left-color: var(--hub-gold);
+  animation: pie-still-in 300ms ease-out both;
+}
+
+.pie-points-words {
+  font-family: var(--font-family-body, Georgia, serif);
+  color: var(--hub-ink);
+}
+
+.pie-points-rules {
+  margin-top: 0.6rem;
+  border-top: 1px solid var(--hub-line);
+  padding-top: 0.45rem;
+}
+
+.pie-points-rules summary {
+  cursor: pointer;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep);
+}
+
+.pie-points-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.55rem;
+}
+
+.pie-points-col {
+  --way: var(--hub-gold);
+  padding: 0.45rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--way) 40%, var(--hub-line));
+  border-top: 3px solid var(--way);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--way) 6%, var(--hub-panel));
+}
+
+.pie-points-col-head {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--way, var(--hub-ink)) 70%, var(--hub-ink));
+}
+
+.pie-points-col ul {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-points-col li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  max-width: none;
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.pie-points-col li b {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  color: color-mix(in srgb, var(--way) 70%, var(--hub-ink));
+}
+
+.pie-points-col li.is-tuned b::after {
+  content: ' tuned';
+  font-weight: 400;
+  color: var(--hub-accent-deep);
+}
+
+.pie-points-contest,
+.pie-points-more,
+.pie-points-tune {
+  margin: 0.65rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.pie-points-side {
+  margin: 0.2rem 0 0;
+}
+
+.pie-points-side.is-wap b { color: var(--hub-accent-deep); }
+.pie-points-side.is-maw b { color: #7a3f9a; }
+
+.pie-points-more {
+  padding-left: 1.1rem;
+  color: var(--hub-muted);
+}
+
+.pie-points-more li {
+  max-width: none;
+}
+
+/* Board: the screen is a plain board; the cabinet says so at its edge. */
+.pie-voyage[data-show='board'] .pie-screen {
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--hub-accent) 40%, transparent),
+    inset 0 2px 8px rgba(10, 12, 16, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-show-still:first-child,
+  .pie-points-feed li:first-child {
+    animation: none;
+  }
+}
+
+/* ─── The card interstitial: a thing met for the first time, turned over the paused lanes ───
+ * It rises out of the lanes in its type's light, says what it is and what it can be worth, reads
+ * its spell aloud, and keeps Play on in reach at its foot however long it runs. The table's tools
+ * (the moment, how it felt) fold away. */
+.pie-intro:has(.pie-cardface.is-live) {
+  background:
+    radial-gradient(70% 55% at 50% 42%, color-mix(in srgb, var(--hub-paper) 74%, transparent), color-mix(in srgb, var(--hub-ink) 14%, transparent));
+  backdrop-filter: blur(3px) saturate(0.85);
+}
+
+.pie-cardface.is-live {
+  container-type: inline-size;
+  position: relative;
+  width: min(100%, 23.5rem);
+  padding-bottom: 0;
+  border-color: color-mix(in srgb, var(--card-edge) 40%, var(--hub-line));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--card-edge) 18%, transparent),
+    0 0 2.6rem color-mix(in srgb, var(--card-edge) 26%, transparent),
+    0 1.2rem 2.6rem color-mix(in srgb, var(--hub-ink) 22%, transparent);
+  animation: pie-card-rise 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+}
+
+/* A glint runs along the top edge once, as it lands. */
+.pie-cardface.is-live::before {
+  content: '';
+  position: absolute;
+  inset: -4px 0 auto;
+  height: 4px;
+  border-radius: 0.8rem 0.8rem 0 0;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, #fff 85%, var(--card-edge)) 50%, transparent 100%) no-repeat;
+  background-size: 40% 100%;
+  animation: pie-card-glint 900ms 380ms ease-out both;
+  pointer-events: none;
+}
+
+@keyframes pie-card-rise {
+  0% { opacity: 0; transform: perspective(42rem) translateY(2.2rem) rotateX(-38deg) scale(0.92); filter: blur(3px); }
+  60% { opacity: 1; filter: none; }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes pie-card-glint {
+  from { background-position: -40% 0; }
+  to { background-position: 140% 0; }
+}
+
+.pie-cardface-new {
+  display: inline-block;
+  margin-left: 0.2rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 70%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(100deg, color-mix(in srgb, var(--hub-gold) 14%, var(--hub-panel)) 30%, color-mix(in srgb, var(--hub-gold) 34%, var(--hub-panel)) 50%, color-mix(in srgb, var(--hub-gold) 14%, var(--hub-panel)) 70%);
+  background-size: 250% 100%;
+  color: color-mix(in srgb, var(--hub-gold) 55%, var(--hub-ink));
+  letter-spacing: 0.06em;
+  animation: pie-new-shimmer 2.4s ease-in-out 600ms 2;
+}
+
+@keyframes pie-new-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -50% 0; }
+}
+
+.pie-cardface-worth {
+  display: grid;
+  gap: 0.3rem;
+  justify-self: stretch;
+  padding: 0.45rem 0.55rem;
+  border: 1px dashed color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--hub-paper) 55%, var(--hub-panel));
+}
+
+.pie-cardface-worth ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-cardface-worth li {
+  max-width: none;
+  margin: 0;
+  border-radius: 0.6rem;
+  white-space: normal;
+  font-weight: 600;
+}
+
+.pie-cardface.is-live .pie-cardface-spell {
+  justify-self: stretch;
+}
+
+.pie-cardface-table {
+  justify-self: stretch;
+  margin-top: 0.15rem;
+  padding-top: 0.35rem;
+  border-top: 1px dotted var(--hub-line);
+}
+
+.pie-cardface-table summary {
+  cursor: pointer;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-cardface-table[open] summary {
+  margin-bottom: 0.35rem;
+}
+
+/* Play on, always in reach: the card's foot stays put while the card scrolls. */
+.pie-cardface-foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  justify-self: stretch;
+  margin: 0.2rem -0.95rem 0;
+  padding: 0.55rem 0.95rem 0.7rem;
+  border-top: 1px solid color-mix(in srgb, var(--card-edge) 30%, var(--hub-line));
+  border-radius: 0 0 0.8rem 0.8rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hub-panel) 82%, transparent), var(--hub-panel) 40%);
+}
+
+.pie-cardface-key {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--hub-muted);
+}
+
+.pie-cardface.is-live .pie-intro-go {
+  flex: none;
+  white-space: nowrap;
+  padding: 0.45rem 1.1rem;
+  border-color: color-mix(in srgb, var(--card-edge) 70%, var(--hub-gold));
+  background: color-mix(in srgb, var(--card-edge) 16%, var(--hub-panel));
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-edge) 14%, transparent);
+}
+
+@container (max-width: 17rem) {
+  .pie-cardface-key { display: none; }
+  .pie-cardface-foot { justify-content: flex-end; }
+}
+
+.pie-cardface.is-live .pie-intro-go:hover,
+.pie-cardface.is-live .pie-intro-go:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--card-edge) 28%, var(--hub-panel));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-edge) 32%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-cardface.is-live,
+  .pie-cardface.is-live::before,
+  .pie-cardface-new {
+    animation: none;
+  }
+}
+
+/* At the spill: how the carry was scored, in the lanes' own chips. */
+.pie-card-points {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0 0 0.3rem;
+}
+
+.pie-card-points-head,
+.pie-card-points-most {
+  flex-basis: 100%;
+  text-align: center;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-card-points-most {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  font-size: 0.78rem;
+}
+
+/* A register on the live card, and under a still: said that way too, in its own voice. */
+.pie-cardface-register,
+.pie-show-register {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--hub-berry, #5b3a6e) 70%, var(--hub-ink));
+}
+
+.pie-cardface-register::before,
+.pie-show-register::before {
+  content: '= ';
+  opacity: 0.6;
+}
+
+/* Answer in a register: house registers as chips; one is free, several a combination (a trial). */
+.pie-bias {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--hub-line);
+  border-left: 4px solid color-mix(in srgb, var(--hub-berry, #5b3a6e) 70%, var(--hub-line));
+  border-radius: 0.6rem;
+  background: var(--hub-panel);
+}
+
+.pie-bias.is-combination {
+  border-left-style: double;
+  border-left-width: 6px;
+}
+
+.pie-bias-registers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pie-bias-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 60%, var(--hub-panel));
+  color: var(--hub-ink);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+.pie-bias-chip b {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  color: color-mix(in srgb, var(--hub-berry, #5b3a6e) 70%, var(--hub-ink));
+}
+
+.pie-bias-chip[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--hub-berry, #5b3a6e) 70%, var(--hub-line));
+  background: color-mix(in srgb, var(--hub-berry, #5b3a6e) 14%, var(--hub-panel));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--hub-berry, #5b3a6e) 20%, transparent);
+}
+
+.pie-bias-chip:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: 2px;
+}
+
+.pie-bias-note {
+  margin: 0;
+  font-size: 0.84rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+.pie-bias-actions {
+  margin: 0;
+}
+
+/* A card's seal and what is like it, at the head of the card. */
+.pie-cardface-type .likeness-find {
+  float: right;
+  margin: -0.2rem 0 0 0.4rem;
+  text-transform: none;
+  letter-spacing: 0;
 }

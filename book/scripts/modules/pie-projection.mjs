@@ -17,8 +17,8 @@
  */
 
 import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.J';
-import { applyGenre, readGenre } from './lens-control.mjs?v=2026_11_06.F';
-import { readStory } from './story-directions.mjs?v=2026_11_06.F';
+import { applyGenre, readGenre } from './lens-control.mjs?v=2026_11_08.N';
+import { readStory } from './story-directions.mjs?v=2026_11_08.N';
 
 const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
 

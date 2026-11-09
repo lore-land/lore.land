@@ -818,3 +818,14 @@ body[data-surface='monument'] .cast-count {
   font-style: italic;
   color: var(--hub-ink);
 }
+
+/* The cast's likenesses (components/likeness.css): who is like them, from the card's corner. */
+body[data-surface='monument'] .cast-card {
+  position: relative;
+}
+
+body[data-surface='monument'] .cast-card > .likeness-find {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}

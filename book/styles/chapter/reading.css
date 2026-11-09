@@ -2661,6 +2661,19 @@ main.chapter .voice-kicker[data-constellation]:focus-visible {
   color: var(--color-text-alt);
 }
 
+/* A register cast for the visit (spw-bias.mjs) adds its line under the plain one, never instead. */
+.settled-detail.is-register {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--color-berry, #5b3a6e) 65%, var(--color-text-main, currentColor));
+}
+
+.settled-detail.is-register::before {
+  content: "= ";
+  opacity: 0.6;
+}
+
 /* The sweep: a hairline of gold crosses the region that changed. */
 .is-settling { position: relative; }
 .is-settling::after {

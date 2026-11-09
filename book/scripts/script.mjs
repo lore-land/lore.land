@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.J';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.N';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
@@ -16,10 +16,10 @@ import {
   registerStoryServiceWorker
 } from './modules/experience-core.mjs?v=2026_08_27.A';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
-import { chapterSeedMap } from './home/seeds.mjs?v=2026_02_28.I';
+import { chapterSeedMap } from './home/seeds.mjs?v=2026_11_08.N';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_08.J';
-import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_05.B';
+import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_08.N';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';
@@ -32,7 +32,7 @@ import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
 import { injectSvgFilters } from './modules/svg-filters.mjs';
 import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_11_05.A';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_08_27.A';
+import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_11_08.N';
 import {
   initChapterChrome,
   initScrollChrome
@@ -49,26 +49,27 @@ import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A
 import { initReferences } from './modules/references.mjs?v=2026_11_05.B';
 import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
 import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
-import { initLiving } from './modules/living.mjs?v=2026_11_06.F';
-import { initTellings } from './modules/tellings.mjs?v=2026_11_06.F';
-import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_06.F';
-import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.L';
-import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.J';
+import { initLiving } from './modules/living.mjs?v=2026_11_08.N';
+import { initTellings } from './modules/tellings.mjs?v=2026_11_08.N';
+import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_08.N';
+import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_08.N';
+import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_08.N';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
-import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.L';
-import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.A';
-import { initCollection } from './modules/collection.mjs?v=2026_11_08.M';
+import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.N';
+import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.N';
+import { initCollection } from './modules/collection.mjs?v=2026_11_08.N';
+import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_08.N';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
-import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_06.F';
+import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
-import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_06.F';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.J';
+import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_08.N';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.N';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
-import { initLensControl } from './modules/lens-control.mjs?v=2026_11_06.F';
-import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.J';
+import { initLensControl } from './modules/lens-control.mjs?v=2026_11_08.N';
+import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.N';
 import { initConstellation } from './modules/constellation.mjs?v=2026_11_08.J';
-import { initSettled } from './modules/settled.mjs?v=2026_11_05.B';
-import { initRooms } from './modules/rooms.mjs?v=2026_11_08.J';
+import { initSettled } from './modules/settled.mjs?v=2026_11_08.N';
+import { initRooms } from './modules/rooms.mjs?v=2026_11_08.N';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
@@ -196,6 +197,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initMaterialPaths({ chapterData }).then((destroy) => { destroyMaterialPaths = destroy; });
     const destroyBeginAgain = initBeginAgain({ chapterData, latest: TOTAL_CHAPTERS });
     const destroyCollection = initCollection({ chapterData, announce });
+    // The chapter in Spw, at its end: its description spell and every expression it holds, lit by what was found.
+    const destroyInventory = initChapterInventory({ chapterData });
     const destroyLineShare = initLineShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
@@ -295,6 +298,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyMaterialPaths) destroyMaterialPaths();
       if (destroyBeginAgain) destroyBeginAgain();
       if (destroyCollection) destroyCollection();
+      if (destroyInventory) destroyInventory();
       if (ebookNav?.destroy) ebookNav.destroy();
       if (languageExplore?.destroy) languageExplore.destroy();
       if (destroyChapterChrome) destroyChapterChrome();

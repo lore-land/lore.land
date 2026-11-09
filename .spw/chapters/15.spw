@@ -12,6 +12,29 @@
   chapter_path: "/book/chapter/15/"
 }
 
+$[chapter/15/made_of]{
+  spell: ^chapter[15]{
+    .rooms[ =<back_lane>@the_city ^<parcel_gate>@the_porter @[horn_button]@boof #{three_records}@the_city
+      &[arrivals_board]@bonewap =(long_table)@the_city ]
+    @told_by[labyrinth narrator boof reflection]
+    $glass $oak $flour
+    *wonders{ @remainder_moths @gate_pigeons $storm_weight $pie_dividers $door_rule &hearth_drift $sliver_tin #a_box_for_what_you_do_not_know }
+    &met[porter clerk]
+    =palette[three_stools]
+    ~berries{ $boneberry[falafel] }
+    &harmonies[ <flour parcel_gate> <parcel_gate boneberries> <glass parcel_gate>
+      <kilns glass> <baneberries boof> <boneberries boof> ]
+  }
+  rooms: "Six rooms: two [ ] windows, two < > passages, a { } room and a ( ) gathering; three kept by the city, the rest by the porter, Boof and Mx. BoneWAP."
+  told_by: "Told by the labyrinth, the narrator, Boof and the record."
+  made_of: "Made most of Bonk glass, then oak and frame, then flour."
+  wonders: "First met here: remainder-moths, gate-pigeons, the storm-weight, pie-dividers, the door-rule, hearth-drift, the sliver tin and a saying, “A box for what you do not know”."
+  met: "Met here for the first time: the porter and a feast clerk."
+  palette: "Its palette is three stools, earned a layer at a time: a teal night, a moon, a dark saucer, and three white stools: three records side by side."
+  berries: "A boneberry in this chapter tastes of falafel."
+  harmonies: "The city takes its flour in at the parcel gate. The vine over the gate feeds the night school. The glass hums before a storm, and the gate comes down. The kiln forgives blows into glass. A baneberry says what will go wrong. A boneberry promises nothing, and feeds you. And one more on Boof’s map."
+}
+
 &[chapter/15/routes]{
   web: "/book/chapter/15/"
   timeline: "/book/timeline.html#chapter-15"

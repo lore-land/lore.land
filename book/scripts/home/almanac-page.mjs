@@ -4,10 +4,11 @@
 // from this browser's own shelf; nothing is sent anywhere.
 import { loadAlmanac, readAlmanac, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.M';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.N';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
 import { CHARACTERS, portraitSVG } from '../modules/characters.mjs?v=2026_11_08.M';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.L';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
+import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_08.N';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -97,22 +98,34 @@ function promptBlock(wonder) {
     copy);
 }
 
+/* A thing's likeness (likeness.mjs): its seal in the corner, and the way to what is like it. */
+const likenessSeal = (id) => {
+  const item = likenessItem(id);
+  return item ? el('span', { className: 'almanac-likeness-seal' }, likenessMark(item, { size: 34 })) : null;
+};
+const likenessFind = (id) => (likenessItem(id) ? el('p', { className: 'almanac-likeness' }, findSimilar(id)) : null);
+
 function card(data, wonder, kept) {
   const chips = placeChips(data, wonder, kept);
+  const id = `wonder:${wonder.id}`;
   if (!kept) {
     return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}` },
+      likenessSeal(id),
       el('p', { className: 'almanac-card-kicker' }, `Unrecorded · ${wonder.region}`),
       el('p', { className: 'almanac-card-hint' }, wonder.hint),
-      chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null);
+      chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null,
+      likenessFind(id));
   }
   return el('li', { className: 'almanac-card is-found', id: `wonder-${wonder.id}` },
+    likenessSeal(id),
     el('p', { className: 'almanac-card-kicker' }, `${KIND_SIGIL[wonder.kind] || '·'} ${wonder.region}`),
     el('p', { className: 'almanac-card-name' }, wonder.name),
     el('p', { className: 'almanac-card-note' }, wonder.note),
     wonder.craft ? el('p', { className: 'almanac-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
     chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, chips.length > 1 ? 'Lives in' : 'Found in'), ...chips) : null,
     promptBlock(wonder),
-    el('p', { className: 'almanac-card-first' }, `First kept ${kept.first}`));
+    el('p', { className: 'almanac-card-first' }, `First kept ${kept.first}`),
+    likenessFind(id));
 }
 
 function paintShelves(data) {
@@ -154,7 +167,7 @@ async function copyText(button, text, done) {
 function paletteCard(data, p, state) {
   const layers = layersOf(p.id, state);
   const begun = layers.length > 0;
-  const li = el('li', { className: `palette-card${begun ? '' : ' is-unbegun'}` });
+  const li = el('li', { className: `palette-card${begun ? '' : ' is-unbegun'}`, id: `palette-${p.id}` });
   Object.entries(paletteTokens(p)).forEach(([name, value]) => li.style.setProperty(name, value));
   LAYERS.forEach((layer) => li.classList.toggle(`has-${layer}`, layers.includes(layer)));
   const title = p.chapter ? data.titleOf(p.chapter) : 'Won back';
@@ -189,7 +202,8 @@ function paletteCard(data, p, state) {
     begun ? el('details', { className: 'palette-extract' },
       el('summary', {}, 'Carry it away'),
       spw, el('p', {}, copySpw),
-      css, el('p', {}, copyCss)) : null].filter(Boolean));
+      css, el('p', {}, copyCss)) : null,
+    likenessFind(`palette:${p.id}`)].filter(Boolean));
   return li;
 }
 
@@ -206,12 +220,19 @@ async function paintPalettes(data) {
 }
 
 /* A character card wears its portrait: in colour once met, a silhouette with a question mark before. */
+const characterFor = (kind) => Object.keys(CHARACTERS).find((id) => CHARACTERS[id].card === kind) || null;
 const portraitFor = (kind, met) => {
-  const who = Object.keys(CHARACTERS).find((id) => CHARACTERS[id].card === kind);
+  const who = characterFor(kind);
   if (!who) return null;
   const span = el('span', { className: 'deck-portrait lore-portrait' });
   span.innerHTML = portraitSVG(who, { size: 72, met });
+  // Veiled, glimpsed or met, by this reader's shelves (likeness.mjs), with its seal at the rim.
+  if (likenessItem(`character:${who}`)) dressAsset(span, `character:${who}`, { sealSize: 22 });
   return span;
+};
+const deckLikeness = (kind) => {
+  const who = characterFor(kind);
+  return likenessFind(who ? `character:${who}` : `card:${kind}`);
 };
 
 function paintDeck() {
@@ -231,7 +252,8 @@ function paintDeck() {
       return el('li', { className: `deck-card is-face-down type-${card.type}` },
         el('p', { className: 'almanac-card-kicker' }, CARD_TYPES[card.type] || card.type),
         silhouette || el('p', { className: 'deck-card-back' }, '?'),
-        el('p', { className: 'deck-card-hint' }, card.chapter ? `Somewhere from ${chapterName(card.chapter)} on` : 'Only in the lanes'));
+        el('p', { className: 'deck-card-hint' }, card.chapter ? `Somewhere from ${chapterName(card.chapter)} on` : 'Only in the lanes'),
+        deckLikeness(kind));
     }
     const where = kept?.how === 'lanes'
       ? `Met in the lanes${kept.chapter ? `, ${chapterName(kept.chapter)}` : ''}`
@@ -242,8 +264,20 @@ function paintDeck() {
       el('h3', {}, card.name),
       el('p', {}, card.story),
       el('p', { className: 'deck-card-lanes' }, card.lanes),
-      el('p', { className: 'almanac-card-first' }, `${where}${kept?.first ? ` · ${kept.first}` : ''}`));
+      el('p', { className: 'almanac-card-first' }, `${where}${kept?.first ? ` · ${kept.first}` : ''}`),
+      deckLikeness(kind));
   }));
+}
+
+/* Each shelf shows the studies of its sigil from the seed atlas, and links into it. */
+function placeAtlasStrips() {
+  [['#bestiary', '@'], ['#contrivances', '$'], ['#bracework', '&'], ['#sayings', '#'], ['#keepsakes', '='], ['#cards', '@!']]
+    .forEach(([selector, sigils]) => {
+      const lede = document.querySelector(`${selector} .almanac-shelf-lede`);
+      if (!lede || lede.nextElementSibling?.classList.contains('likeness-atlas-strip')) return;
+      const strip = atlasStrip(sigils.length > 1 ? [...sigils] : sigils, { n: 2 });
+      if (strip) lede.after(strip);
+    });
 }
 
 /* ─── The bench ─────────────────────────────────────────────────────── */
@@ -368,7 +402,8 @@ function initBench(data) {
 }
 
 paintFigure();
-loadAlmanac().then((data) => {
+// The likeness index rides along: a seal and "find similar" on every card, when it arrives.
+Promise.all([loadAlmanac(), loadLikeness()]).then(([data]) => {
   if (!data.wonders.length) {
     $('[data-almanac-tally]').textContent = 'The almanac could not be opened just now.';
     return;
@@ -378,3 +413,7 @@ loadAlmanac().then((data) => {
   initBench(data);
 });
 paintDeck();
+loadLikeness().then(() => {
+  paintDeck();
+  placeAtlasStrips();
+});

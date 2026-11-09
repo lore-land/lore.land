@@ -12,6 +12,9 @@
  *   precache_existence   — sw.js precache list vs files on disk        (AL-002, lore-c005)
  *   reduced_motion_gates — motion CSS carries its calm cut             (c012, lore-c007)
  *   theme_parity         — ember/cosmos custom-property key symmetry   (theme-flash probe)
+ *   attribute_parity     — CSS-selected data-* attributes have a setter
+ *   premium_floor        — nothing on the ground layer is premium; bias
+ *                          registers answer responses, never story prose (PLAN.F ^premium)
  *
  * Visual probes (baseline overlay, live theme-switch flash, print fold) stay
  * manual; this kit records that honestly rather than simulating them.
@@ -281,6 +284,62 @@ function probeAttributeParity() {
   return { checked: cssAttrs.size, orphans: orphanCount };
 }
 
+/* ── premium_floor ──────────────────────────────────────────────────────── */
+/* The story is whole and free (PLAN.F.spw ^premium). Every feature placed in
+ * .spw/surfaces/layers.spw names its layer and a premium word (never, floor,
+ * plan); anything on the ground layer must be `never`. The meme registers in
+ * .spw/runtime/bias.spw may answer only response slots (the families
+ * spw-bias.mjs accepts), never story prose. Line-shaped reads, like the
+ * canon's own one-line records; a placement the regex cannot read is a defect
+ * too, so the check cannot pass by reading nothing. */
+const LAYERS_FILE = '.spw/surfaces/layers.spw';
+const BIAS_FILE = '.spw/runtime/bias.spw';
+const PREMIUM_WORDS = new Set(['never', 'floor', 'plan']);
+const RESPONSE_FAMILIES = new Set(['pop', 'toast', 'tag', 'spill', 'reveal', 'points', 'settle']);
+const REGISTER_FIELDS = new Set(['title', 'line', 'cast']);
+
+function probePremiumFloor() {
+  let checked = 0;
+  if (!exists(LAYERS_FILE)) {
+    file('premium_floor', 'canonical', 'defect', LAYERS_FILE, 'the layers canon is missing');
+  } else {
+    const lines = read(LAYERS_FILE).split('\n');
+    const layers = new Set(lines.map((line) => /^\s*([a-z]+):\s*\{\s*order:/.exec(line)?.[1]).filter(Boolean));
+    const placement = /^\^placement\{([\s\S]*?)\n\}/m.exec(read(LAYERS_FILE))?.[1] || '';
+    const records = placement.split('\n').filter((line) => /^\s*[a-z_]+:\s*\{/.test(line));
+    if (!layers.has('ground') || !records.length) {
+      file('premium_floor', 'canonical', 'defect', LAYERS_FILE, 'no ground layer or no placements could be read');
+    }
+    for (const line of records) {
+      checked += 1;
+      const [, name, layer, premium] = /^\s*([a-z_]+):\s*\{\s*layer:\s*([a-z]+),\s*premium:\s*([a-z]+)/.exec(line) || [];
+      if (!name) {
+        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `a placement does not read as { layer, premium }: ${line.trim().slice(0, 60)}`);
+      } else if (!layers.has(layer)) {
+        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} is placed in ${layer}, which is not a layer`);
+      } else if (!PREMIUM_WORDS.has(premium)) {
+        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} has premium: ${premium}; the words are never, floor, plan`);
+      } else if (layer === 'ground' && premium !== 'never') {
+        file('premium_floor', 'canonical', 'defect', LAYERS_FILE, `${name} is on the ground (the story, free and whole) but is marked premium: ${premium}`);
+      }
+    }
+  }
+  if (!exists(BIAS_FILE)) {
+    file('premium_floor', 'canonical', 'defect', BIAS_FILE, 'the bias registers are missing');
+  } else {
+    const registers = /^\*registers\{([\s\S]*?)\n\}/m.exec(read(BIAS_FILE))?.[1] || '';
+    if (!registers) file('premium_floor', 'canonical', 'defect', BIAS_FILE, 'no *registers{ … } block could be read');
+    for (const match of registers.matchAll(/#([a-z]+(?:\.[a-z]+)?)\[/g)) {
+      if (REGISTER_FIELDS.has(match[1])) continue;
+      checked += 1;
+      if (!RESPONSE_FAMILIES.has(match[1].split('.')[0])) {
+        file('premium_floor', 'canonical', 'defect', BIAS_FILE, `#${match[1]} is not a response slot; a register answers, and never touches story prose`);
+      }
+    }
+  }
+  return { checked };
+}
+
 /* ── run + precipitate ──────────────────────────────────────────────────── */
 const stats = {
   canonical_mirror: probeCanonicalMirror(),
@@ -288,7 +347,8 @@ const stats = {
   precache_existence: probePrecacheExistence(),
   reduced_motion_gates: probeReducedMotionGates(),
   theme_parity: probeThemeParity(),
-  attribute_parity: probeAttributeParity()
+  attribute_parity: probeAttributeParity(),
+  premium_floor: probePremiumFloor()
 };
 
 const defects = findings.filter((f) => f.class === 'defect');

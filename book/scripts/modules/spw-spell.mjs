@@ -101,7 +101,7 @@ const KIND_SAYS = Object.freeze({
 });
 const CHARGE = Object.freeze({ primed: 0.82, step: 0.18, tickMs: 2800, quiet: 0.08 });
 
-export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false, onCast = null } = {}) {
+export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false, onCast = null, layout = 'auto' } = {}) {
   const root = document.createElement('div');
   root.className = `spell${cast ? ' is-uncast' : ''}`;
   // Made of something: the first $material it names gives it that material's ground and sheen.
@@ -117,6 +117,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   gloss.className = 'spell-gloss';
   gloss.setAttribute('aria-live', 'polite');
   const stack = [];
+  const kinds = [];   // the open brackets, so a long spell can be laid out as verse
   let pairN = 0;
   let glyph = 0;
   let atom = null;
@@ -124,6 +125,10 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   // Kept, so a scrubbed number can be written back into the spell's own text.
   const tokens = tokenize(String(text));
   let numberN = 0;
+  // Verse: a long one-line spell is laid out a line an atom inside its bodies, indented by depth,
+  // so its shape reads before its words. Copying still gives the spell exactly as written.
+  const verse = layout === 'verse' || (layout === 'auto' && String(text).length > 64 && /\{/.test(text) && !/\n/.test(String(text).trim()));
+  const roles = [];
   tokens.forEach((t, position) => {
     let node;
     if (t.type === 'sigil') {
@@ -135,6 +140,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       node = span(`spell-sigil op-${role?.role || 'plain'}`, t.text, role ? `${t.text} ${role.role}: ${role.says}` : '');
       atom.append(node);
       atom.dataset.sigil = t.text;
+      if (role) roles.push(role.role);
     } else if (t.type === 'label' && atom) {
       node = span('spell-label', t.text);
       atom.append(node);
@@ -142,6 +148,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
     } else if (t.type === 'open') {
       pairN += 1;
       stack.push(pairN);
+      kinds.push(t.text);
       node = span(`spell-bracket spell-open b-${t.text === '[' ? 'frame' : t.text === '{' ? 'body' : t.text === '(' ? 'group' : 'capsule'}`, t.text, CONTAINER_NAMES[t.text]);
       node.dataset.pair = String(pairN);
       // A frame right after a label belongs to that atom; a body closes it.
@@ -149,6 +156,7 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       if (t.text === '[' && atom) atom.dataset.depth = String(stack.length);
     } else if (t.type === 'close') {
       const n = stack.pop();
+      kinds.pop();
       node = span('spell-bracket spell-close', t.text);
       if (n) node.dataset.pair = String(n);
       if (t.text === ']' && atom && atom.dataset.depth && Number(atom.dataset.depth) === (stack.length + 1)) {
@@ -182,7 +190,12 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       (atom || line).append(node);
     } else if (t.type === 'space') {
       if (atom && !atom.querySelector('.spell-open')) close();
-      (atom || line).append(document.createTextNode(t.text));
+      const next = tokens[position + 1];
+      const inBody = kinds[kinds.length - 1] === '{' && kinds.length <= 3;
+      let gap = t.text;
+      if (verse && inBody && next?.type === 'sigil') gap = `\n${'  '.repeat(kinds.length)}`;
+      else if (verse && inBody && next?.type === 'close' && next.text === '}') gap = `\n${'  '.repeat(kinds.length - 1)}`;
+      (gap === t.text && atom ? atom : line).append(document.createTextNode(gap));
       return;   // spaces take no time to write
     } else {
       node = span(t.type === 'word' ? 'spell-word' : 'spell-other', t.text);
@@ -192,8 +205,27 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
     glyph += 1;
   });
   root.style.setProperty('--glyphs', String(glyph));
-  if (play) root.append(playButton(text, line));
-  if (copy) root.append(copyButton(() => tokens.map((t) => t.text).join(''), typeof copy === 'string' ? copy : ''));
+  if (verse) root.classList.add('is-verse');
+  // Its spectrum: the roles in the order they are cast, as the spell's own edge.
+  if (roles.length) root.style.setProperty('--spectrum', `linear-gradient(90deg, ${(roles.length === 1 ? [roles[0], roles[0]] : roles.slice(0, 16)).map((r) => `var(--hue-${r})`).join(', ')})`);
+  // Its head: the shape at a glance (a pip an atom, in its role's ink), and what can be done with it.
+  const head = document.createElement('div');
+  head.className = 'spell-head';
+  if (roles.length > 1) {
+    const shape = document.createElement('span');
+    shape.className = 'spell-shape';
+    shape.setAttribute('aria-hidden', 'true');
+    roles.slice(0, 24).forEach((r, i) => {
+      const pip = document.createElement('i');
+      pip.className = `spell-pip op-${r}`;
+      pip.dataset.n = String(i);
+      shape.append(pip);
+    });
+    head.append(shape);
+  }
+  if (play) head.append(playButton(text, line));
+  if (copy) head.append(copyButton(() => tokens.map((t) => t.text).join(''), typeof copy === 'string' ? copy : ''));
+  if (head.childElementCount) root.append(head);
   if (scrub && numberN) enableScrub(line, tokens, scrub);
   root.append(line);
   root.append(gloss);   // always: a prime and a cast say themselves here
@@ -210,13 +242,21 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
   });
   const say = (a, on) => {
     a.classList.toggle('is-lit', on);
+    const pip = root.querySelector(`.spell-pip[data-n="${[...line.querySelectorAll('.spell-atom')].indexOf(a)}"]`);
+    pip?.classList.toggle('is-lit', on);
     if (!explain || line.querySelector('.spell-atom.is-primed')) return;
+    const role = SIGIL_ROLES[a.dataset.sigil]?.role;
+    gloss.className = `spell-gloss${on && role ? ` op-${role}` : ''}`;
+    if (on) gloss.dataset.sigil = a.dataset.sigil || ''; else delete gloss.dataset.sigil;
     gloss.textContent = on ? (explain(a.textContent.trim(), a.dataset.sigil, a.dataset.label) || `${a.dataset.sigil} ${SIGIL_ROLES[a.dataset.sigil]?.role || ''}: ${SIGIL_ROLES[a.dataset.sigil]?.says || ''}`) : '';
   };
   line.addEventListener('pointerover', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, true); });
   line.addEventListener('pointerout', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, false); });
   line.addEventListener('focusin', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, true); });
   line.addEventListener('focusout', (event) => { const a = event.target.closest('.spell-atom'); if (a) say(a, false); });
+  // A pip answers for its atom.
+  head.addEventListener('pointerover', (event) => { const pip = event.target.closest('.spell-pip'); if (pip) { const a = line.querySelectorAll('.spell-atom')[Number(pip.dataset.n)]; if (a) say(a, true); } });
+  head.addEventListener('pointerout', (event) => { const pip = event.target.closest('.spell-pip'); if (pip) { const a = line.querySelectorAll('.spell-atom')[Number(pip.dataset.n)]; if (a) say(a, false); } });
 
   enablePriming(root, line, gloss, explain, onCast);
   if (cast) castWhenSeen(root);
@@ -385,7 +425,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_08.L').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_08.N').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

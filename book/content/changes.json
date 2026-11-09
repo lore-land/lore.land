@@ -2,6 +2,19 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.N",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie, every point says where it came from: a small chip rises from the spot in the lanes, in the colour of the way it leans the chapter (fairy tale, absurd reality, low magic) or for the pie against the mimes. Beside the screen the points are said in words as they come, and How points work lays out every weight from the rules in play, marked where you have tuned one. The card at the spill says how the whole carry was scored.",
+        "A new ▢ Show button (or V) gives the game a window under the screen: the last thing that happened, as a still, with what it was worth. Press it again for the board, the lanes as a plain board where every thing is a token for what it does, with a mark where a hop clears it; the lanes as drawn shrink into the window. The last few stills are kept beside the screen.",
+        "A card turned in the lanes now rises in its own light, says what it can be worth before you play it, reads its spell aloud, and keeps Play on in reach at its foot; the notes for testers fold away.",
+        "Spells are easier to read everywhere: a long one is laid out a line a part, each sigil sits on a small coloured key, a row of dots at its head shows its shape at a glance, and a hairline along its top carries its colours in order, so spells of one shape look related.",
+        "The land can answer in a register now: cast one as a spell (on the game's tuning desk, by link with ?bias=pov, or with the new trial switch) and the pops, notices and receipts now and then come back as POV, plot twist or core memory: unlocked, while the story keeps every word of its own. One register is always free; layering several is a trial for now.",
+        "The seed atlas belongs to the book again: every study wears its sigil and a seal of what it is made of, and waits veiled in its chapter's colours until you open that chapter. Like every room, wonder, palette, card and person in the almanac, the cast and the game, it can show you what in the book is like it, by what things are made of and never by who else has looked.",
+        "At the end of every chapter a folded page now says what it is made of in one spell, and keeps every sigil it holds: what you have found is lit and takes you back to it, and what you have not yet found only tells you where to look."
+      ]
+    },
+    {
       "release": "2026_11_08.M",
       "date": "2026-11-08",
       "notes": [

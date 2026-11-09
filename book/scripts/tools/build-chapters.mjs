@@ -5,18 +5,22 @@ import { renderChapterBody, renderChapterCoda, padChapterNumber, chapterOrdinal,
 import { isCustomElementType, storyVoiceFor } from '../modules/story-lexicon.mjs';
 import { leanFor } from '../modules/valence-lens.mjs';
 import { MATERIALS, materialScores } from '../modules/materials.mjs';
+import { describeChapter, chapterInventory, renderChapterInventory, spellProblems } from '../modules/chapter-spell.mjs';
+import { CANON_REFUSALS } from '../../schema/book-types.mjs';
+import { parse as parseSpw } from '../vendor/spw-seed.mjs';
 import { createMiniDocument } from './mini-dom.mjs';
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(TOOL_DIR, '../../..');
 const CONTENT_DIR = resolve(ROOT, 'book/content/chapters');
 const TEMPLATE_PATH = resolve(ROOT, 'book/templates/chapter.html');
-const RELEASE = '2026_11_08.M';
+const RELEASE = '2026_11_08.N';
 const REFERENCES_PATH = resolve(ROOT, 'book/content/world/references.json');
 const SHELF_LIST_PATH = resolve(ROOT, 'book/content/world/shelf-list.json');
 const SERIAL_PATH = resolve(ROOT, 'book/content/serial.json');
 const ALMANAC_PATH = resolve(ROOT, 'book/content/world/almanac.json');
 const EXTENT_PATH = resolve(ROOT, 'book/scripts/modules/book-extent.mjs');
+const WORLD_DIR = resolve(ROOT, 'book/content/world');
 
 const escapeAttribute = (value) => String(value ?? '')
   .replaceAll('&', '&amp;')
@@ -43,6 +47,9 @@ const references = JSON.parse(await readFile(REFERENCES_PATH, 'utf8'));
 const shelfList = JSON.parse(await readFile(SHELF_LIST_PATH, 'utf8'));
 const serial = JSON.parse(await readFile(SERIAL_PATH, 'utf8'));
 const almanac = JSON.parse(await readFile(ALMANAC_PATH, 'utf8'));
+// What a chapter's Spw description and inventory are read against (chapter-spell.mjs).
+const [characters, palettes, berries, harmonies] = await Promise.all(['characters', 'palettes', 'berries', 'harmonies']
+  .map(async (name) => JSON.parse(await readFile(resolve(WORLD_DIR, `${name}.json`), 'utf8'))));
 const wonders = (almanac.wonders || []).map(({ id, kind, terms }) => ({ id, kind, terms }));
 const wonderNames = Object.fromEntries((almanac.wonders || []).map((w) => [w.id, w.name]));
 /* Releasing the story a room at a time (.spw/surfaces/rooms.spw): a section
@@ -89,79 +96,34 @@ const renderSlot = (render, data, options) => {
   return holder.children.map((node) => `    ${node.outerHTML}`).join('\n');
 };
 
-for (const [index, filename] of filenames.entries()) {
-  const slug = filename.slice(0, 2);
-  const data = chapters[index];
-  const expectedNumber = Number(slug);
-  const previous = chapters[(index - 1 + chapters.length) % chapters.length];
-  const next = chapters[(index + 1) % chapters.length];
-
-  if (data.chapterNumber !== expectedNumber || !data.title || !data.description || !Array.isArray(data.sections)) {
-    throw new Error(`${filename} does not satisfy the chapter content contract.`);
-  }
-
-  const pageTitle = `${data.title} | Lore.Land`;
-  const canonicalUrl = `https://lore.land/book/chapter/${slug}/`;
-  const logline = data.logline || data.description;
-  const chapterDir = resolve(ROOT, `book/chapter/${slug}`);
-  const marked = new Set();
-  await mkdir(chapterDir, { recursive: true });
-
-  const page = render(template, {
-    RELEASE,
-    PAGE_TITLE: escapeAttribute(pageTitle),
-    DESCRIPTION: escapeAttribute(data.description),
-    LOGLINE: escapeAttribute(logline),
-    EPIGRAPH: escapeAttribute(data.epigraph || ''),
-    CANONICAL_URL: canonicalUrl,
-    // Share card = the chapter's plate set in the cover type (npm run assets:brand).
-    OG_IMAGE: `https://lore.land/book/images/og/chapter-${slug}.jpg`,
-    OG_IMAGE_ALT: escapeAttribute(`${chapterOrdinal(data.chapterNumber)}: ${data.title}, set over the chapter's painted plate. ${logline}`),
-    CHAPTER_SLUG: slug,
-    CHAPTER_HEADING: escapeAttribute(`Chapter ${slug}: ${data.title}`),
-    CHAPTER_TITLE: escapeAttribute(data.title),
-    CHAPTER_NUMBER: String(expectedNumber),
-    // The chapter rides along explicitly, so the slip knows where the reader was even without a Referer.
-    FEEDBACK_URL: `https://autonomous.feedback/lore.land?at=/book/chapter/${slug}/`,
-    MOOD: escapeAttribute(data.mood || 'boon'),
-    PREV_HREF: chapterHref(previous.chapterNumber),
-    PREV_NUMBER: padChapterNumber(previous.chapterNumber),
-    PREV_TITLE: escapeAttribute(previous.title),
-    NEXT_HREF: chapterHref(next.chapterNumber),
-    NEXT_NUMBER: padChapterNumber(next.chapterNumber),
-    NEXT_TITLE: escapeAttribute(next.title),
-    CHAPTER_EDGE: index === 0 ? 'first' : index === chapters.length - 1 ? 'last' : 'middle',
-    CHAPTER_BODY: renderSlot(renderChapterBody, data, {
-      wonders,
-      wonderNames,
-      markedOut: marked,
-      inWhich: inWhichFor(data),
-      next: {
-        number: next.chapterNumber,
-        title: next.title,
-        inWhich: inWhichFor(next),
-        href: chapterHref(next.chapterNumber),
-        wraps: index === chapters.length - 1,
-        upcoming: index === chapters.length - 1 ? serial.next : null
-      },
-      stacks: {
-        entries: shelfList.chapters?.[String(data.chapterNumber)] || [],
-        search: shelfList.search
-      }
-    }),
-    CHAPTER_CODA: renderSlot(renderChapterCoda, data, {
-      wonders: [...marked].map((id) => ({
-        id,
-        kind: wonders.find((w) => w.id === id)?.kind,
-        name: wonderNames[id] || id,
-        lives: (wonderChapters[id] || []).map(padChapterNumber).join(' · ')
-      }))
-    }),
-    CHAPTER_DATA: JSON.stringify(data, null, 2).replaceAll('<', '\\u003c')
+/* The chapter's body, and its Spw right after the end mark: the description
+ * spell and the inventory of every expression it holds, collapsed (the
+ * keepsakes slip in between at runtime). `marked` is filled by the body
+ * render, so the inventory lists exactly the wonders marked on the page. */
+const renderBodyWithSpell = (data, options, world) => {
+  const doc = createMiniDocument();
+  const holder = doc.createElement('div');
+  renderChapterBody(holder, data, { doc, ...options });
+  const description = describeChapter(data, world);
+  [description.text, description.veiled].forEach((text, i) => {
+    const problems = spellProblems(text, parseSpw);
+    if (problems.length) {
+      throw new Error(`Chapter ${data.chapterNumber}'s ${i ? 'veiled ' : ''}Spw description does not read whole: ${problems.join('; ')}\n${text}`);
+    }
   });
-
-  await writeFile(resolve(chapterDir, 'index.html'), page);
-}
+  const inventory = chapterInventory(data, world, { marked: options.markedOut });
+  // Generated words are held to the same canon as the prose (compass words, wages, the withheld name).
+  const said = JSON.stringify({ clauses: description.clauses, items: inventory.items.map(({ name, note, hint }) => ({ name, note, hint })) });
+  CANON_REFUSALS.forEach((refusal) => {
+    const match = said.match(refusal.pattern);
+    if (match) throw new Error(`Chapter ${data.chapterNumber}'s Spw inventory says "${match[0]}" — ${refusal.why}`);
+  });
+  const shelf = doc.createElement('div');
+  const node = renderChapterInventory(shelf, { description, inventory }, { doc });
+  const end = holder.childNodes.findIndex((child) => child.nodeType === 1 && child.className === 'chapter-end-mark');
+  holder.childNodes.splice(end < 0 ? holder.childNodes.length : end + 1, 0, node);
+  return holder.children.map((child) => `    ${child.outerHTML}`).join('\n');
+};
 
 /* The catalog: every chapter's number, title, question and door, for the
  * Scriptorium desk, the offline shelf, and any sibling site that lists us. */
@@ -338,6 +300,85 @@ Object.values(semantic.threads).forEach((entry) => {
   delete entry.labels;
 });
 Object.values(semantic.leans).forEach((list) => list.sort((a, b) => b.n - a.n || a.c - b.c));
+
+/* The pages, after the semantic index: each chapter's Spw description and
+ * inventory (chapter-spell.mjs) read its materials and where its wonders are
+ * marked. A chapter whose spell does not read whole is refused. */
+const world = { almanac, semantic, characters, palettes, berries, harmonies };
+for (const [index, filename] of filenames.entries()) {
+  const slug = filename.slice(0, 2);
+  const data = chapters[index];
+  const expectedNumber = Number(slug);
+  const previous = chapters[(index - 1 + chapters.length) % chapters.length];
+  const next = chapters[(index + 1) % chapters.length];
+
+  if (data.chapterNumber !== expectedNumber || !data.title || !data.description || !Array.isArray(data.sections)) {
+    throw new Error(`${filename} does not satisfy the chapter content contract.`);
+  }
+
+  const pageTitle = `${data.title} | Lore.Land`;
+  const canonicalUrl = `https://lore.land/book/chapter/${slug}/`;
+  const logline = data.logline || data.description;
+  const chapterDir = resolve(ROOT, `book/chapter/${slug}`);
+  const marked = new Set();
+  await mkdir(chapterDir, { recursive: true });
+
+  const page = render(template, {
+    RELEASE,
+    PAGE_TITLE: escapeAttribute(pageTitle),
+    DESCRIPTION: escapeAttribute(data.description),
+    LOGLINE: escapeAttribute(logline),
+    EPIGRAPH: escapeAttribute(data.epigraph || ''),
+    CANONICAL_URL: canonicalUrl,
+    // Share card = the chapter's plate set in the cover type (npm run assets:brand).
+    OG_IMAGE: `https://lore.land/book/images/og/chapter-${slug}.jpg`,
+    OG_IMAGE_ALT: escapeAttribute(`${chapterOrdinal(data.chapterNumber)}: ${data.title}, set over the chapter's painted plate. ${logline}`),
+    CHAPTER_SLUG: slug,
+    CHAPTER_HEADING: escapeAttribute(`Chapter ${slug}: ${data.title}`),
+    CHAPTER_TITLE: escapeAttribute(data.title),
+    CHAPTER_NUMBER: String(expectedNumber),
+    // The chapter rides along explicitly, so the slip knows where the reader was even without a Referer.
+    FEEDBACK_URL: `https://autonomous.feedback/lore.land?at=/book/chapter/${slug}/`,
+    MOOD: escapeAttribute(data.mood || 'boon'),
+    PREV_HREF: chapterHref(previous.chapterNumber),
+    PREV_NUMBER: padChapterNumber(previous.chapterNumber),
+    PREV_TITLE: escapeAttribute(previous.title),
+    NEXT_HREF: chapterHref(next.chapterNumber),
+    NEXT_NUMBER: padChapterNumber(next.chapterNumber),
+    NEXT_TITLE: escapeAttribute(next.title),
+    CHAPTER_EDGE: index === 0 ? 'first' : index === chapters.length - 1 ? 'last' : 'middle',
+    CHAPTER_BODY: renderBodyWithSpell(data, {
+      wonders,
+      wonderNames,
+      markedOut: marked,
+      inWhich: inWhichFor(data),
+      next: {
+        number: next.chapterNumber,
+        title: next.title,
+        inWhich: inWhichFor(next),
+        href: chapterHref(next.chapterNumber),
+        wraps: index === chapters.length - 1,
+        upcoming: index === chapters.length - 1 ? serial.next : null
+      },
+      stacks: {
+        entries: shelfList.chapters?.[String(data.chapterNumber)] || [],
+        search: shelfList.search
+      }
+    }, world),
+    CHAPTER_CODA: renderSlot(renderChapterCoda, data, {
+      wonders: [...marked].map((id) => ({
+        id,
+        kind: wonders.find((w) => w.id === id)?.kind,
+        name: wonderNames[id] || id,
+        lives: (wonderChapters[id] || []).map(padChapterNumber).join(' · ')
+      }))
+    }),
+    CHAPTER_DATA: JSON.stringify(data, null, 2).replaceAll('<', '\\u003c')
+  });
+
+  await writeFile(resolve(chapterDir, 'index.html'), page);
+}
+
 await writeFile(resolve(ROOT, 'book/content/search.json'), `${JSON.stringify(search)}\n`);
 await writeFile(resolve(ROOT, 'book/content/semantic.json'), `${JSON.stringify(semantic)}\n`);
 

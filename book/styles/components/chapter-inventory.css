@@ -1,0 +1,536 @@
+/*
+ * chapter-inventory.css — the chapter in Spw, at its end (chapter-spell.mjs builds it,
+ * chapter-inventory.mjs lights it).
+ *
+ * A collapsed panel after the keepsakes: serif for the story (the gloss, the names, the hints),
+ * mono for the structure (the spell, the sigils, the counts). Every expression the chapter holds,
+ * by sigil, each group in its role's hue. Found things are lit and open a door to where they
+ * live; the rest stay quiet and say where to look. The visuals carry data-discovery
+ * (veiled | glimpsed | found) for likeness.css to dress; this file only sets their ground.
+ *
+ * Inks lean to the binding's own --text-color-main (as rooms.css does), so they clear 4.5:1 on
+ * every cover and in lamplight. Unlayered, like collection.css and rooms.css.
+ */
+
+main.chapter > .chapter-inventory {
+  --inv-ink: var(--text-color-main, var(--color-text-main, #161d2b));
+  --inv-soft: var(--text-color-alt, var(--color-text-alt, #3a455c));
+  --inv-gold: var(--hub-gold, var(--color-gold, #c4922e));
+  --inv-paper: var(--bg-color-content-strong, #fffcf6);
+  --inv-rule: color-mix(in oklab, var(--inv-soft) 22%, transparent);
+  margin-block: 1.2rem 0;
+  padding: 0;
+  border: 1px solid color-mix(in oklab, var(--inv-gold) 32%, transparent);
+  border-radius: var(--border-radius-main, 0.8rem);
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--room-hue-integration, #a07a12) 7%, transparent), transparent 65%),
+    var(--theme-paper, transparent);
+  color: var(--inv-ink);
+  font-size: 0.92rem;
+  text-indent: 0;
+}
+
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) main.chapter > .chapter-inventory {
+  --inv-paper: var(--room-chip, rgba(32, 46, 38, 0.92));
+  /* A spell made of something mixes its ground from --mat-paper (materials.css), which stays a
+     light panel in a night binding while the spell's ink turns light: give it the room's own night. */
+  --mat-paper: var(--room-chip, rgba(32, 46, 38, 0.92));
+  border-color: color-mix(in oklab, var(--room-hue-integration, #f0d46a) 30%, transparent);
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--room-hue-integration, #f0d46a) 10%, transparent), transparent 65%),
+    var(--room-section, transparent);
+}
+
+main.chapter > .chapter-inventory :is(p, li, dd, dt, ul, dl) {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  hyphens: manual;
+}
+
+.chapter-inventory ul {
+  list-style: none;
+}
+
+/* ─── The summary: one line, closed by default ───────────────────────── */
+
+.chapter-inventory > .inv-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  padding: clamp(0.75rem, 2.6vw, 1rem) clamp(0.85rem, 3vw, 1.2rem);
+  cursor: pointer;
+  list-style: none;
+  border-radius: inherit;
+}
+
+.chapter-inventory > .inv-summary::-webkit-details-marker {
+  display: none;
+}
+
+.chapter-inventory > .inv-summary:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--room-hue-integration, #a07a12) 70%, var(--inv-ink));
+  outline-offset: 2px;
+}
+
+.inv-summary-sigil {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--room-hue-integration, #a07a12) 45%, transparent);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: color-mix(in oklab, var(--room-hue-integration, #a07a12) 62%, var(--inv-ink));
+  transition: transform 260ms ease;
+}
+
+.chapter-inventory[open] .inv-summary-sigil {
+  transform: rotate(180deg);
+}
+
+.inv-summary-words {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.inv-kicker,
+.inv-count,
+.inv-group-head,
+.inv-gloss dt,
+.inv-where {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+}
+
+.inv-kicker {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--room-hue-integration, #a07a12) 55%, var(--inv-ink));
+}
+
+.inv-title {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--inv-ink);
+}
+
+.inv-count {
+  justify-self: end;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--inv-soft);
+}
+
+.chapter-inventory.is-complete .inv-count {
+  color: color-mix(in oklab, var(--room-hue-integration, #a07a12) 65%, var(--inv-ink));
+}
+
+@container (max-width: 26rem) {
+  .chapter-inventory > .inv-summary {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .inv-count {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* ─── The spell, its gloss beside it ─────────────────────────────────── */
+
+.inv-body {
+  display: grid;
+  gap: 1rem;
+  padding: 0 clamp(0.85rem, 3vw, 1.2rem) clamp(0.9rem, 3vw, 1.2rem);
+  border-top: 1px solid var(--inv-rule);
+  padding-top: 1rem;
+}
+
+.inv-description {
+  display: grid;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+@container (min-width: 44rem) {
+  .inv-description {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.inv-spell {
+  min-width: 0;
+}
+
+.inv-spell-source {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--inv-gold) 30%, transparent);
+  border-radius: 0.5rem;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.76rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--inv-ink);
+  background: color-mix(in oklab, var(--inv-paper) 70%, transparent);
+}
+
+.inv-gloss {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.inv-gloss-row {
+  display: grid;
+  grid-template-columns: 6.6rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.inv-gloss dt {
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.inv-gloss-head {
+  font: inherit;
+  padding: 0;
+  background: none;
+  color: color-mix(in oklab, var(--inv-hue, var(--inv-soft)) 62%, var(--inv-ink));
+}
+
+.inv-gloss dd {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--inv-ink);
+}
+
+@container (max-width: 22rem) {
+  .inv-gloss-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.1rem;
+  }
+}
+
+.inv-lede {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--inv-soft);
+}
+
+/* ─── Each role's hue (rooms.css: --room-hue-*, lifted in lamplight) ── */
+
+.chapter-inventory .op-probe { --inv-hue: var(--room-hue-probe); }
+.chapter-inventory .op-potential { --inv-hue: var(--room-hue-potential); }
+.chapter-inventory .op-perspective { --inv-hue: var(--room-hue-perspective); }
+.chapter-inventory .op-confluence { --inv-hue: var(--room-hue-confluence); }
+.chapter-inventory .op-value { --inv-hue: var(--room-hue-value); }
+.chapter-inventory .op-integration { --inv-hue: var(--room-hue-integration); }
+.chapter-inventory .op-action { --inv-hue: var(--room-hue-action); }
+.chapter-inventory .op-annotation { --inv-hue: var(--room-hue-annotation); }
+.chapter-inventory .op-ground { --inv-hue: var(--room-hue-ground); }
+.chapter-inventory .op-config { --inv-hue: var(--room-hue-lean); }
+.chapter-inventory .op-measure { --inv-hue: var(--room-hue-measure); }
+.chapter-inventory .op-substrate { --inv-hue: var(--room-hue-substrate); }
+
+/* ─── The groups, by sigil ───────────────────────────────────────────── */
+
+.inv-groups {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.inv-group {
+  --inv-hue-ink: color-mix(in oklab, var(--inv-hue, var(--inv-soft)) 60%, var(--inv-ink));
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.inv-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.55rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--inv-hue, var(--inv-soft)) 30%, transparent);
+  font-size: 0.7rem;
+  color: var(--inv-soft);
+}
+
+.inv-group-sigil {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--inv-hue-ink);
+  text-shadow: 0 0 0.5em color-mix(in oklab, var(--inv-hue, transparent) 35%, transparent);
+}
+
+.inv-group-role {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--inv-hue-ink);
+}
+
+.inv-group-holds {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-style: italic;
+  font-size: 0.84rem;
+  letter-spacing: 0;
+}
+
+.inv-group-count {
+  margin-inline-start: auto;
+  white-space: nowrap;
+}
+
+.inv-group.is-complete .inv-group-count {
+  color: var(--inv-hue-ink);
+}
+
+.inv-list {
+  display: grid;
+  gap: 0.35rem;
+}
+
+/* ─── An item: its visual, what it is (or where to look), a hook for its likeness ── */
+
+.inv-item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: start;
+  padding: 0.4rem 0.45rem;
+  border-radius: 0.5rem;
+  transition: background-color 320ms ease;
+}
+
+.inv-item.is-found {
+  background: color-mix(in oklab, var(--inv-hue, var(--inv-gold)) 7%, transparent);
+}
+
+.inv-visual {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in oklab, var(--inv-hue, var(--inv-soft)) 40%, transparent);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--inv-hue-ink);
+  background: color-mix(in oklab, var(--inv-paper) 60%, transparent);
+  overflow: hidden;
+  transition: opacity 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+}
+
+.inv-visual[data-discovery="veiled"] {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.inv-visual[data-discovery="glimpsed"] {
+  opacity: 0.7;
+  border-style: dotted;
+}
+
+.inv-visual[data-discovery="found"] {
+  box-shadow: 0 0 0.7rem color-mix(in oklab, var(--inv-hue, var(--inv-gold)) 28%, transparent);
+}
+
+/* A room's visual is its kind's braces, shaped like its chip in the strip (rooms.css). */
+.inv-visual--room {
+  font-size: 0.82rem;
+  letter-spacing: -0.04em;
+  color: color-mix(in oklab, var(--room-kind-hue, var(--inv-hue)) 60%, var(--inv-ink));
+}
+
+.inv-visual--character {
+  border-radius: 50%;
+  padding: 0;
+}
+
+.inv-visual--character svg {
+  width: 100%;
+  height: 100%;
+}
+
+.inv-visual--palette {
+  grid-auto-flow: column;
+  gap: 1px;
+  padding: 0.35rem 0.3rem;
+}
+
+.inv-swatch {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--swatch);
+}
+
+.inv-visual--berry {
+  border-radius: 50%;
+}
+
+.inv-visual--berry i {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+}
+
+.inv-visual--berry.is-boonberry i {
+  background: radial-gradient(circle at 38% 34%, #f6c56a 0 18%, #2c8b86 46%, #1d5a62 100%);
+  box-shadow: 0 0 0.5rem rgba(246, 197, 106, 0.45);
+}
+
+.inv-visual--berry.is-baneberry i {
+  background: radial-gradient(circle at 36% 32%, #b9a3d6 0 12%, #4a2c5a 50%, #1f1426 100%);
+}
+
+.inv-visual--berry.is-boneberry i {
+  background: radial-gradient(circle at 40% 36%, #fbf7f0 0 30%, #e8d9c8 55%, #a8564a 100%);
+}
+
+.inv-text {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.inv-expr {
+  min-width: 0;
+}
+
+.inv-code {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  color: var(--inv-ink);
+  background: none;
+}
+
+.inv-code.is-veiled {
+  color: var(--inv-hue-ink);
+  letter-spacing: 0.08em;
+}
+
+/* An item's spell sits in the list like a line of the inventory, not a card: no head, no box,
+   and its gloss only when a sigil is touched (as the projection's lines do, spell.css). */
+.inv-expr .spell.is-compact {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.inv-expr .spell.is-compact .spell-head {
+  display: none;
+}
+
+.inv-expr .spell.is-compact .spell-gloss {
+  min-height: 0;
+  margin: 0;
+}
+
+.inv-expr .spell.is-compact .spell-gloss:empty {
+  display: none;
+}
+
+/* The description spell's own paper, in a night binding (spell.css mixes it from a light panel). */
+html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-inventory .spell {
+  --spell-paper: var(--room-chip, rgba(32, 46, 38, 0.92));
+}
+
+.inv-name {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--inv-ink);
+}
+
+.inv-hint {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--inv-soft);
+}
+
+.inv-item:not(.is-found) .inv-hint {
+  font-style: italic;
+}
+
+.inv-where {
+  justify-self: start;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--inv-hue-ink);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.inv-where:hover,
+.inv-where:focus-visible {
+  text-decoration-style: solid;
+}
+
+.inv-item.is-drafting {
+  opacity: 0.6;
+}
+
+/* The hook a seal and "find similar" sit in (likeness.mjs); empty, it takes no room. */
+.inv-likeness:empty {
+  display: none;
+}
+
+.inv-likeness {
+  align-self: center;
+}
+
+@container (max-width: 24rem) {
+  .inv-item {
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+  }
+  .inv-visual {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+  .inv-likeness {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inv-summary-sigil,
+  .inv-item,
+  .inv-visual {
+    transition: none;
+  }
+}
+
+@media print {
+  main.chapter > .chapter-inventory {
+    display: none;
+  }
+}

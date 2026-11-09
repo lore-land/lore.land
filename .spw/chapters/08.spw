@@ -12,6 +12,26 @@
   chapter_path: "/book/chapter/08/"
 }
 
+$[chapter/08/made_of]{
+  spell: ^chapter[8]{
+    .rooms[ .[folded_faces]@the_well %(taproom)@genie =<trapdoor>@the_fool #{well_rim}@the_well
+      ~<rocky_ridge>@boof ]
+    @told_by[boof game fool narrator]
+    $steam $ink $glass
+    *wonders{ @remembrancers $well_winch #the_winch_song_underneath }
+    =palette[watering_eye]
+    ~berries{ $boneberry[mushroom_broth] }
+    &harmonies[ <beavers well> <beavers torch_ants> <egg boof> ]
+  }
+  rooms: "Five rooms: two < > passages, a [ ] window, a { } room and a ( ) gathering; two kept by the well, the rest by the Genie, the Fool and Boof."
+  told_by: "Told by Boof, the fold, the Fool and the narrator."
+  made_of: "Made most of steam and warmth, then ink and line, then Bonk glass."
+  wonders: "First met here: remembrancers, the well-winch and a saying, “The winch song underneath”."
+  palette: "Its palette is the watering eye, earned a layer at a time: a pale pink field, a brown iris that reflects a window, one teal tear."
+  berries: "A boneberry in this chapter tastes of mushroom broth."
+  harmonies: "The beavers keep the water slow. Slow work, like the ants. The egg rides against her ribs."
+}
+
 &[chapter/08/routes]{
   web: "/book/chapter/08/"
   timeline: "/book/timeline.html#chapter-08"

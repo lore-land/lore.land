@@ -12,6 +12,28 @@
   chapter_path: "/book/chapter/03/"
 }
 
+$[chapter/03/made_of]{
+  spell: ^chapter[3]{
+    .rooms[ ?{signal_stones}@boof !(green_bottle)@genie *<dune_ridge>@the_fool
+      %{sand_seam}@genie &<one_turn>@boof ]
+    @told_by[boof paradox fool narrator]
+    $flour $glass $steam
+    *wonders{ @salt_whales @signal_skinks $bottle_desk $want_needle $resolution_glass $wish_scale #build_where_it_leans }
+    &met[genie]
+    =palette[legal_pad]
+    ~berries{ $boneberry[roast_chestnut_and_sage] }
+    &harmonies[ <whales torch_ants> <egg boof> ]
+  }
+  rooms: "Five rooms: two { } rooms, two < > passages and a ( ) gathering; two kept by Boof, the rest by the Genie and the Fool."
+  told_by: "Told by Boof, a paradox, the Fool and the narrator."
+  made_of: "Made most of flour, then Bonk glass, then steam and warmth."
+  wonders: "First met here: salt-whales, signal-skinks, the bottle-desk, the want-needle, the resolution glass, the wish-scale and a saying, “Build where the land already leans”."
+  met: "Met here for the first time: the Genie, off-season."
+  palette: "Its palette is the legal pad, earned a layer at a time: a yellow pad and a pen: signals written down before they are argued."
+  berries: "A boneberry in this chapter tastes of roast chestnut and sage."
+  harmonies: "Roads too big for maps; streets too small for them. The egg rides against her ribs."
+}
+
 &[chapter/03/routes]{
   web: "/book/chapter/03/"
   timeline: "/book/timeline.html#chapter-03"

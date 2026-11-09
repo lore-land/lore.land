@@ -17,7 +17,14 @@
  *
  * `art` (an SVG string this codebase wrote, never reader text) sits beside
  * the words — the sightings drawing uses it to show the stroke just earned.
+ *
+ * With a meme register cast for the visit (spw-bias.mjs), a receipt may add
+ * one line in that register beside the plain detail, never instead of it;
+ * `register: false` keeps a receipt plain. With no register cast, nothing
+ * changes.
  */
+
+import { biased } from './spw-bias.mjs?v=2026_11_08.N';
 
 const LIFETIME = 2600;
 const SWEEP = 900;
@@ -99,7 +106,7 @@ function sweep(region) {
 }
 
 /**
- * @param {{ sigil?: string, title: string, detail?: string, art?: string, lifetime?: number, at?: Element|null, region?: string|Element|null, tone?: string }} what
+ * @param {{ sigil?: string, title: string, detail?: string, art?: string, lifetime?: number, at?: Element|null, region?: string|Element|null, tone?: string, register?: boolean }} what
  */
 export function settle(what = {}) {
   if (!what.title || typeof document === 'undefined') return;
@@ -107,11 +114,13 @@ export function settle(what = {}) {
   clearTimeout(timer);
   const art = typeof what.art === 'string' && what.art.startsWith('<svg') ? el('span', { className: 'settled-art', 'aria-hidden': 'true' }) : null;
   if (art) art.innerHTML = what.art;
+  const aside = what.register === false ? '' : biased('settle', '', { what: what.title });
   const card = el('div', { className: `settled-card${what.tone ? ` is-${what.tone}` : ''}${art ? ' has-art' : ''}` },
     art || el('span', { className: 'settled-sigil', 'aria-hidden': 'true' }, what.sigil || '·'),
     el('span', { className: 'settled-text' },
       el('strong', { className: 'settled-title' }, what.title),
-      what.detail ? el('span', { className: 'settled-detail' }, what.detail) : null));
+      what.detail ? el('span', { className: 'settled-detail' }, what.detail) : null,
+      aside ? el('span', { className: 'settled-detail is-register' }, aside) : null));
   box.replaceChildren(card);
   reveal(box);
   placeNear(card, what.at instanceof Element ? what.at : null);

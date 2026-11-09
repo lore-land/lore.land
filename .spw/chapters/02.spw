@@ -12,6 +12,27 @@
   chapter_path: "/book/chapter/02/"
 }
 
+$[chapter/02/made_of]{
+  spell: ^chapter[2]{
+    .rooms[ ?{hollow_cedar}@boof $[listening_thicket]@boof %[wild_vines]@the_berries
+      ~<forked_path>@the_echo *{mossy_stone}@boof ^<cedar_fork>@boof ]
+    @told_by[narrator boof boonberry echo fool]
+    $steam $berry $oak
+    *wonders{ @echo_wrens @lag_stag @rehearsal_moths #try_it_again }
+    =palette[grove_echo]
+    ~berries{ $boneberry[mushroom_broth] }
+    &harmonies[ <grove torch_ants> <egg boonberries> <roots boonberries>
+      <boonberries boof> <egg boof> ]
+  }
+  rooms: "Six rooms: two [ ] windows, two { } rooms and two < > passages; four kept by Boof, the rest by the berries and the echo."
+  told_by: "Told by the narrator, Boof, the boonberries, an echo and the Fool."
+  made_of: "Made most of steam and warmth, then boonberries, then oak and frame."
+  wonders: "First met here: echo-wrens, the lag-stag, rehearsal moths and a saying, “Try it again, a little changed”."
+  palette: "Its palette is the grove, earned a layer at a time: moss and leaf-dark green with a straw-pale light: the grove that answers a beat late."
+  berries: "A boneberry in this chapter tastes of mushroom broth."
+  harmonies: "Torch-ants will not settle where a light comes back twice. The berries remember the egg's hum. Warm roots keep the berries in their light. A boonberry foresees kindly. The egg rides against her ribs."
+}
+
 &[chapter/02/routes]{
   web: "/book/chapter/02/"
   timeline: "/book/timeline.html#chapter-02"

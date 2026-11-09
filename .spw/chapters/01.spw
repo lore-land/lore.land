@@ -12,6 +12,29 @@
   chapter_path: "/book/chapter/01/"
 }
 
+$[chapter/01/made_of]{
+  spell: ^chapter[1]{
+    .rooms[ ~{warm_furrow}@boof .[furrow_rim]@boof =[berry_row]@the_berries #{map_house}@the_archivist
+      !<sloe_hedge>@boof &(grove_mouth)@boof ]
+    @told_by[narrator boof]
+    $ink $steam $berry
+    *wonders{ @torch_ants $press_stones $drying_line #first_ink_stays }
+    &met[boof ants]
+    =palette[pool]
+    ~berries{ boonberry baneberry $boneberry[roast_chestnut_and_sage] }
+    &harmonies[ <torch_ants roots> <roots boonberries> <boonberries pool>
+      <pool flour> <frost torch_ants> <egg torch_ants> ]
+  }
+  rooms: "Six rooms: two [ ] windows, two { } rooms, a ( ) gathering and a < > passage; four kept by Boof, the rest by the berries and the archivist."
+  told_by: "Told by the narrator and Boof."
+  made_of: "Made most of ink and line, then steam and warmth, then boonberries."
+  wonders: "First met here: torch-ants, press-stones, the drying-line and a saying, “First ink stays”."
+  met: "Met here for the first time: Boof and the torch-ants."
+  palette: "Its palette is the pool, earned a layer at a time: where the berries' light collects at night, and Boof checks it on her rounds."
+  berries: "Here boonberries foresee and baneberries foretell; a boneberry in this chapter tastes of roast chestnut and sage."
+  harmonies: "The ants warm the roots. Warm roots keep the berries in their light. The berries let their light run down to the pond. The pond turns the mill. The frost holds still while the ants work under it. The ants take the egg for a new coal. And five more on Boof’s map."
+}
+
 &[chapter/01/routes]{
   web: "/book/chapter/01/"
   timeline: "/book/timeline.html#chapter-01"

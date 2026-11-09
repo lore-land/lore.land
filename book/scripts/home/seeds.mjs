@@ -51,10 +51,15 @@ function toSeedItem(path, setId, order) {
   }
 
   return {
+    // The adoption id (lore.experience.seed-adopted): kept as it always was.
     id: `set-${setId}-${dimension}-${order}`,
     setId,
     order,
     src: path,
+    // Stable anchor on the atlas page, the likeness id (likeness.mjs) and a light thumbnail (spw:likeness --thumbs).
+    anchor: `seed-${setId}-${dimension}`,
+    likeness: `seed:${setId}.${dimension}`,
+    thumb: `/seeds/2026-02-28/thumbs/${setId}-${dimension}.webp`,
     dimension,
     label: humanizeDimension(dimension),
     alt: `Midjourney seed ${humanizeDimension(dimension)}, set ${setId}`

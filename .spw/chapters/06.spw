@@ -12,6 +12,29 @@
   chapter_path: "/book/chapter/06/"
 }
 
+$[chapter/06/made_of]{
+  spell: ^chapter[6]{
+    .rooms[ ${kiln_gate}@boof .<mirrored_alley>@the_labyrinth ^<lamp_ladder>@the_fool ?(round_plaza)@boonwap
+      ~<iron_gate>@boof ]
+    @told_by[boof labyrinth fool narrator]
+    $glass $steam $brass
+    *wonders{ $bonk_kiln $dent_lanterns $chime_gutters $lamp_ladders @pane_snails &pane_faces $folio_press $brace_boxes #glass_over_never_scrape }
+    &met[boonwap]
+    =palette[kiln]
+    ~berries{ boonberry $boneberry[burnt_ends] }
+    &harmonies[ <boonberries boonwap> <kilns glass> <kilns boneberries>
+      <boneberries boof> <egg boof> ]
+  }
+  rooms: "Five rooms: three < > passages, a { } room and a ( ) gathering; two kept by Boof, the rest by the labyrinth, the Fool and Mr. BoonWAP."
+  told_by: "Told by Boof, the labyrinth, the Fool and the narrator."
+  made_of: "Made most of Bonk glass, then steam and warmth, then brass and bronze."
+  wonders: "First met here: the bonk-kiln, dent-lanterns, chime-gutters, lamp-ladders, pane-snails, pane faces, the folio press, brace-boxes and a saying, “Glass over, never scrape”."
+  met: "Met here for the first time: Mr. BoonWAP."
+  palette: "Its palette is the kiln, earned a layer at a time: purple and rust, where old knocks are forgiven into new glass."
+  berries: "Here boonberries foresee; a boneberry in this chapter tastes of burnt ends."
+  harmonies: "A boonberry pie is never smaller. The kiln forgives blows into glass. Boneberries grow on the warm kiln walls. A boneberry promises nothing, and feeds you. The egg rides against her ribs."
+}
+
 &[chapter/06/routes]{
   web: "/book/chapter/06/"
   timeline: "/book/timeline.html#chapter-06"
