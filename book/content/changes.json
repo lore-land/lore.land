@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.R",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie the controls are at the top of the cabinet now, with a ❚❚ Pause button for screens that have no Esc key.",
+        "⚙ Setup gathers what you can change about the cabinet: how big it is, the pace of the whole world (gentle, as written, or brisk), whether the story runs beside the screen or in a strip under it, how big the story's words are, and whether the heights strip shows. Every choice is kept.",
+        "Pinch works on the game page too: over the story it sizes the words, on the cabinet's frame it sizes the cabinet. The lanes and the pad are left to your fingers for playing.",
+        "Pinching to size the words in a chapter works again on iPhone and iPad, where Safari had been zooming the whole page instead.",
+        "The scrolling story beside the game is easier to read: the passages not going by stay legible, and its words grow with your setting."
+      ]
+    },
+    {
       "release": "2026_11_08.Q",
       "date": "2026-11-08",
       "notes": [

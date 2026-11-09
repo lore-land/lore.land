@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.Q';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.R';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
@@ -19,7 +19,7 @@ import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_11_08.N';
 import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_08.J';
-import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_08.N';
+import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_08.R';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_05.A';
 import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_08_27.A';

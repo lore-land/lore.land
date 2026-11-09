@@ -453,7 +453,7 @@ export function initReadingGestures(options = {}) {
   };
 
   const beginPinch = () => {
-    if (!scale || pointers.size !== 2) return;
+    if (!scale || pointers.size !== 2 || safariPinch) return;
     if (swipe) endSwipe(false);
     mode = 'pinch';
     pinch = { d0: Math.max(1, distance()), s0: scale.get() };
@@ -595,6 +595,34 @@ export function initReadingGestures(options = {}) {
     if (mode === 'pinch' && event.touches.length >= 2 && event.cancelable) event.preventDefault();
   };
 
+  /* Safari (iOS, and the macOS trackpad) pinches with its own gesture events and zooms the whole page
+     unless told not to; touch-action does not stop it. Over the prose its pinch sizes the text instead,
+     and while it does, the pointer pinch above stands aside so the two never both drive the scale. */
+  let safariPinch = null;
+  const onGestureStart = (event) => {
+    if (!scale) return;
+    event.preventDefault();
+    if (pinch) { pinch = null; }
+    safariPinch = { s0: scale.get() };
+    mode = 'pinch';
+    surface.dataset.gesture = 'pinch';
+  };
+  const onGestureChange = (event) => {
+    if (!scale || !safariPinch) return;
+    event.preventDefault();
+    scale.set(safariPinch.s0 * (Number(event.scale) || 1), { persist: false, quiet: true });
+  };
+  const onGestureEnd = (event) => {
+    if (!scale || !safariPinch) return;
+    event.preventDefault();
+    safariPinch = null;
+    delete surface.dataset.gesture;
+    scale.set(Math.round(scale.get() / 0.01) * 0.01, { persist: true, quiet: true });
+    announce(`Text size ${percent(scale.get())}.`);
+    dismissHint();
+    mode = 'spent';
+  };
+
   /* Trackpad pinch arrives as ctrl+wheel. Over the prose it sizes the text. */
   let wheelAnnounce = 0;
   const onWheel = (event) => {
@@ -621,6 +649,9 @@ export function initReadingGestures(options = {}) {
   surface.addEventListener('gesturechange', onGesture);
   surface.addEventListener('touchmove', onTouchMove, { passive: false });
   surface.addEventListener('wheel', onWheel, { passive: false });
+  surface.addEventListener('gesturestart', onGestureStart, { passive: false });
+  surface.addEventListener('gesturechange', onGestureChange, { passive: false });
+  surface.addEventListener('gestureend', onGestureEnd, { passive: false });
   body.addEventListener('pointerdown', onAnyTap, { passive: true, capture: true });
 
   return () => {
@@ -632,6 +663,9 @@ export function initReadingGestures(options = {}) {
     surface.removeEventListener('gesturechange', onGesture);
     surface.removeEventListener('touchmove', onTouchMove);
     surface.removeEventListener('wheel', onWheel);
+    surface.removeEventListener('gesturestart', onGestureStart);
+    surface.removeEventListener('gesturechange', onGestureChange);
+    surface.removeEventListener('gestureend', onGestureEnd);
     body.removeEventListener('pointerdown', onAnyTap, { capture: true });
     window.clearTimeout(cueTimer);
     window.clearTimeout(hintTimer);

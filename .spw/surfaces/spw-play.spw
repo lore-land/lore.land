@@ -98,6 +98,16 @@
   reward: "planned: parts of the side view earned rather than given, the arc after a first hop in time, the words after a chapter carried, a longer look after a high hop; everything stays configurable once earned, and nothing a player has now is taken away"
 }
 
+^cabinet_setup{
+  .note: "pie-game.mjs SETUP, applySetup, paintSetup, the hand pinch; reading-gestures.mjs for the chapter pages"
+  top: "the controls sit at the top of the cabinet, two rows of five: pause, sound, story, zen, full; ask, labels, show, hands (touch), setup"
+  pause: "a ❚❚ Pause button for screens without Esc; it reads ▶ Resume while paused"
+  configurable: "cabinet size (small, medium, large, larger), pace (gentle 0.8×, as written, brisk 1.2×: the whole world on one clock), the story (beside the screen, under the screen in the cabinet, folded away), the story words (four sizes), the heights strip (shown or hidden, and its parts in its own row), the show (off, inset, board), labels, ask, zen, the hand the pad sits under"
+  mobile: "on a touch screen the cabinet stacks: controls, setup, screen, pad, the story strip if chosen, heights, caption, steps; its width comes from the window height times the cabinet size, never wider than the window"
+  pinch: "by hand: two fingers over the story size its words, over the cabinet frame size the cabinet, never over the lanes or the pad where fingers play; Safari pinch and ctrl+wheel do the same"
+  reading: "the story not passing stays legible (two-thirds ink); the passage going by is full ink with a gold edge"
+}
+
 ^end_of_carry{
   .note: "pie-game.mjs paintCarrySheet, paintNextPrompt, carryPrompt; the card and The carry, inspected"
   card: "a prompt, top to bottom: what happened in a line, what to try next (from why it spilled, a chapter the mimes took, rooms unread) with a way to do it, play again; then how to play again and the ways out"

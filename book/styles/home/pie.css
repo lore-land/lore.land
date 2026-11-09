@@ -3903,3 +3903,151 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-card > .pie-card-modes { order: 4; }
 .pie-card > .pie-card-chapters { order: 5; }
 .pie-card > .pie-card-links { order: 6; }
+
+/* ─── The controls at the top of the cabinet, ⚙ Setup under them ─────────
+ * Pause, sound, the views and Setup sit above the screen, where a thumb or an eye finds them first.
+ * On a touch screen the order is: controls, setup, screen, pad, the story under it (if chosen), heights,
+ * caption, steps. */
+.pie-cabinet .pie-return { order: -3; }
+.pie-cabinet .pie-tools { order: -2; }
+.pie-cabinet .pie-setup { order: -1; }
+
+@media (pointer: coarse) {
+  .pie-cabinet .pie-tools { order: -2; }
+  .pie-cabinet .pie-flow-prose.is-under,
+  .pie-cabinet .pie-heights { order: 3; }
+}
+
+.pie-cabinet .pie-tools {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pie-tool-pause[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
+}
+
+.pie-tool-pause:disabled {
+  opacity: 0.45;
+}
+
+.pie-setup {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.6rem 0.65rem;
+  border: 2px solid var(--panel-ink, var(--hub-ink));
+  border-radius: 0.3rem;
+  background: var(--hub-panel);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 18%, transparent);
+}
+
+.pie-setup[hidden] {
+  display: none;
+}
+
+.pie-setup-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pie-setup-label {
+  flex: 0 0 100%;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-setup-opt {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 55%, var(--hub-panel));
+  color: var(--hub-ink);
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.pie-setup-opt[aria-pressed='true'] {
+  border-color: var(--hub-ink);
+  background: color-mix(in srgb, var(--hub-gold) 20%, var(--hub-panel));
+  font-weight: 600;
+}
+
+.pie-setup-opt:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: 1px;
+}
+
+.pie-setup-note {
+  margin: 0;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+/* Cabinet size (⚙ Setup, or pinch on its frame): the screen scales with it, the lanes keep their shape. */
+@media (min-width: 62rem) {
+  .pie-voyage {
+    grid-template-columns:
+      minmax(0, 1fr)
+      clamp(calc(18rem * var(--cabinet-scale, 1)), calc((100vh - 20rem) * 0.643 * var(--cabinet-scale, 1)), calc(25rem * var(--cabinet-scale, 1)))
+      minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 61.99rem) {
+  .pie-voyage > .pie-cabinet {
+    max-width: min(100%, calc(26rem * var(--cabinet-scale, 1)));
+  }
+}
+
+@media (pointer: coarse) {
+  .pie-voyage .pie-cabinet,
+  .pie-voyage.is-zen .pie-cabinet {
+    max-width: min(100%, calc(((100dvh - 13rem) * 0.643 + 1.5rem) * var(--cabinet-scale, 1)));
+  }
+}
+
+/* The scrolling story: its words sized by ⚙ Setup or a pinch, and the ones not passing still legible. */
+.pie-flow-para {
+  font-size: calc(0.9rem * var(--flow-scale, 1));
+  color: color-mix(in srgb, var(--hub-ink) 66%, transparent);
+}
+
+.pie-flow-para.is-passing {
+  color: var(--hub-ink);
+}
+
+/* Under the screen: the story in the cabinet, a strip of a few lines that follows the carry. */
+.pie-cabinet .pie-flow-prose.is-under {
+  gap: 0.25rem;
+  padding: 0.35rem 0.5rem;
+  border: 2px solid var(--panel-ink, var(--hub-ink));
+  border-radius: 0.3rem;
+  background: var(--hub-panel);
+}
+
+.pie-cabinet .pie-flow-prose.is-under .pie-flow-head span {
+  display: inline;
+  margin: 0 0 0 0.4rem;
+  font-size: 0.82rem;
+}
+
+.pie-cabinet .pie-flow-prose.is-under .pie-flow-window {
+  flex: none;
+  min-height: 6.4rem;
+  max-height: 6.4rem;
+}
+
+/* The story under the screen: two columns, the cabinet and its wonders beside it. */
+@media (min-width: 62rem) {
+  .pie-voyage.is-story-under {
+    grid-template-columns:
+      clamp(calc(18rem * var(--cabinet-scale, 1)), calc((100vh - 20rem) * 0.643 * var(--cabinet-scale, 1)), calc(25rem * var(--cabinet-scale, 1)))
+      minmax(0, 1fr);
+  }
+}

@@ -388,7 +388,14 @@ function readRecord() {
       met: Array.isArray(parsed.met) ? parsed.met : [],
       cards: Array.isArray(parsed.cards) ? parsed.cards : [],
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
-      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, heights: parsed.view?.heights !== false, heightsCfg: parsed.view?.heightsCfg && typeof parsed.view.heightsCfg === 'object' ? parsed.view.heightsCfg : null, show: ['inset', 'board'].includes(parsed.view?.show) ? parsed.view.show : 'off' },
+      view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, heights: parsed.view?.heights !== false, heightsCfg: parsed.view?.heightsCfg && typeof parsed.view.heightsCfg === 'object' ? parsed.view.heightsCfg : null,
+        // ⚙ Setup: kept as chosen, held to their ranges.
+        size: Number.isFinite(parsed.view?.size) ? Math.min(1.45, Math.max(0.8, parsed.view.size)) : undefined,
+        flowSize: Number.isFinite(parsed.view?.flowSize) ? Math.min(1.6, Math.max(0.8, parsed.view.flowSize)) : undefined,
+        pace: [0.8, 1, 1.2].includes(parsed.view?.pace) ? parsed.view.pace : undefined,
+        storyAt: ['beside', 'under'].includes(parsed.view?.storyAt) ? parsed.view.storyAt : undefined,
+        heightsShown: parsed.view?.heightsShown === false ? false : undefined,
+        show: ['inset', 'board'].includes(parsed.view?.show) ? parsed.view.show : 'off' },
       sound: parsed.sound !== false
     };
   } catch {
@@ -6559,7 +6566,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // A frame's timestamp can come just before the moment play resumed: never let time run backwards.
       const dt = clamp((now - last) / 1000, 0, 0.05);
       last = now;
-      if (state === 'running' || state === 'spilling') update(dt);
+      // Pace (⚙ Setup): the whole world at a gentler or brisker clock, carrier and all.
+      if (state === 'running' || state === 'spilling') update(dt * (record.view.pace || 1));
       draw();
       paintPadHook();
       if (state !== 'paused' && state !== 'title' && state !== 'over' && state !== 'revealing') frame = requestAnimationFrame(tick);
@@ -6575,6 +6583,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const home = returnAnchor();
     if (home) cardLinks?.replaceChildren(home);
     say('Paused.');
+    paintPauseBtn();
   };
   const resume = () => {
     if (state !== 'paused') return;
@@ -6582,7 +6591,135 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     state = 'running';
     last = performance.now();
     loop();
+    paintPauseBtn();
   };
+  /* ❚❚ Pause, at the top of the cabinet: in reach on a phone, where there is no Esc. */
+  const pauseBtn = root.querySelector('[data-pie-pause]');
+  function paintPauseBtn() {
+    if (!pauseBtn) return;
+    const paused = state === 'paused';
+    pauseBtn.textContent = paused ? '▶ Resume' : '❚❚ Pause';
+    pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    pauseBtn.disabled = !(state === 'running' || state === 'paused');
+  }
+  pauseBtn?.addEventListener('click', () => { if (state === 'running') pause(); else if (state === 'paused') resume(); });
+  setInterval(paintPauseBtn, 600);
+
+  /* ─── ⚙ Setup: how big the cabinet is, how fast the world goes, where the story runs and how big its words ───
+   * Every choice is kept in this browser. Pinch does the same by hand: over the story it sizes the words,
+   * on the cabinet's frame it sizes the cabinet (ctrl+wheel on a trackpad does both). */
+  // Its own handle on the voyage: the page's `voyage` is declared further down, after setup runs.
+  const cabinetVoyage = root.closest('.pie-voyage');
+  const setupBtn = root.querySelector('[data-pie-setup-toggle]');
+  const setupOut = root.querySelector('[data-pie-setup]');
+  const flowProseBox = document.querySelector('.pie-flow-prose');
+  const flowHome = flowProseBox?.parentElement;
+  const SETUP = Object.freeze([
+    ['size', 'Cabinet', [[0.86, 'Small'], [1, 'Medium'], [1.16, 'Large'], [1.32, 'Larger']], 1],
+    ['pace', 'Pace', [[0.8, 'Gentle'], [1, 'As written'], [1.2, 'Brisk']], 1],
+    ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
+    ['flowSize', 'Story words', [[0.88, 'Small'], [1, 'Medium'], [1.18, 'Large'], [1.36, 'Larger']], 1],
+    ['heightsShown', '⤒ Heights strip', [[true, 'Shown'], [false, 'Hidden']], true]
+  ]);
+  const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
+  function applySetup() {
+    cabinetVoyage?.style.setProperty('--cabinet-scale', String(setting('size')));
+    cabinetVoyage?.style.setProperty('--flow-scale', String(setting('flowSize')));
+    const at = record.view.story === false ? 'off' : setting('storyAt');
+    if (flowProseBox && flowHome) {
+      if (at === 'under' && flowProseBox.parentElement !== root) root.insertBefore(flowProseBox, heightsPanel || root.querySelector('.pie-caption'));
+      else if (at !== 'under' && flowProseBox.parentElement !== flowHome) flowHome.prepend(flowProseBox);
+      flowProseBox.classList.toggle('is-under', at === 'under');
+      cabinetVoyage?.classList.toggle('is-story-under', at === 'under');
+    }
+    if (heightsPanel) heightsPanel.hidden = setting('heightsShown') === false;
+    requestAnimationFrame(fit);
+  }
+  function paintSetup() {
+    if (!setupOut) return;
+    const rows = SETUP.map(([key, label, options]) => {
+      const row = nodeOf('div', 'pie-setup-row');
+      row.setAttribute('role', 'group');
+      row.setAttribute('aria-label', label);
+      row.append(nodeOf('span', 'pie-setup-label', label));
+      const current = key === 'storyAt' && record.view.story === false ? 'off' : setting(key);
+      options.forEach(([value, words]) => {
+        const b = nodeOf('button', 'pie-setup-opt', words);
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(current) === String(value) ? 'true' : 'false');
+        b.addEventListener('click', () => {
+          if (key === 'storyAt') {
+            record.view.story = value !== 'off';
+            if (value !== 'off') record.view.storyAt = value;
+            applyView();
+          } else record.view[key] = value;
+          writeRecord(record);
+          applySetup();
+          paintSetup();
+        });
+        row.append(b);
+      });
+      return row;
+    });
+    setupOut.replaceChildren(...rows, nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes) to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
+  }
+  requestAnimationFrame(applySetup);   // after setup of the page: where the story runs, how big things are
+  setupBtn?.addEventListener('click', () => {
+    const open = setupOut.hidden;
+    setupOut.hidden = !open;
+    setupBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) paintSetup();
+  });
+
+  /* Pinch by hand: two fingers (or Safari's own pinch, or ctrl+wheel) over the story size its words,
+   * over the cabinet's frame size the cabinet. Never over the lanes or the pad, where fingers play. */
+  const PINCH_LIMITS = { size: [0.8, 1.45], flowSize: [0.8, 1.6] };
+  const pinchKeyFor = (target) => {
+    if (!target?.closest || target.closest('canvas, .pie-thumbs, .pie-steps, button, a, input, textarea')) return null;
+    if (target.closest('.pie-flow-prose')) return 'flowSize';
+    if (target.closest('.pie-cabinet')) return 'size';
+    return null;
+  };
+  const setScaled = (key, value, persist) => {
+    const [lo, hi] = PINCH_LIMITS[key];
+    record.view[key] = Math.round(clamp(value, lo, hi) * 100) / 100;
+    cabinetVoyage?.style.setProperty(key === 'size' ? '--cabinet-scale' : '--flow-scale', String(record.view[key]));
+    if (persist) { writeRecord(record); requestAnimationFrame(fit); if (!setupOut?.hidden) paintSetup(); }
+  };
+  const fingers = new Map();
+  let handPinch = null;
+  const spread = () => { const [a, b] = [...fingers.values()]; return Math.hypot(a.x - b.x, a.y - b.y) || 1; };
+  cabinetVoyage?.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch') return;
+    fingers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (fingers.size === 2 && !handPinch) {
+      const key = pinchKeyFor(event.target);
+      if (key) handPinch = { key, d0: spread(), s0: Number(setting(key)) || 1 };
+    }
+  });
+  cabinetVoyage?.addEventListener('pointermove', (event) => {
+    if (!fingers.has(event.pointerId)) return;
+    fingers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (handPinch && fingers.size === 2) setScaled(handPinch.key, handPinch.s0 * (spread() / handPinch.d0), false);
+  });
+  const fingerUp = (event) => {
+    fingers.delete(event.pointerId);
+    if (handPinch && fingers.size < 2) { setScaled(handPinch.key, Number(record.view[handPinch.key]) || 1, true); say(handPinch.key === 'size' ? 'Cabinet resized.' : 'Story words resized.'); handPinch = null; }
+  };
+  cabinetVoyage?.addEventListener('pointerup', fingerUp);
+  cabinetVoyage?.addEventListener('pointercancel', fingerUp);
+  cabinetVoyage?.addEventListener('touchmove', (event) => { if (handPinch && event.touches.length >= 2 && event.cancelable) event.preventDefault(); }, { passive: false });
+  let safariHand = null;
+  cabinetVoyage?.addEventListener('gesturestart', (event) => { const key = pinchKeyFor(event.target); if (!key) return; event.preventDefault(); safariHand = { key, s0: Number(setting(key)) || 1 }; }, { passive: false });
+  cabinetVoyage?.addEventListener('gesturechange', (event) => { if (!safariHand) return; event.preventDefault(); setScaled(safariHand.key, safariHand.s0 * (Number(event.scale) || 1), false); }, { passive: false });
+  cabinetVoyage?.addEventListener('gestureend', (event) => { if (!safariHand) return; event.preventDefault(); setScaled(safariHand.key, Number(record.view[safariHand.key]) || 1, true); safariHand = null; }, { passive: false });
+  cabinetVoyage?.addEventListener('wheel', (event) => {
+    if (!event.ctrlKey || event.deltaMode !== 0) return;
+    const key = pinchKeyFor(event.target);
+    if (!key) return;
+    event.preventDefault();
+    setScaled(key, (Number(setting(key)) || 1) * (1 - clamp(event.deltaY, -40, 40) * 0.004), true);
+  }, { passive: false });
 
   /* ─── The legend: every thing in the game, drawn by the game's own hand ─── */
   const SPRITES = {
