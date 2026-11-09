@@ -59,7 +59,7 @@ export const LEGEND = Object.freeze([
 
 const STILL_W = 184;
 const STILL_H = 138;
-const REEL = 6;
+const REEL = 12;   // the reel shows the first six; the carry sheet can look further back
 
 export function createShow({ canvas, insetFigure, reelList, env }) {
   const { W, H, LANES, LANE_W, PLAYER_Y, ROWS, ROW_H, PRESENCE_Y, Z, LOW, HIGH_CLEARS, KNOCKS, reduced } = env;
@@ -116,7 +116,7 @@ export function createShow({ canvas, insetFigure, reelList, env }) {
 
   function paintReel() {
     if (!reelList) return;
-    reelList.replaceChildren(...stills.map(({ still, caption }) => {
+    reelList.replaceChildren(...stills.slice(0, 6).map(({ still, caption }) => {
       const li = document.createElement('li');
       li.className = 'pie-show-still';
       const frame = document.createElement('canvas');
@@ -331,6 +331,8 @@ export function createShow({ canvas, insetFigure, reelList, env }) {
     frame,
     drawBoard,
     reset,
+    /** The stills kept this carry whose captions pass a test: { still, caption, entry }, newest first. */
+    stills: (test = () => true) => stills.filter((item) => test(item.caption || {})),
     calm: () => Boolean(reduced?.matches)
   };
 }

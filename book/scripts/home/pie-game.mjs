@@ -161,7 +161,7 @@ import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, d
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
-import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.N';
+import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
 
@@ -2492,6 +2492,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   const hideCard = () => {
     card.hidden = true;
+    card.querySelector('[data-pie-card-next]')?.setAttribute('hidden', '');
     if (cardChapters) cardChapters.hidden = true;
     if (cardModes) cardModes.hidden = true;
     cardLinks?.replaceChildren();
@@ -2530,6 +2531,171 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
   })();
   let lastCarry = null;
+  let lastProvenance = '';
+
+  /* ─── The carry, inspected: every achievement a tile; tap one for what it is, how it counted, how it
+   * compares with your best and your whole record, the stills of those moments, and its Spw atom ─── */
+  const ACHIEVEMENTS = Object.freeze([
+    ['cobbles', '.', 'cobbles carried', 'How far up the book the pie went. Further up the lanes, each cobble counts for more (×(1 + rows ahead × =ahead_bonus)).', null, 'best'],
+    ['chapters', '^', 'chapters carried through', 'A chapter carried through (or mostly, when it spilled) is kept on that chapter: how you carried it leans its reading on its page.', null, null],
+    ['waps', '!', 'clowns given WAP', 'A slice to a clown, square: the pie on the plate is never smaller.', null, 'waps'],
+    ['satisfied', '*', 'clowns satisfied', 'A clown whose appetite was filled: a whole slice a pip, a perfect slice two.', 'satisfied', 'satisfied'],
+    ['perfects', '*', 'perfect throws', 'Off a wall, off Bonk glass, off a ramp, poised, or on an arrow: it counts twice.', 'perfect', 'perfects'],
+    ['bestCombo', '&', 'WAPs in a row, at best', 'WAPs close together run on: from two the pie steadies; from three, a slice is ready at once.', null, null],
+    ['inTimeTotal', '~', 'hops in time', 'A hazard cleared at the top of a hop: the middle third of its arc.', 'in_time', null],
+    ['cleared', '~', 'hopped clear', 'A low thing passed under a hop: passed for good, and a slice readies.', 'hop_clear', null],
+    ['highClears', '^', 'over the top', 'A taller thing cleared by a high hop, the third of a clean chain.', null, null],
+    ['foils', '!', 'Mr. BaneWAP foiled', 'His off switch, found and thrown: a scheme undone.', 'foiled', 'foils'],
+    ['kept', '*', 'wonders kept', 'Steered into, up the lanes: kept in your almanac, with a gift for the carry.', 'kept', 'kept'],
+    ['shared', '&', 'slices shared', 'A whole slice to a clerk or a subject, who trade you something back.', 'shared', 'shared'],
+    ['sweetened', '&', 'baneberries sweetened', 'A baneberry WAPped kindly: its foretelling turns good.', 'sweetened', 'sweetened'],
+    ['squashed', '.', 'foretellings left unsaid', 'A baneberry stopped before it could say what would happen.', 'squashed', null],
+    ['met', '@', 'met for the first time', 'New to your deck: each has a card, a spell, and a place in the book.', null, null],
+    ['newLore', '#', 'lines of lore let slip', 'Said by a pie in the lanes: each is set beside its room on the chapter page.', null, null],
+    ['wasted', '%', 'slices wasted', 'A slice that hit nothing, or was boxed by a mime. It costs a little of each ingredient.', null, null]
+  ]);
+  function paintCarrySheet({ cause, distance, best }) {
+    const out = document.querySelector('[data-pie-carry-sheet]');
+    if (!out || !run) return null;
+    const value = {
+      cobbles: distance, chapters: run.outcomes.length, waps: run.waps, satisfied: run.satisfied, perfects: run.perfects, bestCombo: run.bestCombo || 0,
+      inTimeTotal: run.inTimeTotal || 0, cleared: run.cleared || 0, highClears: run.highClears || 0, foils: run.foils || 0, kept: run.kept || 0,
+      shared: run.shared || 0, sweetened: run.sweetened || 0, squashed: run.squashed || 0, met: run.met.length, newLore: run.newLore || 0, wasted: run.wasted || 0
+    };
+    // Bests, kept per achievement (cobbles keeps its own, record.best).
+    record.bests = record.bests || {};
+    const isBest = {};
+    ACHIEVEMENTS.forEach(([key]) => {
+      const was = key === 'cobbles' ? null : record.bests[key] || 0;
+      isBest[key] = key === 'cobbles' ? best : value[key] > 0 && value[key] > was && key !== 'wasted';
+      if (key !== 'cobbles' && key !== 'wasted') record.bests[key] = Math.max(was, value[key]);
+    });
+    writeRecord(record);
+    const shown = ACHIEVEMENTS.filter(([key]) => value[key] > 0 || key === 'cobbles');
+    const grid = nodeOf('ul', 'pie-ach-grid');
+    const detail = nodeOf('div', 'pie-ach-detail');
+    detail.setAttribute('aria-live', 'polite');
+    const open = (key, button) => {
+      grid.querySelectorAll('.pie-ach').forEach((b) => b.setAttribute('aria-pressed', b === button ? 'true' : 'false'));
+      const [, sigil, label, says, leanKey, totalKey] = ACHIEVEMENTS.find(([k]) => k === key);
+      const parts = [nodeOf('p', 'pie-ach-what', says)];
+      const rule = leanKey && (leanRules[leanKey] || LEAN_DEFAULTS[leanKey]);
+      const contest = leanKey && [...CONTEST.wap, ...CONTEST.maw].find(([id]) => id === leanKey);
+      if (rule || contest) {
+        const worth = nodeOf('p', 'pie-ach-worth');
+        worth.append('Each one: ');
+        if (rule) worth.append(nodeOf('b', `pie-points-chip is-${rule[0]}`, `${LEAN_GLYPH[rule[0]]} +${fmtPts(rule[1])} ${LEAN_NAMES[rule[0]]}`));
+        if (contest) worth.append(' ', nodeOf('b', `pie-points-chip is-${CONTEST.wap.includes(contest) ? 'wap' : 'maw'}`, `${CONTEST.wap.includes(contest) ? 'pie' : 'mimes'} +${fmtPts(contest[1])}`));
+        parts.push(worth);
+      }
+      const compare = [`This carry: ${value[key]}`];
+      if (key === 'cobbles') compare.push(`your best: ${record.best}`);
+      else if (record.bests?.[key] != null && key !== 'wasted') compare.push(`your best: ${record.bests[key]}`);
+      if (totalKey && totalKey !== 'best' && record[totalKey] != null) compare.push(`in every carry so far: ${record[totalKey]}`);
+      parts.push(nodeOf('p', 'pie-ach-compare', `${compare.join(' · ')}.`));
+      if (key === 'met' && run.met.length) parts.push(nodeOf('p', 'pie-ach-names', run.met.join(', ')));
+      // The stills of moments like these, if the show was keeping them.
+      const words = { waps: /WAP/i, satisfied: /satisfied/i, perfects: /perfect/i, inTimeTotal: /in time/i, cleared: /hop/i, foils: /foiled/i, kept: /wonder kept/i, shared: /shared/i, sweetened: /sweetened/i }[key];
+      const stills = words ? show.stills((c) => words.test(c.words || '')) : [];
+      if (stills.length) {
+        const strip = nodeOf('div', 'pie-ach-stills');
+        stills.slice(0, 3).forEach(({ still }) => {
+          const c = document.createElement('canvas');
+          c.width = still.width; c.height = still.height;
+          c.getContext('2d').drawImage(still, 0, 0);
+          c.setAttribute('aria-hidden', 'true');
+          strip.append(c);
+        });
+        parts.push(strip);
+      } else if (words && show.mode === 'off') {
+        parts.push(nodeOf('p', 'pie-ach-hint', 'Turn on ▢ Show and the next carry keeps stills of moments like these.'));
+      }
+      const atom = `${sigil}${key.replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)}[${value[key]}]`;
+      parts.push(renderSpell(atom, { cast: false, label: `${label}, as Spw` }));
+      detail.replaceChildren(nodeOf('p', 'pie-ach-head', `${value[key]} ${label}${isBest[key] ? ' · your best yet' : ''}`), ...parts);
+    };
+    shown.forEach(([key, sigil, label]) => {
+      const li = nodeOf('li', '');
+      const b = nodeOf('button', `pie-ach${isBest[key] ? ' is-best' : ''}`);
+      b.type = 'button';
+      b.dataset.key = key;
+      b.setAttribute('aria-pressed', 'false');
+      b.append(nodeOf('span', 'pie-ach-sigil', sigil), nodeOf('b', 'pie-ach-n', String(value[key])), nodeOf('span', 'pie-ach-label', label));
+      if (isBest[key]) b.append(nodeOf('span', 'pie-ach-best', 'best yet'));
+      b.addEventListener('click', () => open(key, b));
+      li.append(b);
+      grid.append(li);
+    });
+    const spell = lastProvenance ? renderSpell(lastProvenance, { cast: true, play: true, copy: 'lore.land/pie#carry', label: 'This carry, as Spw' }) : null;
+    const copy = nodeOf('button', 'pie-tool', '⧉ Copy as a prompt');
+    copy.type = 'button';
+    const status = nodeOf('p', 'pie-ach-status');
+    status.setAttribute('role', 'status');
+    copy.addEventListener('click', () => copyInto(carryPrompt({ cause, distance, value }), copy, status));
+    out.replaceChildren(
+      nodeOf('p', 'pie-flow-head', 'The carry, inspected'),
+      nodeOf('p', 'pie-ach-lede', `${chapterWords(run.chapter)}, under ${run.carrier.name}. Tap any of these for what it is and how it counted.`),
+      grid, detail,
+      ...(spell ? [nodeOf('p', 'pie-ach-sub', 'The carry, as Spw: read back by the parser, kept with the provenance cards.'), spell] : []),
+      (() => { const p = nodeOf('p', 'pie-ach-actions'); p.append(copy); return p; })(), status
+    );
+    out.hidden = false;
+    const first = grid.querySelector('.pie-ach.is-best') || grid.querySelector('.pie-ach');
+    if (first) open(first.dataset.key, first);
+    return { value, isBest };
+  }
+  const copyInto = async (text, button, status) => {
+    try { await navigator.clipboard.writeText(text); status.textContent = 'Copied: a scene from this carry, to write from, draw from, or pass along.'; } catch { status.textContent = text; }
+    button.blur();
+  };
+  /* The carry as a prompt: a scene to write or draw from, in the book's voice, with where it came from. */
+  function carryPrompt({ cause, distance, value }) {
+    const title = document.querySelector('[data-pie-flow-title]')?.textContent?.trim() || '';
+    const done = [
+      value.waps && `${value.waps} clown${value.waps === 1 ? '' : 's'} given WAP`,
+      value.inTimeTotal && `${value.inTimeTotal} hop${value.inTimeTotal === 1 ? '' : 's'} in time`,
+      value.kept && `${value.kept} wonder${value.kept === 1 ? '' : 's'} kept`,
+      value.foils && 'Mr. BaneWAP foiled',
+      run.met.length && `met for the first time: ${run.met.join(', ')}`
+    ].filter(Boolean);
+    return [
+      `A scene from lore.land, the serial book: ${run.carrier.name} carries exactly one pie up the lanes of ${chapterWords(run.chapter)}${title ? `, ${title}` : ''}. ${scene().card}`,
+      `The moment it spills: ${CAUSES[cause] || 'it spills, as it was always going to.'}`,
+      done.length ? `Before that, ${distance} cobbles of it: ${done.join('; ')}.` : `Before that, ${distance} cobbles of it.`,
+      'Tell it, or draw it, warm and exact and a little absurd; nobody is hurt, the hat does not fall, and the pie on the plate is never smaller.',
+      `#from["lore.land/pie carry ${new Date().toISOString().slice(0, 10)}"]`
+    ].join('\n');
+  }
+  /* What to try next: one plain prompt, from what actually happened, with a way to do it. */
+  function paintNextPrompt({ cause }) {
+    const out = card.querySelector('[data-pie-card-next]');
+    if (!out || !run) return;
+    const n = run.chapter;
+    const known = roomsReadIn(n);
+    const total = ROOM_TOTALS[n] || 0;
+    const tries = [];
+    const z = Z[cause];
+    const thingName = (CARDS[cause]?.name || cause).replace(/^(A|An|The) /, '').toLowerCase();
+    if (LOW.has(cause)) tries.push({ text: `The ${thingName} was low enough to hop. ⤒ Heights shows the moment to hop it.`, label: '⤒ Open Heights', act: () => { if (heightsPanel) { heightsPanel.open = true; heightsPanel.scrollIntoView({ block: 'nearest' }); } } });
+    else if (HIGH_CLEARS.has(cause)) tries.push({ text: `Only a high hop clears a ${thingName}: three clean hops in a row. Or step aside a lane early.` });
+    else if (z >= 3) tries.push({ text: `The ${thingName} came through the air: no hop helps. Step aside before it reaches your lane.` });
+    else if (cause === 'wobble') tries.push({ text: 'Too much, too soon: stand still a moment and the pie settles; when it leans, step toward the lean to catch it.' });
+    else if (KNOCKS[cause]) tries.push({ text: `A ${thingName} is too tall to hop: watch its lane, and step aside early.` });
+    const taken = run.outcomes.find((o) => o.outcome === 'won');
+    if (taken) tries.push({ text: `The mimes took ${chapterWords(taken.n)}. Win it back: throw over them off a hop, or satisfy clowns faster than they march.`, label: `▶ From ${chapterWords(taken.n)}`, act: () => { chosenStartChapter = taken.n; paintCardChapters(taken.n); cardAction.click(); } });
+    if (total && known < total) tries.push({ text: `You have read ${known} of ${total} rooms of ${chapterWords(n)}. Read the rest and the pie is steadier there, and the pies will say what they know of it.`, label: `Read ${chapterWords(n)} →`, href: `/book/chapter/${pad2(n)}/` });
+    if (!tries.length) tries.push({ text: 'Try another way up: a different start chapter, or the knack of whoever the hat settles on next.' });
+    const [first, ...rest] = tries;
+    const make = (t, primary) => {
+      const p = nodeOf('p', `pie-card-next-line${primary ? ' is-primary' : ''}`);
+      p.append(nodeOf('span', '', t.text));
+      if (t.href) { const a = nodeOf('a', 'pie-card-next-act', t.label); a.href = t.href; p.append(' ', a); }
+      else if (t.act) { const b = nodeOf('button', 'pie-card-next-act', t.label); b.type = 'button'; b.addEventListener('click', (e) => { e.stopPropagation(); t.act(); }); p.append(' ', b); }
+      return p;
+    };
+    out.replaceChildren(nodeOf('span', 'pie-card-next-head', 'Next'), make(first, true), ...rest.slice(0, 1).map((t) => make(t, false)));
+    out.hidden = false;
+  }
   const goBack = () => {
     if (!from) return;
     leaveBackNote({
@@ -2798,7 +2964,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.shared = (record.shared || 0) + run.shared;
     record.sweetened = (record.sweetened || 0) + run.sweetened;
     // The carry, written back as Spw: how this pie came to be where it spilled (pie-powers.mjs).
-    keepProvenance(carryProvenance({
+    keepProvenance(lastProvenance = carryProvenance({
       date: new Date().toISOString().slice(0, 10),
       chapter: run.chapter,
       carrier: run.carrier.id,
@@ -2846,7 +3012,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const marks = run.outcomes.map((o) => (o.outcome === 'won' ? `The mimes took ${chapterWords(o.n)}.` : o.outcome === 'back' ? `${chapterWords(o.n)} won back from the mimes.` : o.outcome === 'held' ? `The mimes kept ${chapterWords(o.n)}.` : '')).filter(Boolean).join(' ');
       const carried = run.outcomes.length ? ` Chapters carried through: ${run.outcomes.length}.${marks ? ` ${marks}` : ''}` : '';
       const firsts = run.met.length ? ` Met for the first time: ${run.met.join(', ')}.` : '';
-      showCard(biased('spill.title', 'Exactly one.', { who: run.carrier.name }), `${biased('spill.line', CAUSES[cause], { who: run.carrier.name, where: chapterWords(run.chapter) })} Under the hat this time: ${run.carrier.name}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${served}${foiled}${carried}${firsts} The hat did not fall.`, chosenStartChapter > 1 ? `▶ Play again from ${chapterWords(chosenStartChapter)}` : '▶ Play again');
+      // The card is a prompt: what happened in a line, what stood out, and what to try next. Everything
+      // else, inspectable, is in The carry, inspected, beside the screen.
+      showCard(biased('spill.title', 'Exactly one.', { who: run.carrier.name }), `${biased('spill.line', CAUSES[cause], { who: run.carrier.name, where: chapterWords(run.chapter) })} ${run.carrier.name.charAt(0).toUpperCase()}${run.carrier.name.slice(1)}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${marks ? ` ${marks}` : ''}`, chosenStartChapter > 1 ? `▶ Play again from ${chapterWords(chosenStartChapter)}` : '▶ Play again');
+      const sheet = paintCarrySheet({ cause, distance, best });
+      paintNextPrompt({ cause, sheet });
       paintCarries();
       paintCardChapters(run.chapter);
       paintCardModes();
@@ -2868,6 +3038,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         marked.textContent = 'See what your carries have done to the book →';
         links.push(marked);
       }
+      const inspect = document.createElement('a');
+      inspect.href = '#pie-carry-sheet';
+      inspect.className = 'pie-card-link';
+      inspect.textContent = 'The carry, inspected →';
+      inspect.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = document.getElementById('pie-carry-sheet');
+        target?.scrollIntoView({ block: 'start', behavior: reduced?.matches ? 'auto' : 'smooth' });
+        target?.querySelector('.pie-ach')?.focus({ preventScroll: true });
+      });
+      links.unshift(inspect);
       if (newLore) {
         const slip = document.createElement('a');
         slip.href = '#pie-lore';
@@ -3963,13 +4144,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             const inTime = Math.abs(phase - 0.5) < 0.17;
             if (inTime) {
               run.inTime = (run.inTime || 0) + 1;
+              run.inTimeTotal = (run.inTimeTotal || 0) + 1;
               lean('in_time');
               sfx('deft');
               beat();
               if (run.inTime >= 2) meanwhile('boof', 'glad', run.inTime >= 3 ? '♪ ♪' : '♪');
             }
             run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: inTime ? (run.inTime >= 2 ? `IN TIME ×${run.inTime}` : 'IN TIME') : run.highHop && !LOW.has(thing.kind) ? 'OVER THE TOP' : 'CLEARED' });
-            if (run.highHop && !LOW.has(thing.kind)) meanwhile('boof', 'surprised', '!');
+            if (run.highHop && !LOW.has(thing.kind)) { meanwhile('boof', 'surprised', '!'); run.highClears = (run.highClears || 0) + 1; }
             if (run.mini) run.mini.score += 1;
             if (run.highHop && !LOW.has(thing.kind)) impact('hop', thing.x, thing.y - 40, { scale: 0.8, word: pick(['OVER!', 'WHEEE!', 'UP AND OVER!']) });
           }

@@ -3672,3 +3672,234 @@ html:not([data-chrome-hidden='true']) .pie-index {
   outline: 2px solid var(--hub-gold);
   outline-offset: 1px;
 }
+
+/* ─── The spill card as a prompt: what to try next, from what actually happened ─── */
+.pie-card-next {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px dashed rgba(217, 195, 138, 0.55);
+  border-radius: 0.3rem;
+  background: rgba(217, 195, 138, 0.06);
+  text-align: left;
+}
+
+.pie-card-next[hidden] {
+  display: none;
+}
+
+.pie-card-next-head {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d9c38a;
+}
+
+.pie-card-next-line {
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: rgba(243, 234, 214, 0.82);
+}
+
+.pie-card-next-line.is-primary {
+  font-size: 0.9rem;
+  color: #f3ead6;
+}
+
+.pie-card-next-act {
+  display: inline-block;
+  margin-top: 0.2rem;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid #d9c38a;
+  border-radius: 999px;
+  background: rgba(217, 195, 138, 0.14);
+  color: #f3ead6;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.68rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pie-card-next-act:hover,
+.pie-card-next-act:focus-visible {
+  background: rgba(217, 195, 138, 0.3);
+  outline: none;
+}
+
+/* ─── The carry, inspected: every achievement a tile, one open at a time ─── */
+.pie-carry-sheet {
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.75rem;
+  border: 2px solid var(--panel-ink, var(--hub-ink));
+  border-radius: 0.3rem;
+  background: var(--hub-panel);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 18%, transparent);
+}
+
+.pie-carry-sheet[hidden] {
+  display: none;
+}
+
+.pie-ach-lede,
+.pie-ach-sub {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+.pie-ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.4rem, 1fr));
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-ach-grid li {
+  max-width: none;
+  margin: 0;
+}
+
+.pie-ach {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: 'sigil n' 'label label';
+  align-items: baseline;
+  gap: 0 0.35rem;
+  width: 100%;
+  min-height: 3.6rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--hub-paper) 55%, var(--hub-panel));
+  color: var(--hub-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.pie-ach-sigil {
+  grid-area: sigil;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--hub-gold) 65%, var(--hub-ink));
+}
+
+.pie-ach-n {
+  grid-area: n;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.pie-ach-label {
+  grid-area: label;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: var(--hub-muted);
+}
+
+.pie-ach-best {
+  position: absolute;
+  top: -0.45rem;
+  right: 0.3rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--hub-gold);
+  color: #1d1d22;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pie-ach.is-best {
+  border-color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-line));
+}
+
+.pie-ach[aria-pressed='true'] {
+  border-color: var(--hub-ink);
+  box-shadow: inset 0 0 0 1px var(--hub-ink), 2px 2px 0 color-mix(in srgb, var(--hub-ink) 20%, transparent);
+}
+
+.pie-ach:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: 2px;
+}
+
+.pie-ach-detail {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.55rem 0 0.7rem;
+  padding: 0.55rem 0.65rem;
+  border-left: 3px solid var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 6%, var(--hub-panel));
+}
+
+.pie-ach-detail p {
+  max-width: none;
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.pie-ach-head {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep);
+}
+
+.pie-ach-compare,
+.pie-ach-hint {
+  color: var(--hub-muted);
+  font-style: italic;
+}
+
+.pie-ach-stills {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.pie-ach-stills canvas {
+  width: 32%;
+  aspect-ratio: 184 / 138;
+  border: 1.5px solid var(--panel-ink, var(--hub-ink));
+  border-radius: 0.2rem;
+}
+
+.pie-ach-actions {
+  margin: 0.6rem 0 0;
+}
+
+.pie-ach-status {
+  margin: 0.3rem 0 0;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+  white-space: pre-line;
+}
+
+/* The spill card reads as a prompt, top to bottom: what happened, what to try next, play again; then
+ * how to play again (modes, a start chapter) and the ways out. Long, it scrolls from its top. */
+.pie-card {
+  align-content: safe center;
+  grid-auto-rows: max-content;   /* no row shrinks to nothing when the card runs long */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pie-card > .pie-card-title { order: 0; }
+.pie-card > .pie-card-line { order: 1; }
+.pie-card > .pie-card-next { order: 2; }
+.pie-card > .pie-card-action { order: 3; }
+.pie-card > .pie-card-modes { order: 4; }
+.pie-card > .pie-card-chapters { order: 5; }
+.pie-card > .pie-card-links { order: 6; }

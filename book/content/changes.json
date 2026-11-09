@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.Q",
+      "date": "2026-11-08",
+      "notes": [
+        "When the pie spills, the card is a prompt now: what happened in a line, then what to try next, drawn from what actually happened (it was low enough to hop, the mimes took a chapter, there are rooms still unread), with a button or a link to do it, and Play again.",
+        "Beside the screen, The carry, inspected lays out everything the carry did as tiles, marking your bests. Tap one for what it is, what each is worth, how this carry compares with your best and with every carry so far, the stills of those moments if the show kept them, and the same thing as a line of Spw; the whole carry is there as a spell too.",
+        "Copy as a prompt writes the carry as a scene, in the book's voice, to write or draw from or pass along."
+      ]
+    },
+    {
       "release": "2026_11_08.P",
       "date": "2026-11-08",
       "notes": [

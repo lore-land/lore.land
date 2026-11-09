@@ -98,6 +98,13 @@
   reward: "planned: parts of the side view earned rather than given, the arc after a first hop in time, the words after a chapter carried, a longer look after a high hop; everything stays configurable once earned, and nothing a player has now is taken away"
 }
 
+^end_of_carry{
+  .note: "pie-game.mjs paintCarrySheet, paintNextPrompt, carryPrompt; the card and The carry, inspected"
+  card: "a prompt, top to bottom: what happened in a line, what to try next (from why it spilled, a chapter the mimes took, rooms unread) with a way to do it, play again; then how to play again and the ways out"
+  inspected: "every achievement a tile with best yet marked; tap one for what it is, what each is worth in points, this carry against your best and your whole record, the stills of those moments if the show kept them, and its Spw atom; the carry itself as a provenance spell"
+  prompt: "copy the carry as a scene to write or draw from, in the book voice, with where it came from"
+}
+
 ^exchange{
   .note: "the game and the story feed each other both ways; .spw/audits/progression.spw counts it (npm run spw:progression)"
   story_to_game: "rooms read in a chapter steady the pie there, up to a third; a chapter read room by room makes the pies say its lore; the chapter toast says how many rooms you have read"
