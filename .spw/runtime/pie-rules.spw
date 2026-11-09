@@ -107,3 +107,42 @@
   *court{ $glass %drama[1.2] }
   *table{ $oak %drama[1] }
 }
+
+# What can go well or poorly in the lanes is what can be probed and measured: each outcome asks
+# something (?), measures something (%), and returns a bias toward a way of reading (=, the =lean
+# weights above) and a reference to where in the story it happened (~ the room passing). The game
+# writes each outcome this way (pie-game.mjs outcomeSpell); the inspected carry shows them with
+# their rooms.
+?outcomes{
+  satisfied{ ?appetite %pips }
+  perfect{ ?aim %bounces }
+  knocked{ ?clears %tilt }
+  hop_clear{ ?clears %lift }
+  in_time{ ?timing %phase }
+  boxed{ ?through %gap }
+  kept{ ?reach %rows }
+  read{ ?underfoot %words }
+  foiled{ ?switch %schemes }
+  over_mimes{ ?loft %height }
+  sweetened{ ?kindness %foretold }
+  caught{ ?lean %tilt }
+  cast{ ?room %verb }
+}
+
+# The story shapes the play, room by room. A room's sigil says what kind of room it is: while it
+# passes, its own things come up the lanes (blending into the next room's in its last third), and its
+# verb, done while it passes, casts the room (kept beside it on the chapter page).
+!rooms{
+  action{ .sigil["!"] *kinds[post stone spool] !verb[struck] ?by[satisfied perfect foiled] }
+  probe{ .sigil["?"] *kinds[baneberry snail] !verb[answered] ?by[squashed sweetened in_time] }
+  potential{ .sigil["~"] *kinds[berry furrow] !verb[taken] ?by[boonberry furrow kept] }
+  perspective{ .sigil["@"] *kinds[pigeon vane] !verb[seen] ?by[sighting boof boonwap] }
+  confluence{ .sigil["&"] *kinds[clown clerk subject] !verb[joined] ?by[shared satisfied] }
+  value{ .sigil["*"] *kinds[boneberry berry] !verb[kept] ?by[kept boneberry egg] }
+  integration{ .sigil["^"] *kinds[pile arrow] !verb[lifted] ?by[ramp over_mimes in_time] }
+  annotation{ .sigil["#"] *kinds[arrow vane] !verb[marked] ?by[aimed read] }
+  ground{ .sigil["."] *kinds[stone hole snail] !verb[let_go] ?by[hop_clear deft] }
+  config{ .sigil["="] *kinds[mime pane] !verb[tuned] ?by[caught over_mimes] }
+  measure{ .sigil["%"] *kinds[clerk] !verb[measured] ?by[perfect satisfied] }
+  substrate{ .sigil["$"] *kinds[sack pile] !verb[made] ?by[boneberry ramp caught] }
+}

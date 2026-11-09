@@ -1020,7 +1020,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
     caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
-    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], read: ['boon', 0.2]
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], read: ['boon', 0.2], cast: ['bone', 0.5]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -1029,7 +1029,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
     caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
-    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', read: 'words read underfoot'
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', read: 'words read underfoot', cast: 'rooms cast'
   });
   let leanRules = {};
   const lean = (event, n = 1) => {
@@ -1037,6 +1037,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!cat || !run?.tally) return;
     tally(cat, w * n);
     noteFeed({ cat, pts: w * n, event, word: LEAN_ONE[event] || LEAN_WORDS[event] || event.replace(/_/g, ' ') });
+    if (event !== 'cast') castIfRoomAsks(event);
     run.leanWhy = run.leanWhy || {};
     run.leanWhy[event] = (run.leanWhy[event] || 0) + n;
   };
@@ -1062,7 +1063,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'a knock', boxed: 'a slice boxed', bane_fed: 'a baneberry fed to him', scheme_ran: 'a scheme run', foretold: 'a foretelling come true',
     flinched: 'a flinch', let_past: 'a baneberry let past', perfect: 'a perfect throw', over_mimes: 'over the mimes', ramp: 'off a ramp',
     hop_clear: 'a clean hop', deft: 'a deft landing', caught: 'a tilt caught', boneberry: 'a boneberry', foiled: 'Mr. BaneWAP foiled',
-    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', read: 'a word read underfoot'
+    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', read: 'a word read underfoot', cast: 'a room cast'
   });
   /* The contest with Mimes Against WAP: what scores for the pie, and what for the mimes. */
   const CONTEST = Object.freeze({
@@ -1081,7 +1082,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!run) return;
     let entry = run.feed[run.feed.length - 1];
     if (!entry || run.t - entry.t > 0.08) {
-      entry = { t: run.t, x: run.x, y: run.y - 26, parts: {}, contest: {}, words: [], events: [], chapter: run.chapter, n: ++feedSeen };
+      entry = { t: run.t, x: run.x, y: run.y - 26, parts: {}, contest: {}, words: [], events: [], chapter: run.chapter, n: ++feedSeen, ref: roomRef() };
       run.feed.push(entry);
       if (run.feed.length > 60) run.feed.shift();
       queueMicrotask(() => { if (run?.feed.includes(entry)) { showFeed(entry); paintPointsSoon(); } });
@@ -1148,6 +1149,124 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
     ctx.restore();
   };
+  /* ─── Rooms in the lanes: the story's own events shape the play, and the play can cast a room ───
+   * Every room has a Spw signature, and its sigil says what kind of room it is. While a room passes,
+   * the lanes lean its way: its own things come up more often, blending into the next room's as the
+   * passage nears it (a gradient, not a switch). And every sigil has a verb: do the room's verb while it
+   * passes and the room is cast, kept in lore.rooms.cast.v1, and shown beside the room on the page.
+   * Each outcome in the lanes is also an outcome in Spw: what it asked (?), what it measured (%), the
+   * bias it returns (= toward a way of reading) and where in the story it happened (~ the room). */
+  const ROOM_PLAY = Object.freeze({
+    '!': { kinds: ['post', 'stone', 'spool'], verb: 'struck', events: ['satisfied', 'perfect', 'foiled'], says: 'things strike here: more comes at you', how: 'give a clown its WAP while the room passes' },
+    '?': { kinds: ['baneberry', 'snail'], verb: 'answered', events: ['squashed', 'sweetened', 'in_time'], says: 'a room of questions: foretellings come up the lanes', how: 'squash or sweeten a baneberry, or hop in time' },
+    '~': { kinds: ['berry', 'furrow'], verb: 'taken', events: ['boonberry', 'furrow', 'kept'], says: 'a room of what might be: boonberries and warm furrows', how: 'take boonberries, or a warm furrow' },
+    '@': { kinds: ['pigeon', 'vane'], verb: 'seen', events: ['sighting', 'boof', 'boonwap'], says: 'a room seen from somewhere: watchers and weathercocks', how: 'notice someone: brush past Boof, or catch the figure' },
+    '&': { kinds: ['clown', 'clerk', 'subject'], verb: 'joined', events: ['shared', 'satisfied'], says: 'a room of meetings: people to share with', how: 'share a slice, or satisfy a clown' },
+    '*': { kinds: ['boneberry', 'berry'], verb: 'kept', events: ['kept', 'boneberry', 'egg'], says: 'a room of what is valued: things worth keeping', how: 'keep a wonder, or eat a boneberry' },
+    '^': { kinds: ['pile', 'arrow'], verb: 'lifted', events: ['ramp', 'over_mimes', 'in_time'], says: 'a room that rises: ramps of flour and arrows', how: 'throw off a ramp, or hop in time' },
+    '#': { kinds: ['arrow', 'vane', 'banner'], verb: 'marked', events: ['aimed', 'read'], says: 'a room of signs: arrows, vanes and words', how: 'follow an arrow, or read a glowing word underfoot' },
+    '.': { kinds: ['stone', 'hole', 'snail'], verb: 'let go', events: ['hop_clear', 'deft'], says: 'a room of ground: stones and holes', how: 'hop something clean' },
+    '=': { kinds: ['mime', 'pane'], verb: 'tuned', events: ['caught', 'over_mimes'], says: 'a room of rules: mimes and their walls, Bonk glass', how: 'catch the pie as it leans, or throw over the mimes' },
+    '%': { kinds: ['clerk'], verb: 'measured', events: ['perfect', 'satisfied'], says: 'a room of measures: feast clerks with their slips', how: 'make a perfect throw' },
+    '$': { kinds: ['sack', 'pile'], verb: 'made', events: ['boneberry', 'ramp', 'caught'], says: 'a room made of something: flour, sacks and what they make', how: 'eat a boneberry, or throw off a ramp' }
+  });
+  const CAST_KEY = 'lore.rooms.cast.v1';
+  const readCasts = () => { try { return JSON.parse(window.localStorage.getItem(CAST_KEY) || '{}') || {}; } catch { return {}; } };
+  /* The room passing now: its number, signature, sigil, how far through it the carry is, and the next one. */
+  function roomNow() {
+    const at = passing();
+    if (!at?.para?.room) return null;
+    const { leg, i, para } = at;
+    let first = i;
+    let last = i;
+    while (first > 0 && leg.paras[first - 1].sec === para.sec) first -= 1;
+    while (last < leg.paras.length - 1 && leg.paras[last + 1].sec === para.sec) last += 1;
+    const span = Math.max(1, last - first + 1);
+    const n = leg.paras.length;
+    const within = clamp(progress() * n - first, 0, span) / span;
+    const nextPara = leg.paras.slice(last + 1).find((p) => p.room);
+    // The page gives a titled room an anchor from its title (the build's slug), when it has no id of its own.
+    const anchor = para.id || (para.title ? para.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : null);
+    return { chapter: leg.n, n: para.roomNo, sig: para.room, sigil: para.room.charAt(0), title: para.title, id: anchor, within, next: nextPara ? nextPara.room.charAt(0) : null };
+  }
+  const roomRef = () => { const r = roomNow(); return r ? { chapter: r.chapter, n: r.n, sig: r.sig, sigil: r.sigil, id: r.id } : null; };
+  /* The gradient: a thing of the room's own kinds, now and then, weighted toward the next room's as it nears. */
+  function roomThing(free) {
+    const r = roomNow();
+    if (!r || !free.length) return null;
+    const blend = r.within > 0.7 && r.next ? (r.within - 0.7) / 0.3 : 0;   // the last third leans into what is next
+    const sigil = Math.random() < blend ? r.next : r.sigil;
+    const play = ROOM_PLAY[sigil];
+    if (!play || Math.random() > 0.3) return null;
+    const kinds = play.kinds.filter((kind) => allowed(kind) && !WIDE.has(kind));
+    return kinds.length ? makeThing(pick(kinds), pick(free)) : null;
+  }
+  /* Casting: the room's verb, done while it passes. Once a carry, once a room; kept for the page. */
+  function castIfRoomAsks(event) {
+    const r = roomNow();
+    const play = r && ROOM_PLAY[r.sigil];
+    if (!play || !play.events.includes(event) || !r.n) return;
+    run.castThisCarry = run.castThisCarry || new Set();
+    const key = `${r.chapter}:${r.n}`;
+    if (run.castThisCarry.has(key)) return;
+    run.castThisCarry.add(key);
+    const casts = readCasts();
+    const isNew = !casts[r.chapter]?.[r.n];
+    casts[r.chapter] = casts[r.chapter] || {};
+    casts[r.chapter][r.n] = { verb: play.verb, by: event, sig: r.sig, at: new Date().toISOString().slice(0, 10) };
+    try { window.localStorage.setItem(CAST_KEY, JSON.stringify(casts)); } catch { /* kept for the visit */ }
+    record.roomsCast = record.roomsCast || {};
+    record.roomsCast[r.sigil] = (record.roomsCast[r.sigil] || 0) + (isNew ? 1 : 0);
+    writeRecord(record);
+    lean('cast');
+    run.tags.push({ x: run.x, y: run.y - 120, t: 0, text: `ROOM ${r.n} CAST: ${play.verb.toUpperCase()}` });
+    impact('combo', W / 2, 150, { scale: 0.7, word: `${r.sigil} ${play.verb.toUpperCase()}!` });
+    showToast(`Room ${r.n} cast · ${play.verb}`, `${r.sig}${r.title ? ` — ${r.title}` : ''}. ${isNew ? 'Kept on the chapter page, beside the room.' : 'Cast again.'}`, 3200, 'wonder');
+  }
+  /* Entering a room: its banner, by how well its sigil is known. Syntax (its signature) always; semantics
+   * (what the sigil makes of the lanes) once a room of that sigil has passed before; pragmatics (how to
+   * cast it) from the third such room, or as soon as one has been cast. */
+  let roomShown = '';
+  function announceRoom() {
+    const r = roomNow();
+    if (!r || !r.n) return;
+    const key = `${r.chapter}:${r.n}`;
+    if (key === roomShown) return;
+    roomShown = key;
+    const play = ROOM_PLAY[r.sigil];
+    record.roomsSeen = record.roomsSeen || {};
+    const seen = record.roomsSeen[r.sigil] || 0;
+    record.roomsSeen[r.sigil] = seen + 1;
+    writeRecord(record);
+    const cast = (record.roomsCast?.[r.sigil] || 0) > 0;
+    const already = readCasts()[r.chapter]?.[r.n];
+    const lines = [];
+    if (play && (seen >= 1 || cast)) lines.push(`${r.sigil}: ${play.says}.`);
+    if (play && (seen >= 2 || cast)) lines.push(already ? `Cast before (${already.verb}).` : `Cast it: ${play.how}.`);
+    showToast(`Room ${r.n} · ${r.sig}`, lines.join(' ') || (r.title || 'A room of the chapter, passing.'), 3000, '');
+  }
+  /* An outcome as Spw: what it asked, what it measured, the bias it returns, and where it happened. */
+  const OUTCOME = Object.freeze({
+    satisfied: ['appetite', 'pips'], perfect: ['aim', 'bounces'], knocked: ['clears', 'tilt'], hop_clear: ['clears', 'lift'], in_time: ['timing', 'phase'],
+    boxed: ['through', 'gap'], kept: ['reach', 'rows'], read: ['underfoot', 'words'], foiled: ['switch', 'schemes'], over_mimes: ['loft', 'height'],
+    sweetened: ['kindness', 'foretold'], ahead: ['nerve', 'rows'], shared: ['company', 'slices'], caught: ['lean', 'tilt'], cast: ['room', 'verb'],
+    aimed: ['needle', 'arrows'], boonberry: ['sweetness', 'berries'], furrow: ['warmth', 'furrows'], boneberry: ['savour', 'berries'], deft: ['landing', 'hops'],
+    ramp: ['rise', 'ramps'], sighting: ['notice', 'strokes'], boof: ['nose', 'brushes'], boonwap: ['court', 'lines'], scheme_ran: ['scheme', 'runs'],
+    bane_fed: ['appetite', 'baneberries'], let_past: ['watch', 'baneberries'], foretold: ['prophecy', 'come_true'], squashed: ['silence', 'unsaid'],
+    flinched: ['nerve', 'flinches'], egg: ['warmth', 'passes'], alley: ['game', 'arrows'], parade: ['game', 'clowns'], long_view: ['game', 'cleared']
+  });
+  const WAY_LABEL = Object.freeze({ boon: 'fairy_tale', bane: 'absurd_reality', bone: 'low_magic' });
+  function outcomeSpell(entry) {
+    const event = entry.events[0] || 'moment';
+    const [probe, measure] = OUTCOME[event] || ['what', 'n'];
+    const parts = [`?${probe}`, `%${measure}[${entry.events.length || 1}]`];
+    const num = (v) => String(Math.round(v * 100) / 100);   // plain numbers in Spw: 0.5, never ½
+    Object.entries(entry.parts).forEach(([cat, pts]) => parts.push(`=${WAY_LABEL[cat]}[${num(pts)}]`));
+    Object.entries(entry.contest).forEach(([side, pts]) => parts.push(`&${side === 'wap' ? 'pie' : 'mimes'}[${num(pts)}]`));
+    if (entry.ref) parts.push(`~"book/chapter/${pad2(entry.ref.chapter)}${entry.ref.id ? `#${entry.ref.id}` : ''}"`, `#room[${entry.ref.n}]`);
+    return `!${event}{ ${parts.join(' ')} }`;
+  }
+
   /* ─── The lane from the side (pie-heights.mjs): what the game will do, handed over each frame ─── */
   const inLaneOf = (th) => (WIDE.has(th.kind) ? th.gap !== run.lane : Math.abs(th.x - run.x) < ((th.w || 24) + run.carrier.width) / 2);
   function heightsSnap() {
@@ -1834,6 +1953,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const free = lanes.filter((lane) => !blocked.has(lane));
     const low = (s.low || ['puddle']).filter(allowed);
     if (low.length && Math.random() < 0.14 + d * 0.12 + (s.low ? 0.12 : 0)) run.things.push(makeThing(pick(low), pick(free)));
+    // The room passing leans the lanes its way (and, near its end, toward the next room's way).
+    if (!calm) { const roomish = roomThing(free.filter((lane) => !run.things.some((t) => t.y < 0 && t.lane === lane))); if (roomish) run.things.push(roomish); }
     // This chapter's wonders, in the order the leg reaches them. Ones already in your almanac wait a little longer.
     if (run.wonderQueue.length && progress() >= run.wonderQueue[0].at) {
       const wonder = makeThing('wonder', pick(free));
@@ -2759,6 +2880,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['squashed', '.', 'foretellings left unsaid', 'A baneberry stopped before it could say what would happen.', 'squashed', null],
     ['met', '@', 'met for the first time', 'New to your deck: each has a card, a spell, and a place in the book.', null, null],
     ['newLore', '#', 'lines of lore let slip', 'Said by a pie in the lanes: each is set beside its room on the chapter page.', null, null],
+    ['roomsCast', '^', 'rooms cast', 'A room’s own verb, done while it passed (struck, answered, joined, kept…): kept beside the room on the chapter page.', 'cast', null],
     ['wasted', '%', 'slices wasted', 'A slice that hit nothing, or was boxed by a mime. It costs a little of each ingredient.', null, null]
   ]);
   function paintCarrySheet({ cause, distance, best }) {
@@ -2767,7 +2889,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const value = {
       cobbles: distance, chapters: run.outcomes.length, waps: run.waps, satisfied: run.satisfied, perfects: run.perfects, bestCombo: run.bestCombo || 0,
       inTimeTotal: run.inTimeTotal || 0, cleared: run.cleared || 0, highClears: run.highClears || 0, foils: run.foils || 0, kept: run.kept || 0,
-      shared: run.shared || 0, sweetened: run.sweetened || 0, squashed: run.squashed || 0, met: run.met.length, newLore: run.newLore || 0, wasted: run.wasted || 0
+      shared: run.shared || 0, sweetened: run.sweetened || 0, squashed: run.squashed || 0, met: run.met.length, newLore: run.newLore || 0, wasted: run.wasted || 0,
+      roomsCast: run.castThisCarry?.size || 0
     };
     // Bests, kept per achievement (cobbles keeps its own, record.best).
     record.bests = record.bests || {};
@@ -2816,6 +2939,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         parts.push(strip);
       } else if (words && show.mode === 'off') {
         parts.push(nodeOf('p', 'pie-ach-hint', 'Turn on ▢ Show and the next carry keeps stills of moments like these.'));
+      }
+      // Where in the story it happened: each time, as an outcome in Spw, with a way into that room.
+      const where = leanKey ? (run.feed || []).filter((e) => e.events.includes(leanKey) && e.ref).slice(-3).reverse() : [];
+      if (where.length) {
+        const list = nodeOf('ul', 'pie-ach-where');
+        where.forEach((e) => {
+          const li = nodeOf('li', '');
+          const a = nodeOf('a', '', `Room ${e.ref.n} of ${chapterWords(e.ref.chapter)} →`);
+          a.href = `/book/chapter/${pad2(e.ref.chapter)}/${e.ref.id ? `#${e.ref.id}` : ''}`;
+          li.append(renderSpell(outcomeSpell(e), { cast: false, layout: 'line', label: 'Where it happened, as Spw' }), a);
+          list.append(li);
+        });
+        parts.push(nodeOf('p', 'pie-ach-sub', 'Where in the story it happened:'), list);
       }
       const atom = `${sigil}${key.replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)}[${value[key]}]`;
       parts.push(renderSpell(atom, { cast: false, label: `${label}, as Spw` }));
@@ -2943,13 +3079,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       loadAlmanacData()
     ]);
     const paras = [];
+    // Rooms are numbered as the chapter page numbers them: among the sections that have a room.
+    const roomNoOf = new Map();
+    (chapter?.sections || []).forEach((section, sec) => { if (section.room) roomNoOf.set(sec, roomNoOf.size + 1); });
     (chapter?.sections || []).forEach((section, sec) => {
       const walk = (node) => (node.content || []).forEach((item) => {
         if (item.type === 'paragraph' && item.text) {
           // Variant zero: the book's own words; slots stay ready to turn with the carry's lean.
           const rawText = String(item.text);
           const text = rawText.replace(/\{\{([a-z0-9-]+)\}\}/gi, (_, name) => item.slots?.[name]?.variants?.[0] ?? '');
-          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, voice: voiceName(section.type), room: section.room?.spw || null, title: section.title || null });
+          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, roomNo: roomNoOf.get(sec) || null, voice: voiceName(section.type), room: section.room?.spw || null, title: section.title || null });
         } else if (Array.isArray(item.content)) {
           walk(item);
         }
@@ -3136,6 +3275,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.intro = introMode;
     show.reset();
     Object.assign(laneStory, { para: -1, at: -1, capQ: [], cap: '', roadQ: [] });
+    roomShown = '';
     hideCard();
     state = 'running';
     // Immersion: on Play, the whole cabinet comes into view (⚙ Setup can leave the page where it is).
@@ -3843,6 +3983,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       flowAt = i;
     }
     laneStoryTick(i, f - i);
+    announceRoom();
     const { top, h } = flowMeasure[i];
     // Where the passing line sits (⚙ Setup: high, middle, low), and how the story moves: a passage at a
     // time (each held still while it passes, easier to read) or smoothly with the carry.

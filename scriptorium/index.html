@@ -33,14 +33,16 @@
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_08_27.A&ctx=home:atmosphere">
   <link rel="stylesheet" href="/book/styles/components/copy-climate.css?v=2026_11_08.H&ctx=home:climate">
   <link rel="stylesheet" href="/book/styles/components/production-flow.css?v=2026_11_08.H&ctx=home:flow">
-  <link rel="stylesheet" href="/book/styles/home/desk.css?v=2026_11_08.H&ctx=scriptorium:desk">
+  <link rel="stylesheet" href="/book/styles/home/desk.css?v=2026_11_08.W&ctx=scriptorium:desk">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
   <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.K&ctx=canon:materials">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.T&ctx=canon:spell">
   <link rel="stylesheet" href="/book/styles/home/loom.css?v=2026_11_08.K&ctx=scriptorium:loom">
+  <link rel="stylesheet" href="/book/styles/components/spw-disk.css?v=2026_11_08.W&ctx=scriptorium:disk">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_08.S"></script>
   <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_11_08.S"></script>
   <script defer type="module" src="/book/scripts/modules/story-loom.mjs?v=2026_11_08.N"></script>
+  <script defer type="module" src="/book/scripts/modules/spw-projection-disk.mjs?v=2026_11_08.W"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -77,6 +79,31 @@
           <li>New chapters are set on the 13th and 26th of each month.</li>
           <li><a href="https://autonomous.feedback/lore.land?at=/scriptorium/">Write a slip to the scribes</a></li>
         </ul>
+      </section>
+
+      <section class="spw-disk-section" id="projection" aria-labelledby="projection-title">
+        <p class="hub-eyebrow">The book's Spw, projected · arcs and loops</p>
+        <h2 id="projection-title">The projection</h2>
+        <p class="hub-section-lede">
+          Everything in the book is written in Spw, and everything written there points somewhere else:
+          a chapter to its rooms, a room to the wonder first met in it, the wonder to the rooms it comes
+          back to, a line the pies let slip to the room it is about. Here it is laid on a disk that is
+          larger inside than it looks. What you stand on sits at the centre; its neighbours ring it;
+          theirs crowd toward the rim and never reach it, so there is always more beyond. Tap anything
+          to walk there, along an arc. Some walks come back to where they began.
+        </p>
+        <p class="hub-section-lede">
+          At first a thing shows only its spell. Stand on it and it says what it means. Walk a loop
+          through it and it tells you what it is for. Arrow keys move among the neighbours, Enter walks
+          there, and L lists the loops.
+        </p>
+        <div class="spw-disk" data-spw-disk>
+          <p class="spw-disk-fallback">
+            The projection needs scripts to draw. Without them, the same web is walkable in the
+            <a href="/almanac/">almanac</a> and at the end of every chapter, from
+            <a href="/book/chapter/01/">Chapter One</a> on.
+          </p>
+        </div>
       </section>
 
       <header class="scriptorium-part" id="making">

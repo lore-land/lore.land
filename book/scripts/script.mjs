@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.V';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.W';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
@@ -58,8 +58,8 @@ import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
 import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_08.N';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_08.N';
 import { initCollection } from './modules/collection.mjs?v=2026_11_08.O';
-import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_08.O';
-import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_08.P';
+import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_08.W';
+import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_08.W';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';

@@ -1,0 +1,686 @@
+/*
+ * spw-disk.css — the projection (spw-projection-disk.mjs): the book's Spw on a Poincaré disk.
+ *
+ * The disk reads as Spw before anything on it is read: its rim is a ring of the twelve sigils in
+ * their role hues (spell.css's --hue-* tokens, named here too so the rim can use them), each at its
+ * own hour in the spirit sequence's order, as on a likeness seal; behind it a faint nesting of the
+ * four containers, { [ ( < > ) ] }, a body holding a frame holding a gathering holding a passage.
+ * Things on the disk wear their likeness seals; ties are geodesics, styled by kind; a walked loop
+ * leaves a gold ring on everything on it. The focus card says a thing in three layers: what it says
+ * (its spell), what it means, what it is for (locked until a loop through it is walked).
+ * Theme-aware through the hub tokens; a role's hue leans toward the page's ink, so it darkens on
+ * paper and lightens on night cloth. Reduced motion: nothing moves but the focus itself.
+ */
+
+.spw-disk-section {
+  min-width: 0;
+  scroll-margin-top: 5rem;
+  container: spw-disk / inline-size;
+}
+
+.spw-disk {
+  --hue-probe: #2f6688;
+  --hue-potential: #2c8b86;
+  --hue-perspective: #7a4f8e;
+  --hue-confluence: #b0602a;
+  --hue-value: #c4922e;
+  --hue-integration: #8a4fb0;
+  --hue-action: #c0392b;
+  --hue-annotation: #9a7a20;
+  --hue-ground: #5d6a73;
+  --hue-config: #2b5aa6;
+  --hue-measure: #3d7a3a;
+  --hue-substrate: #7a5a44;
+
+  --disk-ink: var(--hub-ink, var(--color-text-main, #1d1d22));
+  --disk-muted: var(--hub-muted, var(--color-text-alt, #5b6472));
+  --disk-paper: var(--hub-panel, var(--color-background-panel, #fbf7ef));
+  --disk-ground: var(--hub-paper, #f3ede1);
+  --disk-line: var(--hub-line, color-mix(in srgb, #5a4a3a 26%, transparent));
+  --disk-gold: var(--hub-gold, var(--color-gold, #c4922e));
+  --disk-accent: var(--hub-accent, #246270);
+  --role: var(--disk-gold);
+  --role-ink: color-mix(in srgb, var(--role) 72%, var(--disk-ink));
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1rem;
+  min-width: 0;
+  color: var(--disk-ink);
+}
+
+.spw-disk .op-probe { --role: var(--hue-probe); }
+.spw-disk .op-potential { --role: var(--hue-potential); }
+.spw-disk .op-perspective { --role: var(--hue-perspective); }
+.spw-disk .op-confluence { --role: var(--hue-confluence); }
+.spw-disk .op-value { --role: var(--hue-value); }
+.spw-disk .op-integration { --role: var(--hue-integration); }
+.spw-disk .op-action { --role: var(--hue-action); }
+.spw-disk .op-annotation { --role: var(--hue-annotation); }
+.spw-disk .op-ground { --role: var(--hue-ground); }
+.spw-disk .op-config { --role: var(--hue-config); }
+.spw-disk .op-measure { --role: var(--hue-measure); }
+.spw-disk .op-substrate { --role: var(--hue-substrate); }
+
+/* A role's ink is mixed where the role is set, so each thing leans its own hue toward the page's ink. */
+.spw-disk :is(.op-probe, .op-potential, .op-perspective, .op-confluence, .op-value, .op-integration,
+  .op-action, .op-annotation, .op-ground, .op-config, .op-measure, .op-substrate) {
+  --role-ink: color-mix(in srgb, var(--role) 72%, var(--disk-ink));
+}
+
+@container spw-disk (min-width: 46rem) {
+  .spw-disk.is-ready {
+    grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 1fr);
+    align-items: start;
+  }
+
+  .spw-disk.is-ready .spw-disk-view {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+/* ─── The stage: the disk over its nesting ─────────────────────────────── */
+
+.spw-disk-view {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.spw-disk-stage {
+  position: relative;
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+  aspect-ratio: 1;
+  overflow: clip;
+  border-radius: 1rem;
+  container-type: inline-size;
+  outline: none;
+}
+
+.spw-disk-stage:focus-visible {
+  box-shadow: 0 0 0 2px var(--disk-gold), 0 0 0 5px color-mix(in srgb, var(--disk-gold) 22%, transparent);
+}
+
+/* { [ ( < > ) ] }: the four containers, nested, behind the disk. */
+.spw-disk-nest {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spw-disk-nest > span {
+  position: absolute;
+  inset: 0;
+}
+
+.spw-disk-nest > span::before,
+.spw-disk-nest > span::after {
+  position: absolute;
+  top: 50%;
+  translate: 0 -53%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--disk-ink) 15%, transparent);
+}
+
+.spw-disk-nest > span::before { left: 0; }
+.spw-disk-nest > span::after { right: 0; }
+
+.spw-disk-nest .spw-disk-nest-body { inset: 0 -1%; }
+.spw-disk-nest .spw-disk-nest-body::before { content: "{"; font-size: 100cqi; }
+.spw-disk-nest .spw-disk-nest-body::after { content: "}"; font-size: 100cqi; }
+.spw-disk-nest .spw-disk-nest-frame { inset: 0 7%; }
+.spw-disk-nest .spw-disk-nest-frame::before { content: "["; font-size: 80cqi; }
+.spw-disk-nest .spw-disk-nest-frame::after { content: "]"; font-size: 80cqi; }
+.spw-disk-nest .spw-disk-nest-group { inset: 0 14%; }
+.spw-disk-nest .spw-disk-nest-group::before { content: "("; font-size: 62cqi; }
+.spw-disk-nest .spw-disk-nest-group::after { content: ")"; font-size: 62cqi; }
+.spw-disk-nest .spw-disk-nest-capsule { inset: 0 21%; }
+.spw-disk-nest .spw-disk-nest-capsule::before { content: "<"; font-size: 46cqi; }
+.spw-disk-nest .spw-disk-nest-capsule::after { content: ">"; font-size: 46cqi; }
+
+.spw-disk-svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.spw-disk-floor-mid { stop-color: color-mix(in srgb, var(--disk-paper) 90%, transparent); }
+.spw-disk-floor-ring { stop-color: color-mix(in srgb, var(--disk-paper) 80%, color-mix(in srgb, var(--disk-accent) 10%, transparent)); }
+.spw-disk-floor-rim { stop-color: color-mix(in srgb, var(--disk-ground) 70%, color-mix(in srgb, var(--disk-ink) 14%, transparent)); }
+
+.spw-disk-horizons circle {
+  fill: none;
+  stroke: var(--disk-line);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The rim: twelve sigils, each at its hour. */
+.spw-disk-rim-line {
+  fill: none;
+  stroke: color-mix(in srgb, var(--disk-ink) 22%, transparent);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.spw-disk-rim-arc {
+  fill: none;
+  stroke: color-mix(in srgb, var(--role) 78%, var(--disk-ink));
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  opacity: 0.62;
+  vector-effect: non-scaling-stroke;
+}
+
+.spw-disk-rim-sigil {
+  fill: var(--role-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, ui-monospace, monospace);
+  font-weight: 700;
+  font-size: calc(var(--k, 0.008) * 13px);
+  opacity: 0.8;
+}
+
+.spw-disk-rim-sigil.is-lit {
+  opacity: 1;
+  font-size: calc(var(--k, 0.008) * 17px);
+  paint-order: stroke;
+  stroke: color-mix(in srgb, var(--role) 30%, transparent);
+  stroke-width: calc(var(--k, 0.008) * 4px);
+}
+
+/* ─── Ties: geodesics, by kind ─────────────────────────────────────────── */
+
+.spw-disk-edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--disk-ink) 38%, transparent);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.spw-disk-edge.tie-contains { stroke-width: 1.7; }
+.spw-disk-edge.tie-first { stroke: color-mix(in srgb, var(--hue-value) 62%, var(--disk-ink)); stroke-width: 1.7; }
+.spw-disk-edge.tie-returns { stroke: color-mix(in srgb, var(--hue-value) 48%, var(--disk-ink)); stroke-dasharray: 6 4; }
+.spw-disk-edge.tie-grounded { stroke: color-mix(in srgb, var(--hue-annotation) 66%, var(--disk-ink)); stroke-dasharray: 0.1 4; stroke-width: 2.2; }
+.spw-disk-edge.tie-said { stroke: color-mix(in srgb, var(--hue-annotation) 50%, var(--disk-ink)); }
+.spw-disk-edge.tie-kept { stroke: color-mix(in srgb, var(--hue-perspective) 55%, var(--disk-ink)); stroke-dasharray: 9 3 2 3; }
+.spw-disk-edge.tie-palette { stroke: color-mix(in srgb, var(--hue-config) 55%, var(--disk-ink)); }
+.spw-disk-edge.tie-planted { stroke: color-mix(in srgb, var(--hue-measure) 50%, var(--disk-ink)); stroke-dasharray: 3 3; }
+.spw-disk-edge.tie-egg { stroke: color-mix(in srgb, var(--hue-probe) 70%, var(--disk-ink)); stroke-dasharray: 1 3; stroke-width: 1.6; }
+.spw-disk-edge.tie-sigil { stroke: color-mix(in srgb, var(--role) 80%, var(--disk-ink)); stroke-width: 1.4; }
+.spw-disk-edge.tie-like { stroke-width: 0.8; stroke-dasharray: 2 3; }
+
+.spw-disk-edge.is-focus-tie { stroke-width: 2; }
+.spw-disk-edge.tie-like.is-focus-tie { stroke-width: 1.2; }
+
+.spw-disk-edge.is-walked {
+  stroke: color-mix(in srgb, var(--disk-gold) 70%, var(--disk-ink));
+}
+
+.spw-disk-edge.is-lit {
+  stroke: var(--disk-gold);
+  stroke-width: 3.2;
+  stroke-dasharray: none;
+}
+
+/* ─── Things on the disk ───────────────────────────────────────────────── */
+
+.spw-disk-node {
+  cursor: pointer;
+}
+
+.spw-disk-node.is-focus {
+  cursor: default;
+}
+
+.spw-disk-halo {
+  fill: color-mix(in srgb, var(--role) 20%, transparent);
+  stroke: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.spw-disk-node.is-focus .spw-disk-halo,
+.spw-disk-node.is-active .spw-disk-halo,
+.spw-disk-node.is-on-loop .spw-disk-halo {
+  opacity: 1;
+}
+
+.spw-disk-node.is-on-loop .spw-disk-halo {
+  fill: color-mix(in srgb, var(--disk-gold) 26%, transparent);
+}
+
+.spw-disk-dot {
+  fill: var(--disk-paper);
+  stroke: var(--role-ink);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.spw-disk-node.is-focus .spw-disk-dot {
+  stroke-width: 2.6;
+}
+
+.spw-disk-node.is-active .spw-disk-dot {
+  stroke: var(--disk-gold);
+  stroke-width: 2.4;
+}
+
+.spw-disk-node.is-far .spw-disk-dot {
+  fill: color-mix(in srgb, var(--role) 70%, var(--disk-ink));
+  stroke: none;
+}
+
+.spw-disk-seal {
+  pointer-events: none;
+}
+
+.spw-disk-glyph {
+  fill: var(--role-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, ui-monospace, monospace);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.spw-disk-node.kind-egg .spw-disk-dot {
+  fill: color-mix(in srgb, #f6e7c8 70%, var(--disk-paper));
+  stroke-dasharray: 3 2;
+}
+
+/* A loop walked through it: a gold ring, kept. */
+.spw-disk-loopmark {
+  fill: none;
+  stroke: var(--disk-gold);
+  stroke-width: 1.6;
+  stroke-dasharray: 3 2;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spw-disk-node.is-walked .spw-disk-loopmark {
+  opacity: 0.95;
+}
+
+.spw-disk-label {
+  fill: var(--disk-ink);
+  font-family: var(--font-family-display, Georgia, serif);
+  paint-order: stroke;
+  stroke: var(--disk-paper);
+  stroke-width: calc(var(--k, 0.008) * 3.5px);
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.spw-disk-node.is-focus .spw-disk-label {
+  font-weight: 700;
+}
+
+/* Never stood on: it shows only its Spw. */
+.spw-disk-label.is-syntax {
+  fill: var(--role-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, ui-monospace, monospace);
+  font-weight: 600;
+}
+
+.spw-disk-wait {
+  position: absolute;
+  inset: auto 0 46%;
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--disk-muted);
+}
+
+.spw-disk-live {
+  min-height: 1.4em;
+  margin: 0;
+  text-align: center;
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--disk-muted);
+}
+
+/* ─── The card: what it says, what it means, what it is for ────────────── */
+
+.spw-disk-side {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.spw-disk-card {
+  min-width: 0;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--disk-line);
+  border-top: 3px solid var(--role-ink);
+  border-radius: 0.75rem;
+  background: var(--disk-paper);
+  box-shadow: 0 0.6rem 1.4rem color-mix(in srgb, var(--disk-ink) 6%, transparent);
+}
+
+.spw-disk-card-head {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.spw-disk-card-head .likeness-mark {
+  flex: none;
+}
+
+.spw-disk-card-glyph {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1.5px dashed var(--role-ink);
+  border-radius: 50%;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--role-ink);
+}
+
+.spw-disk-card-words {
+  min-width: 0;
+}
+
+.spw-disk-card-kind {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--disk-muted);
+}
+
+.spw-disk-card-title {
+  margin: 0.1rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.spw-disk-layer {
+  margin-top: 0.8rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--disk-line);
+}
+
+.spw-disk-layer p {
+  margin: 0.25rem 0 0;
+  line-height: 1.5;
+}
+
+.spw-disk-layer-name {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  margin: 0 0 0.4rem;
+  font-size: 0.86rem;
+}
+
+.spw-disk-layer-register {
+  padding: 0.04rem 0.4rem;
+  border: 1px solid var(--disk-line);
+  border-radius: 999px;
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--disk-muted);
+}
+
+.spw-disk-layer.is-semantics .spw-disk-layer-register { border-color: color-mix(in srgb, var(--role) 45%, var(--disk-line)); }
+.spw-disk-layer.is-pragmatics .spw-disk-layer-register { border-color: color-mix(in srgb, var(--disk-gold) 55%, var(--disk-line)); }
+
+.spw-disk-air {
+  font-style: italic;
+}
+
+.spw-disk-probe {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: color-mix(in srgb, var(--hue-probe) 72%, var(--disk-ink));
+}
+
+.spw-disk-layer.is-locked {
+  opacity: 0.8;
+}
+
+.spw-disk-locked {
+  font-style: italic;
+  color: var(--disk-muted);
+}
+
+.spw-disk-uses {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.45;
+}
+
+.spw-disk-uses a {
+  color: color-mix(in srgb, var(--disk-accent) 80%, var(--disk-ink));
+}
+
+/* ─── The ways on, the loops, the trail ────────────────────────────────── */
+
+.spw-disk-ways-title,
+.spw-disk-loops-title,
+.spw-disk-trail-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+}
+
+.spw-disk-ways,
+.spw-disk-loops,
+.spw-disk-trail {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spw-disk-ways {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+}
+
+.spw-disk-way {
+  display: grid;
+  gap: 0.12rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--disk-line);
+  border-left: 3px solid var(--role-ink);
+  border-radius: 0.5rem;
+  background: var(--disk-paper);
+  color: var(--disk-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+
+.spw-disk-way:hover,
+.spw-disk-way:focus-visible {
+  outline: 2px solid var(--disk-gold);
+  outline-offset: 1px;
+}
+
+.spw-disk-way.is-walked::after {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  right: 0.5rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1.5px dashed var(--disk-gold);
+  border-radius: 50%;
+}
+
+.spw-disk-way-name {
+  font-size: 0.92rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.spw-disk-way-name.is-syntax {
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  color: var(--role-ink);
+}
+
+.spw-disk-way-kind {
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: var(--disk-muted);
+}
+
+.spw-disk-loop {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--disk-line);
+  border-radius: 0.6rem;
+  background: var(--disk-paper);
+}
+
+.spw-disk-loop.is-walked {
+  border-color: color-mix(in srgb, var(--disk-gold) 60%, var(--disk-line));
+}
+
+.spw-disk-loop-take {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.25rem 0.3rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: none;
+  color: var(--disk-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.spw-disk-loop-take:hover,
+.spw-disk-loop-take:focus-visible {
+  outline: 2px solid var(--disk-gold);
+  outline-offset: 1px;
+}
+
+.spw-disk-loop-lede {
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.spw-disk-loop-steps {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--disk-muted);
+  overflow-wrap: anywhere;
+}
+
+.spw-disk-loop-spell.spell {
+  padding: 0.2rem 0.4rem;
+}
+
+.spw-disk-noloop {
+  font-style: italic;
+  color: var(--disk-muted);
+}
+
+.spw-disk-stop {
+  justify-self: start;
+  margin-bottom: 0.45rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--disk-gold);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--disk-gold) 14%, var(--disk-paper));
+  color: var(--disk-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.spw-disk-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.spw-disk-trail-step {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--disk-line);
+  border-radius: 999px;
+  background: none;
+  color: var(--disk-ink);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.spw-disk-trail-step:hover,
+.spw-disk-trail-step:focus-visible {
+  outline: 2px solid var(--disk-gold);
+}
+
+/* ─── Motion: meaning inks in; a closed loop rings the rim once ────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .spw-disk-layer.is-semantics.is-new {
+    animation: spw-disk-ink 640ms ease both;
+  }
+
+  .spw-disk.is-closing .spw-disk-rim-arc {
+    animation: spw-disk-ring 1100ms ease both;
+  }
+
+  .spw-disk-node {
+    transition: opacity 180ms ease;
+  }
+}
+
+@keyframes spw-disk-ink {
+  from { opacity: 0; translate: 0 0.3rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes spw-disk-ring {
+  0%, 100% { opacity: 0.62; }
+  40% { opacity: 1; stroke-width: 6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-disk-layer.is-semantics.is-new,
+  .spw-disk.is-closing .spw-disk-rim-arc {
+    animation: none;
+  }
+
+  .spw-disk-halo,
+  .spw-disk-node {
+    transition: none;
+  }
+}
+
+/* On night cloth the floor lets a little more of the nesting through. */
+html:is([data-theme='night'], [data-theme='slate']) .spw-disk-floor-mid {
+  stop-color: color-mix(in srgb, var(--disk-paper) 82%, transparent);
+}

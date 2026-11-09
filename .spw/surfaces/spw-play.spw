@@ -114,6 +114,14 @@
   sheet: "⚙ Setup is a sheet over the screen, anchored to the controls, scrolling within itself; the cabinet keeps its shape while it is open; a tap outside or Escape puts it away"
 }
 
+^rooms_in_lanes{
+  .note: "pie-game.mjs ROOM_PLAY, roomNow, roomThing, castIfRoomAsks, announceRoom, outcomeSpell; canon in .spw/runtime/pie-rules.spw ?outcomes and !rooms; lanes-lore.mjs shows a cast on the page"
+  gradient: "while a room passes, its sigil's own things come up the lanes now and then, and in its last third the next room's begin to: the play changes with the story, not at a cut"
+  cast: "each sigil has a verb (struck, answered, taken, seen, joined, kept, lifted, marked, let go, tuned, measured, made); do it while the room passes and the room is cast, once a carry, kept in lore.rooms.cast.v1 and worn on the room's doorplate in the chapter"
+  outcomes: "every outcome is a probe and a measure that returns a bias and a reference: !satisfied{ ?appetite %pips[1] =fairy_tale[1] ~\"book/chapter/01#the-warm-furrow\" #room[1] }"
+  progressive: "a room's banner says its signature at first (syntax); what its sigil makes of the lanes once a room of that sigil has passed before (semantics); and how to cast it from the third, or as soon as one is cast (pragmatics)"
+}
+
 ^lanes_story{
   .note: "pie-game.mjs laneStoryTick, laneStoryStep, paveSentence, drawLaneCaption, drawRoadWords; ⚙ Setup: story in the lanes"
   why: "the carry goes through a chapter far faster than anyone reads (a passage a second or so), and on a phone the story beside is out of sight while playing; so the lanes tell it at reading speed"

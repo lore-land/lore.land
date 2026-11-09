@@ -4368,3 +4368,23 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-cabinet .pie-thumb b {
   font-size: calc(1rem * var(--controls-scale, 1));
 }
+
+/* Where in the story an achievement happened: its outcome as Spw, and the room it happened in. */
+.pie-ach-where {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-ach-where li {
+  display: grid;
+  gap: 0.15rem;
+  max-width: none;
+  margin: 0;
+}
+
+.pie-ach-where a {
+  font-size: 0.78rem;
+}

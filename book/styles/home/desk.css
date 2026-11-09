@@ -54,7 +54,7 @@ html:is([data-theme='night'], [data-theme='slate']) .desk {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 14px 34px rgba(12, 20, 16, 0.28);
 }
 
-.spell-label {
+label.spell-label {
   color: var(--desk-gold);
   font-size: 1.3rem;
   line-height: 1;

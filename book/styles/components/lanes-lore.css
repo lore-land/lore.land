@@ -70,3 +70,23 @@ main.chapter .lanes-lore-hint b {
   font-weight: 600;
   color: var(--color-text-main, inherit);
 }
+
+/* A room cast in the lanes says so on its doorplate. */
+main.chapter .room-head .room-cast {
+  display: inline-block;
+  justify-self: start;
+  width: fit-content;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold, #c4922e) 60%, transparent);
+  border-radius: 999px;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  color: color-mix(in srgb, var(--color-gold, #a67c38) 60%, var(--color-text-main, currentColor));
+}
+
+main.chapter .room-head .room-cast::before {
+  content: '◆ ';
+}

@@ -6,6 +6,9 @@
  * it is set beside that room, in his voice, so playing deepens the reading. A line not heard yet
  * leaves a quiet note where it belongs (never what it says), with the two ways to it: hear it in
  * the lanes, or read every room of this chapter, which makes the pies say it the next time.
+ *
+ * And a room cast in the lanes (its sigil's verb done while it passed: struck, answered, joined…,
+ * kept in lore.rooms.cast.v1 by pie-game.mjs) says so on its doorplate, with the way back to cast more.
  */
 import { portraitSVG } from './characters.mjs?v=2026_11_08.P';
 
@@ -49,7 +52,25 @@ export function initLanesLore({ chapterData } = {}) {
     return end ? { before: end } : { append: main };
   };
 
+  const paintCasts = () => {
+    let casts = {};
+    try { casts = JSON.parse(window.localStorage.getItem('lore.rooms.cast.v1') || '{}')[String(n)] || {}; } catch { casts = {}; }
+    const rooms = [...main.querySelectorAll(':scope > .room')];
+    rooms.forEach((room, index) => {
+      const cast = casts[index + 1];
+      const head = room.querySelector(':scope > .room-head');
+      let badge = head?.querySelector('.room-cast');
+      if (!cast) { badge?.remove(); return; }
+      if (!head) return;
+      if (!badge) { badge = el('a', 'room-cast'); head.append(badge); }
+      badge.href = '/pie/';
+      badge.textContent = `cast in the lanes · ${cast.verb}`;
+      badge.title = `This room's verb, done in Exactly One Pie while the room passed (${cast.at || 'kept'})`;
+    });
+  };
+
   const paint = () => {
+    paintCasts();
     placed.forEach((node) => node.remove());
     placed = [];
     const known = heard();
@@ -87,6 +108,7 @@ export function initLanesLore({ chapterData } = {}) {
     });
   };
 
+  paintCasts();
   fetch(LORE_URL).then((r) => r.json()).then((data) => {
     lines = (data.lines || []).filter((line) => Number(line.ground?.chapter) === n);
     if (lines.length) paint();

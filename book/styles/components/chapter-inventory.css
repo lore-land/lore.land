@@ -521,6 +521,26 @@ html:is([data-nook-light="lamp"], [data-binding-tone="dark"]) .chapter-inventory
   }
 }
 
+/* The last word: a door out to the scriptorium's disk, focused on this chapter (spw-projection-disk.mjs). */
+.inv-projection {
+  margin: 0;
+  padding: 0.7rem clamp(0.85rem, 3vw, 1.2rem) 0.9rem;
+  border-top: 1px dashed var(--inv-rule);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+}
+
+.inv-projection a {
+  color: color-mix(in oklab, var(--room-hue-integration, #a07a12) 62%, var(--inv-ink));
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.inv-projection a:hover,
+.inv-projection a:focus-visible {
+  text-decoration-style: solid;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .inv-summary-sigil,
   .inv-item,

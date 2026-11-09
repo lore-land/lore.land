@@ -2,6 +2,16 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.W",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie the story's rooms shape the lanes: while a room passes, things of its own kind come up more often (a room of strikes brings more to strike, a room of ground its stones and holes, a room of meetings people to share with), and as the passage nears the next room the lanes begin to lean its way.",
+        "Every room has a verb, from the sign it is written under: struck, answered, taken, seen, joined, kept, lifted, marked, let go, tuned, measured, made. Do a room's verb while it passes and the room is cast; the chapter page then says so beside the room. A room's banner in the lanes says its sign at first, then what that sign makes of the lanes, then how to cast it, as you come to know it.",
+        "Whatever goes well or badly in the lanes is now told as something asked and measured, with the way it leans the chapter and the room it happened in: the inspected carry shows where in the story each of your moments happened, with a way back into that room.",
+        "The scriptorium has a new room, the projection: the book's Spw laid on a disk that is larger inside than it looks, where whatever you stand on sits at the centre, what it touches rings it, and the short loops through it can be walked round, each thing showing first its spell, then what it means once stood on, then what it is for once a loop is walked; every chapter's inventory now ends with a door to it."
+      ]
+    },
+    {
       "release": "2026_11_08.V",
       "date": "2026-11-08",
       "notes": [

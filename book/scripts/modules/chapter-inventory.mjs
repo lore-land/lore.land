@@ -248,7 +248,8 @@ export function initChapterInventory({ chapterData } = {}) {
       if (strip) {
         const atlas = el('div', 'inv-atlas');
         atlas.append(strip);
-        box.append(atlas);
+        const walk = box.querySelector(':scope > .inv-projection');
+        if (walk) walk.before(atlas); else box.append(atlas);
       }
     }
     box.querySelectorAll('.inv-likeness[data-likeness-id]:not(.is-dressed)').forEach((slot) => {
@@ -258,6 +259,15 @@ export function initChapterInventory({ chapterData } = {}) {
       slot.append(likeness.findSimilar(id, { label: 'Like it', n: 6 }));
     });
   };
+
+  // The last word: walk out from this chapter on the scriptorium's disk (spw-projection-disk.mjs).
+  if (!box.querySelector(':scope > .inv-projection')) {
+    const walk = el('p', 'inv-projection');
+    const link = el('a', '', '◎ Walk the projection from here');
+    link.href = `/scriptorium/?focus=chapter:${String(n).padStart(2, '0')}#projection`;
+    walk.append(link);
+    box.append(walk);
+  }
 
   let queued = 0;
   const soon = () => {
