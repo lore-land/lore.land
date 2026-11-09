@@ -25,6 +25,7 @@
   alignment_ledger: "@spw/state/alignment-ledger.spw"
   story_boonhonk: "@spw/story-boonhonk.spw"
   book_two: "@spw/surfaces/wonder-about-pie.spw"
+  tropes: "@spw/surfaces/tropes.spw"
   almanac: "@spw/surfaces/almanac.spw"
   fold_and_materials: "@spw/surfaces/fold-and-materials.spw"
   projection: "@spw/surfaces/projection.spw"

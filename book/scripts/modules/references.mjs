@@ -5,6 +5,46 @@
  */
 
 import { isSighting, readSightings } from './sightings.mjs?v=2026_11_05.B';
+import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
+
+/* The track (book/content/world/tropes.json): a rumour with a `track` winds between the book and the lanes.
+ * Heard here, beside the prose, it is kept (lore.rumours.heard.v1) and said in the lanes when a carry
+ * reaches its chapter; what the carries did there (lore.pie.deeds.v1, written by the game, and the
+ * chapters' own carry marks) comes back into its note, which says so. */
+const HEARD_KEY = 'lore.rumours.heard.v1';
+const DEEDS_KEY = 'lore.pie.deeds.v1';
+const readStore = (key) => { try { return JSON.parse(window.localStorage.getItem(key) || '{}') || {}; } catch { return {}; } };
+// A count is a chapter's own carry mark (carried, held), or any deed the lanes kept: in one chapter when the
+// rumour names it, across the book when it does not.
+const COUNTS = Object.freeze({
+  carried: (deeds, carries, chapter) => carries[chapter]?.carried || 0,
+  held: (deeds, carries) => Object.values(carries).filter((c) => c?.maw === 'won').length
+});
+const countOf = (key, chapter) => {
+  if (COUNTS[key]) return COUNTS[key](readStore(DEEDS_KEY), readCarries(), chapter);
+  const deeds = readStore(DEEDS_KEY);
+  return chapter ? deeds[chapter]?.[key] || 0 : Object.values(deeds).reduce((sum, d) => sum + (d?.[key] || 0), 0);
+};
+
+/** The rumour as the carries have left it: its own note, or the note of what was done there. */
+function trackNote(entry) {
+  const after = entry.track?.after;
+  if (!after?.count || !after.says) return null;
+  const n = countOf(after.count, after.chapter);
+  if (!(n > 0)) return null;
+  return after.says.replace(/\{\{n\}\}/g, String(n)).replace(/\{\{s\}\}/g, n === 1 ? '' : 's');
+}
+
+/** Rumours that wind into the lanes are kept as heard, so the lanes can say them where they belong. */
+function hear(entries) {
+  const tracked = entries.filter((entry) => entry.track?.lanes);
+  if (!tracked.length) return;
+  const heard = readStore(HEARD_KEY);
+  const fresh = tracked.filter((entry) => !heard[entry.id]);
+  if (!fresh.length) return;
+  fresh.forEach((entry) => { heard[entry.id] = new Date().toISOString().slice(0, 10); });
+  try { window.localStorage.setItem(HEARD_KEY, JSON.stringify(heard)); } catch { /* heard for this visit */ }
+}
 
 const REFERENCES_URL = '/book/content/world/references.json';
 
@@ -79,16 +119,18 @@ function paintList(list, entries) {
       if (isSighting(entry.id)) {
         item.setAttribute('data-sighting', readSightings()[entry.id] ? 'seen' : 'new');
       }
+      const told = trackNote(entry);
+      if (told) item.dataset.track = 'lanes';
       const kicker = document.createElement('p');
       kicker.className = 'reading-ref-kind';
-      kicker.textContent = entry.kind || 'ref';
+      kicker.textContent = `${entry.kind || 'ref'}${told ? ' · since the lanes' : ''}`;
       const title = document.createElement('a');
       title.className = 'reading-ref-title';
       title.href = entry.href || '#';
       title.textContent = entry.title;
       const note = document.createElement('p');
       note.className = 'reading-ref-note';
-      note.textContent = entry.note;
+      note.textContent = told || entry.note;
       item.append(kicker, title, note);
       return item;
     })
@@ -99,14 +141,15 @@ function paintWhisper(entry) {
   const whisper = document.createElement('aside');
   whisper.className = 'reading-ref-whisper';
   whisper.setAttribute('aria-hidden', 'true');
+  const told = trackNote(entry);
   const kind = document.createElement('p');
   kind.className = 'reading-ref-kind';
-  kind.textContent = entry.kind || 'ref';
+  kind.textContent = `${entry.kind || 'ref'}${told ? ' · since the lanes' : ''}`;
   const title = document.createElement('p');
   title.className = 'reading-ref-whisper-title';
   title.textContent = entry.title;
   const note = document.createElement('p');
-  note.textContent = entry.note;
+  note.textContent = told || entry.note;
   whisper.append(kind, title, note);
   return whisper;
 }
@@ -168,6 +211,7 @@ export async function initReferences(options = {}) {
     }
     lastKey = key;
     paintList(list, entries);
+    hear(entries);
     empty.hidden = entries.length > 0;
     panel.dataset.loaded = entries.length ? 'true' : 'false';
 

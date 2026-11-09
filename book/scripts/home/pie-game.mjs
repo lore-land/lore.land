@@ -434,6 +434,37 @@ function writeRecord(record) {
   try { window.localStorage.setItem(KEY, JSON.stringify(record)); } catch { /* the run still counted */ }
 }
 
+/* ─── The tropes (book/content/world/tropes.json): each card names the trope its thing belongs to, and what
+ * the book hands the lanes there; the story and the lanes are strands of one track, crossing both ways. ─── */
+const TROPES_URL = '/book/content/world/tropes.json';
+const tropeOfKind = new Map();
+// A thing in more than one trope's lanes belongs to the most particular one (the trope with the fewest kinds):
+// the figure to the plain lines before the floating title, a clown under the hat to WAP.
+fetch(TROPES_URL).then((res) => (res.ok ? res.json() : null)).then((data) => {
+  (data?.tropes || []).forEach((trope) => (trope.faces?.lanes?.kinds || []).forEach((kind) => {
+    const had = tropeOfKind.get(kind);
+    if (!had || trope.faces.lanes.kinds.length < had.faces.lanes.kinds.length) tropeOfKind.set(kind, trope);
+  }));
+}).catch(() => {});
+
+/* ─── The track, from the book's side: rumours heard in a chapter's margins (references.mjs keeps which) are
+ * said in the lanes when a carry reaches that chapter; what each leg did is kept for the margins to retell
+ * (lore.pie.deeds.v1). Reading and carrying wind through each other, each a reason for the other. ─── */
+const HEARD_KEY = 'lore.rumours.heard.v1';
+const DEEDS_KEY = 'lore.pie.deeds.v1';
+const readStore = (key) => { try { return JSON.parse(window.localStorage.getItem(key) || '{}') || {}; } catch { return {}; } };
+const marginRumours = [];
+fetch('/book/content/world/references.json').then((res) => (res.ok ? res.json() : null)).then((data) => {
+  (data?.entries || []).filter((entry) => entry.track?.lanes).forEach((entry) => marginRumours.push(entry));
+}).catch(() => {});
+function keepDeeds(chapter, deeds) {
+  const all = readStore(DEEDS_KEY);
+  const had = all[chapter] || {};
+  Object.entries(deeds).forEach(([key, n]) => { if (n > 0) had[key] = (had[key] || 0) + n; });
+  all[chapter] = had;
+  try { window.localStorage.setItem(DEEDS_KEY, JSON.stringify(all)); } catch { /* kept for this visit */ }
+}
+
 /* ─── What the pies let slip ─── */
 const LORE_URL = '/book/content/world/pie-lore.json';
 let lorePromise = null;
@@ -820,6 +851,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     tally(cat, w * n);
     noteFeed({ cat, pts: w * n, event, word: LEAN_ONE[event] || LEAN_WORDS[event] || event.replace(/_/g, ' ') });
     if (event !== 'cast') castIfRoomAsks(event);
+    // Every event of the leg is a deed the book's margins may count (keepDeeds, references.mjs).
+    if (run.legEvents) run.legEvents[event] = (run.legEvents[event] || 0) + n;
     run.leanWhy = run.leanWhy || {};
     run.leanWhy[event] = (run.leanWhy[event] || 0) + n;
   };
@@ -1685,7 +1718,48 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   const mawAhead = () => Boolean(run?.tally?.mawSeen && run.tally.maw > run.tally.wap + 0.5);
   const met = (kind) => record.met.includes(kind);
-  const allowed = (kind) => !(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind);
+  /* The Thursday nobody kept (Chapter Fourteen; tropes.json#missing-day): no person is in the day, so nobody
+   * comes down the lanes (no clown, clerk, subject or mime; neither pie holds court or schemes; nobody
+   * blows a horn) until the last of it, when Friday arrives with everyone in it. */
+  const NOBODY_ON_THURSDAY = new Set(['clown', 'clerk', 'subject', 'mime', 'mimewall', 'march', 'dividers', 'boon', 'bane', 'horn']);
+  const thursday = () => run?.chapter === 14 && !run.friday;
+  const allowed = (kind) => !(thursday() && NOBODY_ON_THURSDAY.has(kind))
+    && (!(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind));
+  /* A rumour heard in this chapter's margins, said in the lanes as the carry reaches it. */
+  function tickMargins() {
+    if (run.marginSaid || run.marginAt == null || run.t < run.marginAt) return;
+    run.marginSaid = true;
+    const heard = readStore(HEARD_KEY);
+    // Rumours before the land's other notes; carry by carry, they take turns.
+    const here = marginRumours.filter((entry) => heard[entry.id] && (entry.chambers || []).includes(run.chapter))
+      .sort((x, y) => (y.kind === 'rumour') - (x.kind === 'rumour'));
+    const rumour = here[(record.runs || 0) % Math.max(1, here.length)];
+    if (!rumour) return;
+    showToast(`Heard in the margins of ${chapterWords(run.chapter)}`, rumour.track.lanes, 4600, '');
+    say(rumour.track.lanes);
+  }
+  function tickThursday(dt) {
+    if (run.chapter !== 14) return;
+    // Said a breath in, after the first room has said its own name.
+    run.thursdayT = (run.thursdayT || 0) + dt;
+    if (!run.thursdaySaid && run.thursdayT > 3.4) {
+      run.thursdaySaid = true;
+      showToast('The Thursday nobody kept', 'No person is in the day. The lanes are yours and the land’s.', 3400, '');
+    }
+    if (run.friday || progress() < 0.86) return;
+    run.friday = true;
+    showToast('Friday', 'Friday arrives with everyone in it.', 3600, 'wonder');
+    impact('combo', W / 2, 150, { scale: 0.85, word: 'FRIDAY!' });
+    say('Friday arrives with everyone in it.');
+    // Everyone at once: a row of the people the day did not have, a way left through.
+    const way = run.safe;
+    [...Array(LANES).keys()].filter((lane) => lane !== way).forEach((lane, i) => {
+      const who = makeThing(['clown', 'subject', 'clown', 'clerk'][i % 4], lane);
+      who.y -= 24 + i * 6;
+      run.things.push(who);
+    });
+    run.nextPresence = Math.min(run.nextPresence ?? 4, 2);
+  }
 
   /* ─── Things in the lanes: they come in rows, and every row leaves a way through ─── */
   const difficulty = () => clamp(run.t / 110 + (run.chapter - 1) * 0.025 + run.lap * 0.25, 0, 1);
@@ -1872,7 +1946,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.things.push(horn);
     }
     const clowns = (run.boon ? 0.62 : 0.14) * (s.id === 'plaza' ? 1.4 : 1);
-    if (Math.random() < clowns) {
+    if (allowed('clown') && Math.random() < clowns) {
       const lane = pick(free);
       const clown = makeThing('clown', lane);
       clown.y -= 30;
@@ -3028,6 +3102,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const n = run.chapter;
     const t = run.tally;
     const outcome = keepCarry(n, { ...t, why: leanWhyText().replace(/^Why: /, '').replace(/\.$/, '') });
+    keepDeeds(n, { ...run.legEvents, waps: run.waps - (run.legFrom?.waps || 0), satisfied: run.satisfied - (run.legFrom?.satisfied || 0) });
     const lean = describeLean({ boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone });
     run.outcomes.push({ n, outcome, lean });
     if (outcome === 'won') return `Mimes Against WAP take ${chapterWords(n)}: it will be harder to wonder about pie there until you win it back.`;
@@ -3052,6 +3127,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.sceneT = first ? 1 : 0;
     run.chapter = n;
     run.tally = newTally(n);
+    run.legFrom = { waps: run.waps || 0, satisfied: run.satisfied || 0 };
+    run.legEvents = {};
+    run.marginAt = run.t + 8;   // after the room has said its name, the margins say what was heard of here
+    run.marginSaid = false;
     paintPointsSoon();
     run.lastSection = undefined;
     run.mawWas = mawAhead();
@@ -3283,6 +3362,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (most.length) scored.append(nodeOf('span', 'pie-card-points-most', `Most of it: ${most.map(([w, n]) => `${w} ×${n}`).join(', ')}.`));
         links.unshift(scored);
       }
+      // Beyond the frame (tropes.json#beyond-the-frame): every WAP leaves a plate for the washer-up nobody thanks.
+      if (run.waps > 0) links.unshift(nodeOf('span', 'pie-card-plates', `${run.waps} plate${run.waps === 1 ? '' : 's'} left for the washer-up, beyond the frame.`));
       // What was taken from the road, word by word: the carry's found lines (and any words short of one).
       const leftover = (run.found?.length || 0) % 5;
       if (run.foundLines?.length || leftover) {
@@ -4195,6 +4276,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       tickForetold(dt);
       tickEcology(dt);
       tickMini(dt);
+      tickThursday(dt);
+      tickMargins();
       // A weathercock by the lanes swings the needle the way it points, while the carrier passes it.
       const vane = run.things.find((t) => t.kind === 'vane' && Math.abs(t.x - run.x) < LANE_W * 1.6 && Math.abs(t.y - run.y) < 70);
       if (vane && !(run.aimLock > 0)) {
@@ -7723,6 +7806,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ...(registerLine ? [nodeOf('p', 'pie-cardface-register', registerLine)] : []),
       (() => { const p = nodeOf('p', 'pie-cardface-story'); p.append(nodeOf('span', '', 'In the story'), ` ${c.story}`); return p; })(),
       (() => { const p = nodeOf('p', 'pie-cardface-lanes'); p.append(nodeOf('span', '', 'In the lanes'), ` ${c.lanes}`); return p; })(),
+      ...(() => {
+        const trope = tropeOfKind.get(kind);
+        if (!trope) return [];
+        const p = nodeOf('p', 'pie-cardface-trope');
+        // What the book hands the lanes here: the crossing this thing stands on (tropes.json crossings.into_lanes).
+        p.append(nodeOf('span', '', 'The trope'), ` ${trope.name}`, ...(trope.bends?.length ? [nodeOf('em', '', ` (${trope.bends.join(', ')})`)] : []), compact || !trope.crossings?.into_lanes?.says ? '' : ` — ${trope.crossings.into_lanes.says}`);
+        return [p];
+      })(),
       chips,
       book);
     // A carrier's model: their knack, and how they carry, as four bars.

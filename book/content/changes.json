@@ -2,6 +2,22 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.E",
+      "date": "2026-11-09",
+      "notes": [
+        "The book and Exactly One Pie now wind through each other. A rumour you come across in a chapter's margins is said in the lanes when your carry reaches that chapter: clowns going home from the plaza's edge in Six, a placard with nothing on it in Eleven, prints in the frost on the Thursday in Fourteen, plates stacked by the spring water in Thirteen, and a new one on the hill in Four about baneberries.",
+        "What you do in the lanes is told back in those margins, marked 'since the lanes': how many clowns went home from the plaza, how many foretellings were stepped on before they could be said, how many boonberries you ate in passing, how many times something warm was passed close, how many plates are waiting by the water, how many placards the mimes have put up. Reading gives the carry something to look for, and carrying gives the margins something new to say."
+      ]
+    },
+    {
+      "release": "2026_11_09.D",
+      "date": "2026-11-09",
+      "notes": [
+        "The book and Exactly One Pie now look at each other from the side rather than retelling each other. In the margins of Chapter Six, clowns go home delighted from somewhere off to the side of the plot; in Eleven, someone has pasted a placard with nothing on it to the garden wall; in Thirteen, plates are stacked by the cold spring water, taller than the meal could have been.",
+        "In the lanes, Chapter Fourteen is the Thursday nobody kept: nobody comes down the lanes at all until the last of it, when Friday arrives with everyone in it. When the pie spills, the card counts the plates the carry left for the washer-up, beyond the frame. Every card now names the trope its thing belongs to, and what the book shows of it that the lanes cannot."
+      ]
+    },
+    {
       "release": "2026_11_09.C",
       "date": "2026-11-09",
       "notes": [

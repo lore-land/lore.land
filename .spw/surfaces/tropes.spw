@@ -1,0 +1,53 @@
+# Tropes — one track through the story and the lanes
+# The registry is book/content/world/tropes.json (source of truth, portable for trope.wiki): every
+# trope with its face in the story, the lanes and the visuals, how present it is in each, the
+# crossings that carry something from one strand into the other, and (where it winds) its stations
+# chapter by chapter. This surface is the contract.
+#>tropes
+#:story #:game #!track
+
+^"tropes"{
+  .registry: ~"book/content/world/tropes.json"
+  .checked_by: "npm run book:check (shape, chapters, kinds, stations, rumours; each trope's status on the track, said as a note)"
+  .for: "trope.wiki: stable ids, aliases, the classic tropes each one bends, faces by medium, crossings both ways, stations, rhymes"
+  &physics: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
+  &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
+}
+
+^"contract"{
+  track: "The book follows its people's plot; the lanes carry the pie through the book's own places. One track winds through and around both, crossing back and forth, so that reading is a reason to carry and carrying a reason to read."
+  hypotenuse: "The strands may lean the same way: a useful hypotenuse is welcome. What matters is that each reinforces the other, the trope's reach across both carried both ways."
+  crossing: "A crossing carries something from one strand into the other (an object, a count, a line, a state), and arrives where it belongs: in the chapter, or the leg of the carry, it can be used in. A mention alone is not a crossing."
+  measure: "reach = √(story² + lanes²) / √2 · strength = reach × wired crossings ÷ 2 · status: winding (both ways) · one-way · parallel (neither) · stranded (missing from a strand)"
+  edges: "the crossings ride the edges, never the prose's own line: into the book by its margins (references.json rumours and notes, retold since the lanes), its rooms, its inventory and its reading's lean; into the lanes by the road, the rooms, the cards, the captions and the end card"
+  guards: "the figure is never named in the prose; the Egg is never explained (the lanes never call it the Egg, even quoting the margins); records are comedy and care, never the engine; Boof works for the land; no cardinal directions"
+}
+
+~<"the_loop">{
+  .note: "The track's own engine, built in 2026_11_09.E (references.mjs, pie-game.mjs)."
+  heard: "a rumour (or a note) with a track, surfacing beside the prose, is kept as heard (lore.rumours.heard.v1)"
+  said: "when a carry reaches that chapter, a breath after the room says its name, the lanes say what was heard there (rumours before notes; carry by carry they take turns)"
+  done: "every event of the leg (clowns satisfied, baneberries squashed, boonberries eaten, warm things passed, WAPs) is kept as a deed of that chapter (lore.pie.deeds.v1)"
+  retold: "the margin's note is retold with the count, and says it is since the lanes"
+}
+
+!"wound"[
+  { trope: "wap" through: "Six's margin (clowns going home) ⇄ Six's lanes (clowns satisfied, counted)" }
+  { trope: "silent-protest" through: "Eleven's margin (a blank placard) ⇄ the mimes' holds anywhere (the placards multiply)" }
+  { trope: "missing-day" through: "Fourteen's lanes (nobody until Friday) ⇄ Fourteen's margin (a second set of prints)" }
+  { trope: "beyond-the-frame" through: "every WAP a plate (the end card) ⇄ Thirteen's margin (the stack, counted)" }
+  { trope: "said-so" through: "Four's hill (the baneberry's saying) ⇄ the lanes (foretellings stepped on, unsaid)" }
+  { trope: "glimpse" through: "the margin's boonberry ⇄ boonberries eaten in passing" }
+  { trope: "warm-question" through: "the margin's egg ⇄ something warm passed close, never named in the lanes" }
+]
+
+?lay[
+  "forgiving-glass: the book's kiln forgives every blow; let a pane struck in the lanes be one more blow the margin's lantern glass remembers forgiving."
+  "slow-gift: the beavers want the wording exact; let time a beaver gave in the lanes slow the passage it was given in, and the margin say whose dam."
+  "the next stone (The Second Place): the figure dries plates at the back; let the plates the lanes counted be the ones on the drying rack."
+]
+
+?open[
+  "Should the track ever be shown as a track: a line through the chapters, crossing between the page and the lanes, with the reader's own stations lit?"
+  "When a rumour has been retold since the lanes, should the lanes say it differently the next time they reach its chapter?"
+]

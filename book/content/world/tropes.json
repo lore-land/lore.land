@@ -1,0 +1,993 @@
+{
+  "title": "Tropes of the land",
+  "about": "The tropes lore.land is made of, each with a face in every medium it reaches: the story (the chapters), the lanes (Exactly One Pie), the visuals, and the rest of the site. The story and the lanes are two strands of one track that winds through and around both: each trope is a place where the track crosses, and every crossing carries something from one strand into the other, so reading is a reason to carry and carrying a reason to read. Canon: .spw/surfaces/tropes.spw. Portable for trope.wiki.",
+  "contract": {
+    "track": "The book follows its people's plot; the lanes carry the pie through the book's own places. One track winds through and around both, crossing back and forth: a rumour read in a margin is said in the lanes at its chapter; what is done in the lanes there is written back into the margin.",
+    "hypotenuse": "Faces may lean the same way. A useful hypotenuse is welcome: what matters is that the two strands reinforce each other, the reach of a trope across both (√(story² + lanes²) / √2) carried both ways.",
+    "presence": "0–1 for each strand: how present the trope is in the story and in the lanes.",
+    "crossings": "into_lanes is what the book hands the lanes; into_story is what the lanes hand the book. Each says what crosses and, when it is built, where it is wired (wired: null is a crossing still to lay).",
+    "strength": "reach × (wired crossings ÷ 2): a trope carried both ways winds; one way is half a track.",
+    "status": "winding (both crossings wired) · one-way (one) · parallel (in both, crossing neither way) · stranded (missing from a strand).",
+    "rules": [
+      "Every crossing carries something: an object, a count, a line, a state; a mention alone is not a crossing.",
+      "Relevant where it lands: a crossing arrives in the chapter (or the leg) it belongs to, at a moment it can be used.",
+      "Each strand works alone; together each is a reason for the other (story-boonhonk.spw#media_ecosystem: recognition adds depth, ignorance makes no gap).",
+      "Margins, the road, rooms, cards and the end card carry the crossings; the chapters' prose stays the book's.",
+      "Guards hold in every face: the figure is never named in the prose, the Egg is never explained, records are comedy and care, never the engine."
+    ]
+  },
+  "tropes": [
+    {
+      "id": "exactly-one",
+      "name": "Exactly one",
+      "aliases": [
+        "the counting prophecy"
+      ],
+      "bends": [
+        "The Prophecy",
+        "Chosen One"
+      ],
+      "sigil": "!",
+      "statement": "Someone is destined to spill exactly one pie. The prophecy is very clear about the number and no help at all about the name.",
+      "prop": "the pie",
+      "faces": {
+        "story": {
+          "says": "Bonk City hunts the destined one before the Feast of the Uneven Slice, some to stop the spill and some to crown it; by one o'clock on the day of the parcel gate it decides the destined one is the dog.",
+          "chambers": [
+            6,
+            15
+          ]
+        },
+        "lanes": {
+          "says": "Every carry ends in exactly one spill. The card says EXACTLY ONE., what the land would say about the cause, and how far the pie was carried.",
+          "kinds": []
+        },
+        "visual": {
+          "says": "A silent-film title card, always night, in the lanes and on the home screen."
+        }
+      },
+      "presence": {
+        "story": 0.9,
+        "lanes": 1
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "The book's prophecy is the lanes' whole rule: every carry ends in exactly one spill, and the card says EXACTLY ONE.",
+          "wired": "pie-game.mjs (the end card)"
+        },
+        "into_story": {
+          "says": "The end of a carry points back into the passage that was going by when the pie spilled; the way back returns to the section the game was found in.",
+          "wired": "pie-segues.mjs"
+        }
+      },
+      "rhymes": [
+        "floating-title"
+      ]
+    },
+    {
+      "id": "floating-title",
+      "name": "The floating title",
+      "aliases": [
+        "the chosen title",
+        "the hat that never lands"
+      ],
+      "bends": [
+        "Chosen One",
+        "Mistaken Identity"
+      ],
+      "sigil": "~",
+      "statement": "The chosen title floats like the hat and lands on the wrong person for one scene at a time without becoming false.",
+      "prop": "the hat",
+      "faces": {
+        "story": {
+          "says": "The crier mistakes the figure for a scarecrow and writes that she saw a hat; the city decides the destined one is the dog; in the next stone Boof wears the title for one scene at Mr. BoonWAP's table.",
+          "chambers": [
+            13,
+            14,
+            15
+          ]
+        },
+        "lanes": {
+          "says": "Each carry the hat settles on someone: the figure in plain lines, the porter, a feast clerk, the Genie off-season, a clown. It lags behind them and never falls, not even at the spill.",
+          "kinds": [
+            "carrier-figure",
+            "carrier-porter",
+            "carrier-clerk",
+            "carrier-genie",
+            "carrier-clown"
+          ]
+        },
+        "visual": {
+          "says": "A black bowler at head height, touching nothing, farther down the road each time she looked (plate 14: the hat goes straight up the slope)."
+        }
+      },
+      "presence": {
+        "story": 0.8,
+        "lanes": 0.9
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "The people the book crowns by mistake (the porter, a feast clerk, the Genie off-season) take the hat in turn.",
+          "wired": "pie-game.mjs CARRIERS"
+        },
+        "into_story": {
+          "says": "A carrier met under the hat turns its card into the one deck the book and the lanes share.",
+          "wired": "collection.mjs (the shared deck)"
+        }
+      },
+      "rhymes": [
+        "exactly-one",
+        "plain-lines"
+      ]
+    },
+    {
+      "id": "never-smaller",
+      "name": "Never smaller",
+      "aliases": [
+        "only arithmetic"
+      ],
+      "bends": [
+        "Horn of Plenty",
+        "Bottomless Feast"
+      ],
+      "sigil": "%",
+      "statement": "A pie that serves itself in slices and is never smaller. People hear a boast; it is only arithmetic.",
+      "prop": "a slice",
+      "faces": {
+        "story": {
+          "says": "Mr. BoonWAP serves himself in slices at the plaza table and is never smaller; he misses what the room is telling him, the server's wrist and the washing-up.",
+          "chambers": [
+            6,
+            12
+          ]
+        },
+        "lanes": {
+          "says": "A slice thrown is a slice the pie never loses; an aura of flour and boonberries makes it whole again, and runs thin when slices are wasted.",
+          "kinds": [
+            "boon",
+            "sack",
+            "pile",
+            "berry"
+          ]
+        },
+        "visual": {
+          "says": "The pie in hand swells with the aura: scalloped crust, berry vents, rising steam."
+        }
+      },
+      "presence": {
+        "story": 0.9,
+        "lanes": 0.9
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Mr. BoonWAP comes into the lanes from Six, as in the book, and holds court: clowns flock and every pie finds an eye.",
+          "wired": "pie-game.mjs INTRO (boon from Six)"
+        },
+        "into_story": {
+          "says": "What the carry gave leans the chapter's reading toward the fairy tale, and the page says why.",
+          "wired": "pie-carries.mjs → pie-projection.mjs"
+        }
+      },
+      "rhymes": [
+        "beyond-the-frame",
+        "wap"
+      ]
+    },
+    {
+      "id": "wap",
+      "name": "WAP",
+      "aliases": [
+        "a pie in the face, wanted"
+      ],
+      "bends": [
+        "Pie in the Face",
+        "Slapstick"
+      ],
+      "sigil": "&",
+      "statement": "A pie in the face is a gift the face wanted. Bonk City's word for it is WAP, after the sound it makes.",
+      "prop": "a clown's face",
+      "faces": {
+        "story": {
+          "says": "In the margins of the plaza: clowns going home all evening with pie on their faces, delighted, though nobody at the table saw where the pie came from.",
+          "chambers": [
+            6
+          ]
+        },
+        "lanes": {
+          "says": "Clowns drift toward the pie, each wanting so much (pips over its head). WAP: it gets the pie square, loves it, and goes home delighted; the pie on the plate is no smaller.",
+          "kinds": [
+            "clown",
+            "carrier-clown"
+          ]
+        },
+        "visual": {
+          "says": "A burst, BONK lettering, two kazoo honks in the chapter's key."
+        }
+      },
+      "presence": {
+        "story": 0.5,
+        "lanes": 1
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Heard in Six's margins, the rumour of clowns going home is said in the lanes as the carry reaches Six.",
+          "wired": "references.json track → pie-game.mjs tickMargins"
+        },
+        "into_story": {
+          "says": "Clowns satisfied in Six's lanes are counted in the rumour's note, which says it is since the lanes.",
+          "wired": "pie-game.mjs keepDeeds → references.mjs trackNote"
+        }
+      },
+      "track": [
+        {
+          "chapter": 6,
+          "in": "story",
+          "beat": "a rumour at the plaza's edge: clowns going home delighted"
+        },
+        {
+          "chapter": 6,
+          "in": "lanes",
+          "beat": "the rumour said as the carry reaches the plaza; clowns come for the pie"
+        },
+        {
+          "chapter": 6,
+          "in": "story",
+          "beat": "the rumour counts the clowns sent home"
+        }
+      ],
+      "wound_in": "2026_11_09.E",
+      "rhymes": [
+        "never-smaller",
+        "silent-protest"
+      ]
+    },
+    {
+      "id": "silent-protest",
+      "name": "Mimes Against WAP",
+      "aliases": [
+        "the silent protest",
+        "the wall that is also there"
+      ],
+      "bends": [
+        "Mime",
+        "Invisible Wall",
+        "Silent Protest"
+      ],
+      "sigil": "=",
+      "statement": "A protest that agrees with you silently, and a wall that is imaginary and also there.",
+      "prop": "a blank placard",
+      "faces": {
+        "story": {
+          "says": "In the margins of the bloom garden: a placard pasted to the wall with nothing written on it, agreed with silently by passers-by, and a pie drawn on it and crossed out.",
+          "chambers": [
+            11
+          ]
+        },
+        "lanes": {
+          "says": "Mimes box flat slices on walls nobody can see; Mimes Against WAP march in silence, placards blank but one. While they lead, the passage's pie words go hollow; a chapter they hold stays quiet on its page.",
+          "kinds": [
+            "mime",
+            "mimewall",
+            "march"
+          ]
+        },
+        "visual": {
+          "says": "Palms flat on nothing, a shimmer and two gloves; blank placards; a pie, crossed out."
+        }
+      },
+      "presence": {
+        "story": 0.5,
+        "lanes": 1
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Heard in Eleven's margins, the blank placard is said in the lanes there; the book's announcing villain organises the march.",
+          "wired": "references.json track → pie-game.mjs tickMargins"
+        },
+        "into_story": {
+          "says": "A chapter the mimes hold goes quiet on its page, and the placard rumour counts the chapters they hold.",
+          "wired": "pie-carries.mjs (maw) → references.mjs trackNote"
+        }
+      },
+      "track": [
+        {
+          "chapter": 11,
+          "in": "story",
+          "beat": "Mr. BaneWAP announces to a garden that had not asked; a blank placard on its wall"
+        },
+        {
+          "chapter": 11,
+          "in": "lanes",
+          "beat": "the placard said; Mimes Against WAP march, placards blank but one"
+        },
+        {
+          "chapter": null,
+          "in": "story",
+          "beat": "wherever the mimes win, the page goes quiet and the placards multiply in Eleven's margin"
+        }
+      ],
+      "wound_in": "2026_11_09.E",
+      "rhymes": [
+        "off-switch",
+        "wap"
+      ]
+    },
+    {
+      "id": "off-switch",
+      "name": "The off switch",
+      "aliases": [
+        "the clause he never reads"
+      ],
+      "bends": [
+        "Self-Destruct Button",
+        "Evil Plan",
+        "Announcing the Scheme"
+      ],
+      "sigil": "!",
+      "statement": "A scheme is not a scheme until it is announced to someone who did not ask, and every scheme carries its own off switch: a clause the schemer wrote himself and never reads.",
+      "prop": "the clause",
+      "faces": {
+        "story": {
+          "says": "Mr. BaneWAP announces to a bloom garden that had not asked: a wish the size of an empire, spent all at once, and not one clause about giving it back; foiled, he says one thing more than he means.",
+          "chambers": [
+            11,
+            12
+          ]
+        },
+        "lanes": {
+          "says": "His schemes (a rented wind, a step tax, the lanes re-let) each leave a visible off switch on the way through; step on it or throw at it and he blurts a line of lore.",
+          "kinds": [
+            "bane",
+            "switch"
+          ]
+        },
+        "visual": {
+          "says": "A lever in the lanes with its own red ring; a lattice-crusted pie."
+        }
+      },
+      "presence": {
+        "story": 0.8,
+        "lanes": 0.9
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Mr. BaneWAP comes from Four, as in the book, announcing; every scheme leaves its off switch in the lanes.",
+          "wired": "pie-game.mjs SCHEMES"
+        },
+        "into_story": {
+          "says": "Foiled, he blurts a line of lore that grounds itself in a chapter of the book.",
+          "wired": "pie-lore.json"
+        }
+      },
+      "rhymes": [
+        "silent-protest"
+      ]
+    },
+    {
+      "id": "said-so",
+      "name": "Said, and so",
+      "aliases": [
+        "the baneberry's foretelling"
+      ],
+      "bends": [
+        "Self-Fulfilling Prophecy"
+      ],
+      "sigil": "?",
+      "statement": "A foretelling of chaos that comes because it was said; whoever waits for it flinches because they were waiting.",
+      "prop": "a baneberry",
+      "faces": {
+        "story": {
+          "says": "On the hill they say a baneberry tells you what will go wrong, and that it goes wrong because you were told; Mr. BaneWAP was made of them, and says a thing that will go wrong often enough.",
+          "chambers": [
+            4,
+            11
+          ]
+        },
+        "lanes": {
+          "says": "A baneberry let past posts its lane in violet and the knock comes because it was said; one in five foretells a flinch. Squashed, it never says; sweetened by a slice, it foretells boonberries.",
+          "kinds": [
+            "baneberry"
+          ]
+        },
+        "visual": {
+          "says": "A violet column up one lane; the berry's thorn."
+        }
+      },
+      "presence": {
+        "story": 0.8,
+        "lanes": 0.9
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Baneberries come up the lanes from Four, where the hill first says what they do.",
+          "wired": "pie-game.mjs INTRO"
+        },
+        "into_story": {
+          "says": "Baneberries squashed in the lanes keep the hill's rumour quiet: it counts the foretellings stepped on before they could be said.",
+          "wired": "pie-game.mjs lean → keepDeeds → references.json rumour-unsaid (squashed)"
+        }
+      },
+      "rhymes": [
+        "glimpse"
+      ],
+      "wound_in": "2026_11_09.E"
+    },
+    {
+      "id": "glimpse",
+      "name": "The kindly glimpse",
+      "aliases": [
+        "the boonberry's foresight"
+      ],
+      "bends": [
+        "Prophetic Vision",
+        "Magical Fruit"
+      ],
+      "sigil": "~",
+      "statement": "Ordinary magic that foresees kindly, and does not say whether it showed you the way or you remembered it.",
+      "prop": "a boonberry",
+      "faces": {
+        "story": {
+          "says": "Boonberries are fruit, lantern-fuel, seed and supper; now and then one notices the story it is sitting in, which is more than most fruit will do.",
+          "chambers": [
+            1,
+            2,
+            6
+          ]
+        },
+        "lanes": {
+          "says": "A boonberry gives filling and a glimpse: the clear way up the lanes in teal, a breath before it is needed.",
+          "kinds": [
+            "berry"
+          ]
+        },
+        "visual": {
+          "says": "Teal and amber, lit from within."
+        }
+      },
+      "presence": {
+        "story": 0.8,
+        "lanes": 0.9
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Boonberries come up the lanes from One, as in the book's first field; heard in the margins, the berry that notices its story is said there.",
+          "wired": "pie-game.mjs INTRO"
+        },
+        "into_story": {
+          "says": "Boonberries eaten in the lanes are counted in the margin's note on boonberries: the clear way seen a breath early, and still undecided whether shown or remembered.",
+          "wired": "pie-game.mjs lean → keepDeeds → references.json boonberry (boonberry)"
+        }
+      },
+      "rhymes": [
+        "said-so"
+      ],
+      "wound_in": "2026_11_09.E"
+    },
+    {
+      "id": "plain-lines",
+      "name": "The figure in plain lines",
+      "aliases": [
+        "the orthogonal stranger",
+        "the drawing under the hat"
+      ],
+      "bends": [
+        "Mysterious Stranger",
+        "Art Shift",
+        "Fish out of Water"
+      ],
+      "sigil": "@",
+      "statement": "A figure in a few plain lines crosses every scene at a right angle and stays the same drawing in every place.",
+      "prop": "the drawing",
+      "faces": {
+        "story": {
+          "says": "Lines in the sand at the signal stones; a hat above the crowd on the glass bridge; one small figure facing ninety degrees away from the throne; a drawing under the hat above the warm furrow. Never named.",
+          "chambers": [
+            3,
+            4,
+            6,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        "lanes": {
+          "says": "You carry as him: he steps across the scene a lane at a time, never along it, plain ink in every binding, the right arm a little shorter from Fourteen.",
+          "kinds": [
+            "carrier-figure"
+          ]
+        },
+        "visual": {
+          "says": "One circle, one rectangle, four lines, two dots. Book Two's plates paint a scene and draw him into it in plain lines; the mismatch is the canon."
+        }
+      },
+      "presence": {
+        "story": 1,
+        "lanes": 1
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Each sighting noticed in the book steadies the figure in the lanes, a stroke at a time.",
+          "wired": "sightings.mjs → pie-game.mjs"
+        },
+        "into_story": {
+          "says": "Carrying the pie past a prose sighting (Thirteen, Fourteen, Fifteen) notices it in the book.",
+          "wired": "pie-game.mjs → sightings.mjs"
+        }
+      },
+      "track": [
+        {
+          "chapter": 3,
+          "in": "story",
+          "beat": "lines in the sand at the signal stones"
+        },
+        {
+          "chapter": 6,
+          "in": "story",
+          "beat": "a hat above the crowd on the glass bridge"
+        },
+        {
+          "chapter": 11,
+          "in": "story",
+          "beat": "one small figure facing ninety degrees away"
+        },
+        {
+          "chapter": 14,
+          "in": "lanes",
+          "beat": "carried past the furrow's sighting, it is noticed in the book"
+        },
+        {
+          "chapter": 14,
+          "in": "story",
+          "beat": "the right arm drawn shorter, in the book and from then on in the lanes"
+        }
+      ],
+      "rhymes": [
+        "floating-title",
+        "torch-arm"
+      ]
+    },
+    {
+      "id": "warm-question",
+      "name": "The warm question",
+      "aliases": [
+        "the unnamed egg"
+      ],
+      "bends": [
+        "Mystery Box",
+        "MacGuffin",
+        "Never Explained"
+      ],
+      "sigil": "*",
+      "statement": "Something warm and egg-shaped that no one may name; naming it is a kind of debt.",
+      "prop": "warmth",
+      "faces": {
+        "story": {
+          "says": "A dog finds an egg the maps will not admit: warm where it ought to have been cold, no nest, no mother. The shell stays warm and empty.",
+          "chambers": [
+            1,
+            2,
+            9,
+            11,
+            13
+          ]
+        },
+        "lanes": {
+          "says": "Now and then, at the very top of the lanes, something warm and egg-shaped. It is not for taking and the game never calls it the Egg; passed close, the pie settles faster and the next knock is forgiven.",
+          "kinds": [
+            "egg"
+          ]
+        },
+        "visual": {
+          "says": "A warm shape at the far edge of every place."
+        }
+      },
+      "presence": {
+        "story": 0.9,
+        "lanes": 0.7
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Something warm and egg-shaped comes up the lanes, likeliest in the chapters where the book keeps the egg.",
+          "wired": "pie-game.mjs (egg chapters)"
+        },
+        "into_story": {
+          "says": "Something warm passed close in the lanes is counted in the margin's note on the egg, which still does not say what it is.",
+          "wired": "pie-game.mjs lean → keepDeeds → references.json egg (egg)"
+        }
+      },
+      "rhymes": [
+        "missing-day"
+      ],
+      "wound_in": "2026_11_09.E"
+    },
+    {
+      "id": "forgiving-glass",
+      "name": "Glass made of old impacts",
+      "aliases": [
+        "Bonk glass"
+      ],
+      "bends": [
+        "Scars Are Forever",
+        "Forgiven, but Not Forgotten"
+      ],
+      "sigil": "#",
+      "statement": "Bonk City's glass is melted down from things struck and forgiven into transparency; it remembers every blow.",
+      "prop": "a pane",
+      "faces": {
+        "story": {
+          "says": "Anything struck goes to the bonk-kiln, which melts the blow out and pours it off clear; put a palm to a pane and you can feel the blow it forgave.",
+          "chambers": [
+            6
+          ]
+        },
+        "lanes": {
+          "says": "A pane knocks the pie and remembers being struck, and now remembers this; a slice banked off glass rings; pane-snails forgive the panes.",
+          "kinds": [
+            "pane",
+            "snail"
+          ]
+        },
+        "visual": {
+          "says": "Panes on edge along the lanes, a ring of light where struck."
+        }
+      },
+      "presence": {
+        "story": 0.7,
+        "lanes": 0.8
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "The lanes' glass comes from Three onward, as the book's city does.",
+          "wired": "pie-game.mjs INTRO"
+        },
+        "into_story": {
+          "says": "A pane struck in the lanes could be one more blow the book's kiln forgives.",
+          "wired": null
+        }
+      },
+      "rhymes": [
+        "records"
+      ]
+    },
+    {
+      "id": "slow-gift",
+      "name": "Slowness, given",
+      "aliases": [
+        "a beaver's pace"
+      ],
+      "bends": [
+        "Tortoise and Hare",
+        "Slow-Motion Time Step"
+      ],
+      "sigil": "~",
+      "statement": "Slowing is a gift, never a penalty: the land at a beaver's pace while you keep your own.",
+      "prop": "a beaver",
+      "faces": {
+        "story": {
+          "says": "Two beavers take the whole evening over a dam, wanting the wording exact; the water held back in steps comes down to the well slow and clear.",
+          "chambers": [
+            8
+          ]
+        },
+        "lanes": {
+          "says": "Steered into, a slow beaver slows the land and not the carrier; everything is heard as through slow time, and boonberries it planted come up behind it.",
+          "kinds": [
+            "beaver"
+          ]
+        },
+        "visual": {
+          "says": "The bus muffled, the lanes slower, hoofprints a beat late."
+        }
+      },
+      "presence": {
+        "story": 0.6,
+        "lanes": 0.8
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Slow beavers come up the lanes from Two.",
+          "wired": "pie-game.mjs INTRO"
+        },
+        "into_story": {
+          "says": "Time the beaver gave in the lanes could slow the passage it was given in.",
+          "wired": null
+        }
+      },
+      "rhymes": [
+        "glimpse"
+      ]
+    },
+    {
+      "id": "records",
+      "name": "Three correct records",
+      "aliases": [
+        "pupil, parcel, or door"
+      ],
+      "bends": [
+        "Rashomon-Style",
+        "Obstructive Bureaucrat"
+      ],
+      "sigil": "%",
+      "statement": "Three records of one visitor disagree, and all three are correct.",
+      "prop": "a slip",
+      "faces": {
+        "story": {
+          "says": "The gate-book names him a parcel, the repair log a door, the night-school roll a pupil; Mx. BoneWAP posts all three. The porter signs the damage in his own name.",
+          "chambers": [
+            4,
+            15
+          ]
+        },
+        "lanes": {
+          "says": "A feast clerk with a DAMAGE slip only wants to write down that something happened; share a slice and he writes SETTLED, which is shorter and leaves more afternoon. Every spill writes the carry back as a record of its own.",
+          "kinds": [
+            "clerk",
+            "carrier-clerk"
+          ]
+        },
+        "visual": {
+          "says": "Slips stamped DAMAGE and SETTLED; three receipts pinned side by side."
+        }
+      },
+      "presence": {
+        "story": 0.8,
+        "lanes": 0.8
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "The book's clerks and its porter keep the lanes' damage slips and carry the hat.",
+          "wired": "pie-game.mjs (clerks, carriers)"
+        },
+        "into_story": {
+          "says": "Each carry's own account, why it leaned, is written on the chapter's page.",
+          "wired": "pie-carries.mjs why → pie-projection.mjs"
+        }
+      },
+      "rhymes": [
+        "forgiving-glass"
+      ]
+    },
+    {
+      "id": "missing-day",
+      "name": "The Thursday nobody kept",
+      "aliases": [
+        "the missing day"
+      ],
+      "bends": [
+        "Lost Time",
+        "Missing Time"
+      ],
+      "sigil": ".",
+      "statement": "A small wish costs a coincidence and a Thursday; one Thursday goes missing from every person's week and stays in the field.",
+      "prop": "an empty day",
+      "faces": {
+        "story": {
+          "says": "No person is in the day; the berries correct a quarter turn, the ant-streets run ruled and straight, and Friday arrives with everyone in it.",
+          "chambers": [
+            3,
+            5,
+            8,
+            12,
+            13,
+            14
+          ]
+        },
+        "lanes": {
+          "says": "In Fourteen's leg nobody comes down the lanes (no clown, clerk, subject or mime; neither pie holds court; nobody blows a horn) until the last of it, when Friday arrives with everyone in it.",
+          "kinds": []
+        },
+        "visual": {
+          "says": "The frosted field, emptied of people; then a row of everyone at once."
+        }
+      },
+      "presence": {
+        "story": 1,
+        "lanes": 0.8
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Fourteen's lanes keep the Thursday: nobody in them until Friday arrives with everyone.",
+          "wired": "pie-game.mjs tickThursday"
+        },
+        "into_story": {
+          "says": "Carried through, the field's margin rumour holds a second set of prints, a lane apart and level.",
+          "wired": "references.json rumour-prints (carried)"
+        }
+      },
+      "track": [
+        {
+          "chapter": 14,
+          "in": "story",
+          "beat": "no person is in the day"
+        },
+        {
+          "chapter": 14,
+          "in": "lanes",
+          "beat": "nobody comes down the lanes; the prints rumour, if heard, is said"
+        },
+        {
+          "chapter": 14,
+          "in": "lanes",
+          "beat": "Friday arrives with everyone in it"
+        },
+        {
+          "chapter": 14,
+          "in": "story",
+          "beat": "a second set of prints in the frost, counted"
+        }
+      ],
+      "wound_in": "2026_11_09.E",
+      "rhymes": [
+        "warm-question"
+      ]
+    },
+    {
+      "id": "beyond-the-frame",
+      "name": "Beyond the frame",
+      "aliases": [
+        "someone washes the plates"
+      ],
+      "bends": [
+        "Happily Ever After",
+        "Bottomless Feast"
+      ],
+      "sigil": "&",
+      "statement": "After the final picture holds still, someone is still washing the plates beyond the frame.",
+      "prop": "a plate",
+      "faces": {
+        "story": {
+          "says": "In the margins of the oculus room: plates stacked by the cold spring water, taller than the meal had been, and nobody saw who washed them. The next stone asks why the person serving a pie that is never smaller still gets tired.",
+          "chambers": [
+            13
+          ],
+          "pending": "The Second Place (next stone, 2026-11-13): the figure dries plates beside the washer-up nobody has asked the name of."
+        },
+        "lanes": {
+          "says": "When the pie spills, the card counts the plates the carry left for the washer-up: one for every WAP.",
+          "kinds": []
+        },
+        "visual": {
+          "says": "A stack of plates by cold spring water, taller than the meal had been."
+        }
+      },
+      "presence": {
+        "story": 0.6,
+        "lanes": 0.7
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Heard in Thirteen's margins, the stacked plates are said in the lanes there.",
+          "wired": "references.json track → pie-game.mjs tickMargins"
+        },
+        "into_story": {
+          "says": "Every WAP is a plate: counted on the end card, and in the rumour's stack.",
+          "wired": "pie-game.mjs keepDeeds → references.mjs trackNote"
+        }
+      },
+      "track": [
+        {
+          "chapter": 6,
+          "in": "lanes",
+          "beat": "every WAP, a plate"
+        },
+        {
+          "chapter": 13,
+          "in": "story",
+          "beat": "plates stacked by the cold spring water, counted"
+        },
+        {
+          "chapter": 16,
+          "in": "story",
+          "beat": "the next stone: the figure dries plates beside the washer-up"
+        }
+      ],
+      "wound_in": "2026_11_09.E",
+      "rhymes": [
+        "never-smaller"
+      ]
+    },
+    {
+      "id": "right-angle-companion",
+      "name": "The companion at a right angle",
+      "aliases": [
+        "nose before name"
+      ],
+      "bends": [
+        "Team Pet",
+        "Animal Companion"
+      ],
+      "sigil": "@",
+      "statement": "The materially specific animal beside the drawn figure works for the land, not for anyone's quest, and helps in passing.",
+      "prop": "a scent",
+      "faces": {
+        "story": {
+          "says": "Boof works for the land, not for pay or fruit; she trusts a scent that ends in something real and is suspicious of applause.",
+          "chambers": [
+            1,
+            2,
+            7,
+            12
+          ]
+        },
+        "lanes": {
+          "says": "Boof crosses the lanes on her own business now and then; brushing past her steadies the pie.",
+          "kinds": [
+            "boof"
+          ]
+        },
+        "visual": {
+          "says": "A painted dog beside a drawing: the contrast is the scene's pressure."
+        }
+      },
+      "presence": {
+        "story": 1,
+        "lanes": 0.7
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "Boof comes into the lanes when the passage going by is hers.",
+          "wired": "pie-game.mjs (a passage in Boof's voice)"
+        },
+        "into_story": {
+          "says": "Brushing past her is seeing someone: it casts a room of watchers, kept beside the room on the chapter page.",
+          "wired": "pie-game.mjs castIfRoomAsks → the chapter's rooms"
+        }
+      },
+      "rhymes": [
+        "plain-lines"
+      ]
+    },
+    {
+      "id": "torch-arm",
+      "name": "A torch from a line",
+      "aliases": [
+        "the shorter arm"
+      ],
+      "bends": [
+        "Heroic Sacrifice",
+        "Tiny Civilization"
+      ],
+      "sigil": "*",
+      "statement": "A dead torch in an ant-street is relit from the end of a drawn arm; the arm stays shorter, warm at the tip.",
+      "prop": "a torch",
+      "faces": {
+        "story": {
+          "says": "The ant-streets run ruled and straight; a torch is relit from the end of a line arm, and the arm stays shorter.",
+          "chambers": [
+            14
+          ]
+        },
+        "lanes": {
+          "says": "Torch-ants light the way through, bring warm furrows and melt the frost ahead; from Fourteen the figure's right arm is drawn a little shorter and warm at the tip.",
+          "kinds": [
+            "wonder",
+            "furrow"
+          ]
+        },
+        "visual": {
+          "says": "The plain drawing with one line shortened, a warm dot at its end."
+        }
+      },
+      "presence": {
+        "story": 0.9,
+        "lanes": 0.8
+      },
+      "crossings": {
+        "into_lanes": {
+          "says": "From Fourteen the figure is drawn with the arm the book shortened.",
+          "wired": "pie-game.mjs (the drawing)"
+        },
+        "into_story": {
+          "says": "Torch-ants kept in the lanes are kept in the almanac and light the chapter's inventory.",
+          "wired": "almanac.mjs → chapter-inventory.mjs"
+        }
+      },
+      "rhymes": [
+        "plain-lines"
+      ]
+    }
+  ]
+}

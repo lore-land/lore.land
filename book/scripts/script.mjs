@@ -46,7 +46,7 @@ import {
   initPointerCraft
 } from './modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
-import { initReferences } from './modules/references.mjs?v=2026_11_05.B';
+import { initReferences } from './modules/references.mjs?v=2026_11_09.E';
 import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
 import { initAlmanac } from './modules/almanac.mjs?v=2026_11_06.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_08.N';

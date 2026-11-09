@@ -38,7 +38,14 @@
         9,
         11,
         13
-      ]
+      ],
+      "track": {
+        "lanes": "Warm where it ought to have been cold, they say in the margins; no nest, no mother, and the maps will not write it down.",
+        "after": {
+          "count": "egg",
+          "says": "Warm where it ought to have been cold. No nest. No mother. The maps will not write it down. Somebody carrying a pie has passed something warm like it {{n}} time{{s}}, and each time the pie settled. Carry it if you must; naming it is a kind of debt."
+        }
+      }
     },
     {
       "id": "boof",
@@ -76,7 +83,14 @@
         1,
         2,
         6
-      ]
+      ],
+      "track": {
+        "lanes": "Now and then a boonberry notices the story it is sitting in, they say in the margins, which is more than most fruit will do.",
+        "after": {
+          "count": "boonberry",
+          "says": "Ordinary magic: fruit, lantern-fuel, seed, and supper. Somebody carrying a pie has eaten {{n}} in passing and seen the clear way a breath before they needed it; whether the berry showed it or they remembered it, nobody can say."
+        }
+      }
     },
     {
       "id": "commons-scale",
@@ -487,6 +501,134 @@
         6,
         13
       ]
+    },
+    {
+      "id": "rumour-clowns",
+      "kind": "rumour",
+      "title": "Clowns, going home",
+      "note": "All evening, at the edge of the plaza, clowns went home with pie on their faces, delighted. Nobody at the table saw where the pie had come from. The pie on the table was no smaller.",
+      "href": "/pie/",
+      "terms": [
+        "pie",
+        "slice",
+        "face",
+        "faces",
+        "plaza",
+        "honk"
+      ],
+      "chambers": [
+        6
+      ],
+      "track": {
+        "lanes": "Clowns go home delighted from the plaza's edge, they say, and nobody at the table sees where the pie came from.",
+        "after": {
+          "count": "satisfied",
+          "chapter": 6,
+          "says": "All evening, at the edge of the plaza, clowns went home with pie on their faces: {{n}} of them so far, from somebody's carries through here. Nobody at the table saw where the pie had come from. The pie on the table was no smaller."
+        }
+      }
+    },
+    {
+      "id": "rumour-placard",
+      "kind": "rumour",
+      "title": "A notice with nothing on it",
+      "note": "Someone has pasted a placard to the garden wall with nothing written on it. Passers-by stop to agree with it, silently. One has drawn a pie on it, and crossed the pie out.",
+      "href": "/pie/",
+      "terms": [
+        "wall",
+        "walls",
+        "garden",
+        "bloom",
+        "announced",
+        "behold"
+      ],
+      "chambers": [
+        11
+      ],
+      "track": {
+        "lanes": "Someone pasted a placard with nothing on it to the garden wall; passers-by agreed with it, silently, and one drew a pie on it and crossed the pie out.",
+        "after": {
+          "count": "held",
+          "says": "Someone has pasted a placard to the garden wall with nothing written on it. There are {{n}} more like it now, one in every chapter the mimes hold. Passers-by agree with them, silently; one has drawn a pie on each and crossed it out."
+        }
+      }
+    },
+    {
+      "id": "rumour-plates",
+      "kind": "rumour",
+      "title": "Plates, after",
+      "note": "By the cold spring water someone has stacked the plates from a meal nobody here remembers eating. The stack is taller than the meal could have been. Nobody saw who washed them.",
+      "href": "/book/chapter/13/",
+      "terms": [
+        "water",
+        "spring",
+        "bowl",
+        "plates",
+        "cold",
+        "washed",
+        "drank"
+      ],
+      "chambers": [
+        13
+      ],
+      "track": {
+        "lanes": "Plates are stacked by the cold spring water, taller than the meal could have been, and nobody saw who washed them.",
+        "after": {
+          "count": "waps",
+          "says": "By the cold spring water someone has stacked the plates from a meal nobody here remembers eating: {{n}} plate{{s}}, one for every pie that went into a delighted face. The stack is taller than the meal could have been. Nobody saw who washed them."
+        }
+      }
+    },
+    {
+      "id": "rumour-prints",
+      "kind": "rumour",
+      "title": "Prints at right angles",
+      "note": "The frost on the field that kept the Thursday holds the prints of nobody: a step, a right angle, a step, straight across, the way no road goes.",
+      "href": "/book/chapter/14/",
+      "terms": [
+        "frost",
+        "field",
+        "furrow",
+        "hedge",
+        "straight",
+        "across"
+      ],
+      "chambers": [
+        14
+      ],
+      "track": {
+        "lanes": "The frost on the field holds the prints of nobody, they say: a step, a right angle, a step.",
+        "after": {
+          "count": "carried",
+          "chapter": 14,
+          "says": "The frost on the field that kept the Thursday holds a second set of prints now, a lane apart and level, as if someone had carried something across it without spilling it: {{n}} time{{s}}. Nobody was in the day to see who."
+        }
+      }
+    },
+    {
+      "id": "rumour-unsaid",
+      "kind": "rumour",
+      "title": "Foretellings, unsaid",
+      "note": "On the hill they say a baneberry tells you what will go wrong, and that it goes wrong because you were told. Nobody on the hill has ever heard of one that kept quiet.",
+      "href": "/book/chapter/04/",
+      "terms": [
+        "hill",
+        "baneberry",
+        "baneberries",
+        "cellar",
+        "foretell",
+        "foretells"
+      ],
+      "chambers": [
+        4
+      ],
+      "track": {
+        "lanes": "On the hill they say a baneberry tells you what will go wrong, and that it goes wrong because you were told.",
+        "after": {
+          "count": "squashed",
+          "says": "On the hill they say a baneberry tells you what will go wrong, and that it goes wrong because you were told. Lately some have kept quiet: {{n}} stepped on before they could say a thing, somewhere in the lanes, and nothing went wrong that day because of them."
+        }
+      }
     }
   ]
 }

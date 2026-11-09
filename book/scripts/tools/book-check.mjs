@@ -184,6 +184,44 @@ almanac.wonders.forEach((wonder) => {
   });
 });
 
+/* The tropes (book/content/world/tropes.json; .spw/surfaces/tropes.spw): the story and the lanes as strands of
+ * one track. Each trope needs a face in both, its chambers published, its lanes kinds real cards, a crossing
+ * each way (said, and wired when built); its reach (√(story² + lanes²) / √2), strength (reach × wired ÷ 2)
+ * and status are said as a note, so the crossings still to lay stay in view. */
+const tropes = await read('book/content/world/tropes.json');
+const cardKinds = new Set([...(await readFile(resolve(ROOT, 'book/scripts/home/pie-cards.mjs'), 'utf8')).matchAll(/^\s+'?([a-z][\w-]*)'?:\s*\{\s*name:/gm)].map((m) => m[1]));
+const referenceIds = new Set((await read('book/content/world/references.json')).entries.map((entry) => entry.id));
+const tropeIds = new Set();
+const track = { winding: [], 'one-way': [], parallel: [], stranded: [] };
+const unit = (x) => typeof x === 'number' && x >= 0 && x <= 1;
+(tropes.tropes || []).forEach((trope) => {
+  const at = `tropes ${trope.id}`;
+  if (tropeIds.has(trope.id)) error(at, 'duplicate id');
+  tropeIds.add(trope.id);
+  ['name', 'statement', 'prop', 'sigil'].forEach((key) => { if (!trope[key]) error(at, `missing ${key}`); });
+  if (!unit(trope.presence?.story) || !unit(trope.presence?.lanes)) error(at, 'presence.story and presence.lanes must each be 0–1');
+  if (!trope.faces?.story?.says || !trope.faces?.lanes?.says) error(at, 'needs a face in the story and one in the lanes');
+  ['into_lanes', 'into_story'].forEach((way) => { if (!trope.crossings?.[way]?.says) error(at, `crossings.${way}.says: what crosses, even before it is wired`); });
+  (trope.faces?.story?.chambers || []).forEach((n) => { if (!proseOf[n]) error(at, `story chamber ${n} is not a published chapter`); });
+  (trope.faces?.lanes?.kinds || []).forEach((kind) => { if (!cardKinds.has(kind)) error(at, `lanes kind "${kind}" has no card in pie-cards.mjs`); });
+  (trope.track || []).forEach((station, i) => {
+    if (!['story', 'lanes'].includes(station.in) || !station.beat) error(at, `track[${i}]: needs in (story | lanes) and a beat`);
+  });
+  Object.values(trope.crossings || {}).forEach((crossing) => {
+    const ref = String(crossing?.wired || '').match(/references\.json (rumour-[\w-]+)/);
+    if (ref && !referenceIds.has(ref[1])) error(at, `crossing wired through unknown rumour ${ref[1]}`);
+  });
+});
+(tropes.tropes || []).forEach((trope) => {
+  (trope.rhymes || []).forEach((id) => { if (!tropeIds.has(id)) error(`tropes ${trope.id}`, `rhymes with unknown trope ${id}`); });
+  const wired = ['into_lanes', 'into_story'].filter((way) => trope.crossings?.[way]?.wired).length;
+  const story = trope.presence?.story || 0;
+  const lanes = trope.presence?.lanes || 0;
+  const status = !story || !lanes ? 'stranded' : wired === 2 ? 'winding' : wired === 1 ? 'one-way' : 'parallel';
+  track[status].push(trope.id);
+});
+notes.push(`tropes: ${tropeIds.size} on the track — ${track.winding.length} winding, ${track['one-way'].length} one-way (${track['one-way'].join(', ')}), ${track.parallel.length} parallel, ${track.stranded.length} stranded; crossings to lay in .spw/surfaces/tropes.spw`);
+
 /* The serial. */
 const books = serial.books || [];
 books.forEach((book, i) => {

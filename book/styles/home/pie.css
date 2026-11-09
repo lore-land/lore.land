@@ -4699,3 +4699,39 @@ html:not([data-chrome-hidden='true']) .pie-index {
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ─── The trope a card belongs to (tropes.json), and the light the book casts on it from the other direction ─── */
+.pie-cardface-trope {
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  border-left: 2px solid color-mix(in srgb, var(--hub-gold) 70%, transparent);
+  background: color-mix(in srgb, var(--hub-gold) 8%, transparent);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.pie-cardface-trope > span {
+  display: block;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-cardface-trope em {
+  color: var(--hub-muted);
+}
+
+/* The end card: what the carry left for the washer-up, beyond the frame. */
+.pie-card-plates {
+  flex-basis: 100%;
+  margin: 0 0 0.2rem;
+  text-align: center;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.78rem;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.85;
+}
