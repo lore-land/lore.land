@@ -2,6 +2,16 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.O",
+      "date": "2026-11-08",
+      "notes": [
+        "In Exactly One Pie the mechanics are drawn where they act: every gift in force is a badge over the hat with what is left of it, a leaning pie shows a CATCH chevron on the side to step to, a combo is a row of pips with the time left to keep it going, and stillness fills a ring under the carrier's feet until it turns gold.",
+        "Whoever is under the hat now shows how the carry is going: a small smile, a level look as the needle turns, a grin after a WAP, a worried brow (and a bead of sweat) as the pie tilts, an ouch at a knock.",
+        "Each carrier has a knack of their own: the figure's finer aim, the porter's long hold on an arrow, the clerk's quick feet between hops, the Genie's true aim after a satisfied clown, and the clown's bigger feelings. Their cards show the knack and four bars of how they carry.",
+        "Every character now has a model sheet on the game's design table: five moods, the traits a reader could name, a temperament in a line, their knack if the hat settles on them, and their colours. Meeting someone for the first time, their portrait looks surprised."
+      ]
+    },
+    {
       "release": "2026_11_08.N",
       "date": "2026-11-08",
       "notes": [

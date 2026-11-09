@@ -79,6 +79,24 @@
   reel: "the last six stills, each captioned with what happened and what it was worth"
 }
 
+^mechanics_drawn{
+  .note: "pie-game.mjs drawMechanics, drawFace, moodOf; carrierStats and the knacks in CARRIERS"
+  gifts: "every gift in force is a badge over the hat with what is left of it as an arc (echoes as a count)"
+  catch: "when the pie leans, a chevron on the side to step to says CATCH"
+  combo: "a combo is pips over the hat and a bar of the time left to keep it going"
+  poise: "stillness fills a ring under the feet; poised, it is gold"
+  faces: "the carrier face follows the carry: calm, focused on the needle, glad after a WAP, worried as it tilts (a bead of sweat near the top), ouch at a knock"
+}
+
+^carriers{
+  figure: "fine hands: the needle turns a finer notch"
+  porter: "long hold: an arrow holds the needle half as long again"
+  clerk: "quick feet: a wider moment to chain hops"
+  genie: "true after a WAP: each clown satisfied, the needle points true for two seconds"
+  clown: "big feelings: every impact lands bigger"
+  model: "each carrier card shows the knack and four bars: steady, quick, calm, unhurried"
+}
+
 ^spell_display{
   .note: "spw-spell.mjs and components/spell.css"
   verse: "a long spell is laid out a line an atom inside its bodies, indented by depth; copying still gives it exactly as written"

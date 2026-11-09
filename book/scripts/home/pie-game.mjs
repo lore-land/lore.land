@@ -156,10 +156,10 @@ import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_06.B
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_08.L';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.N';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_08.O';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_08.J';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
-import { CHARACTERS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.M';
+import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.O';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.N';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
@@ -304,12 +304,28 @@ const SCHEMES = Object.freeze({
 
 /* Who the hat settles on. Each carries the pie their own way. */
 const CARRIERS = Object.freeze([
-  { id: 'figure', name: 'the figure in plain lines', weight: 4, step: 0.09, wobble: 0.18, hurried: 0.3, settle: 0.5, width: 24 },
-  { id: 'porter', name: 'the porter from the parcel gate', weight: 2, step: 0.13, wobble: 0.12, hurried: 0.22, settle: 0.56, width: 28, says: 'Steady as a sack of flour, and as quick.' },
-  { id: 'clerk', name: 'a feast clerk', weight: 1.5, step: 0.065, wobble: 0.23, hurried: 0.36, settle: 0.46, width: 19, says: 'Quick, precise, and nervous about the paperwork.' },
-  { id: 'genie', name: 'the Genie, off-season', weight: 1.5, step: 0.15, wobble: 0.16, hurried: 0.26, settle: 0.7, width: 24, says: 'Glides. Settles a pie the way he settles a price.' },
-  { id: 'clown', name: 'a clown', weight: 1, step: 0.09, wobble: 0.25, hurried: 0.4, settle: 0.42, width: 24, says: 'A clown, carrying a pie. Everyone is nervous.' }
+  { id: 'figure', name: 'the figure in plain lines', weight: 4, step: 0.09, wobble: 0.18, hurried: 0.3, settle: 0.5, width: 24,
+    knack: { id: 'fine_aim', name: 'Fine hands', says: 'The needle turns a finer notch in his hands, and every stroke noticed steadies them more.' } },
+  { id: 'porter', name: 'the porter from the parcel gate', weight: 2, step: 0.13, wobble: 0.12, hurried: 0.22, settle: 0.56, width: 28, says: 'Steady as a sack of flour, and as quick.',
+    knack: { id: 'long_hold', name: 'Long hold', says: 'An arrow on the track holds the needle half as long again for him.' } },
+  { id: 'clerk', name: 'a feast clerk', weight: 1.5, step: 0.065, wobble: 0.23, hurried: 0.36, settle: 0.46, width: 19, says: 'Quick, precise, and nervous about the paperwork.',
+    knack: { id: 'quick_feet', name: 'Quick feet', says: 'A wider moment to chain one hop into the next: the clerk is always halfway to the next thing.' } },
+  { id: 'genie', name: 'the Genie, off-season', weight: 1.5, step: 0.15, wobble: 0.16, hurried: 0.26, settle: 0.7, width: 24, says: 'Glides. Settles a pie the way he settles a price.',
+    knack: { id: 'true_after', name: 'True after a WAP', says: 'Each clown satisfied, the needle points true for two seconds.' } },
+  { id: 'clown', name: 'a clown', weight: 1, step: 0.09, wobble: 0.25, hurried: 0.4, settle: 0.42, width: 24, says: 'A clown, carrying a pie. Everyone is nervous.',
+    knack: { id: 'big_feelings', name: 'Big feelings', says: 'Everything lands bigger: a third more drama in every pop, splat and bonk.' } }
 ]);
+/* A carrier's model, as a reader would weigh it: steady (settles a tilt), quick (between steps), calm
+ * (wobbles less at a knock), unhurried (wobbles less when hurried). Each 0..1 across the five. */
+const carrierStats = (c) => {
+  const span = (v, lo, hi) => Math.max(0.08, Math.min(1, (v - lo) / (hi - lo)));
+  return [
+    ['Steady', span(c.settle, 0.4, 0.72)],
+    ['Quick', span(0.16 - c.step, 0, 0.1)],
+    ['Calm', span(0.27 - c.wobble, 0, 0.16)],
+    ['Unhurried', span(0.42 - c.hurried, 0, 0.21)]
+  ];
+};
 const carrierById = (id) => CARRIERS.find((carrier) => carrier.id === id) || CARRIERS[0];
 function drawCarrierLot(not = null) {
   const pool = CARRIERS.filter((carrier) => carrier.id !== not);
@@ -1138,7 +1154,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const latest = run.feed[run.feed.length - 1];
     if (latest && run.t - latest.t < 0.05 && !latest.placed) { latest.x = x; latest.y = y; latest.placed = true; }
     const w = whimsyFor(kind);
-    const drama = TUNE.drama * (w.drama ?? 1) * (sceneWhimsy().drama ?? 1) * scale;
+    const drama = TUNE.drama * (w.drama ?? 1) * (sceneWhimsy().drama ?? 1) * scale * (run.carrier?.id === 'clown' ? 1.3 : 1);
     if (drama <= 0) return;
     const calm = reduced?.matches || record.view.zen;
     // A register cast for the visit (spw-bias.mjs) may answer instead, now and then; never the story.
@@ -1657,7 +1673,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.jumpT = JUMP_DUR;
     // A chain: hop again soon after a good landing and the next hop goes higher; the third is a high
     // hop, which clears the lighter tall things too (=hop_window, =hop_chain).
-    const quick = run.t - (run.lastLand ?? -9) < TUNE.hop_window;
+    const quick = run.t - (run.lastLand ?? -9) < TUNE.hop_window * (run.carrier.id === 'clerk' ? 1.4 : 1);
     run.hopChain = quick && run.lastHopGood ? Math.min(3, (run.hopChain || 0) + 1) : 0;
     run.hopPower = 1 + run.hopChain * TUNE.hop_chain;
     run.highHop = run.hopChain >= 2;
@@ -1726,7 +1742,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /** Turn the needle a notch (Q/E, [ ]); it holds there until something turns it again. */
   const turnAim = (dir) => {
     if (!run) return;
-    run.aim.a = clamp(run.aim.a + dir * TUNE.aim_step, -AIM_MAX, AIM_MAX);
+    run.aim.a = clamp(run.aim.a + dir * TUNE.aim_step * (run.carrier.id === 'figure' ? 0.7 : 1), -AIM_MAX, AIM_MAX);
+    run.aimFocusT = 0.9;   // the carrier's face narrows to the needle
   };
   const whole = () => run.aura >= SLICE_COST && run.filling >= SLICE_COST;   // both ingredients on hand
   /* The pies grow with the aura: plenty of flour and boonberries make a bigger slice, and a more satisfying one. */
@@ -2214,6 +2231,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       thing.wapT = 0;
       thing.spin = pick([-1, 1]);
       run.satisfied += 1;
+      run.gladT = 1.4;
+      if (run.carrier.id === 'genie') run.trueAim = Math.max(run.trueAim, 2);
       lean('satisfied');
       tally('wap', 0.5, 'satisfied');
       thanks(thing);
@@ -3253,7 +3272,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const lean = { boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone };
     const bar = makeLeanBar(lean);
     const whoParts = [
-      `Under the hat: ${run.carrier.name}${run.carrier.id === 'figure' && run.strokes ? ` (${run.strokes}/9 strokes steadying)` : ''}`,
+      `Under the hat: ${run.carrier.name}${run.carrier.id === 'figure' && run.strokes ? ` (${run.strokes}/9 strokes steadying)` : ''}${run.carrier.knack ? ` · knack: ${run.carrier.knack.name.toLowerCase()}` : ''}`,
       run.charm ? `charm ${run.charm.expr}` : null
     ].filter(Boolean);
     const rows = [
@@ -3590,7 +3609,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else {
       run.stillT = 0;
     }
-    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
+    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool', 'gladT', 'aimFocusT'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
     // The pie settles if you let it.
     // A knock rattles it for a moment; after that it settles, faster with something warm close by or when held in poise.
     if (!(run.rattled > 0)) {
@@ -3812,7 +3831,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             thing.wapT = 0.4;
             thing.spin = 0;
             run.aim.a = clamp(thing.angle, -AIM_MAX, AIM_MAX);
-            run.aimLock = TUNE.arrow_hold;
+            run.aimLock = TUNE.arrow_hold * (run.carrier.id === 'porter' ? 1.5 : 1);
             sfx('catch');
             impact('arrow', thing.x, thing.y - 24, { scale: 0.7 });
             lean('aimed');
@@ -5520,6 +5539,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const swapping = run?.prevCarrier && run.swapT < 1;
     if (swapping) bodyOf(run.prevCarrier.id, 1 - run.swapT);
     bodyOf(who, swapping ? run.swapT : 1);
+    drawFace(x, y, moodOf(), who, swapping ? run.swapT : 1);
     if (who !== 'figure') {
       ctx.strokeStyle = who === 'clown' ? '#d6473e' : '#3a2a20';
       ctx.fillStyle = ctx.strokeStyle;
@@ -5554,6 +5574,149 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     drawHat();
   };
+
+  /* ─── The carrier's face: how the carry is going, in the one under the hat ───
+   * calm (a small smile), focused (the needle just turned: brows level, mouth set), glad (a clown
+   * satisfied, or a combo running), worried (the pie past two-thirds tilted; a bead of sweat near the
+   * top), ouch (a knock, or the spill). Every carrier's head sits in the same place, so one face fits all. */
+  function moodOf() {
+    if (!run || state === 'title') return 'calm';
+    if (run.spill || run.hurtT > 0) return 'ouch';
+    if (run.wobble > 0.62) return 'worried';
+    if (run.gladT > 0 || (run.combo >= 2 && run.comboT > 0)) return 'glad';
+    if (run.aimFocusT > 0) return 'focused';
+    return 'calm';
+  }
+  function drawFace(x, y, mood, who, alpha = 1) {
+    const hy = y - 44;
+    const my = hy + (who === 'clown' ? 6 : 4.6);
+    ctx.save();
+    ctx.globalAlpha *= alpha;
+    ctx.strokeStyle = who === 'figure' ? colors.ink : who === 'clown' ? '#c0392b' : '#3a2a20';
+    ctx.lineWidth = 1.25;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (mood === 'glad') {
+      ctx.arc(x, my - 2, 3.4, 0.12 * Math.PI, 0.88 * Math.PI);
+      ctx.moveTo(x - 5, hy - 4.6); ctx.quadraticCurveTo(x - 3.2, hy - 6.4, x - 1.4, hy - 4.6);
+      ctx.moveTo(x + 1.4, hy - 4.6); ctx.quadraticCurveTo(x + 3.2, hy - 6.4, x + 5, hy - 4.6);
+    } else if (mood === 'worried') {
+      ctx.moveTo(x - 3.2, my); ctx.quadraticCurveTo(x - 1.6, my - 1.6, x, my); ctx.quadraticCurveTo(x + 1.6, my + 1.6, x + 3.2, my);
+      ctx.moveTo(x - 5.2, hy - 4.4); ctx.lineTo(x - 1.6, hy - 6.2);
+      ctx.moveTo(x + 5.2, hy - 4.4); ctx.lineTo(x + 1.6, hy - 6.2);
+    } else if (mood === 'ouch') {
+      ctx.arc(x, my, 1.7, 0, Math.PI * 2);
+      ctx.moveTo(x - 5.2, hy - 6.2); ctx.lineTo(x - 1.6, hy - 4.6);
+      ctx.moveTo(x + 5.2, hy - 6.2); ctx.lineTo(x + 1.6, hy - 4.6);
+    } else if (mood === 'focused') {
+      ctx.moveTo(x - 2.2, my); ctx.lineTo(x + 2.2, my);
+      ctx.moveTo(x - 5, hy - 4.4); ctx.lineTo(x - 1.6, hy - 4.4);
+      ctx.moveTo(x + 1.6, hy - 4.4); ctx.lineTo(x + 5, hy - 4.4);
+    } else {
+      ctx.arc(x, my - 2.4, 2.6, 0.25 * Math.PI, 0.75 * Math.PI);
+    }
+    ctx.stroke();
+    if (mood === 'worried' && run?.wobble > 0.8) {
+      ctx.fillStyle = '#7fb4c0';
+      ctx.beginPath();
+      ctx.moveTo(x + 9.5, hy - 6); ctx.quadraticCurveTo(x + 12, hy - 1.5, x + 9.5, hy - 0.8); ctx.quadraticCurveTo(x + 7, hy - 1.5, x + 9.5, hy - 6);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  /* ─── The mechanics, drawn where they act ───
+   * Gifts as badges over the hat, each with what is left of it as an arc (echoes as a count);
+   * the catch: when the pie leans, a chevron on the side to step to; a combo as pips and the time
+   * left to keep it going; poise as a ring filling under the feet, gold when poised. Quiet in zen. */
+  const GIFT_BADGES = Object.freeze([
+    ['lit', '☀', '#d9a23a', 'lit'], ['echoes', '◎', '#2c8b86', 'echoes'], ['lag', '≈', '#4f86a8', 'slow'], ['unkept', '◌', '#8a8a8a', 'unkept'],
+    ['trueAim', '➶', '#3d7a3a', 'true aim'], ['aimLock', '↑', '#3d7a3a', 'arrow'], ['fed', '♨', '#8a6a4a', 'fed'], ['warm', '✹', '#d0892e', 'warm'], ['glimpse', '◐', '#7a4f8e', 'glimpse']
+  ]);
+  function drawMechanics() {
+    if (!run || state !== 'running' || record.view.zen) return;
+    const calm = reduced?.matches;
+    const x = run.x;
+    const y = run.y - (run.jumpT > 0 ? jumpLift() : 0);
+    ctx.save();
+    ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    // Gifts over the hat.
+    run.giftMax = run.giftMax || {};
+    const live = GIFT_BADGES.filter(([key]) => run[key] > 0);
+    GIFT_BADGES.forEach(([key]) => { if (!(run[key] > 0)) delete run.giftMax[key]; });
+    live.forEach(([key, glyph, ink], i) => {
+      const v = run[key];
+      const max = (run.giftMax[key] = Math.max(run.giftMax[key] || 0, v));
+      const a = -Math.PI / 2 + (i - (live.length - 1) / 2) * 0.42;
+      const bx = x + Math.cos(a) * 34;
+      const by = y - 70 + Math.sin(a) * 18;
+      ctx.fillStyle = 'rgba(255, 252, 244, 0.92)';
+      ctx.beginPath(); ctx.arc(bx, by, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = mix(colors.ink, colors.paper, 0.75);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      if (key !== 'echoes') {
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(bx, by, 8, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * clamp(v / max, 0, 1)); ctx.stroke();
+      }
+      ctx.fillStyle = ink;
+      ctx.fillText(key === 'echoes' ? String(Math.ceil(v)) : glyph, bx, by + 0.5);
+    });
+    // The catch: step toward the lean.
+    if (run.wobble >= 0.24 && Math.abs(run.tiltDir || 0) >= 0.3 && !run.spill) {
+      const side = Math.sign(run.tiltDir);
+      const pulse = calm ? 1 : 0.65 + Math.sin(run.t * 9) * 0.35;
+      const cx = x + side * 50;
+      const cy = y - 18;
+      ctx.globalAlpha = pulse;
+      ctx.strokeStyle = '#2c8b86';
+      ctx.lineWidth = 2.4;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(cx - side * 3, cy - 6); ctx.lineTo(cx + side * 3, cy); ctx.lineTo(cx - side * 3, cy + 6);
+      ctx.moveTo(cx - side * 9, cy - 6); ctx.lineTo(cx - side * 3, cy); ctx.lineTo(cx - side * 9, cy + 6);
+      ctx.stroke();
+      ctx.font = '700 7px "JetBrainsMono", ui-monospace, monospace';
+      ctx.fillStyle = '#2c8b86';
+      ctx.fillText('CATCH', cx - side * 3, cy + 13);
+      ctx.globalAlpha = 1;
+    }
+    // A combo: its pips, and the time left to keep it going.
+    if (run.combo >= 1 && run.comboT > 0) {
+      const n = Math.min(run.combo, 6);
+      const by = y - (live.length ? 98 : 80);   // over the hat (and its gifts): clear of the aura at the foot
+      for (let i = 0; i < n; i += 1) {
+        ctx.fillStyle = i >= 2 ? '#d6473e' : '#f2c14e';
+        ctx.beginPath(); ctx.arc(x - (n - 1) * 4.5 + i * 9, by, 3, 0, Math.PI * 2); ctx.fill();
+      }
+      const w = 44 * clamp(run.comboT / 2.6, 0, 1);
+      ctx.fillStyle = mix(colors.ink, colors.paper, 0.8);
+      ctx.fillRect(x - 22, by + 6, 44, 2);
+      ctx.fillStyle = '#d9a23a';
+      ctx.fillRect(x - 22, by + 6, w, 2);
+      if (run.combo >= 2) {
+        ctx.font = '700 8px "JetBrainsMono", ui-monospace, monospace';
+        ctx.fillStyle = colors.ink;
+        ctx.fillText(`×${run.combo}`, x + (n - 1) * 4.5 + 14, by + 0.5);
+      }
+    }
+    // Poise: stillness filling a ring under the feet.
+    const need = poiseNeed();
+    if (run.jumpT <= 0 && run.stillT > 0.08) {
+      ctx.lineWidth = 1.6;
+      if (poised()) {
+        ctx.strokeStyle = 'rgba(242, 193, 78, 0.85)';
+        ctx.beginPath(); ctx.ellipse(x, run.y + 17, 17, 5, 0, 0, Math.PI * 2); ctx.stroke();
+      } else {
+        ctx.strokeStyle = mix(colors.ink, colors.paper, 0.55);
+        ctx.beginPath(); ctx.ellipse(x, run.y + 17, 17, 5, 0, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * clamp(run.stillT / need, 0, 1)); ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
 
   /* The others the hat settles on: drawn in their materials, unlike him. */
   function drawBody(who, x, y, stride) {
@@ -6015,6 +6178,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawFigure();
     things.filter((t) => (Z[t.kind] ?? 2) >= 3).forEach(drawThing);
     drawHopGauge();
+    drawMechanics();
     drawFlight();
     drawSpill();
     drawBursts();
@@ -6043,6 +6207,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // The board: the alternate view, drawn over the lanes once they are in the window.
     if (show.mode === 'board' && run) {
       show.drawBoard(ctx, run, colors);
+      drawMechanics();
       drawAim();
       drawFlight();
       drawWhimsy();
@@ -6456,6 +6621,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       (() => { const p = nodeOf('p', 'pie-cardface-lanes'); p.append(nodeOf('span', '', 'In the lanes'), ` ${c.lanes}`); return p; })(),
       chips,
       book);
+    // A carrier's model: their knack, and how they carry, as four bars.
+    const carrier = kind.startsWith('carrier-') ? carrierById(kind.replace('carrier-', '')) : null;
+    if (carrier?.knack && !compact) {
+      const box = nodeOf('div', 'pie-cardface-carrier');
+      const knack = nodeOf('p', 'pie-cardface-knack');
+      knack.append(nodeOf('b', '', `Knack · ${carrier.knack.name}`), ` ${carrier.knack.says}`);
+      const bars = nodeOf('ul', 'pie-cardface-stats');
+      bars.setAttribute('aria-label', `How ${carrier.name} carries`);
+      carrierStats(carrier).forEach(([label, v]) => {
+        const li = nodeOf('li', '');
+        const bar = nodeOf('span', 'pie-stat-bar');
+        bar.style.setProperty('--v', v.toFixed(2));
+        li.append(nodeOf('span', 'pie-stat-label', label), bar);
+        li.setAttribute('aria-label', `${label}: ${Math.round(v * 10)} of 10`);
+        bars.append(li);
+      });
+      box.append(knack, bars);
+      face.append(box);
+    }
     // What it can be worth, in points, from the rules in play: the same chips the lanes show.
     const worth = worthOf(kind);
     if (worth.length && !compact) {
@@ -6914,7 +7098,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const save = nodeOf('a', 'pie-tool', 'Download');
       save.download = `lore-land-${id}.svg`;
       save.href = URL.createObjectURL(new Blob([portraitSVG(id, { size: 512, standalone: true })], { type: 'image/svg+xml' }));
-      li.append(art, nodeOf('strong', '', c.name), nodeOf('span', 'pie-portrait-first', c.first ? `first in Chapter ${c.first}` : 'in the lanes'), renderSpell(characterSpell(id), { cast: false, copy: `lore.land/characters#${id}` }), nodeOf('span', 'pie-portrait-actions'));
+      // The model sheet: every mood, what they are like, their knack if the hat settles on them, their colours.
+      const model = MODELS[id] || {};
+      const moods = nodeOf('span', 'pie-portrait-moods');
+      MOODS.forEach((mood) => {
+        const m = nodeOf('span', 'pie-portrait-mood');
+        m.innerHTML = portraitSVG(id, { size: 40, mood });
+        m.title = mood;
+        m.append(nodeOf('small', '', mood));
+        moods.append(m);
+      });
+      const traits = nodeOf('span', 'pie-portrait-traits');
+      (model.traits || []).forEach((t) => traits.append(nodeOf('span', '', t)));
+      const swatches = nodeOf('span', 'pie-portrait-swatches');
+      Object.entries(c.palette || {}).forEach(([k, v]) => { const sw = nodeOf('i', ''); sw.style.background = v; sw.title = `${k} ${v}`; swatches.append(sw); });
+      li.append(art, nodeOf('strong', '', c.name), nodeOf('span', 'pie-portrait-first', c.first ? `first in Chapter ${c.first}` : 'in the lanes'), moods, traits,
+        ...(model.temperament ? [nodeOf('span', 'pie-portrait-temperament', model.temperament)] : []),
+        ...(model.knack ? [nodeOf('span', 'pie-portrait-knack', `Under the hat · ${model.knack}`)] : []),
+        swatches, renderSpell(characterSpell(id), { cast: false, copy: `lore.land/characters#${id}` }), nodeOf('span', 'pie-portrait-actions'));
       li.querySelector('.pie-portrait-actions').append(copy, ' ', save);
       return li;
     }));
@@ -7234,7 +7435,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   });
   window.addEventListener(BIAS_EVENT, () => paintBias());
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_08.N').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_08.O').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();

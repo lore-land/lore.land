@@ -27,7 +27,7 @@ import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_08.L';
 import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
 import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_06.B';
 import { settle } from './settled.mjs?v=2026_11_08.N';
-import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_08.M';
+import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_08.O';
 
 /* A card's character, if it has one: the portrait shown when it turns (characters.mjs). */
 const characterOf = (kind) => Object.keys(CHARACTERS).find((id) => CHARACTERS[id].card === kind) || null;
@@ -366,7 +366,8 @@ export function initCollection({ chapterData, announce } = {}) {
     // As much of its story as reads at a glance: whole sentences, about a line and a half.
     const detail = card.story.split(/(?<=[.!?])\s/).reduce((said, sentence) => (!said || said.length + sentence.length < 120 ? `${said} ${sentence}`.trim() : said), '');
     const who = characterOf(kind);
-    settle({ sigil: '@', title: `A card: ${card.name}`, detail, art: who ? portraitSVG(who, { size: 48, standalone: true }) : cardArt() });
+    // Met for the first time: their portrait wears surprise (a bang beside the head), once.
+    settle({ sigil: '@', title: `A card: ${card.name}`, detail, art: who ? portraitSVG(who, { size: 48, standalone: true, mood: 'surprised' }) : cardArt() });
     if (announce) announce(`Card turned: ${card.name}.`);
     setTimeout(() => { speaking = false; speak(); }, 3200);
     repaint();

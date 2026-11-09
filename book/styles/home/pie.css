@@ -3343,3 +3343,138 @@ html:not([data-chrome-hidden='true']) .pie-index {
   text-transform: none;
   letter-spacing: 0;
 }
+
+/* A carrier's model on their card: the knack, and four bars of how they carry. */
+.pie-cardface-carrier {
+  display: grid;
+  gap: 0.35rem;
+  justify-self: stretch;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--card-edge) 30%, var(--hub-line));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--card-edge) 5%, var(--hub-panel));
+}
+
+.pie-cardface-knack {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pie-cardface-knack b {
+  display: block;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--card-edge) 60%, var(--hub-ink));
+}
+
+.pie-cardface-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-cardface-stats li {
+  display: grid;
+  grid-template-columns: 5.2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.4rem;
+  max-width: none;
+  margin: 0;
+}
+
+.pie-stat-label {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-stat-bar {
+  position: relative;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-ink) 10%, transparent);
+  overflow: hidden;
+}
+
+.pie-stat-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--v, 0.5) * 100%);
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--card-edge) 70%, var(--hub-gold));
+}
+
+@container (max-width: 17rem) {
+  .pie-cardface-stats { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The model sheet: every mood in a row, traits as tags, the temperament, the knack, the colours. */
+.pie-portrait-moods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.pie-portrait-mood {
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+}
+
+.pie-portrait-mood small {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+  color: var(--hub-muted);
+}
+
+.pie-portrait-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.pie-portrait-traits span {
+  padding: 0.02rem 0.4rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  color: var(--hub-ink);
+}
+
+.pie-portrait-temperament {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--hub-ink);
+}
+
+.pie-portrait-knack {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--hub-accent-deep);
+}
+
+.pie-portrait-swatches {
+  display: flex;
+  gap: 2px;
+}
+
+.pie-portrait-swatches i {
+  display: block;
+  width: 1rem;
+  height: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--hub-ink) 20%, transparent);
+  border-radius: 2px;
+}

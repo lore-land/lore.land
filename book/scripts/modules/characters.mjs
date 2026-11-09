@@ -72,6 +72,31 @@ export const CHARACTERS = Object.freeze({
 });
 
 /** Who they are, as a Spw spell (the same shape the game's cards use). */
+/* ─── Each character's model: traits a reader could name, a temperament in one line, and (for those
+ * the hat settles on in Exactly One Pie) their knack. The portrait wears five moods, drawn as the marks
+ * comics have always used beside a head, so any portrait in the set can wear any of them. ─── */
+export const MODELS = Object.freeze({
+  boof: { traits: ['nose first', 'works for the land', 'patient'], temperament: 'Unhurried until she is not; trusts a scent before a name.' },
+  ants: { traits: ['businesslike', 'particular', 'many'], temperament: 'Keep the lights on; a detour is just a street nobody has lit yet.' },
+  genie: { traits: ['glides', 'off-season', 'generous to a fault'], temperament: 'Settles a pie the way he settles a price.', knack: 'True after a WAP: each clown satisfied, the needle points true for two seconds.' },
+  bane: { traits: ['announces', 'self-fulfilling', 'keeps an off switch'], temperament: 'Says what will happen, and so it does, the bad way.' },
+  boon: { traits: ['holds court', 'warm', 'never smaller'], temperament: 'Serves himself in slices and is never the less for it.' },
+  bonewap: { traits: ['declared', 'savoury', 'listens to timber'], temperament: 'No sugar it has not declared; lets the beam answer.' },
+  porter: { traits: ['steady', 'broad', 'holds the gate'], temperament: 'Steady as a sack of flour, and as quick.', knack: 'Long hold: an arrow on the track holds the needle half as long again.' },
+  clerk: { traits: ['precise', 'quick', 'nervous'], temperament: 'A word at the top, a line for the cause.', knack: 'Quick feet: a wider moment to chain one hop into the next.' },
+  figure: { traits: ['plain lines', 'unnamed', 'under the hat'], temperament: 'Nobody has said who; the hat has an opinion.', knack: 'Fine hands: the needle turns a finer notch, steadier with every stroke noticed.' },
+  clown: { traits: ['loves WAP', 'big feelings', 'forgiving'], temperament: 'A pie in the face is a kindness, done right.', knack: 'Big feelings: every impact lands bigger.' },
+  mime: { traits: ['silent', 'white-gloved', 'very clear about walls'], temperament: 'Says nothing, and is very clear about it.' }
+});
+export const MOODS = Object.freeze(['calm', 'glad', 'worried', 'surprised', 'thinking']);
+const MOOD_MARKS = Object.freeze({
+  calm: () => '',
+  glad: () => `<path d="M80 20 l6 -6 M84 28 l8 -2 M74 15 l1 -8" stroke-width="2.4" stroke-linecap="round" ${s('accent')} fill="none"/>`,
+  worried: () => `<path d="M83 14 q5 9 0 12 q-5 -3 0 -12Z" fill="#7fb4c0" stroke="#3c6f86" stroke-width="0.8"/><path d="M71 12 q3 -2 6 0 M88 32 q3 -2 6 0" stroke-width="1.6" ${s('c')} fill="none" opacity="0.7"/>`,
+  surprised: () => `<path d="M84 8 v12" stroke-width="3.4" stroke-linecap="round" ${s('accent')}/><circle cx="84" cy="26" r="2" ${f('accent')}/>`,
+  thinking: () => `<path d="M79 13 q0 -6 6 -6 q6 0 6 5 q0 4 -5 6 v3" stroke-width="2.4" stroke-linecap="round" ${s('accent')} fill="none"/><circle cx="86" cy="26" r="1.8" ${f('accent')}/>`
+});
+
 export const identitySpell = (id) => {
   const c = CHARACTERS[id];
   if (!c) return '';
@@ -174,7 +199,7 @@ const s = (key) => (mode === 'vars' ? `style="stroke: var(--lp-${key})"` : `stro
  * (a file that stands on its own, for prints and other sites); otherwise fills are tokens, and a
  * character not met is drawn as a silhouette.
  */
-export function portraitSVG(id, { size = 96, met = true, standalone = false } = {}) {
+export function portraitSVG(id, { size = 96, met = true, standalone = false, mood = 'calm' } = {}) {
   const c = CHARACTERS[id];
   if (!c) return '';
   mode = standalone ? 'plain' : 'vars';
@@ -184,13 +209,16 @@ export function portraitSVG(id, { size = 96, met = true, standalone = false } = 
   const body = DRAW[id](f).replace(/\s+/g, ' ');
   const ring = standalone ? `stroke="${c.palette.accent}"` : 'style="stroke: var(--lp-accent)"';
   const ground = standalone ? `fill="${c.palette.ground}"` : 'style="fill: var(--lp-ground)"';
-  return `<svg class="lore-portrait-svg${met ? '' : ' is-unmet'}" viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="${label.replace(/"/g, '&quot;')}"${vars ? ` style="${vars}"` : ''} xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="lore-portrait-clip"><circle cx="50" cy="50" r="46"/></clipPath></defs><circle cx="50" cy="50" r="47" ${ground}/><g clip-path="url(#lore-portrait-clip)">${body}</g><circle cx="50" cy="50" r="47" fill="none" stroke-width="3" ${ring}/>${met ? '' : '<text x="50" y="58" text-anchor="middle" font-size="26" font-family="Georgia, serif" class="lore-portrait-q">?</text>'}</svg>`;
+  return `<svg class="lore-portrait-svg${met ? '' : ' is-unmet'}" viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="${label.replace(/"/g, '&quot;')}"${vars ? ` style="${vars}"` : ''} xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="lore-portrait-clip"><circle cx="50" cy="50" r="46"/></clipPath></defs><circle cx="50" cy="50" r="47" ${ground}/><g clip-path="url(#lore-portrait-clip)">${body}</g><circle cx="50" cy="50" r="47" fill="none" stroke-width="3" ${ring}/>${met && MOOD_MARKS[mood] ? MOOD_MARKS[mood]() : ''}${met ? '' : '<text x="50" y="58" text-anchor="middle" font-size="26" font-family="Georgia, serif" class="lore-portrait-q">?</text>'}</svg>`;
 }
 
 /** Every character as one portable sheet: name, identity spell, first chapter and the portrait itself. */
 export function charactersSheet() {
   return Object.entries(CHARACTERS).map(([id, c]) => ({
-    id, name: c.name, first: c.first, href: c.href, line: c.line, material: c.material, spell: identitySpell(id), svg: portraitSVG(id, { standalone: true, size: 256 })
+    id, name: c.name, first: c.first, href: c.href, line: c.line, material: c.material, palette: c.palette, spell: identitySpell(id),
+    traits: MODELS[id]?.traits || [], temperament: MODELS[id]?.temperament || '', knack: MODELS[id]?.knack || null,
+    svg: portraitSVG(id, { standalone: true, size: 256 }),
+    moods: Object.fromEntries(MOODS.map((mood) => [mood, portraitSVG(id, { standalone: true, size: 256, mood })]))
   }));
 }
 
@@ -213,7 +241,7 @@ if (typeof window !== 'undefined' && window.customElements && !window.customElem
       const id = this.getAttribute('kind');
       const size = Number(this.getAttribute('size')) || 72;
       const met = this.hasAttribute('always') || hasMet(id);
-      this.innerHTML = portraitSVG(id, { size, met });
+      this.innerHTML = portraitSVG(id, { size, met, mood: this.getAttribute('mood') || 'calm' });
       this.classList.add('lore-portrait');
       this.classList.toggle('is-unmet', !met);
       if (!this.title) this.title = met ? CHARACTERS[id]?.name || '' : `Not met yet${CHARACTERS[id]?.first ? `: first in Chapter ${CHARACTERS[id].first}` : ''}`;
