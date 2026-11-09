@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="gate-book-entry-t gate-book-entry-d">
+  <title id="gate-book-entry-t">The gate-book entry — a study</title>
+  <desc id="gate-book-entry-d">The parcel gate's ledger open under a hooded lamp, ruled columns and one row filled in a careful hand, with a single word under remarks: parcel.</desc>
+  <defs>
+    <radialGradient id="gate-book-entry-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="gate-book-entry-glow" cx="50%" cy="30%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.62"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.11159999999999999"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gate-book-entry-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="gate-book-entry-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="gate-book-entry-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="gate-book-entry-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#gate-book-entry-ground)"/>
+  <rect width="600" height="400" fill="url(#gate-book-entry-rim)"/>
+  <rect width="600" height="400" fill="url(#gate-book-entry-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M250 40h100l-14 40h-72z" stroke-opacity="0.7"/>
+    <path d="M300 80v12" stroke-opacity="0.5"/>
+    <path d="M120 150L480 140L520 340L80 352Z" fill="#e8d9b4" fill-opacity="0.12"/>
+    <path d="M120 150L480 140L520 340L80 352Z"/>
+    <path d="M300 145L300 346" stroke-opacity="0.5"/>
+    <path d="M112 176L486 166" stroke-opacity="0.25" stroke-width="1.2"/><path d="M106 206L492 196" stroke-opacity="0.25" stroke-width="1.2"/><path d="M100 236L498 226" stroke-opacity="0.25" stroke-width="1.2"/><path d="M94 266L504 256" stroke-opacity="0.25" stroke-width="1.2"/><path d="M88 296L510 286" stroke-opacity="0.25" stroke-width="1.2"/><path d="M82 326L516 316" stroke-opacity="0.25" stroke-width="1.2"/>
+    <path d="M170 146L185.6 348" stroke-opacity="0.22" stroke-width="1.2"/><path d="M220 146L229.6 348" stroke-opacity="0.22" stroke-width="1.2"/><path d="M360 146L352.8 348" stroke-opacity="0.22" stroke-width="1.2"/><path d="M420 146L405.6 348" stroke-opacity="0.22" stroke-width="1.2"/>
+    <path d="M130 228q12-8 24 0t24 0 24 0M184 226q10-6 20 0" stroke="#f2b04e" stroke-width="1.8"/>
+    <path d="M232 225q8-6 16 0t16 0M326 222q10-6 20 0t20 0" stroke="#f2b04e" stroke-width="1.8"/>
+    <text x="430" y="226" fill="#f2b04e" stroke="none" font-family="Georgia, serif" font-style="italic" font-size="22" text-anchor="middle">parcel</text>
+    <path d="M500 300l40-90" stroke-width="3" stroke-opacity="0.7"/>
+    <path d="M500 300l-4 10" stroke="#f2b04e" stroke-width="3"/>
+  </g>
+  <rect width="600" height="400" filter="url(#gate-book-entry-grain)"/>
+  <rect width="600" height="400" fill="url(#gate-book-entry-vignette)"/>
+</svg>

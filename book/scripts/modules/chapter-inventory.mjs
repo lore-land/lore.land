@@ -25,7 +25,7 @@
 import { renderSpell } from './spw-spell.mjs?v=2026_11_08.N';
 import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.J';
 import { roomsRead } from './rooms.mjs?v=2026_11_08.N';
-import { readAlmanac } from './almanac.mjs?v=2026_11_09.F';
+import { readAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_08.O';
 import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_08.O';
 import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_09.F';

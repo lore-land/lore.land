@@ -41,7 +41,8 @@
 
 ~"art_hooks"{
   .note: "Every wonder can carry a plate prompt (vantage, light, scent, hint, edges); the almanac card shows it and copies it in the series look. The kinds say which fields each needs (kinds.mjs art), and each kind's frame is a template for its plate's border."
-  next: "plates for the artifacts first (each is one object in one light); antiques as still lifes with their keepers' hands; the bestiary as field studies at a dog's height"
+  studies: "the artifacts have drawn studies (2026_11_09.G): one object in one light, cream line over the series ground (leaf-dark, amber lit from within, a teal rim, grain, vignette), drawn by book/scripts/tools/assets/artifact-studies.mjs (npm run assets:studies) into book/images/studies/artifact-<id>-vN.svg; almanac.json `plate` {src, state: study | public} points to it, the almanac card and the chapter's wonder card show it (unrecorded, only a shape in the dark), and book:check holds the file to be there"
+  next: "paint the artifacts' plates from their prompts (state public); antiques as still lifes with their keepers' hands; the bestiary as field studies at a dog's height"
 }
 
 !"architecture"[

@@ -32,7 +32,7 @@
  * — and ?tell=kitchen-smell.3 pins one phrase on this page, as if a reader
  * had turned it there.
  */
-import { loadAlmanac } from './almanac.mjs?v=2026_11_09.F';
+import { loadAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { readStage } from './stage-directions.mjs?v=2026_11_06.F';
 import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_08.N';
 

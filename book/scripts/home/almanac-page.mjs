@@ -2,7 +2,7 @@
 // each thing lives, and a bench for combining found things into small
 // realms (the night school's game; bracework as a toy). Everything is read
 // from this browser's own shelf; nothing is sent anywhere.
-import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_09.F';
+import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_09.G';
 import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.F';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_08.O';
@@ -117,6 +117,16 @@ function clueFor(wonder) {
   return null;
 }
 
+/* Its plate: a drawn study until it is painted. Unrecorded, it is only a shape in the dark, a clue to look for. */
+function plateFigure(wonder, kept) {
+  const plate = wonder.plate;
+  if (!plate?.src) return null;
+  const img = el('img', { src: plate.src, alt: kept ? `${wonder.name}, ${plate.state === 'study' ? 'a drawn study' : 'its plate'}` : '', loading: 'lazy', decoding: 'async', width: '600', height: '400' });
+  if (!kept) return el('figure', { className: 'almanac-card-plate is-veiled', 'aria-hidden': 'true' }, img);
+  return el('figure', { className: 'almanac-card-plate' }, img,
+    el('figcaption', {}, plate.state === 'study' ? 'A drawn study · the plate is still to paint' : 'Plate'));
+}
+
 function card(data, wonder, kept) {
   const chips = placeChips(data, wonder, kept);
   const id = `wonder:${wonder.id}`;
@@ -124,6 +134,7 @@ function card(data, wonder, kept) {
   if (!kept) {
     return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}`, 'data-kind': wonder.kind },
       likenessSeal(id),
+      plateFigure(wonder, false),
       el('p', { className: 'almanac-card-kicker' }, badge, ` Unrecorded · ${wonder.region}`),
       el('p', { className: 'almanac-card-hint' }, wonder.hint),
       clueFor(wonder),
@@ -132,6 +143,7 @@ function card(data, wonder, kept) {
   }
   return el('li', { className: 'almanac-card is-found', id: `wonder-${wonder.id}`, 'data-kind': wonder.kind },
     likenessSeal(id),
+    plateFigure(wonder, true),
     el('p', { className: 'almanac-card-kicker' }, badge, ` ${wonder.region}`),
     el('p', { className: 'almanac-card-name' }, wonder.name),
     el('p', { className: 'almanac-card-note' }, wonder.note),
@@ -160,6 +172,9 @@ function paintShelves(data) {
   let placesFound = 0;
   KIND_ORDER.forEach((kind) => {
     if (!$(`[data-shelf="${kind}"]`)) return;
+    // The shelf's heading wears its kind's badge, the same one its cards and the lanes' medallions wear.
+    const sigil = $(`[data-shelf="${kind}"]`).closest('.almanac-shelf')?.querySelector('.almanac-sigil');
+    if (sigil && !sigil.querySelector('svg')) { sigil.replaceChildren(kindBadgeNode(kind, { size: 26 })); sigil.classList.add('has-badge'); }
     const list = data.wonders.filter((w) => w.kind === kind);
     // Found first, in the order the book meets them; then the unrecorded.
     const ordered = [...list.filter((w) => state[w.id]), ...list.filter((w) => !state[w.id])];

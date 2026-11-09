@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="criers-note-t criers-note-d">
+  <title id="criers-note-t">The crier's note — a study</title>
+  <desc id="criers-note-d">A crier's pad with one line written on it — a hat — under the brass bell of her cart, mid-swing, and far off above the field the faint shape of a bowler at a person's height, touching nothing.</desc>
+  <defs>
+    <radialGradient id="criers-note-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="criers-note-glow" cx="43.333333333333336%" cy="57.49999999999999%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.5"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.09"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="criers-note-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="criers-note-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="criers-note-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="criers-note-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#criers-note-ground)"/>
+  <rect width="600" height="400" fill="url(#criers-note-rim)"/>
+  <rect width="600" height="400" fill="url(#criers-note-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M360 60q30 0 34 34l8 40h-84l8-40q4-34 34-34z" fill="#f2b04e" fill-opacity="0.22"/>
+    <path d="M360 60q30 0 34 34l8 40h-84l8-40q4-34 34-34z"/>
+    <circle cx="360" cy="142" r="6" fill="#f2b04e" stroke="none"/>
+    <path d="M300 70q-10 14-6 30M420 70q10 14 6 30" stroke-opacity="0.4" stroke-width="1.4"/>
+    <path d="M360 44v16" />
+    <g opacity="0.45"><path d="M492 120h40M498 120q0-22 14-22t14 22" stroke-width="1.8"/></g>
+    <rect x="150" y="180" width="220" height="170" rx="6" fill="#e8d9b4" fill-opacity="0.12"/>
+    <rect x="150" y="180" width="220" height="170" rx="6"/>
+    <circle cx="172" cy="180" r="5"/><circle cx="194" cy="180" r="5"/><circle cx="216" cy="180" r="5"/><circle cx="238" cy="180" r="5"/><circle cx="260" cy="180" r="5"/><circle cx="282" cy="180" r="5"/><circle cx="304" cy="180" r="5"/><circle cx="326" cy="180" r="5"/><circle cx="348" cy="180" r="5"/>
+    <path d="M168 230H352" stroke-opacity="0.22" stroke-width="1.2"/><path d="M168 262H352" stroke-opacity="0.22" stroke-width="1.2"/><path d="M168 294H352" stroke-opacity="0.22" stroke-width="1.2"/><path d="M168 326H352" stroke-opacity="0.22" stroke-width="1.2"/>
+    <text x="176" y="224" fill="#f2b04e" stroke="none" font-family="Georgia, serif" font-style="italic" font-size="26">a hat.</text>
+  </g>
+  <rect width="600" height="400" filter="url(#criers-note-grain)"/>
+  <rect width="600" height="400" fill="url(#criers-note-vignette)"/>
+</svg>

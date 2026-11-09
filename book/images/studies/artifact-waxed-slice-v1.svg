@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="waxed-slice-t waxed-slice-d">
+  <title id="waxed-slice-t">The slice in waxed paper — a study</title>
+  <desc id="waxed-slice-d">A slice of pie folded in soft waxed paper on the shelf of a cold stove, a faint berry stain through the paper and steam still rising from it, though the room is cold.</desc>
+  <defs>
+    <radialGradient id="waxed-slice-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="waxed-slice-glow" cx="50%" cy="57.49999999999999%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.6"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.108"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="waxed-slice-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="waxed-slice-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="waxed-slice-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="waxed-slice-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#waxed-slice-ground)"/>
+  <rect width="600" height="400" fill="url(#waxed-slice-rim)"/>
+  <rect width="600" height="400" fill="url(#waxed-slice-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 300H540" stroke-width="2"/>
+    <path d="M60 300v48M540 300v48" stroke-opacity="0.4"/>
+    <rect x="70" y="200" width="70" height="100" stroke-opacity="0.35"/>
+    <path d="M80 210l50 80M130 210l-50 80" stroke-opacity="0.18"/>
+    <path d="M188 296L246 206L438 214L462 296Z" fill="#e8d9b4" fill-opacity="0.1"/>
+    <path d="M188 296L246 206L438 214L462 296" stroke-opacity="0.45" stroke-width="1.6"/>
+    <path d="M246 206L292 258M438 214L410 262" stroke-opacity="0.25" stroke-width="1.2"/>
+    <path d="M232 262v20L404 300v-20" fill="#b0566e" fill-opacity="0.45"/>
+    <path d="M232 262L386 222Q424 246 404 280Z" fill="#e8d9b4" fill-opacity="0.2"/>
+    <path d="M232 262L386 222Q424 246 404 280Z"/>
+    <path d="M386 222Q424 246 404 280" stroke="#c99a5a" stroke-width="9" stroke-opacity="0.9"/>
+    <path d="M404 280v20" stroke="#c99a5a" stroke-width="9" stroke-opacity="0.7"/>
+    <path d="M262 256l56-10M290 262l64-12" stroke-opacity="0.3" stroke-width="1.2"/>
+    <path d="M232 262L274 296L292 256Z" fill="#e8d9b4" fill-opacity="0.28"/>
+    <ellipse cx="340" cy="252" rx="14" ry="7" fill="#b0566e" fill-opacity="0.6" stroke="none"/>
+    <path d="M276 196c-10-18 12-26 0-44s8-28 0-40" stroke="#efe3c8" stroke-opacity="0.55" stroke-width="1.8"/>
+    <path d="M304 192c-8-16 10-22 0-38s6-24 0-36" stroke="#efe3c8" stroke-opacity="0.4" stroke-width="1.6"/>
+    <path d="M330 200c-8-14 8-20 0-34" stroke="#efe3c8" stroke-opacity="0.3" stroke-width="1.4"/>
+  </g>
+  <rect width="600" height="400" filter="url(#waxed-slice-grain)"/>
+  <rect width="600" height="400" fill="url(#waxed-slice-vignette)"/>
+</svg>

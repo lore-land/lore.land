@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.G",
+      "date": "2026-11-09",
+      "notes": [
+        "Every artifact now has a picture: a drawn study of the thing itself in one light, at the head of its card in your almanac and on the card that opens when you find it in a chapter. Ones you have not found yet show only as a shape in the dark, enough to know them when the prose turns them up. They are studies, the way Fourteen and Fifteen's plates began; the painted plates come later.",
+        "Exactly One Pie paces itself better. A new card no longer stops you in the middle of dodging: it waits for a breath (a quiet stretch of road, or a turn between rooms) and says it is waiting. Captions no longer talk over each other; they take turns, and the ones that matter most go first. If you have carried the pie before, cards still open at once as they always have; ⚙ Setup › Cards and captions lets anyone choose.",
+        "⚙ Setup is sorted into five sections (screen and pace, buttons and arrows, taps and swipes, the story, cards and captions), each saying what it is set to before you open it, and the game's buttons are drawn icons now, the same on every phone and computer."
+      ]
+    },
+    {
       "release": "2026_11_09.F",
       "date": "2026-11-09",
       "notes": [

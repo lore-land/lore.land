@@ -156,7 +156,7 @@
 
 import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_08.N';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.F';
+import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.G';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
@@ -169,6 +169,7 @@ import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.F';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
+import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
 
 const KEY = 'lore.pie.v1';
@@ -422,11 +423,12 @@ function readRecord() {
         tap: ['throw', 'go', 'step', 'hop', 'none'].includes(parsed.view?.tap) ? parsed.view.tap : undefined,
         doubleTap: ['none', 'hop', 'throw', 'go'].includes(parsed.view?.doubleTap) ? parsed.view.doubleTap : undefined,
         swipeUp: ['step', 'hop'].includes(parsed.view?.swipeUp) ? parsed.view.swipeUp : (Number(parsed.runs) ? undefined : 'hop'),
-        panels: ['auto', 'manual'].includes(parsed.view?.panels) ? parsed.view.panels : (Number(parsed.runs) ? undefined : 'auto') },
+        panels: ['auto', 'manual'].includes(parsed.view?.panels) ? parsed.view.panels : (Number(parsed.runs) ? undefined : 'auto'),
+        cardPace: ['at-once', 'breath', 'quiet'].includes(parsed.view?.cardPace) ? parsed.view.cardPace : (Number(parsed.runs) ? undefined : 'breath') },
       sound: parsed.sound !== false
     };
   } catch {
-    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false, hand: 'right', show: 'off', swipeUp: 'hop', panels: 'auto' }, sound: true };
+    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false, hand: 'right', show: 'off', swipeUp: 'hop', panels: 'auto', cardPace: 'breath' }, sound: true };
   }
 }
 
@@ -1036,7 +1038,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     lean('cast');
     run.tags.push({ x: run.x, y: run.y - 120, t: 0, text: `ROOM ${r.n} CAST: ${play.verb.toUpperCase()}` });
     impact('combo', W / 2, 150, { scale: 0.7, word: `${r.sigil} ${play.verb.toUpperCase()}!` });
-    showToast(`Room ${r.n} cast · ${play.verb}`, `${r.sig}${r.title ? ` — ${r.title}` : ''}. ${isNew ? 'Kept on the chapter page, beside the room.' : 'Cast again.'}`, 3200, 'wonder');
+    showToast(`Room ${r.n} cast · ${play.verb}`, `${r.sig}${r.title ? ` — ${r.title}` : ''}. ${isNew ? 'Kept on the chapter page, beside the room.' : 'Cast again.'}`, 3200, 'wonder', 2);
   }
   /* Entering a room: its banner, by how well its sigil is known. Syntax (its signature) always; semantics
    * (what the sigil makes of the lanes) once a room of that sigil has passed before; pragmatics (how to
@@ -1335,7 +1337,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const line = run.found.slice(-5).join(' ');
       run.foundLines = run.foundLines || [];
       run.foundLines.push(line);
-      showToast('A found line', `«${line}» — taken from the road, word by word.`, 3600, 'wonder');
+      showToast('A found line', `«${line}» — taken from the road, word by word.`, 3600, 'wonder', 2);
       sfx('wonder', 'saying', rw.x, rw.y);
       run.aura = Math.min(1, run.aura + 0.05);
       run.wobble = Math.max(0, run.wobble - 0.08);
@@ -1735,7 +1737,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       .sort((x, y) => (y.kind === 'rumour') - (x.kind === 'rumour'));
     const rumour = here[(record.runs || 0) % Math.max(1, here.length)];
     if (!rumour) return;
-    showToast(`Heard in the margins of ${chapterWords(run.chapter)}`, rumour.track.lanes, 4600, '');
+    showToast(`Heard in the margins of ${chapterWords(run.chapter)}`, rumour.track.lanes, 4600, '', 2);
     say(rumour.track.lanes);
   }
   function tickThursday(dt) {
@@ -1748,7 +1750,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     if (run.friday || progress() < 0.86) return;
     run.friday = true;
-    showToast('Friday', 'Friday arrives with everyone in it.', 3600, 'wonder');
+    showToast('Friday', 'Friday arrives with everyone in it.', 3600, 'wonder', 2);
     impact('combo', W / 2, 150, { scale: 0.85, word: 'FRIDAY!' });
     say('Friday arrives with everyone in it.');
     // Everyone at once: a row of the people the day did not have, a way left through.
@@ -2761,8 +2763,39 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   /* A toast: where we are now, and who is under the hat. Play does not stop for it. */
-  const showToast = (title, line, ms = 2600, voice = '') => {
+  /* Captions take turns: each is held at least CAPTION_HOLD before another of no greater weight replaces it; the
+   * rest wait (newest first in their kind, three at most, gone when stale), so a room's name, a first meeting and
+   * Friday arriving do not wipe each other out in the same breath. Weight 2 is for the story's own moments. */
+  const CAPTION_HOLD = 1.9;
+  const captionQueue = [];
+  let captionAt = -99;
+  let captionWeight = 0;
+  let captionWait = 0;
+  const showToast = (title, line, ms = 2600, voice = '', weight = 1) => {
     if (!toast || record.view.zen) return;   // zen: nothing pops up; the live region still says it
+    const now = performance.now() / 1000;
+    if (now - captionAt < CAPTION_HOLD && weight <= captionWeight) {
+      const same = captionQueue.findIndex((c) => c.title === title);
+      if (same >= 0) captionQueue.splice(same, 1);
+      captionQueue.push({ title, line, ms, voice, weight, at: now });
+      captionQueue.sort((a, b) => b.weight - a.weight);
+      if (captionQueue.length > 3) captionQueue.length = 3;
+      clearTimeout(captionWait);
+      captionWait = setTimeout(nextCaption, Math.max(60, (CAPTION_HOLD - (now - captionAt)) * 1000));
+      return;
+    }
+    paintCaption(title, line, ms, voice, weight);
+  };
+  function nextCaption() {
+    const now = performance.now() / 1000;
+    while (captionQueue.length && now - captionQueue[0].at > 9) captionQueue.shift();   // stale: the moment has passed
+    const next = captionQueue.shift();
+    if (next) paintCaption(next.title, next.line, next.ms, next.voice, next.weight);
+    if (captionQueue.length) captionWait = setTimeout(nextCaption, CAPTION_HOLD * 1000);
+  }
+  function paintCaption(title, line, ms, voice, weight) {
+    captionAt = performance.now() / 1000;
+    captionWeight = weight;
     toastTitle.textContent = title;
     toastLine.textContent = line || '';
     toast.dataset.voice = voice;
@@ -2772,7 +2805,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     clearTimeout(toastTimer);
     // The words stay, quieter, until the next ones: a caption can be read again.
     toastTimer = setTimeout(() => toast.classList.remove('is-in'), ms);
-  };
+  }
   const hideToast = () => {
     clearTimeout(toastTimer);
     toast?.classList.remove('is-in');
@@ -3015,7 +3048,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const shelf = readStore('lore.almanac.v1');
       (data?.wonders || []).filter((w) => w.made_by && !shelf[w.id] && total(w.made_by.deed) >= w.made_by.at_least).forEach((w) => {
         try { collectWonder(w.id, n); } catch { /* made, if not shelved */ }
-        showToast(`* ${w.name} · made in the lanes`, `${w.note} Kept in your almanac.`, 4200, 'wonder');
+        showToast(`* ${w.name} · made in the lanes`, `${w.note} Kept in your almanac.`, 4200, 'wonder', 2);
         say(`${w.name}, made in the lanes, and kept in your almanac.`);
       });
     }).catch(() => {});
@@ -4146,8 +4179,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
     }
     if (state === 'running' && run.revealQueue.length) {
-      openReveal(run.revealQueue.shift());
-      return;
+      const head = run.revealQueue[0];
+      head.waited = (head.waited || 0) + dt;
+      const pace = run.intro ? 'at-once' : setting('cardPace');
+      // A breath: the section's break, or nothing knocking within reach of the carrier.
+      const calm = run.breath > 0 || !run.things.some((th) => th.fatal && !th.wapped && th.y < run.y + 10 && run.y - th.y < 230);
+      if (pace !== 'breath' || head.waited > 20 || (calm && head.waited > 1)) {
+        openReveal(run.revealQueue.shift());
+        return;
+      }
     }
     run.t += dt;
     if (state === 'running') {
@@ -7037,6 +7077,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['doubleTap', 'A double tap', [['none', 'Two taps'], ['hop', 'Hops'], ['throw', 'Throws there'], ['go', 'Walks there']], 'none'],
     ['swipeUp', 'A quick swipe up', [['step', 'Steps ahead'], ['hop', 'Hops (a slow drag steps)']], 'step'],
     ['panels', 'Panels', [['auto', 'Arranged for this screen'], ['manual', 'As set below']], 'manual'],
+    ['cardPace', 'New cards', [['at-once', 'Open at once'], ['breath', 'Wait for a breath'], ['quiet', 'Never pause']], 'at-once'],
     ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
     ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
@@ -7048,6 +7089,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['focusOnPlay', 'On Play', [[true, 'Bring the game into view'], [false, 'Leave the page where it is']], true]
   ]);
   const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
+  /* The sheet in sections, each with its icon (icons.mjs) and what is chosen in it, said in its head, so the sheet
+   * can be read closed and opened only where a change is wanted. Every SETUP row belongs to one section. */
+  const SETUP_GROUPS = Object.freeze([
+    ['screen', 'Screen and pace', 'screen', ['size', 'pace', 'panels', 'panelsAt', 'heightsShown', 'focusOnPlay']],
+    ['controls', 'Buttons and arrows', 'controls', ['controls', 'controlsAt', 'arrows', 'controlsPlace', 'buttons', 'buttonsSwap', 'controlsSize']],
+    ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
+    ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
+    ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']]
+  ]);
+  const openGroups = new Set(['screen']);
   /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
    * window's height (the lanes keep their shape), never wider than there is room for. Measured twice,
    * because the cabinet's other parts wrap differently at a new width. */
@@ -7257,9 +7308,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const text = b.textContent.trim();
       const cut = text.indexOf(' ');
       if (cut < 1) return;
-      const icon = text.slice(0, cut);
+      const glyph = text.slice(0, cut);
       const words = text.slice(cut + 1);
-      b.replaceChildren(Object.assign(document.createElement('span'), { className: 'tool-icon', textContent: icon }), Object.assign(document.createElement('span'), { className: 'tool-words', textContent: words }));
+      // The glyph becomes the site's own icon (icons.mjs), drawn the same on every platform; the words stay its name.
+      const mark = Object.assign(document.createElement('span'), { className: 'tool-icon' });
+      const drawn = iconForGlyph(glyph, words);
+      if (drawn) mark.innerHTML = icon(drawn, { size: 18 }); else mark.textContent = glyph;
+      b.replaceChildren(mark, Object.assign(document.createElement('span'), { className: 'tool-words', textContent: words }));
       b.setAttribute('aria-label', words);
       if (!b.title) b.title = words;
     });
@@ -7323,12 +7378,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
   function paintSetup() {
     if (!setupOut) return;
+    const currentOf = (key) => (key === 'storyAt' && record.view.story === false ? 'off' : key === 'storyIn' ? storyInMode() : key === 'controlsPlace' ? placeNow() : setting(key));
     const rows = SETUP.map(([key, label, options]) => {
       const row = nodeOf('div', 'pie-setup-row');
       row.setAttribute('role', 'group');
       row.setAttribute('aria-label', label);
       row.append(nodeOf('span', 'pie-setup-label', label));
-      const current = key === 'storyAt' && record.view.story === false ? 'off' : key === 'storyIn' ? storyInMode() : key === 'controlsPlace' ? placeNow() : setting(key);
+      const current = currentOf(key);
       if (panelPlan && ['panelsAt', 'storyAt'].includes(key)) {
         row.classList.add('is-overridden');
         row.title = 'The panels are arranged for this screen: choosing here sets them by hand instead.';
@@ -7367,7 +7423,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       presets.append(b);
     });
     const planSays = panelPlan ? nodeOf('p', 'pie-setup-plan', `Arranged for this screen. ${panelPlan.why}`) : null;
-    setupOut.replaceChildren(presets, ...(planSays ? [planSays] : []), ...rows, viewsMatrix(), nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes), or drag its corner ◢, to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
+    const rowOf = new Map(SETUP.map(([key], i) => [key, rows[i]]));
+    const placed = new Set(SETUP_GROUPS.flatMap(([, , , keys]) => keys));
+    const groups = [...SETUP_GROUPS, ...(SETUP.some(([key]) => !placed.has(key)) ? [['more', 'More', 'setup', SETUP.map(([key]) => key).filter((key) => !placed.has(key))]] : [])]
+      .map(([id, title, iconName, keys]) => {
+        const box = nodeOf('details', 'pie-setup-group');
+        box.dataset.group = id;
+        box.open = openGroups.has(id);
+        const head = nodeOf('summary', 'pie-setup-group-head');
+        const mark = nodeOf('span', 'pie-setup-group-icon');
+        mark.innerHTML = icon(iconName, { size: 18 });
+        const now = keys.map((key) => SETUP.find(([k]) => k === key)?.[2].find(([value]) => String(value) === String(currentOf(key)))?.[1]).filter(Boolean).slice(0, 3).join(' · ');
+        head.append(mark, nodeOf('span', 'pie-setup-group-title', title), nodeOf('span', 'pie-setup-group-now', now));
+        const body = nodeOf('div', 'pie-setup-group-body');
+        body.append(...keys.map((key) => rowOf.get(key)).filter(Boolean));
+        box.append(head, body);
+        box.addEventListener('toggle', () => { if (box.open) openGroups.add(id); else openGroups.delete(id); });
+        return box;
+      });
+    setupOut.replaceChildren(presets, ...(planSays ? [planSays] : []), ...groups, viewsMatrix(), nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes), or drag its corner ◢, to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
   }
   requestAnimationFrame(applySetup);   // after setup of the page: where the story runs, how big things are
 
@@ -7704,9 +7778,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       shelveCard(kind, { chapter: run.chapter, how: 'lanes' });
       paintDeck();
     }
-    const pause = record.view.story && !record.view.zen && (run.intro || isNew);
-    if (pause) run.revealQueue.push({ kind, isNew, moment: momentOf() });
-    else if (isNew) run.tags.push({ x: W / 2, y: 98, t: 0, text: `✦ CARD · ${CARDS[kind].name.toUpperCase()}` });
+    // ⚙ Setup › New cards: at once (the carry pauses as it meets one), at the next breath (a section's break, or
+    // when nothing is coming; the carry is never stopped mid-dodge), or quietly (never paused, only marked).
+    const pace = run.intro ? 'at-once' : setting('cardPace');
+    const pause = record.view.story && !record.view.zen && (run.intro || isNew) && pace !== 'quiet';
+    if (pause) {
+      run.revealQueue.push({ kind, isNew, moment: momentOf(), waited: 0 });
+      if (pace === 'breath') run.tags.push({ x: W / 2, y: 98, t: 0, text: `✦ NEW CARD · ${CARDS[kind].name.toUpperCase()} · AT THE NEXT BREATH` });
+    } else if (isNew) run.tags.push({ x: W / 2, y: 98, t: 0, text: `✦ CARD · ${CARDS[kind].name.toUpperCase()}` });
   }
   function chipsFor(kind) {
     const chips = [];

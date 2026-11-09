@@ -25,7 +25,7 @@ import { readStory, describeStory, hasStory } from './story-directions.mjs?v=202
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
-import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_09.F';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
 
 const CATALOG_URL = '/book/content/catalog.json';

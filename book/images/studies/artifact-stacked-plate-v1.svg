@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="stacked-plate-t stacked-plate-d">
+  <title id="stacked-plate-t">A plate from the stack — a study</title>
+  <desc id="stacked-plate-d">A stack of plates by a bowl of cold spring water, taller than any meal could have been and leaning a little, one berry smear on the topmost rim, a dish-cloth nobody is holding; starlight from an opening above.</desc>
+  <defs>
+    <radialGradient id="stacked-plate-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="stacked-plate-glow" cx="50%" cy="35%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.4"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.072"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="stacked-plate-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="stacked-plate-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="stacked-plate-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="stacked-plate-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#stacked-plate-ground)"/>
+  <rect width="600" height="400" fill="url(#stacked-plate-rim)"/>
+  <rect width="600" height="400" fill="url(#stacked-plate-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M300 -10L156 380" stroke="#efe3c8" stroke-opacity="0.12" stroke-width="1"/><path d="M300 -10L252 380" stroke="#efe3c8" stroke-opacity="0.18" stroke-width="1"/><path d="M300 -10L348 380" stroke="#efe3c8" stroke-opacity="0.18" stroke-width="1"/><path d="M300 -10L444 380" stroke="#efe3c8" stroke-opacity="0.12" stroke-width="1"/>
+    <ellipse cx="262" cy="330" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="263.6" cy="313" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="265.2" cy="296" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="266.8" cy="279" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="268.4" cy="262" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="270" cy="245" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="271.6" cy="228" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="273.2" cy="211" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="274.8" cy="194" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="276.4" cy="177" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/><ellipse cx="278" cy="160" rx="78" ry="16" fill="#15221c" fill-opacity="0.9"/>
+    <ellipse cx="278" cy="160" rx="78" ry="16" fill="#e8d9b4" fill-opacity="0.12"/>
+    <ellipse cx="278" cy="160" rx="54" ry="10" stroke-opacity="0.45"/>
+    <path d="M318 154q12 2 18 8" stroke="#b0566e" stroke-width="5" stroke-opacity="0.8"/>
+    <ellipse cx="470" cy="318" rx="70" ry="22"/>
+    <ellipse cx="470" cy="312" rx="56" ry="14" fill="#5fb3a8" fill-opacity="0.18" stroke="#5fb3a8" stroke-opacity="0.5"/>
+    <path d="M440 312q30 6 60 0" stroke="#efe3c8" stroke-opacity="0.35" stroke-width="1.2"/>
+    <path d="M110 250q20 30 6 70q24-6 34 10" stroke-opacity="0.6"/>
+  </g>
+  <rect width="600" height="400" filter="url(#stacked-plate-grain)"/>
+  <rect width="600" height="400" fill="url(#stacked-plate-vignette)"/>
+</svg>

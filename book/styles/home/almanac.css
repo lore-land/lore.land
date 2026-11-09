@@ -826,3 +826,68 @@ body[data-surface='monument'] .almanac-shelf[data-kind='artifact'] { --kind-ink:
 .almanac-card-clue a {
   white-space: nowrap;
 }
+
+/* A shelf's heading wears its kind's badge (almanac-page.mjs): the ring, the plaque, the tag, the cog, the braces. */
+body[data-surface='monument'] .almanac-sigil.has-badge {
+  background: none;
+  width: auto;
+  height: auto;
+  margin-right: 0.35rem;
+  color: var(--kind-ink, var(--hub-gold));
+  vertical-align: -0.2em;
+}
+
+/* Its plate, at the head of its card: a drawn study until it is painted (almanac.json `plate`). Unrecorded, only
+ * a shape in the dark: enough to know it when the prose turns it up. */
+body[data-surface='monument'] .almanac-card-plate {
+  margin: -0.9rem -1rem 0.25rem;
+  border-radius: 0.3rem 0.3rem 0 0;
+  overflow: hidden;
+  background: #0b1310;
+  line-height: 0;
+}
+
+.almanac-card-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.almanac-card-plate figcaption {
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.58rem;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, #efe3c8 70%, transparent);
+  background: #0b1310;
+}
+
+.almanac-card-plate.is-veiled img {
+  filter: grayscale(1) brightness(0.62) contrast(1.15) blur(2px);
+  opacity: 0.8;
+  transform: scale(1.04);
+}
+
+/* A plate's filter makes a layer of its own: the likeness seal sits on top of it, pressed into the picture. */
+body[data-surface='monument'] .almanac-card:has(.almanac-card-plate) > .almanac-likeness-seal {
+  z-index: 2;
+}
+
+body[data-surface='monument'] .almanac-card:has(.almanac-card-plate) > .almanac-card-kicker {
+  padding-right: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .almanac-card.is-found .almanac-card-plate img {
+    animation: almanac-plate-develop 1.4s ease-out both;
+  }
+}
+
+@keyframes almanac-plate-develop {
+  from { filter: grayscale(1) brightness(0.4) blur(2px); }
+  to { filter: none; }
+}

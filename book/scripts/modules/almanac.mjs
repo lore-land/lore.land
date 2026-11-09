@@ -203,6 +203,8 @@ export function initAlmanac({ chapterData, announce } = {}) {
         el('span', { className: 'wonder-card-kind' }, `${KIND_WORD[wonder.kind] || wonder.kind} · ${wonder.region}`),
         el('button', { type: 'button', className: 'wonder-card-close', 'aria-label': 'Close' }, '×')),
       el('p', { className: 'wonder-card-name' }, wonder.name),
+      // Its plate (a drawn study until it is painted): one object in one light, seen as the scene left it.
+      wonder.plate?.src ? el('img', { className: 'wonder-card-plate', src: wonder.plate.src, alt: `${wonder.name}, ${wonder.plate.state === 'study' ? 'a drawn study' : 'its plate'}`, decoding: 'async', width: '600', height: '400' }) : null,
       el('p', { className: 'wonder-card-note' }, wonder.note),
       wonder.craft ? el('p', { className: 'wonder-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
       // Its kind's own lines: how a creature moves and who misreads it; an antique's provenance; an artifact's residue.

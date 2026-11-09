@@ -4888,3 +4888,17 @@ main.chapter .projection-spell-status:empty {
   text-transform: uppercase;
   color: var(--wonder-ink, currentColor);
 }
+
+/* A wonder's plate on its card (a drawn study until it is painted), kept short so the card still fits a phone. */
+.wonder-card-plate {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  max-height: min(9.5rem, 24vh);
+  margin: 0.15rem 0 0.55rem;
+  object-fit: cover;
+  border-radius: 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--wonder-ink) 40%, transparent);
+  background: #0b1310;
+}

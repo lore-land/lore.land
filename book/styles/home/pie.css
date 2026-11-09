@@ -4735,3 +4735,103 @@ html:not([data-chrome-hidden='true']) .pie-index {
   text-transform: none;
   opacity: 0.85;
 }
+
+/* ─── Icons (book/scripts/modules/icons.mjs): one pen for every interface mark ─── */
+.pie-cabinet .tool-icon:has(.icon) {
+  display: inline-grid;
+  place-items: center;
+  line-height: 0;
+}
+
+.icon {
+  flex: none;
+  vertical-align: middle;
+}
+
+.icon .icon-off {
+  display: none;
+}
+
+/* Sound off: the speaker struck through. */
+[aria-pressed='false'] .icon-sound .icon-off {
+  display: inline;
+}
+
+/* ─── ⚙ Setup in sections: each a head with its icon and what is chosen in it ─── */
+.pie-setup-group {
+  border-top: 1px solid color-mix(in srgb, var(--hub-ink) 14%, transparent);
+}
+
+.pie-setup-group-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.pie-setup-group-head::-webkit-details-marker {
+  display: none;
+}
+
+.pie-setup-group-icon {
+  display: inline-grid;
+  place-items: center;
+  color: var(--hub-accent-deep, var(--hub-ink));
+}
+
+.pie-setup-group-title {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pie-setup-group-now {
+  margin-left: auto;
+  max-width: 58%;
+  overflow: hidden;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.78rem;
+  font-style: italic;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--hub-muted);
+}
+
+.pie-setup-group-head::after {
+  content: '▸';
+  flex: none;
+  font-size: 0.7rem;
+  color: var(--hub-muted);
+  transition: transform 140ms ease;
+}
+
+.pie-setup-group[open] > .pie-setup-group-head::after {
+  transform: rotate(90deg);
+}
+
+/* The sheet's own two columns are for loose rows: a section, the layouts and the notes take its width, and a
+ * section lays its own choices two to a line where there is room. */
+.pie-setup > * {
+  grid-column: 1 / -1;
+}
+
+.pie-setup-group-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem 1rem;
+  padding: 0 0 0.6rem 1.7rem;
+}
+
+@container (min-width: 30rem) {
+  .pie-setup-group-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.pie-setup-group:last-of-type {
+  border-bottom: 1px solid color-mix(in srgb, var(--hub-ink) 14%, transparent);
+  margin-bottom: 0.6rem;
+}

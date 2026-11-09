@@ -19,7 +19,7 @@
  *   serial     books are contiguous; the next stone is a date
  * Exit 1 on any error; warnings and notes print but pass.
  */
-import { readFile, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -170,6 +170,7 @@ for (const file of files) {
 
 /* The almanac: shape, and every wonder named in its home and each echo. */
 const ids = new Set();
+const plateChecks = [];
 const proseOf = Object.fromEntries(chapters.map((c) => [c.chapterNumber,
   c.sections.filter(isPublished).flatMap((s) => (s.content || []).filter((x) => x.type === 'paragraph').map((x) => `${canonicalText(x)} ${(x.children || []).map((k) => k.text || '').join(' ')}`)).join(' ')]));
 almanac.wonders.forEach((wonder) => {
@@ -177,6 +178,10 @@ almanac.wonders.forEach((wonder) => {
   ids.add(wonder.id);
   checkWonder(wonder, { totalChapters: chapters.length }).forEach((p) => error('almanac', p));
   if (!wonder.prompt && wonder.kind !== 'saying') warn('almanac', `${wonder.id}: no plate prompt yet (PLAN.E L10)`);
+  // A plate (a drawn study until it is painted) is a file the cards show: it must be there, in a state the cards know.
+  if (wonder.plate) plateChecks.push(access(resolve(ROOT, wonder.plate.src.replace(/^\//, '')))
+    .then(() => { if (!['study', 'public'].includes(wonder.plate.state)) error('almanac', `${wonder.id}: plate state should be study or public`); })
+    .catch(() => error('almanac', `${wonder.id}: plate ${wonder.plate.src} is missing`)));
   // Made in the lanes (an artifact a carry's deed makes), a wonder is not named in the prose: it is kept by play.
   if (wonder.made_in === 'lanes') return;
   [wonder.home, ...(wonder.echoes || [])].forEach((n) => {
@@ -185,6 +190,7 @@ almanac.wonders.forEach((wonder) => {
     if (!wonder.terms.some((t) => termPattern(t).test(text))) error(`ch${pad(n)}`, `${wonder.id} should be named here (${wonder.terms.join(' / ')})`);
   });
 });
+await Promise.all(plateChecks);
 
 /* The tropes (book/content/world/tropes.json; .spw/surfaces/tropes.spw): the story and the lanes as strands of
  * one track. Each trope needs a face in both, its chambers published, its lanes kinds real cards, a crossing

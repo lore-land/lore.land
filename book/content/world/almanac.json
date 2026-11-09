@@ -1,5 +1,5 @@
 {
-  "note": "The almanac of Boon.land — wonders a reader can collect (book/scripts/modules/almanac.mjs; kinds in book/scripts/modules/kinds.mjs). Canon: .spw/surfaces/almanac.spw and .spw/surfaces/ecology.spw. `terms` are matched in the prose, case-insensitively; `home` is where each is first met, `echoes` where it returns. A creature has a `motion` and someone who `misread`s it; an antique a `provenance` (made, kept, remembers); an artifact a `residue` (left_by, obliges), and, when it is made in the lanes, `made_by` (a deed the carries keep, at_least so many).",
+  "note": "The almanac of Boon.land — wonders a reader can collect (book/scripts/modules/almanac.mjs; kinds in book/scripts/modules/kinds.mjs). Canon: .spw/surfaces/almanac.spw and .spw/surfaces/ecology.spw. `terms` are matched in the prose, case-insensitively; `home` is where each is first met, `echoes` where it returns. A creature has a `motion` and someone who `misread`s it; an antique a `provenance` (made, kept, remembers); an artifact a `residue` (left_by, obliges), and, when it is made in the lanes, `made_by` (a deed the carries keep, at_least so many). A `plate` is the picture its card shows: a drawn study (state \"study\", book/scripts/tools/assets/artifact-studies.mjs) until it is painted (state \"public\").",
   "kinds": {
     "creature": "Bestiary",
     "antique": "Antiques",
@@ -1976,6 +1976,10 @@
           "the scuff where it was trodden in the plaza",
           "the gate's iron threshold, rain running along it"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-horn-button-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2007,6 +2011,10 @@
           "a faint berry stain through the paper",
           "steam that should not still be rising"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-waxed-slice-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2035,6 +2043,10 @@
           "a pencil worn to the ferrule",
           "rain-spots on the margin"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-gate-book-entry-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2063,6 +2075,10 @@
           "flour paste drying on the corner",
           "a signature that pressed through to the desk"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-damage-slip-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2091,6 +2107,10 @@
           "the arm's line ending a little early",
           "one ant holding the light up"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-relit-torch-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2119,6 +2139,10 @@
           "the bell mid-swing",
           "the ink still wet on one line"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-criers-note-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2150,6 +2174,10 @@
           "the seam of two waters underneath",
           "handwriting nobody present is reading"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-bridge-receipts-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2186,6 +2214,10 @@
           "the stack leaning a little",
           "a dish-cloth nobody is holding"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-stacked-plate-v1.svg",
+        "state": "study"
       }
     },
     {
@@ -2220,6 +2252,10 @@
           "one with a berry stain beside it",
           "one underlined in gold"
         ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-found-line-v1.svg",
+        "state": "study"
       }
     }
   ]

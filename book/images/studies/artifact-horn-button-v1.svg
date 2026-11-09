@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="horn-button-t horn-button-d">
+  <title id="horn-button-t">The horn button — a study</title>
+  <desc id="horn-button-d">A round horn button with two thread-holes, scuffed where it was trodden in the plaza, at rest on the parcel gate's wet iron threshold; a single drawn line, the figure's arm, reaches in from the dark to lift it.</desc>
+  <defs>
+    <radialGradient id="horn-button-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="horn-button-glow" cx="50%" cy="51.24999999999999%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.55"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.099"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="horn-button-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="horn-button-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="horn-button-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="horn-button-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#horn-button-ground)"/>
+  <rect width="600" height="400" fill="url(#horn-button-rim)"/>
+  <rect width="600" height="400" fill="url(#horn-button-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M212.1 67.8l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M525.3 104.5l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M382.3 75.7l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M540.4 114.7l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M235.7 126.2l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M534.0 178.3l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M228.3 159.5l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M403.6 23.7l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M507.6 181.0l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M489.2 55.7l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M162.1 90.3l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M476.4 157.3l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M456.4 96.5l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M204.7 179.3l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M93.8 180.4l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M303.2 135.2l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M184.8 144.0l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M52.9 103.8l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M203.0 25.2l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M275.5 57.8l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M527.3 220.6l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M329.1 59.9l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M130.4 214.1l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M130.1 164.3l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M334.8 92.5l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/><path d="M442.6 26.0l-6 16" stroke="#5fb3a8" stroke-opacity="0.35" stroke-width="1.2"/>
+    <path d="M40 286H560" stroke-width="1.6" stroke-opacity="0.5"/>
+    <rect x="40" y="288" width="520" height="34" fill="#2a2f33" stroke="none" opacity="0.85"/>
+    <path d="M40 288H560M40 322H560" stroke="#5fb3a8" stroke-opacity="0.45" stroke-width="1.4"/>
+    <path d="M70 305h460" stroke="#efe3c8" stroke-opacity="0.25" stroke-dasharray="3 9"/>
+    <circle cx="300" cy="226" r="54" fill="#8c6a43" stroke="none" opacity="0.95"/>
+    <circle cx="300" cy="226" r="54" fill="none" stroke="#efe3c8"/>
+    <circle cx="300" cy="226" r="44" fill="none" stroke="#f2b04e" stroke-opacity="0.7" stroke-width="1.6"/>
+    <circle cx="287" cy="226" r="6.5" fill="#15221c" stroke="#efe3c8" stroke-width="1.8"/>
+    <circle cx="313" cy="226" r="6.5" fill="#15221c" stroke="#efe3c8" stroke-width="1.8"/>
+    <path d="M270 196q10-6 22-6M318 252q12 2 20-8" stroke="#efe3c8" stroke-opacity="0.55" stroke-width="1.4"/>
+    <path d="M100 360L262 286Q276 280 284 284" stroke-width="2.6"/>
+    <path d="M284 284q8 2 12-6" stroke-width="2.6"/>
+  </g>
+  <rect width="600" height="400" filter="url(#horn-button-grain)"/>
+  <rect width="600" height="400" fill="url(#horn-button-vignette)"/>
+</svg>
