@@ -1,0 +1,41 @@
+# Spw proposals — language and runtime, for creative expressiveness and navigational convenience
+# Proposed 2026-11-09, after building texture.website's routes, the hand's tuning, spw.quest's middleware and
+# the materials (release 2026_11_09.H). Each proposal names the friction it answers, measured here or in
+# spw-stress.spw. None is built. Language proposals go upstream (spw-seed, the workbench); runtime proposals
+# live in lore.land as portable modules spw.quest could take up.
+#>spw_proposals
+#:canon #:proposal #!open
+
+^"proposals"{
+  .from: "release 2026_11_09.H (texture-routes.mjs, spwashi-hand.mjs readTuning, quest-middleware.mjs, texture-materials.mjs) and the findings in spw-stress.spw"
+  &stress: ~".spw/surfaces/spw-stress.spw"
+  &texture_website: ~".spw/surfaces/texture-website.spw"
+  &roadmap: ~".spw/_workbench/lib/spw-v0.3.0/ROADMAP.md"
+  .order: "P1 and P3 together first: one grammar for addresses, then the book's own routes; P2 upstream beside them. P7, P8 and P9 become small once routes are parse trees."
+  .state: "proposed"
+}
+
+!"first"[
+  { id: "P1" layer: "language" name: "one grammar for addresses" answers: "three readers parse overlapping syntax (spw-seed, readTuning for dials, readRoute for addresses); two readers already drift in the game (pie-powers' small reader beside the parser)" proposal: "an address lex profile in spw-seed: / separates parts, + is a space, a dotted host is an atom; routes and tunings parse with the real parser, and the hand-written readers become tree walkers" also: "hosts are capsules: a bare texture.website in an address is sugar for <texture.website>, the channel the depiction scheme spwashi@<lore.land> already uses, which settles host dots against decimals against . ground; and the URL fragment is the # part, since # cannot travel in a query and a fragment is already an extrinsic pointer: …/@spwashi#curriculum" state: "proposed" }
+  { id: "P2" layer: "language" name: "dial literals, declared in canon" answers: "~2 @8 # is the tuning grammar's own; the spec's measure form is ~lit[7]; ranges and meanings live in code (RANGES in quest-middleware.mjs, DIALS in spwashi-hand.mjs)" proposal: "an operator followed directly by a number is legal sugar: ~2 means ~[2]; dials declared in .spw, as =dial[~]{ .says \"how much the hand wanders\" %range[0, 3] }, so align, the dial chips and the receipts read ranges from canon, and a maker adds a dial by writing a line" state: "proposed" }
+  { id: "P3" layer: "runtime" name: "book routes" answers: "lore.land's addresses are scattered parameters: ?edition, ?lens, ?tell, ?try, ?powers=, ?scene=&from=, ?chapter=" proposal: "one grammar for the book: ?/lore.land/#15/@boof (Fifteen from Boof's side), ?/lore.land/*horn-button (a wonder and every place it lives), ?/lore.land/~forgiving-glass (a trope, station by station), ?/lore.land/$storm/#15 (Fifteen on the storm material); the old parameters keep working by translating into routes, so regulars lose nothing (the continuity promise); semantic.json already holds most targets by anchor" state: "proposed" }
+]
+
+!"language"[
+  { id: "P4" name: "open bodies as state" answers: "a dropped closing brace falls silently to prose (spw-stress quiet_prose_fallback), yet .{ at the end of the scheme already means still gathering, and the letter blocks read open as boxed and closed as free" proposal: "a body left open at the end of a line is legal and marked (open: true on the node); unclosed mid-line stays an error; open and closed become something a maker says on purpose" state: "proposed" }
+  { id: "P5" name: "the scheme as one node" answers: "who@<through>.{…} parses as two loose expressions (spw-stress postfix_observer_detached)" proposal: "a DepictionScheme node: observer, channel, ground, body (open or closed); a maker pack declares one, and the hand's tuning, a room's keeper (~{warm_furrow}@boof) and an address's @ read the same node" state: "proposed" }
+  { id: "P6" name: "materials written in Spw" answers: "the seven materials live in texture-materials.mjs, so only code can add one" proposal: "a canon surface of $ material blocks, as $honey{ #texture[honey] =type{ %1.2 ~0.5 } %physics{ velocityDecay[0.9] centerStrength[0.03] fall[0.06] } }, read by the letter blocks, the pie lanes' rules and the factshift.center grounding alike" state: "proposed" }
+]
+
+!"runtime"[
+  { id: "P7" name: "verbs as pipeline hooks, receipts as one precipitate" answers: "the seven ? verbs are a module of their own; the workbench roadmap (v0.4.0) plans pipeline stage hooks before and after parse, normalize and interpret" proposal: "each verb a hook, (line, context) to { line, receipt }, every receipt written alike, as .receipt[align]{ ~9 → ~3 \"past what the hand does\" }; the valence lens, the living slots and the card pacing leave the same receipts: c029 as infrastructure" state: "proposed" }
+  { id: "P8" name: "relative addresses" answers: "a link must spell a whole state even when it only changes one part" proposal: "?./$honey (this, made on honey), ?./@boof (seen from someone else), ?../ (up a level), so a doc or a margin note can say: try it on storm" state: "proposed" }
+  { id: "P9" name: "read a link before following it" answers: "an address reads part by part only once it is opened" proposal: "hovering or a long press on any ?/ link shows its ?clarify reading in place: a navigational convenience, and T10's question built into every link" state: "proposed" }
+  { id: "P10" name: "variations as a contact sheet" answers: "?mutate gives one variation per visit" proposal: "?mutate%6 lays out six seeded variations side by side, each with its own address; tap one to keep it; seeds always written, so any variation can be had again" state: "proposed" }
+]
+
+?open[
+  "Does the address profile belong in spw-seed itself, or in a host-neutral package spw.quest and lore.land both import?"
+  "Should #fragment and the # operator merge everywhere, or only in addresses?"
+  "Which book routes come first: chapters seen from a character (@), or wonders (*), which already have cards to open?"
+]

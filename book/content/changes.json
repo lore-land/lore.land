@@ -2,6 +2,18 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.H",
+      "date": "2026-11-09",
+      "notes": [
+        "On a sheet of ruled boxes, spwashi lettered the alphabet by hand; it is traced here into two typefaces, a solid one and one that keeps the pen line as drawn. At lore.land/?/texture.website/@spwashi you can write any word in that hand, letter by letter in boxes like the sheet's, and see the sounds the word is made of underneath.",
+        "The address is part of the play. Every part of it reads: ?/ asks, texture.website is where it belongs, @spwashi whose hand, !Boof the words written, =~2 how it is tuned. Write or tune and the address changes with you, so what you made can be passed along — and read before it is opened.",
+        "Words can be made on something: paper, a wash, a drip, hatching, honey, glass or a storm, each with its own ground, its own way of setting the hand, and its own physics — the letters become things you can pick up and throw, and they come back as the material says. Add &factshift.center/?ground to the address and the same physics is said in factshift.center's terms, ready to open there.",
+        "A ? in the address passes it through spw.quest: ?clarify reads it to you, ?align tidies it, ?mutate varies it, ?edit makes changes written into it, ?enhance fills in what is missing, ?resonate finds what echoes it on the folios. Each one leaves a receipt saying what it did.",
+        "Where the sheet had no letter (numbers, marks, the Spw sigils), a pen measured from the hand draws one, in a dashed box that says it was penned. A line of Spw tunes how the hand is shown — wandering, leaning, bouncing, as scanned, or with its measure showing — and the page always says what was changed on purpose.",
+        "spwashi's hand comes with a curriculum: eight plans, each something to make and a question to ask about how pictures and words are made, written for readers of different ages to do together. It also reads spwashi's folios for textures, figures and sayings, each linked to the piece it came from on spwashi.com."
+      ]
+    },
+    {
       "release": "2026_11_09.G",
       "date": "2026-11-09",
       "notes": [

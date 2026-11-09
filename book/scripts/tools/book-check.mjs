@@ -28,6 +28,8 @@ import {
 import { CUSTOM_ELEMENT_TYPES } from '../modules/story-lexicon.mjs';
 import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
+import { packProblems } from '../modules/packs.mjs';
+import { existsSync } from 'node:fs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = async (path) => JSON.parse(await readFile(resolve(ROOT, path), 'utf8'));
@@ -191,6 +193,20 @@ almanac.wonders.forEach((wonder) => {
   });
 });
 await Promise.all(plateChecks);
+
+/* Packs (book/content/packs/; .spw/surfaces/texture-website.spw): every pack where its route says, its sources
+ * linked where they live, its files there, a maker's scheme and curriculum whole. */
+const packIndex = await read('book/content/packs/index.json');
+for (const entry of packIndex.packs) {
+  const pack = await read(entry.src.replace(/^\//, '')).catch(() => null);
+  if (!pack) { error('packs', `${entry.id}: ${entry.src} will not load`); continue; }
+  if (pack.id !== entry.id) error('packs', `${entry.src} says it is ${pack.id}, the index says ${entry.id}`);
+  if (pack.route !== entry.route) error('packs', `${entry.id}: the index routes it to ${entry.route}, the pack to ${pack.route}`);
+  if (!entry.src.startsWith(`/book/content/packs${pack.route}/`)) error('packs', `${entry.id}: lives where its route says (book/content/packs${pack.route}/)`);
+  packProblems(pack, { exists: (path) => existsSync(resolve(ROOT, path.replace(/^\//, ''))) }).forEach((p) => error('packs', p));
+  const plans = pack.curriculum || [];
+  if (plans.length) notes.push(`packs: ${pack.id}: ${plans.filter((p) => p.state === 'done').length} of ${plans.length} plans done, ${plans.filter((p) => p.state === 'open').length} under way`);
+}
 
 /* The tropes (book/content/world/tropes.json; .spw/surfaces/tropes.spw): the story and the lanes as strands of
  * one track. Each trope needs a face in both, its chambers published, its lanes kinds real cards, a crossing

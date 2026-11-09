@@ -49,6 +49,11 @@
     }
   </script>
   <script>
+    /* An address that begins ?/ is a route (texture.website, played through lore.land: texture-routes.mjs):
+       /texture/ answers it, and keeps the address as given. */
+    if (location.search.startsWith('?/')) location.replace('/texture/' + location.search + location.hash);
+  </script>
+  <script>
     try {
       const eggStyle = localStorage.getItem('lore-egg-style-v1');
       const smoothStyle = eggStyle === 'thorn' ? 'amber' : eggStyle;

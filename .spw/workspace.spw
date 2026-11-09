@@ -39,6 +39,8 @@
   c026: "No book file reaches main unless npm run book:check passes: chapter shape, slots, bracework, almanac terms, sighting anchors, compass words (PLAN.E L13)."
   c027: "Nothing is a dead end: every wonder links to each place it lives and to the almanac; every chapter names the wonders it holds (PLAN.E L09)."
   c028: "Soil glints, never shifts: reference-projected motion lights components without reordering or reflowing prose, and stops under reduced motion (PLAN.E L16)."
+  c029: "Intergenerational Media Literacy is a core value: every made thing says how it was made (lettered or penned, study or plate, changed on purpose and how), every address reads part by part, and every curriculum plan is something to make and a question to ask about media, for readers of every age (.spw/surfaces/texture-website.spw#value)."
+  c030: "Packs add without changing: each lives where its route says (book/content/packs/<surface>/@<who>/), answers lore.land/?/<surface>/@<who>, lists what it brings, links every source where it lives (never copies), and is removed by removing its line from book/content/packs/index.json; book:check holds every pack (packs.mjs packProblems)."
 }
 
 ^contract_status{
@@ -74,6 +76,8 @@
   c027: "passing — wonder cards, almanac entries and every chapter colophon (Wonders here) link each place; dead-end probe still to write (L09)"
   c028: "passing — soil glints (text-shadow only, period projected from places lived) ride the living trial; none under reduced motion"
   c023: "passing — valence-lens.mjs + lens-control.mjs genre dial (continuous boon/bane/bone weights, pre-paint); 45 boon / 29 bone / 17 bane paragraphs by vocabulary, 3 authored; story copy revised toward the Egg (ch 1, 5, 9–13) and re-paced into beats; six WAPboy sightings in marginalia"
+  c029: "starting — spwashi's hand says lettered or penned for every glyph and what was changed on purpose; its address reads part by part and carries what you write and tune; eight plans, each with a question and who it is for (2026_11_09.H)"
+  c030: "passing — one pack (spwashi, a maker, at ?/texture.website/@spwashi) in book/content/packs/index.json; book:check holds its route, sources, files, page, scheme and curriculum (2026_11_09.H)"
 }
 
 &lifecycle{

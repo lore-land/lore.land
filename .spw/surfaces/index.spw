@@ -15,6 +15,8 @@
   &wonder_about_pie: "@spw/surfaces/wonder-about-pie.spw"
   &tropes: "@spw/surfaces/tropes.spw"
   &ecology: "@spw/surfaces/ecology.spw"
+  &texture_website: "@spw/surfaces/texture-website.spw"
+  &spw_proposals: "@spw/surfaces/spw-proposals.spw"
   &almanac: "@spw/surfaces/almanac.spw"
   &knobs: "@spw/surfaces/knobs.spw"
   &cullet_deck: "@spw/surfaces/cullet-deck.spw"

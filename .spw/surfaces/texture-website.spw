@@ -1,0 +1,145 @@
+# texture.website, played through lore.land — addresses that read, and what lives at them
+# texture.website is the neighbour for grain (spwashi.com's canon: "texture.website is grain. lore.land is
+# long-form."): material, texture, the tactile side of how things are made and published. Played through
+# lore.land it is a lab for routes and URL structure: an address that begins ?/ reads part by part, the way
+# Spw is read, and a pack answers it. Held to one core value: Intergenerational Media Literacy.
+#>texture_website
+#:canon #:architecture #!working
+
+^"texture_website"{
+  .grammar: ~"book/scripts/modules/texture-routes.mjs"
+  .packs: ~"book/scripts/modules/packs.mjs"
+  .registry: ~"book/content/packs/index.json"
+  .page: ~"texture/index.html"
+  .hand_off: "index.html (root): an address beginning ?/ goes to /texture/, which shows it as given (lore.land/?/…)"
+  .checked_by: "npm run book:check (packProblems: route, sources linked, files there, scheme read, curriculum whole)"
+  &domains: ~".spw/surfaces/domains.spw"
+  &literacy_ladder: ~".spw/index.spw"
+  &folios: ~".spw/surfaces/folios.spw"
+  &tropes: ~".spw/surfaces/tropes.spw#tropes"
+  rule: "An address is state you can read aloud: every part says what it is by its operator, the same state is always the same address, and what a reader does on the page is written back into it."
+}
+
+^"routes"{
+  .note: "lore.land/?/<surface>/<op><name>/… — ? asks; the surface is a neighbour (a name with a dot: texture.website, trope.wiki); each part after it opens with an operator (ROUTE_OPS)."
+  "@": "whose: the maker it is seen from (@spwashi)"
+  "*": "a thing itself: one glyph, one piece (*g)"
+  "!": "do: write these words (!Boof+and+the+pie)"
+  "=": "tuned: how it is shown, in the tuning grammar (=~2+@8)"
+  "~": "a motif: what keeps coming back (~drip)"
+  "&": "together with"
+  ".": "a field of it"
+  "%": "how many"
+  "^": "up to"
+  "$": "what it is made on"
+  "?": "asked"
+  encoding: "spaces travel as +; % # / + and quotes are escaped; @ ~ ! = * & ^ $ ? stay as they are, so the address stays legible"
+  order: "surface, @whose, ~motif, *thing, !words, =tuning, &with — written in that order, so one state is one address"
+}
+
+!"experiments"[
+  { route: "?/texture.website" shows: "the surface: the packs on it" }
+  { route: "?/texture.website/@spwashi" shows: "spwashi's hand: letter blocks, the alphabet with provenance, the curriculum, the folio findings" }
+  { route: "?/texture.website/@spwashi/!Boof+and+the+pie" shows: "words written in the hand, their sounds spelled out" }
+  { route: "?/texture.website/@spwashi/!honk/=~2+^1+?1" shows: "written and tuned; the tuning is the address's own" }
+  { route: "?/texture.website/@spwashi/*g" shows: "one letter, written and found in the alphabet with where it came from" }
+  { route: "?/texture.website/~drip" shows: "a motif across the folios, its pieces linked on spwashi.com" }
+  { route: "?/texture.website/@spwashi/$honey/!slow+honk" shows: "made on a material: the letters are bodies; drag one, it comes back late" }
+  { route: "?/texture.website/@spwashi/$storm/!parcel+gate/&factshift.center/?ground" shows: "a material said in factshift.center's physics, with the address to open there" }
+  { route: "?/texture.website/@spwashi/!Boof/=~9+@40/?align" shows: "through spw.quest: put in range, with a receipt" }
+  { route: "?/texture.website/@spwashi/.word:moon/.material:wash/?edit" shows: "an edit written in the address, applied and consumed" }
+  { route: "?/texture.website/$glass" shows: "a material on its own: texture, typography, physics" }
+]
+
+^"materials"{
+  .module: ~"book/scripts/modules/texture-materials.mjs"
+  .note: "What a thing is made on ($ in an address). A material has three registers read together: texture (a ground, credited to a texture held on spwashi's folios by its ~ handle), typography (the hand's own tuning dials, set before the reader's, so the reader's win), physics (how the letters move, in factshift.center's own words)."
+  paper: "the sheet it was lettered on: still, ruled, kept"
+  wash: "thinned paint over the page: the letters float and drift back (~blue.grey.wash)"
+  drip: "paint that ran: the letters sag and bead, and hang on (~drip.glyph)"
+  hatch: "lines laid over lines: stiff, close, every letter keeping its own (~crosshatch)"
+  honey: "slow: whatever moves it, it gives back late"
+  glass: "Bonk City's glass, made of old impacts: hard, bright, quick to spring back"
+  storm: "the night at the parcel gate: nothing holds still"
+  physics: "alpha (stirred at the start), alphaTarget (heat that never leaves), alphaDecay (how fast it settles), velocityDecay (drag), charge (kept apart), centerStrength (pull home), linkStrength (held by neighbours), and fall, which only lore.land has"
+  play: "on a material the letter blocks are bodies: pulled home, held by neighbours, kept apart, stirred, dragged by the air, falling; drag one and let go (nothing moves under reduced motion)"
+}
+
+^"grounding"{
+  .note: "texture.website tunes physics for factshift.center: a material is said in factshift.center's own address, the parameters its app reads (app.factshift.com src/js/init/parameters/options: alpha, alphaTarget, alphaDecay, velocityDecay, charge, centerStrength, linkStrength), with the line as ?spw= (up to 400 letters)."
+  route: "?/texture.website/@spwashi/$storm/!parcel+gate/&factshift.center/?ground"
+  says: "the receipt lists each field that differs from factshift.center's defaults (force-config.ts) and what it means in words, then the address to open; fall stays in lore.land, since the canvas has no down"
+  caution: "the deployed canvas may lag its source; an address that grounds is a proposal the canvas reads if it can"
+}
+
+^"middleware"{
+  .module: ~"book/scripts/modules/quest-middleware.mjs"
+  .note: "spw.quest as middleware: it keeps state in the address and reads a line so it can be compared; here it stands between a surface (texture.website's materials and hands) and what plays or uses them (lore.land's letter blocks, factshift.center's canvas). A ? part is a pass through it, and every pass returns a receipt in words."
+  edit: "change what the address asks to change: .field:value parts (.word:moon .material:wash .wobble:2), consumed"
+  enhance: "fill in what is missing from what the maker already has: words, a material, the hand's wander, the measure shown"
+  clarify: "say what the line means, part by part, and its material's registers, in words; stays in the address"
+  align: "put it in order and in range (dials clamped to what a hand does, unknown words set aside, an unknown material made paper), so one state is one address"
+  mutate: "a variation: two dials turned, the seed moved, sometimes a new material; always varies"
+  ground: "say it in a target's own terms (&factshift.center: its physics address; &lore.land: the letter blocks' numbers); stays"
+  resonate: "find what echoes it: motifs on the folios sharing its words or its material's texture, its letters lettered or penned; stays"
+  rule: "a verb that changes the line leaves the address changed and itself gone; a verb that reads stays, so the reading travels with the link"
+  carried: "lore.land's model, importing nothing: for spw.quest to take up as its own if the maker wants it"
+}
+
+^"packs"{
+  .note: "A pack adds without changing what is there. It lives where its route says (book/content/packs/<surface>/@<who>/pack.json), answers that route, lists what it brings (fonts, data, pages, tools), links every source where it lives (never copies), and is removed by removing its line from the index."
+  maker: "a maker's material seen from lore.land: maker, route, depiction scheme, sources, contributions, curriculum (plans T01…)"
+  expansion: "more of the land: chapters, wonders, rooms or a feature, with a route, sources and contributions"
+}
+
+^"value"{
+  name: "Intergenerational Media Literacy"
+  says: "What lore.land makes should be something two people of different ages can make, read and question together: how a picture was made, by whom, what a machine did in someone's manner, where an idea came from and how to say so — and where an address will take you before you follow it."
+  shows_as: "every made thing says how it was made (lettered or penned; a drawn study or a painted plate; changed on purpose, and how); every address reads part by part; every curriculum plan is something to make and a question to ask, with who it is for across ages; every borrowed thing names its piece"
+  care: "audience care holds (intergenerational media; PG-level gates for PG-13 themes); a plan's question is one a grandparent and a grandchild can both answer differently and both be right"
+}
+
+^"scheme"{
+  .note: "A maker's depiction scheme is a Spw expression read as how lore.land shows the maker's work: maker@<channel>.{ — whose, through what (a capsule: the channel and its register), grounded (.), and a body left open ({: still gathering) or closed (}: complete). The route says where it is; the scheme says how it is seen."
+  spwashi: "spwashi@<lore.land>.{ — the maker's hand, seen through lore.land (literary register, readers of every age), traced from paper, the set open: a lettered glyph replaces a penned one when a scan brings it"
+  tuning: "the same grammar tunes how the work is projected, and travels in the address (=…): ~ lets the hand wander, % weighs it, @ leans it, . settles it, ^ bounces it, ! swells it, ? tilts it, * shows it as scanned, # shows the measure, & layers the outline over the hand, = seeds it, $ shows the paper; an open body keeps the letters in their blocks, a closed one lets them run free (spwashi-hand.mjs readTuning)"
+  wonder_and_measure: "some dials make it more wonderful (~ ^ ? !), some make it more true (* # &); the page says which were turned, so a changed picture always says it was changed"
+}
+
+^"spwashi_hand"{
+  route: "?/texture.website/@spwashi"
+  source: "the alphabet blocks (prime-2026-10-22-00, spwashi.com's October drop): one sheet of ruled boxes lettered Aa to Zz along a snaking path, scanned at 300 dpi; the scan stays in spwashi.com"
+  trace: "npm run font:trace (book/scripts/tools/font/hand/trace-alphabet.mjs): boxes found as drawn; ruled lines found as long straight lines along each edge (once or twice over) and lifted by their own thickness, so a letter leaning on its line keeps its edge; capital and small letter parted; the pen line contoured from the scan's grey; the strokes filled for the solid face where the space inside them is long and thin (a counter, round, is left)"
+  build: "npm run font:hand (build-hand.mjs): the pen measured from the stems (line 27, body 72 font units); small letters' heights drawn halfway to their kind's middle for text (the trace keeps them as lettered); digits, marks and the twelve sigils penned from skeletons (SKELETONS in spwashi-hand.mjs); Spwashi Hand and Spwashi Outline written, and hand.json with every glyph's provenance"
+  corrections: "said in the tracer: wider closing for C Q U S g u x z (their pen lines open wider than a skip); k and r keep only what rises as wide as a letter (their boxes' inner rulings touch them)"
+  rights: "lettered by spwashi; the faces read on lore.land, and leave it only when the maker says"
+}
+
+^"mining"{
+  run: "npm run texture:mine (book/scripts/tools/texture/mine-folios.mjs) → book/content/packs/texture.website/@spwashi/findings.json"
+  reads: "every ~ handle (held motif) on the folios and the primes, sorted into textures, figures and sayings, each with the pieces it is on, linked on spwashi.com; each has an address (?/texture.website/~drip)"
+  promotes: "by hand, one at a time: a figure or saying becomes a trope in tropes.json (with its piece in its faces), a texture becomes a ground under a study or plate (T08); the finding then says where it went"
+  keeps_out: "anything naming WAPboy, and lettering about schooling, as the archive keeps them out of its own titles"
+}
+
+!"curriculum"[
+  { plan: "T01" does: "trace the hand" rung: "inspect" state: "done" }
+  { plan: "T02" does: "a pen from a hand" rung: "inspect" state: "done" }
+  { plan: "T03" does: "letter blocks" rung: "explore" state: "done" }
+  { plan: "T04" does: "tune the projection, in the address" rung: "operate" state: "done" }
+  { plan: "T05" does: "read the folios for tropes and textures" rung: "notice" state: "open" }
+  { plan: "T06" does: "letter the missing marks" rung: "author" state: "planned" }
+  { plan: "T07" does: "a second hand" rung: "author" state: "planned" }
+  { plan: "T08" does: "textures under the plates" rung: "author" state: "planned" }
+  { plan: "T09" does: "made on: texture, typography, physics" rung: "operate" state: "done" }
+  { plan: "T10" does: "through spw.quest: read an address before you follow it" rung: "inspect" state: "done" }
+]
+
+?long_horizon[
+  "More surfaces through the same door: ?/trope.wiki/… reading tropes.json, so a trope has an address before trope.wiki has a host."
+  "Routes into the book: ?/lore.land/#15/@boof — a chapter seen from a character — the address as a reading lens."
+  "When texture.website has a host of its own, the routes move with it unchanged (texture.website/@spwashi/!Boof) and lore.land's ?/ form keeps working as the way in from the book."
+  "A pack's fonts offered to the rest of the site as a reading switch (the hand for chapter titles and drop caps), off for regulars, a trial for the curious — never replacing LoreLand Display without asking."
+  "A second maker through the same doors: a hand from another generation (T07), set beside the first at ?/texture.website/@…"
+  "Should a pack be importable by spwashi.com (packs.mjs and texture-routes.mjs import nothing), so a route reads the same from both registers?"
+]

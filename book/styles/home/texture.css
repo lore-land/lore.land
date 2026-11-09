@@ -1,0 +1,897 @@
+/* ─── /texture/: texture.website, played through lore.land (lore.land/?/…) ─────────────────────────
+ * The hand is the page's display face: lettered on paper, traced into type (book/fonts/spwashi/). Story serif
+ * for what is said, mono for the structure (the scheme, the dials, the plans' ids), the hand for what is written. */
+@font-face {
+  font-family: 'Spwashi Hand';
+  src: url('/book/fonts/spwashi/SpwashiHand.otf') format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Spwashi Outline';
+  src: url('/book/fonts/spwashi/SpwashiOutline.otf') format('opentype');
+  font-display: swap;
+}
+
+body[data-surface='monument'] .texture-main {
+  --texture-ink: var(--hub-ink, #1d2a24);
+  --texture-box: color-mix(in srgb, var(--hub-ink, #1d2a24) 70%, transparent);
+  --texture-penned: var(--kind-artifact, #84444c);
+  --texture-paper: #f4ecdc;
+}
+
+/* The hero reads top to bottom: the hand's own title, what it is, then its scheme read part by part. */
+body[data-surface='monument'] .texture-hero {
+  display: block;
+}
+
+body[data-surface='monument'] .texture-title {
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+}
+
+.texture-scheme {
+  margin: 1rem 0 0.4rem;
+}
+
+.texture-scheme code {
+  font-family: 'Spwashi Outline', var(--font-family-mono, monospace);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--hub-accent-deep, var(--texture-ink));
+}
+
+.texture-reads {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.25rem 0.8rem;
+  max-width: 44rem;
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.texture-reads dt code {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.85rem;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-reads dd {
+  margin: 0;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-section {
+  margin-top: clamp(2rem, 5vw, 3.2rem);
+}
+
+.texture-section h2 {
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0 0 0.4rem;
+}
+
+.texture-lede {
+  max-width: 44rem;
+  color: var(--hub-muted, inherit);
+}
+
+/* ─── The writer ─── */
+.texture-writer {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 48rem;
+}
+
+.texture-field {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.texture-field > span {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-field input {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-radius: 0.35rem;
+  background: var(--hub-panel, #fffaf0);
+  color: var(--texture-ink);
+  font: inherit;
+}
+
+.texture-field [data-text] {
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-size: 1.4rem;
+}
+
+.texture-field-tune input {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.92rem;
+}
+
+.texture-dials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.texture-dial {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texture-ink);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.texture-dial code {
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-dial:hover,
+.texture-dial:focus-visible {
+  border-color: var(--hub-accent-deep, currentColor);
+}
+
+/* ─── The stage: letters in their boxes ───
+ * A long word scrolls within its stage; the page itself never scrolls sideways (min-width: 0 down the column). */
+body[data-surface='monument'] .texture-main,
+body[data-surface='monument'] .texture-main > *,
+.texture-section,
+.texture-stage {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.texture-stage {
+  margin: 1rem 0 0;
+}
+
+.texture-svg {
+  overflow-x: auto;
+  padding: 0.4rem 0;
+  border-radius: 0.4rem;
+}
+
+.texture-svg svg {
+  display: block;
+  height: clamp(7rem, 22vw, 12rem);
+  width: auto;
+  max-width: none;
+}
+
+.texture-svg.is-paper {
+  background: var(--texture-paper);
+}
+
+.texture-paper {
+  fill: var(--texture-paper);
+}
+
+.texture-box {
+  fill: none;
+  stroke: var(--texture-box);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.texture-letter.is-penned .texture-box {
+  stroke: var(--texture-penned);
+  stroke-dasharray: 18 14;
+}
+
+.texture-ink {
+  fill: var(--texture-ink);
+  stroke: var(--texture-ink);
+  stroke-width: 0;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.texture-ink.is-under {
+  fill: color-mix(in srgb, var(--hub-gold, #c9a76a) 55%, transparent);
+  stroke: none;
+}
+
+.texture-letter.is-penned .texture-ink:not(.is-under) {
+  fill: color-mix(in srgb, var(--texture-ink) 70%, var(--texture-penned));
+}
+
+.texture-label {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 48px;
+  text-anchor: middle;
+  fill: var(--hub-muted, #6b6b6b);
+}
+
+.texture-guides line {
+  stroke: var(--hub-gold, #c9a76a);
+  stroke-width: 2;
+  stroke-dasharray: 10 10;
+}
+
+.texture-who {
+  margin-top: 0.35rem;
+  font-size: 0.86rem;
+  color: var(--hub-muted, inherit);
+}
+
+/* ─── Phonics: the sounds a word is made of ─── */
+.texture-phonics {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.texture-word {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.texture-word-name {
+  min-width: 4.5rem;
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-size: 1.25rem;
+}
+
+.texture-chunk {
+  display: inline-grid;
+  justify-items: center;
+  padding: 0.15rem 0.5rem 0.2rem;
+  border: 1.5px solid var(--texture-box);
+  border-radius: 0.3rem;
+  background: var(--hub-panel, transparent);
+}
+
+.texture-chunk b {
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.texture-chunk small {
+  font-size: 0.66rem;
+  color: var(--hub-muted, inherit);
+}
+
+/* ─── The alphabet ─── */
+.texture-faces {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.texture-face {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texture-ink);
+  cursor: pointer;
+}
+
+.texture-face[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--hub-gold, #c9a76a) 25%, transparent);
+  border-color: var(--hub-gold, #c9a76a);
+}
+
+.texture-glyphs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.2rem, 1fr));
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-glyph {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  max-width: none;
+  padding: 0.35rem 0.25rem 0.4rem;
+  border: 1.5px solid var(--texture-box);
+  border-radius: 0.25rem;
+}
+
+.texture-glyph.is-penned {
+  border-style: dashed;
+  border-color: var(--texture-penned);
+}
+
+.texture-glyph-ink {
+  font-size: 2.6rem;
+  line-height: 1.15;
+}
+
+.texture-glyph-ink.is-hand { font-family: 'Spwashi Hand', serif; }
+.texture-glyph-ink.is-outline { font-family: 'Spwashi Outline', serif; }
+
+.texture-glyph-where {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.56rem;
+  text-align: center;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-download {
+  margin-top: 0.8rem;
+  font-size: 0.86rem;
+}
+
+/* ─── The curriculum ─── */
+.texture-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-plan {
+  max-width: none;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-top: 3px solid var(--hub-gold, #c9a76a);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--hub-panel, #fffaf0) 80%, transparent);
+}
+
+.texture-plan.is-open { border-top-color: var(--hub-accent-deep, #246270); }
+.texture-plan.is-planned { border-top-style: dashed; background: transparent; }
+
+.texture-plan p {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+}
+
+.texture-plan-head {
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-size: 1.25rem !important;
+}
+
+.texture-plan-id,
+.texture-plan-state {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+}
+
+.texture-plan-state {
+  display: block;
+  text-transform: uppercase;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-plan-ask > span,
+.texture-plan-ages > span {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep, inherit);
+}
+
+/* ─── Found in the folios ─── */
+.texture-findings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0.9rem;
+}
+
+.texture-finding-shelf h3 {
+  margin: 0 0 0.3rem;
+  font-family: 'Spwashi Hand', var(--hub-display, Georgia, serif);
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.texture-finding-shelf h3 span {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-finding-shelf ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.86rem;
+}
+
+.texture-finding-shelf li {
+  max-width: none;
+  padding: 0.12rem 0;
+}
+
+.texture-finding-shelf code {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-findings-note {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--hub-muted, inherit);
+}
+
+/* ─── Sources ─── */
+.texture-sources {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-sources li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  max-width: 44rem;
+}
+
+.texture-sources img {
+  flex: none;
+  width: 4.5rem;
+  height: auto;
+  border-radius: 0.2rem;
+}
+
+.texture-sources p {
+  margin: 0.15rem 0 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted, inherit);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .texture-letter {
+    animation: texture-letter-in 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  }
+}
+
+@keyframes texture-letter-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── The address, read part by part ─── */
+.texture-route {
+  padding: 1rem 0 0.4rem;
+}
+
+.texture-route-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 48rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.7rem;
+  border: 1.5px solid var(--hub-line, #ccc);
+  border-radius: 999px;
+  background: var(--hub-panel, #fffaf0);
+}
+
+.texture-route-host {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.86rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-route-bar input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--texture-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.92rem;
+}
+
+.texture-route-bar input:focus {
+  outline: none;
+}
+
+.texture-route-bar:focus-within {
+  border-color: var(--hub-accent-deep, currentColor);
+}
+
+.texture-route-go {
+  padding: 0.25rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--hub-accent-deep, #246270);
+  color: var(--hub-panel, #fff);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.texture-route-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-part {
+  display: inline-grid;
+  max-width: 14rem;
+  padding: 0.25rem 0.55rem 0.3rem;
+  border-left: 3px solid var(--hub-gold, #c9a76a);
+  background: color-mix(in srgb, var(--hub-panel, #fffaf0) 70%, transparent);
+}
+
+.texture-part code {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--hub-accent-deep, inherit);
+  overflow-wrap: anywhere;
+}
+
+.texture-part span {
+  font-size: 0.72rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-part.is-surface { border-left-color: var(--hub-accent-deep, #246270); }
+.texture-part.is-perspective { border-left-color: var(--kind-creature, #6b5010); }
+.texture-part.is-action { border-left-color: var(--kind-artifact, #84444c); }
+.texture-part.is-config { border-left-color: var(--kind-bracework, #5b3a6e); }
+
+.texture-route-try {
+  margin-top: 0.6rem;
+  font-size: 0.86rem;
+}
+
+.texture-route-try summary {
+  cursor: pointer;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-route-try ul {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-route-try li {
+  max-width: none;
+  padding: 0.12rem 0;
+}
+
+.texture-route-try code {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+/* ─── The surface and its packs ─── */
+.texture-packs {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-packs li {
+  max-width: 44rem;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--texture-box);
+  border-radius: 0.3rem;
+}
+
+.texture-packs code {
+  font-family: var(--font-family-mono, monospace);
+}
+
+.texture-packs p {
+  margin: 0.3rem 0 0;
+  font-size: 0.88rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-motif {
+  margin-top: 1.2rem;
+}
+
+.texture-motif h2 code {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.8em;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-motif-pieces {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.texture-motif-pieces li {
+  display: grid;
+  gap: 0.25rem;
+  max-width: none;
+  font-size: 0.82rem;
+}
+
+.texture-motif-pieces img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.2rem;
+}
+
+/* A letter with its own address: tapped, it is written and found. */
+.texture-glyph-link {
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.texture-glyph.is-here {
+  outline: 3px solid var(--hub-gold, #c9a76a);
+  outline-offset: 2px;
+}
+
+.texture-motif-link {
+  text-decoration: none;
+}
+
+/* ─── Through spw.quest: the seven verbs, and the receipts they leave ─── */
+.texture-verbs,
+.texture-materials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+}
+
+.texture-verbs-label,
+.texture-materials-label {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted, inherit);
+  margin-right: 0.2rem;
+}
+
+.texture-verb,
+.texture-material-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texture-ink);
+  font-size: 0.78rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.texture-verb code,
+.texture-material-chip code {
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: var(--kind-bracework, #5b3a6e);
+}
+
+.texture-material-chip code { color: var(--hub-accent-deep, #246270); }
+
+.texture-material-chip.is-here {
+  background: color-mix(in srgb, var(--hub-gold, #c9a76a) 25%, transparent);
+  border-color: var(--hub-gold, #c9a76a);
+}
+
+.texture-receipts {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  max-width: 48rem;
+}
+
+.texture-receipt {
+  padding: 0.55rem 0.75rem;
+  border: 1px dashed var(--kind-bracework, #5b3a6e);
+  border-left: 3px solid var(--kind-bracework, #5b3a6e);
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--hub-panel, #fffaf0) 80%, transparent);
+  font-size: 0.86rem;
+}
+
+.texture-receipt-head {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-receipt-head code {
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: var(--kind-bracework, #5b3a6e);
+}
+
+.texture-receipt ul {
+  margin: 0.3rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.texture-receipt li {
+  max-width: none;
+}
+
+.texture-receipt-url {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+/* ─── A material: its three registers ─── */
+.texture-material {
+  max-width: 48rem;
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.texture-material-says code {
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  color: var(--hub-accent-deep, inherit);
+}
+
+.texture-material-none {
+  color: var(--hub-muted, inherit);
+}
+
+.texture-registers {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.2rem 0.7rem;
+  margin: 0.4rem 0;
+}
+
+.texture-registers dt {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-muted, inherit);
+  padding-top: 0.15rem;
+}
+
+.texture-registers dd {
+  margin: 0;
+}
+
+.texture-registers code,
+.texture-phys {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.76rem;
+}
+
+.texture-phys {
+  display: inline-block;
+  margin: 0 0.5rem 0.1rem 0;
+  white-space: nowrap;
+}
+
+.texture-surface-sub {
+  margin-top: 1.4rem;
+}
+
+.texture-surface-sub span {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.7rem;
+  color: var(--hub-muted, inherit);
+}
+
+.texture-material-list {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.texture-material-list li {
+  max-width: 44rem;
+  padding: 0.15rem 0;
+}
+
+.texture-material-list code {
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+}
+
+/* The letters as bodies: grab one. */
+.texture-svg[data-ground]:not([data-ground='']) .texture-letter {
+  cursor: grab;
+  touch-action: none;
+}
+
+.texture-letter.is-held {
+  cursor: grabbing;
+}
+
+/* ─── The texture register: each material's ground under the letters ─── */
+.texture-svg[data-ground='paper'] {
+  background:
+    repeating-linear-gradient(180deg, transparent 0 27px, color-mix(in srgb, var(--hub-accent-deep, #246270) 14%, transparent) 27px 28px),
+    #f6efe0;
+}
+
+.texture-svg[data-ground='wash'] {
+  background:
+    radial-gradient(120% 90% at 20% 30%, color-mix(in srgb, #8fa6b5 45%, transparent), transparent 60%),
+    radial-gradient(90% 80% at 80% 70%, color-mix(in srgb, #a8b6bd 40%, transparent), transparent 65%),
+    #eef0ec;
+}
+
+.texture-svg[data-ground='drip'] {
+  background:
+    linear-gradient(180deg, #b34d4d 0 12%, transparent 12%),
+    repeating-linear-gradient(90deg, transparent 0 34px, color-mix(in srgb, #b34d4d 55%, transparent) 34px 38px, transparent 38px 71px),
+    #f3e8dc;
+  background-size: auto, auto 46%, auto;
+  background-repeat: no-repeat, repeat-x, no-repeat;
+}
+
+.texture-svg[data-ground='hatch'] {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 9px, color-mix(in srgb, #3c3a34 16%, transparent) 9px 10px),
+    repeating-linear-gradient(-45deg, transparent 0 9px, color-mix(in srgb, #3c3a34 12%, transparent) 9px 10px),
+    #f4efe4;
+}
+
+.texture-svg[data-ground='honey'] {
+  background:
+    radial-gradient(80% 120% at 50% 110%, color-mix(in srgb, #d99a2b 55%, transparent), transparent 70%),
+    #f8ecd2;
+}
+
+.texture-svg[data-ground='glass'] {
+  background:
+    linear-gradient(115deg, transparent 0 38%, rgba(255, 255, 255, 0.75) 38% 41%, transparent 41% 60%, rgba(255, 255, 255, 0.5) 60% 61.5%, transparent 61.5%),
+    linear-gradient(180deg, #dfeeed, #c9e0de);
+}
+
+.texture-svg[data-ground='storm'] {
+  background:
+    repeating-linear-gradient(105deg, transparent 0 22px, rgba(200, 220, 230, 0.35) 22px 23px),
+    linear-gradient(180deg, #4d5b63, #2e383d);
+}
+
+.texture-svg[data-ground='storm'] .texture-ink { fill: #f1ead8; stroke: #f1ead8; }
+.texture-svg[data-ground='storm'] .texture-box { stroke: rgba(241, 234, 216, 0.55); }

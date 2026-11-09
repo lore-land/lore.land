@@ -54,4 +54,13 @@
   bone_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
   bonk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
   honk_land: { pipeline: "default", selector: "$^[\"valence\"]@spw/surfaces" }
+  texture_website: { pipeline: "probe", selector: "lore.land/?/texture.website/…", canon: ~".spw/surfaces/texture-website.spw" }
+}
+
+^"neighbours"{
+  .note: "Surfaces near lore.land, reached through it before (or besides) a host of their own: lore.land/?/<surface>/… reads the address part by part (texture-routes.mjs) and a pack answers it."
+  texture_website: "grain: material, texture, the tactile side of making and publishing; a lab for routes and URL structure, played through lore.land (trope_knowledge_commons)"
+  trope_wiki: "tropes as a commons: tropes.json is portable for it (trope_knowledge_commons); no route yet"
+  spw_quest: "the reader that keeps state in the address; as middleware, the ? passes in a route (quest-middleware.mjs: edit, enhance, clarify, align, mutate, ground, resonate), each with a receipt"
+  factshift_center: "the canvas that turns a line toward motion (a d3 force simulation); texture.website's materials ground in its own address (alpha … linkStrength, ?spw=) through &factshift.center/?ground"
 }

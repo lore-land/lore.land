@@ -1,0 +1,174 @@
+{
+  "id": "spwashi",
+  "kind": "maker",
+  "route": "/texture.website/@spwashi",
+  "surface": "texture.website",
+  "maker": "spwashi",
+  "title": "spwashi's hand",
+  "scheme": "spwashi@<lore.land>.{",
+  "reads": {
+    "spwashi@": "whose hand: the maker's, as they lettered it",
+    "<lore.land>": "through what: lore.land is the channel the hand is seen through, its register literary, its readers every age; texture.website is the surface it belongs to, played through lore.land",
+    ".": "grounded: traced from paper, kept on the line",
+    "{": "open: the set keeps gathering — a lettered glyph replaces a penned one when a scan brings it"
+  },
+  "opened": "2026-11-09",
+  "state": "open",
+  "value": "intergenerational-media-literacy",
+  "sources": [
+    {
+      "piece": "prime-2026-10-22-00",
+      "title": "Alphabet blocks, framed board",
+      "href": "https://spwashi.com/design/folios/october-2026/#prime-1022-00",
+      "thumb": "https://spwashi.com/public/images/assets/primes/prime-alphabet-blocks-framed-board-thumb.webp",
+      "use": "traced into the hand: 52 letters, Aa to Zz, along the snaking path"
+    },
+    {
+      "piece": "folio archive",
+      "title": "The folio wall and the October drop",
+      "href": "https://spwashi.com/design/folios/",
+      "use": "read for tropes and textures (findings.json): every held motif, with the pieces it is on"
+    }
+  ],
+  "contributes": {
+    "fonts": [
+      {
+        "family": "Spwashi Hand",
+        "src": "/book/fonts/spwashi/SpwashiHand.otf",
+        "says": "the strokes filled"
+      },
+      {
+        "family": "Spwashi Outline",
+        "src": "/book/fonts/spwashi/SpwashiOutline.otf",
+        "says": "the pen line as lettered"
+      }
+    ],
+    "data": [
+      {
+        "src": "/book/scripts/modules/texture-materials.mjs",
+        "says": "the materials: texture, typography, physics (in factshift.center's terms)"
+      },
+      {
+        "src": "/book/fonts/spwashi/hand.json",
+        "says": "every glyph, lettered or penned, with where it came from"
+      },
+      {
+        "src": "/book/content/packs/texture.website/@spwashi/findings.json",
+        "says": "tropes and textures found in the folios, as candidates"
+      }
+    ],
+    "pages": [
+      {
+        "href": "/?/texture.website/@spwashi",
+        "title": "spwashi's hand, on texture.website",
+        "says": "letter blocks in the hand, tuned by Spw and kept in the address; the alphabet and where each letter came from; the curriculum"
+      }
+    ],
+    "tools": [
+      {
+        "run": "npm run font:trace",
+        "says": "trace the alphabet blocks (needs the scan, in spwashi.com)"
+      },
+      {
+        "run": "npm run font:hand",
+        "says": "build both faces and hand.json from the trace"
+      },
+      {
+        "run": "npm run texture:mine",
+        "says": "read the folios' held motifs into findings.json"
+      }
+    ]
+  },
+  "curriculum": [
+    {
+      "id": "T01",
+      "title": "Trace the hand",
+      "state": "done",
+      "rung": "inspect",
+      "make": "The alphabet blocks traced into outlines: each box found, its ruled lines lifted off, the capital and small letter parted, the pen line followed.",
+      "ask": "What did the tracing keep, and what did it leave on the paper? (The boxes were ruled by the same hand: lifting them off was a choice.)",
+      "ages": "anyone who has traced a picture; grown-ups can say why a copy is never quite the thing"
+    },
+    {
+      "id": "T02",
+      "title": "A pen from a hand",
+      "state": "done",
+      "rung": "inspect",
+      "make": "A pen measured from the letters (its line and a stroke's width) draws the digits, marks and the twelve sigils the sheet did not hold. Each says it was penned.",
+      "ask": "Which letters did a person draw, and which did a machine draw in their manner? How can you tell — and should it have to tell you?",
+      "ages": "children spotting the difference; adults asking where else it is not said"
+    },
+    {
+      "id": "T03",
+      "title": "Letter blocks",
+      "state": "done",
+      "rung": "explore",
+      "make": "Write any word in the hand, in boxes like the sheet's, and see it come apart into the sounds it makes.",
+      "ask": "Which letters make one sound together? Say a word slowly with someone older or younger than you, and see where you split it differently.",
+      "ages": "early readers with a grown-up beside them; anyone learning English letters"
+    },
+    {
+      "id": "T04",
+      "title": "Tune the projection",
+      "state": "done",
+      "rung": "operate",
+      "make": "A Spw expression sets how the hand is shown: ~ lets it wander, % weighs it, @ leans it, # shows the measure, * shows it as scanned. The tuning travels in the address (?/texture.website/@spwashi/=~2), so a tuned picture can be passed along and read before it is opened.",
+      "ask": "When a picture is changed on purpose, what should it say about that? Read an address aloud: can you tell what you will see before you open it?",
+      "ages": "older children and up; a good one to argue about across a table"
+    },
+    {
+      "id": "T05",
+      "title": "Read the folios for tropes and textures",
+      "state": "open",
+      "rung": "notice",
+      "make": "Every held motif on the folios is found, sorted (texture, figure, saying) and linked to its pieces; one at a time, by hand, a candidate becomes a trope in the book or a texture under a plate.",
+      "ask": "Where did this idea come from, and how do we say so when we use it?",
+      "ages": "anyone who keeps a scrapbook; anyone who has had an idea taken without credit"
+    },
+    {
+      "id": "T06",
+      "title": "Letter the missing marks",
+      "state": "planned",
+      "rung": "author",
+      "make": "Digits, marks and the twelve sigils lettered on a ruled sheet like the first, scanned, traced; each penned glyph is replaced by a lettered one, and the set closes toward }.",
+      "ask": "What changes when the hand comes back to finish what the machine stood in for?",
+      "ages": "the resident; anyone who wants to letter a sheet of their own"
+    },
+    {
+      "id": "T07",
+      "title": "A second hand",
+      "state": "planned",
+      "rung": "author",
+      "make": "Someone a generation away letters an alphabet on the same ruled sheet; the same tools trace it into a hand of its own, and the two are set side by side.",
+      "ask": "What does a hand say about who wrote it? What would you want a stranger to know about yours?",
+      "ages": "a grandparent and a grandchild; a teacher and a class; two friends"
+    },
+    {
+      "id": "T08",
+      "title": "Textures under the plates",
+      "state": "planned",
+      "rung": "author",
+      "make": "Folio textures (wash, scumble, drip, hatching) become grounds for the drawn studies and plates, each crediting its piece.",
+      "ask": "When a texture is borrowed into a new picture, does the picture owe the old one anything?",
+      "ages": "anyone who has made a collage"
+    },
+    {
+      "id": "T09",
+      "title": "Made on: texture, typography, physics",
+      "state": "done",
+      "rung": "operate",
+      "make": "Choose what the words are made on ($paper, $wash, $drip, $hatch, $honey, $glass, $storm): each brings a ground from a folio texture, a way of setting the hand, and physics — the letters become bodies you can drag, that sag or float or spring back.",
+      "ask": "Does a word mean something different when it moves like honey, or like a storm? Where else does the way something moves tell you how to feel about it?",
+      "ages": "small hands that like to drag things; anyone who has noticed a sad song in a fast video"
+    },
+    {
+      "id": "T10",
+      "title": "Through spw.quest: read an address before you follow it",
+      "state": "done",
+      "rung": "inspect",
+      "make": "Add a ? to an address and it passes through spw.quest: ?clarify says what it will show, ?align puts it in range, ?ground says it in another site's terms, ?mutate makes a variation — each with a receipt of what it did.",
+      "ask": "Read a link aloud before you open it: what do you expect? When something tidied or changed what you sent, did it tell you?",
+      "ages": "anyone who has been sent a link; a grown-up and a child reading one together"
+    }
+  ]
+}

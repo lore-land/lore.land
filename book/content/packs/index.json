@@ -1,0 +1,12 @@
+{
+  "note": "Packs (book/scripts/modules/packs.mjs; canon .spw/surfaces/texture-website.spw). A pack adds to lore.land without changing what is there: it lives where its route says (book/content/packs/<surface>/@<who>/), answers that route (lore.land/?/<surface>/@<who>), lists what it brings, and links every source where it lives. Removing its line here removes it. A maker's pack has a maker, a depiction scheme and a curriculum; an expansion has neither. book:check holds every pack's files and plans.",
+  "value": "intergenerational-media-literacy",
+  "packs": [
+    {
+      "id": "spwashi",
+      "kind": "maker",
+      "route": "/texture.website/@spwashi",
+      "src": "/book/content/packs/texture.website/@spwashi/pack.json"
+    }
+  ]
+}

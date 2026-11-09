@@ -1,0 +1,2648 @@
+{
+ "note": "Tropes and textures found in spwashi's folios (book/scripts/tools/texture/mine-folios.mjs): every ~ handle (a held motif) across the archive and the primes, sorted into textures, figures and sayings, each with the pieces it is on, linked where they live. Candidates: one becomes a trope (book/content/world/tropes.json) or a texture by hand, and says which piece it came from.",
+ "mined": "2026-11-09",
+ "source": {
+  "archive": "https://spwashi.com/design/folios/",
+  "pieces": 222
+ },
+ "counts": {
+  "motifs": 173,
+  "textures": 22,
+  "figures": 130,
+  "sayings": 21
+ },
+ "motifs": [
+  {
+   "handle": "~moon",
+   "words": "moon",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-07",
+     "title": "Moon over a green hill",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-07",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-moon-green-hill-black-cutout-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-back-03",
+     "title": "Two pale moons, green lozenge",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-two-pale-moons-green-lozenge-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-back-08",
+     "title": "Teal night, moon, three stools",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-night-moon-three-stools-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-back-10",
+     "title": "Blue sky, grey moon, rose",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-blue-sky-grey-moon-rose-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-01",
+     "title": "Two moons, stepped violet",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-two-moons-stepped-violet-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-02",
+     "title": "Rose moon, teal surf",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rose-moon-teal-surf-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-08",
+     "title": "Pale moon, maroon",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-pale-moon-maroon-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-10",
+     "title": "Teal moon, white drip",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-moon-white-drip-thumb.webp"
+    },
+    {
+     "id": "panel-2026-10-26-01",
+     "title": "White blot over pale moon",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1026-01",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-white-blot-over-pale-moon-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cloud",
+   "words": "cloud",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-24",
+     "title": "Grey cloud over drawings",
+     "href": "https://spwashi.com/design/folios/#folio-0927-24",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-grey-cloud-over-drawings-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-20-03",
+     "title": "Hand bound journal, rock",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hand-bound-journal-rock-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-20-12",
+     "title": "Character seed to Lore Land",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-12",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-character-seed-lore-land-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-22-03",
+     "title": "Bonk announce, steering",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-announce-steering-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-14",
+     "title": "Boon, cloud and heart balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-14",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-boon-cloud-heart-balloon-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-16",
+     "title": "Pi Spillin' Guy and braces",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-16",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pi-spillin-guy-braces-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-12",
+     "title": "Pale blue cloud, drawings",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-pale-blue-cloud-drawings-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~glyph",
+   "words": "glyph",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-00",
+     "title": "Gold glyph blocks, pink plume",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-gold-glyph-blocks-pink-plume-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-07",
+     "title": "Ember, figure glyph",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-ember-figure-glyph-thumb.webp"
+    },
+    {
+     "id": "panel-2026-10-22-01",
+     "title": "Maroon glyph, pale plume",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-maroon-glyph-pale-plume-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.eyes",
+   "words": "hash eyes",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-07",
+     "title": "Hash-eyed face on orange",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-07",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-orange-hash-eyed-face-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-18",
+     "title": "Uncle AR: why am I unclear",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-18",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-uncle-ar-why-unclear-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-23",
+     "title": "Five wireframes, hash-eyed face",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-23",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-five-wireframes-hash-face-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~spiral",
+   "words": "spiral",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-04",
+     "title": "Token column, grey wash",
+     "href": "https://spwashi.com/design/folios/#folio-0927-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-token-column-grey-wash-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-17",
+     "title": "More Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-17",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-more-boon-honk-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-03",
+     "title": "Teal spiral, arch",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-spiral-arch-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~agua",
+   "words": "agua",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-03",
+     "title": "Bonk and the water cycle",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-water-cycle-mirrored-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-18-06",
+     "title": "How water works",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-water-works-agua-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~arch",
+   "words": "arch",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-07",
+     "title": "Rose arch, bulb, dome",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rose-arch-bulb-dome-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-03",
+     "title": "Teal spiral, arch",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-spiral-arch-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~boon.bane.bone.bonk.honk",
+   "words": "boon bane bone bonk honk",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-06",
+     "title": "Headline honk in clown downtown",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-headline-honk-clown-downtown-thumb.webp"
+    },
+    {
+     "id": "prime-2026-10-22-03",
+     "title": "Operator tree, boon to honk",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1022-03",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-operator-tree-boon-to-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~boon.honk",
+   "words": "boon honk",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-00",
+     "title": "Spwashi design & development",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-spwashi-design-and-development-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-20-13",
+     "title": "Operator ladder with boat and car",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-13",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-operator-ladder-boat-car-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~column",
+   "words": "column",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-04",
+     "title": "Token column, grey wash",
+     "href": "https://spwashi.com/design/folios/#folio-0927-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-token-column-grey-wash-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-back-11",
+     "title": "Five columns, beads, boxes",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-five-columns-beads-boxes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~contour.lines",
+   "words": "contour lines",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-22-00",
+     "title": "Wonder about pi, Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-wonder-about-pi-box-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-22-01",
+     "title": "WAP casual, HONK about PI",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-wap-casual-honk-about-pi-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~date.splat",
+   "words": "date splat",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-02",
+     "title": "JAN-U-ARY, boon balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-02",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-jan-u-ary-boon-balloon-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-03",
+     "title": "Pie, pi, Boon? bone",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-03",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pie-pi-ladder-january-eight-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~drip",
+   "words": "drip",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-09",
+     "title": "Red field, teal drips",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-red-field-teal-drips-thumb.webp"
+    },
+    {
+     "id": "panel-2026-09-27-front-10",
+     "title": "Teal moon, white drip",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-moon-white-drip-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~drip.glyph",
+   "words": "drip glyph",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-02",
+     "title": "Framed maroon, green drip",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-framed-maroon-drip-glyph-thumb.webp"
+    },
+    {
+     "id": "prime-2026-10-22-00",
+     "title": "Alphabet blocks, framed board",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-alphabet-blocks-framed-board-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~evolution",
+   "words": "evolution",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-08",
+     "title": "My code beginner's journey, 2011 to 2015",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-08",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-code-journey-2011-2015-thumb.webp"
+    },
+    {
+     "id": "prime-2026-09-28-09",
+     "title": "Moving on, but I'm native",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-09",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-moving-on-native-evolution-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~h2o.sun",
+   "words": "h2o sun",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-03",
+     "title": "Bonk and the water cycle",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-water-cycle-mirrored-thumb.webp"
+    },
+    {
+     "id": "folio-2026-10-18-06",
+     "title": "How water works",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-water-works-agua-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~halo",
+   "words": "halo",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-05",
+     "title": "White blot, red halo",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-white-blot-red-halo-thumb.webp"
+    },
+    {
+     "id": "panel-2026-10-26-01",
+     "title": "White blot over pale moon",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1026-01",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-white-blot-over-pale-moon-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~lips",
+   "words": "lips",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-07",
+     "title": "Hash-eyed face on orange",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-07",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-orange-hash-eyed-face-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-12",
+     "title": "Why, why, why",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-12",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-why-why-why-lips-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~pi.ladder",
+   "words": "pi ladder",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-02",
+     "title": "JAN-U-ARY, boon balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-02",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-jan-u-ary-boon-balloon-thumb.webp"
+    },
+    {
+     "id": "pad-2026-10-21-03",
+     "title": "Pie, pi, Boon? bone",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-03",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pie-pi-ladder-january-eight-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~plume",
+   "words": "plume",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-00",
+     "title": "Gold glyph blocks, pink plume",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-gold-glyph-blocks-pink-plume-thumb.webp"
+    },
+    {
+     "id": "panel-2026-10-22-01",
+     "title": "Maroon glyph, pale plume",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-maroon-glyph-pale-plume-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~a.lot.to.process",
+   "words": "a lot to process",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-07",
+     "title": "Radar, Introspective, Professional",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-07",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-radar-introspective-professional-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~aa.bb.cc",
+   "words": "aa bb cc",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-09",
+     "title": "Practice making videos, code ecosystem",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-09",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-practice-videos-code-ecosystem-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~addition",
+   "words": "addition",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-05",
+     "title": "Factshift, faint lands, chaos",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-factshift-faint-lands-chaos-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~arc",
+   "words": "arc",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-01",
+     "title": "Rust arc, grey serpent",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rust-arc-grey-serpent-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~arrow",
+   "words": "arrow",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-06",
+     "title": "Violet cutouts, ochre arrows",
+     "href": "https://spwashi.com/design/folios/#folio-0927-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-violet-cutouts-ochre-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~arrow.legs",
+   "words": "arrow legs",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-04",
+     "title": "I love you, arrow legs",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-i-love-you-arrow-legs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~arrows.down",
+   "words": "arrows down",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-24",
+     "title": "Atmosphere over a hashed box",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-24",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-atmosphere-slab-onto-box-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~asterisk.ring",
+   "words": "asterisk ring",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-07",
+     "title": "Pick your Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-07",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-pick-your-boon-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~asterisks",
+   "words": "asterisks",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-01",
+     "title": "Lavender asterisks and arrows",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-lavender-asterisks-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~bap",
+   "words": "bap",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-17",
+     "title": "Daily bap on WAP.MOM",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-17",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-daily-bap-wap-mom-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~block.letters",
+   "words": "block letters",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-10",
+     "title": "Magenta wash, pencil eye",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-10",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-magenta-wash-pencil-eye-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~blue.grey.wash",
+   "words": "blue grey wash",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-04",
+     "title": "Babbling, noodling, play",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-babbling-noodling-play-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~blurt",
+   "words": "blurt",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-16",
+     "title": "Episode card; Blurting Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-16",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-episode-card-blurting-boonhonk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~bone.ends",
+   "words": "bone ends",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-17",
+     "title": "More Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-17",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-more-boon-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~boon.bane.bone",
+   "words": "boon bane bone",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-01",
+     "title": "Dang, literal, boon land",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-dang-literal-boon-land-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~boonhonk",
+   "words": "boonhonk",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-01",
+     "title": "I make some things look easy",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-01",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-make-things-look-easy-caveat-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~brace.wireframe",
+   "words": "brace wireframe",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-05",
+     "title": "January 10 wireframes",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-05",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-january-ten-wireframes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~braces",
+   "words": "braces",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-16",
+     "title": "Pi Spillin' Guy and braces",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-16",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pi-spillin-guy-braces-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~bracket.pairs",
+   "words": "bracket pairs",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-01",
+     "title": "Custom instructions and augmentation language",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-custom-instructions-augmentation-language-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~breakdancing.to.flag.football",
+   "words": "breakdancing to flag football",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-04",
+     "title": "Boon domain list",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-boon-domain-list-flag-football-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~bruh",
+   "words": "bruh",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-18",
+     "title": "Uncle AR: why am I unclear",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-18",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-uncle-ar-why-unclear-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~bulb",
+   "words": "bulb",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-07",
+     "title": "Rose arch, bulb, dome",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rose-arch-bulb-dome-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~card.stack",
+   "words": "card stack",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-16",
+     "title": "Pi Spillin' Guy and braces",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-16",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pi-spillin-guy-braces-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cassette",
+   "words": "cassette",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-00",
+     "title": "Hash speech, cassette",
+     "href": "https://spwashi.com/design/folios/#folio-0927-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hash-speech-cassette-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~chaos",
+   "words": "chaos",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-05",
+     "title": "Factshift, faint lands, chaos",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-factshift-faint-lands-chaos-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~coil",
+   "words": "coil",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-17",
+     "title": "More Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-17",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-more-boon-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~comet",
+   "words": "comet",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-11",
+     "title": "Hatched green comet",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-hatched-green-comet-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~concentric.years",
+   "words": "concentric years",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-04",
+     "title": "My clients, web ecology coach",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-04",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-my-clients-web-ecology-coach-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~continuity",
+   "words": "continuity",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-05",
+     "title": "Factshift, faint lands, chaos",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-factshift-faint-lands-chaos-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~crosshatch",
+   "words": "crosshatch",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-14",
+     "title": "Boon, cloud and heart balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-14",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-boon-cloud-heart-balloon-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~crowned.eyes",
+   "words": "crowned eyes",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-23",
+     "title": "Five wireframes, hash-eyed face",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-23",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-five-wireframes-hash-face-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cube",
+   "words": "cube",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-17",
+     "title": "More Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-17",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-more-boon-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cup",
+   "words": "cup",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-09",
+     "title": "October 09, Monday",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-october-09-monday-cups-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cup.ring",
+   "words": "cup ring",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-03",
+     "title": "Pie, pi, Boon? bone",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-03",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-pie-pi-ladder-january-eight-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~cup_rings",
+   "words": "cup rings",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-00",
+     "title": "Are we saying the same",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-are-we-saying-the-same-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~curiosity",
+   "words": "curiosity",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-03",
+     "title": "Hand bound journal, rock",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hand-bound-journal-rock-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~curve",
+   "words": "curve",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-06",
+     "title": "Ochre drawings, teal curve",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-ochre-drawings-teal-curve-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~diagonal.wash",
+   "words": "diagonal wash",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-10",
+     "title": "Magenta wash, pencil eye",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-10",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-magenta-wash-pencil-eye-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~dice",
+   "words": "dice",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-22-01",
+     "title": "WAP casual, HONK about PI",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-wap-casual-honk-about-pi-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~drawn.eye",
+   "words": "drawn eye",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-10",
+     "title": "Magenta wash, pencil eye",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-10",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-magenta-wash-pencil-eye-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~drips",
+   "words": "drips",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-20",
+     "title": "Yellow-green drip glyph",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-20",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-yellow-green-drip-glyph-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~ellipsis.box",
+   "words": "ellipsis box",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-22",
+     "title": "Mimes Against WAP, we mean it",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-22",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-mimes-against-wap-mean-it-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~ember",
+   "words": "ember",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-07",
+     "title": "Ember, figure glyph",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-ember-figure-glyph-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~eye",
+   "words": "eye",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-00",
+     "title": "Eye, teal tear, dress form",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-eye-teal-tear-dress-form-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~faces",
+   "words": "faces",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-11",
+     "title": "What kind of cake",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-11",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-what-kind-of-cake-tiles-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~field",
+   "words": "field",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-09",
+     "title": "Red field, teal drips",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-red-field-teal-drips-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~font.tone.emphasis",
+   "words": "font tone emphasis",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-03",
+     "title": "Header, rod, menu, frame",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-header-rod-menu-frame-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~frame",
+   "words": "frame",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-02",
+     "title": "Framed maroon, green drip",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-framed-maroon-drip-glyph-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~free.body.diagram",
+   "words": "free body diagram",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-11",
+     "title": "Curiosity and challenge forces",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-11",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-curiosity-challenge-forces-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~gold.flecks",
+   "words": "gold flecks",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-02",
+     "title": "Violet and pink block wash",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-violet-pink-block-wash-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~grawlix",
+   "words": "grawlix",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-18",
+     "title": "Uncle AR: why am I unclear",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-18",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-uncle-ar-why-unclear-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~green.hill",
+   "words": "green hill",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-07",
+     "title": "Moon over a green hill",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-07",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-moon-green-hill-black-cutout-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~green.mass",
+   "words": "green mass",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-15",
+     "title": "Green mass, white sweep",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-15",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-green-mass-white-sweep-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash",
+   "words": "hash",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-02",
+     "title": "Ochre map, gold hashes",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-ochre-map-gold-hashes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.bars",
+   "words": "hash bars",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-26-00",
+     "title": "WABO pie",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1026-00",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-wabo-pie-zzz-face-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.braces",
+   "words": "hash braces",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-00",
+     "title": "Boon, bane, bone, 04 January",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-00",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-boon-bane-bone-january-four-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.circles",
+   "words": "hash circles",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-00",
+     "title": "Boon, bane, bone, 04 January",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-00",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-boon-bane-bone-january-four-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.mark",
+   "words": "hash mark",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-00",
+     "title": "Teal swirl with white arcs",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-teal-swirl-white-arcs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash.marks",
+   "words": "hash marks",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-15",
+     "title": "Honk Bazongas",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-15",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hash_speech",
+   "words": "hash speech",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-00",
+     "title": "Hash speech, cassette",
+     "href": "https://spwashi.com/design/folios/#folio-0927-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hash-speech-cassette-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hatched.cloud",
+   "words": "hatched cloud",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-05",
+     "title": "Four screens, dark arrow",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-four-screens-dark-arrow-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hatched.shell",
+   "words": "hatched shell",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-07",
+     "title": "Pick your Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-07",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-pick-your-boon-honk-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~heart",
+   "words": "heart",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-21",
+     "title": "April, thirty hearts",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-21",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-april-thirty-hearts-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~helpless",
+   "words": "helpless",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-06",
+     "title": "New friends, old friends, Lore.Land",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-06",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hill",
+   "words": "hill",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-04",
+     "title": "Grey river, dark hill",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-grey-river-dark-hill-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hiring.floor",
+   "words": "hiring floor",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-04",
+     "title": "Hiring floor and onboarding",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hiring-floor-onboard-complexity-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~hmm",
+   "words": "hmm",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-02",
+     "title": "We need better plating",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-we-need-better-plating-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~human.judgement",
+   "words": "human judgement",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-06",
+     "title": "Modern skills, January 11 2026",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-06",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-modern-skills-fifteen-yoe-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~infinity",
+   "words": "infinity",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-06",
+     "title": "Violet cutouts, ochre arrows",
+     "href": "https://spwashi.com/design/folios/#folio-0927-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-violet-cutouts-ochre-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~infinity.loop",
+   "words": "infinity loop",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-01",
+     "title": "Lavender asterisks and arrows",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-lavender-asterisks-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~je.ne.sais.quoi",
+   "words": "je ne sais quoi",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-04",
+     "title": "Depth, contribution, je ne sais quoi",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-depth-contribution-network-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~layered.painting",
+   "words": "layered painting",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-01",
+     "title": "Year 1, Year 2, Year 3; play with your logo",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-01",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-year-one-two-three-logo-play-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~leaf",
+   "words": "leaf",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-04",
+     "title": "Teal spheres, red leaf",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-spheres-red-leaf-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~leaf.point",
+   "words": "leaf point",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-01",
+     "title": "Lavender asterisks and arrows",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-lavender-asterisks-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~ledger.rows",
+   "words": "ledger rows",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-18",
+     "title": "I love you balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-18",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-i-love-you-ledger-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~literal",
+   "words": "literal",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-01",
+     "title": "Dang, literal, boon land",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-dang-literal-boon-land-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~logo.flipped",
+   "words": "logo flipped",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-01",
+     "title": "Boon Scroll, typography bone",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-01",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-boon-scroll-typography-bone-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~lozenge",
+   "words": "lozenge",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-03",
+     "title": "Two pale moons, green lozenge",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-two-pale-moons-green-lozenge-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~map",
+   "words": "map",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-02",
+     "title": "Ochre map, gold hashes",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-ochre-map-gold-hashes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~maroon",
+   "words": "maroon",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-02",
+     "title": "Framed maroon, green drip",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-framed-maroon-drip-glyph-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~micro.animations",
+   "words": "micro animations",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-19",
+     "title": "Transform matrix CSS",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-19",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-css-transform-transition-animation-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~moment.intent.value",
+   "words": "moment intent value",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-03",
+     "title": "Header, rod, menu, frame",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-header-rod-menu-frame-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~mostly.its.vibes",
+   "words": "mostly its vibes",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-01",
+     "title": "It is my boonhat",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-it-is-my-boonhat-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~movies.are.emotions",
+   "words": "movies are emotions",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-00",
+     "title": "Spwashi design & development",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-spwashi-design-and-development-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~night",
+   "words": "night",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-08",
+     "title": "Teal night, moon, three stools",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-night-moon-three-stools-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~obvious",
+   "words": "obvious",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-04",
+     "title": "Each arc has up to 13 beats",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-thirteen-beats-silver-glyphs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~on.to.arrow",
+   "words": "on to arrow",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-07",
+     "title": "Over, on to, about",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-07",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-over-on-to-about-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~onboard",
+   "words": "onboard",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-04",
+     "title": "Hiring floor and onboarding",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-hiring-floor-onboard-complexity-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~opposition",
+   "words": "opposition",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-05",
+     "title": "Factshift, faint lands, chaos",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-factshift-faint-lands-chaos-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~orb",
+   "words": "orb",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-05",
+     "title": "Dark orb, two pink dots",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-dark-orb-two-pink-dots-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~peak",
+   "words": "peak",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-12",
+     "title": "Thirteen pages to WAP",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-12",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-thirteen-page-arc-wap-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~pennant",
+   "words": "pennant",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-08",
+     "title": "Boat on lined paper",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-08",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-boat-on-lined-paper-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~pie",
+   "words": "pie",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-22-00",
+     "title": "Wonder about pi, Boon HONK",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-wonder-about-pi-box-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~pink.square",
+   "words": "pink square",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-02",
+     "title": "Violet and pink block wash",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-violet-pink-block-wash-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~postcard",
+   "words": "postcard",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-02",
+     "title": "Book, I hold you",
+     "href": "https://spwashi.com/design/folios/#folio-0927-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-book-i-hold-you-location-inn-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~potential",
+   "words": "potential",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-05",
+     "title": "Operator tiles, signed copy",
+     "href": "https://spwashi.com/design/folios/#folio-0927-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-operator-tiles-signed-copy-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~readme.hooks.philosophy",
+   "words": "readme hooks philosophy",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-17-01",
+     "title": "Spwashi presents Spw Workbench",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1017-01",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-spw-workbench-outline-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~red.tulips",
+   "words": "red tulips",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-03",
+     "title": "Bonk and the water cycle",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-water-cycle-mirrored-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~relationship.to.senses",
+   "words": "relationship to senses",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-04",
+     "title": "How pomegranate, external, internal",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-pomegranate-external-internal-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~rhythm.about.expression",
+   "words": "rhythm about expression",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-04",
+     "title": "How pomegranate, external, internal",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-04",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-pomegranate-external-internal-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~rising.arrows",
+   "words": "rising arrows",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-18",
+     "title": "I love you balloon",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-18",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-i-love-you-ledger-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~river",
+   "words": "river",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-04",
+     "title": "Grey river, dark hill",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-grey-river-dark-hill-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~roles.not.jobs",
+   "words": "roles not jobs",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-02",
+     "title": "Operator table; making stuff is fun",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-02",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-operator-table-making-stuff-fun-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~rolling.sphere",
+   "words": "rolling sphere",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-02",
+     "title": "Design, development, architecture",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-design-development-architecture-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scalloped.cloud",
+   "words": "scalloped cloud",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-15",
+     "title": "Honk Bazongas",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-15",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-honk-bazongas-graph-paper-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scared",
+   "words": "scared",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-06",
+     "title": "New friends, old friends, Lore.Land",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-06",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-new-friends-old-friends-lore-land-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scope",
+   "words": "scope",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-08",
+     "title": "Enter, scope, teal blocks",
+     "href": "https://spwashi.com/design/folios/#folio-0927-08",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-enter-scope-teal-blocks-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scope.of.redundancy",
+   "words": "scope of redundancy",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-05",
+     "title": "There is a technical skills gap",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-05",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-technical-skills-gap-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scribbled.ball",
+   "words": "scribbled ball",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-05",
+     "title": "Four screens, dark arrow",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-05",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-four-screens-dark-arrow-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~scumble",
+   "words": "scumble",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-14",
+     "title": "Lavender scumble, faint letters",
+     "href": "https://spwashi.com/design/folios/#folio-0927-14",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-lavender-scumble-faint-letters-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~serpent",
+   "words": "serpent",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-back-01",
+     "title": "Rust arc, grey serpent",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rust-arc-grey-serpent-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~signature.glyph",
+   "words": "signature glyph",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-11",
+     "title": "Autumn lantern",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-11",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-autumn-lantern-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~skeleton.bones",
+   "words": "skeleton bones",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-10",
+     "title": "HTML carton, CSS hat, JS",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-10",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-html-carton-css-hat-js-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~space.where",
+   "words": "space where",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-22-04",
+     "title": "Big O notation, faucet",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1022-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-big-o-notation-faucet-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~sparkles",
+   "words": "sparkles",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-10",
+     "title": "HTML carton, CSS hat, JS",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-10",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-html-carton-css-hat-js-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~sphere",
+   "words": "sphere",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-04",
+     "title": "Teal spheres, red leaf",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-teal-spheres-red-leaf-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~spiral.tiles",
+   "words": "spiral tiles",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-17-00",
+     "title": "Media for play and development",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1017-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-media-for-play-and-development-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~spirals",
+   "words": "spirals",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-04",
+     "title": "I love you, arrow legs",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-i-love-you-arrow-legs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~square.face.lips",
+   "words": "square face lips",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-17-00",
+     "title": "Season's Boon HONK sweater",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1017-00",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-seasons-boon-honk-sweater-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~steering",
+   "words": "steering",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-03",
+     "title": "Bonk announce, steering",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-03",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-announce-steering-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~stick.figure",
+   "words": "stick figure",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-05",
+     "title": "I feel less stress daydreaming",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-05",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-daydreaming-less-stress-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~structure",
+   "words": "structure",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-14",
+     "title": "Concept, topic, structure, quality",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-14",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-concept-topic-structure-quality-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~surf",
+   "words": "surf",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-09-27-front-02",
+     "title": "Rose moon, teal surf",
+     "href": "https://spwashi.com/design/folios/#panel-faces",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-rose-moon-teal-surf-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~swoop",
+   "words": "swoop",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-02",
+     "title": "Unary motions of my brand",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-unary-motions-of-my-brand-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~tan.stains",
+   "words": "tan stains",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-25",
+     "title": "Boon additive, bane subtractive, bone ground",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-25",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-additive-subtractive-ground-chaotic-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~teal",
+   "words": "teal",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-24",
+     "title": "Read some, teal squares",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-24",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-read-some-teal-squares-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~teal.block",
+   "words": "teal block",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-15",
+     "title": "Green mass, white sweep",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-15",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-green-mass-white-sweep-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~teal.stripes.vibes",
+   "words": "teal stripes vibes",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-02",
+     "title": "Unary motions of my brand",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-unary-motions-of-my-brand-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~teal.swirl",
+   "words": "teal swirl",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-00",
+     "title": "Teal swirl with white arcs",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-teal-swirl-white-arcs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~teal.tear",
+   "words": "teal tear",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-00",
+     "title": "Eye, teal tear, dress form",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-eye-teal-tear-dress-form-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~the.thing",
+   "words": "the thing",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-12",
+     "title": "I literally can't NOT say the thing",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-12",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-cant-not-say-the-thing-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~tide",
+   "words": "tide",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-18-06",
+     "title": "How water works",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1018-06",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-how-water-works-agua-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~tile.rows",
+   "words": "tile rows",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-05",
+     "title": "January 10 wireframes",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-05",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-january-ten-wireframes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~time.how_many",
+   "words": "time how many",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "prime-2026-10-22-04",
+     "title": "Big O notation, faucet",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1022-04",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-big-o-notation-faucet-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~timing.functions",
+   "words": "timing functions",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-19",
+     "title": "Transform matrix CSS",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-19",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-css-transform-transition-animation-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~top.hat",
+   "words": "top hat",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-10",
+     "title": "HTML carton, CSS hat, JS",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-10",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-html-carton-css-hat-js-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~topic",
+   "words": "topic",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-14",
+     "title": "Concept, topic, structure, quality",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-14",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-concept-topic-structure-quality-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~traced.show.through",
+   "words": "traced show through",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-05",
+     "title": "January 10 wireframes",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-05",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-january-ten-wireframes-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~travel",
+   "words": "travel",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-09-28-15",
+     "title": "Travel; the avoidant attachment playbook",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-0928-15",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-travel-avoidant-playbook-faces-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~triangle",
+   "words": "triangle",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-20",
+     "title": "Yellow-green drip glyph",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-20",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-yellow-green-drip-glyph-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~up.arrow",
+   "words": "up arrow",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-01",
+     "title": "Lavender asterisks and arrows",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-lavender-asterisks-arrows-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~violet.patch",
+   "words": "violet patch",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-02",
+     "title": "Violet and pink block wash",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-02",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-violet-pink-block-wash-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~waves",
+   "words": "waves",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-18-08",
+     "title": "Boat on lined paper",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1018-08",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-boat-on-lined-paper-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~wavy.ledge",
+   "words": "wavy ledge",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-10-20-09",
+     "title": "Bonk",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1020-09",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-bonk-three-balls-ledge-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~weathering",
+   "words": "weathering",
+   "kind": "texture",
+   "pieces": [
+    {
+     "id": "folio-2026-09-27-11",
+     "title": "Rust, yellow blocks, weathered",
+     "href": "https://spwashi.com/design/folios/#folio-0927-11",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-rust-yellow-blocks-weathered-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~weekly.rhythm",
+   "words": "weekly rhythm",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "prime-2026-10-21-08",
+     "title": "Lore writer's room, applied math",
+     "href": "https://spwashi.com/design/folios/october-2026/#prime-1021-08",
+     "thumb": "https://spwashi.com/public/images/assets/primes/prime-lore-writers-room-applied-math-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~when.we.say",
+   "words": "when we say",
+   "kind": "saying",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-22",
+     "title": "Mimes Against WAP, we mean it",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-22",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-mimes-against-wap-mean-it-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~white.arcs",
+   "words": "white arcs",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "folio-2026-10-22-00",
+     "title": "Teal swirl with white arcs",
+     "href": "https://spwashi.com/design/folios/october-2026/#folio-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/folios/folio-teal-swirl-white-arcs-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~white.sweep",
+   "words": "white sweep",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-15",
+     "title": "Green mass, white sweep",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-15",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-green-mass-white-sweep-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~window.reflection",
+   "words": "window reflection",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-00",
+     "title": "Eye, teal tear, dress form",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-00",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-eye-teal-tear-dress-form-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~z.marks",
+   "words": "z marks",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-26-00",
+     "title": "WABO pie",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1026-00",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-wabo-pie-zzz-face-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~zigzag",
+   "words": "zigzag",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "panel-2026-10-22-01",
+     "title": "Maroon glyph, pale plume",
+     "href": "https://spwashi.com/design/folios/october-2026/#panel-1022-01",
+     "thumb": "https://spwashi.com/public/images/assets/panels/panel-maroon-glyph-pale-plume-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  },
+  {
+   "handle": "~zigzag.fold",
+   "words": "zigzag fold",
+   "kind": "figure",
+   "pieces": [
+    {
+     "id": "pad-2026-10-21-13",
+     "title": "Nav from home to shop",
+     "href": "https://spwashi.com/design/folios/october-2026/#pad-1021-13",
+     "thumb": "https://spwashi.com/public/images/assets/pads/pad-about-rhythm-pricing-services-thumb.webp"
+    }
+   ],
+   "state": "candidate"
+  }
+ ]
+}

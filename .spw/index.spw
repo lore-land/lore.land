@@ -27,6 +27,8 @@
   book_two: "@spw/surfaces/wonder-about-pie.spw"
   tropes: "@spw/surfaces/tropes.spw"
   ecology: "@spw/surfaces/ecology.spw"
+  texture_website: "@spw/surfaces/texture-website.spw"
+  spw_proposals: "@spw/surfaces/spw-proposals.spw"
   almanac: "@spw/surfaces/almanac.spw"
   fold_and_materials: "@spw/surfaces/fold-and-materials.spw"
   projection: "@spw/surfaces/projection.spw"
