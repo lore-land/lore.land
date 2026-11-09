@@ -1,0 +1,14 @@
+# The bud as the Apple touch icon, 180 pixels.
+#>apple_touch
+!icon{
+  *apple_touch{
+    .file["apple-touch-icon.png"]
+    #says["The bud as the Apple touch icon, 180 pixels."]
+    %size[180]
+    %scale[0.56]
+    %stroke[1.5]
+    =@sigil{ @bud }
+    =@field{ @cover }
+    =@scale{ @touch }
+  }
+}

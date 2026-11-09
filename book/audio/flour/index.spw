@@ -1,0 +1,12 @@
+# A cabasa: flour as powder, brighter than the grass and shorter than a step.
+#>sound_event_flour
+!event{
+  *flour{
+    #means["flour"]
+    #says["A cabasa: flour as powder, brighter than the grass and shorter than a step."]
+    %hear[2200]
+    %q[0.6]
+    =@heard{ @bandpass }
+    ~"book/audio/flour"
+  }
+}

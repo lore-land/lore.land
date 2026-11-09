@@ -1,0 +1,25 @@
+# A low log drum: the same animal, lower.
+#>sound_beaver_2
+!take{
+  *2{
+    .file["2.m4a"]
+    .event["beaver"]
+    #says["A low log drum: the same animal, lower."]
+    #means["hollow wood"]
+    %gain[0.85]
+    %duration[0.42]
+    %cap[0.42]
+    %hear[360]
+    %q[1.2]
+    &source[~"https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slit%20Drum"]
+    #license["CC0-1.0"]
+    #author["Versilian Studios LLC"]
+    #retrieved["2026-11-09"]
+    =@channels{ @mono }
+    =@window{ @loudest }
+    =@edges{ @fade }
+    =@peak{ @minus3 }
+    =@codec{ @aac }
+    =@heard{ @bandpass }
+  }
+}

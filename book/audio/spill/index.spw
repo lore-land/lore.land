@@ -1,0 +1,12 @@
+# A bass drum under the falling tone: the floor, once the pie has gone down.
+#>sound_event_spill
+!event{
+  *spill{
+    #means["floor"]
+    #says["A bass drum under the falling tone: the floor, once the pie has gone down."]
+    %hear[200]
+    %q[0.7]
+    =@heard{ @lowpass }
+    ~"book/audio/spill"
+  }
+}

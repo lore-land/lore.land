@@ -1,0 +1,25 @@
+# The second strike of that drum.
+#>sound_spill_2
+!take{
+  *2{
+    .file["2.m4a"]
+    .event["spill"]
+    #says["The second strike of that drum."]
+    #means["floor"]
+    %gain[0.9]
+    %duration[0.5]
+    %cap[0.5]
+    %hear[200]
+    %q[0.7]
+    &source[~"https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Bass%20Drum%201"]
+    #license["CC0-1.0"]
+    #author["Versilian Studios LLC"]
+    #retrieved["2026-11-09"]
+    =@channels{ @mono }
+    =@window{ @loudest }
+    =@edges{ @fade }
+    =@peak{ @minus3 }
+    =@codec{ @aac }
+    =@heard{ @lowpass }
+  }
+}

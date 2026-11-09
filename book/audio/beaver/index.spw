@@ -1,0 +1,12 @@
+# A log drum, twice and unhurried. Hollow wood, lower than the landing and higher than the floor.
+#>sound_event_beaver
+!event{
+  *beaver{
+    #means["hollow wood"]
+    #says["A log drum, twice and unhurried. Hollow wood, lower than the landing and higher than the floor."]
+    %hear[420]
+    %q[1.2]
+    =@heard{ @bandpass }
+    ~"book/audio/beaver"
+  }
+}

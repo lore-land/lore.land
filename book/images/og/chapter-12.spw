@@ -1,0 +1,22 @@
+# Chapter Twelve, The Last Confluence: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_12
+!card{
+  *chapter_12{
+    .file["chapter-12.jpg"]
+    .plate["book/images/12.png"]
+    #title["The Last Confluence"]
+    #in_which["rivers meet and remember their names"]
+    #says["Chapter Twelve, The Last Confluence: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

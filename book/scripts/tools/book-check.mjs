@@ -19,7 +19,7 @@
  *   serial     books are contiguous; the next stone is a date
  * Exit 1 on any error; warnings and notes print but pass.
  */
-import { access, readFile, readdir } from 'node:fs/promises';
+import { access, readFile, readdir, stat } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -33,6 +33,7 @@ import { readLevels } from '../home/pie-rhythm.mjs';
 import { readMechanics } from '../modules/unlocks.mjs';
 import { CLIENT, clientProblems } from './feedback-client.mjs';
 import { existsSync } from 'node:fs';
+import { CARD_MUTATIONS, ICON_MUTATIONS, SOUND_MUTATIONS, missingMutations, mutationEdge, readSidecar } from '../modules/asset-sidecar.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = async (path) => JSON.parse(await readFile(resolve(ROOT, path), 'utf8'));
@@ -54,8 +55,9 @@ const isRoomBlock = (section) => section?.type === 'section' || CUSTOM_ELEMENT_T
 const isPublished = (section) => section?.status !== 'drafting';
 
 let parse = null;
+let readBias = null;
 try {
-  ({ parse } = await import('../vendor/spw-seed.mjs'));
+  ({ parse, readBias } = await import('../vendor/spw-seed.mjs'));
 } catch {
   notes.push('Spw interpreter unavailable; bracework and room signatures are checked for shape only.');
 }
@@ -410,6 +412,133 @@ const unit = (x) => typeof x === 'number' && x >= 0 && x <= 1;
   track[status].push(trope.id);
 });
 notes.push(`tropes: ${tropeIds.size} on the track — ${track.winding.length} winding, ${track['one-way'].length} one-way (${track['one-way'].join(', ')}), ${track.parallel.length} parallel, ${track.stranded.length} stranded; crossings to lay in .spw/surfaces/tropes.spw`);
+
+/** A sidecar's mutations, as text and, when the interpreter is loaded, as read edges. */
+function checkMutations(at, text, pairs) {
+  for (const [anchor, target] of pairs) {
+    if (!text.includes(mutationEdge(anchor, target))) error(at, `sidecar missing ${mutationEdge(anchor, target)}`);
+  }
+  if (!parse) return;
+  const side = readSidecar(text, parse, readBias);
+  if (!side.ok) error(at, `sidecar ${side.error}`);
+  else {
+    const missing = missingMutations(side.mutations, pairs);
+    if (missing.length) error(at, `sidecar mutations unread: ${missing.map(([anchor, target]) => `${anchor} ${target}`).join(', ')}`);
+  }
+}
+
+async function checkSpwWhole(rel) {
+  try {
+    const text = await readFile(resolve(ROOT, rel), 'utf8');
+    if (!parse) return text;
+    const result = parse(text, { lexProfile: 'prose' });
+    if (!result?.completeness?.complete || result.completeness.proseFallback) error('assets', `${rel} does not read whole`);
+    return text;
+  } catch {
+    error('assets', `missing ${rel}`);
+    return '';
+  }
+}
+
+/* Pie samples (book/content/sounds.json): CC0 only, present, short, under the size budget. */
+const SOUND_EVENTS = new Set(['wap', 'step-field', 'step-city', 'flour', 'land', 'spill', 'beaver']);
+try {
+  const soundsDoc = await read('book/content/sounds.json');
+  const sounds = soundsDoc.sounds || [];
+  if (!sounds.length) error('sounds', 'no takes');
+  let bytes = 0;
+  for (const s of sounds) {
+    const at = `sounds ${s.id || '?'}`;
+    if (!SOUND_EVENTS.has(s.event)) error(at, `unknown event ${s.event}`);
+    if (s.license !== 'CC0-1.0') error(at, `license ${s.license || 'missing'} is not on the allowlist`);
+    if (!s.source || !s.author || !s.changed) error(at, 'needs source, author and changed');
+    if (typeof s.gain !== 'number' || s.gain <= 0 || s.gain > 1) error(at, 'gain must be above 0 and at most 1');
+    if (typeof s.duration !== 'number' || s.duration < 0.04 || s.duration > 1.2) error(at, 'duration must be between 0.04s and 1.2s');
+    if (typeof s.file !== 'string' || !/^\/book\/audio\/[a-z-]+\/\d+\.m4a$/.test(s.file)) error(at, 'file must be /book/audio/<event>/<n>.m4a');
+    else {
+      try { bytes += (await stat(resolve(ROOT, s.file.slice(1)))).size; }
+      catch { error(at, `missing ${s.file}`); }
+    }
+    if (!s.says) error(at, 'needs a description');
+    if (!s.hear?.type || typeof s.hear.freq !== 'number') error(at, 'needs a hearing (type and freq)');
+    const sidePath = s.file.replace(/\.m4a$/, '.spw');
+    let sideText = '';
+    try { sideText = await readFile(resolve(ROOT, sidePath.slice(1)), 'utf8'); }
+    catch { error(at, `missing sidecar ${sidePath}`); }
+    if (sideText) {
+      if (!sideText.includes(`#says["${s.says}"]`)) error(at, 'sidecar description does not match sounds.json');
+      checkMutations(at, sideText, [...SOUND_MUTATIONS, ['heard', s.hear.type]]);
+    }
+  }
+  if (parse) {
+    for (const name of ['index.spw', ...[...SOUND_EVENTS].map((event) => `${event}/index.spw`)]) {
+      try {
+        const text = await readFile(resolve(ROOT, 'book/audio', name), 'utf8');
+        const result = parse(text, { lexProfile: 'prose' });
+        if (!result?.completeness?.complete || result.completeness.proseFallback) error('sounds', `${name} does not read whole`);
+      } catch { error('sounds', `missing book/audio/${name}`); }
+    }
+  }
+  const budget = soundsDoc.budgetBytes || 1572864;
+  if (bytes > budget) error('sounds', `${bytes} bytes over the ${budget} budget`);
+  notes.push(`sounds: ${sounds.length} takes, ${(bytes / 1024).toFixed(0)} KB, colouring ${new Set(sounds.map((s) => s.event)).size} events`);
+} catch (err) {
+  if (err?.code !== 'ENOENT') throw err;
+  notes.push('sounds: no book/content/sounds.json; the lanes stay synthesized');
+}
+
+/* Share cards and app icons: the same sidecar shape, beside the derived file. */
+const ICON_SCALES = [
+  ['icon-192', 'mark'],
+  ['icon-512', 'mark'],
+  ['icon-maskable-512', 'safe'],
+  ['apple-touch-icon', 'touch'],
+  ['favicon', 'small'],
+];
+try {
+  const refs = await read('book/content/world/references.json');
+  let cards = 0;
+  for (let n = 1; n <= 15; n += 1) {
+    const slug = pad(n);
+    const at = `share chapter ${slug}`;
+    const data = await read(`book/content/chapters/${slug}.json`);
+    const inWhich = data.inWhich || refs.inWhich?.[String(data.chapterNumber ?? n)] || '';
+    const jpg = `book/images/og/chapter-${slug}.jpg`;
+    const plate = `book/images/${slug}.png`;
+    if (!existsSync(resolve(ROOT, jpg))) error(at, `missing ${jpg}`);
+    if (!existsSync(resolve(ROOT, plate))) error(at, `missing ${plate}`);
+    let text = '';
+    try { text = await readFile(resolve(ROOT, `book/images/og/chapter-${slug}.spw`), 'utf8'); }
+    catch { error(at, 'missing sidecar'); }
+    if (text) {
+      if (!text.includes(`#title["${data.title}"]`)) error(at, 'sidecar title does not match the chapter');
+      if (!text.includes(`#in_which["${inWhich}"]`)) error(at, 'sidecar in-which does not match the chapter');
+      if (!text.includes(`.plate["${plate}"]`)) error(at, 'sidecar does not name its plate');
+      checkMutations(at, text, CARD_MUTATIONS);
+      cards += 1;
+    }
+  }
+  await checkSpwWhole('book/images/og/index.spw');
+  let icons = 0;
+  for (const [name, scale] of ICON_SCALES) {
+    const at = `icon ${name}`;
+    const file = name === 'favicon' ? 'book/pwa/icons/favicon.svg' : `book/pwa/icons/${name}.png`;
+    if (!existsSync(resolve(ROOT, file))) error(at, `missing ${file}`);
+    let text = '';
+    try { text = await readFile(resolve(ROOT, `book/pwa/icons/${name}.spw`), 'utf8'); }
+    catch { error(at, 'missing sidecar'); }
+    if (text) {
+      if (!text.includes('#says["')) error(at, 'sidecar needs a description');
+      checkMutations(at, text, [...ICON_MUTATIONS, ['scale', scale]]);
+      icons += 1;
+    }
+  }
+  await checkSpwWhole('book/pwa/icons/index.spw');
+  notes.push(`assets: ${cards} share cards and ${icons} icons, each with a sidecar`);
+} catch (err) {
+  if (err?.code !== 'ENOENT') throw err;
+  error('assets', 'chapter or references missing while checking share cards');
+}
 
 /* The serial. */
 const books = serial.books || [];

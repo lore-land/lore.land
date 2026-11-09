@@ -1,0 +1,12 @@
+# A guiro scrape, long enough to be stalks. A field step, not a thud.
+#>sound_event_step_field
+!event{
+  *step_field{
+    #means["grass"]
+    #says["A guiro scrape, long enough to be stalks. A field step, not a thud."]
+    %hear[1300]
+    %q[0.7]
+    =@heard{ @bandpass }
+    ~"book/audio/step-field"
+  }
+}

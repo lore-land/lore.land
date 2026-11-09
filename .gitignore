@@ -3,7 +3,7 @@
 node_modules
 dist
 
-# Exactly One Pie WAV pipeline (rendered samples, the synth script and its sketchbook): kept local, to be enhanced later
-audio/
-tools/audio_synthesis/synth_pie_audio.py
+# Exactly One Pie sound sketchbook: live Web Audio designs (no files, no voices), kept local until they move into pie-sound.mjs
 tools/audio_synthesis/pie-sketchbook.html
+# Open sounds fetched by npm run sounds:fetch (book/content/sound-library.json); raw sources stay out of the site.
+sound-library/

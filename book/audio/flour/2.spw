@@ -1,0 +1,25 @@
+# The rub again, the other hand.
+#>sound_flour_2
+!take{
+  *2{
+    .file["2.m4a"]
+    .event["flour"]
+    #says["The rub again, the other hand."]
+    #means["flour"]
+    %gain[0.7]
+    %duration[0.4]
+    %cap[0.4]
+    %hear[2200]
+    %q[0.6]
+    &source[~"https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Cabasa"]
+    #license["CC0-1.0"]
+    #author["Versilian Studios LLC"]
+    #retrieved["2026-11-09"]
+    =@channels{ @mono }
+    =@window{ @loudest }
+    =@edges{ @fade }
+    =@peak{ @minus3 }
+    =@codec{ @aac }
+    =@heard{ @bandpass }
+  }
+}

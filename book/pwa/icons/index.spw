@@ -1,0 +1,9 @@
+# App icons drawn from the bud sigil. shortcut-pie.png and shortcut-atlas.png are hand icons and keep no mutation record.
+#>app_icons
+!icons{
+  *icon_192{ #says["The bud sigil in cover gold on the cover field, 192 pixels, any purpose."] ~"book/pwa/icons/icon-192.png" }
+  *icon_512{ #says["The same bud, 512 pixels, any purpose."] ~"book/pwa/icons/icon-512.png" }
+  *icon_maskable{ #says["The bud inside the maskable safe zone, 512 pixels."] ~"book/pwa/icons/icon-maskable-512.png" }
+  *apple_touch{ #says["The bud as the Apple touch icon, 180 pixels."] ~"book/pwa/icons/apple-touch-icon.png" }
+  *favicon{ #says["The bud as a favicon, the stroke thickened so it survives at 32 pixels."] ~"book/pwa/icons/favicon.svg" }
+}

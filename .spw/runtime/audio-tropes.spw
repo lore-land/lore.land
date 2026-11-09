@@ -1,0 +1,128 @@
+# Exactly One Pie: audio tropes — patterns with a mathematics you can hear, bound to what the lanes hold
+# DRAFT (2026-11-09): a design, not yet read by the game. Planned reader: book/scripts/home/pie-tropes.mjs (a small
+# reader, held to the Spw interpreter by book:check, as the levels are), played by pie-sound.mjs on the
+# conductor's sixteenth-note clock. Every obstacle kind, character and power gets a binding; a binding is a
+# pattern (when), a timbre (what it is made of), a motif (whose), a register (where in the mix) and a budget.
+#>lore_land_runtime_audio_tropes
+#:surface #!runtime
+#:layer #!pragmatics
+#:status #!draft
+
+~<rationale>{
+  A trope in a story is a pattern a reader recognizes and enjoys seeing turned. An audio trope is the same for the ear: a pattern with a real structure underneath (a rhythm spread as evenly as it can be, a ratio of whole numbers, a shape played backwards) that a player learns without being told, and that the lanes can turn. Each binding comes from the canon, so the mathematics says what the thing is: the remainder moths never land twice in the same place, so their notes walk by the golden ratio and never repeat; the sliver tin is always filling and never full, so it rises forever as a Shepard tone; the three WAPs are one motif, played straight, upside down and backwards. Obstacles are told apart by what they are made of (each material rings at its own partials) and by a rhythm heard in their lane as they come. Everything here is configurable: a reader chooses how much they hear, a spell at the bench retunes a binding for a visit, and a level can lean on one.
+}
+
+# Patterns: when things sound. Steps are sixteenths of the conductor; n is the length of the cycle.
+!patterns{
+  *euclid{ %k[3] %n[8] %rotate[0] #math["k onsets spread as evenly as possible over n steps (Bjorklund, Bresenham): E(3,8) x..x..x. is the tresillo, E(5,8) a rotation of the cinquillo x.xx.xx."] #drawn["a pie of n slices, k of them served"] }
+  *missing{ %n[9] %drop[9] #math["a cycle of n with one place left empty; against a bar of 16 it comes round again only every lcm(n,16) steps"] }
+  *cantor{ %depth[2] #math["remove the middle third, again: depth 2 over 9 steps keeps x.x...x.x; more edge than room"] }
+  *golden{ %scale[5] #math["place n is frac(n times phi) of the way round: by the three-distance theorem no two places are ever the same; sung, each snaps to the nearest note of the scale, and its exact place is kept in its pan and a few cents of tune, so no two are ever quite alike"] }
+  *tally{ %group[5] #math["four strokes and a fifth across: a quintuplet over the beat"] }
+  *phase{ %drift[1] %every[16] #math["a copy of the pattern slipping one step later every cycle, until it comes round (Reich)"] }
+  *hemiola{ %a[3] %b[2] #math["three against two; sped up past twenty a second the same ratio is a perfect fifth (Cowell, the rhythmicon)"] }
+  *canon{ %delay[4] %voices[3] #math["the same line again, a beat later, and again"] }
+  *augment{ %factor[2] #math["every duration doubled"] }
+  *anticipate{ %early[1] #math["each onset a sixteenth before its beat"] }
+  *shepard{ %octaves[6] %dir[up] #math["partials an octave apart under a fixed bell-shaped envelope: a scale that rises forever"] }
+  *digits{ %of[pi] %count[16] #math["3 1 4 1 5 9 2 6 5 3 5 8 9 7 9 3, each taken mod the scale: the prophecy of 1pi(e), sung"] }
+  *silence{ #math["the pattern of another, played as rests: the groove drops out where it would have been"] }
+}
+
+# Timbres: what things are made of. Partials are ratios to the struck note; decay in seconds.
+!timbres{
+  *wood{ %partials[1 3 6] %decay[0.14] #math["a bar tuned like a xylophone: the first overtone a twelfth up (3:1)"] }
+  *marimba_bar{ %partials[1 4 10] %decay[0.6] #math["a marimba bar is tuned 1:4:10: two octaves up, then three octaves and a major third"] }
+  *glass{ %partials[1 2.756 5.404 8.933] %decay[1.4] #math["a free bar or plate: the modes of the Euler-Bernoulli beam, inharmonic, a bell-like ring"] }
+  *stone{ %partials[1 1.59 2.14 2.30 2.65] %decay[0.08] #math["dense inharmonic modes close together (chosen by ear, not measured), damped at once: a thud with grit"] }
+  *hollow{ %partials[1] %decay[0.3] #math["a Helmholtz resonator: one pitch, set by the opening and the volume; it falls as you drop into it"] }
+  *cloth{ %noise[band] %decay[0.12] #math["filtered noise, no pitch"] }
+  *reed{ %partials[1 2 3 4 5 6 7 8] %decay[0.2] #math["every harmonic: bright, nasal, a kazoo or a goose"] }
+  *odd{ %partials[1 3 5 7 9] %decay[0.5] #math["odd harmonics only: hollow and woody, a clarinet"] }
+  *swarm{ %partials[1 2 3] %beat[6] #math["two voices a few hertz apart beat at the difference: a buzz that is a slow tremolo"] }
+  *undertone{ %partials[1 0.5 0.333 0.25] %decay[2.4] #math["the undertone series f, f/2, f/3, f/4: roads under the crust"] }
+}
+
+# Motifs: whose. Notes are degrees of the chapter pentatonic (0 is its root); forms transform one shape.
+!motifs{
+  *boof{ ~notes[0 3 2] $timbre[marimba_bar] #says["three notes, already in the game (marimba 0-7-4 in semitones: degrees 0 3 2 of the pentatonic)"] }
+  *wap{ ~notes[0 2 4 3] #says["the shape all three WAPs share"] }
+  *boonwap{ ~of[wap] =form[prime] $timbre[reed] #says["the shape as it is: up and bright"] }
+  *banewap{ ~of[wap] =form[inversion] $timbre[reed] #says["the same shape upside down: every step up becomes a step down"] }
+  *bonewap{ ~of[wap] =form[retrograde] $timbre[wood] #says["the same shape backwards, plain and exact"] }
+  *genie{ ~stack[fifths] %count[12] $timbre[odd] #math["twelve pure fifths overshoot seven octaves by the Pythagorean comma (531441:524288, about 23.5 cents): every wish costs a little"] }
+  *clerk{ ~pattern[tally] $timbre[wood] #says["DAMAGE closes on a minor second, SETTLED on a major third"] }
+  *porter{ ~notes[0 2 1] ~meters[3 4 6] #says["one knock, three ways: the same three notes in three meters, all of them right"] }
+  *clown{ ~notes[0 4] =glide[up] $timbre[reed] #says["a kazoo slide; satisfied, it lands on the chord"] }
+  *mime{ ~pattern[silence] #says["heard by what goes missing: the groove rests on their beats"] }
+  *ants{ ~walk[tonnetz] $timbre[marimba_bar] #math["chords stepping through the Tonnetz by P, L and R, one street lit at a time"] }
+  *figure{ ~notes[0] #says["the carrier is the pulse itself"] }
+}
+
+# Bindings: every thing in the lanes, its pattern, timbre, motif, register and budget (sounds in ten seconds).
+# Obstacles ring at their material and are heard coming in their own lane; the knock lands on the beat.
+!bindings{
+  *post{ &kind[obstacle] $timbre[wood] ~pattern[euclid] %k[3] %n[8] .register[low] %budget[3] }
+  *stone{ &kind[obstacle] $timbre[stone] ~pattern[euclid] %k[2] %n[5] .register[low] %budget[3] }
+  *hole{ &kind[obstacle] $timbre[hollow] ~pattern[silence] .register[low] %budget[2] #says["a hole is heard as a gap, and falls"] }
+  *ditch{ &kind[obstacle] $timbre[hollow] ~pattern[euclid] %k[1] %n[4] .register[low] %budget[2] }
+  *pane{ &kind[obstacle] $timbre[glass] ~pattern[euclid] %k[5] %n[12] .register[high] %budget[3] }
+  *mime{ &kind[obstacle] @motif[mime] ~pattern[silence] .register[none] %budget[2] }
+  *mimewall{ &kind[obstacle] $timbre[cloth] ~pattern[silence] .register[mid] %budget[1] #says["the shape of a wall with no attack: a swell that stops dead"] }
+  *table{ &kind[obstacle] $timbre[wood] ~pattern[hemiola] .register[low] %budget[1] }
+  *wasps{ &kind[obstacle] $timbre[swarm] ~pattern[euclid] %k[7] %n[16] .register[mid] %budget[2] }
+  *pigeon{ &kind[obstacle] $timbre[odd] ~pattern[euclid] %k[2] %n[3] .register[mid] %budget[2] }
+  *snail{ &kind[obstacle] $timbre[hollow] ~pattern[augment] .register[low] %budget[1] }
+  *boof{ &kind[character] @motif[boof] .register[mid] %budget[1] }
+  *boonwap{ &kind[character] @motif[boonwap] .register[mid] %budget[2] }
+  *banewap{ &kind[character] @motif[banewap] .register[mid] %budget[2] }
+  *bonewap{ &kind[character] @motif[bonewap] .register[mid] %budget[2] }
+  *genie{ &kind[character] @motif[genie] .register[mid] %budget[1] }
+  *clerk{ &kind[character] @motif[clerk] .register[mid] %budget[1] }
+  *porter{ &kind[character] @motif[porter] .register[mid] %budget[1] }
+  *clown{ &kind[character] @motif[clown] .register[mid] %budget[3] }
+  *ants{ &kind[character] @motif[ants] .register[high] %budget[2] }
+  *torch_ants{ &kind[power] ~pattern[canon] @motif[ants] .register[high] %budget[2] #says["lit streets: the ants walk the chords"] }
+  *salt_whales{ &kind[power] $timbre[undertone] .register[low] %budget[1] #says["old roads under the crust, sung in undertones"] }
+  *echo_wrens{ &kind[power] ~pattern[canon] %delay[4] %voices[3] .register[high] %budget[3] #says["everything again, a beat late, three times"] }
+  *lag_stag{ &kind[power] ~pattern[phase] .register[mid] %budget[1] #says["hoofprints a beat behind: the line slips against itself and comes round"] }
+  *jazz_geese{ &kind[power] $timbre[reed] ~pattern[missing] %n[9] %drop[9] .register[mid] %budget[2] #says["nine honks, eight heard"] }
+  *hob_deer{ &kind[power] ~pattern[missing] %n[8] %drop[5] .register[mid] %budget[1] #says["a bar from a day nobody kept: one beat gone"] }
+  *page_fox{ &kind[power] ~pattern[missing] %n[8] %drop[5] ~pattern2[anticipate] .register[high] %budget[1] #says["unkept, and late, so early"] }
+  *pane_snails{ &kind[power] $timbre[glass] %beat[3] .register[high] %budget[1] #says["two panes a few hertz apart, beating, slowing to one: level"] }
+  *remainder_moths{ &kind[power] ~pattern[golden] .register[high] %budget[2] #says["round a flame, never landing twice in the same place"] }
+  *frill_lichen{ &kind[power] ~pattern[cantor] %depth[2] .register[high] %budget[2] #says["more edge than room"] }
+  *sliver_tin{ &kind[power] ~pattern[shepard] .register[high] %budget[1] #says["always filling, never full"] }
+  *boonberry{ &kind[power] ~pattern[anticipate] $timbre[glass] .register[high] %budget[3] #says["it foresees: each note a little before its beat"] }
+  *baneberry{ &kind[power] ~pattern[canon] %lead[4] .register[mid] %budget[2] #says["it foretells itself true: the answer is heard before the call"] }
+  *boneberry{ &kind[power] $timbre[marimba_bar] .register[low] %budget[2] #says["it feeds: the root and fifth held under everything"] }
+  *beaver{ &kind[power] ~pattern[augment] $timbre[wood] .register[low] %budget[1] #says["a slow beaver keeps its own time: everything twice as long"] }
+  *spill{ &kind[event] ~pattern[digits] %count[3] .register[mid] %budget[1] #says["the end of a carry falls home, 3-1-4"] }
+}
+
+# What a reader can set (Setup, Music and rhythm), what a link or a bench spell can retune, what a level can lean on.
+^configure{
+  setup_obstacles: "Obstacles: what they are made of / and heard coming in their lane (the approach rhythm, quiet, panned to the lane)"
+  setup_characters: "Characters: their motifs, on or off"
+  setup_powers: "Power-ups: their patterns, on or off"
+  setup_math: "Show the pattern: a card or caption draws it as a pie of n slices, k served, with its spell"
+  spell: "=trope[post]{ euclid %k[5] %n[8] } at the bench retunes one binding for the visit (the visit layer), passed as a link like any spell"
+  level: "a level in pie-levels.spw may lean a binding for its chapter (chapter 9 leans the jazz geese)"
+  limits: "k up to n, n up to 16; budgets hold; the ear that tires still tires; reduced motion leaves the sound and stills the drawing"
+}
+
+# The mix: distinct by register, so a thing is known before it is seen.
+^mix{
+  low: "obstacles and the bass (materials struck, under 300 Hz at their root)"
+  mid: "characters and the line (motifs, 300 Hz to 1.2 kHz)"
+  high: "powers and wonders (shimmers and patterns, above 1.2 kHz)"
+  none: "the mimes"
+  priority: "a knock coming outranks a power's pattern; a character's motif outranks the groove; never more than six voices in one band"
+}
+
+?open{
+  resonant_tempo: "should a chapter's tempo be its key, octaves down? D at 293.66 Hz is 68.8 beats a minute eight octaves down and 137.7 seven down; a fifth above that (3:2) is 103.2, a fifth below (2:3) is 91.8: the pulse and the key in one ratio"
+  approach_cues: "how loud and how early an obstacle is heard coming, and whether that is a help a reader turns on (it is also an accessibility aid)"
+  trope_cards: "should tropes be found, like rhythms, and kept as cards that show their mathematics?"
+  samples: "which timbres a VCSL instrument colours (marimba_bar, glass from the wine glasses, wood from the woodblock and slit drum), with the synth kept as the fallback"
+}

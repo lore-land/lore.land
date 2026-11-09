@@ -1,0 +1,11 @@
+# The physical moments of a carry. Each event is a folder; each take is a file and a sidecar.
+#>sound_index
+!events{
+  *wap{ #means["crust"] #says["A slapstick crack over the wet fall: the crust, not the whole pie in the face."] ~"book/audio/wap" }
+  *step_field{ #means["grass"] #says["A guiro scrape, long enough to be stalks. A field step, not a thud."] ~"book/audio/step-field" }
+  *step_city{ #means["cobble"] #says["A clave tick. Cobble, bright, nothing like the grass."] ~"book/audio/step-city" }
+  *flour{ #means["flour"] #says["A cabasa: flour as powder, brighter than the grass and shorter than a step."] ~"book/audio/flour" }
+  *land{ #means["weight"] #says["A frame drum. The pie's weight arriving, a skin rather than a click."] ~"book/audio/land" }
+  *spill{ #means["floor"] #says["A bass drum under the falling tone: the floor, once the pie has gone down."] ~"book/audio/spill" }
+  *beaver{ #means["hollow wood"] #says["A log drum, twice and unhurried. Hollow wood, lower than the landing and higher than the floor."] ~"book/audio/beaver" }
+}

@@ -1,0 +1,405 @@
+{
+  "about": "Each physical moment of a carry is a folder under book/audio/. A take is an m4a beside a .spw sidecar: the sidecar says what the take is and lists the mutations that made it (mono, the loudest window, a fade, the peak, AAC) and the register it is heard in. This file is the runtime list of those takes. Knocks stay synthesized, out of key. The synth plays when a file has not arrived. Made by node book/scripts/tools/prepare-pie-sounds.mjs.",
+  "budgetBytes": 1572864,
+  "sounds": [
+    {
+      "id": "wap-1",
+      "file": "/book/audio/wap/1.m4a",
+      "event": "wap",
+      "gain": 1,
+      "duration": 0.2,
+      "means": "crust",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slapstick",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1000,
+        "q": 0.7
+      },
+      "says": "The first slapstick round: a high crack, the crust breaking.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1000 Hz"
+    },
+    {
+      "id": "wap-2",
+      "file": "/book/audio/wap/2.m4a",
+      "event": "wap",
+      "gain": 1,
+      "duration": 0.2,
+      "means": "crust",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slapstick",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1000,
+        "q": 0.7
+      },
+      "says": "The second round, a shade shorter: the same crust, not the same slap.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1000 Hz"
+    },
+    {
+      "id": "wap-3",
+      "file": "/book/audio/wap/3.m4a",
+      "event": "wap",
+      "gain": 1,
+      "duration": 0.2,
+      "means": "crust",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slapstick",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1000,
+        "q": 0.7
+      },
+      "says": "The third round: the crust again, so a WAP is never one recording.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1000 Hz"
+    },
+    {
+      "id": "step-field-1",
+      "file": "/book/audio/step-field/1.m4a",
+      "event": "step-field",
+      "gain": 0.8,
+      "duration": 0.34,
+      "means": "grass",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Guiro",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 1300,
+        "q": 0.7
+      },
+      "says": "A fast guiro stroke: stalks brushing past a step.",
+      "changed": "mono, loudest 0.34s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 1300 Hz"
+    },
+    {
+      "id": "step-field-2",
+      "file": "/book/audio/step-field/2.m4a",
+      "event": "step-field",
+      "gain": 0.8,
+      "duration": 0.28,
+      "means": "grass",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Guiro",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 1300,
+        "q": 0.7
+      },
+      "says": "A struck guiro: grass catching, then letting go.",
+      "changed": "mono, loudest 0.28s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 1300 Hz"
+    },
+    {
+      "id": "step-field-3",
+      "file": "/book/audio/step-field/3.m4a",
+      "event": "step-field",
+      "gain": 0.75,
+      "duration": 0.28,
+      "means": "grass",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Guiro",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 1300,
+        "q": 0.7
+      },
+      "says": "Another struck round: the field, not a thud.",
+      "changed": "mono, loudest 0.28s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 1300 Hz"
+    },
+    {
+      "id": "step-city-1",
+      "file": "/book/audio/step-city/1.m4a",
+      "event": "step-city",
+      "gain": 0.55,
+      "duration": 0.2,
+      "means": "cobble",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Claves",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1500,
+        "q": 0.7
+      },
+      "says": "A clave, the bright one: a cobble under the foot.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1500 Hz"
+    },
+    {
+      "id": "step-city-2",
+      "file": "/book/audio/step-city/2.m4a",
+      "event": "step-city",
+      "gain": 0.55,
+      "duration": 0.2,
+      "means": "cobble",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Claves",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1500,
+        "q": 0.7
+      },
+      "says": "The second clave: the same stone, a different tick.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1500 Hz"
+    },
+    {
+      "id": "step-city-3",
+      "file": "/book/audio/step-city/3.m4a",
+      "event": "step-city",
+      "gain": 0.5,
+      "duration": 0.2,
+      "means": "cobble",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Claves",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "highpass",
+        "freq": 1500,
+        "q": 0.7
+      },
+      "says": "A softer clave: cobble still, less of it.",
+      "changed": "mono, loudest 0.2s, faded, peaked near −3 dBFS, AAC 64 kbps, heard highpass at 1500 Hz"
+    },
+    {
+      "id": "flour-1",
+      "file": "/book/audio/flour/1.m4a",
+      "event": "flour",
+      "gain": 0.7,
+      "duration": 0.4,
+      "means": "flour",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Cabasa",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 2200,
+        "q": 0.6
+      },
+      "says": "A cabasa rubbed: flour moving, not falling.",
+      "changed": "mono, loudest 0.4s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 2200 Hz"
+    },
+    {
+      "id": "flour-2",
+      "file": "/book/audio/flour/2.m4a",
+      "event": "flour",
+      "gain": 0.7,
+      "duration": 0.4,
+      "means": "flour",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Cabasa",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 2200,
+        "q": 0.6
+      },
+      "says": "The rub again, the other hand.",
+      "changed": "mono, loudest 0.4s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 2200 Hz"
+    },
+    {
+      "id": "flour-3",
+      "file": "/book/audio/flour/3.m4a",
+      "event": "flour",
+      "gain": 0.65,
+      "duration": 0.22,
+      "means": "flour",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Cabasa",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 2200,
+        "q": 0.6
+      },
+      "says": "A cabasa hit: a puff, shorter than a pour.",
+      "changed": "mono, loudest 0.22s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 2200 Hz"
+    },
+    {
+      "id": "land-1",
+      "file": "/book/audio/land/1.m4a",
+      "event": "land",
+      "gain": 0.85,
+      "duration": 0.32,
+      "means": "weight",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Frame%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 1100,
+        "q": 0.7
+      },
+      "says": "A large frame drum: the pie's weight arriving.",
+      "changed": "mono, loudest 0.32s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 1100 Hz"
+    },
+    {
+      "id": "land-2",
+      "file": "/book/audio/land/2.m4a",
+      "event": "land",
+      "gain": 0.85,
+      "duration": 0.32,
+      "means": "weight",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Frame%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 1100,
+        "q": 0.7
+      },
+      "says": "The same drum, the other hand.",
+      "changed": "mono, loudest 0.32s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 1100 Hz"
+    },
+    {
+      "id": "land-3",
+      "file": "/book/audio/land/3.m4a",
+      "event": "land",
+      "gain": 0.8,
+      "duration": 0.28,
+      "means": "weight",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Frame%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 1100,
+        "q": 0.7
+      },
+      "says": "A smaller drum: the same arrival, less of it.",
+      "changed": "mono, loudest 0.28s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 1100 Hz"
+    },
+    {
+      "id": "spill-1",
+      "file": "/book/audio/spill/1.m4a",
+      "event": "spill",
+      "gain": 0.9,
+      "duration": 0.5,
+      "means": "floor",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Bass%20Drum%201",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 200,
+        "q": 0.7
+      },
+      "says": "The loudest bass drum: the floor taking the pie.",
+      "changed": "mono, loudest 0.5s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 200 Hz"
+    },
+    {
+      "id": "spill-2",
+      "file": "/book/audio/spill/2.m4a",
+      "event": "spill",
+      "gain": 0.9,
+      "duration": 0.5,
+      "means": "floor",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Bass%20Drum%201",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 200,
+        "q": 0.7
+      },
+      "says": "The second strike of that drum.",
+      "changed": "mono, loudest 0.5s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 200 Hz"
+    },
+    {
+      "id": "spill-3",
+      "file": "/book/audio/spill/3.m4a",
+      "event": "spill",
+      "gain": 0.85,
+      "duration": 0.5,
+      "means": "floor",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Membranophones/Struck%20Membranophones/Bass%20Drum%201",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "lowpass",
+        "freq": 200,
+        "q": 0.7
+      },
+      "says": "A quieter drum: the floor, further off.",
+      "changed": "mono, loudest 0.5s, faded, peaked near −3 dBFS, AAC 64 kbps, heard lowpass at 200 Hz"
+    },
+    {
+      "id": "beaver-1",
+      "file": "/book/audio/beaver/1.m4a",
+      "event": "beaver",
+      "gain": 0.85,
+      "duration": 0.42,
+      "means": "hollow wood",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slit%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 420,
+        "q": 1.2
+      },
+      "says": "A high log drum: a hollow note, unhurried.",
+      "changed": "mono, loudest 0.42s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 420 Hz"
+    },
+    {
+      "id": "beaver-2",
+      "file": "/book/audio/beaver/2.m4a",
+      "event": "beaver",
+      "gain": 0.85,
+      "duration": 0.42,
+      "means": "hollow wood",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slit%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 360,
+        "q": 1.2
+      },
+      "says": "A low log drum: the same animal, lower.",
+      "changed": "mono, loudest 0.42s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 360 Hz"
+    },
+    {
+      "id": "beaver-3",
+      "file": "/book/audio/beaver/3.m4a",
+      "event": "beaver",
+      "gain": 0.8,
+      "duration": 0.42,
+      "means": "hollow wood",
+      "source": "https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Slit%20Drum",
+      "license": "CC0-1.0",
+      "author": "Versilian Studios LLC",
+      "retrieved": "2026-11-09",
+      "hear": {
+        "type": "bandpass",
+        "freq": 420,
+        "q": 1.2
+      },
+      "says": "The high drum again, a lighter hand.",
+      "changed": "mono, loudest 0.42s, faded, peaked near −3 dBFS, AAC 64 kbps, heard bandpass at 420 Hz"
+    }
+  ]
+}

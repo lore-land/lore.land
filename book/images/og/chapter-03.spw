@@ -1,0 +1,22 @@
+# Chapter Three, Signals in the Sand: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_03
+!card{
+  *chapter_03{
+    .file["chapter-03.jpg"]
+    .plate["book/images/03.png"]
+    #title["Signals in the Sand"]
+    #in_which["two roads claim the same step"]
+    #says["Chapter Three, Signals in the Sand: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

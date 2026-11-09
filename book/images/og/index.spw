@@ -1,0 +1,19 @@
+# Chapter share cards. Each card is a plate mutated into 1200 by 630, and a sidecar names the mutations.
+#>share_cards
+!cards{
+  *chapter_01{ #title["Dawn in Boon.land"] #says["Chapter One, Dawn in Boon.land: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-01.jpg" }
+  *chapter_02{ #title["The First Echo"] #says["Chapter Two, The First Echo: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-02.jpg" }
+  *chapter_03{ #title["Signals in the Sand"] #says["Chapter Three, Signals in the Sand: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-03.jpg" }
+  *chapter_04{ #title["Crosswind Council"] #says["Chapter Four, Crosswind Council: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-04.jpg" }
+  *chapter_05{ #title["The Quiet Rift"] #says["Chapter Five, The Quiet Rift: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-05.jpg" }
+  *chapter_06{ #title["Lanterns of Bonk City"] #says["Chapter Six, Lanterns of Bonk City: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-06.jpg" }
+  *chapter_07{ #title["Blueberry Oath"] #says["Chapter Seven, Blueberry Oath: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-07.jpg" }
+  *chapter_08{ #title["Songs of the Watering Eye"] #says["Chapter Eight, Songs of the Watering Eye: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-08.jpg" }
+  *chapter_09{ #title["Shards of Nine Honks"] #says["Chapter Nine, Shards of Nine Honks: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-09.jpg" }
+  *chapter_10{ #title["Bone.land Resonance"] #says["Chapter Ten, Bone.land Resonance: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-10.jpg" }
+  *chapter_11{ #title["Paradox Bloom"] #says["Chapter Eleven, Paradox Bloom: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-11.jpg" }
+  *chapter_12{ #title["The Last Confluence"] #says["Chapter Twelve, The Last Confluence: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-12.jpg" }
+  *chapter_13{ #title["The Shell-Shaped Door"] #says["Chapter Thirteen, The Shell-Shaped Door: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-13.jpg" }
+  *chapter_14{ #title["The Thursday Nobody Kept"] #says["Chapter Fourteen, The Thursday Nobody Kept: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-14.jpg" }
+  *chapter_15{ #title["Pupil, Parcel, or Door"] #says["Chapter Fifteen, Pupil, Parcel, or Door: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."] ~"book/images/og/chapter-15.jpg" }
+}

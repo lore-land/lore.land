@@ -1,0 +1,25 @@
+# A cabasa hit: a puff, shorter than a pour.
+#>sound_flour_3
+!take{
+  *3{
+    .file["3.m4a"]
+    .event["flour"]
+    #says["A cabasa hit: a puff, shorter than a pour."]
+    #means["flour"]
+    %gain[0.65]
+    %duration[0.22]
+    %cap[0.22]
+    %hear[2200]
+    %q[0.6]
+    &source[~"https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Cabasa"]
+    #license["CC0-1.0"]
+    #author["Versilian Studios LLC"]
+    #retrieved["2026-11-09"]
+    =@channels{ @mono }
+    =@window{ @loudest }
+    =@edges{ @fade }
+    =@peak{ @minus3 }
+    =@codec{ @aac }
+    =@heard{ @bandpass }
+  }
+}

@@ -1,0 +1,12 @@
+# A clave tick. Cobble, bright, nothing like the grass.
+#>sound_event_step_city
+!event{
+  *step_city{
+    #means["cobble"]
+    #says["A clave tick. Cobble, bright, nothing like the grass."]
+    %hear[1500]
+    %q[0.7]
+    =@heard{ @highpass }
+    ~"book/audio/step-city"
+  }
+}

@@ -1,0 +1,22 @@
+# Chapter Nine, Shards of Nine Honks: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_09
+!card{
+  *chapter_09{
+    .file["chapter-09.jpg"]
+    .plate["book/images/09.png"]
+    #title["Shards of Nine Honks"]
+    #in_which["the ninth honk is missing, and warms"]
+    #says["Chapter Nine, Shards of Nine Honks: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

@@ -1,0 +1,14 @@
+# The bud as a favicon, the stroke thickened so it survives at 32 pixels.
+#>favicon
+!icon{
+  *favicon{
+    .file["favicon.svg"]
+    #says["The bud as a favicon, the stroke thickened so it survives at 32 pixels."]
+    %size[32]
+    %scale[0.78]
+    %stroke[2.1]
+    =@sigil{ @bud }
+    =@field{ @cover }
+    =@scale{ @small }
+  }
+}

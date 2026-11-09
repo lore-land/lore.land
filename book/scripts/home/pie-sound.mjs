@@ -1,5 +1,10 @@
 /**
- * pie-sound.mjs — the lanes, heard: WAP and the tactile notes of the carry, synthesized; no files.
+ * pie-sound.mjs — the lanes, heard: WAP and the tactile notes of the carry, synthesized.
+ * A few physical moments carry a CC0 sample (book/content/sounds.json), each a different material
+ * in a different register: a slapstick crack over the wet fall of a WAP, a guiro for grass, a clave
+ * for cobble, a cabasa for flour, a frame drum when the pie arrives, a bass drum for the floor
+ * under a spill, a log drum for the beaver. A knock stays synthesized, a minor second out of key.
+ * If a sample has not arrived, the synthesized voice plays. Tuned things stay in key.
  *
  * One bus for every sound: a soft top, a compressor, a short echo the size of a lane that darkens
  * as it returns, and a room around it all (open air in the field, walls close by in the city).
@@ -184,12 +189,52 @@ function context() {
   audio = audio || new AudioCtx();
   if (audio.state !== 'running') audio.resume().catch(() => {});
   ensureBus();
+  ensureSamples();
   return audio;
 }
 
 /** Browsers let sound start only from a gesture: the click or key that starts a carry. */
 export function primeAudio() {
   try { context(); } catch { /* silent, then */ }
+}
+
+/* ─── Samples: a few physical moments, coloured; the synth if they have not arrived ─── */
+
+let sampleGroups = null;
+let samplesAsked = false;
+const lastSample = new Map();
+
+function ensureSamples() {
+  if (samplesAsked || !audio) return;
+  samplesAsked = true;
+  fetch('/book/content/sounds.json')
+    .then((res) => (res.ok ? res.json() : null))
+    .then(async (doc) => {
+      if (!doc?.sounds?.length || !audio) return;
+      const groups = new Map();
+      await Promise.all(doc.sounds.map(async (s) => {
+        try {
+          const res = await fetch(s.file);
+          if (!res.ok) return;
+          const buf = await audio.decodeAudioData(await res.arrayBuffer());
+          const list = groups.get(s.event) || [];
+          list.push({ buf, gain: Number(s.gain) || 1, shape: s.hear?.type ? s.hear : null });
+          groups.set(s.event, list);
+        } catch { /* the synthesized voice remains */ }
+      }));
+      sampleGroups = groups;
+    })
+    .catch(() => {});
+}
+
+/** One take of an event, not the same take twice in a row. */
+function pickSample(event) {
+  const list = sampleGroups?.get(event);
+  if (!list?.length) return null;
+  let i = Math.floor(Math.random() * list.length);
+  if (list.length > 1 && i === lastSample.get(event)) i = (i + 1) % list.length;
+  lastSample.set(event, i);
+  return list[i];
 }
 
 /* A room's answer, as a stereo impulse: in the field, a soft bounce off the ground and open air
@@ -509,7 +554,29 @@ function kit(out, t, pan = 0) {
     tone('sine', f0 * 2.25, 0, 0.03, vol * 0.3, delay, { attack: 0.002, cents: 25 });
     hiss(2500, 2300, 0.014, vol * 0.3, 3, delay);
   };
-  return { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, honk, tock };
+  // A recorded take, through the same place as the voices, and through a filter that keeps its
+  // register: the crack high, the grass in the middle, the floor under everything. False if none has arrived.
+  const sample = (event, gain = 1, delay = 0, shape = null) => {
+    const picked = pickSample(event);
+    if (!picked) return false;
+    const heard = shape || picked.shape;
+    const src = audio.createBufferSource();
+    src.buffer = picked.buf;
+    src.playbackRate.value = 2 ** (jitter(20) / 1200);
+    const g = audio.createGain();
+    g.gain.value = picked.gain * gain * spread(0.05);
+    src.connect(g);
+    if (heard) {
+      const flt = audio.createBiquadFilter();
+      flt.type = heard.type;
+      flt.frequency.value = heard.freq;
+      flt.Q.value = heard.q ?? 0.7;
+      g.connect(flt).connect(place(0));
+    } else g.connect(place(0));
+    src.start(t + delay);
+    return true;
+  };
+  return { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, honk, tock, sample };
 }
 
 /* ─── The land joins in: a streak of good things brings the room's chord up under them ─── */
@@ -705,14 +772,15 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
     const t = audio.currentTime + 0.005;
     const heat = hear('wap', t);
     if (heat === null) return;
-    const { tone, hiss, honk } = kit(outlet(heat, { depth, air: AIR.wap }), t, pan + jitter(0.04));
-    // The W: a short drop in pitch, like a cheek meeting crust; under it, the room's bass.
-    tone('triangle', 320, 70, 0.16, 0.4, 0, { attack: 0.006, cents: 60 });
+    const { tone, hiss, honk, sample } = kit(outlet(heat, { depth, air: AIR.wap }), t, pan + jitter(0.04));
+    // Crust, high and short, over the filling. The filling always falls: a cheek meeting pie.
+    sample('wap');
+    tone('triangle', 380, 58, 0.22, 0.42, 0, { attack: 0.004, cents: 40 });
+    hiss(1700, 200, 0.3, 0.38, 1.1, 0, 'bandpass', 0.35);
+    hiss(480, 110, 0.34, 0.18, 0.7, 0.02, 'lowpass');
+    // Under it, the room's bass.
     tone('sine', hz(bassLow()), hz(bassLow()) * 0.98, 0.32, 0.09, 0, { attack: 0.006, cents: 0 });
     tone('sine', hz(bassLow() - 12), 0, 0.28, 0.05, 0, { attack: 0.008, cents: 0 });
-    // The AP: filling, everywhere — noise through a closing filter, wide, and a softer body under it.
-    hiss(1800, 260, 0.22, 0.32, 1.4, 0, 'bandpass', 0.3);
-    hiss(600, 150, 0.26, 0.12, 0.8, 0.02, 'lowpass');
     // And the clown's delight: two honks on the pulse, chord tones a step higher for each WAP in a combo.
     const step = clamp(combo - 1, 0, 4);
     const first = toPulse(t, 0.15);
@@ -729,14 +797,19 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
     const t = audio.currentTime + 0.005;
     const heat = hear(kind, t);
     if (heat === null) return;
-    const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock } = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2 }), t, pan + jitter(0.04));
+    const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock, sample } = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2 }), t, pan + jitter(0.04));
     const answer = toPulse(t);
     const s32 = sixteenth() / 2;
     switch (kind) {
       // Footsteps know the ground: a brush of grass in the field, a tick of cobble in the city; left and right differ.
       case 'step':
-        if (sound.ground === 'field') { hiss(1400 + (param > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 }); }
-        else { tone('triangle', 150 + (param > 0 ? 14 : 0), 72, 0.04, 0.05, 0, { attack: 0.003, cents: 40 }); hiss(2800, 2000, 0.022, 0.024, 2.5); }
+        if (sound.ground === 'field') {
+          if (!sample('step-field')) {
+            hiss(1400 + (param > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 });
+          }
+        } else if (!sample('step-city')) {
+          tone('triangle', 150 + (param > 0 ? 14 : 0), 72, 0.04, 0.05, 0, { attack: 0.003, cents: 40 }); hiss(2800, 2000, 0.022, 0.024, 2.5);
+        }
         break;
       // A catch: the line's next note on a celesta, answered on the pulse by the chord's next tone up.
       case 'catch': {
@@ -754,7 +827,10 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         break;
       }
       // A landing: felt, and in the field a little flour.
-      case 'land': tone('sine', 150, 68, 0.07, 0.04, 0, { attack: 0.004, cents: 40 }); if (sound.ground === 'field') hiss(800, 300, 0.08, 0.025, 0.7, 0, 'lowpass', 0.2); break;
+      case 'land':
+        if (!sample('land')) tone('sine', 150, 68, 0.07, 0.04, 0, { attack: 0.004, cents: 40 });
+        if (sound.ground === 'field') hiss(800, 300, 0.08, 0.025, 0.7, 0, 'lowpass', 0.2);
+        break;
       // A deft landing: the line leaps, on a marimba, and is answered a chord tone higher.
       case 'deft': { const a = nextNote(t, 2); marimba(hz(a), 0.3, 0.05); marimba(hz(sungFrom(sungFrom(a))), 0.36, 0.045, answer, 0.12); break; }
       case 'throw': hiss(820, 2100, 0.09, 0.09, 2, 0, 'bandpass', 0.1); tone('sine', 280, 420, 0.07, 0.04, 0, { cents: 30 }); break;
@@ -792,34 +868,40 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // ... and as it comes: a fall, low, out of key.
       case 'fulfil': tone('sawtooth', hz(bassLow() + 1), hz(bassLow() - 1), 0.32, 0.07, 0, { cut: 900 }); tone('sine', 90, 55, 0.25, 0.09); hushPad(t); break;
       // A slow beaver: two wooden tocks, unhurried.
-      case 'beaver': tock(520, 380, 0.12); tock(470, 340, 0.1, 0.32); break;
+      case 'beaver':
+        if (!sample('beaver')) { tock(520, 380, 0.12); tock(470, 340, 0.1, 0.32); }
+        else sample('beaver', 0.9, 0.38);
+        break;
       // A share: two kalimbas, one either side, a chord's tones apart, together.
       case 'share': { const a = nextNote(t); kalimba(hz(a), 0.3, 0.05, 0, -0.25); kalimba(hz(sungFrom(a, -1)), 0.3, 0.045, 0.012, 0.25); break; }
-      case 'flour': hiss(640, 170, 0.18, 0.085, 0.8, 0, 'bandpass', 0.25); break;
+      case 'flour':
+        if (!sample('flour')) hiss(640, 170, 0.18, 0.085, 0.8, 0, 'bandpass', 0.25);
+        break;
       // A wonder: a music box playing the room's chord, its shape by kind.
       case 'wonder': {
         const shape = param === 'contrivance' ? [0, 1, 2, 3] : param === 'antique' ? [0, 0, 2, 1] : param === 'artifact' ? [2, 0, 3, 1] : param === 'bracework' ? [0, 2, 1, 3] : param === 'saying' ? [3, 2, 1, 0] : [0, 1, 3, 2];
         shape.forEach((i, k) => musicBox(hz(sungTone(i + 3)), k === shape.length - 1 ? 0.7 : 0.35, 0.042, k * s32, (k - 1.5) * 0.12));
         break;
       }
-      // A knock: a thud with a little grit in it, out of key on purpose, never twice at the same pitch; it breaks the spell.
+      // A knock: two notes a minor second apart, falling. Out of key on purpose, so it cannot be a step
+      // or the beaver; it breaks the spell. No sample — a recording cannot sit outside the chapter's key.
       case 'knock':
-        tone('sine', 95, 48, 0.2, 0.1, 0, { attack: 0.003, cents: 80 });
-        hiss(420, 140, 0.12, 0.09, 1.2);
-        tone('sawtooth', 185, 70, 0.1, 0.07, 0, { attack: 0.003, cents: 80, cut: 700 });
+        tone('sine', 108, 50, 0.24, 0.16, 0, { attack: 0.003, cents: 12 });
+        tone('sine', 114.5, 53, 0.2, 0.12, 0.012, { attack: 0.004, cents: 8 });
+        hiss(460, 120, 0.16, 0.07, 1);
         hushPad(t);
         break;
       // A scheme foiled: Mr. BaneWAP's plans going down, then the line coming back up on the pulse.
       case 'foil': { tone('square', 520, 180, 0.2, 0.07, 0, { cut: 1200 }); const a = nextNote(t); celesta(hz(a), 0.2, 0.05, answer); celesta(hz(sungFrom(a)), 0.3, 0.045, answer + sixteenth(), 0.1); break; }
       // The Egg: a hum belonging to no chapter's key.
       case 'egg': tone('sine', 130.8, 131.2, 0.5, 0.1, 0, { attack: 0.08, cents: 0, side: -0.15 }); tone('sine', 196, 196.5, 0.5, 0.07, 0.03, { attack: 0.08, cents: 0, side: 0.15 }); break;
-      // The spill: the fall, then home — five, three, one, softly, on the pulse. Exactly one; the prophecy holds.
+      // The spill: the pie goes down, the floor takes it, then home — five, three, one. Exactly one.
       case 'spill': {
-        tone('triangle', 280, 65, 0.34, 0.17);
-        hiss(1100, 160, 0.3, 0.15, 1.2, 0, 'bandpass', 0.3);
-        tone('sine', 70, 40, 0.3, 0.1);
+        tone('triangle', 460, 46, 0.5, 0.22);
+        hiss(1400, 150, 0.4, 0.12, 1, 0, 'bandpass', 0.2);
+        sample('spill', 1, 0.14);
         hushPad(t);
-        const home = toPulse(t, 0.4);
+        const home = toPulse(t, 0.5);
         (sound.minor ? [7, 3, 0] : [7, 4, 0]).forEach((semi, k) => celesta(hz(semi), k === 2 ? 1.1 : 0.5, 0.04, home + k * sixteenth() * 2, (1 - k) * 0.15));
         break;
       }

@@ -1,0 +1,22 @@
+# Chapter Fourteen, The Thursday Nobody Kept: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_14
+!card{
+  *chapter_14{
+    .file["chapter-14.jpg"]
+    .plate["book/images/14.png"]
+    #title["The Thursday Nobody Kept"]
+    #in_which["a day goes missing from the week, and the field keeps it anyway"]
+    #says["Chapter Fourteen, The Thursday Nobody Kept: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

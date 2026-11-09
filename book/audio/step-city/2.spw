@@ -1,0 +1,25 @@
+# The second clave: the same stone, a different tick.
+#>sound_step_city_2
+!take{
+  *2{
+    .file["2.m4a"]
+    .event["step-city"]
+    #says["The second clave: the same stone, a different tick."]
+    #means["cobble"]
+    %gain[0.55]
+    %duration[0.2]
+    %cap[0.2]
+    %hear[1500]
+    %q[0.7]
+    &source[~"https://github.com/sgossner/VCSL/tree/c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e/Idiophones/Struck%20Idiophones/Claves"]
+    #license["CC0-1.0"]
+    #author["Versilian Studios LLC"]
+    #retrieved["2026-11-09"]
+    =@channels{ @mono }
+    =@window{ @loudest }
+    =@edges{ @fade }
+    =@peak{ @minus3 }
+    =@codec{ @aac }
+    =@heard{ @highpass }
+  }
+}

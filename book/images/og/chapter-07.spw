@@ -1,0 +1,22 @@
+# Chapter Seven, Blueberry Oath: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_07
+!card{
+  *chapter_07{
+    .file["chapter-07.jpg"]
+    .plate["book/images/07.png"]
+    #title["Blueberry Oath"]
+    #in_which["an oath is paid in fruit"]
+    #says["Chapter Seven, Blueberry Oath: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

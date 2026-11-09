@@ -1,0 +1,14 @@
+# The bud inside the maskable safe zone, 512 pixels.
+#>icon_maskable
+!icon{
+  *icon_maskable{
+    .file["icon-maskable-512.png"]
+    #says["The bud inside the maskable safe zone, 512 pixels."]
+    %size[512]
+    %scale[0.44]
+    %stroke[1.3]
+    =@sigil{ @bud }
+    =@field{ @cover }
+    =@scale{ @safe }
+  }
+}

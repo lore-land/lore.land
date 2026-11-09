@@ -1,0 +1,14 @@
+# The same bud, 512 pixels, any purpose.
+#>icon_512
+!icon{
+  *icon_512{
+    .file["icon-512.png"]
+    #says["The same bud, 512 pixels, any purpose."]
+    %size[512]
+    %scale[0.62]
+    %stroke[1.2]
+    =@sigil{ @bud }
+    =@field{ @cover }
+    =@scale{ @mark }
+  }
+}

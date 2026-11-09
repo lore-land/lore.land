@@ -1,0 +1,87 @@
+{
+  "about": "Open sounds lore.land may use and change: where each came from, under what license, and why it was taken. npm run sounds:fetch downloads them into sound-library/ (git-ignored: raw sources stay out of the published site). A sample joins an event only through book/content/sounds.json (made by node book/scripts/tools/prepare-pie-sounds.mjs), with its synthesized voice kept as the fallback.",
+  "root": "sound-library",
+  "policy": {
+    "allowed": ["CC0-1.0"],
+    "never": [
+      "macOS system sounds and say voices (personal use only)",
+      "BBC RemArc (non-commercial)",
+      "licenses that forbid serving a file on its own (Pixabay, Sonniss): a static site serves every file on its own",
+      "CC BY-NC and Sampling+",
+      "voice packs, until dialogue is chosen"
+    ]
+  },
+  "sources": [
+    {
+      "id": "kenney",
+      "name": "Kenney audio packs",
+      "author": "Kenney (kenney.nl)",
+      "license": "CC0-1.0",
+      "licenseCheck": "Creative Commons CC0",
+      "packs": [
+        { "slug": "interface-sounds", "category": "interface", "why": "clicks, toggles, confirms for Setup, the bench and the desk" },
+        { "slug": "ui-audio", "category": "interface", "why": "more interface clicks and switches" },
+        { "slug": "digital-audio", "category": "interface", "why": "soft digital blips, for the route lab and the scriptorium" },
+        { "slug": "impact-sounds", "category": "impact", "why": "knocks on posts, stones, panes, wood, the table" },
+        { "slug": "rpg-audio", "category": "effects", "why": "foley: coins, cloth, book pages, footsteps, doors" },
+        { "slug": "casino-audio", "category": "effects", "why": "coins and chips, for the step tax and the rented wind" },
+        { "slug": "sci-fi-sounds", "category": "effects", "why": "whooshes and sweeps to colour transitions" },
+        { "slug": "music-jingles", "category": "instrument", "why": "short instrumental stings, for reference and unlocks" }
+      ],
+      "skipped": ["voiceover-pack", "voiceover-pack-fighter"]
+    },
+    {
+      "id": "vcsl",
+      "name": "Versilian Community Sample Library",
+      "author": "Versilian Studios LLC",
+      "license": "CC0-1.0",
+      "repo": "sgossner/VCSL",
+      "commit": "c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e",
+      "folders": [
+        { "path": "Idiophones/Friction Idiophones/Wine Glasses", "category": "instrument", "why": "Bonk glass and the lantern glass" },
+        { "path": "Idiophones/Plucked Idiophones/Kalimba, Kenya", "category": "instrument", "why": "the kalimba voice (echo wrens, confluence)" },
+        { "path": "Idiophones/Plucked Idiophones/Kalimba, Tanzania", "category": "instrument", "why": "a second kalimba" },
+        { "path": "Idiophones/Plucked Idiophones/Nyunga Nyunga, Mozambique, Low F", "category": "instrument", "why": "a low mbira, for the grove answering late" },
+        { "path": "Idiophones/Struck Idiophones/Glockenspiel", "category": "instrument", "why": "the music box and celesta voices have no sample; this stands nearest" },
+        { "path": "Idiophones/Struck Idiophones/Tubular Glockenspiel", "category": "instrument", "why": "a rounder bell for what the land gives" },
+        { "path": "Idiophones/Struck Idiophones/Marimba", "category": "instrument", "why": "the marimba voice and Boof's three notes" },
+        { "path": "Idiophones/Struck Idiophones/Vibraphone", "category": "instrument", "why": "the vibes voice (oath fruit, the shell door)" },
+        { "path": "Idiophones/Struck Idiophones/Xylophone", "category": "instrument", "why": "dry bright catches" },
+        { "path": "Idiophones/Struck Idiophones/Balafon", "category": "instrument", "why": "a wooden, buzzing bar for the lanes" },
+        { "path": "Idiophones/Struck Idiophones/Woodblock", "category": "instrument", "why": "the tock voice (torch-ants, the kept Thursday)" },
+        { "path": "Idiophones/Struck Idiophones/Slit Drum", "category": "instrument", "why": "the slow beaver's temple blocks" },
+        { "path": "Idiophones/Struck Idiophones/Slapstick", "category": "effects", "why": "the WAP" },
+        { "path": "Idiophones/Struck Idiophones/Ratchet", "category": "effects", "why": "the step tax winding up" },
+        { "path": "Idiophones/Struck Idiophones/Guiro", "category": "effects", "why": "the step tax counting" },
+        { "path": "Idiophones/Struck Idiophones/Vibraslap", "category": "effects", "why": "a comic rattle for a knock survived" },
+        { "path": "Idiophones/Struck Idiophones/Flexatone", "category": "effects", "why": "the hat that never lands" },
+        { "path": "Idiophones/Struck Idiophones/Anvil", "category": "impact", "why": "a hard knock, Bonk City" },
+        { "path": "Idiophones/Struck Idiophones/Claps", "category": "impact", "why": "the clowns satisfied" },
+        { "path": "Idiophones/Struck Idiophones/Claves", "category": "impact", "why": "a crisp tick for the pulse" },
+        { "path": "Idiophones/Struck Idiophones/Cabasa", "category": "instrument", "why": "the shaker voice" },
+        { "path": "Idiophones/Struck Idiophones/Shaker, Small", "category": "instrument", "why": "the shaker voice (sand signals)" },
+        { "path": "Idiophones/Struck Idiophones/Shaker, Large", "category": "instrument", "why": "a heavier shaker" },
+        { "path": "Idiophones/Struck Idiophones/Hand Bells, Nepalese", "category": "instrument", "why": "the Thursday nobody kept" },
+        { "path": "Idiophones/Struck Idiophones/Finger Cymbals", "category": "instrument", "why": "a wonder kept" },
+        { "path": "Idiophones/Struck Idiophones/Bell Tree", "category": "instrument", "why": "a shimmer for unlocks and rhythms found" },
+        { "path": "Idiophones/Struck Idiophones/Sleigh Bells", "category": "instrument", "why": "the parade" },
+        { "path": "Idiophones/Struck Idiophones/Tubular Bells 3 - Legacy", "category": "instrument", "why": "the bone hall, small" },
+        { "path": "Aerophones/Edge-blown Aerophones/Train Whistle, Toy", "category": "effects", "why": "the porter, the parcel gate" },
+        { "path": "Aerophones/Edge-blown Aerophones/Ball Whistle", "category": "effects", "why": "a whistle for the council" },
+        { "path": "Aerophones/Edge-blown Aerophones/Ocarina, Small", "category": "instrument", "why": "a small round voice, for a character's motif" },
+        { "path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder", "category": "instrument", "why": "a plain melodic line" },
+        { "path": "Aerophones/Free Aerophones/Harmonica-Hohner-Special20-C", "category": "instrument", "why": "a reed voice nearest a kazoo or a goose" },
+        { "path": "Chordophones/Zithers/Psaltery, Bowed and Plucked", "category": "instrument", "why": "the egg's drone, bowed" },
+        { "path": "Membranophones/Other Membranophones/Ocean Drum", "category": "effects", "why": "rivers that remember" },
+        { "path": "Membranophones/Struck Membranophones/Frame Drum", "category": "instrument", "why": "the bass voice, a soft low hit" },
+        { "path": "Membranophones/Struck Membranophones/Bass Drum 1", "category": "impact", "why": "the spill, a low thump" },
+        { "path": "Membranophones/Struck Membranophones/Bongos", "category": "instrument", "why": "hand drums for rhythms" },
+        { "path": "Membranophones/Struck Membranophones/Darbuka", "category": "instrument", "why": "hand drums for rhythms" }
+      ]
+    }
+  ],
+  "notLoaded": {
+    "freesound": "CC0 sounds there need a signed-in download; a reader of this file can add them by hand with their page, author and license recorded here",
+    "vsco2_ce": "mostly folded into VCSL"
+  }
+}

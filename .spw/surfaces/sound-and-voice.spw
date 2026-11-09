@@ -1,0 +1,122 @@
+# Sound and voice — a plan for what the lanes sound like, and who speaks in them
+# Written 2026-11-09 after the user said the dialogue in the archived WAV pipeline was never chosen, and
+# asked to plan the dialogue and the sounds better, with open sounds that are free to use and modify.
+# This is a plan, not canon for any line: no spoken words are written here. Every line a character says
+# is chosen by the user before it ships (^dialogue rule); until then a moment has a slot, not a line.
+#>lore_land_surfaces_sound_and_voice
+#:surface #!plan
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  The lanes already sound like a place: each chapter has a key, a tempo and a motif, rooms colour the chord, rhythms hide in rooms, and every sound is made in the browser with no files. What is missing is a plan that says, for every moment, what it means, who it belongs to and how often it may speak, so that sound and dialogue are designed together instead of piling up. Voices are the most personal part of a story; they are cast, not generated. Samples may join the synthesized floor only with a license that lets anyone use, change and serve them as files, recorded where it came from.
+}
+
+^meta{
+  &engine: ~"book/scripts/home/pie-sound.mjs"
+  &levels: ~".spw/runtime/pie-levels.spw"
+  &audition: ~"tools/audio_synthesis/pie-sound-audition.html"
+  &archive: "removed 2026-11-09 at the user's word: synth_pie_audio.py, its macOS system-sound extracts and say voices, and the 21 MB of WAVs it rendered (moved to the Trash). The six designs worth keeping live on in tools/audio_synthesis/pie-sketchbook.html (live Web Audio, no files, git-ignored)"
+  &library: ~"book/content/sound-library.json"
+  &fetch: "npm run sounds:fetch (book/scripts/tools/sound-library.mjs) into sound-library/, git-ignored, with INDEX.json naming every file, its source and license"
+  &audio: ~"book/audio/index.spw"
+  &manifest: ~"book/content/sounds.json"
+  &prepare: "npm run sounds:prepare (book/scripts/tools/prepare-pie-sounds.mjs). Each take is book/audio/<event>/<n>.m4a beside <n>.spw: the sidecar says what the take is and lists the mutations that made it"
+  &sidecars: "asset-sidecar.mjs. A derived file keeps a sidecar: #says, and =@anchor{ @target } for each mutation, in order. Share cards and the bud icons use the same shape. The cast of the lanes is pie-world.mjs, imported, because it is the rules and not a derived file"
+  &characters: ~".spw/surfaces/characters.spw"
+  &care: "audience care: the same PG floor and gate as the prose; no real names; no cloned or imitated real voices; no borrowed dialects (the bias rules)"
+}
+
+^principles{
+  one_engine: "pie-sound.mjs is the one engine. When files are wanted (a soundboard, a trailer, a found rhythm to share), they are rendered from it in the browser (OfflineAudioContext on the audition page), so a file always sounds like the game."
+  floor: "the game plays whole with no files at all. A sample may colour a sound; if it fails to load, the synthesized voice plays instead, and nothing waits on a download."
+  every_sound_is_an_event: "each sound is written down as an event: the moment it answers, what it means, whose it is, how it sits in the key, how often it may sound, and where its sound comes from (synth or a sample by id)."
+  budget: "a carry is hundreds of moments. Each event has a budget (how often in ten seconds, whether it may repeat a pitch), and the ear that tires (pie-sound heat) holds it."
+  chosen_words: "no character says a word on a page or in the lanes unless the user chose that line. Proposals carry !state[proposed]; only !state[chosen] plays; book:check refuses the rest."
+  wordless_first: "a character can be heard before they are given words: a leitmotif (Boof has three notes), an instrument, a babble shaped by a chosen line and pitched to the chapter key, with the words shown as a caption."
+  licenses: "CC0 first; CC BY 4.0 only with the credit recorded and shown; never NC, never a license that forbids serving the file on its own (a static site serves every file on its own), never macOS system sounds or voices"
+}
+
+# The sound map: every event the engine plays today, and the archived designs that could join it.
+# Each wants its meaning, owner and budget filled in before it changes; ?source says what could colour it.
+^events{
+  carry: { now: [step, hop, land, throw, catch, deft, ramp, post, share, squash, sweet, flour], says: "the body of the carry: one melodic line through catches, a pluck climbing with a hop chain, steps on the beat" }
+  harm: { now: [knock, spill, foil], says: "a stumble and its resolve: knocks hush the pad, the spill falls home 5-3-1" }
+  land_gives: { now: [berry, bone, wonder, egg, glass, fulfil, foretell, beaver, drip, honk], says: "what the land gives sings chord tones inside the chapter pentatonic" }
+  music: { now: [incipit, leitmotif_boof, rhythm_hits, rhythm_found, pad, bed, pulse], says: "the chapter key, tempo and motif from pie-levels.spw; the fifteen hidden rhythms in their voices" }
+  wap: { now: [wapSound], says: "the pie in the face: the game signature" }
+  archived_designs: {
+    jazz_geese: "nine honks, eight heard, the ninth missing and warm (chapter 9)"
+    thursday_week: "a seven-note week with Thursday missing (chapter 14)"
+    hat_hover: "an unresolved sus2 and sus4, the hat that never lands"
+    step_tax: "four dry clicks and a coin cascade, a BaneWAP scheme"
+    rented_wind: "a gust with a coin meter and a receipt torn, foiled"
+    clerk_stamps: "DAMAGE as a squish and a minor second, SETTLED as a wood tap and a major third"
+  }
+}
+
+# Dialogue: the moments that could have a voice, and the questions that decide them. No lines.
+^dialogue{
+  rule: "a line is a record { who, moment, words, state, chosen_by, chosen_on }; only state chosen plays; a line repeats at most once a carry; a spoken line never covers a caption a reader is reading"
+  moments: {
+    carry_start: "the first step of a carry, once"
+    chapter_enter: "beside the incipit, as the lanes enter a chapter"
+    combo: "a run of catches or WAPs, at most once in ten seconds"
+    near_miss: "a knock survived"
+    spill: "the end of a carry"
+    rhythm_found: "a rhythm found, once ever per rhythm"
+    unlock: "a mechanic unlocked, once ever"
+    crossing: "a character crossing the lanes (Boof has a leitmotif already)"
+  }
+  ways: {
+    leitmotif: "notes only, in the chapter key (cheapest, never tiring, works in every language)"
+    babble: "a voice-like instrument (formants) speaking the rhythm of a chosen line, in key, with the words as a caption"
+    recorded: "a person reading a chosen line, with a signed release; casting is the user to do"
+    synthesized_speech: "TTS only with a voice model whose license allows commercial use and serving files; most do not, so it is last"
+  }
+}
+
+# Open sounds, vetted 2026-11-09. Each file still has its own page to check before it is taken.
+^sources{
+  vcsl: { license: "CC0", where: "versilian-studios.com/vcsl (and GitHub mirrors)", fits: "kalimbas and mbiras (echo wrens), glockenspiel, marimba, vibraphone, xylophone, woodblock (the slow beaver), wine glasses (Bonk glass, lantern glass), hand bells and tubular bells (the kept Thursday, the bone hall), slapstick (WAP), ratchet and guiro (the step tax), toy train whistle, ocarina, recorders, harmonica, sleigh bells, flexatone, anvil", note: "no celesta, music box or kazoo listed; SFZ plus raw WAV, about 5 GB in all, so take single notes" }
+  vsco2_ce: { license: "CC0", where: "versilian-studios.com/vsco-community", fits: "chamber orchestra: strings, winds, harp, keyboards", note: "contents to check per instrument" }
+  kenney: { license: "CC0", where: "kenney.nl/assets (Interface Sounds, Impact Sounds, Voiceover Pack)", fits: "interface clicks for Setup and the bench; impacts for knocks", note: "the Voiceover Pack (90 files) is generic announcer words, not lore voices" }
+  freesound_cc0: { license: "CC0 per file (filter by license)", where: "freesound.org", fits: "foley the instruments lack: a goose, a kazoo, a rubber stamp, coins, paper torn, flour", note: "licenses are per sound: take CC0 only, or CC BY with credit; never CC BY-NC or Sampling+; record the page and author" }
+  iowa_mis: { license: "stated free to use without restriction, no formal license text", where: "theremin.music.uiowa.edu/MIS", fits: "single orchestral notes, anechoic", note: "prefer VCSL; if used, keep the statement with the file" }
+  zzfx: { license: "MIT (code); what it makes is yours", where: "github.com/KilledByAPixel/ZzFX", fits: "parametric game blips designed in its sound designer and written into the engine as numbers, no files" }
+  espeak_ng: { license: "GPL-3 (the program); its output is generally not covered", where: "github.com/espeak-ng/espeak-ng", fits: "a frankly mechanical voice, if a character should sound like a contrivance" }
+  avoid: {
+    macos: "system sounds and say voices: licensed for personal use"
+    bbc_remarc: "non-commercial use only"
+    pixabay: "free to use, but no standalone redistribution, and a static site serves files standalone"
+    sonniss: "royalty-free inside a project, but no standalone redistribution; same problem"
+    freesound_nc: "CC BY-NC and Sampling+ sounds"
+    piper_models: "the engine is open, but most voice models carry non-commercial dataset terms; check each model card"
+  }
+}
+
+# How a sample would enter, if one does.
+^pipeline{
+  manifest: "book/content/sounds.json is the runtime list: { id, file, event, says, hear, means, source, license, author, retrieved, changed }. The sidecar is the annotation."
+  files: "book/audio/<event>/<n>.m4a beside <n>.spw (#says for the description; anchored = edges for the mutations: mono, the loudest window, a fade, the peak, AAC, and the register it is heard in). An index.spw in each event folder, and book/audio/index.spw over them. Mono, trimmed, short; total under 1.5 MB; loaded when a carry starts"
+  check: "book:check: license on the allowlist (CC0, CC BY 4.0 with a credit line), file present, size budget, loudness measured against its event; CC BY credits listed on a credits page"
+  fallback: "every sampled event keeps its synthesized voice; a missing or slow file plays the synth"
+  render: "the audition page renders any event or a whole found rhythm to WAV with OfflineAudioContext, for a soundboard or a share"
+}
+
+?decide{
+  words_at_all: "Should anyone in the lanes speak words, or do characters keep to motifs and babble with captions?"
+  first_voices: "Which characters are heard first, and as what: Boof (three notes already), Mr. BoonWAP and Mr. BaneWAP, the clowns, the Feast Clerk, the Genie, the mimes (silent?)"
+  whose_voice: "If words are spoken: yours, people you know with a release, or none?"
+  files_or_not: "Should the game itself admit a small sample set (VCSL, Freesound CC0), or keep samples to the soundboard and shares and stay synthesized?"
+  first_designs: "Which archived designs come in first: the Jazz-Geese, the Thursday week, the hat, the step tax, the rented wind, the stamps?"
+}
+
+!next[
+  "fill ^events with meaning, owner and budget for every sound: drafted as .spw/runtime/audio-tropes.spw (patterns, timbres, motifs, bindings for every obstacle, character and power), to be read by pie-tropes.mjs the way levels are"
+  "bring the six archived designs into pie-sound.mjs as synthesized events, auditioned against the current mix"
+  "a dialogue sheet (.spw/runtime/pie-lines.spw) with moments and empty slots; the user writes or chooses each line; book:check plays only chosen"
+  "babble voices: a formant instrument that speaks the rhythm of a chosen line in the chapter key"
+  "physical moments are in: wap, step-field, step-city, flour, land, spill, beaver, each a folder of takes with sidecars (npm run sounds:prepare). Knocks stay synthesized, out of key. The synth plays when a file has not arrived"
+  "WAV export on the audition page (synth_pie_audio.py and its voices are retired)"
+]

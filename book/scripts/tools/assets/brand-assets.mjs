@@ -16,6 +16,11 @@
  * Authoring-time tool, not part of `npm run build`: needs ImageMagick
  * (`magick`), `rsvg-convert` and a Georgia face (macOS ships one). Outputs
  * are committed. Re-run after a title, in-which line, plate or sigil changes.
+ *
+ * Each card and each rebuilt icon keeps a .spw sidecar beside the file
+ * (asset-sidecar.mjs): the description, and the mutations that made it.
+ * `node book/scripts/tools/assets/brand-assets.mjs --sidecars` rewrites
+ * those sidecars from the chapter JSON without ImageMagick.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -24,6 +29,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chapterOrdinal } from '../../modules/chapter-render.mjs';
+import { CARD_MUTATIONS, ICON_MUTATIONS, mutationEdges, spwQuote } from '../../modules/asset-sidecar.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
 const CHAPTERS = join(ROOT, 'book/content/chapters');
@@ -92,7 +98,103 @@ function buildIcons(work) {
   renderSvg(sigilSvg({ size: 512, scale: 0.44, stroke: 1.3 }), join(ICON_DIR, 'icon-maskable-512.png'), work);
   renderSvg(sigilSvg({ size: 180, scale: 0.56, stroke: 1.5 }), join(ICON_DIR, 'apple-touch-icon.png'), work);
   writeFileSync(join(ICON_DIR, 'favicon.svg'), `${sigilSvg({ size: 32, scale: 0.78, stroke: 2.1 })}\n`);
+  writeIconSidecars();
   console.log('icons: icon-192, icon-512, icon-maskable-512, apple-touch-icon, favicon.svg');
+}
+
+const ICONS = Object.freeze([
+  { file: 'icon-192.png', id: 'icon_192', size: 192, scale: 0.62, stroke: 1.5, scaleName: 'mark', says: 'The bud sigil in cover gold on the cover field, 192 pixels, any purpose.' },
+  { file: 'icon-512.png', id: 'icon_512', size: 512, scale: 0.62, stroke: 1.2, scaleName: 'mark', says: 'The same bud, 512 pixels, any purpose.' },
+  { file: 'icon-maskable-512.png', id: 'icon_maskable', size: 512, scale: 0.44, stroke: 1.3, scaleName: 'safe', says: 'The bud inside the maskable safe zone, 512 pixels.' },
+  { file: 'apple-touch-icon.png', id: 'apple_touch', size: 180, scale: 0.56, stroke: 1.5, scaleName: 'touch', says: 'The bud as the Apple touch icon, 180 pixels.' },
+  { file: 'favicon.svg', id: 'favicon', size: 32, scale: 0.78, stroke: 2.1, scaleName: 'small', says: 'The bud as a favicon, the stroke thickened so it survives at 32 pixels.' },
+]);
+
+function cardSays(data) {
+  return `${chapterOrdinal(data.chapterNumber)}, ${data.title}: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.`;
+}
+
+function loadChapters(onlyChapters = null) {
+  const refs = JSON.parse(readFileSync(REFERENCES, 'utf8'));
+  return readdirSync(CHAPTERS).filter((name) => /^\d{2}\.json$/.test(name)
+    && (!onlyChapters || onlyChapters.includes(Number(name.slice(0, 2))))).sort()
+    .map((name) => {
+      const data = JSON.parse(readFileSync(join(CHAPTERS, name), 'utf8'));
+      const slug = name.slice(0, 2);
+      const inWhich = data.inWhich || refs.inWhich?.[String(data.chapterNumber)] || '';
+      return { data, slug, inWhich, says: cardSays(data) };
+    });
+}
+
+function cardSidecar(chapter) {
+  const { data, slug, inWhich, says } = chapter;
+  const edges = mutationEdges(CARD_MUTATIONS).map((edge) => `    ${edge}`).join('\n');
+  return `# ${says}
+#>share_chapter_${slug}
+!card{
+  *chapter_${slug}{
+    .file["chapter-${slug}.jpg"]
+    .plate["book/images/${slug}.png"]
+    #title[${spwQuote(data.title)}]
+    #in_which[${spwQuote(inWhich)}]
+    #says[${spwQuote(says)}]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+${edges}
+  }
+}
+`;
+}
+
+function iconSidecar(icon) {
+  const edges = mutationEdges([...ICON_MUTATIONS, ['scale', icon.scaleName]]).map((edge) => `    ${edge}`).join('\n');
+  return `# ${icon.says}
+#>${icon.id}
+!icon{
+  *${icon.id}{
+    .file[${spwQuote(icon.file)}]
+    #says[${spwQuote(icon.says)}]
+    %size[${icon.size}]
+    %scale[${icon.scale}]
+    %stroke[${icon.stroke}]
+${edges}
+  }
+}
+`;
+}
+
+function writeCardSidecars(onlyChapters = null) {
+  mkdirSync(OG_DIR, { recursive: true });
+  const chapters = loadChapters(onlyChapters);
+  for (const chapter of chapters) {
+    writeFileSync(join(OG_DIR, `chapter-${chapter.slug}.spw`), cardSidecar(chapter));
+  }
+  if (!onlyChapters) {
+    const lines = chapters.map((chapter) => `  *chapter_${chapter.slug}{ #title[${spwQuote(chapter.data.title)}] #says[${spwQuote(chapter.says)}] ~"book/images/og/chapter-${chapter.slug}.jpg" }`);
+    writeFileSync(join(OG_DIR, 'index.spw'), `# Chapter share cards. Each card is a plate mutated into 1200 by 630, and a sidecar names the mutations.
+#>share_cards
+!cards{
+${lines.join('\n')}
+}
+`);
+  }
+  console.log(`sidecars: ${chapters.length} share cards`);
+}
+
+function writeIconSidecars() {
+  mkdirSync(ICON_DIR, { recursive: true });
+  for (const icon of ICONS) writeFileSync(join(ICON_DIR, `${icon.file.replace(/\.[^.]+$/, '')}.spw`), iconSidecar(icon));
+  const lines = ICONS.map((icon) => `  *${icon.id}{ #says[${spwQuote(icon.says)}] ~"book/pwa/icons/${icon.file}" }`);
+  writeFileSync(join(ICON_DIR, 'index.spw'), `# App icons drawn from the bud sigil. shortcut-pie.png and shortcut-atlas.png are hand icons and keep no mutation record.
+#>app_icons
+!icons{
+${lines.join('\n')}
+}
+`);
+  console.log(`sidecars: ${ICONS.length} icons`);
 }
 
 function buildCards(work, onlyChapters = null) {
@@ -100,17 +202,12 @@ function buildCards(work, onlyChapters = null) {
     throw new Error(`brand-assets needs Georgia at ${FONT_DIR} for chapter cards.`);
   }
   mkdirSync(OG_DIR, { recursive: true });
-  const refs = JSON.parse(readFileSync(REFERENCES, 'utf8'));
   const sigil = join(work, 'card-sigil.png');
   renderSvg(sigilSvg({ size: 46, scale: 1, stroke: 1.1, background: false }), sigil, work);
 
-  const files = readdirSync(CHAPTERS).filter((name) => /^\d{2}\.json$/.test(name)
-    && (!onlyChapters || onlyChapters.includes(Number(name.slice(0, 2))))).sort();
-  for (const name of files) {
-    const data = JSON.parse(readFileSync(join(CHAPTERS, name), 'utf8'));
-    const slug = name.slice(0, 2);
+  const chapters = loadChapters(onlyChapters);
+  for (const { data, slug, inWhich } of chapters) {
     const plate = join(ROOT, `book/images/${slug}.png`);
-    const inWhich = data.inWhich || refs.inWhich?.[String(data.chapterNumber)] || '';
     const veil = join(work, 'veil.png');
     const text = join(work, `text-${slug}.png`);
     const out = join(OG_DIR, `chapter-${slug}.jpg`);
@@ -147,17 +244,23 @@ function buildCards(work, onlyChapters = null) {
     magick([...layers, '-strip', '-interlace', 'Plane', '-quality', '93', out]);
     console.log(`card: ${out.replace(`${ROOT}/`, '')}`);
   }
+  writeCardSidecars(onlyChapters);
 }
 
-need('magick');
-need('rsvg-convert');
-const work = mkdtempSync(join(tmpdir(), 'lore-brand-'));
-try {
-  const chapterArg = process.argv.find((arg) => arg.startsWith('--chapters='));
-  const onlyChapters = chapterArg ? chapterArg.slice('--chapters='.length).split(',').map(Number).filter(Boolean) : null;
-  const only = process.argv.slice(2).filter((arg) => !arg.startsWith('--chapters='));
-  if (!only.length || only.includes('--icons')) buildIcons(work);
-  if (!only.length || only.includes('--og')) buildCards(work, onlyChapters);
-} finally {
-  rmSync(work, { recursive: true, force: true });
+const chapterArg = process.argv.find((arg) => arg.startsWith('--chapters='));
+const onlyChapters = chapterArg ? chapterArg.slice('--chapters='.length).split(',').map(Number).filter(Boolean) : null;
+const only = process.argv.slice(2).filter((arg) => !arg.startsWith('--chapters='));
+if (only.includes('--sidecars')) {
+  if (!only.includes('--icons')) writeCardSidecars(onlyChapters);
+  if (!only.includes('--og')) writeIconSidecars();
+} else {
+  need('magick');
+  need('rsvg-convert');
+  const work = mkdtempSync(join(tmpdir(), 'lore-brand-'));
+  try {
+    if (!only.length || only.includes('--icons')) buildIcons(work);
+    if (!only.length || only.includes('--og')) buildCards(work, onlyChapters);
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
 }

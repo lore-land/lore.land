@@ -1,0 +1,12 @@
+# A frame drum. The pie's weight arriving, a skin rather than a click.
+#>sound_event_land
+!event{
+  *land{
+    #means["weight"]
+    #says["A frame drum. The pie's weight arriving, a skin rather than a click."]
+    %hear[1100]
+    %q[0.7]
+    =@heard{ @lowpass }
+    ~"book/audio/land"
+  }
+}

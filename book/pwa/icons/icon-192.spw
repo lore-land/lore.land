@@ -1,0 +1,14 @@
+# The bud sigil in cover gold on the cover field, 192 pixels, any purpose.
+#>icon_192
+!icon{
+  *icon_192{
+    .file["icon-192.png"]
+    #says["The bud sigil in cover gold on the cover field, 192 pixels, any purpose."]
+    %size[192]
+    %scale[0.62]
+    %stroke[1.5]
+    =@sigil{ @bud }
+    =@field{ @cover }
+    =@scale{ @mark }
+  }
+}

@@ -1,0 +1,22 @@
+# Chapter Four, Crosswind Council: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_04
+!card{
+  *chapter_04{
+    .file["chapter-04.jpg"]
+    .plate["book/images/04.png"]
+    #title["Crosswind Council"]
+    #in_which["keys are filed smaller, and none of them fit"]
+    #says["Chapter Four, Crosswind Council: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

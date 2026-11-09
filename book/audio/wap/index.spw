@@ -1,0 +1,12 @@
+# A slapstick crack over the wet fall: the crust, not the whole pie in the face.
+#>sound_event_wap
+!event{
+  *wap{
+    #means["crust"]
+    #says["A slapstick crack over the wet fall: the crust, not the whole pie in the face."]
+    %hear[1000]
+    %q[0.7]
+    =@heard{ @highpass }
+    ~"book/audio/wap"
+  }
+}
