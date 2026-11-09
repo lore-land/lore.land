@@ -168,7 +168,7 @@ import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.W';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.I';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, markBeat, rhythmHit, rhythmFound, chapterIncipit, leitmotif, setMusicBed } from './pie-sound.mjs?v=2026_11_09.O';
@@ -1506,7 +1506,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function sceneTexture(id) {
     const material = sceneWhimsy(id).material;
     if (!record.sound || !material) return;
-    import('../modules/spw-sound.mjs?v=2026_11_09.I').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
+    import('../modules/spw-sound.mjs?v=2026_11_09.Q').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
   }
   const drawWhimsy = () => {
     if (!run) return;

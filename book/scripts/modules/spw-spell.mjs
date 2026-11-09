@@ -12,6 +12,7 @@
  *
  * Magic, kept honest:
  *   - each sigil carries its role's ink (?, ~, @, &, *, ^, !, #, ., =, %, $) and a gloss
+ *   - a mutation =@anchor{ @target } is one = atom: the label is @anchor, and the body is what it leans toward
  *   - hover or focus an atom (sigil + label + frame) and it lights, with what it does said under it
  *   - hover a bracket and its pair lights too
  *   - cast: on first sight the spell inks in, glyph by glyph, and the sigils flare once
@@ -47,17 +48,22 @@ const CONTAINER_NAMES = Object.freeze({ '[': 'a frame', '{': 'a body', '(': 'a g
 /* The surface of a spell, as tokens: sigil, label, open, close, string, number, path, word, space, other. */
 export function tokenize(text) {
   const tokens = [];
-  const re = /(\s+)|("(?:[^"\\]|\\.)*"?)|([?~@&*^!#.=%$])(?=[A-Za-z_"[{(<]|$)|([[{(<])|([\]})>])|(-?\d+(?:\.\d+)?)|([A-Za-z_][\w-]*)|(.)/gu;
+  // =@anchor is one tuning, not a bare = and a separate perspective. The label keeps the @ so the
+  // spell joins back to the text it was read from.
+  const re = /(\s+)|("(?:[^"\\]|\\.)*"?)|(=@)([A-Za-z_][\w-]*)|([?~@&*^!#.=%$])(?=[A-Za-z_"[{(<]|$)|([[{(<])|([\]})>])|(-?\d+(?:\.\d+)?)|([A-Za-z_][\w-]*)|(.)/gu;
   let m;
   while ((m = re.exec(text))) {
-    const [whole, space, str, sigil, open, close, num, word] = m;
-    if (space) tokens.push({ type: 'space', text: whole });
-    else if (str) tokens.push({ type: 'string', text: whole });
-    else if (sigil) tokens.push({ type: 'sigil', text: whole });
-    else if (open) tokens.push({ type: 'open', text: whole });
-    else if (close) tokens.push({ type: 'close', text: whole });
-    else if (num) tokens.push({ type: 'number', text: whole });
-    else if (word) tokens.push({ type: 'word', text: whole });
+    const whole = m[0];
+    if (m[1]) tokens.push({ type: 'space', text: whole });
+    else if (m[2]) tokens.push({ type: 'string', text: whole });
+    else if (m[3]) {
+      tokens.push({ type: 'sigil', text: '=' });
+      tokens.push({ type: 'label', text: `@${m[4]}` });
+    } else if (m[5]) tokens.push({ type: 'sigil', text: m[5] });
+    else if (m[6]) tokens.push({ type: 'open', text: m[6] });
+    else if (m[7]) tokens.push({ type: 'close', text: m[7] });
+    else if (m[8]) tokens.push({ type: 'number', text: m[8] });
+    else if (m[9]) tokens.push({ type: 'word', text: m[9] });
     else tokens.push({ type: 'other', text: whole });
   }
   // A string right after a sigil is a path (~"book/chapter/01#…"); a word right after a sigil is its label.
@@ -425,7 +431,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_09.I').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_09.Q').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

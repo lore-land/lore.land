@@ -19,7 +19,7 @@
  * scoreOf(text) gives the events (and is pure, so it can be tested and drawn); playSpell(text,
  * { onAtom }) plays them and calls onAtom(i) as the i-th sigil sounds, so a spell can light as it sings.
  */
-import { tokenize } from './spw-spell.mjs?v=2026_11_09.I';
+import { tokenize } from './spw-spell.mjs?v=2026_11_09.Q';
 
 const MATERIAL_WORDS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
 const PENTA = [0, 2, 4, 7, 9];
@@ -55,6 +55,7 @@ function treeOf(text) {
       if (t.type === 'sigil') {
         const atom = { type: 'atom', sigil: t.text, label: '', args: [], index: atomIndex };
         atomIndex += 1;
+        // A mutation's label is @anchor (tokenize keeps the @ on the = atom, so this is one tuning).
         if (tokens[i]?.type === 'label') { atom.label = tokens[i].text; i += 1; }
         if (tokens[i]?.type === 'path') { atom.path = tokens[i].text; i += 1; }
         if (tokens[i]?.type === 'open' && tokens[i].text === '[') { i += 1; atom.args = readArgs(); }

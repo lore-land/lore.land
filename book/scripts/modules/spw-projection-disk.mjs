@@ -37,9 +37,13 @@
  * (likeness.mjs discoveryOf and shownTitle); until then its spell is a veil, a probe that says where
  * to look. Canon only: nothing is read from other readers, nothing is sent anywhere.
  *
+ * A derived file (a sound, a share card, an app icon) keeps a sidecar beside it. The disk stands
+ * on the three indexes and on each file: the spell on the card is the sidecar, so =@anchor{ @target }
+ * reads as one tuning. A share card is tied to its chapter. The jpg, png and m4a paths stay put.
+ *
  * Canon: .spw/surfaces/spw-architecture.spw (why linked Spw is hyperbolic, and which loops it has).
  */
-import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_09.I';
+import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_09.Q';
 import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-signature.mjs?v=2026_11_08.W';
 import {
   loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,
@@ -123,9 +127,9 @@ export function geodesic(p, q) {
 /* ─── The graph, from the canon ───────────────────────────────────────── */
 
 /* Edge kinds, strongest first: one edge per pair, the first kind that joins them. */
-export const EDGE_KINDS = Object.freeze(['contains', 'first', 'palette', 'planted', 'grounded', 'said', 'kept', 'egg', 'returns', 'sigil', 'like']);
+export const EDGE_KINDS = Object.freeze(['contains', 'card', 'holds', 'beside', 'first', 'palette', 'planted', 'grounded', 'said', 'kept', 'egg', 'returns', 'sigil', 'like']);
 const EDGE_RANK = Object.freeze(Object.fromEntries(EDGE_KINDS.map((kind, i) => [kind, i])));
-const KIND_ORDER = Object.freeze(['chapter', 'room', 'wonder', 'egg', 'lore', 'character', 'palette', 'seed']);
+const KIND_ORDER = Object.freeze(['chapter', 'room', 'wonder', 'egg', 'lore', 'character', 'palette', 'seed', 'card', 'sound', 'icon', 'index']);
 const KEEPER_IDS = Object.freeze({ boof: 'boof', genie: 'genie', boonwap: 'boon', banewap: 'bane', bonewap: 'bonewap', the_porter: 'porter' });
 const SPEAKER_LABEL = Object.freeze({ boon: 'boonwap', bane: 'banewap' });
 
@@ -135,7 +139,7 @@ const SPEAKER_LABEL = Object.freeze({ boon: 'boonwap', bane: 'banewap' });
  * Host-neutral: the build or a script can call it with the same JSON.
  * @returns {{ nodes: Map<string, object>, adj: Map<string, {to: string, edge: object}[]>, edges: object[] }}
  */
-export function buildGraph({ items = {}, near = {}, wonders = [], places = () => [], lines = [], speakers = {}, chapters = [], palettes = [] } = {}) {
+export function buildGraph({ items = {}, near = {}, wonders = [], places = () => [], lines = [], speakers = {}, chapters = [], palettes = [], derived = null } = {}) {
   const nodes = new Map();
   const adj = new Map();
   const edges = [];
@@ -278,6 +282,28 @@ export function buildGraph({ items = {}, near = {}, wonders = [], places = () =>
     (list || []).map((other) => (other === 'card:egg' ? 'egg' : other)).filter((other) => nodes.has(other)).slice(0, 3)
       .forEach((other) => link(id === 'card:egg' ? 'egg' : id, other, 'like'));
   });
+  // Derived files: one index each for sounds, share cards and icons, and a node for each file.
+  // A share card is tied to its chapter, and the three indexes stand beside one another.
+  if (derived) {
+    const indexes = [];
+    for (const group of [derived.sounds, derived.cards, derived.icons]) {
+      if (!group?.id) continue;
+      add({ id: group.id, kind: 'index', sigil: '&', title: group.title, says: group.says || '', spell: group.spell || `&${spwLabel(group.title)}`, href: group.href || null });
+      indexes.push(group.id);
+      for (const member of group.members || []) {
+        if (!member?.id) continue;
+        add({
+          id: member.id, kind: member.kind, sigil: member.sigil || '=', title: member.title, says: member.says || '',
+          spell: member.spell || '', href: member.href || null, chapter: member.chapter || null
+        });
+        link(group.id, member.id, 'holds');
+        if (member.kind === 'card' && member.chapter) link(chapterId(member.chapter), member.id, 'card');
+      }
+    }
+    if (indexes.length >= 2) {
+      for (let i = 0; i < indexes.length; i += 1) link(indexes[i], indexes[(i + 1) % indexes.length], 'beside');
+    }
+  }
   // Neighbours in a stable order: the strongest ties first, then by kind, then by name.
   adj.forEach((list) => list.sort((x, y) => EDGE_RANK[x.edge.kind] - EDGE_RANK[y.edge.kind]
     || KIND_ORDER.indexOf(nodes.get(x.to).kind) - KIND_ORDER.indexOf(nodes.get(y.to).kind) || x.to.localeCompare(y.to)));
@@ -434,7 +460,8 @@ export function layoutFrom(graph, focus, { cap = CAP, ringOne = RING_ONE, depth 
 
 const KIND_WORDS = Object.freeze({
   chapter: 'a chapter', room: 'a room', wonder: 'a wonder', character: 'someone in the book', palette: 'a palette',
-  lore: 'a line the pies let slip', seed: 'a study in the seed atlas', egg: 'a question'
+  lore: 'a line the pies let slip', seed: 'a study in the seed atlas', egg: 'a question',
+  card: 'a share card', sound: 'a sound', icon: 'an app icon', index: 'an index of what the tools made'
 });
 
 /** "a passage in Chapter Four", "a wonder of the dawnward field". */
@@ -449,6 +476,10 @@ export function kindLine(node) {
     case 'seed': return 'a study in the seed atlas';
     case 'lore': return `a line ${node.who} lets slip`;
     case 'egg': return 'a question';
+    case 'card': return node.chapter ? `the share card for ${chapterName(node.chapter)}` : 'a share card';
+    case 'sound': return 'a sound the lanes may play';
+    case 'icon': return 'an app icon drawn from the bud';
+    case 'index': return 'an index of what the tools made';
     default: return KIND_WORDS[node.kind] || 'a thing';
   }
 }
@@ -481,6 +512,9 @@ export function tieWords(graph, edge, from, to) {
       const b = there.likeness;
       return a && b ? `alike: ${whyWords(likenessScore(likeOf(a), likeOf(b)).shared)}` : 'alike';
     }
+    case 'card': return outward ? 'its share card' : 'the chapter this card covers';
+    case 'holds': return outward ? 'one it lists' : 'the index that lists it';
+    case 'beside': return 'another index of what the tools made';
     default: return '';
   }
 }
@@ -546,10 +580,78 @@ export function focusFromAddress(search = globalThis.location?.search || '') {
   return chapter ? `chapter:${pad2(Number(chapter[1]))}` : raw;
 }
 
+/** Entries of a flat index: *name{ #key["value"] ~"path" }. */
+export function readIndexEntries(text) {
+  const entries = [];
+  const re = /\*([a-z0-9_]+)\{([^}]*)\}/g;
+  let m;
+  while ((m = re.exec(String(text)))) {
+    const body = m[2];
+    const fields = {};
+    for (const field of body.matchAll(/#([a-z_]+)\["((?:[^"\\]|\\.)*)"\]/g)) fields[field[1]] = field[2];
+    const path = (body.match(/~"([^"]+)"/) || [])[1] || '';
+    entries.push({ name: m[1], fields, path });
+  }
+  return entries;
+}
+
+/** The spell of a sidecar: from its first action block, comments above left off. */
+export function spellOfSidecar(text) {
+  const start = String(text).search(/^!/m);
+  return start >= 0 ? String(text).slice(start).trim() : '';
+}
+
+/** A path in an index, and the sidecar that sits beside that file. */
+function derivedPaths(path) {
+  const clean = String(path || '').replace(/^\//, '');
+  if (!clean) return { href: '', sidecar: '' };
+  if (/\.spw$/i.test(clean)) return { href: `/${clean}`, sidecar: `/${clean}` };
+  if (/\.[a-z0-9]+$/i.test(clean)) return { href: `/${clean}`, sidecar: `/${clean.replace(/\.[a-z0-9]+$/i, '.spw')}` };
+  return { href: `/${clean}/index.spw`, sidecar: `/${clean}/index.spw` };
+}
+
+const niceName = (name) => capital(String(name).replace(/_/g, ' '));
+
+async function loadDerived() {
+  const text = async (url) => {
+    try {
+      const res = await fetch(url);
+      return res.ok ? await res.text() : '';
+    } catch { return ''; }
+  };
+  const group = async (indexUrl, id, title, kind, sigil) => {
+    const indexText = await text(indexUrl);
+    const entries = readIndexEntries(indexText);
+    const members = await Promise.all(entries.map(async (entry) => {
+      const paths = derivedPaths(entry.path);
+      const sidecar = paths.sidecar ? await text(paths.sidecar) : '';
+      const chapter = kind === 'card' ? Number((/^chapter_(\d+)$/.exec(entry.name) || [])[1]) || null : null;
+      return {
+        id: `derived:${kind}:${kind === 'card' && chapter ? pad2(chapter) : entry.name}`,
+        kind, sigil, title: entry.fields.title || niceName(entry.name),
+        says: entry.fields.says || '',
+        spell: spellOfSidecar(sidecar),
+        href: paths.href || null,
+        chapter
+      };
+    }));
+    return {
+      id, title, says: (indexText.split('\n').find((line) => line.startsWith('# ')) || '').slice(2).trim(),
+      spell: spellOfSidecar(indexText), href: indexUrl, members: members.filter((member) => member.spell)
+    };
+  };
+  const [sounds, cards, icons] = await Promise.all([
+    group('/book/audio/index.spw', 'derived:sounds', 'The sounds', 'sound', '!'),
+    group('/book/images/og/index.spw', 'derived:cards', 'The share cards', 'card', '='),
+    group('/book/pwa/icons/index.spw', 'derived:icons', 'The app icons', 'icon', '*')
+  ]);
+  return { sounds, cards, icons };
+}
+
 async function loadSources() {
   const json = (url) => fetch(url).then((res) => (res.ok ? res.json() : null)).catch(() => null);
-  const [likeness, almanac, lore, catalog, palettes] = await Promise.all([
-    loadLikeness(), loadAlmanac(), json(LORE_URL), json(CATALOG_URL), json(PALETTES_URL)
+  const [likeness, almanac, lore, catalog, palettes, derived] = await Promise.all([
+    loadLikeness(), loadAlmanac(), json(LORE_URL), json(CATALOG_URL), json(PALETTES_URL), loadDerived()
   ]);
   return {
     items: likeness?.items || {},
@@ -559,7 +661,8 @@ async function loadSources() {
     lines: lore?.lines || [],
     speakers: lore?.speakers || {},
     chapters: catalog?.chapters || [],
-    palettes: palettes?.palettes || []
+    palettes: palettes?.palettes || [],
+    derived
   };
 }
 
@@ -1006,6 +1109,14 @@ export function initProjectionDisk(mount) {
           ? [`“${node.line}”`, 'A # is something said, or marked: it stays.']
           : [`The pies have not let this one slip to you yet.${node.hint ? ` ${node.hint}` : ''}`, 'A # is something said, or marked: it stays.'];
       }
+      case 'card':
+        return [node.says, node.chapter ? `A share card for ${chapterName(node.chapter)}. Each =@ is one mutation of the plate, in the order it was applied.` : 'A share card. Each =@ is one mutation of the plate, in the order it was applied.'].filter(Boolean);
+      case 'sound':
+        return [node.says, 'A sound the lanes may play. =@heard names the filter the ear applies.'].filter(Boolean);
+      case 'icon':
+        return [node.says, 'An icon drawn from the bud. Each =@ is one mutation of that sigil.'].filter(Boolean);
+      case 'index':
+        return [node.says || 'An index of files the tools made.', 'The & gathers them. Stand on one to read its sidecar.'];
       default: return [];
     }
   }
@@ -1050,6 +1161,20 @@ export function initProjectionDisk(mount) {
       case 'egg':
         read(node.href, `Where it is first carried: ${chapterName(node.chapter)} →`);
         out.push({ text: 'What it is for is not said here.' });
+        break;
+      case 'card':
+        read(node.href, 'The card itself →');
+        if (node.chapter) read(`/book/chapter/${pad2(node.chapter)}/`, `Read ${chapterName(node.chapter)} →`);
+        break;
+      case 'sound':
+        read(node.href, 'Its sidecar →');
+        out.push({ text: 'Heard in Exactly One Pie, when the moment comes.', href: PIE_HREF, link: 'To the lanes →' });
+        break;
+      case 'icon':
+        read(node.href, 'The icon →');
+        break;
+      case 'index':
+        read(node.href, 'The index, as Spw →');
         break;
       default: break;
     }

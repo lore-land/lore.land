@@ -96,10 +96,18 @@
   &module: ~"book/scripts/modules/spw-projection-disk.mjs"
   &styles: ~"book/styles/components/spw-disk.css"
   where: "/scriptorium/#projection, and from the end of every chapter inventory as ◎ Walk the projection from here (?focus=chapter:NN)"
-  graph: "from the canon only: likeness.json (items and near), the chapter JSONs (rooms, and a room air once it is stood on), semantic.json (where each wonder is marked), the almanac, pie-lore.json, the catalog and the palettes"
+  graph: "from the canon only: likeness.json (items and near), the chapter JSONs (rooms, and a room air once it is stood on), semantic.json (where each wonder is marked), the almanac, pie-lore.json, the catalog, the palettes, and the indexes of derived files (sounds, share cards, app icons), each sidecar read as the spell on its card"
   look: "each thing wears its likeness seal; the rim is the twelve sigils in their role hues, each at its hour; behind the disk the four containers nest, { [ ( < > ) ] }"
   marks: "lore.disk.loops.v1 keeps what was stood on, what was walked and which loops were closed, in this browser only; a walked loop leaves a gold ring on everything on it; a loop closed by hand counts the same"
   limits: "about sixty things at once, the deepest rings pruned first; drawn only while moving; at once under reduced motion; a parallel list of buttons for the keyboard and for screen readers (arrows cycle the first ring, Enter walks there, L lists the loops)"
+}
+
+^derived{
+  .note: "files the tools made, annotated beside the file, mounted from the root index. The public file stays where a link already points"
+  sounds: ~"book/audio/index.spw"
+  share_cards: ~"book/images/og/index.spw"
+  app_icons: ~"book/pwa/icons/index.spw"
+  shape: "a sidecar says what the file is, then names each mutation in order as =@anchor{ @target }. On the disk that spelling is one tuning, and a share card is tied to its chapter"
 }
 
 !never[

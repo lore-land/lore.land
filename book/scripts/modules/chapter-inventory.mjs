@@ -22,7 +22,7 @@
  * Additive: collapsed at the chapter's end, nothing anyone had is moved.
  */
 
-import { renderSpell } from './spw-spell.mjs?v=2026_11_09.I';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
 import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.W';
 import { roomsRead } from './rooms.mjs?v=2026_11_09.L';
 import { readAlmanac } from './almanac.mjs?v=2026_11_09.G';
