@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.J",
+      "date": "2026-11-09",
+      "notes": [
+        "Opened as an app on a phone, the front page fits the screen again: the row that puts the game and the atlas a tap away had made it wider than the phone, which zoomed out to show it all.",
+        "On a slow connection a page is always this release's own: a copy kept from an earlier visit is shown only when the network is gone."
+      ]
+    },
+    {
       "release": "2026_11_09.I",
       "date": "2026-11-09",
       "notes": [

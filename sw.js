@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_11_09.I';
+const CACHE_VERSION = 'lore-pwa-v2026_11_09.J';
 /* Chapters a reader has opened (or asked to keep) live in their own cache,
  * which survives releases: navigations are network-first, so a kept page is
  * only ever served when the network is gone, and it is refreshed on the next
@@ -10,9 +10,6 @@ const PAGES_CACHE = 'lore-pages-v1';
  * an old page asks for its own old assets, and finds them here. */
 const KEPT_ASSETS = 'lore-kept-assets-v1';
 const OFFLINE_URL = '/book/pwa/offline.html';
-/* On a poor connection a kept page is served after this long rather than waiting
- * out the network; the network still finishes and refreshes the kept copy. */
-const NAVIGATION_PATIENCE_MS = 3200;
 
 /* Precache is the offline shell and its icons, nothing more. The shell is
  * self-contained (inline styles and script) so it renders whole with zero
@@ -158,13 +155,12 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       })();
-      network.catch(() => {});
-      const kept = await caches.match(key, { ignoreSearch: true });
+      // Network first, always: a kept copy answers only when the network fails. (Racing a slow network with the
+      // kept copy served an older release's page under this release's styles, which looked broken.)
       try {
-        if (!kept) return await network;
-        // With a kept copy in hand, the network gets a moment; after that the reader gets the page.
-        return await Promise.race([network, new Promise((resolve) => setTimeout(() => resolve(kept), NAVIGATION_PATIENCE_MS))]);
+        return await network;
       } catch {
+        const kept = await caches.match(key, { ignoreSearch: true });
         return kept || caches.match(OFFLINE_URL);
       }
     })());

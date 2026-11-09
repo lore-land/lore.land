@@ -3542,6 +3542,12 @@ html body[data-surface='monument'][data-current-scene] {
 /* ─── Settling: a page is laid out before its footer is seen ───
  * The main column is at least a screen tall, so a footer never starts in view and then gets pushed down
  * while the page's own scripts fill it in (each page's regions keep their settled room in its own sheet). */
+/* A section never makes the page wider than the screen: grid items may be narrower than their contents
+ * (min-width: auto would let one wide row push the whole column, and a phone zooms out to fit it). */
+body[data-surface='monument'] .hub-main > * {
+  min-width: 0;
+}
+
 body[data-surface='monument'] .hub-main {
   min-height: 100svh;
   /* The room is held at the end, not shared among the rows: a short page's sections keep their own height. */
@@ -3553,7 +3559,11 @@ body[data-surface='monument'] .hub-main {
 .featured {
   display: block;
   max-width: 44rem;
-  min-height: 5.8rem;
+  min-height: 6.6rem;
+}
+
+@media (max-width: 40rem) {
+  .featured { min-height: 9.5rem; }
 }
 
 .featured.is-empty {
@@ -3610,6 +3620,17 @@ body[data-surface='monument'] .hub-main {
 .featured-title a {
   color: inherit;
 }
+
+/* A card's lines are capped, so its height is the room its slot kept (no jump as it fills, on any screen). */
+.featured-title,
+.featured-line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featured-title { -webkit-line-clamp: 3; line-clamp: 3; }
+.featured-line { -webkit-line-clamp: 2; line-clamp: 2; }
 
 .featured-line,
 .featured-more {

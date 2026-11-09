@@ -833,7 +833,10 @@ body[data-surface='monument'] .cast-card > .likeness-find {
 /* In the app (launched from its icon): the game and the atlas, a tap away at the top of the front page. */
 .app-feature {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  /* Each card at least 14rem, or the whole width on a phone: never wider than the screen it is on (an
+   * installed app's front page was 520px wide on a 390px phone, and the phone zoomed out to fit it). */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  min-width: 0;
   gap: 0.6rem;
   max-width: 60rem;
   margin: 0.4rem auto 1.2rem;
