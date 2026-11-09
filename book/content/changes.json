@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.V",
+      "date": "2026-11-08",
+      "notes": [
+        "Throw and hop can be arranged in ⚙ Setup: in the middle of the step buttons as before, on either side of them, or as an A/B pair on a diagonal, hop low and throw high, like a pair of buttons under a right thumb. Either can be swapped, Hands mirrors them, and the buttons come small, medium or large. On a phone the same choices arrange them around the pad.",
+        "Sizing the cabinet by its corner now snaps: it holds at the sizes the window offers (fit the window, medium, as wide as there is room) and steps between them so every lane is a whole number of pixels wide, saying the size beside the corner as you drag."
+      ]
+    },
+    {
       "release": "2026_11_08.U",
       "date": "2026-11-08",
       "notes": [

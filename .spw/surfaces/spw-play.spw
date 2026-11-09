@@ -128,6 +128,8 @@
   tactician: "heights with every part, the show window, the story on the road to step on"
   comic_page: "every panel: caption, heights and its meanwhile, the show window, the story as a caption"
   grips: "the cabinet's corner ◢ drags (or arrow-keys) its size; the story strip's foot drags its height"
+  snapping: "a drag of the corner holds at the sizes the window offers (fit the window, medium, as wide as there is room) and between them steps on a grid where each lane is a whole number of pixels; the size it holds is said beside the corner"
+  buttons: "throw and hop in the middle of the steps, on either side of them, or as an A/B pair on a diagonal (B low, A high), either way round, mirrored by Hands; on a touch screen the same, beside or around the pad; two-row layouts keep their buttons short; the buttons come small, medium or large"
 }
 
 ?views{

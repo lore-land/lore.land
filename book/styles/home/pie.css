@@ -555,6 +555,7 @@ body[data-surface='monument'] .pie-main {
 .pie-steps {
   display: grid;
   grid-template-columns: 0.8fr 0.8fr 1.2fr 1.2fr 0.8fr 0.8fr;
+  grid-template-areas: 'left down throw hop up right';   /* each button placed by name: see the layouts below */
   gap: 0.35rem;
 }
 
@@ -4118,19 +4119,20 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 /* ─── Grips: the cabinet's corner sizes the cabinet; the story strip's foot sizes the strip ─── */
 .pie-grip {
+  /* Hung on the cabinet's corner, outside its buttons, so it never takes a tap meant for one. */
   position: absolute;
-  right: 0.15rem;
-  bottom: 0.15rem;
+  right: -0.55rem;
+  bottom: -0.55rem;
   z-index: 3;
   display: grid;
   place-items: center;
   width: 1.4rem;
   height: 1.4rem;
   padding: 0;
-  border: 0;
-  border-radius: 0.3rem;
-  background: transparent;
-  color: color-mix(in srgb, var(--hub-ink) 45%, transparent);
+  border: 1px solid var(--hub-line);
+  border-radius: 50%;
+  background: var(--hub-panel);
+  color: color-mix(in srgb, var(--hub-ink) 55%, transparent);
   font-size: 0.8rem;
   line-height: 1;
   cursor: nwse-resize;
@@ -4215,3 +4217,154 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 .pie-setup-matrix td.is-easier { color: #2f8a4f; font-weight: 700; }
 .pie-setup-matrix td.is-harder { color: var(--pie-knock); font-weight: 700; }
+
+/* ─── Throw and hop, arranged (⚙ Setup): in the middle, either side of the steps, or an A/B pair ───
+ * Every button is placed by name, so a layout is only an arrangement; Swap exchanges throw and hop in
+ * any of them, and Hands mirrors the pair to the other side. Two-row layouts keep their buttons compact
+ * so the row is never much taller than one. */
+.pie-steps .pie-step-left { grid-area: left; }
+.pie-steps .pie-step-down { grid-area: down; }
+.pie-steps .pie-throw { grid-area: throw; }
+.pie-steps .pie-jump { grid-area: hop; }
+.pie-steps .pie-step-up { grid-area: up; }
+.pie-steps .pie-step-right { grid-area: right; }
+
+.pie-cabinet.is-buttons-swap .pie-steps { grid-template-areas: 'left down hop throw up right'; }
+
+.pie-cabinet.is-buttons-sides .pie-steps {
+  grid-template-columns: 1.15fr repeat(4, minmax(0, 0.8fr)) 1.15fr;
+  grid-template-areas: 'throw left down up right hop';
+}
+
+.pie-cabinet.is-buttons-sides.is-buttons-swap .pie-steps { grid-template-areas: 'hop left down up right throw'; }
+
+.pie-cabinet.is-buttons-ab .pie-steps {
+  grid-template-columns: repeat(4, minmax(0, 0.62fr)) repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, calc(2.1rem * var(--controls-scale, 1)));   /* two short rows: the pair stands diagonal, the row stays low */
+  grid-template-areas:
+    'left down up right . throw'
+    'left down up right hop .';
+  row-gap: 0.25rem;
+}
+
+.pie-cabinet.is-buttons-ab.is-buttons-swap .pie-steps {
+  grid-template-areas:
+    'left down up right . hop'
+    'left down up right throw .';
+}
+
+.pie-cabinet.is-buttons-ab.is-left-handed .pie-steps {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) repeat(4, minmax(0, 0.62fr));
+  grid-template-areas:
+    '. throw left down up right'
+    'hop . left down up right';
+}
+
+.pie-cabinet.is-buttons-ab.is-left-handed.is-buttons-swap .pie-steps {
+  grid-template-areas:
+    '. hop left down up right'
+    'throw . left down up right';
+}
+
+.pie-cabinet.is-buttons-ab .pie-steps .pie-step {
+  min-height: 0;
+  padding-block: 0.15rem;
+}
+
+.pie-cabinet.is-buttons-ab .pie-steps :is(.pie-throw, .pie-jump) {
+  border-radius: 999px;
+  white-space: nowrap;
+  padding-inline: 0.25rem;
+  font-size: 0.7rem;
+}
+
+/* On a touch screen: either side of the pad, or the pair as two round buttons, B low and A high. */
+.pie-cabinet.is-buttons-sides .pie-thumbs {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr) minmax(0, 0.8fr);
+  grid-template-areas: 'b pad a';
+  align-items: center;
+}
+
+.pie-cabinet.is-buttons-sides .pie-thumb-actions,
+.pie-cabinet.is-buttons-ab .pie-thumb-actions {
+  grid-template-rows: none;
+}
+
+.pie-cabinet.is-buttons-sides .pie-thumb-actions {
+  display: contents;
+}
+
+.pie-cabinet.is-buttons-sides .pie-thumb {
+  min-height: 0;
+  height: min(100%, 6.5rem);
+}
+
+.pie-cabinet.is-buttons-ab .pie-thumb-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    '. a'
+    'b .';
+  align-content: center;
+  gap: 0.2rem;
+}
+
+.pie-cabinet .pie-thumb-throw { grid-area: a; }
+.pie-cabinet .pie-thumb-hop { grid-area: b; }
+.pie-cabinet.is-buttons-swap .pie-thumb-throw { grid-area: b; }
+.pie-cabinet.is-buttons-swap .pie-thumb-hop { grid-area: a; }
+
+/* In the middle (the default) the pair stacks, throw over hop (hop over throw, swapped). */
+.pie-cabinet:not(.is-buttons-sides):not(.is-buttons-ab) .pie-thumb-actions {
+  grid-template-areas: 'a' 'b';
+}
+
+.pie-cabinet.is-buttons-ab .pie-thumb {
+  min-height: 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 0.2rem;
+}
+
+.pie-cabinet.is-buttons-ab .pie-thumb small {
+  display: none;
+}
+
+.pie-cabinet.is-buttons-sides.is-left-handed .pie-thumbs {
+  grid-template-areas: 'a pad b';
+}
+
+/* Resizing snaps: the size it is holding, said beside the corner while the corner is dragged. */
+.pie-snap-guide {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 9;
+  padding: 0.2rem 0.55rem;
+  border: 1.5px solid var(--panel-ink, var(--hub-ink));
+  border-radius: 999px;
+  background: var(--hub-panel);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--hub-ink) 18%, transparent);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.pie-snap-guide[hidden] {
+  display: none;
+}
+
+/* Button size (⚙ Setup): the steps and the thumbs grow or shrink together; compact layouts stay compact. */
+.pie-cabinet .pie-steps .pie-step {
+  padding-block: calc(0.68rem * var(--controls-scale, 1));
+  font-size: calc(0.84rem * var(--controls-scale, 1));
+}
+
+.pie-cabinet .pie-thumb {
+  min-height: calc(3.4rem * var(--controls-scale, 1));
+}
+
+.pie-cabinet .pie-thumb b {
+  font-size: calc(1rem * var(--controls-scale, 1));
+}

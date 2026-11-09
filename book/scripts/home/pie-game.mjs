@@ -393,6 +393,9 @@ function readRecord() {
         size: parsed.view?.size === 'fit' ? 'fit' : Number.isFinite(parsed.view?.size) ? Math.min(1.45, Math.max(0.8, parsed.view.size)) : undefined,
         controls: ['icons', 'words'].includes(parsed.view?.controls) ? parsed.view.controls : undefined,
         controlsAt: ['top', 'bottom'].includes(parsed.view?.controlsAt) ? parsed.view.controlsAt : undefined,
+        buttons: ['middle', 'sides', 'ab'].includes(parsed.view?.buttons) ? parsed.view.buttons : undefined,
+        buttonsSwap: parsed.view?.buttonsSwap === true ? true : undefined,
+        controlsSize: [0.85, 1, 1.2].includes(parsed.view?.controlsSize) ? parsed.view.controlsSize : undefined,
         panelsAt: ['beside', 'cabinet'].includes(parsed.view?.panelsAt) ? parsed.view.panelsAt : undefined,
         storyMotion: ['passage', 'smooth'].includes(parsed.view?.storyMotion) ? parsed.view.storyMotion : undefined,
         storyIn: ['off', 'caption', 'road', 'both'].includes(parsed.view?.storyIn) ? parsed.view.storyIn : undefined,
@@ -6838,6 +6841,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['pace', 'Pace', [[0.8, 'Gentle'], [1, 'As written'], [1.2, 'Brisk']], 1],
     ['controls', 'Controls', [['icons', 'Icons, one row'], ['words', 'Icons and words']], 'icons'],
     ['controlsAt', 'Controls sit', [['top', 'Above the screen'], ['bottom', 'Below it']], 'top'],
+    ['buttons', 'Throw and hop', [['middle', 'In the middle'], ['sides', 'Either side'], ['ab', 'A/B, diagonal']], 'middle'],
+    ['buttonsSwap', 'Which is which', [[false, 'Throw, then hop'], [true, 'Hop, then throw']], false],
+    ['controlsSize', 'Button size', [[0.85, 'Small'], [1, 'Medium'], [1.2, 'Large']], 1],
     ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
     ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
@@ -6852,6 +6858,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
    * window's height (the lanes keep their shape), never wider than there is room for. Measured twice,
    * because the cabinet's other parts wrap differently at a new width. */
+  /* The room the cabinet has, and the width at which its screen fills the window's height: the numbers
+   * Fit uses, and the points a drag of the corner snaps to. */
+  function cabinetRoom() {
+    const screenEl = root.querySelector('.pie-screen');
+    if (!screenEl || !cabinetVoyage) return null;
+    const desktop = window.matchMedia('(min-width: 62rem)').matches;
+    const topGap = desktop ? parseFloat(getComputedStyle(root).top) || 72 : 8;
+    const pad = root.offsetWidth - screenEl.offsetWidth;
+    const room = desktop ? Math.min(window.innerWidth * (cabinetVoyage.classList.contains('is-story-under') ? 0.5 : 0.42), 760) : cabinetVoyage.clientWidth;
+    const gap = parseFloat(getComputedStyle(root).rowGap) || 0;
+    const below = [heightsPanel, root.querySelector('.pie-caption'), root.querySelector('.pie-flow-prose.is-under')]
+      .filter((el) => el && el.parentElement === root && !el.hidden && el.offsetParent)
+      .reduce((sum, el) => sum + el.offsetHeight + gap, 0);
+    const chrome = root.offsetHeight - screenEl.offsetHeight - below;
+    const screenH = Math.max(300, window.innerHeight - topGap - 12 - chrome);
+    return { pad, room, fitW: Math.round(Math.min(room, Math.max(240, screenH * (W / H) + pad))) };
+  }
   function fitCabinet() {
     if (!cabinetVoyage || setting('size') !== 'fit') return;
     const screenEl = root.querySelector('.pie-screen');
@@ -6882,6 +6905,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     root.classList.toggle('is-compact-controls', setting('controls') === 'icons');
     root.classList.toggle('is-controls-bottom', setting('controlsAt') === 'bottom');
     root.classList.toggle('is-caption-off', setting('caption') === false);
+    root.classList.toggle('is-buttons-sides', setting('buttons') === 'sides');
+    root.classList.toggle('is-buttons-ab', setting('buttons') === 'ab');
+    root.classList.toggle('is-buttons-swap', setting('buttonsSwap') === true);
+    root.style.setProperty('--controls-scale', String(setting('controlsSize')));
     cabinetVoyage?.style.setProperty('--flow-scale', String(setting('flowSize')));
     const at = record.view.story === false ? 'off' : setting('storyAt');
     if (flowProseBox && flowHome) {
@@ -7040,15 +7067,41 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let gripDrag = null;
   grip.addEventListener('pointerdown', (event) => {
     event.preventDefault();
-    grip.setPointerCapture?.(event.pointerId);
+    try { grip.setPointerCapture(event.pointerId); } catch { /* a pointer that is not live: drag without capture */ }
     gripDrag = { x: event.clientX, y: event.clientY, w: root.offsetWidth, m: mediumWidth() };
   });
+  /* Snapping: near a named size (Fit the window, Medium, as wide as there is room) the corner holds there;
+   * between them it steps on a grid where every lane is a whole number of pixels, so the lanes stay crisp. */
+  const snapGuide = Object.assign(document.createElement('span'), { className: 'pie-snap-guide' });
+  snapGuide.hidden = true;
+  root.append(snapGuide);
+  function snapWidth(w, m) {
+    const r = cabinetRoom();
+    if (!r) return { w, label: '' };
+    const points = [[r.fitW, 'Fit the window', 'fit'], [Math.round(m), 'Medium', 1], [Math.round(r.room), 'As wide as there is room', null]];
+    const near = points.find(([pw]) => Math.abs(w - pw) <= 14);
+    if (near) return { w: near[0], label: near[1], named: near[2] };
+    const lane = Math.max(36, Math.round((w - r.pad) / LANES / 4) * 4);   // a lane in whole pixels, on a 4 px step
+    return { w: Math.min(r.room, lane * LANES + r.pad), label: `Lanes ${lane} px wide`, named: null };
+  }
   grip.addEventListener('pointermove', (event) => {
     if (!gripDrag) return;
     const d = Math.max(event.clientX - gripDrag.x, (event.clientY - gripDrag.y) * (W / H));
-    sizeTo((gripDrag.w + d) / gripDrag.m, false);
+    const snap = snapWidth(gripDrag.w + d, gripDrag.m);
+    gripDrag.snap = snap;
+    sizeTo(snap.w / gripDrag.m, false);
+    snapGuide.textContent = snap.label;
+    snapGuide.hidden = false;
   });
-  const gripUp = () => { if (!gripDrag) return; gripDrag = null; sizeTo(Number(record.view.size) || 1, true); say(`Cabinet sized: ${Math.round((Number(record.view.size) || 1) * 100)}%.`); };
+  const gripUp = () => {
+    if (!gripDrag) return;
+    const snap = gripDrag.snap;
+    gripDrag = null;
+    snapGuide.hidden = true;
+    if (snap?.named === 'fit') { record.view.size = 'fit'; writeRecord(record); applySetup(); say('Cabinet: fit the window.'); return; }
+    sizeTo(Number(record.view.size) || 1, true);
+    say(`Cabinet sized: ${snap?.label || `${Math.round((Number(record.view.size) || 1) * 100)}%`}.`);
+  };
   grip.addEventListener('pointerup', gripUp);
   grip.addEventListener('pointercancel', gripUp);
   grip.addEventListener('keydown', (event) => {
@@ -7056,8 +7109,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!step) return;
     event.preventDefault();
     event.stopPropagation();
-    const from = setting('size') === 'fit' ? root.offsetWidth / mediumWidth() : Number(setting('size')) || 1;
-    sizeTo(from + step, true);
+    // A key steps a lane-grid notch (5 lanes × 4 px), snapping to a named size when it reaches one.
+    const m = mediumWidth();
+    const snap = snapWidth(root.offsetWidth + Math.sign(step) * LANES * 4, m);
+    if (snap.named === 'fit') { record.view.size = 'fit'; writeRecord(record); applySetup(); } else sizeTo(snap.w / m, true);
+    say(`Cabinet: ${snap.label}.`);
   });
   const stripGrip = Object.assign(document.createElement('span'), { className: 'pie-strip-grip', tabIndex: 0, title: 'Drag to size the story strip' });
   stripGrip.setAttribute('role', 'separator');
@@ -7071,7 +7127,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   if (record.view.stripH) cabinetVoyage?.style.setProperty('--strip-h', `${record.view.stripH}rem`);
   let stripDrag = null;
-  stripGrip.addEventListener('pointerdown', (event) => { event.preventDefault(); stripGrip.setPointerCapture?.(event.pointerId); stripDrag = { y: event.clientY, h: record.view.stripH || 6.4 }; });
+  stripGrip.addEventListener('pointerdown', (event) => { event.preventDefault(); try { stripGrip.setPointerCapture(event.pointerId); } catch { /* not live */ } stripDrag = { y: event.clientY, h: record.view.stripH || 6.4 }; });
   stripGrip.addEventListener('pointermove', (event) => { if (stripDrag) stripTo(stripDrag.h + (event.clientY - stripDrag.y) / 16, false); });
   const stripUp = () => { if (!stripDrag) return; stripDrag = null; stripTo(record.view.stripH || 6.4, true); };
   stripGrip.addEventListener('pointerup', stripUp);
@@ -7119,7 +7175,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   const setScaled = (key, value, persist) => {
     const [lo, hi] = PINCH_LIMITS[key];
-    record.view[key] = Math.round(clamp(value, lo, hi) * 100) / 100;
+    record.view[key] = Math.round(clamp(value, lo, hi) * 10000) / 10000;   // fine enough that a snapped lane stays whole
     cabinetVoyage?.style.setProperty(key === 'size' ? '--cabinet-scale' : '--flow-scale', String(record.view[key]));
     if (persist) { writeRecord(record); requestAnimationFrame(fit); if (!setupOut?.hidden) paintSetup(); }
   };
