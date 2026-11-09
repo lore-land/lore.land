@@ -114,6 +114,30 @@
   sheet: "⚙ Setup is a sheet over the screen, anchored to the controls, scrolling within itself; the cabinet keeps its shape while it is open; a tap outside or Escape puts it away"
 }
 
+^lanes_story{
+  .note: "pie-game.mjs laneStoryTick, laneStoryStep, paveSentence, drawLaneCaption, drawRoadWords; ⚙ Setup: story in the lanes"
+  why: "the carry goes through a chapter far faster than anyone reads (a passage a second or so), and on a phone the story beside is out of sight while playing; so the lanes tell it at reading speed"
+  caption: "the sentence (a long one in clauses) as a subtitle at the top of the screen, up for as long as its words take to read; when it falls more than four behind it skips ahead to the carry, and says … where it did"
+  road: "a phrase at a time painted on the cobbles, coming down with the world, five or so on the road at once; a stream of glimpses that keeps up by dropping the oldest; a wonder's own words glow, and stepping onto one underfoot reads it: a little crust, and the chapter leans toward the fairy tale (=lean read)"
+  defaults: "a caption on a narrow screen, nothing in the lanes on a wide one where the story runs beside"
+}
+
+^layouts{
+  lanes_first: "the screen as large as the window allows, the story as a caption, nothing else in the way"
+  reader: "the story beside the screen (under it on a phone), large, a passage at a time"
+  tactician: "heights with every part, the show window, the story on the road to step on"
+  comic_page: "every panel: caption, heights and its meanwhile, the show window, the story as a caption"
+  grips: "the cabinet's corner ◢ drags (or arrow-keys) its size; the story strip's foot drags its height"
+}
+
+?views{
+  across: "easier on the drawn lanes and the board; harder on the heights strip, which is one lane"
+  ahead: "easier on the lanes and the board; harder in the show window and with the story in the lanes"
+  height: "hardest from above: the ⤒ marks and the heights strip are there for it"
+  timing: "easier on the heights strip and in the show window (after the fact); harder with the story beside, where the eyes leave the lanes"
+  story: "easier beside and in the lanes; harder on the board and the heights strip"
+}
+
 ^app{
   shortcuts: "the installed app leads with Play (the game) and Atlas (the seed atlas), each with its own icon drawn from the book: Mr. BoonWAP glad, and a study seal; then the desk, Chapter One and the zine"
   front_page: "launched from its icon, the front page offers the game and the atlas at its top"

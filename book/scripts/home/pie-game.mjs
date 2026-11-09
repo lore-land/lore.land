@@ -395,6 +395,8 @@ function readRecord() {
         controlsAt: ['top', 'bottom'].includes(parsed.view?.controlsAt) ? parsed.view.controlsAt : undefined,
         panelsAt: ['beside', 'cabinet'].includes(parsed.view?.panelsAt) ? parsed.view.panelsAt : undefined,
         storyMotion: ['passage', 'smooth'].includes(parsed.view?.storyMotion) ? parsed.view.storyMotion : undefined,
+        storyIn: ['off', 'caption', 'road', 'both'].includes(parsed.view?.storyIn) ? parsed.view.storyIn : undefined,
+        stripH: Number.isFinite(parsed.view?.stripH) ? Math.min(16, Math.max(4, parsed.view.stripH)) : undefined,
         storyLine: [0.3, 0.5, 0.66].includes(parsed.view?.storyLine) ? parsed.view.storyLine : undefined,
         caption: parsed.view?.caption === false ? false : undefined,
         focusOnPlay: parsed.view?.focusOnPlay === false ? false : undefined,
@@ -1015,7 +1017,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
     caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
-    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5]
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], read: ['boon', 0.2]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -1024,7 +1026,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
     caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
-    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time'
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', read: 'words read underfoot'
   });
   let leanRules = {};
   const lean = (event, n = 1) => {
@@ -1057,7 +1059,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'a knock', boxed: 'a slice boxed', bane_fed: 'a baneberry fed to him', scheme_ran: 'a scheme run', foretold: 'a foretelling come true',
     flinched: 'a flinch', let_past: 'a baneberry let past', perfect: 'a perfect throw', over_mimes: 'over the mimes', ramp: 'off a ramp',
     hop_clear: 'a clean hop', deft: 'a deft landing', caught: 'a tilt caught', boneberry: 'a boneberry', foiled: 'Mr. BaneWAP foiled',
-    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time'
+    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', read: 'a word read underfoot'
   });
   /* The contest with Mimes Against WAP: what scores for the pie, and what for the mimes. */
   const CONTEST = Object.freeze({
@@ -1252,6 +1254,194 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     void meanwhileOut.offsetWidth;
     meanwhileOut.classList.add('is-cut');
   }
+
+  /* ─── The story in the lanes: the passing passage, a sentence at a time ───
+   * Caption: the sentence at the top of the screen, a subtitle that advances with the carry, so the
+   * story can be read without looking away from the lanes. Road: its words painted on the cobbles,
+   * coming down with the world in reading order; a wonder's own words glow, and stepping onto one as it
+   * passes underfoot reads it (a little crust for the pie, and the chapter leans toward the fairy tale).
+   * ⚙ Setup: off, caption, road, or both; on a narrow screen, where the story beside is out of sight
+   * while playing, it starts as a caption. */
+  // The carry goes through a chapter far faster than anyone reads, so the lanes tell it at reading speed:
+  // a caption stays up as long as its words take to read; the road lays a phrase at a time; when either
+  // falls more than a few behind, it skips ahead to where the carry is (and says … where it did).
+  const laneStory = { para: -1, sentences: [], terms: new Set(), at: -1, shownAt: 0, capQ: [], cap: '', capAt: 0, roadQ: [] };
+  // Sentences, and a long one in clauses (at a comma, a semicolon, a dash), so a caption is never cut short.
+  const sentencesOf = (text) => (String(text).match(/[^.!?…]+[.!?…]+["”’)]*|[^.!?…]+$/g) || [text])
+    .map((x) => x.trim()).filter(Boolean)
+    .flatMap((sentence) => {
+      if (sentence.length <= 140) return [sentence];
+      const parts = [];
+      let cur = '';
+      sentence.split(/(?<=[,;:—])\s+/).forEach((clause) => {
+        if (cur && (cur.length + clause.length > 120)) { parts.push(cur); cur = clause; } else cur = cur ? `${cur} ${clause}` : clause;
+      });
+      if (cur) parts.push(cur);
+      return parts;
+    });
+  const storyInMode = () => {
+    const v = record.view.storyIn;
+    if (v === 'off' || v === 'caption' || v === 'road' || v === 'both') return v;
+    return window.matchMedia('(min-width: 62rem)').matches ? 'off' : 'caption';
+  };
+  function laneStoryTick(i, frac) {
+    if (!run || !flowProse) return;
+    if (i !== laneStory.para) {
+      const el = flowProse.children[i];
+      laneStory.para = i;
+      laneStory.sentences = sentencesOf(el?.textContent || '');
+      laneStory.terms = new Set([...(el?.querySelectorAll('.pie-flow-term') || [])].map((m) => m.textContent.toLowerCase()));
+      laneStory.at = -1;
+    }
+    const list = laneStory.sentences;
+    if (!list.length) return;
+    // Which sentence the carry is at: by how far through the passage it is, weighted by sentence length.
+    const total = list.reduce((sum, x) => sum + x.length, 0);
+    let acc = 0;
+    let at = list.length - 1;
+    for (let k = 0; k < list.length; k += 1) { acc += list[k].length; if (acc / total > frac) { at = k; break; } }
+    if (at !== laneStory.at) {
+      laneStory.at = at;
+      const mode = storyInMode();
+      if (mode === 'caption' || mode === 'both') laneStory.capQ.push(list[at]);
+      if (mode === 'road' || mode === 'both') {
+        // A phrase a row: short enough to read in one look as it comes down.
+        let row = '';
+        list[at].split(/\s+/).forEach((word) => {
+          if (row && row.length + word.length > 38) { laneStory.roadQ.push({ text: row, terms: laneStory.terms }); row = word; } else row = row ? `${row} ${word}` : word;
+        });
+        if (row) laneStory.roadQ.push({ text: row, terms: laneStory.terms });
+      }
+    }
+  }
+  /* Each frame: the caption turns when it has been read; the road lays its next phrase when the last
+   * one has come onto the screen. */
+  function laneStoryStep() {
+    if (!run) return;
+    const L = laneStory;
+    const need = L.cap ? clamp(L.cap.split(/\s+/).length * 0.28, 2, 6) : 0;
+    if (L.capQ.length && (!L.cap || run.t - L.capAt >= need)) {
+      let skipped = false;
+      if (L.capQ.length > 4) { L.capQ.splice(0, L.capQ.length - 1); skipped = true; }
+      L.cap = `${skipped ? '… ' : ''}${L.capQ.shift()}`;
+      L.capAt = run.t;
+      L.shownAt = run.t;
+    }
+    if (L.roadQ.length) {
+      const highest = run.roadWords?.length ? Math.min(...run.roadWords.map((w) => w.y)) : Infinity;
+      if (highest >= 84) {   // a phrase every ~100 px: five or so on the road at once, the lanes still clear
+        // The road is a stream of glimpses (the carry outruns it); it keeps up by dropping the oldest.
+        if (L.roadQ.length > 4) L.roadQ.splice(0, L.roadQ.length - 2);
+        const next = L.roadQ.shift();
+        paveSentence(next.text, next.terms);
+      }
+    }
+  }
+  /* Its words on the cobbles: packed into rows across the lanes, read top to bottom, coming down. */
+  function paveSentence(text, terms = laneStory.terms) {
+    run.roadWords = run.roadWords || [];
+    const words = text.split(/\s+/).filter(Boolean);
+    ctx.save();
+    ctx.font = '600 13px Georgia, serif';
+    let row = 0;
+    let x = 14;
+    const rows = [[]];
+    words.forEach((word) => {
+      const w = ctx.measureText(word).width;
+      if (x + w > W - 14 && rows[row].length) { row += 1; rows[row] = []; x = 14; }
+      rows[row].push({ word, w, x: x + w / 2 });
+      x += w + 9;
+    });
+    ctx.restore();
+    // Above whatever is already on the road; its rows read top to bottom, a little apart, as a line does.
+    const top = -16;
+    rows.forEach((line, r) => {
+      const width = line.reduce((sum, item) => sum + item.w, 0) + (line.length - 1) * 9;
+      const shift = (W - width) / 2 - 14;   // each row centred across the lanes
+      line.forEach((item) => {
+        const clean = item.word.replace(/[^\p{L}\p{N}'’-]/gu, '').toLowerCase();
+        const glow = [...terms].some((term) => term.split(/\s+/).includes(clean));
+        run.roadWords.push({ word: item.word, w: item.w, x: item.x + shift, y: top - (rows.length - 1 - r) * 34, glow, read: false });
+      });
+    });
+    if (run.roadWords.length > 90) run.roadWords.splice(0, run.roadWords.length - 90);
+  }
+  function roadWordsStep(dt) {
+    if (!run?.roadWords?.length) return;
+    run.roadWords.forEach((rw) => {
+      rw.y += run.speed * dt;
+      // A glowing word underfoot, on the ground (not in a hop), is read.
+      if (rw.glow && !rw.read && !airborne() && Math.abs(rw.y - (run.y + 10)) < 13 && Math.abs(rw.x - run.x) < rw.w / 2 + 12) {
+        rw.read = true;
+        lean('read');
+        run.aura = Math.min(1, run.aura + 0.03);
+        run.tags.push({ x: rw.x, y: rw.y - 18, t: 0, text: `READ: ${rw.word.replace(/[^\p{L}\p{N}'’ -]/gu, '').toUpperCase()}` });
+        sfx('catch', 0, rw.x);
+      }
+    });
+    run.roadWords = run.roadWords.filter((rw) => rw.y < H + 24);
+  }
+  /* Painted on the road, under everything that comes down it. */
+  const drawRoadWords = () => {
+    if (!run?.roadWords?.length) return;
+    ctx.save();
+    ctx.font = '600 13px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    run.roadWords.forEach((rw) => {
+      if (rw.y < -20) return;
+      if (rw.glow && !rw.read) {
+        ctx.shadowColor = 'rgba(242, 193, 78, 0.9)';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = mix(colors.gold, colors.ink, 0.35);
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = colors.ink;
+        ctx.globalAlpha = rw.read ? 0.3 : 0.55;
+      }
+      ctx.fillText(rw.word, rw.x, rw.y);
+      if (rw.glow && !rw.read) {
+        ctx.shadowBlur = 0;
+        ctx.fillRect(rw.x - rw.w / 2, rw.y + 8, rw.w, 1.5);
+      }
+    });
+    ctx.restore();
+  };
+  /* The subtitle: the sentence the carry is at, at the top of the screen under the HUD. */
+  const drawLaneCaption = () => {
+    const mode = storyInMode();
+    if (!run || state !== 'running' || (mode !== 'caption' && mode !== 'both') || !laneStory.cap) return;
+    const text = laneStory.cap;
+    if (!text) return;
+    ctx.save();
+    ctx.font = '500 13.5px Georgia, serif';
+    const maxW = W - 34;
+    const lines = [];
+    let line = '';
+    text.split(/\s+/).forEach((word) => {
+      const next = line ? `${line} ${word}` : word;
+      if (ctx.measureText(next).width > maxW && line) { lines.push(line); line = word; } else line = next;
+    });
+    if (line) lines.push(line);
+    const shown = lines.slice(0, 3);
+    if (lines.length > 3) shown[2] = `${shown[2].replace(/[,;:]?$/, '')}…`;
+    const age = run.t - laneStory.shownAt;
+    const y0 = 92;
+    const h = shown.length * 17 + 12;
+    ctx.globalAlpha = reduced?.matches ? 1 : Math.min(1, age / 0.25);
+    ctx.fillStyle = mix(colors.paper, 'rgb(255, 255, 255)', 0.25).replace('rgb(', 'rgba(').replace(')', ', 0.88)');
+    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.7);
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(10, y0, W - 20, h, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = colors.gold;
+    ctx.fillRect(10, y0 + 4, 2.5, h - 8);
+    ctx.fillStyle = colors.ink;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    shown.forEach((l, k) => ctx.fillText(l, 19, y0 + 7 + k * 17));
+    ctx.restore();
+  };
 
   /* ─── Whimsy: how an impact looks and sounds, by sprite and by scene ───
    * !whimsy{ *kind{ #pop["BONK!", …] *bits[crumbs] !sound[…] %drama[1] } } and !scenes{ *field{ $frost
@@ -2942,6 +3132,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run = fresh();
     run.intro = introMode;
     show.reset();
+    Object.assign(laneStory, { para: -1, at: -1, capQ: [], cap: '', roadQ: [] });
     hideCard();
     state = 'running';
     // Immersion: on Play, the whole cabinet comes into view (⚙ Setup can leave the page where it is).
@@ -3648,6 +3839,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       flowProse.children[i]?.classList.add('is-passing');
       flowAt = i;
     }
+    laneStoryTick(i, f - i);
     const { top, h } = flowMeasure[i];
     // Where the passing line sits (⚙ Setup: high, middle, low), and how the story moves: a passage at a
     // time (each held still while it passes, easier to read) or smoothly with the carry.
@@ -4120,6 +4312,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         return !gone;
       });
       run.ways.forEach((way) => { way.y += run.speed * dt; });
+      laneStoryStep();
+      roadWordsStep(dt);
       run.rules.forEach((rule) => { rule.y += run.speed * dt; });
       run.rules = run.rules.filter((rule) => rule.y < H + 20);
       // First meetings: said under the screen once per visitor, with what the thing does.
@@ -6526,6 +6720,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     drawScene();
     drawRules();
+    drawRoadWords();
     drawBoonWAP();
     drawBaneWAP();
     // Drawn by height (the implicit z): ground first, then low, then bodies; things in the air after
@@ -6564,6 +6759,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.fillRect(0, 0, W, H);
     }
     drawHud();
+    drawLaneCaption();
     drawPoints();
     if (show.mode !== 'off') show.frame(run, colors);
     heights.draw(heightsSnap(), colors);
@@ -6578,6 +6774,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       drawMiniBanner();
       drawAskTags();
       drawHud();
+      drawLaneCaption();
     }
   }
 
@@ -6643,6 +6840,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['controlsAt', 'Controls sit', [['top', 'Above the screen'], ['bottom', 'Below it']], 'top'],
     ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
+    ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
     ['storyMotion', 'Story moves', [['passage', 'A passage at a time'], ['smooth', 'Smoothly, with the carry']], 'passage'],
     ['storyLine', 'Passing line', [[0.3, 'High'], [0.5, 'Middle'], [0.66, 'Low']], 0.5],
     ['flowSize', 'Story words', [[0.88, 'Small'], [1, 'Medium'], [1.18, 'Large'], [1.36, 'Larger']], 1],
@@ -6730,6 +6928,59 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   if (toolsBar) new MutationObserver(splitLabels).observe(toolsBar, { childList: true, subtree: true, characterData: true });
   requestAnimationFrame(splitLabels);
+  /* Layouts: a way of playing, as several choices at once (each can still be changed after). */
+  const LAYOUTS = Object.freeze([
+    ['lanes', 'Lanes first', 'The screen as large as the window allows; the story as a caption in the lanes; nothing else in the way.'],
+    ['reader', 'Reader', 'The story beside the screen (under it on a phone), large, a passage at a time; the caption box kept.'],
+    ['tactician', 'Tactician', 'Heights shown with every part, the show in its window, the story on the road where you can step on its words.'],
+    ['comic', 'Comic page', 'Every panel: the caption, heights and its meanwhile, the show window, the story as a caption.']
+  ]);
+  function applyLayout(id) {
+    const wide = window.matchMedia('(min-width: 62rem)').matches;
+    const v = record.view;
+    const set = {
+      lanes: { size: 'fit', controls: 'icons', controlsAt: 'top', panelsAt: 'beside', storyIn: 'caption', caption: false, heightsShown: false, show: 'off', story: wide },
+      reader: { size: 'fit', storyAt: wide ? 'beside' : 'under', storyIn: 'off', storyMotion: 'passage', flowSize: 1.18, caption: true, heightsShown: false, story: true },
+      tactician: { size: 'fit', heightsShown: true, heights: true, show: 'inset', storyIn: 'road', caption: true, heightsCfg: { ...HEIGHTS_DEFAULTS } },
+      comic: { size: 'fit', panelsAt: 'beside', caption: true, heightsShown: true, heights: true, show: 'inset', storyIn: 'caption', heightsCfg: { ...HEIGHTS_DEFAULTS, meanwhile: true } }
+    }[id];
+    if (!set) return;
+    Object.assign(v, set);
+    writeRecord(record);
+    if (heightsPanel && set.heights) heightsPanel.open = true;
+    applyView();
+    applyShow();
+    applySetup();
+    paintSetup();
+    requestAnimationFrame(placeSetup);
+    say(`${LAYOUTS.find(([k]) => k === id)[1]}: ${LAYOUTS.find(([k]) => k === id)[2]}`);
+  }
+  /* Which views make which dimensions of play easier, and which harder: across the lanes, ahead up
+   * them, height (what a hop clears), timing, and the story. */
+  const VIEWS = Object.freeze([
+    ['The lanes, drawn', '✓', '✓', '✕', '·', '✕'],
+    ['The board (▢ Show)', '✓', '✓', '·', '·', '✕'],
+    ['⤒ Heights strip', '✕', '·', '✓', '✓', '✕'],
+    ['The show window', '·', '✕', '·', '✓', '·'],
+    ['The story beside', '·', '·', '·', '✕', '✓'],
+    ['The story in the lanes', '·', '✕', '·', '·', '✓']
+  ]);
+  function viewsMatrix() {
+    const box = nodeOf('details', 'pie-setup-matrix');
+    box.append(nodeOf('summary', '', 'What each view makes easier'));
+    const table = nodeOf('table', '');
+    const head = nodeOf('tr', '');
+    ['', 'Across', 'Ahead', 'Height', 'Timing', 'Story'].forEach((h) => head.append(nodeOf('th', '', h)));
+    table.append(head);
+    VIEWS.forEach(([name, ...cells]) => {
+      const tr = nodeOf('tr', '');
+      tr.append(nodeOf('th', '', name));
+      cells.forEach((c) => { const td = nodeOf('td', c === '✓' ? 'is-easier' : c === '✕' ? 'is-harder' : '', c); td.setAttribute('aria-label', c === '✓' ? 'easier' : c === '✕' ? 'harder' : 'no change'); tr.append(td); });
+      table.append(tr);
+    });
+    box.append(table, nodeOf('p', 'pie-setup-note', '✓ easier · ✕ harder · · neither. Height is the hardest to see from above: the ⤒ marks and the heights strip are there for it. The story is hardest to follow while playing: a caption or the road brings it into the lanes.'));
+    return box;
+  }
   function paintSetup() {
     if (!setupOut) return;
     const rows = SETUP.map(([key, label, options]) => {
@@ -6737,7 +6988,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       row.setAttribute('role', 'group');
       row.setAttribute('aria-label', label);
       row.append(nodeOf('span', 'pie-setup-label', label));
-      const current = key === 'storyAt' && record.view.story === false ? 'off' : setting(key);
+      const current = key === 'storyAt' && record.view.story === false ? 'off' : key === 'storyIn' ? storyInMode() : setting(key);
       options.forEach(([value, words]) => {
         const b = nodeOf('button', 'pie-setup-opt', words);
         b.type = 'button';
@@ -6757,9 +7008,81 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
       return row;
     });
-    setupOut.replaceChildren(...rows, nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes) to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
+    // Layouts: several choices at once, each for a way of playing.
+    const presets = nodeOf('div', 'pie-setup-row pie-setup-presets');
+    presets.setAttribute('role', 'group');
+    presets.setAttribute('aria-label', 'Layouts');
+    presets.append(nodeOf('span', 'pie-setup-label', 'Layouts: several at once'));
+    LAYOUTS.forEach(([id, label, says]) => {
+      const b = nodeOf('button', 'pie-setup-opt pie-setup-preset', label);
+      b.type = 'button';
+      b.title = says;
+      b.addEventListener('click', () => applyLayout(id));
+      presets.append(b);
+    });
+    setupOut.replaceChildren(presets, ...rows, viewsMatrix(), nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes), or drag its corner ◢, to size the cabinet. On a trackpad, ctrl and scroll does the same.'));
   }
   requestAnimationFrame(applySetup);   // after setup of the page: where the story runs, how big things are
+
+  /* ─── Grips: the cabinet's corner (◢) drags its size; the story strip's foot drags its height ───
+   * Both keep what they are set to; the corner also answers the arrow keys, the strip's foot too. */
+  const mediumWidth = () => (window.matchMedia('(min-width: 62rem)').matches
+    ? clamp((window.innerHeight - 320) * 0.643, 288, 400)
+    : Math.min(cabinetVoyage?.clientWidth || 360, 416));
+  const grip = Object.assign(document.createElement('button'), { type: 'button', className: 'pie-grip', textContent: '◢', title: 'Drag to size the cabinet (or use the arrow keys)' });
+  grip.setAttribute('aria-label', 'Size the cabinet: drag, or use the arrow keys');
+  root.append(grip);
+  const sizeTo = (scale, persist) => {
+    if (setting('size') === 'fit') cabinetVoyage?.classList.remove('is-fit');
+    setScaled('size', scale, persist);
+    if (persist) applySetup();
+  };
+  let gripDrag = null;
+  grip.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    grip.setPointerCapture?.(event.pointerId);
+    gripDrag = { x: event.clientX, y: event.clientY, w: root.offsetWidth, m: mediumWidth() };
+  });
+  grip.addEventListener('pointermove', (event) => {
+    if (!gripDrag) return;
+    const d = Math.max(event.clientX - gripDrag.x, (event.clientY - gripDrag.y) * (W / H));
+    sizeTo((gripDrag.w + d) / gripDrag.m, false);
+  });
+  const gripUp = () => { if (!gripDrag) return; gripDrag = null; sizeTo(Number(record.view.size) || 1, true); say(`Cabinet sized: ${Math.round((Number(record.view.size) || 1) * 100)}%.`); };
+  grip.addEventListener('pointerup', gripUp);
+  grip.addEventListener('pointercancel', gripUp);
+  grip.addEventListener('keydown', (event) => {
+    const step = { ArrowRight: 0.04, ArrowUp: 0.04, ArrowLeft: -0.04, ArrowDown: -0.04 }[event.key];
+    if (!step) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const from = setting('size') === 'fit' ? root.offsetWidth / mediumWidth() : Number(setting('size')) || 1;
+    sizeTo(from + step, true);
+  });
+  const stripGrip = Object.assign(document.createElement('span'), { className: 'pie-strip-grip', tabIndex: 0, title: 'Drag to size the story strip' });
+  stripGrip.setAttribute('role', 'separator');
+  stripGrip.setAttribute('aria-orientation', 'horizontal');
+  stripGrip.setAttribute('aria-label', 'Story strip height: drag, or use the arrow keys');
+  flowProseBox?.append(stripGrip);
+  const stripTo = (rem, persist) => {
+    record.view.stripH = Math.round(clamp(rem, 4, 16) * 10) / 10;
+    cabinetVoyage?.style.setProperty('--strip-h', `${record.view.stripH}rem`);
+    if (persist) { writeRecord(record); fitCabinet(); requestAnimationFrame(fit); }
+  };
+  if (record.view.stripH) cabinetVoyage?.style.setProperty('--strip-h', `${record.view.stripH}rem`);
+  let stripDrag = null;
+  stripGrip.addEventListener('pointerdown', (event) => { event.preventDefault(); stripGrip.setPointerCapture?.(event.pointerId); stripDrag = { y: event.clientY, h: record.view.stripH || 6.4 }; });
+  stripGrip.addEventListener('pointermove', (event) => { if (stripDrag) stripTo(stripDrag.h + (event.clientY - stripDrag.y) / 16, false); });
+  const stripUp = () => { if (!stripDrag) return; stripDrag = null; stripTo(record.view.stripH || 6.4, true); };
+  stripGrip.addEventListener('pointerup', stripUp);
+  stripGrip.addEventListener('pointercancel', stripUp);
+  stripGrip.addEventListener('keydown', (event) => {
+    const step = { ArrowDown: 0.5, ArrowUp: -0.5 }[event.key];
+    if (!step) return;
+    event.preventDefault();
+    event.stopPropagation();
+    stripTo((record.view.stripH || 6.4) + step, true);
+  });
   const placeSetup = () => {
     // Under the controls when they sit above the screen; over them when they sit below.
     const below = setting('controlsAt') === 'bottom';

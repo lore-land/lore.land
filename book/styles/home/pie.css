@@ -3982,8 +3982,8 @@ html:not([data-chrome-hidden='true']) .pie-index {
 
 .pie-cabinet .pie-flow-prose.is-under .pie-flow-window {
   flex: none;
-  min-height: 6.4rem;
-  max-height: 6.4rem;
+  min-height: var(--strip-h, 6.4rem);
+  max-height: var(--strip-h, 6.4rem);
 }
 
 /* The story under the screen: two columns, the cabinet and its wonders beside it. */
@@ -4115,3 +4115,103 @@ html:not([data-chrome-hidden='true']) .pie-index {
   .pie-cabinet .pie-heights { order: 3; }
   .pie-cabinet .pie-caption { order: 4; }
 }
+
+/* ─── Grips: the cabinet's corner sizes the cabinet; the story strip's foot sizes the strip ─── */
+.pie-grip {
+  position: absolute;
+  right: 0.15rem;
+  bottom: 0.15rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: color-mix(in srgb, var(--hub-ink) 45%, transparent);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.pie-grip:hover,
+.pie-grip:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--hub-gold) 22%, transparent);
+  color: var(--hub-ink);
+}
+
+.pie-strip-grip {
+  display: none;
+}
+
+.pie-cabinet .pie-flow-prose.is-under .pie-strip-grip {
+  display: block;
+  height: 0.55rem;
+  margin: 0.1rem auto -0.15rem;
+  width: 3rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(var(--hub-line), var(--hub-line)) center 30% / 100% 1.5px no-repeat,
+    linear-gradient(var(--hub-line), var(--hub-line)) center 70% / 100% 1.5px no-repeat;
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.pie-cabinet .pie-flow-prose.is-under .pie-strip-grip:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: 2px;
+}
+
+/* Layouts: several choices at once, set apart at the head of the sheet. */
+.pie-setup-presets {
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed var(--hub-line);
+}
+
+.pie-setup-preset {
+  font-weight: 600;
+}
+
+/* What each view makes easier: a small table, ✓ and ✕ in the lanes' own inks. */
+.pie-setup-matrix summary {
+  cursor: pointer;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hub-accent-deep);
+}
+
+.pie-setup-matrix table {
+  width: 100%;
+  margin-top: 0.35rem;
+  border-collapse: collapse;
+  font-size: 0.74rem;
+}
+
+.pie-setup-matrix th,
+.pie-setup-matrix td {
+  padding: 0.18rem 0.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--hub-line) 70%, transparent);
+  text-align: center;
+}
+
+.pie-setup-matrix th:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.pie-setup-matrix tr:first-child th {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-setup-matrix td.is-easier { color: #2f8a4f; font-weight: 700; }
+.pie-setup-matrix td.is-harder { color: var(--pie-knock); font-weight: 700; }

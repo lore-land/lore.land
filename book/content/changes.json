@@ -2,6 +2,15 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.U",
+      "date": "2026-11-08",
+      "notes": [
+        "The story can be read in the lanes now. The carry goes through a chapter much faster than anyone reads, so the lanes tell it at reading speed: as a caption at the top of the screen that stays up as long as its words take to read, or painted on the road a phrase at a time. On a phone, where the story beside the game is out of sight while you play, it starts as a caption.",
+        "On the road, a wonder's own words glow: step onto one as it passes underfoot and you have read it, which feeds the crust a little and leans the chapter toward the fairy tale.",
+        "⚙ Setup has layouts that set several things at once (Lanes first, Reader, Tactician, Comic page), a table of what each view makes easier or harder (across, ahead, height, timing, the story), and the cabinet can be sized by dragging its corner ◢; the story strip under the screen by dragging its foot."
+      ]
+    },
+    {
       "release": "2026_11_08.T",
       "date": "2026-11-08",
       "notes": [
