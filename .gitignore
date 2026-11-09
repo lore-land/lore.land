@@ -2,3 +2,8 @@
 .DS_Store
 node_modules
 dist
+
+# Exactly One Pie WAV pipeline (rendered samples, the synth script and its sketchbook): kept local, to be enhanced later
+audio/
+tools/audio_synthesis/synth_pie_audio.py
+tools/audio_synthesis/pie-sketchbook.html

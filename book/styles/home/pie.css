@@ -4388,3 +4388,314 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-ach-where a {
   font-size: 0.78rem;
 }
+
+/* ─── Arrows and buttons, shaped and placed (⚙ Setup) ─────────────────────────
+ * A row under the screen is the older arrangement (and, on a touch screen, the pad). Any other shape
+ * or place shows the arrows themselves on every screen: either side (◀ at the left and ▶ at the right,
+ * ▲ ▼ with one of them and throw and hop with the other, by ⇄ Hands), or a cross (the four arrows as a
+ * pad, throw and hop an A/B pair on the other side). Under the screen; at its edges, the screen held
+ * between them; or over it, a see-through layer the lanes show through. Every layout is a set of named
+ * areas (--areas under or over the screen, --edge-areas beside it); Swap and Hands only rename them. */
+.pie-cabinet {
+  grid-template-columns: minmax(0, 1fr);   /* nothing in the cabinet may widen it past its frame */
+  --key-h: calc(2.3rem * var(--controls-scale, 1));
+  --key-w: calc(2.6rem * var(--controls-scale, 1));
+  --act-w: calc(3.5rem * var(--controls-scale, 1));
+}
+
+.pie-cabinet.is-arrows-sides {
+  --cols: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  --areas: 'up . throw' 'left . right' 'down . hop';
+  --edge-cols: var(--act-w) minmax(0, 1fr) var(--act-w);
+  --edge-areas: '. screen .' 'up screen throw' 'left screen right' 'down screen hop';
+}
+.pie-cabinet.is-arrows-sides.is-buttons-swap {
+  --areas: 'up . hop' 'left . right' 'down . throw';
+  --edge-areas: '. screen .' 'up screen hop' 'left screen right' 'down screen throw';
+}
+.pie-cabinet.is-arrows-sides.is-left-handed {
+  --areas: 'throw . up' 'left . right' 'hop . down';
+  --edge-areas: '. screen .' 'throw screen up' 'left screen right' 'hop screen down';
+}
+.pie-cabinet.is-arrows-sides.is-left-handed.is-buttons-swap {
+  --areas: 'hop . up' 'left . right' 'throw . down';
+  --edge-areas: '. screen .' 'hop screen up' 'left screen right' 'throw screen down';
+}
+.pie-cabinet.is-arrows-sides.is-place-over {
+  --cols: var(--act-w) minmax(0, 1fr) var(--act-w);
+}
+
+.pie-cabinet.is-arrows-cross {
+  --cols: repeat(3, var(--key-w)) minmax(0, 1fr) repeat(2, var(--act-w));
+  --areas: '. up . . . throw' 'left . right . hop throw' '. down . . hop .';
+  --edge-cols: repeat(3, var(--key-w)) minmax(0, 1fr) var(--act-w);
+  --edge-areas: '. . . screen .' '. up . screen throw' 'left . right screen throw' '. down . screen hop';
+}
+.pie-cabinet.is-arrows-cross.is-buttons-swap {
+  --areas: '. up . . . hop' 'left . right . throw hop' '. down . . throw .';
+  --edge-areas: '. . . screen .' '. up . screen hop' 'left . right screen hop' '. down . screen throw';
+}
+.pie-cabinet.is-arrows-cross.is-left-handed {
+  --cols: repeat(2, var(--act-w)) minmax(0, 1fr) repeat(3, var(--key-w));
+  --areas: '. throw . . up .' 'hop throw . left . right' 'hop . . . down .';
+  --edge-cols: var(--act-w) minmax(0, 1fr) repeat(3, var(--key-w));
+  --edge-areas: '. screen . . .' 'throw screen . up .' 'throw screen left . right' 'hop screen . down .';
+}
+.pie-cabinet.is-arrows-cross.is-left-handed.is-buttons-swap {
+  --areas: '. hop . . up .' 'throw hop . left . right' 'throw . . . down .';
+  --edge-areas: '. screen . . .' 'hop screen . up .' 'hop screen left . right' 'throw screen . down .';
+}
+
+/* Shown on a touch screen too, in place of the pad. */
+.pie-cabinet.is-arrows .pie-steps {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  grid-template-columns: var(--cols);
+  grid-template-rows: repeat(3, var(--key-h));
+  grid-template-areas: var(--areas);
+  gap: 0.25rem;
+}
+
+.pie-cabinet.is-arrows .pie-thumbs {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .pie-cabinet.is-arrows .pie-steps { order: 2; }
+  .pie-cabinet .pie-screenrow { order: 1; }
+}
+
+.pie-cabinet.is-arrows .pie-steps .pie-step {
+  min-height: 0;
+  padding: 0.05rem 0.15rem;
+  font-size: calc(0.95rem * var(--controls-scale, 1));
+  line-height: 1.05;
+}
+
+.pie-cabinet.is-arrows .pie-steps :is(.pie-throw, .pie-jump) {
+  font-size: calc(0.7rem * var(--controls-scale, 1));
+  border-radius: 999px;
+}
+
+.pie-cabinet.is-arrows-cross .pie-steps :is(.pie-step-left, .pie-step-right, .pie-step-up, .pie-step-down) {
+  border-radius: 0.45rem;
+}
+
+/* At the edges: the screen held between two clusters, under the thumbs of a screen held on its side. */
+.pie-screenrow {
+  display: grid;
+  grid-template-columns: var(--edge-cols);
+  grid-template-rows: minmax(0, 1fr) repeat(3, var(--key-h));
+  grid-template-areas: var(--edge-areas);
+  gap: 0.3rem;
+}
+
+.pie-screenrow > .pie-screen {
+  grid-area: screen;
+  min-width: 0;
+}
+
+.pie-cabinet.is-place-edges .pie-steps {
+  display: contents;
+}
+
+/* Over the screen: a see-through layer at its foot; the tilt and the pie's aura step up above it. */
+.pie-cabinet.is-place-over .pie-screen > .pie-steps {
+  position: absolute;
+  inset: auto 0.45rem 0.45rem;
+  pointer-events: none;   /* no z-index: laid before the card in the screen, the card (title, pause) still covers it */
+}
+
+.pie-cabinet.is-place-over .pie-screen > .pie-steps .pie-step {
+  pointer-events: auto;
+  border-color: color-mix(in srgb, var(--hub-ink) 30%, transparent);
+  background: color-mix(in srgb, var(--hub-paper) 36%, transparent);
+  box-shadow: none;
+  backdrop-filter: blur(2px);
+  opacity: 0.84;
+}
+
+.pie-cabinet.is-place-over .pie-screen > :is(.pie-aura, .pie-meter) {
+  bottom: calc(3 * var(--key-h) + 1.3rem);
+}
+
+/* ─── Panels arranged for this screen (pie-panels.mjs) ─────────────────────────
+ * The plan names an arrangement and a form for each panel (data-form-* on the voyage); these are those
+ * forms. Story beats (data-beat) change emphasis only: no size here depends on a beat. */
+
+/* Side: the cabinet and one column of panels beside it, at any width (a tablet, a phone on its side). */
+.pie-voyage.is-arranged-side,
+.pie-voyage.is-fit.is-arranged-side,
+.pie-voyage.is-fit.is-story-under.is-arranged-side {
+  grid-template-columns: minmax(0, var(--cabinet-fit, 24rem)) minmax(15rem, 1fr);
+  justify-items: stretch;
+  align-items: start;
+}
+
+.pie-voyage.is-arranged-side > * {
+  max-width: none;
+}
+
+.pie-flow-wonders > .pie-flow-prose.is-side .pie-flow-window {
+  flex: none;
+  min-height: 6rem;
+  max-height: var(--strip-h, 9rem);
+}
+
+.pie-voyage[data-form-strip='compact'] .pie-flow-prose:is(.is-under, .is-side) .pie-flow-window {
+  min-height: 3.1rem;
+  max-height: 3.1rem;
+}
+
+/* Folded for the lanes: the prose is read as a caption in them instead. */
+.pie-voyage.is-strip-folded .pie-flow-prose {
+  display: none;
+}
+
+/* The caption, compact: two lines. */
+.pie-voyage[data-form-caption='compact'] .pie-caption {
+  min-height: 0;
+  padding: 0.35rem 0.6rem;
+}
+
+.pie-voyage[data-form-caption='compact'] .pie-caption .pie-toast-line,
+.pie-screen > .pie-caption .pie-toast-line {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.86rem;
+  line-height: 1.3;
+}
+
+/* The caption as glass: riding the top of the lanes, under the score, the lanes showing through. */
+.pie-screen > .pie-caption {
+  position: absolute;
+  top: 8%;
+  left: 0.4rem;
+  right: 0.4rem;
+  min-height: 0;
+  padding: 0.28rem 0.55rem 0.32rem;
+  border: 0;
+  border-left: 3px solid var(--hub-gold);
+  border-radius: 0.3rem;
+  outline: 0;
+  background: color-mix(in srgb, var(--hub-panel) 80%, transparent);
+  box-shadow: 0 2px 10px rgba(10, 12, 16, 0.12);
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+  transition: opacity 260ms ease, box-shadow 260ms ease;
+}
+
+.pie-screen > .pie-caption .pie-toast-title {
+  font-size: 0.58rem;
+}
+
+.pie-screen > .pie-caption .pie-toast-line {
+  margin-top: 0.1rem;
+  font-size: 0.8rem;
+}
+
+/* The show in the screen's corner, beside the glass caption (the top tier of the page). */
+.pie-screen > .pie-show-inset {
+  position: absolute;
+  top: 8%;
+  right: 0.4rem;
+  width: 24%;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.pie-screen > .pie-show-inset figcaption {
+  display: none;
+}
+
+.pie-voyage[data-form-show='pip'] .pie-screen > .pie-caption {
+  right: calc(24% + 0.75rem);
+}
+
+/* The heights: narrower, or folded to their title line. */
+.pie-voyage[data-form-heights='compact'] .pie-heights-canvas {
+  max-width: 52%;
+  margin-inline: auto;
+}
+
+.pie-voyage[data-form-heights='compact'] .pie-heights-say,
+.pie-voyage[data-form-heights='folded'] .pie-heights-say {
+  flex: 1 1 0;
+  min-width: 0;   /* a line that does not wrap must not widen the cabinet */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pie-voyage[data-form-heights='compact'] .pie-heights-cfg {
+  display: none;
+}
+
+.pie-voyage[data-form-heights='folded'] :is(.pie-heights-row, .pie-meanwhile) {
+  display: none;
+}
+
+.pie-voyage[data-form-heights='folded'] .pie-heights summary {
+  min-height: 0;
+  padding-block: 0.25rem;
+}
+
+/* Beats: a room opening brings the narrator and the prose forward; danger thins what rides the lanes. */
+.pie-voyage[data-beat='establish'] .pie-caption {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--hub-gold) 70%, transparent), 0 2px 10px rgba(10, 12, 16, 0.12);
+}
+
+.pie-voyage[data-beat='establish'] .pie-flow-prose .pie-flow-head {
+  color: var(--hub-accent-deep);
+}
+
+.pie-voyage[data-beat='action'] .pie-screen > :is(.pie-caption, .pie-show-inset) {
+  opacity: 0.32;
+}
+
+.pie-voyage .pie-flow-prose {
+  transition: opacity 300ms ease;
+}
+
+.pie-voyage[data-beat='action'] .pie-flow-prose {
+  opacity: 0.72;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-screen > :is(.pie-caption, .pie-show-inset),
+  .pie-voyage .pie-flow-prose {
+    transition: none;
+  }
+}
+
+/* ⚙ Setup: the plan in words, and the rows it overrides. */
+.pie-setup-plan {
+  margin: 0 0 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 10%, transparent);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pie-setup-row.is-overridden {
+  opacity: 0.55;
+}
+
+/* The end card: what was taken from the road. */
+.pie-card-found {
+  flex-basis: 100%;
+  margin: 0 0 0.3rem;
+  text-align: center;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+}
