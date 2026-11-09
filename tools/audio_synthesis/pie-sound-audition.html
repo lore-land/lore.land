@@ -48,6 +48,7 @@
   <p class="lede">Each row plays one sound the way a carry does, many times over. Play it before and after and listen to the twentieth one, not the first.</p>
   <div class="bar">
     <label>Chapter <select id="chapter"></select></label>
+    <label>Room <select id="room"></select></label>
     <label><input type="checkbox" id="held"> the mimes hold it (minor)</label>
     <label><input type="checkbox" id="slow"> slow time (a beaver)</label>
     <button id="all">measure every row, before and after</button>
@@ -103,7 +104,7 @@ window.AudioContext = Tapped;
 window.webkitAudioContext = Tapped;
 
 const [after, before] = await Promise.all([
-  import('/book/scripts/home/pie-sound.mjs'),
+  import(`/book/scripts/home/pie-sound.mjs?fresh=${Date.now()}`),
   import('./pie-sound-before.mjs')
 ]);
 const ENGINES = { before, after };
@@ -117,6 +118,7 @@ const CARRY = (() => {
   const events = [];
   let lane = 2;
   let chain = 0;
+  ['.', '~', '@', '^'].forEach((room, k) => events.push({ t: k * 3.75, room }));
   for (let t = 0; t < 15; t += 0.3) {
     lane = Math.max(0, Math.min(4, lane + (r() < 0.5 ? -1 : 1)));
     events.push({ t, kind: 'step', param: r() < 0.5 ? -1 : 1, lane });
@@ -130,12 +132,13 @@ const CARRY = (() => {
   return events;
 })();
 let wapCombo = 0;
-const play = (engine, { kind, param = 0, lane = 2 }) => {
+const play = (engine, { kind, param = 0, lane = 2, room = null, depth = 0 }) => {
   const m = ENGINES[engine];
+  if (room) { m.setSoundRoom?.(room); return; }
   if (kind === 'wap') {
     wapCombo += 1;
-    m.wapSound(engine === 'before' ? 1 + Math.min(wapCombo - 1, 6) * 0.08 : wapCombo, LANES[lane]);
-  } else m.playTone(kind, param, LANES[lane]);
+    m.wapSound(engine === 'before' ? 1 + Math.min(wapCombo - 1, 6) * 0.08 : wapCombo, LANES[lane], depth);
+  } else m.playTone(kind, param, LANES[lane], depth);
 };
 const repeat = (kind, count, every, f = (i) => ({ param: 0, lane: i % 5 })) => Array.from({ length: count }, (_, i) => ({ t: i * every, kind, ...f(i) }));
 
@@ -149,6 +152,19 @@ const ROWS = [
   { what: 'WAPs in a combo', how: '8, one after another', events: repeat('wap', 8, 0.8) },
   { what: 'Bank shots off glass', how: '10', events: repeat('glass', 10, 0.6) },
   { what: 'Boonberries', how: '10, eaten in a row', events: repeat('berry', 10, 0.5, (i) => ({ param: i, lane: i % 5 })) },
+  { what: 'A streak, room by room', how: 'catches, berries, deft landings, glass and WAPs for twelve seconds while the room changes (. ? ~ @): the line, the chords and the land joining in', events: (() => {
+    const r = seeded(11);
+    const events = ['.', '?', '~', '@'].map((room, k) => ({ t: k * 3, room }));
+    const kinds = ['catch', 'catch', 'berry', 'deft', 'glass', 'catch', 'wap', 'share'];
+    let berries = 0;
+    for (let t = 0.1; t < 12; t += 0.42) {
+      const kind = kinds[Math.floor(r() * kinds.length)];
+      events.push({ t, kind, param: kind === 'berry' ? berries++ : 0, lane: Math.floor(r() * 5) });
+    }
+    return events;
+  })() },
+  { what: 'Near, then far', how: 'the same catches at the carrier, then at the top of the lanes', events: repeat('catch', 8, 0.6, (i) => ({ lane: i % 5, depth: i < 4 ? 0 : 0.95 })) },
+  { what: 'The spill', how: 'the end of a carry', events: [{ t: 0, kind: 'spill', lane: 2 }] },
   { what: 'Fifteen seconds of a carry', how: 'steps all along, with catches, hops, knocks, throws, WAPs and glass between', events: CARRY }
 ];
 
@@ -156,9 +172,12 @@ const ROWS = [
 const $ = (s) => document.querySelector(s);
 const chapterSel = $('#chapter');
 for (let n = 1; n <= 15; n += 1) chapterSel.append(new Option(String(n), String(n)));
+const roomSel = $('#room');
+['.', '!', '?', '~', '@', '&', '*', '^', '#', '=', '%', '$'].forEach((sigil) => roomSel.append(new Option(sigil, sigil)));
 const place = () => {
   Object.values(ENGINES).forEach((m) => {
     m.setSoundPlace({ chapter: Number(chapterSel.value), held: $('#held').checked });
+    m.setSoundRoom?.(roomSel.value);
     m.setSoundMood({ muffled: $('#slow').checked });
   });
 };
@@ -173,15 +192,15 @@ async function run(row, engine, out) {
   await new Promise((r) => setTimeout(r, 150));
   wapCombo = 0;
   Object.assign(meter, { on: true, chunks: [], peak: 0, hi: 0, all: 0 });
-  const end = Math.max(...row.events.map((e) => e.t)) + 1;
+  const end = Math.max(...row.events.map((e) => e.t)) + 2;
   row.events.forEach((e) => setTimeout(() => play(engine, e), e.t * 1000));
   await new Promise((r) => setTimeout(r, end * 1000));
   meter.on = false;
   busy = false;
   const c = meter.chunks;
   const mean = (a) => a.reduce((s, x) => s + x, 0) / Math.max(1, a.length);
-  // The tail compares the last quarter of the playing with the first (the last second is only echo).
-  const playing = c.slice(0, Math.max(4, c.length - Math.round((meter.sr || 48000) / 2048)));
+  // The tail compares the last quarter of the playing with the first (the last two seconds are only the room).
+  const playing = c.slice(0, Math.max(4, c.length - Math.round((2 * (meter.sr || 48000)) / 2048)));
   const q = Math.max(1, Math.floor(playing.length / 4));
   const res = { level: db(mean(c)), peak: 20 * Math.log10(meter.peak || 1e-9), bright: meter.all ? (100 * meter.hi) / meter.all : 0, tail: db(mean(playing.slice(-q))) - db(mean(playing.slice(0, q))) };
   if (out) out.innerHTML = `level <b>${res.level.toFixed(1)}</b> · peak <b>${res.peak.toFixed(1)}</b>\nbright <b>${res.bright.toFixed(1)}%</b> · tail <b>${res.tail >= 0 ? '+' : ''}${res.tail.toFixed(1)}</b>`;
@@ -213,7 +232,8 @@ $('#all').addEventListener('click', async () => {
 });
 window.__audition = null;
 /** One sound, once, through either engine (for calibrating one against the other). */
-window.__once = (engine, kind, param = 0) => run({ events: [{ t: 0, kind, param, lane: 2 }] }, engine, null);
+window.__once = (engine, kind, param = 0, depth = 0) => run({ events: [{ t: 0, kind, param, lane: 2, depth }] }, engine, null);
+window.__row = (i, engine) => run(ROWS[i], engine, rowsEl.children[i].querySelector(`[data-m="${engine}"]`));
 </script>
 </body>
 </html>

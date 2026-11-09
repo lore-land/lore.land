@@ -77,10 +77,11 @@
  *   sound      pie-sound.mjs: one bus, panned to where things happen; what the land gives plays
  *              in the chapter's pentatonic key, climbing as it comes (minor while the mimes hold
  *              it); knocks are out of key; slow time muffles, the mimes' lead thins; footsteps
- *              know grass from cobble. Made to be heard the hundredth time: nothing plays the
- *              same twice, a sound repeated fast comes back quieter and softer, and what
- *              answers the carry (catches, bank shots, hops in a chain, WAPs in a combo) walks
- *              the key as it repeats.
+ *              know grass from cobble; a room around it all, the far things farther. Each room
+ *              colours the key by its sigil, every tuned thing continues one melody that lands
+ *              on that chord, answers come on the chapter's pulse, a streak brings the chord up
+ *              under it all, and the spill resolves home. Made to be heard the hundredth time:
+ *              nothing plays the same twice, and a sound repeated fast comes back quieter.
  *   slow       a slow beaver ambles through the lanes now and then: steer into it and the land
  *              goes at its pace for a while (the carrier does not), so dodging is easier. The
  *              lag-stag does the same. Slowing is a gift here, never a penalty.
@@ -166,7 +167,7 @@ import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell 
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_08.N';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood } from './pie-sound.mjs?v=2026_11_09.A';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom } from './pie-sound.mjs?v=2026_11_09.B';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_08.N';
 
 const KEY = 'lore.pie.v1';
@@ -579,7 +580,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const say = (text) => { if (live) live.textContent = text; };
   // Every sound is panned to where it happened: the carrier, unless something else is said to be the source.
   const panOf = (x) => (Number.isFinite(x) ? (x / W) * 2 - 1 : run ? (run.x / W) * 2 - 1 : 0) * 0.7;
-  const sfx = (kind, param, x) => { if (record.sound) playTone(kind, param, panOf(x)); };
+  // ... and back by how far up the lanes it is: at the carrier, near; at the top of the lanes, far.
+  const depthOf = (y) => (Number.isFinite(y) ? clamp((PLAYER_Y - y) / (PLAYER_Y - 40), 0, 1) : 0);
+  const sfx = (kind, param, x, y) => { if (record.sound) playTone(kind, param, panOf(x), depthOf(y)); };
   const paintBest = () => {
     if (!bestOut) return;
     bestOut.textContent = record.runs
@@ -995,6 +998,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function announceRoom() {
     const r = roomNow();
     if (!r || !r.n) return;
+    setSoundRoom(r.sigil);
     const key = `${r.chapter}:${r.n}`;
     if (key === roomShown) return;
     roomShown = key;
@@ -1396,7 +1400,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       if (run.bits.length > 140) run.bits.splice(0, run.bits.length - 140);
     }
-    if (w.sound) sfx(w.sound, 0, x);
+    if (w.sound) sfx(w.sound, 0, x, y);
   }
   /* ─── Minigames: a horn up the lanes starts one (and the lanes gain a dimension as the book goes) ───
    * Each is a timed session with its own rule, a banner and a countdown, and a score said at its end.
@@ -2479,7 +2483,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // A thin pie, and the clown is satisfied anyway: it counts once, never twice.
       run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: missing === 'everything' ? 'WAP · CRUMBS' : `WAP · NO ${missing.toUpperCase()}` });
       run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: 0.8 });
-      if (record.sound) wapSound(run.combo, panOf(thing.x));
+      if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y));
       say(`WAP, thin: ${missing === 'everything' ? 'crumbs, mostly' : `no ${missing}`}. ${satisfied ? 'Enough, just: the clown is satisfied.' : 'It helps; the clown wants more.'}`);
       return;
     }
@@ -2495,7 +2499,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: ((perfect ? 1.25 : 1) + Math.min(run.combo, 6) * 0.06) * (0.85 + Math.min(1, TUNE.drama) * 0.3) });
     impact(perfect ? 'perfect' : 'clown', thing.x, thing.y - 52);
     if (run.combo >= 3) impact('combo', thing.x, thing.y - 84, { scale: 0.5 + run.combo * 0.15, word: `COMBO ×${run.combo}!` });
-    if (record.sound) wapSound(run.combo, panOf(thing.x));
+    if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y));
     const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : '';
     say(run.waps === 1
       ? `WAP. A clown got the pie in the eye, and loved it. The pie on the plate is no smaller.${by}`
@@ -3404,7 +3408,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       thing.foretold = true;
       run.things.push(thing);
       if (!p.kindly) { run.foretold.came += 1; lean('foretold'); }
-      sfx(p.kindly ? 'berry' : 'fulfil', 0, x);
+      sfx(p.kindly ? 'berry' : 'fulfil', 0, x, 60);
       run.tags.push({ x, y: 60, t: 0, text: p.kindly ? 'AS FORETOLD, KINDLY' : 'AS FORETOLD' });
     });
     run.prophecies = run.prophecies.filter((p) => p.t > 0);

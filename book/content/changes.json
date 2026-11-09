@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.B",
+      "date": "2026-11-09",
+      "notes": [
+        "Exactly One Pie has more music in it. Each room of the story colours the chapter's key by its sign, and what the lanes give sings that room's chord: catches, bank shots and deft landings carry on one melody between them, and answers land on the chapter's own pulse. Keep a run of good things going and the land joins in, the room's chord rising softly under you until a knock breaks it; and when the pie spills, as it must, the tune comes home.",
+        "The lanes have depth now: there is a room around them, open air in the field and walls close by in the city, and things far up the lanes sound farther off than things at your feet. The instruments have their own voices: a celesta for catches, a marimba for deft landings, a vibraphone for boonberries, two kalimbas for a share, and a music box for wonders."
+      ]
+    },
+    {
       "release": "2026_11_09.A",
       "date": "2026-11-09",
       "notes": [
