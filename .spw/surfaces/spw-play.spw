@@ -106,6 +106,17 @@
   mobile: "on a touch screen the cabinet stacks: controls, setup, screen, pad, the story strip if chosen, heights, caption, steps; its width comes from the window height times the cabinet size, never wider than the window"
   pinch: "by hand: two fingers over the story size its words, over the cabinet frame size the cabinet, never over the lanes or the pad where fingers play; Safari pinch and ctrl+wheel do the same"
   reading: "the story not passing stays legible (two-thirds ink); the passage going by is full ink with a gold edge"
+  fit: "the default size fits the window: everything play needs in view (controls, screen, pad or steps) is measured, and the screen takes the rest of the window height, never wider than there is room for; measured again on every resize"
+  panels: "on a wide screen the caption and the heights strip sit beside the cabinet, at the head of the wonders column, so the cabinet is the controls and the screen; on a narrow one they follow the steps, below the fold"
+  controls: "icons in one row (compact, the default; each keeps its words as its name) or icons and words; above the screen or below it"
+  story: "a passage at a time (each paragraph comes to the line and holds still while it passes, the default) or smoothly with the carry; the passing line high, middle or low"
+  immersion: "on Play the cabinet comes fully into view, measured from where it sticks; Setup can leave the page where it is"
+}
+
+^app{
+  shortcuts: "the installed app leads with Play (the game) and Atlas (the seed atlas), each with its own icon drawn from the book: Mr. BoonWAP glad, and a study seal; then the desk, Chapter One and the zine"
+  front_page: "launched from its icon, the front page offers the game and the atlas at its top"
+  offline: "keeping the book offline keeps the game and the atlas pages too"
 }
 
 ^end_of_carry{

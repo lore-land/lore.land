@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Lore.Land",
   "short_name": "Lore.Land",
-  "description": "A living serial you can read in a nook: Boof, a warm egg the maps will not admit, and chapters that keep their place for you.",
+  "description": "A living serial you can read in a nook, a small game that carries the whole book, and the atlas it was grown from: Boof, a warm egg the maps will not admit, and chapters that keep their place for you.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -12,7 +12,8 @@
   "dir": "ltr",
   "categories": [
     "books",
-    "entertainment"
+    "entertainment",
+    "games"
   ],
   "icons": [
     {
@@ -41,6 +42,32 @@
     }
   ],
   "shortcuts": [
+    {
+      "name": "Exactly One Pie: carry the book",
+      "short_name": "Play",
+      "url": "/pie/?source=pwa-shortcut",
+      "description": "The small game that carries the whole book, chapter by chapter, past its words.",
+      "icons": [
+        {
+          "src": "/book/pwa/icons/shortcut-pie.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "The seed atlas: what the book was grown from",
+      "short_name": "Atlas",
+      "url": "/seeds/2026-02-28/?source=pwa-shortcut",
+      "description": "Every study the book grew from, each with its sigil, its seal, and what in the book is like it.",
+      "icons": [
+        {
+          "src": "/book/pwa/icons/shortcut-atlas.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
     {
       "name": "Your desk: pick up, search, keep offline",
       "short_name": "Your desk",
@@ -80,6 +107,13 @@
     }
   ],
   "screenshots": [
+    {
+      "src": "/book/pwa/screenshots/game-wide.webp",
+      "sizes": "1400x736",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Exactly One Pie: the book flows past the cabinet, the side of the lane and the caption beside it."
+    },
     {
       "src": "/book/pwa/screenshots/reader-wide.webp",
       "sizes": "1400x853",

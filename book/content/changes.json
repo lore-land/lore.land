@@ -2,6 +2,16 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_08.S",
+      "date": "2026-11-08",
+      "notes": [
+        "Exactly One Pie fits the window now: it measures what play needs in view and gives the screen the rest of the window's height. On a wide screen the caption and the heights strip move beside the cabinet so the lanes can be as large as the window allows; on a phone they follow the controls, below.",
+        "The controls are a single row of icons (each still says its name to a screen reader and on hover), or icons and words if you prefer, above the screen or below it, as you choose in ⚙ Setup.",
+        "The story beside the game moves a passage at a time by default, each paragraph holding still at the line while it passes, which is easier to read; the line can sit high, middle or low, and the old smooth motion is still there. The caption box can be hidden, and pressing Play brings the whole cabinet into view.",
+        "Installed on a phone or a computer, Lore.Land now leads with the game and the atlas: Play and Atlas are the first shortcuts on its icon, its front page offers both at the top, and keeping the book offline keeps them too."
+      ]
+    },
+    {
       "release": "2026_11_08.R",
       "date": "2026-11-08",
       "notes": [

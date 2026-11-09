@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.R';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_08.S';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_07_23.B';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_08.J';
@@ -64,7 +64,7 @@ import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_08.N';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_08.N';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.N';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_08.S';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_08.N';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_08.N';

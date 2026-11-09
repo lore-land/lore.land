@@ -390,7 +390,14 @@ function readRecord() {
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
       view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, heights: parsed.view?.heights !== false, heightsCfg: parsed.view?.heightsCfg && typeof parsed.view.heightsCfg === 'object' ? parsed.view.heightsCfg : null,
         // ⚙ Setup: kept as chosen, held to their ranges.
-        size: Number.isFinite(parsed.view?.size) ? Math.min(1.45, Math.max(0.8, parsed.view.size)) : undefined,
+        size: parsed.view?.size === 'fit' ? 'fit' : Number.isFinite(parsed.view?.size) ? Math.min(1.45, Math.max(0.8, parsed.view.size)) : undefined,
+        controls: ['icons', 'words'].includes(parsed.view?.controls) ? parsed.view.controls : undefined,
+        controlsAt: ['top', 'bottom'].includes(parsed.view?.controlsAt) ? parsed.view.controlsAt : undefined,
+        panelsAt: ['beside', 'cabinet'].includes(parsed.view?.panelsAt) ? parsed.view.panelsAt : undefined,
+        storyMotion: ['passage', 'smooth'].includes(parsed.view?.storyMotion) ? parsed.view.storyMotion : undefined,
+        storyLine: [0.3, 0.5, 0.66].includes(parsed.view?.storyLine) ? parsed.view.storyLine : undefined,
+        caption: parsed.view?.caption === false ? false : undefined,
+        focusOnPlay: parsed.view?.focusOnPlay === false ? false : undefined,
         flowSize: Number.isFinite(parsed.view?.flowSize) ? Math.min(1.6, Math.max(0.8, parsed.view.flowSize)) : undefined,
         pace: [0.8, 1, 1.2].includes(parsed.view?.pace) ? parsed.view.pace : undefined,
         storyAt: ['beside', 'under'].includes(parsed.view?.storyAt) ? parsed.view.storyAt : undefined,
@@ -1194,7 +1201,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       b.addEventListener('click', () => {
         record.view.heightsCfg = { ...cfg, [key]: !cfg[key] };
         writeRecord(record);
-        if (key === 'meanwhile' && cfg[key]) root.querySelector('[data-pie-meanwhile]')?.setAttribute('hidden', '');
+        if (key === 'meanwhile' && cfg[key]) heightsPanel?.querySelector('[data-pie-meanwhile]')?.setAttribute('hidden', '');
         paintHeightsCfg();
       });
       return b;
@@ -2937,6 +2944,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     show.reset();
     hideCard();
     state = 'running';
+    // Immersion: on Play, the whole cabinet comes into view (⚙ Setup can leave the page where it is).
+    if (record.view.focusOnPlay !== false) {
+      // Measured a frame later, once the card is gone; the cabinet sticks at its own top on a wide screen.
+      requestAnimationFrame(() => {
+        const box = root.getBoundingClientRect();
+        const stick = window.matchMedia('(min-width: 62rem)').matches ? parseFloat(getComputedStyle(root).top) || 72 : 6;
+        if (box.top < stick - 2 || box.bottom > window.innerHeight + 4) {
+          window.scrollTo({ top: Math.max(0, window.scrollY + box.top - stick), behavior: reduced?.matches ? 'auto' : 'smooth' });
+        }
+      });
+    }
     enterChapter(run.chapter, { first: true });
     turnCard(`carrier-${run.carrier.id}`);
     last = performance.now();
@@ -3631,8 +3649,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       flowAt = i;
     }
     const { top, h } = flowMeasure[i];
-    const focus = flowProse.parentElement.clientHeight * 0.62;
-    const shift = Math.round(focus - (top + h - (f - i) * h));
+    // Where the passing line sits (⚙ Setup: high, middle, low), and how the story moves: a passage at a
+    // time (each held still while it passes, easier to read) or smoothly with the carry.
+    const focus = flowProse.parentElement.clientHeight * (Number(record.view.storyLine) || 0.5);
+    const byPassage = (record.view.storyMotion || 'passage') === 'passage';
+    flowProse.classList.toggle('is-by-passage', byPassage);
+    const shift = Math.round(byPassage ? focus - (top + h / 2) : focus - (top + h - (f - i) * h));
     if (shift !== flowShift) {
       flowShift = shift;
       flowProse.style.transform = `translateY(${shift}px)`;
@@ -6615,15 +6637,53 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const flowProseBox = document.querySelector('.pie-flow-prose');
   const flowHome = flowProseBox?.parentElement;
   const SETUP = Object.freeze([
-    ['size', 'Cabinet', [[0.86, 'Small'], [1, 'Medium'], [1.16, 'Large'], [1.32, 'Larger']], 1],
+    ['size', 'Cabinet', [['fit', 'Fit the window'], [0.86, 'Small'], [1, 'Medium'], [1.16, 'Large'], [1.32, 'Larger']], 'fit'],
     ['pace', 'Pace', [[0.8, 'Gentle'], [1, 'As written'], [1.2, 'Brisk']], 1],
+    ['controls', 'Controls', [['icons', 'Icons, one row'], ['words', 'Icons and words']], 'icons'],
+    ['controlsAt', 'Controls sit', [['top', 'Above the screen'], ['bottom', 'Below it']], 'top'],
+    ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
+    ['storyMotion', 'Story moves', [['passage', 'A passage at a time'], ['smooth', 'Smoothly, with the carry']], 'passage'],
+    ['storyLine', 'Passing line', [[0.3, 'High'], [0.5, 'Middle'], [0.66, 'Low']], 0.5],
     ['flowSize', 'Story words', [[0.88, 'Small'], [1, 'Medium'], [1.18, 'Large'], [1.36, 'Larger']], 1],
-    ['heightsShown', '⤒ Heights strip', [[true, 'Shown'], [false, 'Hidden']], true]
+    ['caption', 'Caption box', [[true, 'Shown'], [false, 'Hidden (still said aloud)']], true],
+    ['heightsShown', '⤒ Heights strip', [[true, 'Shown'], [false, 'Hidden']], true],
+    ['focusOnPlay', 'On Play', [[true, 'Bring the game into view'], [false, 'Leave the page where it is']], true]
   ]);
   const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
+  /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
+   * window's height (the lanes keep their shape), never wider than there is room for. Measured twice,
+   * because the cabinet's other parts wrap differently at a new width. */
+  function fitCabinet() {
+    if (!cabinetVoyage || setting('size') !== 'fit') return;
+    const screenEl = root.querySelector('.pie-screen');
+    if (!screenEl) return;
+    const desktop = window.matchMedia('(min-width: 62rem)').matches;
+    const topGap = desktop ? parseFloat(getComputedStyle(root).top) || 72 : 8;
+    const pad = root.offsetWidth - screenEl.offsetWidth;
+    const room = desktop ? Math.min(window.innerWidth * (cabinetVoyage.classList.contains('is-story-under') ? 0.5 : 0.42), 760) : cabinetVoyage.clientWidth;
+    // What play needs in view is the controls, the screen and the pad or steps; the strip, the caption
+    // and the heights (when they sit in the cabinet) may run on below the fold.
+    const gap = parseFloat(getComputedStyle(root).rowGap) || 0;
+    const belowFold = () => [heightsPanel, root.querySelector('.pie-caption'), root.querySelector('.pie-flow-prose.is-under')]
+      .filter((el) => el && el.parentElement === root && !el.hidden && el.offsetParent)
+      .reduce((sum, el) => sum + el.offsetHeight + gap, 0);
+    for (let pass = 0; pass < 2; pass += 1) {
+      const chrome = root.offsetHeight - screenEl.offsetHeight - belowFold();
+      const screenH = Math.max(300, window.innerHeight - topGap - 12 - chrome);
+      const w = Math.round(Math.min(room, Math.max(240, screenH * (W / H) + pad)));
+      cabinetVoyage.style.setProperty('--cabinet-fit', `${w}px`);
+    }
+  }
+  let fitTimer = 0;
+  window.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(() => applySetup(), 150); });
   function applySetup() {
-    cabinetVoyage?.style.setProperty('--cabinet-scale', String(setting('size')));
+    const fitMode = setting('size') === 'fit';
+    cabinetVoyage?.classList.toggle('is-fit', fitMode);
+    cabinetVoyage?.style.setProperty('--cabinet-scale', String(fitMode ? 1 : setting('size')));
+    root.classList.toggle('is-compact-controls', setting('controls') === 'icons');
+    root.classList.toggle('is-controls-bottom', setting('controlsAt') === 'bottom');
+    root.classList.toggle('is-caption-off', setting('caption') === false);
     cabinetVoyage?.style.setProperty('--flow-scale', String(setting('flowSize')));
     const at = record.view.story === false ? 'off' : setting('storyAt');
     if (flowProseBox && flowHome) {
@@ -6633,8 +6693,43 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       cabinetVoyage?.classList.toggle('is-story-under', at === 'under');
     }
     if (heightsPanel) heightsPanel.hidden = setting('heightsShown') === false;
-    requestAnimationFrame(fit);
+    // On a wide screen the caption and the heights strip go beside the cabinet (the head of the wonders
+    // column), so the cabinet is the controls and the screen, and the screen can have the window's height.
+    const wide = window.matchMedia('(min-width: 62rem)').matches;
+    const side = document.querySelector('.pie-flow-wonders');
+    const captionEl = root.querySelector('.pie-caption') || side?.querySelector('.pie-caption');
+    const stepsEl = root.querySelector('.pie-steps');
+    if (side && captionEl && heightsPanel) {
+      if (wide && setting('panelsAt') === 'beside') {
+        if (captionEl.parentElement !== side) side.prepend(captionEl, heightsPanel);
+      } else if (captionEl.parentElement !== root) {
+        root.insertBefore(heightsPanel, stepsEl);
+        root.insertBefore(captionEl, stepsEl);
+      }
+      cabinetVoyage?.classList.toggle('is-panels-beside', captionEl.parentElement === side);
+    }
+    requestAnimationFrame(() => { fitCabinet(); requestAnimationFrame(fit); });
   }
+  heightsPanel?.addEventListener('toggle', () => requestAnimationFrame(() => { fitCabinet(); requestAnimationFrame(fit); }));
+
+  /* Every control is an icon and its words: compact shows the icon alone (the words stay its name for a
+   * screen reader and its tooltip); a writer that sets a label is split again as it writes. */
+  const toolsBar = root.querySelector('.pie-tools');
+  const splitLabels = () => {
+    toolsBar?.querySelectorAll('button').forEach((b) => {
+      if (b.querySelector('.tool-icon')) return;
+      const text = b.textContent.trim();
+      const cut = text.indexOf(' ');
+      if (cut < 1) return;
+      const icon = text.slice(0, cut);
+      const words = text.slice(cut + 1);
+      b.replaceChildren(Object.assign(document.createElement('span'), { className: 'tool-icon', textContent: icon }), Object.assign(document.createElement('span'), { className: 'tool-words', textContent: words }));
+      b.setAttribute('aria-label', words);
+      if (!b.title) b.title = words;
+    });
+  };
+  if (toolsBar) new MutationObserver(splitLabels).observe(toolsBar, { childList: true, subtree: true, characterData: true });
+  requestAnimationFrame(splitLabels);
   function paintSetup() {
     if (!setupOut) return;
     const rows = SETUP.map(([key, label, options]) => {
@@ -6694,7 +6789,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     fingers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (fingers.size === 2 && !handPinch) {
       const key = pinchKeyFor(event.target);
-      if (key) handPinch = { key, d0: spread(), s0: Number(setting(key)) || 1 };
+      if (key) handPinch = { key, d0: spread(), s0: Number(setting(key)) || 1 };   // from Fit, a pinch starts at Medium
     }
   });
   cabinetVoyage?.addEventListener('pointermove', (event) => {

@@ -88,6 +88,32 @@ function markCurrentChapterInIndex() {
 
 /* The cast, with portraits (characters.mjs): met in colour, not yet met as a silhouette with where to meet them. */
 const CAST_IDS = Object.freeze({ boof: 'boof', ants: 'ants', genie: 'genie', bane: 'bane', boon: 'boon', bone: 'bonewap', hat: 'figure' });
+/* Launched as the app (installed, or from its icon): the game and the atlas are a tap away, at the top
+ * of the front page, each with its own mark. In a browser tab the front page is as it was. */
+function featureInApp() {
+  const launched = window.matchMedia?.('(display-mode: standalone)').matches || new URLSearchParams(window.location.search).get('source') === 'pwa';
+  if (!launched || window.location.pathname !== '/') return;
+  const main = document.querySelector('main');
+  if (!main || main.querySelector('.app-feature')) return;
+  const row = document.createElement('nav');
+  row.className = 'app-feature';
+  row.setAttribute('aria-label', 'In the app');
+  [
+    ['/pie/', '/book/pwa/icons/shortcut-pie.png', 'Exactly One Pie', 'Carry the book, chapter by chapter.'],
+    ['/seeds/2026-02-28/', '/book/pwa/icons/shortcut-atlas.png', 'The seed atlas', 'What the book was grown from.']
+  ].forEach(([href, icon, title, line]) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.className = 'app-feature-card';
+    const img = Object.assign(document.createElement('img'), { src: icon, alt: '', width: 48, height: 48 });
+    const text = document.createElement('span');
+    text.append(Object.assign(document.createElement('b'), { textContent: title }), Object.assign(document.createElement('small'), { textContent: line }));
+    a.append(img, text);
+    row.append(a);
+  });
+  main.prepend(row);
+}
+
 function paintCastPortraits() {
   const cards = document.querySelectorAll('.cast-list .cast-card[data-cast]');
   if (!cards.length) return;
@@ -587,6 +613,7 @@ function initMonumentEntrance() {
   markCurrentChapterInIndex();
   paintPaletteRibbons();
   paintCastPortraits();
+  featureInApp();
   enhancePrimaryCta();
   addBeginAgain();
   renderChamberSeals(document);

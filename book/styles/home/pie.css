@@ -4051,3 +4051,131 @@ html:not([data-chrome-hidden='true']) .pie-index {
       minmax(0, 1fr);
   }
 }
+
+/* ─── Fit the window (the default size): the cabinet's width is solved from the window's height ───
+ * (pie-game.mjs fitCabinet: the screen takes what the rest of the cabinet leaves of the window). */
+.pie-cabinet {
+  scroll-margin-top: 4.25rem;
+}
+
+@media (min-width: 62rem) {
+  .pie-voyage.is-fit {
+    grid-template-columns: minmax(0, 1fr) var(--cabinet-fit, 22rem) minmax(0, 1fr);
+  }
+
+  .pie-voyage.is-fit.is-story-under {
+    grid-template-columns: var(--cabinet-fit, 22rem) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 61.99rem) {
+  .pie-voyage.is-fit > .pie-cabinet {
+    max-width: min(100%, var(--cabinet-fit, 26rem));
+  }
+}
+
+@media (pointer: coarse) {
+  .pie-voyage.is-fit .pie-cabinet,
+  .pie-voyage.is-fit.is-zen .pie-cabinet {
+    max-width: min(100%, var(--cabinet-fit, 100%));
+  }
+}
+
+/* On a small phone the cabinet keeps a narrower frame, so the lanes get the width. */
+@media (max-width: 30rem) {
+  .pie-cabinet {
+    gap: 0.45rem;
+    padding: 0.45rem;
+  }
+}
+
+/* ─── Controls: icons in one row (compact, the default) or icons and words; above the screen or below ─── */
+.pie-cabinet .pie-tools .tool-icon,
+.pie-cabinet .pie-tools .tool-words {
+  display: block;
+}
+
+.pie-cabinet.is-compact-controls .pie-tools {
+  grid-template-columns: repeat(auto-fit, minmax(1.5rem, 1fr));
+}
+
+.pie-cabinet.is-compact-controls .pie-tools > button {
+  min-height: 2.1rem;
+  padding: 0.25rem 0.1rem;
+}
+
+.pie-cabinet.is-compact-controls .pie-tools .tool-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.pie-cabinet.is-compact-controls .pie-tools .tool-words {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pie-cabinet.is-controls-bottom .pie-tools { order: 20; }
+.pie-cabinet.is-controls-bottom .pie-setup { order: 21; }
+
+@media (pointer: coarse) {
+  .pie-cabinet.is-controls-bottom .pie-tools { order: 20; }
+}
+
+/* The caption box hidden (its words are still said to a screen reader); the show's window stays if on. */
+.pie-cabinet.is-caption-off .pie-caption:not(:has(.pie-show-inset:not([hidden]))) {
+  display: none;
+}
+
+.pie-cabinet.is-caption-off .pie-caption > p {
+  display: none;
+}
+
+/* A passage at a time: each paragraph comes to the line and holds still while it passes. */
+.pie-flow-list.is-by-passage {
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.pie-flow-para.is-passing {
+  font-size: calc(0.94rem * var(--flow-scale, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-flow-list.is-by-passage { transition: none; }
+}
+
+/* The setup sheet: two columns of choices where there is room. */
+@container (min-width: 30rem) {
+  .pie-setup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Caption and heights beside the cabinet (wide screens): the head of the wonders column, a narration
+ * box and the side of the lane, inked like the cabinet's own panels. */
+.pie-flow-wonders > .pie-caption,
+.pie-flow-wonders > .pie-heights {
+  margin-bottom: 0.2rem;
+}
+
+.pie-flow-wonders > .pie-caption {
+  opacity: 1;
+  min-height: 0;
+  border-radius: 0.25rem;
+  outline: 2.5px solid var(--panel-ink, var(--hub-ink));
+  background: color-mix(in srgb, var(--hub-gold) 10%, var(--hub-panel));
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 22%, transparent);
+}
+
+.pie-voyage.is-panels-beside .pie-flow-wonders > .pie-heights .pie-heights-canvas {
+  max-width: 34rem;
+}
+
+/* Narrow: what play needs follows the screen at once (the steps), then the strip, heights and caption. */
+@media (max-width: 61.99rem) {
+  .pie-cabinet .pie-steps { order: 2; }
+  .pie-cabinet .pie-flow-prose.is-under,
+  .pie-cabinet .pie-heights { order: 3; }
+  .pie-cabinet .pie-caption { order: 4; }
+}

@@ -829,3 +829,46 @@ body[data-surface='monument'] .cast-card > .likeness-find {
   top: 0.75rem;
   right: 0.75rem;
 }
+
+/* In the app (launched from its icon): the game and the atlas, a tap away at the top of the front page. */
+.app-feature {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.6rem;
+  max-width: 60rem;
+  margin: 0.4rem auto 1.2rem;
+  padding-inline: 1rem;
+}
+
+.app-feature-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid var(--hub-ink);
+  border-radius: 0.35rem;
+  background: var(--hub-panel);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--hub-ink) 20%, transparent);
+  color: var(--hub-ink);
+  text-decoration: none;
+}
+
+.app-feature-card:hover,
+.app-feature-card:focus-visible {
+  border-color: var(--hub-gold);
+  outline: none;
+}
+
+.app-feature-card b {
+  display: block;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.app-feature-card small {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+}

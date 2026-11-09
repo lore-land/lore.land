@@ -353,6 +353,8 @@ export function keepChapters(onKept) {
     .map((entry) => entry.name)
     .filter((name) => name.startsWith(window.location.origin) && /\.(css|mjs|js|json|woff2?|otf|svg)(\?|$)/.test(name));
   urls.push(new URL('/scriptorium/', window.location.origin).href);
+  // The game and the atlas travel with the book: kept too, so an installed copy can play and look offline.
+  urls.push(new URL('/pie/', window.location.origin).href, new URL('/seeds/2026-02-28/', window.location.origin).href);
   controller.postMessage({ type: 'KEEP_CHAPTERS', urls, assets });
   return () => navigator.serviceWorker.removeEventListener('message', onMessage);
 }
