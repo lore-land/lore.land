@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pie Sound Audition</title>
+<!--
+  Serve the repo root (python3 -m http.server 8765) and open /tools/audio_synthesis/pie-sound-audition.html.
+  Plays the lanes' own soundscape (book/scripts/home/pie-sound.mjs) against the one before it
+  (pie-sound-before.mjs) the way a carry plays it: the same sound, over and over. Both are measured
+  at the speakers, so the numbers say what the ear gets.
+-->
+<style>
+  :root {
+    --paper: #f3ede1; --card: #fbf8f1; --ink: #2a2520; --muted: #6d6357; --line: #ddd2bf;
+    --gold: #a97c22; --teal: #1f6b63; --berry: #7b2d4a;
+    --serif: "Iowan Old Style", "Palatino", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #1c1a17; --card: #25221e; --ink: #ece4d6; --muted: #a89c8b; --line: #3a352e; --gold: #d3a548; --teal: #5fb3a8; --berry: #d77a9c; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.45; }
+  header, main { max-width: 1000px; margin: 0 auto; padding: 1rem 16px; }
+  h1 { margin: 0.4rem 0 0.2rem; font-size: 1.5rem; font-weight: 600; }
+  .lede { margin: 0 0 0.8rem; color: var(--muted); font-style: italic; max-width: 70ch; }
+  .bar { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; align-items: center; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+  select { font: inherit; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 2px 4px; }
+  .rows { display: grid; gap: 0.6rem; }
+  .row { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 0.7rem 0.9rem; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 0.4rem 1rem; align-items: start; }
+  .row h2 { margin: 0; font-size: 1.02rem; font-weight: 600; }
+  .row p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .side { display: flex; flex-direction: column; gap: 0.3rem; }
+  button { font: 0.8rem var(--mono); padding: 0.32rem 0.7rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 4px; cursor: pointer; }
+  button:hover { border-color: var(--gold); }
+  button.after { background: var(--teal); border-color: var(--teal); color: #fff; }
+  button[aria-busy="true"] { opacity: 0.55; }
+  .m { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); white-space: pre-line; min-height: 2.6em; }
+  .m b { color: var(--ink); font-weight: 600; }
+  .note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 1rem; }
+  @media (max-width: 640px) { .row { grid-template-columns: 1fr 1fr; } .row > :first-child { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>The lanes, heard again and again</h1>
+  <p class="lede">Each row plays one sound the way a carry does, many times over. Play it before and after and listen to the twentieth one, not the first.</p>
+  <div class="bar">
+    <label>Chapter <select id="chapter"></select></label>
+    <label><input type="checkbox" id="held"> the mimes hold it (minor)</label>
+    <label><input type="checkbox" id="slow"> slow time (a beaver)</label>
+    <button id="all">measure every row, before and after</button>
+  </div>
+</header>
+<main>
+  <div class="rows" id="rows"></div>
+  <p class="note">level: loudness over the whole run (RMS dBFS) · peak: loudest sample (dBFS) · bright: share of the energy above 4 kHz · tail: the last quarter of the run against the first, in dB (below zero means the ear is spared as it repeats)</p>
+</main>
+
+<script type="module">
+/* ─── Measure at the speakers: every context the modules make is tapped ─── */
+const Native = window.AudioContext || window.webkitAudioContext;
+const meter = { on: false, chunks: [], peak: 0, hi: 0, all: 0 };
+class Tapped extends Native {
+  constructor(...args) {
+    super(...args);
+    const tap = this.createGain();
+    tap.connect(super.destination);
+    const proc = this.createScriptProcessor(2048, 2, 2);
+    const mute = this.createGain();
+    mute.gain.value = 0;
+    tap.connect(proc).connect(mute).connect(super.destination);
+    proc.onaudioprocess = (e) => {
+      if (!meter.on) return;
+      meter.sr = e.inputBuffer.sampleRate;
+      let sum = 0;
+      for (let c = 0; c < e.inputBuffer.numberOfChannels; c += 1) {
+        const d = e.inputBuffer.getChannelData(c);
+        for (let i = 0; i < d.length; i += 1) { sum += d[i] * d[i]; meter.peak = Math.max(meter.peak, Math.abs(d[i])); }
+      }
+      meter.chunks.push(sum / (e.inputBuffer.length * e.inputBuffer.numberOfChannels));
+    };
+    const analyser = this.createAnalyser();
+    analyser.fftSize = 2048;
+    tap.connect(analyser);
+    const bins = new Float32Array(analyser.frequencyBinCount);
+    const cut = Math.round(4000 / (this.sampleRate / 2) * bins.length);
+    setInterval(() => {
+      if (!meter.on) return;
+      analyser.getFloatFrequencyData(bins);
+      for (let i = 1; i < bins.length; i += 1) {
+        const p = 10 ** (bins[i] / 10);
+        meter.all += p;
+        if (i >= cut) meter.hi += p;
+      }
+    }, 40);
+    this._tap = tap;
+  }
+  get destination() { return this._tap || super.destination; }
+}
+window.AudioContext = Tapped;
+window.webkitAudioContext = Tapped;
+
+const [after, before] = await Promise.all([
+  import('/book/scripts/home/pie-sound.mjs'),
+  import('./pie-sound-before.mjs')
+]);
+const ENGINES = { before, after };
+
+/* ─── What a carry does, over and over ─── */
+const LANES = [-0.56, -0.28, 0, 0.28, 0.56];
+const seeded = (seed) => () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t ^= t + Math.imul(t ^ (t >>> 7), 61 | t); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+/** Fifteen seconds of a carry, the same each time: steps all along, and what happens between them. */
+const CARRY = (() => {
+  const r = seeded(7);
+  const events = [];
+  let lane = 2;
+  let chain = 0;
+  for (let t = 0; t < 15; t += 0.3) {
+    lane = Math.max(0, Math.min(4, lane + (r() < 0.5 ? -1 : 1)));
+    events.push({ t, kind: 'step', param: r() < 0.5 ? -1 : 1, lane });
+    const roll = r();
+    if (roll < 0.1) events.push({ t: t + 0.12, kind: 'catch', lane });
+    else if (roll < 0.17) { events.push({ t: t + 0.1, kind: 'hop', param: chain, lane }); chain = (chain + 1) % 4; events.push({ t: t + 0.4, kind: r() < 0.5 ? 'land' : 'deft', lane }); }
+    else if (roll < 0.22) events.push({ t: t + 0.15, kind: 'knock', lane });
+    else if (roll < 0.3) { events.push({ t: t + 0.1, kind: 'throw', lane }); events.push({ t: t + 0.45, kind: 'wap', lane: Math.floor(r() * 5) }); }
+    else if (roll < 0.34) events.push({ t: t + 0.2, kind: 'glass', lane });
+  }
+  return events;
+})();
+let wapCombo = 0;
+const play = (engine, { kind, param = 0, lane = 2 }) => {
+  const m = ENGINES[engine];
+  if (kind === 'wap') {
+    wapCombo += 1;
+    m.wapSound(engine === 'before' ? 1 + Math.min(wapCombo - 1, 6) * 0.08 : wapCombo, LANES[lane]);
+  } else m.playTone(kind, param, LANES[lane]);
+};
+const repeat = (kind, count, every, f = (i) => ({ param: 0, lane: i % 5 })) => Array.from({ length: count }, (_, i) => ({ t: i * every, kind, ...f(i) }));
+
+const ROWS = [
+  { what: 'Footsteps', how: '30 steps, three a second, left and right', events: repeat('step', 30, 0.3, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 + (i % 2) })) },
+  { what: 'Catches', how: '16, two a second', events: repeat('catch', 16, 0.5) },
+  { what: 'Hops in chains', how: 'four chains of four', events: repeat('hop', 16, 0.42, (i) => ({ param: i % 4, lane: 2 })) },
+  { what: 'Landings', how: '12, a little over two a second', events: repeat('land', 12, 0.45, () => ({ lane: 2 })) },
+  { what: 'Throws', how: '14, two and a half a second', events: repeat('throw', 14, 0.4, () => ({ lane: 2 })) },
+  { what: 'Knocks', how: '10, about one a second and a half', events: repeat('knock', 10, 0.7) },
+  { what: 'WAPs in a combo', how: '8, one after another', events: repeat('wap', 8, 0.8) },
+  { what: 'Bank shots off glass', how: '10', events: repeat('glass', 10, 0.6) },
+  { what: 'Boonberries', how: '10, eaten in a row', events: repeat('berry', 10, 0.5, (i) => ({ param: i, lane: i % 5 })) },
+  { what: 'Fifteen seconds of a carry', how: 'steps all along, with catches, hops, knocks, throws, WAPs and glass between', events: CARRY }
+];
+
+/* ─── Running and reading a row ─── */
+const $ = (s) => document.querySelector(s);
+const chapterSel = $('#chapter');
+for (let n = 1; n <= 15; n += 1) chapterSel.append(new Option(String(n), String(n)));
+const place = () => {
+  Object.values(ENGINES).forEach((m) => {
+    m.setSoundPlace({ chapter: Number(chapterSel.value), held: $('#held').checked });
+    m.setSoundMood({ muffled: $('#slow').checked });
+  });
+};
+const db = (x) => (x > 0 ? 10 * Math.log10(x) : -Infinity);
+let busy = false;
+
+async function run(row, engine, out) {
+  if (busy) return;
+  busy = true;
+  ENGINES[engine].primeAudio();
+  place();
+  await new Promise((r) => setTimeout(r, 150));
+  wapCombo = 0;
+  Object.assign(meter, { on: true, chunks: [], peak: 0, hi: 0, all: 0 });
+  const end = Math.max(...row.events.map((e) => e.t)) + 1;
+  row.events.forEach((e) => setTimeout(() => play(engine, e), e.t * 1000));
+  await new Promise((r) => setTimeout(r, end * 1000));
+  meter.on = false;
+  busy = false;
+  const c = meter.chunks;
+  const mean = (a) => a.reduce((s, x) => s + x, 0) / Math.max(1, a.length);
+  // The tail compares the last quarter of the playing with the first (the last second is only echo).
+  const playing = c.slice(0, Math.max(4, c.length - Math.round((meter.sr || 48000) / 2048)));
+  const q = Math.max(1, Math.floor(playing.length / 4));
+  const res = { level: db(mean(c)), peak: 20 * Math.log10(meter.peak || 1e-9), bright: meter.all ? (100 * meter.hi) / meter.all : 0, tail: db(mean(playing.slice(-q))) - db(mean(playing.slice(0, q))) };
+  if (out) out.innerHTML = `level <b>${res.level.toFixed(1)}</b> · peak <b>${res.peak.toFixed(1)}</b>\nbright <b>${res.bright.toFixed(1)}%</b> · tail <b>${res.tail >= 0 ? '+' : ''}${res.tail.toFixed(1)}</b>`;
+  return res;
+}
+
+const results = {};
+const rowsEl = $('#rows');
+ROWS.forEach((row, i) => {
+  const el = document.createElement('section');
+  el.className = 'row';
+  el.innerHTML = `<div><h2>${row.what}</h2><p>${row.how}</p></div>
+    <div class="side"><button data-e="before">▶ before</button><div class="m" data-m="before"></div></div>
+    <div class="side"><button class="after" data-e="after">▶ after</button><div class="m" data-m="after"></div></div>`;
+  el.querySelectorAll('button').forEach((b) => b.addEventListener('click', async () => {
+    b.setAttribute('aria-busy', 'true');
+    results[`${i}:${b.dataset.e}`] = await run(row, b.dataset.e, el.querySelector(`[data-m="${b.dataset.e}"]`));
+    b.removeAttribute('aria-busy');
+  }));
+  rowsEl.append(el);
+});
+$('#all').addEventListener('click', async () => {
+  for (const [i, row] of ROWS.entries()) {
+    for (const engine of ['before', 'after']) {
+      results[`${i}:${engine}`] = await run(row, engine, rowsEl.children[i].querySelector(`[data-m="${engine}"]`));
+    }
+  }
+  window.__audition = ROWS.map((row, i) => ({ what: row.what, before: results[`${i}:before`], after: results[`${i}:after`] }));
+});
+window.__audition = null;
+/** One sound, once, through either engine (for calibrating one against the other). */
+window.__once = (engine, kind, param = 0) => run({ events: [{ t: 0, kind, param, lane: 2 }] }, engine, null);
+</script>
+</body>
+</html>
