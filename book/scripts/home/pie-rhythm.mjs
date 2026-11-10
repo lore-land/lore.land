@@ -1,25 +1,35 @@
 /**
  * pie-rhythm.mjs — the lanes keep time: each chapter's level, the musical clock, and rhythms to find.
  *
- * Levels live in .spw/runtime/pie-levels.spw: a chapter's tempo, its key (a root in hertz), the motif its catches
- * spell out, whose theme it carries, and the rhythm the land keeps in one of its rooms. A small reader here reads
+ * Levels live in .spw/runtime/pie-levels.spw: a chapter's tempo, its key (a root in hertz), its lean (%swing), the
+ * motif its catches spell out, whose theme it carries, and the rhythm the land keeps in one of its rooms. A small reader here reads
  * them at once (the file is plain and regular, and the game need not wait for the parser); book:check reads the
  * file again with the Spw interpreter and holds the two reads to agree.
  *
  * The conductor is the clock the lanes keep: sixteen steps to the bar at the level's tempo, advanced by the
- * game's own time (so a pause pauses it). It decides when a row is let in, so that it arrives at the carrier on a
+ * game's own time (so a pause pauses it). It counts in steps, not seconds, so a chapter with a new tempo goes on
+ * from the same place in the bar. It decides when a row is let in, so that it arrives at the carrier on a
  * beat — every one, two or three beats, as the pace allows, the spacing the lanes always had, now in time.
+ *
+ * It also says what is about to sound: each step a moment before it falls, with how long until it does, so the
+ * sound can be placed on the audio clock and not on whichever frame noticed it. A level may lean its
+ * off-sixteenths late (%swing: where in the eighth the off-sixteenth falls, 50 even, 66 a triplet); the land
+ * keeps its rhythm with that lean, and the carrier's steps are heard against it the same way.
  *
  * A rhythm is found by playing it. In its room the land keeps it softly; each step, hop or throw the carrier makes
  * is heard against its hits (on a hit: within WINDOW seconds of one), and six of the last seven on a hit find it.
  * Found rhythms are kept in this browser (lore.pie.rhythms.v1) and play under later carries (Setup: Music).
  */
 
-export const LEVELS_URL = '/.spw/runtime/pie-levels.spw';
+/* The token is the release the levels last changed in, so a returning player's kept copy is not last release's. */
+export const LEVELS_URL = '/.spw/runtime/pie-levels.spw?v=2026_11_09.S';
 export const STORE = 'lore.pie.rhythms.v1';
 export const WINDOW = 0.075;
 const NEED = 6;
 const OF = 7;
+/* How far ahead (seconds, as the listener counts them) a step is said before it falls. */
+const LOOK = 0.09;
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
 /* ─── Reading the levels: a small reader for a plain, regular file ─── */
 
@@ -50,6 +60,7 @@ export function readLevels(text = '') {
       levels[n] = {
         tempo: Number(field(body, '%', 'tempo')) || null,
         root: Number(field(body, '%', 'root')) || null,
+        swing: Number(field(body, '%', 'swing')) || null,
         motif: (field(body, '~', 'motif') || '').split(/\s+/).filter(Boolean).map(Number).filter(Number.isFinite),
         theme: field(body, '@', 'theme'),
         rhythm: field(body, '*', 'rhythm'),
@@ -99,17 +110,22 @@ function keepFound(id, chapter) {
 /* ─── The conductor ─── */
 
 /**
- * A clock for the lanes. tick(dt, { speed, travel, gap, room }) advances it and says what happened this frame:
- * { steps: [step indices passed], beat, bar, row } — row is true when a row should be let in now so that it
- * reaches the carrier on a beat. act(kind) hears an action against the hidden rhythm; when one is found,
- * onFound(rhythm) is called once.
+ * A clock for the lanes. tick(dt, { speed, travel, gap, rate }) advances it and says what happened this frame:
+ * { steps: [step indices passed], beat, bar, row, late, ahead } — row is true when a row should be let in now so
+ * that it reaches the carrier on a beat; late is how long ago the beat fell (seconds, as the listener counts
+ * them); ahead is each step about to sound, { k, step, bar, in }, said once, a moment before it falls. rate is
+ * game seconds per real second (the pace, a slowed moment), so `late` and `in` are real time.
+ * act(kind) hears an action against the hidden rhythm; when one is found, onFound(rhythm) is called once.
  */
 export function createConductor({ onFound = () => {} } = {}) {
   const c = {
-    tempo: 96, t: 0, step: -1, level: null, rhythm: null, rhythms: {}, chapter: 1,
+    tempo: 96, swing: 0.5, t: 0, pos: 0, step: -1, said: -1, level: null, rhythm: null, rhythms: {}, chapter: 1,
     lastRowStep: -999, inRoom: false, heard: [], whispered: false, lastPocket: null
   };
   const sixteenth = () => 60 / c.tempo / 4;
+  /* Where a step falls, in steps: an off-sixteenth leans late by the level's swing. */
+  const lean = () => (c.swing - 0.5) * 2;
+  const stepPos = (k) => k + (Math.abs(k) % 2 ? lean() : 0);
 
   c.setLevels = ({ rhythms = {} } = {}) => { c.rhythms = rhythms; };
 
@@ -117,6 +133,7 @@ export function createConductor({ onFound = () => {} } = {}) {
     c.chapter = n;
     c.level = level;
     c.tempo = level?.tempo || 96;
+    c.swing = clamp((level?.swing || 50) / 100, 0.5, 0.67);
     c.rhythm = level?.rhythm ? c.rhythms[level.rhythm] || null : null;
     c.heard = [];
     c.inRoom = false;
@@ -130,16 +147,25 @@ export function createConductor({ onFound = () => {} } = {}) {
     return c.inRoom && !was;
   };
 
-  c.tick = (dt, { speed = 150, travel = 2, gap = 220 } = {}) => {
-    const out = { steps: [], beat: false, bar: false, row: false };
+  c.tick = (dt, { speed = 150, travel = 2, gap = 220, rate = 1 } = {}) => {
+    const out = { steps: [], ahead: [], beat: false, bar: false, row: false, late: 0 };
     if (!(dt > 0)) return out;
-    c.t += dt;
     const s = sixteenth();
-    const now = Math.floor(c.t / s);
+    const r = clamp(rate || 1, 0.05, 4);
+    c.t += dt;
+    c.pos += dt / s;
+    const now = Math.floor(c.pos);
+    // What is about to sound: every step whose moment comes within the look-ahead, said once.
+    if (c.said < now - 1) c.said = now - 1;
+    const reach = c.pos + (LOOK * r) / s;
+    for (let k = c.said + 1, guard = 0; stepPos(k) <= reach && guard < 8; k += 1, guard += 1) {
+      out.ahead.push({ k, step: k % 16, bar: Math.floor(k / 16), in: Math.max(0, ((stepPos(k) - c.pos) * s) / r) });
+      c.said = k;
+    }
     // Every step passed this frame (a slow frame can pass two); the row is decided on the last.
-    for (let k = c.step + 1; k <= now; k += 1) {
+    for (let k = Math.max(c.step + 1, now - 4); k <= now; k += 1) {
       out.steps.push(k);
-      if (k % 4 === 0) out.beat = true;
+      if (k % 4 === 0) { out.beat = true; out.late = ((c.pos - k) * s) / r; }
       if (k % 16 === 0) out.bar = true;
     }
     if (!out.steps.length) return out;
@@ -158,26 +184,26 @@ export function createConductor({ onFound = () => {} } = {}) {
     return out;
   };
 
-  /** Seconds from now to the nearest hit of the hidden rhythm (signed), or null when none is kept here. */
-  const offHit = () => {
+  /** The nearest hit of the hidden rhythm: how far off it is (seconds, signed) and which step it is; or null. */
+  const nearHit = () => {
     if (!c.rhythm) return null;
-    const s = sixteenth();
-    const barT = c.t % (s * 16);
-    let best = Infinity;
+    const bar0 = Math.floor(c.pos / 16) * 16;
+    let best = null;
     c.rhythm.hits.forEach((h) => {
       [-16, 0, 16].forEach((wrap) => {
-        const d = barT - (h + wrap) * s;
-        if (Math.abs(d) < Math.abs(best)) best = d;
+        const k = bar0 + h + wrap;
+        const d = c.pos - stepPos(k);
+        if (!best || Math.abs(d) < Math.abs(best.d)) best = { d, k };
       });
     });
-    return best;
+    return best && { off: best.d * sixteenth(), k: best.k };
   };
 
   /** An action (step, hop, throw), heard against the hidden rhythm while its room passes. */
   c.act = (kind) => {
     if (!c.inRoom || !c.rhythm) return null;
-    const d = offHit();
-    const on = d !== null && Math.abs(d) <= WINDOW;
+    const near = nearHit();
+    const on = Boolean(near) && Math.abs(near.off) <= WINDOW;
     c.heard.push(on);
     if (c.heard.length > OF) c.heard.shift();
     const onCount = c.heard.filter(Boolean).length;
@@ -192,18 +218,21 @@ export function createConductor({ onFound = () => {} } = {}) {
    * in the chapter. Once per hit, so a flurry of steps on one hit counts once. */
   c.pocket = () => {
     if (!c.rhythm || !foundRhythms()[c.rhythm.id]) return false;
-    const d = offHit();
-    if (d === null || Math.abs(d) > WINDOW) return false;
-    const hit = Math.round((c.t - d) / sixteenth());
-    if (hit === c.lastPocket) return false;
-    c.lastPocket = hit;
+    const near = nearHit();
+    if (!near || Math.abs(near.off) > WINDOW) return false;
+    if (near.k === c.lastPocket) return false;
+    c.lastPocket = near.k;
     return true;
   };
 
-  /** The hidden rhythm's hits in the steps just passed (for the land to keep it softly), and whether it is found. */
+  /* A step as it is passed (a number) or as it is said ahead ({ k, in }). */
+  const said = (e) => (typeof e === 'number' ? { k: e, in: 0 } : e);
+  const inBar = (k) => ((k % 16) + 16) % 16;
+
+  /** The hidden rhythm's hits among these steps (for the land to keep it softly), each with when it falls. */
   c.hitsIn = (steps) => {
     if (!c.rhythm || !c.inRoom) return [];
-    return steps.map((k) => k % 16).filter((k) => c.rhythm.steps[k] !== '.').map((k) => ({ step: k, strong: c.rhythm.steps[k] === 'X' }));
+    return steps.map(said).filter((e) => c.rhythm.steps[inBar(e.k)] !== '.').map((e) => ({ step: inBar(e.k), strong: c.rhythm.steps[inBar(e.k)] === 'X', in: e.in }));
   };
 
   /** The rhythms to play under the carry: the chapter's own if found, and one more found elsewhere, in turn. */
@@ -213,17 +242,18 @@ export function createConductor({ onFound = () => {} } = {}) {
     if (!kept.length) return [];
     const own = c.rhythm && found[c.rhythm.id] ? c.rhythm : null;
     const others = kept.filter((r) => r !== own);
-    const visiting = others.length ? others[Math.floor(c.t / (sixteenth() * 64)) % others.length] : null;
+    const visiting = others.length ? others[Math.floor(c.pos / 64) % others.length] : null;
     const out = [];
-    steps.forEach((k) => {
-      const i = k % 16;
+    steps.map(said).forEach((e) => {
+      const i = inBar(e.k);
       [[own, 1], [visiting, own ? 0.55 : 0.8]].forEach(([r, level]) => {
-        if (r && r.steps[i] !== '.') out.push({ rhythm: r, step: i, strong: r.steps[i] === 'X', level });
+        if (r && r.steps[i] !== '.') out.push({ rhythm: r, step: i, strong: r.steps[i] === 'X', level, in: e.in });
       });
     });
     return out;
   };
 
-  c.phase = () => (c.t % (sixteenth() * 4)) / (sixteenth() * 4);
+  /** Where in the beat the lanes are, 0 to 1. */
+  c.phase = () => (((c.pos % 4) + 4) % 4) / 4;
   return c;
 }

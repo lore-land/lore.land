@@ -43,7 +43,7 @@
   carry: { now: [step, hop, land, throw, catch, deft, ramp, post, share, squash, sweet, flour], says: "the body of the carry: one melodic line through catches, a pluck climbing with a hop chain, steps on the beat" }
   harm: { now: [knock, spill, foil], says: "a stumble and its resolve: knocks hush the pad, the spill falls home 5-3-1" }
   land_gives: { now: [berry, bone, wonder, egg, glass, fulfil, foretell, beaver, drip, honk], says: "what the land gives sings chord tones inside the chapter pentatonic" }
-  music: { now: [incipit, leitmotif_boof, rhythm_hits, rhythm_found, pad, bed, pulse], says: "the chapter key, tempo and motif from pie-levels.spw; the fifteen hidden rhythms in their voices" }
+  music: { now: [incipit, cadence, leitmotif_boof, rhythm_hits, rhythm_found, room_said, pad, bed, bass_turn, tilt_tone, pulse, song_echo], says: "the chapter key, tempo, lean and motif from pie-levels.spw; the fifteen hidden rhythms in their voices; one clock for the lanes and the music, counted in steps and said ahead so sounds sit on the audio clock; a room says its chord on the beat; a chapter closes with a cadence by how it went; the tilt is a tone drifting out of tune" }
   wap: { now: [wapSound], says: "the pie in the face: the game signature" }
   archived_designs: {
     jazz_geese: "nine honks, eight heard, the ninth missing and warm (chapter 9)"

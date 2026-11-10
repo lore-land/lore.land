@@ -2,33 +2,34 @@
 # Read at runtime (book/scripts/home/pie-rhythm.mjs reads it at once with a small reader); npm run book:check
 # reads it again with the Spw interpreter (book/scripts/vendor/spw-seed.mjs) and holds the two reads to agree.
 # A level is the lanes of one chapter: the tempo they keep, the key they sing in, the motif every catch
-# spells out, and the rhythm the land keeps in one of its rooms. The game keeps its own defaults; these
-# tune them. A new level is a new *chNN{} block; a new rhythm, a new block under !rhythms.
+# spells out, and the rhythm the land keeps in one of its rooms. A level may lean: %swing says where in
+# the eighth its off-sixteenths fall (50 even, 66 a triplet; left out, it is even). The game keeps its own
+# defaults; these tune them. A new level is a new *chNN{} block; a new rhythm, a new block under !rhythms.
 #>lore_land_runtime_pie_levels
 #:surface #!runtime
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  A chapter has a voice in the book and a sound in the lanes, and they should rhyme. Each level gives its chapter a tempo (the rows arrive on its beats), a key (a root in hertz, sung pentatonic), a motif (the melody that catches spell out, in semitones above the root), whose theme it carries, and the rhythm the land keeps in one of its rooms. A rhythm is found by playing it: in its room the land keeps it softly, and steps, hops and throws in time with its hits find it. A rhythm found is kept, and plays under the carry from then on (Setup, Music and rhythm). The steps of a rhythm are sixteen to the bar: X a strong hit, x a hit, . a rest.
+  A chapter has a voice in the book and a sound in the lanes, and they should rhyme. Each level gives its chapter a tempo (the rows arrive on its beats), a key (a root in hertz, sung pentatonic), a motif (the melody that catches spell out, in semitones above the root), whose theme it carries, and the rhythm the land keeps in one of its rooms. A rhythm is found by playing it: in its room the land keeps it softly, and steps, hops and throws in time with its hits find it. A rhythm found is kept, and plays under the carry from then on (Setup, Music and rhythm). The steps of a rhythm are sixteen to the bar: X a strong hit, x a hit, . a rest. Six chapters lean, each for a reason in its story: the grove answers a beat late (two), the clowns shuffle (six, and most at the nine honks), the oath is counted never quite even (seven), two currents keep one bar (twelve), and the porter knocks three ways (fifteen). A march, a hall and a well stay even. The land keeps its rhythm with the lean, the answers that wait for the pulse wait with it, and a step is heard against it the same way.
 }
 
 !levels{
   *ch01{ %tempo[96] %root[293.66] ~motif[0 2 4 7 9 7] @theme[boof] *rhythm[torch_march] .room["warm_furrow"] }
-  *ch02{ %tempo[92] %root[261.63] ~motif[7 4 7 4 2 0] @theme[echo] *rhythm[echo_wrens] .room["forked_path"] }
+  *ch02{ %tempo[92] %root[261.63] %swing[58] ~motif[7 4 7 4 2 0] @theme[echo] *rhythm[echo_wrens] .room["forked_path"] }
   *ch03{ %tempo[104] %root[329.63] ~motif[0 7 9 7 4 2] @theme[genie] *rhythm[sand_signals] .room["signal_stones"] }
   *ch04{ %tempo[88] %root[311.13] ~motif[4 2 4 7 4 0] @theme[council] *rhythm[crosswind] .room["weather_pane"] }
   *ch05{ %tempo[100] %root[277.18] ~motif[9 7 4 2 4 7] @theme[rift] *rhythm[quiet_rift] .room["crack_gauge"] }
-  *ch06{ %tempo[108] %root[349.23] ~motif[0 4 7 12 7 4] @theme[clowns] *rhythm[lantern_glass] .room["lamp_ladder"] }
-  *ch07{ %tempo[96] %root[293.66] ~motif[2 4 7 4 2 0] @theme[oath] *rhythm[oath_fruit] .room["oath_stone"] }
+  *ch06{ %tempo[108] %root[349.23] %swing[60] ~motif[0 4 7 12 7 4] @theme[clowns] *rhythm[lantern_glass] .room["lamp_ladder"] }
+  *ch07{ %tempo[96] %root[293.66] %swing[56] ~motif[2 4 7 4 2 0] @theme[oath] *rhythm[oath_fruit] .room["oath_stone"] }
   *ch08{ %tempo[92] %root[261.63] ~motif[0 0 2 2 4 2] @theme[well] *rhythm[well_drips] .room["well_rim"] }
-  *ch09{ %tempo[112] %root[392] ~motif[7 9 12 9 7 4] @theme[honks] *rhythm[nine_honks] .room["eight_shards"] }
+  *ch09{ %tempo[112] %root[392] %swing[62] ~motif[7 9 12 9 7 4] @theme[honks] *rhythm[nine_honks] .room["eight_shards"] }
   *ch10{ %tempo[84] %root[220] ~motif[0 2 7 9 12 9] @theme[hall] *rhythm[bone_hall] .room["timber_hall"] }
   *ch11{ %tempo[100] %root[246.94] ~motif[4 7 9 7 4 2] @theme[bloom] *rhythm[early_bloom] .room["bloom_garden"] }
-  *ch12{ %tempo[104] %root[329.63] ~motif[0 4 2 7 4 9] @theme[rivers] *rhythm[confluence] .room["bridge_deck"] }
+  *ch12{ %tempo[104] %root[329.63] %swing[54] ~motif[0 4 2 7 4 9] @theme[rivers] *rhythm[confluence] .room["bridge_deck"] }
   *ch13{ %tempo[96] %root[293.66] ~motif[2 4 7 9 7 4] @theme[door] *rhythm[shell_door] .room["shell_door"] }
   *ch14{ %tempo[90] %root[261.63] ~motif[7 4 2 0] @theme[thursday] *rhythm[kept_thursday] .room["frost_lane"] }
-  *ch15{ %tempo[108] %root[349.23] ~motif[0 7 4 7 0 9] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] }
+  *ch15{ %tempo[108] %root[349.23] %swing[57] ~motif[0 7 4 7 0 9] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] }
 }
 
 !rhythms{

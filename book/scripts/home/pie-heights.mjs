@@ -11,12 +11,15 @@
  *   underfoot  holes, ditches, puddles, frost, flour: a hop passes over them too
  *
  * Over it, the arc of a hop taken now (higher if it would chain), so whatever falls under the arc
- * is marked ✓, and the next thing worth hopping says when: "hop in 0.3 s". The chain is pips: land a
- * clean hop and hop again inside the window, and the third is a high hop.
+ * is marked ✓, and the next thing worth hopping says when: "hop in 0.3 s". The arc hangs flat at
+ * the top; a clear there is in time. The chain is pips: land a clean hop and hop again inside the
+ * window, and the third is a high hop.
  *
  * The game owns the rules; it hands this module a snapshot each frame (peek()), so the panel only
  * ever shows what the game will actually do.
  */
+
+import { hopCurve, HOP_HANG } from './pie-world.mjs?v=2026_11_09.S';
 
 let HORIZON = 1.8;        // seconds of lane shown ahead (configurable)
 const GUTTER = 64;        // the band labels
@@ -115,8 +118,8 @@ export function createHeights({ panel, config = () => HEIGHTS_DEFAULTS }) {
     const nextHigh = nextChain >= 2;
     const airFrom = 0.08 * jumpDur;
     const airTo = 0.92 * jumpDur;
-    const sweetFrom = 0.33 * jumpDur;   // in time: cleared near the top of the hop
-    const sweetTo = 0.67 * jumpDur;
+    const sweetFrom = HOP_HANG[0] * jumpDur;   // in time: cleared in the hang, the flat top
+    const sweetTo = HOP_HANG[1] * jumpDur;
     const remaining = jumpT > 0 ? jumpT : 0;
     const inAirNow = jumpT > 0;
     ahead.forEach((t) => {
@@ -142,31 +145,35 @@ export function createHeights({ panel, config = () => HEIGHTS_DEFAULTS }) {
     for (let i = 0; i <= 24; i += 1) {
       const tau = (i / 24) * jumpDur;
       const p = tau / jumpDur;
-      const h = Math.sin(Math.PI * p) ** 0.75 * hopLift * (inAirNow ? snap.power : nextPower);
+      const h = hopCurve(p) * hopLift * (inAirNow ? snap.power : nextPower);
       const x = xAt(inAirNow ? tau - (jumpDur - remaining) : tau);
       const y = feetY(h, inAirNow ? highHop : nextHigh);
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
     ctx.stroke();
     ctx.setLineDash([]);
-    // The sweet spot: the top third of the hop. Clear something there and it is IN TIME.
+    // The hang: the flat top of the hop. Clear something there and it is in time.
     ctx.strokeStyle = '#d9a23a';
     ctx.lineWidth = 3.5;
     ctx.globalAlpha = 0.55;
     ctx.beginPath();
-    for (let i = 8; i <= 16; i += 1) {
-      const tau = (i / 24) * jumpDur;
-      const h = Math.sin(Math.PI * (tau / jumpDur)) ** 0.75 * hopLift * (inAirNow ? snap.power : nextPower);
+    const hangSteps = 8;
+    for (let i = 0; i <= hangSteps; i += 1) {
+      const p = HOP_HANG[0] + (HOP_HANG[1] - HOP_HANG[0]) * (i / hangSteps);
+      const tau = p * jumpDur;
+      const h = hopCurve(p) * hopLift * (inAirNow ? snap.power : nextPower);
       const x = xAt(inAirNow ? tau - (jumpDur - remaining) : tau);
       const y = feetY(h, inAirNow ? highHop : nextHigh);
-      if (i === 8) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
     ctx.stroke();
     ctx.globalAlpha = 1;
-    ctx.fillStyle = inAirNow ? colors.accent : colors.gold;
+    const phase = inAirNow ? 1 - remaining / jumpDur : 0;
+    const hanging = phase >= HOP_HANG[0] && phase <= HOP_HANG[1];
+    ctx.fillStyle = hanging ? '#d9a23a' : inAirNow ? colors.accent : colors.gold;
     ctx.font = '700 8px "JetBrainsMono", ui-monospace, monospace';
     ctx.textAlign = 'left';
-    const label = inAirNow ? (highHop ? 'HIGH HOP, IN THE AIR' : 'IN THE AIR') : !canHop ? 'LANDING…' : nextHigh ? 'IF YOU HOP NOW: A HIGH HOP' : nextChain ? 'IF YOU HOP NOW: HIGHER' : 'IF YOU HOP NOW';
+    const label = inAirNow ? (hanging ? (highHop ? 'HIGH HOP, IN THE HANG' : 'IN THE HANG') : (highHop ? 'HIGH HOP, IN THE AIR' : 'IN THE AIR')) : !canHop ? 'LANDING…' : nextHigh ? 'IF YOU HOP NOW: A HIGH HOP' : nextChain ? 'IF YOU HOP NOW: HIGHER' : 'IF YOU HOP NOW';
     ctx.fillText(label, xAt(0) + 4, feetY(hopLift * nextPower, nextHigh) - 7);
     ctx.restore();
 

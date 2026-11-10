@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_09.S",
+      "date": "2026-11-09",
+      "notes": [
+        "Exactly One Pie keeps better time. A chapter slower than the one before it used to leave the lanes empty and the beat silent for a while, longest in chapters Four, Seven, Ten and Thirteen. The lanes now go on from the same place in the bar. The rhythms you have found sit exactly on the beat, and six chapters lean a little, each for a reason in its story: the grove in Two answers late, and the clowns in Six and Nine shuffle.",
+        "A room says its chord once as it opens, strummed far off, and the chord changes on the beat. A chapter carried to its end closes with a few notes that tell how it went: home, when it is carried; home and brighter, when it is won back from the mimes; left hanging, when they take it. Then the next chapter's tune begins.",
+        "A pie tilting too far can be heard: a low note on the side it leans to, drifting out of tune, and back in tune as it settles. What is sung has a soft echo in the chapter's time. A run of good things fills the room's chord in, a fifth, then its third, then the room's colour, and what comes down the lanes is heard once as it nears, in the stuff it is made of.",
+        "If Music is set to only what happens (Setup, Music and rhythm), the lanes stay as sparse as they were: no room chords and no tilt note.",
+        "A hop hangs at the top. A clear there steadies the pie and brings the next slice on, and a hop pressed while you are still in the air leaves the ground again as soon as you land. A throw dead centre counts for more than a throw that is only close, and a throw from the hang, from a held poise, or off a wall counts for more again."
+      ]
+    },
+    {
       "release": "2026_11_09.L",
       "date": "2026-11-09",
       "notes": [

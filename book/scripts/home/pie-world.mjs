@@ -49,6 +49,16 @@ export const SLIPS = new Set(['puddle', 'frost', 'sack']);
 /* Low enough to jump: a hop clears them. (Berries, wonders and clowns are met in the air too.) */
 export const LOW = new Set(['baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner']);
 export const JUMP_DUR = 0.62;
+/* The hang: the flat top of a hop. A clear there is in time. A throw from there leaves the hand high. */
+export const HOP_HANG = Object.freeze([0.36, 0.64]);
+export const hopCurve = (u) => {
+  const t = Math.min(1, Math.max(0, u));
+  const [a, b] = HOP_HANG;
+  if (t <= 0 || t >= 1) return 0;
+  if (t >= a && t <= b) return 1;
+  if (t < a) return Math.sin((t / a) * Math.PI / 2);
+  return Math.cos(((t - b) / (1 - b)) * Math.PI / 2);
+};
 /* The implicit z: how high each thing stands, as its own dimension of play. 0 ground (puddles, holes,
  * arrows: underfoot) · 1 low (a hop clears it) · 2 body (posts, glass, people: too tall, though a high
  * hop clears the lighter ones) · 3 air (pigeons, wasps: drawn over the carrier) · 4 high (the Egg). */

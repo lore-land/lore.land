@@ -247,6 +247,7 @@ function parsedLevels(text) {
     levels[n] = {
       tempo: Number(f['%tempo']?.[0]) || null,
       root: Number(f['%root']?.[0]) || null,
+      swing: Number(f['%swing']?.[0]) || null,
       motif: (f['~motif'] || []).map(Number).filter(Number.isFinite),
       theme: f['@theme']?.[0] ?? null,
       rhythm: f['*rhythm']?.[0] ?? null,
@@ -291,6 +292,7 @@ function parsedLevels(text) {
     const level = levels[c.chapterNumber];
     if (!level) { warn('levels', `chapter ${c.chapterNumber} has no level (its lanes keep the game's defaults)`); return; }
     if (!level.tempo || !level.root) error('levels', `ch${pad(c.chapterNumber)}: a level needs a %tempo and a %root`);
+    if (level.swing && (level.swing < 50 || level.swing > 66)) error('levels', `ch${pad(c.chapterNumber)}: %swing is where in the eighth the off-sixteenth falls, 50 (even) to 66 (a triplet), not ${level.swing}`);
     if (level.rhythm && !rhythms[level.rhythm]) error('levels', `ch${pad(c.chapterNumber)}: rhythm ${level.rhythm} is not under !rhythms (or its steps are not sixteen of X x .)`);
     const rooms = (c.sections || []).map((sec) => sec.room?.spw).filter(Boolean);
     if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);

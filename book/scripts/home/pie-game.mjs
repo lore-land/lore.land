@@ -20,11 +20,12 @@
  *              a drag in the lanes (a step for every half lane it crosses, as it goes; a quick
  *              flick is one); or the step buttons. Up the lanes is where wonders wait,
  *              and where what is coming comes sooner.
- *   jump       Space or J, the jump button, or a tap on the carrier: a hop. Low things pass
- *              under it — stones, snails, spools, puddles, frost, bags and piles of flour, a
- *              fallen banner — and are cleared for good (a slice readies). Posts, glass,
- *              tables and people are too tall. It lands with a little jostle. A slice thrown
- *              at the top of a hop is lofted as if off a ramp, and can be Perfect.
+ *   jump       Space or J, the jump button, or a tap on the carrier: a hop. It rises, hangs
+ *              at the top, and comes down. Low things pass under it — stones, snails, spools,
+ *              puddles, frost, bags and piles of flour, a fallen banner — and are cleared for
+ *              good. A clear in the hang is in time: the pie steadies, and a slice comes back.
+ *              Hop again as you come down and the next goes higher; the third is a high hop,
+ *              which clears the lighter tall things too. A throw from the hang leaves high.
  *   tilt       the one thing at stake. Every step tilts the pie a little, hurried steps
  *              more; it settles if you let it. Tilted all the way, it spills.
  *   knocks     hazards wear a red ring at their foot. A knock tilts the pie by what hit it
@@ -43,9 +44,12 @@
  *              left: only something done turns it (Q/E or [ ], a pointer, a tap, a drag from
  *              the pie, a knock that swings the carrier, remainder-moths leading it to the
  *              nearest face). It does not home. When the needle lines up with a
- *              clown's face (or Mr. BaneWAP's off switch) the ring turns gold. Dead centre, off
- *              a wall, off Bonk glass or off a ramp is Perfect: it counts twice. Bronze posts
- *              bend a slice; wasps and pigeons snatch it; anything solid takes it with a splat.
+ *              clown's face (or Mr. BaneWAP's off switch) the ring turns gold: TRUE, and near
+ *              it, NEAR. Dead centre counts twice, steadies the pie, and brings the next slice
+ *              on. Near does less of the same. Off a wall, off Bonk glass, or off a ramp is
+ *              Perfect on its own; dead centre as well, and the way you got there (the hang,
+ *              a held poise) stacks on that. Bronze posts bend a slice; wasps and pigeons
+ *              snatch it; anything solid takes it with a splat.
  *   aura       the pie in hand stays whole because an aura keeps replenishing it: flour for
  *              the crust, boonberries for the filling. Every slice draws on both; a wasted one
  *              costs more. Short of either, the slice goes without it — crust and no filling,
@@ -83,8 +87,17 @@
  *              it); knocks are out of key; slow time muffles, the mimes' lead thins; footsteps
  *              know grass from cobble; a room around it all, the far things farther. Each room
  *              colours the key by its sigil, every tuned thing continues one melody that lands
- *              on that chord, answers come on the chapter's pulse, a streak brings the chord up
- *              under it all, and the spill resolves home. Made to be heard the hundredth time:
+ *              on that chord, answers come on the chapter's pulse. A run of good things fills
+ *              that chord in — a fifth, then its third, then the room's colour — and a knock
+ *              lets it go. An obstacle is heard once, in the stuff it is made of; Boon climbs,
+ *              Bane falls. The spill resolves home. The lanes and the music keep one clock
+ *              (pie-rhythm.mjs counts in steps, so a new tempo goes on from the same place in
+ *              the bar, and says each step a moment before it falls, so its sound is placed on
+ *              the audio clock); some chapters lean (%swing). A room opening changes the chord
+ *              on the beat and says it once on plucked strings; a chapter closes with a cadence
+ *              by how it went; what is sung has an echo in the chapter's time; the bass keeps
+ *              bars in fours and turns at the fourth; past poise the pie's tilt is a low tone
+ *              drifting out of tune. Made to be heard the hundredth time:
  *              nothing plays the same twice, and a sound repeated fast comes back quieter.
  *   slow       a slow beaver ambles through the lanes now and then: steer into it and the land
  *              goes at its pace for a while (the carrier does not), so dodging is easier. The
@@ -170,18 +183,18 @@ import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from 
 import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.W';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
-import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_08.P';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, markBeat, rhythmHit, rhythmFound, chapterIncipit, leitmotif, setMusicBed } from './pie-sound.mjs?v=2026_11_09.O';
-import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.L';
+import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_09.S';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare } from './pie-sound.mjs?v=2026_11_09.S';
+import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
   BIT_COLORS, CAUSES, CARRIERS, CHAPTER_SCENE, DIMENSIONS_GAINED, EGG_ODDS, HIGH_CLEARS,
-  INTRO, JUMP_DUR, KNOCKS, LOW, MEET, MINIS, SCENES, SCENE_WHIMSY_DEFAULTS, SCHEMES, SLIPS,
+  HOP_HANG, hopCurve, INTRO, JUMP_DUR, KNOCKS, LOW, MEET, MINIS, SCENES, SCENE_WHIMSY_DEFAULTS, SCHEMES, SLIPS,
   WHIMSY_DEFAULTS, WIDE, Z, carrierById, carrierStats, drawCarrierLot, pad2,
-} from './pie-world.mjs?v=2026_11_09.P';
+} from './pie-world.mjs?v=2026_11_09.S';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -918,7 +931,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   function announceRoom() {
     const r = roomNow();
     if (!r || !r.n) return;
-    setSoundRoom(r.sigil);
+    setSoundRoom(r.sigil, { announce: Boolean(record.sound && state === 'running' && setting('music') !== 'quiet') });
     // The room that keeps the chapter's rhythm: said once, the first time, if it has not been found.
     if (conductor.setRoom(r.sig) && conductor.rhythm && !foundRhythms()[conductor.rhythm.id]) {
       showToast('Something here keeps time', 'Listen for it. Step, hop or throw along with it, and it is yours.', 3400, 'wonder', 1);
@@ -1469,23 +1482,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.fillRect(W / 2 - 80, 116, 160 * left, 4);
     ctx.restore();
   }
-  /* Clear about height: a hop gauge beside the carrier while a hop is on, with the two lines that
-   * matter (a hop clears low things; a high hop, the third of a chain, clears the lighter tall ones). */
+  /* Clear about height: a hop gauge beside the carrier while a hop is on, or while another
+   * hop would still chain. The hang is the flat top. LOW and HIGH are what that height clears. */
   function drawHopGauge() {
-    if (!run || state !== 'running' || !(run.jumpT > 0 || (run.hopChain || 0) > 0)) return;
+    if (!run || state !== 'running') return;
+    const windowFull = TUNE.hop_window * (run.carrier.id === 'clerk' ? 1.4 : 1);
+    const windowLeft = run.jumpT <= 0 && run.lastHopGood ? Math.max(0, windowFull - (run.t - (run.lastLand ?? -9))) : 0;
+    if (!(run.jumpT > 0 || windowLeft > 0 || run.hopWant)) return;
     const lift = jumpLift();
     const max = TUNE.hop_lift * (1 + 2 * TUNE.hop_chain);
     const x = run.x + 26;
     const base = run.y + 14;
     const h = 44;
     const at = (v) => base - (v / max) * h;
+    const hanging = inHang();
     ctx.save();
-    ctx.globalAlpha = 0.85;
+    ctx.globalAlpha = 0.9;
     ctx.strokeStyle = mix(colors.ink, colors.paper, 0.45);
     ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x, base - h); ctx.stroke();
-    ctx.fillStyle = run.highHop ? '#f2c14e' : colors.accent;
-    ctx.fillRect(x - 2, at(lift), 4, base - at(lift));
+    ctx.fillStyle = hanging || run.highHop ? '#f2c14e' : colors.accent;
+    ctx.fillRect(x - 2, at(lift), 4, Math.max(0, base - at(lift)));
     ctx.font = '700 7px "JetBrainsMono", ui-monospace, monospace';
     ctx.textAlign = 'left';
     [[9, 'LOW ⤒'], [TUNE.hop_lift * (1 + 2 * TUNE.hop_chain) * 0.92, 'HIGH ⤒⤒']].forEach(([v, label]) => {
@@ -1493,6 +1510,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.fillRect(x - 4, at(v), 8, 1);
       ctx.fillText(label, x + 6, at(v) + 2.5);
     });
+    if (hanging) {
+      ctx.fillStyle = '#a8782a';
+      ctx.fillText('HANG', x + 6, at(lift) - 4);
+    } else if (run.hopWant) {
+      ctx.fillStyle = colors.accent;
+      ctx.fillText('AGAIN', x + 6, base - 4);
+    }
+    if (windowLeft > 0 && run.jumpT <= 0) {
+      ctx.fillStyle = colors.accent;
+      ctx.fillRect(x - 2, base + 4, 18 * (windowLeft / windowFull), 2);
+    }
+    const chain = run.hopChain || 0;
+    for (let i = 0; i < 3; i += 1) {
+      ctx.fillStyle = i < chain ? (chain >= 2 ? '#f2c14e' : colors.accent) : mix(colors.ink, colors.paper, 0.75);
+      ctx.beginPath();
+      ctx.arc(x + i * 6, base + 12, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.restore();
   }
   /* Clear about height: a hazard wears a small mark of what a hop does about it. */
@@ -1883,16 +1918,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     jostle(0.8);
   };
 
-  /* A hop: low things pass under it. The pie lifts a little off the plate, and lands with a jostle. */
-  // A hop hangs a moment at the top (the curve is flattened there), and a chain of hops goes higher.
-  const jumpLift = () => (run?.jumpT > 0 ? Math.sin(Math.PI * clamp(1 - run.jumpT / JUMP_DUR, 0, 1)) ** 0.75 * TUNE.hop_lift * (run.hopPower || 1) : 0);
+  /* A hop: low things pass under it. It rises, hangs, and lands. Another hop pressed while
+   * it is in the air is remembered, and leaves the ground again as soon as this one is down. */
+  const hopPhase = () => (run?.jumpT > 0 ? clamp(1 - run.jumpT / JUMP_DUR, 0, 1) : 0);
+  const inHang = () => { const u = hopPhase(); return u >= HOP_HANG[0] && u <= HOP_HANG[1]; };
+  const jumpLift = () => (run?.jumpT > 0 ? hopCurve(hopPhase()) * TUNE.hop_lift * (run.hopPower || 1) : 0);
   const airborne = () => jumpLift() > 9;
   const jump = () => {
     if (state === 'title' || state === 'over') {
       start();
       return;
     }
-    if (state !== 'running' || run.jumpT > 0 || run.jumpCool > 0) return;
+    if (state !== 'running') return;
+    if (run.jumpT > 0 || run.jumpCool > 0) {
+      run.hopWant = true;
+      return;
+    }
+    run.hopWant = false;
+    run.inTimeAtHop = run.inTime || 0;
     heardAct('hop');
     // A deft hop right as a low hazard reaches the carrier lands steadier and readies a slice.
     const grazing = run.things.some((th) => !th.wapped && !th.cleared && !th.knocked && LOW.has(th.kind) && (th.fatal || SLIPS.has(th.kind))
@@ -1909,7 +1952,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.highHop = run.hopChain >= 2;
     if (run.hopChain) impact('hop', run.x, run.y - 74, { scale: 0.45 + run.hopChain * 0.25, word: run.highHop ? 'HIGH HOP!' : 'HOP HOP!' });
     if (!reduced?.matches) for (let i = 0; i < 6; i += 1) run.puffs.push({ x: run.x + rand(-10, 10), y: run.y + 14, vx: rand(-50, 50), vy: rand(-30, -5), t: 0.3 });
-    run.wobble = Math.min(1.2, run.wobble + (grazing ? 0.01 : 0.04));
+    run.wobble = Math.min(1.2, run.wobble + (grazing ? 0.01 : 0.025));
     sfx('hop', run.hopChain);
     spawnRing(run.x, run.y + 12, 22, colors.ink, 0.45);
     if (!run.jumpSaid) {
@@ -2005,12 +2048,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     let vx = Math.sin(angle) * SLICE_SPEED;
     let vy = -Math.cos(angle) * SLICE_SPEED;
     let reach = SLICE_REACH;
-    let loft = airborne() ? 120 : 0;
+    const leftHigh = airborne();
+    const leftHang = Boolean(leftHigh && inHang());
+    let loft = leftHang ? 160 : leftHigh ? 85 : 0;
     let bounces = 0;
     let curved = false;
     let ramped = false;
     const bent = new Set();
     let hit = null;
+    let off = null;
     let label = '';
     const dt = 14 / SLICE_SPEED;
     for (let stepIdx = 0; stepIdx < 34 && reach > 0; stepIdx += 1) {
@@ -2048,7 +2094,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (Math.abs((thing.y - 6) - y) > thing.h * 0.5 + 6) continue;
         if (thing.kind === 'clown' || thing.kind === 'switch') {
           hit = thing;
-          label = bounces > 0 ? 'BANK SHOT' : curved ? 'CURVE SHOT' : ramped ? 'LOFT SHOT' : 'THROW';
+          off = Math.abs(thing.x - x);
+          const trueLine = off < (poised() ? 10 : 7);
+          label = trueLine && leftHang ? 'HUNG TRUE'
+            : trueLine ? 'TRUE'
+            : bounces > 0 ? 'BANK SHOT'
+            : curved ? 'CURVE SHOT'
+            : ramped ? 'LOFT SHOT'
+            : leftHang ? 'FROM THE HANG'
+            : leftHigh ? 'JUMP THROW'
+            : 'THROW';
           stopped = true;
           break;
         }
@@ -2108,7 +2163,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (stopped || y < -20) break;
     }
     points.push({ x, y });
-    return { points, hit, label, bounces, curved, ramped };
+    return { points, hit, label, bounces, curved, ramped, leftHang, leftHigh, off };
   };
   const throwSlice = (angle = null) => {
     if (state !== 'running') return;
@@ -2136,11 +2191,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run.tin > 0 && !missing) run.tin -= 1;   // the sliver tin: half again, three times
     sfx('throw');
     heardAct('throw');
-    // Thrown from the top of a hop, a slice is lofted as if off a ramp.
+    // Thrown from a hop, the slice leaves high. The hang throws it higher. The line still has to be true.
     if (airborne()) {
-      first.loft = 120;
-      first.ramped.add('jump');
-      run.tags.push({ x: run.x, y: run.y - 100, t: 0, text: 'JUMP THROW' });
+      const hung = inHang();
+      first.loft = hung ? 160 : 85;
+      first.hung = hung;
+      first.aloft = true;
+      run.tags.push({ x: run.x, y: run.y - 100, t: 0, text: hung ? 'FROM THE HANG' : 'JUMP THROW' });
     } else if (wasPoised) {
       run.tags.push({ x: run.x, y: run.y - 98, t: 0, text: 'POISED THROW' });
       spawnRing(from.x, from.y, 26, colors.gold, 0.45);
@@ -2168,8 +2225,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.trails.push({
         x: shot.x + rand(-3, 3),
         y: shot.y + rand(-3, 3),
-        r: (shot.bounces > 0 || shot.curved || shot.poised) ? 2.4 : 1.7,
-        gold: Boolean(shot.bounces > 0 || shot.curved || shot.ramped.size > 0 || shot.poised),
+        r: (shot.bounces > 0 || shot.curved || shot.poised || shot.hung) ? 2.4 : 1.7,
+        gold: Boolean(shot.bounces > 0 || shot.curved || shot.ramped.size > 0 || shot.poised || shot.hung),
         t: 0
       });
     }
@@ -2231,11 +2288,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (Math.abs(thing.x - shot.x) > thing.w * 0.6 + 6 * (shot.size || 1)) continue;   // a bigger slice reaches wider
       if (Math.abs((thing.y - 6) - shot.y) > thing.h * 0.5 + 6) continue;
       if (thing.kind === 'clown' || thing.kind === 'switch') {
-        const centred = Math.abs(thing.x - shot.x) < (shot.poised ? 9 : 6);
-        const perfect = centred || shot.bounces > 0 || shot.ramped.size > 0 || shot.curved || shot.sure;
-        if (thing.kind === 'switch') foil(thing, perfect);
+        const off = Math.abs(thing.x - shot.x);
+        const trueLine = off < (shot.poised ? 10 : 7);
+        const closeLine = !trueLine && off < (shot.poised ? 16 : 12);
+        const piled = [...shot.ramped].some((id) => id !== 'mimes');
+        const craft = shot.bounces > 0 || shot.curved || piled || shot.sure;
+        const perfect = trueLine || craft;
+        const manners = { trueLine, closeLine, hung: Boolean(shot.hung), poised: Boolean(shot.poised), craft };
+        if (thing.kind === 'switch') foil(thing, perfect, manners);
         else if (shot.missing) wap(thing, 'thin', shot.missing);
-        else wap(thing, perfect ? 'perfect' : 'throw', null, shot.helping);
+        else wap(thing, perfect ? 'perfect' : closeLine ? 'near' : 'throw', null, shot.helping, manners);
         if (shot.bounces > 0 && perfect) run.tags.push({ x: thing.x, y: thing.y - 54, t: 0, text: 'OFF THE WALL' });
         else if (shot.curved && perfect) run.tags.push({ x: thing.x, y: thing.y - 54, t: 0, text: 'AROUND THE POST' });
         shot.done = true;
@@ -2316,6 +2378,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
               missing: null,
               echo: true,
               remembered: true,
+              poised: shot.poised,
+              sure: shot.sure,
+              hung: shot.hung,
+              aloft: shot.aloft,
               helping: shot.helping,
               size: (shot.size || 1) * 0.85
             });
@@ -2446,7 +2512,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
 
   /* ─── WAP: a clown gets the pie, square, and the pie on the plate is no smaller ─── */
-  const wap = (thing, how = 'plate', missing = null, size = 1) => {
+  const wap = (thing, how = 'plate', missing = null, size = 1, manners = null) => {
     if (how === 'plate' && thing.fedT > 0) return;   // still chewing the last one
     const perfect = how === 'perfect';
     // Satisfaction: a whole slice fills a pip — a pip and a half, rich; two, a full pie — and a Perfect
@@ -2496,9 +2562,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (perfect) {
       run.perfects += 1;
       lean('perfect');
-      run.wobble = Math.max(0, run.wobble - 0.3);
+      const m = manners || {};
+      // A true line is the aim. The hang, a held poise, and a worked path each add to it. A trick on its own is still perfect.
+      const extra = m.trueLine ? (m.hung ? 1 : 0) + (m.poised ? 1 : 0) + (m.craft ? 1 : 0) : 0;
+      run.wobble = Math.max(0, run.wobble - (0.3 + 0.1 * extra));
+      run.sliceReady = Math.min(1, run.sliceReady + (m.trueLine ? 0.4 : 0.15) + 0.2 * extra);
       spawnRing(thing.x, thing.y - 10, 32, '#f2c14e', 0.5);
-      run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'PERFECT' });
+      const word = !m.trueLine ? 'PERFECT' : m.hung ? 'HUNG TRUE' : m.poised ? 'HELD TRUE' : m.craft ? 'WORKED TRUE' : 'TRUE';
+      run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: word });
+    } else if (how === 'near') {
+      run.wobble = Math.max(0, run.wobble - 0.1);
+      run.sliceReady = Math.min(1, run.sliceReady + 0.2);
+      run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'NEAR' });
     } else if (how === 'plate') {
       run.wobble = Math.min(1.2, run.wobble + 0.18);
     }
@@ -2506,14 +2581,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     impact(perfect ? 'perfect' : 'clown', thing.x, thing.y - 52);
     if (run.combo >= 3) impact('combo', thing.x, thing.y - 84, { scale: 0.5 + run.combo * 0.15, word: `COMBO ×${run.combo}!` });
     if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y));
-    const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : '';
+    const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : manners?.trueLine ? ' Dead centre. It counts twice, and the pie is ready for another.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : how === 'near' ? ' Close: the pie steadies a little.' : '';
     say(run.waps === 1
       ? `WAP. A clown got the pie in the eye, and loved it. The pie on the plate is no smaller.${by}`
       : `WAP. ${run.waps} for the clowns, and still one pie.${by}`);
   };
 
   /* Mr. BaneWAP's off switch: every scheme has one. */
-  const foil = (thing, perfect = false) => {
+  const foil = (thing, perfect = false, manners = null) => {
     if (!run.bane) return;
     const scheme = SCHEMES[run.bane.id];
     thing.wapped = true;
@@ -2536,7 +2611,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       other.spin = other.x < W / 2 ? -1 : 1;
     });
     run.nextPresence = rand(15, 22);
-    if (perfect) run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'FOILED FROM AFAR' });
+    if (perfect && manners?.trueLine) {
+      run.wobble = Math.max(0, run.wobble - 0.22);
+      run.sliceReady = Math.min(1, run.sliceReady + 0.5);
+      run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'FOILED TRUE' });
+    } else if (perfect) run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: 'FOILED FROM AFAR' });
     // A foiled villain says more than he means to.
     const said = speak('bane');
     const words = said ? `“${said.text}”` : scheme.foiled;
@@ -2673,9 +2752,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['chapters', '^', 'chapters carried through', 'A chapter carried through (or mostly, when it spilled) is kept on that chapter: how you carried it leans its reading on its page.', null, null],
     ['waps', '!', 'clowns given WAP', 'A slice to a clown, square: the pie on the plate is never smaller.', null, 'waps'],
     ['satisfied', '*', 'clowns satisfied', 'A clown whose appetite was filled: a whole slice a pip, a perfect slice two.', 'satisfied', 'satisfied'],
-    ['perfects', '*', 'perfect throws', 'Off a wall, off Bonk glass, off a ramp, poised, or on an arrow: it counts twice.', 'perfect', 'perfects'],
+    ['perfects', '*', 'perfect throws', 'Dead centre, or off a wall, off Bonk glass, off a ramp, or on an arrow: it counts twice. Dead centre from the hang, from a held poise, or along a worked path, steadies more.', 'perfect', 'perfects'],
     ['bestCombo', '&', 'WAPs in a row, at best', 'WAPs close together run on: from two the pie steadies; from three, a slice is ready at once.', null, null],
-    ['inTimeTotal', '~', 'hops in time', 'A hazard cleared at the top of a hop: the middle third of its arc.', 'in_time', null],
+    ['inTimeTotal', '~', 'hops in time', 'A hazard cleared in the hang, the flat top of a hop.', 'in_time', null],
     ['cleared', '~', 'hopped clear', 'A low thing passed under a hop: passed for good, and a slice readies.', 'hop_clear', null],
     ['highClears', '^', 'over the top', 'A taller thing cleared by a high hop, the third of a clean chain.', null, null],
     ['foils', '!', 'Mr. BaneWAP foiled', 'His off switch, found and thrown: a scheme undone.', 'foiled', 'foils'],
@@ -3005,7 +3084,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return `${chapterWords(n)} carried: its reading ${lean}.`;
   };
 
-  const enterChapter = (wanted, { back = false, first = false, note = '' } = {}) => {
+  const enterChapter = (wanted, { back = false, first = false, note = '', closed = '' } = {}) => {
     let n = wanted;
     let lapped = false;
     if (n > TOTAL_CHAPTERS) {
@@ -3016,9 +3095,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       lapped = true;
     }
     n = Math.max(1, n);
-    setSoundPlace({ chapter: n, held: mimesHold(n), level: levelData.levels[n] || null });
+    // A chapter carried to its end closes with a cadence in its own key, by how it went; the next one's motif waits for it.
+    const cadence = closed && record.sound ? chapterCadence(closed) : 0;
+    setSoundPlace({ chapter: n, held: mimesHold(n), level: levelData.levels[n] || null, after: cadence });
     conductor.setChapter(n, levelData.levels[n] || null);
-    if (record.sound) chapterIncipit();
+    if (record.sound) chapterIncipit(cadence);
     run.prevScene = run.sceneId;
     run.sceneT = first ? 1 : 0;
     run.chapter = n;
@@ -3037,6 +3118,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (gained) {
       record.met.push(`dim-${gained[1]}`);
       writeRecord(record);
+      run.dimFlash = { id: gained[1], t: 0 };
+      if (record.sound) dimensionFanfare(gained[1]);
       setTimeout(() => showToast(gained[2], gained[3], 4200, 'wonder'), 1600);
     }
     run.legStart = cobbles();
@@ -3990,6 +4073,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       say('Mr. BoonWAP holds court, but the mimes are ahead here: he mimes his one true thing, and nobody can make it out.');
       return;
     }
+    if (record.sound) characterMotif('boon');
     const said = speak('boon');
     const words = said ? `“${said.text}”` : 'A sentient pie of the quinary five. Clowns flock to him, and every pie finds an eye.';
     showToast(`Mr. BoonWAP holds court${said?.isNew ? ' · ✦ new' : ''}`, words, 6000, 'boon');
@@ -4007,6 +4091,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     meanwhile('bane', 'thinking', 'Hm. Yes.', { force: true });
     showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.`, 3400, 'bane');
     say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.`);
+    if (record.sound) characterMotif('bane');
   };
 
   const update = (rawDt) => {
@@ -4054,7 +4139,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       if (progress() >= 1 && run.leg) {
         const note = closeLeg();
-        enterChapter(run.chapter + 1, { note });
+        enterChapter(run.chapter + 1, { note, closed: run.outcomes[run.outcomes.length - 1]?.outcome || 'carried' });
         return;
       }
       const at = passing();
@@ -4065,7 +4150,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // Rows a set distance apart, so the time to react holds as the pace builds; with a level, they are let in
       // so that they reach the carrier on its beats (pie-rhythm.mjs), and the music keeps the same time.
       const gap = clamp(270 - difficulty() * 120, 150, 270);
-      const music = conductor.tick(dt, { speed: Math.max(run.speed, 60), travel: (run.y + 44) / Math.max(run.speed, 60), gap });
+      // The clock says each step a moment before it falls, and how long until it does in the listener's time
+      // (the pace, a held breath and ? Ask all slow the game's clock), so every sound it starts is on the audio clock.
+      const rate = (record.view.pace || 1) * (rawDt > 0 ? dt / rawDt : 1);
+      const music = conductor.tick(dt, { speed: Math.max(run.speed, 60), travel: (run.y + 44) / Math.max(run.speed, 60), gap, rate });
       if (Object.keys(levelData.levels).length) {
         if (music.row) spawnRow();
       } else {
@@ -4075,15 +4163,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           run.rowIn = gap / Math.max(run.speed, 90);
         }
       }
-      if (music.beat) markBeat();
+      if (music.beat) markBeat(music.late);
       if (music.steps.length) {
         const glowAt = setting('glow');
         if ((glowAt === 'beat' && music.beat) || (glowAt === 'bar' && music.bar)) glow(music.bar);
-        if (record.sound) {
-          // The land keeps its rhythm softly in its room; rhythms found play under the carry (⚙ Setup › Music).
-          conductor.hitsIn(music.steps).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35 }));
-          if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.steps).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0 }));
-        }
+      }
+      if (music.ahead.length && record.sound) {
+        // The land's bass keeps the bar and turns every fourth; it keeps its rhythm softly in its room; rhythms
+        // found play under the carry (⚙ Setup › Music).
+        music.ahead.forEach((h) => landPulse(h));
+        conductor.hitsIn(music.ahead).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35, step: h.step, in: h.in }));
+        if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, in: h.in }));
       }
       run.boofIn -= dt;
       if (run.boofIn <= 0 && !run.boof) {
@@ -4180,40 +4270,53 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.dust = Math.max(0, run.dust - dt * 0.18);
     if (run.jumpT > 0) {
       run.jumpT = Math.max(0, run.jumpT - dt);
+      if (run.jumpT > 0 && inHang() && !run.wasHang) {
+        run.wasHang = true;
+        run.apexGlow = 0.22;
+        spawnRing(run.x, run.y - jumpLift(), 18, '#f2c14e', 0.35);
+      }
       if (run.jumpT === 0) {
-        // Down again: the pie lands on the plate with a little jostle (the porter barely feels it).
-        run.jumpCool = 0.22;
+        // Down again. A hop that cleared something lands light and is ready to chain. An empty hop lands heavier.
+        const clears = run.hopClears || 0;
+        const deft = Boolean(run.deftHop);
+        const timed = (run.inTime || 0) > (run.inTimeAtHop || 0);
+        run.lastHopGood = deft || clears >= 1;
+        run.landT = run.lastHopGood ? 0.16 : 0.2;
+        run.jumpCool = run.lastHopGood ? 0.07 : 0.16;
         run.lastLand = run.t;
-        run.lastHopGood = run.deftHop || (run.hopClears || 0) >= 1;
-        run.landT = 0.2;
+        run.wasHang = false;
         if (!reduced?.matches) for (let i = 0; i < 8; i += 1) run.puffs.push({ x: run.x + rand(-12, 12), y: run.y + 14, vx: rand(-70, 70), vy: rand(-25, -5), t: 0.25 });
         // Landing on a word of the road marks it (and a room of signs counts it read).
         const landedOn = wordUnder(run.x, run.y + 10, 8);
         if (landedOn && !landedOn.kept) { keepWord(landedOn, 'marked'); lean('read'); }
         if (run.lastHopGood) {
-          run.punch = Math.max(run.punch || 0, 0.25 * TUNE.drama);
-          impact('hop', run.x, run.y - 92, { scale: 0.55 + Math.min(3, run.hopClears || 1) * 0.15, word: (run.hopClears || 0) >= 2 ? `HOP ×${run.hopClears}!` : pick(['DEFT!', 'NEAT!', 'LIGHT AS FLOUR!']) });
+          const grace = 0.08 + (deft ? 0.06 : 0) + (timed ? 0.06 : 0) + Math.max(0, clears - 1) * 0.04;
+          run.wobble = Math.max(0, run.wobble - grace);
+          run.sliceReady = Math.min(1, run.sliceReady + 0.16 + (timed ? 0.28 : 0) + (clears >= 2 ? 0.14 : 0));
+          const word = timed && run.highHop ? 'HIGH, IN TIME' : timed ? 'IN TIME' : run.highHop ? 'HIGH HOP' : clears >= 2 ? `CLEARED ×${clears}` : clears >= 1 ? 'CLEARED' : 'DEFT HOP';
+          run.tags.push({ x: run.x, y: run.y - 104, t: 0, text: word });
+          if (timed || deft || clears >= 2) {
+            sfx('deft');
+            lean('deft');
+            spawnRing(run.x, run.y + 10, 26, colors.gold, 0.45);
+            run.punch = Math.max(run.punch || 0, 0.25 * TUNE.drama);
+            impact('hop', run.x, run.y - 92, { scale: 0.55 + Math.min(3, clears || 1) * 0.15, word });
+          } else {
+            sfx('land');
+          }
         } else {
           run.hopChain = 0;
+          sfx('land');
+          run.wobble = Math.min(1.2, run.wobble + 0.05);
         }
         run.highHop = false;
-        if (!run.hopClears) run.inTime = 0;
-        if (run.deftHop || run.hopClears >= 2) {
-          sfx('deft');
-          lean('deft');
-          spawnRing(run.x, run.y + 10, 26, colors.gold, 0.45);
-          run.wobble = Math.max(0, run.wobble - 0.12 * Math.max(1, run.hopClears || 1));
-          run.sliceReady = Math.min(1, run.sliceReady + 0.35);
-          run.tags.push({ x: run.x, y: run.y - 104, t: 0, text: run.hopClears >= 2 ? `HOP ×${run.hopClears}` : 'DEFT HOP' });
-        } else {
-          sfx('land');
-          run.wobble = Math.min(1.2, run.wobble + 0.1 * clamp(run.carrier.wobble / 0.18, 0.7, 1.3));
-        }
+        if (!clears) run.inTime = 0;
         run.deftHop = false;
         run.hopClears = 0;
       }
     } else if (run.jumpCool > 0) {
       run.jumpCool = Math.max(0, run.jumpCool - dt);
+      if (run.jumpCool === 0 && run.hopWant) jump();
     }
     run.moveYT = Math.min(1, run.moveYT + dt / run.carrier.step);
     run.y = run.fromY + (rowY(run.row) - run.fromY) * (1 - (1 - run.moveYT) ** 3);
@@ -4274,6 +4377,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (run.escort) run.escort.t -= dt;
     }
     setSoundMood({ muffled: state === 'running' && run.lag > 0, thin: state === 'running' && mawAhead() });
+    // The tilt, heard (with the music on): past poise the pie drifts out of tune on the side it leans to.
+    setSoundTilt(state === 'running' && record.sound && setting('music') !== 'quiet' ? run.wobble : 0, run.tiltDir);
+    if (run.dimFlash) {
+      run.dimFlash.t += dt;
+      if (run.dimFlash.t > 2.6) run.dimFlash = null;
+    }
+    if (state === 'running' && record.sound) {
+      const q = landQuality();
+      if (q.stage >= 3 && (run.landStage || 0) < 3 && !met('land-colour')) {
+        record.met.push('land-colour');
+        writeRecord(record);
+        showToast('The land is in it', 'A run of good things fills the room: a fifth, then its third, then the colour the room adds. A knock lets it go.', 4200, 'wonder');
+      }
+      run.landStage = q.stage;
+    }
     paintBeat();
 
     if (state === 'running') {
@@ -4383,6 +4501,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
         }
         if (thing.kind === 'pigeon') thing.flap += dt * 14;
+        // Heard once, as it comes: a character by motif, an obstacle by the stuff it is made of.
+        if (record.sound && thing.y > 24 && thing.y < run.y - 36) {
+          if (!thing.voiced && (thing.kind === 'clown' || thing.kind === 'clerk')) {
+            thing.voiced = true;
+            characterMotif(thing.kind, panOf(thing.x), { settled: Boolean(thing.shared) });
+          }
+          if (!thing.neared && thing.y > run.y - 300) {
+            thing.neared = true;
+            approachCue(thing.kind, panOf(thing.x), depthOf(thing.y));
+          }
+        }
       });
       run.things = run.things.filter((thing) => {
         const gone = thing.y > H + 60 || thing.x < -60 || thing.x > W + 60 || (thing.wapped && thing.wapT > 1.1);
@@ -4440,9 +4569,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             lean('hop_clear');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
-            // In time: cleared near the top of the hop (its middle third). A run of them is a rhythm.
-            const phase = 1 - run.jumpT / JUMP_DUR;
-            const inTime = Math.abs(phase - 0.5) < 0.17;
+            // In time: cleared in the hang, the flat top of the hop. A run of them is a rhythm.
+            const inTime = inHang();
             if (inTime) {
               run.inTime = (run.inTime || 0) + 1;
               run.inTimeTotal = (run.inTimeTotal || 0) + 1;
@@ -4939,10 +5067,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const hit = sighted(a);
     const trace = traceTrajectory(a);
     const trick = trace.bounces > 0 || trace.curved || trace.ramped;
-    const gold = Boolean((hit && hit.off < 7) || (trace.hit && trick) || trace.label === 'SHARE SLICE');
+    const off = trace.off != null ? trace.off : hit?.off;
+    const held = poised();
+    const trueLine = off != null && off < (held ? 10 : 7);
+    const closeLine = off != null && !trueLine && off < (held ? 16 : 12);
+    const gold = Boolean(trueLine || trick || trace.label === 'SHARE SLICE');
+    const near = closeLine && !gold;
     const ready = run.sliceReady >= 1;
+    const word = trueLine && trace.leftHang ? 'HUNG TRUE'
+      : trueLine && held ? 'HELD TRUE'
+      : trueLine ? 'TRUE'
+      : closeLine ? 'NEAR'
+      : (trace.label || 'THROW');
     ctx.save();
-    ctx.strokeStyle = gold ? '#f2c14e' : mix(colors.ink, colors.paper, ready ? 0.35 : 0.7);
+    ctx.strokeStyle = gold ? '#f2c14e' : near ? colors.accent : mix(colors.ink, colors.paper, ready ? 0.35 : 0.7);
     ctx.lineWidth = gold ? 2.4 : 1.5;
     ctx.setLineDash([3, 6]);
     ctx.beginPath();
@@ -4971,18 +5109,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     const targetThing = trace.hit || hit?.thing;
     if (targetThing) {
-      ctx.strokeStyle = gold ? '#f2c14e' : mix(colors.ink, colors.paper, 0.45);
-      ctx.lineWidth = gold ? 3 : 1.5;
-      if (!gold) ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = gold ? '#f2c14e' : near ? colors.accent : mix(colors.ink, colors.paper, 0.45);
+      ctx.lineWidth = gold ? 3 : near ? 2 : 1.5;
+      if (!gold && !near) ctx.setLineDash([4, 4]);
       ctx.beginPath();
       ctx.arc(targetThing.x, targetThing.y - 6, 22, 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
-      if (gold) {
-        ctx.fillStyle = '#f2c14e';
+      if (trueLine) {
+        ctx.strokeStyle = '#f2c14e';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(targetThing.x, targetThing.y - 6, 8, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      if (gold || near || trick) {
+        ctx.fillStyle = gold ? '#f2c14e' : colors.accent;
         ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
         ctx.textAlign = 'center';
-        ctx.fillText(ready ? (trace.label || 'THROW') : '…', targetThing.x, targetThing.y - 34);
+        ctx.fillText(ready ? word : '…', targetThing.x, targetThing.y - 34);
       }
     }
     ctx.restore();
@@ -5138,6 +5283,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.strokeStyle = 'rgba(30, 18, 10, 0.5)';
         ctx.lineWidth = 0.8;
         ctx.beginPath(); ctx.moveTo(x - dir * 20, y + 3); ctx.lineTo(x - dir * 10, y + 3); ctx.stroke();
+        if (!thing.wapped && !reduced?.matches) {
+          ctx.strokeStyle = 'rgba(90, 58, 34, 0.4)';
+          ctx.lineWidth = 1;
+          for (let i = 1; i <= 3; i += 1) {
+            ctx.beginPath();
+            ctx.ellipse(x - dir * (20 + i * 6), y + 6, 2.5 + i, 1.1, 0, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
         ctx.fillStyle = '#8a5a34';
         ctx.beginPath(); ctx.ellipse(x, y, 12, 8, 0, 0, Math.PI * 2); ctx.fill();               // body
         ctx.beginPath(); ctx.arc(x + dir * 11, y - 3, 6, 0, Math.PI * 2); ctx.fill();           // head
@@ -5360,11 +5514,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.rect(x - 15, y - 4, 30, 9);                     // seat
         ctx.fill();
         ctx.stroke();
+        ctx.strokeStyle = '#8a5a34';                        // gilt over pine: the pine shows through
+        ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(x - 8, y - 16); ctx.lineTo(x - 3, y - 6); ctx.lineTo(x + 1, y + 1); ctx.stroke();
         ctx.fillStyle = '#8a3a3a';
         ctx.fillRect(x - 11, y - 3, 22, 5);                  // cushion
+        ctx.fillStyle = '#3a2a14';                           // hollow under the seat
+        ctx.fillRect(x - 8, y + 5, 16, 3);
         ctx.fillStyle = '#b8935a';
-        ctx.fillRect(x - 13, y + 5, 4, 10);
-        ctx.fillRect(x + 9, y + 5, 4, 10);
+        ctx.fillRect(x - 13, y + 8, 4, 8);
+        ctx.fillRect(x + 9, y + 8, 4, 8);
         ctx.fillStyle = '#6a4e14';
         ctx.font = '600 6px Georgia, serif';
         ctx.textAlign = 'center';
@@ -5372,19 +5531,40 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       case 'subject':
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - (thing.wapT - 0.25) * 1.4);
-        ctx.fillStyle = '#5a6b52';
+        else {
+          const step = reduced?.matches ? 0 : Math.sin((run?.t || 0) * 6 + (thing.born || 0)) * 3;
+          ctx.strokeStyle = '#2a241c';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x - 4, y + 10); ctx.lineTo(x - 6 - step, y + 18);
+          ctx.moveTo(x + 3, y + 10); ctx.lineTo(x + 6 + step, y + 18);
+          ctx.stroke();
+        }
+        ctx.fillStyle = '#3e4a38';
         ctx.beginPath();
-        ctx.roundRect(x - 9, y - 6, 18, 22, 6);
+        ctx.moveTo(x - 9, y - 8); ctx.lineTo(x - 12, y + 11); ctx.lineTo(x + 11, y + 11); ctx.lineTo(x + 8, y - 8);
+        ctx.closePath();
         ctx.fill();
+        ctx.fillStyle = '#2c3828';
+        ctx.fillRect(x - 12, y + 7, 23, 4);
         ctx.fillStyle = '#e2b48c';
         ctx.beginPath();
-        ctx.arc(x, y - 12, 7, 0, Math.PI * 2);
+        ctx.arc(x - 1, y - 13, 6.2, 0, Math.PI * 2);
         ctx.fill();
         if (thing.loaf || thing.shared) {
           ctx.fillStyle = thing.shared ? '#f2c14e' : '#c98a3e';
           ctx.beginPath();
-          ctx.ellipse(x + 10, y + 2, 7, 4, -0.3, 0, Math.PI * 2);
+          ctx.ellipse(x + 11, y + 1, 7, 4, -0.3, 0, Math.PI * 2);
           ctx.fill();
+        } else {
+          ctx.fillStyle = '#c9b08a';
+          ctx.fillRect(x + 8, y - 2, 10, 8);
+          ctx.strokeStyle = '#6a4e2c';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x + 13, y - 2); ctx.lineTo(x + 13, y + 6);
+          ctx.moveTo(x + 8, y + 2); ctx.lineTo(x + 18, y + 2);
+          ctx.stroke();
         }
         break;
       case 'pile': {
@@ -5517,6 +5697,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'post': {
+        ctx.fillStyle = '#6a4418';
+        ctx.fillRect(x - 2.5, y + 6, 5, 14);
         const g = ctx.createRadialGradient(x - 4, y - 4, 2, x, y, 13);
         g.addColorStop(0, '#f0c97a');
         g.addColorStop(1, '#8a5a1e');
@@ -5569,18 +5751,37 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       case 'snail':
         ctx.fillStyle = '#c9d6d2';
         ctx.beginPath();
-        ctx.ellipse(x, y + 3, 11, 4, 0, 0, Math.PI * 2);
+        ctx.ellipse(x - 2, y + 4, 11, 4, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = '#9fb8b2';
         ctx.beginPath();
-        ctx.arc(x - 2, y - 2, 7, 0, Math.PI * 2);
+        ctx.arc(x - 4, y - 1, 7, 0, Math.PI * 2);
         ctx.fill();
         ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(x - 2, y - 2, 3.5, 0, Math.PI * 1.5);
+        ctx.arc(x - 4, y - 1, 3.5, 0, Math.PI * 1.5);
         ctx.stroke();
+        // The pane it was there with: Bonk glass, carried on edge.
+        ctx.fillStyle = 'rgba(150, 205, 210, 0.5)';
+        ctx.strokeStyle = 'rgba(70, 120, 130, 0.95)';
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(x + 2, y + 6); ctx.lineTo(x + 6, y - 12); ctx.lineTo(x + 15, y - 9); ctx.lineTo(x + 11, y + 7);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.beginPath(); ctx.moveTo(x + 8, y - 1); ctx.lineTo(x + 6, y - 8); ctx.stroke();
         break;
-      case 'spool':
+      case 'spool': {
+        const way = Math.sign(thing.vx || 1);
+        ctx.strokeStyle = colors.berry;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.quadraticCurveTo(x - way * 14, y + 8, x - way * 22, y + 1);
+        ctx.stroke();
         ctx.translate(x, y);
         ctx.rotate(run.t * (thing.vx > 0 ? 6 : -6));
         ctx.fillStyle = colors.berry;
@@ -5589,6 +5790,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.fillRect(-8, -8, 3, 16);
         ctx.fillRect(5, -8, 3, 16);
         break;
+      }
       case 'pigeon': {
         ctx.fillStyle = '#8f98a6';
         ctx.beginPath();
@@ -5603,20 +5805,41 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.lineTo(x + 13, y - flap);
         ctx.lineTo(x + 4, y + 2);
         ctx.fill();
+        ctx.fillStyle = '#5c6570';
+        ctx.beginPath(); ctx.moveTo(x + 8, y - 1); ctx.lineTo(x + 14, y + 1); ctx.lineTo(x + 8, y + 3); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = '#d08a3a';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(x + 1, y - 1, 3.2, 0.15, Math.PI * 1.15); ctx.stroke();
+        ctx.strokeStyle = '#6a5344';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x - 2, y + 5); ctx.lineTo(x - 4, y + 9); ctx.moveTo(x + 3, y + 5); ctx.lineTo(x + 5, y + 9); ctx.stroke();
         break;
       }
       case 'clerk':
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - Math.max(0, (thing.wapT - 0.25) * 1.4));
         ctx.fillStyle = colors.night;
         ctx.beginPath();
-        ctx.roundRect(x - 11, y - 12, 22, 26, 6);
+        ctx.roundRect(x - 11, y - 10, 22, 24, 6);
         ctx.fill();
+        ctx.fillRect(x - 9, y - 20, 18, 4);
+        ctx.beginPath(); ctx.ellipse(x, y - 16, 10, 3.2, 0, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#f7f1e2';
-        ctx.fillRect(x - 6, y - 6, 12, 15);
+        ctx.fillRect(x - 7, y - 6, 14, 14);
+        ctx.strokeStyle = 'rgba(90, 70, 40, 0.45)';
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.moveTo(x - 5, y - 2); ctx.lineTo(x + 5, y - 2);
+        ctx.moveTo(x - 5, y + 2); ctx.lineTo(x + 5, y + 2);
+        ctx.stroke();
         ctx.fillStyle = thing.shared ? '#2e6f5e' : colors.hearth;
         ctx.font = '700 4.5px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText(thing.shared ? 'SETTLED' : 'DAMAGE', x, y - 1);
+        ctx.fillText(thing.shared ? 'SETTLED' : 'DAMAGE', x, y - 3);
+        ctx.strokeStyle = '#e8c4a0';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x + 10, y - 2); ctx.lineTo(x + 17, y + 4); ctx.stroke();
+        ctx.fillStyle = thing.shared ? '#2e6f5e' : '#c0392b';
+        ctx.fillRect(x + 15, y + 3, 5, 4);
         break;
       case 'wasps':
         ctx.fillStyle = '#b8b2a0';
@@ -5630,11 +5853,22 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.lineTo(x + 12, y + 8);
         ctx.closePath();
         ctx.fill();
-        ctx.fillStyle = '#3a3426';
+        ctx.strokeStyle = 'rgba(90, 70, 30, 0.65)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
         for (let i = 0; i < 3; i += 1) {
+          const wx = x - 10 + i * 10 + (reduced?.matches ? 0 : Math.sin(run.t * 9 + i) * 3);
+          const wy = y - 16 + (reduced?.matches ? 0 : Math.cos(run.t * 7 + i) * 3);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
           ctx.beginPath();
-          ctx.arc(x - 10 + i * 10 + Math.sin(run.t * 9 + i) * 3, y - 14 + Math.cos(run.t * 7 + i) * 3, 1.6, 0, Math.PI * 2);
+          ctx.ellipse(wx - 3.2, wy, 3.4, 1.3, -0.5, 0, Math.PI * 2);
+          ctx.ellipse(wx + 3.2, wy, 3.4, 1.3, 0.5, 0, Math.PI * 2);
           ctx.fill();
+          ctx.fillStyle = i === 1 ? '#2a261c' : '#e6d36a';
+          ctx.beginPath(); ctx.ellipse(wx, wy, 1.5, 3.1, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#2a261c';
+          ctx.fillRect(wx - 1.15, wy - 1.3, 2.3, 1);
+          ctx.fillRect(wx - 1.15, wy + 1.1, 2.3, 1);
         }
         break;
       case 'clown': {
@@ -5665,9 +5899,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       case 'chair':
         ctx.fillStyle = '#8a5a34';
-        ctx.fillRect(x - 12, y - 4, 24, 6);
-        ctx.fillRect(x - 12, y - 14, 4, 22);
-        ctx.fillRect(x + 8, y - 4, 4, 12);
+        ctx.fillRect(x - 12, y - 2, 24, 5);
+        ctx.fillRect(x - 11, y - 16, 3, 15);
+        ctx.fillRect(x + 8, y - 16, 3, 15);
+        ctx.fillRect(x - 8, y - 12, 16, 2);
+        ctx.fillRect(x - 8, y - 7, 16, 2);
+        ctx.strokeStyle = '#6a4024';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x - 10, y + 3); ctx.lineTo(x - 14, y + 14);
+        ctx.moveTo(x + 10, y + 3); ctx.lineTo(x + 14, y + 14);
+        ctx.moveTo(x - 3, y + 3); ctx.lineTo(x - 1, y + 14);
+        ctx.moveTo(x + 3, y + 3); ctx.lineTo(x + 1, y + 14);
+        ctx.stroke();
         break;
       case 'dividers': {
         const [a, b] = thing.lanes.map(laneX);
@@ -5679,14 +5923,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.lineTo(b - 8, y);
         ctx.stroke();
         [a, b].forEach((cx) => {
-          ctx.fillStyle = colors.berry;
+          ctx.fillStyle = '#243044';
           ctx.beginPath();
-          ctx.arc(cx, y + 2, 7, 0, Math.PI * 2);
+          ctx.roundRect(cx - 6, y - 2, 12, 12, 3);
           ctx.fill();
           ctx.fillStyle = '#f2d2b0';
           ctx.beginPath();
-          ctx.arc(cx, y - 7, 4.5, 0, Math.PI * 2);
+          ctx.arc(cx, y - 8, 4.5, 0, Math.PI * 2);
           ctx.fill();
+          ctx.fillStyle = colors.berry;
+          ctx.fillRect(cx - 5, y + 1, 10, 2);
         });
         break;
       }
@@ -5787,10 +6033,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     [[-5, 7], [4, 12], [-2, 15]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(dx, dy, 2, 0, Math.PI * 2); ctx.fill(); });
     ctx.fillStyle = '#ffffff';
     for (let i = -2; i <= 2; i += 1) { ctx.beginPath(); ctx.arc(i * 4, 1, 3, 0, Math.PI * 2); ctx.fill(); }
-    // Hair.
+    // Hair: two exclamation marks.
     ctx.fillStyle = '#e0582e';
-    ctx.beginPath(); ctx.arc(-9, -10, 5, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(9, -10, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(-11, -24, 3.2, 10);
+    ctx.beginPath(); ctx.arc(-9.4, -11, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(8, -24, 3.2, 10);
+    ctx.beginPath(); ctx.arc(9.6, -11, 2, 0, Math.PI * 2); ctx.fill();
     // Face.
     ctx.fillStyle = '#fbf6ee';
     ctx.beginPath(); ctx.arc(0, -9, 8, 0, Math.PI * 2); ctx.fill();
@@ -5933,26 +6181,53 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x - 10, y + 10, x - 16, y + 2); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x + 10, y + 10, x + 16, y + 2); ctx.stroke();
     ctx.restore();
-    // The scheme, shown before it happens: wind streaks, or the lanes' new lease.
+    // The scheme, shown before it happens. Wind streaks across. A re-let redraws the lane edges.
     const soon = b.id !== 'tax' && b.nextBeat < 0.7;
     if (b.id === 'wind' || b.id === 'relet') {
       ctx.save();
-      ctx.globalAlpha = soon ? 0.9 : 0.35;
-      ctx.strokeStyle = b.id === 'wind' ? mix(colors.ink, colors.paper, 0.4) : '#d6473e';
-      ctx.fillStyle = ctx.strokeStyle;
-      ctx.lineWidth = 2.5;
-      const ay = b.id === 'wind' ? run.y - 40 : 170;
-      for (let i = 0; i < 3; i += 1) {
-        const ax = W / 2 + b.dir * (i * 26 - 26);
-        ctx.beginPath();
-        ctx.moveTo(ax - b.dir * 10, ay - 9);
-        ctx.lineTo(ax + b.dir * 4, ay);
-        ctx.lineTo(ax - b.dir * 10, ay + 9);
-        ctx.stroke();
+      ctx.lineCap = 'round';
+      if (b.id === 'wind') {
+        ctx.strokeStyle = mix(colors.ink, colors.paper, 0.28);
+        ctx.lineWidth = 1.6;
+        for (let i = 0; i < 5; i += 1) {
+          const len = 26 + (i % 3) * 16;
+          const y = run.y - 78 - i * 14;
+          const drift = (reduced?.matches ? 0 : Math.sin(run.t * 3 + i) * 8) + b.dir * 6;
+          const x0 = W / 2 - b.dir * 24 + drift - b.dir * len * 0.5;
+          ctx.globalAlpha = (soon ? 0.9 : 0.38) * (0.5 + (i % 3) * 0.18);
+          ctx.beginPath();
+          ctx.moveTo(x0, y);
+          ctx.lineTo(x0 + b.dir * len, y);
+          ctx.moveTo(x0 + b.dir * len, y);
+          ctx.lineTo(x0 + b.dir * (len - 7), y - 3.5);
+          ctx.moveTo(x0 + b.dir * len, y);
+          ctx.lineTo(x0 + b.dir * (len - 7), y + 3.5);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = soon ? 0.95 : 0.5;
+        ctx.fillStyle = mix(colors.ink, colors.paper, 0.15);
+        ctx.font = '700 10px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('RENTED WIND', W / 2, run.y - 156);
+      } else {
+        ctx.strokeStyle = '#d6473e';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 4]);
+        for (let lane = 0; lane <= LANES; lane += 1) {
+          const x = lane * LANE_W + b.dir * (soon ? 10 : 4);
+          ctx.globalAlpha = soon ? 0.85 : 0.32;
+          ctx.beginPath();
+          ctx.moveTo(x, 118);
+          ctx.lineTo(x, run.y - 24);
+          ctx.stroke();
+        }
+        ctx.setLineDash([]);
+        ctx.globalAlpha = soon ? 0.95 : 0.55;
+        ctx.fillStyle = '#d6473e';
+        ctx.font = '700 10px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('LANES RE-LET', W / 2, 108);
       }
-      ctx.font = '700 10px "JetBrainsMono", ui-monospace, monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(b.id === 'wind' ? 'RENTED WIND' : 'LANES RE-LET', W / 2, ay - 16);
       ctx.restore();
     }
   };
@@ -6099,6 +6374,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.beginPath(); ctx.ellipse(x, y + lift + 16, 14 - lift * 0.2, 3.5, 0, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     }
+    if (run?.apexGlow > 0 && !reduced?.matches) {
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, run.apexGlow / 0.22) * 0.9;
+      ctx.strokeStyle = '#f2c14e';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(x, y - 8, 16, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
     const ink = colors.ink;
     const stride = state === 'running' && !reduced?.matches ? Math.sin((run?.t || 0) * 10) * 5 : 0;
     // Squash and stretch: a crouch to leap, a stretch in the air, a squash on landing.
@@ -6106,8 +6391,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     let sy = 1;
     if (run && !reduced?.matches) {
       if (run.jumpT > 0) {
-        const p = 1 - run.jumpT / JUMP_DUR;
-        sy = p < 0.12 ? 0.88 : 1 + Math.sin(Math.PI * p) * 0.09 * (run.hopPower || 1);
+        const p = hopPhase();
+        sy = p < 0.12 ? 0.88 : 1 + hopCurve(p) * 0.09 * (run.hopPower || 1);
         sx = 2 - sy;
       } else if (run.landT > 0) {
         const k = run.landT / 0.2;
@@ -6801,6 +7086,117 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.restore();
   };
 
+  /* Depth, while the long view is open: lane edges drawn to a far point, over the road. */
+  function drawDepthGuide() {
+    const k = longK();
+    if (!k || !run) return;
+    ctx.save();
+    ctx.globalAlpha = 0.22 * k;
+    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.35);
+    ctx.lineWidth = 1;
+    const vx = W / 2;
+    const vy = 30;
+    for (let lane = 0; lane <= LANES; lane += 1) {
+      ctx.beginPath();
+      ctx.moveTo(lane * LANE_W, H - 8);
+      ctx.lineTo(vx + (lane * LANE_W - vx) * 0.18, vy);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /* A dimension, the moment the lanes gain it: height rises, games ring like a horn, depth goes to a point. */
+  function drawDimensionFlash() {
+    const d = run?.dimFlash;
+    if (!d || state !== 'running') return;
+    const fade = clamp(1 - d.t / 2.4, 0, 1);
+    const emerge = clamp(d.t / 0.2, 0, 1);
+    const rise = reduced?.matches ? 0 : d.t * 28;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, fade * emerge);
+    ctx.lineCap = 'round';
+    ctx.textAlign = 'center';
+    ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
+    if (d.id === 'height') {
+      ctx.strokeStyle = '#f2c14e';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 4; i += 1) {
+        const x = run.x - 18 + i * 12;
+        const y0 = run.y - 24 - rise;
+        ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y0 - (18 + i * 10)); ctx.stroke();
+      }
+      ctx.fillStyle = '#2c8b86';
+      ctx.fillText('HEIGHT', run.x, run.y - 96 - rise);
+    } else if (d.id === 'games') {
+      ctx.strokeStyle = '#f2c14e';
+      ctx.lineWidth = 2;
+      for (let i = 1; i <= 3; i += 1) {
+        ctx.globalAlpha = Math.max(0, fade * emerge) * (1 - i * 0.12);
+        ctx.beginPath();
+        ctx.arc(W / 2, 148, 10 + i * 14 + (reduced?.matches ? 0 : d.t * 16), -0.7, 0.7);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = Math.max(0, fade * emerge);
+      ctx.fillStyle = '#a8782a';
+      ctx.fillText('GAMES', W / 2, 118);
+    } else {
+      ctx.strokeStyle = mix(colors.ink, colors.paper, 0.25);
+      ctx.lineWidth = 1.2;
+      const vx = W / 2;
+      const vy = 34;
+      for (let lane = 0; lane <= LANES; lane += 1) {
+        ctx.beginPath();
+        ctx.moveTo(lane * LANE_W, run.y);
+        ctx.lineTo(vx + (lane * LANE_W - vx) * 0.12, vy);
+        ctx.stroke();
+      }
+      ctx.fillStyle = colors.ink;
+      ctx.fillText('DEPTH', W / 2, 26);
+    }
+    ctx.restore();
+  }
+
+  /* What the room is singing, off the figure's left shoulder: a fifth, then its third, then the colour.
+   * Three seats. A seat still waiting is a hairline. The bed, if it is on, is the room already. */
+  function drawLandQuality() {
+    if (!run || state !== 'running' || !record.sound || record.view.zen) return;
+    const q = landQuality();
+    const stage = q.stage || (q.bed ? 1 : 0);
+    if (!stage) return;
+    const lift = run.jumpT > 0 ? jumpLift() : 0;
+    const x = Math.max(8, run.x - 50);
+    const y = run.y - 24 - lift;
+    const label = q.bed ? 'ROOM' : stage === 1 ? 'FIFTH' : stage === 2 ? 'THIRD' : 'COLOUR';
+    ctx.save();
+    ctx.globalAlpha = q.bed ? 0.8 : 0.95;
+    ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    for (let i = 0; i < 3; i += 1) {
+      const open = q.bed ? i < 2 : stage === 1 ? i < 2 : true;
+      const colour = stage === 3 && i === 2;
+      ctx.fillStyle = colour ? '#f2c14e' : open ? colors.accent : mix(colors.ink, colors.paper, 0.72);
+      ctx.fillRect(x, y - i * 5, i === 2 ? 12 : i === 1 ? 8 : 10, open ? 2.4 : 1.1);
+    }
+    if (stage === 3) {
+      ctx.strokeStyle = '#f2c14e';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(x + 6, y - 16, 3.4, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    const tw = ctx.measureText(label).width;
+    const right = x + 12;
+    ctx.fillStyle = stage === 3 ? 'rgba(242, 193, 78, 0.96)' : 'rgba(255, 252, 245, 0.94)';
+    ctx.beginPath();
+    ctx.roundRect(right - tw - 8, y + 5, tw + 8, 13, 3);
+    ctx.fill();
+    ctx.fillStyle = stage === 3 ? '#6a4a16' : colors.accent;
+    ctx.textAlign = 'right';
+    ctx.fillText(label, right - 4, y + 15);
+    ctx.restore();
+  }
+
   function draw() {
     if (!canvas.width) return;
     ctx.save();
@@ -6844,6 +7240,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     ctx.restore();
     warpLongView();
+    drawDepthGuide();
+    drawDimensionFlash();
+    drawLandQuality();
     drawMiniBanner();
     drawAskTags();
     if (run?.hurtT > 0 && !record.view.zen) {
@@ -6867,6 +7266,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       drawWhimsy();
       drawPoints();
       drawMiniBanner();
+      drawDepthGuide();
+      drawDimensionFlash();
+      drawLandQuality();
       drawAskTags();
       drawHud();
       drawLaneCaption();
@@ -6893,6 +7295,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const pause = () => {
     if (state !== 'running') return;
     state = 'paused';
+    setSoundTilt(0);
     showCard('A pause.', 'The pie is held very still. The city waits, politely.', '▶ Keep playing');
     const home = returnAnchor();
     if (home) cardLinks?.replaceChildren(home);
@@ -7222,8 +7625,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     requestAnimationFrame(placeSetup);
     say(`${LAYOUTS.find(([k]) => k === id)[1]}: ${LAYOUTS.find(([k]) => k === id)[2]}`);
   }
-  /* Which views make which dimensions of play easier, and which harder: across the lanes, ahead up
-   * them, height (what a hop clears), timing, and the story. */
+  /* Which views make which dimensions of seeing easier, and which harder: across the lanes, ahead up
+   * them, height (what a hop clears), timing, and the story. Separate from the three the lanes gain
+   * (height, games, depth) and from the chord filling in off the left shoulder. */
   const VIEWS = Object.freeze([
     ['The lanes, drawn', '✓', '✓', '✕', '·', '✕'],
     ['The board (▢ Show)', '✓', '✓', '·', '·', '✕'],
@@ -7246,6 +7650,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       table.append(tr);
     });
     box.append(table, nodeOf('p', 'pie-setup-note', '✓ easier · ✕ harder · · neither. Height is the hardest to see from above: the ⤒ marks and the heights strip are there for it. The story is hardest to follow while playing: a caption or the road brings it into the lanes.'));
+    box.append(nodeOf('p', 'pie-setup-note', 'The lanes gain three dimensions, each shown once: height rises in streaks from chapter Four, games open as a horn from Six, depth draws lines to a far point from Ten. A rented wind streaks across; a re-let redraws the lane edges. Off your left shoulder, a run of good things fills the room: FIFTH, then THIRD, then COLOUR. A knock lets it go. The marks name what is being sung.'));
     return box;
   }
   function paintSetup() {
@@ -7316,6 +7721,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           body.append(nodeOf('p', 'pie-setup-rhythms', found.length
             ? `Rhythms you have found: ${found.length}${total ? ` of ${total}` : ''} — ${found.join(', ')}. Each chapter keeps one in a room; play along with it to find it.`
             : `No rhythms found yet${total ? ` (there are ${total})` : ''}. Each chapter keeps one in a room: when the lanes say something here keeps time, step, hop or throw along with it.`));
+          body.append(nodeOf('p', 'pie-setup-rhythms', 'With the music on (either setting past the first), a room says its chord once as it opens, and a pie tilting past poise is a low tone drifting out of tune on the side it leans to. With the chord held, the bass keeps the bars in fours. On any setting, a chapter carried to its end closes with a cadence that tells how it went.'));
           // The music's unlocks (unlocks.mjs): where the reader stands with each, and its page.
           const said = ['groove', 'in_the_pocket'].map((uid) => [unlockMechanics()[uid], standing(uid)]).filter(([m]) => m);
           if (said.length) {
@@ -9182,7 +9588,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.sound = !record.sound;
     writeRecord(record);
     paintSound();
-    if (!record.sound) setMusicBed(false);
+    if (!record.sound) { setMusicBed(false); setSoundTilt(0); }
     if (record.sound) {
       primeAudio();
       wapSound();
