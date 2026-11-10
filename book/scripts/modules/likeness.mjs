@@ -30,7 +30,7 @@
  * Host-neutral at import: the index tool imports the scoring and the seal.
  * Canon: .spw/surfaces/likeness.spw.
  */
-import { CHARACTERS } from './characters.mjs?v=2026_11_08.W';
+import { CHARACTERS } from './characters.mjs?v=2026_11_10.A';
 import { MATERIALS } from './materials.mjs?v=2026_11_08.H';
 
 export const LIKENESS_URL = '/book/content/world/likeness.json';

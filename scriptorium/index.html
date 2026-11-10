@@ -41,13 +41,15 @@
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v=2026_11_06.D">
   <link rel="stylesheet" href="/book/styles/components/materials.css?v=2026_11_08.K&ctx=canon:materials">
   <link rel="stylesheet" href="/book/styles/components/spell.css?v=2026_11_08.W&ctx=canon:spell">
+  <link rel="stylesheet" href="/book/styles/components/way.css?v=2026_11_10.A&ctx=scriptorium:way">
   <link rel="stylesheet" href="/book/styles/home/loom.css?v=2026_11_08.K&ctx=scriptorium:loom">
   <link rel="stylesheet" href="/book/styles/components/spw-disk.css?v=2026_11_08.W&ctx=scriptorium:disk">
-  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_09.L"></script>
-  <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_11_09.L"></script>
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_10.A"></script>
+  <script defer type="module" src="/book/scripts/modules/scriptorium-desk.mjs?v=2026_11_10.A"></script>
   <script defer type="module" src="/book/scripts/modules/story-loom.mjs?v=2026_11_09.Q"></script>
-  <script defer type="module" src="/book/scripts/modules/spw-projection-disk.mjs?v=2026_11_09.Q"></script>
+  <script defer type="module" src="/book/scripts/modules/spw-projection-disk.mjs?v=2026_11_10.A"></script>
   <script defer type="module" src="/book/scripts/modules/featured.mjs?v=2026_11_09.I"></script>
+  <script defer type="module" src="/book/scripts/modules/way-through.mjs?v=2026_11_10.A"></script>
 </head>
 <body data-surface="monument" data-presence="threshold" data-current-scene="scriptorium">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -87,6 +89,20 @@
           <li>New chapters are set on the 13th and 26th of each month.</li>
           <li><a href="https://autonomous.feedback/lore.land?at=/scriptorium/">Write a slip to the scribes</a></li>
         </ul>
+      </section>
+
+      <section class="way-section" id="way" aria-labelledby="way-title">
+        <p class="hub-eyebrow">One line</p>
+        <h2 id="way-title">Your way through</h2>
+        <p class="hub-section-lede">
+          Set a chapter aside, or keep two people out of the same room, and the book goes round them. The chapter
+          after one you stepped over says what it held. The lanes keep to the same line. It is all written as one
+          line of Spw, so you can read it, change it by hand, or pass it to someone for a visit. Nothing you have
+          kept is touched, and every choice can be taken back.
+        </p>
+        <div data-way-panel>
+          <p>This needs scripts. Without them the book reads whole, in order.</p>
+        </div>
       </section>
 
       <section class="spw-disk-section" id="projection" aria-labelledby="projection-title">
@@ -237,6 +253,8 @@
         <h2 id="experience-title">The wonder path</h2>
         <p class="hub-section-lede">
           Every chapter answers the next question a reader asks, in five movements, each in its turn.
+          And each one holds a question one edit away from something it already says: a line you can guess about now and
+          check later, or keep open on purpose. The answer is yours to give.
         </p>
         <figure class="wonder-path-art">
           <img src="/book/images/wonder-path-v1.webp" width="1983" height="793"
@@ -249,7 +267,7 @@
           <li><strong>Encounter · Where is it felt?</strong> A chamber, a room, or a threshold lets the promise meet a real need.</li>
           <li><strong>Evidence · What makes it believable?</strong> Consequences, records, behavior, and material choices show whether the claim survives contact.</li>
           <li><strong>Memory · What travels afterward?</strong> A motif, phrase, feeling, or useful result gives people something distinct to carry.</li>
-          <li><strong>Return · Why come back?</strong> Rhythm, unfinished responsibility, and renewed value create continuity without demanding constant attention.</li>
+          <li><strong>Return · Why come back?</strong> Rhythm, unfinished responsibility, and renewed value create continuity without demanding constant attention. Nothing here counts your days. Wonder sets the pace: you stop when there is something to look at.</li>
         </ol>
       </section>
 

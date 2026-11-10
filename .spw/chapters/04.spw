@@ -18,7 +18,7 @@ $[chapter/04/made_of]{
       ~<hill_stairs>@boof ]
     @told_by[boof mirror fool narrator]
     $oak $ink $brass
-    *wonders{ @weathercocks $crosswind_loom &council_slab #write_it_before_you_argue_it $key_file_bench }
+    *wonders{ @weathercocks .crosswind_loom &council_slab #write_it_before_you_argue_it $key_file_bench }
     &met[banewap]
     =palette[announce]
     ~berries{ baneberry $boneberry[salted_flatbread] }

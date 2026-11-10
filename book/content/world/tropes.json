@@ -644,13 +644,31 @@
           "wired": "pie-game.mjs INTRO"
         },
         "into_story": {
-          "says": "A pane struck in the lanes could be one more blow the book's kiln forgives.",
-          "wired": null
+          "says": "Panes struck in the lanes are counted in the margin's lantern glass, one more blow the kiln forgave.",
+          "wired": "pie-game.mjs knock (pane_struck) → references.json glass → references.mjs trackNote"
         }
       },
       "rhymes": [
         "records"
-      ]
+      ],
+      "track": [
+        {
+          "chapter": 6,
+          "in": "story",
+          "beat": "the kiln melts the blow out and pours it off clear"
+        },
+        {
+          "chapter": 6,
+          "in": "lanes",
+          "beat": "a pane knocks the pie and remembers it"
+        },
+        {
+          "chapter": 6,
+          "in": "story",
+          "beat": "the margin's glass counts what the kiln took back"
+        }
+      ],
+      "wound_in": "2026_11_10.A"
     },
     {
       "id": "slow-gift",
@@ -692,13 +710,31 @@
           "wired": "pie-game.mjs INTRO"
         },
         "into_story": {
-          "says": "Time the beaver gave in the lanes could slow the passage it was given in.",
-          "wired": null
+          "says": "Time a beaver lent in the lanes is counted beside the dam it came from, and the margin asks whose.",
+          "wired": "pie-game.mjs beaver (beaver_time) → references.json rumour-slow-dam → references.mjs trackNote"
         }
       },
       "rhymes": [
         "glimpse"
-      ]
+      ],
+      "track": [
+        {
+          "chapter": 8,
+          "in": "story",
+          "beat": "two beavers take the evening over the wording of a dam"
+        },
+        {
+          "chapter": 8,
+          "in": "lanes",
+          "beat": "a slow beaver lends the land its pace"
+        },
+        {
+          "chapter": 8,
+          "in": "story",
+          "beat": "the margin counts the pace lent, and asks whose dam"
+        }
+      ],
+      "wound_in": "2026_11_10.A"
     },
     {
       "id": "records",

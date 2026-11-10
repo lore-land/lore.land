@@ -30,6 +30,9 @@ import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
+import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
+import { parseWay, waySpell } from '../modules/way-through.mjs';
+import { CHARACTERS, REASONS } from '../modules/characters.mjs';
 import { readMechanics } from '../modules/unlocks.mjs';
 import { CLIENT, clientProblems } from './feedback-client.mjs';
 import { existsSync } from 'node:fs';
@@ -298,6 +301,83 @@ function parsedLevels(text) {
     if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);
   });
   notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find`);
+
+  /* Whose it is (.spw/runtime/audio-tropes.spw; pie-tropes.mjs): the game's reader agrees with the interpreter, and the
+   * three WAPs are one shape turned three ways. */
+  const tropesText = await readFile(resolve(ROOT, '.spw/runtime/audio-tropes.spw'), 'utf8');
+  const motifs = readMotifs(tropesText);
+  if (parse) {
+    const blocks = spwBlocks(tropesText);
+    if (!blocks) error('motifs', 'audio-tropes.spw does not read whole with the Spw interpreter (it fell back to prose)');
+    else (blocks.motifs || []).forEach(([id, f]) => {
+      const notesRead = (f['~notes'] || []).map(Number);
+      if (JSON.stringify(notesRead) !== JSON.stringify(motifs[id]?.notes || [])) error('motifs', `${id}: the game's reader and the Spw interpreter read its notes differently (${JSON.stringify(motifs[id]?.notes)} vs ${JSON.stringify(notesRead)})`);
+      if ((f['$timbre']?.[0] ?? undefined) !== motifs[id]?.timbre) error('motifs', `${id}: the two readers part on its timbre`);
+    });
+  }
+  const wap = motifNotes(motifs, 'wap');
+  if (JSON.stringify(motifNotes(motifs, 'boonwap')) !== JSON.stringify(wap)) error('motifs', 'boonwap should be the shape as it is');
+  if (JSON.stringify(motifNotes(motifs, 'bonewap')) !== JSON.stringify([...(wap || [])].reverse())) error('motifs', 'bonewap should be the shape backwards');
+  if (JSON.stringify(motifNotes(motifs, 'banewap')) !== JSON.stringify((wap || []).map((n) => 2 * wap[0] - n))) error('motifs', 'banewap should be the shape upside down');
+  notes.push(`motifs: ${Object.keys(motifs).length} themes, one shape turned three ways`);
+
+  /* Your way through (book/content/world/way.json; way-through.mjs). A wonder is one edit past a room's own line; a swap
+   * adds no spoken line; a pairing names people the book has; the line reads whole and reads back. */
+  const way = await read('book/content/world/way.json');
+  const proseOf = (b) => (typeof b === 'string' ? b : Array.isArray(b) ? b.map(proseOf).join(' ') : b && typeof b === 'object' ? Object.values(b).map(proseOf).join(' ') : '');
+  const tokensOf = (line) => line.match(/[~!?@&*^#.=%$]|[{}[\]()<>]|[A-Za-z_0-9]+/g) || [];
+  const editDistance = (a, b) => {
+    const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+    a.forEach((token, i) => {
+      let prev = i;
+      row[0] = i + 1;
+      b.forEach((other, j) => { const cur = row[j + 1]; row[j + 1] = Math.min(row[j + 1] + 1, row[j] + 1, prev + (token === other ? 0 : 1)); prev = cur; });
+    });
+    return row[b.length];
+  };
+  const reads = (line) => { const r = parse?.(line, { lexProfile: 'prose' }); return !parse || (r?.completeness?.complete && !r?.completeness?.proseFallback); };
+  const knownChapters = new Set(chapters.map((c) => c.chapterNumber));
+  if (/WAPboy/.test(JSON.stringify(way)) || /WAPboy/.test(JSON.stringify(REASONS))) error('way', 'the figure is never named');
+  chapters.forEach((c) => {
+    const n = c.chapterNumber;
+    const entry = way.chapters[n];
+    if (!entry) { error('way', `ch${pad(n)}: no reason, holds or wonder`); return; }
+    ['reason', 'holds'].forEach((key) => { if (!entry[key]) error('way', `ch${pad(n)}: ${key} is empty`); });
+    const w = entry.wonder || {};
+    if (!(c.sections || []).some((sec) => sec.room?.spw === w.line)) error('way', `ch${pad(n)}: the wonder's line ${w.line} is not a room of this chapter`);
+    if (editDistance(tokensOf(w.line || ''), tokensOf(w.edit || '')) !== 1) error('way', `ch${pad(n)}: ${w.edit} is not one edit from ${w.line}`);
+    if (!reads(w.line) || !reads(w.edit)) error('way', `ch${pad(n)}: the wonder does not read whole with the Spw interpreter`);
+    if (!Array.isArray(w.ways) || w.ways.length < 2) error('way', `ch${pad(n)}: a wonder needs at least two ways it could come out`);
+    if (w.probe != null && (!knownChapters.has(w.probe) || w.probe <= n)) error('way', `ch${pad(n)}: a probe is a later chapter of the book, not ${w.probe}`);
+  });
+  (way.pairs || []).forEach((p) => {
+    p.who.forEach((who) => { if (!CHARACTERS[who]) error('way', `${p.id}: unknown character ${who}`); });
+    if (!/^[a-z_]+$/.test(p.id)) error('way', `${p.id}: an id is lower case with underscores, so it reads inside =apart[…]`);
+    (p.aside || []).forEach((n) => { if (!knownChapters.has(n)) error('way', `${p.id}: no chapter ${n}`); });
+    (p.rooms || []).forEach((room) => {
+      const c = chapters.find((ch) => ch.chapterNumber === room.chapter);
+      if (!c) { error('way', `${p.id}: no chapter ${room.chapter}`); return; }
+      const paragraphs = (c.sections || []).flatMap((sec) => (sec.content || []).filter((b) => b.type === 'paragraph').map((b) => b.text));
+      const whole = proseOf(c.sections);
+      room.swaps.forEach((swap) => {
+        if (swap.para) {
+          if (paragraphs.filter((t) => t.startsWith(swap.para)).length !== 1) error('way', `${p.id}: "${swap.para}" should open exactly one paragraph of chapter ${room.chapter}`);
+          if (/[“”"]/.test(swap.text)) error('way', `${p.id}: a swap adds no spoken line ("${swap.text.slice(0, 40)}…")`);
+        } else {
+          if (whole.split(swap.find).length !== 2) error('way', `${p.id}: "${swap.find}" should appear exactly once in chapter ${room.chapter}`);
+          if (/[“”"]/.test(swap.to)) error('way', `${p.id}: a swap adds no spoken line`);
+        }
+      });
+    });
+  });
+  (way.held || []).forEach((h) => h.who.forEach((who) => { if (!CHARACTERS[who]) error('way', `held: unknown character ${who}`); }));
+  Object.keys(CHARACTERS).forEach((id) => {
+    ['want', 'limit', 'escape', 'reason'].forEach((key) => { if (!REASONS[id]?.[key]) error('characters', `${id}: ${key} is empty`); });
+  });
+  const sampleWay = { aside: [2, 7], apart: (way.pairs || []).map((p) => p.id) };
+  if (!reads(waySpell(sampleWay))) error('way', 'a way line does not read whole with the Spw interpreter');
+  if (JSON.stringify(parseWay(waySpell(sampleWay))) !== JSON.stringify({ aside: [2, 7], apart: [...sampleWay.apart].sort() })) error('way', 'a way line does not read back as itself');
+  notes.push(`way: ${Object.keys(way.chapters).length} chapters with reasons and wonders, ${(way.pairs || []).length} pairings, ${(way.held || []).length} held together`);
 }
 
 /* Marks stay marked (book/content/marks.json): each says who, for what and since when, stands beside pages that

@@ -35,6 +35,7 @@
     "spw:trope-prompt": "node .spw/tools/trope-prompt.mjs",
     "spw:sigil-audit": "node .spw/tools/sigil-audit.mjs",
     "spw:characters": "node .spw/tools/characters-canon.mjs",
+    "spw:way": "node .spw/tools/way-canon.mjs",
     "spw:likeness": "node .spw/tools/likeness-index.mjs",
     "spw:progression": "node .spw/tools/progression-audit.mjs",
     "css:audit": "node book/scripts/tools/css-audit.mjs"

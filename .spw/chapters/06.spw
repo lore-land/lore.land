@@ -18,7 +18,7 @@ $[chapter/06/made_of]{
       ~<iron_gate>@boof ]
     @told_by[boof labyrinth fool narrator]
     $glass $steam $brass
-    *wonders{ $bonk_kiln $dent_lanterns $chime_gutters $lamp_ladders @pane_snails &pane_faces $folio_press $brace_boxes #glass_over_never_scrape }
+    *wonders{ .bonk_kiln .dent_lanterns .chime_gutters $lamp_ladders @pane_snails &pane_faces $folio_press $brace_boxes #glass_over_never_scrape *waxed_slice }
     &met[boonwap]
     =palette[kiln]
     ~berries{ boonberry $boneberry[burnt_ends] }
@@ -28,7 +28,7 @@ $[chapter/06/made_of]{
   rooms: "Five rooms: three < > passages, a { } room and a ( ) gathering; two kept by Boof, the rest by the labyrinth, the Fool and Mr. BoonWAP."
   told_by: "Told by Boof, the labyrinth, the Fool and the narrator."
   made_of: "Made most of Bonk glass, then steam and warmth, then brass and bronze."
-  wonders: "First met here: the bonk-kiln, dent-lanterns, chime-gutters, lamp-ladders, pane-snails, pane faces, the folio press, brace-boxes and a saying, “Glass over, never scrape”."
+  wonders: "First met here: the bonk-kiln, dent-lanterns, chime-gutters, lamp-ladders, pane-snails, pane faces, the folio press, brace-boxes, a saying, “Glass over, never scrape” and the slice in waxed paper."
   met: "Met here for the first time: Mr. BoonWAP."
   palette: "Its palette is the kiln, earned a layer at a time: purple and rust, where old knocks are forgiven into new glass."
   berries: "Here boonberries foresee; a boneberry in this chapter tastes of burnt ends."

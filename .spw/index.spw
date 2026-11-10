@@ -40,6 +40,7 @@
   spw_stress: "@spw/surfaces/spw-stress.spw"
   stories: "@spw/surfaces/stories.spw"
   characters: "@spw/surfaces/characters.spw"
+  reasons: "@spw/surfaces/reasons.spw"
   spw_play: "@spw/surfaces/spw-play.spw"
   sigil_audit: "@spw/audits/sigil-chapter-audit.spw"
   progression: "@spw/audits/progression.spw"

@@ -47,7 +47,8 @@ export const READING_MARKS = Object.freeze([
   'lore.rooms.v1',
   'lore.cards.v1',
   'lore.palettes.v1',
-  'lore.likeness.seen.v1'
+  'lore.likeness.seen.v1',
+  'lore.wonders.asked.v1'
 ]);
 
 const store = () => {

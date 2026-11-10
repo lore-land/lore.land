@@ -113,7 +113,7 @@
 }
 
 !next[
-  "fill ^events with meaning, owner and budget for every sound: drafted as .spw/runtime/audio-tropes.spw (patterns, timbres, motifs, bindings for every obstacle, character and power), to be read by pie-tropes.mjs the way levels are"
+  "fill ^events with meaning, owner and budget for every sound: drafted as .spw/runtime/audio-tropes.spw. Its !motifs are live as of 2026-11-10 (pie-tropes.mjs reads them; Setup, Characters); !patterns, !timbres and !bindings are next"
   "bring the six archived designs into pie-sound.mjs as synthesized events, auditioned against the current mix"
   "a dialogue sheet (.spw/runtime/pie-lines.spw) with moments and empty slots; the user writes or chooses each line; book:check plays only chosen"
   "babble voices: a formant instrument that speaks the rhythm of a chosen line in the chapter key"

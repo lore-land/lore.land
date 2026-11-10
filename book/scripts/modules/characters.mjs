@@ -88,6 +88,42 @@ export const MODELS = Object.freeze({
   clown: { traits: ['loves WAP', 'big feelings', 'forgiving'], temperament: 'A pie in the face is a kindness, done right.', knack: 'Big feelings: every impact lands bigger.' },
   mime: { traits: ['silent', 'white-gloved', 'very clear about walls'], temperament: 'Says nothing, and is very clear about it.' }
 });
+/* Why each one is drawn the way they are. A character is a want and a limit on one sheet. `escape` is what you get to be
+ * while they carry, or while they keep you company: the lanes are for getting away, and this is who from. `reason` is the
+ * maker's register, and only ever shown folded, off the lanes. Nobody here is given a line to say. */
+export const REASONS = Object.freeze({
+  boof: { want: 'To finish the rounds with nothing unaccounted for.', limit: 'Cannot read, and will not be told what a smell means.', escape: 'She crosses your lanes on her own business. For a moment you are someone a dog has no opinion about.', reason: 'The book needed a witness with no stake in being believed. A working dog notices and does not interpret, so the reader gets to.' },
+  ants: { want: 'The street lit by evening.', limit: 'Will not go anywhere unlit.', escape: 'While they walk with you the way is lit, and it is somebody else\u2019s job.', reason: 'A wish this large needs something small that goes on working around it. The ants keep the book\u2019s scale honest.' },
+  genie: { want: 'To close the practice with the books even.', limit: 'Cannot read a want as small as hers, and cannot stop pricing.', escape: 'For a carry you are unhurried and very good at your job.', reason: 'Wish stories usually take the genie for granted. This one keeps asking who pays for a granted thing.' },
+  bane: { want: 'To hold the thing longest.', limit: 'What he announces comes true, and he cannot help leaving an off switch.', escape: 'He is the trouble, and the trouble has a switch on it.', reason: 'A villain who always leaves an off switch can be foiled by anyone paying attention. The fear has a floor, so it can be played with.' },
+  boon: { want: 'To feed everyone, and be thanked in passing.', limit: 'Cannot get smaller, so nothing he gives costs him, and he has never noticed.', escape: 'Near him there is enough. For once nobody is counting.', reason: 'Generosity with no cost is a comfort and a problem. He is funny so a reader can enjoy him before asking what it would take to be him.' },
+  bonewap: { want: 'A frame that holds.', limit: 'Will not say what it cannot show.', escape: 'Nothing near it is pretending.', reason: 'Between what could be and what it will cost, the book needed someone who asks only what remains. BoneWAP is exact so the other two can be excessive.' },
+  porter: { want: 'The gate before the storm.', limit: 'One rule kept thirty years, and he has broken it once.', escape: 'For a carry you are the one who does not get moved.', reason: 'Book Two asks who gets let in. The porter answers with his shoulder before any record does.' },
+  clerk: { want: 'Every slip filed by evening.', limit: 'Can write only what fits on the line.', escape: 'For a carry your nerves are your job, and they make you quick.', reason: 'Records are comedy and care here. The clerk is anxious so the paperwork can be tender.' },
+  figure: { want: 'Nobody has said.', limit: 'Four lines, two dots, and a hat that will not land.', escape: 'For a carry nobody knows who you are, and your hands are very fine.', reason: 'Nobody in the book has said, and this card will not either.' },
+  clown: { want: 'A pie in the face, done right.', limit: 'Cannot have a small feeling.', escape: 'For a carry everything lands bigger and nobody minds.', reason: 'The clown wants exactly what is about to happen to them, which turns slapstick into a gift. Nobody in the lanes is a victim.' },
+  mime: { want: 'Quiet, where the pie words were.', limit: 'Cannot say so.', escape: 'Someone else has decided not to explain.', reason: 'A contest needs someone who cannot be argued with. The mimes take the words away so a reader feels what a chapter loses without them, and can carry them back.' }
+});
+
+/* What they remember of you: the lanes' deeds, said from their side. Counted, never set. Returns '' for someone you have not touched. */
+const REMEMBERS = Object.freeze({
+  boof: ['boof', 'Brushed past %n time%s. She has no opinion.'],
+  boon: ['shared', '%n slice%s passed along. He has not noticed, and is delighted.'],
+  bane: ['foiled', 'Foiled %n time%s. He has made a note of the switch.'],
+  bonewap: ['boneberry', '%n boneberr%ies eaten, every one declared.'],
+  clerk: ['knocked', 'The slips say %n knock%s, each with a line for the cause.'],
+  clown: ['satisfied', '%n went home delighted.'],
+  mime: ['over_mimes', '%n slice%s over their heads. They are very clear about it.'],
+  ants: ['furrow', '%n warm furrow%s crossed, on streets they lit.']
+});
+export function remembers(id, deeds = {}) {
+  const [key, says] = REMEMBERS[id] || [];
+  if (!key) return '';
+  const n = Math.round(Object.values(deeds).reduce((sum, d) => sum + (Number(d?.[key]) || 0), 0));
+  if (n <= 0) return '';
+  return says.replace(/%n/g, String(n)).replace(/%ies/g, n === 1 ? 'y' : 'ies').replace(/%s/g, n === 1 ? '' : 's');
+}
+
 export const MOODS = Object.freeze(['calm', 'glad', 'worried', 'surprised', 'thinking']);
 const MOOD_MARKS = Object.freeze({
   calm: () => '',
@@ -217,6 +253,7 @@ export function charactersSheet() {
   return Object.entries(CHARACTERS).map(([id, c]) => ({
     id, name: c.name, first: c.first, href: c.href, line: c.line, material: c.material, palette: c.palette, spell: identitySpell(id),
     traits: MODELS[id]?.traits || [], temperament: MODELS[id]?.temperament || '', knack: MODELS[id]?.knack || null,
+    want: REASONS[id]?.want || '', limit: REASONS[id]?.limit || '', escape: REASONS[id]?.escape || '', reason: REASONS[id]?.reason || '',
     svg: portraitSVG(id, { standalone: true, size: 256 }),
     moods: Object.fromEntries(MOODS.map((mood) => [mood, portraitSVG(id, { standalone: true, size: 256, mood })]))
   }));

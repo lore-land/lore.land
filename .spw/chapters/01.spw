@@ -18,7 +18,7 @@ $[chapter/01/made_of]{
       !<sloe_hedge>@boof &(grove_mouth)@boof ]
     @told_by[narrator boof]
     $ink $steam $berry
-    *wonders{ @torch_ants $press_stones $drying_line #first_ink_stays }
+    *wonders{ @torch_ants .press_stones $drying_line #first_ink_stays }
     &met[boof ants]
     =palette[pool]
     ~berries{ boonberry baneberry $boneberry[roast_chestnut_and_sage] }

@@ -43,6 +43,7 @@
   c030: "Packs add without changing: each lives where its route says (book/content/packs/<surface>/@<who>/), answers lore.land/?/<surface>/@<who>, lists what it brings, links every source where it lives (never copies), and is removed by removing its line from book/content/packs/index.json; book:check holds every pack (packs.mjs packProblems)."
   c031: "Pages settle before they are seen: what a page's scripts fill keeps its settled room (or arrives in the top layer), nothing above the fold moves after first paint, and every public page measures under 0.1 cumulative layout shift."
   c032: "One version token per file: every reference to a stylesheet or module carries the same ?v= token, so nothing loads twice (npm run tokens:align; --check in CI)."
+  c033: "A way through is a line: what a reader sets aside and keeps apart is one Spw line the panel writes and typing reads back; the prerendered page is the book as it stands and only a reader who asks sees a passage told another way, marked where it changes with a button to read it as written; no mark is touched, a chapter after one stepped over says what it held, and the lanes keep to the same line (way-through.mjs; way.json held by book:check; a swap adds no spoken line)."
 }
 
 ^contract_status{
@@ -82,6 +83,7 @@
   c030: "passing — one pack (spwashi, a maker, at ?/texture.website/@spwashi) in book/content/packs/index.json; book:check holds its route, sources, files, page, scheme and curriculum (2026_11_09.H)"
   c031: "passing — measured 2026-11-09 on a local server: home 0, chapters 0–0.08, almanac 0.001, pie 0.06, folios 0.008, scriptorium 0.005, texture 0.06, zine 0.007 (were up to 0.31); hub-main holds its room at the end (align-content: start), the desk, wall and spell reserve theirs, the reading band ships in the chapter template, the rail keeps a reserve until its panels arrive, the pie voyage settles unseen (2026_11_09.I)"
   c032: "passing — 148 files referenced, one token each; story-lexicon.mjs was instantiated four times on a chapter, likeness, characters and spw-spell twice on the desk (2026_11_09.I)"
+  c033: "trial — switch way-through off by default; book:check holds every wonder to one edit, every swap to its place, and the line to the interpreter."
 }
 
 &lifecycle{

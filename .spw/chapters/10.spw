@@ -18,7 +18,7 @@ $[chapter/10/made_of]{
       ^(anchor_stones)@the_valley ~<rear_archway>@boof ]
     @told_by[boof the_bonk fool narrator]
     $oak $ink $flour
-    *wonders{ &mortise_marks #chalk_is_cheaper_than_oak @load_beetles $listening_mallet $load_bells }
+    *wonders{ &mortise_marks #chalk_is_cheaper_than_oak @load_beetles $listening_mallet .load_bells }
     &met[bonewap]
     =palette[land_tree]
     ~berries{ $boneberry[rib_tips] }

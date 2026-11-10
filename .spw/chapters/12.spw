@@ -18,7 +18,7 @@ $[chapter/12/made_of]{
       &(bridge_deck)@boof ~<moon_lane>@boof ]
     @told_by[boof path fool narrator]
     $ink $steam $flour
-    *wonders{ @seam_otters @ink_herons $rail_pins $ferry_bell #two_springs_one_bed &moonrun }
+    *wonders{ @seam_otters @ink_herons $rail_pins .ferry_bell #two_springs_one_bed *bridge_receipts &moonrun }
     =palette[rain_bonk]
     ~berries{ $boneberry[grilled_river_corn] }
     &harmonies[ <banewap boonwap> <roots boonberries> <torch_ants roots>
@@ -27,7 +27,7 @@ $[chapter/12/made_of]{
   rooms: "Five rooms: three < > passages, a { } room and a ( ) gathering; three kept by Boof, the rest by the land and the Genie."
   told_by: "Told by Boof, the path, the Fool and the narrator."
   made_of: "Made most of ink and line, then steam and warmth, then flour."
-  wonders: "First met here: seam-otters, ink-herons, rail-pins, the ferry-bell, a saying, “Two springs, one bed” and moonrun."
+  wonders: "First met here: seam-otters, ink-herons, rail-pins, the ferry-bell, a saying, “Two springs, one bed”, two receipts on the rail and moonrun."
   palette: "Its palette is the rain, earned a layer at a time: mint, pink, a yellow sun and two red tulips: water going round, where two rivers meet."
   berries: "A boneberry in this chapter tastes of grilled river corn."
   harmonies: "Sweetened, a baneberry foretells kindness. Warm roots keep the berries in their light. The ants warm the roots. The frost holds still while the ants work under it. A boonberry pie is never smaller. The egg rides against her ribs."

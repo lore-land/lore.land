@@ -65,6 +65,9 @@
  *                The mimes stay quiet: they are the rest
  *   a bed        on request (Setup, Music: full), the room's chord held low under everything
  *   leitmotifs   Boof's three notes when Boof crosses the lanes
+ *   themes       whose a sound is (Setup: Characters). The three WAPs are one shape turned three ways, the Genie a
+ *                stack of fifths a comma sharp, the porter one knock in three meters, a mime a bar of rest; the line
+ *                takes the carrier's instrument; a carry closes on the openings of who was met, in order
  *
  * Made to be heard the hundredth time, since a carry is hundreds of steps, catches and knocks:
  *   never twice the same   each sound is nudged a little in pitch, level, colour and place, and
@@ -79,7 +82,7 @@
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, motif: null };
+const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, motif: null, carrier: '', rest: 0 };
 const ROOTS = [293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23];
 const PULSES = [96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108];
 const MAJOR = [0, 2, 4, 7, 9];
@@ -114,12 +117,18 @@ const COLOURS = Object.freeze({
 const FALLS = Object.freeze({ 4: 3, 9: 8, 11: 10 });
 const harmony = { sigil: '.', bass: 0, pcs: [0, 4, 7], sung: [0, 4, 7] };
 
+/* A chapter leaning toward low magic sings in fourths: no thirds to say how it feels, a frame of load-bearing
+ * intervals (the third up to the fourth, the sixth up to the seventh). Only with themes on (setSoundPlace). */
+const OPEN = [0, 2, 5, 7, 10];
+const RAISES = Object.freeze({ 4: 5, 9: 10, 11: 10 });
+const scaleNow = () => (sound.minor ? MINOR : sound.open ? OPEN : MAJOR);
+
 function setHarmony(sigil) {
   const base = COLOURS[sigil] || COLOURS['.'];
   const own = sound.minor && base.minor;
   const colour = own || base;
-  const fall = (pc) => (sound.minor && !own ? (FALLS[pc] ?? pc) : pc);
-  const scale = sound.minor ? MINOR : MAJOR;
+  const fall = (pc) => (sound.minor && !own ? (FALLS[pc] ?? pc) : sound.open ? (RAISES[pc] ?? pc) : pc);
+  const scale = scaleNow();
   const pcs = [...new Set(colour.pcs.map(fall))].sort((a, b) => a - b);
   let sung = pcs.filter((pc) => scale.includes(pc));
   if (sung.length < 2) sung = [...new Set([...sung, 0, 7])].sort((a, b) => a - b);
@@ -138,7 +147,7 @@ const bassLow = () => harmony.bass - (harmony.bass > 6 ? 24 : 12);
 
 const line = { at: 7, dir: 1, last: -9 };
 const scaleRun = () => {
-  const scale = sound.minor ? MINOR : MAJOR;
+  const scale = scaleNow();
   const out = [];
   for (let o = -1; o <= 3; o += 1) scale.forEach((s) => out.push(s + 12 * o));
   return out;
@@ -158,9 +167,9 @@ const sungFrom = (semi, dir = 1) => {
 /** The line's next note: `steps` on through the key the way it is heading, landing on the chord;
  *  at the top or bottom of its range it turns; after a rest it starts again near the middle. */
 const fallen = (semi) => {
-  if (!sound.minor) return semi;
+  if (!sound.minor && !sound.open) return semi;
   const pc = ((semi % 12) + 12) % 12;
-  return semi - pc + (FALLS[pc] ?? pc);
+  return semi - pc + ((sound.minor ? FALLS[pc] : RAISES[pc]) ?? pc);
 };
 function nextNote(now, steps = 1) {
   // A chapter with a motif: the line spells it out, from its start after a rest, backwards every third time round.
@@ -418,13 +427,15 @@ function regroundRoom() {
 /** Where the carry is: the chapter's key, pulse and ground, and whether the mimes hold it. With `after`
  *  (seconds), the chord held under the carry stays in the old key that long, while a cadence finishes there. */
 let placeAfter = 0;
-export function setSoundPlace({ chapter = 1, held = false, level = null, after = 0 } = {}) {
+export function setSoundPlace({ chapter = 1, held = false, level = null, after = 0, lean: leaning = '' } = {}) {
   sound.root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
   sound.pulse = level?.tempo || PULSES[(chapter - 1) % PULSES.length] || 96;
   sound.swing = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
   sound.motif = Array.isArray(level?.motif) && level.motif.length ? level.motif : null;
   line.motifAt = 0;
+  // How the chapter leans (the reader's lens, or their carries), heard: low magic opens the key. The minor stays the mimes' alone.
   sound.minor = held;
+  sound.open = !sound.minor && leaning === 'bone';
   sound.ground = chapter <= 3 || chapter === 7 || chapter === 14 ? 'field' : 'city';
   line.last = -9;
   placeAfter = clamp(Number(after) || 0, 0, 4);
@@ -827,7 +838,7 @@ function admit(semi, stage) {
   const rootish = pc === 0 || pc === 7 || pc === bassPc || pc === (bassPc + 7) % 12;
   if (rootish) return 1;
   if (stage === 1) return 0.02;
-  if (pc === (sound.minor ? 3 : 4)) return 1;
+  if (pc === (sound.minor ? 3 : sound.open ? 5 : 4)) return 1;
   return stage >= 3 ? 1 : 0.05;
 }
 
@@ -1030,6 +1041,7 @@ export function rhythmHit({ voice = 'tock', strong = false, level = 1, whisper =
   try {
     if (!audio || audio.state !== 'running') return;
     const t = audioNow() + 0.005 + clamp(Number(wait) || 0, 0, 0.5);
+    if (!whisper && t < sound.rest) return;   // a mime is passing: the groove rests; a rhythm still to be found keeps its whisper
     const heat = hear(`${whisper ? 'whisper' : 'groove'}:${voice}`, t);
     if (heat === null) return;
     const lift = whisper ? 0.55 : clamp(0.5 + pad.momentum / 12, 0.5, 1);
@@ -1143,6 +1155,129 @@ export function characterMotif(who, pan = 0, { settled = false } = {}) {
   } catch { /* they still arrive */ }
 }
 
+/* ─── Themes: whose it is (.spw/runtime/audio-tropes.spw, read in pie-tropes.mjs) ───
+ * A theme is longer than a call and is the same someone everywhere. Mr. BoonWAP, Mr. BaneWAP and BoneWAP are one
+ * shape turned three ways, so where the book has two of them in a room the second can answer the first. */
+let MOTIFS = {};
+let meterTurn = 0;
+export function setThemes(motifs = {}) { MOTIFS = motifs || {}; }
+/** Who is carrying, or '' when themes are off: the line takes their instrument. */
+export function setSoundCarrier(id = '') { sound.carrier = id; }
+
+const degree = (d) => {
+  const scale = scaleNow();
+  const n = scale.length;
+  return scale[((d % n) + n) % n] + 12 * Math.floor(d / n);
+};
+/* The notes of a motif, with its `of` followed and its form applied (the reader's motifNotes, without the import). */
+const themeNotes = (who) => {
+  const m = MOTIFS[who];
+  if (!m) return null;
+  if (!m.of) return m.notes || null;
+  const source = MOTIFS[m.of]?.notes;
+  if (!source) return null;
+  if (m.form === 'inversion') return source.map((n) => 2 * source[0] - n);
+  if (m.form === 'retrograde') return [...source].reverse();
+  return source;
+};
+/* What each timbre of the file is played on here. Reed keeps the kazoo the pies have always had. */
+const voiceFor = (k, timbre) => ({ reed: k.honk, wood: k.marimba, marimba_bar: k.marimba, glass: k.celesta, odd: k.vibes }[timbre] || k.kalimba);
+
+function playTheme(k, who, at, { vol = 1, settled = false, side = 0 } = {}) {
+  const s = sixteenth();
+  const m = MOTIFS[who];
+  if (!m) return 0;
+  if (who === 'genie') {
+    // A stack of pure fifths, folded back into the octave, and home again a comma sharp: every wish costs a little.
+    const f = hz(0);
+    [1, 1.5, 1.125, 1.6875].forEach((ratio, i) => k.vibes(f * ratio, 0.4, 0.018 * vol, at + i * s * 2, side));
+    k.vibes(f * 2, 0.9, 0.013 * vol, at + s * 8, side - 0.1);
+    k.vibes(f * 2 * (531441 / 524288), 0.9, 0.013 * vol, at + s * 8, side + 0.1);
+    return s * 8 + 0.9;
+  }
+  if (who === 'clerk') {
+    // A tally: four strokes and a fifth across, closing on a minor second, or a major third once settled.
+    [0, 1, 2, 3].forEach((i) => k.tock(520, 400, 0.034 * vol, at + i * s * 0.8));
+    k.tock(760, 300, 0.044 * vol, at + s * 3.6);
+    if (settled) k.marimba(hz(4), 0.2, 0.036 * vol, at + s * 5);
+    else k.tone('sine', hz(0) * 2 ** (1 / 12), 0, 0.12, 0.026 * vol, at + s * 5, { attack: 0.004, cents: 4 });
+    return s * 5 + 0.2;
+  }
+  if (who === 'ants') {
+    // A triad and two single moves through the Tonnetz (R, then L): one street lit at a time.
+    [0, 4, 7, 9, 5].forEach((semi, i) => k.marimba(hz(fallen(semi) + 12), 0.2, 0.024 * vol, at + i * s, side + (i - 2) * 0.1));
+    return s * 5;
+  }
+  if (who === 'figure') {
+    // The carrier is the pulse itself: one plain tone on the beat, and nothing said after it.
+    k.tone('sine', hz(0), 0, 0.22, 0.03 * vol, at, { attack: 0.006, cents: 2 });
+    return 0.25;
+  }
+  const notes = themeNotes(who);
+  if (!notes) return 0;
+  if (who === 'clown') {
+    // A kazoo slide up; satisfied, it lands on the chord.
+    const from = hz(degree(notes[0]));
+    const to = hz(settled ? sungNear(degree(notes[1])) : degree(notes[1]));
+    k.tone('sawtooth', from, to, s * 3, 0.03 * vol, at, { attack: 0.012, cut: 1700, vibrato: 14, side });
+    return s * 3;
+  }
+  const play = voiceFor(k, m.timbre);
+  let gap = 2;
+  if (m.meters?.length) {
+    // One knock, three ways: the same notes in the next of its meters, all of them right.
+    meterTurn += 1;
+    gap = m.meters[meterTurn % m.meters.length];
+  }
+  notes.forEach((d, i) => play(hz(degree(d)), m.timbre === 'reed' ? 0.1 : 0.26, (m.timbre === 'reed' ? 0.036 : 0.026) * vol, at + i * s * gap, side));
+  return s * gap * notes.length;
+}
+
+/** A character's theme, once, on the pulse. `answer` names who replies a bar later, from further off. */
+export function characterTheme(who, pan = 0, { settled = false, answer = '' } = {}) {
+  try {
+    if (!audio || audio.state !== 'running' || !MOTIFS[who]) return false;
+    const t = audio.currentTime + 0.01;
+    const heat = hear(`who:${who}`, t);
+    if (heat === null || heat > 2.5) return false;
+    const k = kit(outlet(heat, { air: 0.28 }), t, pan);
+    const at = toPulse(t, 0.02);
+    playTheme(k, who, at, { settled });
+    if (answer && MOTIFS[answer]) {
+      const far = kit(outlet(heat, { depth: 0.7, air: 0.55 }), t, -pan);
+      playTheme(far, answer, at + sixteenth() * 16, { vol: 0.62 });
+    }
+    return true;
+  } catch { return false; }
+}
+
+/** A mime, heard by what goes missing: the groove rests for a bar. */
+export function mimeRest() {
+  try {
+    if (!audio || audio.state !== 'running') return;
+    sound.rest = Math.max(sound.rest, audioNow() + sixteenth() * 16);
+  } catch { /* the groove goes on */ }
+}
+
+/** The end of a carry, after the spill has fallen home: the opening of each theme, in the order they were met. */
+export function curtainCall(cast = [], wait = 1.4) {
+  try {
+    if (!audio || audio.state !== 'running' || !cast.length) return;
+    const t = audio.currentTime + 0.01;
+    const k = kit(outlet(0, { air: 0.42 }), t, 0);
+    const s = sixteenth() * 1.5;
+    let at = clamp(wait, 0, 4);
+    cast.slice(0, 5).forEach((who, i) => {
+      const side = cast.length > 1 ? (i / (cast.length - 1) - 0.5) * 0.7 : 0;
+      const notes = themeNotes(who) || [0];
+      const play = voiceFor(k, MOTIFS[who]?.timbre);
+      notes.slice(0, 2).forEach((d, n) => play(hz(degree(d)), 0.3, 0.03, at + n * s, side));
+      at += s * 3;
+    });
+    k.musicBox(hz(12), 1, 0.026, at + s);
+  } catch { /* the curtain comes down quietly */ }
+}
+
 /** The lanes gain a dimension: height climbs, games are a horn, depth is a low fifth and a far high note. */
 export function dimensionFanfare(id) {
   try {
@@ -1175,7 +1310,7 @@ export function chapterCadence(outcome = 'carried') {
     const t = audio.currentTime + 0.01;
     const at = pulseFrom(t, 0.06);
     const k = kit(outlet(0, { air: 0.4, song: 0.18 }), t, 0);
-    (sound.minor ? [7, 10] : [7, 9]).forEach((semi, i) => k.marimba(hz(semi), 0.24, 0.042, at(i * 2), (i - 0.5) * 0.2));
+    (sound.minor ? [7, 10] : sound.open ? [7, 10] : [7, 9]).forEach((semi, i) => k.marimba(hz(semi), 0.24, 0.042, at(i * 2), (i - 0.5) * 0.2));
     k.tone('sine', hz(-17), 0, 0.34, 0.045, at(0), { attack: 0.012, cents: 0 });
     const home = at(4);
     const bass = (semi) => k.tone('sine', hz(semi), 0, 0.7, 0.05, home, { attack: 0.015, cents: 0 });
@@ -1192,7 +1327,7 @@ export function chapterCadence(outcome = 'carried') {
     } else {
       bass(-12);
       k.celesta(hz(12), 0.7, 0.04, home, -0.12);
-      k.celesta(hz(sound.minor ? 15 : 16), 0.7, 0.03, home, 0.12);
+      k.celesta(hz(sound.minor ? 15 : sound.open ? 17 : 16), 0.7, 0.03, home, 0.12);
     }
     return home + sixteenth() * 4;
   } catch { return 0; }
@@ -1249,7 +1384,7 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
     honk(hz(sungTone(2 + step)), 0.1, 0.09, first, -0.08);
     honk(hz(sungTone(3 + step)), 0.12, 0.1, pulse(1), 0.08);
     // A run of WAPs fills the same way the room does: from two, the third; from four, the room's colour.
-    if (step >= 1) tone('sine', hz(sound.minor ? 3 : 4), 0, 0.18, 0.03, first, { attack: 0.012, cents: 0 });
+    if (step >= 1) tone('sine', hz(sound.minor ? 3 : sound.open ? 5 : 4), 0, 0.18, 0.03, first, { attack: 0.012, cents: 0 });
     if (step >= 3) celesta(hz(harmony.pcs[harmony.pcs.length - 1] + 12), 0.26, 0.016, pulse(1));
     swellPad(t, WORTH.wap);
   } catch { /* a silent WAP is still a WAP */ }
@@ -1279,8 +1414,10 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // A catch: the line's next note on a celesta, answered on the pulse by the chord's next tone up.
       case 'catch': {
         const a = nextNote(t);
-        celesta(hz(a), 0.18, 0.045);
-        celesta(hz(sungFrom(a)), 0.26, 0.035, answer, 0.1);
+        // Who carries is heard: the line takes the carrier's own instrument (themes on); the celesta otherwise.
+        const sing = { porter: marimba, clerk: kalimba, genie: vibes }[sound.carrier] || celesta;
+        sing(hz(a), 0.18, 0.045);
+        sing(hz(sungFrom(a)), 0.26, 0.035, answer, 0.1);
         break;
       }
       // A hop is a plucked string; a chain climbs the room's chord, and the high hop sparkles.
@@ -1367,7 +1504,7 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         sample('spill', 1, 0.14);
         hushPad(t);
         const home = toPulse(t, 0.5);
-        (sound.minor ? [7, 3, 0] : [7, 4, 0]).forEach((semi, k) => celesta(hz(semi), k === 2 ? 1.1 : 0.5, 0.04, home + k * sixteenth() * 2, (1 - k) * 0.15));
+        (sound.minor ? [7, 3, 0] : sound.open ? [7, 5, 0] : [7, 4, 0]).forEach((semi, k) => celesta(hz(semi), k === 2 ? 1.1 : 0.5, 0.04, home + k * sixteenth() * 2, (1 - k) * 0.15));
         break;
       }
       default: break;

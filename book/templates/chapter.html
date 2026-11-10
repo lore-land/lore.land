@@ -54,6 +54,7 @@
   <link rel="stylesheet" href="/book/styles/components/cards.css?v={{RELEASE}}&ctx=chapter:layout">
   <link rel="stylesheet" href="/book/styles/components/gestures.css?v={{RELEASE}}&ctx=chapter:gestures">
   <link rel="stylesheet" href="/book/styles/chapter/reading.css?v={{RELEASE}}&ctx=chapter:reading">
+  <link rel="stylesheet" href="/book/styles/components/way.css?v={{RELEASE}}&ctx=chapter:way">
   <link rel="stylesheet" href="/book/styles/chapter/bindings.css?v={{RELEASE}}&ctx=chapter:bindings">
   <link rel="stylesheet" href="/book/styles/components/begin-again.css?v={{RELEASE}}&ctx=chapter:again">
   <link rel="stylesheet" href="/book/styles/components/materials.css?v={{RELEASE}}&ctx=canon:materials">
@@ -144,7 +145,7 @@
       const root = document.documentElement;
       let sw = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null');
       if (!sw) {
-        const returning = Object.keys(localStorage).some((k) => k.startsWith('lore.') && !/^lore\.(nook|switches|release)/.test(k));
+        const returning = Object.keys(localStorage).some((k) => k.startsWith('lore.') && !/^lore\.(nook|switches|release|way)/.test(k));
         sw = { cohort: returning ? 'returning' : 'new', choices: {}, tried: [],
           resolved: returning ? { 'return-notes': 'on', 'full-rail': 'on', logline: 'on' } : { 'return-notes': 'on' } };
         localStorage.setItem('lore.switches.v1', JSON.stringify(sw));

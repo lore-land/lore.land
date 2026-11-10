@@ -1,0 +1,110 @@
+/* components/way.css — your way through: the line at the desk, a bridge over what was set aside, and why a chapter is here.
+ * Serif says the story, mono says the structure. A control's state shows in its border and its words, never in hue alone. */
+
+.way-note,
+.way-why {
+  margin-block: 1.5rem;
+  padding: 0.85rem 1rem;
+  border-inline-start: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  font-size: 0.95em;
+}
+
+.way-note p,
+.way-why p { text-indent: 0; }
+
+.way-swapped {
+  text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+p.way-swapped {
+  text-decoration: none;
+  border-inline-start: 2px dotted color-mix(in srgb, currentColor 40%, transparent);
+  padding-inline-start: 0.6rem;
+}
+
+.way-kicker {
+  margin: 0 0 0.35rem;
+  font: 600 0.72rem/1.3 var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.way-note ul { margin: 0; padding-inline-start: 1.1rem; }
+.way-note li + li { margin-block-start: 0.4rem; }
+.way-foot { margin: 0.5rem 0 0; font-size: 0.85em; opacity: 0.85; }
+
+.way-why > summary {
+  cursor: pointer;
+  font: 600 0.8rem/1.4 var(--font-mono, ui-monospace, monospace);
+}
+
+.way-why[open] > summary { margin-block-end: 0.6rem; }
+
+.way-wonder { margin-block-start: 0.9rem; }
+.way-wonder .spell { margin-block: 0.25rem; }
+.way-asks { font-style: italic; margin-block: 0.5rem; }
+.way-ways { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.way-receipt { display: block; min-height: 1.5em; margin-block: 0.6rem 0; font-size: 0.9em; }
+
+.way-pick,
+.way-chapter,
+.way-pair {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  text-align: start;
+}
+
+.way-pick:hover,
+.way-chapter:hover,
+.way-pair:hover { border-color: currentColor; }
+
+.way-section { margin-block: 2.5rem; }
+.way-section h3 { margin-block: 1.25rem 0.5rem; font-size: 1rem; }
+
+.way-line { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: 0.6rem; }
+.way-line-input {
+  flex: 1 1 16rem;
+  min-width: 0;
+  font: 0.9rem/1.5 var(--font-mono, ui-monospace, monospace);
+  padding: 0.35rem 0.5rem;
+  color: inherit;
+  background: var(--hub-panel, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 3px;
+}
+
+.way-chapters,
+.way-pairs,
+.way-held { list-style: none; margin: 0; padding: 0; }
+
+.way-chapters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 0.35rem; }
+.way-chapter { display: grid; grid-template-columns: auto 1fr; gap: 0.15rem 0.5rem; width: 100%; align-items: baseline; }
+.way-chapter small { grid-column: 1 / -1; font-size: 0.78em; opacity: 0.8; }
+.way-chapter-n { font-family: var(--font-mono, ui-monospace, monospace); font-size: 0.8em; }
+
+.way-chapter[aria-pressed="true"],
+.way-pair[aria-pressed="true"] {
+  border-style: dashed;
+  border-width: 2px;
+  opacity: 0.72;
+}
+
+.way-chapter[aria-pressed="true"] > span:last-of-type { text-decoration: line-through; }
+.way-chapter:disabled { cursor: default; }
+
+.way-pairs > li + li { margin-block-start: 0.75rem; }
+.way-pairs details { margin-block-start: 0.3rem; font-size: 0.92em; }
+.way-held li + li { margin-block-start: 0.5rem; }
+
+/* The contents, once something is set aside. */
+.hub-chapter-list li.is-aside { opacity: 0.55; }
+.hub-chapter-list li.is-aside .hub-ch-title::after {
+  content: " · set aside";
+  font: 0.72em var(--font-mono, ui-monospace, monospace);
+}

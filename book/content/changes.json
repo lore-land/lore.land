@@ -2,6 +2,17 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_10.A",
+      "date": "2026-11-10",
+      "notes": [
+        "Your way through, a trial at your desk (Scriptorium, or ?try=way-through): set a chapter aside, or keep two people out of the same room, and the book goes round them. The chapter after one you stepped over says what it held, a passage told another way is marked, and a button puts the words back. It is written as one line of Spw you can read, change by hand, or pass to someone for a visit. If you never turn it on, the book is exactly as it was.",
+        "Chapters can say why they are here, a trial in the switches (or ?try=reasons): each chapter ends with a closed fold saying why the book has it, and a line one edit away from something it says. Guess now, check against a later chapter, or keep it open.",
+        "Exactly One Pie: the people have themes (Setup, Characters). Mr. BoonWAP, Mr. BaneWAP and BoneWAP are one tune turned three ways. The Genie is a stack of fifths that comes home a little sharp. The porter knocks in three meters. A mime is a bar of rest. The melody takes the instrument of whoever is carrying, a chapter leaning toward low magic sings in open fourths (by your lens, or your carries there), and a spill closes on the openings of everyone you met, in order. If you have played before you keep the short calls until you choose.",
+        "The margins remember two more things. A pane struck in the lanes is counted in Chapter Six's lantern glass, and a beaver's pace is counted beside the dam in Chapter Eight.",
+        "In the deck, each person now says what they want and what they cannot do, what they remember of you, and, folded, why they are drawn that way."
+      ]
+    },
+    {
       "release": "2026_11_09.S",
       "date": "2026-11-09",
       "notes": [

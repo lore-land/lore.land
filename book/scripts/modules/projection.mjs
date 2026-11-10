@@ -36,6 +36,7 @@
 import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
+import { readWay, waySpell } from './way-through.mjs?v=2026_11_10.A';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
@@ -101,6 +102,8 @@ export function readProjection({ chapter = 0, palette = null } = {}) {
     });
     if (!projectionOn()) clauses.push({ key: 'plain', value: 'carries', source: session()?.getItem(PLAIN_VISIT_KEY) === 'off' ? 'visit' : 'yours' });
   }
+  const way = readWay();
+  if (way.aside.length || way.apart.length) clauses.push({ key: 'way', value: way, source: way.source === 'visit' ? 'visit' : 'yours' });
   if (palette?.wearing) clauses.push({ key: 'palette', value: { id: palette.id, layers: palette.layers }, source: 'kept' });
   else if (palette?.layers?.length) clauses.push({ key: 'plain', value: 'palette', source: session()?.getItem(PALETTE_VISIT_KEY) === 'off' ? 'visit' : 'yours' });
   if (palette?.kept && (palette.kept.cards || palette.kept.palettes)) clauses.push({ key: 'kept', value: palette.kept, source: 'kept' });
@@ -121,6 +124,7 @@ export function clauseText(clause) {
     case 'lens': return `=lens[${v}]`;
     case 'genre': return `=genre{ ${weightsText(v)} }`;
     case 'audience': return `=audience[${v}]`;
+    case 'way': return waySpell(v);
     case 'room': return `=room[${v}]`;
     case 'binding': return `=binding[${v}]`;
     case 'edition': return `=edition[${v}]`;
@@ -145,6 +149,7 @@ export function clauseGloss(clause) {
     lens: v === 'balanced' ? 'every paragraph at full presence' : `paragraphs that lean ${v} come forward`,
     genre: 'paragraphs weighted by the three lands',
     audience: v === 'pg' ? 'what every household’s copy shows' : 'the late themes are open in this copy',
+    way: 'chapters stepped over and people kept apart; a chapter it changes says so and marks the words',
     room: `the room’s light: ${v}`,
     binding: `the cover: ${v}`,
     edition: `every turning phrase in its ${v} telling`,

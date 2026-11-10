@@ -5,11 +5,11 @@
 import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_09.G';
 import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.F';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_09.L';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_10.A';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_08.W';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_10.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
-import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_09.I';
+import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_10.A';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).

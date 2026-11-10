@@ -39,11 +39,11 @@
   { trope: "said-so" through: "Four's hill (the baneberry's saying) ⇄ the lanes (foretellings stepped on, unsaid)" }
   { trope: "glimpse" through: "the margin's boonberry ⇄ boonberries eaten in passing" }
   { trope: "warm-question" through: "the margin's egg ⇄ something warm passed close, never named in the lanes" }
+  { trope: "forgiving-glass" through: "Six's lantern glass ⇄ a pane struck in the lanes, counted among the blows the kiln took back" }
+  { trope: "slow-gift" through: "Eight's dam, worded exactly ⇄ a beaver's pace lent in the lanes, and the margin asking whose" }
 ]
 
 ?lay[
-  "forgiving-glass: the book's kiln forgives every blow; let a pane struck in the lanes be one more blow the margin's lantern glass remembers forgiving."
-  "slow-gift: the beavers want the wording exact; let time a beaver gave in the lanes slow the passage it was given in, and the margin say whose dam."
   "the next stone (The Second Place): the figure dries plates at the back; let the plates the lanes counted be the ones on the drying rack."
 ]
 

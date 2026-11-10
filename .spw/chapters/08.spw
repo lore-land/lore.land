@@ -18,7 +18,7 @@ $[chapter/08/made_of]{
       ~<rocky_ridge>@boof ]
     @told_by[boof game fool narrator]
     $steam $ink $glass
-    *wonders{ @remembrancers $well_winch #the_winch_song_underneath }
+    *wonders{ @remembrancers .well_winch #the_winch_song_underneath }
     =palette[watering_eye]
     ~berries{ $boneberry[mushroom_broth] }
     &harmonies[ <beavers well> <beavers torch_ants> <egg boof> ]

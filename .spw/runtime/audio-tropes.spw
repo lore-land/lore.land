@@ -1,12 +1,12 @@
 # Exactly One Pie: audio tropes — patterns with a mathematics you can hear, bound to what the lanes hold
-# DRAFT (2026-11-09): a design, not yet read by the game. Planned reader: book/scripts/home/pie-tropes.mjs (a small
-# reader, held to the Spw interpreter by book:check, as the levels are), played by pie-sound.mjs on the
-# conductor's sixteenth-note clock. Every obstacle kind, character and power gets a binding; a binding is a
-# pattern (when), a timbre (what it is made of), a motif (whose), a register (where in the mix) and a budget.
+# !motifs are live (2026-11-10): book/scripts/home/pie-tropes.mjs reads them, book:check holds that small reader to the
+# Spw interpreter, and pie-sound.mjs plays them behind Setup > Characters. !patterns, !timbres and !bindings are still a
+# DRAFT (2026-11-09), to be played on the conductor's sixteenth-note clock. Every obstacle kind, character and power gets
+# a binding; a binding is a pattern (when), a timbre (what it is made of), a motif (whose), a register (where in the mix) and a budget.
 #>lore_land_runtime_audio_tropes
 #:surface #!runtime
 #:layer #!pragmatics
-#:status #!draft
+#:status #!working
 
 ~<rationale>{
   A trope in a story is a pattern a reader recognizes and enjoys seeing turned. An audio trope is the same for the ear: a pattern with a real structure underneath (a rhythm spread as evenly as it can be, a ratio of whole numbers, a shape played backwards) that a player learns without being told, and that the lanes can turn. Each binding comes from the canon, so the mathematics says what the thing is: the remainder moths never land twice in the same place, so their notes walk by the golden ratio and never repeat; the sliver tin is always filling and never full, so it rises forever as a Shepard tone; the three WAPs are one motif, played straight, upside down and backwards. Obstacles are told apart by what they are made of (each material rings at its own partials) and by a rhythm heard in their lane as they come. Everything here is configurable: a reader chooses how much they hear, a spell at the bench retunes a binding for a visit, and a level can lean on one.

@@ -199,7 +199,14 @@
       ],
       "chambers": [
         6
-      ]
+      ],
+      "track": {
+        "lanes": "Every pane here was once a blow, they say in the margins. The kiln melts the hurt out and pours it off clear.",
+        "after": {
+          "count": "pane_struck",
+          "says": "Bonk City's lanterns show light. They are not the light. Somebody carrying a pie has struck {{n}} pane{{s}} in the lanes, and the kiln has taken every one back without asking whose. Put a palm to the glass and they are in there with the rest."
+        }
+      }
     },
     {
       "id": "oath-stone",
@@ -234,6 +241,29 @@
       "chambers": [
         8
       ]
+    },
+    {
+      "id": "rumour-slow-dam",
+      "kind": "rumour",
+      "title": "A dam, worded exactly",
+      "note": "Two beavers took a whole evening over a dam and went out to build it before anyone could quote a price. Below it the water comes to the well slow and clear.",
+      "href": "/book/chapter/08/",
+      "terms": [
+        "beaver",
+        "beavers",
+        "dam",
+        "creek"
+      ],
+      "chambers": [
+        8
+      ],
+      "track": {
+        "lanes": "Two beavers took a whole evening over one dam, they say in the margins, and finished it themselves.",
+        "after": {
+          "count": "beaver_time",
+          "says": "Two beavers took a whole evening over a dam and went out to build it before anyone could quote a price. Somebody carrying a pie has been lent their pace {{n}} time{{s}} since, and the water below the dam is in no more of a hurry for it. Whose dam? They would want that worded exactly."
+        }
+      }
     },
     {
       "id": "ninth-honk",

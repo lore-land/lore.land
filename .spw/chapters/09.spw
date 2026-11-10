@@ -18,7 +18,7 @@ $[chapter/09/made_of]{
       ^{shard_ring}@boof =<pass_road>@boof ]
     @told_by[boof puzzle fool narrator]
     $glass $berry $ink
-    *wonders{ @jazz_geese $shard_rack #one_shard_at_a_time @chimney_swifts }
+    *wonders{ @jazz_geese .shard_rack #one_shard_at_a_time @chimney_swifts }
     =palette[clown_downtown]
     ~berries{ $boneberry[burnt_ends] }
     &harmonies[ <pool boof> <geese grove> <boonberries pool>

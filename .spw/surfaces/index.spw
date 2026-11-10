@@ -24,6 +24,7 @@
   &autonomous_feedback: "@spw/surfaces/autonomous-feedback.spw"
   &berries: "@spw/surfaces/berries.spw"
   &characters: "@spw/surfaces/characters.spw"
+  &reasons: "@spw/surfaces/reasons.spw"
   &collecting: "@spw/surfaces/collecting.spw"
   &enchantment: "@spw/surfaces/enchantment.spw"
   &fold_and_materials: "@spw/surfaces/fold-and-materials.spw"

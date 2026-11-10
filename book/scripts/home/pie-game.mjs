@@ -177,15 +177,17 @@ import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.G
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_09.L';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_10.A';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
-import { CHARACTERS, MODELS, MOODS, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_08.W';
+import { CHARACTERS, MODELS, MOODS, REASONS, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_10.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_09.S';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare } from './pie-sound.mjs?v=2026_11_09.S';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_10.A';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
+import { loadMotifs } from './pie-tropes.mjs';
+import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_10.A';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_09.C';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
@@ -270,6 +272,7 @@ function readRecord() {
         cardPace: ['at-once', 'breath', 'quiet'].includes(parsed.view?.cardPace) ? parsed.view.cardPace : (Number(parsed.runs) ? undefined : 'breath'),
         // Music and rhythm: someone new hears the rhythms they find; a regular keeps the lanes as they knew them.
         music: ['quiet', 'groove', 'full'].includes(parsed.view?.music) ? parsed.view.music : (Number(parsed.runs) ? undefined : 'groove'),
+        themes: ['calls', 'themes'].includes(parsed.view?.themes) ? parsed.view.themes : (Number(parsed.runs) ? undefined : 'themes'),
         glow: ['off', 'beat', 'bar'].includes(parsed.view?.glow) ? parsed.view.glow : undefined },
       sound: parsed.sound !== false
     };
@@ -485,6 +488,39 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     conductor.setLevels(data);
     if (run?.chapter) conductor.setChapter(run.chapter, data.levels[run.chapter]);
   });
+  /* Whose it is: each character's theme (.spw/runtime/audio-tropes.spw), and the reader's way through (way-through.mjs). */
+  loadMotifs().then((motifs) => setThemes(motifs));
+  takeWayFromAddress();
+  let wayData = null;
+  let way = readWay();
+  if (way.source !== 'off') loadWay().then((data) => { wayData = data; way = readWay(); });
+  const asideList = () => (wayData ? asideNow(way, wayData) : way.aside);
+  const keptApart = (...who) => Boolean(wayData && pairFor(who, wayData, way));
+  const droppedKinds = () => new Set((wayData?.pairs || []).filter((p) => way.apart.includes(p.id)).flatMap((p) => p.lanes?.drop || []));
+  const themesOn = () => setting('themes') === 'themes';
+  /* Where the book has the two pies in one room, the lanes let the second answer the first, a bar later and far off. */
+  const SHARED_ROOMS = new Set([6, 10, 12]);
+  const THEME_OF = Object.freeze({ boon: 'boonwap', bane: 'banewap' });
+  const CHAPTER_THEME = Object.freeze({ genie: 'genie', clowns: 'clown', hall: 'bonewap', thursday: 'ants', porter: 'porter' });
+  const heardTheme = (who) => { if (run && !run.heardThemes.includes(who)) run.heardThemes.push(who); };
+  const voiced = (who, pan = 0, opts = {}) => {
+    if (!record.sound) return;
+    const theme = THEME_OF[who] || who;
+    const other = who === 'boon' ? 'banewap' : who === 'bane' ? 'boonwap' : '';
+    const answer = other && SHARED_ROOMS.has(run?.chapter) && !keptApart('boon', 'bane') ? other : '';
+    if (themesOn() && characterTheme(theme, pan, { ...opts, answer })) heardTheme(theme);
+    else characterMotif(who, pan, opts);
+  };
+  /* How a chapter is heard to lean: the reader's own lens first, then what their carries left there. */
+  const leanHeard = (n) => {
+    if (!themesOn()) return '';
+    try {
+      const nook = JSON.parse(window.localStorage.getItem('lore.nook.v1') || '{}') || {};
+      if (['boon', 'bane', 'bone'].includes(nook.lens)) return nook.lens;
+      if (nook.lens === 'balanced') return '';
+    } catch { /* their carries, then */ }
+    return carryFor(n) ? leanOf(carryFor(n).lean) : '';
+  };
   const heardAct = (kind) => {
     const heard = conductor.act(kind);
     if (heard?.on && heard.onCount >= 3 && run) run.tags.push({ x: run.x, y: run.y - 40, t: 0, text: '♪'.repeat(Math.min(3, heard.onCount - 2)) });
@@ -563,6 +599,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   })();
   let chosenStartChapter = firstChapter;
   const fresh = (carrier = drawCarrierLot(), startChap = chosenStartChapter) => ({
+    heardThemes: [],
     carrier,
     charm: activeCombine(),
     strokes: Object.keys(readSightings()).length,
@@ -1595,6 +1632,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const NOBODY_ON_THURSDAY = new Set(['clown', 'clerk', 'subject', 'mime', 'mimewall', 'march', 'dividers', 'boon', 'bane', 'horn']);
   const thursday = () => run?.chapter === 14 && !run.friday;
   const allowed = (kind) => !(thursday() && NOBODY_ON_THURSDAY.has(kind))
+    && !droppedKinds().has(kind)
     && (!(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind));
   /* A rumour heard in this chapter's margins, said in the lanes as the carry reaches it. */
   function tickMargins() {
@@ -2641,9 +2679,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = `pie-card-chapter-btn${n === chosenStartChapter ? ' is-active' : ''}${mimesHold(n) ? ' is-held' : ''}`;
+      if (asideList().includes(n)) { btn.disabled = true; btn.setAttribute('data-aside', ''); }
       btn.textContent = String(n);
-      btn.title = `${chapterWords(n)} (${(SCENES.find((s) => s.id === (CHAPTER_SCENE[n] || 'lanes')) || SCENES[2]).card.replace(/\.$/, '')})${mimesHold(n) ? ' · held by the mimes' : ''}`;
-      btn.setAttribute('aria-label', `Start at ${chapterWords(n)}`);
+      btn.title = `${chapterWords(n)} (${(SCENES.find((s) => s.id === (CHAPTER_SCENE[n] || 'lanes')) || SCENES[2]).card.replace(/\.$/, '')})${mimesHold(n) ? ' · held by the mimes' : ''}${asideList().includes(n) ? ' · set aside' : ''}`;
+      btn.setAttribute('aria-label', asideList().includes(n) ? `${chapterWords(n)} is set aside` : `Start at ${chapterWords(n)}`);
       btn.setAttribute('aria-pressed', n === chosenStartChapter ? 'true' : 'false');
       btn.addEventListener('click', (event) => {
         event.stopPropagation();
@@ -3044,7 +3083,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!legs.has(n)) legs.set(n, loadLeg(n));
     return legs.get(n);
   };
-  const nextChapter = (n) => (n >= TOTAL_CHAPTERS ? 1 : n + 1);
+  const nextChapter = (n) => {
+    const aside = asideList();
+    let c = n;
+    for (let i = 0; i < TOTAL_CHAPTERS; i += 1) {
+      c = c >= TOTAL_CHAPTERS ? 1 : c + 1;
+      if (!aside.includes(c)) return c;
+    }
+    return n >= TOTAL_CHAPTERS ? 1 : n + 1;
+  };
 
   /* Where in the story the carry is: the paragraph passing now. */
   const passing = () => {
@@ -3087,19 +3134,33 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const enterChapter = (wanted, { back = false, first = false, note = '', closed = '' } = {}) => {
     let n = wanted;
     let lapped = false;
+    // A chapter set aside is stepped over; the book's order is otherwise the carry's.
+    const aside = asideList();
+    const stepOver = () => { for (let i = 0; i < TOTAL_CHAPTERS && aside.includes(n) && aside.length < TOTAL_CHAPTERS; i += 1) n += 1; };
+    stepOver();
     if (n > TOTAL_CHAPTERS) {
       // Round again: a lap is the whole book, so a carry begun mid-book first goes back to its beginning.
       n = 1;
       if (run.startChapter === 1 || run.wrapped) run.lap += 1;
       run.wrapped = true;
       lapped = true;
+      stepOver();
     }
     n = Math.max(1, n);
     // A chapter carried to its end closes with a cadence in its own key, by how it went; the next one's motif waits for it.
     const cadence = closed && record.sound ? chapterCadence(closed) : 0;
-    setSoundPlace({ chapter: n, held: mimesHold(n), level: levelData.levels[n] || null, after: cadence });
+    setSoundPlace({ chapter: n, held: mimesHold(n), level: levelData.levels[n] || null, after: cadence, lean: leanHeard(n) });
     conductor.setChapter(n, levelData.levels[n] || null);
     if (record.sound) chapterIncipit(cadence);
+    // Themes wait for the chapter's own tune: who is carrying, the first time, and whose chapter this is.
+    if (record.sound && themesOn()) {
+      const theme = CHAPTER_THEME[levelData.levels[n]?.theme];
+      setTimeout(() => {
+        if (!run || state !== 'running') return;
+        if (first && characterTheme(run.carrier.id, 0)) heardTheme(run.carrier.id);
+        else if (theme && characterTheme(theme, 0)) heardTheme(theme);
+      }, (cadence + 2.6) * 1000);
+    }
     run.prevScene = run.sceneId;
     run.sceneT = first ? 1 : 0;
     run.chapter = n;
@@ -3166,10 +3227,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.prevCarrier = run.carrier;
       run.swapT = 0;
       run.carrier = drawCarrierLot(run.carrier.id);
+      setSoundCarrier(themesOn() ? run.carrier.id : '');
       moved = `The hat moved on. Under it now: ${run.carrier.name}.`;
       turnCard(`carrier-${run.carrier.id}`);
     }
-    const who = first ? `Under the hat: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}` : '';
+    const who = first ? `Under the hat: ${run.carrier.name}.${run.carrier.says ? ` ${run.carrier.says}` : ''}${REASONS[run.carrier.id]?.escape ? ` ${REASONS[run.carrier.id].escape}` : ''}` : '';
     const held = run.tally.held ? 'The mimes hold this chapter: out-do them before it ends to win it back.' : '';
     const line = [note, lapped ? (run.lap ? 'The book again, and faster.' : 'Back to the beginning of the book.') : '', who, moved, held].filter(Boolean).join(' ');
     const known = roomsReadIn(n);
@@ -3184,6 +3246,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     colors = palette();
     if (record.sound) { primeAudio(); setMusicBed(setting('music') === 'full'); }
     run = fresh();
+    setSoundCarrier(themesOn() ? run.carrier.id : '');
     run.intro = introMode;
     show.reset();
     Object.assign(laneStory, { para: -1, at: -1, capQ: [], cap: '', roadQ: [] });
@@ -3220,6 +3283,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else {
       sfx('spill');
     }
+    // The curtain: the opening of each theme, in the order they were met, after the spill has fallen home.
+    if (record.sound && themesOn()) curtainCall(run.heardThemes.filter((who) => who !== 'mime'), 1.6);
     impact('spill', run.x, run.y - 70, { hurt: true });
     const distance = cobbles() + Math.floor(run.aheadCobbles || 0);
     record.runs += 1;
@@ -3375,6 +3440,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.knocked = true;
     if (run.hurtT > 0) return false;   // still steadying from the last one
     const cost = { ...(KNOCKS[thing.kind] || { tilt: 0.45 }), ...(knockRules[thing.kind] || {}) };
+    // Bonk glass remembers: a pane struck here is one more blow the margin's lantern glass counts (references.json glass).
+    if (thing.kind === 'pane' && run.legEvents) run.legEvents.pane_struck = (run.legEvents.pane_struck || 0) + 1;
     // How a carrier takes a knock: the porter barely, the clerk and the clown badly.
     let tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3);
     if (run.frill > 0) {
@@ -4073,7 +4140,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       say('Mr. BoonWAP holds court, but the mimes are ahead here: he mimes his one true thing, and nobody can make it out.');
       return;
     }
-    if (record.sound) characterMotif('boon');
+    voiced('boon');
     const said = speak('boon');
     const words = said ? `“${said.text}”` : 'A sentient pie of the quinary five. Clowns flock to him, and every pie finds an eye.';
     showToast(`Mr. BoonWAP holds court${said?.isNew ? ' · ✦ new' : ''}`, words, 6000, 'boon');
@@ -4091,7 +4158,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     meanwhile('bane', 'thinking', 'Hm. Yes.', { force: true });
     showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.`, 3400, 'bane');
     say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.`);
-    if (record.sound) characterMotif('bane');
+    voiced('bane');
   };
 
   const update = (rawDt) => {
@@ -4176,11 +4243,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, in: h.in }));
       }
       run.boofIn -= dt;
-      if (run.boofIn <= 0 && !run.boof) {
+      if (run.boofIn <= 0 && !run.boof && !(run.bane && keptApart('boof', 'bane'))) {
         const side = pick([-1, 1]);
         run.boof = { x: side < 0 ? -40 : W + 40, y: rand(80, 200), vx: -side * rand(60, 80), touched: false };
         turnCard('boof');
-        if (record.sound) leitmotif('boof', side * 0.6);
+        if (record.sound) { leitmotif('boof', side * 0.6); heardTheme('boof'); }
         run.boofIn = rand(12, 18);
       }
       // Presences: Mr. BoonWAP and Mr. BaneWAP never share the stage.
@@ -4505,7 +4572,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (record.sound && thing.y > 24 && thing.y < run.y - 36) {
           if (!thing.voiced && (thing.kind === 'clown' || thing.kind === 'clerk')) {
             thing.voiced = true;
-            characterMotif(thing.kind, panOf(thing.x), { settled: Boolean(thing.shared) });
+            voiced(thing.kind, panOf(thing.x), { settled: Boolean(thing.shared) });
+          }
+          // A mime is heard by what goes missing: the groove rests for a bar.
+          if (!thing.voiced && themesOn() && (thing.kind === 'mime' || thing.kind === 'march')) {
+            thing.voiced = true;
+            mimeRest();
+            heardTheme('mime');
           }
           if (!thing.neared && thing.y > run.y - 300) {
             thing.neared = true;
@@ -4652,6 +4725,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           thing.spin = 0;
           applyPower(powerFor('beaver'));
           sfx(powerFor('beaver')?.refs?.sound || 'beaver');
+          // Time a beaver lends is counted beside the dam it came from (references.json rumour-slow-dam).
+          if (run.legEvents) run.legEvents.beaver_time = (run.legEvents.beaver_time || 0) + 1;
           run.tags.push({ x: thing.x, y: thing.y - 28, t: 0, text: 'SLOW BEAVER · BERRIES BEHIND IT' });
           if (!run.beaverSaid) {
             run.beaverSaid = true;
@@ -7347,6 +7422,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ['panels', 'Panels', [['auto', 'Arranged for this screen'], ['manual', 'As set below']], 'manual'],
     ['cardPace', 'New cards', [['at-once', 'Open at once'], ['breath', 'Wait for a breath'], ['quiet', 'Never pause']], 'at-once'],
     ['music', 'Music', [['quiet', 'Only what happens'], ['groove', 'Rhythms you have found, softly'], ['full', 'Rhythms and the room’s chord, held']], 'quiet'],
+    ['themes', 'Characters', [['calls', 'A short call each'], ['themes', 'Their own themes, and how the chapter leans']], 'calls'],
     ['glow', 'Glow', [['off', 'Off'], ['beat', 'On every beat'], ['bar', 'On the first of each bar']], 'off'],
     ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
     ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
@@ -7478,6 +7554,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   function applySetup({ replan = true } = {}) {
     setMusicBed(record.sound && setting('music') === 'full');
+    setSoundCarrier(themesOn() && run ? run.carrier.id : '');
     if (replan) panelPlan = planNow();
     const plan = panelPlan;
     const fitMode = setting('size') === 'fit';
@@ -8781,11 +8858,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
       const traits = nodeOf('span', 'pie-portrait-traits');
       (model.traits || []).forEach((t) => traits.append(nodeOf('span', '', t)));
+      /* What they want and cannot do; what they remember of you; why they are drawn this way, folded, off the lanes. */
+      const whyOf = (who) => {
+        const why = REASONS[who];
+        if (!why) return [];
+        const memory = remembers(who, readStore(DEEDS_KEY));
+        const fold = document.createElement('details');
+        fold.className = 'pie-portrait-why';
+        fold.append(nodeOf('summary', '', 'Why they are drawn this way'), nodeOf('span', '', why.reason));
+        return [nodeOf('span', 'pie-portrait-want', `Wants · ${why.want}`), nodeOf('span', 'pie-portrait-limit', `Cannot · ${why.limit}`),
+          ...(memory ? [nodeOf('span', 'pie-portrait-memory', `Remembers · ${memory}`)] : []), fold];
+      };
       const swatches = nodeOf('span', 'pie-portrait-swatches');
       Object.entries(c.palette || {}).forEach(([k, v]) => { const sw = nodeOf('i', ''); sw.style.background = v; sw.title = `${k} ${v}`; swatches.append(sw); });
       li.append(art, nodeOf('strong', '', c.name), nodeOf('span', 'pie-portrait-first', c.first ? `first in Chapter ${c.first}` : 'in the lanes'), moods, traits,
         ...(model.temperament ? [nodeOf('span', 'pie-portrait-temperament', model.temperament)] : []),
         ...(model.knack ? [nodeOf('span', 'pie-portrait-knack', `Under the hat · ${model.knack}`)] : []),
+        ...whyOf(id),
         swatches, renderSpell(characterSpell(id), { cast: false, copy: `lore.land/characters#${id}` }), nodeOf('span', 'pie-portrait-actions'));
       li.querySelector('.pie-portrait-actions').append(copy, ' ', save);
       return li;
@@ -9117,7 +9206,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintLore();
   }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_09.I').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_10.A').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();

@@ -939,6 +939,8 @@ function* matchModifier(state, depth) {
     if (peekString(state, mod.length) === mod) {
       const nextChar = peek(state, mod.length);
       if (nextChar && /[a-zA-Z0-9_]/.test(nextChar)) continue;
+      const afterHyphen = nextChar === "-" ? peek(state, mod.length + 1) : void 0;
+      if (afterHyphen && /[a-zA-Z0-9_]/.test(afterHyphen)) continue;
       advance(state, mod.length);
       const token2 = {
         type: "MODIFIER",
@@ -3675,6 +3677,19 @@ function chargeEndsExpression(token2, chargeLine) {
   if (token2.type === "EOF" || token2.type === "CONTAINER_CLOSE" || token2.type === "CAPSULE_CLOSE" || token2.type === "STREAM_CLOSE" || token2.type === "NRANGE_CLOSE" || token2.type === "COMMA" || token2.type === "ARROW" || token2.type === "COLON") return true;
   return isScheduleSeparator(token2);
 }
+function valenceKey(chain) {
+  const segments = chain.modifiers.map((modifier2) => modifier2.value);
+  return {
+    type: "Identifier",
+    span: chain.span,
+    token: {
+      type: "IDENTIFIER",
+      value: segments.join("."),
+      span: chain.span,
+      identifier: { segments, qualified: segments.length > 1 }
+    }
+  };
+}
 var expressionImpl = named(
   "expression",
   function* expressionParser(stream, depth) {
@@ -3683,6 +3698,7 @@ var expressionImpl = named(
     const origin = stream.position;
     let charge;
     let chargeConsumed = 0;
+    let keyTerm;
     if (current(stream).type === "MODIFIER") {
       const modGen = modifierChain(stream, depth + 1);
       let modStep = modGen.next();
@@ -3694,10 +3710,14 @@ var expressionImpl = named(
         skipWhitespace(stream);
         const next = current(stream);
         const interval = next.type === "CONNECTOR" && next.value === "..";
+        const chain = modStep.value.value;
         if (next.type === "OPERATOR" || interval) {
           stream.position = origin;
+        } else if (next.type === "COLON" && next.span.start.line === chain.span.end.line) {
+          keyTerm = valenceKey(chain);
+          chargeConsumed = modStep.value.consumed;
         } else {
-          charge = modStep.value.value;
+          charge = chain;
           chargeConsumed = modStep.value.consumed;
         }
       } else {
@@ -3707,9 +3727,9 @@ var expressionImpl = named(
     const chargeLine = charge?.span.end.line;
     const heldForPostfix = charge !== void 0 && chargeLine !== void 0 && current(stream).span.start.line === chargeLine && isNounPostfixOpener(current(stream));
     const chargeOnly = charge !== void 0 && chargeLine !== void 0 && !heldForPostfix && chargeEndsExpression(current(stream), chargeLine);
-    let headTerm;
+    let headTerm = keyTerm;
     let consumed = chargeConsumed;
-    if (!heldForPostfix && !chargeOnly) {
+    if (!headTerm && !heldForPostfix && !chargeOnly) {
       const firstGen = termNode(stream, depth + 1);
       let firstStep = firstGen.next();
       while (!firstStep.done) {
@@ -20061,6 +20081,108 @@ function slotHash(input, options = {}) {
   };
 }
 
+// .spw/_workbench/packages/spw-seed/src/canonical/register-stamp.ts
+var REGISTER_STAMP_CONTRACT = "register.stamp/1";
+var REGISTER_OF_CLOSER = Object.freeze({
+  "}": "facet",
+  "]": "set",
+  ")": "scope",
+  ">": "capsule",
+  ">>": "stream"
+});
+var SKIPPED = /* @__PURE__ */ new Set(["WHITESPACE", "NEWLINE", "COMMENT"]);
+var VALUE_TYPES = /* @__PURE__ */ new Set(["IDENTIFIER", "NUMBER", "MODIFIER", "BOOLEAN"]);
+function closerOf(token2) {
+  if (!token2) return null;
+  const closing = token2.type === "CONTAINER_CLOSE" || token2.type === "CAPSULE_CLOSE" || token2.type === "STREAM_CLOSE";
+  return closing && token2.value in REGISTER_OF_CLOSER ? token2.value : null;
+}
+function pairsAt(tokens, open) {
+  const pairs = [];
+  let at = open + 1;
+  const next = () => {
+    while (at < tokens.length && SKIPPED.has(tokens[at].type)) at++;
+    return tokens[at];
+  };
+  for (; ; ) {
+    const key = next();
+    if (key?.type !== "IDENTIFIER") return null;
+    at++;
+    const equals = next();
+    if (equals?.type !== "OPERATOR" || equals.value !== "=") return null;
+    at++;
+    const value = next();
+    if (!value || !VALUE_TYPES.has(value.type)) return null;
+    at++;
+    pairs.push([String(key.value), String(value.value)]);
+    const after = next();
+    if (after?.type === "CONTAINER_CLOSE" && after.value === "]") return { pairs, close: at };
+    if (after?.type !== "COMMA") return null;
+    at++;
+  }
+}
+function readRegisterStamps(source) {
+  let tokens;
+  try {
+    tokens = lex(source).tokens;
+  } catch {
+    return [];
+  }
+  const stamps = [];
+  for (let index = 0; index < tokens.length; index++) {
+    const open = tokens[index];
+    if (open.type !== "CONTAINER_OPEN" || open.value !== "[") continue;
+    const read = pairsAt(tokens, index);
+    if (!read || read.pairs[0]?.[0] !== "reg") continue;
+    const closes = closerOf(tokens[index - 1]);
+    const shape = closes ? REGISTER_OF_CLOSER[closes] : null;
+    const name = read.pairs[0][1];
+    stamps.push({
+      name,
+      closes,
+      shape,
+      restates: shape !== null && shape === name,
+      also: Object.fromEntries(read.pairs.slice(1)),
+      line: open.span.start.line,
+      start: open.span.start.offset,
+      end: tokens[read.close].span.end.offset
+    });
+    index = read.close;
+  }
+  return stamps;
+}
+function summarizeRegisterStamps(stamps) {
+  const names = {};
+  const informingNames = {};
+  let restating = 0;
+  let detached = 0;
+  for (const stamp of stamps) {
+    names[stamp.name] = (names[stamp.name] ?? 0) + 1;
+    if (stamp.restates) restating++;
+    else informingNames[stamp.name] = (informingNames[stamp.name] ?? 0) + 1;
+    if (!stamp.closes) detached++;
+  }
+  return {
+    contract: REGISTER_STAMP_CONTRACT,
+    total: stamps.length,
+    restating,
+    informing: stamps.length - restating,
+    names,
+    informingNames,
+    detached
+  };
+}
+function withoutRestatingStamps(source) {
+  const restating = readRegisterStamps(source).filter((stamp) => stamp.restates);
+  let text = "";
+  let from = 0;
+  for (const stamp of restating) {
+    text += source.slice(from, stamp.start);
+    from = stamp.end;
+  }
+  return { text: text + source.slice(from), removed: restating.length };
+}
+
 // .spw/_workbench/packages/spw-seed/src/line/write.ts
 var PAIR_ORDER = ["mode", "body", "scene", "concept"];
 function joinParts(parts, separator) {
@@ -20197,6 +20319,8 @@ export {
   REFACTOR_PLAN_SURFACE,
   REFERENCES,
   REFERENCE_PROGRESSIONS,
+  REGISTER_OF_CLOSER,
+  REGISTER_STAMP_CONTRACT,
   RegisterId,
   SCOPES,
   SEPARATORS,
@@ -20522,6 +20646,7 @@ export {
   readMarks,
   readMassDeclarations,
   readRange,
+  readRegisterStamps,
   recognizeCompositionSequence,
   recognizeCompositionSource,
   reconcileAuthority,
@@ -20592,6 +20717,7 @@ export {
   spwq,
   stencilToAutomataConfig,
   summarizeFormulaHits,
+  summarizeRegisterStamps,
   textFormatter,
   textHash,
   toVscodeSnippets,
@@ -20612,6 +20738,7 @@ export {
   walkGraph,
   walkReferenceProgression,
   withCoupling,
+  withoutRestatingStamps,
   wrapWords,
   writeAt,
   writeLine,

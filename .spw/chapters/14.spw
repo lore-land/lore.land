@@ -19,7 +19,7 @@ $[chapter/14/made_of]{
       !(crier_cart)@the_crier =<field_edge>@boof ]
     @told_by[narrator boof boonberry path]
     $steam $ink $frost
-    *wonders{ @hob_deer #keep_the_morning @page_fox @frill_lichen }
+    *wonders{ @hob_deer #keep_the_morning *relit_torch @page_fox @frill_lichen *criers_note *found_line }
     &met[figure]
     =palette[hill_moon]
     ~berries{ boonberry baneberry $boneberry[burnt_ends] }
@@ -29,7 +29,7 @@ $[chapter/14/made_of]{
   rooms: "Eight rooms: three [ ] windows, two { } rooms, two < > passages and a ( ) gathering; six kept by Boof, the rest by the berries and the crier."
   told_by: "Told by the narrator, Boof, the boonberries and the path."
   made_of: "Made most of steam and warmth, then ink and line, then frost."
-  wonders: "First met here: hob-deer, a saying, “Keep the morning, not the week”, the page-fox and frill-lichen."
+  wonders: "First met here: hob-deer, a saying, “Keep the morning, not the week”, the relit torch, the page-fox, frill-lichen, the crier's note and a found line."
   met: "Met here for the first time: the figure in plain lines."
   palette: "Its palette is the hill, earned a layer at a time: a lilac sky, a dark green hill, a grey moon, and a tall shape standing where somebody is missing."
   berries: "Here boonberries foresee and baneberries foretell; a boneberry in this chapter tastes of burnt ends."

@@ -21,7 +21,7 @@
 
 import { settle } from './settled.mjs?v=2026_11_09.L';
 import { visitSwitches, dropSwitch, readStory } from './story-directions.mjs?v=2026_11_09.L';
-import { chapterPath } from './chapter-links.mjs?v=2026_11_05.A';
+import { chapterPath } from './chapter-links.mjs?v=2026_11_10.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 import { activeBias, setBias, castHouseRegister, initBiasFromURL } from './spw-bias.mjs?v=2026_11_09.L';
 
@@ -103,6 +103,18 @@ export const SWITCHES = Object.freeze([
     hint: 'Some phrases are told more than one way; a faint wavy line marks them. Tap one to hear its next telling, hold it to see them all, or turn the hour in the rail and watch the page change with the day.',
     effect: { on: 'Phrases with other tellings are marked; tap to turn, hold for all.', off: 'Every phrase reads as plain words; what you heard is kept.' }, region: 'main.chapter',
     defaults: { returning: 'on', new: 'on' }
+  },
+  {
+    id: 'reasons', attribute: 'data-switch-reasons', stage: 'trial', layer: 'trial', label: 'Why each chapter is here',
+    hint: 'At each chapter\u2019s end, a closed fold: why the book has this chapter, and one line a single edit away from it to guess about.',
+    effect: { on: 'Each chapter ends with a fold saying why it is here.', off: 'Chapters end without the fold.' }, region: '.way-why',
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'way-through', attribute: 'data-switch-way-through', stage: 'trial', layer: 'trial', label: 'Your way through',
+    hint: 'Set chapters aside and keep some people out of the same room, said as one line of Spw at your desk. A chapter after one you stepped over says what it held.',
+    effect: { on: 'Your way through applies. Choose it at your desk.', off: 'The whole book, in order, everyone in their rooms.' },
+    defaults: { returning: 'off', new: 'off' }
   },
   {
     id: 'living', attribute: 'data-switch-living', stage: 'trial', layer: 'trial', label: 'Phrases turn with the clock',
@@ -199,7 +211,7 @@ function writeJSON(key, value) {
 /** Had this browser read lore.land before switches existed? */
 export function cohortFromStorage() {
   try {
-    return Object.keys(window.localStorage).some((key) => key.startsWith('lore.') && !/^lore\.(nook|switches|release)/.test(key))
+    return Object.keys(window.localStorage).some((key) => key.startsWith('lore.') && !/^lore\.(nook|switches|release|way)/.test(key))
       ? 'returning'
       : 'new';
   } catch {

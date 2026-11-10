@@ -28,6 +28,18 @@
   integration: "^projects[chapter, game, folio_value] — what the projection is bound into"
 }
 
+^"orthogonality"{
+  .status: "proposed reading, 2026-11-10; the mechanics named are live"
+  claim: "The story and the lanes are at right angles. A carry cannot change what happened in the book, and a chapter cannot change the rules of the lanes. Because neither can move the other, each can cast a shadow on the other without either being overwritten, and that shadow is the projection."
+  why_right_angles: "The figure in plain lines crosses every scene at ninety degrees (story-boonhonk trope_physics). The game does the same to the book: present, consequential, and not aligned with its direction. A game that could rewrite the plot would make the plot a score."
+  lanes_onto_story: "lean (the reading weighs a little toward how the carry went) · mimes (pie words go quiet) · margins (a rumour retold with what was done) · what the people remember, on their cards"
+  story_onto_lanes: "rooms (the chord the land sings) · rumours heard, said in the lanes · a lens or a chapter's lean heard as the key · chapters set aside, stepped over · people kept apart, kept apart there too · where the book has two pies in a room, the second answers the first"
+  rule: "A shadow never moves the thing that cast it. Variant zero stays in the page, and the prophecy always holds."
+  escape: "This is also why the lanes can be for getting away. Nothing you do there is the book, so nothing there is homework. The reasons for each person live on their card, folded, off the lanes."
+  &reasons: ~".spw/surfaces/reasons.spw"
+  &tropes: ~".spw/surfaces/tropes.spw#tropes"
+}
+
 ^"passing_it_along"{
   link: "?spell=<the spell> — on arrival it becomes this visit's story directions (never saved as the reader's own unless they keep it), ?audience=pg (lower only) and ?plain=carries (this visit)"
   safety: "a spell from a link can never raise the audience, set a measure, or overwrite the reader's own settings"

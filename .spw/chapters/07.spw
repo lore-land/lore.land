@@ -18,7 +18,7 @@ $[chapter/07/made_of]{
       .{cooling_stone}@boof ~<long_alley>@the_stranger ]
     @told_by[boof shadow fool narrator]
     $berry $brass $ink
-    *wonders{ @oath_moths $oath_scale #promise_the_next_stone }
+    *wonders{ @oath_moths .oath_scale #promise_the_next_stone }
     =palette[oath]
     ~berries{ boonberry baneberry $boneberry[roast_chestnut_and_sage] }
     &harmonies[ <egg boof> ]
