@@ -56,7 +56,7 @@ const tallness = (panel, form, cab, stripRem) => {
  * all ({ caption, strip, heights, show, lanesStory }); controls: where the player put the controls, if
  * they did ('under' | 'edges' | 'over').
  */
-export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, controls = null, stripRem = 6.4 }) {
+export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, controls = null, stripRem = 6.4, rail = false }) {
   const wants = {
     caption: want.caption !== false,
     strip: want.strip !== false,
@@ -68,9 +68,10 @@ export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, contr
   const place = controls || (coarse && landscape ? 'edges' : 'under');
   const desk = vw >= 992;
   const top = desk ? 72 : 8;
-  const tools = 2.9 * REM;
+  // On a short window the switches stand in a rail beside the screen, so they take width instead of height.
+  const tools = rail ? 0 : 2.9 * REM;
   const ctrlH = place !== 'under' ? 0 : coarse ? 9.5 * REM : 3 * REM;
-  const ctrlW = place === 'edges' ? (coarse ? 10 : 8) * REM : 0;
+  const ctrlW = (place === 'edges' ? (coarse ? 10 : 8) * REM : 0) + (rail ? 4.6 * REM : 0);
   const pad = 1.6 * REM;
   const gap = 0.7 * REM;
   const pageGap = 1.5 * REM;
@@ -84,11 +85,13 @@ export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, contr
   const score = (h, forms) => screenScore(h) - overlap(forms) + Object.entries(forms).reduce((sum, [panel, form]) => sum + (wants[panel] ? STORY_WEIGHT[panel] * (READS[panel][form] ?? 0) : 0), 0);
   const offIfUnwanted = (forms) => Object.fromEntries(Object.entries(forms).map(([panel, form]) => [panel, wants[panel] ? form : 'off']));
   const plans = [];
+  // A column is worth having only if something would stand in it; a spread needs the prose on its own side.
+  const anyBeside = wants.strip || wants.caption || wants.heights || wants.show;
 
   // spread: the prose in its own column on one side, the panels in a column on the other.
   {
     const h = Math.min(tallest, widest(room - 2 * (column + pageGap)));
-    if (desk && h >= floor) {
+    if (desk && wants.strip && h >= floor) {
       const forms = offIfUnwanted({ caption: 'full', strip: 'full', heights: 'full', show: 'inset' });
       plans.push({ arrangement: 'spread', forms, screenH: h, score: score(h, forms) + 0.3 });
     }
@@ -98,7 +101,7 @@ export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, contr
   {
     const h = Math.min(tallest, widest(room - column - pageGap));
     const colW = room - (h * ASPECT + pad + ctrlW) - pageGap;
-    if (h >= floor && colW >= column) {
+    if (anyBeside && h >= floor && colW >= column) {
       const colH = vh - top - 8;
       let pick = null;
       (wants.strip ? ['full', 'compact'] : ['off']).forEach((strip) => (wants.heights ? ['full', 'compact', 'folded'] : ['off']).forEach((heights) => {

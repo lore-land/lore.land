@@ -1361,8 +1361,17 @@ body[data-surface='monument'] .pie-main {
   background: color-mix(in srgb, var(--hub-gold) 14%, var(--hub-panel));
 }
 
-/* Story off: the narrative beside the screen folds away. Zen: nothing pops up. */
+/* Story off: the narrative beside the screen folds away. Zen: nothing pops up. The caption and the heights have
+ * their own switches, so when they stand in the wonders column it stays up for them. */
 .pie-voyage.is-story-off .pie-flow {
+  display: none;
+}
+
+.pie-voyage.is-story-off:not(.is-zen) .pie-flow-wonders:has(> .pie-caption, > .pie-heights) {
+  display: flex;
+}
+
+.pie-voyage.is-story-off:not(.is-zen) .pie-flow-wonders > :not(.pie-caption, .pie-heights) {
   display: none;
 }
 
@@ -4889,3 +4898,435 @@ html.pie-settling .pie-voyage {
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
   font-size: 0.82rem;
 }
+
+/* ─── The tracks follow what is beside the cabinet (pie-game.mjs sets data-tracks last, after every toggle) ─── */
+.pie-voyage {
+  --cabinet-col: clamp(calc(18rem * var(--cabinet-scale, 1)), calc((100vh - 20rem) * 0.643 * var(--cabinet-scale, 1)), calc(25rem * var(--cabinet-scale, 1)));
+  --side-col: minmax(0, 1fr);
+}
+
+.pie-voyage.is-fit {
+  --cabinet-col: var(--cabinet-fit, 22rem);
+}
+
+/* The whole window: the voyage steps out of the page's column; a column of words still keeps a reading measure. */
+.pie-voyage.is-wide {
+  --side-col: minmax(0, 36rem);
+  width: calc(var(--page-w, 100vw) - 2rem);
+  max-width: none;
+  margin-inline-start: calc((100% - var(--page-w, 100vw)) / 2 + 1rem);
+}
+
+.pie-voyage[data-tracks] > *,
+.pie-voyage[data-tracks] > .pie-cabinet.pie-cabinet {
+  max-width: none;
+}
+
+.pie-voyage.pie-voyage.pie-voyage.pie-voyage[data-tracks='solo'] {
+  grid-template-columns: minmax(0, var(--cabinet-col));
+  justify-content: center;
+  justify-items: stretch;
+}
+
+.pie-voyage.pie-voyage.pie-voyage.pie-voyage[data-tracks='pair'] {
+  grid-template-columns: var(--cabinet-col) minmax(15rem, 36rem);
+  justify-content: center;
+  justify-items: stretch;
+}
+
+.pie-voyage.pie-voyage.pie-voyage.pie-voyage[data-tracks='trio'] {
+  grid-template-columns: var(--side-col) var(--cabinet-col) var(--side-col);
+  justify-content: center;
+  justify-items: stretch;
+}
+
+.pie-voyage[data-tracks='pair'] > .pie-cabinet,
+.pie-voyage[data-tracks='solo'] > .pie-cabinet {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.pie-voyage[data-tracks='pair'] > .pie-flow-wonders {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.pie-voyage[data-tracks='trio'] > .pie-flow-prose { grid-column: 1; grid-row: 1; }
+.pie-voyage[data-tracks='trio'] > .pie-cabinet { grid-column: 2; grid-row: 1; }
+.pie-voyage[data-tracks='trio'] > .pie-flow-wonders { grid-column: 3; grid-row: 1; }
+
+/* Whatever the cabinet's position, its corner grip and its sheet stay hung on the cabinet. */
+.pie-voyage.is-zen .pie-cabinet {
+  position: relative;
+}
+
+/* The caption box hidden stays hidden wherever it stands. */
+.pie-voyage.is-caption-off .pie-caption:not(:has(.pie-show-inset:not([hidden]))) {
+  display: none;
+}
+
+.pie-voyage.is-caption-off .pie-caption > p {
+  display: none;
+}
+
+/* A short window: the switches stand in a rail beside the screen, in two columns, and give their row back to the lanes. */
+.pie-cabinet.is-short {
+  grid-template-columns: 4rem minmax(0, 1fr);
+  column-gap: 0.45rem;
+  row-gap: 0.35rem;
+  padding: 0.4rem;
+}
+
+.pie-cabinet.is-short > * {
+  grid-column: 2;
+}
+
+.pie-cabinet.is-short > .pie-tools {
+  grid-column: 1;
+  grid-row: 1 / span 8;
+  align-self: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pie-cabinet.is-short > .pie-tools > button {
+  border-block-end: 1px solid var(--hub-line);
+}
+
+/* ─── The switches, grouped: playing · what is shown · what is said · hands and setup ─── */
+.pie-cabinet .pie-tools > :is([data-pie-toggle='story'], [data-pie-ask], .pie-tool-hand, [data-pie-setup-toggle]) {
+  border-inline-start-width: 2px;
+  border-inline-start-color: color-mix(in srgb, var(--hub-ink) 38%, transparent);
+}
+
+.pie-cabinet .pie-tools > [data-pie-setup-toggle][aria-expanded='true'] {
+  background: color-mix(in srgb, var(--hub-gold) 26%, transparent);
+}
+
+/* ─── ⚙ Setup: a drawer beside the lanes, or a sheet from the foot of the window ─── */
+.pie-setup[popover] {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  align-content: stretch;
+  gap: 0.5rem;
+  padding: 0.7rem 0.8rem 0.8rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 18px 44px rgba(12, 16, 24, 0.28);
+  color: var(--hub-ink);
+  container: pie-setup / inline-size;
+}
+
+.pie-setup.is-sheet[popover] {
+  border-radius: 0.8rem 0.8rem 0 0;
+  border-block-end: 0;
+}
+
+.pie-setup-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.pie-setup-title {
+  margin: 0;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pie-setup-close {
+  min-height: 2rem;
+  padding: 0.2rem 0.85rem;
+  border: 1px solid var(--hub-ink);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-gold) 18%, var(--hub-panel));
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.74rem;
+  cursor: pointer;
+}
+
+.pie-setup-map {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.2rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--hub-paper) 60%, transparent);
+}
+
+.pie-setup-map-art {
+  flex: none;
+  line-height: 0;
+}
+
+.pie-setup-map-art svg {
+  display: block;
+  max-height: 4.6rem;
+  width: auto;
+}
+
+.pie-setup-map-words {
+  min-width: 0;
+}
+
+.pie-setup-map-says,
+.pie-setup-map-key {
+  margin: 0;
+}
+
+.pie-setup-map-says {
+  font-size: 0.86rem;
+}
+
+.pie-setup-map-key {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--hub-muted);
+}
+
+.pie-mini {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.pie-mini-window { fill: color-mix(in srgb, var(--hub-paper) 80%, transparent); stroke: var(--hub-ink); stroke-width: 1; }
+.pie-mini-lanes { fill: #d9a24a; }
+.pie-mini-words { fill: #4f9a98; }
+.pie-mini-caption { fill: #bd5472; }
+.pie-mini-heights { fill: #6f4c7c; }
+.pie-mini-show { fill: #8a8496; }
+.pie-mini-side { fill: color-mix(in srgb, var(--hub-ink) 12%, transparent); }
+.pie-mini-tools { fill: color-mix(in srgb, var(--hub-ink) 62%, transparent); }
+
+.pie-setup-tabs {
+  display: flex;
+  gap: 0.2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-block-end: 2px solid var(--hub-line);
+}
+
+.pie-setup-tab {
+  flex: 1 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+  min-width: 3.6rem;
+  min-height: 2.75rem;
+  padding: 0.25rem 0.35rem;
+  border: 0;
+  border-block-end: 2px solid transparent;
+  margin-block-end: -2px;
+  background: transparent;
+  color: var(--hub-muted);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.pie-setup-tab[aria-selected='true'] {
+  border-block-end-color: var(--hub-ink);
+  color: var(--hub-ink);
+  font-weight: 700;
+}
+
+.pie-setup-tab:focus-visible {
+  outline: 2px solid var(--hub-gold);
+  outline-offset: -2px;
+}
+
+.pie-setup-tab-words {
+  white-space: nowrap;
+}
+
+.pie-setup-panel {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.15rem 0.1rem 0.5rem;
+}
+
+.pie-setup-panel .pie-setup-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.3rem;
+}
+
+.pie-setup-panel .pie-setup-label {
+  flex: none;
+}
+
+.pie-setup-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.pie-setup-panel .pie-setup-opt {
+  min-height: 2rem;
+  max-width: 100%;
+  white-space: normal;
+  text-align: start;
+  border-radius: 0.4rem;
+}
+
+@media (pointer: coarse) {
+  .pie-setup-panel .pie-setup-opt { min-height: 2.75rem; padding-inline: 0.7rem; }
+}
+
+@container pie-setup (min-width: 26rem) {
+  .pie-setup-panel .pie-setup-row {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 0.7rem;
+  }
+
+  .pie-setup-why {
+    grid-column: 2;
+  }
+}
+
+.pie-setup-why {
+  margin: 0;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+.pie-setup-resting {
+  border-block-start: 1px solid var(--hub-line);
+  padding-block-start: 0.4rem;
+}
+
+.pie-setup-resting > summary {
+  min-height: 2rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.66rem;
+  color: var(--hub-muted);
+  cursor: pointer;
+}
+
+.pie-setup-resting > .pie-setup-row {
+  margin-block-start: 0.55rem;
+  opacity: 0.72;
+}
+
+.pie-setup-layouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.45rem;
+}
+
+.pie-setup-layout {
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  padding: 0.45rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--hub-paper) 55%, var(--hub-panel));
+  color: var(--hub-ink);
+  text-align: start;
+  cursor: pointer;
+}
+
+.pie-setup-layout:hover,
+.pie-setup-layout:focus-visible {
+  border-color: var(--hub-ink);
+  outline: none;
+  background: color-mix(in srgb, var(--hub-gold) 16%, var(--hub-panel));
+}
+
+.pie-setup-layout-art {
+  display: block;
+  aspect-ratio: 100 / 56;
+  line-height: 0;
+}
+
+.pie-setup-layout b {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+}
+
+.pie-setup-layout small {
+  font-size: 0.74rem;
+  line-height: 1.3;
+  color: var(--hub-muted);
+}
+
+/* The start card: the place the carry would begin in, at its head. */
+.pie-card-art {
+  width: 100%;
+  max-width: 22rem;
+  aspect-ratio: 320 / 110;
+  overflow: hidden;
+  line-height: 0;
+  border: 1px solid var(--pie-film-gold);
+}
+
+.pie-card-art[hidden] {
+  display: none;
+}
+
+.pie-card-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pie-cardface-emblem {
+  float: inline-start;
+  margin: 0.1rem 0.55rem 0.2rem 0;
+  line-height: 0;
+}
+
+/* The places, in the legend. */
+.pie-places {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 0.9rem;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-places li {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.pie-places .lore-panel {
+  aspect-ratio: 16 / 10;
+  margin-block-end: 0.3rem;
+}
+
+.pie-places b {
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+}
+
+.pie-places span {
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+

@@ -25,6 +25,6 @@
 ]
 
 ^moods{
-  marks: "calm · glad · worried · surprised · thinking: drawn as the marks comics use beside a head (strokes, a bead of sweat, a bang, a question), so any portrait can wear any mood; portraitSVG(id, { mood }) and <lore-portrait mood>"
+  marks: "calm · glad · worried · surprised · thinking: worn on the face, and drawn as the marks comics use beside a head (strokes, a bead of sweat, a bang, a question), so any portrait can wear any mood; the figure in plain lines has only the marks; portraitSVG(id, { mood }) and <lore-portrait mood>"
   in_the_lanes: "the carriers faces in Exactly One Pie follow the carry: calm, focused on the needle, glad after a WAP, worried as the pie tilts, ouch at a knock"
 }

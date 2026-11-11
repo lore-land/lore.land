@@ -1,5 +1,5 @@
 // scripts/script.mjs
-import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_10.A';
+import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_10.B';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_11_09.I';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_09.I';
@@ -54,18 +54,19 @@ import { initTellings } from './modules/tellings.mjs?v=2026_11_09.L';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_09.L';
 import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_09.L';
 import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_09.L';
-import { initWayThrough } from './modules/way-through.mjs?v=2026_11_10.A';
+import { initWayThrough } from './modules/way-through.mjs?v=2026_11_10.B';
+import { initDrawnPlaces } from './modules/drawn-places.mjs?v=2026_11_10.B';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
-import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_10.A';
+import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_10.B';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_10.A';
-import { initCollection } from './modules/collection.mjs?v=2026_11_10.A';
-import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_10.A';
-import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_10.A';
+import { initCollection } from './modules/collection.mjs?v=2026_11_10.B';
+import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_10.B';
+import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_10.B';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_08.F';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_09.L';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_09.L';
-import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_10.A';
+import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_10.B';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
 import { initLensControl } from './modules/lens-control.mjs?v=2026_11_09.L';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_09.L';
@@ -196,6 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const destroyPieSegues = initPieSegues({ chapterData });
     const destroyPieProjection = initPieProjection({ chapterData });
     const destroyWay = initWayThrough({ chapterData });
+    const destroyPlace = initDrawnPlaces({ chapterData });
     let destroyMaterialPaths = null;
     initMaterialPaths({ chapterData }).then((destroy) => { destroyMaterialPaths = destroy; });
     const destroyBeginAgain = initBeginAgain({ chapterData, latest: TOTAL_CHAPTERS });
@@ -300,6 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyPieSegues) destroyPieSegues();
       if (destroyPieProjection) destroyPieProjection();
       if (destroyWay) destroyWay();
+      if (destroyPlace) destroyPlace();
       if (destroySpell) destroySpell();
       if (destroyMaterialPaths) destroyMaterialPaths();
       if (destroyBeginAgain) destroyBeginAgain();

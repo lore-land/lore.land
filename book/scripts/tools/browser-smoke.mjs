@@ -74,6 +74,42 @@ const SCENARIOS = [
     await page.waitFor(`!location.search.includes('way=')`);
     if (await page.ev(`localStorage.getItem('lore.way.v1')`)) throw new Error('a link wrote the reader\'s own way');
   }],
+  ['a switch hands its room back at once', async (page) => {
+    await page.setViewport(1440, 900);
+    await seed(page, { 'lore.pie.v1': { ...PLAYER, view: { story: true, zen: false, focusOnPlay: false, cardPace: 'quiet', panels: 'auto' } } });
+    await page.goto('/pie/?chapter=3');
+    await page.waitFor(`window.__pieTest && document.querySelector('.pie-voyage').dataset.tracks`);
+    await page.ev(`document.querySelector('[data-pie-toggle="zen"]').click()`);
+    await page.waitFor(`document.querySelector('.pie-voyage').dataset.tracks === 'solo'`);
+    await page.waitFor(`Math.abs((() => { const b = document.querySelector('.pie-cabinet').getBoundingClientRect(); return (b.left + b.right) / 2 - document.documentElement.clientWidth / 2; })()) < 12`);
+    await page.ev(`document.querySelector('[data-pie-toggle="zen"]').click()`);
+    await page.ev(`document.querySelector('[data-pie-toggle="story"]').click()`);
+    await page.waitFor(`document.querySelector('.pie-voyage').dataset.tracks === 'pair'`);
+    const caption = await page.ev(`Boolean(document.querySelector('.pie-caption').offsetParent)`);
+    if (!caption) throw new Error('folding the story took the caption with it');
+  }],
+  ['Setup leaves the lanes in view, and no choice runs off it', async (page) => {
+    for (const [w, h] of [[1440, 900], [390, 844]]) {
+      await page.setViewport(w, h);
+      await seed(page, { 'lore.pie.v1': { ...PLAYER, view: { story: true, zen: false, focusOnPlay: false, cardPace: 'quiet', panels: 'auto' } } });
+      await page.goto('/pie/?chapter=3');
+      await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')?.offsetParent`);
+      await page.ev(`document.querySelector('.pie-cabinet').scrollIntoView({ block: 'start', behavior: 'instant' }); document.querySelector('[data-pie-setup-toggle]').click()`);
+      await page.waitFor(`document.querySelector('[data-pie-setup]').matches(':popover-open')`);
+      const seen = await page.ev(`(() => { const s = document.querySelector('[data-pie-setup]'); const a = s.getBoundingClientRect(); const b = document.querySelector('.pie-screen').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)); const iy = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top)); const wide = [...s.querySelectorAll('[role=tab]')].some((t) => { t.click(); const p = s.querySelector('.pie-setup-panel'); return p.scrollWidth > p.clientWidth + 1; }); return { covered: (ix * iy) / (b.width * b.height), wide }; })()`);
+      if (seen.covered > 0.62) throw new Error(`Setup covers ${Math.round(seen.covered * 100)}% of the lanes at ${w}`);
+      if (seen.wide) throw new Error(`a section of Setup runs off its side at ${w}`);
+    }
+  }],
+  ['every id in a drawing is its own', async (page) => {
+    await page.setViewport(1200, 900);
+    await page.goto('/pie/');
+    await page.waitFor(`document.querySelectorAll('lore-panel svg').length >= 6`);
+    // Through the page's own copy of the module: another copy at another address would count from one again.
+    await page.ev(`import(document.querySelector('script[src*="pie-game.mjs"]').src).then(() => import([...performance.getEntriesByType('resource')].find((r) => r.name.includes('characters.mjs')).name)).then((m) => { const d = document.createElement('div'); d.innerHTML = m.portraitSVG('boof') + m.portraitSVG('boof'); document.body.append(d); })`);
+    const clash = await page.ev(`(() => { const seen = new Set(); for (const e of document.querySelectorAll('svg [id]')) { if (seen.has(e.id)) return e.id; seen.add(e.id); } return ''; })()`);
+    if (clash) throw new Error(`two drawings share the id ${clash}`);
+  }],
   ['the real parser runs where it can fall back silently', async (page) => {
     await page.goto('/pie/');
     const reader = await page.ev(`import('/book/scripts/home/pie-spw.mjs').then(async (m) => (await m.loadRules())?.reader)`);

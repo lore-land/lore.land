@@ -27,7 +27,7 @@ import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_09.F';
 import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
 import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_09.G';
 import { settle } from './settled.mjs?v=2026_11_09.L';
-import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_10.A';
+import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_10.B';
 
 /* A card's character, if it has one: the portrait shown when it turns (characters.mjs). */
 const characterOf = (kind) => Object.keys(CHARACTERS).find((id) => CHARACTERS[id].card === kind) || null;

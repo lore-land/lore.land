@@ -111,6 +111,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'drawn-places', attribute: 'data-switch-drawn-places', stage: 'trial', layer: 'trial', label: 'Drawn places',
+    hint: 'Each chapter ends with a painting of the place the game carries you through there, and a way to go.',
+    effect: { on: 'Each chapter ends with its place, painted.', off: 'Chapters end with their own words.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'way-through', attribute: 'data-switch-way-through', stage: 'trial', layer: 'trial', label: 'Your way through',
     hint: 'Set chapters aside and keep some people out of the same room, said as one line of Spw at your desk. A chapter after one you stepped over says what it held.',
     effect: { on: 'Your way through applies. Choose it at your desk.', off: 'The whole book, in order, everyone in their rooms.' },

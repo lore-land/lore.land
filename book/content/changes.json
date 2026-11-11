@@ -2,6 +2,18 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_10.B",
+      "date": "2026-11-10",
+      "notes": [
+        "Exactly One Pie uses the screen better. Fold the story away, or turn on zen, and the board no longer sits off to one side of an empty page. The caption and the heights stay up when the story is folded, since they have their own switches. On a short window the switches stand in a rail beside the lanes, and on a phone on its side the controls stay in reach.",
+        "Setup is now a drawer beside the lanes, or a sheet from the foot of the window on a phone, so you can watch what a choice does. It opens in sections, draws each layout, and shows a small map of where everything is on your screen. Choices that have no effect just now wait in their own fold and say why. Every choice you had is still there.",
+        "New in Setup: the game can take the whole window instead of the page's column. New players start with it on; if you have played before, nothing changes until you choose it.",
+        "The book's places are painted now, in the way the maker's panels are put together: the field, the parcel gate, the lanes, the plaza, the rented court, the long table. You will find them at the head of the start card, in the game's legend, and on a few pages about the world.",
+        "Portraits wear their moods on their faces now, and each stands in front of a moon and a stepped horizon. Every trope has a small emblem on its card.",
+        "Drawn places, a trial in the switches (or ?try=drawn-places): each chapter ends with a painting of its place, and a way into the lanes from there."
+      ]
+    },
+    {
       "release": "2026_11_10.A",
       "date": "2026-11-10",
       "notes": [

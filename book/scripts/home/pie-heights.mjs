@@ -19,7 +19,7 @@
  * ever shows what the game will actually do.
  */
 
-import { hopCurve, HOP_HANG } from './pie-world.mjs?v=2026_11_09.S';
+import { hopCurve, HOP_HANG } from './pie-world.mjs?v=2026_11_10.A';
 
 let HORIZON = 1.8;        // seconds of lane shown ahead (configurable)
 const GUTTER = 64;        // the band labels

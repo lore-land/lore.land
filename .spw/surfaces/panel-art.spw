@@ -1,0 +1,37 @@
+# Panel Art
+#>panel_art
+#:surface #!draft
+
+^"purpose"{
+  what: "The book's places, characters and tropes as drawings any page can show, so a new scene costs a record and not a commission."
+  code: ~"book/scripts/modules/panel-art.mjs"
+  figures: ~"book/scripts/modules/characters.mjs"
+}
+
+^"composition"{
+  source: "The maker's laminated panels, public at spwashi.com/design/folios. What carries over is how a panel is put together. No scan or caption is copied into this tree."
+  wash: "long dry strokes at one lean, roughened"
+  horizon: "a terraced edge, two layers, a stair and not a slope"
+  disc: "one or a pair, standing over the horizon, shaded off centre"
+  ink: "thin cream line laid on top of the paint"
+  palette: "plum, maroon, violet and storm grounds; teal and amber lit from within, per the boonberry form"
+}
+
+^"vocabulary"[
+  { kind: "place", where: "PLACES in panel-art.mjs", cost: "a palette, a horizon, discs and one ink" }
+  { kind: "figure", where: "STAND in characters.mjs", cost: "one drawing, feet at y 100" }
+  { kind: "mood", where: "mien() in each portrait", cost: "a face per mood; the figure in plain lines has none" }
+  { kind: "emblem", where: "PROPS in panel-art.mjs", cost: "one prop on a 64 tile, keyed to a trope id" }
+]
+
+!guards[
+  "nobody in a panel speaks"
+  "the figure in plain lines stays one circle, one rectangle, four lines and two dots at any scale, and the hat rests above and never lands"
+  "children are never drawn, and no stranger is placed among them"
+  "every id inside an SVG is prefixed, so panels can share a document"
+]
+
+?open[
+  "The six places are the game's. The 71 chapter scene blocks have vantage, light and edges that could each pick a ground and an ink. Whether a scene block should draw itself is the author's call."
+  "Cast in a panel is chosen by hand here. Who may stand with whom should follow way.json once a pairing has been read in its paragraph."
+]

@@ -22,7 +22,7 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_09.L';
-import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_10.A';
+import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_10.B';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 

@@ -108,3 +108,24 @@ p.way-swapped {
   content: " · set aside";
   font: 0.72em var(--font-mono, ui-monospace, monospace);
 }
+
+/* Drawn places (drawn-places.mjs): a chapter's place at its end, a door into the lanes. */
+.drawn-place {
+  display: block;
+  max-width: 44rem;
+  margin: 2rem auto 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.drawn-place .lore-panel {
+  aspect-ratio: 16 / 5;
+}
+
+.drawn-place-words {
+  display: block;
+  margin-block-start: 0.4rem;
+  font-size: 0.92rem;
+  font-style: italic;
+}
+
