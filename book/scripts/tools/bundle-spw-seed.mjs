@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * Bundle spw-workbench's parser kernel (packages/spw-seed) into a single
  * dependency-free ESM file the browser runtime can import directly.

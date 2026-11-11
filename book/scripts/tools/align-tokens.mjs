@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * align-tokens.mjs — one ?v= token per file, everywhere it is linked or imported (npm run tokens:align).
  *
@@ -16,28 +17,36 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const CHECK = process.argv.includes('--check');
-const RELEASE = readFileSync(resolve(ROOT, 'book/scripts/modules/cache-context.mjs'), 'utf8').match(/DEFAULT_CACHE_RELEASE = '([^']+)'/)[1];
+const releaseMatch = readFileSync(resolve(ROOT, 'book/scripts/modules/cache-context.mjs'), 'utf8').match(/DEFAULT_CACHE_RELEASE = '([^']+)'/);
+if (!releaseMatch) throw new Error('[tokens:align] DEFAULT_CACHE_RELEASE not found in cache-context.mjs');
+const RELEASE = releaseMatch[1];
 
+/** @param {string[]} args */
 const git = (...args) => execFileSync('git', args, { cwd: ROOT }).toString().split('\n').filter(Boolean);
 const tracked = git('ls-files').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^(dist|node_modules|\.spw\/_workbench)\//.test(f) && !/^book\/chapter\/\d\d\//.test(f) && !/^pie\/unlocks\//.test(f) && f !== 'book/timeline.html');
 const untracked = git('ls-files', '--others', '--exclude-standard').filter((f) => /\.(m?js|html|css)$/.test(f) && !/^book\/chapter\/\d\d\//.test(f) && !/^pie\/unlocks\//.test(f) && f !== 'book/timeline.html');
 const files = [...new Set([...tracked, ...untracked])].filter((f) => existsSync(resolve(ROOT, f)));
 const changed = new Set([...git('diff', '--name-only', 'HEAD'), ...untracked]);
 
+/** @param {string} t */
 const order = (t) => { const [date, letter = ''] = t.split('.'); return `${date}.${String(letter.length).padStart(2, '0')}${letter}`; };
+/** @type {(a: string, b: string) => string} */
 const newest = (a, b) => (order(a) >= order(b) ? a : b);
 
 // A reference: an asset path with a ?v= token, in an HTML attribute or an import specifier.
 const REF = /((?:\/|\.{1,2}\/)[\w./@-]+?\.(?:m?js|css))\?v=([0-9]{4}_[0-9]{2}_[0-9]{2}\.[A-Z]+)/g;
+/** @type {(file: string, path: string) => string} */
 const targetOf = (file, path) => (path.startsWith('/') ? path.slice(1) : relative(ROOT, resolve(ROOT, dirname(file), path)));
 
+/** @type {Map<string, string>} */
 const tokens = new Map();
 for (const file of files) {
   const text = readFileSync(resolve(ROOT, file), 'utf8');
   for (const m of text.matchAll(REF)) {
     const target = targetOf(file, m[1]);
     if (!existsSync(resolve(ROOT, target))) continue;
-    tokens.set(target, tokens.has(target) ? newest(tokens.get(target), m[2]) : m[2]);
+    const had = tokens.get(target);
+    tokens.set(target, had ? newest(had, m[2]) : m[2]);
   }
 }
 const want = new Map([...tokens].map(([target, token]) => [target, changed.has(target) ? RELEASE : token]));

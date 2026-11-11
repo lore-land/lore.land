@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * check.mjs — one door: every `npm run` step in .github/workflows/ci.yml, in that order (npm run check).
  *
@@ -14,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const steps = [...readFileSync(resolve(ROOT, '.github/workflows/ci.yml'), 'utf8').matchAll(/^\s*(?:- )?run:\s*npm run (.+?)\s*$/gm)].map((m) => m[1]);
 const tree = () => execFileSync('git', ['status', '--porcelain'], { cwd: ROOT }).toString();
+/** @type {(state: string, detail: string, code: number) => never} */
 const finish = (state, detail, code) => { console.log(`check[${state}]{${detail}}`); process.exit(code); };
 
 if (!steps.length) finish('fail', 'no npm run steps found in ci.yml', 1);

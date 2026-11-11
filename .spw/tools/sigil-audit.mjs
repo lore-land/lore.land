@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * sigil-audit.mjs — the chapter-by-chapter, sigil-by-sigil audit plan, grounded in counts.
  *
@@ -15,16 +16,21 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
+/** JSON at the boundary; book:check holds its shape. @param {string} p @returns {Promise<any>} */
 const read = async (p) => JSON.parse(await readFile(resolve(ROOT, p), 'utf8'));
+/** @param {number} n */
 const pad = (n) => String(n).padStart(2, '0');
 
+/** @type {Readonly<Record<string, string>>} */
 const ROLES = Object.freeze({
   '?': 'probe', '~': 'potential', '@': 'perspective', '&': 'confluence', '*': 'value', '^': 'integration',
   '!': 'action', '#': 'annotation', '.': 'ground', '=': 'config', '%': 'measure', '$': 'substrate'
 });
+/** @type {Readonly<Record<string, string>>} */
 const CONTAINERS = Object.freeze({ '[': 'window', '{': 'room', '(': 'gathering', '<': 'passage' });
 
 /* What an audit asks of each sigil, in each of the four lenses. */
+/** @type {Readonly<Record<string, { components: string, creatures: string, ecology: string, interaction: string }>>} */
 const QUESTIONS = Object.freeze({
   probe: { components: 'every place that asks the reader something says what an answer does', creatures: 'which wonders are questions (the Egg is one, never answered)', ecology: 'what in the land is still undecided, and is it allowed to stay so', interaction: 'a probe never commits anything: hovering, peeking, asking' },
   potential: { components: 'what lasts a while shows how long (timers, glows, tellings that may turn)', creatures: 'gifts that last (lit, lag, unkept) name their giver', ecology: 'what is held in reserve: berries under snow, a wish unspent', interaction: 'nothing potential is lost on a reload unless it was meant to fade' },
@@ -43,15 +49,20 @@ const QUESTIONS = Object.freeze({
 async function main() {
   const almanac = await read('book/content/world/almanac.json');
   const semantic = await read('book/content/semantic.json');
+  /** @type {{ harmonies?: { chapters?: (number | string)[], told?: (number | string)[] }[], edges?: { chapters?: (number | string)[], told?: (number | string)[] }[] }} */
   let harmonies = { harmonies: [] };
   try { harmonies = await read('book/content/world/harmonies.json'); } catch { /* optional */ }
   const edges = harmonies.harmonies || harmonies.edges || [];
+  /** @type {{ n: number, title: string, rooms: string[], sigils: Record<string, number>, containers: Record<string, number>, firsts: Record<string, number>, materials: [string, number][], told: number }[]} */
   const chapters = [];
   for (let n = 1; n <= 15; n += 1) {
     let data;
     try { data = await read(`book/content/chapters/${pad(n)}.json`); } catch { continue; }
-    const rooms = (data.sections || []).map((s) => s.room?.spw).filter(Boolean);
+    /** @type {string[]} */
+    const rooms = (data.sections || []).map((/** @type {{ room?: { spw: string } }} */ s) => s.room?.spw).filter(Boolean);
+    /** @type {Record<string, number>} */
     const sigils = {};
+    /** @type {Record<string, number>} */
     const containers = {};
     rooms.forEach((sig) => {
       const op = sig[0];
@@ -59,19 +70,22 @@ async function main() {
       sigils[op] = (sigils[op] || 0) + 1;
       if (open) containers[CONTAINERS[open]] = (containers[CONTAINERS[open]] || 0) + 1;
     });
+    /** @type {Record<string, number>} */
     const firsts = {};
-    (almanac.wonders || []).forEach((w) => {
+    (almanac.wonders || []).forEach((/** @type {{ id: string, kind: string }} */ w) => {
       const places = semantic.wonders?.[w.id] || [];
-      if (places.length && Math.min(...places.map((p) => p.c)) === n) firsts[w.kind] = (firsts[w.kind] || 0) + 1;
+      if (places.length && Math.min(...places.map((/** @type {{ c: number }} */ p) => p.c)) === n) firsts[w.kind] = (firsts[w.kind] || 0) + 1;
     });
+    /** @type {[string, number][]} */
     const materials = Object.entries(semantic.materials || {})
-      .map(([id, m]) => [id, m.chapters?.[String(n)]?.n || 0])
+      .map(([id, m]) => /** @type {[string, number]} */ ([id, /** @type {any} */ (m).chapters?.[String(n)]?.n || 0]))
       .filter(([, k]) => k > 0)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3);
     const told = edges.filter((e) => (e.chapters || e.told || []).map(Number).includes(n)).length;
     chapters.push({ n, title: data.title, rooms, sigils, containers, firsts, materials, told });
   }
+  /** @type {Record<string, { rooms: number, chapters: number[] }>} */
   const bySigil = {};
   chapters.forEach((c) => Object.entries(c.sigils).forEach(([op, k]) => {
     const role = ROLES[op];
@@ -80,6 +94,7 @@ async function main() {
     bySigil[role].rooms += k;
     bySigil[role].chapters.push(c.n);
   }));
+  /** @param {unknown} s */
   const q = (s) => String(s).replace(/"/g, "'");
   const lines = [
     '# Lore.Land sigil × chapter audit (generated by .spw/tools/sigil-audit.mjs; do not edit by hand, re-run it)',

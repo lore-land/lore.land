@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * book-types.mjs — the book's types, named once (PLAN.E L13, L17).
  *
@@ -31,7 +32,7 @@ import { KIND_ORDER, kindProblems } from '../scripts/modules/kinds.mjs';
  * @property {string} text — may carry {{slot}} placeholders
  * @property {Record<string, Slot>} [slots]
  * @property {Lean} [lean]
- * @property {object[]} [children] — inline voices
+ * @property {object[]} [children] inline voices
  */
 
 /**
@@ -54,7 +55,7 @@ import { KIND_ORDER, kindProblems } from '../scripts/modules/kinds.mjs';
  * @property {number} home — the chapter that introduces it
  * @property {number[]} echoes — the chapters it returns in
  * @property {{vantage: string, light: string, scent: string, edges: string[], hint: string}} [prompt]
- * @property {string} [craft] — the workshop reading of a saying: what it teaches about style and development
+ * @property {string} [craft] the workshop reading of a saying: what it teaches about style and development
  */
 
 /**
@@ -106,6 +107,39 @@ import { KIND_ORDER, kindProblems } from '../scripts/modules/kinds.mjs';
  * @property {string} remainder
  */
 
+/**
+ * A pairing a reader may keep apart, and the chapters and passages that changes (book/content/world/way.json).
+ * @typedef {{ find: string, to: string, para?: undefined, text?: undefined } | { para: string, text: string, find?: undefined, to?: undefined }} WaySwap
+ * @typedef {object} WayPair
+ * @property {string} id
+ * @property {string[]} who
+ * @property {string} name
+ * @property {string} primes
+ * @property {string} why
+ * @property {string} costs
+ * @property {number[]} [aside]
+ * @property {{ chapter: number, swaps: WaySwap[] }[]} [rooms]
+ * @property {{ drop?: string[], no_boof_during?: string }} [lanes]
+ */
+
+/**
+ * @typedef {object} WayWonder
+ * @property {string} line a room's own signature
+ * @property {string} edit the same line, one edit away
+ * @property {string} says
+ * @property {string} asks
+ * @property {string[]} ways
+ * @property {number | null} probe a later chapter to check against; null keeps it open
+ */
+
+/**
+ * @typedef {object} WayData
+ * @property {string} note
+ * @property {Record<string, { reason: string, holds: string, wonder: WayWonder }>} chapters
+ * @property {WayPair[]} pairs
+ * @property {{ who: string[], why: string }[]} held
+ */
+
 export const LEANS = Object.freeze(['boon', 'bane', 'bone']);
 export const CLOCKS = Object.freeze(['minute', 'hour', 'day']);
 export const WONDER_KINDS = KIND_ORDER;
@@ -116,7 +150,10 @@ export const SLOT_VARIANTS = Object.freeze({ min: 3, max: 6 });
 export const ROOM_STATUSES = Object.freeze(['set', 'drafting']);
 export const ROOM_AIR_MAX = 140;
 
-/** A calendar day written YYYY-MM-DD that exists (no 30 February). */
+/**
+ * A calendar day written YYYY-MM-DD that exists (no 30 February).
+ * @param {string} value
+ */
 export function isCalendarDay(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value || ''))) return false;
   const [year, month, day] = value.split('-').map(Number);
@@ -131,14 +168,21 @@ export const CANON_REFUSALS = Object.freeze([
   { pattern: /\bWAPboy\b/, why: 'The figure under the hat is not named in the prose.' }
 ]);
 
-/** The paragraph's canonical text: every {{slot}} resolved to its variant zero. */
+/**
+ * The paragraph's canonical text: every slot placeholder resolved to its variant zero.
+ * @param {Paragraph} paragraph
+ */
 export function canonicalText(paragraph) {
   const text = String(paragraph?.text || '');
-  if (!paragraph?.slots) return text;
-  return text.replace(SLOT_PATTERN, (_match, name) => paragraph.slots[name]?.variants?.[0] ?? '');
+  const slots = paragraph?.slots;
+  if (!slots) return text;
+  return text.replace(SLOT_PATTERN, (_match, name) => slots[name]?.variants?.[0] ?? '');
 }
 
-/** Whole-word, case-insensitive for word terms; exact for sigil-led bracework terms. */
+/**
+ * Whole-word, case-insensitive for word terms; exact for sigil-led bracework terms.
+ * @param {string} term
+ */
 export function termPattern(term) {
   const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const lead = /^[\p{L}\p{N}]/u.test(term) ? '(?<![\\p{L}\\p{N}-])' : '';
@@ -146,7 +190,12 @@ export function termPattern(term) {
   return new RegExp(`${lead}${escaped}${tail}`, /^\p{L}/u.test(term) ? 'iu' : 'u');
 }
 
-/** Validate one living slot. Returns a list of problems. */
+/**
+ * Validate one living slot. Returns a list of problems.
+ * @param {string} name
+ * @param {Slot} slot
+ * @param {{ wonderTerms?: RegExp[] }} [options]
+ */
 export function checkSlot(name, slot, { wonderTerms = [] } = {}) {
   const problems = [];
   if (!CLOCKS.includes(slot?.clock)) problems.push(`slot ${name}: clock must be ${CLOCKS.join(' | ')}`);
@@ -169,7 +218,11 @@ export function checkSlot(name, slot, { wonderTerms = [] } = {}) {
   return problems;
 }
 
-/** Validate a paragraph's slots against its placeholders. */
+/**
+ * Validate a paragraph's slots against its placeholders.
+ * @param {Paragraph} paragraph
+ * @param {{ wonderTerms?: RegExp[] }} [options]
+ */
 export function checkParagraphSlots(paragraph, options = {}) {
   const problems = [];
   const text = String(paragraph?.text || '');
@@ -182,7 +235,11 @@ export function checkParagraphSlots(paragraph, options = {}) {
   return problems;
 }
 
-/** Validate an almanac wonder's own shape (cross-checks against prose live in book-check). */
+/**
+ * Validate an almanac wonder's own shape (cross-checks against prose live in book-check).
+ * @param {any} wonder unverified JSON: this function is what decides whether it is a Wonder
+ * @param {{ totalChapters?: number }} [options]
+ */
 export function checkWonder(wonder, { totalChapters = Infinity } = {}) {
   const problems = [];
   ['id', 'name', 'region', 'note', 'hint'].forEach((key) => {
@@ -191,9 +248,10 @@ export function checkWonder(wonder, { totalChapters = Infinity } = {}) {
   if (!WONDER_KINDS.includes(wonder?.kind)) problems.push(`${wonder?.id}: kind must be ${WONDER_KINDS.join(' | ')}`);
   else problems.push(...kindProblems(wonder));
   if (!Array.isArray(wonder?.terms) || !wonder.terms.length) problems.push(`${wonder?.id}: needs terms`);
+  /** @param {number} n */
   const inBook = (n) => Number.isInteger(n) && n >= 1 && n <= totalChapters;
   if (!inBook(wonder?.home)) problems.push(`${wonder?.id}: home ${wonder?.home} is not a chapter`);
-  (wonder?.echoes || []).forEach((n) => { if (!inBook(n)) problems.push(`${wonder.id}: echo ${n} is not a chapter`); });
+  (wonder?.echoes || []).forEach((/** @type {number} */ n) => { if (!inBook(n)) problems.push(`${wonder.id}: echo ${n} is not a chapter`); });
   if (wonder?.kind === 'saying' && (typeof wonder.craft !== 'string' || !wonder.craft.trim())) problems.push(`${wonder.id}: a saying needs its craft reading`);
   if (wonder?.prompt) {
     ['vantage', 'light', 'scent', 'hint'].forEach((key) => {

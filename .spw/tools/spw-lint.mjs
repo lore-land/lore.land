@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * Real-grammar .spw linter — parses every hand-authored .spw file under
  * .spw/ with spw-workbench's actual parser (packages/spw-seed), not a
@@ -14,7 +15,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { parse } from '../_workbench/packages/spw-seed/src/index.ts';
+/* Read straight from the submodule's source. A variable specifier keeps tsc from type-checking the workbench under this repo's settings. */
+const SEED_SOURCE = '../_workbench/packages/spw-seed/src/index.ts';
+/** @type {typeof import('../../book/scripts/vendor/spw-seed.mjs').parse} */
+const parse = (await import(SEED_SOURCE)).parse;
 import { spwFiles } from './spw-files.mjs';
 
 const ROOT = process.cwd();

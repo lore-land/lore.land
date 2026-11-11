@@ -23,6 +23,10 @@ Passing checks do not show that something plays or reads right. `book:check` cou
 3. Run `npm run tokens:align` until `-- --check` passes. A first pass can widen what counts as changed.
 4. Run `npm run chapters:build`.
 
+## Types
+
+Node-side tools are plain `.mjs` with JSDoc. A file is checked once it carries `// @ts-check`, and then under `strict` (`npm run types`, `tsconfig.tools.json`). Grow the set by adding the pragma and fixing what it finds. Don't loosen `strict` to make one fit.
+
 ## Generated files
 
 Change the source and re-run; don't hand-edit these: `book/chapter/*` and `pie/unlocks/*` (`chapters:build`), `.spw/chapters/*` (`spw:export`), `.spw/surfaces/characters.spw` (`spw:characters`, from `characters.mjs`), `.spw/surfaces/reasons.spw` (`spw:way`, from `book/content/world/way.json`), `book/scripts/vendor/spw-seed.mjs` (`spw:seed-bundle`). `npm run canon:build` runs the canon generators, and `build` includes it.
