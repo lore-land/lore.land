@@ -19,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SPW_SKIP_DIRS } from './spw-files.mjs';
 
 const ROOT = process.cwd();
 const SPW_ROOT = path.join(ROOT, '.spw');
@@ -52,7 +53,7 @@ const REQUIRED_RELATIVE = Object.freeze([
   'workspace.spw'
 ]);
 
-const EXCLUDED_DIR_NAMES = new Set(['_workbench', 'tools', 'node_modules', '.git']);
+const EXCLUDED_DIR_NAMES = SPW_SKIP_DIRS;
 
 function parseArgs(argv) {
   const args = {

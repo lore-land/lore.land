@@ -18,21 +18,21 @@
 }
 
 %chapters{
-  c01: { title: "Dawn in Boon.land" rooms: 6 sigils: "~1 .1 =1 #1 !1 &1" kinds: "room 2, window 2, passage 1, gathering 1" wonders: "creature 3, contrivance 2, bracework 1, saying 2" materials: "ink 27, steam 25, berry 17" harmonies: 11 state: "seed" }
+  c01: { title: "Dawn in Boon.land" rooms: 6 sigils: "~1 .1 =1 #1 !1 &1" kinds: "room 2, window 2, passage 1, gathering 1" wonders: "creature 3, antique 1, contrivance 1, bracework 1, saying 2" materials: "ink 27, steam 25, berry 17" harmonies: 11 state: "seed" }
   c02: { title: "The First Echo" rooms: 6 sigils: "?1 $1 %1 ~1 *1 ^1" kinds: "room 2, window 2, passage 2" wonders: "creature 4, saying 2" materials: "steam 11, berry 5, oak 3" harmonies: 5 state: "seed" }
   c03: { title: "Signals in the Sand" rooms: 5 sigils: "?1 !1 *1 %1 &1" kinds: "room 2, gathering 1, passage 2" wonders: "creature 2, contrivance 4, saying 1" materials: "flour 8, glass 6, steam 6" harmonies: 2 state: "seed" }
-  c04: { title: "Crosswind Council" rooms: 5 sigils: "&1 @1 !1 ?1 ~1" kinds: "gathering 1, window 1, passage 2, room 1" wonders: "creature 1, contrivance 2, bracework 1, saying 4" materials: "oak 14, ink 7, brass 6" harmonies: 2 state: "seed" }
+  c04: { title: "Crosswind Council" rooms: 5 sigils: "&1 @1 !1 ?1 ~1" kinds: "gathering 1, window 1, passage 2, room 1" wonders: "creature 1, contrivance 1, antique 1, bracework 1, saying 4" materials: "oak 14, ink 7, brass 6" harmonies: 2 state: "seed" }
   c05: { title: "The Quiet Rift" rooms: 5 sigils: "=1 ^2 $1 %1" kinds: "room 2, passage 3" wonders: "creature 1, contrivance 2, saying 1" materials: "ink 11, brass 6, glass 4" harmonies: 2 state: "seed" }
-  c06: { title: "Lanterns of Bonk City" rooms: 5 sigils: "$1 .1 ^1 ?1 ~1" kinds: "room 1, passage 3, gathering 1" wonders: "creature 2, contrivance 8, bracework 1, saying 1" materials: "glass 23, steam 18, brass 13" harmonies: 5 state: "seed" }
-  c07: { title: "Blueberry Oath" rooms: 5 sigils: "=1 #1 *1 .1 ~1" kinds: "gathering 1, window 1, passage 2, room 1" wonders: "creature 1, contrivance 1, saying 2" materials: "berry 16, brass 5, ink 4" harmonies: 1 state: "seed" }
-  c08: { title: "Songs of the Watering Eye" rooms: 5 sigils: ".1 %1 =1 #1 ~1" kinds: "window 1, gathering 1, passage 2, room 1" wonders: "creature 1, contrivance 1, saying 1" materials: "steam 6, ink 5, glass 4" harmonies: 3 state: "seed" }
-  c09: { title: "Shards of Nine Honks" rooms: 5 sigils: "#1 &1 ~1 ^1 =1" kinds: "room 2, gathering 1, passage 2" wonders: "creature 1, contrivance 1, saying 1" materials: "glass 15, berry 6, ink 5" harmonies: 4 state: "seed" }
-  c10: { title: "Bone.land Resonance" rooms: 5 sigils: ".1 ?1 !1 ^1 ~1" kinds: "room 2, passage 2, gathering 1" wonders: "creature 1, contrivance 2, bracework 1" materials: "oak 44, ink 9, flour 6" harmonies: 6 state: "seed" }
+  c06: { title: "Lanterns of Bonk City" rooms: 5 sigils: "$1 .1 ^1 ?1 ~1" kinds: "room 1, passage 3, gathering 1" wonders: "creature 2, antique 4, contrivance 4, bracework 1, saying 1, artifact 2" materials: "glass 23, steam 18, brass 13" harmonies: 5 state: "seed" }
+  c07: { title: "Blueberry Oath" rooms: 5 sigils: "=1 #1 *1 .1 ~1" kinds: "gathering 1, window 1, passage 2, room 1" wonders: "creature 1, antique 1, saying 2" materials: "berry 16, brass 5, ink 4" harmonies: 1 state: "seed" }
+  c08: { title: "Songs of the Watering Eye" rooms: 5 sigils: ".1 %1 =1 #1 ~1" kinds: "window 1, gathering 1, passage 2, room 1" wonders: "creature 1, antique 1, saying 1" materials: "steam 6, ink 5, glass 4" harmonies: 3 state: "seed" }
+  c09: { title: "Shards of Nine Honks" rooms: 5 sigils: "#1 &1 ~1 ^1 =1" kinds: "room 2, gathering 1, passage 2" wonders: "creature 1, antique 1, saying 1" materials: "glass 15, berry 6, ink 5" harmonies: 4 state: "seed" }
+  c10: { title: "Bone.land Resonance" rooms: 5 sigils: ".1 ?1 !1 ^1 ~1" kinds: "room 2, passage 2, gathering 1" wonders: "creature 1, contrivance 1, antique 1, bracework 1" materials: "oak 44, ink 9, flour 6" harmonies: 6 state: "seed" }
   c11: { title: "Paradox Bloom" rooms: 5 sigils: "!1 *1 $1 ~1 =1" kinds: "gathering 1, window 1, passage 2, room 1" wonders: "creature 2" materials: "flour 11, steam 7, oak 4" harmonies: 5 state: "seed" }
-  c12: { title: "The Last Confluence" rooms: 5 sigils: "*1 ^1 ~2 &1" kinds: "room 1, passage 3, gathering 1" wonders: "creature 2, contrivance 2, bracework 1" materials: "ink 10, steam 9, flour 8" harmonies: 6 state: "seed" }
-  c13: { title: "The Shell-Shaped Door" rooms: 5 sigils: "!2 #1 .1 ~1" kinds: "room 2, window 1, passage 2" wonders: "creature 1, contrivance 1, bracework 1" materials: "ink 41, glass 10, steam 9" harmonies: 4 state: "seed" }
-  c14: { title: "The Thursday Nobody Kept" rooms: 8 sigils: "?1 .1 =2 @1 *1 &1 !1" kinds: "room 2, window 3, passage 2, gathering 1" wonders: "creature 1" materials: "steam 28, ink 22, frost 19" harmonies: 10 state: "seed" }
-  c15: { title: "Pupil, Parcel, or Door" rooms: 6 sigils: "=2 ^1 @1 #1 &1" kinds: "passage 2, window 2, room 1, gathering 1" wonders: "creature 1, contrivance 1" materials: "glass 19, oak 18, flour 17" harmonies: 7 state: "seed" }
+  c12: { title: "The Last Confluence" rooms: 5 sigils: "*1 ^1 ~2 &1" kinds: "room 1, passage 3, gathering 1" wonders: "creature 2, contrivance 1, antique 1, bracework 1, artifact 1" materials: "ink 10, steam 9, flour 8" harmonies: 6 state: "seed" }
+  c13: { title: "The Shell-Shaped Door" rooms: 5 sigils: "!2 #1 .1 ~1" kinds: "room 2, window 1, passage 2" wonders: "creature 1, antique 1, bracework 1" materials: "ink 41, glass 10, steam 9" harmonies: 4 state: "seed" }
+  c14: { title: "The Thursday Nobody Kept" rooms: 8 sigils: "?1 .1 =2 @1 *1 &1 !1" kinds: "room 2, window 3, passage 2, gathering 1" wonders: "creature 1, artifact 2" materials: "steam 28, ink 22, frost 19" harmonies: 10 state: "seed" }
+  c15: { title: "Pupil, Parcel, or Door" rooms: 6 sigils: "=2 ^1 @1 #1 &1" kinds: "passage 2, window 2, room 1, gathering 1" wonders: "creature 1, contrivance 1, artifact 2" materials: "glass 19, oak 18, flour 17" harmonies: 7 state: "seed" }
 }
 
 %sigils{

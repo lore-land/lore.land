@@ -25,7 +25,7 @@ Passing checks do not show that something plays or reads right. `book:check` cou
 
 ## Generated files
 
-Change the source and re-run; don't hand-edit these: `book/chapter/*` and `pie/unlocks/*` (`chapters:build`), `.spw/chapters/*` (`spw:export`), `.spw/surfaces/characters.spw` (`spw:characters`, from `characters.mjs`), `.spw/surfaces/reasons.spw` (`spw:way`, from `book/content/world/way.json`), `book/scripts/vendor/spw-seed.mjs` (`spw:seed-bundle`).
+Change the source and re-run; don't hand-edit these: `book/chapter/*` and `pie/unlocks/*` (`chapters:build`), `.spw/chapters/*` (`spw:export`), `.spw/surfaces/characters.spw` (`spw:characters`, from `characters.mjs`), `.spw/surfaces/reasons.spw` (`spw:way`, from `book/content/world/way.json`), `book/scripts/vendor/spw-seed.mjs` (`spw:seed-bundle`). `npm run canon:build` runs the canon generators, and `build` includes it.
 
 ## Reader-facing changes
 

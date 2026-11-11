@@ -10,7 +10,7 @@ Loaded when working under `.spw/`. The routing table is `.spw/index.spw`; read i
 - `.spw/state/` — `observable.spw`, `alignment-ledger.spw` (every noticed misalignment resolves to a ledger entry), `plates-manifest.spw` (per-chamber plate production gate: `!state` draft|grounded|study|public, `%version`, `.file`, `&ledger` ref — read by `spw:plates` and `spw:probes`)
 - `.spw/audits/` — dated audit + alignment-probe snapshots; newest is pointed to by `index.spw`'s `audit_active`
 - `.spw/workspace.spw` — numbered contracts (`c001`…) + `contract_status` — the closest thing to a project status doc
-- `.spw/tools/*.mjs` — the scripts behind the `npm run spw:*` commands below
+- `.spw/tools/*.mjs` — the scripts behind the `npm run spw:*` commands below. `spw-files.mjs` is the one list of what counts as canon; `npm run spw -- <command>` is the workbench CLI, read-only (`spw-cli.mjs` refuses commands that rewrite sources)
 - `.spw/_workbench` — git submodule, `https://github.com/spwashi/spw-workbench.git`. This is the canonical Spw language spec/tooling monorepo (parser, runtime, LSP, CLI). lore.land's `.spw` files are a *consumer* of that spec, not a fork of it. Update with `cd .spw/_workbench && git fetch origin && git checkout origin/main`, then commit the bumped pointer in the superproject. HTTPS (not SSH) so `actions/checkout` with `submodules: recursive` can clone it using `GITHUB_TOKEN`.
 
 ## `spw:*` tooling — gotchas (scripts themselves are in `package.json`)

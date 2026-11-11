@@ -15,30 +15,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parse } from '../_workbench/packages/spw-seed/src/index.ts';
+import { spwFiles } from './spw-files.mjs';
 
 const ROOT = process.cwd();
 const SPW_ROOT = path.join(ROOT, '.spw');
 const STRICT = process.argv.includes('--strict');
 
-const SKIP_DIRS = new Set(['_workbench', 'gen']);
 
-function walk(dir, out = []) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) {
-        continue;
-      }
-      walk(path.join(dir, entry.name), out);
-      continue;
-    }
-    if (entry.name.endsWith('.spw')) {
-      out.push(path.join(dir, entry.name));
-    }
-  }
-  return out;
-}
-
-const files = walk(SPW_ROOT).sort();
+const files = spwFiles(SPW_ROOT).sort();
 let failCount = 0;
 let errorTotal = 0;
 let warningTotal = 0;
