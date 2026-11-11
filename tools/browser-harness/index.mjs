@@ -185,7 +185,7 @@ function hookExit() {
  * @param {number} timeoutMs
  */
 async function launchChrome(chromePath, profile, extra, timeoutMs) {
-  const args = ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--disable-extensions', `--user-data-dir=${profile}`, '--autoplay-policy=no-user-gesture-required', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows', '--remote-debugging-port=0', ...extra, 'about:blank'];
+  const args = ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--use-mock-keychain', '--password-store=basic', '--disable-extensions', `--user-data-dir=${profile}`, '--autoplay-policy=no-user-gesture-required', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows', '--remote-debugging-port=0', ...extra, 'about:blank'];
   const chrome = spawn(chromePath, args, { stdio: ['ignore', 'ignore', 'pipe'] });
   let stderr = '';
   /** @type {number | null} */
