@@ -1,0 +1,11 @@
+{
+  "name": "browser-harness",
+  "version": "1.0.0",
+  "description": "Drive a static site in headless Chrome with no dependencies and no browser download.",
+  "type": "module",
+  "exports": "./index.mjs",
+  "bin": { "browser-harness": "./cli.mjs" },
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node --test \"test/*.test.mjs\"" },
+  "license": "ISC"
+}

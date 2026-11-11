@@ -28,6 +28,8 @@
     "book:check": "node book/scripts/tools/book-check.mjs",
     "check": "node book/scripts/tools/check.mjs",
     "types": "tsc -p tsconfig.tools.json",
+    "smoke": "node book/scripts/tools/browser-smoke.mjs",
+    "harness:test": "node --test \"tools/browser-harness/test/*.test.mjs\"",
     "spw": "node .spw/tools/spw-cli.mjs",
     "canon:build": "npm run spw:characters && npm run spw:way && npm run spw:likeness && npm run spw:sigil-audit && npm run spw:progression",
     "tokens:align": "node book/scripts/tools/align-tokens.mjs",
