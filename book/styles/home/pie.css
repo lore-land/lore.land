@@ -5470,9 +5470,14 @@ html.pie-settling .pie-voyage {
   position: absolute;
   inset: 0;
   display: block;
-  width: auto;
+  /* Stretched outright: the full-screen rule centres the cabinet (justify-self), which shrinks an absolute box to
+   * its contents, and a canvas at 100% of nothing is nothing. */
+  justify-self: stretch;
+  align-self: stretch;
+  box-sizing: border-box;
+  width: 100%;
   max-width: none;
-  height: auto;
+  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
@@ -5485,6 +5490,9 @@ html.pie-settling .pie-voyage {
 .pie-voyage.is-fill .pie-screenrow > .pie-screen {
   position: absolute;
   inset: 0;
+  justify-self: stretch;
+  width: 100%;
+  height: 100%;
   border-radius: 0;
   box-shadow: none;
 }
@@ -5581,8 +5589,36 @@ html.pie-settling .pie-voyage {
   right: max(5%, calc(var(--world-side, 8%) + 0.4rem));
 }
 
-.pie-voyage.is-fill .pie-screen > :is(.pie-aura, .pie-meter) {
-  bottom: calc(var(--world-bottom, 0px) + 0.6rem);
+/* The pie's aura and the tilt: held up, on the ground between the two columns of buttons; on its side, on the far
+ * verge beside its buttons. */
+.pie-voyage.is-fill:is([data-shape='tall'], [data-shape='upright'], [data-shape='square']) .pie-screen > .pie-meter {
+  left: calc(var(--act-w, 3.5rem) + 3.6rem);   /* room for its TILT label, which stands to its left */
+  right: calc(var(--act-w, 3.5rem) + 1.4rem);
+  width: auto;
+  bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
+}
+
+.pie-voyage.is-fill:is([data-shape='tall'], [data-shape='upright'], [data-shape='square']) .pie-cabinet.is-arrows-cross .pie-screen > .pie-meter {
+  left: calc(3 * var(--key-w, 2.6rem) + 3.4rem);
+}
+
+.pie-voyage.is-fill:is([data-shape='tall'], [data-shape='upright'], [data-shape='square']) .pie-screen > .pie-aura {
+  left: 50%;
+  bottom: calc(2.3rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+}
+
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-screen > .pie-meter {
+  left: auto;
+  right: calc(var(--act-w, 3.5rem) + 1.6rem + env(safe-area-inset-right, 0px));
+  width: min(11rem, calc(var(--world-side, 12rem) - var(--act-w, 3.5rem) - 3rem));
+  bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
+}
+
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-screen > .pie-aura {
+  left: auto;
+  right: calc(var(--act-w, 3.5rem) + 1.6rem + env(safe-area-inset-right, 0px));
+  bottom: calc(2.3rem + env(safe-area-inset-bottom, 0px));
 }
 
 /* Not filled, a screen's shape still decides where the title card's action falls: lower on a tall phone. */

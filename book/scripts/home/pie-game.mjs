@@ -622,9 +622,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const box = canvas.getBoundingClientRect();
     // Filling a screen, the canvas is the screen's own shape and the world stands in it on the ground, clear
     // of every overlay (pie-frame.mjs); otherwise the canvas is the world's shape and shows it exactly.
-    board = filling() && box.width > 40 && box.height > 40
-      ? frameFor({ box: { w: box.width, h: box.height }, reserve: fillReserve(box), share: setting('share') })
-      : IDENTITY;
+    board = filling() && box.width > 40 && box.height > 40 ? frameForFill(box) : IDENTITY;
     canvas.width = Math.round(box.width * ratio);
     canvas.height = Math.round((board.filled ? box.height : box.width * (H / W)) * ratio);
     const sx = canvas.width / board.w;
@@ -641,6 +639,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     draw();
   };
+  /* A filled screen's frame. Held up, the caption sits under the switches in the haze; when there is not haze enough,
+   * the world steps down for it if that costs the lanes little (8% at most), and otherwise the caption rides the far
+   * end of the road as glass. */
+  function frameForFill(box) {
+    const reserve = fillReserve(box);
+    const share = setting('share');
+    let frame = frameFor({ box: { w: box.width, h: box.height }, reserve, share });
+    const cap = screenBox?.querySelector(':scope > .pie-caption');
+    if (cap && cap.offsetParent && box.width <= box.height * 1.15) {
+      const foot = cap.getBoundingClientRect().bottom - box.top + 6;
+      if (foot > reserve.top) {
+        const under = frameFor({ box: { w: box.width, h: box.height }, reserve: { ...reserve, top: foot }, share });
+        if (under.s >= frame.s * 0.92) frame = under;
+      }
+    }
+    return frame;
+  }
   /* What a filled screen keeps clear for its overlays, in px from each edge, measured where they stand: the
    * switches along the top; the buttons along the foot when the screen is held up, at the sides when it is on
    * its side. The glass caption is not counted: it rides the haze when there is haze enough, and the far end of
@@ -1270,7 +1285,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (i !== laneStory.para) {
       const el = flowProse.children[i];
       laneStory.para = i;
-      laneStory.sentences = sentencesOf(el?.textContent || '');
+      // The paragraph's words without its voice's name (the strip shows who speaks beside them; a caption would run
+      // the name into the first word).
+      const words = el ? el.cloneNode(true) : null;
+      words?.querySelectorAll('.pie-flow-voice').forEach((n) => n.remove());
+      laneStory.sentences = sentencesOf(words?.textContent || '');
       laneStory.terms = new Set([...(el?.querySelectorAll('.pie-flow-term') || [])].map((m) => m.textContent.toLowerCase()));
       laneStory.at = -1;
     }
@@ -8349,8 +8368,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       style.left = right >= left ? 'auto' : `${gap}px`;
       style.right = right >= left ? `${gap}px` : 'auto';
     } else {
+      // A sheet from the foot: the lanes go to the top of the window first (unless the screen is already filled),
+      // and the sheet stops short of them, so at least 42% of the lanes stays in view to watch a choice work.
+      let lanes = root.querySelector('.pie-screen')?.getBoundingClientRect();
+      if (lanes && lanes.height && lanes.top > 12 && !filling()) {
+        window.scrollBy({ top: lanes.top - 8, behavior: 'instant' });
+        lanes = root.querySelector('.pie-screen')?.getBoundingClientRect();
+      }
+      const keep = lanes && lanes.height ? Math.max(0, lanes.top) + lanes.height * 0.42 : vh * 0.38;
       style.width = 'auto';
-      style.height = `${Math.round(vh * 0.62)}px`;
+      style.height = `${Math.round(Math.max(vh * 0.42, Math.min(vh * 0.62, vh - keep)))}px`;
       style.top = 'auto';
       style.bottom = '0px';
       style.left = '0px';

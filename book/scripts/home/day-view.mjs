@@ -25,6 +25,7 @@ const el = (tag, props = {}, ...kids) => {
   kids.flat().forEach((kid) => kid != null && node.append(kid));
   return node;
 };
+const isoDay = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 const longDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
 
 function readReach() {
@@ -91,7 +92,7 @@ function dayLayer(r) {
   const d = r.day;
   const lens = r.month.label;
   return el('section', { className: 'day-layer', 'data-layer': 'day', 'aria-label': 'Today' },
-    el('p', { className: 'day-kicker' }, `Today · Chapter ${d.chapter}`),
+    el('p', { className: 'day-kicker' }, `${r.date === isoDay(new Date()) ? 'Today' : longDate(r.date)} · Chapter ${d.chapter}`),
     el('h2', {}, d.title),
     el('p', { className: 'day-sig' }, el('code', {}, d.spw), d.reading ? el('span', {}, `${d.reading.lead} ${d.reading.gloss ? `(${d.reading.gloss})` : ''}`.trim()) : null),
     el('blockquote', { className: 'day-excerpt' }, d.excerpt),

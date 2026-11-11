@@ -16,7 +16,7 @@ import { withHarness } from '../../../tools/browser-harness/index.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t) };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
@@ -99,6 +99,24 @@ const SCENARIOS = [
       const seen = await page.ev(`(() => { const s = document.querySelector('[data-pie-setup]'); const a = s.getBoundingClientRect(); const b = document.querySelector('.pie-screen').getBoundingClientRect(); const ix = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)); const iy = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top)); const wide = [...s.querySelectorAll('[role=tab]')].some((t) => { t.click(); const p = s.querySelector('.pie-setup-panel'); return p.scrollWidth > p.clientWidth + 1; }); return { covered: (ix * iy) / (b.width * b.height), wide }; })()`);
       if (seen.covered > 0.62) throw new Error(`Setup covers ${Math.round(seen.covered * 100)}% of the lanes at ${w}`);
       if (seen.wide) throw new Error(`a section of Setup runs off its side at ${w}`);
+    }
+  }],
+  ['a filled screen is all lanes and ground, the buttons clear of the road in play', async (page) => {
+    /** @type {Array<[number, number, string]>} */
+    const screens = [[390, 844, 'one_thumb'], [844, 390, 'two_thumbs'], [768, 1024, 'propped']];
+    for (const [w, h, hold] of screens) {
+      await page.setViewport(w, h, { mobile: true });
+      await seed(page, { 'lore.pie.v1': { ...PLAYER, view: { story: true, zen: false, focusOnPlay: false, cardPace: 'quiet', panels: 'auto', hold, fill: 'fill' } } });
+      await page.goto('/pie/?chapter=3');
+      await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-fullscreen]')?.offsetParent`);
+      // Headless refuses requestFullscreen without a real gesture, so this takes the immersive path, as an iPhone does.
+      await page.ev(`document.querySelector('[data-pie-fullscreen]').click()`);
+      await page.waitFor(`window.__pieTest.board.filled`);
+      const seen = await page.ev(`(() => { const b = window.__pieTest.board; const c = document.querySelector('.pie-screen canvas').getBoundingClientRect(); const keys = [...document.querySelectorAll('.pie-screen .pie-steps .pie-step')].filter((k) => k.offsetParent).map((k) => k.getBoundingClientRect()); const left = -b.x0 * b.s, top = -b.y0 * b.s, right = left + 360 * b.s, played = top + 520 * b.s; return { canvas: [c.width, c.height], view: [innerWidth, innerHeight], inside: b.x0 <= 0.5 && b.y0 <= 0.5 && b.x0 + b.w >= 359.5 && b.y0 + b.h >= 559.5, over: keys.filter((k) => k.left < right && k.right > left && k.top < played && k.bottom > top).length, keys: keys.length }; })()`);
+      if (Math.abs(seen.canvas[0] - seen.view[0]) > 1 || Math.abs(seen.canvas[1] - seen.view[1]) > 1) throw new Error(`the filled canvas is ${seen.canvas.join('×')} on a ${seen.view.join('×')} screen`);
+      if (!seen.inside) throw new Error(`the world is cut at ${w}×${h}`);
+      if (!seen.keys) throw new Error(`no buttons stand on a filled screen at ${w}×${h}`);
+      if (seen.over) throw new Error(`${seen.over} button(s) over the road in play at ${w}×${h}`);
     }
   }],
   ['every id in a drawing is its own', async (page) => {
