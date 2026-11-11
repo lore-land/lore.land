@@ -4,13 +4,18 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { HarnessError, findChrome, startHarness, withHarness } from '../index.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const root = path.join(here, 'fixtures/site');
 const cli = path.join(here, '../cli.mjs');
+const entry = path.join(here, '../index.mjs');
+/* Built here, so a deliberately broken page is never committed to a tree that may be served. */
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'harness-fixture-'));
+fs.writeFileSync(path.join(root, 'index.html'), `<!doctype html><meta name="viewport" content="width=device-width"><title>clean</title><h1>Clean</h1><script>window.ready = true; window.marker = 'original';</script>`);
+fs.writeFileSync(path.join(root, 'broken.html'), `<!doctype html><title>broken</title><img src="/missing.png" alt=""><div style="width:4000px">wide</div><script>console.error('logged an error'); setTimeout(() => { throw new Error('thrown later'); }, 10);</script>`);
+test.after(() => fs.rmSync(root, { recursive: true, force: true }));
 let skip = /** @type {string | false} */ (false);
 try { findChrome(); } catch { skip = 'no Chrome on this machine'; }
 const profiles = () => fs.readdirSync(os.tmpdir()).filter((name) => name.startsWith('browser-harness-'));
@@ -73,6 +78,18 @@ test('stop leaves no profile behind, and is safe to repeat', { skip }, async () 
   assert.equal(profiles().length, before.length + 1);
   await harness.stop();
   await harness.stop();
+  assert.deepEqual(profiles(), before);
+});
+
+test('an interrupt leaves no browser or profile behind', { skip }, async () => {
+  const before = profiles();
+  const source = `import { startHarness } from ${JSON.stringify(entry)}; await startHarness({ root: ${JSON.stringify(root)} }); console.log('ready'); setInterval(() => {}, 1000);`;
+  const child = spawn('node', ['--input-type=module', '-e', source], { stdio: ['ignore', 'pipe', 'inherit'] });
+  await new Promise((resolve, reject) => { child.stdout.once('data', resolve); child.once('exit', reject); });
+  assert.equal(profiles().length, before.length + 1);
+  const code = new Promise((resolve) => { child.once('exit', resolve); });
+  child.kill('SIGINT');
+  assert.equal(await code, 130);
   assert.deepEqual(profiles(), before);
 });
 

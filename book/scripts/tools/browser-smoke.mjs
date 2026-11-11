@@ -78,10 +78,19 @@ const SCENARIOS = [
     await page.goto('/pie/');
     const reader = await page.ev(`import('/book/scripts/home/pie-spw.mjs').then(async (m) => (await m.loadRules())?.reader)`);
     if (reader !== 'spw-seed') throw new Error(`pie rules were read by ${reader}`);
+    const bias = await page.ev(`import('/book/scripts/modules/spw-bias.mjs').then(async (m) => { await m.warmBiasParser(); return m.readBias('=meme[pov]{ pop }').reader; })`);
+    if (bias !== 'spw-seed') throw new Error(`a bias spell was read by ${bias}`);
+    await page.goto('/book/chapter/10/');
+    await page.waitFor(`document.querySelector('.bracework')`);
+    await page.ev(`(() => { const plate = document.querySelector('.bracework'); plate.scrollIntoView(); plate.querySelector('button, summary')?.click(); })()`);
+    await page.waitFor(`/Read by the Spw interpreter/.test(document.querySelector('.bracework').textContent)`);
   }]
 ];
 
-const failures = await withHarness({
+/** @type {number} */
+let failures;
+try {
+failures = await withHarness({
   root: ROOT,
   allowDotPaths: ['.spw', '.well-known'],
   denyPaths: ['.spw/_workbench', '.spw/tools', 'node_modules', '.studio'],
@@ -92,8 +101,10 @@ const failures = await withHarness({
 }, async (harness) => {
   let failed = 0;
   for (const [name, run] of SCENARIOS) {
-    const page = await harness.open();
+    /** @type {Page | null} */
+    let page = null;
     try {
+      page = await harness.open();
       await run(page);
       const { exceptions } = page.problems();
       if (exceptions.length) throw new Error(`uncaught: ${exceptions[0].split('\n')[0]}`);
@@ -102,9 +113,14 @@ const failures = await withHarness({
       failed += 1;
       console.error(`  FAIL ${name}\n       ${error instanceof Error ? error.message : String(error)}`);
     }
-    page.close();
+    page?.close();
   }
   return failed;
 });
+} catch (error) {
+  // The browser itself could not start or stay up, which says nothing about the site.
+  console.error(`smoke[blocked]{${error instanceof Error ? error.message : String(error)}}`);
+  process.exit(2);
+}
 console.log(`smoke[${failures ? 'fail' : 'ok'}]{${SCENARIOS.length - failures} of ${SCENARIOS.length}}`);
 process.exit(failures ? 1 : 0);

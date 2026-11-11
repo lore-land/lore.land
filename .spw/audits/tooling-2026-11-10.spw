@@ -8,10 +8,12 @@
 #:layer #!pragmatics
 
 ^"method"{
-  ran: "each tool once in a detached worktree, recording its exit code and which tracked files it changed"
+  ran: "most tools once in a detached worktree, recording exit code and tracked files changed. Not run: prepare-pie-sounds, sound-library, font:trace, and the full brand-assets pass, which need local samples, tracing inputs or ImageMagick. The exporters ran through build"
   reached: "referenced by package.json, ci.yml, an import, or a page"
   typed: "carries // @ts-check and passes strict (npm run types)"
   do_not: "Do not read a kept verdict as an endorsement. It means the tool runs and something reaches it."
+  unread_plans: "PLAN.A to PLAN.D fail the parser, mostly on strings that span lines. They are long-arc specs and were left alone, so lint covers only PLAN.E and PLAN.F at the root"
+  any_left: "any remains at JSON reads in progression-audit and sigil-audit, in one cast in sigil-audit, and in the checkWonder validator; the commit that added types undercounted this"
 }
 
 %retired[
@@ -24,7 +26,7 @@
 %consolidated[
   { what: ".spw walkers" result: "one skip list in .spw/tools/spw-files.mjs; the lists had drifted, and lint had read the CLI cache" }
   { what: "canon generators" result: "canon:build chains characters, way, likeness, sigil and progression into build, so npm run check catches a stale one; the sigil and progression audits were stale" }
-  { what: "CI steps" result: "npm run check reads them from ci.yml, so the two cannot part" }
+  { what: "CI steps" result: "npm run check reads them from ci.yml, so the two cannot part. Only the local door fails on a stale generated file; CI has no such step" }
   { what: "workbench CLI" result: "npm run spw is read-only by allowlist" }
   { what: "browser testing" result: "tools/browser-harness replaces the throwaway drivers; npm run smoke holds what checks cannot see" }
 ]

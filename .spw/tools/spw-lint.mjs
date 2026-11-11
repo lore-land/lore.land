@@ -26,7 +26,9 @@ const SPW_ROOT = path.join(ROOT, '.spw');
 const STRICT = process.argv.includes('--strict');
 
 
-const files = spwFiles(SPW_ROOT).sort();
+/* The canon, and the root plans that are kept as records. PLAN.A to PLAN.D predate the parser's rules and do not read; see the tooling audit. */
+const rootFiles = ['PLAN.E.spw', 'PLAN.F.spw'].map((name) => path.join(ROOT, name));
+const files = [...spwFiles(SPW_ROOT), ...rootFiles].sort();
 let failCount = 0;
 let errorTotal = 0;
 let warningTotal = 0;

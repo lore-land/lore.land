@@ -7,6 +7,8 @@
  * refuses the ones that rewrite sources. To run one deliberately, call the workbench's main.ts yourself.
  */
 import { spawnSync } from 'node:child_process';
+import { realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 /** Commands that read. `format` and `mount` are allowed only in their read forms, below. */
 const READS = new Set(['doctor', 'roots', 'tree', 'census', 'graph', 'formula', 'density', 'form', 'lattice', 'measure', 'authority', 'taste', 'stack', 'fingerprint', 'lint', 'query', 'resolve', 'select', 'outline', 'ls', 'inspect', 'help']);
@@ -27,7 +29,7 @@ export function refusal(args) {
   return READS.has(command) ? null : `${command} is not on the read-only list`;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   const args = process.argv.slice(2);
   const why = refusal(args);
   if (why) {

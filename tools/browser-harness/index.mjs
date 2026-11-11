@@ -93,8 +93,9 @@ export function resolveRequest(root, rawUrl, { allowDotPaths = [], denyPaths = [
   try { real = fs.realpathSync(candidate); } catch { return null; }
   if (refused(real)) return null;
   if (fs.statSync(real).isDirectory()) {
-    real = path.join(real, 'index.html');
-    if (!fs.existsSync(real)) return null;
+    // The index may itself be a symlink, so it is contained again after the join.
+    try { real = fs.realpathSync(path.join(real, 'index.html')); } catch { return null; }
+    if (refused(real)) return null;
   }
   return real;
 }
@@ -110,6 +111,13 @@ export function serve({ root, allowDotPaths = [], denyPaths = [], transforms = [
     if (request.method !== 'GET' && request.method !== 'HEAD') { response.writeHead(405, { allow: 'GET, HEAD' }); response.end(); return; }
     const file = resolveRequest(realRoot, request.url || '/', { allowDotPaths, denyPaths });
     if (!file) { response.writeHead(404); response.end('not found'); return; }
+    // A directory without its trailing slash redirects, as static hosts do, so relative links resolve the same way.
+    const [pathname, ...query] = (request.url || '/').split('?');
+    if (fs.statSync(path.resolve(realRoot, `.${decodeURIComponent(pathname)}`), { throwIfNoEntry: false })?.isDirectory() && !pathname.endsWith('/')) {
+      response.writeHead(301, { location: `${pathname}/${query.length ? `?${query.join('?')}` : ''}` });
+      response.end();
+      return;
+    }
     try {
       /** @type {string | Buffer} */
       let body = fs.readFileSync(file);

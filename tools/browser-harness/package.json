@@ -6,6 +6,6 @@
   "exports": "./index.mjs",
   "bin": { "browser-harness": "./cli.mjs" },
   "engines": { "node": ">=22" },
-  "scripts": { "test": "node --test \"test/*.test.mjs\"" },
+  "scripts": { "test": "node --test --test-timeout=180000 \"test/*.test.mjs\"" },
   "license": "ISC"
 }

@@ -2,7 +2,7 @@
 
 Drive a static site in headless Chrome. No dependencies, no browser download, no build step: one file of plain JavaScript that uses the Chrome already on your machine.
 
-Requires Node 22 or later and Chrome or Chromium.
+Requires Chrome or Chromium, and Node 22 or later for its built-in WebSocket. Tested on Node 23 and macOS.
 
 ## When to use it
 
@@ -49,7 +49,7 @@ withHarness({
 
 ## What it will and won't serve
 
-The server listens on 127.0.0.1 only, on a free port, and answers only GET and HEAD.
+The server listens on 127.0.0.1 only, on a free port, and answers only GET and HEAD. A directory requested without its trailing slash redirects, as static hosts do.
 
 A request is contained by real path, so neither `..` nor a symlink can lead out of the root. Every dot-named path segment is refused unless you list it in `allowDotPaths`, and `.git`, `.env*`, `.npmrc`, `.ssh` and `.aws` are refused even then. `denyPaths` refuses root-relative prefixes.
 

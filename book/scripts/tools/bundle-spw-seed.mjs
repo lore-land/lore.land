@@ -51,6 +51,12 @@ const result = await esbuild.build({
 const [output] = result.outputFiles;
 
 if (VERIFY) {
+  // The hand-written declaration has to name exactly what the bundle exports.
+  const declared = [...fs.readFileSync(path.join(ROOT, 'book/scripts/vendor/spw-seed.d.mts'), 'utf8').matchAll(/^export function (\w+)/gm)].map((m) => m[1]).sort();
+  if (declared.join() !== [...EXPORTS].sort().join()) {
+    console.error(`[bundle-spw-seed] verify failed — spw-seed.d.mts declares ${declared.join(', ')}; EXPORTS has ${EXPORTS.join(', ')}`);
+    process.exit(1);
+  }
   if (!fs.existsSync(OUTFILE)) {
     console.error('[bundle-spw-seed] verify failed — no bundle checked in yet');
     process.exit(1);
