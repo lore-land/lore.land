@@ -1,0 +1,55 @@
+# Tooling audit — 2026-11-10
+# Every script in book/scripts/tools, .spw/tools, tools and the repository root, run in an isolated worktree and read for who
+# reaches it. A verdict is what was done or what is next; a tool can be reached and still be someone's call.
+#>lore_land_audit_tooling_2026_11_10
+#:audit #!tooling
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"method"{
+  ran: "each tool once in a detached worktree, recording its exit code and which tracked files it changed"
+  reached: "referenced by package.json, ci.yml, an import, or a page"
+  typed: "carries // @ts-check and passes strict (npm run types)"
+  do_not: "Do not read a kept verdict as an endorsement. It means the tool runs and something reaches it."
+}
+
+%retired[
+  { file: "check_classes.mjs" why: "imports glob, which this repository does not install; exit 1; nothing refers to it" }
+  { file: "evaluate_height.mjs" why: "imports puppeteer, not installed; exit 1; nothing refers to it; tools/browser-harness does this job" }
+  { file: "js/vendor/md5.js" why: "no reference since 2024" }
+  { file: "book/scripts/tools/crypto-browser-shim.mjs" why: "stood in for node:crypto in the parser bundle; since tree-shaking nothing resolves it, and the bundle is byte-identical without it" }
+]
+
+%consolidated[
+  { what: ".spw walkers" result: "one skip list in .spw/tools/spw-files.mjs; the lists had drifted, and lint had read the CLI cache" }
+  { what: "canon generators" result: "canon:build chains characters, way, likeness, sigil and progression into build, so npm run check catches a stale one; the sigil and progression audits were stale" }
+  { what: "CI steps" result: "npm run check reads them from ci.yml, so the two cannot part" }
+  { what: "workbench CLI" result: "npm run spw is read-only by allowlist" }
+  { what: "browser testing" result: "tools/browser-harness replaces the throwaway drivers; npm run smoke holds what checks cannot see" }
+]
+
+%typed[
+  "book/schema/book-types.mjs" "book/scripts/tools/check.mjs" "book/scripts/tools/bundle-spw-seed.mjs" "book/scripts/tools/align-tokens.mjs" "book/scripts/tools/browser-smoke.mjs"
+  ".spw/tools/spw-lint.mjs" ".spw/tools/spw-files.mjs" ".spw/tools/spw-cli.mjs" ".spw/tools/characters-canon.mjs" ".spw/tools/way-canon.mjs" ".spw/tools/sigil-audit.mjs" ".spw/tools/progression-audit.mjs"
+  "tools/browser-harness/index.mjs" "tools/browser-harness/cli.mjs" "tools/browser-harness/test/containment.test.mjs" "tools/browser-harness/test/browser.test.mjs"
+]
+
+%kept[
+  { group: "build and deploy" files: "build-chapters, build-unlocks, feedback-client, mini-dom" evidence: "in build; exit 0; deterministic" next: "type next: build-chapters has about 85 strict errors, mostly untyped callbacks" }
+  { group: "book:check" files: "book-check" evidence: "in CI" next: "about 160 strict errors; the highest-value file left to type" }
+  { group: "dist projection" files: "project-dist-static, project-public-spw, vite.config" evidence: "in CI, but dist is not deployed" next: "the maker's call, tied to whether the site should deploy dist so the .spw allowlist applies" }
+  { group: "canon export" files: "export-chapters, likeness-index, alignment-probes, plates-manifest, trope-prompt" evidence: "exit 0" next: "type as touched" }
+  { group: "assets" files: "brand-assets, artifact-studies, optimize-assets" evidence: "exit 0; need ImageMagick and rsvg for a full run" next: "keep; authoring-time" }
+  { group: "fonts" files: "font/*, font/hand/*" evidence: "exit 0; every glyph outline identical to the committed fonts, only a timestamp differs" next: "keep; do not commit a rebuild with no glyph change" }
+  { group: "sound" files: "prepare-pie-sounds, sound-library" evidence: "reached; need the local sample library" next: "keep" }
+  { group: "texture" files: "texture/mine-folios" evidence: "exit 0; reads another repository, so its output moves when that one does" next: "keep; re-run on purpose" }
+  { group: "css" files: "css-audit" evidence: "exit 0; report only" next: "keep" }
+  { group: "audition" files: "tools/audio_synthesis/pie-sound-audition.html, pie-sound-before.mjs" evidence: "reached; the before engine is a snapshot from an earlier release" next: "retire pie-sound-before.mjs when the next engine comparison replaces it" }
+]
+
+^"dependencies"{
+  before: "6 advisories, 5 high, all build-time, through vite and esbuild"
+  after: "0 advisories; vite 7.3.8, esbuild 0.28.2; parser bundle byte-identical"
+  added: "typescript and @types/node, dev only; esbuild declared directly"
+}

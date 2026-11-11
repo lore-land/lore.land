@@ -65,6 +65,7 @@
   tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
   session_residue: "@spw/audits/session-opus-fable-2026-11-10.spw"
+  tooling_audit: "@spw/audits/tooling-2026-11-10.spw"
   dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw"
 }
 
