@@ -1,0 +1,65 @@
+# AST play — a Spw parse read literally as the plan of a game
+# A design, proposed. Built as book/scripts/modules/spw-play-graph.mjs; held by npm run play-graph:check. Structures and counts only: nothing here has been played.
+#>lore_land_surfaces_ast_play
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  Every Spw text is already shaped like a level. Operations are places with rules, containers are kinds of space, sequences are paths, references are doors. Read literally, the tree a parser returns is a map, and the same map can be played as several kinds of game. That makes the theory playable from the other side: a reader who writes Spw is also drawing a level, and a level drawn by playing is a sentence that can be read. The lane runner this site already plays is one projection of many.
+}
+
+^"mapping"{
+  operation: "a place, whose rule is its sigil: ! an event that fires on arrival, ? a probe that reveals, ~ something left open, @ a point of view, & a junction, * a thing to collect, ^ a key that binds upward and opens the area above, # a sign, . solid ground, = a lean, % a gauge, $ what it is made of"
+  frame: "[ ] an arena: a choice among its items"
+  body: "{ } an area: gathers charge as it is entered, discharges on the way out"
+  scope: "( ) a turn: its items taken together, as one combo"
+  capsule: "< > a passage: a concept gate; @mind <concept>{ space } couples a mind on the left to a space on the right"
+  path_ref: "a door to another surface"
+  reference: "@word a view: whose eyes the next place is seen through"
+  binding: "key: value a sign posted in the place"
+  leaf: "a literal, identifier or lone valence word is an item lying there; a particle (#>, #:, #!) is a mark on the map"
+  sequence: "a path in order; the steps of one sequence are siblings, and siblings are branches"
+  whole: "a text that does not read whole maps to nothing and says so: a level built from half a parse would be built from guesses"
+}
+
+^"projections"{
+  lane_runner: "the top-level path is the road; each step a room passing, named by its sigil; what stands inside comes down the lanes"
+  deck_builder: "every place a card: sigil the suit, depth the cost, what it holds the power"
+  metroidvania: "every body a region behind the sigil of the place that owns it, which must be found somewhere else first; a region whose key is found nowhere in the text stays sealed until another surface brings it"
+  rhythm_track: "each top-level step a beat; ! on the downbeat, * and ^ lift, the sigils with no phase are ghost notes; each frame a bar as long as its choices"
+  roguelike_floor: "every frame a fork chosen by a seed; the same seed walks the same floor; how many floors a text can make is the product of its frames"
+  garden: "every body a bed that grows with what stands in it and is harvested at its closing brace"
+  abstraction_ladder: "areas climb from literal rooms { } to chosen arenas [ ] to pattern zones ( ) to concept gates < >; a gate becomes a place only when a mind enters, and the mind coupled to it (or the nearest @ before it) decides what kind of place (gradients.spw)"
+}
+
+^"levels_from_this_tree"{
+  pie_rules: "1178 nodes, 361 places, 94 areas, 258 arenas; 16 rooms on the road with 808 things; 361 cards in 11 suits; all 94 regions open in 4 rounds; about 10 to the 12 floors; one concept gate"
+  chapter_01: "305 nodes, depth 15; 12 rooms, 226 things; 40 cards in 10 suits; 19 of 26 regions open in 2 rounds, 7 sealed; 16016 floors; ladder 26 literal, 28 instance, 1 pattern, 11 concept"
+  chapter_14: "303 nodes, depth 15; 12 rooms, 220 things; 42 cards in 12 suits; 15 of 25 regions open, 10 sealed; 26208 floors; 16 concept gates"
+  liminal_physics: "170 nodes; 14 rooms; 2 of 3 regions open, 1 sealed; 12 floors"
+  board_line: "12 nodes; one region, sealed: the line holds the only ^ it has, so its key must come from another surface"
+  way_line: "10 nodes; one region, sealed, for the same reason"
+  board_and_way: "read together, each line holds the key the other needs, and both regions open in one round: two set-ups that unlock each other"
+  mind_and_concept: "@boof <boon>{ {bone} } becomes a concept gate boon, implemented by the mind boof as a literal room"
+}
+
+^"links"{
+  formulas: "book/scripts/modules/spw-formulas.mjs and .spw/surfaces/formulas.spw, the castable side: formulas read, said and computed at the desk"
+  gradients: "@spw/surfaces/gradients.spw, the reasons for a sigil by scale, span and abstraction"
+  physics: "@spw/surfaces/liminal-physics.spw, the sigils as the physics of the page"
+}
+
+!guards[
+  "The mapping reads a sigil only in its own role. A projection that needs a sigil to mean something new is the wrong projection"
+  "A projection is structure and counts until someone plays it. No claim that a level is fun rests on its numbers"
+  "Chapter mirrors are read as maps of the book, never rewritten to make better levels"
+]
+
+?open[
+  "Which projection is worth a playable prototype first: the abstraction ladder is the most Spw, the deck builder the most familiar"
+  "Should a sealed region be opened by a door to another surface (a ~ path), making surfaces into a world map"
+  "Could a reader draw a level by writing a line at the desk, and play it in the lanes"
+  "Do chapter mirrors keep their rooms as rooms when played as a metroidvania, or does the book want a different map"
+]

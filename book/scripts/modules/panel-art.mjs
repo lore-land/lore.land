@@ -14,7 +14,7 @@
  * Canon: nobody in a panel speaks; the figure in plain lines stays one circle, one rectangle, four lines
  * and two dots at any scale, and the hat rests above and never lands; children are never drawn.
  */
-import { figureGroup } from './characters.mjs?v=2026_11_10.B';
+import { figureGroup } from './characters.mjs?v=2026_11_11.A';
 
 const INK = '#efe3c8';
 const GOLD = '#d9a24a';

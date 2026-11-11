@@ -100,12 +100,14 @@ export function createShow({ canvas, insetFigure, reelList, env }) {
     still.width = STILL_W * ratio;
     still.height = STILL_H * ratio;
     const c = still.getContext('2d');
-    const sx = canvas.width / W;
-    const sy = canvas.height / H;
+    // Through the board's frame (pie-frame.mjs): a filled screen shows more than the world, the world inside it.
+    const f = env.frame?.() || { x0: 0, y0: 0, w: W, h: H };
+    const sx = canvas.width / f.w;
+    const sy = canvas.height / f.h;
     const x0 = Math.max(0, Math.min(W - STILL_W, entry.x - STILL_W / 2));
     const y0 = Math.max(0, Math.min(H - STILL_H, entry.y - STILL_H * 0.62));
     try {
-      c.drawImage(canvas, x0 * sx, y0 * sy, STILL_W * sx, STILL_H * sy, 0, 0, still.width, still.height);
+      c.drawImage(canvas, (x0 - f.x0) * sx, (y0 - f.y0) * sy, STILL_W * sx, STILL_H * sy, 0, 0, still.width, still.height);
     } catch { return; }
     const item = { still, caption, entry };
     stills.unshift(item);
@@ -301,7 +303,10 @@ export function createShow({ canvas, insetFigure, reelList, env }) {
     ictx.clearRect(0, 0, inset.width, inset.height);
     if (mode === 'board') {
       // The views swapped: the lanes as drawn, in small.
-      try { ictx.drawImage(canvas, 0, 0, inset.width, inset.height); } catch { /* not yet drawn */ }
+      const f = env.frame?.() || { x0: 0, y0: 0, w: W, h: H };
+      const sx = canvas.width / f.w;
+      const sy = canvas.height / f.h;
+      try { ictx.drawImage(canvas, -f.x0 * sx, -f.y0 * sy, W * sx, H * sy, 0, 0, inset.width, inset.height); } catch { /* not yet drawn */ }
       if (insetCap) insetCap.textContent = 'the lanes, as drawn';
       return;
     }

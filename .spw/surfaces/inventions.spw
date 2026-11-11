@@ -1,0 +1,44 @@
+# Inventions — the land's machines for sharing a weight, kept and proposed
+# A design, proposed. The kept ones are already in the chapters; the proposed ones are not, and none is a line anyone says.
+#>lore_land_surfaces_inventions
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  A story feeds its readers by what it shows can be built. The land already invents in one direction: its best machines take a weight that one person was carrying and give it to the world, or make a cost visible so it can be shared. A counterweight in a wall, torch-lines, a slip with a line for the cause, a receipt posted where everyone can read it. More of these, in the same register, make the book more optimistic without making it sweeter: each is material, a little absurd, and honest about what it costs. Each proposed one names the sigil it would answer in the lanes, so play and story keep one physics.
+}
+
+^"kept"{
+  storm_weight: "Chapter Fifteen: an iron counterweight in the wall of the parcel gate, so a gate hung for three porters can be kept by one"
+  torch_lines: "Chapters One and Fourteen: the ants light a street torch to torch, and the lines run straight even on a day nobody keeps"
+  damage_slip: "Chapter Fifteen: a word at the top, a line for the cause; the slip remembers the knock so nobody has to"
+  posted_receipt: "Chapter Twelve: BoneWAP posts both receipts, so a gift and an apology are both written where they can be seen"
+  wish_scale: "Chapter Three: pans balanced against coincidences instead of weights"
+  brace_box: "Chapter Fifteen: the night school chalks two nouns, a sigil and a container on a brace-box"
+}
+
+^"proposed"{
+  many_handled_tray: "A tray with a handle for everyone at the table. It gets lighter by the hand: two hands carry half each, and nobody can carry it alone because nobody is meant to. In the lanes, & confluence: a pie carried beside an escort tilts less for every hand on it"
+  second_chair: "A chair folded into the side of every table in Bonk City, that opens only when someone arrives without a receipt. Stone sixteen is the second place at the table; this is how the furniture could already know. In the lanes, ^ integration: a seat binds a newcomer upward, into the table"
+  thank_bell: "A small bell on the washtubs that rings once when the last plate is dry, so the work nobody watches is heard across the plaza. In the lanes, # annotation: the unseen deed gets its mark"
+  backward_receipt: "A receipt that records who helped instead of who owes, kept in the same drawer as the DAMAGE slips. It answers the clerk and the Genie at once. In the lanes, $ value: what a carry gave, not what it cost"
+  warm_stone: "A doorstep stone that stays warm because everyone who passes touches it. Nobody heats it; it is heated by being passed. Boof would know it by scent. In the lanes, ~ reference, a warmth that lasts a while"
+  lantern_lending: "Lanterns hung at the end of every unlit street for anyone to take and leave at the next. The torch-ants approve, and correct the spacing. In the lanes, * a named thing carried"
+  counterweight_library: "A lending wall of counterweights: borrow one for a heavy week, return it when the week is lighter. Kept by the porter, in his own name. In the lanes, = a lean, lent"
+  lag_bench: "A bench by the field with two seats, where a hob-deer sometimes sits a beat late. Proposed as a place, not a creature: somewhere to wait that proves you were not waiting alone. In the lanes, @ perspective, the second seat"
+}
+
+!guards[
+  "An invention shares a weight or makes a cost visible. None makes a problem vanish, none is bought, and none is owned by the one who made it"
+  "Inventions are things, not speeches. No inventor explains one"
+  "No invention touches the Egg, the figure or the hat"
+  "Each stays a little absurd and exactly material: what it is made of, what it weighs, who keeps it"
+]
+
+?open[
+  "Which proposed inventions, if any, may appear in a chapter, and which only in the lanes or the almanac"
+  "Who in the land makes things, and is it one maker or many hands"
+  "Should the many-handled tray become the lanes mechanic for escorts (tilt shared by hand) before it appears in prose"
+]

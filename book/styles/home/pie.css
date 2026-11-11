@@ -5330,3 +5330,379 @@ html.pie-settling .pie-voyage {
   color: var(--hub-muted);
 }
 
+/* ─── Setup on a small screen: the choices get the height, and a layout is one row a thumb can hit ─── */
+@container pie-setup (max-width: 30rem) {
+  .pie-setup-layouts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.3rem;
+  }
+
+  .pie-setup-layout {
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 0.6rem;
+    row-gap: 0.05rem;
+    align-items: center;
+    min-height: 3.4rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .pie-setup-layout-art {
+    grid-row: 1 / span 2;
+  }
+
+  .pie-setup-layout b {
+    align-self: end;
+  }
+
+  .pie-setup-layout small {
+    align-self: start;
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.72rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  /* All the sections in one row: no tab hides past the edge. */
+  .pie-setup-tabs {
+    gap: 0;
+    overflow-x: visible;
+  }
+
+  .pie-setup-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0.05rem;
+    font-size: 0.56rem;
+    letter-spacing: 0;
+  }
+}
+
+/* A sheet is short: the map keeps to one line. */
+.pie-setup.is-sheet .pie-setup-map {
+  min-height: 0;
+  padding: 0.2rem 0.45rem;
+}
+
+.pie-setup.is-sheet .pie-setup-map-key {
+  display: none;
+}
+
+.pie-setup.is-sheet .pie-setup-map-art {
+  zoom: 0.42;
+}
+
+.pie-setup.is-sheet .pie-setup-map-says {
+  font-size: 0.78rem;
+}
+
+/* A window with little height (a phone on its side): no map, and the sections run down the side of the choices. */
+@media (max-height: 30rem) {
+  .pie-setup[popover] {
+    grid-template-columns: 3.8rem minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: 0.4rem 0.5rem;
+    gap: 0.3rem 0.45rem;
+  }
+
+  .pie-setup-head {
+    grid-column: 1 / -1;
+  }
+
+  .pie-setup-map {
+    display: none;
+  }
+
+  .pie-setup-tabs {
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden auto;
+    border-block-end: 0;
+    border-inline-end: 2px solid var(--hub-line);
+  }
+
+  .pie-setup-tab {
+    flex: 0 0 auto;
+    min-width: 0;
+    min-height: 2.5rem;
+    margin-block-end: 0;
+    border-block-end: 0;
+    border-inline-end: 2px solid transparent;
+    margin-inline-end: -2px;
+  }
+
+  .pie-setup-tab[aria-selected='true'] {
+    border-inline-end-color: var(--hub-ink);
+  }
+}
+
+
+/* ─── Filling the screen (pie-frame.mjs) ─────────────────────────────────────
+ * Full screen with Fill chosen (new players start with it): the lanes' canvas is the whole display, the world
+ * standing in it on the ground, with haze over the road's far end and verges when the screen is on its side.
+ * Everything else stands on the board: the switches along the top (a rail on the verge when the screen is on
+ * its side), the caption in the haze or on a verge, the buttons on the ground, inside the safe area. The story
+ * columns and the heights wait until the screen is given back. */
+.pie-voyage.pie-voyage.is-fill {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--hub-paper);
+}
+
+.pie-voyage.pie-voyage.is-fill.is-immersive {
+  position: fixed;
+  inset: 0;
+}
+
+.pie-voyage.pie-voyage.is-fill > :not(.pie-cabinet) {
+  display: none;
+}
+
+.pie-voyage.pie-voyage.is-fill > .pie-cabinet {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: auto;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pie-voyage.is-fill .pie-cabinet > .pie-screen,
+.pie-voyage.is-fill .pie-screenrow > .pie-screen {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.pie-voyage.is-fill .pie-screen canvas {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.pie-voyage.is-fill .pie-cabinet :is(.pie-heights, .pie-grip, .pie-return, .pie-thumbs) {
+  display: none;
+}
+
+.pie-voyage.is-fill .pie-cabinet > .pie-tools {
+  position: absolute;
+  z-index: 3;
+  top: env(safe-area-inset-top, 0px);
+  left: env(safe-area-inset-left, 0px);
+  right: env(safe-area-inset-right, 0px);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem;
+  overflow: auto hidden;
+  scrollbar-width: none;
+  background: color-mix(in srgb, var(--hub-paper) 52%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.pie-voyage.is-fill .pie-cabinet > .pie-tools > button {
+  flex: 0 0 auto;
+}
+
+/* On its side: the switches stand in a rail at the top of the far verge, two abreast, clear of the buttons below. */
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-cabinet > .pie-tools {
+  left: auto;
+  right: calc(0.3rem + env(safe-area-inset-right, 0px));
+  top: calc(0.3rem + env(safe-area-inset-top, 0px));
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  max-height: calc(100% - 3 * var(--key-h, 2.3rem) - 2.4rem);
+  overflow: hidden auto;
+  border-radius: 0.6rem;
+}
+
+.pie-voyage.is-fill[data-hold='desk']:is([data-shape='broad'], [data-shape='long']) .pie-cabinet > .pie-tools,
+.pie-voyage.is-fill .pie-cabinet.is-left-handed > .pie-tools {
+  right: auto;
+  left: calc(0.3rem + env(safe-area-inset-left, 0px));
+}
+
+/* The buttons on the ground: the see-through layer at the foot, inside the safe area. */
+.pie-voyage.is-fill .pie-cabinet.is-place-over .pie-screen > .pie-steps {
+  z-index: 2;
+  inset: auto calc(0.45rem + env(safe-area-inset-right, 0px)) calc(0.45rem + env(safe-area-inset-bottom, 0px)) calc(0.45rem + env(safe-area-inset-left, 0px));
+}
+
+.pie-voyage.is-fill .pie-cabinet.is-place-over .pie-screen > .pie-steps .pie-step {
+  background: color-mix(in srgb, var(--hub-paper) 48%, transparent);
+  opacity: 0.92;
+}
+
+/* The caption: in the haze under the switches when the screen is held up; on the near verge when it is on its side. */
+.pie-voyage.is-fill .pie-screen > .pie-caption {
+  top: calc(2.9rem + env(safe-area-inset-top, 0px));
+  left: calc(0.5rem + env(safe-area-inset-left, 0px));
+  right: calc(0.5rem + env(safe-area-inset-right, 0px));
+}
+
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-screen > .pie-caption {
+  top: calc(0.4rem + env(safe-area-inset-top, 0px));
+  right: auto;
+  width: max(9rem, calc(var(--world-side, 10rem) - 1rem));
+  max-width: calc(50% - 1rem);
+}
+
+.pie-voyage.is-fill .pie-screen > .pie-show-inset {
+  top: calc(2.9rem + env(safe-area-inset-top, 0px));
+  width: min(24%, 8rem);
+}
+
+/* The title card: within a thumb's reach on a tall screen, over the road (not the verges) on one held on its side. */
+.pie-voyage.is-fill:is([data-shape='tall'], [data-shape='upright']) .pie-card {
+  inset: auto 4% calc(var(--world-bottom, 0px) + 6%) 4%;
+  max-height: 74%;
+}
+
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-card {
+  inset: 5% calc(var(--world-side, 8%) + 0.4rem);
+  min-width: min(20rem, 90%);
+  left: max(5%, calc(var(--world-side, 8%) + 0.4rem));
+  right: max(5%, calc(var(--world-side, 8%) + 0.4rem));
+}
+
+.pie-voyage.is-fill .pie-screen > :is(.pie-aura, .pie-meter) {
+  bottom: calc(var(--world-bottom, 0px) + 0.6rem);
+}
+
+/* Not filled, a screen's shape still decides where the title card's action falls: lower on a tall phone. */
+.pie-voyage[data-shape='tall']:not(.is-fill) .pie-card {
+  align-content: safe end;
+}
+
+/* ─── The board as a line, and the holds (⚙ Setup › Layouts) ───────────────── */
+.pie-setup-board {
+  display: grid;
+  gap: 0.4rem;
+  margin-block-end: 0.7rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+}
+
+.pie-setup-board-line {
+  display: block;
+  font-family: var(--font-family-mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.pie-setup-board-line mark {
+  padding: 0 0.15rem;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--hub-gold) 40%, transparent);
+  color: inherit;
+}
+
+.pie-setup-board-says,
+.pie-setup-board-heard {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--hub-muted);
+}
+
+.pie-setup-board-heard:empty {
+  display: none;
+}
+
+.pie-setup-board-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.pie-setup-board-field {
+  flex: 1 1 12rem;
+  min-width: 0;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.35rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font: 0.76rem var(--font-family-mono, ui-monospace, monospace);
+}
+
+.pie-setup-board :is(button),
+.pie-setup-board-full {
+  padding: 0.28rem 0.7rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 70%, transparent);
+  color: var(--hub-ink);
+  font: 0.74rem var(--font-family-heading, monospace);
+  cursor: pointer;
+}
+
+.pie-setup-subhead {
+  margin: 0.4rem 0 0.3rem;
+  font: 600 0.72rem var(--font-family-heading, monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-setup-holds {
+  margin-block-end: 0.6rem;
+}
+
+.pie-setup-board-full {
+  margin-block-start: 0.45rem;
+}
+
+.pie-mini-haze { fill: color-mix(in srgb, var(--hub-paper) 60%, #c9d6dc); }
+.pie-mini-ground { fill: color-mix(in srgb, var(--hub-ink) 22%, transparent); }
+.pie-mini-thumb { fill: color-mix(in srgb, var(--hub-hearth, #b0602a) 55%, transparent); stroke: var(--hub-ink); stroke-width: 0.6; }
+
+/* The story on the near verge of a filled screen held on its side, under the caption and clear of the buttons. */
+.pie-voyage.is-fill .pie-screen > .pie-flow-prose.is-verge {
+  position: absolute;
+  z-index: 1;
+  top: calc(6.2rem + env(safe-area-inset-top, 0px));
+  bottom: calc(3 * var(--key-h, 2.3rem) + 2rem + env(safe-area-inset-bottom, 0px));
+  left: calc(0.5rem + env(safe-area-inset-left, 0px));
+  width: max(9rem, calc(var(--world-side, 10rem) - 1rem));
+  max-width: calc(50% - 1rem);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--hub-panel) 82%, transparent);
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+
+.pie-voyage.is-fill .pie-screen > .pie-flow-prose.is-verge .pie-flow-window {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-screen > .pie-show-inset {
+  top: calc(0.4rem + env(safe-area-inset-top, 0px));
+  right: calc(var(--world-side, 0px) + 0.4rem);
+}

@@ -1,0 +1,94 @@
+# Formulas — Spw that computes, reads and answers: the theory made castable
+# A design, proposed. The forms marked cast: "yes" work at the desk now (scriptorium-desk.mjs); spw-formulas.mjs
+# and land-answers.mjs hold them in code, and npm run formulas:check casts every one.
+#>lore_land_surfaces_formulas
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  A formula is an expression whose shape is its meaning. The grammar already says what each sigil and container does; a formula makes that true of something a reader can hold: a hand of cards is a combination and its body says which, a slice is a fraction of the pie, a lean is a share of three genres, an edge leans forward or back, a board line is how a screen holds the lanes. When the theory computes, a reader can test it by writing it, and the answer comes back in plain words and numbers. When it does not compute, it can still be said, and the land can still answer in the book own words. Every form below was parsed by the vendored parser; whole means it read complete with no prose fallback, in the prose profile lint uses and in the default profile.
+}
+
+^"frames_and_bodies"{
+  board: { form: "^board{ @hold[two_thumbs] =frame[fill] %lanes[0.9] }" reads: "how a screen holds the lanes, one term per choice" theory: "@ whose hands, % how much, = what it is tuned to" plays: "Setup at /pie/; cast at the desk it is kept for the lanes" cast: "yes" whole: "both" }
+  frame_body: { form: "[lanes]{ world }" reads: "a frame around a body: what is seen, around what is there" theory: "[] selects, {} holds; the board is a screen of any shape around a world of one size" plays: "pie-frame.mjs" cast: "yes" whole: "both" }
+  probe_ground: { form: "?{ haze } .{ ground }" reads: "a look, then what holds" theory: "probe before ground" plays: "the haze and ground of a filled screen" cast: "yes" whole: "both" }
+  pocket: { form: "<pocket>{ }" reads: "a capsule with no inside: a passage, not a store" theory: "<> as channel" plays: "proposed in liminal-physics.spw; the land answers it" cast: "yes" whole: "both" }
+}
+
+^"leans_and_weights"{
+  lean: { form: "=lean{ %boon[2] %bane[1] %bone[1] }" reads: "a share of three genres: boon 50, bane 25, bone 25" theory: "= config over % measures; the valence triangle" plays: "the genre dial; pie-rules.spw" cast: "yes" whole: "both" }
+  carry_lean: { form: "=lean{ &fairy_tale{ %satisfied[1] %shared[1] } &absurd_reality{ %knocked[1] } &low_magic{ %perfect[1] } }" reads: "what a carry did, weighed into the three ways a chapter develops" theory: "& confluence of weighted events" plays: ".spw/runtime/pie-rules.spw" cast: "yes" whole: "both" }
+  genre: { form: "=[genre]{ boon:2 bone:1 }" reads: "two parts fairy tale to one part low magic" theory: "a lean as a blend" plays: "the desk spell, live" cast: "yes" whole: "both" }
+}
+
+^"edges_and_receipts"{
+  gain: { form: "=boon@porter{ @stranger }" reads: "a gain from the porter toward a stranger: it carries forward" theory: "a signed bias edge, read by the workbench readBias" plays: "grants.spw; the desk" cast: "yes" whole: "both" }
+  price: { form: "=bane@pie{ @mime }" reads: "a pull from the pie back toward the mimes: read as a ledger, the price" theory: "the inverse sign" plays: "grants.spw; the desk" cast: "yes" whole: "both" }
+  answered: { form: "~#answer(2026-11-10): …" reads: "a question closed on a day, kept rather than deleted" theory: "a dated mark (spw-proposals P12)" plays: "grants.spw inside a body; spw:plans" cast: "no" whole: "neither, alone: it is a field, and reads whole inside a body" }
+}
+
+^"counts_and_combinations"{
+  hand: { form: "*hand[3]{ %from[5] =ordered[no] =repeats[no] }" reads: "10 hands of three from five, listed" theory: "combinations, C(5, 3)" plays: "competency.mjs hands(); the desk" cast: "yes" whole: "both" }
+  berries: { form: "*hand[2]{ %from[boon, bane, bone] =ordered[yes] =repeats[no] }" reads: "6 ordered pairs of two different berries, listed" theory: "arrangements" plays: "the desk" cast: "yes" whole: "both" }
+  bush: { form: "*hand[2]{ %from[3] =ordered[no] =repeats[yes] }" reads: "6 pairs that may repeat" theory: "multisets" plays: "the desk" cast: "yes" whole: "both" }
+  slice: { form: "%[slice]{ 1/8 }" reads: "an eighth: 12.5 percent, 45 degrees, eight make the whole" theory: "part and whole" plays: "the desk" cast: "yes" whole: "both" }
+  cone: { form: "@pupil{ %band[5] }" reads: "band five: what a hand holds, and a cone of attention three clusters wide" theory: "the competency ladder (competency.spw)" plays: "competency.mjs; the desk" cast: "yes" whole: "both" }
+}
+
+^"time_and_cadence"{
+  cadence: { form: "^cadence[ %day{ #room } %week{ &trope } %month{ =lens } %quarter{ @cone } ]" reads: "a room a day, a trope a week, a lens a month, a cone a quarter; 104 quarters make about 9497 days" theory: "nested measures, integrated upward" plays: "the daily reading (daily.mjs), read through an event route; the desk" cast: "yes" whole: "both" }
+  way: { form: "^way{ !aside[7, 9] =apart[two_pies] }" reads: "a way through: chapters set aside, a pair kept apart" theory: "! an event on the route, = a constraint" plays: "way-through.mjs" cast: "yes" whole: "both" }
+  wind_up: { form: "{ }" reads: "gather, then spend" theory: "the opening brace accumulates, the closing brace discharges" plays: "proposed: a throw that winds up" cast: "yes" whole: "both" }
+}
+
+^"perspective"{
+  hands_and_route: { form: "&[ ^board{ @hold[two_thumbs] } ^way{ !aside[7] } ]" reads: "hands and route together: two lines in one confluence, neither changing the other" theory: "& joins lines without merging them" plays: "proposed: one link carrying both" cast: "yes" whole: "both" }
+  route: { form: "?/texture.website/*folio-ampersand-hair-cube" reads: "a route: one piece of texture.website, a thing itself on the surface" theory: "the ?/ door: a surface, @ whose, * a thing itself (texture-routes.mjs)" plays: "the desk opens any ?/ line at /texture/" cast: "yes" whole: "both" }
+  window: { form: "%{window}@genie" reads: "the reader window, as the Genie measures it" theory: "a page as a room (spw-proposals P13)" plays: "proposed: genie-practice.spw" cast: "no" whole: "both" }
+}
+
+^"containers_and_minds"{
+  literal: { form: "{boon}.land" reads: "the place itself: boon.land, the same for everyone, Boof included" theory: "a body is a literal space" plays: "resolveLand; the desk" cast: "yes" whole: "both" }
+  concept: { form: "<boon>.land" reads: "the concept of boon, not yet a place: a mind decides where it lands" theory: "a capsule is a concept space" plays: "resolveLand; the desk" cast: "yes" whole: "both" }
+  as_boof: { form: "<boon>.land@boof" reads: "the concept of boon as Boof holds it: {bone}.land" theory: "concept spaces in < >, literal spaces in { }; a mind is where a concept is consistently implemented" plays: "resolveLand; the desk" cast: "yes" whole: "both" }
+  as_boof_first: { form: "@boof<boon>.land" reads: "the same, with the mind said first" theory: "perspective before the capsule" plays: "the desk" cast: "yes" whole: "both, though the tree keeps one Capsule and the land name is not a separate node" }
+  map: { form: "@boof{ <boon>{bone} }" reads: "the map itself: in her mind the concept boon always lands in the literal space bone" theory: "a mind as a table from concept to place, stated in Spw" plays: "readMind walks the tree; the desk" cast: "yes" whole: "both (a Reference whose body hangs on the Expression: spw-stress reference_body)" }
+  open_row: { form: "<bane>.land@boof" reads: "open: the maker has not said where bane lands in her mind" theory: "an unwritten row is never guessed" plays: "the desk" cast: "yes" whole: "both" }
+  choice: { form: "[boon, bane, bone].land" reads: "the three lands side by side, one to be chosen" theory: "a frame selects among instances" plays: "the desk" cast: "yes" whole: "both" }
+  gathered: { form: "(boon).land" reads: "whatever is boon-like, gathered: open for a land" theory: "a scope groups" plays: "the desk" cast: "yes" whole: "both" }
+}
+
+!minds{
+  boof: "<boon> is {bone}. Grounds: the boneberry promises nothing and feeds you honestly, where a boonberry shows the way something will go well a moment before it does (berries.json); a dog keeps mornings, not weeks (Chapter Fourteen); she cannot read, and will not be told what a smell means (characters.mjs). Foresight reaches a working dog as a meal now, and bone is the plain joke, kept dry"
+}
+
+^"container_ladder"{
+  note: "One name, four steps of abstraction, a gradient: {boon} the literal space, [boon] one chosen among several, (boon) a grouping of whatever is like it, <boon> the concept a mind implements in its own literal space. ^ binds a name one step up, toward the concept; . grounds it one step down, toward the thing. The third gradient beside global and local and the intergenerational one: see gradients.spw"
+  order_in_spec: "CONTAINERS.md lists frame, body, scope, capsule as a table with no order of abstraction. The spirit sequence ?~<#.>@(#.)&[#.]*{#.}^ (LAYERS.md) runs < ( [ { from the unspent (~) toward the concrete (*), which is this ladder read from the top. Both orders are recorded here; neither is forced"
+  body: { form: "{boon}" step: "1 of 4" whole: "both" }
+  frame: { form: "[boon]" step: "2 of 4" whole: "both" }
+  scope: { form: "(boon)" step: "3 of 4" whole: "both" }
+  capsule: { form: "<boon>" step: "4 of 4" whole: "both" }
+  up: { form: "^{boon}" reads: "boon bound one step up: [boon]" whole: "both" }
+  down: { form: ".(boon)" reads: "boon grounded one step down: [boon]" whole: "both" }
+  down_from_concept: { form: ".<boon>" reads: "meant: the concept grounded to (boon); the parser drops the . before a capsule, so the desk reads it by hand" whole: "reads complete, but the . is lost: spw-stress ground_before_capsule" }
+}
+
+^"the_land_answers"{
+  what: "Write something specific, under any sign, and the land acknowledges it in the book own words and points to where the book has it: a character, a wonder, a room, a trope, a kind, a gift, a berry, a folio of texture.website, an invention, a piece of the physics. A name inside another body is a meeting the book can count (Boof and the ants share rooms). An expression the land does not know is answered honestly: what was read, and the nearest things it knows"
+  composed_from: "characters.mjs (line, temperament, traits, knack, want, limit, escape, weight), kinds.mjs, almanac.json, tropes.json, likeness.json, the texture.website folios (packs/texture.website/@spwashi/folios.json), berries.json, pie-powers.mjs, inventions.spw, liminal-physics.spw, read through each sigil in spw-resonance.mjs. The maker reasons stay folded where they are and are never quoted"
+  coverage: "with the texture.website folios read, 337 things by 563 names and 3003 name and sigil answers (12012 single-name forms in four shapes: bare, @[x], @x{ }, @{x}); without them, 219 things, 2302 answers, 9208 forms; every pair of names can meet in a body; 38 hand-picked pairings answered more specifically, each from named canon fields. npm run formulas:check prints the live numbers"
+  specials: "*beaver{ ~lag }, @boof{ ?scent }, &ants{ !torch }, =bane@pie{ @mime }, ^[porter]{ .storm_weight }, %[slice]{ 1/8 }, <pocket>{ }, @genie{ %price }, ?[thursday], ~boof{ .furrow }, %clerk{ #slip }, *boneberry, <boon>.land@boof and the rest in land-answers.mjs SPECIAL"
+  held: "the figure, the hat, the Egg, and anything naming who is under the hat are acknowledged as nothing at all, and never offered as near"
+  desk: "anything with a sign or a container that is not one of the desk own spells goes to the land; the desk spells keep their meanings"
+}
+
+?open[
+  "Which minds have tables, and what is in them. Boof holding <boon> as {bone} is the only row; <bane> in her mind, and every other mind, is the maker to write"
+  "Should <boon>.land become a surface read through the ?/ door, so ?/<boon>.land@boof (which reads whole) shows where a mind holds the concept; proposed as a line, not wired"
+  "Is the container ladder the right order for this book, or should the spec table order stand beside it in the desk"
+  "Should the land answer in the lanes too (a cast typed during a pause), or only at the desk"
+]

@@ -23,6 +23,9 @@ jobs:
       - name: spw:lint (parse every .spw file with the real spw-workbench grammar)
         run: npm run spw:lint -- --strict
 
+      - name: spw:plans (what the plans claim, held against the tree)
+        run: npm run spw:plans -- --strict
+
       - name: spw:seed-bundle:verify (vendored browser parser matches the current submodule pin)
         run: npm run spw:seed-bundle:verify
 
@@ -31,6 +34,21 @@ jobs:
 
       - name: book:check (chapters, slots, bracework, almanac, anchors — c026)
         run: npm run book:check
+
+      - name: board:check (the pie board on fourteen screens, and its Spw line out and back)
+        run: npm run board:check
+
+      - name: texture:finds:check (texture.website pieces from spwashi.com, linked, never copied)
+        run: npm run texture:finds:check
+
+      - name: formulas:check (Spw formulas compute; the land answers; held words stay held)
+        run: npm run formulas:check
+
+      - name: daily:check (a year of daily readings, none empty, none unreleased)
+        run: npm run daily:check
+
+      - name: play-graph:check (Spw read as game structures; the gradients)
+        run: npm run play-graph:check
 
       - name: One version token per file (no module loaded twice)
         run: npm run tokens:align -- --check

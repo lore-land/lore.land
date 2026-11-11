@@ -22,7 +22,7 @@ const KEY = 'lore.almanac.v1';
 const DATA_URL = '/book/content/world/almanac.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
 
-import { KIND_SIGIL, KIND_WORD, kindBadgeNode, kindLines } from './kinds.mjs?v=2026_11_09.F';
+import { KIND_SIGIL, KIND_WORD, kindBadgeNode, kindLines } from './kinds.mjs?v=2026_11_09.G';
 
 export { KIND_SIGIL, KIND_WORD };
 

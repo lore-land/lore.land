@@ -17,16 +17,19 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_10.B';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_11.A';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_09.L';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_10.A';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_11.A';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_09.L';
 import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_09.L';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
-import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_09.G';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_11.A';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
+import { mergeBoard } from './spw-formulas.mjs?v=2026_11_11.A';
+import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_11.A';
+import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_11.A';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -34,6 +37,24 @@ const CHANGES_URL = '/book/content/changes.json';
 const SEARCH_URL = '/book/content/search.json';
 const FEEDBACK_URL = 'https://autonomous.feedback/lore.land?at=';
 const HISTORY_KEY = 'lore.desk.spells.v1';
+const PIE_KEY = 'lore.pie.v1';
+/* The real parser, loaded only when a formula is cast. */
+let seedPromise = null;
+const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null); return seedPromise; };
+/* What the desk's own spells answer, by operator: anything else with a sign is the land's to answer (land-answers.mjs). */
+const DESK_OWNS = Object.freeze({
+  '@': /^(folios?|pie|game|play|home|entrance|chapter\/\d+|\d{1,2})$/i,
+  '~': /^(resume)?$/i,
+  '?': /^(spells|next|new|shelf|find|living|breathing|sightings|hat|almanac|wonders|pie|carries|tellings|told|links|story)?$/i,
+  '&': /^(threads?|motif|trope|foreshadow|lean|voice)?$/i,
+  '%': /^(read)?$/i,
+  '!': /^(again|keep)$/i,
+  '^': /^(slip|\d{1,2}|chapter\/\d+)?$/i,
+  '#': /^(stacks|\d{1,2}|chapter\/\d+)?$/i,
+  '*': /^(card|\d{1,2}|chapter\/\d+)?$/i,
+  '=': /^(lens|genre|light|binding|cozy|texture)$/i,
+  '$': /^(desk)?$/i
+});
 const NOOK_KEY = 'lore.nook.v1';
 const TOTAL = TOTAL_CHAPTERS;
 
@@ -146,7 +167,11 @@ export const SPELLBOOK = Object.freeze([
   { op: '=', example: '=[genre]{boon:2 bone:1}', does: 'Blend genres: fairy tale, absurd reality, low magic, in any proportion.' },
   { op: '=', example: '=[light]{lamp}', does: 'Set the room: light day|dusk|lamp, or any switch on|off.' },
   { op: '=', example: '=[binding]{glass}', does: 'Bind the book: rag, glass, salt, ember, slate or starfield.' },
-  { op: '$', example: '$[desk]', does: 'Show this spellbook.' }
+  { op: '$', example: '$[desk]', does: 'Show this spellbook.' },
+  { op: '@', example: '@boof{ ?scent }', does: 'Name anything in the land under any sign, a character, a wonder, a room, a trope, a folio, and the land answers in the book’s own words.' },
+  { op: '*', example: '*hand[3]{ %from[5] =ordered[no] =repeats[no] }', does: 'Count hands of cards, and list them when there are few.' },
+  { op: '~', example: '<boon>.land@boof', does: 'A concept, and where a mind holds it: {boon}.land is the place itself; <boon> is the idea, and Boof holds it as {bone}.' },
+  { op: '^', example: '^board{ @hold[two_thumbs] }', does: 'How you hold the pie game, kept for the lanes.' }
 ]);
 
 const PRACTICE = Object.freeze([
@@ -249,6 +274,23 @@ export async function initScriptoriumDesk() {
     if (!text) {
       return;
     }
+    // A route (texture-routes.mjs): a line that begins ?/ is an address, opened through the same door the root page uses.
+    if (!practice && /^\?\/\S/.test(text)) {
+      say('?', el('p', {}, `Following the route ${text}.`));
+      go(`/texture/${text.replace(/\s+/g, '+')}`);
+      return;
+    }
+    // A board line (pie-frame.mjs): kept into the pie game's record, so the lanes open held this way.
+    if (!practice && /^\^board\s*\{/.test(text)) {
+      const seed = await loadSeed();
+      const { view, unknown, reader } = readBoardLine(text, { parse: seed?.parse || null });
+      const keys = Object.keys(view);
+      if (keys.length) writeJSON(PIE_KEY, mergeBoard(readJSON(PIE_KEY, {}), view));
+      say('^', el('p', {}, keys.length ? `Kept for the lanes${reader === 'spw-seed' ? ', read by the Spw parser' : ''}: ${keys.map((k) => `${k} ${String(view[k])}`).join(', ')}. The game opens held this way.` : 'Nothing in that line is a choice the board has.'),
+        unknown.length ? el('p', {}, `Not taken: ${unknown.join('; ')}.`) : null,
+        keys.length ? el('a', { href: '/pie/' }, 'To the lanes →') : null);
+      return;
+    }
     const spell = parseSpell(text);
 
     if (practice) {
@@ -274,6 +316,19 @@ export async function initScriptoriumDesk() {
     history.push(text);
     writeJSON(HISTORY_KEY, history.slice(-30));
     historyAt = history.length;
+
+    // The land answers (land-answers.mjs): anything written with a sign or a container that is not a desk spell is
+    // read, and acknowledged in the book's own words, or answered honestly with what was read and what is near.
+    const owned = spell && (DESK_OWNS[spell.op]?.test(spell.handle) || (spell.op === '=' && SWITCHES.some((entry) => entry.id === spell.handle)) || (spell.op === '@' && chapterFrom(spell.handle)));
+    const switchOn = (id) => document.documentElement.getAttribute(`data-switch-${id}`) === 'on';
+    if (!owned && switchOn('land-answers') && /^[!?~@&*^#.=%$<{[(]/.test(text)) {
+      const [land, seed] = await Promise.all([loadLand({ withWeight: switchOn('reasons') }), loadSeed()]);
+      const heard = landAnswer(land, text, { parse: seed?.parse || null, readBias: seed?.readBias || null });
+      const sign = heard.sigil || text[0];
+      say(sign, ...heard.says.map((line) => el('p', {}, line)),
+        heard.href ? el('a', { href: heard.href }, 'Where the land keeps it →') : null);
+      return;
+    }
 
     if (!spell) {
       const results = await searchBook(text, catalog);

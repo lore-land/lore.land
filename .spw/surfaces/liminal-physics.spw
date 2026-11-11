@@ -1,0 +1,42 @@
+# Liminal physics — how things move at the edge of the page, sigil by sigil
+# A design, proposed. One part is built (the board's frame); the rest are mechanics for the maker to choose from.
+#>lore_land_surfaces_liminal_physics
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The lanes already move by Spw: = tunes, % measures, ~ lasts, ! happens at once. A comic page has a second physics, the physics of being drawn: a thing takes shape when it is looked at, a pocket holds more than it can, a runner winds up before the run, a cast knows it is watched and plays on anyway. Each of those is already a sigil role. Written down as one table, play and story can share them, and a reader who learns the sigil in one place finds it working in the other. That is the reward for Spw fluency this surface is for: a rule learned in the lanes turns out to be true of the book.
+}
+
+^"built"{
+  frame: "pie-frame.mjs: the board is a frame [ ] around the world body { }. The world is one size on every screen; a screen of another shape adds scenery, never a row anyone plays in sooner"
+  haze: "? over the far end of the road: nothing in it can be made out yet, and things come out of it where they always did"
+  ground: ". under the carrier: the buttons stand on it, and the road already passed runs a little under their glass"
+  line: "^board{ @hold[one_thumb] =frame[fill] %lanes[0.9] }: every Setup choice is a term, @ for whose hands, % for how much, = for what it is tuned to; the first change anyone makes is the first Spw they write"
+}
+
+^"proposed"{
+  looked_at_ground: "? then . : a hop over a gap holds in the air until the carrier looks down. The first input after the top of a hop is the look, and only then does the ground take hold. Cheap to build (hop hang time ends on input, capped), and it teaches that a probe comes before a grounding"
+  pocket: "< > a capsule with no inside: the slice that comes back to the plate after a throw is drawn from a pocket in the cabinet, and the pocket is shown once, open, empty, when the pie is never smaller. The channel is a passage, not a store"
+  wind_up: "{ then } : hold to gather, let go to spend. A held throw winds up in place (the carrier stays, the needle steadies) and goes further when released. The brace that opens gathers, the brace that closes discharges, as the nav-shape holds already do"
+  watched: "@ as observer: the cast remembers what the lanes did (characters.mjs remembers()), across carries, and plays on in character. Being watched changes nothing they do and everything they keep"
+  costume: "* then @ : the hat settles on another carrier mid-chapter, and the same lane is read from another side. Quick changes of who is under the hat, each a change of perspective, never of the world"
+  nightly_plan: "The goal is the same every day: keep exactly one pie. It never quite works, and the not working is the gift. The day event (?/day.lore.land) is the same loop for the book"
+  part_in_the_band: "& confluence: every pupil gets a part matched to what they already do, and the parts only sound together. The competency cone (competency.spw) gives each metaphor cluster a part; a hand of cards is a band"
+  role_turned: "= a lean re-tuned: the part someone was assigned and the part they can play sit on one axis. The valence lens already turns a chapter from boon to bane to bone; a character can be turned the same way, in the cast, without a word changed"
+}
+
+!guards[
+  "Each mechanic is a sigil doing its own role. If a mechanic needs a sigil to mean something new, it is the wrong mechanic"
+  "No mechanic gives foresight for free. Seeing further is priced (a boonberry glimpse, the long view)"
+  "Physics is shown, never lectured. A rule appears in play first and is named in Setup or the almanac after"
+  "Nothing here names, imitates or quotes another work. The physics is the land's own"
+]
+
+?open[
+  "Which proposed mechanic is worth one session first. The looked-at ground is the cheapest and the most legible"
+  "Should the wind-up replace the long press on throw, or sit beside it as a choice"
+  "Does a cast that remembers belong on the character pages, or only in the cast at /pie/"
+]

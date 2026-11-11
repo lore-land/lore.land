@@ -984,3 +984,63 @@ body[data-surface='monument'] .texture-post-doors {
 body[data-surface='monument'] .texture-post-door {
   font-weight: 700;
 }
+
+/* ─── Events through the ?/ door (route-events.mjs) and pieces of texture.website (texture-finds.mjs) ─── */
+.texture-event-kicker {
+  margin: 0 0 0.3rem;
+  font: 600 0.74rem var(--font-family-heading, monospace);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.texture-event-body,
+.texture-piece-body {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.texture-found ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+lore-folio {
+  display: block;
+  max-width: 30rem;
+}
+
+lore-folio figure {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+lore-folio :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem;
+}
+
+lore-folio figcaption {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+lore-folio .lore-folio-wait {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+lore-folio .lore-folio-near,
+lore-folio .lore-folio-motifs {
+  color: var(--hub-muted);
+}

@@ -1,0 +1,50 @@
+# Texture finds — pieces of texture.website that turn up in the land
+# A design, proposed. The pieces live at spwashi.com; lore.land reads them through texture.website and never copies them.
+#>lore_land_surfaces_texture_finds
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  texture.website is grain: the laminated pages and painted panels of the maker, scanned. lore.land already reads it through one door, the ?/ route, part by part. A piece of it can also wait in the land: each answers a room, a trope or a motif, and someone who carries a pie past that place finds it. Finding is the wonder. The piece is never explained, only placed, and its address is the same one the route lab already writes.
+}
+
+^"address"{
+  piece: "?/texture.website/*folio-ampersand-hair-cube — one piece, drawn until found, the scan once found, with a way across to spwashi.com"
+  surface: "?/texture.website — the surface lists the pieces found so far beside the packs, motifs and materials"
+  motif: "?/texture.website/~drip — a motif across the folios, as before"
+  reads: "* a thing itself (texture-routes.mjs ROUTE_OPS): the piece is a value on the surface, the same operator a letter takes in a maker's hand"
+}
+
+^"data"{
+  built_by: "book/scripts/tools/texture-finds-build.mjs (npm run texture:finds:build)"
+  writes: "book/content/packs/texture.website/@spwashi/folios.json, beside the pack and its findings"
+  reads_archive: "spwashi.com origin/main through git, never its working tree; SPWASHI_COM or the default beside the home folder, as texture:mine finds it"
+  checked_by: "book/scripts/tools/texture-finds-check.mjs (npm run texture:finds:check)"
+  runtime: "book/scripts/modules/texture-finds.mjs: foliosFor, offer, hold, held, findMoment, pieceRoute, and the lore-folio element"
+  storage: "lore.texture.finds.v1 in the reader's browser: which pieces turned up, the day, and where"
+}
+
+!rules[
+  "A piece is kept only if its pictures are tracked on spwashi.com origin/main, a spwashi.com page already shows it, and nothing in its title, alt, tags, handles or question names the figure under the hat or lines about schooling"
+  "Every picture URL is spwashi.com. Nothing is downloaded into this tree, resized, recoloured or priced"
+  "A waiting piece is drawn in the panels' own composition (a wash in its own colours, a stepped horizon, a disc, a laminate edge, its sigils in thin ink). The scan shows only once found"
+  "A room's own piece turns up when that room opens. A carry that ends in a chapter names the tropes standing in it and can find a piece that shares one. A piece nothing nearer claims waits under glass, in the chapters where a page is glassed in the story (Six and Thirteen)"
+  "At most one piece turns up per carry, so finding stays a moment"
+  "Resonance is worked out from words the piece and the room share, weighted so a word most rooms use counts for less. It is a hint toward wonder, never a reading of the piece, and the figure's own trope is never computed toward"
+]
+
+%"numbers_2026_11_11"{
+  pieces: "119: 90 folios and 29 panels, from spwashi.com origin/main ef961d3b"
+  kept_back: "5, kept on the maker's side"
+  rooms: "81 rooms; 71 answer at least one piece; passing 45 of them finds one"
+}
+
+?open[
+  "Which release sets join: every published set, or only the ones the maker names"
+  "Whether panels join the folios, or wait for their fronts and backs to be paired"
+  "Whether the hero tier may load on mobile data; today it is left out when the browser asks to save data"
+  "Whether a waiting piece links across to spwashi.com before it is found. Today it does, quietly, inside its hint"
+  "Whether the 36 rooms that find nothing should, or whether a chapter's carry is enough for them"
+]

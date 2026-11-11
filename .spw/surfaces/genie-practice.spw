@@ -1,0 +1,50 @@
+# The Genie's practice — architecture priced, as a way for him to touch the page
+# A design, proposed. Nothing here is built, and nothing here is a line he says.
+#>lore_land_surfaces_genie_practice
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The book already says what his trade is. A want is named, a price is heard, and the client pays or folds. His instruments are specific and they fail in specific ways. The page he is printed on is also made of choices with costs. Wisdom about architecture and a wish story ask one question: who pays for a granted thing. So he can reach through the page by doing his job on it.
+}
+
+^"from_the_book"{
+  needle: "Chapter Three: the want-needle, quick to find a want"
+  glass: "Chapters Three and Eight: the resolution glass cannot see a want smaller than a loaf"
+  scale: "Chapter Three: the wish-scale, its pans balanced against coincidences instead of weights"
+  terms: "Chapter Eight: name one, hear the price, pay or fold"
+  beavers: "Chapter Eight: the beavers build it themselves before he can quote a price"
+  unbilled: "Chapter Three: Boof walks the seam herself, and no miracle is billed"
+  his_rule: "Chapter Five: ask for a little turn, pay a little; ask the world to swing around you, and somebody else catches the weight"
+  spent: "Chapter Twelve: spent to the last of himself, he walks upstream to become an echo you can visit"
+  echo: "Chapter Fourteen: something in the grove that sounded a little like him speaks, to nobody, a beat late"
+}
+
+!guards[
+  "He acts through slips, receipts and the state of the page. He gets no new speech; if he speaks at all it is a line the chapters already give him"
+  "Every price is computed from the real thing it prices. A made-up number makes the fourth wall a costume"
+  "Prices are in lanes, sight and coincidences. Never money, and nothing a reader had can be taken away by not paying"
+  "What the needle reads stays in the reader's browser"
+  "Boof's want is never priced, and the Egg is not explained"
+]
+
+^"variants"{
+  estimate: "With the Genie under the hat, a pause shows a slip. It reads the board as %{window}@genie. Each row is a change to this reader's layout, priced by running planPanels on that change: the lanes gain so much, the caption goes to glass. The glass hides any row too small to matter. Paying is one sigil, !{window}@genie, and the change is made. Folding leaves it. A row the reader made by hand before it was quoted is receipted unbilled, like the beavers"
+  books: "A page of his books: .spw/state/grants.spw shown as the practice's ledger, the site's real changes in his columns of wish, price and receipt. It costs almost nothing to build, and it is the most literal fourth wall: the maker's mistakes are on the bill"
+  echo: "From Chapter Twelve on he has nothing left to charge with. The slip still comes, a beat late, after the reader has already moved, addressed to nobody and with no price on it. It is the estimate with its power gone, and the book has already earned that"
+  closed_thursdays: "On a real Thursday the practice is shut and the slip does not appear. One clock check. It may lean too hard on what Book Two is doing with that day"
+}
+
+^"recommendation"{
+  first: "estimate, because it changes what a reader does and it can only be true if the panel plan is. books can follow from the same ledger"
+  slice: ~"PLAN.F.spw"
+}
+
+?open[
+  "Which variant, if any? The maker decides, and writes or chooses every word on a slip"
+  "Should the estimate exist only when he carries, or wherever the wish-scale has been found?"
+  "He is spent by Chapter Twelve and still carries the pie in the lanes, which run at right angles to the story. Does a carry past Twelve get the estimate, the echo, or neither?"
+  "Is a ledger of the site's real mistakes in his hand funny, or does it make him the maker's mouthpiece?"
+]

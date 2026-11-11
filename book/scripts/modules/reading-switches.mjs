@@ -123,6 +123,18 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'land-answers', attribute: 'data-switch-land-answers', stage: 'trial', layer: 'trial', label: 'The land answers at the desk',
+    hint: 'At the scriptorium desk, write a thing of the land under any sign and the land says what that sign does to it, in the book\u2019s own words. A hand of cards counts itself; a ^board line is kept for the lanes.',
+    effect: { on: 'The land answers what you write at the desk.', off: 'The desk keeps to its own spells and the search.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'texture-finds', attribute: 'data-switch-texture-finds', stage: 'trial', layer: 'trial', label: 'Pieces of texture.website turn up',
+    hint: 'The maker\u2019s scanned folios and panels wait in the land. Carry a pie past the room or trope one answers and it turns up, one per carry, at its own address on texture.website.',
+    effect: { on: 'Pieces turn up as you play.', off: 'Each piece on texture.website stays a drawing of itself.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'living', attribute: 'data-switch-living', stage: 'trial', layer: 'trial', label: 'Phrases turn with the clock',
     hint: 'A few phrases in every chapter turn by the minute, the hour or the day (never the one you are reading), and the marked words catch the light now and then. Off, every word is the book\u2019s own. For one visit: ?phrases=turn, or ?at=19:00 to see the words of that hour.',
     effect: { on: 'Phrases turn with the clock, away from where you are reading.', off: 'Every phrase is the book\u2019s own again.' }, region: 'main.chapter',

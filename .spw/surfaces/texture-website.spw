@@ -94,14 +94,14 @@
 
 ^"value"{
   name: "Intergenerational Media Literacy"
-  says: "What lore.land makes should be something two people of different ages can make, read and question together: how a picture was made, by whom, what a machine did in someone's manner, where an idea came from and how to say so — and where an address will take you before you follow it."
-  shows_as: "every made thing says how it was made (lettered or penned; a drawn study or a painted plate; changed on purpose, and how); every address reads part by part; every curriculum plan is something to make and a question to ask, with who it is for across ages; every borrowed thing names its piece"
-  care: "audience care holds (intergenerational media; PG-level gates for PG-13 themes); a plan's question is one a grandparent and a grandchild can both answer differently and both be right"
+  says: "What lore.land makes should be something two people who read differently can make, read and question together: how a picture was made, by whom, what a machine did in someone's manner, where an idea came from and how to say so — and where an address will take you before you follow it."
+  shows_as: "every made thing says how it was made (lettered or penned; a drawn study or a painted plate; changed on purpose, and how); every address reads part by part; every curriculum plan is something to make and a question to ask, with the kind of afternoon it suits; every borrowed thing names its piece"
+  care: "audience care holds (intergenerational media; PG-level gates for PG-13 themes); a plan's question is one two people at one table can answer differently and both be right"
 }
 
 ^"scheme"{
   .note: "A maker's depiction scheme is a Spw expression read as how lore.land shows the maker's work: maker@<channel>.{ — whose, through what (a capsule: the channel and its register), grounded (.), and a body left open ({: still gathering) or closed (}: complete). The route says where it is; the scheme says how it is seen."
-  spwashi: "spwashi@<lore.land>.{ — the maker's hand, seen through lore.land (literary register, readers of every age), traced from paper, the set open: a lettered glyph replaces a penned one when a scan brings it"
+  spwashi: "spwashi@<lore.land>.{ — the maker's hand, seen through lore.land (literary register, read slowly, alone or aloud), traced from paper, the set open: a lettered glyph replaces a penned one when a scan brings it"
   tuning: "the same grammar tunes how the work is projected, and travels in the address (=…): ~ lets the hand wander, % weighs it, @ leans it, . settles it, ^ bounces it, ! swells it, ? tilts it, * shows it as scanned, # shows the measure, & layers the outline over the hand, = seeds it, $ shows the paper; an open body keeps the letters in their blocks, a closed one lets them run free (spwashi-hand.mjs readTuning)"
   wonder_and_measure: "some dials make it more wonderful (~ ^ ? !), some make it more true (* # &); the page says which were turned, so a changed picture always says it was changed"
 }

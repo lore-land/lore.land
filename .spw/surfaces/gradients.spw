@@ -1,0 +1,57 @@
+# Gradients — why a sigil is written or kept, by where, over how long, and in which container
+# A design, proposed. Computable in book/scripts/modules/spw-gradients.mjs; held by npm run play-graph:check.
+#>lore_land_surfaces_gradients
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  A sigil collection means more than a count. The same sigil has a different reason to be written under a thumb than among everyone who reads, on a first evening than on a return after years, inside a room than inside a concept. Three gradients give those reasons. Each point is said as what someone does and the mood of it, never as who they are. The weights are a starting tuning, not a finding: they say where the book has most reason to offer a sigil, so a collection can be read back as a position, and a missing sigil can be offered as a way to widen it.
+}
+
+^"scale"{
+  .order: "carry, chapter, book, land, commons"
+  carry: "one reader, one room, one carry"
+  chapter: "a chapter, read through"
+  book: "the book, across its stones"
+  land: "the land, across its books"
+  commons: "everyone who reads, together"
+  leans: "! has most reason under a thumb (something happens now); & has most among everyone (what readers make together); # rises toward the commons (what readers say about it); . toward the land (the ground every story stands on)"
+}
+
+^"span"{
+  .order: "first_evening, habit, study, return; together stands apart"
+  first_evening: "points at everything, presses to see what happens, turns the sound up; curious, quick"
+  habit: "comes back on their own, keeps a shelf, plays one carry before bed; settled, collecting"
+  study: "reads closely, writes their own lines, tunes on purpose; patient, precise"
+  return: "comes back after a long while and notices what changed; wistful, glad"
+  together: "two at different points on one page: one reads aloud, one holds the controls; patient and delighted"
+  arc: "the first four follow the competency arc (competency.mjs: 104 quarters in bands of eight), a reach a reader chooses and never an age asked"
+  leans: "~ matters more the longer the span: a door left open long ago, still open, is worth most on a return. * peaks with habit (filling the shelf). & and @ peak when the page is shared (handing over the controls)"
+}
+
+^"abstraction"{
+  .order: "{ } literal, [ ] instance, ( ) pattern, < > concept"
+  literal: "{ } the place itself: literal space, where things are. Spec: {#.} materialize properties"
+  instance: "[ ] one chosen among several: an instance in view. Spec: [#.] merge categorized truths"
+  pattern: "( ) a grouping: the pattern that gathers instances. Spec: (#.) observe ground truth"
+  concept: "< > a channel: a concept any mind implements in its own literal space. Spec: <#.> name the coupling"
+  spirit: "the spirit sequence ?~<#.>@(#.)&[#.]*{#.}^ places the containers < > ( ) [ ] { }, materializing from channel to body; abstraction is the same sequence read backward, climbing from body to channel"
+  coupling: "the parser already reads @mind <concept>{ space } as a capsule with a left and a right: the left is the mind that implements the concept, the right is the literal space it becomes"
+  examples: "a ! in { } is a local, literal event; a & in < > is a global concept of confluence (placeOf in spw-gradients.mjs)"
+}
+
+!guards[
+  "A gradient point describes a behaviour and a mood. No point names an age, a role in a family, or a circumstance"
+  "A reason offers a sigil; it never withholds one. Every sigil can be written anywhere"
+  "Weights are tuning, kept in one table, and change by editing that table"
+  "Whose mind implements which concept, and as what, is the maker's to say; nothing here assigns one to a character"
+]
+
+?open[
+  "The older spec (spw-v0.1.0-alpha CONTAINERS.md) calls ( ) spatial, where exists, and { } procedural, how behaves. This ladder puts literal space in { }. Which reading does the land keep"
+  "Should a reader's kept sigils ever be read back to them as a position, or only used to choose what to offer next"
+  "Is together a point on the span, or a second reader's span laid beside the first"
+  "Do the weights start where they are, or should the land's own counts (rooms by sigil, cards by suit) tune them"
+]

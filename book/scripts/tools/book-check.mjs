@@ -29,10 +29,11 @@ import { CUSTOM_ELEMENT_TYPES } from '../modules/story-lexicon.mjs';
 import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 import { packProblems } from '../modules/packs.mjs';
+import { eventProblems } from '../modules/route-events.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
 import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
 import { parseWay, waySpell } from '../modules/way-through.mjs';
-import { CHARACTERS, REASONS } from '../modules/characters.mjs';
+import { CHARACTERS, REASONS, WEIGHT } from '../modules/characters.mjs';
 import { readMechanics } from '../modules/unlocks.mjs';
 import { CLIENT, clientProblems } from './feedback-client.mjs';
 import { existsSync } from 'node:fs';
@@ -337,7 +338,8 @@ function parsedLevels(text) {
   };
   const reads = (line) => { const r = parse?.(line, { lexProfile: 'prose' }); return !parse || (r?.completeness?.complete && !r?.completeness?.proseFallback); };
   const knownChapters = new Set(chapters.map((c) => c.chapterNumber));
-  if (/WAPboy/.test(JSON.stringify(way)) || /WAPboy/.test(JSON.stringify(REASONS))) error('way', 'the figure is never named');
+  if (/WAPboy/.test(JSON.stringify(way)) || /WAPboy/.test(JSON.stringify(REASONS)) || /WAPboy|wabo/i.test(JSON.stringify(WEIGHT))) error('way', 'the figure is never named');
+  if (Object.values(WEIGHT.figure || {}).some((v, i, all) => i < 3 && v !== 'Nobody has said.')) error('characters', 'the figure\u2019s weight stays unsaid');
   chapters.forEach((c) => {
     const n = c.chapterNumber;
     const entry = way.chapters[n];
@@ -373,6 +375,7 @@ function parsedLevels(text) {
   (way.held || []).forEach((h) => h.who.forEach((who) => { if (!CHARACTERS[who]) error('way', `held: unknown character ${who}`); }));
   Object.keys(CHARACTERS).forEach((id) => {
     ['want', 'limit', 'escape', 'reason'].forEach((key) => { if (!REASONS[id]?.[key]) error('characters', `${id}: ${key} is empty`); });
+    ['carries', 'hands_on', 'eased', 'ground'].forEach((key) => { if (!WEIGHT[id]?.[key]) error('characters', `${id}: the weight's ${key} is empty`); });
   });
   const sampleWay = { aside: [2, 7], apart: (way.pairs || []).map((p) => p.id) };
   if (!reads(waySpell(sampleWay))) error('way', 'a way line does not read whole with the Spw interpreter');
@@ -455,6 +458,18 @@ for (const entry of packIndex.packs) {
   packProblems(pack, { exists: (path) => existsSync(resolve(ROOT, path.replace(/^\//, ''))) }).forEach((p) => error('packs', p));
   const plans = pack.curriculum || [];
   if (plans.length) notes.push(`packs: ${pack.id}: ${plans.filter((p) => p.state === 'done').length} of ${plans.length} plans done, ${plans.filter((p) => p.state === 'open').length} under way`);
+}
+/* Events through the ?/ door (route-events.mjs): each entry whole, no two on one surface, none on a pack's surface. */
+{
+  const eventsFile = await read('book/content/events.json').catch(() => null);
+  const events = Array.isArray(eventsFile?.events) ? eventsFile.events : [];
+  if (!eventsFile) error('events', 'book/content/events.json will not load');
+  events.forEach((e) => eventProblems(e).forEach((p) => error('events', p)));
+  const seen = new Set();
+  events.forEach((e) => { if (seen.has(e.surface)) error('events', `${e.surface} is two events`); seen.add(e.surface); });
+  const packSurfaces = new Set(packIndex.packs.map((entry) => String(entry.route || '').split('/')[1]).filter(Boolean));
+  events.forEach((e) => { if (packSurfaces.has(e.surface) || e.surface === 'autonomous.feedback') error('events', `${e.surface} is already a surface, not an event`); });
+  notes.push(`events: ${events.length} through the ?/ door (${events.map((e) => e.surface).join(', ')})`);
 }
 
 /* The tropes (book/content/world/tropes.json; .spw/surfaces/tropes.spw): the story and the lanes as strands of

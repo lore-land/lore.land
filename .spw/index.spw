@@ -7,7 +7,7 @@
   purpose: "Long-form Spw references for chapter extension, storytelling semantics, and platform ship direction."
   ethos_bridge: "book/scripts/modules/spw-ethos.mjs"
   prose_sot: "book/content/chapters/*.json"
-  audit_active: "@spw/audits/alignment-probes-2026-11-07.spw"
+  audit_active: "@spw/audits/alignment-probes-2026-11-09.spw"
 }
 
 &surfaces{
@@ -40,6 +40,17 @@
   spw_stress: "@spw/surfaces/spw-stress.spw"
   stories: "@spw/surfaces/stories.spw"
   characters: "@spw/surfaces/characters.spw"
+  genie_practice: "@spw/surfaces/genie-practice.spw"
+  texture_finds: "@spw/surfaces/texture-finds.spw"
+  formulas: "@spw/surfaces/formulas.spw"
+  cadence: "@spw/surfaces/cadence.spw"
+  competency: "@spw/surfaces/competency.spw"
+  inventions: "@spw/surfaces/inventions.spw"
+  liminal_physics: "@spw/surfaces/liminal-physics.spw"
+  prompts: "@spw/surfaces/prompts.spw"
+  ast_play: "@spw/surfaces/ast-play.spw"
+  gradients: "@spw/surfaces/gradients.spw"
+  grants: "@spw/state/grants.spw"
   panel_art: "@spw/surfaces/panel-art.spw"
   reasons: "@spw/surfaces/reasons.spw"
   spw_play: "@spw/surfaces/spw-play.spw"
@@ -71,13 +82,13 @@
 }
 
 &plans{
-  .note: "Root PLAN.*.spw files are the long-arc specs; surfaces carry ship-facing phases."
+  .note: "Root PLAN.*.spw files are the long-arc specs; surfaces carry ship-facing phases. PLAN.E and PLAN.F are live and held by npm run spw:plans. PLAN.A to PLAN.D do not parse and are read as reference, never as a source of slices."
   structure: "PLAN.A.spw"
   ethos: "PLAN.B.spw"
   shadow_chrome: "PLAN.C.spw"
   houdini_firefox: "PLAN.D.spw"
   living_book: "PLAN.E.spw (direction + curriculum L01–L28)"
-  sustainable_serial: "PLAN.F.spw (dimensions of narrative semantic evolution; publishing ecosystem; increments f1–f8)"
+  sustainable_serial: "PLAN.F.spw (dimensions of narrative semantic evolution; publishing ecosystem; increments f1 onward; npm run spw:plans says which are open)"
   platform_ship: "@spw/surfaces/platform.spw"
   editorial_desk: "@spw/surfaces/editorial.spw"
   atelier_production: "@spw/surfaces/atelier.spw"
@@ -92,9 +103,10 @@
 }
 
 ~direction{
-  from_audit: "2026-08-26 alignment probes (supersedes 2026-07-22 — plates public, theme_parity closed)"
+  from_audit: "2026-11-09 alignment probes; older runs are in git history"
   tooling: "2026-11-10: npm run check is the door; npm run spw is the workbench CLI, to be used read-only"
   order: [
+    "npm run spw:plans says first when the next stone is due and whether its chapter exists",
     "PLAN.E is the season's direction and PLAN.F its publishing dimensions. Open work is cut into one-session slices there, each naming its files, who decides, and the command that checks it. Pick one slice; do not survey",
     "Book Two (Wonder About Pi(e)) is under way: ch14 The Thursday Nobody Kept, ch15 Pupil, Parcel, or Door (set 2026-11-05). Next stone ch16 on 2026-11-13 — the second place at BoonWAP's table; see wonder-about-pie.spw#book_two chambers.c16",
     "on every stone: update book/content/serial.json `next`, add the chapter to index.html Contents + #latest, run assets:brand --og --chapters=NN, chapters:build, spw:export",

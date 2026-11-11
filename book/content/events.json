@@ -1,0 +1,19 @@
+{
+  "note": "Routes that are events, read through lore.land's ?/ door (book/scripts/modules/route-events.mjs, painted by /texture/). An event is one entry: a surface named like a subdomain, what kind it is, when it opens and closes (the reader's local calendar day), what it says before, during and after, and where it lands. A new promotional route is a new entry here; nothing else changes. Standing events are always open; a release takes its date from the serial.",
+  "events": [
+    {
+      "surface": "day.lore.land",
+      "kind": "standing",
+      "view": "day",
+      "title": "A day in the land",
+      "says": "A reading for each day, chosen from the chapters as they stand: a room for the day, a trope for the week, a lens for the month. Name a day to read it: *2026-11-13."
+    },
+    {
+      "surface": "stone.lore.land",
+      "kind": "release",
+      "view": "stone",
+      "title": "The next stone",
+      "says": "When the next chapter is set, and where it is once it has come."
+    }
+  ]
+}

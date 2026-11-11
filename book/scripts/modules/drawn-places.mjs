@@ -4,8 +4,8 @@
  * Which place comes from the game's own map of chapters to places, so the book and the lanes agree. The panel links to a
  * carry starting there. It is added after the chapter's words and changes none of them.
  */
-import { readSwitches } from './reading-switches.mjs?v=2026_11_10.B';
-import { placeSVG, PLACES } from './panel-art.mjs?v=2026_11_10.B';
+import { readSwitches } from './reading-switches.mjs?v=2026_11_11.A';
+import { placeSVG, PLACES } from './panel-art.mjs?v=2026_11_11.A';
 import { CHAPTER_SCENE } from '../home/pie-world.mjs?v=2026_11_10.A';
 
 export function initDrawnPlaces({ chapterData } = {}) {

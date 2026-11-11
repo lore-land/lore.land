@@ -35,7 +35,7 @@ export const STORY_WEIGHT = Object.freeze({ strip: 3, caption: 2.5, heights: 1.5
 // How well each form reads, panel by panel: half a heights strip is harder to read than two lines of prose.
 const READS = Object.freeze({
   caption: { full: 1, compact: 0.8, glass: 0.65, off: 0 },
-  strip: { full: 1, compact: 0.8, lanes: 0.45, off: 0 },
+  strip: { full: 1, compact: 0.8, verge: 0.9, lanes: 0.45, off: 0 },
   heights: { full: 1, compact: 0.6, folded: 0.15, off: 0 },
   show: { inset: 1, pip: 0.75, off: 0 }
 });
@@ -56,7 +56,7 @@ const tallness = (panel, form, cab, stripRem) => {
  * all ({ caption, strip, heights, show, lanesStory }); controls: where the player put the controls, if
  * they did ('under' | 'edges' | 'over').
  */
-export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, controls = null, stripRem = 6.4, rail = false }) {
+export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, controls = null, stripRem = 6.4, rail = false, fill = false }) {
   const wants = {
     caption: want.caption !== false,
     strip: want.strip !== false,
@@ -65,6 +65,21 @@ export function planPanels({ vw, vh, room = vw, coarse = false, want = {}, contr
     lanesStory: want.lanesStory !== false
   };
   const landscape = vw > vh * 1.15;
+  // Filling the screen (pie-frame.mjs): the lanes have all of it. The caption rides as glass in the haze over
+  // the road's far end, the prose is a caption in the lanes, the show is in a corner, the buttons stand on the
+  // ground; the heights wait until the screen is given back.
+  if (fill) {
+    // A screen on its side leaves a verge either side of the road; one wide enough for a column of words holds the story.
+    const verge = (vw - Math.min(vw, vh * ASPECT)) / 2;
+    const forms = {
+      caption: wants.caption ? 'glass' : 'off',
+      strip: wants.strip && verge >= 11 * REM ? 'verge' : wants.strip && wants.lanesStory ? 'lanes' : 'off',
+      heights: 'off',
+      show: wants.show ? 'pip' : 'off'
+    };
+    const plan = { arrangement: 'fill', forms, screenH: vh, score: 0, place: 'over', floor: 0, wants, share: 100, ctx: { vw, vh, coarse, landscape } };
+    return { ...plan, why: describePlan(plan, plan.ctx) };
+  }
   const place = controls || (coarse && landscape ? 'edges' : 'under');
   const desk = vw >= 992;
   const top = desk ? 72 : 8;
@@ -171,7 +186,7 @@ export function settlePlan(plan, measuredH) {
 
 const FORM_WORDS = Object.freeze({
   caption: { full: 'the caption', compact: 'the caption in two lines', glass: 'the caption over the top of the lanes' },
-  strip: { full: 'the story strip', compact: 'the story strip, two lines', lanes: 'the story as a caption in the lanes' },
+  strip: { full: 'the story strip', compact: 'the story strip, two lines', verge: 'the story on the verge beside the road', lanes: 'the story as a caption in the lanes' },
   heights: { full: 'the heights', compact: 'the heights, narrower', folded: 'the heights folded to a line' },
   show: { inset: 'the show beside the caption', pip: 'the show in the screen’s corner' }
 });
@@ -179,7 +194,11 @@ const FORM_WORDS = Object.freeze({
 /** The plan in plain words, for ⚙ Setup: what the window is, and where each panel went. */
 export function describePlan(plan, { vw, vh, coarse, landscape }) {
   const shape = `${vw >= 992 ? 'A wide' : vw >= 600 && vh >= 600 ? 'A tablet-sized' : 'A small'}${landscape ? ', short' : ', tall'} ${coarse ? 'touch screen' : 'window'}`;
-  const where = { spread: 'the story on one side of the lanes, the panels on the other', side: 'the panels in a column beside the lanes', stack: 'the panels under the lanes', glass: 'the caption on the lanes, the rest under them' }[plan.arrangement];
+  const where = { spread: 'the story on one side of the lanes, the panels on the other', side: 'the panels in a column beside the lanes', stack: 'the panels under the lanes', glass: 'the caption on the lanes, the rest under them', fill: 'the lanes fill it, with haze over the far end of the road and ground under the carrier for the buttons' }[plan.arrangement];
+  if (plan.arrangement === 'fill') {
+    const parts = Object.entries(plan.forms).filter(([, form]) => form !== 'off').map(([panel, form]) => FORM_WORDS[panel]?.[form]).filter(Boolean);
+    return `${shape}, full screen: ${where}${parts.length ? `; ${parts.join(', ')}` : ''}. The heights come back when the screen is given back.`;
+  }
   const parts = Object.entries(plan.forms).filter(([, form]) => form !== 'off').map(([panel, form]) => FORM_WORDS[panel]?.[form]).filter(Boolean);
   const controls = plan.place === 'edges' ? ' The buttons sit at the screen’s edges, under the thumbs.' : plan.place === 'over' ? ' The buttons sit over the screen.' : '';
   return `${shape}: ${where}. The lanes keep ${plan.share}% of the height${plan.screenH < plan.floor ? ' (less than they would like: some panels run below)' : ''}; ${parts.join(', ')}.${controls}`;

@@ -46,6 +46,6 @@
 }
 
 ^"next"{
-  audience_gate: "PG-13-leaning themes live only in tagged variants (=audience[pg13]) with a PG twin that book:check requires; they open through the late table (an in-world invitation after Book One, answered with a question a grown-up answers easily) and a household key (set in the binder's room, lockable with a word only the grown-up knows)"
+  audience_gate: "PG-13-leaning themes live only in tagged variants (=audience[pg13]) with a PG twin that book:check requires; they open through the late table (an in-world invitation after Book One, answered with a question whoever holds the book answers easily) and a household key (set in the binder's room, lockable with a word only its keeper knows)"
   folio_value: "a folio's ask is formula-only: the tier's working ask (October drop as Seeds, $35) moved by the play spell within −25% to +15%; play arrives as % measures (%carried, %satisfied, %wonders, %held, %won_back, %foils…); each original records %fulfill[p], the chance it can be delivered as it is — fulfilling an original is the premium form, otherwise the order is the maker's interpretation of its inspirational process, or a print; the spell recomputes under the published policy and an auditor checks the play is a reachable game state, so the reason for a price can be discussed and checked"
 }

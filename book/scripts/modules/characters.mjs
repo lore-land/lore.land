@@ -105,6 +105,24 @@ export const REASONS = Object.freeze({
   mime: { want: 'Quiet, where the pie words were.', limit: 'Cannot say so.', escape: 'Someone else has decided not to explain.', reason: 'A contest needs someone who cannot be argued with. The mimes take the words away so a reader feels what a chapter loses without them, and can carry them back.' }
 });
 
+/* The weight each one carries. The book keeps asking who catches the weight of a granted thing (Chapter Five: ask the
+ * world to swing around you, and somebody else catches the weight), so each character stands somewhere on it: what they
+ * carry, how they hand it on (or why they cannot), and what in the book eases it. Every line rests on a passage, named in
+ * `ground`, and none is a line for anyone to say. Shown folded, beside the reasons; the figure's stays unsaid. */
+export const WEIGHT = Object.freeze({
+  boof: { carries: 'The rounds: every fence line, every morning, nothing unaccounted for.', hands_on: 'Never all of it. She works for the land, and the land does the keeping.', eased: 'Her wish, when she knows it, is small: one warm furrow kept open for whatever arrives next without a receipt.', ground: 'Chapter 12, the logline; Chapter 14, a dog keeps mornings, not weeks' },
+  ants: { carries: 'The light, street by street, all winter.', hands_on: 'Torch to torch: no ant holds a street alone, and a detour is a street nobody has lit yet.', eased: 'Lines that run straight on a day nobody else keeps.', ground: 'Chapter 14, the torch-lines running straight; Chapter 1, the ant hearths' },
+  genie: { carries: 'The price of every granted thing, worked out to the coincidence.', hands_on: 'He paid for hers himself: everything he had left, and one Thursday.', eased: 'The week forgets his Thursday, but a dog keeps mornings, not weeks, and the field keeps everything.', ground: 'Chapter 5, the slate and the weight; Chapter 14, the opening' },
+  bane: { carries: 'He offers to. He proposed the wish be sold to someone prepared to bear its responsibilities, and supplied his own name.', hands_on: 'Not willingly; it has to be foiled out of his hands, and he always leaves the switch.', eased: 'Splitting himself as an apology, and being received warm.', ground: 'Chapter 4, the council; Chapter 12, re-sweetened' },
+  boon: { carries: 'Everyone’s supper, and he never feels it.', hands_on: 'In slices, to anyone, and he is never smaller for it.', eased: 'Nothing needs easing, which is his limit: giving is not subtraction if the filling is true, and he has never had to ask what it costs anyone else.', ground: 'Chapter 6; Chapter 12, receiving BaneWAP' },
+  bonewap: { carries: 'Only what the frame will bear, declared.', hands_on: 'Posts the receipt, so the weight is written where everyone can see it.', eased: 'A beam that answers when tapped.', ground: 'Chapter 10, set the wish on the frame; Chapter 12, both receipts' },
+  porter: { carries: 'A gate hung for three porters and kept by one.', hands_on: 'Into the wall: the storm-weight, an iron counterweight, does what two more porters would.', eased: 'Holding it for a stranger, and signing for the spoiled flour in his own name.', ground: 'Chapter 15, the parcel gate' },
+  clerk: { carries: 'Every slip, filed by evening.', hands_on: 'A line for the cause: the slip carries the knock so nobody has to remember it.', eased: 'A word at the top, and the line filled.', ground: 'Chapter 15, the DAMAGE slips' },
+  figure: { carries: 'Nobody has said.', hands_on: 'Nobody has said.', eased: 'Nobody has said.', ground: 'Chapters 14 and 15' },
+  clown: { carries: 'A feeling bigger than the moment.', hands_on: 'Straight back, as delight: a pie in the face, done right, is a kindness.', eased: 'Nobody minds how big it lands.', ground: 'The lanes' },
+  mime: { carries: 'The words a chapter loses.', hands_on: 'Only to someone who carries them back.', eased: 'A slice over their heads, very clearly.', ground: 'The lanes' }
+});
+
 /* What they remember of you: the lanes' deeds, said from their side. Counted, never set. Returns '' for someone you have not touched. */
 const REMEMBERS = Object.freeze({
   boof: ['boof', 'Brushed past %n time%s. She has no opinion.'],

@@ -15,12 +15,12 @@
 ^grammar{
   who: "@name{ … } is the person, named by what they are doing, never by who they are"
   dimensions: "? asks · ~ might · ! does · = tunes · % measures · ^ becomes · & with · .at[place] where · $ made of · * values · #says[…] the story in plain words"
-  care: "a story never names a child as its subject; a household story is told by the grown-up who chooses"
+  care: "a story never names a child as its subject; a story read aloud is told by the one who holds the book and chooses"
 }
 
 ^stories[
   @commuter{ ?find[last_place] ~offline .at[desk] %minutes[12] ^returns[tomorrow] *quiet $ink #says["As someone reading on a train, I want the book to remember where I stopped and to work without signal, so that twelve minutes is enough to be back inside it."] }
-  @household{ ?choose[what_a_child_sees] =audience[pg] &child .at[late_table] ^trust *care $oak #says["As a grown-up reading with a child, I want to choose what they meet, so that the book can be shared without worry and the late themes wait for a key I hold."] }
+  @reading_aloud{ ?choose[what_we_meet] =audience[pg] &listener .at[late_table] ^trust *care $oak #says["As someone reading aloud to a listener, I want to choose what we meet, so that the book can be shared without worry and the late themes wait for a key I hold."] }
   @night_reader{ ?read[in_the_dark] =binding[slate] ~lamp .at[nook] ^rest *quiet $steam #says["As someone reading before sleep, I want a dark cover and a warm lamp that are easy on the eyes, so that a chapter ends the day instead of starting it again."] }
   @regular{ ?keep[my_way_of_reading] ~new_release !notice[what_changed] .at[desk] ^continuity *trust $ink #says["As someone who has read every stone, I want each release to keep my way of reading and tell me what changed, so that coming back feels like coming home."] }
   @maker{ !release[a_room] %evenings[1] ?know[what_changed_in_meaning] .at[scriptorium] ^stone *sustain $ink #says["As the maker, I want to set one room on an ordinary evening and have the checks tell me it is whole, so that the serial keeps its promise without costing me the week."] }

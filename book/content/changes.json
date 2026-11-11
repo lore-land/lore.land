@@ -2,6 +2,18 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_11.A",
+      "date": "2026-11-11",
+      "notes": [
+        "Exactly One Pie can fill your whole screen. Press ⛶ Full with Fill chosen in Setup and the lanes take the display: the road stands on the ground with the buttons under your thumbs, the switches ride along the top, and haze covers the far end of the road. Things still come out of the haze exactly where they always did, so a taller screen never sees further. On a phone on its side the story runs down the verge beside the road. It is yours to choose: pick a hold that fills, or Fill in Setup.",
+        "Setup opens with how you hold the screen: one thumb, two thumbs, propped up, at a desk, or from across the room. Each sets the buttons, taps and sizes at once, and every layout still goes with every hold.",
+        "Every choice in Setup is now one line of Spw at the head of Layouts, with the last thing you changed marked. Copy it as a link to carry your set-up to another screen (a link holds for that visit unless you keep it), or write a line and read it in.",
+        "New addresses that open and close: lore.land/?/day.lore.land is a reading for each day, chosen from the chapters as they stand, and lore.land/?/stone.lore.land says when the next chapter comes. More will open for events.",
+        "Pieces of texture.website, a trial in the switches: the maker's scanned folios and panels wait in the land, and carrying a pie past what one answers brings it out, one a carry, at its own address. Every picture lives at spwashi.com.",
+        "The land answers, a trial in the switches: at the scriptorium desk, write almost anything in Spw and the land answers in the book's own words: a hand of cards counts itself, a slice measures itself, and a ^board line is kept for the lanes."
+      ]
+    },
+    {
       "release": "2026_11_10.B",
       "date": "2026-11-10",
       "notes": [

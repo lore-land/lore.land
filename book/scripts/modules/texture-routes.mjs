@@ -97,10 +97,15 @@ export function writeRoute({ surface, perspective, value, action, config, motif,
   return `?/${segments.map((s, i) => (i === 0 ? s : `${s[0]}${encodeSegment(s.slice(1))}`)).join('/')}`;
 }
 
-/** The pack a route lands on: the one whose own route (/surface/@maker) it begins with. */
-export function resolveRoute(route, packs = []) {
+/** What a route lands on: an event (route-events.mjs: day.lore.land, stone.lore.land, a promotional surface), the post,
+ * a pack (the one whose own route, /surface/@maker, it begins with), the surface itself, or one piece on a surface
+ * (texture.website/*folio-…: a thing itself, texture-finds.mjs). */
+export function resolveRoute(route, packs = [], events = []) {
   if (!route) return { kind: 'none' };
+  const event = route.surface ? events.find((e) => e.surface === route.surface) : null;
+  if (event) return { kind: 'event', event };
   if (route.surface === 'autonomous.feedback') return { kind: 'post', host: route.perspective || 'lore.land', subject: route.value || null };
+  if (route.surface === 'texture.website' && !route.perspective && /^(folio|panel)-/.test(route.value || '')) return { kind: 'piece', id: route.value };
   const pack = packs.find((p) => {
     const own = readRoute(`?${p.route || ''}`);
     return own && own.surface === route.surface && (own.perspective || null) === (route.perspective || null);
@@ -129,6 +134,10 @@ export const TRY = Object.freeze([
   ['?/texture.website/@spwashi/!Boof/?mutate', 'through spw.quest: a variation, every time'],
   ['?/texture.website/@spwashi/.word:moon/.material:wash/?edit', 'through spw.quest: an edit written in the address'],
   ['?/texture.website/@spwashi/!pie+and+egg/?clarify/?resonate', 'through spw.quest: what it means, and what echoes it'],
+  ['?/texture.website/*folio-ampersand-hair-cube', 'one piece: drawn until it turns up in the lanes, then the scan, from spwashi.com'],
+  ['?/day.lore.land', 'an event that is always on: the day in the land, a room, a trope, a lens'],
+  ['?/day.lore.land/*2026-11-13', 'the same event, on a day named in the address'],
+  ['?/stone.lore.land', 'an event with a date: the next stone, and where it is once it comes'],
   ['?/autonomous.feedback/@lore.land', 'the post the Scriptorium reads: every subject, and a door in each'],
   ['?/autonomous.feedback/@lore.land/*charms', 'one subject: a charm to ask the land for'],
   ['?/autonomous.feedback/@lore.land/*game', 'one subject: the game, with what is already answered']

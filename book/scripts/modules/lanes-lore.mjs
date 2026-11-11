@@ -10,7 +10,7 @@
  * And a room cast in the lanes (its sigil's verb done while it passed: struck, answered, joined…,
  * kept in lore.rooms.cast.v1 by pie-game.mjs) says so on its doorplate, with the way back to cast more.
  */
-import { portraitSVG } from './characters.mjs?v=2026_11_10.B';
+import { portraitSVG } from './characters.mjs?v=2026_11_11.A';
 
 const LORE_URL = '/book/content/world/pie-lore.json';
 const SPEAKERS = Object.freeze({ boon: 'Mr. BoonWAP', bane: 'Mr. BaneWAP' });

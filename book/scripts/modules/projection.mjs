@@ -36,7 +36,7 @@
 import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
-import { readWay, waySpell } from './way-through.mjs?v=2026_11_10.B';
+import { readWay, waySpell } from './way-through.mjs?v=2026_11_11.A';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
@@ -148,7 +148,7 @@ export function clauseGloss(clause) {
   const said = {
     lens: v === 'balanced' ? 'every paragraph at full presence' : `paragraphs that lean ${v} come forward`,
     genre: 'paragraphs weighted by the three lands',
-    audience: v === 'pg' ? 'what every household’s copy shows' : 'the late themes are open in this copy',
+    audience: v === 'pg' ? 'what every copy shows until the late table is answered' : 'the late themes are open in this copy',
     way: 'chapters stepped over and people kept apart; a chapter it changes says so and marks the words',
     room: `the room’s light: ${v}`,
     binding: `the cover: ${v}`,

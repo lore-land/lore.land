@@ -1,0 +1,296 @@
+/* ─── ?/day.lore.land: a reading for every day, layered (book/scripts/home/day-view.mjs) ─────
+ * Four layers, one inside the next: the day's room is the page; the week, the month and the quarter
+ * stand around it in widening bands. Story serif for what the book says; mono for structure (a
+ * signature, a count, a sigil). Proposed: .spw/surfaces/cadence.spw. */
+
+body[data-surface='monument'] .texture-event {
+  --day-ink: var(--hub-ink, #161d2b);
+  --day-accent: var(--hub-accent, #246270);
+  --day-deep: var(--hub-accent-deep, #184456);
+  --day-line: var(--hub-line, rgba(90, 74, 58, 0.26));
+  --day-panel: var(--hub-panel, #fffaf2);
+  --day-muted: var(--hub-muted, #5b5146);
+  --day-gold: var(--hub-gold, #c4922e);
+  --day-mono: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+}
+
+body[data-surface='monument'] .day-hero {
+  display: block;
+}
+
+body[data-surface='monument'] .day-hero .hub-lede {
+  max-width: 42rem;
+}
+
+body[data-surface='monument'] .day-layers {
+  display: grid;
+  gap: 1rem;
+  max-width: 46rem;
+  margin-block: 1.4rem 2rem;
+}
+
+body[data-surface='monument'] .day-layer {
+  position: relative;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--day-line);
+  border-radius: 0.9rem;
+  background: var(--day-panel);
+  color: var(--day-ink);
+}
+
+/* The day is the page: the widest band, the first thing read. Each later layer is one step quieter. */
+body[data-surface='monument'] .day-layer[data-layer='day'] {
+  border-color: color-mix(in srgb, var(--day-accent) 45%, var(--day-line));
+  box-shadow: 0 0.6rem 1.6rem -1.2rem color-mix(in srgb, var(--day-deep) 60%, transparent);
+}
+
+body[data-surface='monument'] .day-layer[data-layer='quarter'] {
+  background: color-mix(in srgb, var(--day-panel) 88%, var(--day-gold));
+}
+
+body[data-surface='monument'] .day-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--day-muted);
+  font-family: var(--day-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body[data-surface='monument'] .day-layer h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.25rem, 3.6vw, 1.7rem);
+  line-height: 1.15;
+}
+
+body[data-surface='monument'] .day-sig {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+  align-items: baseline;
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+}
+
+body[data-surface='monument'] .day-sig code {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--day-line);
+  border-radius: 0.4rem;
+  font-family: var(--day-mono);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+body[data-surface='monument'] .day-sig span {
+  color: var(--day-muted);
+}
+
+body[data-surface='monument'] .day-excerpt {
+  margin: 0 0 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--day-gold);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+body[data-surface='monument'] .day-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  align-items: center;
+}
+
+body[data-surface='monument'] .day-actions a {
+  display: inline-block;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--day-accent);
+  border-radius: 999px;
+  color: var(--day-accent);
+  font-family: var(--day-mono);
+  font-size: 0.84rem;
+  text-decoration: none;
+}
+
+body[data-surface='monument'] .day-actions a:first-child {
+  background: var(--day-accent);
+  color: #fffaf2;
+}
+
+body[data-surface='monument'] .day-actions a:hover,
+body[data-surface='monument'] .day-actions a:focus-visible {
+  border-color: var(--day-deep);
+  background: var(--day-deep);
+  color: #fffaf2;
+}
+
+/* The week: seven days, today marked, the rest a quiet row of where else the trope stands. */
+body[data-surface='monument'] .day-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.3rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body[data-surface='monument'] .day-week li {
+  min-width: 0;
+}
+
+body[data-surface='monument'] .day-week a {
+  display: grid;
+  gap: 0.15rem;
+  height: 100%;
+  padding: 0.4rem 0.35rem;
+  border: 1px solid var(--day-line);
+  border-radius: 0.5rem;
+  color: inherit;
+  font-size: 0.76rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+body[data-surface='monument'] .day-week b {
+  font-family: var(--day-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--day-muted);
+}
+
+body[data-surface='monument'] .day-week [aria-current='date'] {
+  border-color: var(--day-accent);
+  background: color-mix(in srgb, var(--day-accent) 12%, transparent);
+}
+
+body[data-surface='monument'] .day-week span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+@container (max-width: 30rem) {
+  body[data-surface='monument'] .day-week {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-surface='monument'] .day-week a {
+    grid-template-columns: 2.6rem 1fr;
+    align-items: baseline;
+  }
+}
+
+body[data-surface='monument'] .day-layers {
+  container-type: inline-size;
+}
+
+/* The month: a triangle of three lands, the month's one lit. */
+body[data-surface='monument'] .day-turn {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--day-mono);
+  font-size: 0.8rem;
+}
+
+body[data-surface='monument'] .day-turn li {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--day-line);
+  border-radius: 999px;
+  color: var(--day-muted);
+}
+
+body[data-surface='monument'] .day-turn li[aria-current='true'] {
+  border-color: var(--day-accent);
+  color: var(--day-ink);
+}
+
+/* The quarter: the cone, from the clusters in view down to the pupil. */
+body[data-surface='monument'] .day-cone {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  height: auto;
+  margin: 0.6rem 0;
+}
+
+body[data-surface='monument'] .day-cone .ring {
+  fill: none;
+  stroke: var(--day-line);
+}
+
+body[data-surface='monument'] .day-cone .beam {
+  fill: color-mix(in srgb, var(--day-gold) 22%, transparent);
+  stroke: none;
+}
+
+body[data-surface='monument'] .day-cone .cluster {
+  fill: var(--day-panel);
+  stroke: var(--day-line);
+}
+
+body[data-surface='monument'] .day-cone .cluster.in-view {
+  fill: color-mix(in srgb, var(--day-gold) 40%, var(--day-panel));
+  stroke: var(--day-gold);
+}
+
+body[data-surface='monument'] .day-cone .cluster.focus {
+  stroke: var(--day-deep);
+  stroke-width: 2;
+}
+
+body[data-surface='monument'] .day-cone text {
+  fill: var(--day-ink);
+  font-family: var(--day-mono);
+  font-size: 11px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+body[data-surface='monument'] .day-cone .pupil {
+  fill: var(--day-deep);
+}
+
+body[data-surface='monument'] .day-reach {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  font-size: 0.92rem;
+}
+
+body[data-surface='monument'] .day-reach select {
+  max-width: 100%;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--day-line);
+  border-radius: 0.4rem;
+  background: var(--day-panel);
+  color: var(--day-ink);
+  font: inherit;
+}
+
+body[data-surface='monument'] .day-reach output {
+  color: var(--day-muted);
+}
+
+body[data-surface='monument'] .day-next {
+  max-width: 46rem;
+  color: var(--day-muted);
+  font-size: 0.92rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-surface='monument'] .day-layer {
+    animation: day-settle 420ms ease-out both;
+  }
+
+  body[data-surface='monument'] .day-layer:nth-child(2) { animation-delay: 60ms; }
+  body[data-surface='monument'] .day-layer:nth-child(3) { animation-delay: 120ms; }
+  body[data-surface='monument'] .day-layer:nth-child(4) { animation-delay: 180ms; }
+}
+
+@keyframes day-settle {
+  from { opacity: 0; transform: translateY(0.4rem); }
+  to { opacity: 1; transform: none; }
+}

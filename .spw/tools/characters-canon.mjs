@@ -13,7 +13,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const { CHARACTERS, MODELS, MOODS, REASONS, identitySpell, charactersSheet } = await import(resolve(ROOT, 'book/scripts/modules/characters.mjs'));
+const { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, identitySpell, charactersSheet } = await import(resolve(ROOT, 'book/scripts/modules/characters.mjs'));
 /** @param {unknown} s */
 const q = (s) => String(s).replace(/"/g, "'");
 const lines = [
@@ -34,7 +34,8 @@ const lines = [
 Object.entries(CHARACTERS).forEach(([id, c]) => {
   const m = MODELS[id] || {};
   const why = REASONS[id] || {};
-  const model = [m.traits?.length && `#traits["${q(m.traits.join(', '))}"]`, m.temperament && `#temperament["${q(m.temperament)}"]`, m.knack && `#knack["${q(m.knack)}"]`, why.want && `?want["${q(why.want)}"]`, why.limit && `.limit["${q(why.limit)}"]`, why.escape && `~escape["${q(why.escape)}"]`, why.reason && `#reason["${q(why.reason)}"]`].filter(Boolean).join(' ');
+  const weight = WEIGHT[id] || {};
+  const model = [m.traits?.length && `#traits["${q(m.traits.join(', '))}"]`, m.temperament && `#temperament["${q(m.temperament)}"]`, m.knack && `#knack["${q(m.knack)}"]`, why.want && `?want["${q(why.want)}"]`, why.limit && `.limit["${q(why.limit)}"]`, why.escape && `~escape["${q(why.escape)}"]`, why.reason && `#reason["${q(why.reason)}"]`, weight.carries && `%carries["${q(weight.carries)}"]`, weight.hands_on && `&hands_on["${q(weight.hands_on)}"]`, weight.eased && `~eased["${q(weight.eased)}"]`, weight.ground && `#ground["${q(weight.ground)}"]`].filter(Boolean).join(' ');
   lines.push(`  ${identitySpell(id).replace(/ \}$/, ` &card[${c.card}] #where["${q(c.href)}"] #line["${q(c.line)}"]${model ? ` ${model}` : ''} }`)}`);
 });
 lines.push(']', '');

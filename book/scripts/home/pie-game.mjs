@@ -173,24 +173,25 @@
 
 import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_09.L';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_09.G';
+import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_11.A';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_10.B';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_11.A';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
-import { loadRules, readRules, crossRead, fuzz, stressReport, writePower } from './pie-spw.mjs?v=2026_11_08.K';
-import { CHARACTERS, MODELS, MOODS, REASONS, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_10.B';
-import { placeSVG, tropeEmblemSVG, PLACES } from '../modules/panel-art.mjs?v=2026_11_10.B';
+import { loadRules, readRules, crossRead, fuzz, stressReport, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
+import { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
+import { placeSVG, tropeEmblemSVG, PLACES } from '../modules/panel-art.mjs?v=2026_11_11.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
-import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_08.Q';
+import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_10.B';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_10.A';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
 import { loadMotifs } from './pie-tropes.mjs';
-import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_10.B';
+import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_11.A';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
-import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_10.B';
+import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
+import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_11.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
@@ -275,7 +276,12 @@ function readRecord() {
         // Music and rhythm: someone new hears the rhythms they find; a regular keeps the lanes as they knew them.
         music: ['quiet', 'groove', 'full'].includes(parsed.view?.music) ? parsed.view.music : (Number(parsed.runs) ? undefined : 'groove'),
         themes: ['calls', 'themes'].includes(parsed.view?.themes) ? parsed.view.themes : (Number(parsed.runs) ? undefined : 'themes'),
-        glow: ['off', 'beat', 'bar'].includes(parsed.view?.glow) ? parsed.view.glow : undefined },
+        glow: ['off', 'beat', 'bar'].includes(parsed.view?.glow) ? parsed.view.glow : undefined,
+        // How the screen is held, and whether full screen fills it (pie-frame.mjs). Fill is chosen, not given: a hold
+        // that fills, or Setup, turns it on (until it has been seen on real screens it is nobody's default).
+        hold: ALLOWED.hold.includes(parsed.view?.hold) ? parsed.view.hold : undefined,
+        fill: ALLOWED.fill.includes(parsed.view?.fill) ? parsed.view.fill : undefined,
+        share: ALLOWED.share.includes(parsed.view?.share) ? parsed.view.share : undefined },
       sound: parsed.sound !== false
     };
   } catch {
@@ -283,8 +289,17 @@ function readRecord() {
   }
 }
 
+/* A board line that came in a link (?board=) holds for this visit only: what the player had before stays what is
+ * kept, key by key, until they keep the line or choose a key for themselves. */
+let visitBoard = null;   // { before: { key: value-or-undefined } }
 function writeRecord(record) {
-  try { window.localStorage.setItem(KEY, JSON.stringify(record)); } catch { /* the run still counted */ }
+  let out = record;
+  if (visitBoard && Object.keys(visitBoard.before).length) {
+    const view = { ...record.view };
+    Object.entries(visitBoard.before).forEach(([key, value]) => { if (value === undefined) delete view[key]; else view[key] = value; });
+    out = { ...record, view };
+  }
+  try { window.localStorage.setItem(KEY, JSON.stringify(out)); } catch { /* the run still counted */ }
 }
 
 /* ─── The tropes (book/content/world/tropes.json): each card names the trope its thing belongs to, and what
@@ -452,6 +467,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   // lanes the caption reaches when it rides them as glass (the lanes' own caption goes under it).
   let panelPlan = null;
   let glassFoot = 0;
+  // The board's frame around the world (pie-frame.mjs): the world exactly, unless a full screen is filled.
+  let board = IDENTITY;
+  let fullOn = false;   // the voyage has the whole display (fullscreen, or the immersive fallback)
+  const filling = () => fullOn && setting('fill') === 'fill';
+  const fillFrame = () => ctx.fillRect(board.x0, board.y0, board.w, board.h);
   const soundToggle = root.querySelector('[data-pie-sound]');
   const cardLinks = card.querySelector('[data-pie-card-links]');
   const loreOut = document.querySelector('[data-pie-lore]');
@@ -460,6 +480,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   let colors = palette();
   let record = readRecord();
+  /* A board line written into choices (pie-frame.mjs): the hold first (it sets several), then each term, so a term
+   * the line names after its hold wins. With before, what each key held is noted, so a link's line can be held
+   * for the visit only (writeRecord keeps the noted values). */
+  const applyBoardView = (view, before = null) => {
+    const note = (key) => { if (before && !(key in before)) before[key] = record.view[key]; };
+    const put = (key, value) => {
+      if (key === 'storyAt') { note('story'); note('storyAt'); record.view.story = value !== 'off'; if (value !== 'off') record.view.storyAt = value; return; }
+      note(key);
+      record.view[key] = value;
+    };
+    if (view.hold && HOLDS[view.hold]) Object.entries(HOLDS[view.hold].view).forEach(([key, value]) => put(key, value));
+    Object.entries(view).forEach(([key, value]) => put(key, value));
+  };
+  try {
+    const carried = new URLSearchParams(window.location.search).get('board');
+    if (carried) {
+      const { view } = readBoardLine(carried);
+      if (Object.keys(view).length) { visitBoard = { before: {}, line: carried }; applyBoardView(view, visitBoard.before); }
+    }
+  } catch { /* no line, or none that reads: the board as kept */ }
   let state = 'title';     // title | running | paused | spilling | over
   let frame = 0;
   let last = 0;
@@ -472,7 +512,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     canvas,
     insetFigure: root.querySelector('[data-pie-show-inset]'),
     reelList: document.querySelector('[data-pie-show-reel]'),
-    env: { W, H, LANES, LANE_W, PLAYER_Y, ROWS, ROW_H, PRESENCE_Y, Z, LOW, HIGH_CLEARS, KNOCKS, reduced, nameOf: (t) => (t.wonder?.name || CARDS[t.kind]?.name || t.kind).replace(/^(A|An|The) /, '') }
+    env: { W, H, LANES, LANE_W, PLAYER_Y, ROWS, ROW_H, PRESENCE_Y, Z, LOW, HIGH_CLEARS, KNOCKS, reduced, frame: () => board, nameOf: (t) => (t.wonder?.name || CARDS[t.kind]?.name || t.kind).replace(/^(A|An|The) /, '') }
   });
 
   const say = (text) => { if (live) live.textContent = text; };
@@ -580,11 +620,54 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const fit = () => {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     const box = canvas.getBoundingClientRect();
+    // Filling a screen, the canvas is the screen's own shape and the world stands in it on the ground, clear
+    // of every overlay (pie-frame.mjs); otherwise the canvas is the world's shape and shows it exactly.
+    board = filling() && box.width > 40 && box.height > 40
+      ? frameFor({ box: { w: box.width, h: box.height }, reserve: fillReserve(box), share: setting('share') })
+      : IDENTITY;
     canvas.width = Math.round(box.width * ratio);
-    canvas.height = Math.round(box.width * (H / W) * ratio);
-    ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
+    canvas.height = Math.round((board.filled ? box.height : box.width * (H / W)) * ratio);
+    const sx = canvas.width / board.w;
+    const sy = canvas.height / board.h;
+    ctx.setTransform(sx, 0, 0, sy, -board.x0 * sx, -board.y0 * sy);
+    if (cabinetVoyage) {
+      cabinetVoyage.dataset.shape = board.filled ? board.shape : shapeOf(window.innerWidth, window.innerHeight);
+      if (board.filled) {
+        // Where the world stands in the screen, for overlays that go with it rather than with the screen's edges.
+        cabinetVoyage.style.setProperty('--world-top', `${Math.round(-board.y0 * board.s)}px`);
+        cabinetVoyage.style.setProperty('--world-bottom', `${Math.round((board.y0 + board.h - H) * board.s)}px`);
+        cabinetVoyage.style.setProperty('--world-side', `${Math.round(-board.x0 * board.s)}px`);
+      }
+    }
     draw();
   };
+  /* What a filled screen keeps clear for its overlays, in px from each edge, measured where they stand: the
+   * switches along the top; the buttons along the foot when the screen is held up, at the sides when it is on
+   * its side. The glass caption is not counted: it rides the haze when there is haze enough, and the far end of
+   * the road (where nothing is near yet) when there is not. */
+  function fillReserve(box) {
+    const reserve = { top: 0, bottom: 0, left: 0, right: 0 };
+    const across = box.width > box.height * 1.15;
+    const tools = root.querySelector('.pie-tools');
+    const visible = (el) => el && el.offsetParent && el.getBoundingClientRect().width > 0;
+    if (visible(tools)) {
+      const r = tools.getBoundingClientRect();
+      if (r.height > r.width) {
+        // A rail: it stands at one side.
+        if (r.left - box.left < box.width / 2) reserve.left = Math.max(reserve.left, r.right - box.left);
+        else reserve.right = Math.max(reserve.right, box.right - r.left);
+      } else reserve.top = Math.max(reserve.top, r.bottom - box.top);
+    }
+    root.querySelectorAll('.pie-screen .pie-steps .pie-step, .pie-screen .pie-thumbs').forEach((el) => {
+      if (!visible(el)) return;
+      const r = el.getBoundingClientRect();
+      const mid = (r.left + r.right) / 2 - box.left;
+      if (across && mid < box.width / 3) reserve.left = Math.max(reserve.left, r.right - box.left + 4);
+      else if (across && mid > (box.width * 2) / 3) reserve.right = Math.max(reserve.right, box.right - r.left + 4);
+      else reserve.bottom = Math.max(reserve.bottom, box.bottom - r.top + 4);
+    });
+    return reserve;
+  }
 
   /* ─── A run: a voyage through the chapters ─── */
   const firstChapter = (() => {
@@ -966,6 +1049,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Entering a room: its banner, by how well its sigil is known. Syntax (its signature) always; semantics
    * (what the sigil makes of the lanes) once a room of that sigil has passed before; pragmatics (how to
    * cast it) from the third such room, or as soon as one has been cast. */
+  /* Texture finds (texture-finds.mjs), a trial: with it on, a room that answers one of the maker's pieces on
+   * texture.website, or a carry's end, may find one, at most one a carry. It is said in the caption, and its address
+   * is ?/texture.website/*<piece>, where the scan is shown from spwashi.com. Off, nothing is loaded. */
+  const findsOn = () => document.documentElement.getAttribute('data-switch-texture-finds') === 'on';
+  let findsMod = null;
+  async function textureFind(moment) {
+    if (!findsOn()) return null;
+    try {
+      findsMod = findsMod || await import('../modules/texture-finds.mjs?v=2026_11_11.A');
+      return await findsMod.findMoment(moment);
+    } catch { return null; }
+  }
+  const findSaid = (found) => {
+    if (!found) return;
+    showToast('A piece turns up', `${found.piece.title}, near ${found.via}. It is on texture.website now.`, 3400, 'wonder', 1);
+    say(`A piece turns up: ${found.piece.title}. It is on texture.website now.`);
+  };
   let roomShown = '';
   function announceRoom() {
     const r = roomNow();
@@ -979,6 +1079,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (key === roomShown) return;
     roomShown = key;
     if (run) run.roomAt = run.t;   // the beat: a room opens (the narrator and the prose come forward)
+    if (run && state === 'running') textureFind({ room: r.sig, chapter: r.chapter, sigils: [r.sigil], carry: run }).then(findSaid);
     const play = ROOM_PLAY[r.sigil];
     record.roomsSeen = record.roomsSeen || {};
     const seen = record.roomsSeen[r.sigil] || 0;
@@ -1491,7 +1592,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.fillRect(0, 0, cw, ch);
     const strip = Math.max(2, Math.round(ch / 140));
     for (let y = 0; y < ch; y += strip) {
-      const s = viewScale((y / ch) * H);
+      const s = viewScale(board.y0 + (y / ch) * board.h);
       const dw = cw * s;
       ctx.drawImage(warpCanvas, 0, y, cw, strip, (cw - dw) / 2, y, dw, strip);
     }
@@ -3357,6 +3458,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       + (run.squashed ? ` Baneberries kept from him: ${run.squashed}.` : '')
       + (run.wasted ? ` Slices wasted: ${run.wasted}.` : '');
     const newLore = run.newLore || 0;
+    // A carry's end may find a piece the chapter answers (texture finds, a trial); its link joins the card's.
+    const endedRun = run;
+    textureFind({ chapter: run.chapter, end: true, page: '/pie/', carry: run }).then((found) => {
+      if (!found) return;
+      findSaid(found);
+      const addLink = () => {
+        if (state !== 'over' || run !== endedRun || !cardLinks) return;
+        const a = document.createElement('a');
+        a.href = found.href;
+        a.className = 'pie-card-link';
+        a.textContent = `A piece turned up: ${found.piece.title} →`;
+        cardLinks.append(a);
+      };
+      setTimeout(addLink, 2600);
+    });
     setTimeout(() => {
       state = 'over';
       // What this carry did to the book, and what was met for the first time.
@@ -4945,6 +5061,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold, berry: colors.berry, frost: mix(colors.accent, 'rgb(236, 244, 248)', 0.55) }[s.tint];
     return [mix(colors.paper, tint, s.tint === 'night' ? 0.32 : 0.16), mix(colors.deep, tint, s.tint === 'night' ? 0.22 : 0.08)];
   };
+  /* The road's texture, row by row, from one row above the frame's top (above the world, in a filled screen's haze)
+   * to its foot; with the world exactly in view this is the old -step + off. */
+  const roadFrom = (step, off) => off - step * (1 + Math.ceil(Math.max(0, -board.y0) / step));
   const drawGroundFor = (sceneId, scroll, alpha = 1) => {
     if (alpha <= 0.01) return;
     ctx.save();
@@ -4955,7 +5074,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (sceneId === 'field') {
       // Turned earth ridges and frost-flecked furrow lines.
       const off = scroll % 36;
-      for (let y = -36 + off; y < H + 18; y += 36) {
+      for (let y = roadFrom(36, off); y < board.y0 + board.h + 18; y += 36) {
         const rowIdx = Math.floor((y - off) / 36);
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -4973,7 +5092,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else if (sceneId === 'gate') {
       // Squared parcel-gate flagstones with bronze threshold rivets.
       const off = scroll % 38;
-      for (let y = -38 + off; y < H; y += 38) {
+      for (let y = roadFrom(38, off); y < board.y0 + board.h; y += 38) {
         const shift = (Math.floor((y - off) / 38) % 2) * (LANE_W * 0.5);
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -4991,7 +5110,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else if (sceneId === 'plaza') {
       // Fan-paved festival courses and radial joints.
       const off = scroll % 40;
-      for (let y = -40 + off; y < H + 40; y += 40) {
+      for (let y = roadFrom(40, off); y < board.y0 + board.h + 40; y += 40) {
         ctx.beginPath();
         ctx.ellipse(W / 2, y + 60, W * 0.68, 38, 0, Math.PI * 1.08, Math.PI * 1.92);
         ctx.stroke();
@@ -5006,14 +5125,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // Chequered palace flagstones and a worn runner down the middle lane.
       const off = scroll % 36;
       ctx.fillStyle = mix(colors.hearth, colors.paper, 0.9);
-      ctx.fillRect(laneX(2) - LANE_W * 0.44, 0, LANE_W * 0.88, H);
+      ctx.fillRect(laneX(2) - LANE_W * 0.44, board.y0, LANE_W * 0.88, board.h);
       ctx.strokeStyle = mix(colors.gold, colors.paper, 0.74);
       ctx.beginPath();
-      ctx.moveTo(laneX(2) - LANE_W * 0.4, 0); ctx.lineTo(laneX(2) - LANE_W * 0.4, H);
-      ctx.moveTo(laneX(2) + LANE_W * 0.4, 0); ctx.lineTo(laneX(2) + LANE_W * 0.4, H);
+      ctx.moveTo(laneX(2) - LANE_W * 0.4, board.y0); ctx.lineTo(laneX(2) - LANE_W * 0.4, board.y0 + board.h);
+      ctx.moveTo(laneX(2) + LANE_W * 0.4, board.y0); ctx.lineTo(laneX(2) + LANE_W * 0.4, board.y0 + board.h);
       ctx.stroke();
       ctx.strokeStyle = stroke;
-      for (let y = -36 + off; y < H; y += 36) {
+      for (let y = roadFrom(36, off); y < board.y0 + board.h; y += 36) {
         const rowIdx = Math.floor((y - off) / 36);
         for (let lane = 0; lane < LANES; lane += 1) {
           if ((rowIdx + lane) % 2 === 0 && lane !== 2) {
@@ -5029,11 +5148,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       for (let lane = 0; lane < LANES; lane += 1) {
         const lx = lane * LANE_W;
         ctx.beginPath();
-        ctx.moveTo(lx + LANE_W * 0.5, 0);
-        ctx.lineTo(lx + LANE_W * 0.5, H);
+        ctx.moveTo(lx + LANE_W * 0.5, board.y0);
+        ctx.lineTo(lx + LANE_W * 0.5, board.y0 + board.h);
         ctx.stroke();
       }
-      for (let y = -44 + off; y < H; y += 44) {
+      for (let y = roadFrom(44, off); y < board.y0 + board.h; y += 44) {
         const rowIdx = Math.floor((y - off) / 44);
         for (let lane = 0; lane < LANES; lane += 1) {
           const jy = y + ((lane * 17 + rowIdx * 9) % 22);
@@ -5051,7 +5170,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else {
       // Cobbles, scrolling with the scene.
       const off = scroll % 32;
-      for (let y = -32 + off; y < H; y += 32) {
+      for (let y = roadFrom(32, off); y < board.y0 + board.h; y += 32) {
         for (let lane = 0; lane < LANES; lane += 1) {
           const shift = (Math.floor((y - off) / 32) % 2) * 12;
           ctx.beginPath();
@@ -5061,6 +5180,58 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
     }
     ctx.restore();
+  };
+  /* A filled screen's two bands, each in its sigil's role (pie-frame.mjs). ? is haze over the road's far end:
+   * nothing in it can be made out yet, and things come out of it where they always did, so a taller screen
+   * sees no further. . is ground under the carrier: the buttons stand on it, and the road already passed runs
+   * a little way under their glass. */
+  let skyTop = 'rgb(243, 237, 225)';
+  const rgba = (c, a) => { const [r, g, b] = channels(c); return `rgba(${r}, ${g}, ${b}, ${a})`; };
+  const drawBands = () => {
+    if (!board.filled) return;
+    const above = -board.y0;
+    if (above > 4) {
+      // Opaque above the world, so nothing in it is seen sooner than at the world's own edge; the last few units
+      // fade to nothing exactly at that edge, where the world has always begun. The road itself goes on into it.
+      const edge = Math.min(10, above);
+      const haze = ctx.createLinearGradient(0, board.y0, 0, 0);
+      haze.addColorStop(0, rgba(mix(skyTop, colors.paper, 0.45), 1));
+      haze.addColorStop(Math.max(0, 1 - edge / above), rgba(skyTop, 1));
+      haze.addColorStop(1, rgba(skyTop, 0));
+      ctx.fillStyle = haze;
+      ctx.fillRect(board.x0, board.y0, board.w, above);
+      ctx.save();
+      ctx.strokeStyle = rgba(colors.muted, 0.22);
+      ctx.setLineDash([6, 10]);
+      for (let lane = 1; lane < LANES; lane += 1) {
+        ctx.beginPath();
+        ctx.moveTo(lane * LANE_W, board.y0);
+        ctx.lineTo(lane * LANE_W, -edge);
+        ctx.stroke();
+      }
+      ctx.restore();
+      if (record.view.labels) {
+        ctx.fillStyle = rgba(colors.muted, 0.55);
+        ctx.font = '700 15px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('?', W / 2, Math.max(board.y0 + 18, -8));
+      }
+    }
+    const below = board.y0 + board.h - H;
+    if (below > -40) {
+      const from = H - 40;
+      const ground = ctx.createLinearGradient(0, from, 0, board.y0 + board.h);
+      ground.addColorStop(0, rgba(colors.deep, 0));
+      ground.addColorStop(1, rgba(colors.deep, 0.5));
+      ctx.fillStyle = ground;
+      ctx.fillRect(board.x0, from, board.w, board.y0 + board.h - from);
+      if (record.view.labels) {
+        ctx.fillStyle = rgba(colors.muted, 0.55);
+        ctx.font = '700 15px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('.', W / 2, H + Math.min(below, 60) / 2);
+      }
+    }
   };
   const drawScene = () => {
     const defaultSceneId = CHAPTER_SCENE[chosenStartChapter] || 'lanes';
@@ -5074,8 +5245,22 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const sky = ctx.createLinearGradient(0, 0, 0, H);
     sky.addColorStop(0, top);
     sky.addColorStop(1, bottom);
+    skyTop = top;
     ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, W, H);
+    fillFrame();
+    // On a screen held on its side, the verges either side of the road: a little greener, and edged.
+    if (board.x0 < -1) {
+      ctx.fillStyle = mix(colors.deep, colors.paper, 0.86);
+      ctx.fillRect(board.x0, board.y0, -board.x0, board.h);
+      ctx.fillRect(W, board.y0, board.x0 + board.w - W, board.h);
+      ctx.strokeStyle = mix(colors.muted, colors.paper, 0.45);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, board.y0); ctx.lineTo(0, board.y0 + board.h);
+      ctx.moveTo(W, board.y0); ctx.lineTo(W, board.y0 + board.h);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
     const scroll = run?.scroll || 0;
     if (run && run.prevScene && run.prevScene !== s.id && run.sceneT < 1) {
       drawGroundFor(run.prevScene, scroll, 1 - run.sceneT);
@@ -5088,8 +5273,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.setLineDash([6, 10]);
     for (let lane = 1; lane < LANES; lane += 1) {
       ctx.beginPath();
-      ctx.moveTo(lane * LANE_W, 0);
-      ctx.lineTo(lane * LANE_W, H);
+      ctx.moveTo(lane * LANE_W, board.y0);
+      ctx.lineTo(lane * LANE_W, board.y0 + board.h);
       ctx.stroke();
     }
     ctx.setLineDash([]);
@@ -6928,7 +7113,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!run || run.dust < 0.02) return;
     ctx.save();
     ctx.fillStyle = `rgba(250, 246, 236, ${run.dust * 0.2})`;
-    ctx.fillRect(0, 0, W, H);
+    fillFrame();
     ctx.fillStyle = `rgba(255, 253, 246, ${0.35 + run.dust * 0.5})`;
     const drift = reduced?.matches ? 0 : run.t;
     for (let i = 0; i < Math.round(run.dust * 36); i += 1) {
@@ -7325,8 +7510,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run?.lag > 0) {
       // The land at a beaver's pace: a cool hush over everything but the carrier's own time.
       ctx.fillStyle = `rgba(70, 120, 160, ${Math.min(1, run.lag) * 0.08})`;
-      ctx.fillRect(0, 0, W, H);
+      fillFrame();
     }
+    drawBands();
     ctx.restore();
     warpLongView();
     drawDepthGuide();
@@ -7339,7 +7525,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       edge.addColorStop(0, 'rgba(200, 50, 36, 0)');
       edge.addColorStop(1, `rgba(200, 50, 36, ${0.32 * Math.min(1, run.hurtT / 0.9)})`);
       ctx.fillStyle = edge;
-      ctx.fillRect(0, 0, W, H);
+      fillFrame();
     }
     drawHud();
     drawLaneCaption();
@@ -7420,46 +7606,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const setupOut = root.querySelector('[data-pie-setup]');
   const flowProseBox = document.querySelector('.pie-flow-prose');
   const flowHome = flowProseBox?.parentElement;
-  const SETUP = Object.freeze([
-    ['size', 'Cabinet', [['fit', 'Fit the window'], [0.86, 'Small'], [1, 'Medium'], [1.16, 'Large'], [1.32, 'Larger']], 'fit'],
-    ['wide', 'The game takes', [['page', 'The page’s column'], ['window', 'The whole window']], 'page'],
-    ['pace', 'Pace', [[0.8, 'Gentle'], [1, 'As written'], [1.2, 'Brisk']], 1],
-    ['controls', 'Controls', [['icons', 'Icons, one row'], ['words', 'Icons and words']], 'icons'],
-    ['controlsAt', 'Controls sit', [['top', 'Above the screen'], ['bottom', 'Below it']], 'top'],
-    ['buttons', 'Throw and hop', [['middle', 'In the middle'], ['sides', 'Either side'], ['ab', 'A/B, diagonal']], 'middle'],
-    ['buttonsSwap', 'Which is which', [[false, 'Throw, then hop'], [true, 'Hop, then throw']], false],
-    ['controlsSize', 'Button size', [[0.85, 'Small'], [1, 'Medium'], [1.2, 'Large']], 1],
-    ['arrows', 'On-screen arrows', [['row', 'In a row'], ['sides', 'Either side'], ['cross', 'A cross']], 'row'],
-    ['controlsPlace', 'Arrows and buttons', [['under', 'Under the screen'], ['edges', 'At its edges'], ['over', 'Over the screen']], 'under'],
-    ['tap', 'A tap in the lanes', [['throw', 'Throws there'], ['go', 'Walks there'], ['step', 'Steps toward it'], ['hop', 'Hops'], ['none', 'Nothing']], 'throw'],
-    ['doubleTap', 'A double tap', [['none', 'Two taps'], ['hop', 'Hops'], ['throw', 'Throws there'], ['go', 'Walks there']], 'none'],
-    ['swipeUp', 'A quick swipe up', [['step', 'Steps ahead'], ['hop', 'Hops (a slow drag steps)']], 'step'],
-    ['panels', 'Panels', [['auto', 'Arranged for this screen'], ['manual', 'As set below']], 'manual'],
-    ['cardPace', 'New cards', [['at-once', 'Open at once'], ['breath', 'Wait for a breath'], ['quiet', 'Never pause']], 'at-once'],
-    ['music', 'Music', [['quiet', 'Only what happens'], ['groove', 'Rhythms you have found, softly'], ['full', 'Rhythms and the room’s chord, held']], 'quiet'],
-    ['themes', 'Characters', [['calls', 'A short call each'], ['themes', 'Their own themes, and how the chapter leans']], 'calls'],
-    ['glow', 'Glow', [['off', 'Off'], ['beat', 'On every beat'], ['bar', 'On the first of each bar']], 'off'],
-    ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
-    ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
-    ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
-    ['storyMotion', 'Story moves', [['passage', 'A passage at a time'], ['smooth', 'Smoothly, with the carry']], 'passage'],
-    ['storyLine', 'Passing line', [[0.3, 'High'], [0.5, 'Middle'], [0.66, 'Low']], 0.5],
-    ['flowSize', 'Story words', [[0.88, 'Small'], [1, 'Medium'], [1.18, 'Large'], [1.36, 'Larger']], 1],
-    ['caption', 'Caption box', [[true, 'Shown'], [false, 'Hidden (still said aloud)']], true],
-    ['heightsShown', '⤒ Heights strip', [[true, 'Shown'], [false, 'Hidden']], true],
-    ['focusOnPlay', 'On Play', [[true, 'Bring the game into view'], [false, 'Leave the page where it is']], true]
-  ]);
+  // ⚙ Setup's rows and sections are one table in pie-frame.mjs, which the board line reads too.
   const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
-  /* The sheet in sections, each with its icon (icons.mjs) and what is chosen in it, said in its head, so the sheet
-   * can be read closed and opened only where a change is wanted. Every SETUP row belongs to one section. */
-  const SETUP_GROUPS = Object.freeze([
-    ['screen', 'Screen and pace', 'screen', ['size', 'wide', 'pace', 'panels', 'panelsAt', 'heightsShown', 'focusOnPlay']],
-    ['controls', 'Buttons and arrows', 'controls', ['controls', 'controlsAt', 'arrows', 'controlsPlace', 'buttons', 'buttonsSwap', 'controlsSize']],
-    ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
-    ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
-    ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']],
-    ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow']]
-  ]);
   let activeGroup = 'layouts';
   /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
    * window's height (the lanes keep their shape), never wider than there is room for. Measured twice,
@@ -7482,7 +7630,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return { pad, room, fitW: Math.round(Math.min(room, Math.max(240, screenH * (W / H) + pad))) };
   }
   function fitCabinet() {
-    if (!cabinetVoyage || setting('size') !== 'fit') return;
+    if (!cabinetVoyage || setting('size') !== 'fit' || filling()) return;
     const screenEl = root.querySelector('.pie-screen');
     if (!screenEl) return;
     const desktop = window.matchMedia('(min-width: 62rem)').matches;
@@ -7514,7 +7662,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * the story strip, the heights and the show go, and in what form, for the story's sake; story beats
    * only change their emphasis. ⚙ Setup's Panels row turns it on (new players start with it on). ─── */
   const coarseQuery = window.matchMedia('(pointer: coarse)');
-  const planNow = () => (setting('panels') !== 'auto' ? null : planPanels({
+  const planNow = () => (setting('panels') !== 'auto' && !filling() ? null : planPanels({
+    fill: filling(),
     vw: window.innerWidth,
     vh: window.innerHeight,
     room: cabinetVoyage?.clientWidth || window.innerWidth,
@@ -7530,7 +7679,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   // A window too short to spare a row for the switches: they stand in a rail beside the screen.
   function shortWindow() { return window.innerHeight < 36 * 16 && window.innerWidth > window.innerHeight * 1.15; }
   // Where the arrows and buttons sit: as chosen; unchosen, where the plan put them; else under the screen.
-  const placeNow = () => record.view.controlsPlace || panelPlan?.place || (shortWindow() && coarseQuery.matches ? 'edges' : 'under');
+  const placeNow = () => (filling() ? 'over' : null) || record.view.controlsPlace || panelPlan?.place || (shortWindow() && coarseQuery.matches ? 'edges' : 'under');
   // The room the cabinet's column has: beside a column of panels (or between two), the page's width
   // less those columns at their narrowest readable width.
   const roomFor = (desktop) => {
@@ -7567,7 +7716,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   // How far down the lanes the glass caption reaches, in the lanes' own units, so their caption goes under it.
   const measureGlass = () => {
     const glass = screenBox?.querySelector(':scope > .pie-caption');
-    glassFoot = glass && screenBox.clientHeight ? ((glass.offsetTop + glass.offsetHeight) / screenBox.clientHeight) * H : 0;
+    glassFoot = glass && screenBox.clientHeight ? board.y0 + ((glass.offsetTop + glass.offsetHeight) / screenBox.clientHeight) * board.h : 0;
   };
   if (window.ResizeObserver) {
     const glassWatch = new ResizeObserver(measureGlass);
@@ -7581,6 +7730,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');
     // The whole window, if chosen: the plan budgets from the width the voyage then has.
     cabinetVoyage?.classList.toggle('is-wide', setting('wide') === 'window');
+    cabinetVoyage?.classList.toggle('is-fill', filling());
+    if (cabinetVoyage) cabinetVoyage.dataset.hold = holdNow();
     cabinetVoyage?.style.setProperty('--page-w', `${document.documentElement.clientWidth}px`);
     root.classList.toggle('is-short', shortWindow());
     if (replan) panelPlan = planNow();
@@ -7611,13 +7762,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // The story strip: beside, in a side column, under the screen, or folded away (the story then in the lanes).
     const side = document.querySelector('.pie-flow-wonders');
     const at = record.view.story === false ? 'off'
-      : plan ? ({ spread: 'beside', side: 'side' }[plan.arrangement] || (['full', 'compact'].includes(plan.forms.strip) ? 'under' : 'folded'))
+      : plan ? (plan.forms.strip === 'verge' ? 'verge' : { spread: 'beside', side: 'side' }[plan.arrangement] || (['full', 'compact'].includes(plan.forms.strip) ? 'under' : 'folded'))
         : setting('storyAt');
     if (flowProseBox && flowHome) {
-      if (at === 'under' && flowProseBox.parentElement !== root) root.insertBefore(flowProseBox, heightsPanel?.parentElement === root ? heightsPanel : root.querySelector(':scope > .pie-caption'));
+      // On a filled screen held on its side, the story stands on the near verge, over the screen.
+      if (at === 'verge') { if (flowProseBox.parentElement !== screenBox) screenCard.before(flowProseBox); }
+      else if (at === 'under' && flowProseBox.parentElement !== root) root.insertBefore(flowProseBox, heightsPanel?.parentElement === root ? heightsPanel : root.querySelector(':scope > .pie-caption'));
       else if (at === 'side' && side && flowProseBox.parentElement !== side) side.prepend(flowProseBox);
       else if (!['under', 'side'].includes(at) && flowProseBox.parentElement !== flowHome) flowHome.prepend(flowProseBox);
       flowProseBox.classList.toggle('is-under', at === 'under');
+      flowProseBox.classList.toggle('is-verge', at === 'verge');
       flowProseBox.classList.toggle('is-side', at === 'side');
       cabinetVoyage?.classList.toggle('is-story-under', at === 'under');
       cabinetVoyage?.classList.toggle('is-strip-folded', at === 'folded');
@@ -7782,6 +7936,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (key === 'wide' && !wideEnough) return 'Only on a wide window.';
     if (key === 'swipeUp' && !coarseQuery.matches) return 'Only on a touch screen.';
     if (key === 'glow' && setting('music') === 'quiet') return 'Only with the music on.';
+    if (key === 'share' && !filling()) return 'Only when the lanes fill a full screen (⛶, with Fill chosen above).';
     return '';
   };
   /* A layout, drawn small: the window, the lanes, and which panels stand where. */
@@ -7822,6 +7977,116 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     words.append(say, key);
     out.replaceChildren(art, words);
   }
+  /* ─── The board as a line (pie-frame.mjs): every choice in Setup is a term of ^board{ … }. The line is shown at the
+   * head of Layouts with the term last changed marked, so the first change anyone makes is also the first Spw they
+   * write; it copies as a link that carries a pair of hands to another screen, and a line written by hand is read
+   * by the real parser (or, if it is not to be had, term by term), every term it could not take said in words. ─── */
+  let lastTerm = '';
+  const holdNow = () => (setting('hold') === 'auto' ? suggestHold({ coarse: coarseQuery.matches, vw: window.innerWidth, vh: window.innerHeight }) : setting('hold'));
+  const chosenOf = (key) => (key === 'storyAt' ? (record.view.story === false ? 'off' : record.view.storyAt) : record.view[key]);
+  const lineNow = () => boardLine(chosenOf);
+  function applyHold(id) {
+    if (id !== 'auto' && !HOLDS[id]) return;
+    if (id === 'auto') record.view.hold = 'auto';
+    else applyBoardView({ hold: id });
+    if (visitBoard) { Object.keys(HOLDS[id]?.view || {}).forEach((key) => delete visitBoard.before[key]); delete visitBoard.before.hold; }
+    lastTerm = 'hold';
+    writeRecord(record);
+    applyView();
+    applySetup();
+    paintSetup();
+    requestAnimationFrame(placeSetup);
+    say(id === 'auto' ? 'Held as this screen suggests.' : `${HOLDS[id].name}: ${HOLDS[id].says}`);
+  }
+  const boardBlock = () => {
+    const box = nodeOf('div', 'pie-setup-board');
+    const line = lineNow();
+    const code = nodeOf('code', 'pie-setup-board-line');
+    const changed = lastTerm ? `${lastTerm === 'fill' ? 'frame' : lastTerm === 'share' ? 'lanes' : lastTerm.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`)}[` : '';
+    line.split(/(\s+)/).forEach((part) => {
+      if (changed && part.slice(1).startsWith(changed)) code.append(nodeOf('mark', '', part));
+      else code.append(part);
+    });
+    box.append(code, nodeOf('p', 'pie-setup-board-says', 'Every choice in Setup is a term of this line: @ is whose hands, % is how much, = is what the board is tuned to. The lanes are the same size on every screen, and the line says how this one holds them.'));
+    if (visitBoard) {
+      const keep = nodeOf('button', 'pie-setup-board-keep', 'Keep this line');
+      keep.type = 'button';
+      keep.addEventListener('click', () => { visitBoard = null; writeRecord(record); paintSetup(); say('The line from the link is kept.'); });
+      box.append(nodeOf('p', 'pie-setup-board-says', 'A link brought this line. It holds for this visit; what you had comes back next time unless you keep it.'), keep);
+    }
+    const acts = nodeOf('div', 'pie-setup-board-acts');
+    const copy = nodeOf('button', 'pie-setup-board-copy', 'Copy as a link');
+    copy.type = 'button';
+    const field = nodeOf('input', 'pie-setup-board-field');
+    field.type = 'text';
+    field.spellcheck = false;
+    field.autocapitalize = 'off';
+    field.setAttribute('aria-label', 'A board line to read');
+    field.placeholder = '^board{ @hold[two_thumbs] }';
+    copy.addEventListener('click', () => {
+      const url = `${window.location.origin}${window.location.pathname}?board=${encodeURIComponent(lineNow())}`;
+      const done = () => { copy.textContent = 'Copied'; setTimeout(() => { copy.textContent = 'Copy as a link'; }, 1600); };
+      try { navigator.clipboard.writeText(url).then(done, () => { field.value = url; field.select(); }); } catch { field.value = url; field.select(); }
+    });
+    const read = nodeOf('button', 'pie-setup-board-read', 'Read a line');
+    read.type = 'button';
+    const heard = nodeOf('p', 'pie-setup-board-heard');
+    heard.setAttribute('role', 'status');
+    read.addEventListener('click', async () => {
+      // A line, or a link that carries one.
+      let text = field.value.trim();
+      const fromLink = /[?&]board=([^&#]*)/.exec(text);
+      if (fromLink) { try { text = decodeURIComponent(fromLink[1]); } catch { text = fromLink[1]; } }
+      const parser = await loadParser();
+      const { view, unknown, reader } = readBoardLine(text, { parse: parser?.parse || null });
+      const keys = Object.keys(view);
+      if (keys.length) {
+        applyBoardView(view);
+        if (visitBoard) keys.forEach((key) => delete visitBoard.before[key]);
+        lastTerm = keys[keys.length - 1];
+        writeRecord(record);
+        applyView();
+        applySetup();
+        paintSetup();
+        requestAnimationFrame(placeSetup);
+      }
+      const out = setupOut.querySelector('.pie-setup-board-heard') || heard;
+      out.textContent = `${keys.length ? `Read ${keys.length} term${keys.length === 1 ? '' : 's'}${reader === 'spw-seed' ? ' with the Spw parser' : ''}.` : 'Nothing in it was a choice the board has.'}${unknown.length ? ` Not taken: ${unknown.join('; ')}.` : ''}`;
+    });
+    acts.append(copy, field, read);
+    box.append(acts, heard);
+    return box;
+  };
+  const holdsList = () => {
+    const wrap = nodeOf('div', 'pie-setup-holds');
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'How you hold it');
+    wrap.append(nodeOf('p', 'pie-setup-subhead', 'How you hold it'));
+    const suggested = suggestHold({ coarse: coarseQuery.matches, vw: window.innerWidth, vh: window.innerHeight });
+    const chosen = setting('hold');
+    const list = nodeOf('div', 'pie-setup-layouts pie-setup-holdlist');
+    [...Object.entries(HOLDS), ['auto', { name: 'As this screen suggests', says: `Nothing chosen: this screen suggests ${HOLDS[suggested].name.toLowerCase()}, and the board follows whatever you set below.` }]].forEach(([id, hold]) => {
+      const b = nodeOf('button', 'pie-setup-layout pie-setup-hold');
+      b.type = 'button';
+      b.dataset.key = 'hold';
+      b.dataset.value = id;
+      b.title = hold.says;
+      b.setAttribute('aria-pressed', chosen === id ? 'true' : 'false');
+      const art = nodeOf('span', 'pie-setup-layout-art');
+      art.innerHTML = id === 'auto' ? holdMini(suggested) : holdMini(id);
+      b.append(art, nodeOf('b', '', `${hold.name}${id === suggested && chosen === 'auto' ? ' · suggested' : ''}`), nodeOf('small', '', hold.says));
+      b.addEventListener('click', () => applyHold(id));
+      list.append(b);
+    });
+    wrap.append(list);
+    if (HOLDS[holdNow()]?.view.fill === 'fill' && !fullOn && document.fullscreenEnabled !== undefined) {
+      const go = nodeOf('button', 'pie-setup-board-full', '⛶ Fill the screen with it');
+      go.type = 'button';
+      go.addEventListener('click', () => { closeSetup(); setFull(true); });
+      wrap.append(go);
+    }
+    return wrap;
+  };
   function paintSetup() {
     if (!setupOut) return;
     const focused = document.activeElement && setupOut.contains(document.activeElement) ? document.activeElement : null;
@@ -7852,6 +8117,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             if (value !== 'off') record.view.storyAt = value;
             applyView();
           } else record.view[key] = value;
+          if (visitBoard) { delete visitBoard.before[key]; if (key === 'storyAt') delete visitBoard.before.story; }
+          lastTerm = key;
           writeRecord(record);
           applySetup();
           paintSetup();
@@ -7863,7 +8130,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return row;
     });
     const rowOf = new Map(SETUP.map(([key], i) => [key, rows[i]]));
-    const placed = new Set(SETUP_GROUPS.flatMap(([, , , keys]) => keys));
+    const placed = new Set([...SETUP_GROUPS.flatMap(([, , , keys]) => keys), 'hold']);
     const groups = [...SETUP_GROUPS, ...(SETUP.some(([key]) => !placed.has(key)) ? [['more', 'More', 'setup', SETUP.map(([key]) => key).filter((key) => !placed.has(key))]] : [])];
     // Layouts: several choices at once, each for a way of playing, each drawn.
     const layoutsBody = () => {
@@ -7875,13 +8142,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         b.type = 'button';
         b.dataset.key = 'layout';
         b.dataset.value = id;
+        b.title = says;
         const art = nodeOf('span', 'pie-setup-layout-art');
         art.innerHTML = miniBlocks(LAYOUT_MINIS[id] || []);
         b.append(art, nodeOf('b', '', label), nodeOf('small', '', says));
         b.addEventListener('click', () => applyLayout(id));
         list.append(b);
       });
-      return [list, ...(panelPlan ? [nodeOf('p', 'pie-setup-plan', `Arranged for this screen. ${panelPlan.why}`)] : [])];
+      return [boardBlock(), holdsList(), nodeOf('p', 'pie-setup-subhead', 'What you see'), list, ...(panelPlan ? [nodeOf('p', 'pie-setup-plan', `${panelPlan.arrangement === 'fill' ? '' : 'Arranged for this screen. '}${panelPlan.why}`)] : [])];
     };
     const groupBody = (id, keys) => {
       const live = keys.filter((key) => !notInUse(key));
@@ -8082,7 +8350,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       style.right = right >= left ? `${gap}px` : 'auto';
     } else {
       style.width = 'auto';
-      style.height = `${Math.round(vh * 0.56)}px`;
+      style.height = `${Math.round(vh * 0.62)}px`;
       style.top = 'auto';
       style.bottom = '0px';
       style.left = '0px';
@@ -9050,6 +9318,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const fold = document.createElement('details');
         fold.className = 'pie-portrait-why';
         fold.append(nodeOf('summary', '', 'Why they are drawn this way'), nodeOf('span', '', why.reason));
+        const weight = WEIGHT[who];
+        // The weight is the maker's register too: shown only with Reasons on in the switches.
+        if (weight && who !== 'figure' && document.documentElement.getAttribute('data-switch-reasons') === 'on') fold.append(nodeOf('span', 'pie-portrait-weight', `Carries · ${weight.carries} Hands it on · ${weight.hands_on} Eased by · ${weight.eased}`));
         return [nodeOf('span', 'pie-portrait-want', `Wants · ${why.want}`), nodeOf('span', 'pie-portrait-limit', `Cannot · ${why.limit}`),
           ...(memory ? [nodeOf('span', 'pie-portrait-memory', `Remembers · ${memory}`)] : []), fold];
       };
@@ -9393,7 +9664,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintLore();
   }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_10.B').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();
@@ -9501,16 +9772,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     fullBtn.title = isFull() ? 'Leave fullscreen' : 'Fullscreen';
     fullBtn.setAttribute('aria-pressed', isFull() ? 'true' : 'false');
   };
+  // Given the whole display, the board is laid out again: filled (pie-frame.mjs), or the cabinet centred.
+  const fullChanged = () => {
+    fullOn = isFull();
+    paintFull();
+    applySetup();
+    if (setupOut && !setupOut.hidden) { paintSetup(); requestAnimationFrame(placeSetup); }
+  };
   const immersive = (on) => {
     voyage?.classList.toggle('is-immersive', on);
     document.documentElement.classList.toggle('pie-immersive', on);
-    paintFull();
-    requestAnimationFrame(fit);
+    fullChanged();
+  };
+  // In true fullscreen a phone may be turned for the hold (Android allows it; elsewhere this quietly does nothing).
+  const turnForHold = () => {
+    const want = { one_thumb: 'portrait', two_thumbs: 'landscape' }[holdNow()];
+    if (want && setting('fill') === 'fill') { try { window.screen.orientation?.lock?.(want).catch(() => {}); } catch { /* not here */ } }
   };
   function setFull(on) {
     if (!voyage) return;
     if (on) {
-      if (document.fullscreenEnabled && voyage.requestFullscreen) voyage.requestFullscreen().catch(() => immersive(true));
+      if (document.fullscreenEnabled && voyage.requestFullscreen) voyage.requestFullscreen().then(turnForHold, () => immersive(true));
       else immersive(true);
     } else {
       if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
@@ -9520,8 +9802,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   fullBtn?.addEventListener('click', () => setFull(!isFull()));
   const onFullChange = () => {
     voyage?.classList.toggle('is-full', document.fullscreenElement === voyage);
-    paintFull();
-    requestAnimationFrame(fit);
+    if (document.fullscreenElement !== voyage) { try { window.screen.orientation?.unlock?.(); } catch { /* not here */ } }
+    fullChanged();
   };
   document.addEventListener('fullscreenchange', onFullChange);
 
@@ -9697,10 +9979,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let press = null;
   const toGame = (event) => {
     const box = canvas.getBoundingClientRect();
-    const y = ((event.clientY - box.top) / box.height) * H;
+    // Through the board's frame: a filled screen shows more than the world, and the world stands inside it.
+    const y = board.y0 + ((event.clientY - box.top) / box.height) * board.h;
     // In the long view the road is drawn narrower toward its far end: undo that for where a tap lands.
-    const x = W / 2 + (((event.clientX - box.left) / box.width) * W - W / 2) / viewScale(y);
-    return { x, y, px: box.width / W };
+    const x = W / 2 + ((board.x0 + ((event.clientX - box.left) / box.width) * board.w) - W / 2) / viewScale(y);
+    return { x, y, px: box.width / board.w };
   };
   // How far a drag goes for one step: =swipe_across (a fraction of a lane) and =swipe_along (in the game's units).
   const stepAcross = () => LANE_W * TUNE.swipe_across;

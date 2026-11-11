@@ -1,0 +1,63 @@
+# Prompts — image-model prompts for the land, ready for Midjourney, held to the canon
+# A design, proposed. Nothing here is generated or committed as art; a prompt is a starting sketch for the maker.
+#>lore_land_surfaces_prompts
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The plates, cards and studies need a shared hand before any image is made, or every picture argues with the last. These prompts carry the land in its own register: earnest fairy tale, dry material comedy, wonder that is made of something. Each names its materials and its light, the way the scene sketches do, and borrows its composition from the laminated panels of the maker as panel-art.mjs reads them: a wash of ground colour, a stepped horizon, discs of light, ink line over it. A prompt is a sketch to react to. What comes back is a study until the maker grounds it, and the plates manifest keeps that state.
+}
+
+^"house_style"{
+  look: "gouache wash ground, stepped horizon in three flat bands, round discs of lantern light, confident ink line drawn over the paint, a little laminate sheen, hand-lettered feeling without letters"
+  light: "lit from within: teal and amber, berries that glow like small lamps, warm windows, never neon"
+  comedy: "dry and material: things are made of flour, oak, glass, brass, ink, frost; the joke is in what something is made of"
+  close: "--style raw --stylize 150 --chaos 8 --no text, letters, words, signature, watermark, logo"
+  plate: "--ar 16:9 (book/images/NN.png is 1280 by 720)"
+  card: "--ar 1:1 for a portrait medallion; --ar 4:5 for a folio-shaped study"
+  never: "no living artist named, no other work named or imitated, no real brand; no children shown; the hat and the figure are never prompted here; the Egg is never shown opened or explained"
+}
+
+^"places"{
+  field: "a frost-silvered field at dawn, turned furrows in long curves, one furrow steaming faintly warm, torch-ant lights threading along the berry roots like a string of tiny lanterns, gouache wash ground, stepped horizon in three flat bands, ink line over paint --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters, people"
+  gate: "a heavy parcel gate in a stone wall during a storm, an iron counterweight on a chain inside the wall doing the work of three, one broad porter with a lantern at his belt holding the gate open, rain in diagonal ink strokes, amber lantern disc, slate blue wash --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters, children"
+  lanes: "five narrow cobbled lanes running up a gentle hill between leaning houses, painted lane lines like dashed ink, a single warm pie on a plate glowing teal and amber in the middle lane, flour dust in the air, stepped horizon, discs of window light --ar 9:16 --style raw --stylize 150 --chaos 8 --no text, letters, people"
+  plaza: "Bonk City plaza at the edge of a feast, curving bronze posts and rain-slick arches, no straight streets, long tables, washtubs steaming at the edge of the square, plates stacked to dry, a quiet corner lit by one lantern --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters, children"
+  court: "a small palace court of chequered flagstones with a worn runner down the middle, brass and plum, a throne that is mostly a very large chair, warm daylight through tall leaded panes --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters"
+  table: "a long banqueting table of wide floorboards and brass dowel pins, set with one empty second place and a folded chair tucked into the table's side, candle discs, plum wash --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters, people"
+  grove: "a berry grove at blue hour where every echo arrives a beat late, ripples in the air drawn as concentric ink rings, teal berries glowing from within, amber lantern quatrefoil hung on a branch --ar 16:9 --style raw --stylize 150 --chaos 8 --no text, letters"
+}
+
+^"cast"{
+  boof: "a working dog with a brown and tan coat walking her rounds along a fence line at dawn, nose to the frost, collar with no tag, earnest and unhurried, portrait medallion, gouache wash, ink line --ar 1:1 --style raw --stylize 120 --chaos 5 --no text, letters, people"
+  ants: "torch-ants carrying tiny lit torches in a line along a berry root, businesslike, very particular about spacing, warm amber against dark soil, macro but painterly --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters"
+  genie: "a genie in the off-season, blue and glass, gliding just above a cobbled street with a set of brass scales and a long needle instrument, kindly and tired, a ledger under one arm --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters, lamp"
+  boonwap: "a warm round pie with a generous golden crust, teal berry filling glowing from within, a slice missing that is somehow still there, holding court on a cake stand, cheerful, never smaller --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters, face"
+  banewap: "a dark lattice-crust pie of plum-black baneberries in a banker's dish, a small brass off switch set into the crust, slightly too pleased with itself --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters, face"
+  bonewap: "a savoury pie with its structure showing, an honest pale crust with every seam declared, resting on an oak beam, a tapping mallet beside it --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters, face"
+  porter: "a broad porter with a lantern on a hook at his belt, rain on his coat, shoulder to a gate, steady as a sack of flour, portrait medallion --ar 1:1 --style raw --stylize 120 --chaos 5 --no text, letters, children"
+  clerk: "a quick, nervous feast clerk with a stack of red-headed slips and a pen behind one ear, at a small desk in the rain, every slip squared --ar 1:1 --style raw --stylize 120 --chaos 5 --no text, letters, words"
+  clown: "a delighted clown with flour on their face mid-laugh, a pie plate held up like a trophy, warm red and cream --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters"
+  mime: "a white-gloved mime with palms flat against a wall that is not there, very clear about it, grey and glass tones, a basket of dark berries at their feet --ar 1:1 --style raw --stylize 150 --chaos 8 --no text, letters"
+}
+
+^"inventions"{
+  storm_weight: "cutaway of a stone wall showing an iron counterweight on a chain and pulley, connected to a heavy gate, diagram-like but painted, ink annotation marks without letters --ar 4:5 --style raw --stylize 120 --chaos 5 --no text, letters, words"
+  torch_lines: "a street being lit torch to torch by a line of ants, each torch lighting the next, seen from above, a lit path curving through dark --ar 4:5 --style raw --stylize 150 --chaos 8 --no text, letters"
+  many_handled_tray: "a wide wooden tray with many handles all around its rim, a pie in the middle, several different hands each holding one handle, seen from above, warm table light --ar 4:5 --style raw --stylize 150 --chaos 8 --no text, letters, faces, children"
+  second_chair: "a table with a chair folded flat into its side, half unfolding as a door opens, lantern light falling across it --ar 4:5 --style raw --stylize 150 --chaos 8 --no text, letters, people"
+  warm_stone: "a smooth doorstep stone worn by many touches, faintly glowing warm, frost all around it but not on it --ar 4:5 --style raw --stylize 120 --chaos 5 --no text, letters"
+}
+
+^"folio_study"{
+  composition: "a laminated folio page, mauve or plum gouache wash, a stepped horizon in flat bands, two or three discs of light, cards and operator glyph shapes laid over the paint as collage, ink line on top, slight laminate glare at one corner --ar 4:5 --style raw --stylize 200 --chaos 12 --no text, letters, words"
+  note: "for studies in the maker's panel language. The scans themselves live at spwashi.com and are shown, never imitated, at their own addresses on texture.website (?/texture.website/*piece)"
+}
+
+?open[
+  "Which plates should be re-made from these, and which drawn studies stay as they are"
+  "Is a glowing face on a pie ever allowed in a plate, or only in the lanes"
+  "Should the house style name a model version, or leave that to the bench"
+]

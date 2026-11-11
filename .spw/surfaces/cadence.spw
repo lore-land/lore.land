@@ -1,0 +1,50 @@
+# A reading for every day, layered: day, week, month, quarter
+# A design, proposed. book/scripts/modules/daily.mjs computes it and the event route ?/day.lore.land shows it (route-events.mjs); nothing links to it yet.
+#>lore_land_surfaces_cadence
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  A serial set twice a month asks a reader to wait thirteen days. A reader who comes every day should find something, and find it again, so that a trope is met more than once and a twist is felt before it is named. Every layer is chosen from the canon as it stands: a room of a released chapter, a trope of the land, a lens of the triangle, a band of the long arc. Nothing new is written for it. The layers nest, so a week is one trope seen from several rooms, a month is one lens laid over several weeks, and a quarter turns the triangle once.
+}
+
+!guards[
+  "It does not replace the stones. New chapters are still set on the 13th and 26th. Stone 16 is due on 2026-11-13 and has no chapter yet; a daily page is no reason to wait on it or to rush it"
+  "Zero new prose. A day shows a room title, its signature, the first lines of its own text, a trope statement and a lens question, all already published"
+  "Never an unreleased chapter. The rooms come from likeness.json, cut at book-extent.mjs TOTAL_CHAPTERS"
+  "The reader local calendar day: a day starts at their own midnight"
+  "Nothing is stored except a reach the reader chooses for themselves"
+]
+
+^"layers"[
+  ^layer[day]{ unit: "one room" from: "likeness.json rooms joined to search.json passages" shows: "chapter, room title, its Spw signature read by room-signature.mjs, the first lines of the passage, a link to read it" }
+  ^layer[week]{ unit: "one trope" from: "tropes.json faces.story.chambers" rule: "every day of the week is a room in a chapter the trope is in; a different room each day until they run out; every trope once a cycle, never the same two weeks running" }
+  ^layer[month]{ unit: "one lens" from: "valence-lens.mjs LENSES" rule: "boon, bane, bone, one a calendar month, so a quarter turns the triangle once. The day links into the chapter with ?lens= so the same room reads differently across the quarter. Each week, a day in each month it touches is a room already leaning that way, when the trope has one" }
+  ^layer[quarter]{ unit: "a band and a teaching metaphor" from: ~"@spw/surfaces/competency.spw" rule: "the land keeps its own quarter of the 104; the cluster facing the pupil turns each quarter; a reader may choose a reach of their own" }
+]
+
+^"why_months"{
+  chosen: "calendar months"
+  reason: "Three months make a quarter exactly, so the lens turn and the arc nest. Moons would drift across quarters; they could carry a lighter layer later"
+}
+
+^"measured"{
+  tool: ~"book/scripts/tools/daily-check.mjs"
+  promises: "no empty layer, no unreleased chapter, every passage an anchor on its prerendered page, one trope a week, no trope two weeks running, the same reading all day"
+  nesting: "how many month-week overlaps the lens touches, and whether every overlap that could be touched is"
+}
+
+^"from_the_book"{
+  stones: "book/content/serial.json: new chapters are set on the 13th and 26th of each month"
+  tropes: "book/content/world/tropes.json: the story and the lanes as two strands of one winding track"
+  lenses: "What could this become? What will this cost? What will remain?"
+}
+
+?open[
+  "Is ?/day.lore.land linked from the home page, from the rail of a chapter, or found only by those who look?"
+  "Should a day show the trope rumour of its chamber from the margins when there is one, so the week and the marginalia rhyme?"
+  "Should a stone day replace the daily room with the new chapter, so the daily reader is handed the serial on the day it moves?"
+  "Should the month carry a second dimension (the room containers: window, room, gathering, passage) once the lens turn is familiar?"
+]

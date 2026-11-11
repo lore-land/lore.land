@@ -13,8 +13,10 @@
  * What you write, tune or tap goes back into the address (replaceState), so a state is an address you can read
  * and pass along. The address bar shows the route as lore.land/?/…, the way it was given.
  */
-import { loadPacks, schemeParts, PLAN_STATES } from '../modules/packs.mjs?v=2026_11_09.H';
-import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_09.L';
+import { loadPacks, schemeParts, PLAN_STATES } from '../modules/packs.mjs?v=2026_11_11.A';
+import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_11.A';
+import { loadEvents, eventState, daysBetween, localDay } from '../modules/route-events.mjs?v=2026_11_11.A';
+import { TOTAL_CHAPTERS, NEXT_STONE } from '../modules/book-extent.mjs';
 import { MATERIALS, PHYSICS, factshiftAddress, physicsDelta } from '../modules/texture-materials.mjs?v=2026_11_09.H';
 import { VERBS, passThrough } from '../modules/quest-middleware.mjs?v=2026_11_09.H';
 import { readTuning, DIALS, DEFAULT_TUNING, noise } from '../modules/spwashi-hand.mjs?v=2026_11_09.H';
@@ -288,7 +290,7 @@ function paintPack(pack, findings) {
       el('span', { className: 'texture-plan-state' }, `${PLAN_STATES[plan.state]} · ${RUNG_WORDS[plan.rung] || plan.rung}`)),
     el('p', { className: 'texture-plan-make' }, plan.make),
     el('p', { className: 'texture-plan-ask' }, el('span', {}, 'Ask · '), plan.ask),
-    el('p', { className: 'texture-plan-ages' }, el('span', {}, 'For · '), plan.ages))));
+    el('p', { className: 'texture-plan-ages' }, el('span', {}, 'Suits · '), plan.suits))));
   const font = (pack.contributes?.fonts || []).map((f) => el('a', { href: f.src, download: '' }, f.family));
   $('[data-download]').replaceChildren('The faces, to set your own words in: ', ...font.flatMap((a, i) => (i ? [' · ', a] : [a])), '. Lettered by spwashi; ask before you use them beyond reading.');
   $('[data-sources]').replaceChildren(...(pack.sources || []).map((s) => el('li', {},
@@ -459,6 +461,69 @@ function paintSurface(packs, findings) {
 const DIALS_BY_OP = DIALS;
 let packsCache = [];
 let findingsCache = null;
+let eventsCache = [];
+
+/* ─── Events, through the same door (route-events.mjs): a standing day, a dated release, a promotional window ─── */
+const longDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+const KIND_WORDS = { standing: 'always on', release: 'a release', promo: 'an event' };
+async function paintEvent(event) {
+  const s = eventState(event, { nextStone: NEXT_STONE, released: TOTAL_CHAPTERS });
+  const when = s.state === 'before' ? ` · opens in ${s.days} day${s.days === 1 ? '' : 's'}` : s.state === 'after' ? ' · closed' : '';
+  $('[data-event-kicker]').textContent = `${event.surface} · ${KIND_WORDS[event.kind] || event.kind}${when}`;
+  $('[data-event-title]').textContent = event.title;
+  $('[data-event-says]').textContent = (s.state === 'before' ? event.before : s.state === 'after' ? event.after : event.during) || event.says || '';
+  const body = $('[data-event-body]');
+  if (event.view === 'day') {
+    const named = /^\d{4}-\d{2}-\d{2}$/.test(route?.value || '') ? new Date(`${route.value}T12:00:00`) : new Date();
+    const { renderDay } = await import('./day-view.mjs?v=2026_11_11.A');
+    await renderDay(body, { date: named });
+    return;
+  }
+  if (event.view === 'stone') {
+    const { chapter, date } = NEXT_STONE;
+    const pad = (n) => String(n).padStart(2, '0');
+    if (TOTAL_CHAPTERS >= chapter) { body.replaceChildren(el('p', {}, el('a', { href: `/book/chapter/${pad(chapter)}/` }, `Chapter ${chapter} is here \u2192`))); return; }
+    const days = daysBetween(localDay(new Date()), date);
+    body.replaceChildren(
+      el('p', {}, days > 0 ? `Chapter ${chapter} is set for ${longDate(date)}, in ${days} day${days === 1 ? '' : 's'}.` : days === 0 ? `Chapter ${chapter} is set for today.` : `Chapter ${chapter} was set for ${longDate(date)}, and has not come yet.`),
+      el('p', {}, el('a', { href: `/book/chapter/${pad(TOTAL_CHAPTERS)}/` }, `Meanwhile, Chapter ${TOTAL_CHAPTERS} \u2192`)));
+    return;
+  }
+  body.replaceChildren(...(event.lands && s.state !== 'before' ? [el('p', {}, el('a', { href: event.lands.startsWith('?/') ? `/${event.lands}` : event.lands }, 'Go there \u2192'))] : []));
+}
+
+/* ─── One piece of texture.website (texture-finds.mjs): drawn until it turns up in the lanes, then the scan ─── */
+let findsMod = null;
+const finds = async () => (findsMod = findsMod || await import('../modules/texture-finds.mjs?v=2026_11_11.A'));
+async function paintPiece(id) {
+  const mod = await finds();
+  const doc = await mod.loadFolios();
+  const piece = doc?.pieces?.find((p) => p.id === id || p.slug === id);
+  const found = piece && Boolean(mod.held()[piece.id]);
+  $('[data-piece-title]').textContent = piece ? (found ? piece.title : 'A piece of texture.website, waiting') : 'No piece by that name';
+  const folio = document.createElement('lore-folio');
+  if (piece) { folio.setAttribute('folio', piece.id); folio.setAttribute('size', '320'); folio.setAttribute('sizes', '(max-width: 40rem) 92vw, 30rem'); }
+  $('[data-piece-body]').replaceChildren(...(piece ? [folio] : []),
+    el('p', {}, found ? 'It turned up in the lanes. It lives at spwashi.com, where it was made.' : piece ? 'It turns up in the lanes, near what it answers, with Pieces of texture.website on in the switches.' : 'The address reads, but no piece goes by that name.'),
+    el('p', {}, el('a', { href: `/${writeRoute({ surface: 'texture.website' })}` }, 'Back to the surface')));
+}
+/* The pieces found so far, on the surface beside the packs. */
+async function paintFound() {
+  const box = $('[data-surface-view]');
+  if (!box) return;
+  let list = box.querySelector('[data-surface-found]');
+  const mod = await finds().catch(() => null);
+  const doc = mod ? await mod.loadFolios() : null;
+  const holding = mod ? mod.held() : {};
+  const pieces = (doc?.pieces || []).filter((p) => holding[p.id]);
+  if (!pieces.length) { if (list?.parentElement) list.parentElement.hidden = true; return; }
+  if (!list) {
+    const wrap = el('div', { className: 'texture-found' }, el('h2', {}, 'Pieces that have turned up'), list = el('ul', { 'data-surface-found': '' }));
+    box.append(wrap);
+  }
+  list.parentElement.hidden = false;
+  list.replaceChildren(...pieces.map((p) => el('li', {}, el('a', { href: mod.pieceRoute(p) }, p.title))));
+}
 
 /* ─── autonomous.feedback, played through: lore.land's client file, a door in every subject ───
  * The doors open the post itself (autonomous.feedback/lore.land[/kind]?at=page); nothing a reader writes rides in
@@ -505,15 +570,19 @@ function paint() {
   }
   paintReceipts(receipts);
   paintRoute();
-  const answer = resolveRoute(route, packsCache);
+  const answer = resolveRoute(route, packsCache, eventsCache);
+  $('[data-event-view]').hidden = answer.kind !== 'event';
+  $('[data-piece-view]').hidden = answer.kind !== 'piece';
   $('[data-maker-view]').hidden = answer.kind !== 'pack';
   $('[data-maker-hero]').hidden = answer.kind !== 'pack';
   $('[data-surface-view]').hidden = answer.kind !== 'surface';
   $('[data-unknown-view]').hidden = answer.kind !== 'unknown' && answer.kind !== 'none';
   $('[data-post-view]').hidden = answer.kind !== 'post';
-  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : answer.kind === 'post' ? `autonomous.feedback · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
+  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : answer.kind === 'post' ? `autonomous.feedback · Lore.Land` : answer.kind === 'event' ? `${answer.event.title} · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
   if (answer.kind === 'post') { paintPost(answer); return; }
-  if (answer.kind === 'surface') paintSurface(answer.packs, findingsCache);
+  if (answer.kind === 'event') { paintEvent(answer.event); return; }
+  if (answer.kind === 'piece') { paintPiece(answer.id); return; }
+  if (answer.kind === 'surface') { paintSurface(answer.packs, findingsCache); paintFound(); }
   if (answer.kind !== 'pack') return;
   // The words and the tuning come from the address (or a letter named in it); otherwise the page's own.
   $('[data-text]').value = route.action || route.value || DEFAULT_TEXT;
@@ -541,11 +610,13 @@ async function start() {
   history.replaceState(null, '', `/${route.raw}${location.hash}`);
   paintRoute();
   $('[data-route-try]').replaceChildren(...TRY.map(([r, says]) => el('li', {}, el('a', { href: `/${r}` }, el('code', {}, r)), ` ${says}`)));
-  const [packs, handData] = await Promise.all([
+  const [packs, handData, events] = await Promise.all([
     loadPacks(),
-    fetch('/book/fonts/spwashi/hand.json').then((r) => { if (!r.ok) throw new Error(`hand.json ${r.status}`); return r.json(); })
+    fetch('/book/fonts/spwashi/hand.json').then((r) => { if (!r.ok) throw new Error(`hand.json ${r.status}`); return r.json(); }),
+    loadEvents()
   ]);
   hand = handData;
+  eventsCache = events;
   packsCache = packs;
   const findingsSrc = packs.flatMap((p) => p.contributes?.data || []).find((d) => /findings/.test(d.src))?.src;
   findingsCache = findingsSrc ? await fetch(findingsSrc).then((r) => r.json()).catch(() => null) : null;

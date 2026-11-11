@@ -6,7 +6,7 @@
  * (lore.land/?/texture.website/@spwashi; texture-routes.mjs). It says what it brings (fonts, data, pages, tools),
  * where every source lives (linked, never copied), and, for a maker, their depiction scheme
  * (spwashi@<lore.land>.{) and a curriculum: plans, each something to make and a question to ask about media,
- * for readers of every age (Intergenerational Media Literacy, .spw/surfaces/texture-website.spw). Removing its
+ * to talk over with whoever is at the table (Intergenerational Media Literacy, .spw/surfaces/texture-website.spw). Removing its
  * line from the index removes it.
  *
  * Portable: the page and the checks (book:check) share it. No DOM at import.
@@ -75,7 +75,7 @@ export function packProblems(pack, { exists = () => true } = {}) {
       if (!PLAN_STATES[plan.state]) problems.push(`${at}: plan ${plan.id} state should be ${Object.keys(PLAN_STATES).join(', ')}`);
       if (!RUNGS.includes(plan.rung)) problems.push(`${at}: plan ${plan.id} rung should be one of ${RUNGS.join(', ')}`);
       if (!plan.make || !plan.ask) problems.push(`${at}: plan ${plan.id} has something to make and a question to ask`);
-      if (!plan.ages) problems.push(`${at}: plan ${plan.id} says who it is for, across ages`);
+      if (!plan.suits) problems.push(`${at}: plan ${plan.id} says what it suits: how it is done, and in what mood`);
     });
     if (!(pack.curriculum || []).length) problems.push(`${at}: a maker's pack has a curriculum`);
   }

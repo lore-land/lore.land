@@ -1,0 +1,53 @@
+# Grants — what an improvement to this tree was for, what was guessed, what it gave and what it took
+# A plan slice is a wish before it is granted. A grant is the same wish afterward, with its price on record.
+# npm run spw:plans fails a grant with no guess, no gain, no price or no receipt: nothing granted is free.
+#>lore_land_state_grants
+#:state #!ledger
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"form"{
+  wish: "!wish says who wanted what, in plain words"
+  guess: "~#expect is what was believed beforehand; if none was written down at the time, it says so"
+  gain: "=boon@before{ @after } a signed bias edge: what it gave"
+  price: "=bane@before{ @after } the same edge, leaning back: what it took. Read here by this ledger only; a tool that treats bias edges as a patch would read bane as revert, and npm run spw refuses rewriting commands"
+  receipt: "~#receipt is the commit"
+  answer: "~#answer(YYYY-MM-DD) says what was found afterward, when something was"
+}
+
+^grant[parser_slimmed]{
+  !wish: "The part of the book that reads Spw should cost a reader less to download"
+  ~#expect: "not written down at the time"
+  =boon@parser_638kb{ @parser_174kb }
+  =bane@every_export{ @named_exports_only }
+  ~#receipt: "94e88ce"
+  ~#answer(2026-11-10): "Three callers fall back silently if an export goes missing, so smoke now confirms each real path ran"
+}
+
+^grant[harness_built]{
+  !wish: "Check the things that pass every check while being wrong"
+  ~#expect: "not written down at the time"
+  =boon@checks_only{ @real_pages_driven }
+  =bane@runs_anywhere{ @needs_chrome_and_is_not_in_ci }
+  =bane@no_keychain_contact{ @chrome_could_reach_the_keychain }
+  ~#receipt: "a614927"
+  ~#answer(2026-11-10): "It launched Chrome with no mock keychain. The flag came in fa37ac8"
+}
+
+^grant[board_follows_what_is_shown]{
+  !wish: "Make better use of the screen when features are toggled"
+  ~#expect: "the empty column came from the grid; the buttons that never re-ran the layout were found later"
+  =boon@fixed_columns{ @columns_from_what_is_shown }
+  =bane@one_layout_for_regulars{ @a_new_setup_row_to_explain }
+  ~#receipt: "db9b613"
+}
+
+^grant[setup_beside_the_lanes]{
+  !wish: "Improve the game menus and settings layout"
+  ~#expect: "a drawer that leaves the lanes in view would serve every window"
+  =boon@sheet_over_the_lanes{ @drawer_beside_them }
+  =bane@measured_at_two_widths{ @layout_list_broke_on_phones }
+  ~#receipt: "db9b613"
+  ~#answer(2026-11-10): "After it merged the maker reported the layout selection was not mobile responsive. The list was too tall for a short sheet, and choosing a layout could throw when a panel stood in the side column"
+}

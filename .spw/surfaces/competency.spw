@@ -1,0 +1,97 @@
+# The long arc: the mathematics a pupil grows into, a quarter at a time, over 26 years
+# A design, proposed. book/scripts/modules/competency.mjs holds the same table as data; nothing reads it yet but the day event, ?/day.lore.land.
+#>lore_land_surfaces_competency
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The Spw cards combine, and how they may combine is mathematics: a set or a sequence, with or without repeats, two cards or six. A reader who stays with the land for years should find the combinations growing with them. So the arc is 104 quarters, thirteen bands of eight, and each band names what it can hold and how the cards combine at that reach. Around the pupil stand seven clusters of teaching metaphor. A quarter turns one of them to face the pupil, and the cone of attention widens from one cluster at the tip of the arc to all seven by its end. The book already has the pupil: the night school in Chapter Fifteen, grown-ups after work, walking brass pie-dividers round paper pies and chalking two nouns, a sigil and a container on the lid of a brace-box.
+}
+
+^"arc"{
+  quarters: 104
+  years: 26
+  bands: 13
+  band_quarters: 8
+  why_thirteen: "A book of the serial is a ring of thirteen chambers. The arc is a ring of thirteen bands"
+  start: "Quarter 1 is July to September 2026, the quarter Chapter One was set. November 2026 is quarter 2"
+  after: "After quarter 104 the arc begins again"
+  module: ~"book/scripts/modules/competency.mjs"
+  shown_at: ~"book/scripts/home/day-view.mjs"
+}
+
+^"from_the_book"{
+  pupils: "Chapter Fifteen: porters, lamplighters and laundresses come after the day to learn their letters, and practise for the feast by walking brass pie-dividers round paper pies to cut even slices"
+  brace_box: "Chapter Fifteen: each pupil drew two nouns from a hat, chose a sigil and a container, and chalked them on the lid of a brace-box. That is a hand of cards, counted: nouns choose two, times twelve sigils, times four containers"
+  pupil_record: "Chapter Fifteen: a pupil is both of those, for as long as the lessons take"
+  feast: "The Feast of the Uneven Slice: one pie, cut, is still exactly one"
+  price: "Chapter Eight: name one, hear the price, pay or fold"
+  weight: "Chapter Five: ask for a little turn, pay a little; ask the world to swing around you, and somebody else catches the weight"
+}
+
+!guards[
+  "Never ask a reader their age. A reach is chosen by the reader, like a lens, and may be changed at any time"
+  "Nothing is stored but that choice, on the reader device. No score, no grade, no record of a wrong answer"
+  "The night-school pupils are grown-ups. Children are never portraits, and no band is a school year"
+  "A band says what a hand of cards can do. It never says what a person can do"
+]
+
+^"bands"[
+  ^band[1]{ name: "Same and different" quarters: "1 to 8" holds: "more and fewer, same and different, pairing one thing with one thing" hand: 1 order: "set" repeats: "no" canon: "Boof reads the field: everything where it belongs" }
+  ^band[2]{ name: "Counting" quarters: "9 to 16" holds: "one-to-one correspondence, the last number said is how many, counting on" hand: 2 order: "set" repeats: "no" canon: "the prophecy is clear about the number: exactly one" }
+  ^band[3]{ name: "Part and whole" quarters: "17 to 24" holds: "halves and quarters of one pie, fair shares, a whole cut is still one pie" hand: 2 order: "set" repeats: "yes" canon: "the Feast of the Uneven Slice" }
+  ^band[4]{ name: "Place value" quarters: "25 to 32" holds: "tens and ones, adding and taking away, the number line" hand: 3 order: "set" repeats: "no" canon: "the clerk: a word at the top, a line for the cause" }
+  ^band[5]{ name: "Equal groups" quarters: "33 to 40" holds: "arrays, multiplication as equal groups, skip counting in rhythm, division as fair sharing" hand: 3 order: "set" repeats: "yes" canon: "rows of the lanes arrive on the beat" }
+  ^band[6]{ name: "Fractions as numbers" quarters: "41 to 48" holds: "fractions on the line, equivalent slices, ratio and rate, measurement" hand: 3 order: "sequence" repeats: "no" canon: "Mr. BoonWAP serves himself in slices and is never smaller" }
+  ^band[7]{ name: "Chance" quarters: "49 to 56" holds: "probability, tallies and data, averages, fair and unfair" hand: 4 order: "set" repeats: "yes" canon: "the wish-scale balances coincidences, not weights" }
+  ^band[8]{ name: "Order, or not" quarters: "57 to 64" holds: "the counting principle, permutations and combinations, choosing k of n" hand: 4 order: "either" repeats: "no" canon: "three correct records of one thing" }
+  ^band[9]{ name: "Rules for patterns" quarters: "65 to 72" holds: "variables, functions, equations as balances, graphs of a rule" hand: 4 order: "sequence" repeats: "yes" canon: "the Genie wants the books even" }
+  ^band[10]{ name: "Proof and the circle" quarters: "73 to 80" holds: "geometry, logic and proof, pi as the way round a pie over the way across" hand: 5 order: "set" repeats: "no" canon: "Wonder About Pi(e)" }
+  ^band[11]{ name: "Recursion and growth" quarters: "81 to 88" holds: "sequences, induction, growth and decay, a thing defined by its own echo" hand: 5 order: "sequence" repeats: "yes" canon: "the Genie becomes an echo you can visit" }
+  ^band[12]{ name: "Structure and change" quarters: "89 to 96" holds: "vectors and matrices, systems of equations, rates of change, accumulation" hand: 5 order: "sequence" repeats: "no" canon: "the heights panel: a lane seen from the side" }
+  ^band[13]{ name: "Trade-offs" quarters: "97 to 104" holds: "models, optimization, games and strategy, marginal cost and benefit, deciding under uncertainty" hand: 6 order: "either" repeats: "yes" canon: "ask for a little turn, pay a little" }
+]
+
+^"counting"{
+  set: "C(n, k): a hand where order does not matter and no card twice"
+  set_with_repeats: "C(n + k - 1, k)"
+  sequence: "n! / (n - k)!: order is meaning"
+  sequence_with_repeats: "n to the k"
+  either: "the sets and the sequences both, since they are different spells"
+  sigil_cards: "n = 12, the twelve sigils. Band 2 makes 66 hands; band 13 makes about three million"
+}
+
+^"cone"{
+  pupil: "the one the metaphors face: in the book, the night school; on the page, whoever is reading"
+  radius: "how many clusters are in view: one at bands 1 and 2, one more every two bands, all seven at band 13"
+  focus: "each quarter of the arc turns the next cluster in the ring to face the pupil"
+  ring: "neighbours share the most, so a widening cone takes in the nearest first"
+}
+
+^"clusters"[
+  ^cluster[kitchen]{ name: "Kitchen and pie" sigil: "%" role: "measure" holds: "part and whole, fair shares, measuring out" }
+  ^cluster[music]{ name: "Music and rhythm" sigil: "~" role: "potential" holds: "counting in time, intervals as ratios, pattern and repeat" }
+  ^cluster[craft]{ name: "Building and craft" sigil: "^" role: "integration" holds: "shape, arrays, structure, proof by making" }
+  ^cluster[market]{ name: "Market and trade" sigil: "$" role: "value" holds: "price, budget, trade-off, the estimate: the microeconomics a pupil can already do at a stall" }
+  ^cluster[garden]{ name: "Garden and ecology" sigil: "&" role: "confluence" holds: "growth, rates, cycles, many lives at once" }
+  ^cluster[theatre]{ name: "Theatre and performance" sigil: "@" role: "perspective" holds: "roles, point of view, order of events, rehearsal" }
+  ^cluster[journey]{ name: "Map and journey" sigil: "." role: "ground" holds: "position, distance, the way from here to there, graphs. Dawnward and hearthward, never a compass" }
+]
+
+^"game_hook"{
+  status: "described, not wired. pie-cards.mjs and pie-powers.mjs are unchanged"
+  hand: "combinatoricsFor(reach).hand caps how many atoms or cards combine into one spell on the bench"
+  order: "ordered decides whether readSpells keeps the order of atoms as meaning or sorts them"
+  repeats: "repeats decides whether the same card may be played twice in one spell"
+  size: "hands(12, rule) tells the bench how large the reader space of spells is at their reach"
+}
+
+?open[
+  "Whose clock is it? The site keeps a quarter of its own (the land is in quarter 2 now), and a reader may choose a reach. The day event shows both. Should the cards follow the land, the reader, or the larger of the two?"
+  "Is quarter 1 the quarter Chapter One was set (July 2026), or the quarter the arc is announced?"
+  "Is a reach a dial in Setup, a spell on the desk (=reach[7]), or both?"
+  "Does the arc begin again after 104 quarters, or end?"
+  "Should the market cluster price things in the same units the Genie does (lanes, sight, coincidences), and never in money?"
+]

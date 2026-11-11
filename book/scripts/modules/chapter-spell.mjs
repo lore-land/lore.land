@@ -35,7 +35,7 @@
 
 import { planRooms, resolveSlots, padChapterNumber, chapterOrdinal } from './chapter-render.mjs?v=2026_11_09.I';
 import { storyVoiceFor } from './story-lexicon.mjs?v=2026_09_26.A';
-import { KIND_SIGIL } from './kinds.mjs?v=2026_11_09.F';
+import { KIND_SIGIL } from './kinds.mjs?v=2026_11_09.G';
 import { ROOM_KINDS, ROOM_RESERVED_WORDS, roomSentence, readRoom } from './room-signature.mjs?v=2026_11_08.W';
 
 /* ─── Words ──────────────────────────────────────────────────────────── */
