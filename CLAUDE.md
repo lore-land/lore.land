@@ -12,7 +12,7 @@ CI (`.github/workflows/ci.yml`) is verification only, no deploy step — Pages s
 
 ## Before calling work done
 
-Run what CI runs, in order: `npm run spw:lint -- --strict`, `spw:seed-bundle:verify`, `book:check`, `tokens:align -- --check`, `build`, `dist:verify`, `spw:probes`. `spw:probes` writes a dated file into `.spw/audits/`; delete it unless it is meant to become `audit_active`.
+Run `npm run check`. It runs what CI runs and stops at the first failure. It writes no dated audit. If a generated file was stale it regenerates it and fails, so look at the diff.
 
 Passing checks do not show that something plays or reads right. `book:check` counts a trope as winding if its `wired` string exists, so exercise the crossing itself. Drive the real page in a browser against a plain static server bound to localhost (`vite dev` proves nothing about deployment). A new player's story cards stop the game clock, so confirm time advances before trusting a run. Sound can be measured but not judged; say so if nobody has listened.
 

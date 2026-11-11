@@ -1,0 +1,12 @@
+# Mount
+#
+# Marks this repository as a mounted consumer of spw-workbench, so its CLI (npm run spw) reads this tree
+# and not a workspace further up the filesystem.
+
+#>spw_mount
+#:mount #!bridge #!submodule
+#:layer #!pragmatics
+
+@root: ~"./_workbench"
+@canon: ~"./_workbench/.spw/index.spw"
+@cli: ~"./_workbench/packages/spw-cli/"

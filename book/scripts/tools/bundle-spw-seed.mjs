@@ -18,6 +18,8 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const ENTRY = path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/index.ts');
+/* Only what lore.land imports, so the rest of the kernel shakes out (about a quarter of the bytes). Add a name here to use it. */
+const EXPORTS = ['parse', 'readBias'];
 const OUTFILE = path.join(ROOT, 'book/scripts/vendor/spw-seed.mjs');
 const VERIFY = process.argv.includes('--verify');
 
@@ -34,8 +36,11 @@ const banner = `/* GENERATED — do not hand-edit.
 const CRYPTO_SHIM = path.join(ROOT, 'book/scripts/tools/crypto-browser-shim.mjs');
 
 const result = await esbuild.build({
-  entryPoints: [ENTRY],
+  stdin: { contents: `export { ${EXPORTS.join(', ')} } from ${JSON.stringify(ENTRY)};`, resolveDir: ROOT, loader: 'js' },
   bundle: true,
+  treeShaking: true,
+  minifyWhitespace: true,
+  minifySyntax: true,
   format: 'esm',
   platform: 'browser',
   target: 'es2022',

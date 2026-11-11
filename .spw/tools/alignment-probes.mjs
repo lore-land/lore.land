@@ -409,10 +409,14 @@ if (!findings.length) {
   lines.push('');
 }
 
-fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
-fs.writeFileSync(OUTPUT, lines.join('\n'));
+// --no-write reports without leaving a dated audit behind (npm run check).
+const NO_WRITE = process.argv.includes('--no-write');
+if (!NO_WRITE) {
+  fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
+  fs.writeFileSync(OUTPUT, lines.join('\n'));
+}
 
-console.log(`[spw:probes] ${defects.length} defect, ${reviews.length} review finding(s) → ${path.relative(ROOT, OUTPUT)}`);
+console.log(`[spw:probes] ${defects.length} defect, ${reviews.length} review finding(s)${NO_WRITE ? '' : ` → ${path.relative(ROOT, OUTPUT)}`}`);
 for (const finding of findings) {
   console.log(`  [${finding.class}] ${finding.probe} :: ${finding.surface} — ${finding.evidence}`);
 }

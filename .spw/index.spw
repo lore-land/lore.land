@@ -64,6 +64,7 @@
   knobs: "@spw/surfaces/knobs.spw"
   tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
   audit_platform: "@spw/audits/platform-ship-audit-2026-07-16.spw"
+  session_residue: "@spw/audits/session-opus-fable-2026-11-10.spw"
   dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw"
 }
 
@@ -90,8 +91,9 @@
 
 ~direction{
   from_audit: "2026-08-26 alignment probes (supersedes 2026-07-22 — plates public, theme_parity closed)"
+  tooling: "2026-11-10: npm run check is the door; npm run spw is the workbench CLI, to be used read-only"
   order: [
-    "PLAN.E is the season's direction: a living book that models future books, taught as a curriculum of lessons (L01–L08 read back from what exists; L09–L18 next, one lesson per increment)",
+    "PLAN.E is the season's direction and PLAN.F its publishing dimensions. Open work is cut into one-session slices there, each naming its files, who decides, and the command that checks it. Pick one slice; do not survey",
     "Book Two (Wonder About Pi(e)) is under way: ch14 The Thursday Nobody Kept, ch15 Pupil, Parcel, or Door (set 2026-11-05). Next stone ch16 on 2026-11-13 — the second place at BoonWAP's table; see wonder-about-pie.spw#book_two chambers.c16",
     "on every stone: update book/content/serial.json `next`, add the chapter to index.html Contents + #latest, run assets:brand --og --chapters=NN, chapters:build, spw:export",
     "plates 14 and 15 are drawn studies over seed paintings — graduate to painted plates when grounded (plates-manifest !state study)",

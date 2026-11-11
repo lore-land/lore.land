@@ -20,7 +20,7 @@ const ROOT = process.cwd();
 const SPW_ROOT = path.join(ROOT, '.spw');
 const STRICT = process.argv.includes('--strict');
 
-const SKIP_DIRS = new Set(['_workbench']);
+const SKIP_DIRS = new Set(['_workbench', 'gen']);
 
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

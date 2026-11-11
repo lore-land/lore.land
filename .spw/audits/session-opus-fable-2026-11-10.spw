@@ -1,0 +1,52 @@
+# Session residue — 2026-11-10: Claude Opus 5.5 working, Claude Fable 5.2 advising
+# A dated record of one long session, for the next one. What happened, the evidence, and the sensor that now catches it,
+# or none, where only the maker can. Counts are from the session log. This file decides nothing and answers no wonder.
+#>session_opus_fable_2026_11_10
+#:cache #!snapshot #!session
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  Most of a session vanishes with its context. What is worth keeping is small: where the first reading was wrong, what showed it, and whether anything would catch it next time. A rule written down is a suggestion. A check that fails is a sensor. Where neither can help, this file says that a person has to read.
+}
+
+^"session"{
+  operation: "cache"
+  do_not: "Do not read this as a ranking of models. One session, one task, one maker."
+  shape: "One broad brief, then several shorter turns. The working model ran every command. The advising model read the transcript at three points and wrote nothing."
+  counts: "about 116 tool calls before this file; the first write near call 32, by a rough count; advice at calls 20, 68 and 104"
+  gap: "No advice was asked during the turns between calls 68 and 104, which moved files, rewrote the public guide, and amended a commit"
+}
+
+%findings[
+  { id: "name_match" happened: "A table of who shares a room was built by matching names in chapter JSON. It counted block types, place names and mentions as people." evidence: "Rebuilt from paragraph text: the two pies share one room, in Chapter Twelve" sensor: "none. The maker reads, and a pairing cites its paragraph" }
+  { id: "silent_read" happened: "A command that read a key plan failed without being noticed, and the work went on as if it had been read." evidence: "The advisor saw the empty output" sensor: "none. Read the output of a read" }
+  { id: "unmarked_change" happened: "A feature rewrote passages with no mark on the page, while its contract said nothing prerendered leaves." evidence: "Advisor review; every check was green" sensor: "the note and the marks exist; no check asserts them" }
+  { id: "stopped_clock" happened: "A game smoke test passed with the game clock stopped." evidence: "The caption was identical before and after seven seconds" sensor: "CLAUDE.md says to confirm time advances; the local harness seeds a returning player" }
+  { id: "wired_string" happened: "A trope counted as winding because a string said it was wired." evidence: "book:check reads the field and not the crossing" sensor: "none yet; the crossing was exercised by hand" }
+  { id: "self_comparison" happened: "An old and new parser differed on 219 of 219 samples, and the difference was timing fields." evidence: "The old bundle also differed from itself on timestamp and duration" sensor: "none. Compare a thing with itself before comparing it with another" }
+  { id: "wrong_workspace" happened: "The workbench CLI, finding no mount here, walked up and read a workspace in the home directory, then wrote a cache there." evidence: "It reported 3 files where this tree has 86" sensor: ".spw/mount.spw; npm run spw -- doctor names the root" }
+  { id: "hand_readers" happened: "Two more small readers were added beside the parser, for the way line and the motifs." evidence: "way-through.mjs parseWay, pie-tropes.mjs readMotifs" sensor: "book:check holds both to the interpreter. The count of readers still grew" }
+  { id: "loose_test_server" happened: "A throwaway test server listened on every interface and did not contain its paths." evidence: "Read back from its own code" sensor: "none tracked. The local harness binds localhost and refuses paths outside the repo, but it is gitignored" }
+  { id: "misrun_steps" happened: "A hand-written loop over the CI steps ran two of them wrongly and reported failure." evidence: "Exit 1 from a missing script name" sensor: "npm run check reads the steps from ci.yml" }
+]
+
+^"what_advice_changed"{
+  before_building: "It found the failed read and the bad table, and put the work in an order where each step ended on a check."
+  before_declaring_done: "With every check green, it found the unmarked rewrite, a continuity error in new prose, spoilers in reasons shipped on by default, the stopped clock, and a sound regression."
+  pattern: "Every blocking catch was a choice about the maker's text or a default. Checks do not see those."
+  not_from_advice: "The designs and the prose came from the working model. Each point of advice was verified before it was acted on, and two were departed from."
+}
+
+?wonders[
+  ?mid_build_advice{ ~#with: "advice at the start and the end, and none between" $%["a call after the first reader-facing change would have caught the unmarked rewrite sooner", "it would have changed nothing", "it would have slowed the build more than it saved"] ~#expect: "it would have caught it sooner" ~#probe(run): "in the next session, ask after the first change a reader can see, and compare what is found with what the end review finds" }
+  ?reader_count{ ~#with: "small readers held to the interpreter" $%["the count falls as the 174 KB parser is used directly", "it holds, because the readers exist to avoid waiting for the parser", "it grows"] ~#expect: "it holds" ~#probe(run): "grep -rl 'matchAll' book/scripts/modules book/scripts/home, at the next release" }
+  ?crossing_sensor{ ~#with: "a trope is winding if its wired field is set" $%["a check can run each crossing headless", "only some can be run", "the field is the right level of claim"] ~#expect: "only some can be run" ~#probe(read): "try it for the two crossings laid on 2026-11-10" }
+]
+
+^"next_session"{
+  open_first: "PLAN.E and PLAN.F slices; npm run check is the door"
+  shape: "One channel, one owner, one thing finished. Another survey is the task to refuse"
+  advice: "Consult after orientation, after the first change a reader can see, and before calling it done"
+}

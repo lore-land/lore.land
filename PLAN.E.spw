@@ -19,6 +19,8 @@
   dialect: spw_native
   style: curriculum_lessons
   normative_voice: direction
+  status: "2026-11-10: every open increment carries its operation, files, who decides, and the command that checks it. Those fields are an agent's proposals, for the maker to keep or strike"
+  do_not: "Do not start a slice with no check. Do not mark a root from memory. Do not write the maker's decisions as an agent's."
   lesson_count: 28
   dependency_model: lessons_with_prerequisites
   &curriculum_reader: "a future maker of lore.land, or of another book built on its engine"
@@ -293,8 +295,10 @@
   i1: { lessons: [L13], release: "2026_11_06.A", note: "types + book:check, so every later lesson is validated" }
   i2: { lessons: [L15, L16], release: "2026_11_06.A", note: "living slots + soil glints as a trial; slots seeded in every chapter" }
   i3: { lessons: [L14], release: "2026_11_06.A", note: "bracework blocks read by the interpreter" }
-  i4: { lessons: [L09, L10], release: "next", note: "colophon wonder links; wonder prompts on the almanac" }
-  i5: { lessons: [L11, L12], release: "next", note: "snapshot faces and kind signatures" }
+  i4: { lessons: [L09], release: "next", note: "colophon wonder links are live; L10's prompts have landed", operation: "audit", files: "book/scripts/tools/book-check.mjs, a count of wonders with fewer than two outbound links", decides: "the agent; the maker if a wonder is meant to be a dead end", check: "npm run book:check reports dead ends and fails on a new one" }
+  i5: { lessons: [L11], release: "next", note: "a snapshot face for the wonder card", operation: "align", files: "book/scripts/modules/almanac.mjs, book/styles/chapter/reading.css", decides: "the maker, on the face; the agent, on the fit", check: "headless at 1080x1350 and 1200x630: the name is not cropped, in paper, ember and night" }
+  i5s: { lessons: [L12], release: "next", note: "kinds have an ink; creatures do not yet breathe and contrivances do not yet tick", operation: "align", files: "book/styles/chapter/reading.css, book/scripts/modules/kinds.mjs", decides: "the maker, on the motion", check: "a creature, a contrivance and a bracework mark can be told apart with motion off" }
+  i5r: { lessons: [L27, L28], release: "2026_11_10.A", note: "your way through as one line; a reason and a one-edit wonder for each chapter; themes for the people in the lanes; all as trials or per-cohort defaults" }
   i5b: { lessons: [L19, L20, L21, L22], release: "2026_11_06.B", note: "at the table; hold the light; frame it; the sayings" }
   i5c: { lessons: [L23, L24, L25], release: "2026_11_06.D", note: "begin again; other tellings and the hour dial; bindings; the page and rail set as a pair on wide screens" }
   i5d: { lessons: [L26], release: "2026_11_06.E", note: "the binder at the folio house: the home page's look as a scene" }
@@ -311,7 +315,7 @@
   i5j: { lessons: [L28, L22], release: "2026_11_07.G", note: "the pies' voices in the chapters (6, 11, 12, 15) shaped so the game's lore lines read as more of the same talk" }
   i5i: { lessons: [L28], release: "2026_11_07.F", note: "the pies let slip lore as the visitor finds the land; captions under the carry; aimed throws; the aura of flour and boonberries; piles as composable ramps; a legend drawn by the game" }
   i5h: { lessons: [L28], release: "2026_11_07.D", note: "Mr. BoonWAP holds court and Mr. BaneWAP meddles; throws with a gold moment; flour slows and sets the story back; rows with a way through; doors between the levels and the chapters, and the way home" }
-  i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book" }
+  i6: { lessons: [L17, L18], release: "later", note: "generator contract; book.config.json and a starter book", operation: "contract", files: ".spw/tools/trope-prompt.mjs, a new spw:scene-seed, book.config.json", decides: "the maker: whether a second book is wanted yet", check: "copying content/ and book.config.json into a fresh checkout passes npm run check" }
 ]
 
 ~"root_vocabulary"{
@@ -322,17 +326,17 @@
 }
 
 %"roots"{
-  .note: "Where each lesson and direction stands, read from code and pages on 2026-11-08. A root is read, never chosen; a turn that changes the site moves it (!relay)."
+  .note: "Where each lesson and direction stands, read from code and pages on 2026-11-08; L07, L10, L28 and model re-read 2026-11-10. A root is read, never chosen; a turn that changes the site moves it (!relay)."
   ^root[L01]{ !state: live .at: "chapter-render.mjs" note: "fifteen chapters prerendered" }
   ^root[L02]{ !state: live .at: "reading-switches.mjs" note: "a return note for every release (changes.json)" }
   ^root[L03]{ !state: live .at: "valence-lens.mjs" note: "a lens at the head of every chapter" }
   ^root[L04]{ !state: live .at: "xray-reading.mjs" }
   ^root[L05]{ !state: live .at: "semantic.json" note: "folded by lore-fold.mjs" }
   ^root[L06]{ !state: live .at: "sightings.mjs" note: "nine strokes, no name" }
-  ^root[L07]{ !state: live .at: "/almanac/" note: "57 wonders, 15 sayings" }
+  ^root[L07]{ !state: live .at: "/almanac/" note: "81 wonders, 15 of them sayings" }
   ^root[L08]{ !state: live .at: "serial.json" note: "next stone 2026-11-13" }
   ^root[L09]{ !state: prototype .at: "chapter-render.mjs" note: "Wonders here on every colophon; no dead-end probe (c027)" }
-  ^root[L10]{ !state: live .at: "almanac-page.mjs" note: "57 of 57 wonders carry a prompt" }
+  ^root[L10]{ !state: live .at: "almanac-page.mjs" note: "66 of 81 carry a prompt; the 15 without are the sayings" }
   ^root[L11]{ !state: prototype .at: "stage-directions.mjs" note: "Frame this is live; the wonder card has no snapshot face" }
   ^root[L12]{ !state: prototype .at: "book/styles/chapter/reading.css" note: "an ink per kind; no breath, no tick" }
   ^root[L13]{ !state: live .at: "book/schema/book-types.mjs" note: "book:check in CI" }
@@ -350,10 +354,10 @@
   ^root[L25]{ !state: live .at: "bindings.css" note: "six bindings" }
   ^root[L26]{ !state: live .at: "bindery.mjs" }
   ^root[L27]{ !state: live .at: "story-directions.mjs" note: "and ?spell= (projection.mjs)" }
-  ^root[L28]{ !state: live .at: "/pie/" note: "cards, carries, segues; 29 lore lines" }
+  ^root[L28]{ !state: live .at: "/pie/" note: "cards, carries, segues; 38 lore lines; themes per character" }
   ^root[north_star]{ !state: prototype note: "alive while read is live; an engine to pour into waits on L18" }
   ^root[living]{ !state: live .at: "living.mjs" }
-  ^root[model]{ !state: prototype .at: "book/scripts/modules/" note: "10 of 63 modules still mention Boof, BoonWAP or Bonk" }
+  ^root[model]{ !state: prototype .at: "book/scripts/modules/" note: "22 of 86 modules mention Boof, BoonWAP or Bonk" }
   ^root[legible]{ !state: live .at: "/scriptorium/#desk" note: "?[living], ?[pie], ?[links], and each chapter's spell" }
   ^root[screenshot]{ !state: prototype note: "frames, share cards, the pie asset sheet; no wonder card face" }
   ^root[linked]{ !state: prototype .at: "material-paths.mjs" note: "doors lead onward; dead ends uncounted" }

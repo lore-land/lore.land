@@ -2,6 +2,16 @@
 #>lore_land_workspace
 #:process #!reference
 
+^"roots"{
+  @spw: ~"."
+  @repo: ~".."
+  @index: ~"./index.spw"
+  @mount: ~"./mount.spw"
+  @surfaces: ~"./surfaces"
+  @runtime: ~"./runtime"
+  @chapters: ~"./chapters"
+}
+
 ^intent{
   hypothesis: "Story pages are readable as prose, shareable as intrigue, installable as an honest PWA, and inspectable as Spw runtime systems."
   architecture: ["chapter-json", "DOM runtime", "Spw handles", "ebook navigation", "ethos probes"]

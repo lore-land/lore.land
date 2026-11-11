@@ -8,5 +8,8 @@ tools/audio_synthesis/pie-sketchbook.html
 # Open sounds fetched by npm run sounds:fetch (book/content/sound-library.json); raw sources stay out of the site.
 sound-library/
 
+# The workbench CLI's own cache (npm run spw).
+.spw/gen/
+
 # A local working room: drafts not yet released, and tooling tied to one machine. Everything tracked is public.
 .studio/
