@@ -87,7 +87,8 @@ for (const [name, src] of TEXTS) {
 }
 
 // Negative controls: half a parse maps to nothing, and says so.
-for (const bad of ['^board{ =tap[go }', "~<rationale>{ the maker's line }"]) {
+// (Since workbench 9ef3d22 a capsule-led body may hold an apostrophe, so the control uses a plain body, which may not.)
+for (const bad of ['^board{ =tap[go }', "^block{ the maker's line }"]) {
   const parsed = parse(bad, { lexProfile: 'prose' });
   const g = playGraph(parsed, { source: bad });
   if (g.ok || g.nodes.length || !/did not read whole/.test(g.why)) fail(`negative control mapped: ${bad} → ${JSON.stringify({ ok: g.ok, nodes: g.nodes.length, why: g.why })}`);
