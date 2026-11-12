@@ -2,6 +2,6 @@
 export const TOTAL_CHAPTERS = 15;
 /** Book One is a ring of thirteen; each later book starts a new ring (a second day). */
 export const CHAMBERS_PER_RING = 13;
-export const BOOKS = Object.freeze([{"number":1,"title":"The Unspent Wish","first":1,"last":13},{"number":2,"title":"Wonder About Pi(e)","first":14,"last":null}]);
+export const BOOKS = Object.freeze([{"number":1,"title":"The Unspent Wish","first":1,"last":13},{"number":2,"title":"Wonder About Pi(e)","first":14,"last":26}]);
 export const NEXT_STONE = Object.freeze({"chapter":16,"date":"2026-11-13"});
 export const bookFor = (n) => BOOKS.find((book) => n >= book.first && (book.last == null || n <= book.last)) || BOOKS[0];

@@ -30,6 +30,7 @@ import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
+import { FORMER_LIVES } from '../home/pie-mimes.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
 import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
 import { parseWay, waySpell } from '../modules/way-through.mjs';
@@ -459,6 +460,18 @@ for (const entry of packIndex.packs) {
   const plans = pack.curriculum || [];
   if (plans.length) notes.push(`packs: ${pack.id}: ${plans.filter((p) => p.state === 'done').length} of ${plans.length} plans done, ${plans.filter((p) => p.state === 'open').length} under way`);
 }
+/* The mimes' former lives (pie-mimes.mjs): nobody says anything, the land's proportions hold, and the held words stay out. */
+{
+  const total = FORMER_LIVES.reduce((n, l) => n + l.weight, 0);
+  const share = (key) => FORMER_LIVES.filter((l) => l[key]).reduce((n, l) => n + l.weight, 0) / total;
+  FORMER_LIVES.forEach((l) => {
+    if (/["\u201c\u201d]/.test(l.was)) error('mimes', `${l.id}: a former life is a description, not a line`);
+    if (/wap\s*boy|wabo|\bhat\b|figure|egg/i.test(l.was)) error('mimes', `${l.id}: names something held`);
+    if ([l.panes, l.bakes, l.prospered].filter(Boolean).length > 1) error('mimes', `${l.id}: one kind of former life at a time`);
+  });
+  if (share('bakes') < 0.15 || share('panes') < 0.15 || share('prospered') < 0.3) error('mimes', 'the former lives lost their proportions (bakers, broken glass, years of doing well)');
+  notes.push(`mimes: ${FORMER_LIVES.length} former lives; ${Math.round(share('prospered') * 100)}% did well for years, ${Math.round(share('panes') * 100)}% swept up real glass, ${Math.round(share('bakes') * 100)}% bake`);
+}
 /* Events through the ?/ door (route-events.mjs): each entry whole, no two on one surface, none on a pack's surface. */
 {
   const eventsFile = await read('book/content/events.json').catch(() => null);
@@ -642,6 +655,10 @@ const books = serial.books || [];
 books.forEach((book, i) => {
   const next = books[i + 1];
   if (next && book.last != null && next.first !== book.last + 1) error('serial', `book ${next.number} does not follow book ${book.number}`);
+  // Books are rings of thirteen (book-extent.mjs CHAMBERS_PER_RING): each begins at 13k + 1 and holds thirteen chapters.
+  if ((book.first - 1) % 13 !== 0) warn('serial', `book ${book.number} begins at chapter ${book.first}, not at the start of a ring of thirteen`);
+  if (book.last != null && book.last - book.first + 1 !== 13) warn('serial', `book ${book.number} holds ${book.last - book.first + 1} chapters, not thirteen`);
+  if (book.last == null) warn('serial', `book ${book.number} has no last chapter; a ring of thirteen ends at ${book.first + 12}`);
 });
 if (serial.next && !/^\d{4}-\d{2}-\d{2}$/.test(serial.next.date || '')) error('serial', 'next.date must be YYYY-MM-DD');
 

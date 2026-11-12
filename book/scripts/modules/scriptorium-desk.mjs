@@ -320,7 +320,7 @@ export async function initScriptoriumDesk() {
     // The land answers (land-answers.mjs): anything written with a sign or a container that is not a desk spell is
     // read, and acknowledged in the book's own words, or answered honestly with what was read and what is near.
     const owned = spell && (DESK_OWNS[spell.op]?.test(spell.handle) || (spell.op === '=' && SWITCHES.some((entry) => entry.id === spell.handle)) || (spell.op === '@' && chapterFrom(spell.handle)));
-    const switchOn = (id) => document.documentElement.getAttribute(`data-switch-${id}`) === 'on';
+    const switchOn = (id) => readSwitches().values?.[id] === 'on';
     if (!owned && switchOn('land-answers') && /^[!?~@&*^#.=%$<{[(]/.test(text)) {
       const [land, seed] = await Promise.all([loadLand({ withWeight: switchOn('reasons') }), loadSeed()]);
       const heard = landAnswer(land, text, { parse: seed?.parse || null, readBias: seed?.readBias || null });

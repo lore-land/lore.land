@@ -176,7 +176,7 @@ import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterLis
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_11.A';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
-import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_09.F';
+import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_11.A';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, crossRead, fuzz, stressReport, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
@@ -184,7 +184,7 @@ import { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, remembers, portraitSVG, cha
 import { placeSVG, tropeEmblemSVG, PLACES } from '../modules/panel-art.mjs?v=2026_11_11.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
-import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_10.B';
+import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_11.A';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_10.A';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
 import { loadMotifs } from './pie-tropes.mjs';
@@ -192,13 +192,14 @@ import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modu
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_11.A';
+import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
   BIT_COLORS, CAUSES, CARRIERS, CHAPTER_SCENE, DIMENSIONS_GAINED, EGG_ODDS, HIGH_CLEARS,
   HOP_HANG, hopCurve, INTRO, JUMP_DUR, KNOCKS, LOW, MEET, MINIS, SCENES, SCENE_WHIMSY_DEFAULTS, SCHEMES, SLIPS,
   WHIMSY_DEFAULTS, WIDE, Z, carrierById, carrierStats, drawCarrierLot, pad2,
-} from './pie-world.mjs?v=2026_11_10.A';
+} from './pie-world.mjs?v=2026_11_11.A';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -242,6 +243,8 @@ function readRecord() {
       met: Array.isArray(parsed.met) ? parsed.met : [],
       cards: Array.isArray(parsed.cards) ? parsed.cards : [],
       qa: Array.isArray(parsed.qa) ? parsed.qa.slice(-200) : [],
+      // The mimes remember (pie-mimes.mjs, a trial): imaginary panes broken, over every carry.
+      mimes: { shattered: Math.max(0, Number(parsed.mimes?.shattered) || 0) },
       view: { story: parsed.view?.story !== false, zen: parsed.view?.zen === true, hand: parsed.view?.hand === 'left' ? 'left' : 'right', labels: parsed.view?.labels === true, heights: parsed.view?.heights !== false, heightsCfg: parsed.view?.heightsCfg && typeof parsed.view.heightsCfg === 'object' ? parsed.view.heightsCfg : null,
         // ⚙ Setup: kept as chosen, held to their ranges.
         size: parsed.view?.size === 'fit' ? 'fit' : Number.isFinite(parsed.view?.size) ? Math.min(1.45, Math.max(0.8, parsed.view.size)) : undefined,
@@ -472,6 +475,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   let fullOn = false;   // the voyage has the whole display (fullscreen, or the immersive fallback)
   const filling = () => fullOn && setting('fill') === 'fill';
   const fillFrame = () => ctx.fillRect(board.x0, board.y0, board.w, board.h);
+  // The reader's switches, read from where reading-switches.mjs keeps them (its resolved map, as the almanac reads
+  // it): this page does not set the data-switch-* attributes the chapters do. Read once, and again on a change.
+  let switchValues = null;
+  const switchOn = (id) => {
+    if (!switchValues) { try { switchValues = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null')?.resolved || {}; } catch { switchValues = {}; } }
+    return switchValues[id] === 'on';
+  };
+  window.addEventListener('storage', (event) => { if (!event.key || event.key === 'lore.switches.v1') switchValues = null; });
+  // The mimes remember (pie-mimes.mjs), a trial: former lives, bakeries, and imaginary panes that are not forgotten.
+  const mimesOn = () => switchOn('mimes-remember');
+  const mimeGrudge = () => grudgeOf(record.mimes?.shattered || 0);
   const soundToggle = root.querySelector('[data-pie-sound]');
   const cardLinks = card.querySelector('[data-pie-card-links]');
   const loreOut = document.querySelector('[data-pie-lore]');
@@ -1067,7 +1081,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Texture finds (texture-finds.mjs), a trial: with it on, a room that answers one of the maker's pieces on
    * texture.website, or a carry's end, may find one, at most one a carry. It is said in the caption, and its address
    * is ?/texture.website/*<piece>, where the scan is shown from spwashi.com. Off, nothing is loaded. */
-  const findsOn = () => document.documentElement.getAttribute('data-switch-texture-finds') === 'on';
+  const findsOn = () => switchOn('texture-finds');
   let findsMod = null;
   async function textureFind(moment) {
     if (!findsOn()) return null;
@@ -1877,6 +1891,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (blocked.size >= count) break;
       if (blocked.has(lane)) continue;
       let kind = pick(solids);
+      // A grudge the land holds turns a few more of a mime-keeping room's solid things into mimes, later on.
+      if (mimesOn() && kind !== 'mime' && solids.includes('mime') && mimeInstead(mimeGrudge(), Math.random())) kind = 'mime';
       if (kind === 'dividers' || kind === 'mime') {
         const pair = [lane + 1, lane - 1].find((other) => other >= 0 && other < LANES && other !== run.safe && !blocked.has(other));
         if (pair == null) {
@@ -1885,6 +1901,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // A mime, and beside it the wall it is miming: invisible, and also there.
           const mime = makeThing('mime', lane);
           mime.facing = Math.sign(pair - lane);
+          if (mimesOn()) {
+            mime.former = formerLife(Math.random());
+            if (mime.former.panes) run.glassSeen = (run.glassSeen || 0) + 1;
+          }
           const wall = makeThing('mimewall', pair);
           run.things.push(mime, wall);
           blocked.add(lane);
@@ -2593,6 +2613,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
         }
         return undefined;
+      }
+      if (thing.kind === 'mimewall' && mimesOn() && !thing.shattered) {
+        // The pane is imaginary, so it breaks: the slice goes on, the lane opens, the mime only looks. Remembered.
+        thing.shattered = true;
+        thing.wapped = true;
+        thing.wapT = 0;
+        const owner = run.things.find((m) => m.kind === 'mime' && !m.wapped && Math.abs(m.y - thing.y) < 8 && Math.abs(m.x - thing.x) < LANE_W * 1.5);
+        if (owner) owner.aghast = run.t;
+        record.mimes = record.mimes || { shattered: 0 };
+        record.mimes.shattered += 1;
+        writeRecord(record);
+        run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: 'IMAGINARY GLASS' });
+        if (!run.shatterSaid) { run.shatterSaid = true; say('The slice went through a mime\u2019s imaginary pane. Nothing happens. The mime saw.'); }
+        continue;
       }
       if (thing.kind === 'mime' || thing.kind === 'mimewall') {   // caught in an invisible box
         tally('maw', 1, 'boxed');
@@ -4296,7 +4330,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     say(`Mr. BoonWAP holds court; clowns flock to him. ${said ? said.text : ''}`);
   };
   const scheme = () => {
-    const id = pick(Object.keys(SCHEMES).filter((key) => key !== 'march' || allowed('march')));
+    const ids = Object.keys(SCHEMES).filter((key) => key !== 'march' || allowed('march'));
+    // Panes broken in earlier chapters and carries make the march easier to call (pie-mimes.mjs): never at once.
+    if (mimesOn() && ids.includes('march')) ids.push(...Array(marchWeight({ grudge: mimeGrudge(), glassSeen: run.glassSeen || 0 })).fill('march'));
+    const id = pick(ids);
     if (!met('bane')) { record.met.push('bane'); writeRecord(record); }
     const fed = Math.min(5, run.baneStore || 0);
     run.baneStore = 0;
@@ -4702,6 +4739,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
               ? 'The mimes shake flour into the air for Mr. BaneWAP. Mr. BoonWAP, holding court, eats it.'
               : 'Mimes Against WAP shake flour into the air, for Mr. BaneWAP. It feeds his schemes.');
           }
+        }
+        if (thing.kind === 'mime' && thing.former?.bakes && !thing.floured && thing.y > run.y - 10 && Math.abs(thing.x - run.x) < LANE_W * 1.6) {
+          // A mime who bakes, passed close: a little flour for the crust, and no fuss about it.
+          thing.floured = true;
+          run.aura = Math.min(1, run.aura + BAKERY_FLOUR);
+          run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: 'FLOUR, FROM A MIME' });
+          if (!run.bakerySaid) { run.bakerySaid = true; say('A mime who works at a bakery left a little flour on the crust as you passed.'); }
         }
         if (thing.kind === 'march' && !thing.passedBy && thing.y > run.y + 30) {
           // A march that gets past the pie unanswered has made its point.
@@ -5601,8 +5645,42 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       case 'mime':
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - thing.wapT * 1.2);
         drawMime(x, y, thing.facing || 1, run.t + thing.born);
+        if (thing.former?.bakes) {
+          // An apron, and flour on it.
+          ctx.fillStyle = 'rgba(255, 252, 244, 0.95)';
+          ctx.strokeStyle = 'rgba(40, 40, 46, 0.5)';
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.roundRect(x - 6, y - 2, 12, 14, 2); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = 'rgba(236, 226, 204, 0.9)';
+          [[-3, 3], [2, 6], [-1, 9], [4, 1]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, 0.9, 0, Math.PI * 2); ctx.fill(); });
+        }
+        if (thing.aghast != null && run.t - thing.aghast < 2.4) {
+          // Saw it happen: two short strokes beside the head, the way comics have always drawn a start.
+          ctx.strokeStyle = '#2a2a30';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.moveTo(x + 9, y - 22); ctx.lineTo(x + 13, y - 27); ctx.moveTo(x + 11, y - 18); ctx.lineTo(x + 16, y - 20); ctx.stroke();
+        }
         break;
       case 'mimewall': {
+        if (thing.shattered) {
+          // The imaginary pane in pieces: outlines only, falling, as a mime would show it.
+          const k = Math.min(1, (thing.wapT || 0) / 1.1);
+          ctx.globalAlpha = Math.max(0, 1 - k);
+          ctx.strokeStyle = 'rgba(150, 175, 200, 0.9)';
+          ctx.setLineDash([3, 3]);
+          ctx.lineWidth = 1;
+          [[-14, -12, 1], [6, -16, -1], [-4, 2, 1], [12, 6, -1], [-12, 10, -1]].forEach(([dx, dy, s], i) => {
+            const fall = k * (16 + i * 5);
+            ctx.beginPath();
+            ctx.moveTo(x + dx, y + dy + fall);
+            ctx.lineTo(x + dx + 8 * s, y + dy + 3 + fall);
+            ctx.lineTo(x + dx + 3 * s, y + dy + 9 + fall);
+            ctx.closePath();
+            ctx.stroke();
+          });
+          ctx.setLineDash([]);
+          break;
+        }
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - thing.wapT * 1.2);
         // The wall a mime is miming: a shimmer, two gloved hands pressed flat against it.
         const shimmer = reduced?.matches ? 0.5 : 0.5 + Math.sin(run.t * 3 + thing.born) * 0.5;
@@ -8895,6 +8973,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (ask) {
       const inBook = nodeOf('div', 'pie-cardface-ask');
       inBook.append(nodeOf('span', 'pie-cardface-spell-label', 'In the book, as you met it'));
+      if (ask.former) inBook.append(nodeOf('p', 'pie-cardface-ask-wonder', `This one: ${ask.former}.`));
       if (ask.wonder) {
         const w = ask.wonder;
         const p = nodeOf('p', 'pie-cardface-ask-wonder');
@@ -9006,6 +9085,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       isNew: false,
       ask: {
         wonder: found?.wonder || null,
+        former: found?.former && mimesOn() ? formerWords(found.former) : null,
         passage: now ? { chapter: now.leg.n, title: now.para.title, room: now.para.room, words: now.para.text.split(/\s+/).slice(0, 12).join(' '), href: passageHref(now) } : null
       }
     });
@@ -9022,7 +9102,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (!kind || t.wapped || t.y < 20 || t.y > H) return;
       const c = CARDS[kind];
       const from = c.chapter || INTRO[t.kind] || null;
-      const label = `${(t.wonder?.name || c.name).replace(/^(A|An|The) /, '').slice(0, 16)}${from ? ` · ${from}` : ''}`;
+      const label = t.former && mimesOn() ? `Mime · ${t.former.bakes ? 'bakes' : `once a ${t.former.id.replace(/_/g, ' ')}`}` : `${(t.wonder?.name || c.name).replace(/^(A|An|The) /, '').slice(0, 16)}${from ? ` · ${from}` : ''}`;
       const w = ctx.measureText(label).width + 8;
       ctx.fillStyle = 'rgba(20, 18, 24, 0.78)';
       ctx.beginPath(); ctx.roundRect(t.x - w / 2, t.y - t.h / 2 - 18, w, 12, 4); ctx.fill();
@@ -9347,7 +9427,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         fold.append(nodeOf('summary', '', 'Why they are drawn this way'), nodeOf('span', '', why.reason));
         const weight = WEIGHT[who];
         // The weight is the maker's register too: shown only with Reasons on in the switches.
-        if (weight && who !== 'figure' && document.documentElement.getAttribute('data-switch-reasons') === 'on') fold.append(nodeOf('span', 'pie-portrait-weight', `Carries · ${weight.carries} Hands it on · ${weight.hands_on} Eased by · ${weight.eased}`));
+        if (weight && who !== 'figure' && switchOn('reasons')) fold.append(nodeOf('span', 'pie-portrait-weight', `Carries · ${weight.carries} Hands it on · ${weight.hands_on} Eased by · ${weight.eased}`));
         return [nodeOf('span', 'pie-portrait-want', `Wants · ${why.want}`), nodeOf('span', 'pie-portrait-limit', `Cannot · ${why.limit}`),
           ...(memory ? [nodeOf('span', 'pie-portrait-memory', `Remembers · ${memory}`)] : []), fold];
       };

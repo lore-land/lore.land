@@ -50,6 +50,8 @@
   prompts: "@spw/surfaces/prompts.spw"
   ast_play: "@spw/surfaces/ast-play.spw"
   gradients: "@spw/surfaces/gradients.spw"
+  three_lands: "@spw/surfaces/three-lands.spw"
+  realm_powers: "@spw/surfaces/realm-powers.spw"
   grants: "@spw/state/grants.spw"
   panel_art: "@spw/surfaces/panel-art.spw"
   reasons: "@spw/surfaces/reasons.spw"
@@ -109,6 +111,7 @@
     "npm run spw:plans says first when the next stone is due and whether its chapter exists",
     "PLAN.E is the season's direction and PLAN.F its publishing dimensions. Open work is cut into one-session slices there, each naming its files, who decides, and the command that checks it. Pick one slice; do not survey",
     "Book Two (Wonder About Pi(e)) is under way: ch14 The Thursday Nobody Kept, ch15 Pupil, Parcel, or Door (set 2026-11-05). Next stone ch16 on 2026-11-13 — the second place at BoonWAP's table; see wonder-about-pie.spw#book_two chambers.c16",
+    "books are rings of thirteen: Book One 1 to 13, Book Two 14 to 26, and a third would be 27 to 39; a chapter's place in its book is its number mod 13 (13 for a multiple), and book:check warns when a book is not thirteen",
     "on every stone: update book/content/serial.json `next`, add the chapter to index.html Contents + #latest, run assets:brand --og --chapters=NN, chapters:build, spw:export",
     "plates 14 and 15 are drawn studies over seed paintings — graduate to painted plates when grounded (plates-manifest !state study)",
     "View Transitions chamber crossing (atelier signature phase 05) now that plates are public"

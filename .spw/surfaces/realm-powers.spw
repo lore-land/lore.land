@@ -1,0 +1,53 @@
+# Realm powers — discovering what a power opens, land by land
+# A design, proposed. Mechanics only. Nothing here is built; the powers named as kept are already in the lanes
+# (book/scripts/home/pie-powers.mjs POWER_SPELLS), and the forms named as proposed are not.
+#>lore_land_surfaces_realm_powers
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The best moment with a power is not getting it. It is going back to a room you already passed and finding that the power has changed what the room is. A wall you walked round becomes a wall you fit under. A beam you went round becomes a beam you stand on. So powers here are kept per land, each land keeping the kind of power its question asks for, and each one is shown first as a change in how you move, never as a number. A room only hints at what a power would open after you have held that power once, so nothing is teased that cannot yet be had. A few rooms have a second way out, found only with the right power, and it leads somewhere the main way does not.
+}
+
+^"each_land_keeps"{
+  boon: "powers of seeing ahead and of being small enough: possibility, a way before it is needed, a gap only a little thing fits"
+  bane: "powers of weight and contract: you are bound to the pie and nothing tips you, but you cannot hop, and what you walk through breaks, and is remembered"
+  bone: "powers of structure: what holds you up becomes somewhere to stand, and the load is shown"
+}
+
+^"kept_powers_by_land"{
+  .note: "every power already in the lanes, sorted by the land whose question it answers"
+  boon: "boonberry ~glimpse (the clear way, a breath early) · echo_wrens *echoes · jazz_geese !honk · page_fox ~unkept and !ready · hob_deer ~unkept (a deer no taller than a boot)"
+  bane: "frill_lichen *frill (knocks land on the ruffle, at a price of edge) · sliver_tin *tin (always filling, never full) · remainder_moths ~true_aim · lag_stag ~lag (the land lands a beat late, on credit)"
+  bone: "boneberry ~fed · pane_snails !level and &without[pane] (the glass forgiven) · salt_whales ~lit (the old roads under the crust) · beaver ~lag (its own time, lent) · torch_ants ~lit (the streets kept lit)"
+}
+
+^"proposed_forms"{
+  small: "*seedling{ ~small[6] } (boon). The carrier is the size of a boonberry for a while: a mime's invisible wall stops at your knee, so you pass under it, and the gap in a march is wide enough. Slices are smaller too, so a clown wants two. Found where the hob-deer is, and first used on a wall you have already gone round"
+  bound: "*clause{ ~bound[6] } (bane). The carrier signs for the pie: knocks do not tilt it, hops are not allowed, and posts and panes in your lane break as you pass. Nothing happens at once when glass breaks; the mimes remember it. Found in a chapter that leans bane, and priced in the open before it is taken"
+  frame: "*joist{ ~frame[6] } (bone). The carrier can stand on what others go round: the dividers become a beam to walk, and a raised row of the lane, seen and never reachable, can be reached. The heights panel shows the load. Found where the frame is tapped and answers"
+}
+
+^"discovery"[
+  { step: "a power changes how you move, shown once, in a room that suits it" }
+  { step: "back in a chapter you carried before, a room is marked with what the power would open, but only once you have held it" }
+  { step: "a few rooms keep a second way out: cast the room with the right land's power and the carry leaves by it, to a chapter out of order, a piece of texture.website, or an event route" }
+  { step: "each land's powers are found in the chapters that lean its way, so the book read by lean is the map of the realms" }
+  { step: "a land's last gate wants its three marks, one per kind of room, and gives nothing but the way through" }
+]
+
+!guards[
+  "A power changes how you move or what you can reach. A bigger number on its own is not a power here"
+  "No room hints at what it hides before the power has been held once"
+  "Every bane power is priced in the open before it is taken, and its cost comes later, never as a punishment the player did not see priced"
+  "A second way out never skips story a reader has not read; it goes sideways, not ahead"
+]
+
+?open[
+  "Are the forms new kinds in the almanac, or gifts of wonders already there (the hob-deer for small, the frame-tapping for joist)"
+  "Does breaking glass while bound feed the mimes memory (the main session is building mimes who remember a shattered pane), or is that only for thrown slices"
+  "Which rooms keep a second way out, and where does each lead"
+  "Is the last gate per land a room, a chapter, or a card"
+]

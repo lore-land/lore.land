@@ -1,0 +1,74 @@
+# The three lands — boon.land, bane.land and bone.land as places, room by room
+# A design, proposed. Grounded in the maker's own three_lands (story-boonhonk.spw) and the strains in inoculant.spw;
+# nothing here is a line anyone says, and no room is in a chapter until the maker puts it there.
+#>lore_land_surfaces_three_lands
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The maker has already given each land its question. boon.land asks what this could become, bane.land asks what it will cost, bone.land asks what will remain. A question is a weather, though, and a reader needs somewhere to stand. So each land is written as a run of short rooms, each with one plain rule that is a little absurd and entirely kept, and residents described by what they do and what they want, never by what they are for. The lands are funnier for being stated flatly, and kinder for never explaining themselves. A reader who has walked one land should recognise the other two by their rooms: every room has a twin in each of the others, the same thing asked a different question.
+}
+
+^"from_the_maker"{
+  boon: "What could this become? Possibility before property. Danger: everything can happen, so nothing has to happen yet"
+  bane: "What will this cost? Consequence made architectural. Danger: mistaking a measurable outcome for a meaningful one"
+  bone: "What will remain? Possibility and consequence made durable. Danger: confusing durability with goodness"
+  shared: "What happens to a wish after it leaves the person who made it?"
+  dog_logic: "Bones are good. Good things are boons. Therefore Bone.land is Boon.land: the good of a thing is the form in which it remains and can be carried"
+}
+
+^boon.land[
+  { room: "the invitation hall" rule: "every door is open and none of them has been decided" residents: "hosts who hold invitations to things nobody has planned yet, and are delighted every time one is accepted" want: "to offer" }
+  { room: "the unspent orchard" rule: "pick one boonberry and the tree offers you three more, which is why nobody picks" residents: "pickers who stand under the branches all season, deciding" want: "the best one, eventually" }
+  { room: "the rehearsal square" rule: "everything happens here once before it happens anywhere" residents: "an audience that applauds every rehearsal and leaves before the performance" want: "to have seen it coming" }
+  { room: "the promised pie" rule: "a pie is promised to everyone; it has not been baked" residents: "a queue that is very patient and somewhat hungry" want: "supper, in principle" }
+  { room: "the warm furrow" rule: "one furrow is kept open, always, for whatever arrives without a receipt" residents: "nobody lives in it; everyone steps round it the way you step round a sleeping dog" want: "for it to stay open" }
+]
+
+^bane.land[
+  { room: "the receipt office" rule: "every wish is stamped on arrival, and its price arrives later, in another register" residents: "a queue waiting to be told what they have already paid" want: "the stamp to be a nice colour" }
+  { room: "the auction of small things" rule: "things too small to want are sold to the highest bidder, who never wanted them" residents: "bidders who win everything and keep it in a drawer" want: "to have won" }
+  { room: "the minimum viable empire" rule: "an empire one hallway wide, with a crown, a ledger and a gate; the only citizen is also the gate" residents: "the citizen, who lets himself through on weekdays" want: "to be let through" }
+  { room: "the desk with the bowl" rule: "a bowl of baneberries sits on the desk of whoever is in charge; nobody eats from it, and it is full again every morning" residents: "whoever is in charge this week" want: "nobody has asked" }
+  { room: "the priced window" rule: "every window has a price on it, and the price goes up while the glass is whole" residents: "glaziers, who are the only people in the land who look out of windows" want: "the view, at cost" }
+]
+
+^bone.land[
+  { room: "the hall of exposed joists" rule: "everything shows how it is held up; a beam that does not answer when tapped is asked again tomorrow" residents: "joiners who tap, listen and write down what the timber said" want: "a frame that holds" }
+  { room: "the crossing" rule: "the bridge is one long bone; the dogs would like it, and the keepers would like everyone across it first" residents: "keepers, a dog, and whoever is halfway over" want: "everyone carried safely, and the chewable end" }
+  { room: "the strata library" rule: "old defaults are kept in layers, like rock, for those who still stand on them" residents: "readers who come back after years and find their floor still there" want: "to find their floor still there" }
+  { room: "the repair with two marks" rule: "every mended thing carries the maker's mark and a tooth mark" residents: "menders who argue gently about which mark came first" want: "to be able to tell" }
+  { room: "the bench" rule: "joiners eat boneberries at the bench and say grown, not raised, and say nothing else about it" residents: "joiners, at lunch" want: "lunch" }
+]
+
+^"twins"{
+  .note: "the same thing asked each land's question; a reader who knows one room finds it again in the other two"
+  pie: "boon: promised to everyone · bane: invoiced to someone · bone: the crust that held"
+  window: "boon: a window that has not chosen its view · bane: a window with a price on it · bone: a pane kept because it was tested"
+  berry: "boon: the one you have not picked yet · bane: the bowl nobody eats from · bone: lunch"
+  door: "boon: open and undecided · bane: a gate that is also the citizen · bone: a crossing that has to stay open"
+  room_nobody_keeps: "each land has a room for a Thursday that nobody keeps; in boon.land it is still being planned, in bane.land it is billed, in bone.land it is a layer in the library with nothing pressed into it"
+}
+
+^"how_the_berries_live_there"{
+  boonberries: "boon.land grows them and does not pick them. Better in every bowl, and the bowls are all promised"
+  baneberries: "bane.land keeps them in bowls on desks. Never a snack: a pinch sets a jam, keeps a pickle, cuts a sweetness that has gone too far, wakes a sauce, dyes cloth the colour of a storm. Who keeps the bowl full is never said"
+  boneberries: "bone.land eats them at the bench. Grown, not raised"
+}
+
+!guards[
+  "One plain rule per room, stated, never explained. If a room needs a second sentence to be funny, it is the wrong room"
+  "Residents are described by what they do and what they want. Nobody is a type, and nobody is sorted"
+  "No spoken lines. A resident may be seen doing something; what they would say is the maker's to choose"
+  "The lands are never a model of an economy. Prices in bane.land are comedy and architecture, not ledgers to balance"
+  "No child among the residents. The figure, the hat and the Egg are in no room"
+]
+
+?open[
+  "Do the rooms belong in chapters, in the lanes as places a carry passes, or only in the almanac and on Boof's map"
+  "Is the desk with the bowl in bane.land, in Bonk City, or both"
+  "Should the room nobody keeps be a fourth room in every land, or only appear on Thursdays"
+  "Which twins should a reader be shown, and which left to find"
+]

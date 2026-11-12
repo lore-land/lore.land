@@ -123,6 +123,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'mimes-remember', attribute: 'data-switch-mimes-remember', stage: 'trial', layer: 'trial', label: 'The mimes remember',
+    hint: 'Every mime was someone first, and Ask says who. Some bake, and leave flour as you pass. Break a mime\u2019s imaginary pane and nothing happens, then.',
+    effect: { on: 'The mimes have former lives, and remember.', off: 'Mimes are mimes: a slice that meets their wall is boxed.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'land-answers', attribute: 'data-switch-land-answers', stage: 'trial', layer: 'trial', label: 'The land answers at the desk',
     hint: 'At the scriptorium desk, write a thing of the land under any sign and the land says what that sign does to it, in the book\u2019s own words. A hand of cards counts itself; a ^board line is kept for the lanes.',
     effect: { on: 'The land answers what you write at the desk.', off: 'The desk keeps to its own spells and the search.' },

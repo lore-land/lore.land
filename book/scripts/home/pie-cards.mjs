@@ -151,7 +151,7 @@ export const CARDS = Object.freeze({
     story: 'Every scheme of his has one. It is in his contract. He wrote his contract. Badly.',
     lanes: 'Rides the way through while he schemes. Step on it or hit it with a slice and he is foiled (+2 for the pie against the mimes).' },
   baneberry: { name: 'A baneberry', type: 'friend', sprite: 'baneberry', chapter: null,
-    story: 'Plum-black, a cold violet sheen, a thorn on the stem: what Mr. BaneWAP is made of. They foretell chaos, and what they foretell comes because it was said.',
+    story: 'Plum-black, a cold violet sheen, a thorn on the stem: what Mr. BaneWAP is made of. They foretell chaos, and what they foretell comes because it was said. Nobody eats them for pleasure; a pinch in the pot sets a jam, keeps a pickle and wakes a sauce.',
     lanes: 'Let one past the pie and it foretells for its lane (wasps, a spool, a pigeon, a stone, a slide), posted in violet; in 3.2 s it comes. One in five foretells a flinch: still in that lane when it is due, +16% tilt. Step on it and it never says. Throw a slice over it to sweeten it: stepped on, +0.22 filling, and it foretells boonberries. Mimes gather them for him; each that reaches him adds 1.2 s to his scheme.' }
 });
 

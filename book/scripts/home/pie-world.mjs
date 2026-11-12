@@ -108,7 +108,7 @@ export const MEET = Object.freeze({
   subject: ['A subject on an errand', 'Knocks; share a whole slice and they trade you crust.'],
   wasps: ['Crown-wasps', 'Knock, sting the filling, and snatch a thrown slice.'],
   banner: ['A fallen banner', 'A whole row with one way through, and low enough to hop.'],
-  baneberry: ['A baneberry', 'It foretells, and what it says comes because it was said: let one past and a knock is on its way to that lane. Step on it and it never says; throw a slice over it and it says something kind.'],
+  baneberry: ['A baneberry', 'It foretells, and what it says comes because it was said: let one past and a knock is on its way to that lane. Step on it and it never says; throw a slice over it and it says something kind. Nobody eats one for pleasure, though a pinch sets a jam and wakes a sauce.'],
   mime: ['A mime, and its wall', 'Both knock; both box a flat slice. A lofted slice sails over.'],
   clerk: ['A feast clerk', 'Knocks with a DAMAGE slip; share a whole slice and it is SETTLED.'],
   dividers: ['Pie-dividers', 'Two night-school pupils, two lanes: knocks, and measures off a little of both.'],
