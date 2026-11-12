@@ -29,6 +29,7 @@ import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_11.A';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
 import { mergeBoard } from './spw-formulas.mjs?v=2026_11_11.A';
 import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_11.A';
+import { noteCrossing } from './trope-reveal.mjs?v=2026_11_11.A';
 import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_11.A';
 
 const CATALOG_URL = '/book/content/catalog.json';
@@ -370,6 +371,8 @@ export async function initScriptoriumDesk() {
     if (!owned && switchOn('land-answers') && /^[!?~@&*^#.=%$<{[(]/.test(text)) {
       const [land, seed] = await Promise.all([loadLand({ withWeight: switchOn('reasons') }), loadSeed()]);
       const heard = landAnswer(land, text, { parse: seed?.parse || null, readBias: seed?.readBias || null });
+      // A trope written at the desk is met in a strand of its own (trope-reveal.mjs): it counts toward its turn.
+      if (heard.acknowledged && heard.noun && String(heard.href || '').includes('tropes.json')) noteCrossing(String(heard.noun).replace(/_/g, '-'), 'desk');
       const sign = heard.sigil || text[0];
       say(sign, ...heard.says.map((line) => el('p', {}, line)),
         heard.href ? el('a', { href: heard.href }, 'Where the land keeps it →') : null,

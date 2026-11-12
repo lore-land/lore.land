@@ -1,0 +1,59 @@
+# Elaboration — how a trope is seeded, hinted, named, turned and paid, and how a reader moves it along
+# A design, proposed. trope-reveal.mjs computes it; rhymes.json (rhymes-build.mjs) gives it evidence; the trope-reveal trial shows it.
+#>lore_land_surfaces_elaboration
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  A trope in this book is a strand of one winding track: heard in the margin, said in the lanes, retold with deeds. A reader should meet it the way the land meets it, a little at a time, each time with something the last time did not have. The reading grammar the maker keeps in story-boonhonk.spw already gives each step an operator: ~ holds a seed without asserting it happened, ? gathers the questions that could change a scene, # supplies provenance, & brings distinct motives into contact, ^ incorporates an earned consequence. Elaboration is those five in order, paced so a reveal is earned by attention or by play and never by being told twice.
+}
+
+^"stages"[
+  { stage: "seed" sigil: "~" says: "the prop alone: the pie, the drawing, the glass, the slip" spw: "~[trope]" reached_by: "nothing yet: it is in the room" }
+  { stage: "hint" sigil: "?" says: "how it looks in play or on the page, without its name" spw: "?[trope]{ @lanes }" reached_by: "meeting it once anywhere: a passage, a crossing in the lanes, a word at the desk" }
+  { stage: "named" sigil: "#" says: "its name and statement: where it comes from, what it claims" spw: "#[trope]{ !prop }" reached_by: "reading a chapter it is told in, or meeting it in play more than once" }
+  { stage: "turned" sigil: "&" says: "how it crosses from one strand to the other, and what familiar shape it bends" spw: "&[trope]{ @story @lanes }" reached_by: "meeting it in both strands: read it, and carry the pie past it (or write it at the desk)" }
+  { stage: "paid" sigil: "^" says: "what the story does with it, once every chamber that tells it is out" spw: "^[trope]{ =boon@story{ @chapter_N } }" reached_by: "reading the chamber where it pays off, after the turn" }
+]
+
+=deepening{
+  rule: "a beat is deepened, never repeated: the first meeting gives the thing, a second reading gives its reason, a third gives its cost"
+  reason: "the second meeting shows why someone needed the arrangement (the maker: let the audience laugh at an arrangement, then discover why someone needed it)"
+  cost: "the third shows who pays for it, said as a signed edge: =bane@who{ @what } for a price, =boon@who{ @what } for a gift"
+  guard: "a stage never quotes a chapter that is not out; the turn needs a released chamber met, and the payoff needs every chamber out"
+}
+
+~pacing{
+  chapter: "one reveal per room at most, a quiet room after a loud one, and room left at a chapter opening and its end (the game paces its own beats the same way)"
+  ring: "across a ring of thirteen, seeds sit early, turns in the middle, payoffs late; Book Two (14 to 26) seeds what its own ring will pay, and may pay what Book One seeded"
+  returns: "the maker writes setup, complication, return: the setup is a seed and a hint, the complication a name and a turn, the return the payoff that repairs or reframes"
+}
+
+&mechanic{
+  lanes: "a crossing met in the lanes counts toward the turn (noteCrossing lanes): carrying the pie past a trope is reading it with your hands"
+  book: "a chapter opened that tells the trope counts toward the name, and its paying chamber toward the payoff (noteCrossing read)"
+  desk: "writing the trope at the desk counts as meeting it in a strand of its own (noteCrossing desk)"
+  shelves: "with the shelves trial on, a reader whose shelves lean the way a trope already leans moves it a little sooner; no shelf closes a trope"
+}
+
+*refrains{
+  source: "the workbench parser (findRhymes, spw-seed experimental at 9ef3d22) over the released chapter mirrors and the trope and character canon, written to book/content/world/rhymes.json"
+  evidence: "a refrain or rhyme that recurs across chapters and shares its filling words with a trope counts toward that trope turning: the book has written its shape more than once"
+  elaboration: "a template with holes is how the land elaborates: the same shape, filled differently each time it returns; the holes are where a reader can see what changed"
+  matching: "words decide and chapters only add; a shape that shares no filling word with a trope is scaffolding, not its rhyme; anything held stays out"
+}
+
+!guards[
+  "Every word a stage shows is already in tropes.json or canon. Nobody says anything new"
+  "No stage is shown from a chapter not yet released"
+  "No reader is sorted: the quiet line says what would deepen a trope, as an action, never as a kind of reader"
+  "The figure in plain lines is a trope like any other here, in its public words only, and nothing decodes it"
+]
+
+?open[
+  "Should a trope at its payoff say its Spw aloud in the margin, or only in Structure mode"
+  "Should the rhymes count more when they span both books, as evidence of a ring answering a ring"
+  "Which trope should be the first a new reader can take all the way to paid within Book One"
+]

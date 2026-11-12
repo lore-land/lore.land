@@ -29,7 +29,7 @@ Node-side tools are plain `.mjs` with JSDoc. A file is checked once it carries `
 
 ## Generated files
 
-Change the source and re-run; don't hand-edit these: `book/chapter/*` and `pie/unlocks/*` (`chapters:build`), `.spw/chapters/*` (`spw:export`), `.spw/surfaces/characters.spw` (`spw:characters`, from `characters.mjs`), `.spw/surfaces/reasons.spw` (`spw:way`, from `book/content/world/way.json`), `book/scripts/vendor/spw-seed.mjs` (`spw:seed-bundle`). `npm run canon:build` runs the canon generators, and `build` includes it.
+Change the source and re-run; don't hand-edit these: `book/chapter/*` and `pie/unlocks/*` (`chapters:build`), `.spw/chapters/*` (`spw:export`), `.spw/surfaces/characters.spw` (`spw:characters`, from `characters.mjs`), `.spw/surfaces/reasons.spw` (`spw:way`, from `book/content/world/way.json`), `book/scripts/vendor/spw-seed.mjs` (`spw:seed-bundle`), `book/content/world/rhymes.json` (`rhymes:build`). `npm run canon:build` runs the canon generators, and `build` includes it.
 
 ## Reader-facing changes
 

@@ -16,7 +16,7 @@ import { withHarness } from '../../../tools/browser-harness/index.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t) };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
@@ -131,6 +131,38 @@ const SCENARIOS = [
     await page.waitFor(`window.__pieTest.run.tags.some((t) => /THE ANTS GOSSIP/.test(t.text))`, { timeoutMs: 8000 });
     const state = await page.ev(`window.__pieTest.state`);
     if (state !== 'running') throw new Error(`an anthill ended the carry (${state})`);
+  }],
+  ['the story is paced: no two captions crowd in the first half minute', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { shelves: 'on' }, tried: [], resolved: { shelves: 'on' } }, 'lore.pie.v1': { ...PLAYER, view: { story: true, zen: false, focusOnPlay: false, cardPace: 'quiet', panels: 'auto' } } });
+    // Chapter Fourteen's rooms are short and much in it is met for the first time: the densest opening in the book.
+    await page.goto('/pie/?chapter=14');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`(() => { const t0 = performance.now(); window.__caps = []; const el = document.querySelector('[data-pie-toast-title]'); new MutationObserver(() => window.__caps.push({ t: (performance.now() - t0) / 1000, text: el.textContent })).observe(el, { childList: true, characterData: true, subtree: true }); setInterval(() => { const r = window.__pieTest.run; if (r) r.wobble = 0; }, 100); })()`);
+    await new Promise((r) => setTimeout(r, 30000));
+    const caps = await page.ev(`window.__caps.filter((c, i, all) => !all.slice(0, i).some((o) => Math.abs(o.t - c.t) < 0.15)).filter((c) => !/has a scheme|foiled|^Pushed back|withdraws/i.test(c.text))`);
+    const gaps = caps.slice(1).map((/** @type {{ t: number }} */ c, /** @type {number} */ i) => c.t - caps[i].t);
+    if (caps.length < 3) throw new Error(`only ${caps.length} captions in 30 seconds: the carry may have stopped`);
+    if (Math.min(...gaps) < 2.4) throw new Error(`two captions ${Math.min(...gaps).toFixed(2)} s apart in the first half minute`);
+  }],
+  ['a chain acts out its edge: a march called, glass ahead', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { shelves: 'on' }, tried: [], resolved: { shelves: 'on' } }, 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=6');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    const seen = await page.ev(`(() => { const t = window.__pieTest; const r = t.run; r.bane = null; r.boon = null;
+      t.actOutChain({ shelf: 'bane', line: '=bane@scheme{ @march }', invokes: 'march', says: 'the scheme calls a march', complete: false });
+      const called = r.marchNext === true; t.scheme(); const scheme = r.bane?.id;
+      const panes = r.things.filter((x) => x.kind === 'pane').length;
+      t.actOutChain({ shelf: 'bonk', line: '=bane@pane{ @mimewall }', invokes: 'mimewall', says: 'glass broken, then imaginary glass', complete: false });
+      return { called, scheme, more: r.things.filter((x) => x.kind === 'pane').length - panes, edge: r.tags.some((x) => x.text === '=bane@scheme{ @march }') }; })()`);
+    if (!seen.called || seen.scheme !== 'march') throw new Error(`the bane chain did not make the next scheme a march (${JSON.stringify(seen)})`);
+    if (seen.more < 1) throw new Error('the bonk chain put no glass ahead');
+    if (!seen.edge) throw new Error('the edge was not shown as it acted');
   }],
   ['every id in a drawing is its own', async (page) => {
     await page.setViewport(1200, 900);

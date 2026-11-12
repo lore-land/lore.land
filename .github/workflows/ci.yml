@@ -59,6 +59,18 @@ jobs:
       - name: kitchen:check (wished dishes by character; mimed orders; the ants' gossip)
         run: npm run kitchen:check
 
+      - name: rhymes:build (refrains the parser finds across released chapters; a stale rhymes.json fails check)
+        run: npm run rhymes:build
+
+      - name: elaboration:check (each trope's five stages, in words and in Spw)
+        run: npm run elaboration:check
+
+      - name: sound:check (scored hooks: colour in range, stings rest, motifs grow, the figure unvoiced)
+        run: npm run sound:check
+
+      - name: pacing:check (story beats in a carry, paced; nothing dropped)
+        run: npm run pacing:check
+
       - name: One version token per file (no module loaded twice)
         run: npm run tokens:align -- --check
 

@@ -1,0 +1,117 @@
+# Site clusters — design theory for the ecosystem
+# One address law, a different look per site, and utility a second person can use
+# without an account. Proposed 2026-11-11. factshift.center carries motion;
+# lore.land keeps the story, the palettes, and the local profile.
+#>lore_land_surfaces_site_clusters
+#:surface #!proposal
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  The sites are one workshop seen through different doors. Each door should be complete on its own: a person who only ever opens one of them still gets a look, a sentence, and something they can hand to a friend. The second reading, the craft under the adventure or the rhetoric under the moving line, stays available and never required. Social value here is that hand-off. Mind share is the sentence and the look a person can still say when the site is closed. Nothing in this surface ranks a reader, follows a reader, or asks for an account.
+}
+
+^"claim"{
+  utility: "A site is socially useful when a second person, who was not in the room, can open one address, wear or name one palette, or try one practice in an afternoon, and both people can say what they did."
+  mind_share: "Mind share is a say-line plus a look. If those cannot be said in one breath, the site is not yet a memory."
+  depth: "Semiotic depth is apparent when the surface looks like it has more underneath, and that underneath is inspectable: a seal, a material, a force, a spell. The first reading stays complete without it."
+  hub: "factshift.center is the design and interaction hub: it turns a line toward motion and lends that momentum to other sites. It does not host the story, the folio, or the curriculum."
+  memory: "A profile is local. Word of mouth is the channel that shares it: a link copied by hand, plus one spoken sentence. The network is whoever passed the link and stayed for the cadence."
+}
+
+^"clusters"{
+  .note: "Differentiated aesthetics. Each cluster has a first reading, a second reading, and a look. Capacities stay in domains.spw. The say-line is what a person repeats."
+  story: { sites: "lore.land, and the valence lands as its weather", first: "a serial you can read", second: "offices, palettes, and craft you can inspect", look: "paper, berry, brass, hearth; each chapter earns its own palette", say: "A book you finish, and the chapter keeps the colours." }
+  grain: { sites: "texture.website, played through lore.land", first: "letters you can drag", second: "an address you can read aloud, and where a picture came from", look: "a hand, a scan, a material with a name", say: "The address says what the letters are made of." }
+  motion: { sites: "factshift.center, with factshift.com as the engine door", first: "a line that moves", second: "forces as rhetoric: pull, drag, charge, frame", look: "a dark field and particles that settle", say: "A sentence you can stir, and watch settle." }
+  portal: { sites: "spwashi.click, with spwashi.work as the folio beside it", first: "one gesture, one impression", second: "software read as literature, an ecology of parts", look: "a rhythm grid and a shader field, then a quiet folio", say: "One click, and you know which door you are in." }
+  study: { sites: "spwashi.college, still a stub, beside lore.land's night school", first: "a path two people can walk", second: "the competency clusters, one afternoon at a time", look: "a desk, not a feed", say: "A practice you can hand to someone after work." }
+}
+
+^"hub"{
+  .note: "factshift.center carries imaginative momentum. Other sites stay themselves."
+  does: "open a line as forces; accept a material said in its own parameters (alpha, alphaTarget, alphaDecay, velocityDecay, charge, centerStrength, linkStrength, with the line as ?spw=); show a frame another site named; lend motion back as a receipt in words"
+  does_not: "rewrite lore.land prose, keep a reader profile, rank attention, or become the curriculum"
+  lends: "motion to a material on texture.website; a force reading of a palette's charge and settle, when a reader chooses to wear one; a frame a capture can point at"
+  returns: "a receipt: which fields differ from its defaults, what each means in words, and the address that opens there. fall stays on lore.land, since the canvas has no down"
+  &grounding: ~".spw/surfaces/texture-website.spw"
+}
+
+^"addresses"{
+  .note: "The live law is texture.website. New doors below are proposed. One state is one address. A verb that changes a line leaves the address changed and itself gone; a verb that reads stays."
+  law: "lore.land/?/<surface>/@whose/~motif/*thing/!words/=tuning/$material/&with/?verb — operators keep their meanings (texture-website.spw routes)"
+  live: [
+    "lore.land/?/texture.website/@spwashi/$storm/!parcel+gate/&factshift.center/?ground",
+    "factshift.center/?spw=<line> with the force parameters its app already reads",
+    "lore.land/?spell=<projection> for one visit, never raising the audience"
+  ]
+  proposed: [
+    "lore.land/?/site.clusters/@<site> — this surface's card for that site, said in words, with its say-line and its door",
+    "factshift.center/?frame=<address> — the canvas opens on a frame another site named, and does not fetch that site's prose",
+    "factshift.center/?overlay=palette:<id> — wear a kept palette as tint and settle, not as story colour",
+    "spwashi.click/?/door/@<site> — one gesture that resolves to that cluster's first live address",
+    "lore.land/?/practice/@<route> — one afternoon, one question, for handing across a table"
+  ]
+  synergy: "A material on lore.land grounds into the canvas. A kept palette may later tint that canvas. A click door points at the first live address, not at a copy of the page. A practice route points at lore.land's night school, not at a new school."
+}
+
+^"overlays"{
+  .note: "An overlay is a visit-layer reading. It never moves the ground (layers.spw, projection orthogonality). A frame is what is addressed: the [ ] of one question. An algorithm here is a named procedure with a receipt, not a ranking of people."
+  likeness: { state: "live", frame: "why these rhyme", procedure: "likeness.mjs scores canon dimensions and the page says the reason in words, never the number" }
+  palette: { state: "live on a chapter", frame: "what this chapter has earned", procedure: "colour by reading, type by carrying the pie, light by keeping wonders; proposed: the same tokens worn on a neighbour, chosen, and never on story prose" }
+  spell: { state: "live", frame: "why this visit reads this way", procedure: "projection.mjs, one clause per line, each with its source" }
+  force: { state: "proposed on the hub, grounded from texture.website", frame: "how this line wants to move", procedure: "the canvas parameters, listed where they differ from defaults" }
+  capture: { state: "proposed", frame: "the moment worth showing while someone talks or plays", procedure: "a card, below" }
+  practice: { state: "proposed", frame: "what two people can try before the afternoon ends", procedure: "one route, one question both may answer differently, a receipt in words" }
+}
+
+^"profiles"{
+  .note: "Profile development without an account. The browser is the profile. Synthesis is later, and only from what the reader chose to copy out."
+  local: "lore.*.v1 in this browser: rooms read, cards turned, palettes earned, studies kept. Nothing is sent. Begin again clears marks and never the story."
+  assets: "A kept palette is the valuable asset: colour and type, extractable as a Spw atom or as CSS tokens (collecting.spw). Seals and cards travel with it as likeness, not as a score."
+  synthesis: "A later composition wears palettes the reader already kept: as tokens on a neighbour overlay, or as force defaults on the canvas. The book keeps the original mix. A link cannot lend a palette (collecting: earned, never chosen)."
+  mouth: "Word of mouth is a mouth card, kept locally and copied by hand: the shortest address that reproduces the moment, and one spoken sentence. No graph of who shared it."
+  channel: "Gossip is the story's own mouth: the book's words, a few at a time, a beat late (gossip-and-kitchens.spw). The reader's mouth is the mouth card. They do not mix."
+}
+
+^"mentorship"{
+  .note: "Decentralized: there is no mentor graph and no buzz metric. Consistency is the public rhythm. Buzz is a scrap that arrives a beat late and can be repeated accurately."
+  cadence: "The serial moves on the 13th and 26th. A practice fits one afternoon. A person who comes back finds the next stone, not a streak."
+  buzz: "What spreads is a say-line, a palette name, or a scrap of the book. It is interesting because it can be said again, not because a counter moved."
+  handoff: "Mentorship is the last person who passed a practice route and stayed to hear the other answer. The receipt is the two answers, kept by the people who made them, not by a site."
+  college: "spwashi.college can become the shelf of those practice routes. Until it has pages, the night school in the book is the shelf, and the college door should point there rather than pretend to teach."
+  guard: "No child is a card, a profile, or a pupil in this network. The night school is grown-ups after work."
+}
+
+^"captures"{
+  .note: "A screenshot or a screen recording is an asset when someone can describe it while talking, or land it on a cue in music. Pretty and indescribable is not yet valuable."
+  still: { worth: "a say-line in one breath, the address that brings the same frame back, and the palette id if one is worn", fails: "a picture nobody can say what is interesting about" }
+  timed: { worth: "in and out against a narration phrase or a bar of music, so the picture belongs to a moment in the telling", fails: "a long take with no cue and no sentence" }
+  card: "say (one breath) · cue (a spoken phrase, or a bar) · address (reproduces the frame) · palette (or none) · span (still, or in and out) · kind (story plate, material, canvas, door)"
+  use: "Play the card beside narration or music. The address is the way back. The say-line is what a person repeats when the picture is gone. The site does not host the recording unless a maker puts the file on a page they already publish."
+  &share: ~"book/images/og/index.spw"
+}
+
+^"lore_utilities"{
+  .note: "What lore.land already lends the clusters, and three utilities worth building next. None of the three is a feed."
+  live: [
+    "palettes earned and extracted (collecting.spw)",
+    "likeness walked from the canon alone (likeness.spw)",
+    "a projection spell passed as a link (projection.spw)",
+    "addresses that read part by part (texture-website.spw)",
+    "gossip as a beat-late scrap of the book (gossip-and-kitchens.spw)",
+    "a charm a reader writes and keeps (autonomous-feedback)"
+  ]
+  next_capture_desk: "a page that fills a capture card from the frame in front of the reader: say, cue, address, palette, span. It copies the card. It does not upload."
+  next_mouth_card: "the shortest address plus one sentence, kept in lore.mouth.v1, copied by hand"
+  next_practice_card: "one route, one afternoon, one question two people can answer differently, with the literacy value texture.website already holds"
+  next_palette_wear: "a kept palette's tokens offered to factshift.center as an overlay address, chosen on this visit, never written into the chapter"
+}
+
+?open[
+  "Which live door should spwashi.click/?/door/@lore.land open: the latest chapter, the texture lab, or the contents"
+  "Should a palette overlay on the canvas be tint only, or may it also set charge and centerStrength"
+  "Where does a capture card live before there is a desk: the keepsakes panel, the almanac, or only the clipboard"
+  "Does spwashi.work stay a folio of selected works, or does it become the shelf of capture cards the maker chooses to publish"
+  "Is the college shelf a list of practice routes, or a single current afternoon"
+]

@@ -70,6 +70,7 @@
   route: "?/texture.website/@spwashi/$storm/!parcel+gate/&factshift.center/?ground"
   says: "the receipt lists each field that differs from factshift.center's defaults (force-config.ts) and what it means in words, then the address to open; fall stays in lore.land, since the canvas has no down"
   caution: "the deployed canvas may lag its source; an address that grounds is a proposal the canvas reads if it can"
+  &clusters: ~".spw/surfaces/site-clusters.spw"
 }
 
 ^"middleware"{

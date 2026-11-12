@@ -185,7 +185,8 @@ import { placeSVG, tropeEmblemSVG, PLACES } from '../modules/panel-art.mjs?v=202
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_11.A';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_10.A';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_11.A';
+import { shelfColor, chainSting, tropeMotif, cadenceVoice } from './pie-sound.mjs?v=2026_11_11.A';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
 import { loadMotifs } from './pie-tropes.mjs';
 import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_11.A';
@@ -193,8 +194,11 @@ import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechani
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_11.A';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
-import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
+import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_11.A';
+import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_11.A';
+import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_11.A';
+import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_11.A';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
@@ -502,6 +506,94 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const g = JSON.parse(localStorage.getItem('lore.nook.v1') || 'null')?.genre || {};
       return { boon: Number(g.boon) || 1, bane: Number(g.bane) || 1, bone: Number(g.bone) || 1, bonk: 1, honk: 1 };
     } catch { return {}; }
+  };
+  /* A chain's link acts out its Spw edge with what the lanes already have (valence-shelves.mjs CHAINS), and the edge
+   * is shown as it acts: boon brings Mr. BoonWAP to court and the clowns flock; bane makes the next scheme a march; bone
+   * measures the road; bonk puts glass ahead, then imaginary glass; honk sounds an echo, and then a rhythm to keep. */
+  const CHAIN_VOICE = { boon: 'boon', bane: 'bane', bone: 'wonder', bonk: 'flour', honk: 'wonder' };
+  function actOutChain(fired) {
+    const open = [...Array(LANES).keys()].filter((l) => l !== run.safe);
+    const ahead = (kind, lane = pick(open)) => { const t = makeThing(kind, lane); t.y = -60; run.things.push(t); return t; };
+    const pair = () => { const l = pick(open.filter((x) => x + 1 < LANES && x + 1 !== run.safe)); return l == null ? null : [l, l + 1]; };
+    const link = CHAINS[fired.shelf]?.findIndex((c) => c.line === fired.line) ?? 0;
+    if (fired.shelf === 'boon') {
+      if (!run.boon && !run.bane) holdCourt();
+      if (link >= 1) { ahead('clown'); ahead('clown'); }
+      if (fired.complete) open.slice(0, 3).forEach((l) => ahead('clown', l));
+    } else if (fired.shelf === 'bane') {
+      if (link === 0 && !run.bane && !run.boon) scheme();
+      if (link >= 1) run.marchNext = true;
+      if (fired.complete) { const p = pair(); if (p) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
+    } else if (fired.shelf === 'bone') {
+      const p = pair();
+      if (link >= 1 && p) { const d = ahead('dividers', p[0]); d.lanes = p; d.x = (laneX(p[0]) + laneX(p[1])) / 2; d.w = LANE_W * 2 - 14; d.h = 22; }
+      if (link === 0) run.tags.push({ x: W / 2, y: PRESENCE_Y + 44, t: 0, text: 'A RECEIPT, POSTED' });
+    } else if (fired.shelf === 'bonk') {
+      if (link === 0) ahead('pane');
+      if (fired.complete || link >= 1) { const p = pair(); if (p) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
+    } else if (fired.shelf === 'honk') {
+      spawnRing(run.x, run.y - 30, 34, colors.gold, 0.6);
+      setTimeout(() => { if (run) spawnRing(run.x, run.y - 30, 26, colors.gold, 0.45); }, 520);   // the echo, a beat late
+      if (link >= 1 || fired.complete) showToast('Something here keeps time', 'Listen for it. Step, hop or throw along with it, and it is yours.', 3400, 'wonder', 1, 'note');
+    }
+    run.tags.push({ x: W / 2, y: PRESENCE_Y + 28, t: 0, text: fired.line });
+    showToast(`${fired.shelf} · ${fired.says}`, `${fired.line}${fired.complete ? ' That chain is complete.' : ''}`, 3400, CHAIN_VOICE[fired.shelf] || '', fired.complete ? 2 : 1, 'chain');
+    say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? '. That chain is complete.' : '.'}`);
+    chainSting(fired.shelf, { complete: fired.complete });
+  }
+  /* Trope development as a mechanic (trope-reveal.mjs): a thing of a trope's kinds, carried past, is a crossing in the
+   * lanes; with the trope-reveal trial on, a trope whose stage rises says so (its stage and its Spw) and its motif
+   * grows a step (pie-sound.mjs tropeMotif, with a refrain the canon repeats when there is one). */
+  const tropeRevealOn = () => switchOn('trope-reveal');
+  let rhymesAsked = false;
+  function tropeMet(trope) {
+    try { noteCrossing(trope.id, 'lanes'); } catch { /* the stage waits */ }
+    if (!tropeRevealOn() || !run) return;
+    if (!rhymesAsked) { rhymesAsked = true; loadRhymes().catch(() => {}); }
+    let reveal = null;
+    try { reveal = revealStage(trope, tropeSignals(trope.id, { trope, lean: run.shelfV || null })); } catch { return; }
+    if (!reveal) return;
+    record.tropeStages = record.tropeStages || {};
+    const was = record.tropeStages[trope.id] ?? -1;
+    if (reveal.index <= was) return;
+    record.tropeStages[trope.id] = reveal.index;
+    writeRecord(record);
+    if (was < 0 && reveal.index === 0) return;   // a seed is planted quietly; the hint is the first thing said
+    run.tags.push({ x: W / 2, y: 96, t: 0, text: `${trope.sigil || ''} ${trope.name.toUpperCase()} · ${reveal.stage.toUpperCase()}`.trim() });
+    // One trope a room is said aloud and heard; the rest rise quietly (their tag, and the carry's sheet).
+    if (run.tropeSaidRoom === roomShown) return;
+    run.tropeSaidRoom = roomShown;
+    showToast(`${trope.name} · ${reveal.stage}`, `${reveal.words || ''}${reveal.spw ? ` ${reveal.spw}` : ''}`.trim(), 3800, 'wonder', 2, 'stage');
+    let refrain = null;
+    try { refrain = (refrainsFor(trope.id) || [])[0] || null; } catch { refrain = null; }
+    tropeMotif(trope.id, reveal.index, { refrain });
+  }
+  /* Characters keep their own time in the lanes (spw-cadence.mjs): each one's own signature read as a loop, a lift on
+   * an accent, held still on a rest; the mime mostly still, the figure not at all. Cached; nothing under reduced motion. */
+  const cadenceCache = new Map();
+  const cadenceFor = (who) => {
+    if (!cadenceCache.has(who)) { let c = null; try { c = cadenceOf(characterSpell(who), who, { bars: 1 }); } catch { c = null; } cadenceCache.set(who, c); }
+    return cadenceCache.get(who);
+  };
+  const CADENCE_BEAT = 0.5;   // seconds a beat, unhurried
+  const cadenceLift = (who, t) => {
+    if (reduced?.matches || who === 'figure') return 0;
+    const c = cadenceFor(who);
+    if (!c?.steps?.length || !c.length) return 0;
+    const pos = (((t / CADENCE_BEAT) % c.length) + c.length) % c.length;
+    let step = null;
+    for (const st of c.steps) { if (st.at <= pos + 1e-6) step = st; else break; }
+    if (!step || step.rest || pos > step.at + step.dur) return 0;
+    const into = (pos - step.at) / Math.max(0.05, step.dur);
+    return (1 - into) * (step.accent >= 2 ? 1 : step.accent === 1 ? 0.6 : 0.3);
+  };
+  const withLift = (who, px, draw) => {
+    const lift = run ? cadenceLift(who, run.t) * px : 0;
+    if (!lift) { draw(); return; }
+    ctx.save();
+    ctx.translate(0, -lift);
+    draw();
+    ctx.restore();
   };
   const shelfVector = () => vectorOf({
     shelf: shelfTuning(),
@@ -1145,15 +1237,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (key === roomShown) return;
     roomShown = key;
     if (run) run.roomAt = run.t;   // the beat: a room opens (the narrator and the prose come forward)
-    if (run && state === 'running' && shelvesOn()) {
+    if (run && state === 'running' && (shelvesOn() || switchOn('sound-design'))) {
       run.shelfV = shelfVector();
+      shelfColor(run.shelfV);   // the sound takes the shelves' colour (pie-sound.mjs; a no-op unless the lanes are scored)
+    }
+    if (run && state === 'running' && shelvesOn()) {
       const stepped = chainStep(run.chains || chainStart(), run.shelfV);
       run.chains = stepped.state;
       const fired = stepped.fired[0];
-      if (fired) {
-        run.tags.push({ x: W / 2, y: PRESENCE_Y + 28, t: 0, text: `${fired.shelf.toUpperCase()} · ${fired.invokes.toUpperCase()}` });
-        say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? ' That chain is complete.' : ''}`);
-      }
+      if (fired) actOutChain(fired);
     }
     if (run && state === 'running') textureFind({ room: r.sig, chapter: r.chapter, sigils: [r.sigil], carry: run }).then(findSaid);
     const play = ROOM_PLAY[r.sigil];
@@ -1292,11 +1384,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
   const meanwhileOut = root.querySelector('[data-pie-meanwhile]');
   let meanwhileAt = 0;
+  let meanwhileWait = 0;
   function meanwhile(who, mood, words, { force = false } = {}) {
     if (!meanwhileOut || !CHARACTERS[who] || record.view.zen || record.view.heightsCfg?.meanwhile === false) return;
     const now = performance.now();
     if (!force && now - meanwhileAt < 2200) return;
+    // A reaction never lands on a caption: it waits until the caption has been seen a moment (pie-pacing.mjs).
+    const sinceCaption = now - captionAt * 1000;
+    if (!force && sinceCaption < 1200) {
+      clearTimeout(meanwhileWait);
+      meanwhileWait = setTimeout(() => meanwhile(who, mood, words, { force: true }), 1200 - sinceCaption);
+      return;
+    }
     meanwhileAt = now;
+    if (!force) pacer.hold(now / 1000 + 0.9);   // a face reacting has the eye a moment; the next caption waits for it
     const art = meanwhileOut.querySelector('.pie-meanwhile-art');
     const balloon = meanwhileOut.querySelector('.pie-meanwhile-says');
     const name = meanwhileOut.querySelector('.pie-meanwhile-who');
@@ -2963,36 +3064,34 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   /* A toast: where we are now, and who is under the hat. Play does not stop for it. */
-  /* Captions take turns: each is held at least CAPTION_HOLD before another of no greater weight replaces it; the
-   * rest wait (newest first in their kind, three at most, gone when stale), so a room's name, a first meeting and
-   * Friday arriving do not wipe each other out in the same breath. Weight 2 is for the story's own moments. */
-  const CAPTION_HOLD = 1.9;
-  const captionQueue = [];
+  /* The story's beats are paced (pie-pacing.mjs): one at a time with a gap between (wider in a carry's first minute),
+   * a quiet stretch after a loud one, a chapter's opening kept for its own words and its last stretch for its ending.
+   * What changes play goes at once. Nothing is dropped: a beat that waited too long is folded into the next caption's
+   * line, and whatever is left at the end of a carry is said on its card. */
+  const pacer = createPacer();
+  let foldedNow = [];
+  const guessKind = (title, voice, weight) => (/has a scheme|foiled|^Pushed back/i.test(title) ? 'urgent'
+    : /^First meeting|holds court|keeps talking|withdraws/i.test(title) ? 'meeting'
+      : /^Room \d/.test(title) ? 'room' : weight >= 2 ? 'story' : 'note');
+  const paintPaced = (b) => {
+    const also = foldedNow.length ? ` ${foldedWords(foldedNow)}` : '';
+    foldedNow = [];
+    paintCaption(b.title, `${b.line || ''}${also}`, b.ms || 2600, b.voice || '', b.weight || 1);
+  };
+  const showToast = (title, line, ms = 2600, voice = '', weight = 1, kind = '') => {
+    if (!toast || record.view.zen) return;   // zen: nothing pops up; the live region still says it
+    const k = kind || guessKind(title, voice, weight);
+    const due = pacer.offer({ title, line, ms, voice, weight, kind: k === 'urgent' ? 'scheme' : k, urgent: k === 'urgent' }, performance.now() / 1000);
+    if (due) paintPaced(due);
+  };
+  const pacerTick = () => {
+    const { due, folded } = pacer.tick(performance.now() / 1000);
+    if (folded.length) foldedNow.push(...folded);
+    if (due) paintPaced(due);
+  };
+  setInterval(pacerTick, 200);
   let captionAt = -99;
   let captionWeight = 0;
-  let captionWait = 0;
-  const showToast = (title, line, ms = 2600, voice = '', weight = 1) => {
-    if (!toast || record.view.zen) return;   // zen: nothing pops up; the live region still says it
-    const now = performance.now() / 1000;
-    if (now - captionAt < CAPTION_HOLD && weight <= captionWeight) {
-      const same = captionQueue.findIndex((c) => c.title === title);
-      if (same >= 0) captionQueue.splice(same, 1);
-      captionQueue.push({ title, line, ms, voice, weight, at: now });
-      captionQueue.sort((a, b) => b.weight - a.weight);
-      if (captionQueue.length > 3) captionQueue.length = 3;
-      clearTimeout(captionWait);
-      captionWait = setTimeout(nextCaption, Math.max(60, (CAPTION_HOLD - (now - captionAt)) * 1000));
-      return;
-    }
-    paintCaption(title, line, ms, voice, weight);
-  };
-  function nextCaption() {
-    const now = performance.now() / 1000;
-    while (captionQueue.length && now - captionQueue[0].at > 9) captionQueue.shift();   // stale: the moment has passed
-    const next = captionQueue.shift();
-    if (next) paintCaption(next.title, next.line, next.ms, next.voice, next.weight);
-    if (captionQueue.length) captionWait = setTimeout(nextCaption, CAPTION_HOLD * 1000);
-  }
   function paintCaption(title, line, ms, voice, weight) {
     captionAt = performance.now() / 1000;
     captionWeight = weight;
@@ -3481,7 +3580,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const known = roomsReadIn(n);
     const total = ROOM_TOTALS[n] || 0;
     const knownWords = known ? ` You have read ${known}${total ? ` of ${total}` : ''} room${known === 1 ? '' : 's'} here: the pie knows the way${total && known >= total ? ', and the pies will tell you what they know of it' : ''}.` : '';
-    showToast(place, biased('toast.chapter', `${line}${knownWords}`, { where: place }), note || held || known ? 4600 : 3200, run.tally.held ? 'bane' : '');
+    pacer.startChapter(performance.now() / 1000);
+    run.endingMarked = false;
+    showToast(place, biased('toast.chapter', `${line}${knownWords}`, { where: place }), note || held || known ? 4600 : 3200, run.tally.held ? 'bane' : '', 2, 'chapter');
     meanwhile(held ? 'mime' : 'boof', held ? 'thinking' : 'calm', held ? '…' : 'sniff.', { force: true });
     say(`${place}. ${line}`);
   };
@@ -3490,6 +3591,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     colors = palette();
     if (record.sound) { primeAudio(); setMusicBed(setting('music') === 'full'); }
     run = fresh();
+    pacer.startCarry(performance.now() / 1000);
     setSoundCarrier(themesOn() ? run.carrier.id : '');
     run.intro = introMode;
     show.reset();
@@ -3611,6 +3713,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // The card is a prompt: what happened in a line, what stood out, and what to try next. Everything
       // else, inspectable, is in The carry, inspected, beside the screen.
       showCard(biased('spill.title', 'Exactly one.', { who: run.carrier.name }), `${biased('spill.line', CAUSES[cause], { who: run.carrier.name, where: chapterWords(run.chapter) })} ${run.carrier.name.charAt(0).toUpperCase()}${run.carrier.name.slice(1)}, ${distance} cobbles${best ? ', further than ever' : ''}, as far as ${chapterWords(run.chapter)}${run.lap ? ` (the book ${run.lap + 1} times over)` : ''}.${marks ? ` ${marks}` : ''}`, chosenStartChapter > 1 ? `▶ Play again from ${chapterWords(chosenStartChapter)}` : '▶ Play again');
+      const waited = foldedWords(pacer.drain());
+      if (waited && cardLine) cardLine.textContent = `${cardLine.textContent} ${waited}`;
       const sheet = paintCarrySheet({ cause, distance, best });
       paintNextPrompt({ cause, sheet });
       paintCarries();
@@ -4388,6 +4492,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   /* Two of the quinary five, one at a time. */
   const holdCourt = () => {
     run.boon = { t: 0, dur: 8.5, lobIn: 0.9 };
+    cadenceVoice('boon', cadenceFor('boon'));
     turnCard('boon');
     run.wobble = Math.max(0, run.wobble - 0.25);   // a steadying word, first
     run.lastPresence = 'boon';
@@ -4420,6 +4525,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       let r = Math.random() * total;
       id = weighted.find((o) => (r -= o.w) < 0)?.id || id;
     }
+    // The bane chain called a march (=bane@scheme{ @march }): the next scheme is one, if a march may happen here.
+    if (run.marchNext && ids.includes('march')) { id = 'march'; run.marchNext = false; }
     if (!met('bane')) { record.met.push('bane'); writeRecord(record); }
     const fed = Math.min(5, run.baneStore || 0);
     run.baneStore = 0;
@@ -4434,6 +4541,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   const update = (rawDt) => {
+    // A chapter's last stretch: kept for its ending (pie-pacing.mjs).
+    if (run && state === 'running' && !run.endingMarked && run.legLength && progress() > 0.94) { run.endingMarked = true; pacer.chapterEnding(performance.now() / 1000); }
     // Hit-stop: the world holds its breath a moment at a great impact (the pops and bits still move).
     let dt = rawDt;
     if (run?.hitStop > 0) { run.hitStop = Math.max(0, run.hitStop - rawDt); dt = rawDt * 0.12; }
@@ -4858,6 +4967,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             if (!run.dishSaid) { run.dishSaid = true; say(`A mime ordered a baneberry dish, to hear the gossip properly. The kitchen was busy${order.misread ? ` and brought ${order.dish.name}` : ''}; the mime waits.`); }
           }
         }
+        if (!thing.tropeNoted && !thing.wapped && thing.y > run.y + 16) {
+          thing.tropeNoted = true;
+          const trope = tropeOfKind.get(thing.kind);
+          if (trope) tropeMet(trope);
+        }
         if (thing.kind === 'mime' && thing.former?.bakes && !thing.floured && thing.y > run.y - 10 && Math.abs(thing.x - run.x) < LANE_W * 1.6) {
           // A mime who bakes, passed close: a little flour for the crust, and no fuss about it.
           thing.floured = true;
@@ -4920,6 +5034,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           run.things.forEach((other) => { if (other.kind === fresh.kind) other.isNew = true; });
           run.meetCool = 2.6;
           showToast(`First meeting · ${name}`, biased('toast.meet', line, { who: name }), 4200, fresh.fatal ? 'bane' : 'boon');
+          if (CHARACTERS[fresh.kind]) cadenceVoice(fresh.kind, cadenceFor(fresh.kind));
           say(`${name}. ${line}`);
         }
       }
@@ -5794,7 +5909,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       case 'mime':
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - thing.wapT * 1.2);
-        drawMime(x, y, thing.facing || 1, run.t + thing.born);
+        drawMime(x, y - cadenceLift('mime', run.t + thing.born) * 2, thing.facing || 1, run.t + thing.born);
         if (thing.former?.bakes) {
           // An apron, and flour on it.
           ctx.fillStyle = 'rgba(255, 252, 244, 0.95)';
@@ -6458,7 +6573,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           ctx.globalAlpha = Math.max(0, 1 - Math.max(0, thing.wapT - 0.6) * 2);
           drawClown(0, 0, true, 0, thing.missing);
         } else {
-          drawClown(x, y, Boolean(thing.pied), Math.sin((run.t + thing.honk) * 6), thing.missing);
+          // A clown bounces in its own time (its cadence), and keeps its old bounce where its loop rests.
+          const lift = cadenceLift('clown', run.t + thing.honk);
+          drawClown(x, y - lift * 3, Boolean(thing.pied), lift ? lift * 2 - 1 : Math.sin((run.t + thing.honk) * 6), thing.missing);
           // Its appetite, over its head: a pip a slice, filled as it is fed.
           const want = thing.want || 1;
           for (let i = 0; i < want; i += 1) {
@@ -6870,14 +6987,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.fillStyle = `rgba(250, 246, 236, ${Math.max(0, 0.85 - puff.t * 0.8)})`;
       ctx.beginPath(); ctx.arc(puff.x, puff.y, 4 + puff.t * 6, 0, Math.PI * 2); ctx.fill();
     });
-    // Tags: TAX, PERFECT, FOILED.
+    // Tags: TAX, PERFECT, FOILED. Tags that rise together are stacked, not drawn over each other: each takes the
+    // first row (13 units apart) clear of every tag already placed this frame that it would overlap.
+    ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
+    const placed = [];
     run.tags.forEach((tag) => {
+      const half = ctx.measureText(tag.text).width / 2 + 3;
+      let y = tag.y - tag.t * 20;
+      for (let tries = 0; tries < 6; tries += 1) {
+        const hit = placed.find((p) => Math.abs(p.y - y) < 12 && p.x - p.half < tag.x + half && tag.x - half < p.x + p.half);
+        if (!hit) break;
+        y = hit.y - 13;
+      }
+      placed.push({ x: tag.x, y, half });
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - tag.t);
       ctx.fillStyle = tag.text === 'TAX' || tag.hurt ? '#c0392b' : '#b8860b';
       ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
       ctx.textAlign = 'center';
-      ctx.fillText(tag.text, tag.x, tag.y - tag.t * 20);
+      ctx.fillText(tag.text, tag.x, y);
       ctx.restore();
     });
   };
@@ -7493,8 +7621,37 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.textBaseline = 'alphabetic';
   };
 
+  const SHELF_INK = { boon: '#e0a23a', bane: '#7a3f9a', bone: '#a8564a', bonk: '#4f9a98', honk: '#c86d2c' };
+  const drawShelves = () => {
+    if (!run?.shelfV || !shelvesOn()) return;
+    const cx = W - 26;
+    const cy = 58;
+    ctx.save();
+    SHELVES.forEach((shelf, i) => {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / SHELVES.length;
+      const len = 5 + (run.shelfV[shelf] || 0) * 26;
+      const done = (run.chains?.at?.[shelf] || 0) / Math.max(1, CHAINS[shelf]?.length || 1);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(a);
+      ctx.beginPath();
+      ctx.ellipse(len / 2, 0, len / 2, 3.2, 0, 0, Math.PI * 2);
+      ctx.fillStyle = SHELF_INK[shelf];
+      ctx.globalAlpha = run.chains?.complete?.includes(shelf) ? 0.95 : 0.35 + done * 0.4;
+      ctx.fill();
+      ctx.globalAlpha = 0.9;
+      ctx.lineWidth = 0.8 + done * 1.6;
+      ctx.strokeStyle = SHELF_INK[shelf];
+      ctx.stroke();
+      ctx.restore();
+    });
+    ctx.fillStyle = colors.paper;
+    ctx.beginPath(); ctx.arc(cx, cy, 2.2, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  };
   const drawHud = () => {
     if (!run) return;
+    drawShelves();
     pill(`${cobbles()} cobbles`, 8, 20, 'left');
     pill(`best ${Math.max(record.best, 0)}`, W - 8, 20, 'right', colors.muted);
     if (run.waps) pill(`WAP ×${run.waps}`, W / 2, 20, 'center', '#c0392b');
@@ -7792,8 +7949,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawScene();
     drawRules();
     drawRoadWords();
-    drawBoonWAP();
-    drawBaneWAP();
+    withLift('boon', 3, drawBoonWAP);
+    withLift('bane', 3, drawBaneWAP);
     // Drawn by height (the implicit z): ground first, then low, then bodies; things in the air after
     // the carrier, so a pigeon passes over the hat and a hop passes over a stone.
     const byZ = (a, b) => (Z[a.kind] ?? 2) - (Z[b.kind] ?? 2) || a.y - b.y;
@@ -7802,7 +7959,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawForetold();
     drawAim();
     drawEscorts();
-    drawBoof();
+    withLift('boof', 2, drawBoof);
     drawFigure();
     things.filter((t) => (Z[t.kind] ?? 2) >= 3).forEach(drawThing);
     drawCorvids();

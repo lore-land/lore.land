@@ -1,0 +1,54 @@
+# Scored — sound as a mechanic of the story: what a reader can hear that tells them something true
+# A design, proposed and built behind the sound-design trial (off by default). Nobody has listened yet: sound can be measured, not judged.
+#>lore_land_surfaces_scored
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  The lanes already sound like the story: a key per chapter, a chord per room, the line through every tuned thing, the minor while the mimes hold a chapter. Scoring goes one step further. Each new sound is a fact about the story that an ear can learn before an eye does: which way the shelves are leaning, that a motivation has just set off and whether its chain has run to the end, how far a trope has come, whose time a character keeps. Nothing here is decoration, and nothing is a reward jingle. A sound that does not say something true is cut.
+}
+
+^"hooks"{
+  shelfColor: "the five shelves colour the bed (pie-sound.mjs shelfColorParams): boon brighter and roomier, bone darker and closer to the fundamental, bonk drier and struck, honk with more echo, bane forward and close, as an announcement is. An even vector is the bed as it always was"
+  chainSting: "a shelf motivation sets off (valence-shelves.mjs chainStep): a short sting in its own voice, boon a rising vibraphone with a glimpse of air, bane the bass with the semitone over it, bone two wood strokes a fourth apart, bonk a tock and a glass ping, honk a kazoo and its echo a beat late; a completed chain adds a fuller cadence"
+  tropeMotif: "each trope has a leitmotif drawn from its name, the same tune in every key, and it grows with the trope (trope-reveal.mjs stages)"
+  cadenceVoice: "a character keeps their own time (spw-cadence.mjs) as a quiet voice in the lanes, one at a time and seldom; the mime is the rest, the figure is unvoiced"
+}
+
+%"trope_stages"[
+  { stage: "seed" heard: "one note, far off, in the song echo" notes: 1 }
+  { stage: "hint" heard: "an interval: the first two notes" notes: 2 }
+  { stage: "named" heard: "the motif, four notes, on its own instrument" notes: 4 }
+  { stage: "turned" heard: "the motif inverted around its first note, over the sixth (the same tune, seen from elsewhere)" notes: 5 }
+  { stage: "paid" heard: "the motif home: through the fifth to the root, over the root" notes: 7 }
+]
+
+&refrains{
+  from: "trope-reveal.mjs refrainsFor reads book/content/world/rhymes.json, built from the workbench parser findRhymes: the largest shapes the canon repeats with different words"
+  heard_as: "the motif tail coming back, from further off and quieter each time, at most three times, only once a trope is named"
+  why: "a refrain is the book rhyming with itself; hearing the tail return is how an ear notices a trope before a reader names it"
+}
+
+!rules[
+  "Silent unless the sound-design trial is on and the game sound is on; only ever from an audio context a gesture started"
+  "The key never changes for a shelf: the minor stays the cue of the mimes, and bane is never a mode of its own"
+  "Every note is placed in the room chord, the scale, or the room bass, so nothing scored is ever out of key except where the lanes already are (a knock)"
+  "The ear tires: two stings never land within 0.9 seconds, the same shelf soon after comes back softer and then rests; a trope motif waits six seconds before it is heard again"
+  "Quiet: every scored sound sits under the existing master, compressor and soft top; none is louder than a catch"
+  "No spoken lines, no samples but CC0, nothing about the figure, the hat or the Egg"
+]
+
+?audition{
+  page: "tools/audio_synthesis/pie-sound-audition.html, four scored rows over the same carry: before is the carry, after is the carry scored"
+  rows: "the shelves lean; a motivation sets off; a trope grows; characters keep their own time"
+  measured: "level, peak, brightness above 4 kHz, and tail (the last quarter against the first) for each row, before and after"
+}
+
+?open[
+  "Should a completed chain cadence wait for the next bar line, or land at once"
+  "Should a trope motif be heard in the reading pages too (the margin, the almanac), or only in the lanes"
+  "Is the bane colour (forward and close) right, or should bane only be heard through the schemes it already has"
+  "Should the characters own time play only while they are in view, or also as they are mentioned in the passage going by"
+]

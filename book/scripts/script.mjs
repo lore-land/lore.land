@@ -47,6 +47,7 @@ import {
 } from './modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initReferences } from './modules/references.mjs?v=2026_11_09.E';
+import { initTropeStrip } from './modules/trope-strip.mjs?v=2026_11_11.A';
 import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
 import { initAlmanac } from './modules/almanac.mjs?v=2026_11_11.A';
 import { initLiving } from './modules/living.mjs?v=2026_11_11.A';
@@ -246,6 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let destroySpatial = null;
     let destroyGenre = null;
     let destroyReferences = null;
+    let destroyTropes = null;
     let destroySightings = null;
     let cancelIdle = () => {};
 
@@ -269,6 +271,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Sightings listen first: the references' opening paint may already surface one.
       destroySightings = initSightings({ chapterData });
       destroyReferences = await initReferences({ chapterData, announce });
+      // The tropes this chapter tells, each at the stage this reader has reached (the trope-reveal trial).
+      destroyTropes = initTropeStrip({ chapterData, root: chapterContent || document });
       requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
     }, { timeout: 900 });
 
@@ -319,6 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyPointerCraft) destroyPointerCraft();
       if (destroyProduction) destroyProduction();
       if (destroyReferences) destroyReferences();
+      if (destroyTropes) destroyTropes();
       if (destroySightings) destroySightings();
       if (destroySwUpdate) destroySwUpdate();
       if (destroyAttention) destroyAttention();

@@ -129,6 +129,18 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'trope-reveal', attribute: 'data-switch-trope-reveal', stage: 'trial', layer: 'trial', label: 'Tropes deepen as you go',
+    hint: 'Each trope shows only as far as you have come with it: seeded, hinted, named, turned, paid off. Read on, carry the pie past it, or write it at the desk, and it says more.',
+    effect: { on: 'Tropes show the stage you have reached.', off: 'Tropes show as they always have.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'sound-design', attribute: 'data-switch-sound-design', stage: 'trial', layer: 'trial', label: 'The lanes are scored',
+    hint: 'The game\u2019s sound follows the story: the shelves colour it, a motivation setting off has its own sting, each trope has a motif that grows as the trope does, and the characters keep their own time.',
+    effect: { on: 'The sound follows the story.', off: 'The lanes sound as they always have.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'shelves', attribute: 'data-switch-shelves', stage: 'trial', layer: 'trial', label: 'Five shelves',
     hint: 'Boon, bane, bone, bonk and honk, kept like shelves: what you lean on in the lanes and dwell on in the book makes its kind of story likelier, and a lean held for three rooms sets a motivation going. Ask says why each thing is in the road.',
     effect: { on: 'The shelves weigh what happens next.', off: 'Every scheme and telling is as likely as the book makes it.' },

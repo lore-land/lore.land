@@ -41,6 +41,7 @@
   &spw_stress: "@spw/surfaces/spw-stress.spw"
   &stories: "@spw/surfaces/stories.spw"
   &tellings_and_bindings: "@spw/surfaces/tellings-and-bindings.spw"
+  &site_clusters: "@spw/surfaces/site-clusters.spw"
 }
 
 ^"audits"{

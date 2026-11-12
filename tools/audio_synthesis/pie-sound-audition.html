@@ -103,11 +103,15 @@ class Tapped extends Native {
 window.AudioContext = Tapped;
 window.webkitAudioContext = Tapped;
 
-const [after, before] = await Promise.all([
+const [after, before, cadence] = await Promise.all([
   import(`/book/scripts/home/pie-sound.mjs?fresh=${Date.now()}`),
-  import('./pie-sound-before.mjs')
+  import('./pie-sound-before.mjs'),
+  import('/book/scripts/modules/spw-cadence.mjs')
 ]);
 const ENGINES = { before, after };
+// The scored hooks (the sound-design trial) are heard here whatever the switch says; the before engine has none,
+// so a scored row's before is the same carry without them, and its after is the carry scored.
+after.setSoundDesign?.(true);
 
 /* ─── What a carry does, over and over ─── */
 const LANES = [-0.56, -0.28, 0, 0.28, 0.56];
@@ -132,8 +136,9 @@ const CARRY = (() => {
   return events;
 })();
 let wapCombo = 0;
-const play = (engine, { kind, param = 0, lane = 2, room = null, depth = 0 }) => {
+const play = (engine, { kind, param = 0, lane = 2, room = null, depth = 0, hook = null, args = [] }) => {
   const m = ENGINES[engine];
+  if (hook) { if (typeof m[hook] === 'function') m[hook](...args); return; }
   if (room) { m.setSoundRoom?.(room); return; }
   if (kind === 'wap') {
     wapCombo += 1;
@@ -165,7 +170,28 @@ const ROWS = [
   })() },
   { what: 'Near, then far', how: 'the same catches at the carrier, then at the top of the lanes', events: repeat('catch', 8, 0.6, (i) => ({ lane: i % 5, depth: i < 4 ? 0 : 0.95 })) },
   { what: 'The spill', how: 'the end of a carry', events: [{ t: 0, kind: 'spill', lane: 2 }] },
-  { what: 'Fifteen seconds of a carry', how: 'steps all along, with catches, hops, knocks, throws, WAPs and glass between', events: CARRY }
+  { what: 'Fifteen seconds of a carry', how: 'steps all along, with catches, hops, knocks, throws, WAPs and glass between', events: CARRY },
+  // Scored (the sound-design trial): each over the same carry, so before is the carry and after is the carry scored.
+  { what: 'Scored: the shelves lean', how: 'the carry while the bed leans even, then boon, bane, bone, bonk and honk, two and a half seconds each (shelfColor)', events: [
+    ...CARRY,
+    ...[{}, { boon: 1 }, { bane: 1 }, { bone: 1 }, { bonk: 1 }, { honk: 1 }].map((v, i) => ({ t: i * 2.5, hook: 'shelfColor', args: [v] })),
+    { t: 15, hook: 'shelfColor', args: [{}] }
+  ] },
+  { what: 'Scored: a motivation sets off', how: 'a sting for each shelf, two seconds apart, then the boon chain completing, then the boon sting four times quickly (a repeated sting softens, then rests)', events: [
+    ...repeat('step', 30, 0.5, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 })),
+    ...['boon', 'bane', 'bone', 'bonk', 'honk'].map((shelf, i) => ({ t: 0.2 + i * 2, hook: 'chainSting', args: [shelf] })),
+    { t: 10.2, hook: 'chainSting', args: ['boon', { complete: true }] },
+    ...[0, 1, 2, 3].map((k) => ({ t: 12.4 + k * 0.95, hook: 'chainSting', args: ['boon'] }))
+  ] },
+  { what: 'Scored: a trope grows', how: 'one trope (exactly one) seeded, hinted, named, turned, paid off, then paid off again with its refrain coming back (tropeMotif); the trope gap is lifted for the row', events: [
+    ...repeat('step', 40, 0.5, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 })),
+    ...[0, 1, 2, 3, 4].map((stage, i) => ({ t: 0.3 + i * 3.4, hook: 'tropeMotif', args: ['exactly-one', stage, { again: true }] })),
+    { t: 17.4, hook: 'tropeMotif', args: ['exactly-one', 4, { refrain: 3, again: true }] }
+  ] },
+  { what: 'Scored: characters keep their own time', how: 'the same line in Boof\u2019s time, the Genie\u2019s, a clown\u2019s; then a mime (the groove rests a bar) and the figure (nothing) (cadenceVoice)', events: [
+    ...repeat('step', 40, 0.5, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 })),
+    ...['boof', 'genie', 'clown', 'mime', 'figure'].map((who, i) => ({ t: 0.3 + i * 4, hook: 'cadenceVoice', args: [who, cadence.cadenceOf('@boof{ ?scent !dig ~ &berry ^up .ground }', who)] }))
+  ] }
 ];
 
 /* ─── Running and reading a row ─── */
@@ -231,6 +257,8 @@ $('#all').addEventListener('click', async () => {
   window.__audition = ROWS.map((row, i) => ({ what: row.what, before: results[`${i}:before`], after: results[`${i}:after`] }));
 });
 window.__audition = null;
+/** Both engines, for measuring one change at a time (setSoundDesign on the after engine turns the scored hooks off and on). */
+window.__engines = ENGINES;
 /** One sound, once, through either engine (for calibrating one against the other). */
 window.__once = (engine, kind, param = 0, depth = 0) => run({ events: [{ t: 0, kind, param, lane: 2, depth }] }, engine, null);
 window.__row = (i, engine) => run(ROWS[i], engine, rowsEl.children[i].querySelector(`[data-m="${engine}"]`));

@@ -3486,6 +3486,72 @@ main.chapter .bracework-source {
 
 @keyframes brace-token-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
+/* ─── Tropes here (colophon; trope-reveal trial, trope-strip.mjs) ─────
+ * Each trope the chapter tells, at the stage this reader has reached; its Spw shows in Structure mode only. */
+.chapter-trope-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+}
+
+.chapter-trope-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.6rem 0.18rem 0.3rem;
+  border: 1px solid color-mix(in srgb, var(--hub-ink, #161d2b) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper, #f3ede1) 70%, transparent);
+  color: inherit;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.chapter-trope-chip[data-stage='seed'],
+.chapter-trope-chip[data-stage='hint'] {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.chapter-trope-chip[data-stage='paid'] {
+  border-color: var(--sigil-gold, #a67c38);
+}
+
+.chapter-trope-emblem svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.chapter-trope-detail {
+  flex-basis: 100%;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 2px solid var(--sigil-gold, #a67c38);
+}
+
+.chapter-trope-detail p {
+  margin: 0;
+}
+
+.chapter-trope-deepen {
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.chapter-trope-spw {
+  display: none;
+  font-size: 0.8em;
+}
+
+main[data-xray] .chapter-trope-spw {
+  display: block;
+}
+
 /* ─── Wonders here (colophon; c027) ─────────────────────────────────── */
 
 .chapter-wonder-row {

@@ -40,11 +40,11 @@
 }
 
 ^"clusters"{
-  valence_realms: { capacity: 8, role: "world-state semantics" }
-  spw_core_network: { capacity: 12, role: "kernel, parser, routing, runtime" }
-  mindful_social_play: { capacity: 8, role: "non-compulsive progression" }
-  absurd_earnest_labs: { capacity: 6, role: "prompt engines for wonder" }
-  trope_knowledge_commons: { capacity: 6, role: "pattern and reference commons" }
+  valence_realms: { capacity: 8, role: "world-state semantics; each land its own weather" }
+  spw_core_network: { capacity: 12, role: "kernel, parser, routing, runtime; one address law" }
+  mindful_social_play: { capacity: 8, role: "local profile, cadence, word of mouth; no feed" }
+  absurd_earnest_labs: { capacity: 6, role: "motion and one-gesture doors; factshift.center carries the line" }
+  trope_knowledge_commons: { capacity: 6, role: "addresses, palettes, describable captures" }
 }
 
 ^"routing"{
@@ -64,5 +64,9 @@
   trope_wiki: "tropes as a commons: tropes.json is portable for it (trope_knowledge_commons); no route yet"
   spw_quest: "the reader that keeps state in the address; as middleware, the ? passes in a route (quest-middleware.mjs: edit, enhance, clarify, align, mutate, ground, resonate), each with a receipt"
   autonomous_feedback: "the post the Scriptorium reads: a reader writes a card and keeps a copy; lore.land is a client (/.well-known/autonomous-feedback.json, held to what the post keeps by book:check), the home of charms (/charm/), and played through the route lab with a door in every subject"
-  factshift_center: "the canvas that turns a line toward motion (a d3 force simulation); texture.website's materials ground in its own address (alpha … linkStrength, ?spw=) through &factshift.center/?ground"
+  factshift_center: "the design and interaction hub: a canvas that turns a line toward motion and lends that momentum back as a receipt; texture.website's materials ground in its own address (alpha … linkStrength, ?spw=) through &factshift.center/?ground. It does not host the story, the folio, or the curriculum (site-clusters.spw)"
+  spwashi_click: "the one-gesture door (portal cluster): a first impression that should resolve to another site's first live address, not a copy of its page"
+  spwashi_work: "the folio beside the portal: selected works, quiet; a candidate shelf for capture cards the maker chooses to publish"
+  spwashi_college: "the academy shelf, still a stub; until it has pages it should point at lore.land's night school rather than pretend to teach"
+  site_clusters: "the design theory for the doors above: say-line, look, overlays, local profile, mouth card, captures (site-clusters.spw)"
 }

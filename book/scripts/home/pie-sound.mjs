@@ -398,7 +398,7 @@ function ensureBus() {
   darkB.connect(sideOf(0.55));
   darkB.connect(again).connect(songA);
   songOut.connect(muffle);
-  bus = { input, muffle, thin, air, room, roomOut, song, songA, songB, ground: sound.ground };
+  bus = { input, muffle, thin, air, room, roomOut, song, songA, songB, soft, feedback, wet, ground: sound.ground };
   return bus;
 }
 
@@ -502,7 +502,9 @@ function outlet(heat, { depth = 0, air = 0, song = 0 } = {}) {
   edge.frequency.value = Math.max(1800, (15000 / (1 + 0.3 * heat)) * (1 - 0.6 * depth));
   level.connect(edge).connect(b.input);
   const send = audio.createGain();
-  send.gain.value = Math.min(1, (air + 0.1 * depth) / (1 - 0.6 * depth));
+  // A bonk-leaning story is heard drier (scored: shelfColor): the struck lose more of the room than the said.
+  const dried = air * (1 - (sound.dry || 0) * (air < 0.15 ? 1 : 0.4));
+  send.gain.value = Math.min(1, (dried + 0.1 * depth) / (1 - 0.6 * depth));
   edge.connect(send).connect(b.air);
   if (song > 0 && b.song) {
     const sung = audio.createGain();
@@ -806,7 +808,7 @@ function retunePad() {
 /* The chord breathes with the bar: a little brighter as the bar opens, settling through it. Its level stays. */
 function breathePad(t) {
   if (!pad.voices) return;
-  const base = 600 + 2000 * landQuality().lift;
+  const base = (600 + 2000 * landQuality().lift) * (sound.padTone || 1);
   pad.tone.frequency.setTargetAtTime(base * 1.45, t, 0.05);
   pad.tone.frequency.setTargetAtTime(base, t + 0.16, 0.45);
 }
@@ -892,7 +894,7 @@ function swellPad(now, worth) {
   holdAt(pad.out.gain, now);
   pad.out.gain.setTargetAtTime(Math.max(floorOf(), 0.0001 + 0.028 * lift), now, 0.5);
   pad.out.gain.setTargetAtTime(floorOf(), now + 1.5, 1.4);
-  pad.tone.frequency.setTargetAtTime(600 + 2000 * lift, now, 0.4);
+  pad.tone.frequency.setTargetAtTime((600 + 2000 * lift) * (sound.padTone || 1), now, 0.4);
   clearTimeout(pad.timer);
   pad.timer = setTimeout(stopPad, 9000);
 }
@@ -1511,4 +1513,277 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
     }
     if (WORTH[kind]) swellPad(t, WORTH[kind]);
   } catch { /* silent play still counts */ }
+}
+
+/* ─── Scored: what the story is doing, heard (the sound-design trial; .spw/surfaces/scored.spw) ───
+ * Four hooks the lanes call. Each tells the ear something true, never decoration:
+ *   shelfColor     the five shelves (valence-shelves.mjs) colour the bed: a boon lean brighter and roomier, a bone lean
+ *                  darker and closer to the fundamental, a bonk lean drier and struck, a honk lean with more echo, a bane
+ *                  lean forward and close, as an announcement is. The key never changes for it: the minor stays the
+ *                  mimes' cue, and bane is never a mode of its own.
+ *   chainSting     a shelf's motivation sets off: a short sting in the shelf's own voice, and when its chain completes,
+ *                  a fuller cadence. Stings tire the ear like everything else: a repeated one softens, and two never
+ *                  crowd each other.
+ *   tropeMotif     each trope has a leitmotif drawn from its name, and it grows as the trope does: seeded, one note far
+ *                  off; hinted, an interval; named, the motif; turned, the motif inverted over the sixth; paid off, the
+ *                  motif home to its root. A refrain the parser finds recurring across the book (rhymes.json, read by
+ *                  trope-reveal.mjs) is heard as the motif's tail coming back, quieter each time.
+ *   cadenceVoice   a character's own time (spw-cadence.mjs) as a quiet voice in the lanes: one at a time, rarely. The mime
+ *                  is the rest (the groove drops a bar); the figure in plain lines is unvoiced.
+ * Silent unless the trial is on and sound is on, and only ever from a context a gesture started. Each has a pure plan
+ * (shelfColorParams, stingPlan, motifPlan, cadencePlan) that a check reads without a speaker. */
+
+let designOverride = null;
+/** For the audition page and checks: force the scored hooks on (true), off (false), or back to the switch (null). */
+export function setSoundDesign(on) { designOverride = on == null ? null : Boolean(on); }
+const designCache = { at: -1e9, on: false };
+/** The trial switch (reading-switches.mjs, saved resolved map, as the game reads it) and the game's own sound setting. */
+function designOn() {
+  if (designOverride !== null) return designOverride;
+  const now = Date.now();
+  if (now - designCache.at < 2000) return designCache.on;
+  let on = false;
+  try {
+    const store = globalThis.localStorage;
+    const sw = JSON.parse(store?.getItem('lore.switches.v1') || 'null');
+    const rec = JSON.parse(store?.getItem('lore.pie.v1') || 'null');
+    on = sw?.resolved?.['sound-design'] === 'on' && rec?.sound !== false;
+  } catch { on = false; }
+  Object.assign(designCache, { at: now, on });
+  return on;
+}
+const scoredLive = () => Boolean(audio && audio.state === 'running' && designOn());
+
+export const SCORED_SHELVES = Object.freeze(['boon', 'bane', 'bone', 'bonk', 'honk']);
+const NEUTRAL = Object.freeze({ bright: -6, room: 0.5, echo: 0.22, wet: 0.1, padTone: 1, dry: 0, mode: 'unchanged' });
+
+/**
+ * The bed's colour for a five-shelf vector, unplayed. An even (or empty) vector is the bed as it always was. Every
+ * value stays in its range, and none of them is a key or a mode.
+ * @param {Record<string, number>} [v]
+ */
+export function shelfColorParams(v = {}) {
+  const raw = SCORED_SHELVES.map((k) => Math.max(0, Number(v?.[k]) || 0));
+  const sum = raw.reduce((a, b) => a + b, 0);
+  if (!sum) return { ...NEUTRAL };
+  const [boon, bane, bone, bonk, honk] = raw.map((x) => x / sum - 0.2);   // the lean away from even
+  return {
+    bright: clamp(-6 + 5 * boon - 3 * bone + 1.5 * bane, -9, -3),
+    room: clamp(0.5 + 0.4 * boon - 0.5 * bonk - 0.25 * bane + 0.15 * bone, 0.3, 0.75),
+    echo: clamp(0.22 + 0.32 * honk - 0.15 * bonk, 0.12, 0.38),
+    wet: clamp(0.1 + 0.12 * honk - 0.06 * bonk, 0.06, 0.16),
+    padTone: clamp(1 + 0.6 * boon - 0.4 * bone, 0.7, 1.4),
+    dry: clamp(1.2 * bonk, 0, 0.6),
+    mode: 'unchanged'
+  };
+}
+
+/** The shelves colour the bed, slowly (a lean is a lean, not a cut). Off, the bed goes back to how it always was. */
+export function shelfColor(v) {
+  try {
+    const p = designOn() ? shelfColorParams(v) : { ...NEUTRAL };
+    sound.dry = p.dry;
+    sound.padTone = p.padTone;
+    if (!audio || audio.state !== 'running' || !bus) return p;
+    const t = audio.currentTime;
+    bus.soft?.gain.setTargetAtTime(p.bright, t, 1.4);
+    bus.roomOut.gain.setTargetAtTime(p.room, t, 1.4);
+    bus.feedback?.gain.setTargetAtTime(p.echo, t, 1.4);
+    bus.wet?.gain.setTargetAtTime(p.wet, t, 1.4);
+    return p;
+  } catch { return null; }
+}
+
+/* A sting is a few notes, each named by where it sits in the room's chord (tone: the i-th tone it sings; bass: the
+ * room's bass and an offset in semitones), so it is always in key, whatever the chapter. */
+const STINGS = Object.freeze({
+  boon: { set: [{ voice: 'vibes', tone: 2, at: 0, dur: 0.35, vol: 0.03 }, { voice: 'vibes', tone: 4, at: 2, dur: 0.45, vol: 0.026, glimpse: true }],
+    done: [{ voice: 'vibes', tone: 5, at: 4, dur: 0.4, vol: 0.024 }, { voice: 'musicBox', tone: 6, at: 6, dur: 0.9, vol: 0.022 }] },
+  bane: { set: [{ voice: 'swell', bass: 0, at: 0, dur: 0.55, vol: 0.026 }, { voice: 'swell', bass: 1, at: 0, dur: 0.55, vol: 0.018 }],
+    done: [{ voice: 'swell', bass: 1, at: 4, dur: 0.4, vol: 0.02 }, { voice: 'tone', bass: 0, at: 6, dur: 0.7, vol: 0.03 }] },
+  bone: { set: [{ voice: 'marimba', bass: 0, at: 0, dur: 0.25, vol: 0.045 }, { voice: 'marimba', bass: 5, at: 2, dur: 0.3, vol: 0.036 }],
+    done: [{ voice: 'marimba', bass: 10, at: 4, dur: 0.3, vol: 0.032 }, { voice: 'marimba', bass: 12, at: 6, dur: 0.5, vol: 0.036 }] },
+  bonk: { set: [{ voice: 'tock', at: 0, vol: 0.045 }, { voice: 'celesta', tone: 4, at: 1, dur: 0.2, vol: 0.02 }],
+    done: [{ voice: 'tock', at: 3, vol: 0.04 }, { voice: 'tock', at: 6, vol: 0.035 }, { voice: 'celesta', tone: 3, at: 8, dur: 0.6, vol: 0.022 }] },
+  honk: { set: [{ voice: 'honk', tone: 1, at: 0, dur: 0.1, vol: 0.028 }, { voice: 'honk', tone: 1, at: 4, dur: 0.1, vol: 0.012, far: true }],
+    done: [{ voice: 'honk', tone: 2, at: 6, dur: 0.1, vol: 0.026 }, { voice: 'honk', tone: 4, at: 7, dur: 0.16, vol: 0.026 }, { voice: 'honk', tone: 4, at: 11, dur: 0.16, vol: 0.011, far: true }] }
+});
+
+/** A shelf's sting, unplayed: its notes (at in sixteenths), the fuller cadence added when the chain completes. */
+export function stingPlan(shelf, { complete = false } = {}) {
+  const s = STINGS[shelf];
+  if (!s) return [];
+  return complete ? [...s.set, ...s.done] : [...s.set];
+}
+
+/** Two stings never crowd each other, and the same shelf heard again soon comes back softer, then not at all. */
+export const STING_GAP = 0.9;
+export function admitSting(state, shelf, now) {
+  const s = state || { last: -9, heat: {} };
+  if (now - s.last < STING_GAP) return { play: false, vol: 0, state: s };
+  const was = s.heat[shelf] || { heat: 0, at: now };
+  const heat = was.heat * 0.5 ** ((now - was.at) / 6);
+  if (heat > 3) return { play: false, vol: 0, state: s };
+  return { play: true, vol: 1 / (1 + 0.6 * heat), state: { last: now, heat: { ...s.heat, [shelf]: { heat: heat + 1, at: now } } } };
+}
+let stingState = null;
+
+/** Play a few planned notes through one outlet, on the pulse. `deg` is a scale degree, `tone` a chord tone, `bass` an
+ *  offset from the room's bass; `far` notes go further off and into the song's echo. */
+function playPlan(notes, { vol = 1, air = 0.3, pan = 0, voice: forced = '' } = {}) {
+  const t = audio.currentTime + 0.01;
+  const near = kit(outlet(0, { air, song: 0.2 }), t, pan);
+  const far = kit(outlet(0, { depth: 0.65, air: air + 0.2, song: 0.35 }), t, -pan * 0.5);
+  const at0 = toPulse(t, 0.02);
+  const s = sixteenth();
+  let end = 0;
+  notes.forEach((n) => {
+    const k = n.far ? far : near;
+    const semi = n.bass != null ? bassLow() + n.bass : n.tone != null ? sungTone(n.tone) : n.deg != null ? degree(n.deg) : 0;
+    const f = hz(semi);
+    const at = at0 + n.at * s;
+    const dur = n.dur || 0.2;
+    const level = (n.vol || 0.02) * vol;
+    const v = n.voice || forced || 'kalimba';
+    if (v === 'tock') k.tock(520, 400, level, at);
+    else if (v === 'swell') k.swell('triangle', f, dur, level, at);
+    else if (v === 'tone') k.tone('sine', f, 0, dur, level, at, { attack: 0.02, cents: 0 });
+    else if (v === 'honk') k.honk(f, dur, level, at);
+    else (k[v] || k.kalimba)(f, dur, level, at);
+    if (n.glimpse) k.hiss(5200, 7800, 0.16, level * 0.5, 4, at, 'bandpass', 0.3);
+    end = Math.max(end, at + dur);
+  });
+  return end;
+}
+
+/** A shelf's motivation sets off (valence-shelves.mjs chainStep): its sting; a fuller cadence when the chain completes. */
+export function chainSting(shelf, { complete = false } = {}) {
+  try {
+    if (!scoredLive() || !STINGS[shelf]) return false;
+    const gate = admitSting(stingState, shelf, audio.currentTime);
+    stingState = gate.state;
+    if (!gate.play) return false;
+    playPlan(stingPlan(shelf, { complete }), { vol: gate.vol, air: shelf === 'bonk' ? 0.08 : shelf === 'honk' ? 0.4 : 0.28 });
+    return true;
+  } catch { return false; }
+}
+
+/* A trope's motif comes from its name: four notes, a step or a small leap at a time, inside an octave. The same trope
+ * is always the same tune, in whatever key the chapter is in. */
+const nameHash = (text) => {
+  let h = 2166136261;
+  for (const ch of String(text)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+};
+/** A trope's motif, in scale degrees. @param {string} id */
+export function tropeShape(id) {
+  const h = nameHash(id);
+  const notes = [h % 3];
+  [2, 5, 8].forEach((bit) => {
+    const m = ((h >>> bit) % 5) - 2;
+    notes.push(clamp(notes[notes.length - 1] + (m || 1), -2, 7));
+  });
+  return notes;
+}
+export const TROPE_STAGES = Object.freeze(['seed', 'hint', 'named', 'turned', 'paid']);
+const TROPE_VOICES = Object.freeze(['celesta', 'vibes', 'marimba', 'kalimba', 'musicBox']);
+const refrainCount = (r) => clamp(Math.round(Number(typeof r === 'number' ? r : r?.count ?? r?.instances?.length ?? (r ? 2 : 0)) || 0), 0, 3);
+
+/**
+ * A trope's motif at a stage, unplayed: { voice, notes }. It grows: seed one note far off, hint an interval, named
+ * the motif, turned the motif inverted over the sixth, paid the motif home to its root. A refrain (stage named and
+ * after) brings the last two notes back, quieter each time, at most three times.
+ * @param {string} id @param {number} stageIndex @param {{ refrain?: unknown }} [opts]
+ */
+export function motifPlan(id, stageIndex, { refrain = null } = {}) {
+  const stage = clamp(Math.round(Number(stageIndex) || 0), 0, 4);
+  const shape = tropeShape(id);
+  const voice = TROPE_VOICES[nameHash(`${id}:voice`) % TROPE_VOICES.length];
+  /** @type {{ deg?: number, bass?: number, at: number, dur: number, vol: number, far?: boolean, voice?: string }[]} */
+  let notes = [];
+  if (stage === 0) notes = [{ deg: shape[0], at: 0, dur: 0.5, vol: 0.016, far: true }];
+  else if (stage === 1) notes = [{ deg: shape[0], at: 0, dur: 0.4, vol: 0.02 }, { deg: shape[1], at: 2, dur: 0.55, vol: 0.02 }];
+  else if (stage === 2) notes = shape.map((d, i) => ({ deg: d, at: i * 2, dur: 0.32, vol: 0.024 }));
+  else if (stage === 3) notes = [...shape.map((d, i) => ({ deg: 2 * shape[0] - d, at: i * 2, dur: 0.32, vol: 0.024 })), { bass: 9, at: 0, dur: 1.4, vol: 0.018, voice: 'tone' }];
+  else notes = [...shape.map((d, i) => ({ deg: d, at: i * 2, dur: 0.3, vol: 0.024 })), { deg: 3, at: 8, dur: 0.3, vol: 0.022 }, { deg: 5, at: 10, dur: 0.9, vol: 0.026 }, { bass: 0, at: 8, dur: 1.4, vol: 0.02, voice: 'tone' }];
+  const times = stage >= 2 ? refrainCount(refrain) : 0;
+  const melody = notes.filter((n) => n.deg != null);
+  const tail = melody.slice(-2);
+  const after = Math.max(...notes.map((n) => n.at)) + 4;
+  for (let k = 0; k < times; k += 1) tail.forEach((n, i) => notes.push({ deg: n.deg, at: after + k * 6 + i * 2, dur: n.dur, vol: n.vol * 0.6 ** (k + 1), far: true }));
+  return { voice, notes, stage: TROPE_STAGES[stage] };
+}
+
+/** A trope, heard at the stage it has reached (trope-reveal.mjs). Once in a while per trope: a motif is a reminder.
+ *  `again` lifts the gap (the audition page, to hear one trope grow). */
+export const TROPE_GAP = 6;
+const tropeAt = new Map();
+export function tropeMotif(tropeId, stageIndex, { refrain = null, again = false } = {}) {
+  try {
+    if (!scoredLive() || !tropeId) return false;
+    const now = audio.currentTime;
+    if (!again && now - (tropeAt.get(tropeId) ?? -99) < TROPE_GAP) return false;
+    tropeAt.set(tropeId, now);
+    const plan = motifPlan(tropeId, stageIndex, { refrain });
+    const wait = stingState && now - stingState.last < 0.6 ? 0.6 : 0;
+    const go = () => { try { if (scoredLive()) playPlan(plan.notes, { voice: plan.voice, vol: 1, air: 0.36 }); } catch { /* the trope turns quietly */ } };
+    if (wait) setTimeout(go, wait * 1000);
+    else go();
+    return true;
+  } catch { return false; }
+}
+
+/* Whose instrument a character's own time is played on (their theme's timbre where pie-tropes gave one). */
+const OWN_VOICE = Object.freeze({ boof: 'marimba', ants: 'marimba', genie: 'vibes', boon: 'honk', bane: 'honk', bonewap: 'marimba', porter: 'marimba', clerk: 'kalimba', clown: 'honk' });
+
+/**
+ * A character's own time as notes, unplayed. The figure in plain lines is unvoiced (nobody has said); the mime is the
+ * rest. Everyone else: at most sixteen of their hits, accents louder, in scale degrees.
+ * @param {string} who @param {{ steps?: { at: number, dur: number, accent: number, pitch: number, voice: string, rest: boolean, chord?: boolean }[], length?: number }} pattern
+ */
+export function cadencePlan(who, pattern) {
+  if (who === 'figure') return { voiced: false, rest: false, notes: [], why: 'unvoiced: nobody has said' };
+  if (who === 'mime') return { voiced: false, rest: true, notes: [], why: 'the mime is the rest' };
+  const steps = (pattern?.steps || []).filter((s) => !s.rest).slice(0, 16);
+  return {
+    voiced: steps.length > 0,
+    rest: false,
+    voice: OWN_VOICE[who] || 'kalimba',
+    length: Math.min(8, Number(pattern?.length) || 8),
+    notes: steps.map((s) => ({ deg: s.voice === 'bass' ? null : s.pitch, bass: s.voice === 'bass', at: s.at, dur: s.dur, vol: s.accent >= 2 ? 0.02 : s.accent ? 0.016 : 0.011, chord: Boolean(s.chord) }))
+  };
+}
+const voiceAt = new Map();
+let voiceBusy = 0;
+/** A character keeps their own time in the lanes, quietly, one at a time, and seldom. Returns whether anything sounded. */
+export function cadenceVoice(who, pattern, { at = 0 } = {}) {
+  try {
+    if (!scoredLive()) return false;
+    const plan = cadencePlan(who, pattern);
+    if (plan.rest) { mimeRest(); return true; }
+    if (!plan.voiced) return false;
+    const now = audio.currentTime;
+    if (now < voiceBusy || now - (voiceAt.get(who) ?? -99) < 8) return false;
+    voiceAt.set(who, now);
+    const t = now + 0.01;
+    const k = kit(outlet(0, { depth: 0.35, air: 0.32 }), t, jitter(0.3));
+    const beat = 60 / sound.pulse;
+    const start = toBeat(t, 0.03) + clamp(Number(at) || 0, 0, 2);
+    const play = k[plan.voice] || k.kalimba;
+    let end = start;
+    plan.notes.filter((n) => n.at < plan.length).forEach((n) => {
+      const when = start + n.at * beat;
+      const dur = clamp(n.dur * beat * 0.85, 0.06, 0.6);
+      if (n.bass) k.tone('sine', hz(bassLow()), 0, dur, n.vol * 1.4, when, { attack: 0.01, cents: 0 });
+      else {
+        const f = hz(degree(n.deg) + (who === 'ants' ? 12 : 0));
+        if (plan.voice === 'honk') k.honk(f, Math.min(dur, 0.14), n.vol, when);
+        else play(f, dur, n.vol, when);
+        if (n.chord) k.kalimba(hz(degree(n.deg + 2)), dur, n.vol * 0.6, when);
+      }
+      end = Math.max(end, when + dur);
+    });
+    voiceBusy = t + end + 0.5;
+    return true;
+  } catch { return false; }
 }
