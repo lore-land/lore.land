@@ -19,6 +19,12 @@ const tree = () => execFileSync('git', ['status', '--porcelain'], { cwd: ROOT })
 const finish = (state, detail, code) => { console.log(`check[${state}]{${detail}}`); process.exit(code); };
 
 if (!steps.length) finish('fail', 'no npm run steps found in ci.yml', 1);
+// GitHub refuses the whole workflow if a plain value holds a colon and a space (YAML reads it as a new key), and the
+// run then fails before any step. Catch that here, since this door reads the file by pattern, not as YAML.
+const unquoted = readFileSync(resolve(ROOT, '.github/workflows/ci.yml'), 'utf8').split('\n')
+  .map((line, i) => ({ at: i + 1, value: /^\s*(?:- )?(?:name|run):\s*([^'"\s].*)$/.exec(line)?.[1] || '' }))
+  .filter(({ value }) => /:\s/.test(value));
+if (unquoted.length) finish('fail', `ci.yml line ${unquoted[0].at}: a colon and a space in an unquoted value breaks the workflow; quote it or rephrase`, 1);
 const before = tree();
 const began = Date.now();
 for (const step of steps) {

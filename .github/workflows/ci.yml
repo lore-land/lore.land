@@ -65,7 +65,7 @@ jobs:
       - name: elaboration:check (each trope's five stages, in words and in Spw)
         run: npm run elaboration:check
 
-      - name: sound:check (scored hooks: colour in range, stings rest, motifs grow, the figure unvoiced)
+      - name: sound:check (scored hooks; colour in range, stings rest, motifs grow, the figure unvoiced)
         run: npm run sound:check
 
       - name: pacing:check (story beats in a carry, paced; nothing dropped)
