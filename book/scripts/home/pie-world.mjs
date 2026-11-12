@@ -47,7 +47,7 @@ export const KNOCKS = Object.freeze({
 });
 export const SLIPS = new Set(['puddle', 'frost', 'sack']);
 /* Low enough to jump: a hop clears them. (Berries, wonders and clowns are met in the air too.) */
-export const LOW = new Set(['baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner']);
+export const LOW = new Set(['baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner', 'anthill']);
 export const JUMP_DUR = 0.62;
 /* The hang: the flat top of a hop. A clear there is in time. A throw from there leaves the hand high. */
 export const HOP_HANG = Object.freeze([0.36, 0.64]);
@@ -63,8 +63,8 @@ export const hopCurve = (u) => {
  * arrows: underfoot) · 1 low (a hop clears it) · 2 body (posts, glass, people: too tall, though a high
  * hop clears the lighter ones) · 3 air (pigeons, wasps: drawn over the carrier) · 4 high (the Egg). */
 export const Z = Object.freeze({
-  puddle: 0, frost: 0, hole: 0, ditch: 0, furrow: 0, pile: 0, arrow: 0,
-  sack: 1, stone: 1, snail: 1, spool: 1, banner: 1, baneberry: 1, berry: 1, boneberry: 1, beaver: 1, switch: 1,
+  puddle: 0, frost: 0, hole: 0, ditch: 0, furrow: 0, pile: 0, arrow: 0, antgift: 0,
+  sack: 1, stone: 1, snail: 1, spool: 1, banner: 1, baneberry: 1, berry: 1, boneberry: 1, beaver: 1, switch: 1, anthill: 1,
   post: 2, pane: 2, chair: 2, throne: 2, table: 2, mime: 2, mimewall: 2, march: 2, clerk: 2, subject: 2, dividers: 2, clown: 2, vane: 2, horn: 2, wonder: 2,
   pigeon: 3, wasps: 3, egg: 4
 });

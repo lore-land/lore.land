@@ -510,3 +510,31 @@ label.spell-label {
     min-height: 100svh;
   }
 }
+
+/* A line as a loop (spw-cadence.mjs): its ring, what the player did with it, and who else could play it. */
+.desk-cadence {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.desk-cadence-ring svg {
+  display: block;
+  width: min(9rem, 40vw);
+  height: auto;
+}
+
+.desk-cadence-says {
+  margin: 0;
+  font-style: italic;
+}
+
+.desk-cadence p {
+  margin: 0;
+}
+
+.desk-cadence .spell-chip {
+  margin: 0.15rem 0.2rem 0.15rem 0;
+}

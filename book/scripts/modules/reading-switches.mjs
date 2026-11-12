@@ -123,6 +123,18 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'anthills', attribute: 'data-switch-anthills', stage: 'trial', layer: 'trial', label: 'Anthills',
+    hint: 'The torch-ants keep anthills by the road. Run into one and they put their crumbs down, lift weights, and gossip: a few words from further on in the chapter. Now and then a line of them rolls a boonberry home, or carries a scrap of the book to the crows.',
+    effect: { on: 'Anthills by the road, and the ants\u2019 gossip.', off: 'The ants keep their streets lit and their gossip to themselves.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'shelves', attribute: 'data-switch-shelves', stage: 'trial', layer: 'trial', label: 'Five shelves',
+    hint: 'Boon, bane, bone, bonk and honk, kept like shelves: what you lean on in the lanes and dwell on in the book makes its kind of story likelier, and a lean held for three rooms sets a motivation going. Ask says why each thing is in the road.',
+    effect: { on: 'The shelves weigh what happens next.', off: 'Every scheme and telling is as likely as the book makes it.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'mimes-remember', attribute: 'data-switch-mimes-remember', stage: 'trial', layer: 'trial', label: 'The mimes remember',
     hint: 'Every mime was someone first, and Ask says who. Some bake, and leave flour as you pass. Break a mime\u2019s imaginary pane and nothing happens, then.',
     effect: { on: 'The mimes have former lives, and remember.', off: 'Mimes are mimes: a slice that meets their wall is boxed.' },

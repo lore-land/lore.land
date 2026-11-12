@@ -1,0 +1,79 @@
+# Shelves — the five modifiers as tunable genre shelves, and the formula that moves the story with them
+# A design, proposed. One formula for what grows dominant, what gets teased, what a dimension brings, and why a thing is in the road.
+#>lore_land_surfaces_shelves
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  Spw has exactly five modifiers: bone, boon, bane, bonk, honk. The land already reads three of them as genres (the genre dial: fairy tale, absurd reality, low magic). Five shelves let a reader keep the story the way a pantry is kept: what is within reach gets used, and what gets used grows. The same five weigh what a reader does in the lanes, what they dwell on in the book, and what they write at the desk. Out of that one vector come four things: which branch grows dominant, which motivation fires next and what it invokes, how far a story point has been teased, and which dimension of the land opens next. Nothing is hidden from a reader who looks, and nothing is given to one who has not.
+}
+
+^"shelves"{
+  boon: "fairy tale and foresight: gifts, wonder, the boonberry that foresees kindly, the destination labelled GOOD"
+  bane: "absurd reality and announcement: schemes, bills, the baneberry that foretells itself true, the off switch"
+  bone: "low magic and what holds: frames, receipts, the boneberry that feeds honestly, a beam that answers"
+  bonk: "material comedy and impact: Bonk City glass, knocks, splats, a pie in the face done right, the test"
+  honk: "echo and announcement: the Fool, the grove that answers a beat late, rhythms found, the return note"
+  reads_as: "the five Spw modifiers (spw-v0.1 SPEC: modifier ::= bone | boon | bane | bonk | honk), the same words the game reserves in =lean and the desk reads in =[genre]{ }"
+}
+
+%"vector"{
+  formula: "v = normalize( shelf^a * (1 + deeds)^b * (1 + attention)^c ), with a = 1, b = 0.5, c = 0.35"
+  shelf: "what the reader tuned: =[genre]{ boon:2 bone:1 } extended to five; untuned is even"
+  deeds: "the lanes' lean tallies (pie-rules.spw =lean): fairy_tale to boon, absurd_reality to bane, low_magic to bone, and two new ways: bonk from knocked, splat, wap, boxed, shattered; honk from rhythms found, grooves kept, echoes heard"
+  attention: "time on paragraphs the valence lens leans (valence-lens.mjs leanScores), and desk spells cast under each modifier"
+  firmness: "k from 1 (loose shelves, every branch stays likely) to 4 (firm shelves, the leaning branch dominates); the reader sets it, as a shelf is set"
+}
+
+=branches{
+  odds: "P(branch) is proportional to exp( k * (signature . v) ): each branch carries a five-part signature, and the shelves decide which grows dominant"
+  branches_are: "tellings in a slot, a pairing swapped on the way line, the scheme Mr. BaneWAP picks, a chapter-end variant, who settles under the hat next"
+  guard: "a branch never closes another for good: the least likely keeps a floor of one in twenty, so a turned shelf can always bring it back"
+}
+
+~chains{
+  rule: "when one shelf holds v at 0.3 or more for three rooms in a row, the next link of its chain fires; a chain is a run of signed bias edges, each a character's motivation invoking the next thing"
+  boon: "=boon@boonwap{ @court } then =boon@court{ @clowns } then =boon@clowns{ @wap }: he holds court, clowns flock, the WAPs come in runs"
+  bane: "=bane@banewap{ @scheme } then =bane@scheme{ @march } then =bane@march{ @mimes }: a scheme, a march, and the mimes remember"
+  bone: "=boon@bonewap{ @receipt } then =boon@receipt{ @frame } then =boon@frame{ @dividers }: a receipt posted, a frame tested, the road measured"
+  bonk: "=bane@pane{ @mimewall } then =bane@mimewall{ @grudge }: glass broken, imaginary glass broken, and a grudge that feeds the bane chain"
+  honk: "=boon@fool{ @echo } then =boon@echo{ @rhythm }: a honk, an echo a beat late, and a rhythm a reader can keep"
+  crossing: "chains cross where the ecology does: bonk feeds bane through the mimes, honk feeds boon through the grove, bone checks both"
+  reward: "a chain run to its end unlocks a depth: a card, a passage, a telling, a room's second rule"
+}
+
+?tease{
+  ladder: "whisper (a margin rumour) then glimpse (a sighting in the lanes, a hint under Ask) then card (kept) then passage (the book says it) then reveal (the beat itself)"
+  score: "0.4 attention to the point + 0.3 deeds near it + 0.2 its signature against v + 0.1 how far the book has been carried"
+  thresholds: "0.1, 0.25, 0.45, 0.65, 0.85; a rung never shows before its chapter is released, and held plot has no ladder at all"
+  layering: "a reader who skims meets whispers; one who comes back meets glimpses and cards; one who dwells meets passages; one who tunes the shelves sees branches turn; one who writes Spw at the desk sees the chains named. Each layer is reached by doing, never by being sorted"
+}
+
+&ecology{
+  dimensions: "across, ahead, height, timing, depth, games, sound"
+  leans: "height to bone (what holds you up), timing to honk, depth to boon (foresight), games to bonk, across to bane (the road narrowed by a scheme), sound to honk, ahead to boon"
+  opening: "the next dimension opens only when the last is lived in (used a few times), and is teased one room early by a resident that only makes sense there: a snail before height, a rhythm before timing, a honk before sound"
+  residents: "every creature and obstacle lives in a dimension and leans a shelf, so the road is an ecology and not a list"
+}
+
+#reasons{
+  rule: "every obstacle in the road says whose it is and why it is there, grounded in a passage: a pane is somebody's window, a banner is somebody's announcement, a spool is somebody's thread"
+  shown: "under Ask, beside what the book says, folded with the reasons so the lanes stay quick"
+  table: "book/scripts/home/pie-reasons.mjs (to be built): kind, whose, why, shelf, dimension, ground"
+}
+
+!guards[
+  "No shelf is a moral ranking. Bane is a genre of story, not a worse reader"
+  "Nothing is withheld for being the wrong kind of reader: every depth has a path from every shelf"
+  "Held plot never enters the ladder, the chains or the reasons"
+  "Nobody says anything new: chains invoke events, cards and passages that already exist or are chosen"
+]
+
+?open[
+  "Should the five shelves replace the three-way genre dial, or sit beside it as a desk spell first"
+  "What firmness should a new reader start at: loose (k of 1) seems kind"
+  "Which branches carry signatures first: the schemes and the tellings are the cheapest"
+  "Should a completed chain say its Spw aloud at the desk, or only in Structure mode"
+]

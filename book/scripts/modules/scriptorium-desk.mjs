@@ -268,6 +268,52 @@ export async function initScriptoriumDesk() {
     window.setTimeout(() => { window.location.href = href; }, 420);
   };
 
+  /* The line as a loop (spw-cadence.mjs): drawn as a ring in the time of whoever it names with @ (else Boof), heard only
+   * when pressed, and played in anyone else's time on request. The line is the score, and it travels as a link. */
+  let cadenceMod = null;
+  let playing = null;
+  const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  async function cadenceBlock(text, seed) {
+    try { cadenceMod = cadenceMod || await import('./spw-cadence.mjs?v=2026_11_11.A'); } catch { return null; }
+    const mod = cadenceMod;
+    const named = mod.playerFor(/@([A-Za-z_-]+)/.exec(text)?.[1] || '');
+    let current = mod.cadenceOf(text, named || 'boof', { bars: 2, parse: seed?.parse || null });
+    const ring = el('div', { className: 'desk-cadence-ring' });
+    const says = el('p', { className: 'desk-cadence-says' });
+    const paint = (c) => {
+      current = c;
+      ring.innerHTML = mod.cadenceRingSVG(c, { size: 132, palette: mod.castOf(c.who).palette });
+      says.textContent = c.says;
+    };
+    const hear = (c) => {
+      playing?.stop();
+      const sound = mod.playCadence(c, { loops: 2 });
+      playing = sound;
+      const hand = ring.querySelector('.cadence-hand');
+      if (!sound || !hand || reducedMotion()) return;
+      const start = performance.now();
+      hand.setAttribute('opacity', '0.9');
+      const turn = (now) => {
+        const t = (now - start) / 1000;
+        if (playing !== sound || t > sound.seconds) { hand.setAttribute('opacity', '0'); return; }
+        hand.setAttribute('transform', `rotate(${((t / (sound.seconds / 2)) * 360) % 360} 50 50)`);
+        requestAnimationFrame(turn);
+      };
+      requestAnimationFrame(turn);
+    };
+    paint(current);
+    const others = mod.PLAYERS.filter((p) => p !== current.who && p !== 'figure').map((p) => el('button', {
+      type: 'button', className: 'spell-chip', onClick: () => { paint(mod.cadenceOf(text, p, { bars: 2, parse: seed?.parse || null })); hear(current); }
+    }, mod.castOf(p).name.replace(/^The /, '')));
+    const share = `${window.location.origin}/scriptorium/?cast=${encodeURIComponent(text)}`;
+    return el('div', { className: 'desk-cadence' },
+      ring,
+      says,
+      current.whole === false ? el('p', {}, 'It did not read whole as Spw, so it is heard as far as it reads, token by token.') : null,
+      el('p', {}, el('button', { type: 'button', className: 'spell-chip', onClick: () => hear(current) }, 'Hear it'), ' ', el('span', {}, 'or in another time: '), ...others),
+      el('p', {}, 'What you wrote is a loop anyone can play back. ', el('a', { href: share }, 'Pass it along →')));
+  }
+
   /* Each spell's effect. Returns nothing; speaks through `say`. */
   const cast = async (line) => {
     const text = String(line || '').trim();
@@ -326,7 +372,8 @@ export async function initScriptoriumDesk() {
       const heard = landAnswer(land, text, { parse: seed?.parse || null, readBias: seed?.readBias || null });
       const sign = heard.sigil || text[0];
       say(sign, ...heard.says.map((line) => el('p', {}, line)),
-        heard.href ? el('a', { href: heard.href }, 'Where the land keeps it →') : null);
+        heard.href ? el('a', { href: heard.href }, 'Where the land keeps it →') : null,
+        await cadenceBlock(text, seed));
       return;
     }
 
@@ -754,6 +801,11 @@ export async function initScriptoriumDesk() {
 
   mount.replaceChildren(slate, hint, reply, index, grid);
   mount.dataset.ready = 'true';
+  // A line passed along (?cast=): cast as if written here. It is read and answered; nothing is heard until pressed.
+  try {
+    const passed = new URLSearchParams(window.location.search).get('cast');
+    if (passed) { input.value = passed; cast(passed); }
+  } catch { /* no line in the address */ }
 
   return () => document.removeEventListener('keydown', onSlash);
 }

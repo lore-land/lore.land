@@ -193,6 +193,10 @@ import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechani
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_11.A';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
+import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
+import { reasonFor } from './pie-reasons.mjs?v=2026_11_11.A';
+import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
+import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
@@ -486,6 +490,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   // The mimes remember (pie-mimes.mjs), a trial: former lives, bakeries, and imaginary panes that are not forgotten.
   const mimesOn = () => switchOn('mimes-remember');
   const mimeGrudge = () => grudgeOf(record.mimes?.shattered || 0);
+  /* Five shelves (valence-shelves.mjs, .spw/surfaces/shelves.spw), a trial: boon, bane, bone, bonk and honk, weighed from
+   * how the reader tuned the genre dial (the nook's genre, boon/bane/bone; bonk and honk even), what this carry has done,
+   * and nothing else. Each room the vector is taken again, a shelf held three rooms sets a motivation going, and Mr.
+   * BaneWAP's scheme is drawn from odds the shelves tilt. */
+  const shelvesOn = () => switchOn('shelves');
+  // Anthills (pie-ants.mjs), a trial: the torch-ants' hills by the road, their gossip, and their gifts to the crows.
+  const anthillsOn = () => switchOn('anthills');
+  const shelfTuning = () => {
+    try {
+      const g = JSON.parse(localStorage.getItem('lore.nook.v1') || 'null')?.genre || {};
+      return { boon: Number(g.boon) || 1, bane: Number(g.bane) || 1, bone: Number(g.bone) || 1, bonk: 1, honk: 1 };
+    } catch { return {}; }
+  };
+  const shelfVector = () => vectorOf({
+    shelf: shelfTuning(),
+    // The ants' gossip is heard as the honk shelf's echoes (an announcement passed along).
+    deeds: deedsFrom(run?.leanWhy || {}, { waps: run?.waps || 0, wasted: run?.wasted || 0, shattered: record.mimes?.shattered || 0, echoes: run?.gossiped || 0 })
+  });
   const soundToggle = root.querySelector('[data-pie-sound]');
   const cardLinks = card.querySelector('[data-pie-card-links]');
   const loreOut = document.querySelector('[data-pie-lore]');
@@ -1095,6 +1117,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     showToast('A piece turns up', `${found.piece.title}, near ${found.via}. It is on texture.website now.`, 3400, 'wonder', 1);
     say(`A piece turns up: ${found.piece.title}. It is on texture.website now.`);
   };
+  /* Run into an anthill: the ants put their crumbs down, lift weights, and gossip, a few words from further on in the
+   * chapter (pie-ants.mjs). A bump, not a spill; heard as the honk shelf, and a whisper when the shelves are on. */
+  function anthillBump(hill) {
+    hill.bumped = true;
+    hill.liftAt = run.t;
+    run.wobble = Math.min(1.2, run.wobble + 0.12);
+    const at = passing();
+    const scrap = at ? gossipFrom(at.leg.paras, { from: at.i }) : null;
+    run.gossiped = (run.gossiped || 0) + 1;
+    run.gossipAt = run.t;
+    hill.scrap = scrap ? { ...scrap, chapter: at.leg.n } : null;
+    run.tags.push({ x: hill.x, y: hill.y - 24, t: 0, text: shelvesOn() ? 'THE ANTS GOSSIP · A WHISPER' : 'THE ANTS GOSSIP' });
+    if (scrap) run.tags.push({ x: W / 2, y: hill.y - 44, t: 0, text: scrap.text.slice(0, 44) });
+    say(`${ANT_SAYS.bump}${scrap ? `: ${scrap.text}` : '.'}`);
+  }
   let roomShown = '';
   function announceRoom() {
     const r = roomNow();
@@ -1108,6 +1145,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (key === roomShown) return;
     roomShown = key;
     if (run) run.roomAt = run.t;   // the beat: a room opens (the narrator and the prose come forward)
+    if (run && state === 'running' && shelvesOn()) {
+      run.shelfV = shelfVector();
+      const stepped = chainStep(run.chains || chainStart(), run.shelfV);
+      run.chains = stepped.state;
+      const fired = stepped.fired[0];
+      if (fired) {
+        run.tags.push({ x: W / 2, y: PRESENCE_Y + 28, t: 0, text: `${fired.shelf.toUpperCase()} · ${fired.invokes.toUpperCase()}` });
+        say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? ' That chain is complete.' : ''}`);
+      }
+    }
     if (run && state === 'running') textureFind({ room: r.sig, chapter: r.chapter, sigils: [r.sigil], carry: run }).then(findSaid);
     const play = ROOM_PLAY[r.sigil];
     record.roomsSeen = record.roomsSeen || {};
@@ -1813,6 +1860,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const thing = { kind, y: -44, lane, x: laneX(lane), home: laneX(lane), w: 30, h: 30, fatal: true, born: run.t };
     switch (kind) {
       case 'post': thing.w = 24; thing.h = 24; break;
+      case 'anthill': thing.w = 36; thing.h = 18; thing.fatal = false; break;   // a bump, never a spill
+      case 'antgift': thing.w = 30; thing.h = 10; thing.fatal = false; break;
       case 'sack': thing.w = 48; thing.h = 34; thing.fatal = false; break;   // flour slows; it does not spill
       case 'puddle': thing.w = 54; thing.h = 18; thing.fatal = false; break;
       case 'snail': thing.w = 24; thing.h = 16; thing.vx = rand(-6, 6); break;
@@ -1966,6 +2015,33 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const bane = makeThing('baneberry', pick(free));
       bane.y -= 50;
       run.things.push(bane);
+    }
+    // The torch-ants (pie-ants.mjs, the anthills trial): a hill by the road in the field and the lanes; now and then a
+    // line of them rolling a boonberry home to it, or carrying a crumb and a scrap of the book to the crows.
+    if (anthillsOn()) {
+      if (['field', 'lanes'].includes(s.id) && !calm && Math.random() < 0.08 && !run.things.some((t) => t.kind === 'anthill' && t.y < 140)) {
+        run.things.push(makeThing('anthill', pick(free)));
+      }
+      const hill = run.things.find((t) => t.kind === 'anthill' && !t.wapped && t.y > -40 && t.y < run.y - 160);
+      if (hill && Math.random() < 0.2) {
+        const away = [...Array(LANES).keys()].filter((l) => l !== hill.lane && Math.abs(l - hill.lane) <= 2);
+        const berry = makeThing('berry', pick(away));
+        berry.y = hill.y - rand(6, 26);
+        berry.rollTo = hill.x;
+        berry.rolled = true;
+        run.things.push(berry);
+      }
+      if (Math.random() < 0.05) {
+        const at = passing();
+        const scrap = at ? gossipFrom(at.leg.paras, { from: at.i }) : null;
+        if (scrap) {
+          const gift = makeThing('antgift', pick(free));
+          gift.vx = gift.x < W / 2 ? -22 : 22;
+          gift.range = W * 2;
+          gift.scrap = { ...scrap, chapter: at.leg.n };
+          run.things.push(gift);
+        }
+      }
     }
     // A slow beaver, now and then: they keep their own time, and lend it.
     if (allowed('beaver') && Math.random() < 0.06 + d * 0.04) {
@@ -4333,7 +4409,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const ids = Object.keys(SCHEMES).filter((key) => key !== 'march' || allowed('march'));
     // Panes broken in earlier chapters and carries make the march easier to call (pie-mimes.mjs): never at once.
     if (mimesOn() && ids.includes('march')) ids.push(...Array(marchWeight({ grudge: mimeGrudge(), glassSeen: run.glassSeen || 0 })).fill('march'));
-    const id = pick(ids);
+    let id = pick(ids);
+    if (shelvesOn()) {
+      // The shelves tilt the scheme (a floor of one in twenty keeps every scheme possible); the mimes' extra chances
+      // still count, as more weight on the march.
+      const counts = ids.reduce((acc, key) => { acc[key] = (acc[key] || 0) + 1; return acc; }, {});
+      const odds = branchOdds(Object.keys(counts).filter((key) => SCHEME_SIGNATURES[key]).map((key) => ({ id: key, signature: SCHEME_SIGNATURES[key] })), run.shelfV || shelfVector(), { firmness: 2 });
+      const weighted = odds.map((o) => ({ id: o.id, w: o.p * counts[o.id] }));
+      const total = weighted.reduce((n, o) => n + o.w, 0);
+      let r = Math.random() * total;
+      id = weighted.find((o) => (r -= o.w) < 0)?.id || id;
+    }
     if (!met('bane')) { record.met.push('bane'); writeRecord(record); }
     const fed = Math.min(5, run.baneStore || 0);
     run.baneStore = 0;
@@ -4687,6 +4773,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (thing.kind === 'clown' && thing.y < run.y - 70) {
           const pull = run.boon ? 70 : 42;
           thing.x += clamp((run.x - thing.x) * 0.9, -pull, pull) * dt;
+        } else if (thing.rollTo != null) {
+          // Rolled home by the ants: once it is there, it is theirs.
+          thing.x += clamp(thing.rollTo - thing.x, -26 * dt, 26 * dt);
+          if (Math.abs(thing.rollTo - thing.x) < 1.5 && !thing.wapped) {
+            thing.wapped = true;
+            thing.wapT = 0.5;
+            thing.spin = 0;
+            if (!run.rolledSaid) { run.rolledSaid = true; say(`${ANT_SAYS.rolled}, and it is home.`); }
+          }
         } else if (thing.vx) {
           thing.x += thing.vx * dt;
           if (Math.abs(thing.x - thing.home) > thing.range) {
@@ -4738,6 +4833,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             say(run.boon
               ? 'The mimes shake flour into the air for Mr. BaneWAP. Mr. BoonWAP, holding court, eats it.'
               : 'Mimes Against WAP shake flour into the air, for Mr. BaneWAP. It feeds his schemes.');
+          }
+        }
+        if (thing.kind === 'antgift' && !thing.given && (thing.x < 2 || thing.x > W - 2)) {
+          // A crow or a raven at the edge takes the gift.
+          thing.given = true;
+          thing.wapped = true;
+          thing.wapT = 0.6;
+          run.corvids = (run.corvids || []).filter((c) => run.t - c.at < 3);
+          run.corvids.push({ edge: thing.x < W / 2 ? -1 : 1, y: thing.y, at: run.t, raven: Math.random() < 0.5 });
+          run.tags.push({ x: thing.x < W / 2 ? 30 : W - 30, y: thing.y - 18, t: 0, text: 'A GIFT FOR THE CROWS' });
+          if (!run.giftSaid) { run.giftSaid = true; say(`${ANT_SAYS.gift}: ${thing.scrap?.text || 'a crumb'}. ${ANT_SAYS.taken}.`); }
+        }
+        if (thing.kind === 'mime' && anthillsOn() && !thing.dishDecided && run.gossipAt != null && run.t - run.gossipAt < 8 && thing.y > 20 && thing.y < run.y) {
+          // A mime will not entertain gossip until a baneberry dish is ordered. A sweetened baneberry is the order
+          // reaching a chef who can make one; otherwise a busy kitchen reads the mimed order its own way.
+          thing.dishDecided = true;
+          if (run.sweetened > 0) {
+            thing.eating = true;
+            if (!run.dishSaid) { run.dishSaid = true; say('A mime has a baneberry dish, from a chef who can make one, and listens to the gossip with a spoon.'); }
+          } else {
+            const order = orderAsRead('bane_dish', { busyness: clamp(0.4 + run.speed / 400, 0.4, 1) });
+            thing.waiting = true;
+            if (!run.dishSaid) { run.dishSaid = true; say(`A mime ordered a baneberry dish, to hear the gossip properly. The kitchen was busy${order.misread ? ` and brought ${order.dish.name}` : ''}; the mime waits.`); }
           }
         }
         if (thing.kind === 'mime' && thing.former?.bakes && !thing.floured && thing.y > run.y - 10 && Math.abs(thing.x - run.x) < LANE_W * 1.6) {
@@ -5008,6 +5126,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
           continue;
         }
+        if (thing.kind === 'anthill') {
+          if (!thing.bumped) anthillBump(thing);
+          continue;
+        }
+        if (thing.kind === 'antgift') continue;   // stepped over: the ants have somewhere to be
         if (thing.kind === 'puddle') {
           if (!thing.slipped) {
             thing.slipped = true;
@@ -5243,6 +5366,33 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
     }
     ctx.restore();
+  };
+  /* The crows and ravens at the edge of the road, taking what the ants bring (the anthills trial). On a filled screen
+   * they stand on the verge; on the plain board, at the lane's edge. They take it, and go. */
+  const drawCorvids = () => {
+    if (!run?.corvids?.length) return;
+    run.corvids.forEach((c) => {
+      const k = run.t - c.at;
+      if (k > 3) return;
+      const onVerge = board.x0 < -18;
+      const x = c.edge < 0 ? (onVerge ? -14 : 8) : (onVerge ? W + 14 : W - 8);
+      const up = k > 1.2 ? (k - 1.2) * 60 : 0;
+      const y = c.y - up;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, 1 - Math.max(0, k - 2.2) / 0.8);
+      ctx.fillStyle = c.raven ? '#151519' : '#24242b';
+      ctx.beginPath(); ctx.ellipse(x, y, c.raven ? 8 : 6.5, c.raven ? 5 : 4.2, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + c.edge * -6, y - 4, c.raven ? 3.4 : 2.8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#5a4a2a';
+      ctx.beginPath(); ctx.moveTo(x + c.edge * -9, y - 4); ctx.lineTo(x + c.edge * -13, y - 3); ctx.lineTo(x + c.edge * -9, y - 2.4); ctx.fill();
+      if (up) {
+        ctx.strokeStyle = c.raven ? '#151519' : '#24242b';
+        ctx.lineWidth = 1.6;
+        const flap = Math.sin(k * 18) * 4;
+        ctx.beginPath(); ctx.moveTo(x - 9, y - flap); ctx.lineTo(x, y - 2); ctx.lineTo(x + 9, y - flap); ctx.stroke();
+      }
+      ctx.restore();
+    });
   };
   /* A filled screen's two bands, each in its sigil's role (pie-frame.mjs). ? is haze over the road's far end:
    * nothing in it can be made out yet, and things come out of it where they always did, so a taller screen
@@ -5654,6 +5804,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           ctx.fillStyle = 'rgba(236, 226, 204, 0.9)';
           [[-3, 3], [2, 6], [-1, 9], [4, 1]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, 0.9, 0, Math.PI * 2); ctx.fill(); });
         }
+        if (thing.eating) {
+          // A baneberry dish and a spoon: the routine, so the story can be listened to properly.
+          const lift = reduced?.matches ? 0 : Math.abs(Math.sin(run.t * 2.2 + thing.born)) * 3;
+          ctx.fillStyle = '#fbf6ea';
+          ctx.strokeStyle = '#2a2a30';
+          ctx.lineWidth = 0.9;
+          ctx.beginPath(); ctx.ellipse(x + 10, y + 6, 6, 2.6, 0, 0, Math.PI); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#4a2c5a';
+          [[-2, 5], [0, 4.5], [2, 5]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + 10 + dx, y + dy, 1.3, 0, Math.PI * 2); ctx.fill(); });
+          ctx.beginPath(); ctx.moveTo(x + 14, y + 3); ctx.lineTo(x + 17, y - 3 - lift); ctx.stroke();
+        } else if (thing.waiting) {
+          // Waiting on an order a busy kitchen read its own way.
+          ctx.fillStyle = '#2a2a30';
+          [0, 3, 6].forEach((dx) => { ctx.beginPath(); ctx.arc(x + 9 + dx, y - 20, 0.9, 0, Math.PI * 2); ctx.fill(); });
+        }
         if (thing.aghast != null && run.t - thing.aghast < 2.4) {
           // Saw it happen: two short strokes beside the head, the way comics have always drawn a start.
           ctx.strokeStyle = '#2a2a30';
@@ -5972,6 +6137,50 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.strokeStyle = '#3d6a3a';
         ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(x, y - 9); ctx.quadraticCurveTo(x + 3, y - 14, x + 7, y - 15); ctx.stroke();
+        if (thing.rolled) {
+          // The ants rolling it home: a short line of them behind, pushing.
+          const dir = Math.sign((thing.rollTo ?? x) - x) || 1;
+          ctx.fillStyle = '#3a2a20';
+          for (let i = 1; i <= 4; i += 1) { ctx.beginPath(); ctx.arc(x - dir * (8 + i * 4.5), y + 7 + (i % 2), 1.5, 0, Math.PI * 2); ctx.fill(); }
+        }
+        break;
+      }
+      case 'anthill': {
+        // A low hill with a door, the torch-ants about it; after a bump, three of them lifting weights.
+        ctx.fillStyle = '#9a6a3c';
+        ctx.beginPath(); ctx.ellipse(x, y + 4, 18, 9, 0, Math.PI, 0); ctx.fill();
+        ctx.fillStyle = '#2a1a10';
+        ctx.beginPath(); ctx.ellipse(x, y + 1, 3.2, 2.2, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#f6b24a';
+        ctx.beginPath(); ctx.arc(x + 9, y - 2, 1.4, 0, Math.PI * 2); ctx.fill();
+        const lifting = thing.liftAt != null && run.t - thing.liftAt < 3.2;
+        ctx.fillStyle = '#3a2a20';
+        ctx.strokeStyle = '#3a2a20';
+        ctx.lineWidth = 0.9;
+        [[-12, 6], [-4, 8], [6, 7], [13, 5]].forEach(([dx, dy], i) => {
+          ctx.beginPath(); ctx.arc(x + dx, y + dy, 1.5, 0, Math.PI * 2); ctx.fill();
+          if (lifting && i < 3) {
+            const up = reduced?.matches ? 0 : Math.abs(Math.sin((run.t - thing.liftAt) * 6 + i)) * 2.5;
+            ctx.beginPath(); ctx.moveTo(x + dx - 3, y + dy - 3 - up); ctx.lineTo(x + dx + 3, y + dy - 3 - up); ctx.stroke();
+            ctx.fillRect(x + dx - 3.6, y + dy - 4.4 - up, 1.2, 2.8);
+            ctx.fillRect(x + dx + 2.4, y + dy - 4.4 - up, 1.2, 2.8);
+          }
+        });
+        break;
+      }
+      case 'antgift': {
+        // Ants in a line, carrying a crumb and a scrap of paper to the edge of the road.
+        if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - thing.wapT * 1.4);
+        const dir = Math.sign(thing.vx || 1);
+        ctx.fillStyle = '#3a2a20';
+        for (let i = 0; i < 6; i += 1) { ctx.beginPath(); ctx.arc(x - dir * i * 4.5, y + (i % 2) * 1.2, 1.4, 0, Math.PI * 2); ctx.fill(); }
+        ctx.fillStyle = '#e9d8b4';
+        ctx.beginPath(); ctx.arc(x + dir * 4, y - 2, 2.2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fbf6ea';
+        ctx.strokeStyle = 'rgba(40, 40, 46, 0.5)';
+        ctx.lineWidth = 0.6;
+        ctx.fillRect(x - dir * 10 - 4, y - 6, 8, 5);
+        ctx.strokeRect(x - dir * 10 - 4, y - 6, 8, 5);
         break;
       }
       case 'arrow': {
@@ -7596,6 +7805,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawBoof();
     drawFigure();
     things.filter((t) => (Z[t.kind] ?? 2) >= 3).forEach(drawThing);
+    drawCorvids();
     drawHopGauge();
     drawMechanics();
     drawFlight();
@@ -8974,6 +9184,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const inBook = nodeOf('div', 'pie-cardface-ask');
       inBook.append(nodeOf('span', 'pie-cardface-spell-label', 'In the book, as you met it'));
       if (ask.former) inBook.append(nodeOf('p', 'pie-cardface-ask-wonder', `This one: ${ask.former}.`));
+      if (ask.reason) {
+        const why = nodeOf('p', 'pie-cardface-ask-wonder');
+        why.append(nodeOf('b', '', 'Whose · '), ask.reason.whose, nodeOf('b', '', ' · Why here · '), ask.reason.why, nodeOf('small', '', ` (${ask.reason.shelf} · ${ask.reason.dimension})`));
+        inBook.append(why);
+      }
       if (ask.wonder) {
         const w = ask.wonder;
         const p = nodeOf('p', 'pie-cardface-ask-wonder');
@@ -9068,10 +9283,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     else if (run.boof && Math.hypot(at.x - run.boof.x, at.y - run.boof.y) < 34) kind = 'boof';
     else {
       found = run.things
-        .filter((t) => !t.wapped && cardKindOf(t))
+        .filter((t) => !t.wapped && (cardKindOf(t) || ANT_KINDS.has(t.kind)))
         .map((t) => ({ t, d: Math.hypot(t.x - at.x, t.y - at.y) }))
         .filter((o) => o.d < 40)
         .sort((a, b) => a.d - b.d)[0]?.t || null;
+      if (found && ANT_KINDS.has(found.kind)) {
+        // The ants: whose, why, and the scrap they carry, with where in the book it is from.
+        const why = reasonFor(found.kind);
+        const sc = found.scrap;
+        showToast(found.kind === 'anthill' ? 'An anthill' : 'Ants, carrying', `${why ? `${why.why.charAt(0).toUpperCase()}${why.why.slice(1)}.` : ''}${sc ? ` ${found.kind === 'anthill' ? 'They gossiped' : 'They carry'} ${sc.text}, from ${chapterWords(sc.chapter)}${sc.title ? `, ${sc.title}` : ''}.` : ''}`, 5200, 'wonder', 1);
+        return true;
+      }
       if (found) kind = cardKindOf(found);
       else if (wordUnder(at.x, at.y, 10)) { tellWord(wordUnder(at.x, at.y, 10)); return true; }
       else if (run.boon && at.y < PRESENCE_Y + 50) kind = 'boon';
@@ -9086,6 +9308,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ask: {
         wonder: found?.wonder || null,
         former: found?.former && mimesOn() ? formerWords(found.former) : null,
+        reason: shelvesOn() ? reasonFor(found?.kind || kind) : null,
         passage: now ? { chapter: now.leg.n, title: now.para.title, room: now.para.room, words: now.para.text.split(/\s+/).slice(0, 12).join(' '), href: passageHref(now) } : null
       }
     });

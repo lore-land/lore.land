@@ -1,0 +1,69 @@
+# Cadences — a line of Spw as a loop, and each character's way of playing it
+# A design, proposed. book/scripts/modules/spw-cadence.mjs reads and plays it; the desk shows it behind the land-answers trial.
+#>lore_land_surfaces_cadences
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+~<rationale>{
+  A line of Spw already has a rhythm: signs that strike, containers that hold, words with syllables. Read as time, the line is a score, and anyone who writes one has written a loop. Each character then plays the same loop the way they live, so a reader hears who someone is before anyone says a word, and a line written at the desk becomes something to keep, pass along and change. That is the reason to wonder twice: as a player, what this line will do in the hands of another; as an artist, what line to write next.
+}
+
+^"sigils"{
+  bang: "! an accent on the beat"
+  probe: "? a rest that asks, then a pickup"
+  potential: "~ a tie: the last note sustains"
+  confluence: "& a chord: two voices at once"
+  value: "* a repeat, or a named sample struck twice"
+  integration: "^ the line rises, and stays risen"
+  ground: ". the ground note, in the bass, and the pitch comes home"
+  config: "= swing: a lean on the off-beat"
+  measure: "% a bar line; %3 sets three beats to the bar"
+  annotation: "# a mark, struck like a written accent"
+  perspective: "@ a solo voice, an octave up; @name also says who plays it"
+  substrate: "$ the material sets the timbre: glass, frost, flour, berry, oak, ink, brass, steam"
+}
+
+^"containers"{
+  frame: "[ ] its items fill one bar, and the first is the one chosen, accented"
+  body: "{ } a loop, played twice"
+  grouping: "( ) a tuplet, inside one beat"
+  capsule: "< > call, and a softer response a step down"
+  words: "a word sets syllables: each vowel group is a hit inside its beat, and its vowel sets the note (a e i o u y)"
+}
+
+^"players"{
+  boof: "steady on the half beat; a question lands on the downbeat, nose first. From her temperament: unhurried until she is not"
+  ants: "every note split in two, the second a step up, passed along the line. From the torch-ants: torch to torch"
+  genie: "swung, and priced: each accent is paid for with the next plain note, which becomes a rest. From his weight: the price of every granted thing"
+  bane: "every accent a beat early, announced, and so it comes. From his line: what he announces comes true"
+  boon: "every note a chord and held to the next; nothing cut short. From his line: never smaller"
+  bonewap: "exact, no swing, every beat said, softly where the line had nothing. From its weight: only what the frame will bear, declared"
+  porter: "one broad note a beat at most, the weight on the first of the bar and its middle. From his temperament: steady as a sack of flour"
+  clerk: "quick and short, on the sixteenth, a tally struck at the end of each bar. From the slips: a line for the cause"
+  clown: "every note big, the downbeats biggest, each sliding up into place. From the clown: big feelings"
+  mime: "one note a bar at most, in the minor, the rest silence; the minor is the cue the mimes already have"
+  figure: "unvoiced. Nobody has said"
+}
+
+^"joins"{
+  desk: "with the land-answers trial on, a line the land answers also shows its ring, in the time of whoever it names with @ (else Boof), heard only when pressed, and in anyone else's time on request; the line travels as /scriptorium/?cast=…"
+  portraits: "signatureRing(id) draws a character's own line (characters.mjs identitySpell) as a ring around their portrait"
+  lanes: "proposed: a rhythm found in the lanes (pie-rhythm.mjs, pie-levels.spw) is kept as the line that plays it, so a reader can take it to the desk, play it in another character's time, change one sign, and carry it back"
+  remix: "proposed: a kept line can be written over; the old line stays beside it, so a reader can see what one sign changed"
+}
+
+!guards[
+  "Nothing plays on its own. Sound starts only from a press, at a gentle level, at most twice round"
+  "No character is given words. A cadence is how they play, never what they say"
+  "The figure stays unvoiced"
+  "Reduced motion stills the ring; the sound is unaffected"
+]
+
+?open[
+  "Should a found rhythm in the lanes become a line kept on the reader's shelf, and where is that shelf"
+  "Should the cast pages show each character's signature ring"
+  "Should a line's tempo be its own (a %tempo term) or the room's"
+  "Does the figure ever get a cadence, and who decides when"
+]

@@ -119,6 +119,19 @@ const SCENARIOS = [
       if (seen.over) throw new Error(`${seen.over} button(s) over the road in play at ${w}×${h}`);
     }
   }],
+  ['an anthill is a bump and gossip, never a spill', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { anthills: 'on' }, tried: [], resolved: { anthills: 'on' } }, 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=1');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running' && window.__pieTest.run`);
+    // Clear the road near the pie, and set an anthill straight ahead of it.
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things = r.things.filter((t) => t.y < 0); r.things.push({ kind: 'anthill', x: r.x, home: r.x, lane: r.lane, y: r.y - 70, w: 36, h: 18, fatal: false, born: r.t }); })()`);
+    await page.waitFor(`window.__pieTest.run.tags.some((t) => /THE ANTS GOSSIP/.test(t.text))`, { timeoutMs: 8000 });
+    const state = await page.ev(`window.__pieTest.state`);
+    if (state !== 'running') throw new Error(`an anthill ended the carry (${state})`);
+  }],
   ['every id in a drawing is its own', async (page) => {
     await page.setViewport(1200, 900);
     await page.goto('/pie/');

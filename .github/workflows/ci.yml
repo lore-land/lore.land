@@ -50,6 +50,15 @@ jobs:
       - name: play-graph:check (Spw read as game structures; the gradients)
         run: npm run play-graph:check
 
+      - name: shelves:check (five shelves; odds, chains, tease, ecology, reasons)
+        run: npm run shelves:check
+
+      - name: cadence:check (a line of Spw as a loop, played eleven ways)
+        run: npm run cadence:check
+
+      - name: kitchen:check (wished dishes by character; mimed orders; the ants' gossip)
+        run: npm run kitchen:check
+
       - name: One version token per file (no module loaded twice)
         run: npm run tokens:align -- --check
 

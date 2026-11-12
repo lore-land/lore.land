@@ -1,0 +1,67 @@
+# Gossip and kitchens — the ants, the mimes at supper, and dishes wished into being
+# A design, proposed. The maker gave this canon on 2026-11-11; the anthills are a trial in the game, the rest is for the maker.
+#>lore_land_surfaces_gossip_and_kitchens
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The torch-ants already keep the streets lit along the berry roots, and the boonberries are kept under the snow by them. So the ants carry things: crumbs, and with the crumbs a little of the book, which is how a story travels in a land where nobody reads the same page. Gossip is the honk shelf at its smallest: an announcement passed along, a beat late. The mimes, who say nothing, are the best audience gossip has, provided the order is right. And a dish wished for is shaped by whoever wishes it, the way a light is shaped by the glass it goes through.
+}
+
+^"canon"{
+  ants_carry: "The ants carry lore along with crumbs, often as fragments of gifts to the ravens and crows"
+  ants_roll: "The ants often roll boonberries back to the anthill"
+  anthill: "Running into an anthill makes the ants lift weights and gossip"
+  mimes_listen: "Mimes often eat a regional dish with baneberries while listening to good gossip, and will not entertain gossip until they have ordered one"
+  hard_to_order: "A baneberry dish is hard to order: it takes a special kind of chef to make one taste good, though that is not the point; the mimes order one to perform a routine and focus on the story"
+  busy_kitchens: "A busy restaurant finds a mime hard to understand, and the order comes out wrong, to everyone's frustration"
+  wish_dishes: "Imagining a boonberry dish wishes it into a form along the boonberry concentration crossed with the dish wanted, and the product depends on who is wishing"
+}
+
+^"grounded_in"{
+  torch_ants: "Chapter 1: the ant hearths along the berry roots; characters.mjs: keep lit streets, very particular about torches"
+  berries_kept: "the boonberry card: kept under the snow by the ants"
+  kitchen_roles: "berries.json: a pinch of baneberry sets a jam, keeps a pickle, wakes a sauce; never a snack"
+  regional: "the boneberry tastes of where it grew (bone feeds regionally); the regional dish with baneberries is its bane twin"
+  wrong_orders: "Chapter 15: the clerk keeps DAMAGE slips, a word at the top and a line for the cause; a misread order is exactly such a slip"
+  feast: "Chapter 15: the Feast of the Uneven Slice, where a busy kitchen is busiest"
+}
+
+^"in_the_lanes"{
+  switch: "anthills, a trial, off by default (reading-switches.mjs)"
+  anthill: "a low hill by the road in the field and the lanes; a hop clears it; run into it and the pie tilts a little (never a spill), three ants lift weights, and the ants gossip: a few words of the book from further on in the chapter, with an ellipsis either side (pie-ants.mjs gossipFrom); never new words, never from a paragraph that holds the figure, the hat or the Egg"
+  shelves: "gossip is heard as the honk shelf (an echo), and with the shelves trial on a gossiped scrap is a whisper, the first rung of the tease ladder (shelves.spw)"
+  rolled: "a line of ants rolling a boonberry home to the hill; walk into it and it is yours as usual, leave it and it reaches home"
+  gifts: "a line of ants carrying a crumb and a scrap of paper to the edge of the road, where a crow or a raven takes it and goes; on a filled screen the bird stands on the verge"
+  mimes: "when gossip has just been heard and a mime is in view, the mime has a baneberry dish (a bowl and a spoon) if a baneberry was sweetened this carry, the order having reached a chef who can make one; otherwise a busy kitchen read the order its own way, and the mime waits"
+  ask: "Ask on an anthill or a line of ants says whose it is, why it is there, and what scrap they carry, from where in the book"
+}
+
+=wish_kitchen{
+  module: "book/scripts/modules/wish-kitchen.mjs: dishes as tastes over sweet, sour, bitter, savoury, warm, crisp, soft, and two of form, round and spread"
+  boof: "a dot product: only the part of the wish that points where she already is comes out, usually a bone, sometimes a crumb"
+  bonewap: "a dot product with the frame declared: only what the wish says aloud is made"
+  boon: "a scaled sum: the dish itself, bigger, never smaller than asked"
+  bane: "a cross product in the tastes: perpendicular to what was asked; it comes true the bad way, as the baneberry dish or a pickle"
+  genie: "a projection onto what boonberries can do, less a price"
+  clown: "everything bigger, with a crust on it"
+  mime: "an order as a kitchen reads it: the busier the kitchen, the further the reading wanders; the special chef reads it exactly"
+  figure: "nobody has said"
+}
+
+!guards[
+  "Gossip is the book's own words, a few at a time, from released chapters; nobody is given a new line"
+  "The mimes still never speak: their orders are mimed, and the misreading is the kitchen's"
+  "Boonberries stay better than baneberries; a baneberry dish is good only in the hands of the right chef, and that is not why it is ordered"
+  "No paragraph that holds the figure, the hat or the Egg is ever gossiped from"
+]
+
+?open[
+  "Who is the special chef who can make baneberries taste good, and where do they cook"
+  "Which regional dish do the mimes order"
+  "Do the ravens and crows have names, and do they keep what the ants bring somewhere a reader could find it"
+  "Should a wished dish be castable at the desk (the land answers), and should the lanes ever serve one"
+  "Do the ants ever gossip about the reader"
+]
