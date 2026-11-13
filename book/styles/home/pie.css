@@ -5887,16 +5887,79 @@ html.pie-settling .pie-voyage {
   box-shadow: 0 -10px 34px rgba(12, 16, 24, 0.25);
 }
 
-.pie-setup.is-sheet[popover]::before {
-  content: '';
+/* The sheet's handle: a real one, dragged to share the window between the lanes and Setup, tapped to switch. Out of
+ * the sheet's grid, so the rows stay what they were; hidden in a drawer beside the cabinet, which needs none. */
+.pie-setup-handle { display: none; }
+
+.pie-setup.is-sheet[popover] .pie-setup-handle {
+  display: block;
   position: absolute;
-  top: 0.4rem;
+  top: 0;
   left: 50%;
+  width: 5rem;
+  height: 1.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.pie-setup.is-sheet[popover] .pie-setup-handle::before {
+  content: '';
+  display: block;
   width: 2.6rem;
   height: 0.28rem;
+  margin: 0.42rem auto 0;
   border-radius: 1rem;
-  background: color-mix(in srgb, var(--hub-ink) 28%, transparent);
-  transform: translateX(-50%);
+  background: color-mix(in srgb, var(--hub-ink) 30%, transparent);
+}
+
+.pie-setup-handle:focus-visible::before { outline: 2px solid var(--hub-gold); outline-offset: 3px; }
+
+/* Across Setup in order: the section before and the one after, at the foot of each. A swipe does the same. */
+.pie-setup-panel { touch-action: pan-y; }
+
+.pie-setup-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-start: 0.3rem;
+  padding-block-start: 0.65rem;
+  border-block-start: 1px solid var(--hub-line);
+}
+
+.pie-setup-step {
+  min-height: 2.5rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font: 600 0.74rem var(--font-family-heading, monospace);
+  cursor: pointer;
+}
+
+.pie-setup-step.is-back { justify-self: start; }
+
+.pie-setup-step.is-on {
+  justify-self: end;
+  border-color: var(--hub-ink);
+  background: color-mix(in srgb, var(--hub-gold) 20%, var(--hub-panel));
+}
+
+.pie-setup-step:focus-visible { outline: 2px solid var(--hub-gold); outline-offset: 2px; }
+
+.pie-setup-step-at {
+  font: 0.66rem var(--font-family-heading, monospace);
+  color: var(--hub-muted);
+}
+
+/* A phone's lanes take a little more of its width: the cabinet reaches into the page's gutter. */
+@media (max-width: 30rem) {
+  .pie-voyage { margin-inline: -0.5rem; }
 }
 
 @media (pointer: coarse) {

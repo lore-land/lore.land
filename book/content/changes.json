@@ -2,6 +2,14 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_13.A",
+      "date": "2026-11-13",
+      "notes": [
+        "On a phone the lanes take a little more of the width.",
+        "Setup can be walked through in order: each section ends with the one before and the one after, a swipe across a section turns to the next, and Setup opens where you left it. On a phone its sheet has a handle: drag it to see more of the lanes or more of Setup, or tap it to switch."
+      ]
+    },
+    {
       "release": "2026_11_12.A",
       "date": "2026-11-12",
       "notes": [

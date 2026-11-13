@@ -227,6 +227,23 @@ const SCENARIOS = [
     const after = await page.ev(`({ moments: (window.__pieTest.run.moments || []).map((m) => m.kind), wilted: window.__pieTest.run.things.filter((x) => x.kind === 'banerose' && !x.cleared).map((x) => x.wilted && !x.fatal) })`);
     if (!after.moments.includes('sniff') || !after.wilted.length || !after.wilted.every(Boolean)) throw new Error(`the sniff opened but its moment or its wilting did not: ${JSON.stringify(after)}`);
   }],
+  ['Setup can be walked end to end on a phone by its steps, a swipe goes back, and it opens where it was left', async (page) => {
+    await page.setViewport(390, 844, { mobile: true });
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/');
+    await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
+    await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-steps')`);
+    const walked = await page.ev(`(async () => { const seen = []; for (let i = 0; i < 12; i += 1) { const tab = document.querySelector('[data-pie-setup] [aria-selected=true]')?.dataset.tab; seen.push(tab); const next = document.querySelector('.pie-setup-step.is-on'); if (!next) break; next.click(); await new Promise((r) => setTimeout(r, 60)); } return seen; })()`);
+    if (walked.length < 6 || walked[walked.length - 1] !== 'guide' || new Set(walked).size !== walked.length) throw new Error(`the steps did not walk Setup once through: ${walked.join(' > ')}`);
+    const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1')).view.setupTab`);
+    if (kept !== 'guide') throw new Error(`Setup did not keep where it was left (${kept})`);
+    await page.ev(`document.querySelector('.pie-setup-close').click()`);
+    await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
+    await page.waitFor(`document.querySelector('[data-pie-setup] [aria-selected=true]')`);
+    const reopened = await page.ev(`document.querySelector('[data-pie-setup] [aria-selected=true]').dataset.tab`);
+    if (reopened !== 'guide') throw new Error(`Setup reopened at ${reopened}, not where it was left`);
+  }],
   ['a chain acts out its edge: a march called, glass ahead', async (page) => {
     await page.setViewport(1200, 900);
     await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { shelves: 'on' }, tried: [], resolved: { shelves: 'on' } }, 'lore.pie.v1': PLAYER });

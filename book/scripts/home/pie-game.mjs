@@ -8761,7 +8761,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const flowHome = flowProseBox?.parentElement;
   // ⚙ Setup's rows and sections are one table in pie-frame.mjs, which the board line reads too.
   const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
-  let activeGroup = 'layouts';
+  // Setup opens where it was last left (record.view.setupTab), so a second visit picks up the thread.
+  let activeGroup = record.view?.setupTab || 'layouts';
   /* Fit: measure everything in the cabinet that is not the screen, and give the screen the rest of the
    * window's height (the lanes keep their shape), never wider than there is room for. Measured twice,
    * because the cabinet's other parts wrap differently at a new width. */
@@ -9362,9 +9363,48 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (on) panel.setAttribute('aria-label', t.textContent);
       });
       const [, , , keys] = sections.find(([sid]) => sid === id);
-      panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'guide' ? guideBody() : groupBody(id, keys)));
+      panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'guide' ? guideBody() : groupBody(id, keys)), stepper(id));
       panel.scrollTop = 0;
+      // The chosen tab stays in sight in a strip that scrolls, and the place is kept for next time.
+      tabs.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (record.view.setupTab !== id) { record.view.setupTab = id; writeRecord(record); }
     };
+    /* Across the configuration, in order: at the foot of every section, the one before and the one after, so Setup
+     * can be walked through from Layouts to Guide without reaching back up to the tabs. */
+    const stepper = (id) => {
+      const at = sections.findIndex(([sid]) => sid === id);
+      const nav = nodeOf('nav', 'pie-setup-steps');
+      nav.setAttribute('aria-label', 'Sections in order');
+      const go = (delta, cls) => {
+        const next = sections[at + delta];
+        if (!next) return nodeOf('span', cls);
+        const b = nodeOf('button', `pie-setup-step ${cls}`, delta < 0 ? `‹ ${next[1]}` : `${next[1]} ›`);
+        b.type = 'button';
+        b.addEventListener('click', () => choose(next[0], { focus: true }));
+        return b;
+      };
+      nav.append(go(-1, 'is-back'), nodeOf('span', 'pie-setup-step-at', `${at + 1} of ${sections.length}`), go(1, 'is-on'));
+      return nav;
+    };
+    /* A swipe across a section moves to the next or the one before, on a phone as on a page of a book. A drag on a
+     * slider, a field or the board line is left alone, and a swipe has to be mostly sideways. */
+    let swipe = null;
+    panel.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' || event.target.closest?.('input, select, textarea, [contenteditable], .pie-setup-board')) { swipe = null; return; }
+      swipe = { x: event.clientX, y: event.clientY, t: performance.now() };
+    });
+    panel.addEventListener('pointerup', (event) => {
+      if (!swipe) return;
+      const dx = event.clientX - swipe.x;
+      const dy = event.clientY - swipe.y;
+      const quick = performance.now() - swipe.t < 700;
+      swipe = null;
+      if (!quick || Math.abs(dx) < 64 || Math.abs(dx) < Math.abs(dy) * 2) return;
+      const at = sections.findIndex(([sid]) => sid === activeGroup);
+      const next = sections[at + (dx < 0 ? 1 : -1)];
+      if (next) choose(next[0]);
+    });
+    panel.addEventListener('pointercancel', () => { swipe = null; });
     sections.forEach(([id, title, iconName]) => {
       const t = nodeOf('button', 'pie-setup-tab');
       t.type = 'button';
@@ -9384,7 +9424,33 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
       tabs.append(t);
     });
-    setupOut.replaceChildren(head, map, tabs, panel);
+    /* The sheet's handle: drag it to see more of the lanes or more of Setup; a tap moves between the two. */
+    const handle = nodeOf('button', 'pie-setup-handle');
+    handle.type = 'button';
+    handle.setAttribute('aria-label', 'Sheet height: drag, or tap to see more of the lanes or more of Setup');
+    let lift = null;
+    handle.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      try { handle.setPointerCapture(event.pointerId); } catch { /* not live */ }
+      lift = { y: event.clientY, h: setupOut.getBoundingClientRect().height, moved: false };
+    });
+    handle.addEventListener('pointermove', (event) => {
+      if (!lift) return;
+      const h = clamp(lift.h - (event.clientY - lift.y), window.innerHeight * 0.28, window.innerHeight * 0.9);
+      if (Math.abs(event.clientY - lift.y) > 4) lift.moved = true;
+      setupOut.style.height = `${Math.round(h)}px`;
+    });
+    const letGo = () => {
+      if (!lift) return;
+      if (!lift.moved) {
+        const tall = setupOut.getBoundingClientRect().height > window.innerHeight * 0.6;
+        setupOut.style.height = `${Math.round(window.innerHeight * (tall ? 0.42 : 0.86))}px`;
+      }
+      lift = null;
+    };
+    handle.addEventListener('pointerup', letGo);
+    handle.addEventListener('pointercancel', letGo);
+    setupOut.replaceChildren(handle, head, map, tabs, panel);
     choose(activeGroup);
     paintSetupMap();
     if (refocus) setupOut.querySelector(refocus)?.focus({ preventScroll: true });
