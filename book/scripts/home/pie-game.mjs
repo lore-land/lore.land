@@ -179,8 +179,8 @@ import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_11.A';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
-import { loadRules, readRules, crossRead, fuzz, stressReport, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
-import { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
+import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
+import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
 import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_12.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
@@ -196,15 +196,18 @@ import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, h
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
 import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
-import { createPacer, foldedWords, CAPTION, captionsOf, captionSeconds, skipAhead } from './pie-pacing.mjs?v=2026_11_12.A';
+import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
 import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_11.A';
 import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_11.A';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
-import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_12.A';
-import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, letGo as letGoKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
+import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_13.A';
+import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
-import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_12.A';
-import { FINDS, readFind, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_12.A';
+import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
+import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.A';
+import { initPieDraw } from './pie-draw.mjs?v=2026_11_13.A';
+import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_13.A';
+import { FINDS, readFind, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
@@ -1399,6 +1402,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.things.forEach((thing) => { if (thing.kind === 'banerose' && !thing.knocked && !thing.cleared) Object.assign(thing, { wilted: true, fatal: false }); });
       sfx('sweet');
     }
+    if (find.id === 'unwritten') { run.unkept = Math.max(run.unkept || 0, 2.5); sfx('wonder'); }
     try { if (rule.crosses) noteCrossing(rule.crosses, 'lanes'); } catch { /* the stage waits */ }
     showToast(`✧ ${find.name}${first ? ' · a find' : ''}`, find.says, 6400, 'wonder', 2);
     say(`${find.name}. ${find.says}`);
@@ -1439,7 +1443,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // at a time, never a full row: there is always a way through, a hop over the stones and holes, and his off switch.
       const canBane = allowed('bane');
       const frozen = (run.frozenUntil || 0) > run.t;
-      const kinds = (frozen ? ['frost'] : gift.key === 'rose' ? ['banerose'] : gift.count >= 100 ? ['pane', 'stone', 'hole'] : gift.count >= 10 ? ['stone', 'hole', 'puddle'] : ['puddle', 'frost']).filter(allowed);
+      const specific = Array.isArray(gift.rivalKinds) ? gift.rivalKinds.filter(allowed) : [];
+      const fallback = (gift.count >= 100 ? ['pane', 'stone', 'hole'] : gift.count >= 10 ? ['stone', 'hole', 'puddle'] : ['puddle', 'frost']).filter(allowed);
+      const kinds = frozen ? ['frost'].filter(allowed) : specific.length ? specific : fallback;
       const many = Math.min(8, 1 + Math.floor(Math.log2(gift.count)));
       for (let i = 0; i < many && kinds.length; i += 1) {
         const block = makeThing(pick(kinds), Math.floor(Math.random() * LANES));
@@ -1457,6 +1463,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       spawnRing(W / 2, PRESENCE_Y, 40, '#7e57c2', 0.5);
       run.tags.push({ x: W / 2, y: PRESENCE_Y + 30, t: 0, text: `${gift.count} ${gift.name.toUpperCase()}${gift.count === 1 ? '' : 'S'} · TO THE OTHER SIDE` });
       say(`${gift.count} ${gift.name}${gift.count === 1 ? '' : 's'}, to the other side. ${canBane ? gift.lands : 'Mr. BaneWAP is not in the book until Chapter Four; what he was given waits for him.'}`);
+      react('gift:rival');
       liveDesk?.landed(gift);
       return;
     }
@@ -1483,10 +1490,28 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       applyPower(power);
       if (power) run.powersUsed[power.id] = 'gift';
       spawnRing(run.x, run.y - 20, 34, colors.gold, 0.5);
+      // TGIF: Friday arrives with everyone in it (as in the Thursday chapter): a row of clowns, a way left through.
+      if (gift.key === 'tgif') {
+        impact('combo', W / 2, 150, { scale: 0.85, word: 'FRIDAY!' });
+        const way = run.safe ?? run.lane;
+        [...Array(LANES).keys()].filter((lane) => lane !== way).forEach((lane, i) => {
+          const who = makeThing('clown', lane);
+          who.y -= 24 + i * 6;
+          who.gift = true;
+          run.things.push(who);
+        });
+      }
+      // GG: a good game. What the other side set in the road ahead shakes hands and steps aside.
+      if (gift.key === 'gg') run.things.forEach((thing) => {
+        if (!thing.rival || thing.wapped || thing.y > run.y - 10) return;
+        Object.assign(thing, { wapped: true, wapT: 0, spin: thing.x < W / 2 ? -1 : 1, fatal: false });
+        run.tags.push({ x: thing.x, y: thing.y - 20, t: 0, text: 'GG' });
+      });
     }
     run.tags.push({ x: run.x, y: run.y - 46, t: 0, text: `${gift.count} ${gift.name.toUpperCase()}${gift.count === 1 ? '' : 'S'}` });
     if (gift.art) (run.giftArt ||= []).push({ art: gift.art, t0: run.t, x: run.x });
     say(`${gift.count} ${gift.name}${gift.count === 1 ? '' : 's'}${gift.who ? ` from ${gift.who}` : ''}: ${gift.lands}`);
+    react(gift.key === 'finger heart' ? 'gift:finger_heart' : gift.key === 'hi bear' ? 'gift:hi_bear' : 'gift:mine');
     liveDesk?.landed(gift);
   }
   if (liveDesk) {
@@ -1686,260 +1711,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     meanwhileOut.classList.add('is-cut');
   }
 
-  /* ─── The story in the lanes: the passing passage, a sentence at a time ───
-   * Caption: the sentence at the top of the screen, a subtitle that advances with the carry, so the
-   * story can be read without looking away from the lanes. Road: its words painted on the cobbles,
-   * coming down with the world in reading order; a wonder's own words glow, and stepping onto one as it
-   * passes underfoot reads it (a little crust for the pie, and the chapter leans toward the fairy tale).
-   * ⚙ Setup: off, caption, road, or both; on a narrow screen, where the story beside is out of sight
-   * while playing, it starts as a caption. */
-  // The carry goes through a chapter far faster than anyone reads, so the lanes tell it at reading speed:
-  // a caption stays up as long as its words take to read; the road lays a phrase at a time; when either
-  // falls more than a few behind, it skips ahead to where the carry is (and says … where it did).
-  const laneStory = { para: -1, sentences: [], terms: new Set(), at: -1, shownAt: 0, capQ: [], cap: '', capAt: 0, capHeld: 0, stepT: 0, shown: 0, skipped: 0, roadQ: [] };
-  // The passage as captions (pie-pacing.mjs captionsOf): its sentences, a long one in clauses, a long clause turned
-  // at a joining word, so a line is a glance; a name with a stop in it (Boon.land) and a title (Mr.) stay whole.
-  const storyInMode = () => {
-    const v = record.view.storyIn;
-    if (v === 'off' || v === 'caption' || v === 'road' || v === 'both') return v;
-    // Arranged for the screen: in the lanes as a caption only where the strip has folded away for it.
-    if (panelPlan) return panelPlan.forms.strip === 'lanes' ? 'caption' : 'off';
-    return window.matchMedia('(min-width: 62rem)').matches ? 'off' : 'caption';
-  };
-  function laneStoryTick(i, frac) {
-    if (!run || !flowProse) return;
-    if (i !== laneStory.para) {
-      // What was left of the last passage is still offered: the carry moved on before its end was reached.
-      if (laneStory.para >= 0 && ['caption', 'both'].includes(storyInMode())) for (let k = laneStory.at + 1; k < laneStory.sentences.length; k += 1) laneStory.capQ.push(laneStory.sentences[k]);
-      const el = flowProse.children[i];
-      laneStory.para = i;
-      // The paragraph's words without its voice's name (the strip shows who speaks beside them; a caption would run
-      // the name into the first word).
-      const words = el ? el.cloneNode(true) : null;
-      words?.querySelectorAll('.pie-flow-voice').forEach((n) => n.remove());
-      // The passage's first line leads it: when the captions fall behind, they pick up at a passage's opening.
-      laneStory.sentences = captionsOf((words?.textContent || '').replace(/\s+/g, ' ').trim()).map((line, k) => ({ ...line, leads: k === 0 }));
-      laneStory.terms = new Set([...(el?.querySelectorAll('.pie-flow-term') || [])].map((m) => m.textContent.toLowerCase()));
-      laneStory.at = -1;
-    }
-    const list = laneStory.sentences;
-    if (!list.length) return;
-    // Which sentence the carry is at: by how far through the passage it is, weighted by sentence length.
-    const total = list.reduce((sum, x) => sum + x.text.length, 0);
-    let acc = 0;
-    let at = list.length - 1;
-    for (let k = 0; k < list.length; k += 1) { acc += list[k].text.length; if (acc / total > frac) { at = k; break; } }
-    if (at !== laneStory.at) {
-      // Every piece between the last one offered and this one is offered, in order: the carry can pass several in a
-      // frame, and only falling behind (skipAhead, at a sentence's start) lets any go.
-      const from = at > laneStory.at ? laneStory.at + 1 : at;
-      laneStory.at = at;
-      const mode = storyInMode();
-      if (mode === 'caption' || mode === 'both') for (let k = from; k <= at; k += 1) laneStory.capQ.push(list[k]);
-      if (mode === 'road' || mode === 'both') {
-        // A phrase a row: short enough to read in one look as it comes down.
-        let row = '';
-        list[at].text.split(/\s+/).forEach((word) => {
-          if (row && row.length + word.length > 38) { laneStory.roadQ.push({ text: row, terms: laneStory.terms, sentence: list[at].text }); row = word; } else row = row ? `${row} ${word}` : word;
-        });
-        if (row) laneStory.roadQ.push({ text: row, terms: laneStory.terms, sentence: list[at].text });
-      }
-    }
-  }
-  /* Each frame: the caption turns when it has been read; the road lays its next phrase when the last
-   * one has come onto the screen. */
-  function laneStoryStep() {
-    if (!run) return;
-    const L = laneStory;
-    // The story waits for the road: while something is about to hit, or the pie is rattled, the caption is not
-    // counted as read (a few seconds at most, CAPTION.waitsForRoad), so a line is not lost to the dodge it came with.
-    const busy = run.hurtT > 0 || run.wobble > 0.62 || run.things.some((th) => th.fatal && !th.wapped && th.y < run.y && run.y - th.y < 150 && inLaneOf(th));
-    const since = Math.max(0, run.t - L.stepT);
-    L.stepT = run.t;
-    if (busy && L.cap && L.capHeld < CAPTION.waitsForRoad) L.capHeld += Math.min(since, 0.1);
-    const need = L.cap ? captionSeconds(L.cap) + L.capHeld : 0;
-    if (L.capQ.length && (!L.cap || run.t - L.capAt >= need)) {
-      // Fallen behind: let go back to where the newest sentence opens, never into the middle of one.
-      const skip = skipAhead(L.capQ);
-      if (skip) L.capQ.splice(0, skip);
-      L.skipped += skip;
-      L.shown += 1;
-      L.cap = `${skip ? '… ' : ''}${L.capQ.shift().text}`;
-      L.capAt = run.t;
-      L.capHeld = 0;
-      L.shownAt = run.t;
-    }
-    if (L.roadQ.length) {
-      const highest = run.roadWords?.length ? Math.min(...run.roadWords.map((w) => w.y)) : Infinity;
-      if (highest >= 84) {   // a phrase every ~100 px: five or so on the road at once, the lanes still clear
-        // The road is a stream of glimpses (the carry outruns it); it keeps up by dropping the oldest.
-        if (L.roadQ.length > 4) L.roadQ.splice(0, L.roadQ.length - 2);
-        const next = L.roadQ.shift();
-        paveSentence(next.text, next.terms, next.sentence);
-      }
-    }
-  }
-  /* Its words on the cobbles: packed into rows across the lanes, read top to bottom, coming down. */
-  function paveSentence(text, terms = laneStory.terms, sentence = text) {
-    run.roadWords = run.roadWords || [];
-    const words = text.split(/\s+/).filter(Boolean);
-    ctx.save();
-    ctx.font = '600 13px Georgia, serif';
-    let row = 0;
-    let x = 14;
-    const rows = [[]];
-    words.forEach((word) => {
-      const w = ctx.measureText(word).width;
-      if (x + w > W - 14 && rows[row].length) { row += 1; rows[row] = []; x = 14; }
-      rows[row].push({ word, w, x: x + w / 2 });
-      x += w + 9;
-    });
-    ctx.restore();
-    // Above whatever is already on the road; its rows read top to bottom, a little apart, as a line does.
-    const top = -16;
-    rows.forEach((line, r) => {
-      const width = line.reduce((sum, item) => sum + item.w, 0) + (line.length - 1) * 9;
-      const shift = (W - width) / 2 - 14;   // each row centred across the lanes
-      line.forEach((item) => {
-        const clean = item.word.replace(/[^\p{L}\p{N}'’-]/gu, '').toLowerCase();
-        const glow = [...terms].some((term) => term.split(/\s+/).includes(clean));
-        run.roadWords.push({ word: item.word, w: item.w, x: item.x + shift, y: top - (rows.length - 1 - r) * 34, glow, read: false, sentence });
-      });
-    });
-    if (run.roadWords.length > 90) run.roadWords.splice(0, run.roadWords.length - 90);
-  }
-  /* The road's words can be had more ways than one: any word walked over is trodden (it dims, the way
-   * a read line does); a glowing word underfoot is read; a hop that lands on a word marks it; a slice
-   * that comes down on a word, at the end of its flight, feeds it; and in ? Ask a tap on a word says the
-   * sentence it came from. Read, marked or fed, a word is kept, in order, and every fifth kept word
-   * makes a found line: said in the caption, steadying the pie, and kept for the end of the carry. */
-  const wordUnder = (x, y, slack = 12) => run?.roadWords?.find((rw) => Math.abs(rw.y - y) < 14 && Math.abs(rw.x - x) < rw.w / 2 + slack) || null;
-  function keepWord(rw, how) {
-    if (!rw || rw.kept) return;
-    rw.kept = how;
-    const clean = rw.word.replace(/[^\p{L}\p{N}'’-]/gu, '');
-    if (!clean) return;
-    run.found = run.found || [];
-    run.found.push(clean.toLowerCase());
-    run.tags.push({ x: rw.x, y: rw.y - 18, t: 0, text: `${{ read: 'READ', marked: 'MARKED', fed: 'FED' }[how] || 'KEPT'}: ${clean.toUpperCase()}` });
-    if (run.found.length % 5 === 0) {
-      const line = run.found.slice(-5).join(' ');
-      run.foundLines = run.foundLines || [];
-      run.foundLines.push(line);
-      showToast('A found line', `«${line}» — taken from the road, word by word.`, 3600, 'wonder', 2);
-      sfx('wonder', 'saying', rw.x, rw.y);
-      run.aura = Math.min(1, run.aura + 0.05);
-      run.wobble = Math.max(0, run.wobble - 0.08);
-    }
-  }
-  function tellWord(rw) {
-    const clean = rw.word.replace(/[^\p{L}\p{N}'’ -]/gu, '');
-    rw.asked = true;
-    showToast(`“${clean}”`, rw.sentence ? `On the road from: ${rw.sentence}` : 'A word of the passage, on the road.', 4200, '');
-    say(`${clean}. From the passage: ${rw.sentence || clean}`);
-  }
-  function roadWordsStep(dt) {
-    if (!run?.roadWords?.length) return;
-    const grounded = !airborne();
-    run.roadWords.forEach((rw) => {
-      rw.y += run.speed * dt;
-      if (!grounded || Math.abs(rw.y - (run.y + 10)) >= 13 || Math.abs(rw.x - run.x) >= rw.w / 2 + 12) return;
-      rw.trod = true;
-      // A glowing word underfoot, on the ground (not in a hop), is read.
-      if (rw.glow && !rw.read) {
-        rw.read = true;
-        lean('read');
-        run.aura = Math.min(1, run.aura + 0.03);
-        sfx('catch', 0, rw.x);
-        keepWord(rw, 'read');
-      }
-    });
-    run.roadWords = run.roadWords.filter((rw) => rw.y < H + 24);
-  }
-  /* Painted on the road, under everything that comes down it. */
-  const drawRoadWords = () => {
-    if (!run?.roadWords?.length) return;
-    ctx.save();
-    ctx.font = '600 13px Georgia, serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    run.roadWords.forEach((rw) => {
-      if (rw.y < -20) return;
-      const live = rw.glow && !rw.read;
-      ctx.shadowBlur = 0;
-      if (live) {
-        ctx.shadowColor = 'rgba(242, 193, 78, 0.9)';
-        ctx.shadowBlur = 10;
-        ctx.fillStyle = mix(colors.gold, colors.ink, 0.35);
-        ctx.globalAlpha = 1;
-      } else if (rw.kept) {
-        // Kept: read in gold, marked in a box of ink, fed with a berry's stain beside it.
-        ctx.fillStyle = rw.kept === 'fed' ? mix(colors.berry, colors.ink, 0.2) : mix(colors.gold, colors.ink, 0.3);
-        ctx.globalAlpha = 0.95;
-      } else {
-        ctx.fillStyle = colors.ink;
-        ctx.globalAlpha = rw.trod ? 0.28 : 0.55;
-      }
-      ctx.fillText(rw.word, rw.x, rw.y);
-      ctx.shadowBlur = 0;
-      if (live) ctx.fillRect(rw.x - rw.w / 2, rw.y + 8, rw.w, 1.5);
-      if (rw.kept === 'marked') {
-        ctx.strokeStyle = colors.ink;
-        ctx.lineWidth = 1.2;
-        ctx.strokeRect(rw.x - rw.w / 2 - 3, rw.y - 9, rw.w + 6, 18);
-      } else if (rw.kept === 'fed') {
-        ctx.fillStyle = colors.berry;
-        ctx.beginPath();
-        ctx.arc(rw.x + rw.w / 2 + 5, rw.y - 6, 3, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      if (rw.asked) {
-        ctx.globalAlpha = 0.6;
-        ctx.setLineDash([2, 2]);
-        ctx.strokeStyle = colors.ink;
-        ctx.beginPath();
-        ctx.moveTo(rw.x - rw.w / 2, rw.y + 9);
-        ctx.lineTo(rw.x + rw.w / 2, rw.y + 9);
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
-    });
-    ctx.restore();
-  };
-  /* The subtitle: the sentence the carry is at, at the top of the screen under the HUD. */
-  const drawLaneCaption = () => {
-    const mode = storyInMode();
-    if (!run || state !== 'running' || (mode !== 'caption' && mode !== 'both') || !laneStory.cap) return;
-    const text = laneStory.cap;
-    if (!text) return;
-    ctx.save();
-    ctx.font = '500 13.5px Georgia, serif';
-    const maxW = W - 34;
-    const lines = [];
-    let line = '';
-    text.split(/\s+/).forEach((word) => {
-      const next = line ? `${line} ${word}` : word;
-      if (ctx.measureText(next).width > maxW && line) { lines.push(line); line = word; } else line = next;
-    });
-    if (line) lines.push(line);
-    const shown = lines.slice(0, 3);
-    if (lines.length > 3) shown[2] = `${shown[2].replace(/[,;:]?$/, '')}…`;
-    const age = run.t - laneStory.shownAt;
-    const y0 = Math.max(92, glassFoot + 6);
-    const h = shown.length * 17 + 12;
-    ctx.globalAlpha = reduced?.matches ? 1 : Math.min(1, age / 0.25);
-    ctx.fillStyle = mix(colors.paper, 'rgb(255, 255, 255)', 0.25).replace('rgb(', 'rgba(').replace(')', ', 0.88)');
-    ctx.strokeStyle = mix(colors.ink, colors.paper, 0.7);
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.roundRect(10, y0, W - 20, h, 6); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = colors.gold;
-    ctx.fillRect(10, y0 + 4, 2.5, h - 8);
-    ctx.fillStyle = colors.ink;
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    shown.forEach((l, k) => ctx.fillText(l, 19, y0 + 7 + k * 17));
-    ctx.restore();
-  };
+  /* ─── The story in the lanes (pie-story-lane.mjs): captions, road words, found lines, story-to-character cues ─── */
+  const {
+    laneStory, storyInMode, laneStoryTick, laneStoryStep, paveSentence,
+    wordUnder, keepWord, tellWord, roadWordsStep, drawRoadWords, drawLaneCaption
+  } = initStoryLane({
+    getCtx: () => ctx,
+    W,
+    H,
+    record,
+    getPanelPlan: () => panelPlan,
+    reduced,
+    getColors: () => colors,
+    mix,
+    getFlowProse: () => flowProse,
+    getRun: () => run,
+    getState: () => state,
+    getGlassFoot: () => glassFoot,
+    airborne: () => airborne(),
+    inLaneOf,
+    lean,
+    showToast: (...args) => showToast(...args),
+    sfx,
+    say,
+    reactionsOn,
+    react,
+    meanwhile
+  });
+
+  let paintPortraits, paintStress, keepProvenance, paintProvenance;
 
   /* ─── Whimsy: how an impact looks and sounds, by sprite and by scene ───
    * !whimsy{ *kind{ #pop["BONK!", …] *bits[crumbs] !sound[…] %drama[1] } } and !scenes{ *field{ $frost
@@ -4513,6 +4313,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       flowProse.replaceChildren(...leg.paras.map((para) => {
         const li = document.createElement('li');
         li.className = 'pie-flow-para';
+        if (para.cue) li.dataset.cue = para.cue;
         if (para.voice && para.voice !== voice) {
           const who = document.createElement('span');
           who.className = 'pie-flow-voice';
@@ -5637,6 +5438,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           const power = seasonPower(BOON_ROSE);
           applyPower(power);
           if (power) run.powersUsed[power.id] = 'gift';
+          if (run.found?.unwritten || liveFound('unwritten')) run.unkept = Math.max(run.unkept || 0, 1.5);
           sfx('sweet', 0, thing.x, thing.y);
           spawnRing(thing.x, thing.y, 24, '#d62f4a', 0.45);
           run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: '+ BOON ROSE · FILLING · GLIMPSE' });
@@ -5765,131 +5567,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   /* ─── Drawing: the city in its colours; the figure in plain ink ─── */
 
-  /* A place's light: the paper, tinted. Between places, one crosses into the next. */
-  const skyFor = (s) => {
-    const tint = { night: colors.night, bronze: colors.gold, ember: colors.hearth, gold: colors.gold, berry: colors.berry, frost: mix(colors.accent, 'rgb(236, 244, 248)', 0.55) }[s.tint];
-    return [mix(colors.paper, tint, s.tint === 'night' ? 0.32 : 0.16), mix(colors.deep, tint, s.tint === 'night' ? 0.22 : 0.08)];
-  };
-  /* The road's texture, row by row, from one row above the frame's top (above the world, in a filled screen's haze)
-   * to its foot; with the world exactly in view this is the old -step + off. */
-  const roadFrom = (step, off) => off - step * (1 + Math.ceil(Math.max(0, -board.y0) / step));
-  const drawGroundFor = (sceneId, scroll, alpha = 1) => {
-    if (alpha <= 0.01) return;
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    const stroke = mix(colors.muted, colors.paper, 0.84);
-    ctx.strokeStyle = stroke;
-    ctx.lineWidth = 1;
-    if (sceneId === 'field') {
-      // Turned earth ridges and frost-flecked furrow lines.
-      const off = scroll % 36;
-      for (let y = roadFrom(36, off); y < board.y0 + board.h + 18; y += 36) {
-        const rowIdx = Math.floor((y - off) / 36);
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        for (let lx = 0; lx <= W; lx += 36) {
-          const wave = Math.sin(lx * 0.05 + rowIdx) * 2.5;
-          ctx.lineTo(lx, y + wave);
-        }
-        ctx.stroke();
-        ctx.fillStyle = mix(colors.accent, colors.paper, 0.85);
-        for (let lane = 0; lane < LANES; lane += 1) {
-          const fx = lane * LANE_W + 22 + ((rowIdx + lane) % 3) * 10;
-          ctx.beginPath(); ctx.arc(fx, y - 10, 1.3, 0, Math.PI * 2); ctx.fill();
-        }
-      }
-    } else if (sceneId === 'gate') {
-      // Squared parcel-gate flagstones with bronze threshold rivets.
-      const off = scroll % 38;
-      for (let y = roadFrom(38, off); y < board.y0 + board.h; y += 38) {
-        const shift = (Math.floor((y - off) / 38) % 2) * (LANE_W * 0.5);
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(W, y);
-        for (let x = shift; x < W; x += LANE_W) {
-          ctx.moveTo(x, y);
-          ctx.lineTo(x, y + 38);
-        }
-        ctx.stroke();
-        ctx.fillStyle = mix(colors.gold, colors.paper, 0.78);
-        for (let x = shift + 6; x < W; x += LANE_W) {
-          ctx.beginPath(); ctx.arc(x, y + 5, 1.3, 0, Math.PI * 2); ctx.fill();
-        }
-      }
-    } else if (sceneId === 'plaza') {
-      // Fan-paved festival courses and radial joints.
-      const off = scroll % 40;
-      for (let y = roadFrom(40, off); y < board.y0 + board.h + 40; y += 40) {
-        ctx.beginPath();
-        ctx.ellipse(W / 2, y + 60, W * 0.68, 38, 0, Math.PI * 1.08, Math.PI * 1.92);
-        ctx.stroke();
-        for (let lane = 0; lane < LANES; lane += 1) {
-          const lx = laneX(lane);
-          ctx.beginPath();
-          ctx.arc(lx, y, 10, 0, Math.PI);
-          ctx.stroke();
-        }
-      }
-    } else if (sceneId === 'court') {
-      // Chequered palace flagstones and a worn runner down the middle lane.
-      const off = scroll % 36;
-      ctx.fillStyle = mix(colors.hearth, colors.paper, 0.9);
-      ctx.fillRect(laneX(2) - LANE_W * 0.44, board.y0, LANE_W * 0.88, board.h);
-      ctx.strokeStyle = mix(colors.gold, colors.paper, 0.74);
-      ctx.beginPath();
-      ctx.moveTo(laneX(2) - LANE_W * 0.4, board.y0); ctx.lineTo(laneX(2) - LANE_W * 0.4, board.y0 + board.h);
-      ctx.moveTo(laneX(2) + LANE_W * 0.4, board.y0); ctx.lineTo(laneX(2) + LANE_W * 0.4, board.y0 + board.h);
-      ctx.stroke();
-      ctx.strokeStyle = stroke;
-      for (let y = roadFrom(36, off); y < board.y0 + board.h; y += 36) {
-        const rowIdx = Math.floor((y - off) / 36);
-        for (let lane = 0; lane < LANES; lane += 1) {
-          if ((rowIdx + lane) % 2 === 0 && lane !== 2) {
-            ctx.fillStyle = mix(colors.muted, colors.paper, 0.93);
-            ctx.fillRect(lane * LANE_W + 3, y + 3, LANE_W - 6, 30);
-          }
-          ctx.strokeRect(lane * LANE_W + 2, y + 2, LANE_W - 4, 32);
-        }
-      }
-    } else if (sceneId === 'table') {
-      // Wide banqueting-hall floorboards and brass dowel pins.
-      const off = scroll % 44;
-      for (let lane = 0; lane < LANES; lane += 1) {
-        const lx = lane * LANE_W;
-        ctx.beginPath();
-        ctx.moveTo(lx + LANE_W * 0.5, board.y0);
-        ctx.lineTo(lx + LANE_W * 0.5, board.y0 + board.h);
-        ctx.stroke();
-      }
-      for (let y = roadFrom(44, off); y < board.y0 + board.h; y += 44) {
-        const rowIdx = Math.floor((y - off) / 44);
-        for (let lane = 0; lane < LANES; lane += 1) {
-          const jy = y + ((lane * 17 + rowIdx * 9) % 22);
-          ctx.beginPath();
-          ctx.moveTo(lane * LANE_W + 2, jy);
-          ctx.lineTo((lane + 1) * LANE_W - 2, jy);
-          ctx.stroke();
-          ctx.fillStyle = mix(colors.gold, colors.paper, 0.76);
-          ctx.beginPath();
-          ctx.arc(lane * LANE_W + 10, jy + 4, 1.1, 0, Math.PI * 2);
-          ctx.arc((lane + 1) * LANE_W - 10, jy + 4, 1.1, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-    } else {
-      // Cobbles, scrolling with the scene.
-      const off = scroll % 32;
-      for (let y = roadFrom(32, off); y < board.y0 + board.h; y += 32) {
-        for (let lane = 0; lane < LANES; lane += 1) {
-          const shift = (Math.floor((y - off) / 32) % 2) * 12;
-          ctx.beginPath();
-          ctx.ellipse(lane * LANE_W + 18 + shift, y, 14, 9, 0, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-      }
-    }
-    ctx.restore();
-  };
+  /* ─── Canvas draw primitives (pie-draw.mjs): ground, sky, carrier face, power ring, gift art, moments ─── */
+  const {
+    skyFor, roadFrom, drawGroundFor, moodOf, drawFace,
+    GIFT_BADGES, drawPowerRing, drawGiftArt, drawMoments, drawMechanics
+  } = initPieDraw({
+    getCtx: () => ctx,
+    W,
+    LANES,
+    LANE_W,
+    getBoard: () => board,
+    record,
+    reduced,
+    getColors: () => colors,
+    mix,
+    clamp,
+    getRun: () => run,
+    getState: () => state,
+    jumpLift: () => jumpLift(),
+    poiseNeed: () => poiseNeed(),
+    poised: () => poised()
+  });
   /* The crows and ravens at the edge of the road, taking what the ants bring (the anthills trial). On a filled screen
    * they stand on the verge; on the plain board, at the lane's edge. They take it, and go. */
   const drawCorvids = () => {
@@ -7782,269 +7480,6 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     drawHat();
   };
-
-  /* ─── The carrier's face: how the carry is going, in the one under the hat ───
-   * calm (a small smile), focused (the needle just turned: brows level, mouth set), glad (a clown
-   * satisfied, or a combo running), worried (the pie past two-thirds tilted; a bead of sweat near the
-   * top), ouch (a knock, or the spill). Every carrier's head sits in the same place, so one face fits all. */
-  function moodOf() {
-    if (!run || state === 'title') return 'calm';
-    if (run.spill || run.hurtT > 0) return 'ouch';
-    if (run.wobble > 0.62) return 'worried';
-    if (run.gladT > 0 || (run.combo >= 2 && run.comboT > 0)) return 'glad';
-    if (run.aimFocusT > 0) return 'focused';
-    return 'calm';
-  }
-  function drawFace(x, y, mood, who, alpha = 1) {
-    const hy = y - 44;
-    const my = hy + (who === 'clown' ? 6 : 4.6);
-    ctx.save();
-    ctx.globalAlpha *= alpha;
-    ctx.strokeStyle = who === 'figure' ? colors.ink : who === 'clown' ? '#c0392b' : '#3a2a20';
-    ctx.lineWidth = 1.25;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    if (mood === 'glad') {
-      ctx.arc(x, my - 2, 3.4, 0.12 * Math.PI, 0.88 * Math.PI);
-      ctx.moveTo(x - 5, hy - 4.6); ctx.quadraticCurveTo(x - 3.2, hy - 6.4, x - 1.4, hy - 4.6);
-      ctx.moveTo(x + 1.4, hy - 4.6); ctx.quadraticCurveTo(x + 3.2, hy - 6.4, x + 5, hy - 4.6);
-    } else if (mood === 'worried') {
-      ctx.moveTo(x - 3.2, my); ctx.quadraticCurveTo(x - 1.6, my - 1.6, x, my); ctx.quadraticCurveTo(x + 1.6, my + 1.6, x + 3.2, my);
-      ctx.moveTo(x - 5.2, hy - 4.4); ctx.lineTo(x - 1.6, hy - 6.2);
-      ctx.moveTo(x + 5.2, hy - 4.4); ctx.lineTo(x + 1.6, hy - 6.2);
-    } else if (mood === 'ouch') {
-      ctx.arc(x, my, 1.7, 0, Math.PI * 2);
-      ctx.moveTo(x - 5.2, hy - 6.2); ctx.lineTo(x - 1.6, hy - 4.6);
-      ctx.moveTo(x + 5.2, hy - 6.2); ctx.lineTo(x + 1.6, hy - 4.6);
-    } else if (mood === 'focused') {
-      ctx.moveTo(x - 2.2, my); ctx.lineTo(x + 2.2, my);
-      ctx.moveTo(x - 5, hy - 4.4); ctx.lineTo(x - 1.6, hy - 4.4);
-      ctx.moveTo(x + 1.6, hy - 4.4); ctx.lineTo(x + 5, hy - 4.4);
-    } else {
-      ctx.arc(x, my - 2.4, 2.6, 0.25 * Math.PI, 0.75 * Math.PI);
-    }
-    ctx.stroke();
-    if (mood === 'worried' && run?.wobble > 0.8) {
-      ctx.fillStyle = '#7fb4c0';
-      ctx.beginPath();
-      ctx.moveTo(x + 9.5, hy - 6); ctx.quadraticCurveTo(x + 12, hy - 1.5, x + 9.5, hy - 0.8); ctx.quadraticCurveTo(x + 7, hy - 1.5, x + 9.5, hy - 6);
-      ctx.fill();
-    }
-    ctx.restore();
-  }
-
-  /* ─── The mechanics, drawn where they act ───
-   * Gifts as badges over the hat, each with what is left of it as an arc (echoes as a count);
-   * the catch: when the pie leans, a chevron on the side to step to; a combo as pips and the time
-   * left to keep it going; poise as a ring filling under the feet, gold when poised. Quiet in zen. */
-  const GIFT_BADGES = Object.freeze([
-    ['lit', '☀', '#d9a23a', 'lit'], ['echoes', '◎', '#2c8b86', 'echoes'], ['lag', '≈', '#4f86a8', 'slow'], ['unkept', '◌', '#8a8a8a', 'unkept'],
-    ['trueAim', '➶', '#3d7a3a', 'true aim'], ['aimLock', '↑', '#3d7a3a', 'arrow'], ['fed', '♨', '#8a6a4a', 'fed'], ['warm', '✹', '#d0892e', 'warm'], ['glimpse', '◐', '#7a4f8e', 'glimpse']
-  ]);
-  /* What is helping the carrier, told as a wide ring around them (for low vision, the maker 2026-11-12): one arc per
-   * thing that lasts, in the colour of its badge, each running down as it runs out, thick enough to read across a
-   * room. A forgiven knock waiting to be spent is a gold dashed ring outside them. Quiet in zen, like the badges. */
-  function drawPowerRing() {
-    if (!run || state !== 'running' || record.view.zen) return;
-    const cx = run.x;
-    const cy = run.y - 24 - (run.jumpT > 0 ? jumpLift() : 0);
-    let r = 34;
-    ctx.save();
-    ctx.lineCap = 'round';
-    const start = -Math.PI / 2;
-    GIFT_BADGES.forEach(([key, , colour]) => {
-      const most = { lit: 12, lag: 8, unkept: 6, trueAim: 10, fed: 10, warm: 10, glimpse: 8 }[key];
-      const left = most ? run[key] || 0 : 0;
-      if (left <= 0) return;
-      const end = start + Math.min(1, left / most) * Math.PI * 2;
-      ctx.strokeStyle = 'rgba(20, 16, 10, 0.4)';
-      ctx.lineWidth = 7;
-      ctx.beginPath(); ctx.arc(cx, cy, r, start, end); ctx.stroke();
-      ctx.strokeStyle = colour;
-      ctx.lineWidth = 4.5;
-      ctx.beginPath(); ctx.arc(cx, cy, r, start, end); ctx.stroke();
-      r += 7;
-    });
-    if (run.shield) {
-      ctx.setLineDash([5, 4]);
-      ctx.strokeStyle = 'rgba(255, 214, 102, 0.9)';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(cx, cy, r + 1, 0, Math.PI * 2); ctx.stroke();
-    }
-    ctx.restore();
-  }
-  /* A gift from a live stream, drawn as itself (pie-live.mjs GIFT_ART): it pops up from the carrier, large and plain,
-   * and fades as it rises. A boxing glove punches up the lanes; a paper crane flies up them. */
-  function drawGiftArt() {
-    if (!run?.giftArt?.length) return;
-    const LIFE = 2.6;
-    run.giftArt = run.giftArt.filter((g) => run.t - g.t0 < LIFE);
-    run.giftArt.forEach((g, i) => {
-      const age = run.t - g.t0;
-      const k = age / LIFE;
-      const pop = reduced?.matches ? 1.2 : k < 0.12 ? 0.6 + (k / 0.12) * 0.8 : 1.4 - Math.min(0.2, (k - 0.12) * 0.6);
-      let x = g.x + (i % 2 ? 14 : -14) * Math.min(1, i);
-      let y = run.y - 70 - k * 70;
-      if (g.art === 'glove') y = run.y - 70 - k * 320;
-      if (g.art === 'crane') { y = run.y - 80 - k * 260; x = g.x + Math.sin(k * 6) * 28; }
-      ctx.save();
-      ctx.globalAlpha = k > 0.72 ? Math.max(0, 1 - (k - 0.72) / 0.28) : 1;
-      ctx.translate(clamp(x, 24, W - 24), y);
-      ctx.scale(pop, pop);
-      (GIFT_ART[g.art] || GIFT_ART.box)(ctx, age);
-      ctx.restore();
-    });
-  }
-  /* A find's moment (pie-finds.mjs), a classic beat drawn where it happens, not said.
-   *   haggle  a price tag swings over the carrier: a 3, struck through, and a 2 beside it, and a coin handed back
-   *   sniff   where Mr. BaneWAP was foiled: the rose rises to him, three lines of a long sniff, and a heart */
-  function drawMoments() {
-    if (!run?.moments?.length) return;
-    const LIFE = 2.8;
-    run.moments = run.moments.filter((m) => run.t - m.t0 < LIFE);
-    run.moments.forEach((m) => {
-      const age = run.t - m.t0;
-      ctx.save();
-      ctx.globalAlpha = age > LIFE - 0.5 ? Math.max(0, (LIFE - age) / 0.5) : 1;
-      if (m.kind === 'haggle') {
-        const x = run.x;
-        const y = run.y - 92;
-        const swing = reduced?.matches ? 0 : Math.sin(age * 5) * 0.28 * Math.max(0, 1 - age / 2);
-        ctx.strokeStyle = '#5a4a3a';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.moveTo(x, y - 30); ctx.lineTo(x, y - 14); ctx.stroke();
-        ctx.translate(x, y - 14);
-        ctx.rotate(swing);
-        ctx.fillStyle = '#fff3d6';
-        ctx.strokeStyle = '#3a2a1a';
-        ctx.lineWidth = 1.6;
-        ctx.beginPath(); ctx.roundRect(-22, 0, 44, 28, 5); ctx.fill(); ctx.stroke();
-        ctx.beginPath(); ctx.arc(0, 5, 2.2, 0, Math.PI * 2); ctx.stroke();
-        ctx.font = '800 17px "JetBrainsMono", ui-monospace, monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#3a2a1a';
-        ctx.fillText('3', -9, 17);
-        const strike = Math.min(1, Math.max(0, (age - 0.6) / 0.3));
-        if (strike > 0) {
-          ctx.strokeStyle = '#c0392b';
-          ctx.lineWidth = 2.4;
-          ctx.beginPath(); ctx.moveTo(-16, 23); ctx.lineTo(-16 + 14 * strike, 23 - 12 * strike); ctx.stroke();
-        }
-        if (age > 1) { ctx.fillStyle = '#c0392b'; ctx.fillText('2', 10, 17); }
-        if (age > 1.3) {
-          const fall = Math.min(40, (age - 1.3) * 60);
-          ctx.fillStyle = '#e8b931';
-          ctx.strokeStyle = '#8a6410';
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.arc(14, 36 + fall, 4.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        }
-      } else if (m.kind === 'sniff') {
-        const rise = Math.min(1, age / 0.7);
-        ctx.translate(m.x, m.y - 10 - rise * 16);
-        ctx.scale(1.3, 1.3);
-        GIFT_ART.rose(ctx, age);
-        ctx.strokeStyle = 'rgba(126, 87, 194, 0.85)';
-        ctx.lineWidth = 1.3;
-        for (let i = 0; i < 3; i += 1) {
-          const show = Math.min(1, Math.max(0, (age - 0.4 - i * 0.18) / 0.25));
-          if (!show) continue;
-          ctx.beginPath(); ctx.arc(14 + i * 5, -10 - i * 3, 4 + i * 1.5, Math.PI * 0.9, Math.PI * (0.9 + 0.8 * show)); ctx.stroke();
-        }
-        if (age > 1.1) {
-          const pop = Math.min(1, (age - 1.1) / 0.2);
-          ctx.translate(-14, -22 - (age - 1.1) * 12);
-          ctx.scale(pop, pop);
-          GIFT_ART.heart(ctx, age);
-        }
-      }
-      ctx.restore();
-    });
-  }
-  function drawMechanics() {
-    if (!run || state !== 'running' || record.view.zen) return;
-    const calm = reduced?.matches;
-    const x = run.x;
-    const y = run.y - (run.jumpT > 0 ? jumpLift() : 0);
-    ctx.save();
-    ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    // Gifts over the hat.
-    run.giftMax = run.giftMax || {};
-    const live = GIFT_BADGES.filter(([key]) => run[key] > 0);
-    GIFT_BADGES.forEach(([key]) => { if (!(run[key] > 0)) delete run.giftMax[key]; });
-    live.forEach(([key, glyph, ink], i) => {
-      const v = run[key];
-      const max = (run.giftMax[key] = Math.max(run.giftMax[key] || 0, v));
-      const a = -Math.PI / 2 + (i - (live.length - 1) / 2) * 0.42;
-      const bx = x + Math.cos(a) * 34;
-      const by = y - 70 + Math.sin(a) * 18;
-      ctx.fillStyle = 'rgba(255, 252, 244, 0.92)';
-      ctx.beginPath(); ctx.arc(bx, by, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = mix(colors.ink, colors.paper, 0.75);
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      if (key !== 'echoes') {
-        ctx.strokeStyle = ink;
-        ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(bx, by, 8, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * clamp(v / max, 0, 1)); ctx.stroke();
-      }
-      ctx.fillStyle = ink;
-      ctx.fillText(key === 'echoes' ? String(Math.ceil(v)) : glyph, bx, by + 0.5);
-    });
-    // The catch: step toward the lean.
-    if (run.wobble >= 0.24 && Math.abs(run.tiltDir || 0) >= 0.3 && !run.spill) {
-      const side = Math.sign(run.tiltDir);
-      const pulse = calm ? 1 : 0.65 + Math.sin(run.t * 9) * 0.35;
-      const cx = x + side * 50;
-      const cy = y - 18;
-      ctx.globalAlpha = pulse;
-      ctx.strokeStyle = '#2c8b86';
-      ctx.lineWidth = 2.4;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(cx - side * 3, cy - 6); ctx.lineTo(cx + side * 3, cy); ctx.lineTo(cx - side * 3, cy + 6);
-      ctx.moveTo(cx - side * 9, cy - 6); ctx.lineTo(cx - side * 3, cy); ctx.lineTo(cx - side * 9, cy + 6);
-      ctx.stroke();
-      ctx.font = '700 7px "JetBrainsMono", ui-monospace, monospace';
-      ctx.fillStyle = '#2c8b86';
-      ctx.fillText('CATCH', cx - side * 3, cy + 13);
-      ctx.globalAlpha = 1;
-    }
-    // A combo: its pips, and the time left to keep it going.
-    if (run.combo >= 1 && run.comboT > 0) {
-      const n = Math.min(run.combo, 6);
-      const by = y - (live.length ? 98 : 80);   // over the hat (and its gifts): clear of the aura at the foot
-      for (let i = 0; i < n; i += 1) {
-        ctx.fillStyle = i >= 2 ? '#d6473e' : '#f2c14e';
-        ctx.beginPath(); ctx.arc(x - (n - 1) * 4.5 + i * 9, by, 3, 0, Math.PI * 2); ctx.fill();
-      }
-      const w = 44 * clamp(run.comboT / 2.6, 0, 1);
-      ctx.fillStyle = mix(colors.ink, colors.paper, 0.8);
-      ctx.fillRect(x - 22, by + 6, 44, 2);
-      ctx.fillStyle = '#d9a23a';
-      ctx.fillRect(x - 22, by + 6, w, 2);
-      if (run.combo >= 2) {
-        ctx.font = '700 8px "JetBrainsMono", ui-monospace, monospace';
-        ctx.fillStyle = colors.ink;
-        ctx.fillText(`×${run.combo}`, x + (n - 1) * 4.5 + 14, by + 0.5);
-      }
-    }
-    // Poise: stillness filling a ring under the feet.
-    const need = poiseNeed();
-    if (run.jumpT <= 0 && run.stillT > 0.08) {
-      ctx.lineWidth = 1.6;
-      if (poised()) {
-        ctx.strokeStyle = 'rgba(242, 193, 78, 0.85)';
-        ctx.beginPath(); ctx.ellipse(x, run.y + 17, 17, 5, 0, 0, Math.PI * 2); ctx.stroke();
-      } else {
-        ctx.strokeStyle = mix(colors.ink, colors.paper, 0.55);
-        ctx.beginPath(); ctx.ellipse(x, run.y + 17, 17, 5, 0, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * clamp(run.stillT / need, 0, 1)); ctx.stroke();
-      }
-    }
-    ctx.restore();
-  }
 
   /* The others the hat settles on: drawn in their materials, unlike him. */
   function drawBody(who, x, y, stride) {
@@ -10559,171 +9994,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     pasteSpell(text);
   });
 
-  /* ─── Portraits, to take anywhere (characters.mjs): copy or download each as a standalone SVG ─── */
-  function paintPortraits() {
-    const list = document.querySelector('[data-pie-portraits]');
-    if (!list) return;
-    const copyInto = async (text, button) => {
-      const label = button.textContent;
-      try { await navigator.clipboard.writeText(text); button.textContent = 'Copied'; } catch { button.textContent = 'Could not copy'; }
-      setTimeout(() => { button.textContent = label; }, 1400);
-    };
-    list.replaceChildren(...Object.entries(CHARACTERS).map(([id, c]) => {
-      const li = nodeOf('li', 'pie-portrait');
-      const art = nodeOf('span', 'lore-portrait');
-      art.innerHTML = portraitSVG(id, { size: 96, standalone: true });
-      const copy = nodeOf('button', 'pie-tool', 'Copy SVG');
-      copy.type = 'button';
-      copy.addEventListener('click', () => copyInto(portraitSVG(id, { size: 512, standalone: true }), copy));
-      const save = nodeOf('a', 'pie-tool', 'Download');
-      save.download = `lore-land-${id}.svg`;
-      save.href = URL.createObjectURL(new Blob([portraitSVG(id, { size: 512, standalone: true })], { type: 'image/svg+xml' }));
-      // The model sheet: every mood, what they are like, their knack if the hat settles on them, their colours.
-      const model = MODELS[id] || {};
-      const moods = nodeOf('span', 'pie-portrait-moods');
-      MOODS.forEach((mood) => {
-        const m = nodeOf('span', 'pie-portrait-mood');
-        m.innerHTML = portraitSVG(id, { size: 40, mood });
-        m.title = mood;
-        m.append(nodeOf('small', '', mood));
-        moods.append(m);
-      });
-      const traits = nodeOf('span', 'pie-portrait-traits');
-      (model.traits || []).forEach((t) => traits.append(nodeOf('span', '', t)));
-      /* What they want and cannot do; what they remember of you; why they are drawn this way, folded, off the lanes. */
-      const whyOf = (who) => {
-        const why = REASONS[who];
-        if (!why) return [];
-        const memory = remembers(who, readStore(DEEDS_KEY));
-        const fold = document.createElement('details');
-        fold.className = 'pie-portrait-why';
-        fold.append(nodeOf('summary', '', 'Why they are drawn this way'), nodeOf('span', '', why.reason));
-        const weight = WEIGHT[who];
-        // The weight is the maker's register too: shown only with Reasons on in the switches.
-        if (weight && who !== 'figure' && switchOn('reasons')) fold.append(nodeOf('span', 'pie-portrait-weight', `Carries · ${weight.carries} Hands it on · ${weight.hands_on} Eased by · ${weight.eased}`));
-        return [nodeOf('span', 'pie-portrait-want', `Wants · ${why.want}`), nodeOf('span', 'pie-portrait-limit', `Cannot · ${why.limit}`),
-          ...(memory ? [nodeOf('span', 'pie-portrait-memory', `Remembers · ${memory}`)] : []), fold];
-      };
-      const swatches = nodeOf('span', 'pie-portrait-swatches');
-      Object.entries(c.palette || {}).forEach(([k, v]) => { const sw = nodeOf('i', ''); sw.style.background = v; sw.title = `${k} ${v}`; swatches.append(sw); });
-      li.append(art, nodeOf('strong', '', c.name), nodeOf('span', 'pie-portrait-first', c.first ? `first in Chapter ${c.first}` : 'in the lanes'), moods, traits,
-        ...(model.temperament ? [nodeOf('span', 'pie-portrait-temperament', model.temperament)] : []),
-        ...(model.knack ? [nodeOf('span', 'pie-portrait-knack', `Under the hat · ${model.knack}`)] : []),
-        ...whyOf(id),
-        swatches, renderSpell(characterSpell(id), { cast: false, copy: `lore.land/characters#${id}` }), nodeOf('span', 'pie-portrait-actions'));
-      li.querySelector('.pie-portrait-actions').append(copy, ' ', save);
-      return li;
-    }));
-    document.querySelector('[data-pie-portraits-json]')?.addEventListener('click', (event) => copyInto(JSON.stringify(charactersSheet(), null, 2), event.target));
-  }
-
-  /* ─── The stress test: what the game has learned about Spw (pie-spw.mjs) ─── */
-  const stressOut = document.querySelector('[data-pie-stress]');
-  let stressCross = [];
-  let stressFuzz = [];
-  function paintStress() {
-    if (!stressOut || !bookRules) return;
-    const s = bookRules.stats;
-    const lede = stressOut.querySelector('[data-pie-stress-lede]');
-    if (lede) {
-      lede.textContent = s
-        ? `The rules (${s.bytes} characters of Spw) were read by ${bookRules.reader} in ${s.ms} ms: ${s.complete ? 'whole' : 'not whole'}${s.proseFallback ? ', falling back to prose' : ''}, ${s.errors} error${s.errors === 1 ? '' : 's'}, ${s.warnings} warning${s.warnings === 1 ? '' : 's'}, ${s.gaps} gaps.`
-        : `The rules were read by the ${bookRules.reader} reader; the parser could not be loaded here.`;
-    }
-    const list = stressOut.querySelector('[data-pie-stress-list]');
-    const rows = [
-      ...(bookRules.quirks || []).map((q) => ['quirk', q]),
-      ...stressCross.map((f) => ['cross', f]),
-      ...stressFuzz.map((f) => ['fuzz', `${f.name}: ${f.complete ? 'read whole' : f.proseFallback ? 'fell back to prose' : 'not whole'}, ${f.errors} errors, ${f.warnings} warnings, ${f.ms} ms${f.quiet ? ' — reported success anyway' : ''}`])
-    ];
-    list?.replaceChildren(...(rows.length ? rows : [['ok', 'Nothing odd yet. Cross-read and fuzz to look harder.']]).map(([kind, text]) => {
-      const li = nodeOf('li', `is-${kind}`);
-      li.append(nodeOf('b', '', kind), nodeOf('span', '', ` ${text}`));
-      return li;
-    }));
-    const report = stressOut.querySelector('[data-pie-stress-report]');
-    if (report) {
-      report.dataset.text = stressReport({ read: bookRules, crossFindings: stressCross, fuzzed: stressFuzz });
-      report.replaceChildren(renderSpell(report.dataset.text, { cast: false }));
-    }
-  }
-  stressOut?.querySelector('[data-pie-stress-cross]')?.addEventListener('click', async (event) => {
-    if (!bookRules) return;
-    event.target.disabled = true;
-    stressCross = await crossRead(bookRules);
-    if (!stressCross.length) stressCross = ['every power read the same by both readers, and every one survived a round trip'];
-    event.target.disabled = false;
-    paintStress();
-  });
-  stressOut?.querySelector('[data-pie-stress-fuzz]')?.addEventListener('click', async (event) => {
-    if (!bookRules?.source) return;
-    event.target.disabled = true;
-    stressFuzz = [...stressFuzz, ...(await fuzz(bookRules.source, 8))].slice(-24);
-    event.target.disabled = false;
-    paintStress();
-  });
-  stressOut?.querySelector('[data-pie-stress-copy]')?.addEventListener('click', async (event) => {
-    const text = stressOut.querySelector('[data-pie-stress-report]')?.dataset.text || '';
-    try { await navigator.clipboard.writeText(text); event.target.textContent = 'Copied'; } catch { event.target.textContent = 'Select it and copy'; }
-  });
-
-  /* ─── Provenance: each carry written back as a Spw card (kept in this browser, the last five) ─── */
-  const PROVENANCE_KEY = 'lore.pie.provenance.v1';
-  const readProvenance = () => {
-    try { const list = JSON.parse(window.localStorage.getItem(PROVENANCE_KEY) || '[]'); return Array.isArray(list) ? list : []; } catch { return []; }
-  };
-  function keepProvenance(card) {
-    const list = [card, ...readProvenance()].slice(0, 5);
-    try { window.localStorage.setItem(PROVENANCE_KEY, JSON.stringify(list)); } catch { /* this visit only */ }
-    paintProvenance(list);
-  }
-  /* A line a season left (pie-seasons.mjs), shown above the carries: sealed, copyable, and the reader's to let go. */
-  function keptBoxes() {
-    if (!seasonsOn()) return [];
-    const mine = readSeasons();
-    const now = seasonClock();
-    return SEASONS.filter((s) => mine[s.id]?.line).map((s) => {
-      const stands = seasonStanding(s, mine, now);
-      const words = { open: 'the season is on', kept: 'the place stays set', line: 'it answers to whoever was there' }[stands] || 'kept';
-      const box = nodeOf('div', 'pie-provenance-card pie-kept-line');
-      box.dataset.pieKept = s.id;
-      box.dataset.pieKeptStands = stands;
-      const go = nodeOf('button', 'pie-tool', 'Let it go');
-      go.type = 'button';
-      go.addEventListener('click', () => { writeSeasons(letGoKept(readSeasons(), s.id)); paintProvenance(); say(SEASON_SAYS[s.id]?.gone || 'Let go.'); });
-      // The line as an address: whoever opens it is shown the line, and it is kept only by someone who was there.
-      const link = nodeOf('button', 'pie-tool', 'Copy as a link');
-      link.type = 'button';
-      link.addEventListener('click', async () => {
-        const url = new URL('/pie/', location.origin);
-        url.searchParams.set('kept', mine[s.id].line);
-        try { await navigator.clipboard.writeText(url.toString()); link.textContent = 'Link copied'; } catch { link.textContent = 'Copy the line instead'; }
-      });
-      box.append(nodeOf('p', 'pie-card-pasted', `From ${s.from} · sealed · ${words}`), renderSpell(mine[s.id].line, { cast: true, play: true, copy: `lore.land/pie#kept:${s.id}` }), link, go);
-      return box;
-    });
-  }
-  function paintProvenance(list = readProvenance()) {
-    const body = document.querySelector('[data-pie-provenance-body]');
-    const kept = keptBoxes();
-    if (!body) return;
-    if (!list.length && !kept.length) {
-      // A kept line let go, with no carry yet: back to the empty panel's own words.
-      if (body.querySelector('.pie-kept-line')) body.replaceChildren(nodeOf('p', 'pie-carries-lede', 'No carry yet. The first spill writes the first card.'));
-      return;
-    }
-    body.replaceChildren(...kept, ...list.map((card, i) => {
-      const box = nodeOf('div', `pie-provenance-card${i ? '' : ' is-latest'}`);
-      const pre = renderSpell(card, { explain: explainAtom('carry'), cast: i === 0, play: true, copy: 'lore.land/pie#carry' });
-      const copy = nodeOf('button', 'pie-tool', i ? 'Copy' : 'Copy the latest');
-      copy.type = 'button';
-      copy.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(card); copy.textContent = 'Copied'; } catch { copy.textContent = 'Select it and copy'; }
-      });
-      box.append(pre, copy);
-      return box;
-    }));
-  }
+  /* ─── Secondary drawer UI (pie-setup-ui.mjs): portraits, Spw stress test, provenance cards ─── */
+  ({ paintPortraits, paintStress, keepProvenance, paintProvenance } = initPieSetupUI({
+    nodeOf,
+    explainAtom,
+    readStore,
+    DEEDS_KEY,
+    switchOn,
+    getBookRules: () => bookRules,
+    seasonsOn,
+    readSeasons,
+    writeSeasons,
+    seasonClock: () => seasonClock(),
+    say
+  }));
 
   /* ─── Thumbs: controls for a phone held in two hands ───
    * The pad is the lanes in small (five across, four up): touch or slide to where you want to

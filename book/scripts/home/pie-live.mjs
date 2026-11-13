@@ -36,7 +36,7 @@ const LIKES_KEY = 'lore.pie.live.likes';
 const MOST = 99999;
 const NUMBERS = Object.freeze({ a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, twenty: 20 });
 const TIMES = Object.freeze({ once: 1, twice: 2, thrice: 3 });
-const ALIASES = Object.freeze({ doughnut: 'donut', 'heart hand': 'hand heart', 'hands heart': 'hand heart', 'hand': 'hand heart' });
+const ALIASES = Object.freeze({ doughnut: 'donut', 'heart hand': 'hand heart', 'hands heart': 'hand heart', 'hand': 'hand heart', hibear: 'hi bear' });
 
 const round = (/** @type {number} */ n) => Math.round(n * 100) / 100;
 /** An amount that grows with the count, held to what the spell reader allows anyway. */
@@ -45,7 +45,7 @@ const plural = (/** @type {number} */ n, /** @type {string} */ word) => `${n} ${
 
 /**
  * @typedef {{ icon: string, art?: string, kind?: 'dolphin' | 'donut' | 'berry' | 'boonrose', most?: number, per?: number, spell?: (n: number) => string, lands: (n: number) => string }} GiftKind
- * @typedef {{ key: string, name: string, count: number, who: string, icon: string, kind: string, most: number, per: number, spell: string, lands: string, side: 'mine' | 'rival', art: string, things?: number, moment?: string }} Gift
+ * @typedef {{ key: string, name: string, count: number, who: string, icon: string, kind: string, most: number, per: number, spell: string, lands: string, side: 'mine' | 'rival', art: string, things?: number, moment?: string, rivalKinds?: ReadonlyArray<string> }} Gift
  */
 
 /** What each gift does. Keyed by the gift's name, singular, in lower case. @type {Readonly<Record<string, GiftKind>>} */
@@ -101,6 +101,46 @@ export const GIFTS = Object.freeze({
     art: 'corn',
     spell: (n) => `*corn{ %crust[${grow(0.08, n, 0.5)}] ~fed[${grow(2, n + 2, 10)}] #says["It is corn: a big lump with knobs, a whole meal on a cob. Steps tilt less for a while, and the crust is fed."] }`,
     lands: () => 'a whole meal on a cob: steps tilt less, and the crust is fed.'
+  },
+  'happy twinkle': {
+    icon: '✨',
+    art: 'twinkle',
+    spell: (n) => `*happy_twinkle{ ~lit[${grow(1.5, n + 2, 12)}] ~glimpse[${grow(0.8, n + 2, 8)}] #says["A happy twinkle from the crowd, and then another. The way through is lit, and the clear way shows a breath ahead."] }`,
+    lands: () => 'the way through is lit, and the clear way shows.'
+  },
+  // GG, a good game: the other side's obstacles ahead shake hands and step aside (pie-game.mjs landGift).
+  gg: {
+    icon: '🤝',
+    art: 'gg',
+    spell: (n) => `*good_game{ !level %crust[${grow(0.05, n, 0.5)}] #says["GG from the crowd: a good game. Whatever the other side set in the road ahead shakes hands and steps aside, and the pie levels."] }`,
+    lands: () => "the other side's obstacles ahead step aside, and the pie levels."
+  },
+  // Mantap: Indonesian and Malay for great, and for firm or steady; so it steadies.
+  mantap: {
+    icon: '👍',
+    art: 'thumb',
+    spell: (n) => `*mantap{ ~fed[${grow(1.5, n + 3, 10)}] %crust[${grow(0.05, n, 0.5)}] #says["Mantap, from the crowd: great, and solid. The carrier stands firmer; steps tilt less for a while, and the crust is fed."] }`,
+    lands: () => 'steps tilt less for a while, and the crust is fed.'
+  },
+  // TGIF: Friday arrives with everyone in it, as it does after the Thursday nobody kept (pie-game.mjs landGift).
+  tgif: {
+    icon: '🎉',
+    art: 'friday',
+    spell: (n) => `*tgif{ ~warm[${grow(1, n + 3, 10)}] #says["Thank goodness it is Friday: Friday arrives with everyone in it, and a row of clowns comes up the lanes, with a way left through."] }`,
+    lands: () => 'Friday arrives with everyone in it: a row of clowns, and a way left through.'
+  },
+  'finger heart': {
+    icon: '🫰',
+    art: 'heart',
+    spell: (n) => `*finger_heart{ ~warm[${grow(1, n + 2, 10)}] %filling[${grow(0.03, n, 0.5)}] #says["A finger heart from the crowd, small and meant. The pie settles faster, and the filling is fed."] }`,
+    lands: () => 'the pie settles faster, and the filling is fed.'
+  },
+  // Hi Bear (hibear): a bright, TikTok-friendly gummy bear in the lanes.
+  'hi bear': {
+    icon: '🧸',
+    art: 'gummy',
+    spell: (n) => `*hi_bear{ !forgive ~warm[${grow(1.5, n + 2, 10)}] %filling[${grow(0.05, n, 0.5)}] #says["A gummy bear from the crowd, bright and bouncy. The next knock is forgiven, the pie settles faster, and the filling is fed."] }`,
+    lands: () => 'the next knock is forgiven, the pie settles faster, and the filling is fed.'
   },
   'heart me': {
     icon: '💗',
@@ -213,6 +253,27 @@ export function parseGifts(text) {
 /* A gift to the other side is an obstacle in the road and feeds Mr. BaneWAP, the lanes' own schemer; it never names anyone. */
 const TO_THE_RIVAL = 'obstacles in the road, ringed in violet: steer round or hop them. Mr. BaneWAP is fed, and comes sooner with a longer scheme; find his off switch.';
 
+/** Gift-specific obstacle twists when a gift is sent to the other side. @type {Readonly<Record<string, { kinds: ReadonlyArray<string>, lands: string }>>} */
+const RIVAL_GIFTS = Object.freeze({
+  rose: { kinds: ['banerose'], lands: 'thorns in the road, ringed in violet: steer round or hop them, and Mr. BaneWAP is fed.' },
+  'hi bear': { kinds: ['snail', 'puddle'], lands: 'sticky gummy trails and snails in the road: steer round them, and Mr. BaneWAP is fed.' },
+  'boxing glove': { kinds: ['stone', 'hole'], lands: 'stones and holes punched into the road: hop or steer round, and Mr. BaneWAP is fed.' },
+  'paper crane': { kinds: ['pigeon', 'pane'], lands: 'crosswind wings and panes in the road: dodge them, and Mr. BaneWAP is fed.' },
+  'finger heart': { kinds: ['pane', 'banerose'], lands: 'city glass and thorns across the lanes: mind the edge, and Mr. BaneWAP is fed.' },
+  'heart me': { kinds: ['pane', 'banerose'], lands: 'city glass and thorns across the lanes: mind the edge, and Mr. BaneWAP is fed.' },
+  'heart puff': { kinds: ['pane', 'frost'], lands: 'city glass and frost across the lanes: steer round, and Mr. BaneWAP is fed.' },
+  'love you so much': { kinds: ['banerose', 'pane'], lands: 'thorns and city glass across the lanes: steer round, and Mr. BaneWAP is fed.' },
+  "it's corn": { kinds: ['stone', 'puddle'], lands: 'cobbled stones and puddles in the road: steer round, and Mr. BaneWAP is fed.' },
+  mantap: { kinds: ['stone', 'puddle'], lands: 'heavy stones and puddles in the road: steer round, and Mr. BaneWAP is fed.' },
+  dolphin: { kinds: ['puddle', 'frost'], lands: 'salt puddles and frost across the road: mind your footing, and Mr. BaneWAP is fed.' },
+  donut: { kinds: ['puddle', 'stone'], lands: 'sticky rings and stones in the road: steer round, and Mr. BaneWAP is fed.' },
+  tgif: { kinds: ['mime', 'clerk'], lands: 'mimes and hurrying clerks in the lanes: give them room, and Mr. BaneWAP is fed.' },
+  'happy twinkle': { kinds: ['pane', 'frost'], lands: 'glinting glass and frost in the lanes: steer round, and Mr. BaneWAP is fed.' },
+  gg: { kinds: ['pane', 'frost'], lands: 'city glass and frost in the lanes: steer round, and Mr. BaneWAP is fed.' },
+  "you're awesome": { kinds: ['pane', 'stone'], lands: 'glass and stones in the lanes: steer round, and Mr. BaneWAP is fed.' },
+  'wink wink': { kinds: ['pane', 'puddle'], lands: 'panes and puddles in the lanes: steer round, and Mr. BaneWAP is fed.' }
+});
+
 /**
  * A gift, made ready for the lanes. @param {string} name @param {number} count @param {string} [who]
  * @param {'mine' | 'rival'} [side] @returns {Gift}
@@ -221,10 +282,11 @@ export function giftOf(name, count, who = '', side = 'mine') {
   const key = singular(clean(name, 40).toLowerCase().replace(/\s+and\s+/g, '_and_'));
   const known = GIFTS[key];
   const kind = known || ANY;
+  const rival = side === 'rival' ? RIVAL_GIFTS[key] : undefined;
   const n = Math.max(1, Math.min(MOST, Math.round(count) || 1));
   return {
     key,
-    name: (known ? key : clean(name, 28).toLowerCase() || 'gift').replace(/_/g, ' '),
+    name: key === 'gg' ? 'GG' : key === 'tgif' ? 'TGIF' : (known ? key : clean(name, 28).toLowerCase() || 'gift').replace(/_/g, ' '),
     count: n,
     who: clean(who),
     icon: /** @type {Record<string, string>} */ (ICONS)[key] || kind.icon,
@@ -232,7 +294,8 @@ export function giftOf(name, count, who = '', side = 'mine') {
     most: kind.most || 0,
     per: kind.per || 1,
     spell: side === 'rival' || !kind.spell ? '' : kind.spell(n),
-    lands: side === 'rival' ? TO_THE_RIVAL : kind.lands(n),
+    lands: side === 'rival' ? (rival?.lands || TO_THE_RIVAL) : kind.lands(n),
+    rivalKinds: rival?.kinds,
     side,
     art: side === 'rival' ? '' : kind.art || (key === 'hat_and_mustache' ? 'mustache' : kind.kind ? '' : 'box')
   };
@@ -356,7 +419,7 @@ export function initLive({ screen, onGift }) {
     const side = submitter?.getAttribute('value') === 'rival' || readSide(input.value).side === 'rival' ? 'rival' : 'mine';
     const notes = [];
     said.forEach(([name, n]) => { if (name === 'like') notes.push(likes(n, side)); else onGift(giftOf(name, n, '', side)); });
-    status.textContent = `${side === 'rival' ? 'To the other side' : 'Sent up'}: ${said.map(([name, n]) => plural(n, name.replace(/_/g, ' '))).join(', ')}. ${notes.join(' ')}`.trim();
+    status.textContent = `${side === 'rival' ? 'To the other side' : 'Sent up'}: ${said.map(([name, n]) => plural(n, giftOf(name, n).name)).join(', ')}. ${notes.join(' ')}`.trim();
     input.value = '';
     input.blur();
   });
@@ -521,6 +584,63 @@ export const GIFT_ART = Object.freeze({
       const a = (i * TAU) / 6 + age;
       c.beginPath(); c.moveTo(Math.cos(a) * 15, Math.sin(a) * 15); c.lineTo(Math.cos(a) * 19, Math.sin(a) * 19); c.stroke();
     }
+  },
+  twinkle: (c, age) => {
+    // A happy twinkle: a four-pointed star with a smile, turning a little, with smaller sparks about it.
+    c.rotate(Math.sin(age * 3) * 0.2);
+    c.beginPath();
+    for (let i = 0; i < 8; i += 1) {
+      const a = (i * Math.PI) / 4 - Math.PI / 2;
+      const r = i % 2 ? 4.5 : 14;
+      if (i) c.lineTo(Math.cos(a) * r, Math.sin(a) * r); else c.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+    }
+    c.closePath();
+    c.fillStyle = '#ffe36e'; c.fill(); outline(c, '#a07a10', 1.3);
+    c.fillStyle = '#5a4210';
+    c.beginPath(); c.arc(-2.2, -1.2, 0.9, 0, TAU); c.arc(2.2, -1.2, 0.9, 0, TAU); c.fill();
+    c.strokeStyle = '#5a4210'; c.lineWidth = 0.9; c.beginPath(); c.arc(0, 0.6, 2, 0.3, Math.PI - 0.3); c.stroke();
+    c.fillStyle = '#fff6c2';
+    [[13, -9, 2.2], [-12, 8, 1.8], [10, 11, 1.4]].forEach(([x, y, r]) => { c.beginPath(); c.arc(x, y, r * (0.7 + 0.3 * Math.sin(age * 8 + x)), 0, TAU); c.fill(); });
+  },
+  friday: (c) => {
+    // TGIF: a party popper, streamers out.
+    c.fillStyle = '#7e57c2';
+    c.beginPath(); c.moveTo(-12, 12); c.lineTo(-2, -4); c.lineTo(4, 2); c.closePath(); c.fill(); outline(c, '#3a2a5a', 1.3);
+    [['#ffd666', -2, -6, 8, -14], ['#e98fb0', 2, -3, 14, -8], ['#8fd3e8', 4, 0, 15, 4]].forEach(([colour, x0, y0, x1, y1]) => {
+      c.strokeStyle = /** @type {string} */ (colour); c.lineWidth = 2;
+      c.beginPath(); c.moveTo(/** @type {number} */ (x0), /** @type {number} */ (y0)); c.quadraticCurveTo(/** @type {number} */ (x1) - 4, /** @type {number} */ (y0) - 6, /** @type {number} */ (x1), /** @type {number} */ (y1)); c.stroke();
+    });
+    c.fillStyle = '#ffd666'; [[10, -16], [16, -2], [-4, -14]].forEach(([x, y]) => { c.beginPath(); c.arc(x, y, 1.6, 0, TAU); c.fill(); });
+  },
+  thumb: (c) => {
+    // A thumb up: Mantap.
+    c.fillStyle = '#f2c38f';
+    c.beginPath(); c.roundRect(-9, -2, 18, 16, 4); c.fill(); outline(c, '#7a4a28', 1.4);
+    c.beginPath(); c.roundRect(-6, -17, 7, 17, 3.5); c.fill(); outline(c, '#7a4a28', 1.4);
+    c.strokeStyle = '#7a4a28'; c.lineWidth = 1;
+    [2, 6, 10].forEach((y) => { c.beginPath(); c.moveTo(-2, y); c.lineTo(8, y); c.stroke(); });
+    c.fillStyle = '#2f8a4f'; c.beginPath(); c.roundRect(-11, 12, 22, 5, 2); c.fill();
+  },
+  gg: (c) => {
+    // GG: a gold badge, the two letters on it, as the gift is known.
+    c.beginPath(); c.roundRect(-16, -11, 32, 22, 11); c.fillStyle = '#ffd666'; c.fill(); outline(c, '#8a6410', 1.6);
+    c.fillStyle = '#3a2a1a';
+    c.font = '900 13px "JetBrainsMono", ui-monospace, monospace';
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillText('GG', 0, 1);
+  },
+  gummy: (c, age) => {
+    // Hi Bear: a bright, bouncy gummy bear.
+    c.translate(0, Math.sin(age * 10) * 1.6);
+    c.fillStyle = '#ff7eb6';
+    [[-6.5, -10.5, 4], [6.5, -10.5, 4]].forEach(([x, y, r]) => { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); outline(c, '#7a1c48', 1.2); });
+    c.beginPath(); c.roundRect(-8, -2, 16, 14, 6); c.fill(); outline(c, '#7a1c48', 1.2);
+    c.beginPath(); c.arc(0, -5, 8.5, 0, TAU); c.fill(); outline(c, '#7a1c48', 1.2);
+    [[-8.5, 2, 3.2], [8.5, 2, 3.2], [-4.5, 11.5, 3.4], [4.5, 11.5, 3.4]].forEach(([x, y, r]) => { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); outline(c, '#7a1c48', 1.1); });
+    c.fillStyle = '#ffd9ea'; c.beginPath(); c.ellipse(0, -3.5, 3.8, 2.8, 0, 0, TAU); c.fill();
+    c.fillStyle = '#3a1024'; c.beginPath(); c.arc(-2.8, -6.5, 1, 0, TAU); c.arc(2.8, -6.5, 1, 0, TAU); c.arc(0, -4, 1.2, 0, TAU); c.fill();
+    c.strokeStyle = 'rgba(255, 255, 255, 0.75)'; c.lineWidth = 1.6; c.beginPath(); c.arc(-3.5, -8, 3, Math.PI * 1.1, Math.PI * 1.6); c.stroke();
   },
   box: (c) => {
     c.fillStyle = '#7e57c2'; c.beginPath(); c.roundRect(-10, -6, 20, 16, 2); c.fill(); outline(c);

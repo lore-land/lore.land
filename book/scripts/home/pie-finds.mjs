@@ -32,7 +32,7 @@
 /** The verbs a step may use: what the game says happened. */
 export const VERBS = Object.freeze(['eat', 'hop', 'foil', 'meet']);
 /** The moments the game can draw. */
-export const MOMENTS = Object.freeze(['haggle', 'sniff']);
+export const MOMENTS = Object.freeze(['haggle', 'sniff', 'unwritten']);
 
 /** @type {ReadonlyArray<Find>} */
 export const FINDS = Object.freeze([
@@ -55,6 +55,16 @@ export const FINDS = Object.freeze([
     says: 'A bane rose cleared, and his off switch thrown before it could fade: Mr. BaneWAP stopped to smell the rose on his way out. He wants to hold a thing longest, and a rose does not last. The bane roses ahead wilt.',
     live: 'one bane rose in two arrives wilted for the rest of the stream.',
     riddle: 'A rose sent against you, cleared, and a switch thrown before it fades.'
+  }),
+  Object.freeze({
+    id: 'unwritten',
+    name: 'The unwritten',
+    rule: '?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] }',
+    who: 'figure',
+    grounds: /** @type {'limit'} */ ('limit'),
+    says: 'A rose kept whole and its thorned twin cleared in four seconds: nobody in the book has written who carries here, yet the lanes keep room beside the plate. For the rest of the carry a boon rose opens two beats of unkept ground.',
+    live: 'every rose sent up the lanes leaves a moment of unkept ground for the rest of the stream.',
+    riddle: 'Two roses in one breath, one held and one hopped, when nobody named in the book is carrying.'
   })
 ]);
 

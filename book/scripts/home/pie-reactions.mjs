@@ -134,6 +134,38 @@ export const REACTIONS = Object.freeze({
     carrying(row('genie', 'thinking', 'The Genie reckons what the knock would cost to undo.', 'again')),
     row('any', 'worried', 'The same lesson, kept a second time.', 'again'),
     row('any', 'thinking', 'The lanes are getting to know this pie.', 'often')
+  ],
+
+  // ─── Live gifts & story cues (?live and passing passages) ───
+  'gift:mine': [
+    row('carrier', 'glad', 'Steadies the tray as the crowd sends something up the lanes.'),
+    standing(row('boon', 'glad', 'Mr. BoonWAP lifts a plate to the crowd, as if he sent it.')),
+    standing(row('clown', 'glad', 'A clown claps both mittens at what just landed.'))
+  ],
+  'gift:finger_heart': [
+    row('carrier', 'glad', 'Keeps the pie steady; the small kindness stays warm.'),
+    standing(row('boon', 'glad', 'Mr. BoonWAP nods once, pleased to see care shared.')),
+    standing(row('clown', 'glad', 'A clown makes two small fingers into a heart and misses.'))
+  ],
+  'gift:hi_bear': [
+    row('carrier', 'glad', 'Catches the bounce in the crust before it settles.'),
+    standing(row('clown', 'glad', 'A gummy bear bounces past. The clown approves.')),
+    standing(row('clerk', 'surprised', 'The clerk checks the ledger for gummy bears. None are listed.'))
+  ],
+  'gift:rival': [
+    row('carrier', 'worried', 'Reads the violet ring ahead and shifts grip on the plate.'),
+    standing(row('bane', 'glad', 'Mr. BaneWAP accepts the parcel on the other side’s behalf.')),
+    standing(row('porter', 'worried', 'The porter braces the gate against what the rival sent.'))
+  ],
+  'story:boon': [
+    row('carrier', 'glad', 'The road warms to the passage as it goes by.'),
+    standing(row('boon', 'glad', 'Mr. BoonWAP leans into the room, ready to serve.')),
+    standing(row('boof', 'calm', 'Boof trots along the verge, keeping pace with the lines.'))
+  ],
+  'story:bane': [
+    row('carrier', 'thinking', 'Reads the air ahead before the passage turns.'),
+    standing(row('bane', 'thinking', 'Mr. BaneWAP listens for a sentence he can turn.')),
+    standing(row('mime', 'calm', 'A mime sets both palms flat against the passing line.'))
   ]
 });
 

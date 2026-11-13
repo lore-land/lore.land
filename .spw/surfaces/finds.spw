@@ -48,6 +48,15 @@
   side: "a gift sent against the carrier, turned to advantage by skill"
 }
 
+^"unwritten"{
+  rule: "?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] }"
+  rests_on: "the figure in plain lines, limit: four lines, two dots, and a hat that will not land"
+  skill: "carry unnamed in plain lines, meet a boon rose, then hop a bane rose within four seconds"
+  moment: "a small hovering outline and two rising sparks beside the carrier, drawn and unsaid"
+  gives: "for the rest of the carry every boon rose opens a moment of unkept ground"
+  room: "on a stream, every rose sent up the lanes leaves a moment of unkept ground for the rest of it"
+}
+
 ^"social"{
   room: "a find made on a stream deepens that gift for everyone sending it, so whoever finds it finds it for the room"
   said: "the gift line over the lanes says the find and what it opened, for the stream to see"
