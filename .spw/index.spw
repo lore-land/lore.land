@@ -91,6 +91,8 @@
   session_residue: "@spw/audits/session-opus-fable-2026-11-10.spw"
   tooling_audit: "@spw/audits/tooling-2026-11-10.spw"
   dregg_release_cache: "@spw/audits/dregg-release-cache-2026-09-26.spw"
+  caches: "@spw/caches/index.spw"
+  workbench_direction: "@spw/caches/workbench-direction.spw"
 }
 
 &plans{

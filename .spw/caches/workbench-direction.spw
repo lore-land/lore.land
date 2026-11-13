@@ -1,0 +1,107 @@
+# Workbench Design and Engineering Direction Cache
+# Living handoff for development agents across lore.land and spw-workbench (editors, runtime, audio, publishing).
+# Cache posture: orient and align cross-repo work; never expose withheld plot canon or machine-local paths.
+#>lore_land_workbench_direction
+#:cache #!direction
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  lore.land acts as an experimental chamber for testing the composition, compilation, acoustic legibility, and social publishing dynamics of Spw. Work here feeds real-world fluency back to spw-workbench across browser surfaces and editor hosts so shared patterns grow out of lived cognition, physical craft, and accessible interaction rather than isolated grammar abstractions.
+}
+
+^"meta"{
+  .updated: "2026-11-13"
+  .role: "Shared design and engineering cache for lore.land and spw-workbench agents"
+  .consumer: "lore.land"
+  .workbench_mount: ~".spw/mount.spw#spw_mount"
+  .ecosystem: "lore.land (chamber and serial) + spw.quest (puzzles and entry) + texture.website (material grammar) + factshift.center (relational pacing and force graphs) + spwashi.click (personal hub)"
+}
+
+&refs{
+  index: ~".spw/index.spw#lore_land_spw_index"
+  site_clusters: ~".spw/surfaces/site-clusters.spw#lore_land_surfaces_site_clusters"
+  sound_and_voice: ~".spw/surfaces/sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
+  spw_proposals: ~".spw/surfaces/spw-proposals.spw#spw_proposals"
+  texture_website: ~".spw/surfaces/texture-website.spw#texture_website"
+  story_boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
+  plan_f: ~"PLAN.F.spw#plan_f"
+}
+
+^"experimental_chamber"{
+  thesis: "Treat lore.land as an active laboratory for testing Spw composition and compilation under real storytelling, game, and reading load so the workbench learns which structural idioms earn community fluency."
+  cs_dimensions: [
+    "composition: how small frames, operators, and valence lenses combine without losing source clarity",
+    "compilation: lowering annotated prose, spells, and material tunings cleanly into static HTML, Web Audio, Canvas, and IDE diagnostics",
+    "shared_awareness: building recognizable structural motifs across storytellers, programmers, and casual visitors so syntax reads as familiar craft"
+  ]
+  workbench_feedback: "Notice where authors hesitate, where readers lose structural orientation, and where hard-coded JS maps should yield to user-editable Spw declarations."
+}
+
+^"audio_and_accessibility"{
+  principle: "Separate structural AST traversal from sound synthesis so no single acoustic mapping becomes rigid or oppressive."
+  blind_and_low_vision: {
+    goal: "Give users direct tools to tune how they hear a codebase, trace lines, enter or exit containers, and feel mathematical or Spw expressions."
+    container_cues: "Provide distinct, configurable earcons for container open and close events across [] {} () <> alongside subtle sustained body auras while cursor focus dwells inside a container."
+    tunability: "Expose pitch contours, stereo placement, dwell timbre, and verbosity as user-adjustable profiles rather than fixed constants."
+  }
+  low_friction_entry: {
+    goal: "Visitors and programmers should navigate entry points structurally without requiring heavyweight screen-reader configuration first."
+    landmarks: "Ensure clean keyboard/landmark routes into lore.land chambers alongside immediate acoustic orientation at doors, headings, and interactive spells."
+  }
+  codebase_anchors: [
+    { file: "book/scripts/modules/spw-cadence.mjs" gap: "SIGIL_BEATS, CONTAINER_BEATS, and TIMBRES are hard-coded; refactor toward pluggable profile tables driven by AST depth and cursor events." },
+    { file: "book/scripts/modules/spw-spell.mjs" gap: "Already drives focusin and aria-live gloss; pair spell focus with optional line-trace and container-aura audio hooks." },
+    { file: "book/scripts/home/pie-sound.mjs" gap: "kit() uses flat StereoPanner gain widths; add user-tunable head-shadow low-pass plus micro-delay panning and clearer pitch separation." },
+    { file: "book/scripts/home/pie-game.mjs" gap: "laneWarning should distinguish hoppable low hazards from tall walls; expose an on-demand keyboard status readout into data-pie-live without flooding live regions." },
+    { file: "pie/index.html" gap: "Flow window, tilt meter, and captions sit inside aria-hidden wrappers; mirror essential state cleanly for non-visual play." }
+  ]
+}
+
+^"booktalk_and_boonhonk"{
+  thesis: "Digital publishing ergonomics and tactile print conventions inform each other: paper grain, binding weight, cover typography, and genre expectation explain why readers enter and trust a world."
+  material_bridges: [
+    "paper_and_texture: connect physical paper/binding qualities and texture.website material laws to interactive UI weight and reading cadence",
+    "cover_and_genre: treat covers, chapbooks, and genre familiarity as deliberate social contracts rather than decorative wrappers",
+    "boonhonk_matrix: explore Boonhonk as a combinatoric matrix inside Spw whose poles give authors and readers shared communicative handles across mood, structure, and consequence"
+  ]
+}
+
+^"boof_and_factshift"{
+  thesis: "Ground notation design in embodied pre-verbal communication alongside explicit force visualization."
+  dog_communication: {
+    subject: "Boof"
+    observation: "Saying a dog name acts as a grounding anchor; matching the pace, intervals, and inflection of her barking turns exchange into shared temporal rhythm before lexical complexity."
+    design_implication: "Favor responsive call-and-response timing, short grounding tokens, and legible cadence mirroring over verbose chrome."
+  }
+  factshift_visualization: {
+    surface: "factshift.center"
+    goal: "Visualize relational pacing, interpretive forces, and call-and-response equilibria between speakers, notations, and material states."
+  }
+}
+
+^"workbench_somatics_and_hosts"{
+  hosts: [
+    { host: "VS Code" path: ".spw/_workbench/extensions/vscode-spw" },
+    { host: "IntelliJ" path: ".spw/_workbench/extensions/intellij-spw" },
+    { host: "Neovim" path: ".spw/_workbench/extensions/neovim-spw" }
+  ]
+  developmental_arc: [
+    "early_career: awaken direct wonder and tactile curiosity toward computers and live computation",
+    "mid_career: counter technical alienation by turning tools back into expressive, inspectable instruments",
+    "late_career: cultivate mentoring capacity and structural empathy — seeing the codebase and interface through another person eyes"
+  ]
+  somatics_law: "Tactile care, pacing, and developed attention belong inside core routing and efficiency engineering: knowing where meaningful transformation happens along the path matters more than arriving instantaneously at a sterile endpoint."
+}
+
+!"next_engineering_slices"[
+  { area: "audio-profile-decoupling" target: "book/scripts/modules/spw-cadence.mjs" summary: "Extract hard-coded container/sigil sound tables into a swappable audio-map config supporting enter, dwell-aura, trace, and exit hooks." }
+  { area: "spatial-accessibility" target: "book/scripts/home/pie-sound.mjs, book/scripts/home/pie-game.mjs, pie/index.html" summary: "Add head-shadow stereo shaping, hoppable-vs-wall threat pitch cues, keyboard status hotkey to data-pie-live, and accessible state mirrors." }
+  { area: "workbench-sync" target: ".spw/_workbench/extensions/*" summary: "Align IDE cursor/brace-entry feedback concepts with web spw-cadence and spw-spell interaction patterns." }
+]
+
+?open[
+  "Which minimal audio-map schema lets a blind programmer retune bracket open, body aura, and exit cues in under three lines of Spw?"
+  "What concrete force/cadence primitives from call-and-response exchange belong on the first factshift.center prototype?"
+  "How should Boonhonk combinatoric handles map cleanly between cover/booktalk vocabulary and Spw valence operators?"
+]

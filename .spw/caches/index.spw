@@ -1,0 +1,15 @@
+# Lore.Land Caches
+# Shared snapshots and living engineering direction between lore.land and spw-workbench agents.
+#>lore_land_caches_index
+#:cache #!index
+#:layer #!pragmatics
+
+~<rationale>{
+  This directory holds consumer caches that mounted development agents in spw-workbench can read alongside lore.land surfaces. Caches summarize live design direction, cross-repo hypotheses, and concrete engineering handles without altering story canon or locking experimental syntax prematurely.
+}
+
+^"caches"{
+  .consumer: "lore.land (mounted via .spw/mount.spw to .spw/_workbench)"
+  workbench_direction: ~".spw/caches/workbench-direction.spw#lore_land_workbench_direction"
+  dregg_release_snapshot: ~".spw/audits/dregg-release-cache-2026-09-26.spw#dregg_release_cache_2026_09_26"
+}
