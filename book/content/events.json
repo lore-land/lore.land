@@ -14,6 +14,18 @@
       "view": "stone",
       "title": "The next stone",
       "says": "When the next chapter is set, and where it is once it has come."
-    }
+    },
+    { "surface": "ringtide.lore.land", "kind": "promo", "view": "promo", "title": "The Ring Tide",
+      "opens": "2026-11-12", "closes": "2026-11-14",
+      "before": "The salt under the crust is rising. The tide comes in on Thursday the 12th.",
+      "during": "For three days the tide is in: dolphins come up the lanes to carry the pie a while, and donuts lie warm on the road. Carry a pie through them, with Seasons switched on.",
+      "after": "The tide has gone out. A dolphin still comes up for whoever was there and kept the line.",
+      "lands": "/pie/?try=seasons" },
+    { "surface": "thursday.lore.land", "kind": "promo", "view": "promo", "title": "A Thursday, kept",
+      "opens": "2026-11-26", "closes": "2026-11-29",
+      "before": "A place is being set by the road, early. It is out on Thursday the 26th.",
+      "during": "A place is set by the road in every chapter: a cloth, a cup and a plate. Carry a pie past it, with Seasons switched on.",
+      "after": "The days are over. The place stays set for whoever was there and kept the line.",
+      "lands": "/pie/" }
   ]
 }

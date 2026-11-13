@@ -299,25 +299,76 @@ function pickSample(event) {
 
 /* A room's answer, as a stereo impulse: in the field, a soft bounce off the ground and open air
  * that darkens as it fades; in the city, walls close on either side, then the street's tail. */
-function roomImpulse(ground) {
+/* Those two rooms, as numbers: how long the tail is, the first reflections ([seconds, gain]), how bright the tail
+ * starts and how far it darkens (a one-pole's coefficient), how fast it dies, how soon it swells in. `damp` says
+ * where each sits for a place's own room (roomPlan): 0.2 is the city's stone, 0.8 the field's air. */
+const ROOMS = Object.freeze({
+  field: Object.freeze({ secs: 1.8, early: [[0.006, 0.45]], damp: 0.8, bright: 0.5, darken: 0.42, decay: 3.8, onset: 0.025, weighed: false }),
+  city: Object.freeze({ secs: 1.2, early: [[0.009, 0.5], [0.017, 0.38], [0.026, 0.3], [0.041, 0.22], [0.057, 0.15]], damp: 0.2, bright: 0.68, darken: 0.5, decay: 5.4, onset: 0.01, weighed: false })
+});
+/* All of a room's first reflections together carry at most this much of its tail's energy, so a room never turns into a comb. */
+const EARLY_SHARE = 0.5;
+
+/**
+ * A room, unplayed: the numbers its impulse is built from. A ground's name ('field', 'city'), or an acoustic with
+ * no room of its own, gives the room the lanes have always had there. A place's own room (pie-world SCENES
+ * `acoustic`: { ground, room: { secs, early, damp } }) is held in range (0.4 to 2.4 seconds, at most eight
+ * reflections inside the room, gains to 0.6, damp 0 to 1) and lies on the line through those two rooms: brighter
+ * and quicker toward stone, darker and slower toward open air. Its tail has always died away by the end, and it
+ * swells in as the first wall answers. In the two old rooms a reflection is one sample among the tail's many, far
+ * under it; in a place's room each is weighed against the whole tail (`weighed`), so a slap or a flutter can be heard.
+ * @param {unknown} acoustic
+ * @returns {{ secs: number, early: number[][], damp: number, bright: number, darken: number, decay: number, onset: number, weighed: boolean }}
+ */
+export function roomPlan(acoustic) {
+  const named = typeof acoustic === 'string' ? { ground: acoustic } : acoustic || {};
+  const base = ROOMS[named.ground === 'field' ? 'field' : 'city'];
+  const room = named.room;
+  if (!room || typeof room !== 'object') return { ...base, early: base.early.map((e) => [...e]) };
+  const secs = clamp(Number.isFinite(room.secs) ? room.secs : base.secs, 0.4, 2.4);
+  const damp = clamp(Number.isFinite(room.damp) ? room.damp : base.damp, 0, 1);
+  let early = (Array.isArray(room.early) ? room.early : [])
+    .filter((e) => Array.isArray(e) && Number.isFinite(e[0]) && Number.isFinite(e[1]) && e[1] > 0)
+    .map(([at, g]) => [clamp(at, 0.001, Math.min(0.25, secs / 2)), clamp(g, 0, 0.6)])
+    .sort((a, b) => a[0] - b[0])
+    .slice(0, 8);
+  const share = early.reduce((sum, [, g]) => sum + g * g, 0);
+  if (share > EARLY_SHARE) early = early.map(([at, g]) => [at, g * Math.sqrt(EARLY_SHARE / share)]);
+  const u = (damp - ROOMS.city.damp) / (ROOMS.field.damp - ROOMS.city.damp);
+  const along = (city, field) => city + (field - city) * u;
+  // How far the tail has fallen by the end of the room (decay × secs) is kept, so a short room is not cut off mid-tail.
+  const fall = along(ROOMS.city.decay * ROOMS.city.secs, ROOMS.field.decay * ROOMS.field.secs);
+  return {
+    secs, early, damp,
+    bright: along(ROOMS.city.bright, ROOMS.field.bright),
+    darken: along(ROOMS.city.darken, ROOMS.field.darken),
+    decay: fall / secs,
+    onset: early.length ? clamp(early[0][0], 0.005, 0.04) : along(ROOMS.city.onset, ROOMS.field.onset),
+    weighed: true
+  };
+}
+
+function roomImpulse(ground, plan = null) {
   const sr = audio.sampleRate;
-  const field = ground === 'field';
-  const secs = field ? 1.8 : 1.2;
+  const p = plan || ROOMS[ground === 'field' ? 'field' : 'city'];
+  const secs = p.secs;
   const n = Math.floor(sr * secs);
   const ir = audio.createBuffer(2, n, sr);
-  const early = field ? [[0.006, 0.45]] : [[0.009, 0.5], [0.017, 0.38], [0.026, 0.3], [0.041, 0.22], [0.057, 0.15]];
   for (let c = 0; c < 2; c += 1) {
     const d = ir.getChannelData(c);
     let lp = 0;
+    let power = 0;
     for (let i = 0; i < n; i += 1) {
       const t = i / sr;
       const darken = Math.min(1, t / secs);
-      lp += (field ? 0.5 - 0.42 * darken : 0.68 - 0.5 * darken) * ((Math.random() * 2 - 1) - lp);
-      d[i] = lp * Math.exp(-t * (field ? 3.8 : 5.4)) * Math.min(1, t / (field ? 0.025 : 0.01));
+      lp += (p.bright - p.darken * darken) * ((Math.random() * 2 - 1) - lp);
+      d[i] = lp * Math.exp(-t * p.decay) * Math.min(1, t / p.onset);
+      power += d[i] * d[i];
     }
-    early.forEach(([at, g], k) => {
+    const weight = p.weighed ? Math.sqrt(power) : 1;
+    p.early.forEach(([at, g], k) => {
       const i = Math.floor((at + (k % 2 === c ? 0 : 0.0011)) * sr);
-      if (i < n) d[i] += g * (k % 2 === c ? 1 : 0.55);
+      if (i < n) d[i] += g * weight * (k % 2 === c ? 1 : 0.55);
     });
   }
   return ir;
@@ -355,7 +406,7 @@ function ensureBus() {
   // The room: each sound sends some of itself, the far and the said more than the near and the struck.
   const air = audio.createGain();
   const room = audio.createConvolver();
-  room.buffer = roomImpulse(sound.ground);
+  room.buffer = roomImpulse(sound.ground, sound.room);
   const roomOut = audio.createGain();
   roomOut.gain.value = 0.5;
   input.connect(muffle).connect(thin).connect(soft).connect(comp).connect(master).connect(audio.destination);
@@ -398,7 +449,7 @@ function ensureBus() {
   darkB.connect(sideOf(0.55));
   darkB.connect(again).connect(songA);
   songOut.connect(muffle);
-  bus = { input, muffle, thin, air, room, roomOut, song, songA, songB, soft, feedback, wet, ground: sound.ground };
+  bus = { input, muffle, thin, air, room, roomOut, song, songA, songB, soft, feedback, wet, ground: roomKey(), door: null };
   return bus;
 }
 
@@ -413,21 +464,53 @@ function retimeSong() {
   [bus.songA, bus.songB].forEach((d) => d.delayTime.setTargetAtTime(songTime(), now, 0.05));
 }
 
-/** A new room when the ground changes: the field's air, or the city's walls. */
+/* What the room now standing was built from: a place's own plan (sound.room), or else the ground's name. */
+const roomKey = () => (sound.room ? JSON.stringify(sound.room) : sound.ground);
+/* Rooms cross over as the colours do at a door (pie-game's sceneT, 1.4 s): nearly there after three of these. */
+const ROOM_CROSS = 0.45;
+
+/** A new room when the ground changes: the field's air, or the city's walls. A place with a room of its own
+ *  (setSoundPlace's `scene`, setSoundScene) is crossed over to instead (crossRooms). */
 function regroundRoom() {
-  if (!bus || bus.ground === sound.ground) return;
+  if (!bus || bus.ground === roomKey()) return;
   const room = audio.createConvolver();
-  room.buffer = roomImpulse(sound.ground);
-  bus.air.connect(room).connect(bus.roomOut);
-  bus.air.disconnect(bus.room);
+  room.buffer = roomImpulse(sound.ground, sound.room);
+  if (!sound.room && !bus.door) {
+    bus.air.connect(room).connect(bus.roomOut);
+    bus.air.disconnect(bus.room);
+  } else crossRooms(room);
   bus.room = room;
-  bus.ground = sound.ground;
+  bus.ground = roomKey();
+}
+
+/* A place's own room is entered through a door (a gain on what is sent to it), which opens as the door of the room
+ * before it closes. The old room's tail rings out, and it is let go once it has. The two old rooms have no door:
+ * leaving one, it stops being sent to at once, as it always has. */
+function crossRooms(room) {
+  const now = audio.currentTime;
+  const was = { door: bus.door, room: bus.room };
+  if (sound.room) {
+    const door = audio.createGain();
+    door.gain.setValueAtTime(0, now);
+    door.gain.setTargetAtTime(1, now, ROOM_CROSS);
+    bus.air.connect(door).connect(room).connect(bus.roomOut);
+    bus.door = door;
+  } else {
+    bus.air.connect(room).connect(bus.roomOut);
+    bus.door = null;
+  }
+  if (!was.door) { bus.air.disconnect(was.room); return; }
+  was.door.gain.setTargetAtTime(0, now, ROOM_CROSS);
+  setTimeout(() => { try { bus.air.disconnect(was.door); was.room.disconnect(); } catch { /* already gone */ } }, (ROOM_CROSS * 6 + 2.4) * 1000);
 }
 
 /** Where the carry is: the chapter's key, pulse and ground, and whether the mimes hold it. With `after`
- *  (seconds), the chord held under the carry stays in the old key that long, while a cadence finishes there. */
+ *  (seconds), the chord held under the carry stays in the old key that long, while a cadence finishes there.
+ *  With `scene` (a pie-world SCENES record), the ground and the room are the ones the place is drawn in; without
+ *  it the chapter's number says the ground, as it always has. The key is the chapter's either way. */
 let placeAfter = 0;
-export function setSoundPlace({ chapter = 1, held = false, level = null, after = 0, lean: leaning = '' } = {}) {
+/** @param {{ chapter?: number, held?: boolean, level?: any, after?: number, lean?: string, scene?: any }} [place] */
+export function setSoundPlace({ chapter = 1, held = false, level = null, after = 0, lean: leaning = '', scene = null } = {}) {
   sound.root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
   sound.pulse = level?.tempo || PULSES[(chapter - 1) % PULSES.length] || 96;
   sound.swing = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
@@ -436,7 +519,9 @@ export function setSoundPlace({ chapter = 1, held = false, level = null, after =
   // How the chapter leans (the reader's lens, or their carries), heard: low magic opens the key. The minor stays the mimes' alone.
   sound.minor = held;
   sound.open = !sound.minor && leaning === 'bone';
-  sound.ground = chapter <= 3 || chapter === 7 || chapter === 14 ? 'field' : 'city';
+  const place = placePlan({ chapter, scene });
+  sound.ground = place.ground;
+  sound.room = place.room;
   line.last = -9;
   placeAfter = clamp(Number(after) || 0, 0, 4);
   setHarmony('.');
@@ -467,7 +552,7 @@ export function setSoundMood({ muffled = false, thin = false } = {}) {
 /* How tired the ear is of each sound: one more each time it plays, halving every HALF_LIFE seconds.
  * The carry's own sounds tire it most (they come constantly); what the land gives, least. */
 const HALF_LIFE = 1.2;
-const TIRES = Object.freeze({ step: 1.3, land: 1, flour: 1, throw: 0.9, hop: 0.7, knock: 0.7, catch: 0.6, deft: 0.6, glass: 0.5, post: 0.5, ramp: 0.5, wap: 0.45, 'land-pulse': 0.35 });
+const TIRES = Object.freeze({ step: 1.3, land: 1, flour: 1, throw: 0.9, hop: 0.7, knock: 0.7, catch: 0.6, deft: 0.6, glass: 0.5, post: 0.5, ramp: 0.5, wap: 0.45, 'land-pulse': 0.35, 'near:berry': 1.6, 'near:boneberry': 1.6 });
 const heard = new Map();
 
 /** Hear a sound: how tired the ear already is of it (null: it was just heard, this instant). */
@@ -1007,7 +1092,7 @@ export function setSoundTilt(wobble = 0, dir = 0) {
     holdAt(tilt.out.gain, now);
     tilt.out.gain.setTargetAtTime(w ? 0.004 + 0.022 * w ** 1.5 : 0.0001, now, w > tilt.level ? 0.08 : 0.25);
     tilt.out.gain.setTargetAtTime(0.0001, now + 0.6, 0.2);
-    tilt.pan?.pan.setTargetAtTime(clamp(dir, -1, 1) * 0.5, now, 0.15);
+    tilt.pan?.pan.setTargetAtTime(clamp(dir, -1, 1) * 0.3, now, 0.15);
     tilt.level = w;
     clearTimeout(tilt.timer);
     tilt.timer = setTimeout(stopTilt, 4000);
@@ -1096,11 +1181,14 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0 } = {}) {
 /* What an obstacle is made of, heard once as it comes down its lane. The mimes are absent on purpose. */
 const APPROACH = Object.freeze({
   stone: 'stone', pane: 'glass', frost: 'glass',
-  chair: 'wood', table: 'wood', post: 'wood', spool: 'wood', beaver: 'wood', dividers: 'wood',
-  throne: 'gilt',
+  chair: 'wood', table: 'wood', spool: 'wood', beaver: 'wood', dividers: 'wood',
+  throne: 'gilt', post: 'gilt',   // the post is bronze (pie-reasons, playTone 'post')
   hole: 'hollow', ditch: 'hollow', snail: 'hollow', puddle: 'hollow',
   wasps: 'swarm', pigeon: 'odd',
-  banner: 'cloth', sack: 'cloth', mimewall: 'cloth'
+  banner: 'cloth', sack: 'cloth', mimewall: 'cloth',
+  // Friends, heard warm, so the lanes can be carried by ear: go toward these.
+  berry: 'warm', boneberry: 'warm', wonder: 'warm', egg: 'warm', place: 'warm', switch: 'warm',
+  dolphin: 'water', donut: 'dough', boonrose: 'warm', banerose: 'wood'
 });
 
 /** A quiet material, panned to the lane, as the thing nears. Unknown kinds, and the mimes, stay silent. */
@@ -1132,8 +1220,57 @@ export function approachCue(kind, pan = 0, depth = 0) {
       k.tone('sine', p, 0, 0.08, 0.018, 0, { attack: 0.004 });
       k.tone('sine', p * 3, 0, 0.04, 0.007, 0, { attack: 0.002 });
       k.tone('sine', p * 5, 0, 0.02, 0.004, 0, { attack: 0.002 });
+    } else if (mat === 'warm') {
+      // Up a major third, softly: something to go toward.
+      const p = hz(sungTone(2) + 12);
+      k.tone('sine', p, 0, 0.12, 0.016, 0, { attack: 0.01 });
+      k.tone('sine', p * 1.26, 0, 0.16, 0.014, 0.07, { attack: 0.01 });
+    } else if (mat === 'water') {
+      // Two bubbles rising: a dolphin coming up out of the salt.
+      k.tone('sine', f * 1.5, f * 2.6, 0.09, 0.018, 0, { attack: 0.004 });
+      k.tone('sine', f * 2, f * 3.4, 0.08, 0.014, 0.09, { attack: 0.004 });
+    } else if (mat === 'dough') {
+      // A soft, low pat: dough on the road.
+      k.tone('sine', Math.max(60, f * 0.75), Math.max(50, f * 0.6), 0.1, 0.024, 0, { attack: 0.006 });
+      k.hiss(700, 300, 0.06, 0.008, 1, 0, 'lowpass', 0.5);
     } else k.hiss(900, 480, 0.12, 0.016, 1.2, 0, 'bandpass', 0.35);
   } catch { /* it still arrives */ }
+}
+
+/**
+ * Heard first: a power that lasts is about to run out. A soft falling third on the vibes, a second before it ends,
+ * centred, so the end of a ride is known before it comes. Tires, so two ending together are heard once.
+ */
+export function powerEnding() {
+  try {
+    if (!audio || audio.state !== 'running') return;
+    const t = audio.currentTime + 0.005;
+    const heat = hear('power-ending', t);
+    if (heat === null || heat > 1.5) return;
+    const k = kit(outlet(heat, { air: 0.3 }), t, 0);
+    const p = hz(sungTone(4) + 12);
+    k.tone('sine', p, 0, 0.16, 0.016, 0, { attack: 0.006 });
+    k.tone('sine', p / 1.19, 0, 0.24, 0.014, 0.13, { attack: 0.006 });
+  } catch { /* it still runs out */ }
+}
+
+/**
+ * Heard first: something that knocks is close in the carrier's own lane. Two short low pulses that mean nothing
+ * else, nearly centred (it is in your lane), louder the nearer it is. Tires like any sound, so a crowded lane does
+ * not become an alarm. @param {number} pan @param {number} near 0 (far) to 1 (upon you)
+ */
+export function laneWarning(pan = 0, near = 0.5) {
+  try {
+    if (!audio || audio.state !== 'running') return;
+    const t = audio.currentTime + 0.005;
+    const heat = hear('lane-warn', t);
+    if (heat === null || heat > 3) return;
+    const k = kit(outlet(heat, { air: 0.08 }), t, clamp(pan, -1, 1) * 0.3);
+    const f = hz(bassLow() + 7);
+    const level = 0.03 + 0.02 * clamp(near, 0, 1);
+    k.tone('triangle', f, f * 0.94, 0.06, level, 0, { attack: 0.002 });
+    k.tone('triangle', f, f * 0.94, 0.06, level * 0.85, 0.09, { attack: 0.002 });
+  } catch { /* the lane still says it */ }
 }
 
 /** A character, once, in the room's key. Boon climbs, Bane falls, a clown scoops, a clerk closes. */
@@ -1784,6 +1921,252 @@ export function cadenceVoice(who, pattern, { at = 0 } = {}) {
       end = Math.max(end, when + dur);
     });
     voiceBusy = t + end + 0.5;
+    return true;
+  } catch { return false; }
+}
+
+/* ─── Places: where a scene is heard (pie-world.mjs SCENES `acoustic`) ───
+ * A place is heard by three things, and none of them is a key: the ground underfoot, the room around the bus
+ * (roomPlan), and a bed of air under everything (ambiencePlan). Its material (frost, steam, brass …) is one short
+ * gesture in the chapter's own key (materialPlan). All of it is asked for by the lanes: setSoundPlace's `scene`,
+ * setSoundScene at a door, setAmbience, sceneMaterial. Unasked, the lanes sound as they always have. Each has a
+ * pure plan a check reads without a speaker. */
+
+/**
+ * Where a place is heard, unplayed: its ground, its room and its bed. A scene (pie-world SCENES) says for itself;
+ * with none, the chapter's number says the ground, as it always has, and the room is that ground's.
+ * @param {{ chapter?: number, scene?: any }} [place]
+ * @returns {{ ground: string, room: ReturnType<typeof roomPlan> | null, ambience: string | null }}
+ */
+export function placePlan({ chapter = 1, scene = null } = {}) {
+  const acoustic = scene?.acoustic;
+  if (!acoustic) return { ground: chapter <= 3 || chapter === 7 || chapter === 14 ? 'field' : 'city', room: null, ambience: null };
+  return {
+    ground: acoustic.ground === 'field' ? 'field' : 'city',
+    room: acoustic.room ? roomPlan(acoustic) : null,
+    ambience: ambiencePlan(acoustic.ambience) ? acoustic.ambience : null
+  };
+}
+
+/** A door mid-chapter (a SCENES record): the place changes and the key does not. Its ground at once, its room
+ *  crossed over to, and its bed if a bed is playing: a door changes which bed plays, never whether one does. */
+export function setSoundScene(scene) {
+  if (!scene?.acoustic) return false;
+  const place = placePlan({ scene });
+  sound.ground = place.ground;
+  sound.room = place.room;
+  try { regroundRoom(); } catch { /* the old room will do */ }
+  if (ambience.name) setAmbience(place.ambience);
+  return true;
+}
+
+/* The beds. `level` is the most a bed ever is (the gain on noise that peaks at one; the flutter only dips under it),
+ * and each sits about where the music's bed does, far under a catch. `colour` is how the top of its band falls
+ * away, `band` the hertz it lives between, `flutter` how slowly and how far it moves, `drops` the rain's own. */
+const AMBIENCES = Object.freeze({
+  wind: { level: 0.012, colour: 'pink', band: [120, 900], flutter: { rate: 0.13, depth: 0.55 } },
+  rain: { level: 0.005, colour: 'white', band: [1800, 7500], flutter: { rate: 0.31, depth: 0.2 }, drops: { everySec: 0.6, level: 0.011 } },
+  lane: { level: 0.01, colour: 'brown', band: [260, 1100], flutter: { rate: 0.19, depth: 0.3 } },
+  square: { level: 0.009, colour: 'pink', band: [200, 2400], flutter: { rate: 0.09, depth: 0.35 } },
+  court: { level: 0.005, colour: 'white', band: [700, 4200], flutter: { rate: 0.07, depth: 0.15 } },
+  hall: { level: 0.012, colour: 'brown', band: [90, 420], flutter: { rate: 0.11, depth: 0.2 } }
+});
+/* A colour is a slope: decibels an octave that the top of the band falls by (a cut, never a lift). */
+const COLOUR_FALL = Object.freeze({ white: 0, pink: -3, brown: -6 });
+
+/**
+ * A place's bed, unplayed, or null for a name nobody gave one.
+ * @param {unknown} name
+ * @returns {{ level: number, colour: string, band: number[], flutter: { rate: number, depth: number }, drops?: { everySec: number, level: number } } | null}
+ */
+export function ambiencePlan(name) {
+  const a = typeof name === 'string' && Object.prototype.hasOwnProperty.call(AMBIENCES, name) ? AMBIENCES[name] : null;
+  if (!a) return null;
+  return { level: a.level, colour: a.colour, band: [...a.band], flutter: { ...a.flutter }, ...(a.drops ? { drops: { ...a.drops } } : {}) };
+}
+
+const ambience = { name: null, bed: null, timer: 0 };
+const BED_AIR = 0.35;      // how much of a bed the room takes
+const BED_IN = 0.6;        // a bed arrives slowly …
+const BED_OUT = 0.3;       // … and leaves a little sooner
+const BAND_SWAY = 900;     // cents the band moves by, at a flutter of full depth
+
+/* One bed: the shared noise read twice (two places in it, two speeds, one either side, so it neither repeats nor
+ * sits in the middle), its top cut by its colour, through its band, moving slowly: two slow sines that never line
+ * up lift the band and the level together, as a gust does. Into the bus, so slow time muffles it and the mimes
+ * thin it, with some of it sent to the room. */
+function startBed(plan) {
+  const b = ensureBus();
+  const now = audio.currentTime;
+  const [lo, hi] = plan.band;
+  const mid = Math.sqrt(lo * hi);
+  const { rate, depth } = plan.flutter;
+  const fade = audio.createGain();
+  fade.gain.setValueAtTime(0, now);
+  fade.gain.setTargetAtTime(1, now, BED_IN);
+  const sway = audio.createGain();
+  sway.gain.value = plan.level * (1 - depth / 2);
+  sway.connect(fade);
+  fade.connect(b.input);
+  const send = audio.createGain();
+  send.gain.value = BED_AIR;
+  fade.connect(send).connect(b.air);
+  const buf = noise();
+  const fall = Math.max(-18, (COLOUR_FALL[plan.colour] || 0) * Math.log2(hi / lo));
+  const bands = [];
+  const running = [];
+  [-1, 1].forEach((side, i) => {
+    const src = audio.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    src.playbackRate.value = i ? 0.871 : 1;
+    let node = src;
+    if (fall) {
+      const shelf = audio.createBiquadFilter();
+      shelf.type = 'highshelf';
+      shelf.frequency.value = mid;
+      shelf.gain.value = fall;
+      node = node.connect(shelf);
+    }
+    const band = audio.createBiquadFilter();
+    band.type = 'bandpass';
+    band.frequency.value = mid;
+    band.Q.value = mid / (hi - lo);
+    node = node.connect(band);
+    // Two noises never add up to more than the bed's level: each a half in power, or in level where there is no side to put it on.
+    const half = audio.createGain();
+    half.gain.value = audio.createStereoPanner ? Math.SQRT1_2 : 0.5;
+    node = node.connect(half);
+    if (audio.createStereoPanner) {
+      const p = audio.createStereoPanner();
+      p.pan.value = side * 0.6;
+      node = node.connect(p);
+    }
+    node.connect(sway);
+    src.start(now, Math.random() * (buf.duration - 0.1));
+    bands.push(band);
+    running.push(src);
+  });
+  [[1, 0.6], [1.618, 0.4]].forEach(([times, share]) => {
+    const lfo = audio.createOscillator();
+    lfo.frequency.value = rate * times;
+    const toLevel = audio.createGain();
+    toLevel.gain.value = share * plan.level * depth / 2;
+    lfo.connect(toLevel).connect(sway.gain);
+    const toBand = audio.createGain();
+    toBand.gain.value = share * depth * BAND_SWAY;
+    lfo.connect(toBand);
+    bands.forEach((band) => { if (band.detune) toBand.connect(band.detune); });
+    lfo.start(now);
+    running.push(lfo);
+  });
+  return { plan, fade, running };
+}
+
+/* A bed leaves: it fades, and then what made it is stopped and let go. */
+function stopBed(bed) {
+  const now = audio.currentTime;
+  holdAt(bed.fade.gain, now);
+  bed.fade.gain.setTargetAtTime(0, now, BED_OUT);
+  setTimeout(() => {
+    bed.running.forEach((node) => { try { node.stop(); } catch { /* already still */ } });
+    try { bed.fade.disconnect(); } catch { /* already gone */ }
+  }, BED_OUT * 8 * 1000);
+}
+
+/* The rain's drops: now and then a soft tick, a click through a filter, somewhere across the lanes and some way
+ * off. Near the pulse when the lanes have marked one (never on it exactly: rain keeps no time), resting while a
+ * mime passes, and tiring the ear like anything else. Unpitched on purpose, and nowhere near the voices a hidden
+ * rhythm is whispered in (a tock has a tone, a drip is a sine, a shaker is higher and longer). */
+function rainDrop() {
+  ambience.timer = 0;
+  const drops = ambience.bed?.plan.drops;
+  if (!drops || !audio) return;
+  ambience.timer = setTimeout(rainDrop, drops.everySec * (0.5 + Math.random()) * 1000);
+  try {
+    if (audio.state !== 'running') return;
+    const t = audioNow() + 0.02;
+    const wait = Math.max(0, beatAnchor ? pulseFrom(t, 0.03)(Math.floor(Math.random() * 4)) + jitter(0.012) : Math.random() * 0.2);
+    if (t + wait < sound.rest) return;
+    const heat = hear('drop', t + wait);
+    if (heat === null) return;
+    const k = kit(outlet(heat, { depth: 0.2 + Math.random() * 0.6, air: 0.3 }), t, jitter(0.8));
+    const f = 4200 * 2 ** jitter(0.4);
+    k.hiss(f, f * 0.6, 0.016, drops.level, 1.2, wait);
+  } catch { /* it rains all the same */ }
+}
+
+/** The bed of the place the carry is in ('wind', 'rain', 'lane', 'square', 'court', 'hall'), or null (or a name
+ *  nobody gave a bed) for none: the old one fades as the new one arrives. Say null when sound is turned off, at a
+ *  pause and when the carry ends; a bed plays until it is told. It never starts the audio itself: before
+ *  primeAudio() has made the context there is nothing to play it. Returns whether a bed is now playing.
+ *  @param {string | null} [name] */
+export function setAmbience(name = null) {
+  try {
+    const plan = ambiencePlan(name);
+    const want = plan ? name : null;
+    if (!audio) { ambience.name = null; return false; }
+    if (want === ambience.name) return Boolean(want);
+    const was = ambience.bed;
+    clearTimeout(ambience.timer);
+    Object.assign(ambience, { name: null, bed: null, timer: 0 });
+    if (was) stopBed(was);
+    if (!want) return false;
+    ambience.bed = startBed(plan);
+    ambience.name = want;
+    if (plan.drops) ambience.timer = setTimeout(rainDrop, plan.drops.everySec * 1000);
+    return true;
+  } catch { return false; }
+}
+
+/* A material is a few notes, each named by where it sits in the room's chord (tone) or over its bass (bass), and
+ * noise through a band (hiss), which has no key to be out of. `at` is in sixteenths. The eight of spw-sound.mjs. */
+const MATERIALS = Object.freeze({
+  glass: [{ voice: 'swell', wave: 'sine', tone: 5, at: 0, dur: 0.7, vol: 0.014 }, { voice: 'swell', wave: 'sine', tone: 6, at: 0.2, dur: 0.7, vol: 0.012 }, { voice: 'swell', wave: 'sine', tone: 7, at: 0.4, dur: 0.7, vol: 0.01 }, { voice: 'hiss', band: [6500, 7800], at: 0, dur: 0.5, vol: 0.008, q: 5 }],
+  flour: [0.024, 0.018, 0.012].map((vol, i) => ({ voice: 'hiss', band: [900, 300], at: i, dur: 0.16, vol, q: 0.7 })),
+  berry: [{ voice: 'vibes', tone: 2, at: 0, dur: 0.3, vol: 0.022 }, { voice: 'vibes', tone: 3, at: 1, dur: 0.3, vol: 0.022 }, { voice: 'vibes', tone: 4, at: 2, dur: 0.45, vol: 0.022 }],
+  frost: [0, 0.3, 0.55, 1, 1.35, 1.9, 2.7].map((at, i) => ({ voice: 'hiss', band: [5200, 4400], at, dur: 0.012, vol: 0.018 - 0.0015 * i, q: 3 })),
+  ink: [{ voice: 'swell', bass: 0, at: 0, dur: 0.8, vol: 0.022 }],
+  brass: [{ voice: 'bar', bass: 12, at: 0, dur: 0.6, vol: 0.026 }],
+  steam: [{ voice: 'hiss', band: [400, 2400], at: 0, dur: 0.7, vol: 0.024, q: 1.5 }],
+  oak: [{ voice: 'marimba', bass: 12, at: 0, dur: 0.3, vol: 0.03 }, { voice: 'hiss', band: [2500, 2300], at: 0, dur: 0.03, vol: 0.012, q: 3 }]
+});
+
+/**
+ * A material's gesture, unplayed: glass a high chord swelling in, flour three puffs settling, berry three notes up
+ * the chord, frost a crackle, ink a swell on the room's bass, brass a struck bar on it, steam a rising hiss, oak a
+ * knock on it. Empty for a material nobody voiced.
+ * @param {unknown} material
+ * @returns {{ voice: string, at: number, dur: number, vol: number, tone?: number, bass?: number, band?: number[], q?: number, wave?: string }[]}
+ */
+export function materialPlan(material) {
+  const list = typeof material === 'string' && Object.prototype.hasOwnProperty.call(MATERIALS, material) ? MATERIALS[material] : [];
+  return list.map((n) => ({ ...n, ...(n.band ? { band: [...n.band] } : {}) }));
+}
+
+/** A place's material, once, as it begins: in the chapter's key, far off and into the place's own room, tiring the
+ *  ear like anything else. With `after` (seconds: a cadence finishing) it waits and lands where the chapter's
+ *  motif does; otherwise on the next pulse. Returns whether anything sounded. */
+export function sceneMaterial(material, pan = 0, { after = 0 } = {}) {
+  try {
+    const plan = materialPlan(material);
+    if (!plan.length || !audio || audio.state !== 'running') return false;
+    const wait = clamp(Number(after) || 0, 0, 4);
+    const t = audio.currentTime + 0.05 + wait;
+    const heat = hear(`material:${material}`, t);
+    if (heat === null || heat > 2) return false;
+    const k = kit(outlet(heat, { depth: 0.25, air: 0.45, song: 0.15 }), t, clamp(Number(pan) || 0, -0.9, 0.9));
+    const first = wait ? 0 : toPulse(t, 0.02);
+    const s = sixteenth();
+    plan.forEach((n) => {
+      const at = first + n.at * s;
+      if (n.voice === 'hiss') { k.hiss(n.band[0], n.band[1], n.dur, n.vol, n.q, at, 'bandpass', 0.25); return; }
+      const f = hz(n.bass != null ? bassLow() + n.bass : sungTone(n.tone));
+      if (n.voice === 'swell') k.swell(n.wave || 'triangle', f, n.dur, n.vol, at);
+      // A bar: its note and the odd partials of bronze, the higher dying the sooner (as a post rings).
+      else if (n.voice === 'bar') [[1, 1, 1, 0], [2.76, 0.4, 0.46, -0.15], [5.4, 0.15, 0.18, 0.15]].forEach(([part, len, share, side]) => k.tone('sine', f * part, 0, n.dur * len, n.vol * share, at, { attack: 0.003, side }));
+      else (k[n.voice] || k.kalimba)(f, n.dur, n.vol, at);
+    });
     return true;
   } catch { return false; }
 }

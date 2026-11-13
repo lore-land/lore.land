@@ -7,11 +7,14 @@
  *   stings plan in key for every shelf, a completed chain adds a cadence, and stings rate-limit and soften
  *   a trope motif grows with its stage for every trope, the same tune every time, a refrain only once named
  *   the figure is unvoiced, the mime is the rest, and the hooks are silent with no speaker and no switch
+ *   every scene has a ground, a room and a bed; rooms stay in range and can be told apart; a bed sits far under a
+ *   catch; a material is placed in the chord or over the bass; no place names a key; unasked, the chapter's rule stands
  */
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as sound from '../home/pie-sound.mjs';
+import { CHAPTER_SCENE, SCENES, SCENE_WHIMSY_DEFAULTS } from '../home/pie-world.mjs';
 import { cadenceOf } from '../modules/spw-cadence.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -105,6 +108,139 @@ const notes = [];
     if (p.notes.some((n) => n.vol > 0.025)) fail(`${who}: louder than a quiet voice`);
   });
   notes.push(`own time: figure unvoiced, mime the rest, boof ${sound.cadencePlan('boof', cadenceOf(line, 'boof')).notes.length} hits, genie ${sound.cadencePlan('genie', cadenceOf(line, 'genie')).notes.length}`);
+}
+
+// Places: each scene's ground, room and bed (pie-world SCENES acoustic), and its material.
+{
+  const BED_CEILING = 0.012;     // a bed, and a drop of rain, at most
+  const STING_CEILING = 0.05;    // a catch: what the stings above are held under
+  const A_KEY = /key|root|mode|minor|major|scale/i;
+  /** @type {(v: unknown) => boolean} */
+  const namesAKey = (v) => (typeof v === 'string' ? A_KEY.test(v)
+    : Array.isArray(v) ? v.some(namesAKey)
+      : v && typeof v === 'object' ? Object.entries(v).some(([k, x]) => A_KEY.test(k) || namesAKey(x)) : false);
+  /** The one predicate a bed is held to: its level, and its drops' level, under the bed ceiling and far under a catch.
+   *  @param {{ level?: unknown, drops?: { level?: unknown } } | null} p */
+  const quietBed = (p) => Boolean(p) && [p?.level, p?.drops ? p.drops.level : 0].every((l) => typeof l === 'number' && l >= 0 && l <= BED_CEILING && l < STING_CEILING / 2);
+  /** @param {ReturnType<typeof sound.roomPlan>} p @param {string} who */
+  const inRange = (p, who) => {
+    const nums = [p.secs, p.damp, p.bright, p.darken, p.decay, p.onset, ...p.early.flat()];
+    if (nums.some((x) => !Number.isFinite(x))) return fail(`${who}: a room has a number that is not one`);
+    if (!(p.secs >= 0.4 && p.secs <= 2.4)) fail(`${who}: a room lasts ${p.secs}s`);
+    if (!(p.damp >= 0 && p.damp <= 1)) fail(`${who}: damp ${p.damp}`);
+    if (p.early.length > 8) fail(`${who}: ${p.early.length} reflections`);
+    if (p.early.some(([at, g]) => !(at > 0 && at < p.secs && g >= 0 && g <= 0.6))) fail(`${who}: a reflection outside the room, or louder than 0.6`);
+    if (p.weighed && p.early.reduce((sum, [, g]) => sum + g * g, 0) > 0.5 + 1e-9) fail(`${who}: the reflections outweigh half the tail`);
+    // The tail's filter must keep a coefficient between 0 and 1 to its end, or the impulse is not a sound at all.
+    if (!(p.bright < 1 && p.bright - p.darken > 0.02)) fail(`${who}: the tail's filter leaves (0, 1): ${p.bright} falling by ${p.darken}`);
+    if (!(p.decay * p.secs >= 6)) fail(`${who}: the tail is cut off before it has died (${(p.decay * p.secs).toFixed(2)})`);
+    if (!(p.onset >= 0.005 && p.onset <= 0.04)) fail(`${who}: the tail swells in over ${p.onset}s`);
+    return undefined;
+  };
+
+  // The two rooms the lanes have always had are still themselves, and still two.
+  const field = sound.roomPlan('field');
+  const city = sound.roomPlan({ ground: 'city' });
+  const WAS = {
+    field: { secs: 1.8, early: [[0.006, 0.45]], damp: 0.8, bright: 0.5, darken: 0.42, decay: 3.8, onset: 0.025, weighed: false },
+    city: { secs: 1.2, early: [[0.009, 0.5], [0.017, 0.38], [0.026, 0.3], [0.041, 0.22], [0.057, 0.15]], damp: 0.2, bright: 0.68, darken: 0.5, decay: 5.4, onset: 0.01, weighed: false }
+  };
+  if (JSON.stringify(field) !== JSON.stringify(WAS.field) || JSON.stringify(city) !== JSON.stringify(WAS.city)) fail('an old room is not the room it was');
+  if (JSON.stringify(field) === JSON.stringify(city) || !(field.secs > city.secs && field.early.length < city.early.length)) fail('the field and the city are one room');
+  if (JSON.stringify(sound.roomPlan('anywhere')) !== JSON.stringify(city) || JSON.stringify(sound.roomPlan(null)) !== JSON.stringify(city)) fail('a ground with no name is not the city');
+  // A place's room lies on the line through them: at their damp it has their brightness and their decay.
+  /** @type {['field' | 'city', typeof field][]} */ ([['field', field], ['city', city]]).forEach(([ground, was]) => {
+    const p = sound.roomPlan({ ground, room: { secs: was.secs, early: was.early, damp: was.damp } });
+    if (Math.abs(p.bright - was.bright) > 1e-9 || Math.abs(p.darken - was.darken) > 1e-9 || Math.abs(p.decay - was.decay) > 1e-9 || !p.weighed) fail(`a place's room at the ${ground}'s damp is not on the ${ground}'s line`);
+  });
+
+  // Wild inputs are held in range.
+  const wild = sound.roomPlan({ ground: 'x', room: { secs: 99, early: Array.from({ length: 20 }, (_, i) => [9 + i, 9]), damp: -4 } });
+  if (wild.secs !== 2.4 || wild.early.length !== 8 || wild.damp !== 0) fail(`a wild room is not held in: ${JSON.stringify(wild)}`);
+  if (sound.roomPlan({ room: { secs: -1, damp: 7 } }).secs !== 0.4 || sound.roomPlan({ room: { secs: -1, damp: 7 } }).damp !== 1) fail('a room shorter than short, or damper than damp');
+  [{ room: { secs: NaN, early: 'no', damp: '0.3' } }, { room: { early: [[NaN, 1], ['a', 'b'], null, [0.01, -3], [0.02, Infinity]] } }, { ground: 'field', room: {} }, { room: [] }]
+    .forEach((odd, i) => inRange(sound.roomPlan(odd), `odd room ${i}`));
+  let r = 11;
+  const rand = () => { r = (r * 16807) % 2147483647; return r / 2147483647; };
+  for (let i = 0; i < 400; i += 1) {
+    const early = Array.from({ length: Math.floor(rand() * 14) }, () => [rand() * 3 - 0.5, rand() * 4 - 1]);
+    inRange(sound.roomPlan({ ground: rand() < 0.5 ? 'field' : 'city', room: { secs: rand() * 12 - 2, early, damp: rand() * 6 - 2 } }), `random room ${i}`);
+  }
+
+  // Every scene has an acoustic, and the six can be told apart on paper.
+  const plans = SCENES.map((sc) => {
+    const a = sc.acoustic;
+    if (!a || !['field', 'city'].includes(a.ground) || !a.room || !Number.isFinite(a.room.secs) || !Array.isArray(a.room.early) || !Number.isFinite(a.room.damp) || typeof a.ambience !== 'string') fail(`${sc.id}: no acoustic, or half of one`);
+    const p = sound.roomPlan(a);
+    inRange(p, sc.id);
+    if (!p.weighed) fail(`${sc.id}: its reflections are not weighed against its tail`);
+    if (p.secs !== a.room.secs || p.damp !== a.room.damp || p.early.length !== a.room.early.length) fail(`${sc.id}: its room is written outside the range and was changed`);
+    if (namesAKey(a) || namesAKey(p)) fail(`${sc.id}: a place names a key, a root or a mode`);
+    return { id: sc.id, p };
+  });
+  /** @param {typeof field} a @param {typeof field} b */
+  const apart = (a, b) => Math.abs(a.secs - b.secs) >= 0.15 || Math.abs(a.damp - b.damp) >= 0.1 || a.early.length !== b.early.length || Math.abs((a.early[0]?.[0] ?? 0) - (b.early[0]?.[0] ?? 0)) >= 0.004;
+  plans.forEach((a, i) => plans.slice(i + 1).forEach((b) => { if (!apart(a.p, b.p)) fail(`${a.id} and ${b.id} are one room`); }));
+
+  // Beds: every scene's has a plan, quiet by the one predicate; an unknown name has none.
+  const beds = [...new Set(SCENES.map((sc) => sc.acoustic.ambience))];
+  beds.forEach((name) => {
+    const b = sound.ambiencePlan(name);
+    if (!b) return fail(`${name}: a scene's bed has no plan`);
+    if (!quietBed(b)) fail(`${name}: a bed, or its drops, is louder than ${BED_CEILING}`);
+    if (!['white', 'pink', 'brown'].includes(b.colour)) fail(`${name}: colour ${b.colour}`);
+    if (!(b.band.length === 2 && b.band[0] >= 40 && b.band[0] < b.band[1] && b.band[1] <= 12000)) fail(`${name}: band ${b.band}`);
+    if (!(b.flutter.rate > 0 && b.flutter.rate <= 0.5 && b.flutter.depth >= 0 && b.flutter.depth <= 0.7)) fail(`${name}: a flutter that is not slow, or not a flutter`);
+    if (b.drops && !(b.drops.everySec >= 0.3)) fail(`${name}: drops that are not sparse`);
+    if (namesAKey(b)) fail(`${name}: a bed names a key, a root or a mode`);
+    return undefined;
+  });
+  if (new Set(beds.map((name) => JSON.stringify(sound.ambiencePlan(name)))).size !== beds.length) fail('two beds are one bed');
+  if (!SCENES.every((sc) => Boolean(sc.rain) === Boolean(sound.ambiencePlan(sc.acoustic.ambience)?.drops))) fail('rain is drawn where no drops fall, or falls where none is drawn');
+  [undefined, null, '', 'thunder', 'constructor', 'toString', '__proto__', 42].forEach((name) => { if (sound.ambiencePlan(name) !== null) fail(`an unknown bed (${String(name)}) has a plan`); });
+  // The negative control: the same predicate refuses a bed as loud as a catch, and drops as loud as one.
+  if (quietBed({ level: 0.05 }) || quietBed({ level: 0.01, drops: { level: 0.05 } }) || quietBed(null) || !quietBed({ level: 0.012 })) fail('the bed predicate does not refuse a loud bed');
+
+  // Without a scene, the chapter's number says the ground, as it always has; with one, the place does.
+  const heardAnew = [];
+  for (let n = 1; n <= 15; n += 1) {
+    const was = sound.placePlan({ chapter: n });
+    if (was.ground !== ([1, 2, 3, 7, 14].includes(n) ? 'field' : 'city') || was.room !== null || was.ambience !== null) fail(`chapter ${n}: with no scene, not the ground it always was`);
+    const sc = SCENES.find((s) => s.id === /** @type {Record<number, string>} */ (CHAPTER_SCENE)[n]);
+    if (!sc) { fail(`chapter ${n}: no scene`); continue; }
+    const now = sound.placePlan({ chapter: n, scene: sc });
+    if (now.ground !== sc.acoustic.ground || !now.room || now.ambience !== sc.acoustic.ambience) fail(`chapter ${n}: not heard where it is drawn`);
+    if (now.ground !== was.ground) heardAnew.push(`${n} ${now.ground === 'field' ? 'grass' : 'cobble'}`);
+  }
+  if (sound.placePlan({ chapter: 5, scene: { id: 'nowhere' } }).ground !== 'city' || sound.placePlan({ chapter: 2, scene: null }).ground !== 'field') fail('a scene with no acoustic does not leave the chapter its rule');
+
+  // Materials: the eight spw-sound.mjs names, and every scene's, each placed in the chord or over the bass and under a catch.
+  const eight = (readFileSync(resolve(ROOT, 'book/scripts/modules/spw-sound.mjs'), 'utf8').match(/MATERIAL_WORDS = Object\.freeze\(\[([^\]]+)\]/)?.[1] || '').match(/[a-z]+/g) || [];
+  if (eight.length !== 8) fail(`spw-sound.mjs names ${eight.length} materials, not eight`);
+  [...new Set([...eight, ...Object.values(SCENE_WHIMSY_DEFAULTS).map((w) => w.material)])].forEach((m) => {
+    const notes = sound.materialPlan(m);
+    if (!notes.length) fail(`${m}: a material with no gesture`);
+    notes.forEach((n) => {
+      if (n.voice === 'hiss' ? !(n.band && n.band.length === 2) : n.tone == null && n.bass == null) fail(`${m}: a note placed in no chord and over no bass`);
+      if (!(n.vol > 0 && n.vol <= 0.03 && n.vol < STING_CEILING)) fail(`${m}: louder than a quiet voice (${n.vol})`);
+      if (!(n.at >= 0 && n.at <= 4 && n.dur > 0 && n.dur <= 0.9)) fail(`${m}: not one short gesture`);
+    });
+    if (namesAKey(notes)) fail(`${m}: a material names a key, a root or a mode`);
+  });
+  if (sound.materialPlan('velvet').length || sound.materialPlan('constructor').length || sound.materialPlan(null).length) fail('an unknown material has a gesture');
+
+  // Silent with no speaker: nothing starts, nothing throws, and the place is still set.
+  if (sound.setAmbience('rain') || sound.setAmbience(null) || sound.sceneMaterial('glass', 0) || sound.sceneMaterial('oak', 0.3, { after: 1 })) fail('a place sounded with no speaker');
+  try {
+    sound.setSoundPlace({ chapter: 3, scene: SCENES[2] });
+    if (!sound.setSoundScene(SCENES[1]) || sound.setSoundScene(null) || sound.setSoundScene({ id: 'nowhere' })) fail('a door did not take a scene, or took none for one');
+    sound.setSoundPlace({ chapter: 1 });
+  } catch (err) { fail(`setting a place threw with no speaker: ${err}`); }
+
+  const rain = sound.ambiencePlan('rain');
+  notes.push(`places: ${SCENES.length} scenes, rooms ${plans.map(({ id, p }) => `${id} ${p.secs}s/${p.early.length}`).join(', ')}; 400 random rooms in range`);
+  notes.push(`beds: ${beds.map((name) => `${name} ${sound.ambiencePlan(name)?.level}`).join(', ')} (ceiling ${BED_CEILING}); rain drops ${rain?.drops?.level} every ${rain?.drops?.everySec}s; ${eight.length} materials`);
+  notes.push(`ground by scene: ${heardAnew.length ? `chapters ${heardAnew.join(', ')}` : 'no chapter changes'}; with no scene, every chapter as it was`);
 }
 
 // Silent with no speaker, and with the switch off.

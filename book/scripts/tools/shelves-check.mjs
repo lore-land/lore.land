@@ -17,6 +17,7 @@ import { REASONS_IN_THE_ROAD, reasonFor, NOBODY } from '../home/pie-reasons.mjs'
 import { SCENES } from '../home/pie-world.mjs';
 import { CARDS } from '../home/pie-cards.mjs';
 import { ANT_KINDS } from '../home/pie-ants.mjs';
+import { SEASON_KINDS } from '../home/pie-seasons.mjs';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -166,15 +167,15 @@ const sum = (/** @type {Record<string, number>} */ v) => Object.values(v).reduce
     open = [...open, n.next];
   }
   if (open.length !== DIMENSIONS.length || nextDimension({ open }) !== null) fail('the dimensions do not all open, in order');
-  // In the road: every scene's kinds, every card, and what the ants bring (pie-ants.mjs), with the crows who take their gifts.
-  const kinds = new Set([...SCENES.flatMap((sc) => sc.kinds), ...Object.keys(CARDS), ...ANT_KINDS, 'corvid']);
+  // In the road: every scene's kinds, every card, what the ants bring (pie-ants.mjs) with the crows who take their gifts, and what a season sets (pie-seasons.mjs).
+  const kinds = new Set([...SCENES.flatMap((sc) => sc.kinds), ...Object.keys(CARDS), ...ANT_KINDS, 'corvid', ...SEASON_KINDS]);
   DIMENSIONS.forEach((d) => { if (d.resident !== 'berry' && !kinds.has(d.resident)) fail(`dimension ${d.id}: its resident ${d.resident} is not in the road`); });
   notes.push(`dimensions: across, then ${order.join(', ')}`);
 }
 
 /* ─── Reasons in the road ─── */
 {
-  const kinds = new Set([...SCENES.flatMap((sc) => sc.kinds), ...Object.keys(CARDS).filter((k) => !k.startsWith('carrier-')), ...ANT_KINDS, 'corvid']);
+  const kinds = new Set([...SCENES.flatMap((sc) => sc.kinds), ...Object.keys(CARDS).filter((k) => !k.startsWith('carrier-')), ...ANT_KINDS, 'corvid', ...SEASON_KINDS]);
   const rules = readFileSync(resolve(ROOT, '.spw/runtime/pie-rules.spw'), 'utf8');
   const knocks = /!knocks\{([\s\S]*?)\n\}/.exec(rules)?.[1] || '';
   [...knocks.matchAll(/\*([a-z_]+)\{/g)].forEach((m) => kinds.add(m[1]));

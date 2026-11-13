@@ -2005,6 +2005,18 @@ html.pie-immersive {
   border-color: var(--hub-gold);
 }
 
+/* A line a season left (pie-seasons.mjs): a keepsake among the carries, edged as glass is, its seal in the spell. */
+.pie-provenance-card.pie-kept-line {
+  border-style: double;
+  border-width: 3px;
+  border-color: color-mix(in srgb, var(--hub-gold) 70%, var(--hub-line));
+}
+
+.pie-provenance-card.pie-kept-line[data-pie-kept-stands="tease"] {
+  border-style: dashed;
+  border-width: 1px;
+}
+
 .pie-provenance-card pre {
   margin: 0;
   font-family: "JetBrainsMono", var(--font-family-mono, monospace);
@@ -4734,7 +4746,8 @@ html:not([data-chrome-hidden='true']) .pie-index {
 }
 
 /* The end card: what the carry left for the washer-up, beyond the frame. */
-.pie-card-plates {
+.pie-card-plates,
+.pie-card-kept {
   flex-basis: 100%;
   margin: 0 0 0.2rem;
   text-align: center;
@@ -5741,4 +5754,155 @@ html.pie-settling .pie-voyage {
 .pie-voyage.is-fill:is([data-shape='broad'], [data-shape='long']) .pie-screen > .pie-show-inset {
   top: calc(0.4rem + env(safe-area-inset-top, 0px));
   right: calc(var(--world-side, 0px) + 0.4rem);
+}
+
+/* Gifts from a live stream (pie-live.mjs, ?live): a line over the lanes that thanks each gift and says what it
+ * does, and a small desk to type them on, out of the way at the foot of the window so a stream can crop it. */
+.pie-live-line {
+  position: absolute;
+  inset: 0.5rem 0.5rem auto;
+  z-index: 6;
+  display: grid;
+  gap: 0.3rem;
+  pointer-events: none;
+}
+
+.pie-live-gift {
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.6rem;
+  background: rgba(18, 26, 34, 0.82);
+  color: #f6efe2;
+  font: 600 0.82rem/1.3 ui-monospace, 'SF Mono', Menlo, monospace;
+  box-shadow: 0 0 0 1px rgba(143, 211, 232, 0.55), 0 4px 14px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.pie-live-gift strong { color: #ffd666; }
+.pie-live-gift span { font-weight: 400; }
+.pie-live-gift[data-phase='waiting'] { box-shadow: 0 0 0 1px rgba(255, 214, 102, 0.5); }
+.pie-live-gift.is-going { opacity: 0; transform: translateY(-0.4rem); }
+
+.pie-live-desk {
+  position: fixed;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 50;
+  max-width: min(26rem, calc(100vw - 1.5rem));
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.6rem;
+  background: rgba(18, 26, 34, 0.9);
+  color: #f6efe2;
+  font: 0.82rem/1.3 ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+.pie-live-desk summary { cursor: pointer; }
+.pie-live-desk form { display: flex; gap: 0.4rem; margin-top: 0.4rem; }
+.pie-live-desk input { flex: 1; min-width: 0; padding: 0.3rem 0.45rem; border-radius: 0.4rem; border: 1px solid rgba(143, 211, 232, 0.6); background: #0e151c; color: inherit; font: inherit; }
+.pie-live-desk button { padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 0; background: #ffd666; color: #1c1408; font: inherit; font-weight: 700; cursor: pointer; }
+.pie-live-status { margin: 0.35rem 0 0; opacity: 0.8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-live-gift { transition: none; }
+}
+
+.pie-live-gift[data-side='rival'] { box-shadow: 0 0 0 1px rgba(126, 87, 194, 0.75), 0 4px 14px rgba(0, 0, 0, 0.3); }
+.pie-live-gift[data-side='rival'] strong { color: #c9a8ff; }
+.pie-live-desk .pie-live-rival { background: #7e57c2; color: #fff; }
+.pie-live-desk:not(:hover):not(:focus-within) { opacity: 0.55; }
+
+/* ─── Setup, easier on the eye (2026-11-12) ───
+ * What a choice does is said in the story's serif, at a size that reads on a phone (it was small mono); structure
+ * keeps the mono: tab words, card names, the board line. The chosen card says so with a border and a mark, not
+ * only when hovered. On a phone the sheet has a grab handle, so it reads as something that came up and goes down. */
+.pie-setup-layout small,
+.pie-setup-why,
+.pie-setup-note,
+.pie-setup-plan,
+.pie-setup-board > p:not(.pie-setup-board-line) {
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--hub-ink) 78%, var(--hub-muted));
+}
+
+.pie-setup-why,
+.pie-setup-note { font-style: italic; }
+
+.pie-setup-layout {
+  position: relative;
+  gap: 0.3rem;
+  padding: 0.55rem 0.6rem 0.65rem;
+  border-radius: 0.6rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pie-setup-layout b {
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+}
+
+.pie-setup-layout[aria-pressed='true'] {
+  border: 2px solid var(--hub-ink);
+  background: color-mix(in srgb, var(--hub-gold) 22%, var(--hub-panel));
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--hub-ink) 25%, transparent);
+}
+
+.pie-setup-layout[aria-pressed='true']::after {
+  content: '✓';
+  position: absolute;
+  top: 0.35rem;
+  right: 0.45rem;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--hub-ink);
+  color: var(--hub-panel);
+  font: 700 0.72rem/1 var(--font-family-heading, monospace);
+}
+
+.pie-setup-tab {
+  font-size: 0.66rem;
+  min-height: 3rem;
+}
+
+.pie-setup-tab[aria-selected='true'] {
+  border-block-end-width: 3px;
+}
+
+.pie-setup-subhead {
+  margin-block: 0.7rem 0.4rem;
+  font-size: 0.74rem;
+  color: var(--hub-ink);
+}
+
+.pie-setup-panel {
+  gap: 0.85rem;
+}
+
+.pie-setup.is-sheet[popover] {
+  padding-block-start: 1.1rem;
+  box-shadow: 0 -10px 34px rgba(12, 16, 24, 0.25);
+}
+
+.pie-setup.is-sheet[popover]::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  left: 50%;
+  width: 2.6rem;
+  height: 0.28rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--hub-ink) 28%, transparent);
+  transform: translateX(-50%);
+}
+
+@media (pointer: coarse) {
+  .pie-setup-layout { min-height: 3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pie-setup-layout { transition: none; }
 }

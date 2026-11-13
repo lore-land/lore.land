@@ -129,6 +129,24 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'reactions', attribute: 'data-switch-reactions', stage: 'trial', layer: 'trial', label: 'The lanes react',
+    hint: 'The people of the lanes answer what happens. Whoever carries the pie takes a knock in their own way; when a kept light or a borrowed slowness runs out, somebody notices; and the ones you have met before remember what earlier carries did. A face beside the lanes and a line from the narrator. Nobody speaks.',
+    effect: { on: 'The lanes react, and remember.', off: 'A knock gets a word, and a power ends quietly.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'places', attribute: 'data-switch-places', stage: 'trial', layer: 'trial', label: 'Places have their own air',
+    hint: 'The lanes pass through six places: the field, the parcel gate, the lanes, the plaza, the rented court and the long table. With this on, each keeps its own light over the road and its own air: the ground underfoot, the room a sound rings in, and something quiet behind it all, rain at the gate, wind in the field. Going through a door changes what you hear as well as what you see. Nobody has listened to it yet.',
+    effect: { on: 'Each place has its own light and its own air.', off: 'The places differ in ground and colour, as before.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'seasons', attribute: 'data-switch-seasons', stage: 'trial', layer: 'trial', label: 'Seasons',
+    hint: 'For a few days at a time the land sets something by the road that it does not set the rest of the year. The Ring Tide brings dolphins that carry the pie and donuts warm on the road; a Thursday that is kept sets a place early, and passing it settles the pie. Whoever meets it is handed one line of Spw to keep, sealed at both ends. After those days the place stays set, more faintly, for whoever was there and still holds the line.',
+    effect: { on: 'Seasons come to the lanes, and leave a line.', off: 'The lanes are the same every day of the year.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'trope-reveal', attribute: 'data-switch-trope-reveal', stage: 'trial', layer: 'trial', label: 'Tropes deepen as you go',
     hint: 'Each trope shows only as far as you have come with it: seeded, hinted, named, turned, paid off. Read on, carry the pie past it, or write it at the desk, and it says more.',
     effect: { on: 'Tropes show the stage you have reached.', off: 'Tropes show as they always have.' },

@@ -18,7 +18,7 @@ import { figureGroup } from './characters.mjs?v=2026_11_11.A';
 
 const INK = '#efe3c8';
 const GOLD = '#d9a24a';
-const COLORS = Object.freeze({
+export const COLORS = Object.freeze({
   plum: '#4b2c44', maroon: '#572733', violet: '#6f4c7c', dusk: '#39304a', leaf: '#26362c', olive: '#5d6238',
   teal: '#4f9a98', pale: '#8fc8c4', rose: '#bd5472', ember: '#a8502e', amber: '#d9a24a', bronze: '#8a6a3a',
   bone: '#e6dfd0', grey: '#8a8496', storm: '#22323c'

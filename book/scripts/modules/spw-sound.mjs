@@ -19,7 +19,7 @@
  * scoreOf(text) gives the events (and is pure, so it can be tested and drawn); playSpell(text,
  * { onAtom }) plays them and calls onAtom(i) as the i-th sigil sounds, so a spell can light as it sings.
  */
-import { tokenize } from './spw-spell.mjs?v=2026_11_09.Q';
+import { tokenize } from './spw-spell.mjs?v=2026_11_12.A';
 
 const MATERIAL_WORDS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
 const PENTA = [0, 2, 4, 7, 9];

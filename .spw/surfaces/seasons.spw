@@ -1,0 +1,107 @@
+# Seasons — what the land sets by the road for a few days, and the line it leaves
+# A design, and a trial in the game (the seasons switch, off for everyone). The days and every word are for the maker to change.
+#>lore_land_surfaces_seasons
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The lanes are the same every day of the year, and the book is not: it has a Thursday nobody kept and a feast at the Turning of the Year. A season gives the lanes a calendar. For a few days the land sets something by the road that it does not set otherwise, the spell that sets it carries its own days, and when the days are over what is left is small and belongs to whoever was there. What is left is a line of Spw the reader keeps, so the residue of a season is a sentence somebody holds, can read, can give away, and can lose.
+}
+
+^"grounded_in"{
+  place: "Chapter 15: at the head of the long table the city had already set a second place, with a cloth, and a cup, and a plate, for the one who was coming"
+  not_the_feast: "Chapter 14: the Feast of the Uneven Slice is at the Turning of the Year, in Bonk City; the first season is a Thursday, and it is not the feast"
+  thursday: "Chapter 14 is The Thursday Nobody Kept; a season on a Thursday that is kept sits beside it and says nothing about it"
+  powers: "pie-powers.mjs: every power is a Spw spell of words the lanes know, each number held to a range"
+  kept_by_play: "mechanics.spw: measures are counted, never set from a link"
+}
+
+^"season"{
+  form: "~season[thursday]{ .opens[\"2026-11-26\"] .closes[\"2026-11-29\"] @event[\"thursday.lore.land\"] *kept_place{ ~warm[8] !ready &with[berry] } }"
+  days: "the reader's own calendar days, both ends counted; 2026-11-26 is a Thursday"
+  table: ~"book/scripts/home/pie-seasons.mjs"
+  event: "book/content/events.json says the same days at ?/thursday.lore.land, and seasons:check holds the two equal"
+  sets: "a place by the road in every chapter: a cloth, a cup and a plate, now and then"
+  while_open: "*kept_place{ ~warm[8] !ready &with[berry] }: the pie settles as if it had been expected, a slice is ready, and berries come up behind"
+  left_after: "*kept_place{ ~warm[4] }: the pie settles a little, and nothing else"
+}
+
+^"the_line"{
+  form: "^kept[thursday]{_thursday .day[\"2026-11-27\"] .chapter[15] .carrier[porter] *kept_place{ ~warm[4] } yadsruht_}"
+  holds: "the day the reader was there, the chapter and the carrier, and what is left of the season as a spell"
+  sealed: "the body opens with the season as a label and closes with the label mirrored; a line cut short on the way does not close, and is refused"
+  plays: "after the season the line is the key and not the spell: what plays at the place is the season own residue, whatever a line handed over or rewritten may hold"
+  where: "with the carries, under Provenance, where it can be copied (with where it is from) or let go"
+  reads: "whole in the real parser, where the label and its mirror are two words in the body; the seal is read by the game"
+}
+
+^"standing"{
+  before: "the season has not come; nothing is set"
+  open: "the season is on, for everyone with the switch on; meeting the place writes the day once and hands over the line once"
+  kept: "over; the reader was there and holds a sealed line: the place is set once a chapter, more faintly"
+  was: "over; the reader was there and holds no line: nothing is set, and a sealed line handed back sets it again"
+  line: "over; the reader holds a line and was not there: it is shown, with words that say whose it answers to, and nothing is set"
+  after: "over, and nothing of it is here"
+}
+
+^"a_line_given_away"{
+  to_one_who_was_there: "kept, and the place is set again"
+  to_one_who_was_not: "shown, not kept; it never says that anyone was there"
+  cut_short: "refused, with the reason: the seal does not close"
+  by_address: "the line may be carried in an address, /pie/?kept= and the line; it is shown to whoever opens it and taken out of the address, and an address writes nothing: someone who was there keeps it by pasting it"
+  whatever_the_switch: "a line handed over is read and shown whether or not the reader has Seasons on; only play with it on writes the day"
+}
+
+!guards[
+  "Being there is written by play inside the season, and by nothing else: no address, paste, desk spell or switch says it"
+  "A game, not a lock: the day and the line live in the reader's own browser, in the open, and either can be written by hand. Nothing that has to stay private is ever kept this way"
+  "No streak, no count shown, and nothing that marks an absence: a reader who was not there is told the place will be set again, and no more"
+  "A season says its days before it opens and while it runs, so nobody takes it for a lasting thing"
+  "Nobody speaks: every word of a season is narration"
+  "The first season is not the Feast of the Uneven Slice, which the book puts at the Turning of the Year"
+]
+
+^"ring_tide"{
+  asked: "the maker, 2026-11-12, live: a sequence open for a standard few days, three, where dolphins aid the carrier significantly and donuts add a boost; some things more ephemeral than that"
+  form: "~season[ringtide]{ .opens[\"2026-11-12\"] .closes[\"2026-11-14\"] @event[\"ringtide.lore.land\"] *ring_tide{ ~unkept[6] ~lag[3] !level &without[puddle] } }"
+  sets: "a dolphin, up out of the salt under the crust, the same sea the salt whales keep their roads in; met, it rides beside the carrier six seconds"
+  also_sets: "donuts warm on the road: *donut{ %filling[0.15] *tin[2] ~warm[4] }, a boost and never the key; only a dolphin hands over the line"
+  left_after: "*ring_tide{ ~unkept[2] }: once a chapter a fainter dolphin, for whoever was there and holds the line"
+  three_layers: "a gift on a live stream lasts seconds and only while the stream is on (pie-live.mjs, ?live); the tide lasts three days; the line lasts as long as it is kept"
+}
+
+^"live_gifts"{
+  module: ~"book/scripts/home/pie-live.mjs"
+  how: "typed on the gift desk as they come, as someone would say them, or from a feed on the streamer machine; only a loopback address is opened"
+  dolphins: "sent up the carrier lanes, the tide spell without the line: a line is only ever met in its days, in play"
+  donuts: "a trail of them up the lanes, nine at most at once"
+  others: "hand hearts level the pie and forgive the next knock; a rose shows the clear way; any other gift feeds the aura a little"
+  likes: "a running total; a boonberry up the lanes for each thousand passed since the last total told"
+  rival: "the maker, 2026-11-12, in a battle: the opponent gifts become obstacles and mine benefits; stones, holes, puddles and panes, ringed in violet, one at a time and never a full row, and Mr. BaneWAP fed, never anyone real"
+  roses: "the maker, 2026-11-12: some boon rose and some bane rose; a rose on my side is laid by the road to pick up, a rose to the other side grows as a bane rose, thorns that knock"
+  icy_clash: "a battle moment, typed as icy clash: the other side is frozen; its obstacles ahead turn to frost, and for thirty seconds what it is sent comes as frost"
+  drawn: "each gift is drawn as itself as it lands, as TikTok draws it where it can be known (the cat with its thumb up is You Are Awesome); what is helping the carrier is a wide ring of arcs around them"
+  guards: "a gift to my own side never hurts a carry; a name is shown while it is thanked and never kept; nobody speaks; nothing in the game asks for a gift"
+}
+
+^"upstream"{
+  trial: "The workbench holds what a label on a brace pair means as a trial (wonder_trial_pair_label); this is one use of the mirrored close proved in play: a check that a line arrived whole"
+  ask: "A pair label the parser reads would let the seal be read by the same reader that reads the line; until then the label and its mirror are members"
+}
+
+^"next"{
+  feast: "proposed, not built: the Feast of the Uneven Slice as a second season at the Turning of the Year"
+  what_a_line_opens: "proposed, not built: at the feast, a reader who holds the Thursday line finds the place already set for them"
+  share_card: "proposed, not built: a kept line drawn as a picture, role inks and the mirrored label shown as a reflection"
+}
+
+?open[
+  "Are these the days, and is Thursday the name"
+  "Should the switch start on for the days of a season, so nobody has to find it"
+  "Should a fresh copy of the book set the day and the line aside, or leave them be as it leaves unlocks"
+  "What does the line open at the feast"
+  "Is the Ring Tide the name, and are three days the standard length for a season"
+  "Which things are more ephemeral than a season: gifts on a stream only, or also a tide that runs some hours of a day"
+]

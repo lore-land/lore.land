@@ -132,6 +132,25 @@
   color: color-mix(in srgb, var(--spell-ink) 85%, transparent);
 }
 
+/* A pair label and its mirror (spw-spell.mjs tokenize; pie-seasons.mjs kept lines): the label in the ink of what
+ * it names, the mirror drawn as its reflection, so a sealed line reads the same from either end. The text itself
+ * is untouched: it copies and is read aloud as written. */
+.spell-pair-label,
+.spell-pair-mirror {
+  color: var(--hue-integration);
+  font-style: italic;
+}
+.spell-pair-mirror {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+:is(.spell-pair-label, .spell-pair-mirror):not(.is-sealed) {
+  color: var(--hue-action);
+  text-decoration: underline wavy;
+  text-underline-offset: 0.22em;
+}
+
+
 .spell-gloss {
   max-width: none;
   min-height: 1.3em;

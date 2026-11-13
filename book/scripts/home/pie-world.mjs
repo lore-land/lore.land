@@ -12,13 +12,22 @@
  * it before the first frame.
  */
 
+/* `acoustic` is how a scene is heard (pie-sound.mjs roomPlan, ambiencePlan): the ground underfoot (grass or cobble),
+ * its room (how long the tail is in seconds, the first reflections as [seconds, gain against the tail], and damp:
+ * 0 bare stone, 1 open air and soft things), and the bed under it. A place never changes the key. */
 export const SCENES = Object.freeze([
-  { id: 'field', card: 'The field, frost in the furrows.', tint: 'frost', rain: false, kinds: ['stone', 'hole', 'stone', 'hole', 'pigeon', 'snail', 'ditch'], low: ['frost', 'frost', 'furrow'] },
-  { id: 'gate', card: 'The parcel gate, in a storm.', tint: 'night', rain: true, kinds: ['sack', 'sack', 'pigeon', 'post', 'ditch'] },
-  { id: 'lanes', card: 'The lanes, which curve for everyone.', tint: 'bronze', rain: false, kinds: ['post', 'post', 'snail', 'spool', 'pigeon', 'pane', 'hole', 'mime'] },
-  { id: 'plaza', card: 'The plaza, where the pie holds court.', tint: 'ember', rain: false, kinds: ['clerk', 'wasps', 'post', 'spool', 'dividers', 'banner', 'pane', 'mime', 'march'], presence: 'boon' },
-  { id: 'court', card: 'The rented court, arriving in pieces.', tint: 'berry', rain: false, kinds: ['throne', 'subject', 'wasps', 'post', 'banner', 'mime', 'march'], presence: 'bane' },
-  { id: 'table', card: 'The long table. A second place is set.', tint: 'gold', rain: false, kinds: ['chair', 'chair', 'clerk', 'dividers', 'wasps', 'table'] }
+  { id: 'field', card: 'The field, frost in the furrows.', tint: 'frost', rain: false, kinds: ['stone', 'hole', 'stone', 'hole', 'pigeon', 'snail', 'ditch'], low: ['frost', 'frost', 'furrow'],
+    acoustic: { ground: 'field', room: { secs: 1.9, early: [[0.052, 0.22]], damp: 0.85 }, ambience: 'wind' } },
+  { id: 'gate', card: 'The parcel gate, in a storm.', tint: 'night', rain: true, kinds: ['sack', 'sack', 'pigeon', 'post', 'ditch'],
+    acoustic: { ground: 'city', room: { secs: 0.7, early: [[0.011, 0.45], [0.023, 0.3]], damp: 0.3 }, ambience: 'rain' } },
+  { id: 'lanes', card: 'The lanes, which curve for everyone.', tint: 'bronze', rain: false, kinds: ['post', 'post', 'snail', 'spool', 'pigeon', 'pane', 'hole', 'mime'],
+    acoustic: { ground: 'city', room: { secs: 1.1, early: [[0.007, 0.4], [0.014, 0.33], [0.021, 0.27], [0.028, 0.21], [0.035, 0.16], [0.042, 0.12]], damp: 0.25 }, ambience: 'lane' } },
+  { id: 'plaza', card: 'The plaza, where the pie holds court.', tint: 'ember', rain: false, kinds: ['clerk', 'wasps', 'post', 'spool', 'dividers', 'banner', 'pane', 'mime', 'march'], presence: 'boon',
+    acoustic: { ground: 'city', room: { secs: 1.5, early: [[0.047, 0.3], [0.083, 0.24], [0.121, 0.17]], damp: 0.5 }, ambience: 'square' } },
+  { id: 'court', card: 'The rented court, arriving in pieces.', tint: 'berry', rain: false, kinds: ['throne', 'subject', 'wasps', 'post', 'banner', 'mime', 'march'], presence: 'bane',
+    acoustic: { ground: 'city', room: { secs: 2.1, early: [[0.019, 0.38], [0.037, 0.3], [0.058, 0.23], [0.083, 0.17]], damp: 0.1 }, ambience: 'court' } },
+  { id: 'table', card: 'The long table. A second place is set.', tint: 'gold', rain: false, kinds: ['chair', 'chair', 'clerk', 'dividers', 'wasps', 'table'],
+    acoustic: { ground: 'city', room: { secs: 0.65, early: [[0.005, 0.36], [0.012, 0.27], [0.021, 0.18]], damp: 0.7 }, ambience: 'hall' } }
 ]);
 export const WIDE = new Set(['banner', 'table', 'ditch', 'march']);
 
@@ -43,11 +52,12 @@ export const KNOCKS = Object.freeze({
   dividers: { tilt: 0.3, crust: 0.15, filling: 0.15, label: 'MEASURED' },
   spool: { tilt: 0.3, shove: true, label: 'TRIPPED' },
   pigeon: { tilt: 0.25, crust: 0.3, label: 'PECKED' },
-  wasps: { tilt: 0.25, filling: 0.3, label: 'STUNG' }
+  wasps: { tilt: 0.25, filling: 0.3, label: 'STUNG' },
+  banerose: { tilt: 0.4, label: 'THORNED' }   // a rose sent to the other side, in a battle on a live stream (pie-live.mjs)
 });
 export const SLIPS = new Set(['puddle', 'frost', 'sack']);
 /* Low enough to jump: a hop clears them. (Berries, wonders and clowns are met in the air too.) */
-export const LOW = new Set(['baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner', 'anthill']);
+export const LOW = new Set(['banerose', 'baneberry', 'stone', 'hole', 'ditch', 'snail', 'spool', 'puddle', 'frost', 'sack', 'pile', 'furrow', 'banner', 'anthill']);
 export const JUMP_DUR = 0.62;
 /* The hang: the flat top of a hop. A clear there is in time. A throw from there leaves the hand high. */
 export const HOP_HANG = Object.freeze([0.36, 0.64]);

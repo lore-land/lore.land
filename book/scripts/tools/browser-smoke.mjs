@@ -10,16 +10,35 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { withHarness } from '../../../tools/browser-harness/index.mjs';
+import { SEASONS, keptLine } from '../home/pie-seasons.mjs';
 
 /** @typedef {import('../../../tools/browser-harness/index.mjs').Page} Page */
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t) };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
+
+/* A season (pie-seasons.mjs): its switch on, a day inside it, a day after it, and the line it leaves. */
+const SEASON = SEASONS[0];
+const SEASON_ON = { cohort: 'returning', choices: { seasons: 'on' }, tried: [], resolved: { seasons: 'on' } };
+const SEASON_DAY = `${SEASON.opens.slice(0, 8)}${String(Number(SEASON.opens.slice(8)) + 1).padStart(2, '0')}`;
+const SEASON_LINE = keptLine(SEASON, { day: SEASON_DAY, chapter: 1, carrier: 'porter' });
+const AFTER_SEASON = '2026-12-05T12:00:00';
+/** Open the lanes on a day, and start a carry. @param {Page} page @param {string} at */
+async function carryOn(page, at) {
+  await page.setViewport(1200, 900);
+  await page.goto('/pie/?chapter=1');
+  await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+  await page.ev(`__pieTest.setClock(${JSON.stringify(at)})`);
+  await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+  await page.waitFor(`window.__pieTest.state === 'running' && window.__pieTest.run`);
+}
+/** Clear the road near the pie and set a season's place straight ahead of it. */
+const PLACE_AHEAD = `(() => { const r = window.__pieTest.run; r.things = r.things.filter((t) => t.y < 0); r.things.push({ kind: 'place', x: r.x, home: r.x, lane: r.lane, y: r.y - 70, w: 34, h: 20, fatal: false, born: r.t, faint: r.season?.mode !== 'open' }); })()`;
 
 /**
  * Start from a known browser state.
@@ -147,6 +166,25 @@ const SCENARIOS = [
     if (caps.length < 3) throw new Error(`only ${caps.length} captions in 30 seconds: the carry may have stopped`);
     if (Math.min(...gaps) < 2.4) throw new Error(`two captions ${Math.min(...gaps).toFixed(2)} s apart in the first half minute`);
   }],
+  ['a first carry on a phone: a tap plays, and the lanes run ten seconds before any card', async (page) => {
+    // A new player on a phone used to tap Play and meet a card a second later, with the clock stopped under it.
+    await page.setViewport(390, 844, { mobile: true });
+    await page.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+    await seed(page, {});
+    await page.goto('/pie/');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    // A finger taps Play once the page has settled. The page scrolls smoothly, so a tap measured mid-scroll can land on
+    // a mode button (introductions open their cards at once, as they should): the tap waits until Play is under it.
+    await page.ev(`document.querySelector('[data-pie-card-action]').scrollIntoView({ block: 'center', behavior: 'instant' })`);
+    await page.waitFor(`(() => { const e = document.querySelector('[data-pie-card-action]'); const b = e.getBoundingClientRect(); const x = b.x + b.width / 2, y = b.y + b.height / 2; const was = window.__at; window.__at = x + ',' + y; return was === window.__at && document.elementFromPoint(x, y) === e; })()`, { timeoutMs: 8000 });
+    const at = await page.ev(`(() => { const b = document.querySelector('[data-pie-card-action]').getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; })()`);
+    await page.send('Input.synthesizeTapGesture', { x: at.x, y: at.y, gestureSourceType: 'touch' });
+    await page.waitFor(`window.__pieTest.state === 'running'`, { timeoutMs: 6000 });
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) r.wobble = 0; }, 100)`);
+    await page.waitFor(`window.__pieTest.state !== 'running' || window.__pieTest.run.t > 10`, { timeoutMs: 40000 });
+    const t = await page.ev(`window.__pieTest.state + ' at ' + window.__pieTest.run.t.toFixed(1) + ' s'`);
+    if (!t.startsWith('running')) throw new Error(`the carry stopped before ten seconds: ${t}`);
+  }],
   ['a chain acts out its edge: a march called, glass ahead', async (page) => {
     await page.setViewport(1200, 900);
     await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { shelves: 'on' }, tried: [], resolved: { shelves: 'on' } }, 'lore.pie.v1': PLAYER });
@@ -183,6 +221,140 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('.bracework')`);
     await page.ev(`(() => { const plate = document.querySelector('.bracework'); plate.scrollIntoView(); plate.querySelector('button, summary')?.click(); })()`);
     await page.waitFor(`/Read by the Spw interpreter/.test(document.querySelector('.bracework').textContent)`);
+  }],
+  ['a season: before its days nothing is set, and with the switch off nothing is set in them', async (page) => {
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER });
+    await carryOn(page, `${SEASON.opens.slice(0, 8)}20T12:00:00`);
+    const early = await page.ev(`window.__pieTest.run.season`);
+    if (early) throw new Error(`a season was set before its days: ${JSON.stringify(early)}`);
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await carryOn(page, `${SEASON_DAY}T12:00:00`);
+    const off = await page.ev(`window.__pieTest.run.season`);
+    if (off) throw new Error('a season was set with its switch off');
+  }],
+  ['a season: in its days a place is met, the pie settles, and one sealed line is kept', async (page) => {
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER });
+    await carryOn(page, `${SEASON_DAY}T12:00:00`);
+    const mode = await page.ev(`window.__pieTest.run.season?.mode`);
+    if (mode !== 'open') throw new Error(`the season is not open on ${SEASON_DAY}: ${mode}`);
+    await page.ev(PLACE_AHEAD);
+    await page.waitFor(`window.__pieTest.run.tags.some((t) => /A PLACE, SET EARLY/.test(t.text))`, { timeoutMs: 8000 });
+    const got = await page.ev(`(() => { const r = window.__pieTest.run; const kept = JSON.parse(localStorage.getItem('lore.pie.seasons.v1') || '{}'); const box = document.querySelector('.pie-kept-line'); return { state: window.__pieTest.state, warm: r.warm, ready: r.sliceReady, kept, sealed: Boolean(box?.querySelector('.spell-pair-mirror.is-sealed') && box.querySelector('.spell-pair-label.is-sealed')) }; })()`);
+    if (got.state !== 'running') throw new Error(`a place ended the carry (${got.state})`);
+    if (!(got.warm > 4) || got.ready !== 1) throw new Error(`the place did not settle the pie and ready a slice: ${JSON.stringify(got)}`);
+    const mark = got.kept[SEASON.id];
+    if (mark?.was !== SEASON_DAY || mark.takes !== 1 || !mark.line?.endsWith(`${[...SEASON.id].reverse().join('')}_}`)) throw new Error(`the day and a sealed line were not kept: ${JSON.stringify(got.kept)}`);
+    if (!got.sealed) throw new Error('the kept line is not shown sealed among the carries');
+    // Met again the same carry: the day stays, and no second line is written.
+    await page.ev(`(() => { const r = window.__pieTest.run; r.tags = []; })()`);
+    await page.ev(PLACE_AHEAD);
+    await page.waitFor(`window.__pieTest.run.tags.some((t) => /A PLACE, SET EARLY/.test(t.text))`, { timeoutMs: 8000 });
+    const again = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.seasons.v1'))`);
+    if (again[SEASON.id].takes !== 2 || again[SEASON.id].line !== mark.line || again[SEASON.id].was !== SEASON_DAY) throw new Error(`a second meeting changed the day or the line: ${JSON.stringify(again)}`);
+  }],
+  ['a season: after its days the place stays set for whoever was there and kept the line', async (page) => {
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER, 'lore.pie.seasons.v1': { [SEASON.id]: { was: SEASON_DAY, takes: 1, line: SEASON_LINE } } });
+    await carryOn(page, AFTER_SEASON);
+    const mode = await page.ev(`window.__pieTest.run.season?.mode`);
+    if (mode !== 'kept') throw new Error(`the place is not kept for someone who was there with the line: ${mode}`);
+    await page.ev(PLACE_AHEAD);
+    await page.waitFor(`window.__pieTest.run.tags.some((t) => /STILL SET/.test(t.text))`, { timeoutMs: 8000 });
+    const got = await page.ev(`(() => { const r = window.__pieTest.run; return { warm: r.warm, ready: r.sliceReady, kept: JSON.parse(localStorage.getItem('lore.pie.seasons.v1')) }; })()`);
+    if (!(got.warm > 0 && got.warm <= 4)) throw new Error(`what is left is not less than the season: warm ${got.warm}`);
+    if (got.kept[SEASON.id].takes !== 1) throw new Error('a meeting after the season was counted as being there');
+  }],
+  ['a season: a line without the day is shown, never kept, and sets nothing', async (page) => {
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER, 'lore.pie.seasons.v1': { [SEASON.id]: { line: SEASON_LINE } } });
+    await carryOn(page, AFTER_SEASON);
+    const held = await page.ev(`window.__pieTest.run.season`);
+    if (held) throw new Error('a line alone set the place');
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER });
+    await carryOn(page, AFTER_SEASON);
+    await page.ev(`window.__pieTest.paste(${JSON.stringify(`${SEASON_LINE}\n#from["lore.land/pie#kept:${SEASON.id}"]`)})`);
+    await page.waitFor(`/answers to whoever was there/.test(document.querySelector('[data-pie-paste-note]').textContent)`, { timeoutMs: 8000 });
+    const got = await page.ev(`({ kept: localStorage.getItem('lore.pie.seasons.v1'), shown: Boolean(document.querySelector('.pie-kept-line[data-pie-kept-stands="tease"] .spell-pair-mirror.is-sealed')), season: window.__pieTest.run.season })`);
+    if (got.kept && got.kept !== '{}') throw new Error(`a pasted line was kept by someone who was not there: ${got.kept}`);
+    if (!got.shown) throw new Error('the pasted line was not shown, sealed, as pasted and not kept');
+    if (got.season) throw new Error('a pasted line set the place');
+    // Cut short on the way, it does not close, and is refused even from someone who was there.
+    await page.ev(`localStorage.setItem('lore.pie.seasons.v1', ${JSON.stringify(JSON.stringify({ [SEASON.id]: { was: SEASON_DAY, takes: 1 } }))})`);
+    await page.ev(`window.__pieTest.paste(${JSON.stringify(SEASON_LINE.slice(0, -6))})`);
+    await page.waitFor(`/does not close/.test(document.querySelector('[data-pie-paste-note]').textContent)`, { timeoutMs: 8000 });
+    const cut = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.seasons.v1'))`);
+    if (cut[SEASON.id].line) throw new Error('a line cut short was kept');
+    // Whole, and handed to someone who was there, it is kept.
+    await page.ev(`window.__pieTest.paste(${JSON.stringify(SEASON_LINE)})`);
+    await page.waitFor(`/you were there/.test(document.querySelector('[data-pie-paste-note]').textContent)`, { timeoutMs: 8000 });
+    const whole = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.seasons.v1'))`);
+    if (whole[SEASON.id].line !== SEASON_LINE) throw new Error('a whole line handed to someone who was there was not kept');
+  }],
+  ['the lanes react: a knock is answered in the carrier\u2019s way, a power that runs out is noticed, and with the switch off neither is', async (page) => {
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { reactions: 'on' }, tried: [], resolved: { reactions: 'on' } }, 'lore.pie.v1': { ...PLAYER, view: { story: false, zen: false, focusOnPlay: false } } });
+    await carryOn(page, '2026-06-01T12:00:00');
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things = r.things.filter((t) => t.y < 0); r.hurtT = 0; window.__pieTest.knock({ kind: 'post', x: r.x - 10, y: r.y }); })()`);
+    const knocked = await page.ev(`({ reacted: window.__pieTest.run.reacted, face: document.querySelector('[data-pie-meanwhile]')?.hidden === false, state: window.__pieTest.state })`);
+    if (knocked.reacted?.['knock:post'] !== 1) throw new Error(`a knock was not answered: ${JSON.stringify(knocked)}`);
+    if (!knocked.face) throw new Error('nobody\u2019s face came up beside the lanes');
+    // A kept light about to run out: when it does, somebody notices.
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things = r.things.filter((t) => t.y < 0); r.wobble = 0; r.lit = 0.3; })()`);
+    await page.waitFor(`window.__pieTest.run.reacted['end:lit'] === 1`, { timeoutMs: 8000 });
+    // (What the narrator says goes through the pacer, which may hold or fold it in a busy first minute: pacing:check
+    // holds that nothing offered is lost.)
+    // Off, a knock gets the old word and nothing is counted.
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await carryOn(page, '2026-06-01T12:00:00');
+    await page.ev(`(() => { const r = window.__pieTest.run; r.hurtT = 0; window.__pieTest.knock({ kind: 'post', x: r.x - 10, y: r.y }); r.lit = 0.2; })()`);
+    await page.waitFor(`window.__pieTest.run.lit === 0`, { timeoutMs: 6000 });
+    const off = await page.ev(`window.__pieTest.run.reacted || null`);
+    if (off) throw new Error(`with the switch off something was answered: ${JSON.stringify(off)}`);
+  }],
+  ['places: with sound on, the gate, a door and a pause run their air with nothing thrown', async (page) => {
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { places: 'on' }, tried: [], resolved: { places: 'on' } }, 'lore.pie.v1': { ...PLAYER, sound: true } });
+    await page.setViewport(1200, 900);
+    await page.goto('/pie/?chapter=15');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running' && window.__pieTest.run`);
+    const t = await page.ev('window.__pieTest.run.t');
+    await page.waitFor(`window.__pieTest.run.t > ${t} + 1`);
+    const scene = await page.ev(`window.__pieTest.run.sceneId`);
+    if (scene !== 'gate') throw new Error(`chapter 15 did not open at the gate: ${scene}`);
+    // Through to a chapter drawn in another place, then a pause and back: each changes the air.
+    await page.ev(`(() => { const r = window.__pieTest.run; window.__pieTest.closeLeg(); window.__pieTest.enterChapter(3, { closed: 'carried', note: '' }); })()`);
+    await page.waitFor(`window.__pieTest.run.sceneId === 'lanes'`);
+    await page.ev(`document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))`);
+    const t2 = await page.ev('window.__pieTest.run.t');
+    await page.ev(`document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))`);
+    await page.ev(`window.__pieTest.state === 'paused' && document.querySelector('[data-pie-card-action]')?.click()`);
+    await page.waitFor(`window.__pieTest.state === 'running' && window.__pieTest.run.t > ${t2} + 0.5`, { timeoutMs: 8000 });
+  }],
+  ['a season: a line carried in an address is shown to a stranger, leaves the address, and is not kept', async (page) => {
+    // A stranger: no switch on, no day. The line still shows what it is.
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await page.setViewport(1200, 900);
+    await page.goto(`/pie/?kept=${encodeURIComponent(SEASON_LINE)}`);
+    await page.waitFor(`/answers to whoever was there/.test(document.querySelector('[data-pie-paste-note]')?.textContent || '')`, { timeoutMs: 8000 });
+    const got = await page.ev(`({ search: location.search, kept: localStorage.getItem('lore.pie.seasons.v1'), shown: Boolean(document.querySelector('.pie-kept-line[data-pie-kept-stands="tease"] .spell-pair-mirror.is-sealed')) })`);
+    if (/kept=/.test(got.search)) throw new Error(`the line stayed in the address: ${got.search}`);
+    if (got.kept) throw new Error(`an address wrote to the reader's seasons: ${got.kept}`);
+    if (!got.shown) throw new Error('the carried line was not shown sealed');
+    // Someone who was there, holding a line of their own: an address shows the other line and changes nothing.
+    const mine = { [SEASON.id]: { was: SEASON_DAY, takes: 1, line: SEASON_LINE } };
+    await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER, 'lore.pie.seasons.v1': mine });
+    const other = SEASON_LINE.replace('~warm[4]', '~warm[10] !level ~unkept[6]');
+    await page.goto(`/pie/?kept=${encodeURIComponent(other)}`);
+    await page.waitFor(`/carried in an address/.test(document.querySelector('[data-pie-paste-note]')?.textContent || '')`, { timeoutMs: 8000 });
+    const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.seasons.v1'))`);
+    if (kept[SEASON.id].line !== SEASON_LINE) throw new Error('an address replaced a line the reader held');
+    // And a rewritten line, pasted and kept, still plays only what the season left.
+    await carryOn(page, AFTER_SEASON);
+    await page.ev(`window.__pieTest.paste(${JSON.stringify(other)})`);
+    await page.waitFor(`/you were there/.test(document.querySelector('[data-pie-paste-note]')?.textContent || '')`, { timeoutMs: 8000 });
+    await page.ev(`(() => { const r = window.__pieTest.run; r.wobble = 0.5; r.unkept = 0; r.season = { season: r.season?.season, mode: 'kept', set: true }; })()`);
+    await page.ev(PLACE_AHEAD);
+    await page.waitFor(`window.__pieTest.run.tags.some((t) => /STILL SET/.test(t.text))`, { timeoutMs: 8000 });
+    const played = await page.ev(`({ warm: window.__pieTest.run.warm, unkept: window.__pieTest.run.unkept })`);
+    if (!(played.warm > 0 && played.warm <= 4) || played.unkept > 0) throw new Error(`a rewritten line played more than the season left: ${JSON.stringify(played)}`);
   }]
 ];
 

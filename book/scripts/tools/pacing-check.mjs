@@ -7,8 +7,15 @@
  * breath) and holds it to its promises: no two released closer than the gap, a gentler first minute, a quiet stretch
  * after a loud beat, a chapter's opening kept for its own words, urgent beats at once, nothing dropped (every beat
  * offered is released, merged, or folded and handed back), and the same title offered twice is one beat.
+ * Then the captions: every paragraph of the chapters as they stand, cut into lines short enough to read between
+ * dodges, with every word kept and in order.
  */
-import { createPacer, PACING, foldedWords } from '../home/pie-pacing.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createPacer, PACING, foldedWords, CAPTION, captionsOf, captionSeconds, skipAhead } from '../home/pie-pacing.mjs';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
 /** @type {string[]} */
 const fails = [];
@@ -80,6 +87,48 @@ const loosePile = pileOf({ gap: 0, firstMinuteGap: 0, quietAfterLoud: 0, opening
 const housePile = pileOf({});
 if (loosePile !== 3 || housePile !== 1) fail(`negative control: three beats in one breath gave ${loosePile} with no gap and ${housePile} with the house gap (expected 3 and 1)`);
 
+/* ─── Captions: the chapters' own prose, a line at a time ─── */
+let captions = 0;
+let longest = 0;
+let waited = 0;
+{
+  const dir = resolve(ROOT, 'book/content/chapters');
+  for (const file of readdirSync(dir).filter((f) => /^\d+\.json$/.test(f)).sort()) {
+    const chapter = JSON.parse(readFileSync(resolve(dir, file), 'utf8'));
+    for (const section of chapter.sections || []) for (const block of section.content || []) {
+      if (block.type !== 'paragraph' || typeof block.text !== 'string') continue;
+      const text = block.text.replace(/\{\{[^}]*\}\}/g, 'a thing').replace(/\s+/g, ' ').trim();
+      const lines = captionsOf(text);
+      // Nothing lost, nothing reordered.
+      if (lines.map((l) => l.text).join(' ') !== text) { fail(`${file}: a paragraph's captions do not say its words back`); continue; }
+      if (lines.length && !lines[0].opens) fail(`${file}: a paragraph's first caption does not open a sentence`);
+      for (const line of lines) {
+        captions += 1;
+        longest = Math.max(longest, line.text.length);
+        // A line over the limit is one with nowhere to turn; it is still read at its own pace, up to the most.
+        if (captionSeconds(line.text) < CAPTION.least || captionSeconds(line.text) > CAPTION.most) fail(`${file}: a caption is given no sensible time`);
+        if (line.text.length <= CAPTION.chars && line.text.split(/\s+/).length * CAPTION.secondsAWord > CAPTION.most) waited += 1;
+      }
+    }
+  }
+  if (!captions) fail('no caption was read from the chapters');
+  if (waited) fail(`${waited} captions within the limit still need longer than they are given`);
+  const over = captionsOf('A sentence with no comma anywhere in it that simply goes on and on past any reasonable limit for a line and has to be turned at a joining word somewhere near its middle.');
+  if (over.length < 2 || over.some((l) => l.text.length > CAPTION.chars)) fail('a long clause with no comma was not turned at a joining word');
+  // A name with a stop inside it is one word, and a title keeps its name: the lanes used to say Boon. and then land.
+  const named = captionsOf('In Boon.land the vizier is baked goods. Mr. BaneWAP supplied his own name.').map((l) => l.text);
+  if (named.length !== 2 || !named[0].includes('Boon.land') || !named[1].startsWith('Mr. BaneWAP')) fail(`a name was broken at its stop: ${JSON.stringify(named)}`);
+  // Falling behind skips to where the newest sentence opens, never into the middle of one.
+  const queue = [{ opens: true }, { opens: false }, { opens: true }, { opens: false }, { opens: false }, { opens: true }, { opens: false }, { opens: false }];
+  if (skipAhead(queue) !== 5 || skipAhead(queue.slice(0, 4)) !== 0) fail('captions that fell behind did not skip to the start of the newest sentence');
+  // With a passage's opening waiting, the skim picks up there, ahead of a later sentence in the passage before it.
+  const passages = [{ opens: true, leads: true }, { opens: false }, { opens: true }, { opens: true, leads: true }, { opens: false }, { opens: true }, { opens: false }];
+  if (skipAhead(passages) !== 3) fail('captions that fell behind did not pick up where the newest passage opens');
+  // Negative control: with no limit a paragraph comes back as its sentences, however long.
+  if (captionsOf('One, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen.', 1000).length !== 1) fail('negative control: a sentence was cut with no limit to cut it for');
+}
+
 console.log(`[pacing] burst: ${burst.length} offered, ${run.shown.length} shown (${run.shown.map((s) => `${s.t}s ${s.kind}`).join(', ')}), ${run.foldedTitles.length} folded, ${run.stats.merged} merged; flood: ${flooded.shown.length} shown, ${flooded.foldedTitles.length} folded`);
 if (fails.length) { console.error(`[pacing] ${fails.length} problem(s):`); fails.forEach((f) => console.error(`  ✕ ${f}`)); process.exit(1); }
+console.log(`[pacing] captions: ${captions} lines from the chapters as they stand, the longest ${longest} characters, every word kept.`);
 console.log('[pacing] ok. Times are simulated; the carry itself is measured in the browser (smoke).');

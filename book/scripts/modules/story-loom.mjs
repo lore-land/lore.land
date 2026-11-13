@@ -10,7 +10,7 @@
  * column says how much its stories rhyme. A pattern found here is one thing a maker can build
  * once and serve many times.
  */
-import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_09.Q';
+import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_12.A';
 
 const STORIES_URL = '/.spw/surfaces/stories.spw';
 export const DIMENSIONS = Object.freeze([

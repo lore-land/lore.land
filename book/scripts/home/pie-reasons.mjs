@@ -57,6 +57,10 @@ export const REASONS_IN_THE_ROAD = Object.freeze({
   anthill: { whose: 'the torch-ants, who keep the streets lit along the berry roots', why: 'where the boonberries are rolled home; run into it and they put their crumbs down, lift weights, and gossip', shelf: 'honk', dimension: 'across', ground: 'Chapter 1: the ant hearths along the berry roots; the maker, 2026-11-11: ants roll boonberries home and gossip at the anthill' },
   antgift: { whose: 'the ants, carrying', why: 'a crumb and a scrap of the book, taken to the edge of the road as a gift for the crows and ravens', shelf: 'honk', dimension: 'across', ground: 'the maker, 2026-11-11: ants carry lore with crumbs, often as fragments of gifts to ravens and crows' },
   corvid: { whose: NOBODY, why: 'a crow or a raven at the edge of the road, taking what the ants bring', shelf: 'honk', dimension: 'ahead', ground: 'the maker, 2026-11-11; the corvids have no names yet' },
+  // A season's own (the seasons trial; .spw/surfaces/seasons.spw).
+  dolphin: { whose: 'the salt sea under the crust', why: 'come up with the Ring Tide, for a few days, to carry a pie a while', shelf: 'boon', dimension: 'height', ground: 'the maker, 2026-11-12: a sequence of a few days where dolphins aid the carrier significantly' },
+  donut: { whose: 'the Ring Tide, which leaves them', why: 'a ring of dough on the road, warm, a boost for whoever passes through it', shelf: 'bone', dimension: 'across', ground: 'the maker, 2026-11-12: donuts add a boost or power-up while the tide is in' },
+  place: { whose: 'the city, which sets it', why: 'a cloth, a cup and a plate by the road, set early for the one who is coming', shelf: 'boon', dimension: 'across', ground: 'Chapter 15: the city had already set a second place, with a cloth, and a cup, and a plate, for the one who was coming' },
   switch: { whose: 'Mr. BaneWAP, by contract', why: 'every scheme of his has one; he wrote his contract, badly', shelf: 'bone', dimension: 'games', ground: 'Chapter 11 (pie-cards): it is in his contract. He wrote his contract' }
 });
 

@@ -72,6 +72,23 @@ export function tokenize(text) {
     if (prev?.type === 'sigil' && t.type === 'string') t.type = 'path';
     else if (prev?.type === 'sigil' && t.type === 'word') t.type = 'label';
   });
+  // A pair label: _name right after a body opens, and the same name mirrored right before it closes (name_,
+  // spelled backwards), as a kept line is sealed (pie-seasons.mjs). Each is still a word; a label and a mirror
+  // that answer each other are marked sealed, so a line cut short shows where it stops answering. Bodies only:
+  // a word led by _ inside a gathering, (_in "boon.land"), is a relation and is left alone.
+  const waiting = [];
+  tokens.forEach((t, i) => {
+    if (t.type !== 'word') return;
+    if (tokens[i - 1]?.text === '{' && tokens[i - 1].type === 'open' && /^_[A-Za-z0-9]/.test(t.text) && tokens[i + 1]?.type === 'space') {
+      t.pair = 'label';
+      waiting.push(t);
+    } else if (tokens[i + 1]?.text === '}' && tokens[i + 1].type === 'close' && /[A-Za-z0-9]_$/.test(t.text) && tokens[i - 1]?.type === 'space') {
+      t.pair = 'mirror';
+      const name = [...t.text.slice(0, -1)].reverse().join('');
+      const at = waiting.map((w) => w.text.slice(1)).lastIndexOf(name);
+      if (at >= 0) { t.sealed = true; waiting.splice(at, 1)[0].sealed = true; }
+    }
+  });
   return tokens;
 }
 
@@ -204,7 +221,9 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
       (gap === t.text && atom ? atom : line).append(document.createTextNode(gap));
       return;   // spaces take no time to write
     } else {
-      node = span(t.type === 'word' ? 'spell-word' : 'spell-other', t.text);
+      const pair = t.pair ? ` spell-pair-${t.pair}${t.sealed ? ' is-sealed' : ''}` : '';
+      const says = !t.pair ? '' : t.sealed ? (t.pair === 'mirror' ? 'the label, mirrored: the line is sealed here' : 'a label; its mirror closes the line') : (t.pair === 'mirror' ? 'a mirrored label with nothing to answer it' : 'a label, with no mirror to close it');
+      node = span(t.type === 'word' ? `spell-word${pair}` : 'spell-other', t.text, says);
       (atom || line).append(node);
     }
     if (node.nodeType === 1) node.style.setProperty('--i', String(glyph));
@@ -431,7 +450,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_09.Q').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_12.A').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

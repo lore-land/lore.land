@@ -8,7 +8,7 @@ import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_11.A';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_09.Q';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
 import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_11.A';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';

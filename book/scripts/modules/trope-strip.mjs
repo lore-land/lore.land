@@ -6,9 +6,9 @@
  * opens to the stage's words, a line on what would deepen it, and its Spw, which shows in Structure mode. Reaching
  * the chapter's end counts as reading its tropes (noteCrossing read), once a chapter a day. Off, nothing is added.
  */
-import { readSwitches } from './reading-switches.mjs?v=2026_11_11.A';
+import { readSwitches } from './reading-switches.mjs?v=2026_11_12.A';
 import { revealStage, tropeSignals, noteCrossing, loadRhymes, chambersOf } from './trope-reveal.mjs?v=2026_11_11.A';
-import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_11.A';
+import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_12.A';
 import { leanScores } from './valence-lens.mjs?v=2026_09_27.A';
 
 const TROPES_URL = '/book/content/world/tropes.json';

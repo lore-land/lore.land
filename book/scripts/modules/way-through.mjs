@@ -22,8 +22,8 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_09.L';
-import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_11.A';
-import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
+import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_12.A';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_12.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
 export const WAY_URL = '/book/content/world/way.json?v=2026_11_10.A';

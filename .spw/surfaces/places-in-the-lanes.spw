@@ -1,0 +1,57 @@
+# Places in the lanes — each of the six places keeps its own light and its own air
+# A design, and a trial in the game (the places switch, off for everyone). Nobody has listened to any of it.
+#>lore_land_surfaces_places_in_the_lanes
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The lanes pass through six places, drawn differently and heard almost alike. The ground underfoot was chosen by chapter number, so four chapters were drawn as one place and heard as another, a door changed the picture and no sound, the rain at the gate fell silently, and a place's material was played once on a separate instrument out of the chapter's key. With this on, the place a chapter is drawn in decides what is heard there, and a door moves the ear as well as the paint.
+}
+
+^"found"{
+  ground_by_number: "pie-sound.mjs chose field or city by chapter number: chapters 3 and 7 are drawn as cobbled lanes and were heard as a field, and chapters 8 and 12 are drawn as a field and were heard as a city"
+  doors: "a door (chapter 6, plaza to lanes and back; chapter 15, gate to table) crossed the colours over and changed no sound"
+  rain: "the gate is the one place with rain, drawn and unheard"
+  material: "a place's material was played through a second instrument, outside the chapter's key, the room and the tiring ear, and never for a carry's first chapter or at a door"
+  early_taps: "the two old rooms' early reflections are single samples about 34 dB under their own tails, by arithmetic: in effect unheard"
+}
+
+^"light"{
+  what: "the disc or two each painted place has (panel-art.mjs PLACES), drawn where the panel has them, high over the far end of the road and faint enough to sit behind everything in it"
+  door: "through a door the old place's light goes out as the new one comes up, with the sky"
+  seen: "in headless Chrome at a phone's width, in all six places, on 2026-11-12"
+}
+
+^"air"{
+  table: ~"book/scripts/home/pie-world.mjs"
+  field: "ground grass; a long thin tail, 1.9 s, one far reflection; wind"
+  gate: "ground cobble; a tight stone arch, 0.7 s, a slap and its echo; rain, with soft unpitched drops"
+  lanes: "ground cobble; narrow walls, 1.1 s, a quick flutter of six; the lane's own hush"
+  plaza: "ground cobble; a wide square, 1.5 s, three late far walls; a square's murmur"
+  court: "ground cobble; long bright stone, 2.1 s, four reflections; a court's stillness"
+  table: "ground cobble; a short wooden hall, 0.65 s, three close reflections; a hall's hum"
+  levels: "every bed at or under 0.012, the level of the music bed's floor; nothing here is as loud as a catch"
+  material: "the eight materials as one short gesture each, in the chapter's key, through the same room and ear as every other sound; at a chapter's start it lands with the motif, and at a door"
+}
+
+^"kept"{
+  off_is_as_before: "with the switch off every chapter is heard exactly as it was: the same calls to the same graph, the impulse buffers bit for bit, over eleven chapters on a recording mock"
+  no_key_by_place: "a place never changes the key or the mode; the minor stays the cue of the mimes (scored.spw)"
+  drops_unpitched: "rain drops are unpitched and off the pulse, since a tuned drop near the grid could pass for the whisper of a hidden rhythm"
+  stops: "a bed stops at a pause, at a spill and when sound is switched off"
+}
+
+!guards[
+  "No sample is added: every bed and gesture is made from the voices the game already has"
+  "Nothing a place adds is louder than a catch"
+  "Sound can be measured and not judged: until somebody has listened, this stays a trial"
+]
+
+?open[
+  "Do the six rooms tell apart by ear, or only on paper"
+  "Are the beds audible on a phone's speaker, and too present on headphones"
+  "Should the old ground rule be corrected for everyone, since four chapters are heard as the wrong place with the switch off"
+  "Should chapter 10, the timber hall, have a place of its own"
+]

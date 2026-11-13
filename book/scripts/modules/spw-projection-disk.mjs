@@ -43,7 +43,7 @@
  *
  * Canon: .spw/surfaces/spw-architecture.spw (why linked Spw is hyperbolic, and which loops it has).
  */
-import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_09.Q';
+import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_12.A';
 import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-signature.mjs?v=2026_11_08.W';
 import {
   loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,

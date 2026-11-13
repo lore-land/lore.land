@@ -1,0 +1,62 @@
+# Reactions in the lanes — who answers a knock, a power taken and a power run out, and what they remember
+# A design, and a trial in the game (the reactions switch, off for everyone). Every deed is a candidate for the maker: keep, change or strike each row.
+#>lore_land_surfaces_reactions_in_the_lanes
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The lanes had seven places where a face came up beside them, each with one of a few short words, and nothing at all when a kept light or a borrowed slowness ran out. Whoever carried the pie took every knock the same way. The people of the lanes already have moods, knacks and things they remember; this lets those show at the moments play turns on, so a reader wonders why the clown is glad of a knock or what the clerk is writing. Nobody is given a line to say: a reaction is a face, a mood, and a deed told by the narrator.
+}
+
+^"grounded_in"{
+  panel: "pie-game.mjs meanwhile: a portrait beside the lanes, in one of five moods"
+  remembers: "characters.mjs REMEMBERS: what each remembers of the reader, counted from the deeds every carried chapter keeps; shown on the portrait sheet and, until now, nowhere in the lanes"
+  no_words: "cadences.spw: no character is given words; sound-and-voice.spw asks whether anyone in the lanes should speak, and it is still open"
+  pacing: "pie-pacing.mjs: a beat offered is released, merged or folded, never lost"
+}
+
+^"moments"{
+  taken: "a power taken, by the word it does longest: take:lit, take:lag, take:unkept, take:warm, take:fed, take:glimpse, take:true_aim, then its charges, its acts and what it feeds"
+  run_out: "a timed power running out: end:lit, end:lag, end:unkept, end:warm, end:fed, end:glimpse, end:true_aim. Before this, a power ended with nothing said"
+  knock: "a knock, one moment for each thing the road can knock with"
+  table: ~"book/scripts/home/pie-reactions.mjs"
+  size: "41 moments and 64 rows on 2026-11-12; reactions:check holds every knock, timed power and spell word to an answer for each of the five carriers"
+}
+
+^"who_answers"{
+  order: "someone standing in the lanes, then the carrier in their own row, then whoever carries, then anyone"
+  telling: "a row for the first time, for a repeat, or for a reader the lanes have answered five times before comes ahead of a row for any telling, so a second knock is not the first one said again"
+  shown: "a face in the meanwhile panel, in the row's mood, and the deed in the caption, paced like any other beat; the deed is said the first two times a carry, and after that the face is enough"
+  figure: "the figure answers with a mood and no deed: it has no interior to tell"
+}
+
+^"the_other_way"{
+  clown: "a clown carrying the pie is glad of a knock, and counts it as a WAP that went the wrong way"
+  mime: "a mime standing by its struck wall does not move"
+  porter: "the porter barely notes a second knock; storms weigh more"
+  clerk: "the clerk, knocked by a clerk, writes a slip for the clerk"
+}
+
+^"remembered"{
+  when: "once a carry, when someone first comes into the lanes: Boof, BoonWAP holding court, BaneWAP announcing, a clown, a mime, a clerk"
+  what: "the line characters.mjs already holds for them, with the count from earlier carries"
+  nothing_yet: "the Genie, the porter and the figure have no line: nothing they remember is written"
+}
+
+!guards[
+  "A deed is narration: no quotation marks, no first person, at most 84 characters"
+  "Nobody speaks, and the mimes stay silent: their rows are hands, gloves and a wall"
+  "The figure is never named and is given no deed; the hat and the Egg are in no row"
+  "No row scolds the reader, and none is about a child"
+  "A reaction changes nothing in play: it is seen and read, never scored"
+]
+
+?open[
+  "Which rows stay: every deed here is a candidate"
+  "With reactions on, a knock no longer gets its old word (Oof, Steady, Mind it). Should it keep both"
+  "Should the Genie, the porter and the figure remember anything of the reader"
+  "Should a reaction ever change play, such as a glad clown wanting less"
+  "Do BoneWAP and the ants, who are not in the lanes, ever answer"
+]

@@ -2,6 +2,27 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_12.A",
+      "date": "2026-11-12",
+      "notes": [
+        "Captions in the lanes are shorter lines, turned where a sentence turns, so a line can be read between dodges. A name with a stop in it (Boon.land) is no longer said in two halves, and a caption waits a moment while something is about to hit you. The carry still outruns the reading: the lanes show a line now and then and skip ahead, from the start of a sentence.",
+        "What a carry learned is kept between visits. How far each trope had been told, the rooms you have met and your own bests on the carry sheet used to begin again every time the page loaded.",
+        "A trope in the lanes is crossed by doing what it is about (a clown given its WAP, a switch thrown, a pane forgiven) as well as by carrying past it. Carrying a chapter crosses the carrier's own trope, and brushing past Boof crosses hers.",
+        "Three switches to try, all off until you turn them on. Seasons: from Thursday the 26th, for four days, the city sets a place by the road in /pie/, and whoever meets it is handed one line of Spw to keep; after those days the place stays set, more faintly, for whoever was there and still holds the line.",
+        "The lanes react: whoever carries the pie takes a knock in their own way, somebody notices when a kept light runs out, and the ones you have met remember what earlier carries did. A face and a line from the narrator; nobody speaks.",
+        "Places have their own air: each of the six places keeps its own light over the road and its own sound, with rain at the gate and wind in the field, and a door changes what you hear as well as what you see. Nobody has listened to it yet.",
+        "A new address that opens and closes: lore.land/?/thursday.lore.land says when the place is set. A kept line can be copied as a link; whoever opens it is shown the line, and it is kept only by someone who was there.",
+        "A spell that opens with a label and closes with the same label mirrored is drawn with the mirror as a reflection, so a line cut short shows where it stops answering.",
+        "The Ring Tide, from Thursday the 12th to Saturday the 14th, with Seasons switched on (or from lore.land/?/ringtide.lore.land): dolphins come up out of the salt under the crust and carry the pie a while, and donuts lie warm on the road as a boost. A dolphin hands over a line to keep; after the tide a fainter one still comes up for whoever was there.",
+        "Gifts from a live stream can be sent up the lanes when the address asks for them (/pie/?live): dolphins and donuts arrive as things to steer into, hand hearts level the pie and forgive the next knock. Nothing a gift does can hurt a carry.",
+        "In a battle on a live stream, gifts to your own side help and gifts to the other side get in the way: they come up the lanes as stones, holes, puddles and panes, ringed in violet so you can see where they came from, never a full row, and Mr. BaneWAP is fed and comes sooner. Likes count too: a boonberry up the lanes for every thousand. Boxing gloves punch the way clear, heart puffs settle the pie, a paper crane slows the land, a wink finds the nearest face, corn is a whole meal on a cob, and a you-are-awesome readies a slice. Each gift is drawn as itself as it arrives (the cat with its thumb up is You Are Awesome). A rose on your side is a boon rose laid by the road; a rose sent to the other side grows as a bane rose, thorns to steer round. In an Icy Clash the other side is frozen, and what it set in the road turns to frost.",
+        "What is helping the carrier is drawn as a wide ring around them, one arc for each thing that lasts, in the colour of its badge, running down as it runs out; a forgiven knock waiting is a gold dashed ring.",
+        "A first carry on a phone begins with the lanes: the first card waits until the pie has been in your hands for ten seconds, where it used to stop the clock a second in. A lasting power says it is about to run out with a soft falling note, a second before. Setup is easier to read: what a choice does is in the story's type at a size that reads on a phone, and the chosen layout wears a mark.",
+        "Sounds lean left and right less than they did: a step across the lanes tilts the sound instead of moving it into one ear.",
+        "The lanes can be followed more by ear. Something that would knock you, close in your own lane, is said with two short low pulses that mean nothing else, and said again if you step into its lane. Friends (berries, wonders, the switch, dolphins, donuts) are heard warm as they come. Nobody has listened to these yet."
+      ]
+    },
+    {
       "release": "2026_11_11.A",
       "date": "2026-11-11",
       "notes": [

@@ -59,6 +59,12 @@ jobs:
       - name: kitchen:check (wished dishes by character; mimed orders; the ants' gossip)
         run: npm run kitchen:check
 
+      - name: seasons:check (a season's days, its spells, the sealed line it leaves, and who it stays set for)
+        run: npm run seasons:check
+
+      - name: reactions:check (who answers a knock, a power taken and a power run out; deeds are narration)
+        run: npm run reactions:check
+
       - name: rhymes:build (refrains the parser finds across released chapters; a stale rhymes.json fails check)
         run: npm run rhymes:build
 

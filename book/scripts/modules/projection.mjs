@@ -35,8 +35,8 @@
 
 import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
-import { renderSpell } from './spw-spell.mjs?v=2026_11_09.Q';
-import { readWay, waySpell } from './way-through.mjs?v=2026_11_11.A';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_12.A';
+import { readWay, waySpell } from './way-through.mjs?v=2026_11_12.A';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';

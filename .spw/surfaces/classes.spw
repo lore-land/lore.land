@@ -1,0 +1,51 @@
+# Classes — who carries, written as a line that composes
+# A design, proposed. Nothing here is built except where it says so. The maker decides every name and pairing.
+#>lore_land_surfaces_classes
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The lanes already have classes and do not call them that. Whoever carries the pie has a way of stepping, a knack, three traits and a trope, and the reader may hold a charm. Each of these is written somewhere different and only two of them combine. Written as one line of Spw, a class is a ground, a focus, a lens and a container, and a second lens or another container is a change to one part of the line. A trope then travels as a particle: a small mark a class wears, and crosses by acting in character.
+}
+
+^"what_exists"{
+  ground: "pie-world.mjs CARRIERS: five carriers, each a way of stepping (step, wobble, hurried, settle, width)"
+  focus: "one knack each, wired: fine hands, a long hold, quick feet, true after a WAP, big feelings"
+  traits: "characters.mjs MODELS: three words each, shown on the sheet and read by nothing in play"
+  lens: "tropes.json names carrier kinds in the lanes: the figure in the plain lines, the porter and the Genie under the floating title, the clerk in the records, the clown in WAP"
+  container: "a bench charm, the one thing a reader composes: [ ] lengthens a kept light, { } poises sooner, ( ) reaches wider, < > steadies at a new chapter"
+  built_2026_11_12: "carrying a chapter now crosses the carrier's own trope, and brushing past Boof crosses hers; before, a carrier was never a thing passed, so those tropes could not be crossed in the lanes"
+}
+
+^"a_class_as_a_line"{
+  form: "@porter{ .steady[0.12] #!long_hold #:floating_title }<charm>"
+  ground: ". is how they step: what the carrier is before anything is added"
+  focus: "#! is the knack: the one thing they do that nobody else does"
+  lens: "#: is the trope they are read through, and cross by doing what the knack does"
+  container: "the bracket around the line is the charm the reader holds"
+  reads: "whole in the parser today, as a reference with a body and three members"
+}
+
+^"composing"{
+  second_lens: "a trope a reader has turned (met in the book and in the lanes) may be worn by any carrier as a second lens: @clerk{ #!quick_feet #:records #:forgiving_glass }"
+  what_a_lens_does: "it changes which deeds count: under #:forgiving_glass a pane forgiven is a crossing, whoever carries"
+  borrowed_focus: "a knack lent for a chapter by someone met there, said as a visit rule and never kept: @figure{ #!fine_hands #!long_hold }"
+  traits_that_act: "a trait word given one small effect, so the three words on the sheet are read by play"
+  limit: "one ground, two lenses and two foci at most, so a class stays a line and a sentence"
+}
+
+!guards[
+  "The figure is never named and has no interior: its line holds a ground and a focus and no lens it did not already have"
+  "No class is a child, and no class is bought"
+  "A class is a way of carrying, never a rank: nothing is locked to one"
+  "A lens is earned by reading and carrying, counted and never set from a link"
+]
+
+?open[
+  "Is class the word, or is it who carries"
+  "Which tropes may be worn as a second lens, and does wearing one change the story a chapter end tells"
+  "Should exactly-one, missing-day and beyond-the-frame, which name no kind in the lanes, be crossed by a deed (a spill, a Thursday kept, a plate left) instead of a thing"
+  "Do traits act at all, or are they the part of a character that play leaves alone"
+]

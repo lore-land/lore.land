@@ -49,6 +49,8 @@
     "shelves:check": "node book/scripts/tools/shelves-check.mjs",
     "cadence:check": "node book/scripts/tools/cadence-check.mjs",
     "kitchen:check": "node book/scripts/tools/kitchen-check.mjs",
+    "seasons:check": "node book/scripts/tools/seasons-check.mjs",
+    "reactions:check": "node book/scripts/tools/reactions-check.mjs",
     "rhymes:build": "tsx book/scripts/tools/rhymes-build.mjs",
     "elaboration:check": "node book/scripts/tools/elaboration-check.mjs",
     "sound:check": "node book/scripts/tools/sound-check.mjs",
