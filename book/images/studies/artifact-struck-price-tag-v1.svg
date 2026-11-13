@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="struck-price-tag-t struck-price-tag-d">
+  <title id="struck-price-tag-t">A struck price tag — a study</title>
+  <desc id="struck-price-tag-d">A paper price tag turning on a knotted string, the lanes dark behind it: a 3, a 2 and a 1, each struck through harder than the last, and under them a coin drawn with an arrow pointing away; a real coin set down by it, and a ring stain on one corner.</desc>
+  <defs>
+    <radialGradient id="struck-price-tag-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="struck-price-tag-glow" cx="51.66666666666667%" cy="50%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.55"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.099"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="struck-price-tag-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="struck-price-tag-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="struck-price-tag-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="struck-price-tag-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#struck-price-tag-ground)"/>
+  <rect width="600" height="400" fill="url(#struck-price-tag-rim)"/>
+  <rect width="600" height="400" fill="url(#struck-price-tag-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M237 210Q200 110 150 30" stroke-opacity="0.7" stroke-width="1.6"/>
+    <path d="M231 212q6 5 12 0q-6 -7 -12 0" stroke-opacity="0.7" stroke-width="1.6"/>
+    <g transform="rotate(-8 320 205)">
+      <path d="M196 205L240 152H436V258H240Z" fill="#e8d9b4" fill-opacity="0.2"/>
+      <path d="M196 205L240 152H436V258H240Z"/>
+      <circle cx="236" cy="205" r="8"/>
+      <path d="M262 174q16 -10 26 2q6 10 -9 17q18 4 9 19q-9 11 -28 1" stroke-width="4"/>
+      <path d="M318 180q12 -14 24 -2q6 10 -22 36h28" stroke-width="4"/>
+      <path d="M378 184l12 -10v46" stroke-width="4"/>
+      <path d="M254 218L298 170" stroke="#b0566e" stroke-width="3" stroke-opacity="0.75"/>
+      <path d="M312 220L356 168" stroke="#b0566e" stroke-width="4" stroke-opacity="0.85"/>
+      <path d="M368 222L410 166" stroke="#b0566e" stroke-width="5.5" stroke-opacity="0.95"/>
+      <circle cx="330" cy="240" r="7" stroke="#f2b04e" stroke-width="2"/>
+      <path d="M342 240h30m-8 -6l8 6l-8 6" stroke="#f2b04e" stroke-width="2"/>
+      <circle cx="414" cy="244" r="10" stroke-opacity="0.3" stroke-width="1.4"/>
+    </g>
+    <circle cx="470" cy="318" r="22" fill="#f2b04e" fill-opacity="0.25" stroke="#f2b04e" stroke-opacity="0.8"/>
+    <circle cx="470" cy="318" r="14" stroke="#f2b04e" stroke-opacity="0.5" stroke-width="1.2"/>
+    <ellipse cx="130" cy="326" rx="48" ry="16" stroke-opacity="0.25" stroke-width="1.4"/>
+    <ellipse cx="130" cy="326" rx="15" ry="5" stroke-opacity="0.25" stroke-width="1.2"/>
+  </g>
+  <rect width="600" height="400" filter="url(#struck-price-tag-grain)"/>
+  <rect width="600" height="400" fill="url(#struck-price-tag-vignette)"/>
+</svg>

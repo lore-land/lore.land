@@ -18,7 +18,7 @@ $[chapter/05/made_of]{
       %{crack_gauge}@genie ^<archway>@boof ]
     @told_by[boof song fool narrator]
     $ink $brass $glass
-    *wonders{ @hum_crickets $crack_gauge #listen_before_you_mend }
+    *wonders{ @hum_crickets $crack_gauge #listen_before_you_mend *struck_price_tag }
     =palette[rift]
     ~berries{ $boneberry[mushroom_broth] }
     &harmonies[ <crickets egg> <egg boof> ]
@@ -26,7 +26,7 @@ $[chapter/05/made_of]{
   rooms: "Five rooms: three < > passages and two { } rooms; two kept by Boof, the rest by the song, the floor and the Genie."
   told_by: "Told by Boof, a song, the Fool and the narrator."
   made_of: "Made most of ink and line, then brass and bronze, then Bonk glass."
-  wonders: "First met here: hum-crickets, the crack-gauge and a saying, “Listen before you mend”."
+  wonders: "First met here: hum-crickets, the crack-gauge, a saying, “Listen before you mend” and a struck price tag."
   palette: "Its palette is the rift, earned a layer at a time: deep teal water and two slips of brass: two harvests trying to be one."
   berries: "A boneberry in this chapter tastes of mushroom broth."
   harmonies: "The crickets keep the crack's note, and sit near the warmth. The egg rides against her ribs."

@@ -104,6 +104,21 @@
   render: "the audition page renders any event or a whole found rhythm to WAV with OfflineAudioContext, for a soundboard or a share"
 }
 
+^textures{
+  asked: "the maker, live on the thirteenth of November: sound toward whimsical and cozy, satisfying, and customizable in Spw, with the board navigation sound and the pie WAP sound named as textures worth choosing"
+  where: "Setup, under Sound, and the board line, so a texture travels in a link like every other choice: ^board{ =cues[shaped] =wap[cream] =steps[tiptoe] }"
+  wap: "splat (crust over filling, as it was), pillow (a round whumpf, and a soft mallet for the delight), cream (a squelch that slides down, then a slide whistle up), bell (a small splat and a fairground ding)"
+  steps: "ground (grass in the field and a cobble tick in the city, as it was), tiptoe (a plucked note in the room chord), felt (hushed slippers), wood (a woodblock tock); each still says left from right"
+  cues: "Heard first: shaped (two pulses that rise for something low enough to hop, two that fall for something that stands tall), one (the falling pair for everything), off"
+  kept: "every texture is a recipe in the same kit and the room key, so it still belongs to the chapter it is heard in, and keeps what the sound tells: the combo climbs, a step says which way"
+  heard: "a texture chosen in Setup is played at once, so the choice is made by ear"
+  feel: "=feel[written|jazz], asked for as more creatively challenging while the music as written stays the default. Jazz swings at least a triplet whatever %swing the chapter wrote; every room colour takes its tensions (a major seven at home, stacked fourths when struck, the Lydian sharp eleven when made, the dominant seven with a flat nine when lifted); the line sings the whole mode, Dorian in the minor; and every other caught note leans on the semitone above before it lands. Choosing it plays a two-five-one in the chapter key, so the ear hears what changed (pie-sound.mjs JAZZ, feelSample)"
+  theory: "the maker wants to learn music theory: the colours of the key by sigil, the level lines and the jazz feel are a small course already, each sound beside the Spw that makes it; a spwashi.com wonder is proposed in .studio, not built"
+  haggle: "the haggle is heard as it is drawn: a wooden tock a step lower for each struck price, then two bright clinks for the coin handed back; HAGGLE_BEATS in pie-finds.mjs keeps the time for both"
+  engine: ~"book/scripts/home/pie-sound.mjs"
+  listened: "nobody has listened yet; sound:check measures the plans, not how they sound"
+}
+
 ?decide{
   words_at_all: "Should anyone in the lanes speak words, or do characters keep to motifs and babble with captions?"
   first_voices: "Which characters are heard first, and as what: Boof (three notes already), Mr. BoonWAP and Mr. BaneWAP, the clowns, the Feast Clerk, the Genie, the mimes (silent?)"
@@ -119,4 +134,5 @@
   "babble voices: a formant instrument that speaks the rhythm of a chosen line in the chapter key"
   "physical moments are in: wap, step-field, step-city, flour, land, spill, beaver, each a folder of takes with sidecars (npm run sounds:prepare). Knocks stay synthesized, out of key. The synth plays when a file has not arrived"
   "WAV export on the audition page (synth_pie_audio.py and its voices are retired)"
+  "an ear line, proposed in .studio: ^ear{ } whose few terms retune the textures, the stereo width and the warning contour, the minimal audio map the workbench direction cache asks for; textures for the hop, the catch and the knock next, with a cozy knock that thuds rather than crashes"
 ]

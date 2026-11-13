@@ -17,7 +17,7 @@ import { SEASONS, keptLine } from '../home/pie-seasons.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t), carrier: (id) => { run.carrier = carrierById(id); }, jump: () => jump(), laneX: (l) => laneX(l) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t), carrier: (id) => { run.carrier = carrierById(id); }, jump: () => jump(), laneX: (l) => laneX(l), ring: (...a) => spawnRing(...a) };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
@@ -206,6 +206,22 @@ const SCENARIOS = [
     const after = await page.ev(`({ haggled: window.__pieTest.run.haggled, moments: (window.__pieTest.run.moments || []).map((m) => m.kind), room: JSON.parse(sessionStorage.getItem('lore.pie.live.finds') || '[]'), said: [...document.querySelectorAll('.pie-live-gift[data-phase=found]')].map((p) => p.textContent) })`);
     if (!after.haggled || !after.moments.includes('haggle')) throw new Error(`the haggle opened but its moment or its gift did not: ${JSON.stringify(after)}`);
     if (!after.room.includes('haggle') || !after.said.length) throw new Error(`the room was not told: ${JSON.stringify(after)}`);
+    // Heard as drawn: a tock for each struck price, then the coin, on the carry's own clock.
+    await page.waitFor(`(window.__pieTest.run.moments || []).some((m) => m.kind === 'haggle' && m.heard === 3 && m.coin)`, { timeoutMs: 6000 });
+    // What the hands did, handed to the book: the deed kept on its chapter, the lean said, the artifact made.
+    await page.waitFor(`JSON.parse(localStorage.getItem('lore.almanac.v1') || '{}')['struck-price-tag']`, { timeoutMs: 6000 });
+    const kept = await page.ev(`({ deeds: JSON.parse(localStorage.getItem('lore.pie.deeds.v1') || '{}'), why: window.__pieTest.run.leanWhy || {}, legs: window.__pieTest.run.legEvents || {} })`);
+    if (kept.deeds[1]?.find_haggle !== 1 || kept.legs.find_haggle) throw new Error(`the haggle was not kept once on Chapter One: ${JSON.stringify(kept.deeds)}`);
+    if (kept.why.find_haggle !== 1 || !(kept.why.donut >= 3)) throw new Error(`the haggle and the donuts did not lean the land: ${JSON.stringify(kept.why)}`);
+  }],
+  ['a find is retold in its chapter: the margin at the Genie\'s price tag counts the haggles', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.deeds.v1': { 5: { find_haggle: 2 } } });
+    await page.goto('/book/chapter/05/');
+    // The margin follows the paragraph being read: the one where he reads a gauge the way he reads a price tag.
+    await page.waitFor(`[...document.querySelectorAll('main p')].some((p) => /price tag/.test(p.textContent)) && document.querySelector('.reading-ref')`, { timeoutMs: 8000 });
+    await page.ev(`[...document.querySelectorAll('main p')].find((p) => /price tag/.test(p.textContent)).scrollIntoView({ block: 'center', behavior: 'instant' })`);
+    await page.waitFor(`[...document.querySelectorAll('.reading-ref-item[data-track=lanes], .reading-ref-whisper')].some((e) => /Priced against himself/.test(e.textContent) && /proved it 2 times/.test(e.textContent))`, { timeoutMs: 8000 });
   }],
   ['a find turns a rival gift by skill: a bane rose hopped, the off switch thrown, and the sniff wilts the thorns', async (page) => {
     await page.setViewport(1200, 900);
@@ -224,8 +240,94 @@ const SCENARIOS = [
     // His scheme, and its switch thrown at once.
     await page.ev(`(() => { const t = window.__pieTest; t.scheme(); const r = t.run; r.things.push({ kind: 'switch', x: r.x, home: r.x, lane: r.lane, y: r.y - 6, w: 26, h: 26, fatal: false, born: r.t }); })()`);
     await page.waitFor(`JSON.parse(localStorage.getItem('lore.pie.finds.v1') || '{}').sniff`, { timeoutMs: 5000 });
-    const after = await page.ev(`({ moments: (window.__pieTest.run.moments || []).map((m) => m.kind), wilted: window.__pieTest.run.things.filter((x) => x.kind === 'banerose' && !x.cleared).map((x) => x.wilted && !x.fatal) })`);
+    const after = await page.ev(`({ moments: (window.__pieTest.run.moments || []).map((m) => m.kind), wilted: window.__pieTest.run.things.filter((x) => x.kind === 'banerose' && !x.cleared).map((x) => x.wilted && !x.fatal), why: window.__pieTest.run.leanWhy || {} })`);
     if (!after.moments.includes('sniff') || !after.wilted.length || !after.wilted.every(Boolean)) throw new Error(`the sniff opened but its moment or its wilting did not: ${JSON.stringify(after)}`);
+    if (!(after.why.turned >= 1) || after.why.find_sniff !== 1) throw new Error(`a rival rose hopped, and the sniff, did not lean the land: ${JSON.stringify(after.why)}`);
+  }],
+  ['the bloom garden (a trial): in Chapter Eleven his scheme opens bane roses, never in the way through, and the sniff needs no stream', async (page) => {
+    await page.setViewport(1200, 900);
+    // Off, as every trial starts: his scheme opens nothing. (Cards never pause here: a first meeting in Chapter Eleven
+    // used to open a card now and then, stop the clock, and leave his first beat unplayed.)
+    await seed(page, { 'lore.pie.v1': { ...PLAYER, reached: 12, view: { ...PLAYER.view, cardPace: 'quiet' } } });
+    await page.goto('/pie/?chapter=11');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) { r.wobble = 0; r.unkept = 5; } }, 100)`);
+    await page.ev(`window.__pieTest.scheme()`);
+    await new Promise((r) => setTimeout(r, 2600));
+    if (await page.ev(`window.__pieTest.run.things.some((x) => x.bloom)`)) throw new Error('the bloom garden opened roses with its trial off');
+    await page.goto('/pie/?chapter=11&try=bloom-garden');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) { r.wobble = 0; r.unkept = 5; } }, 100)`);
+    await page.ev(`window.__pieTest.scheme()`);
+    await page.waitFor(`window.__pieTest.state !== 'running' || window.__pieTest.run.things.some((x) => x.kind === 'banerose' && x.bloom)`, { timeoutMs: 15000 });
+    const clock = await page.ev(`window.__pieTest.state`);
+    if (clock !== 'running') throw new Error(`the clock stopped before his first beat (${clock})`);
+    const roses = await page.ev(`window.__pieTest.run.things.filter((x) => x.bloom).map((x) => ({ lane: x.lane, safe: x.wayWas, rival: Boolean(x.rival) }))`);
+    if (roses.some((/** @type {{ lane: number, safe: number, rival: boolean }} */ r) => r.lane === r.safe || r.rival)) throw new Error(`a bloom rose opened in the way through, or came as a rival's: ${JSON.stringify(roses)}`);
+    // Hopped (one brought under the carrier in the hang, as steering would), then his switch thrown: the sniff, unstreamed.
+    await page.ev(`(() => { const r = window.__pieTest.run; r.unkept = 0; window.__pieTest.jump(); })()`);
+    await page.waitFor(`window.__pieTest.run.jumpT > 0 && window.__pieTest.run.jumpT < 0.42`, { timeoutMs: 3000 });
+    await page.ev(`(() => { const r = window.__pieTest.run; const rose = r.things.find((x) => x.bloom && !x.cleared); Object.assign(rose, { x: r.x, home: r.x, lane: r.lane, y: r.y }); })()`);
+    await page.waitFor(`window.__pieTest.run.things.some((x) => x.bloom && x.cleared)`, { timeoutMs: 3000 });
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things.push({ kind: 'switch', x: r.x, home: r.x, lane: r.lane, y: r.y - 6, w: 26, h: 26, fatal: false, born: r.t }); })()`);
+    await page.waitFor(`JSON.parse(localStorage.getItem('lore.pie.finds.v1') || '{}').sniff`, { timeoutMs: 5000 });
+    await page.waitFor(`JSON.parse(localStorage.getItem('lore.almanac.v1') || '{}')['pressed-rose']`, { timeoutMs: 6000 });
+    const deeds = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.deeds.v1') || '{}')`);
+    if (deeds[11]?.find_sniff !== 1) throw new Error(`the sniff was not kept on Chapter Eleven: ${JSON.stringify(deeds)}`);
+  }],
+  ['carried by a dolphin, the pie still takes its donuts and roses, and still passes what would knock it', async (page) => {
+    // Unkept used to pass everything, so a Ring Tide dolphin carried the pie straight past the tide's own donuts.
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=1&live');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) { r.wobble = 0; r.unkept = 5; } }, 50)`);
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things = r.things.filter((x) => x.y < 0 && !x.fatal); const at = { x: r.x, home: r.x, lane: r.lane, born: r.t }; r.things.push({ ...at, kind: 'donut', y: r.y - 6, w: 24, h: 22, fatal: false }, { ...at, kind: 'boonrose', y: r.y - 40, w: 26, h: 24, fatal: false }, { ...at, kind: 'stone', y: r.y - 80, w: 30, h: 24, fatal: true }); })()`);
+    await page.waitFor(`window.__pieTest.run.donuts >= 1 && (window.__pieTest.run.deeds || []).some((d) => d.kind === 'boonrose')`, { timeoutMs: 6000 });
+    await page.waitFor(`window.__pieTest.run.things.some((x) => x.kind === 'stone' && x.passed) || !window.__pieTest.run.things.some((x) => x.kind === 'stone')`, { timeoutMs: 6000 });
+    const after = await page.ev(`({ state: window.__pieTest.state, knocked: window.__pieTest.run.things.some((x) => x.kind === 'stone' && x.knocked), why: window.__pieTest.run.leanWhy || {} })`);
+    if (after.state !== 'running' || after.knocked || after.why.knocked) throw new Error(`unkept, a stone still knocked the pie: ${JSON.stringify(after)}`);
+  }],
+  ['a ring is drawn: the widening circle round a catch, a gift or a find shows on the canvas', async (page) => {
+    // No ring was ever drawn (its radius was read from fields no ring has), and nothing noticed, since a ring changes no state.
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=1');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    const green = `(() => { const c = document.querySelector('.pie-screen canvas'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 0; i < d.length; i += 4) if (d[i + 1] > d[i] + 45 && d[i + 1] > d[i + 2] + 45) n += 1; return n; })()`;
+    const before = await page.ev(green);
+    await page.ev(`window.__pieTest.ring(180, 260, 60, '#00ff00', 2)`);
+    await new Promise((r) => setTimeout(r, 300));
+    const after = await page.ev(green);
+    if (!(after > before + 40)) throw new Error(`a ring was spawned and not drawn: ${before} green pixels before, ${after} after`);
+  }],
+  ['sounds are chosen by ear and written on the board line: a feel, a WAP, a step and a warning', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.v1': { ...PLAYER, sound: true } });
+    await page.goto('/pie/');
+    await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
+    await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
+    await page.waitFor(`document.querySelector('[data-pie-setup] [data-tab=music]')`);
+    await page.ev(`document.querySelector('[data-pie-setup] [data-tab=music]').click()`);
+    const chosen = [['feel', 'jazz'], ['wap', 'cream'], ['steps', 'tiptoe'], ['cues', 'shaped']];
+    for (const [key, value] of chosen) {
+      await page.waitFor(`document.querySelector('.pie-setup-opt[data-key=${key}][data-value=${value}]')`, { timeoutMs: 3000 });
+      await page.ev(`document.querySelector('.pie-setup-opt[data-key=${key}][data-value=${value}]').click()`);
+    }
+    const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1') || '{}').view || {}`);
+    if (chosen.some(([key, value]) => kept[key] !== value)) throw new Error(`the sounds chosen were not kept: ${JSON.stringify(kept)}`);
+    await page.ev(`document.querySelector('[data-pie-setup] [data-tab=layouts]')?.click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-board-line')`, { timeoutMs: 3000 });
+    const line = await page.ev(`document.querySelector('.pie-setup-board-line').textContent`);
+    if (!chosen.every(([key, value]) => line.includes(`=${key}[${value}]`))) throw new Error(`the board line does not say the sounds chosen: ${line}`);
   }],
   ['Setup can be walked end to end on a phone by its steps, a swipe goes back, and it opens where it was left', async (page) => {
     await page.setViewport(390, 844, { mobile: true });
@@ -417,6 +519,8 @@ const SCENARIOS = [
   }]
 ];
 
+// SMOKE_ONLY=pattern runs only the scenarios whose names match it (case aside), for walking one change quickly.
+const CHOSEN = process.env.SMOKE_ONLY ? SCENARIOS.filter(([name]) => new RegExp(String(process.env.SMOKE_ONLY), 'i').test(name)) : SCENARIOS;
 /** @type {number} */
 let failures;
 try {
@@ -430,7 +534,7 @@ failures = await withHarness({
   } }]
 }, async (harness) => {
   let failed = 0;
-  for (const [name, run] of SCENARIOS) {
+  for (const [name, run] of CHOSEN) {
     /** @type {Page | null} */
     let page = null;
     try {
@@ -452,5 +556,5 @@ failures = await withHarness({
   console.error(`smoke[blocked]{${error instanceof Error ? error.message : String(error)}}`);
   process.exit(2);
 }
-console.log(`smoke[${failures ? 'fail' : 'ok'}]{${SCENARIOS.length - failures} of ${SCENARIOS.length}}`);
+console.log(`smoke[${failures ? 'fail' : 'ok'}]{${CHOSEN.length - failures} of ${CHOSEN.length}${CHOSEN.length < SCENARIOS.length ? `, chosen by SMOKE_ONLY from ${SCENARIOS.length}` : ''}}`);
 process.exit(failures ? 1 : 0);

@@ -56,6 +56,7 @@
   cadences: "@spw/surfaces/cadences.spw"
   gossip_and_kitchens: "@spw/surfaces/gossip-and-kitchens.spw"
   seasons: "@spw/surfaces/seasons.spw"
+  finds: "@spw/surfaces/finds.spw"
   classes: "@spw/surfaces/classes.spw"
   reactions_in_the_lanes: "@spw/surfaces/reactions-in-the-lanes.spw"
   places_in_the_lanes: "@spw/surfaces/places-in-the-lanes.spw"

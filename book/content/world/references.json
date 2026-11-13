@@ -659,6 +659,49 @@
           "says": "On the hill they say a baneberry tells you what will go wrong, and that it goes wrong because you were told. Lately some have kept quiet: {{n}} stepped on before they could say a thing, somewhere in the lanes, and nothing went wrong that day because of them."
         }
       }
+    },
+    {
+      "id": "rumour-haggle",
+      "kind": "rumour",
+      "title": "Priced against himself",
+      "note": "At the crack they say the Genie cannot pass three of a thing without pricing them, and that he has never once won a haggle against somebody who says nothing.",
+      "href": "/book/chapter/05/",
+      "terms": [
+        "gauge",
+        "price tag"
+      ],
+      "chambers": [
+        5
+      ],
+      "track": {
+        "lanes": "They say the Genie cannot pass three of a thing without pricing them, and that he has never won a haggle against somebody who says nothing.",
+        "after": {
+          "count": "find_haggle",
+          "says": "At the crack they say the Genie cannot pass three of a thing without pricing them. Somebody carrying a pie as him has proved it {{n}} time{{s}}: three for the price of two, then two for one, then a coin handed back to nobody in particular. Nobody was selling. He lost anyway."
+        }
+      }
+    },
+    {
+      "id": "rumour-sniff",
+      "kind": "rumour",
+      "title": "Stopped to smell",
+      "note": "In the bloom garden they say Mr. BaneWAP has never once stopped to smell a thing he announced.",
+      "href": "/book/chapter/11/",
+      "terms": [
+        "every bud",
+        "bloom garden",
+        "quince"
+      ],
+      "chambers": [
+        11
+      ],
+      "track": {
+        "lanes": "In the bloom garden they say Mr. BaneWAP has never once stopped to smell a thing he announced.",
+        "after": {
+          "count": "find_sniff",
+          "says": "In the bloom garden they say Mr. BaneWAP has never once stopped to smell a thing he announced. Somebody carrying a pie has stopped him {{n}} time{{s}}: a thorned rose cleared, his own off switch thrown before it could fade, and he stood smelling it as if it might last."
+        }
+      }
     }
   ]
 }

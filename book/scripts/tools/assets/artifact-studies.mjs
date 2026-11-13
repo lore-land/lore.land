@@ -228,6 +228,50 @@ const STUDIES = {
     <rect x="${222 - 41}" y="${232 - 17}" width="82" height="34" stroke="${INK}" stroke-width="2"/>
     <circle cx="${312 + 40}" cy="${230 - 12}" r="6" fill="${BERRY}" stroke="none"/>
     <path d="M${150 - 27} 250H${150 + 27}" stroke="${AMBER}" stroke-width="2.4"/>`
+  },
+  'struck-price-tag': {
+    title: 'A struck price tag',
+    desc: 'A paper price tag turning on a knotted string, the lanes dark behind it: a 3, a 2 and a 1, each struck through harder than the last, and under them a coin drawn with an arrow pointing away; a real coin set down by it, and a ring stain on one corner.',
+    glow: { glowX: 310, glowY: 200, warm: 0.55 },
+    body: `
+    <path d="M237 210Q200 110 150 30" stroke-opacity="0.7" stroke-width="1.6"/>
+    <path d="M231 212q6 5 12 0q-6 -7 -12 0" stroke-opacity="0.7" stroke-width="1.6"/>
+    <g transform="rotate(-8 320 205)">
+      <path d="M196 205L240 152H436V258H240Z" fill="#e8d9b4" fill-opacity="0.2"/>
+      <path d="M196 205L240 152H436V258H240Z"/>
+      <circle cx="236" cy="205" r="8"/>
+      <path d="M262 174q16 -10 26 2q6 10 -9 17q18 4 9 19q-9 11 -28 1" stroke-width="4"/>
+      <path d="M318 180q12 -14 24 -2q6 10 -22 36h28" stroke-width="4"/>
+      <path d="M378 184l12 -10v46" stroke-width="4"/>
+      <path d="M254 218L298 170" stroke="${BERRY}" stroke-width="3" stroke-opacity="0.75"/>
+      <path d="M312 220L356 168" stroke="${BERRY}" stroke-width="4" stroke-opacity="0.85"/>
+      <path d="M368 222L410 166" stroke="${BERRY}" stroke-width="5.5" stroke-opacity="0.95"/>
+      <circle cx="330" cy="240" r="7" stroke="${AMBER}" stroke-width="2"/>
+      <path d="M342 240h30m-8 -6l8 6l-8 6" stroke="${AMBER}" stroke-width="2"/>
+      <circle cx="414" cy="244" r="10" stroke-opacity="0.3" stroke-width="1.4"/>
+    </g>
+    <circle cx="470" cy="318" r="22" fill="${AMBER}" fill-opacity="0.25" stroke="${AMBER}" stroke-opacity="0.8"/>
+    <circle cx="470" cy="318" r="14" stroke="${AMBER}" stroke-opacity="0.5" stroke-width="1.2"/>
+    <ellipse cx="130" cy="326" rx="48" ry="16" stroke-opacity="0.25" stroke-width="1.4"/>
+    <ellipse cx="130" cy="326" rx="15" ry="5" stroke-opacity="0.25" stroke-width="1.2"/>`
+  },
+  'pressed-rose': {
+    title: 'A pressed rose',
+    desc: 'A page of small print seen from above, its last lines finer than the rest, and a dark rose pressed flat across them: the petals gone the colour of old wine, one thorn still on the stem, the first word of the clause showing under a petal, a crease where the page was shut on it.',
+    glow: { glowX: 320, glowY: 270, warm: 0.45 },
+    body: `
+    <rect x="172" y="64" width="256" height="296" rx="3" fill="#e8d9b4" fill-opacity="0.14"/>
+    <rect x="172" y="64" width="256" height="296" rx="3"/>
+    <path d="M300 70V354" stroke-opacity="0.18" stroke-width="1.2"/>
+    ${Array.from({ length: 14 }, (_, i) => `<path d="M192 ${96 + i * 13}H${404 - ((i * 37) % 60)}" stroke-opacity="0.32" stroke-width="1.2"/>`).join('')}
+    ${Array.from({ length: 6 }, (_, i) => `<path d="M192 ${290 + i * 9}H${404 - ((i * 23) % 40)}" stroke-opacity="0.26" stroke-width="0.8"/>`).join('')}
+    <path d="M192 344h34" stroke="${AMBER}" stroke-opacity="0.8" stroke-width="1.6"/>
+    <path d="M330 300Q270 322 214 334" stroke-opacity="0.75" stroke-width="2.4"/>
+    <path d="M262 318l-6 -9l11 4" stroke-opacity="0.75" stroke-width="1.6"/>
+    <path d="M286 312q-18 -24 -40 -16q16 18 40 16Z" fill="${TEAL}" fill-opacity="0.35" stroke="${TEAL}" stroke-opacity="0.6" stroke-width="1.4"/>
+    <path d="M240 330q-6 22 -28 24q8 -20 28 -24Z" fill="${TEAL}" fill-opacity="0.3" stroke="${TEAL}" stroke-opacity="0.55" stroke-width="1.4"/>
+    ${[[0, 34, 20], [60, 30, 18], [120, 33, 19], [180, 31, 20], [240, 34, 18], [300, 30, 19]].map(([a, rx, ry]) => `<ellipse cx="342" cy="294" rx="${rx}" ry="${ry}" transform="rotate(${a} 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="${BERRY}" stroke-opacity="0.7" stroke-width="1.2"/>`).join('')}
+    <path d="M342 294m-4 0a4 4 0 1 1 8 0a8 8 0 1 1 -16 0a12 12 0 1 1 24 0" stroke="#3a1420" stroke-opacity="0.7" stroke-width="1.6"/>`
   }
 };
 

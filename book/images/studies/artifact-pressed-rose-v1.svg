@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-labelledby="pressed-rose-t pressed-rose-d">
+  <title id="pressed-rose-t">A pressed rose — a study</title>
+  <desc id="pressed-rose-d">A page of small print seen from above, its last lines finer than the rest, and a dark rose pressed flat across them: the petals gone the colour of old wine, one thorn still on the stem, the first word of the clause showing under a petal, a crease where the page was shut on it.</desc>
+  <defs>
+    <radialGradient id="pressed-rose-ground" cx="50%" cy="46%" r="75%">
+      <stop offset="0" stop-color="#26362c"/><stop offset="0.6" stop-color="#15221c"/><stop offset="1" stop-color="#0b1310"/>
+    </radialGradient>
+    <radialGradient id="pressed-rose-glow" cx="53.333333333333336%" cy="67.5%" r="42%">
+      <stop offset="0" stop-color="#f2b04e" stop-opacity="0.45"/><stop offset="0.55" stop-color="#f2b04e" stop-opacity="0.081"/><stop offset="1" stop-color="#f2b04e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pressed-rose-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5fb3a8" stop-opacity="0.28"/><stop offset="0.5" stop-color="#5fb3a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="pressed-rose-vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0.62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="pressed-rose-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0 0.78  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="pressed-rose-soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#pressed-rose-ground)"/>
+  <rect width="600" height="400" fill="url(#pressed-rose-rim)"/>
+  <rect width="600" height="400" fill="url(#pressed-rose-glow)"/>
+  <g fill="none" stroke="#efe3c8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="172" y="64" width="256" height="296" rx="3" fill="#e8d9b4" fill-opacity="0.14"/>
+    <rect x="172" y="64" width="256" height="296" rx="3"/>
+    <path d="M300 70V354" stroke-opacity="0.18" stroke-width="1.2"/>
+    <path d="M192 96H404" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 109H367" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 122H390" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 135H353" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 148H376" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 161H399" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 174H362" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 187H385" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 200H348" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 213H371" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 226H394" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 239H357" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 252H380" stroke-opacity="0.32" stroke-width="1.2"/><path d="M192 265H403" stroke-opacity="0.32" stroke-width="1.2"/>
+    <path d="M192 290H404" stroke-opacity="0.26" stroke-width="0.8"/><path d="M192 299H381" stroke-opacity="0.26" stroke-width="0.8"/><path d="M192 308H398" stroke-opacity="0.26" stroke-width="0.8"/><path d="M192 317H375" stroke-opacity="0.26" stroke-width="0.8"/><path d="M192 326H392" stroke-opacity="0.26" stroke-width="0.8"/><path d="M192 335H369" stroke-opacity="0.26" stroke-width="0.8"/>
+    <path d="M192 344h34" stroke="#f2b04e" stroke-opacity="0.8" stroke-width="1.6"/>
+    <path d="M330 300Q270 322 214 334" stroke-opacity="0.75" stroke-width="2.4"/>
+    <path d="M262 318l-6 -9l11 4" stroke-opacity="0.75" stroke-width="1.6"/>
+    <path d="M286 312q-18 -24 -40 -16q16 18 40 16Z" fill="#5fb3a8" fill-opacity="0.35" stroke="#5fb3a8" stroke-opacity="0.6" stroke-width="1.4"/>
+    <path d="M240 330q-6 22 -28 24q8 -20 28 -24Z" fill="#5fb3a8" fill-opacity="0.3" stroke="#5fb3a8" stroke-opacity="0.55" stroke-width="1.4"/>
+    <ellipse cx="342" cy="294" rx="34" ry="20" transform="rotate(0 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/><ellipse cx="342" cy="294" rx="30" ry="18" transform="rotate(60 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/><ellipse cx="342" cy="294" rx="33" ry="19" transform="rotate(120 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/><ellipse cx="342" cy="294" rx="31" ry="20" transform="rotate(180 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/><ellipse cx="342" cy="294" rx="34" ry="18" transform="rotate(240 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/><ellipse cx="342" cy="294" rx="30" ry="19" transform="rotate(300 342 294) translate(14 0)" fill="#6e2a3e" fill-opacity="0.75" stroke="#b0566e" stroke-opacity="0.7" stroke-width="1.2"/>
+    <path d="M342 294m-4 0a4 4 0 1 1 8 0a8 8 0 1 1 -16 0a12 12 0 1 1 24 0" stroke="#3a1420" stroke-opacity="0.7" stroke-width="1.6"/>
+  </g>
+  <rect width="600" height="400" filter="url(#pressed-rose-grain)"/>
+  <rect width="600" height="400" fill="url(#pressed-rose-vignette)"/>
+</svg>

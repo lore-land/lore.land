@@ -254,6 +254,33 @@ const notes = [];
   sound.setSoundDesign(null);
 }
 
+/* The feel (=feel[written|jazz]). As written is the chord table as it always was, so nobody's music moves unless
+ * they choose jazz. Jazz keeps every tone a colour had (it adds tensions, it never takes a tone away) except the
+ * lifted room, which becomes the dominant: its seventh and flat nine over the fifth. Whatever the key or its fall,
+ * the line sings only tones of the scale it walks, and always at least two. */
+{
+  const SIGILS = ['.', '!', '?', '~', '@', '&', '*', '^', '#', '=', '%', '$'];
+  /** @type {Record<string, number[]>} */
+  const was = { '.': [0, 4, 7], '!': [0, 7], '?': [0, 2, 7], '~': [0, 4, 5, 9], '@': [0, 4, 9], '&': [0, 2, 4, 7], '*': [0, 4, 7, 9], '^': [0, 2, 7], '#': [4, 7, 11], '=': [2, 9], '%': [2, 5, 9], '$': [0, 5, 9] };
+  let tensions = 0;
+  SIGILS.forEach((sigil) => {
+    const written = sound.colourPlan(sigil);
+    if (written.pcs.join() !== was[sigil].join()) fail(`as written, ${sigil} is no longer the chord it was (${written.pcs})`);
+    const jazz = sound.colourPlan(sigil, { jazz: true });
+    if (sigil !== '^' && sigil !== '!' && !was[sigil].every((pc) => jazz.pcs.includes(pc))) fail(`jazz takes a tone away from ${sigil} (${jazz.pcs})`);
+    tensions += jazz.pcs.length - written.pcs.length;
+    for (const how of [{}, { minor: true }, { open: true }]) {
+      const plan = sound.colourPlan(sigil, { jazz: true, ...how });
+      if (plan.sung.length < 2 || !plan.sung.every((pc) => plan.scale.includes(pc) || pc === 0 || pc === 7)) fail(`jazz ${sigil} ${JSON.stringify(how)} sings outside its scale (${plan.sung} in ${plan.scale})`);
+    }
+  });
+  const lifted = sound.colourPlan('^', { jazz: true });
+  if (lifted.bass !== 7 || !lifted.pcs.includes(8) || !lifted.pcs.includes(5) || !lifted.pcs.includes(11)) fail(`jazz ^ is not the dominant seven with a flat nine over the fifth (${lifted.bass}: ${lifted.pcs})`);
+  const blue = sound.colourPlan('!', { jazz: true });
+  if (!blue.pcs.includes(10) || !blue.pcs.includes(5)) fail(`jazz ! is not fourths stacked with the flat seven (${blue.pcs})`);
+  notes.push(`feel: as written, the twelve colours as they were; jazz adds ${tensions} tones across them, ^ becomes ${lifted.pcs.join(' ')} over ${lifted.bass} (the flat nine), ! becomes ${blue.pcs.join(' ')}`);
+}
+
 notes.forEach((n) => console.log(`  ${n}`));
 if (fails.length) {
   console.error(`[sound] ${fails.length} problem${fails.length === 1 ? '' : 's'}:`);

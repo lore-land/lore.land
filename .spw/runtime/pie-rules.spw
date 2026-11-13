@@ -75,6 +75,8 @@
   *frill_lichen{ *frill[2] ^card[wonder] @voice[wonder] ~"book/chapter/14#chapter-14-section-06" #says["More edge than room. Your next two knocks land on the ruffle, and only half of each reaches the pie."] }
   *sliver_tin{ *tin[3] ^card[wonder] @voice[wonder] ~"book/chapter/15#chapter-15-section-04" #says["Always filling, never full. Your next three slices fill half again as much appetite."] }
   *creature{ %crust[0.12] %filling[0.12] ^card[wonder] @voice[wonder] #says["A creature of the land, kept. The aura is fed a little, crust and filling."] }
+  *antique{ !level %crust[0.12] ^card[wonder] @voice[wonder] #says["Something old the land kept, kept again. The pie steadies, the way old things do, and the crust is fed."] }
+  *artifact{ !ready %filling[0.12] ^card[wonder] @voice[wonder] #says["Something a scene left behind, picked up. A slice is ready, and the filling is fed."] }
   *contrivance{ %crust[0.24] ^card[wonder] @voice[wonder] #says["Something made with care, kept. The crust is fed."] }
   *bracework{ %filling[0.18] !ready ^card[wonder] @voice[wonder] #says["Written before it was built, kept. A slice is ready, and the filling is fed."] }
   *saying{ !level ^card[wonder] @voice[wonder] #says["A saying the makers keep. The pie steadies, the way a rule does."] }

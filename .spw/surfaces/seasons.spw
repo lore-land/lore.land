@@ -84,6 +84,11 @@
   icy_clash: "a battle moment, typed as icy clash: the other side is frozen; its obstacles ahead turn to frost, and for thirty seconds what it is sent comes as frost"
   drawn: "each gift is drawn as itself as it lands, as TikTok draws it where it can be known (the cat with its thumb up is You Are Awesome); what is helping the carrier is a wide ring of arcs around them"
   guards: "a gift to my own side never hurts a carry; a name is shown while it is thanked and never kept; nobody speaks; nothing in the game asks for a gift"
+  spells: "a gift that is not a thing in the lanes is a spell of words the lanes know (pie-powers.mjs), sized by its count and held to the spell ranges: hand heart, boxing glove, heart puff, you are awesome, paper crane, love you so much, wink wink, it is corn, happy twinkle, GG, Mantap, TGIF, finger heart, heart me, hi bear"
+  beats: "two gifts also play a beat. TGIF is Friday arriving with everyone in it: a row of clowns up the lanes, with a way left through. GG is a good game: what the other side set in the road ahead shakes hands and steps aside"
+  rival_kinds: "RIVAL_GIFTS in pie-live.mjs: a gift sent to the other side names the obstacles it becomes (a hi bear, sticky trails and snails; TGIF, mimes and hurrying clerks; a happy twinkle, glass and frost); any other gift comes by its size"
+  signs: "one object under two signs. What is sent to my side is =boon@carrier{ @gift }, and the same gift sent to the other side is =bane@carrier{ @gift }: the signed edge elaboration.spw writes for a gift and for a price. The sign is the side, never the gift, which is why every gift has both a boon and a bane form"
+  counted: "a gift landing leans nothing and keeps nothing. Only what hands do with it is a deed (a dolphin ridden, a donut eaten, a boon rose kept, a wilted rose walked through, a thing the other side sent hopped), tallied with the other deeds of the leg and kept on its chapter for the margins"
 }
 
 ^"upstream"{
@@ -95,6 +100,7 @@
   feast: "proposed, not built: the Feast of the Uneven Slice as a second season at the Turning of the Year"
   what_a_line_opens: "proposed, not built: at the feast, a reader who holds the Thursday line finds the place already set for them"
   share_card: "proposed, not built: a kept line drawn as a picture, role inks and the mirrored label shown as a reflection"
+  rival_lines: "proposed, not built: RIVAL_GIFTS as lines of Spw read by the held reader the finds use, one signed edge per gift such as =bane@carrier{ &puddle &snail }, so the maker can retune what a gift becomes without code, with a check that reads each line against the kinds the road has"
 }
 
 ?open[

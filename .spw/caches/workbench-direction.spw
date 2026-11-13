@@ -100,6 +100,12 @@
   { area: "workbench-sync" target: ".spw/_workbench/extensions/*" summary: "Align IDE cursor/brace-entry feedback concepts with web spw-cadence and spw-spell interaction patterns." }
 ]
 
+^"proposed_answers"{
+  .filed: "2026-11-13, proposed from the pie, not settled"
+  audio_map: "the first slice is live in /pie/ as board terms, three lines at most: ^board{ =cues[shaped] =wap[pillow] =steps[tiptoe] } (pie-frame.mjs SETUP, pie-sound.mjs TEXTURES). The same shape could carry container cues for an editor, ^ear{ =open[pluck] =dwell[pad] =close[tock] %pan[0.3] }"
+  threat_cues: "the laneWarning gap is closed: something low enough to hop is two pulses that rise, something that stands tall two that fall, chosen or turned off as =cues[shaped|one|off]"
+}
+
 ?open[
   "Which minimal audio-map schema lets a blind programmer retune bracket open, body aura, and exit cues in under three lines of Spw?"
   "What concrete force/cadence primitives from call-and-response exchange belong on the first factshift.center prototype?"

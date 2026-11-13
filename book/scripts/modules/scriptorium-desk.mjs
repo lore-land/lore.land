@@ -17,7 +17,7 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_12.A';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_13.B';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_09.L';
 import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_12.A';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_09.L';
@@ -27,10 +27,10 @@ import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
 import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_11.A';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
-import { mergeBoard } from './spw-formulas.mjs?v=2026_11_11.A';
-import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_11.A';
+import { mergeBoard } from './spw-formulas.mjs?v=2026_11_13.B';
+import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_13.B';
 import { noteCrossing } from './trope-reveal.mjs?v=2026_11_11.A';
-import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_11.A';
+import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_13.B';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';

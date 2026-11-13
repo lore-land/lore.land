@@ -53,7 +53,7 @@ export const KNOCKS = Object.freeze({
   spool: { tilt: 0.3, shove: true, label: 'TRIPPED' },
   pigeon: { tilt: 0.25, crust: 0.3, label: 'PECKED' },
   wasps: { tilt: 0.25, filling: 0.3, label: 'STUNG' },
-  banerose: { tilt: 0.4, label: 'THORNED' }   // a rose sent to the other side, in a battle on a live stream (pie-live.mjs)
+  banerose: { tilt: 0.4, label: 'THORNED' }   // a rose sent to the other side on a live stream (pie-live.mjs), or opened for Mr. BaneWAP in the bloom garden (Chapter Eleven, a trial)
 });
 export const SLIPS = new Set(['puddle', 'frost', 'sack']);
 /* Low enough to jump: a hop clears them. (Berries, wonders and clowns are met in the air too.) */
@@ -114,6 +114,10 @@ export const MEET = Object.freeze({
   post: ['A bronze post', 'Knocks. Curves a thrown slice toward the nearest face.'],
   spool: ['A spool', 'Knocks and trips you a lane. Hop it.'],
   pane: ['A pane of Bonk glass', 'Knocks. A slice thrown at it banks off, Perfect.'],
+  banerose: ['A bane rose', 'Knocks with its thorns. Low enough to hop, or steer round.'],
+  boonrose: ['A boon rose', 'Take it: it fills the pie and shows the clear way a breath ahead.'],
+  dolphin: ['A dolphin', 'Steer into it and it carries the pie beside you a while: nothing holds you, and the pie keeps level.'],
+  donut: ['A donut', 'Eat it in passing: it fills the pie, and slices fill more.'],
   throne: ['A rented throne', 'Knocks hard. Gilt over pine.'],
   subject: ['A subject on an errand', 'Knocks; share a whole slice and they trade you crust.'],
   wasps: ['Crown-wasps', 'Knock, sting the filling, and snatch a thrown slice.'],
@@ -206,6 +210,7 @@ export const CAUSES = Object.freeze({
   wobble: 'Too much, too soon. The pie had opinions about that.',
   stone: 'A field stone, older than the furrow. It has never once moved for anyone.',
   pane: 'A pane of Bonk glass. It remembers being struck, and now it remembers this.',
+  banerose: 'A bane rose, opened for somebody else, with no time to fill and every thorn it could grow.',
   mime: 'A mime, miming a wall. The wall was imaginary. The spill was not.',
   mimewall: 'An invisible wall. A mime had put it there, and had been very clear about it.',
   march: 'Mimes Against WAP, marching in silence. Nobody heard them coming; that is rather the point.',

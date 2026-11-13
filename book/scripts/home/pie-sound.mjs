@@ -82,7 +82,7 @@
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, motif: null, carrier: '', rest: 0 };
+const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0 };
 const ROOTS = [293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23];
 const PULSES = [96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108];
 const MAJOR = [0, 2, 4, 7, 9];
@@ -117,22 +117,54 @@ const COLOURS = Object.freeze({
 const FALLS = Object.freeze({ 4: 3, 9: 8, 11: 10 });
 const harmony = { sigil: '.', bass: 0, pcs: [0, 4, 7], sung: [0, 4, 7] };
 
+/* ─── A jazz feel (Setup, Sound, Feel; the board line =feel[jazz]): for an ear that wants more to do ───
+ * The music as written stays everyone's default. With jazz, three things change, each a step of theory to hear:
+ *  · swing: the off-sixteenths fall at least a triplet late (long, short), whatever the chapter wrote;
+ *  · the chords: each room's colour takes its tensions (sevenths, ninths, a sixth, a sharp eleven), and the lifted
+ *    room (^) becomes the dominant seven with a flat nine, the one chord that wants to go home;
+ *  · the line: it sings the whole mode rather than five notes of it, and every other caught note leans on the
+ *    semitone above before it lands (an appoggiatura: a dissonance that resolves).
+ * In the mimes' minor the same tensions fall as the colours do: a major seventh becomes a minor one. */
+const JAZZ = Object.freeze({
+  '.': { bass: 0, pcs: [0, 4, 7, 11] },         // home: a major seven
+  '!': { bass: 0, pcs: [0, 5, 10] },            // struck: fourths stacked, the flat seven blue in a major key
+  '?': { bass: 0, pcs: [0, 2, 7, 9] },          // asks: a six-nine, suspended
+  '~': { bass: 5, pcs: [0, 4, 5, 7, 9] },       // might be: the fourth's major nine
+  '@': { bass: 9, pcs: [0, 4, 7, 9] },          // seen from somewhere: the relative minor seven
+  '&': { bass: 0, pcs: [0, 2, 4, 7, 11] },      // joined: a major nine
+  '*': { bass: 0, pcs: [0, 2, 4, 7, 9] },       // kept: a six-nine, bright and dear
+  '^': { bass: 7, pcs: [2, 5, 7, 8, 11] },      // lifted: the dominant seven, flat nine, leaning home
+  '#': { bass: 4, pcs: [2, 4, 7, 11] },         // marked: the third's minor seven
+  '=': { bass: 2, pcs: [0, 2, 5, 9] },          // tuned: the second's minor seven
+  '%': { bass: 2, pcs: [0, 2, 4, 5, 9] },       // measured: the second's minor nine
+  '$': { bass: 5, pcs: [0, 4, 5, 9, 11] }       // made: the fourth's Lydian, a sharp eleven bright over the earth
+});
+const JAZZ_MAJOR = [0, 2, 4, 5, 7, 9, 11];
+const DORIAN = [0, 2, 3, 5, 7, 9, 10];
+
 /* A chapter leaning toward low magic sings in fourths: no thirds to say how it feels, a frame of load-bearing
  * intervals (the third up to the fourth, the sixth up to the seventh). Only with themes on (setSoundPlace). */
 const OPEN = [0, 2, 5, 7, 10];
 const RAISES = Object.freeze({ 4: 5, 9: 10, 11: 10 });
-const scaleNow = () => (sound.minor ? MINOR : sound.open ? OPEN : MAJOR);
+const scaleNow = () => (sound.minor ? (sound.jazz ? DORIAN : MINOR) : sound.open ? OPEN : sound.jazz ? JAZZ_MAJOR : MAJOR);
 
-function setHarmony(sigil) {
-  const base = COLOURS[sigil] || COLOURS['.'];
-  const own = sound.minor && base.minor;
+/** A room's chord as a plan, with no audio: its bass, its tones, the scale the line walks, and the tones it sings.
+ *  As written or as jazz, in the key, the mimes' minor, or the open fourths of low magic. (sound:check reads it.) */
+export function colourPlan(sigil, { jazz = false, minor = false, open = false } = {}) {
+  const table = jazz ? JAZZ : COLOURS;
+  const base = table[sigil] || table['.'];
+  const own = minor && base.minor;
   const colour = own || base;
-  const fall = (pc) => (sound.minor && !own ? (FALLS[pc] ?? pc) : sound.open ? (RAISES[pc] ?? pc) : pc);
-  const scale = scaleNow();
+  const fall = (pc) => (minor && !own ? (FALLS[pc] ?? pc) : open ? (RAISES[pc] ?? pc) : pc);
+  const scale = minor ? (jazz ? DORIAN : MINOR) : open ? OPEN : jazz ? JAZZ_MAJOR : MAJOR;
   const pcs = [...new Set(colour.pcs.map(fall))].sort((a, b) => a - b);
   let sung = pcs.filter((pc) => scale.includes(pc));
   if (sung.length < 2) sung = [...new Set([...sung, 0, 7])].sort((a, b) => a - b);
-  Object.assign(harmony, { sigil: COLOURS[sigil] ? sigil : '.', bass: fall(colour.bass), pcs, sung });
+  return { sigil: table[sigil] ? sigil : '.', bass: fall(colour.bass), pcs, sung, scale };
+}
+function setHarmony(sigil) {
+  const plan = colourPlan(sigil, { jazz: sound.jazz, minor: sound.minor, open: sound.open });
+  Object.assign(harmony, { sigil: plan.sigil, bass: plan.bass, pcs: plan.pcs, sung: plan.sung });
   retunePad();
 }
 /** The i-th tone the chord sings, climbing by octaves. */
@@ -513,7 +545,8 @@ let placeAfter = 0;
 export function setSoundPlace({ chapter = 1, held = false, level = null, after = 0, lean: leaning = '', scene = null } = {}) {
   sound.root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
   sound.pulse = level?.tempo || PULSES[(chapter - 1) % PULSES.length] || 96;
-  sound.swing = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
+  sound.written = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
+  sound.swing = sound.jazz ? Math.max(sound.written, 0.66) : sound.written;
   sound.motif = Array.isArray(level?.motif) && level.motif.length ? level.motif : null;
   line.motifAt = 0;
   // How the chapter leans (the reader's lens, or their carries), heard: low magic opens the key. The minor stays the mimes' alone.
@@ -568,7 +601,8 @@ function hear(kind, now) {
 const AIR = Object.freeze({
   step: 0.03, land: 0.05, flour: 0.12, throw: 0.08, hop: 0.12, knock: 0.1, squash: 0.06, wap: 0.16,
   catch: 0.28, deft: 0.25, glass: 0.4, post: 0.32, ramp: 0.2, berry: 0.35, sweet: 0.4, share: 0.28,
-  wonder: 0.45, bone: 0.18, foretell: 0.5, fulfil: 0.3, beaver: 0.25, foil: 0.25, egg: 0.6, spill: 0.3
+  wonder: 0.45, bone: 0.18, foretell: 0.5, fulfil: 0.3, beaver: 0.25, foil: 0.25, egg: 0.6, spill: 0.3,
+  haggle: 0.22, coin: 0.35
 });
 
 /* How much of each sound the song's echo repeats: the sung things, a little; the struck things, nothing. */
@@ -1259,7 +1293,7 @@ export function powerEnding() {
  * else, nearly centred (it is in your lane), louder the nearer it is. Tires like any sound, so a crowded lane does
  * not become an alarm. @param {number} pan @param {number} near 0 (far) to 1 (upon you)
  */
-export function laneWarning(pan = 0, near = 0.5) {
+export function laneWarning(pan = 0, near = 0.5, shape = 'one') {
   try {
     if (!audio || audio.state !== 'running') return;
     const t = audio.currentTime + 0.005;
@@ -1268,8 +1302,19 @@ export function laneWarning(pan = 0, near = 0.5) {
     const k = kit(outlet(heat, { air: 0.08 }), t, clamp(pan, -1, 1) * 0.3);
     const f = hz(bassLow() + 7);
     const level = 0.03 + 0.02 * clamp(near, 0, 1);
-    k.tone('triangle', f, f * 0.94, 0.06, level, 0, { attack: 0.002 });
-    k.tone('triangle', f, f * 0.94, 0.06, level * 0.85, 0.09, { attack: 0.002 });
+    // Shaped by height, so the ear knows which way to go: something low enough to hop is two pulses that climb a
+    // fourth, each sliding up (a hop); something that stands tall is two that step down, each sliding down (a wall).
+    // One for all is the falling pair at one pitch, as it was first heard.
+    if (shape === 'low') {
+      k.tone('triangle', f, f * 1.12, 0.06, level, 0, { attack: 0.002 });
+      k.tone('triangle', f * 4 / 3, f * 4 / 3 * 1.12, 0.06, level * 0.9, 0.09, { attack: 0.002 });
+    } else if (shape === 'tall') {
+      k.tone('triangle', f * 4 / 3, f * 4 / 3 * 0.94, 0.07, level, 0, { attack: 0.002 });
+      k.tone('triangle', f, f * 0.94, 0.08, level * 0.9, 0.1, { attack: 0.002 });
+    } else {
+      k.tone('triangle', f, f * 0.94, 0.06, level, 0, { attack: 0.002 });
+      k.tone('triangle', f, f * 0.94, 0.06, level * 0.85, 0.09, { attack: 0.002 });
+    }
   } catch { /* the lane still says it */ }
 }
 
@@ -1499,6 +1544,50 @@ export function leitmotif(who, pan = 0) {
   } catch { /* Boof crosses quietly */ }
 }
 
+/* ─── Textures a player chooses (Setup, Sound; on the board line as =wap[…] and =steps[…]) ───
+ * The two sounds heard most are the ones worth choosing: the WAP, and a step across the lanes. Each texture is a
+ * recipe in the same kit and the room's key, so whichever is chosen still belongs to the chapter it is heard in, and
+ * each keeps what the sound tells (a step says which way; a WAP climbs with the combo). Whimsical, cozy, or plain. */
+export const TEXTURES = Object.freeze({
+  wap: Object.freeze(['splat', 'pillow', 'cream', 'bell']),
+  steps: Object.freeze(['ground', 'tiptoe', 'felt', 'wood'])
+});
+const textures = { wap: 'splat', steps: 'ground' };
+/** @param {{ wap?: string, steps?: string }} chosen */
+/** The feel: as each chapter is written, or jazz (see JAZZ). Changing it re-colours the room at once. */
+export function setSoundFeel(feel = 'written') {
+  const jazz = feel === 'jazz';
+  if (jazz === sound.jazz) return;
+  sound.jazz = jazz;
+  sound.swing = jazz ? Math.max(sound.written, 0.66) : sound.written;
+  try { setHarmony(harmony.sigil); } catch { /* the room keeps its chord until the next */ }
+}
+/** Heard when the feel is chosen: a two-five-one in the chapter's key, swung, as written or as jazz, so the ear
+ *  knows what changed. As written: three plain triads. Jazz: a minor seven, a dominant with a flat nine, a major
+ *  seven; the flat nine is the dissonance, and the last chord is where it resolves. */
+export function feelSample(feel = 'written') {
+  try {
+    if (!context()) return;
+    const t = audio.currentTime + 0.05;
+    const k = kit(outlet(0, { air: 0.35, song: 0.1 }), t, 0);
+    const jazz = feel === 'jazz';
+    const chords = jazz ? [[2, 5, 9, 12], [-1, 2, 5, 8], [0, 4, 7, 11]] : [[2, 5, 9], [-1, 2, 7], [0, 4, 7]];
+    const roots = [2, 7, 0];
+    const beat = 60 / (sound.pulse || 96);
+    const swung = jazz ? 2 / 3 : 0.5;
+    chords.forEach((chord, c) => {
+      const at = c * beat * 1.5;
+      k.marimba(hz(roots[c] - 24), 0.5, 0.05, at);
+      chord.forEach((semi, i) => k.vibes(hz(semi + 12), c === 2 ? 0.9 : 0.42, 0.024, at + (i % 2 ? swung : 0) * beat * 0.5 + Math.floor(i / 2) * beat * 0.5, (i - 1.5) * 0.12));
+    });
+  } catch { /* chosen, if not heard */ }
+}
+
+export function setSoundTextures({ wap, steps } = {}) {
+  if (TEXTURES.wap.includes(wap)) textures.wap = wap;
+  if (TEXTURES.steps.includes(steps)) textures.steps = steps;
+}
+
 /* ─── The sounds ──────────────────────────────────────────────────── */
 
 export function wapSound(combo = 1, pan = 0, depth = 0) {
@@ -1507,12 +1596,29 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
     const t = audio.currentTime + 0.005;
     const heat = hear('wap', t);
     if (heat === null) return;
-    const { tone, hiss, honk, celesta, sample } = kit(outlet(heat, { depth, air: AIR.wap }), t, pan + jitter(0.04));
-    // Crust, high and short, over the filling. The filling always falls: a cheek meeting pie.
-    sample('wap');
-    tone('triangle', 380, 58, 0.22, 0.42, 0, { attack: 0.004, cents: 40 });
-    hiss(1700, 200, 0.3, 0.38, 1.1, 0, 'bandpass', 0.35);
-    hiss(480, 110, 0.34, 0.18, 0.7, 0.02, 'lowpass');
+    const { tone, hiss, honk, celesta, marimba, sample } = kit(outlet(heat, { depth, air: AIR.wap }), t, pan + jitter(0.04));
+    const texture = textures.wap;
+    if (texture === 'pillow') {
+      // Into a pillow: a round whumpf, the crust muffled by the filling, nothing sharp in it.
+      hiss(700, 120, 0.36, 0.3, 0.6, 0, 'lowpass');
+      tone('sine', 140, 52, 0.3, 0.32, 0, { attack: 0.01, cents: 0 });
+    } else if (texture === 'cream') {
+      // Whipped cream: a squelch that slides down, and after it a slide whistle that goes up, as in a cartoon.
+      tone('sine', 420, 70, 0.26, 0.34, 0, { attack: 0.004, cents: 60 });
+      hiss(2400, 300, 0.24, 0.24, 1.6, 0, 'bandpass', 0.3);
+      tone('sine', hz(sungTone(0)), hz(sungTone(4)), 0.34, 0.05, 0.12, { attack: 0.03, cents: 0 });
+    } else if (texture === 'bell') {
+      // The fairground bell: a small splat, then a ding, as if a prize were won.
+      hiss(1500, 300, 0.12, 0.2, 1.1, 0, 'bandpass', 0.35);
+      celesta(hz(sungTone(4) + 12), 0.6, 0.06, 0.04);
+      celesta(hz(sungTone(2) + 12), 0.5, 0.03, 0.04);
+    } else {
+      // Crust, high and short, over the filling. The filling always falls: a cheek meeting pie.
+      sample('wap');
+      tone('triangle', 380, 58, 0.22, 0.42, 0, { attack: 0.004, cents: 40 });
+      hiss(1700, 200, 0.3, 0.38, 1.1, 0, 'bandpass', 0.35);
+      hiss(480, 110, 0.34, 0.18, 0.7, 0.02, 'lowpass');
+    }
     // Under it, the room's bass.
     tone('sine', hz(bassLow()), hz(bassLow()) * 0.98, 0.32, 0.09, 0, { attack: 0.006, cents: 0 });
     tone('sine', hz(bassLow() - 12), 0, 0.28, 0.05, 0, { attack: 0.008, cents: 0 });
@@ -1520,8 +1626,10 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
     const step = clamp(combo - 1, 0, 4);
     const pulse = pulseFrom(t, 0.15);
     const first = pulse(0);
-    honk(hz(sungTone(2 + step)), 0.1, 0.09, first, -0.08);
-    honk(hz(sungTone(3 + step)), 0.12, 0.1, pulse(1), 0.08);
+    // In a pillow the delight is a soft mallet rather than a honk; every other texture keeps the clown's honks.
+    const delight = texture === 'pillow' ? (f, d, v, at, p) => marimba(f, d * 2, v * 0.6, at, p) : honk;
+    delight(hz(sungTone(2 + step)), 0.1, 0.09, first, -0.08);
+    delight(hz(sungTone(3 + step)), 0.12, 0.1, pulse(1), 0.08);
     // A run of WAPs fills the same way the room does: from two, the third; from four, the room's colour.
     if (step >= 1) tone('sine', hz(sound.minor ? 3 : sound.open ? 5 : 4), 0, 0.18, 0.03, first, { attack: 0.012, cents: 0 });
     if (step >= 3) celesta(hz(harmony.pcs[harmony.pcs.length - 1] + 12), 0.26, 0.016, pulse(1));
@@ -1542,6 +1650,10 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
     switch (kind) {
       // Footsteps know the ground: a brush of grass in the field, a tick of cobble in the city; left and right differ.
       case 'step':
+        // A chosen texture (=steps[…]): each still says which way, left and right a step apart.
+        if (textures.steps === 'tiptoe') { pluck(hz(sungTone(param > 0 ? 2 : 1)), 0.035); break; }
+        if (textures.steps === 'felt') { tone('sine', param > 0 ? 96 : 88, 60, 0.06, 0.03, 0, { attack: 0.006, cents: 0 }); hiss(500, 300, 0.05, 0.012, 0.7, 0, 'lowpass'); break; }
+        if (textures.steps === 'wood') { tock(param > 0 ? 760 : 680, param > 0 ? 560 : 500, 0.04); break; }
         if (sound.ground === 'field') {
           if (!sample('step-field')) {
             hiss(1400 + (param > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 });
@@ -1555,7 +1667,9 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         const a = nextNote(t);
         // Who carries is heard: the line takes the carrier's own instrument (themes on); the celesta otherwise.
         const sing = { porter: marimba, clerk: kalimba, genie: vibes }[sound.carrier] || celesta;
-        sing(hz(a), 0.18, 0.045);
+        // Jazz: every other caught note leans on the semitone above first, and lands a thirty-second later.
+        if (sound.jazz && (line.leaning = !line.leaning)) { sing(hz(a + 1), 0.07, 0.03); sing(hz(a), 0.2, 0.045, s32); }
+        else sing(hz(a), 0.18, 0.045);
         sing(hz(sungFrom(a)), 0.26, 0.035, answer, 0.1);
         break;
       }
@@ -1596,6 +1710,22 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         break;
       }
       case 'sweet': [0, 1, 2, 3].forEach((k) => vibes(hz(sungTone(k + 3)), 0.5, 0.04, k * s32, (k - 1.5) * 0.15)); break;
+      // The haggle (pie-finds.mjs): each price struck is a wooden tock a step lower, and a soft vibes note that falls
+      // with it, so the price is heard going down; then the coin handed back, two bright clinks and a glint. Cozy, and
+      // a little silly, since nobody was selling.
+      case 'haggle': {
+        const round = clamp(Number(param) || 0, 0, 2);
+        tock(560 - round * 70, 420 - round * 60, 0.05);
+        // Jazz walks the price down by semitones (the fifth, its flat, the fourth) rather than by the chord.
+        vibes(hz(sound.jazz ? 7 - round : sungTone(4 - round * 2)), 0.32, 0.03, s32 * 2);
+        break;
+      }
+      case 'coin':
+        // Jazz lands the coin on a six-nine, the ninth over the sixth.
+        celesta(hz(sound.jazz ? 26 : sungTone(5) + 12), 0.2, 0.04);
+        celesta(hz(sound.jazz ? 21 : sungTone(4) + 12), 0.32, 0.035, s32 * 1.5);
+        hiss(6200, 5200, 0.05, 0.012, 4, s32 * 1.5);
+        break;
       // A boneberry: low and woody, like a mallet on a bowl, savoury rather than sweet.
       case 'bone':
         marimba(hz(bassLow()), 0.3, 0.13);

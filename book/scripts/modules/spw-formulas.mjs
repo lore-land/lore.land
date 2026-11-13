@@ -13,7 +13,7 @@
  * the parser is not to be had. Nothing here touches the page or storage: the desk does that.
  */
 import { hands, combinatoricsFor, SIGIL_CARDS, QUARTERS, BAND_QUARTERS } from './competency.mjs?v=2026_11_11.A';
-import { readBoardLine, HOLDS } from '../home/pie-frame.mjs?v=2026_11_11.A';
+import { readBoardLine, HOLDS } from '../home/pie-frame.mjs?v=2026_11_13.B';
 
 /** @typedef {{ sigil: string, name: string, anchor: string, frame: Array<string | Term> | null, body: Term[] | null, capsule: boolean }} Term */
 /** @typedef {(text: string, options?: any) => any} Parse */

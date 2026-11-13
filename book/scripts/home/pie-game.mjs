@@ -184,15 +184,15 @@ import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as character
 import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_12.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
-import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_12.A';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_12.A';
-import { shelfColor, chainSting, tropeMotif, cadenceVoice, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding } from './pie-sound.mjs?v=2026_11_12.A';
+import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_13.B';
+import { shelfColor, chainSting, tropeMotif, cadenceVoice, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample } from './pie-sound.mjs?v=2026_11_13.B';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
 import { loadMotifs } from './pie-tropes.mjs';
-import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_12.A';
+import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_13.B';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
-import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_11.A';
+import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
 import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
@@ -200,21 +200,21 @@ import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
 import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_11.A';
 import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_11.A';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
-import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_13.A';
+import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_13.B';
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
 import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.A';
-import { initPieDraw } from './pie-draw.mjs?v=2026_11_13.A';
+import { initPieDraw } from './pie-draw.mjs?v=2026_11_13.B';
 import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_13.A';
-import { FINDS, readFind, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.A';
+import { FINDS, HAGGLE_BEATS, readFind, deedOf, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.B';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
   BIT_COLORS, CAUSES, CARRIERS, CHAPTER_SCENE, DIMENSIONS_GAINED, EGG_ODDS, HIGH_CLEARS,
   HOP_HANG, hopCurve, INTRO, JUMP_DUR, KNOCKS, LOW, MEET, MINIS, SCENES, SCENE_WHIMSY_DEFAULTS, SCHEMES, SLIPS,
   WHIMSY_DEFAULTS, WIDE, Z, carrierById, carrierStats, drawCarrierLot, pad2,
-} from './pie-world.mjs?v=2026_11_12.A';
+} from './pie-world.mjs?v=2026_11_13.B';
 
 const KEY = 'lore.pie.v1';
 const W = 360;
@@ -300,10 +300,18 @@ function readRecord() {
         swipeUp: ['step', 'hop'].includes(parsed.view?.swipeUp) ? parsed.view.swipeUp : (Number(parsed.runs) ? undefined : 'hop'),
         panels: ['auto', 'manual'].includes(parsed.view?.panels) ? parsed.view.panels : (Number(parsed.runs) ? undefined : 'auto'),
         cardPace: ['at-once', 'breath', 'quiet'].includes(parsed.view?.cardPace) ? parsed.view.cardPace : (Number(parsed.runs) ? undefined : 'breath'),
+        cardMore: parsed.view?.cardMore === true,
         // Music and rhythm: someone new hears the rhythms they find; a regular keeps the lanes as they knew them.
         music: ['quiet', 'groove', 'full'].includes(parsed.view?.music) ? parsed.view.music : (Number(parsed.runs) ? undefined : 'groove'),
         themes: ['calls', 'themes'].includes(parsed.view?.themes) ? parsed.view.themes : (Number(parsed.runs) ? undefined : 'themes'),
         glow: ['off', 'beat', 'bar'].includes(parsed.view?.glow) ? parsed.view.glow : undefined,
+        // Heard first: the warning for something close in your own lane, shaped by its height, one for all, or none.
+        // A regular keeps the warning as they first heard it (one for all); someone new hears it shaped by height.
+        cues: ['shaped', 'one', 'off'].includes(parsed.view?.cues) ? parsed.view.cues : (Number(parsed.runs) ? undefined : 'shaped'),
+        // Textures (pie-sound.mjs TEXTURES): the WAP and a step across the lanes, as chosen; the first of each by default.
+        feel: ['written', 'jazz'].includes(parsed.view?.feel) ? parsed.view.feel : undefined,
+        wap: TEXTURES.wap.includes(parsed.view?.wap) ? parsed.view.wap : undefined,
+        steps: TEXTURES.steps.includes(parsed.view?.steps) ? parsed.view.steps : undefined,
         // How the screen is held, and whether full screen fills it (pie-frame.mjs). Fill is chosen, not given: a hold
         // that fills, or Setup, turns it on (until it has been seen on real screens it is nobody's default).
         hold: ALLOWED.hold.includes(parsed.view?.hold) ? parsed.view.hold : undefined,
@@ -312,7 +320,7 @@ function readRecord() {
       sound: parsed.sound !== false
     };
   } catch {
-    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false, hand: 'right', show: 'off', swipeUp: 'hop', panels: 'auto', wide: 'window', cardPace: 'breath' }, sound: true };
+    return { best: 0, runs: 0, waps: 0, bestWaps: 0, causes: {}, carriers: {}, perfects: 0, satisfied: 0, shared: 0, sweetened: 0, foils: 0, reached: 0, wasted: 0, eggs: 0, kept: 0, lore: [], met: [], cards: [], qa: [], view: { story: true, zen: false, hand: 'right', show: 'off', swipeUp: 'hop', panels: 'auto', wide: 'window', cardPace: 'breath', cues: 'shaped' }, sound: true };
   }
 }
 
@@ -1028,7 +1036,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: ['bane', 0.6], let_past: ['bane', 0.3],
     perfect: ['bone', 1], over_mimes: ['bone', 1], ramp: ['bone', 0.6], hop_clear: ['bone', 0.5], deft: ['bone', 0.6],
     caught: ['bone', 0.5], boneberry: ['bone', 0.6], foiled: ['bone', 1], squashed: ['bone', 0.4], ahead: ['bone', 0.3],
-    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], pocket: ['bone', 0.3], read: ['boon', 0.2], cast: ['bone', 0.5]
+    aimed: ['bone', 0.3], alley: ['bone', 0.6], parade: ['boon', 0.6], long_view: ['bone', 0.6], in_time: ['bone', 0.5], pocket: ['bone', 0.3], read: ['boon', 0.2], cast: ['bone', 0.5],
+    // What a season or a stream sends counts only when hands take it: a dolphin ridden, a donut eaten, a boon rose
+    // kept, a wilted rose walked through, a thing the other side sent hopped. A gift landing leans nothing.
+    dolphin: ['boon', 0.5], boonrose: ['boon', 0.5], wilted: ['boon', 0.3], donut: ['bone', 0.3], turned: ['bone', 0.6]
   });
   const LEAN_WORDS = Object.freeze({
     satisfied: 'clowns satisfied', shared: 'slices shared', kept: 'wonders kept', egg: 'the warm thing passed', sweetened: 'baneberries sweetened',
@@ -1037,14 +1048,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     flinched: 'flinches', let_past: 'baneberries let past',
     perfect: 'perfect throws', over_mimes: 'over the mimes', ramp: 'ramps', hop_clear: 'hops clean', deft: 'deft landings',
     caught: 'tilts caught', boneberry: 'boneberries', foiled: 'Mr. BaneWAP foiled', squashed: 'foretellings left unsaid', ahead: 'moments up the lanes',
-    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', pocket: 'moves in the pocket', read: 'words read underfoot', cast: 'rooms cast'
+    aimed: 'arrows followed', alley: 'vane alleys', parade: 'parades', long_view: 'long views', in_time: 'hops in time', pocket: 'moves in the pocket', read: 'words read underfoot', cast: 'rooms cast',
+    dolphin: 'dolphins ridden', boonrose: 'boon roses kept', wilted: 'wilted roses walked through', donut: 'donuts eaten', turned: 'what the other side sent, hopped'
   });
   let leanRules = {};
+  // A find leans the way its own line says (=lean[…], pie-finds.mjs), under its deed's name (find_<id>).
+  const leanRow = (event) => leanRules[event] || LEAN_DEFAULTS[event] || FIND_LEANS[event] || [];
+  const leanWord = (event) => LEAN_WORDS[event] || FIND_WORDS[event] || event.replace(/_/g, ' ');
   const lean = (event, n = 1) => {
-    const [cat, w] = leanRules[event] || LEAN_DEFAULTS[event] || [];
-    if (!cat || !run?.tally) return;
+    if (!run?.tally) return;
+    const [cat, w] = leanRow(event);
+    if (!cat) return;
     tally(cat, w * n);
-    noteFeed({ cat, pts: w * n, event, word: LEAN_ONE[event] || LEAN_WORDS[event] || event.replace(/_/g, ' ') });
+    noteFeed({ cat, pts: w * n, event, word: LEAN_ONE[event] || leanWord(event) });
     if (event !== 'cast') castIfRoomAsks(event);
     // Every event of the leg is a deed the book's margins may count (keepDeeds, references.mjs).
     if (run.legEvents) run.legEvents[event] = (run.legEvents[event] || 0) + n;
@@ -1073,7 +1089,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     knocked: 'a knock', boxed: 'a slice boxed', bane_fed: 'a baneberry fed to him', scheme_ran: 'a scheme run', foretold: 'a foretelling come true',
     flinched: 'a flinch', let_past: 'a baneberry let past', perfect: 'a perfect throw', over_mimes: 'over the mimes', ramp: 'off a ramp',
     hop_clear: 'a clean hop', deft: 'a deft landing', caught: 'a tilt caught', boneberry: 'a boneberry', foiled: 'Mr. BaneWAP foiled',
-    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', pocket: 'in the pocket', read: 'a word read underfoot', cast: 'a room cast'
+    squashed: 'a foretelling left unsaid', ahead: 'up the lanes, ahead', aimed: 'an arrow followed', alley: 'Vane Alley', parade: 'The Parade', long_view: 'The Long View', in_time: 'a hop in time', pocket: 'in the pocket', read: 'a word read underfoot', cast: 'a room cast',
+    dolphin: 'a dolphin ridden', boonrose: 'a boon rose kept', wilted: 'a wilted rose walked through', donut: 'a donut eaten', turned: 'a thing the other side sent, hopped'
   });
   /* The contest with Mimes Against WAP: what scores for the pie, and what for the mimes. */
   const CONTEST = Object.freeze({
@@ -1336,6 +1353,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const RING_TIDE = SEASONS.find((s) => s.id === 'ringtide');
   function meetDolphin(dolphin) {
     dolphin.ride = dolphin.faint ? 2 : 6;
+    lean('dolphin');
     if (!dolphin.gift && run.season?.season.kind === 'dolphin') meetPlace(dolphin);
     else {
       dolphin.met = true;
@@ -1366,6 +1384,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     spawnRing(donut.x, donut.y, 22, '#e98fb0', 0.45);
     run.tags.push({ x: donut.x, y: donut.y - 22, t: 0, text: '+ DONUT · FILLING · SLICES FILL MORE' });
     if (run.donuts === 1) { showToast('A donut', power?.says || '', 3200, 'wonder'); say(`A donut. ${power?.says || ''}`); }
+    lean('donut');
     noteDeed('eat', 'donut');
   }
   /* Finds (pie-finds.mjs): what opens only to a rare carry played well. The lanes say what happened, a deed at a
@@ -1373,6 +1392,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * moment, drawn and not said), shows a character's own want or limit from a new side, gives the rest of the carry
    * something, and keeps a sealed line, by play only. On a stream (?live) it deepens that gift for the room. */
   const FIND_RULES = FINDS.map((find) => ({ find, rule: readFind(find.rule) }));
+  const FIND_LEANS = Object.freeze(Object.fromEntries(FIND_RULES.filter(({ rule }) => rule.lean).map(({ find, rule }) => [deedOf(find), [rule.lean, 1]])));
+  const FIND_WORDS = Object.freeze(Object.fromEntries(FINDS.map((find) => [deedOf(find), `${find.name.replace(/^The /, '').toLowerCase()} found`])));
   const FINDS_KEY = 'lore.pie.finds.v1';
   function noteDeed(verb, kind) {
     if (!run) return;
@@ -1384,6 +1405,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
   function openFind(find, rule) {
     (run.found ||= {})[find.id] = true;
+    // What the hands did leans the land the way the find's line says, and is kept on this chapter at once, spilled
+    // or not: the deed makes the find's artifact in the almanac and turns its margin rumour in the book.
+    const deed = deedOf(find);
+    lean(deed);
+    if (run.legEvents) delete run.legEvents[deed];   // kept here if at all, and not again when the leg closes
+    // A find held from the book (no artifact, no margin) leans the carry and keeps nothing on the chapter.
+    if (find.made || find.margin) keepDeeds(run.chapter, { [deed]: 1 });
     let first = false;
     try {
       const had = JSON.parse(localStorage.getItem(FINDS_KEY) || '{}') || {};
@@ -1406,6 +1434,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     try { if (rule.crosses) noteCrossing(rule.crosses, 'lanes'); } catch { /* the stage waits */ }
     showToast(`✧ ${find.name}${first ? ' · a find' : ''}`, find.says, 6400, 'wonder', 2);
     say(`${find.name}. ${find.says}`);
+    if (find.made) makeFromDeeds(run.chapter);   // its card waits behind the find's own (the pacer keeps the order)
     if (liveDesk) { markLiveFound(find.id); liveDesk.found(find); }
   }
   /* Gifts from a live stream (pie-live.mjs), only when the address asks (?live): typed on the gift desk or sent
@@ -3387,7 +3416,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const total = ROOM_TOTALS[n] || 0;
     const tries = [];
     const z = Z[cause];
-    const thingName = (CARDS[cause]?.name || cause).replace(/^(A|An|The) /, '').toLowerCase();
+    const thingName = (CARDS[cause]?.name || MEET[cause]?.[0] || cause).replace(/^(A|An|The) /, '').toLowerCase();
     if (LOW.has(cause)) tries.push({ text: `The ${thingName} was low enough to hop. ⤒ Heights shows the moment to hop it.`, label: '⤒ Open Heights', act: () => { if (heightsPanel) { heightsPanel.open = true; heightsPanel.scrollIntoView({ block: 'nearest' }); } } });
     else if (HIGH_CLEARS.has(cause)) tries.push({ text: `Only a high hop clears a ${thingName}: three clean hops in a row. Or step aside a lane early.` });
     else if (z >= 3) tries.push({ text: `The ${thingName} came through the air: no hop helps. Step aside before it reaches your lane.` });
@@ -4442,10 +4471,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const why = run?.leanWhy || {};
     const parts = ['boon', 'bane', 'bone'].map((cat) => {
       const reasons = Object.entries(why)
-        .filter(([event]) => ((leanRules[event] || LEAN_DEFAULTS[event]) || [])[0] === cat)
+        .filter(([event]) => leanRow(event)[0] === cat)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 2)
-        .map(([event, n]) => `${Math.round(n)} ${LEAN_WORDS[event] || event.replace(/_/g, ' ')}`);
+        .map(([event, n]) => `${Math.round(n)} ${leanWord(event)}`);
       return reasons.length ? `${LEAN_NAMES[cat]}: ${reasons.join(', ')}` : null;
     }).filter(Boolean);
     return parts.length ? `Why: ${parts.join(' · ')}.` : 'Nothing has leaned it yet.';
@@ -4689,13 +4718,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const calm = run.breath > 0 || !run.things.some((th) => th.fatal && !th.wapped && th.y < run.y + 10 && run.y - th.y < 230);
       // A first carry ever (none finished yet, and not the introductions): the lanes come first. The first card waits
       // until the pie has been in the player's hands for ten seconds; a phone visit used to open one a second in.
-      const floor = !run.intro && record.runs === 0 ? 10 : 0;
-      if (run.t >= floor && (pace !== 'breath' || head.waited > 20 || (calm && head.waited > 1))) {
+      // At a breath, nobody meets a card in a carry's first moments either: six seconds in hand first. At once stays
+      // at once, as whoever chose it knows it (a floor there only piles the cards up to open back to back).
+      const floor = run.intro ? 0 : record.runs === 0 ? 10 : pace === 'breath' ? 6 : 0;
+      // At a breath, cards keep their distance: twelve seconds of carrying between two, so a room full of first
+      // meetings does not stop the carry three times running.
+      const spaced = pace !== 'breath' || run.lastCardT == null || run.t - run.lastCardT >= 12;
+      if (run.t >= floor && spaced && (pace !== 'breath' || head.waited > 20 || (calm && head.waited > 1))) {
+        run.lastCardT = run.t;
         openReveal(run.revealQueue.shift());
         return;
       }
     }
     run.t += dt;
+    // The haggle is heard as it is drawn, on the carry's own clock: a tock for each struck price, then the coin.
+    run.moments?.forEach((m) => {
+      if (m.kind !== 'haggle') return;
+      const age = run.t - m.t0;
+      m.heard ||= 0;
+      while (m.heard < HAGGLE_BEATS.strikes.length && age >= HAGGLE_BEATS.strikes[m.heard]) { sfx('haggle', m.heard, run.x, run.y); m.heard += 1; }
+      if (!m.coin && age >= HAGGLE_BEATS.coin) { m.coin = true; sfx('coin', 0, run.x, run.y); }
+    });
     if (state === 'running') {
       // The pace: gentle at first, building by the chapter and the minute. (A lag-stag lags the city, not the carrier.)
       const pace = Math.min(350, 150 + run.t * 2.2 + (run.chapter - 1) * 5 + run.lap * 40);
@@ -4805,6 +4848,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (run.bane) {
         const b = run.bane;
         b.t += dt;
+        // The bloom garden (a trial), as in Chapter Eleven: every bud opens at once for him, and a flower opened on demand
+        // has not had time to fill. While he schemes there, whatever the scheme (the step tax has no beats of its own),
+        // a bane rose opens up the lanes soon after he begins, and later ones may: thorned, low enough to hop, never in
+        // the lane that is the way through as it opens (the way moves on with the next row; a rose can always be
+        // hopped), three at most a scheme.
+        if (switchOn('bloom-garden') && run.chapter === 11 && (b.roses || 0) < 3) {
+          b.bloomIn = (b.bloomIn ?? 1.6) - dt;
+          if (b.bloomIn <= 0) {
+            b.bloomIn = 2.2;
+            if (!b.roses || Math.random() < 0.5) {
+              const lanes = [...Array(LANES).keys()].filter((lane) => lane !== run.safe);
+              const rose = makeThing('banerose', pick(lanes));
+              rose.bloom = true;
+              rose.wayWas = run.safe;   // the way through as it stood when this rose opened: never its lane
+              if (run.wilting) Object.assign(rose, { wilted: true, fatal: false });
+              run.things.push(rose);
+              b.roses = (b.roses || 0) + 1;
+            }
+          }
+        }
         if (b.id !== 'tax') {
           b.nextBeat -= dt * (1 + run.dust * 1.2);   // fed on flour in the air, his scheme quickens
           if (b.nextBeat <= 0) {
@@ -5171,13 +5234,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           const gap = run.y - thing.y;
           if (thing.fatal && !thing.knocked && !thing.cleared && !(run.unkept > 0) && gap > 50 && gap < 170 && laneAt(thing.x) === run.lane && thing.warnedIn !== run.lane) {
             thing.warnedIn = run.lane;
-            laneWarning(panOf(thing.x), 1 - (gap - 50) / 120);
-            // Said in words the first time, so the pulses can be learned.
-            if (!met('lane-warn')) {
-              record.met.push('lane-warn');
-              writeRecord(record);
-              showToast('Two low pulses', 'Something that would knock you is close in your own lane. Step aside, or hop.', 3600, '');
-              say('Two low pulses: something that would knock you is close in your own lane. Step aside, or hop.');
+            // Shaped (Setup, Heard first): two pulses that rise for something low enough to hop, two that fall for
+            // something that stands tall, so the ear knows which way to go; or one warning for all; or none.
+            const cues = setting('cues');
+            if (cues !== 'off') {
+              const shape = cues === 'one' ? 'one' : LOW.has(thing.kind) ? 'low' : 'tall';
+              laneWarning(panOf(thing.x), 1 - (gap - 50) / 120, shape);
+              // Said in words the first time, so the pulses can be learned.
+              const key = shape === 'one' ? 'lane-warn' : 'lane-shape';
+              if (!met(key)) {
+                record.met.push(key);
+                writeRecord(record);
+                const [title, line] = shape === 'one'
+                  ? ['Two low pulses', 'Something that would knock you is close in your own lane. Step aside, or hop.']
+                  : ['Heard first', 'Something that would knock you is close in your own lane. Two pulses that rise: it is low, so hop it or step aside. Two that fall: it stands tall, so step aside.'];
+                showToast(title, line, 4200, '');
+                say(`${title}: ${line}`);
+              }
             }
           }
         }
@@ -5238,6 +5311,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             run.cleared += 1;
             noteDeed('hop', thing.kind);
             lean('hop_clear');
+            if (thing.rival) lean('turned');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
             // In time: cleared in the hang, the flat top of the hop. A run of them is a rhythm.
@@ -5363,8 +5437,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
           continue;
         }
-        if (run.unkept > 0) {
-          // Unkept: for a moment nothing in the lanes can hold the carrier.
+        // Unkept: for a moment nothing in the lanes can hold the carrier. What a tide or a stream gave is still taken:
+        // a dolphin used to carry the pie straight past its own donuts, and past the haggle with them.
+        const given = !thing.fatal && (thing.gift || thing.kind === 'donut' || thing.kind === 'boonrose' || thing.kind === 'dolphin');
+        if (run.unkept > 0 && !given) {
           if (!thing.passed) {
             thing.passed = true;
             run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: 'UNKEPT' });
@@ -5442,6 +5518,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           sfx('sweet', 0, thing.x, thing.y);
           spawnRing(thing.x, thing.y, 24, '#d62f4a', 0.45);
           run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: '+ BOON ROSE · FILLING · GLIMPSE' });
+          lean('boonrose');
           noteDeed('meet', 'boonrose');
           continue;
         }
@@ -5449,6 +5526,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // A bane rose wilted by the sniff: walked through, and the crust takes what it was.
           if (!thing.trodden) {
             thing.trodden = true;
+            lean('wilted');
             run.aura = Math.min(1, run.aura + 0.06);
             run.tags.push({ x: thing.x, y: thing.y - 20, t: 0, text: '+ CRUST · A WILTED ROSE' });
           }
@@ -7200,8 +7278,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.strokeStyle = ring.color;
       ctx.globalAlpha = (1 - k) * 0.7;
       ctx.lineWidth = Math.max(1, 2.4 * (1 - k));
+      if (ring.dashed) ctx.setLineDash([5, 4]);
       ctx.beginPath();
-      ctx.arc(ring.x, ring.y, ring.r0 + (ring.r1 - ring.r0) * k, 0, Math.PI * 2);
+      // The radius the update keeps (ring.r, from 4 out to maxR). This read r0 and r1, which no ring has, so the
+      // radius was not a number and no ring was ever drawn; the smoke now counts a ring's pixels.
+      ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
     });
@@ -8316,6 +8397,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   function applySetup({ replan = true } = {}) {
     setMusicBed(record.sound && setting('music') === 'full');
+    setSoundTextures({ wap: setting('wap'), steps: setting('steps') });
+    setSoundFeel(setting('feel'));
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');
     // The whole window, if chosen: the plan budgets from the width the voyage then has.
     cabinetVoyage?.classList.toggle('is-wide', setting('wide') === 'window');
@@ -8710,6 +8793,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           lastTerm = key;
           writeRecord(record);
           applySetup();
+          // A sound chosen is heard at once, so the choice is made by ear.
+          if (record.sound && ['wap', 'steps', 'cues', 'feel'].includes(key)) {
+            try {
+              primeAudio();
+              if (key === 'wap') wapSound(1, 0, 0);
+              if (key === 'feel') feelSample(value);
+              if (key === 'steps') { playTone('step', -1); setTimeout(() => playTone('step', 1), 180); }
+              if (key === 'cues' && value !== 'off') { laneWarning(0, 0.8, value === 'one' ? 'one' : 'low'); if (value === 'shaped') setTimeout(() => laneWarning(0, 0.8, 'tall'), 420); }
+            } catch { /* chosen, if not heard */ }
+          }
           paintSetup();
           requestAnimationFrame(placeSetup);   // the controls may have moved under it
         });
@@ -9267,7 +9360,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // ⚙ Setup › New cards: at once (the carry pauses as it meets one), at the next breath (a section's break, or
     // when nothing is coming; the carry is never stopped mid-dodge), or quietly (never paused, only marked).
     const pace = run.intro ? 'at-once' : setting('cardPace');
-    const pause = record.view.story && !record.view.zen && (run.intro || isNew) && pace !== 'quiet';
+    // At a breath, two cards may wait at once; a third first meeting goes to the deck quietly, marked in the lanes.
+    const crowded = pace === 'breath' && run.revealQueue.length >= 2;
+    const pause = record.view.story && !record.view.zen && (run.intro || isNew) && pace !== 'quiet' && !crowded;
     if (pause) {
       run.revealQueue.push({ kind, isNew, moment: momentOf(), waited: 0 });
       if (pace === 'breath') run.tags.push({ x: W / 2, y: 98, t: 0, text: `✦ NEW CARD · ${CARDS[kind].name.toUpperCase()} · AT THE NEXT BREATH` });
@@ -9437,6 +9532,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     });
     return [...lines.values()].map((line) => ({ cat: line.cat, text: `${line.words}: ${line.parts.join(' · ')}` }));
   }
+  /** The first sentence of a card's words: what its front says. */
+  const firstSentence = (text) => /^.*?[.!?](?=\s|$)/.exec(String(text || ''))?.[0] || String(text || '');
   function renderCard(kind, { moment = null, isNew = false, live = false, compact = false, ask = null } = {}) {
     const c = CARDS[kind];
     const face = nodeOf('article', `pie-cardface type-${c.type}${compact ? ' is-compact' : ''}${live ? ' is-live' : ''}`);
@@ -9588,6 +9685,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     tableHost.append(qa, status);
     if (tableFold) face.append(tableFold);
     if (live) {
+      // A card met mid-carry opens on its front: one sentence of what it is, one of what it does (a carrier keeps
+      // their knack and bars instead), and its numbers as chips. Everything else is one fold away, and the fold stays
+      // open for whoever opens it (record.view.cardMore), so nobody loses the whole card.
+      const front = new Set(['pie-cardface-type', 'pie-cardface-sprite', 'pie-cardface-name', 'pie-cardface-register', 'pie-cardface-chips', 'pie-cardface-carrier', 'pie-cardface-ask']);
+      const more = nodeOf('details', 'pie-cardface-more');
+      more.append(nodeOf('summary', '', 'More: its story, its trope and its spell'));
+      [...face.children].forEach((child) => { if (![...front].some((cls) => child.classList.contains(cls))) more.append(child); });
+      const brief = nodeOf('p', 'pie-cardface-front');
+      brief.append(nodeOf('span', 'pie-cardface-is', firstSentence(c.story)));
+      if (!carrier) brief.append(' ', nodeOf('span', 'pie-cardface-does', firstSentence(c.lanes)));
+      face.querySelector('.pie-cardface-name')?.after(brief);
+      more.open = record.view.cardMore === true;
+      more.addEventListener('toggle', () => { record.view.cardMore = more.open; writeRecord(record); });
+      face.append(more);
       const foot = nodeOf('div', 'pie-cardface-foot');
       const go = nodeOf('button', 'pie-intro-go', 'Play on ▸');
       go.type = 'button';
@@ -9698,7 +9809,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     introOut.hidden = false;
     introOut.querySelector('.pie-intro-go')?.focus({ preventScroll: true });
     const c = CARDS[item.kind];
-    say(`${CARD_TYPES[c.type]}: ${c.name}. ${c.story} In the lanes: ${c.lanes}`);
+    say(`${CARD_TYPES[c.type]}: ${c.name}. ${firstSentence(c.story)} In the lanes: ${firstSentence(c.lanes)} More is on the card.`);
   }
   function closeReveal() {
     if (state !== 'revealing') return;

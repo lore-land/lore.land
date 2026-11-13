@@ -117,7 +117,7 @@ export const REACTIONS = Object.freeze({
   'knock:banner': [row('carrier', 'surprised', 'Walks into an announcement.')],
   'knock:subject': [row('carrier', 'worried', 'Collides with someone halfway through an errand. Both go on.')],
   'knock:snail': [row('carrier', 'thinking', 'Is stopped by a snail, which was in no hurry to be struck.')],
-  'knock:banerose': [row('carrier', 'worried', 'Walks into a rose that was sent to the other side. It has kept its thorns.')],
+  'knock:banerose': [row('carrier', 'worried', 'Walks into a rose opened for somebody else. It has kept its thorns.')],
   'knock:clerk': [
     row('carrier', 'worried', 'Is handed a slip. It has a word at the top.'),
     carrying(row('clerk', 'thinking', 'The clerk writes a slip for the clerk, and fills in the cause.'))

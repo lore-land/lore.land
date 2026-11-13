@@ -114,6 +114,10 @@ export const SETUP = Object.freeze([
   ['music', 'Music', [['quiet', 'Only what happens'], ['groove', 'Rhythms you have found, softly'], ['full', 'Rhythms and the room’s chord, held']], 'quiet'],
   ['themes', 'Characters', [['calls', 'A short call each'], ['themes', 'Their own themes, and how the chapter leans']], 'calls'],
   ['glow', 'Glow', [['off', 'Off'], ['beat', 'On every beat'], ['bar', 'On the first of each bar']], 'off'],
+  ['cues', 'Heard first', [['shaped', 'Low things rise, tall things fall'], ['one', 'One warning for all'], ['off', 'No warning']], 'one'],
+  ['feel', 'Feel', [['written', 'As each chapter is written'], ['jazz', 'Jazz: swung hard, chords with tension, notes that lean before they land']], 'written'],
+  ['wap', 'The WAP', [['splat', 'A splat, crust over filling'], ['pillow', 'Into a pillow, soft'], ['cream', 'Whipped cream and a slide whistle'], ['bell', 'A fairground bell']], 'splat'],
+  ['steps', 'A step across the lanes', [['ground', 'The ground underfoot'], ['tiptoe', 'Tiptoe, a plucked note'], ['felt', 'Felt slippers, hushed'], ['wood', 'A woodblock tock']], 'ground'],
   ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
   ['storyAt', 'The story', [['beside', 'Beside the screen'], ['under', 'Under the screen'], ['off', 'Folded away']], 'beside'],
   ['storyIn', 'Story in the lanes', [['caption', 'A caption'], ['road', 'On the road'], ['both', 'Both'], ['off', 'Not in the lanes']], 'auto'],
@@ -133,7 +137,7 @@ export const SETUP_GROUPS = Object.freeze([
   ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
   ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
   ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']],
-  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow']]
+  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow', 'feel', 'cues', 'wap', 'steps']]
 ]);
 
 /* ─── How a screen is held: each a set of choices made at once, drawn, and said as Spw ───

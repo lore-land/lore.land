@@ -14,17 +14,17 @@
   c02: { title: "The First Echo" rooms: 6 wonders: 4 people: 0 lanes: 0 lore: 1 palette: 1 total: 6 so_far: 14 lanes_bring: "nothing new" }
   c03: { title: "Signals in the Sand" rooms: 5 wonders: 7 people: 1 lanes: 0 lore: 1 palette: 1 total: 10 so_far: 24 lanes_bring: "nothing new" }
   c04: { title: "Crosswind Council" rooms: 5 wonders: 5 people: 1 lanes: 0 lore: 1 palette: 1 total: 8 so_far: 32 lanes_bring: "nothing new" }
-  c05: { title: "The Quiet Rift" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 1 palette: 1 total: 5 so_far: 37 lanes_bring: "nothing new" }
-  c06: { title: "Lanterns of Bonk City" rooms: 5 wonders: 10 people: 1 lanes: 0 lore: 3 palette: 1 total: 15 so_far: 52 lanes_bring: "nothing new" }
-  c07: { title: "Blueberry Oath" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 1 palette: 1 total: 5 so_far: 57 lanes_bring: "nothing new" }
-  c08: { title: "Songs of the Watering Eye" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 1 palette: 1 total: 5 so_far: 62 lanes_bring: "nothing new" }
-  c09: { title: "Shards of Nine Honks" rooms: 5 wonders: 4 people: 0 lanes: 0 lore: 1 palette: 1 total: 6 so_far: 68 lanes_bring: "nothing new" }
-  c10: { title: "Bone.land Resonance" rooms: 5 wonders: 5 people: 1 lanes: 0 lore: 1 palette: 1 total: 8 so_far: 76 lanes_bring: "nothing new" }
-  c11: { title: "Paradox Bloom" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 4 palette: 1 total: 8 so_far: 84 lanes_bring: "nothing new" }
-  c12: { title: "The Last Confluence" rooms: 5 wonders: 7 people: 0 lanes: 0 lore: 4 palette: 1 total: 12 so_far: 96 lanes_bring: "nothing new" }
-  c13: { title: "The Shell-Shaped Door" rooms: 5 wonders: 5 people: 0 lanes: 0 lore: 1 palette: 1 total: 7 so_far: 103 lanes_bring: "nothing new" }
-  c14: { title: "The Thursday Nobody Kept" rooms: 8 wonders: 7 people: 1 lanes: 0 lore: 3 palette: 1 total: 12 so_far: 115 lanes_bring: "nothing new" }
-  c15: { title: "Pupil, Parcel, or Door" rooms: 6 wonders: 11 people: 2 lanes: 0 lore: 3 palette: 1 total: 17 so_far: 132 lanes_bring: "nothing new" }
+  c05: { title: "The Quiet Rift" rooms: 5 wonders: 4 people: 0 lanes: 0 lore: 1 palette: 1 total: 6 so_far: 38 lanes_bring: "nothing new" }
+  c06: { title: "Lanterns of Bonk City" rooms: 5 wonders: 10 people: 1 lanes: 0 lore: 3 palette: 1 total: 15 so_far: 53 lanes_bring: "nothing new" }
+  c07: { title: "Blueberry Oath" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 1 palette: 1 total: 5 so_far: 58 lanes_bring: "nothing new" }
+  c08: { title: "Songs of the Watering Eye" rooms: 5 wonders: 3 people: 0 lanes: 0 lore: 1 palette: 1 total: 5 so_far: 63 lanes_bring: "nothing new" }
+  c09: { title: "Shards of Nine Honks" rooms: 5 wonders: 4 people: 0 lanes: 0 lore: 1 palette: 1 total: 6 so_far: 69 lanes_bring: "nothing new" }
+  c10: { title: "Bone.land Resonance" rooms: 5 wonders: 5 people: 1 lanes: 0 lore: 1 palette: 1 total: 8 so_far: 77 lanes_bring: "nothing new" }
+  c11: { title: "Paradox Bloom" rooms: 5 wonders: 4 people: 0 lanes: 0 lore: 4 palette: 1 total: 9 so_far: 86 lanes_bring: "nothing new" }
+  c12: { title: "The Last Confluence" rooms: 5 wonders: 7 people: 0 lanes: 0 lore: 4 palette: 1 total: 12 so_far: 98 lanes_bring: "nothing new" }
+  c13: { title: "The Shell-Shaped Door" rooms: 5 wonders: 5 people: 0 lanes: 0 lore: 1 palette: 1 total: 7 so_far: 105 lanes_bring: "nothing new" }
+  c14: { title: "The Thursday Nobody Kept" rooms: 8 wonders: 7 people: 1 lanes: 0 lore: 3 palette: 1 total: 12 so_far: 117 lanes_bring: "nothing new" }
+  c15: { title: "Pupil, Parcel, or Door" rooms: 6 wonders: 11 people: 2 lanes: 0 lore: 3 palette: 1 total: 17 so_far: 134 lanes_bring: "nothing new" }
 }
 
 ?flags{

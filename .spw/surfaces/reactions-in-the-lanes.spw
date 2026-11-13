@@ -21,6 +21,8 @@
   taken: "a power taken, by the word it does longest: take:lit, take:lag, take:unkept, take:warm, take:fed, take:glimpse, take:true_aim, then its charges, its acts and what it feeds"
   run_out: "a timed power running out: end:lit, end:lag, end:unkept, end:warm, end:fed, end:glimpse, end:true_aim. Before this, a power ended with nothing said"
   knock: "a knock, one moment for each thing the road can knock with"
+  gift: "gift:mine, gift:finger_heart, gift:hi_bear and gift:rival: on a stream (pie-live.mjs, ?live) the lanes answer what is sent, someone standing first; a gift to the other side is answered by Mr. BaneWAP accepting it on their behalf"
+  story: "story:boon and story:bane: a passage going by that leans one way is answered by someone who leans with it (pie-story-lane.mjs)"
   table: ~"book/scripts/home/pie-reactions.mjs"
   size: "41 moments and 64 rows on 2026-11-12; reactions:check holds every knock, timed power and spell word to an answer for each of the five carriers"
 }

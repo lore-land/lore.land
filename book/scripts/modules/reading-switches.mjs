@@ -147,6 +147,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'bloom-garden', attribute: 'data-switch-bloom-garden', stage: 'trial', layer: 'trial', label: 'The bloom garden',
+    hint: 'In Chapter Eleven every bud in the bloom garden opens at once for Mr. BaneWAP. With this on, while he schemes there in the lanes, the garden answers him: thorned roses come up the road, low enough to hop and never in the way through. Something about them is worth finding.',
+    effect: { on: 'In Chapter Eleven, his schemes open thorned roses up the lanes.', off: 'His schemes in Chapter Eleven are as they were.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'trope-reveal', attribute: 'data-switch-trope-reveal', stage: 'trial', layer: 'trial', label: 'Tropes deepen as you go',
     hint: 'Each trope shows only as far as you have come with it: seeded, hinted, named, turned, paid off. Read on, carry the pie past it, or write it at the desk, and it says more.',
     effect: { on: 'Tropes show the stage you have reached.', off: 'Tropes show as they always have.' },

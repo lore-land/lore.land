@@ -18,6 +18,7 @@ import { SCENES } from '../home/pie-world.mjs';
 import { CARDS } from '../home/pie-cards.mjs';
 import { ANT_KINDS } from '../home/pie-ants.mjs';
 import { SEASON_KINDS } from '../home/pie-seasons.mjs';
+import { POWER_SPELLS } from '../home/pie-powers.mjs';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -179,6 +180,11 @@ const sum = (/** @type {Record<string, number>} */ v) => Object.values(v).reduce
   const rules = readFileSync(resolve(ROOT, '.spw/runtime/pie-rules.spw'), 'utf8');
   const knocks = /!knocks\{([\s\S]*?)\n\}/.exec(rules)?.[1] || '';
   [...knocks.matchAll(/\*([a-z_]+)\{/g)].forEach((m) => kinds.add(m[1]));
+  // The book's rules replace the built-in powers whole once they load (pie-game.mjs compose), so a built-in power the
+  // rules leave out is lost in play: antiques and artifacts gave a creature's gift for want of their own two lines.
+  const powers = /\*powers\{([\s\S]*?)\n\}/.exec(rules)?.[1] || '';
+  const ruled = new Set([...powers.matchAll(/\*([a-z_]+)\{/g)].map((m) => m[1]));
+  Object.keys(POWER_SPELLS).forEach((id) => { if (!ruled.has(id)) fail(`the built-in power ${id} is not in pie-rules.spw *powers{}: once the rules load, it is lost`); });
   let nobody = 0;
   kinds.forEach((kind) => {
     const r = reasonFor(kind);

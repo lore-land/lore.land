@@ -16,59 +16,78 @@
  *   ~within[s]        the whole sequence inside s seconds
  *   ^moment[id]       the classic beat it plays, drawn and not said
  *   #crosses[trope]   the trope it crosses (book/content/world/tropes.json)
+ *   =lean[shelf]      which way it leans the land when it opens: boon, bane or bone, tallied as a deed by hand
  *
  * What a find opens: a moment (a freeze, a double take, a price tag), a character's own want or limit seen from a
  * side the lanes had not shown (REASONS in characters.mjs; no new plot), a benefit for the rest of the carry, and a
  * sealed line kept by play and nothing else. On a live stream it also deepens that gift for everyone's gifts for the
  * rest of the visit, so whoever finds it finds it for the room. Nobody here speaks: the words are narration.
- * (.spw/surfaces/finds.spw)
+ *
+ * What a find hands the book: it is kept at once as a deed on its chapter (deedOf: find_<id>), spilled or not, and
+ * that deed makes its artifact in the almanac (almanac.json made_by) and turns its margin rumour (references.json
+ * track.after.count), so the book retells what the hands did. (.spw/surfaces/finds.spw)
  */
 
 /** @typedef {{ verb: string, kind: string, count: number, lanes: number }} Step */
-/** @typedef {{ id: string, carrier: string, steps: Step[], within: number, moment: string, crosses: string, errors: string[] }} FindRule */
+/** @typedef {{ id: string, carrier: string, steps: Step[], within: number, moment: string, crosses: string, lean: string, errors: string[] }} FindRule */
 /** @typedef {{ verb: string, kind: string, t: number, lane?: number }} Deed */
-/** @typedef {{ id: string, name: string, rule: string, who: string, grounds: 'want' | 'limit', says: string, live: string, riddle: string }} Find */
+/** @typedef {{ id: string, name: string, rule: string, who: string, grounds: 'want' | 'limit', says: string, live: string, riddle: string, made: string, margin: string }} Find */
 
 /** The verbs a step may use: what the game says happened. */
 export const VERBS = Object.freeze(['eat', 'hop', 'foil', 'meet']);
 /** The moments the game can draw. */
 export const MOMENTS = Object.freeze(['haggle', 'sniff', 'unwritten']);
+/** The haggle in three rounds, in seconds of the carry after it opens: each price struck, then the coin handed back.
+ * The drawing (pie-draw.mjs) and the sound (pie-game.mjs, pie-sound.mjs) both keep this time, so they land together. */
+export const HAGGLE_BEATS = Object.freeze({ strikes: Object.freeze([0.7, 1.7, 2.6]), coin: 2.85 });
+/** The ways a find may lean the land: the three the lanes tally (boon a fairy tale, bane absurd reality, bone low magic). */
+export const LEANS = Object.freeze(['boon', 'bane', 'bone']);
+/** The deed a find is kept as, on the chapter it opened in. @param {{ id: string }} find */
+export const deedOf = (find) => `find_${find.id}`;
 
 /** @type {ReadonlyArray<Find>} */
 export const FINDS = Object.freeze([
   Object.freeze({
     id: 'haggle',
     name: 'The haggle',
-    rule: '?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] }',
+    rule: '?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] =lean[bone] }',
     who: 'genie',
     grounds: /** @type {'limit'} */ ('limit'),
-    says: 'Three donuts in three seconds, and the Genie could not help pricing them: three for the price of two, with the difference handed back. For the rest of the carry every donut counts twice.',
+    says: 'Three donuts in three seconds, and the Genie could not help pricing them, though nobody was selling. Three for the price of two. Nobody argued, so two for one. Nobody argued, so he paid for them himself and handed back the change. He has lost a haggle to silence, and looks pleased about it. For the rest of the carry every donut counts twice.',
     live: 'every donut sent up the lanes counts twice for the rest of the stream.',
-    riddle: 'Someone who cannot stop pricing, and a trail of rings taken quickly.'
+    riddle: 'Someone who cannot stop pricing, and a trail of rings taken quickly.',
+    made: 'struck-price-tag',
+    margin: 'rumour-haggle'
   }),
   Object.freeze({
     id: 'sniff',
     name: 'The sniff',
-    rule: '?find[sniff]{ &hop[banerose] &foil[bane] ~within[3] ^moment[sniff] #crosses[off-switch] }',
+    rule: '?find[sniff]{ &hop[banerose] &foil[bane] ~within[3] ^moment[sniff] #crosses[off-switch] =lean[boon] }',
     who: 'bane',
     grounds: /** @type {'want'} */ ('want'),
     says: 'A bane rose cleared, and his off switch thrown before it could fade: Mr. BaneWAP stopped to smell the rose on his way out. He wants to hold a thing longest, and a rose does not last. The bane roses ahead wilt.',
     live: 'one bane rose in two arrives wilted for the rest of the stream.',
-    riddle: 'A rose sent against you, cleared, and a switch thrown before it fades.'
+    riddle: 'A rose sent against you, cleared, and a switch thrown before it fades.',
+    made: 'pressed-rose',
+    margin: 'rumour-sniff'
   }),
   Object.freeze({
     id: 'unwritten',
     name: 'The unwritten',
-    rule: '?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] }',
+    rule: '?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] =lean[boon] }',
     who: 'figure',
     grounds: /** @type {'limit'} */ ('limit'),
     says: 'A rose kept whole and its thorned twin cleared in four seconds: nobody in the book has written who carries here, yet the lanes keep room beside the plate. For the rest of the carry a boon rose opens two beats of unkept ground.',
     live: 'every rose sent up the lanes leaves a moment of unkept ground for the rest of the stream.',
-    riddle: 'Two roses in one breath, one held and one hopped, when nobody named in the book is carrying.'
+    riddle: 'Two roses in one breath, one held and one hopped, when nobody named in the book is carrying.',
+    // Held: an object made for whoever carries in plain lines would say who they are. It leaves no artifact and no
+    // margin; its line and its moment are all it keeps (.spw/surfaces/finds.spw ?open).
+    made: '',
+    margin: ''
   })
 ]);
 
-const ATOM = /([@&%~^#])([a-z_]+)\[([^\]]*)\]/g;
+const ATOM = /([@&%~^#=])([a-z_]+)\[([^\]]*)\]/g;
 
 /** A find's rule, read. @param {string} text @returns {FindRule} */
 export function readFind(text) {
@@ -77,7 +96,7 @@ export function readFind(text) {
   const src = String(text || '');
   const head = /^\?find\[([a-z][a-z0-9_-]*)\]\s*\{([\s\S]*)\}\s*$/.exec(src.trim());
   /** @type {FindRule} */
-  const rule = { id: '', carrier: '', steps: [], within: 0, moment: '', crosses: '', errors };
+  const rule = { id: '', carrier: '', steps: [], within: 0, moment: '', crosses: '', lean: '', errors };
   if (!head) { errors.push('a find is ?find[name]{ … }'); return rule; }
   rule.id = head[1];
   const body = head[2];
@@ -90,6 +109,7 @@ export function readFind(text) {
     else if (sigil === '~' && word === 'within') rule.within = Math.max(0.5, Math.min(30, Number(a) || 0));
     else if (sigil === '^' && word === 'moment' && MOMENTS.includes(a)) rule.moment = a;
     else if (sigil === '#' && word === 'crosses') rule.crosses = a;
+    else if (sigil === '=' && word === 'lean' && LEANS.includes(a)) rule.lean = a;
     else errors.push(`${sigil}${word}[${a}] is not a word a find knows`);
   }
   const left = body.replace(ATOM, '').trim();

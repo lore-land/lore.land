@@ -15,7 +15,7 @@
  * (the figure, the hat, the Egg, and anything naming who is under the hat) are acknowledged as nothing at all.
  * An expression the land does not know is answered honestly: what was read, and the nearest thing it knows.
  */
-import { readFormula, castFormula, isFormula, termText, ROLE } from './spw-formulas.mjs?v=2026_11_11.A';
+import { readFormula, castFormula, isFormula, termText, ROLE } from './spw-formulas.mjs?v=2026_11_13.B';
 
 /** @typedef {import('./spw-formulas.mjs').Term} Term */
 /** @typedef {{ text: string, from: string }} Said */

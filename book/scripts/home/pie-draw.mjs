@@ -3,6 +3,7 @@
  * Extracted from pie-game.mjs so rendering primitives stay readable and separate from physics and state.
  */
 import { GIFT_ART } from './pie-live.mjs?v=2026_11_13.A';
+import { HAGGLE_BEATS } from './pie-finds.mjs?v=2026_11_13.B';
 
 /**
  * Initialize canvas drawing helpers for Exactly One Pie.
@@ -268,16 +269,24 @@ export function initPieDraw({
     const run = getRun();
     if (!run?.moments?.length) return;
     const ctx = getCtx();
-    const LIFE = 2.8;
-    run.moments = run.moments.filter((m) => run.t - m.t0 < LIFE);
+    // The haggle is told in three rounds (the rule of three), so it stays up longer than the other beats.
+    const lifeOf = (m) => (m.kind === 'haggle' ? 4 : 2.8);
+    run.moments = run.moments.filter((m) => run.t - m.t0 < lifeOf(m));
     run.moments.forEach((m) => {
       const age = run.t - m.t0;
+      const LIFE = lifeOf(m);
       ctx.save();
       ctx.globalAlpha = age > LIFE - 0.5 ? Math.max(0, (LIFE - age) / 0.5) : 1;
       if (m.kind === 'haggle') {
+        // Nobody is selling, and the Genie prices them anyway. A 3. Nobody argues (a pause, an empty bubble), so it is
+        // struck and a 2 goes up; nobody argues, so a 1; nobody argues, so he strikes that too and hands a coin back.
+        // He has lost a haggle to silence. Drawn, never said: each strike kicks the tag on its string.
         const x = run.x;
         const y = run.y - 92;
-        const swing = reduced?.matches ? 0 : Math.sin(age * 5) * 0.28 * Math.max(0, 1 - age / 2);
+        const STRIKES = HAGGLE_BEATS.strikes;
+        const kicked = [0, ...STRIKES].filter((t) => t <= age).pop() || 0;
+        const since = age - kicked;
+        const swing = reduced?.matches ? 0 : Math.sin(since * 6) * 0.26 * Math.max(0, 1 - since);
         ctx.strokeStyle = '#5a4a3a';
         ctx.lineWidth = 1.2;
         ctx.beginPath(); ctx.moveTo(x, y - 30); ctx.lineTo(x, y - 14); ctx.stroke();
@@ -286,26 +295,51 @@ export function initPieDraw({
         ctx.fillStyle = '#fff3d6';
         ctx.strokeStyle = '#3a2a1a';
         ctx.lineWidth = 1.6;
-        ctx.beginPath(); ctx.roundRect(-22, 0, 44, 28, 5); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.roundRect(-31, 0, 62, 28, 5); ctx.fill(); ctx.stroke();
         ctx.beginPath(); ctx.arc(0, 5, 2.2, 0, Math.PI * 2); ctx.stroke();
-        ctx.font = '800 17px "JetBrainsMono", ui-monospace, monospace';
+        ctx.font = '800 16px "JetBrainsMono", ui-monospace, monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#3a2a1a';
-        ctx.fillText('3', -9, 17);
-        const strike = Math.min(1, Math.max(0, (age - 0.6) / 0.3));
-        if (strike > 0) {
-          ctx.strokeStyle = '#c0392b';
-          ctx.lineWidth = 2.4;
-          ctx.beginPath(); ctx.moveTo(-16, 23); ctx.lineTo(-16 + 14 * strike, 23 - 12 * strike); ctx.stroke();
-        }
-        if (age > 1) { ctx.fillStyle = '#c0392b'; ctx.fillText('2', 10, 17); }
-        if (age > 1.3) {
-          const fall = Math.min(40, (age - 1.3) * 60);
+        ['3', '2', '1'].forEach((digit, i) => {
+          const shown = i === 0 ? 0 : STRIKES[i - 1] + 0.2;
+          if (age < shown) return;
+          const dx = -19 + i * 19;
+          ctx.fillStyle = i === 0 ? '#3a2a1a' : '#c0392b';
+          ctx.fillText(digit, dx, 17);
+          const strike = Math.min(1, Math.max(0, (age - STRIKES[i]) / 0.18));
+          if (strike > 0) {
+            ctx.strokeStyle = '#c0392b';
+            ctx.lineWidth = 2.2;
+            ctx.beginPath(); ctx.moveTo(dx - 7, 24); ctx.lineTo(dx - 7 + 14 * strike, 24 - 13 * strike); ctx.stroke();
+          }
+        });
+        ctx.rotate(-swing);
+        // The other side of the haggle: nobody, saying nothing, before each strike.
+        STRIKES.forEach((t) => {
+          const k = (age - (t - 0.42)) / 0.4;
+          if (k < 0 || k > 1) return;
+          ctx.save();
+          ctx.globalAlpha *= Math.sin(k * Math.PI);
+          if (x + 68 > W) ctx.scale(-1, 1);   // no room on the right in the last lane: nobody stands on the left
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+          ctx.strokeStyle = 'rgba(58, 42, 26, 0.55)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.roundRect(38, -6, 26, 16, 7); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(42, 9); ctx.lineTo(37, 15); ctx.lineTo(47, 10); ctx.fill();
+          ctx.fillStyle = 'rgba(58, 42, 26, 0.8)';
+          [45, 51, 57].forEach((dotX) => { ctx.beginPath(); ctx.arc(dotX, 2, 1.4, 0, Math.PI * 2); ctx.fill(); });
+          ctx.restore();
+        });
+        // Past one there is nowhere to go but paying: a coin, handed back down to whoever is carrying.
+        if (age > HAGGLE_BEATS.coin) {
+          const k = Math.min(1, (age - HAGGLE_BEATS.coin) / 0.55);
+          const cx = 18 - 18 * k;
+          const cy = 30 + 70 * k - 34 * Math.sin(k * Math.PI);
           ctx.fillStyle = '#e8b931';
           ctx.strokeStyle = '#8a6410';
           ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.arc(14, 36 + fall, 4.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.arc(cx, cy, 4.8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.arc(cx, cy, 2.2, 0, Math.PI * 2); ctx.stroke();
         }
       } else if (m.kind === 'sniff') {
         const rise = Math.min(1, age / 0.7);

@@ -2257,6 +2257,86 @@
         "src": "/book/images/studies/artifact-found-line-v1.svg",
         "state": "study"
       }
+    },
+    {
+      "id": "struck-price-tag",
+      "name": "A struck price tag",
+      "kind": "artifact",
+      "region": "the road",
+      "terms": [
+        "struck price tag"
+      ],
+      "note": "A paper tag on a loop of string: a 3 struck through, a 2 struck through, a 1 struck through, and under them a coin, drawn with an arrow pointing away from him. Nobody was selling. The Genie cannot pass three of a thing without pricing them, nobody argued, and in a haggle silence is the strongest move there is. He lost to it three times running.",
+      "hint": "Made in the lanes: someone who cannot stop pricing, and a trail taken quickly.",
+      "home": 5,
+      "echoes": [
+        3
+      ],
+      "made_in": "lanes",
+      "made_by": {
+        "deed": "find_haggle",
+        "at_least": 1,
+        "says": "someone who cannot stop pricing, and a trail of rings taken quickly"
+      },
+      "residue": {
+        "left_by": "the Genie, carrying, who priced three of a thing nobody was selling and haggled himself down past nothing",
+        "obliges": "nobody, since nobody was selling; the change was handed back already"
+      },
+      "prompt": {
+        "vantage": "close on a paper tag turning on its string, the lanes blurred behind it",
+        "light": "brass-warm lamplight, one edge of the tag lit through",
+        "scent": "tea, brass polish, warm dough",
+        "hint": "a price tag with a 3, a 2 and a 1 each struck through, and a coin drawn under them",
+        "edges": [
+          "each strike-through pressed harder than the last",
+          "a coin's ring stain on one corner",
+          "the string knotted twice"
+        ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-struck-price-tag-v1.svg",
+        "state": "study"
+      }
+    },
+    {
+      "id": "pressed-rose",
+      "name": "A pressed rose",
+      "kind": "artifact",
+      "region": "the bloom garden",
+      "terms": [
+        "pressed rose"
+      ],
+      "note": "A dark rose, pressed flat at the back of a scheme, at the clause about giving it back. Mr. BaneWAP wants to hold a thing longest, and a rose does not last; pressed is how a rose is held longest. He has still not read the clause.",
+      "hint": "Made in the lanes: a rose sent against you, cleared, and a switch thrown before it fades.",
+      "home": 11,
+      "echoes": [
+        12
+      ],
+      "made_in": "lanes",
+      "made_by": {
+        "deed": "find_sniff",
+        "at_least": 1,
+        "says": "a thorned rose cleared, and a switch thrown before it fades"
+      },
+      "residue": {
+        "left_by": "Mr. BaneWAP, foiled, who stopped to smell a rose before it could fade",
+        "obliges": "the clause at the bottom of the scheme, which somebody will read one day"
+      },
+      "prompt": {
+        "vantage": "looking down at a page of small print, a rose pressed flat across its last lines",
+        "light": "late garden light through a window, the petals gone the colour of old wine",
+        "scent": "dried rose, ink, quince over a wall",
+        "hint": "a pressed dark rose lying across the small print at the bottom of a page",
+        "edges": [
+          "a thorn still on the stem",
+          "the clause's first word showing under a petal",
+          "a crease where the page was shut on it"
+        ]
+      },
+      "plate": {
+        "src": "/book/images/studies/artifact-pressed-rose-v1.svg",
+        "state": "study"
+      }
     }
   ]
 }

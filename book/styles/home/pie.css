@@ -3145,6 +3145,49 @@ html:not([data-chrome-hidden='true']) .pie-index {
   justify-self: stretch;
 }
 
+/* A live card's front: what it is, then what it does, in the story's own type; the numbers follow as chips. */
+.pie-cardface-front {
+  margin: 0;
+  font-family: var(--font-family-body, Georgia, serif);
+  font-size: 0.98rem;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+
+.pie-cardface-does {
+  display: block;
+  margin-top: 0.3rem;
+  color: color-mix(in srgb, var(--hub-ink) 78%, var(--card-edge));
+}
+
+/* Everything else the card holds, one fold away; it stays open for whoever opens it. */
+.pie-cardface-more {
+  display: grid;
+  gap: 0.45rem;
+  justify-self: stretch;
+  margin-top: 0.15rem;
+  padding-top: 0.35rem;
+  border-top: 1px dotted var(--hub-line);
+}
+
+.pie-cardface-more > summary {
+  cursor: pointer;
+  min-height: 1.75rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.pie-cardface-more[open] > summary {
+  margin-bottom: 0.35rem;
+}
+
+.pie-cardface-more[open] > :not(summary) {
+  margin-top: 0.45rem;
+}
+
 .pie-cardface-table {
   justify-self: stretch;
   margin-top: 0.15rem;

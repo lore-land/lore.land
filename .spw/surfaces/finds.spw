@@ -16,45 +16,69 @@
   tropes: "book/content/world/tropes.json: a find crosses a trope already there"
   seasons: "pie-seasons.mjs: a sealed line, its label and the label mirrored, kept by play and nothing else"
   live: "pie-live.mjs: gifts to my side are boons, gifts to the other side are banes"
+  lean: "pie-game.mjs LEAN_DEFAULTS: what hands do in the lanes leans the land boon, bane or bone, and is kept on the chapter as a deed"
+  almanac: "almanac.json made_by: an artifact made in the lanes by a deed the carries keep"
+  margins: "references.json track.after: a rumour in a chapter margin that retells, with a count, what the carries did there"
+  elaboration: "elaboration.spw: a crossing met in the lanes moves its trope toward the turn"
 }
 
 ^"form"{
-  rule: "?find[name]{ @carrier[id] &verb[kind] %count[n] %lanes[n] ~within[s] ^moment[id] #crosses[trope] }"
+  rule: "?find[name]{ @carrier[id] &verb[kind] %count[n] %lanes[n] ~within[s] ^moment[id] #crosses[trope] =lean[shelf] }"
   lanes: "the step before it taken from n different lanes: only steering does that; a carrier standing still takes everything from one"
   verbs: "eat, hop, foil, meet: what the lanes say happened"
   order: "steps are taken in order; deeds in between that are not steps do not break the sequence"
   opens: "on the deed that completes the last step, inside the window, once a carry"
   line: "^found[name]{_name .day[...] .chapter[n] .carrier[id] eman_}"
+  lean: "=lean[boon|bane|bone]: which way the find leans the land when it opens, tallied once with the deeds the hands do; the line says it, so the maker can turn it without touching code"
   module: ~"book/scripts/home/pie-finds.mjs"
   check: ~"book/scripts/tools/finds-check.mjs"
 }
 
+^"track"{
+  thesis: "A find is a crossing of the one track from the lanes into the book: hands do it, and the book keeps it"
+  deed: "kept at once on the chapter it opened in as find_<name>, spilled or not, since a find is rare and earned"
+  made: "that deed makes the find's artifact in the almanac, told as an object with a residue, never as an event"
+  margin: "the same deed turns a rumour in that chapter's margin: heard first as a riddle about the character, then retold with a count once someone has done it"
+  trope: "opening it is meeting its trope in the lanes (noteCrossing lanes), a step toward the turn in elaboration.spw"
+  sign: "elaboration.spw writes a cost as =bane@who{ @what } and a gift as =boon@who{ @what }; a find is the hands turning one into the other, a rose sent against the carrier cleared into a rose kept"
+}
+
 ^"haggle"{
-  rule: "?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] }"
+  rule: "?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] =lean[bone] }"
   rests_on: "the Genie, limit: cannot stop pricing"
   skill: "carry as the Genie and steer across a donut trail, taking three from three different lanes in three seconds; standing still takes them from one lane, and the trail never puts three in a row there"
-  moment: "a price tag swings over the carrier: a 3, struck through, a 2 beside it, and a coin handed back"
+  moment: "nobody is selling and he prices them anyway, in three rounds: a 3 on a tag over the carrier; nobody argues, an empty bubble, so it is struck and a 2 goes up; nobody argues, so a 1; nobody argues, so he strikes that too and a coin drops back to the carrier. He has lost a haggle to silence"
+  joke: "the maker, live on the thirteenth: it should be funnier that the Genie is willing to haggle. The classic beat is the merchant who talks himself down while the buyer says nothing; here there is no buyer and no seller, and he still loses"
   gives: "for the rest of the carry every donut counts twice"
   room: "on a stream, every donut sent up the lanes counts twice for the rest of it"
+  made: "a struck price tag: a 3, a 2 and a 1 each struck through harder than the last, and a coin drawn under them (almanac.json struck-price-tag)"
+  margin: "the Quiet Rift, Chapter Five, at the price tag he reads a gauge by: he has never once won a haggle against somebody who says nothing (references.json rumour-haggle)"
 }
 
 ^"sniff"{
-  rule: "?find[sniff]{ &hop[banerose] &foil[bane] ~within[3] ^moment[sniff] #crosses[off-switch] }"
+  rule: "?find[sniff]{ &hop[banerose] &foil[bane] ~within[3] ^moment[sniff] #crosses[off-switch] =lean[boon] }"
   rests_on: "Mr. BaneWAP, want: to hold the thing longest; a rose does not last"
   skill: "hop a bane rose sent to the other side, then throw his off switch within three seconds"
   moment: "where he was foiled: the rose rises to him, three lines of a long sniff, and a heart"
   gives: "the bane roses ahead wilt; walked through, they feed the crust"
   room: "on a stream, one bane rose in two arrives wilted for the rest of it"
   side: "a gift sent against the carrier, turned to advantage by skill"
+  bloom: "the book's own place for it: in Chapter Eleven every bud in the bloom garden opens at once for him, and a flower opened on demand has not had time to fill. While he schemes there a beat may open a bane rose up the lanes, so the sniff needs no stream"
+  made: "a pressed rose, at the clause about giving it back: pressed is how a rose is held longest, and he has still not read the clause (almanac.json pressed-rose)"
+  margin: "the bloom garden, Chapter Eleven: he has never once stopped to smell a thing he announced (references.json rumour-sniff)"
 }
 
 ^"unwritten"{
-  rule: "?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] }"
+  rule: "?find[unwritten]{ @carrier[figure] &meet[boonrose] &hop[banerose] ~within[4] ^moment[unwritten] #crosses[plain-lines] =lean[boon] }"
   rests_on: "the figure in plain lines, limit: four lines, two dots, and a hat that will not land"
   skill: "carry unnamed in plain lines, meet a boon rose, then hop a bane rose within four seconds"
   moment: "a small hovering outline and two rising sparks beside the carrier, drawn and unsaid"
   gives: "for the rest of the carry every boon rose opens a moment of unkept ground"
   room: "on a stream, every rose sent up the lanes leaves a moment of unkept ground for the rest of it"
+}
+
+^"unwritten_book"{
+  book: "the unwritten is held from the book: an object or a rumour made for whoever carries in plain lines would say who they are, so it keeps its sealed line, plays its moment and leans the carry, and writes no deed on the chapter, no artifact and no margin"
 }
 
 ^"social"{
@@ -80,4 +104,6 @@
   "Destiny to become a clown or a mime: whose destiny is it. Staged on the carrier, it would say who the figure in plain lines becomes, which is held"
   "Should a found line be pasted to show its riddle to someone who has not found it, as a season line is"
   "Are these the beats, and are these the windows"
+  "Is a margin the place a find is retold, and may a stream object, a donut or a dolphin, ever be named there; the margins written so far name neither"
+  "Which way should each find lean: the haggle bone, the sniff and the unwritten boon were chosen by the arithmetic, the softened villain and the kept rose, and the line is there to turn"
 ]
