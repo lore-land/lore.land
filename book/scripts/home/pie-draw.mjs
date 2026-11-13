@@ -35,10 +35,16 @@ export function initPieDraw({
     ctx.strokeStyle = stroke;
     ctx.lineWidth = 1;
     if (sceneId === 'field') {
-      // Turned earth ridges and frost-flecked furrow lines.
+      // Turned earth ridges, furrow shadow glaze, frost crystals & field grass flecks.
       const off = scroll % 36;
       for (let y = roadFrom(36, off); y < board.y0 + board.h + 18; y += 36) {
         const rowIdx = Math.floor((y - off) / 36);
+        ctx.strokeStyle = mix(colors.ink, colors.paper, 0.9);
+        ctx.beginPath();
+        ctx.moveTo(0, y + 3);
+        for (let lx = 0; lx <= W; lx += 36) ctx.lineTo(lx, y + 3 + Math.sin(lx * 0.05 + rowIdx) * 2.5);
+        ctx.stroke();
+        ctx.strokeStyle = stroke;
         ctx.beginPath();
         ctx.moveTo(0, y);
         for (let lx = 0; lx <= W; lx += 36) {
@@ -46,17 +52,22 @@ export function initPieDraw({
           ctx.lineTo(lx, y + wave);
         }
         ctx.stroke();
-        ctx.fillStyle = mix(colors.accent, colors.paper, 0.85);
         for (let lane = 0; lane < LANES; lane += 1) {
           const fx = lane * LANE_W + 22 + ((rowIdx + lane) % 3) * 10;
-          ctx.beginPath(); ctx.arc(fx, y - 10, 1.3, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = mix(colors.accent, colors.paper, 0.8);
+          ctx.beginPath(); ctx.arc(fx, y - 10, 1.4, 0, Math.PI * 2); ctx.fill();
+          if ((rowIdx + lane) % 2 === 0) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+            ctx.fillRect(fx + 14, y - 18, 1.5, 1.5);
+          }
         }
       }
     } else if (sceneId === 'gate') {
-      // Squared parcel-gate flagstones with bronze threshold rivets.
+      // Squared parcel-gate flagstones, bevel highlights & bronze sconce pins.
       const off = scroll % 38;
       for (let y = roadFrom(38, off); y < board.y0 + board.h; y += 38) {
         const shift = (Math.floor((y - off) / 38) % 2) * (LANE_W * 0.5);
+        ctx.strokeStyle = stroke;
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(W, y);
@@ -65,15 +76,21 @@ export function initPieDraw({
           ctx.lineTo(x, y + 38);
         }
         ctx.stroke();
-        ctx.fillStyle = mix(colors.gold, colors.paper, 0.78);
+        ctx.strokeStyle = 'rgba(255, 252, 244, 0.35)';
+        ctx.beginPath();
+        ctx.moveTo(0, y + 1.5); ctx.lineTo(W, y + 1.5);
+        ctx.stroke();
+        ctx.fillStyle = mix(colors.gold, colors.paper, 0.72);
         for (let x = shift + 6; x < W; x += LANE_W) {
-          ctx.beginPath(); ctx.arc(x, y + 5, 1.3, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(x, y + 5, 1.5, 0, Math.PI * 2); ctx.fill();
         }
       }
     } else if (sceneId === 'plaza') {
-      // Fan-paved festival courses and radial joints.
+      // Fan-paved festival courses, radial joints & inlaid rosettes.
       const off = scroll % 40;
       for (let y = roadFrom(40, off); y < board.y0 + board.h + 40; y += 40) {
+        const rowIdx = Math.floor((y - off) / 40);
+        ctx.strokeStyle = stroke;
         ctx.beginPath();
         ctx.ellipse(W / 2, y + 60, W * 0.68, 38, 0, Math.PI * 1.08, Math.PI * 1.92);
         ctx.stroke();
@@ -82,32 +99,36 @@ export function initPieDraw({
           ctx.beginPath();
           ctx.arc(lx, y, 10, 0, Math.PI);
           ctx.stroke();
+          if ((rowIdx + lane) % 2 === 0) {
+            ctx.fillStyle = mix(colors.gold, colors.paper, 0.8);
+            ctx.beginPath(); ctx.arc(lx, y + 5, 1.5, 0, Math.PI * 2); ctx.fill();
+          }
         }
       }
     } else if (sceneId === 'court') {
-      // Chequered palace flagstones and a worn runner down the middle lane.
+      // Chequered palace flagstones, fringed runner down the middle lane & sconce pools.
       const off = scroll % 36;
       const midX = 2 * LANE_W + LANE_W / 2;
-      ctx.fillStyle = mix(colors.hearth, colors.paper, 0.9);
+      ctx.fillStyle = mix(colors.hearth, colors.paper, 0.89);
       ctx.fillRect(midX - LANE_W * 0.44, board.y0, LANE_W * 0.88, board.h);
-      ctx.strokeStyle = mix(colors.gold, colors.paper, 0.74);
+      ctx.strokeStyle = mix(colors.gold, colors.paper, 0.7);
       ctx.beginPath();
       ctx.moveTo(midX - LANE_W * 0.4, board.y0); ctx.lineTo(midX - LANE_W * 0.4, board.y0 + board.h);
       ctx.moveTo(midX + LANE_W * 0.4, board.y0); ctx.lineTo(midX + LANE_W * 0.4, board.y0 + board.h);
       ctx.stroke();
-      ctx.strokeStyle = stroke;
       for (let y = roadFrom(36, off); y < board.y0 + board.h; y += 36) {
         const rowIdx = Math.floor((y - off) / 36);
         for (let lane = 0; lane < LANES; lane += 1) {
           if ((rowIdx + lane) % 2 === 0 && lane !== 2) {
-            ctx.fillStyle = mix(colors.muted, colors.paper, 0.93);
+            ctx.fillStyle = mix(colors.muted, colors.paper, 0.92);
             ctx.fillRect(lane * LANE_W + 3, y + 3, LANE_W - 6, 30);
           }
+          ctx.strokeStyle = stroke;
           ctx.strokeRect(lane * LANE_W + 2, y + 2, LANE_W - 4, 32);
         }
       }
     } else if (sceneId === 'table') {
-      // Wide banqueting-hall floorboards and brass dowel pins.
+      // Wide banqueting-hall floorboards, woodgrain arcs & brass dowel pins.
       const off = scroll % 44;
       for (let lane = 0; lane < LANES; lane += 1) {
         const lx = lane * LANE_W;
@@ -120,26 +141,41 @@ export function initPieDraw({
         const rowIdx = Math.floor((y - off) / 44);
         for (let lane = 0; lane < LANES; lane += 1) {
           const jy = y + ((lane * 17 + rowIdx * 9) % 22);
+          ctx.strokeStyle = stroke;
           ctx.beginPath();
           ctx.moveTo(lane * LANE_W + 2, jy);
           ctx.lineTo((lane + 1) * LANE_W - 2, jy);
           ctx.stroke();
-          ctx.fillStyle = mix(colors.gold, colors.paper, 0.76);
+          if ((rowIdx + lane) % 3 === 0) {
+            ctx.beginPath();
+            ctx.ellipse(lane * LANE_W + LANE_W * 0.3, jy - 8, 5, 2.2, 0.2, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.fillStyle = mix(colors.gold, colors.paper, 0.72);
           ctx.beginPath();
-          ctx.arc(lane * LANE_W + 10, jy + 4, 1.1, 0, Math.PI * 2);
-          ctx.arc((lane + 1) * LANE_W - 10, jy + 4, 1.1, 0, Math.PI * 2);
+          ctx.arc(lane * LANE_W + 10, jy + 4, 1.2, 0, Math.PI * 2);
+          ctx.arc((lane + 1) * LANE_W - 10, jy + 4, 1.2, 0, Math.PI * 2);
           ctx.fill();
         }
       }
     } else {
-      // Cobbles, scrolling with the scene.
+      // Cobbles, scrolling with subtle highlight bevels.
       const off = scroll % 32;
       for (let y = roadFrom(32, off); y < board.y0 + board.h; y += 32) {
+        const rowIdx = Math.floor((y - off) / 32);
         for (let lane = 0; lane < LANES; lane += 1) {
-          const shift = (Math.floor((y - off) / 32) % 2) * 12;
+          const shift = (rowIdx % 2) * 12;
+          const cx = lane * LANE_W + 18 + shift;
+          ctx.strokeStyle = stroke;
           ctx.beginPath();
-          ctx.ellipse(lane * LANE_W + 18 + shift, y, 14, 9, 0, 0, Math.PI * 2);
+          ctx.ellipse(cx, y, 14, 9, 0, 0, Math.PI * 2);
           ctx.stroke();
+          if ((rowIdx + lane) % 2 === 0) {
+            ctx.strokeStyle = 'rgba(255, 252, 244, 0.42)';
+            ctx.beginPath();
+            ctx.arc(cx, y, 10, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          }
         }
       }
     }
@@ -463,6 +499,33 @@ export function initPieDraw({
         ctx.strokeStyle = mix(colors.ink, colors.paper, 0.55);
         ctx.beginPath(); ctx.ellipse(x, run.y + 17, 17, 5, 0, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * clamp(run.stillT / need, 0, 1)); ctx.stroke();
       }
+    }
+    // Jazz pocket & intentional motif board-state compass underfoot: quiet and legible across settings.
+    const m = run.motifState;
+    if (run.jazzPocketT > 0) {
+      ctx.strokeStyle = 'rgba(44, 139, 134, 0.72)';
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath(); ctx.ellipse(x, run.y + 19, 22, 6.5, 0, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    if (m?.tension && m.safeDir) {
+      const arrowX = x + m.safeDir * 28;
+      const arrowY = run.y + 15;
+      ctx.strokeStyle = m.tension === 'b9' ? colors.berry : colors.gold;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(arrowX - m.safeDir * 4, arrowY - 4);
+      ctx.lineTo(arrowX + m.safeDir * 2, arrowY);
+      ctx.lineTo(arrowX - m.safeDir * 4, arrowY + 4);
+      ctx.stroke();
+    }
+    if (m?.hopHint) {
+      ctx.strokeStyle = 'rgba(44, 139, 134, 0.85)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(x, run.y - 54, 12, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
     }
     ctx.restore();
   }

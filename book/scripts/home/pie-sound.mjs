@@ -82,7 +82,14 @@
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0 };
+const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0, harmonicTension: 0 };
+const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced' };
+const swingTarget = () => {
+  if (musical.swing === 'straight') return 0.5;
+  if (musical.swing === 'lilt') return 0.58;
+  if (musical.swing === 'deep') return 0.67;
+  return sound.jazz ? Math.max(sound.written, 0.66) : sound.written;
+};
 const ROOTS = [293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23];
 const PULSES = [96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108];
 const MAJOR = [0, 2, 4, 7, 9];
@@ -546,7 +553,7 @@ export function setSoundPlace({ chapter = 1, held = false, level = null, after =
   sound.root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || 293.66;
   sound.pulse = level?.tempo || PULSES[(chapter - 1) % PULSES.length] || 96;
   sound.written = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
-  sound.swing = sound.jazz ? Math.max(sound.written, 0.66) : sound.written;
+  sound.swing = swingTarget();
   sound.motif = Array.isArray(level?.motif) && level.motif.length ? level.motif : null;
   line.motifAt = 0;
   // How the chapter leans (the reader's lens, or their carries), heard: low magic opens the key. The minor stays the mimes' alone.
@@ -599,35 +606,39 @@ function hear(kind, now) {
 
 /* How much of the room each sound takes: the struck and the near little, the said and the rung more. */
 const AIR = Object.freeze({
-  step: 0.03, land: 0.05, flour: 0.12, throw: 0.08, hop: 0.12, knock: 0.1, squash: 0.06, wap: 0.16,
-  catch: 0.28, deft: 0.25, glass: 0.4, post: 0.32, ramp: 0.2, berry: 0.35, sweet: 0.4, share: 0.28,
+  step: 0.03, land: 0.05, flour: 0.14, throw: 0.08, hop: 0.12, knock: 0.1, squash: 0.06, wap: 0.16,
+  catch: 0.28, deft: 0.25, glass: 0.4, post: 0.32, ramp: 0.2, berry: 0.35, sweet: 0.42, share: 0.28,
   wonder: 0.45, bone: 0.18, foretell: 0.5, fulfil: 0.3, beaver: 0.25, foil: 0.25, egg: 0.6, spill: 0.3,
-  haggle: 0.22, coin: 0.35
+  haggle: 0.22, coin: 0.35, pocket: 0.14, poise: 0.32, pantry: 0.38, recipe: 0.4
 });
 
 /* How much of each sound the song's echo repeats: the sung things, a little; the struck things, nothing. */
-const SONG = Object.freeze({ catch: 0.2, deft: 0.14, glass: 0.3, post: 0.2, berry: 0.26, sweet: 0.26, share: 0.2, wonder: 0.34 });
+const SONG = Object.freeze({ catch: 0.2, deft: 0.14, glass: 0.3, post: 0.2, berry: 0.26, sweet: 0.28, share: 0.2, wonder: 0.34, poise: 0.22, pantry: 0.28, recipe: 0.26 });
 
 /** Where one sound goes: a level and an edge that soften as the ear tires and with distance, then
  *  into the bus, and some of it into the room. Far off, less of a sound reaches you directly while
  *  the room stays about as loud, so the far is quieter, darker, and more room than sound. */
-function outlet(heat, { depth = 0, air = 0, song = 0 } = {}) {
+function outlet(heat, { depth = 0, air = 0, song = 0, role = 'fx' } = {}) {
   const b = ensureBus();
   const level = audio.createGain();
-  level.gain.value = Math.max(0.45, 1 / (1 + 0.13 * heat)) * spread(0.12) * (1 - 0.6 * depth);
+  const mixGain = musical.mix === 'music' ? (role === 'music' ? 1.18 : 0.84) : musical.mix === 'ear' ? (role === 'cue' || role === 'step' ? 1.24 : role === 'music' ? 0.78 : 1) : 1;
+  level.gain.value = Math.max(0.45, 1 / (1 + 0.13 * heat)) * spread(0.12) * (1 - 0.6 * depth) * mixGain;
   const edge = audio.createBiquadFilter();
   edge.type = 'lowpass';
   edge.Q.value = 0;
-  edge.frequency.value = Math.max(1800, (15000 / (1 + 0.3 * heat)) * (1 - 0.6 * depth));
+  const voiceBright = musical.voicing === 'bright' ? 1.22 : musical.voicing === 'velvet' ? 0.65 : musical.voicing === 'warm' ? 0.85 : 1;
+  edge.frequency.value = Math.max(1400, (15000 / (1 + 0.3 * heat)) * (1 - 0.6 * depth) * voiceBright);
   level.connect(edge).connect(b.input);
   const send = audio.createGain();
+  const spaceMul = musical.songSpace === 'close' ? 0.42 : musical.songSpace === 'hall' ? 1.55 : 1;
   // A bonk-leaning story is heard drier (scored: shelfColor): the struck lose more of the room than the said.
-  const dried = air * (1 - (sound.dry || 0) * (air < 0.15 ? 1 : 0.4));
+  const dried = air * spaceMul * (1 - (sound.dry || 0) * (air < 0.15 ? 1 : 0.4));
   send.gain.value = Math.min(1, (dried + 0.1 * depth) / (1 - 0.6 * depth));
   edge.connect(send).connect(b.air);
+  const songMul = musical.songSpace === 'close' ? 0.5 : musical.songSpace === 'hall' ? 1.35 : 1;
   if (song > 0 && b.song) {
     const sung = audio.createGain();
-    sung.gain.value = song;
+    sung.gain.value = Math.min(0.6, song * songMul);
     edge.connect(sung).connect(b.song);
   }
   return level;
@@ -827,7 +838,7 @@ function kit(out, t, pan = 0) {
 
 const pad = { voices: null, bass: null, out: null, tone: null, momentum: 0, at: 0, timer: 0, shown: 0, semis: null, root: 0 };
 const PAD_VOICES = 4;
-const WORTH = Object.freeze({ catch: 1, deft: 1, glass: 0.8, post: 0.8, ramp: 0.8, berry: 1, sweet: 1.2, share: 1.2, wonder: 1.5, bone: 0.8, wap: 1.4 });
+const WORTH = Object.freeze({ catch: 1, deft: 1, glass: 0.8, post: 0.8, ramp: 0.8, berry: 1, sweet: 1.2, share: 1.2, wonder: 1.5, bone: 0.8, wap: 1.4, pantry: 1.4, recipe: 1.6, pocket: 0.4 });
 /** The room's chord, close and low (under the key's root), in four voices: where the voices start. */
 const padTones = () => Array.from({ length: PAD_VOICES }, (_, i) => harmony.pcs[i % harmony.pcs.length] + 12 * Math.floor(i / harmony.pcs.length) - 12);
 const pcOf = (semi) => ((Math.round(semi) % 12) + 12) % 12;
@@ -1299,7 +1310,7 @@ export function laneWarning(pan = 0, near = 0.5, shape = 'one') {
     const t = audio.currentTime + 0.005;
     const heat = hear('lane-warn', t);
     if (heat === null || heat > 3) return;
-    const k = kit(outlet(heat, { air: 0.08 }), t, clamp(pan, -1, 1) * 0.3);
+    const k = kit(outlet(heat, { air: 0.08, role: 'cue' }), t, clamp(pan, -1, 1) * 0.3);
     const f = hz(bassLow() + 7);
     const level = 0.03 + 0.02 * clamp(near, 0, 1);
     // Shaped by height, so the ear knows which way to go: something low enough to hop is two pulses that climb a
@@ -1559,8 +1570,69 @@ export function setSoundFeel(feel = 'written') {
   const jazz = feel === 'jazz';
   if (jazz === sound.jazz) return;
   sound.jazz = jazz;
-  sound.swing = jazz ? Math.max(sound.written, 0.66) : sound.written;
+  sound.swing = swingTarget();
   try { setHarmony(harmony.sigil); } catch { /* the room keeps its chord until the next */ }
+}
+
+/** Update musicality settings cluster: swing, voicing, motifCues, songSpace, mix. */
+export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix } = {}) {
+  if (['chapter', 'straight', 'lilt', 'deep'].includes(swing)) musical.swing = swing;
+  if (['folk', 'warm', 'bright', 'velvet'].includes(voicing)) musical.voicing = voicing;
+  if (['off', 'room', 'board'].includes(motifCues)) musical.motifCues = motifCues;
+  if (['natural', 'close', 'hall'].includes(songSpace)) musical.songSpace = songSpace;
+  if (['balanced', 'music', 'ear'].includes(mix)) musical.mix = mix;
+  sound.swing = swingTarget();
+  try { retimeSong(); } catch { /* retimed on next context */ }
+}
+
+/** Audition and interpret local board state via intentional chapter-motif intervals and harmonic tensions. */
+export function setBoardHarmonicState({ tension = '', tensionLevel = 0 } = {}) {
+  sound.harmonicTension = tension ? clamp(Number(tensionLevel) || 0.5, 0, 1) : 0;
+  if (!pad.voices || !audio || audio.state !== 'running') return;
+  try {
+    const now = audio.currentTime;
+    const stretch = sound.jazz && tension === 'b9' ? 1 : sound.jazz && tension === 'sharp11' ? 6 : 0;
+    const topVoice = pad.voices[PAD_VOICES - 1];
+    const topSemi = padNow()[PAD_VOICES - 1];
+    if (topVoice && Number.isFinite(topSemi)) {
+      const targetSemi = stretch ? topSemi - (topSemi % 12) + stretch : topSemi;
+      topVoice.forEach(({ osc }) => osc.frequency.setTargetAtTime(hz(targetSemi), now, 0.12));
+    }
+  } catch { /* pad stays steady */ }
+}
+
+/** Play a brief motif-derived directional or resolution cue interpreting local board state. */
+export function playBoardMotifCue({ action = 'steer', pan = 0, depth = 0.2, kind = 'clear', stepIndex = 0 } = {}) {
+  try {
+    if (!audio || audio.state !== 'running' || musical.motifCues === 'off') return;
+    if (action === 'steer' && musical.motifCues !== 'board') return;
+    const t = audio.currentTime + 0.008;
+    const cueKey = `motif-cue:${action}:${kind}`;
+    const heat = hear(cueKey, t);
+    if (heat === null || heat > 2.4) return;
+    const s = sixteenth();
+    const m = sound.motif?.length ? sound.motif : [0, 2, 4, 7, 4];
+    const base = fallen(m[stepIndex % m.length] ?? 0) + 12;
+    const k = kit(outlet(heat * 0.4, { depth, air: 0.34, song: 0.22, role: 'cue' }), t, clamp(pan, -1, 1) * 0.45);
+    const voice = musical.voicing === 'warm' ? k.vibes : musical.voicing === 'bright' ? k.celesta : k.kalimba;
+    if (action === 'resolve') {
+      const target = sound.jazz ? 14 : 12;
+      voice(hz(base + (sound.jazz ? 1 : 0)), 0.14, 0.028, 0, -0.1);
+      voice(hz(sungTone(3) + target), 0.36, 0.036, s, 0.12);
+      k.marimba(hz(bassLow() + 12), 0.22, 0.03, s);
+      return;
+    }
+    if (action === 'pantry') {
+      voice(hz(sungTone(2) + 12), 0.2, 0.024, 0, pan * 0.3);
+      voice(hz(sungTone(4) + 12), 0.28, 0.02, s * 1.5, pan * 0.3);
+      return;
+    }
+    // Directional steer / height cue shaped by the chapter's motif.
+    const next = fallen(m[(stepIndex + 1) % m.length] ?? (base + 4)) + 12;
+    const second = kind === 'low' ? Math.max(base + 5, next) : kind === 'tall' ? base - 3 : next;
+    voice(hz(base), 0.14, 0.022, 0, pan * 0.35);
+    voice(hz(second), 0.2, 0.026, s * (sound.swing > 0.56 ? 1.3 : 1), pan * 0.35);
+  } catch { /* silent cue still informs visually */ }
 }
 /** Heard when the feel is chosen: a two-five-one in the chapter's key, swung, as written or as jazz, so the ear
  *  knows what changed. As written: three plain triads. Jazz: a minor seven, a dominant with a flat nine, a major
@@ -1590,13 +1662,13 @@ export function setSoundTextures({ wap, steps } = {}) {
 
 /* ─── The sounds ──────────────────────────────────────────────────── */
 
-export function wapSound(combo = 1, pan = 0, depth = 0) {
+export function wapSound(combo = 1, pan = 0, depth = 0, { recipe = '' } = {}) {
   try {
     if (!context()) return;
     const t = audio.currentTime + 0.005;
     const heat = hear('wap', t);
     if (heat === null) return;
-    const { tone, hiss, honk, celesta, marimba, sample } = kit(outlet(heat, { depth, air: AIR.wap }), t, pan + jitter(0.04));
+    const { tone, hiss, honk, celesta, marimba, vibes, sample } = kit(outlet(heat, { depth, air: AIR.wap, role: 'fx' }), t, pan + jitter(0.04));
     const texture = textures.wap;
     if (texture === 'pillow') {
       // Into a pillow: a round whumpf, the crust muffled by the filling, nothing sharp in it.
@@ -1613,14 +1685,16 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
       celesta(hz(sungTone(4) + 12), 0.6, 0.06, 0.04);
       celesta(hz(sungTone(2) + 12), 0.5, 0.03, 0.04);
     } else {
-      // Crust, high and short, over the filling. The filling always falls: a cheek meeting pie.
+      // Crust crackle, high and crisp, over warm creamy splash.
       sample('wap');
       tone('triangle', 380, 58, 0.22, 0.42, 0, { attack: 0.004, cents: 40 });
-      hiss(1700, 200, 0.3, 0.38, 1.1, 0, 'bandpass', 0.35);
+      tone('sine', 240, 88, 0.14, 0.22, 0.004, { attack: 0.002, cents: 20 });
+      hiss(2900, 1250, 0.075, 0.16, 1.7, 0.002, 'bandpass', 0.28);
+      hiss(1700, 200, 0.3, 0.36, 1.1, 0, 'bandpass', 0.35);
       hiss(480, 110, 0.34, 0.18, 0.7, 0.02, 'lowpass');
     }
     // Under it, the room's bass.
-    tone('sine', hz(bassLow()), hz(bassLow()) * 0.98, 0.32, 0.09, 0, { attack: 0.006, cents: 0 });
+    tone('sine', hz(bassLow()), hz(bassLow()) * 0.98, 0.32, 0.095, 0, { attack: 0.006, cents: 0 });
     tone('sine', hz(bassLow() - 12), 0, 0.28, 0.05, 0, { attack: 0.008, cents: 0 });
     // And the clown's delight: two honks on the pulse, chord tones a step higher for each WAP in a combo.
     const step = clamp(combo - 1, 0, 4);
@@ -1633,27 +1707,33 @@ export function wapSound(combo = 1, pan = 0, depth = 0) {
     // A run of WAPs fills the same way the room does: from two, the third; from four, the room's colour.
     if (step >= 1) tone('sine', hz(sound.minor ? 3 : sound.open ? 5 : 4), 0, 0.18, 0.03, first, { attack: 0.012, cents: 0 });
     if (step >= 3) celesta(hz(harmony.pcs[harmony.pcs.length - 1] + 12), 0.26, 0.016, pulse(1));
+    // Recipe sheen over the WAP.
+    if (recipe === 'set_jam' || recipe === 'royal') vibes(hz(sungTone(4) + 12), 0.36, 0.022, first, 0.15);
+    else if (recipe === 'tempered') celesta(hz(sungTone(5) + 12), 0.28, 0.02, first, -0.15);
+    else if (recipe === 'savoury') marimba(hz(sungTone(1)), 0.24, 0.028, first);
     swellPad(t, WORTH.wap);
   } catch { /* a silent WAP is still a WAP */ }
 }
 
-/** Tactile micro-sounds: steps, hops, bank shots, the berries' voices, knocks, and the Egg's hum. */
+/** Tactile micro-sounds: steps, hops, bank shots, the berries' voices, knocks, recipes, and the Egg's hum. */
 export function playTone(kind, param = 1, pan = 0, depth = 0) {
   try {
     if (!audio || audio.state !== 'running') return;
     const t = audio.currentTime + 0.005;
     const heat = hear(kind, t);
     if (heat === null) return;
-    const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock, sample } = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2, song: SONG[kind] || 0 }), t, pan + jitter(0.04));
+    const role = kind === 'step' ? 'step' : ['catch', 'deft', 'berry', 'sweet', 'pantry', 'recipe', 'poise'].includes(kind) ? 'music' : 'fx';
+    const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock, sample } = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2, song: SONG[kind] || 0, role }), t, pan + jitter(0.04));
     const answer = toPulse(t);
     const s32 = sixteenth() / 2;
+    const voiceLead = musical.voicing === 'warm' ? vibes : musical.voicing === 'bright' ? musicBox : musical.voicing === 'velvet' ? kalimba : celesta;
     switch (kind) {
       // Footsteps know the ground: a brush of grass in the field, a tick of cobble in the city; left and right differ.
       case 'step':
         // A chosen texture (=steps[…]): each still says which way, left and right a step apart.
-        if (textures.steps === 'tiptoe') { pluck(hz(sungTone(param > 0 ? 2 : 1)), 0.035); break; }
-        if (textures.steps === 'felt') { tone('sine', param > 0 ? 96 : 88, 60, 0.06, 0.03, 0, { attack: 0.006, cents: 0 }); hiss(500, 300, 0.05, 0.012, 0.7, 0, 'lowpass'); break; }
-        if (textures.steps === 'wood') { tock(param > 0 ? 760 : 680, param > 0 ? 560 : 500, 0.04); break; }
+        if (textures.steps === 'tiptoe') { pluck(hz(sungTone(param > 0 ? 2 : 1)), 0.036); break; }
+        if (textures.steps === 'felt') { tone('sine', param > 0 ? 96 : 88, 60, 0.06, 0.032, 0, { attack: 0.006, cents: 0 }); hiss(500, 300, 0.05, 0.012, 0.7, 0, 'lowpass'); break; }
+        if (textures.steps === 'wood') { tock(param > 0 ? 760 : 680, param > 0 ? 560 : 500, 0.042); break; }
         if (sound.ground === 'field') {
           if (!sample('step-field')) {
             hiss(1400 + (param > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 });
@@ -1662,15 +1742,49 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
           tone('triangle', 150 + (param > 0 ? 14 : 0), 72, 0.04, 0.05, 0, { attack: 0.003, cents: 40 }); hiss(2800, 2000, 0.022, 0.024, 2.5);
         }
         break;
-      // A catch: the line's next note on a celesta, answered on the pulse by the chord's next tone up.
+      // A catch: the line's next note answered on the pulse, with warm wood body & jazz enclosure.
       case 'catch': {
         const a = nextNote(t);
-        // Who carries is heard: the line takes the carrier's own instrument (themes on); the celesta otherwise.
-        const sing = { porter: marimba, clerk: kalimba, genie: vibes }[sound.carrier] || celesta;
-        // Jazz: every other caught note leans on the semitone above first, and lands a thirty-second later.
-        if (sound.jazz && (line.leaning = !line.leaning)) { sing(hz(a + 1), 0.07, 0.03); sing(hz(a), 0.2, 0.045, s32); }
-        else sing(hz(a), 0.18, 0.045);
-        sing(hz(sungFrom(a)), 0.26, 0.035, answer, 0.1);
+        const sing = { porter: marimba, clerk: kalimba, genie: vibes }[sound.carrier] || voiceLead;
+        const steep = Number(param) || 0;
+        marimba(hz(a - 12), 0.18, 0.028);
+        if (sound.jazz && (line.leaning = !line.leaning)) {
+          sing(hz(a + 1), 0.07, 0.032);
+          sing(hz(a), 0.22, 0.048, s32);
+          if (steep > 0.45) vibes(hz(sungFrom(a) + 12), 0.3, 0.022, s32 * 2, -0.15);
+        } else {
+          sing(hz(a), 0.2, 0.046);
+        }
+        sing(hz(sungFrom(a)), 0.28, 0.038, answer, 0.12);
+        break;
+      }
+      // Swung jazz pocket maneuver: brushed cymbal kiss + pizzicato bass pulse.
+      case 'pocket': {
+        hiss(6800, 5200, 0.05, 0.028, 3, 0, 'highpass', 0.22);
+        marimba(hz(bassLow() + (Number(param) > 1 ? 7 : 0)), 0.14, 0.046);
+        if (Number(param) >= 3) voiceLead(hz(sungTone(3) + 12), 0.2, 0.018, s32);
+        break;
+      }
+      // Poise settled lock-in: serene crystal fifth.
+      case 'poise':
+        voiceLead(hz(sungTone(2) + 12), 0.34, 0.024, 0, -0.1);
+        voiceLead(hz(sungTone(3) + 12), 0.42, 0.02, s32 * 1.5, 0.1);
+        break;
+      // Room of ingredients resonance bloom.
+      case 'pantry': {
+        const tones = roomTones().slice(0, 4);
+        tones.forEach((semi, idx) => vibes(hz(semi), 0.42, 0.024, idx * s32, (idx - 1.5) * 0.14));
+        marimba(hz(bassLow()), 0.28, 0.05);
+        break;
+      }
+      // Complex recipe baked/set from tilt + ingredients.
+      case 'recipe': {
+        const chord = param === 'set_jam' ? [0, 4, 7, 11] : param === 'tempered' ? [0, 2, 7, 14] : param === 'savoury' ? [0, 5, 7, 9] : param === 'blistered' ? [0, 4, 9, 14] : [0, 4, 7, 11, 14];
+        marimba(hz(bassLow()), 0.42, 0.075);
+        chord.forEach((semi, idx) => {
+          const play = idx % 2 ? celesta : vibes;
+          play(hz(semi + 12), 0.45 + idx * 0.06, 0.028, idx * s32, (idx - 1.5) * 0.14);
+        });
         break;
       }
       // A hop is a plucked string; a chain climbs the room's chord, and the high hop sparkles.
@@ -1702,14 +1816,15 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // A boonberry: the room's chord climbed as they come, on a vibraphone, and an airy glimpse after.
       case 'berry': {
         const i = 2 + (Number(param) || 0) % 6;
-        vibes(hz(sungTone(i)), 0.4, 0.05);
-        vibes(hz(sungTone(i + 1)), 0.5, 0.045, answer, 0.12);
+        vibes(hz(sungTone(i)), 0.42, 0.05);
+        vibes(hz(sungTone(i + 1)), 0.52, 0.045, answer, 0.12);
+        celesta(hz(sungTone(i + 2) + 12), 0.3, 0.016, answer + s32, -0.14);
         hiss(5200, 7800, 0.18, 0.018, 4, answer, 'bandpass', 0.3);
         line.at = sungTone(i + 1);
         line.last = t;
         break;
       }
-      case 'sweet': [0, 1, 2, 3].forEach((k) => vibes(hz(sungTone(k + 3)), 0.5, 0.04, k * s32, (k - 1.5) * 0.15)); break;
+      case 'sweet': [0, 1, 2, 3].forEach((k) => vibes(hz(sungTone(k + 3)), 0.55, 0.042, k * s32, (k - 1.5) * 0.15)); celesta(hz(sungTone(5) + 12), 0.65, 0.022, s32 * 4); break;
       // The haggle (pie-finds.mjs): each price struck is a wooden tock a step lower, and a soft vibes note that falls
       // with it, so the price is heard going down; then the coin handed back, two bright clinks and a glint. Cozy, and
       // a little silly, since nobody was selling.
@@ -1746,7 +1861,8 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // A share: two kalimbas, one either side, a chord's tones apart, together.
       case 'share': { const a = nextNote(t); kalimba(hz(a), 0.3, 0.05, 0, -0.25); kalimba(hz(sungFrom(a, -1)), 0.3, 0.045, 0.012, 0.25); break; }
       case 'flour':
-        if (!sample('flour')) hiss(640, 170, 0.18, 0.085, 0.8, 0, 'bandpass', 0.25);
+        if (!sample('flour')) hiss(640, 170, 0.2, 0.085, 0.8, 0, 'bandpass', 0.28);
+        marimba(hz(bassLow() + 7), 0.22, 0.024, s32);
         break;
       // A wonder: a music box playing the room's chord, its shape by kind.
       case 'wonder': {

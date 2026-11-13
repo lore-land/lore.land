@@ -119,8 +119,8 @@ function keepFound(id, chapter) {
  */
 export function createConductor({ onFound = () => {} } = {}) {
   const c = {
-    tempo: 96, swing: 0.5, t: 0, pos: 0, step: -1, said: -1, level: null, rhythm: null, rhythms: {}, chapter: 1,
-    lastRowStep: -999, inRoom: false, heard: [], whispered: false, lastPocket: null
+    tempo: 96, swing: 0.5, writtenSwing: 0.5, swingOverride: null, t: 0, pos: 0, step: -1, said: -1, level: null, rhythm: null, rhythms: {}, chapter: 1,
+    lastRowStep: -999, inRoom: false, heard: [], whispered: false, lastPocket: null, lastSwungStep: null
   };
   const sixteenth = () => 60 / c.tempo / 4;
   /* Where a step falls, in steps: an off-sixteenth leans late by the level's swing. */
@@ -133,10 +133,17 @@ export function createConductor({ onFound = () => {} } = {}) {
     c.chapter = n;
     c.level = level;
     c.tempo = level?.tempo || 96;
-    c.swing = clamp((level?.swing || 50) / 100, 0.5, 0.67);
+    c.writtenSwing = clamp((level?.swing || 50) / 100, 0.5, 0.67);
+    c.swing = c.swingOverride != null ? clamp(c.swingOverride, 0.5, 0.67) : c.writtenSwing;
     c.rhythm = level?.rhythm ? c.rhythms[level.rhythm] || null : null;
     c.heard = [];
     c.inRoom = false;
+  };
+
+  /** Override swing ratio directly (e.g. from Setup Swing / Jazz feel), or pass null for chapter default. */
+  c.setSwingOverride = (swingFrac = null) => {
+    c.swingOverride = swingFrac == null ? null : clamp(swingFrac, 0.5, 0.67);
+    c.swing = c.swingOverride != null ? c.swingOverride : c.writtenSwing;
   };
 
   /** The hidden rhythm is kept in its room: is the carry passing it? */
@@ -223,6 +230,26 @@ export function createConductor({ onFound = () => {} } = {}) {
     if (near.k === c.lastPocket) return false;
     c.lastPocket = near.k;
     return true;
+  };
+
+  /** Check whether an action falls on a swung beat or triplet off-beat for Jazz maneuver synergy. */
+  c.swungMoment = () => {
+    const base = Math.floor(c.pos / 2) * 2;
+    let best = null;
+    [-2, 0, 2, 4].forEach((offset) => {
+      [-1, 0, 1].forEach((sub) => {
+        const k = base + offset + sub;
+        const offSec = (c.pos - stepPos(k)) * sixteenth();
+        const absOff = Math.abs(offSec);
+        if (!best || absOff < best.absOff) best = { k, offSec, absOff };
+      });
+    });
+    const inPocket = Boolean(best && best.absOff <= WINDOW * 1.15);
+    const stepInBar = ((best?.k || 0) % 16 + 16) % 16;
+    const offbeat = Boolean(best && (Math.abs(best.k) % 2 === 1 || stepInBar % 4 === 2));
+    const freshHit = inPocket && best.k !== c.lastSwungStep;
+    if (freshHit) c.lastSwungStep = best.k;
+    return { inPocket, freshHit, offbeat, step: stepInBar, phase: c.phase() };
   };
 
   /* A step as it is passed (a number) or as it is said ahead ({ k, in }). */

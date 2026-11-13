@@ -116,6 +116,11 @@ export const SETUP = Object.freeze([
   ['glow', 'Glow', [['off', 'Off'], ['beat', 'On every beat'], ['bar', 'On the first of each bar']], 'off'],
   ['cues', 'Heard first', [['shaped', 'Low things rise, tall things fall'], ['one', 'One warning for all'], ['off', 'No warning']], 'one'],
   ['feel', 'Feel', [['written', 'As each chapter is written'], ['jazz', 'Jazz: swung hard, chords with tension, notes that lean before they land']], 'written'],
+  ['swing', 'Swing', [['chapter', 'As each chapter writes it'], ['straight', 'Straight eighths (50%)'], ['lilt', 'Light triplet lilt (58%)'], ['deep', 'Hard jazz pocket (67%)']], 'chapter'],
+  ['voicing', 'Voicing', [['folk', 'Acoustic folk: celesta, wood & strings'], ['warm', 'Warm parlour: vibes, marimba & low bass'], ['bright', 'Bell & brass: crisp overtones'], ['velvet', 'Velvet night: felt hammers & soft choir']], 'folk'],
+  ['motifCues', 'Motif cues', [['off', 'Chapter open & ending only'], ['room', 'Rooms, tilt tension & recipes'], ['board', 'Speak ahead hazards, lanes & pantry']], 'room'],
+  ['songSpace', 'Space', [['natural', 'Follow each place (field, plaza, court)'], ['close', 'Close underfoot, dry'], ['hall', 'Resonant concert hall']], 'natural'],
+  ['mix', 'Balance', [['balanced', 'Voices and ground even'], ['music', 'Lead with harmony, soft foley'], ['ear', 'Lead with steps & lane warnings']], 'balanced'],
   ['wap', 'The WAP', [['splat', 'A splat, crust over filling'], ['pillow', 'Into a pillow, soft'], ['cream', 'Whipped cream and a slide whistle'], ['bell', 'A fairground bell']], 'splat'],
   ['steps', 'A step across the lanes', [['ground', 'The ground underfoot'], ['tiptoe', 'Tiptoe, a plucked note'], ['felt', 'Felt slippers, hushed'], ['wood', 'A woodblock tock']], 'ground'],
   ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
@@ -137,7 +142,7 @@ export const SETUP_GROUPS = Object.freeze([
   ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
   ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
   ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']],
-  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow', 'feel', 'cues', 'wap', 'steps']]
+  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow', 'feel', 'swing', 'voicing', 'motifCues', 'songSpace', 'mix', 'cues', 'wap', 'steps']]
 ]);
 
 /* ─── How a screen is held: each a set of choices made at once, drawn, and said as Spw ───

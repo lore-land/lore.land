@@ -185,9 +185,9 @@ import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../mod
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier } from './pie-sound.mjs?v=2026_11_13.B';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue } from './pie-sound.mjs?v=2026_11_13.B';
 import { shelfColor, chainSting, tropeMotif, cadenceVoice, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample } from './pie-sound.mjs?v=2026_11_13.B';
-import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_09.S';
+import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_13.B';
 import { loadMotifs } from './pie-tropes.mjs';
 import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_13.B';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
@@ -490,6 +490,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const cardChapters = card.querySelector('[data-pie-card-chapters]');
   const meter = root.querySelector('[data-pie-meter]');
   const auraMeter = root.querySelector('[data-pie-aura]');
+  const recipeMeter = root.querySelector('[data-pie-recipe]');
   const toast = root.querySelector('[data-pie-toast]');
   const toastTitle = toast?.querySelector('[data-pie-toast-title]');
   const toastLine = toast?.querySelector('[data-pie-toast-line]');
@@ -992,7 +993,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     hat: { x: laneX(2), y: PLAYER_Y - 62, vx: 0, vy: 0 },
     spill: null,
     steadied: 0,
-    t: 0
+    t: 0,
+    lastClimb: -9,
+    stepBuffer: null,
+    jazzPocketT: 0,
+    jazzChain: 0,
+    roomPantryT: 0,
+    pantryHeard: new Set(),
+    recipe: { id: 'warm', charges: 0, earnedAt: -9 },
+    motifState: { tension: '', tensionLevel: 0, safeDir: 0, hopHint: false, armedAt: -9, resolvedCount: 0, lastCueAt: -9, stepIdx: 0 }
   });
 
   const cobbles = () => Math.floor((run?.scroll || 0) / COBBLE);
@@ -1380,6 +1389,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run.haggled || (donut.gift && liveFound('haggle'))) applyPower(power);
     if (power) run.powersUsed[power.id] = donut.gift ? 'gift' : 'season';
     run.donuts = (run.donuts || 0) + 1;
+    creditIngredient(donut, 'donut');
     sfx('sweet', 0, donut.x, donut.y);
     spawnRing(donut.x, donut.y, 22, '#e98fb0', 0.45);
     run.tags.push({ x: donut.x, y: donut.y - 22, t: 0, text: '+ DONUT · FILLING · SLICES FILL MORE' });
@@ -1654,7 +1664,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       windowLeft,
       windowFull,
       canHop: run.jumpT <= 0 && !(run.jumpCool > 0),
-      nextChain: windowLeft > 0 ? Math.min(3, chain + 1) : 0
+      nextChain: windowLeft > 0 ? Math.min(3, chain + 1) : 0,
+      recipe: recipeIdNow(),
+      jazzPocket: (run.jazzPocketT || 0) > 0,
+      pantry: (run.roomPantryT || 0) > 0,
+      motif: run.motifState ? { ...run.motifState } : null
     };
   }
   heightsPanel?.addEventListener('toggle', () => {
@@ -2339,6 +2353,152 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return Math.abs(thing.x - run.x) < (thing.w * reach + pw) / 2;
   };
 
+  /* ─── Recipes involving tilt, rooms of ingredients, jazz maneuvers, and motif interpretation ─── */
+  const RECIPES = Object.freeze({
+    warm: { id: 'warm', name: 'Warm Boonberry Pie', short: 'Warm pie', formula: 'crust + berries', summary: 'Balanced crust and sweet boonberry filling.' },
+    thin: { id: 'thin', name: 'Thin Crumble', short: 'Thin', formula: 'low crust or filling', summary: 'Short on an ingredient: lighter slices, tips sooner.' },
+    tempered: { id: 'tempered', name: 'Tempered Whipped Glaze', short: 'Tempered', formula: 'catch steep tilt (>=34%) while whole', summary: '+20% slice speed, +1 wall bounce reach, throws ease tilt.' },
+    set_jam: { id: 'set_jam', name: 'Bane-Set Boon Jam', short: 'Set jam', formula: 'pinch of baneberry into rich filling (>=58%)', summary: '+0.75 satisfaction, pierces one obstacle, -25% ingredient cost.' },
+    savoury: { id: 'savoury', name: 'Hearth Boneberry Pie', short: 'Savoury', formula: 'boneberry at steady poise (<28% tilt)', summary: '-25% knock tilt, heavier crust knockback, refunds +8% crust.' },
+    blistered: { id: 'blistered', name: 'Furrow-Caramel Tart', short: 'Caramel', formula: 'warm furrow while tilting (>=26%)', summary: 'Turns steep tilt into crust & filling, +22% catch reach.' },
+    royal: { id: 'royal', name: 'Sovereign Quinary', short: 'Quinary', formula: 'combine crafted recipes while rich (>=78%)', summary: 'Full harmonic glaze: fast, wide, piercing & lightly magnetic.' }
+  });
+  const INGREDIENT_ROOMS = new Set(['~', '*', '$', '?']);
+  const jazzOn = () => setting('feel') === 'jazz';
+  const recipeIdNow = () => {
+    if (!run) return 'warm';
+    if (!whole()) return 'thin';
+    return run.recipe?.charges > 0 && RECIPES[run.recipe.id] ? run.recipe.id : 'warm';
+  };
+  function bakeRecipe(id, charges = 3, reason = '') {
+    if (!run || !RECIPES[id]) return;
+    const prev = recipeIdNow();
+    const royal = prev !== 'warm' && prev !== 'thin' && prev !== id && richness() >= 0.78;
+    const finalId = royal ? 'royal' : id;
+    const finalCharges = royal ? 5 : charges;
+    run.recipe = { id: finalId, charges: finalCharges, earnedAt: run.t };
+    const info = RECIPES[finalId];
+    run.tags.push({ x: run.x, y: run.y - 108, t: 0, text: `RECIPE · ${info.short.toUpperCase()}` });
+    spawnRing(run.x, run.y - 20, 32, colors.gold, 0.5);
+    if (record.sound) playTone('recipe', finalId, panOf(run.x), 0);
+    if (reason) say(`${info.name}: ${reason}`);
+  }
+  function creditIngredient(thing, what = 'ingredient') {
+    const r = roomNow();
+    if (!r || !INGREDIENT_ROOMS.has(r.sigil)) return;
+    run.roomPantryT = Math.max(run.roomPantryT || 0, 5.2);
+    const home = (r.sigil === '~' && (what === 'berry' || what === 'furrow'))
+      || (r.sigil === '*' && (what === 'bone' || what === 'berry'))
+      || (r.sigil === '$' && (what === 'flour' || what === 'bone'))
+      || (r.sigil === '?' && what === 'sweet');
+    const bonus = home ? 0.08 : 0.05;
+    if (what === 'flour' || what === 'bone') run.aura = Math.min(1, run.aura + bonus);
+    if (what === 'berry' || what === 'sweet' || what === 'furrow' || what === 'donut') run.filling = Math.min(1, run.filling + bonus);
+    if (record.sound && setting('music') !== 'quiet') {
+      playTone('pantry', what, panOf(thing?.x), depthOf(thing?.y));
+    }
+    if (home && run.pantryTagAt !== r.n) {
+      run.pantryTagAt = r.n;
+      run.tags.push({ x: run.x, y: run.y - 72, t: 0, text: 'PANTRY HARMONY · +YIELD' });
+    }
+  }
+  function resolveMotifTension(reason = 'steered') {
+    const m = run?.motifState;
+    if (!m || !m.tension) return false;
+    const was = m.tension;
+    m.tension = '';
+    m.tensionLevel = 0;
+    m.hopHint = false;
+    m.safeDir = 0;
+    m.resolvedCount += 1;
+    setBoardHarmonicState({ tension: '', tensionLevel: 0 });
+    if (jazzOn() || setting('motifCues') !== 'off') {
+      run.sliceReady = Math.min(1, run.sliceReady + (jazzOn() ? 0.18 : 0.1));
+      run.wobble = Math.max(0, run.wobble - (jazzOn() ? 0.07 : 0.04));
+      if (run.comboT > 0) run.comboT = Math.min(2.8, run.comboT + 0.6);
+      run.tags.push({ x: run.x, y: run.y - 96, t: 0, text: jazzOn() ? `♪ ${was.toUpperCase()} → 9` : `♪ RESOLVED` });
+      if (record.sound) playBoardMotifCue({ action: 'resolve', pan: panOf(run.x), kind: reason, stepIndex: m.stepIdx++ });
+    }
+    return true;
+  }
+  function noteSwungManeuver(action) {
+    if (!run || state !== 'running') return { swung: false };
+    const sw = conductor.swungMoment?.();
+    const activeJazz = jazzOn();
+    if (!sw?.inPocket) return { swung: false };
+    if (activeJazz) {
+      run.jazzPocketT = Math.max(run.jazzPocketT || 0, 1.15);
+      run.jazzChain = sw.freshHit ? Math.min(6, (run.jazzChain || 0) + 1) : (run.jazzChain || 1);
+      if (sw.freshHit && record.sound && setting('music') !== 'quiet') {
+        playTone('pocket', run.jazzChain, panOf(run.x), 0);
+      }
+      if (sw.offbeat && sw.freshHit && action !== 'step') {
+        run.tags.push({ x: run.x + 14, y: run.y - 68, t: 0, text: '♪ SWUNG' });
+      }
+    }
+    return { swung: activeJazz, offbeat: sw.offbeat };
+  }
+  function tickMotifInterpreter() {
+    if (!run || state !== 'running' || run.spill) return;
+    const m = run.motifState;
+    if (run.t - m.lastCueAt < 0.18) return;
+    m.lastCueAt = run.t;
+    const ahead = run.things.filter((t) => !t.wapped && !t.knocked && !t.cleared && t.y < run.y + 8 && run.y - t.y < 230);
+    const laneDanger = new Array(LANES).fill(0);
+    let hoppableInLane = false;
+    let tallInLane = false;
+    let nearItem = null;
+    ahead.forEach((th) => {
+      const dist = Math.max(1, run.y - th.y);
+      const weight = (230 - dist) / 230;
+      if (th.fatal) {
+        if (WIDE.has(th.kind)) {
+          for (let l = 0; l < LANES; l += 1) if (l !== th.gap) laneDanger[l] = Math.max(laneDanger[l], weight);
+          if (th.gap !== run.lane && LOW.has(th.kind)) hoppableInLane = true;
+        } else {
+          const l = laneAt(th.x);
+          laneDanger[l] = Math.max(laneDanger[l], weight);
+          if (l === run.lane) {
+            if (LOW.has(th.kind)) hoppableInLane = true;
+            else tallInLane = true;
+          }
+        }
+      } else if (['berry', 'sack', 'boneberry', 'furrow'].includes(th.kind) && !nearItem) {
+        nearItem = th;
+      }
+    });
+    // Also cue approaching ingredients aurally while Pantry Harmony resonates.
+    if (nearItem && run.roomPantryT > 0 && !run.pantryHeard.has(nearItem) && record.sound) {
+      run.pantryHeard.add(nearItem);
+      playBoardMotifCue({ action: 'pantry', pan: panOf(nearItem.x), depth: depthOf(nearItem.y), kind: nearItem.kind, stepIndex: m.stepIdx++ });
+    }
+    const hereDanger = laneDanger[run.lane];
+    let bestDir = 0;
+    const leftD = run.lane > 0 ? laneDanger[run.lane - 1] : 9;
+    const rightD = run.lane < LANES - 1 ? laneDanger[run.lane + 1] : 9;
+    if (hereDanger > 0.25 && Math.min(leftD, rightD) < hereDanger - 0.1) bestDir = leftD <= rightD ? -1 : 1;
+    else if (run.wobble >= 0.28 && Math.abs(run.tiltDir) >= 0.3) bestDir = Math.sign(run.tiltDir);
+    let tension = '';
+    if (run.wobble >= 0.45 || hereDanger >= 0.58) tension = 'b9';
+    else if (tallInLane || hereDanger >= 0.3 || run.things.some((th) => th.kind === 'mimewall' && Math.abs(th.y - run.y) < 180)) tension = '#11';
+    else if (hoppableInLane) tension = 'sus4';
+    m.tension = tension;
+    m.tensionLevel = Math.max(hereDanger, run.wobble);
+    m.safeDir = bestDir;
+    m.hopHint = Boolean(hoppableInLane && hereDanger > 0.2);
+    setBoardHarmonicState({ tension, tensionLevel: m.tensionLevel });
+    if (tension && record.sound && (run.t - m.armedAt > 1.2)) {
+      m.armedAt = run.t;
+      playBoardMotifCue({
+        action: 'steer',
+        pan: bestDir ? bestDir * 0.75 : 0,
+        depth: 0.2,
+        kind: hoppableInLane ? 'low' : tallInLane ? 'tall' : 'clear',
+        stepIndex: m.stepIdx++
+      });
+    }
+  }
+
   /* ─── Stepping: across the scene, a lane at a time ─── */
   const step = (dir) => {
     if (state === 'title' || state === 'over') {
@@ -2346,6 +2506,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return;
     }
     if (state !== 'running') return;
+    if (run.moveT < 0.45) {
+      run.stepBuffer = { fn: 'step', arg: dir };
+      return;
+    }
     // Frost underfoot: the next step slides a lane further.
     const slid = run.slideT > 0 && clamp(run.lane + dir * 2, 0, LANES - 1) !== clamp(run.lane + dir, 0, LANES - 1);
     const next = clamp(run.lane + dir * (slid ? 2 : 1), 0, LANES - 1);
@@ -2358,20 +2522,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.slideT = 0;
       run.tags.push({ x: laneX(next), y: run.y - 84, t: 0, text: 'SLID' });
     }
+    const swung = noteSwungManeuver('step');
     run.from = run.x;
     run.lane = next;
     run.moveT = 0;
     run.dir = dir;
     run.stillT = 0;
+    if (run.motifState?.tension && run.motifState.safeDir === Math.sign(dir)) resolveMotifTension('steered');
     // Stepping under the tilt catches the balance instead of adding to the wobble.
     if (run.wobble >= 0.24 && Math.abs(run.tiltDir) >= 0.3 && Math.sign(dir) === Math.sign(run.tiltDir)) {
-      run.wobble = Math.max(0, run.wobble - 0.14);
+      const steep = run.wobble;
+      const jazzCatchBonus = swung.swung ? 0.05 : 0;
+      run.wobble = Math.max(0, run.wobble - (0.14 + jazzCatchBonus));
       run.tiltDir *= 0.25;
-      run.steadied = Math.max(run.steadied, 0.75);
-      run.tags.push({ x: laneX(next), y: run.y - 84, t: 0, text: 'CAUGHT · STEADIED' });
+      run.steadied = Math.max(run.steadied, swung.swung ? 0.95 : 0.75);
+      run.tags.push({ x: laneX(next), y: run.y - 84, t: 0, text: swung.swung ? 'SWUNG CATCH · STEADIED' : 'CAUGHT · STEADIED' });
       spawnRing(laneX(next), run.y - 18, 28, colors.gold);
-      sfx('catch');
+      sfx('catch', steep);
       lean('caught');
+      if (steep >= 0.34 && whole() && richness() >= 0.42) {
+        bakeRecipe('tempered', 3, 'Steep catch tempered the glaze into fast, bouncing slices.');
+      }
       if (!run.caughtSaid) {
         run.caughtSaid = true;
         say('Caught the tilt: stepping under the lean steadies the plate.');
@@ -2381,7 +2552,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.tiltDir = clamp(run.tiltDir * 0.55 + dir * 0.55, -1, 1);
     sfx('step', dir);
     heardAct('step');
-    jostle(1);
+    const diagonal = run.t - (run.lastClimb ?? -9) < 0.26 ? 0.6 : 1;
+    jostle((swung.swung ? 0.55 : 1) * diagonal);
   };
 
   /* Ahead and back: up the lanes toward what is coming, or down toward the start line. */
@@ -2391,18 +2563,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return;
     }
     if (state !== 'running') return;
+    if (run.moveYT < 0.45) {
+      run.stepBuffer = { fn: 'climb', arg: dir };
+      return;
+    }
     const next = clamp(run.row + dir, 0, ROWS - 1);
     if (next === run.row) {
       run.wobble = Math.min(1, run.wobble + 0.06);
       return;
     }
+    const swung = noteSwungManeuver('climb');
+    const diagonal = run.t - run.lastStep < 0.26 ? 0.55 : 1;
+    run.lastClimb = run.t;
     run.fromY = run.y;
     run.row = next;
     run.moveYT = 0;
     run.stillT = 0;
     sfx('step', dir);
     heardAct('step');
-    jostle(0.8);
+    jostle(0.8 * diagonal * (swung.swung ? 0.55 : 1));
   };
 
   /* A hop: low things pass under it. It rises, hangs, and lands. Another hop pressed while
@@ -2424,6 +2603,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.hopWant = false;
     run.inTimeAtHop = run.inTime || 0;
     heardAct('hop');
+    const swung = noteSwungManeuver('hop');
+    if (run.motifState?.hopHint) resolveMotifTension('hopped');
     // A deft hop right as a low hazard reaches the carrier lands steadier and readies a slice.
     const grazing = run.things.some((th) => !th.wapped && !th.cleared && !th.knocked && LOW.has(th.kind) && (th.fatal || SLIPS.has(th.kind))
       && Math.abs(th.y - run.y) < 42
@@ -2433,7 +2614,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.jumpT = JUMP_DUR;
     // A chain: hop again soon after a good landing and the next hop goes higher; the third is a high
     // hop, which clears the lighter tall things too (=hop_window, =hop_chain).
-    const quick = run.t - (run.lastLand ?? -9) < TUNE.hop_window * (run.carrier.id === 'clerk' ? 1.4 : 1);
+    const jazzWindow = swung.swung || run.jazzPocketT > 0 ? 1.24 : 1;
+    const quick = run.t - (run.lastLand ?? -9) < TUNE.hop_window * (run.carrier.id === 'clerk' ? 1.4 : 1) * jazzWindow;
     run.hopChain = quick && run.lastHopGood ? Math.min(3, (run.hopChain || 0) + 1) : 0;
     run.hopPower = 1 + run.hopChain * TUNE.hop_chain;
     run.highHop = run.hopChain >= 2;
@@ -2668,16 +2850,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     run.sliceReady = 0;
     const rich = richness();   // measured before the aura pays for it
-    run.aura = Math.max(0, run.aura - SLICE_COST);         // the pie in hand is made whole again from the aura:
-    run.filling = Math.max(0, run.filling - SLICE_COST);   // crust and filling both
+    const activeRec = recipeIdNow();
+    const drain = activeRec === 'set_jam' || activeRec === 'royal' ? SLICE_COST * 0.75 : SLICE_COST;
+    run.aura = Math.max(0, run.aura - drain);         // the pie in hand is made whole again from the aura:
+    run.filling = Math.max(0, run.filling - drain);   // crust and filling both
+    if (run.recipe?.charges > 0) {
+      run.recipe.charges -= 1;
+      if (run.recipe.charges <= 0) run.recipe = { id: 'warm', charges: 0, earnedAt: run.t };
+    }
+    const swung = noteSwungManeuver('throw');
     const a = angle == null ? run.aim.a : clamp(angle, -AIM_MAX * 1.4, AIM_MAX * 1.4);
     const from = throwFrom();
-    const shot = (heading, echo = false) => ({ x: from.x, y: from.y, vx: Math.sin(heading) * SLICE_SPEED, vy: -Math.cos(heading) * SLICE_SPEED, reach: SLICE_REACH + (wasPoised ? 45 : 0), bounces: 0, t: 0, bent: new Set(), ramped: new Set(), loft: 0, missing, echo, poised: wasPoised, helping: missing ? 1 : helping(rich) + (run.tin > 0 ? 0.5 : 0), size: missing ? 0.85 : 0.9 + rich * 0.6 });
+    const speedMul = activeRec === 'tempered' || activeRec === 'royal' ? 1.2 : 1;
+    const sizeMul = (missing ? 0.85 : 0.9 + rich * 0.6) * (activeRec === 'blistered' || activeRec === 'royal' ? 1.22 : 1);
+    const helpBonus = (activeRec === 'set_jam' || activeRec === 'royal' ? 0.75 : 0) + (activeRec === 'royal' ? 0.25 : 0);
+    const shot = (heading, echo = false) => ({
+      x: from.x, y: from.y, vx: Math.sin(heading) * SLICE_SPEED * speedMul, vy: -Math.cos(heading) * SLICE_SPEED * speedMul,
+      reach: SLICE_REACH + (wasPoised ? 45 : 0) + (activeRec === 'tempered' || activeRec === 'royal' ? 65 : 0),
+      bounces: 0, t: 0, bent: new Set(), ramped: new Set(), loft: 0, missing, echo, poised: wasPoised,
+      recipe: activeRec, blueNote: Boolean(jazzOn() && (swung.swung || run.jazzPocketT > 0 || activeRec === 'royal')),
+      pierce: activeRec === 'set_jam' || activeRec === 'royal' ? 1 : 0,
+      helping: (missing ? 1 : helping(rich) + (run.tin > 0 ? 0.5 : 0)) + helpBonus,
+      size: sizeMul
+    });
     const first = shot(a);
     first.sure = run.aimLock > 0;   // thrown on an arrow (or in a parade): Perfect wherever it lands on a face
     if (run.tin > 0 && !missing) run.tin -= 1;   // the sliver tin: half again, three times
     sfx('throw');
     heardAct('throw');
+    if (run.motifState?.tension && (wasPoised || swung.swung)) resolveMotifTension('thrown');
     // Thrown from a hop, the slice leaves high. The hang throws it higher. The line still has to be true.
     if (airborne()) {
       const hung = inHang();
@@ -2696,7 +2897,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.throws.push(shot(Math.abs(a) < 0.08 ? 0.3 * pick([-1, 1]) : -a, true));
     }
     if (missing) run.tags.push({ x: run.x, y: run.y - 80, t: 0, text: missing === 'everything' ? 'A THIN SLICE' : `NO ${missing.toUpperCase()}` });
-    if (wasPoised) run.wobble = Math.max(0, run.wobble - 0.05);
+    if (wasPoised || ['tempered', 'royal'].includes(activeRec)) run.wobble = Math.max(0, run.wobble - (wasPoised ? 0.05 : 0.04));
     else run.wobble = Math.min(1.2, run.wobble + 0.06);
   };
 
@@ -2704,6 +2905,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const flySlice = (shot, dt) => {
     shot.t += dt;
     if (run.bane?.id === 'wind') shot.vx += run.bane.dir * 160 * dt;   // a rented wind drifts it
+    // Blue-note curve: in jazz feel during pocket poise or Sovereign Quinary, slices subtly bend toward nearby faces.
+    if (shot.blueNote && shot.vy < 0) {
+      const target = run.things.filter(aimable).filter((other) => other.y < shot.y - 14 && shot.y - other.y < 180 && Math.abs(other.x - shot.x) < 62)
+        .sort((a, b) => Math.hypot(a.x - shot.x, a.y - shot.y) - Math.hypot(b.x - shot.x, b.y - shot.y))[0];
+      if (target) shot.vx += clamp(target.x - shot.x, -40, 40) * 4.5 * dt;
+    }
     const stepDist = Math.hypot(shot.vx, shot.vy) * dt;
     shot.x += shot.vx * dt;
     shot.y += shot.vy * dt;
@@ -2774,17 +2981,31 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       if (Math.abs(thing.x - shot.x) > thing.w * 0.6 + 6 * (shot.size || 1)) continue;   // a bigger slice reaches wider
       if (Math.abs((thing.y - 6) - shot.y) > thing.h * 0.5 + 6) continue;
+      if (thing.kind === 'baneberry' && !thing.wapped) {
+        // Pinch of baneberry (berries.json): throwing a slice over rich filling catches its tartness to set a jam!
+        if (!shot.bent.has(thing) && (run.filling >= 0.58 || shot.poised)) {
+          shot.bent.add(thing);
+          thing.wapped = true;
+          thing.wapT = 0.5;
+          thing.spin = 0;
+          bakeRecipe('set_jam', 4, 'A pinch of baneberry set the rich filling into glossy ruby jam.');
+          run.filling = Math.min(1, run.filling + 0.08);
+          continue;
+        }
+      }
       if (thing.kind === 'clown' || thing.kind === 'switch') {
         const off = Math.abs(thing.x - shot.x);
-        const trueLine = off < (shot.poised ? 10 : 7);
-        const closeLine = !trueLine && off < (shot.poised ? 16 : 12);
+        const pocketGrace = shot.blueNote ? 3 : 0;
+        const trueLine = off < (shot.poised ? 10 : 7) + pocketGrace;
+        const closeLine = !trueLine && off < (shot.poised ? 16 : 12) + pocketGrace;
         const piled = [...shot.ramped].some((id) => id !== 'mimes');
         const craft = shot.bounces > 0 || shot.curved || piled || shot.sure;
         const perfect = trueLine || craft;
-        const manners = { trueLine, closeLine, hung: Boolean(shot.hung), poised: Boolean(shot.poised), craft };
+        const manners = { trueLine, closeLine, hung: Boolean(shot.hung), poised: Boolean(shot.poised), craft, recipe: shot.recipe };
         if (thing.kind === 'switch') foil(thing, perfect, manners);
-        else if (shot.missing) wap(thing, 'thin', shot.missing);
+        else if (shot.missing) wap(thing, 'thin', shot.missing, 1, manners);
         else wap(thing, perfect ? 'perfect' : closeLine ? 'near' : 'throw', null, shot.helping, manners);
+        if (shot.recipe === 'savoury' || shot.recipe === 'royal') run.aura = Math.min(1, run.aura + 0.08);
         if (shot.bounces > 0 && perfect) run.tags.push({ x: thing.x, y: thing.y - 54, t: 0, text: 'OFF THE WALL' });
         else if (shot.curved && perfect) run.tags.push({ x: thing.x, y: thing.y - 54, t: 0, text: 'AROUND THE POST' });
         shot.done = true;
@@ -2942,6 +3163,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       if (thing.kind === 'wasps' || thing.kind === 'pigeon') return splat(shot, thing.kind === 'wasps' ? 'snatched by wasps' : 'a pigeon took it');
       if (['puddle', 'snail', 'berry', 'frost', 'furrow', 'egg', 'wonder', 'beaver'].includes(thing.kind)) continue;   // low things: it flies over
+      if (shot.pierce > 0) {
+        shot.pierce -= 1;
+        thing.knocked = true;
+        spawnRing(thing.x, thing.y, 20, colors.berry, 0.35);
+        run.tags.push({ x: shot.x, y: shot.y - 14, t: 0, text: 'SET JAM PIERCE' });
+        continue;
+      }
       return splat(shot, 'splat');
     }
     if (shot.reach <= 0 || shot.y < -30 || shot.y > H + 30) {
@@ -3056,7 +3284,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       // A thin pie, and the clown is satisfied anyway: it counts once, never twice.
       run.tags.push({ x: thing.x, y: thing.y - 40, t: 0, text: missing === 'everything' ? 'WAP · CRUMBS' : `WAP · NO ${missing.toUpperCase()}` });
       run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: 0.8 });
-      if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y));
+      if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y), { recipe: manners?.recipe || recipeIdNow() });
       say(`WAP, thin: ${missing === 'everything' ? 'crumbs, mostly' : `no ${missing}`}. ${satisfied ? 'Enough, just: the clown is satisfied.' : 'It helps; the clown wants more.'}`);
       return;
     }
@@ -3081,7 +3309,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: ((perfect ? 1.25 : 1) + Math.min(run.combo, 6) * 0.06) * (0.85 + Math.min(1, TUNE.drama) * 0.3) });
     impact(perfect ? 'perfect' : 'clown', thing.x, thing.y - 52);
     if (run.combo >= 3) impact('combo', thing.x, thing.y - 84, { scale: 0.5 + run.combo * 0.15, word: `COMBO ×${run.combo}!` });
-    if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y));
+    if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y), { recipe: manners?.recipe || recipeIdNow() });
     const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : manners?.trueLine ? ' Dead centre. It counts twice, and the pie is ready for another.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : how === 'near' ? ' Close: the pie steadies a little.' : '';
     say(run.waps === 1
       ? `WAP. A clown got the pie in the eye, and loved it. The pie on the plate is no smaller.${by}`
@@ -3949,8 +4177,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const cost = { ...(KNOCKS[thing.kind] || { tilt: 0.45 }), ...(knockRules[thing.kind] || {}) };
     // Bonk glass remembers: a pane struck here is one more blow the margin's lantern glass counts (references.json glass).
     if (thing.kind === 'pane' && run.legEvents) run.legEvents.pane_struck = (run.legEvents.pane_struck || 0) + 1;
-    // How a carrier takes a knock: the porter barely, the clerk and the clown badly.
-    let tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3);
+    // How a carrier takes a knock: the porter barely, the clerk and the clown badly; a savoury pie cushions more.
+    let tilt = cost.tilt * clamp(run.carrier.wobble / 0.18, 0.7, 1.3) * (['savoury', 'royal'].includes(recipeIdNow()) ? 0.75 : 1);
     if (run.frill > 0) {
       // Frill-lichen: more edge than room, and a knock lands on the edge.
       tilt *= 0.5;
@@ -3997,6 +4225,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.floured = true;
     sfx('flour');
     run.aura = Math.min(1, run.aura + FLOUR_GIVES);   // flour: the crust
+    creditIngredient(thing, 'flour');
     run.tags.push({ x: run.x, y: run.y - 96, t: 0, text: '+ CRUST' });
     run.floured = 1.6;   // a dusting on the carrier; flour never slows them
     run.setbacks += 1;
@@ -4906,6 +5135,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // Stepping: a line segment, quickly drawn.
     run.moveT = Math.min(1, run.moveT + dt / run.carrier.step);
     run.x = run.from + (laneX(run.lane) - run.from) * (1 - (1 - run.moveT) ** 3);
+    if (run.stepBuffer && state === 'running' && ((run.stepBuffer.fn === 'step' && run.moveT >= 0.72) || (run.stepBuffer.fn === 'climb' && run.moveYT >= 0.72))) {
+      const queued = run.stepBuffer;
+      run.stepBuffer = null;
+      if (queued.fn === 'step') step(queued.arg);
+      else climb(queued.arg);
+    }
     run.dust = Math.max(0, run.dust - dt * 0.18);
     if (run.jumpT > 0) {
       run.jumpT = Math.max(0, run.jumpT - dt);
@@ -4960,7 +5195,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.moveYT = Math.min(1, run.moveYT + dt / run.carrier.step);
     run.y = run.fromY + (rowY(run.row) - run.fromY) * (1 - (1 - run.moveYT) ** 3);
     if (state === 'running' && run.moveT >= 1 && run.moveYT >= 1 && run.jumpT <= 0) {
+      const wasPoised = poised();
       run.stillT += dt;
+      if (!wasPoised && poised() && record.sound && setting('music') !== 'quiet') playTone('poise', 1, panOf(run.x), 0);
       if (poised() && !run.poisedSaid && run.stillT >= 0.85) {
         run.poisedSaid = true;
         run.tags.push({ x: run.x, y: run.y - 88, t: 0, text: 'POISED' });
@@ -4973,7 +5210,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (record.sound && state === 'running') ['unkept', 'lit', 'lag', 'glimpse', 'fed', 'warm'].forEach((key) => {
       if (run[key] > 1 && run[key] - dt <= 1) powerEnding();
     });
-    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool', 'gladT', 'aimFocusT'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
+    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool', 'gladT', 'aimFocusT', 'jazzPocketT', 'roomPantryT'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
+    if (!(run.jazzPocketT > 0)) run.jazzChain = 0;
     // A timed power that has just run out is noticed (pie-reactions.mjs, the reactions trial): it used to end with
     // nothing said. Read against the last frame, so wherever a timer is counted down it is seen.
     if (reactionsOn()) {
@@ -4993,7 +5231,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.phase += dt * (6 + run.wobble * 10);
     if (run.steadied > 0) run.steadied -= dt;
     if (run.floured > 0) run.floured -= dt;
-    run.sliceReady = Math.min(1, run.sliceReady + dt / (whole() ? 1.0 : 1.6));
+    const readyRate = (whole() ? 1.0 : 1.6) / ((run.jazzPocketT > 0 ? 1.25 : 1) * (run.roomPantryT > 0 ? 1.15 : 1));
+    run.sliceReady = Math.min(1, run.sliceReady + dt / readyRate);
     // The aim needle holds where it was left. Only something done turns it: Q/E, a pointer, a tap,
     // a knock that swings the carrier, or remainder-moths, who go to the nearest face like a lamp.
     if (run.trueAim > 0) {
@@ -5019,6 +5258,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       tickMini(dt);
       tickThursday(dt);
       tickMargins();
+      tickMotifInterpreter();
       // A weathercock by the lanes swings the needle the way it points, while the carrier passes it.
       const vane = run.things.find((t) => t.kind === 'vane' && Math.abs(t.x - run.x) < LANE_W * 1.6 && Math.abs(t.y - run.y) < 70);
       if (vane && !(run.aimLock > 0)) {
@@ -5377,6 +5617,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             sfx('sweet');
             spawnRing(thing.x, thing.y, 26, '#f2c14e', 0.45);
             run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: 'SWEETENED · + FILLING' });
+            creditIngredient(thing, 'sweet');
+            if (run.filling >= 0.58) bakeRecipe('set_jam', 4, 'Sweetened baneberry set the sweet filling into bright jam.');
             foretell(laneAt(thing.x), { kindly: true });
           } else {
             // Squashed underfoot: one he will not get, and a foretelling that never gets said.
@@ -5425,11 +5667,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (thing.kind === 'furrow') {
           if (!thing.warmed) {
             thing.warmed = true;
+            const tilting = run.wobble >= 0.26;
             lean('furrow');
-            run.aura = Math.min(1, run.aura + 0.12);
-            run.filling = Math.min(1, run.filling + 0.08);
-            run.wobble = Math.max(0, run.wobble - 0.15);
-            run.tags.push({ x: thing.x, y: thing.y - 18, t: 0, text: '+ WARM' });
+            run.aura = Math.min(1, run.aura + (tilting ? 0.16 : 0.12));
+            run.filling = Math.min(1, run.filling + (tilting ? 0.14 : 0.08));
+            run.wobble = Math.max(0, run.wobble - (tilting ? run.wobble * 0.48 : 0.15));
+            run.tags.push({ x: thing.x, y: thing.y - 18, t: 0, text: tilting ? '+ CARAMELIZED WARMTH' : '+ WARM' });
+            creditIngredient(thing, 'furrow');
+            if (tilting && whole()) bakeRecipe('blistered', 3, 'The warm furrow caramelized your tilt into a wide amber glaze.');
             if (!run.furrowSaid) {
               run.furrowSaid = true;
               say('A warm furrow. Something keeps the field warm from underneath.');
@@ -5466,6 +5711,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           spawnRing(thing.x, thing.y, 24, '#4d9f97', 0.45);
           applyPower(powerFor('boonberry'));
           run.berriesEaten.boon += 1;
+          creditIngredient(thing, 'berry');
           lean('boonberry');
           run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: '+ FILLING · A GLIMPSE' });
           // Kindly foretelling: whether the berry showed it or you remembered it, the lane does not say.
@@ -5480,6 +5726,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           spawnRing(thing.x, thing.y, 24, '#c9a99a', 0.45);
           applyPower(powerFor('boneberry'));
           run.berriesEaten.bone += 1;
+          creditIngredient(thing, 'bone');
+          if (run.wobble < 0.28 && run.aura >= 0.42) bakeRecipe('savoury', 4, 'Grown, not raised, folded crisp under steady poise.');
           lean('boneberry');
           const taste = boneFlavour();
           run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: `+ BOTH · FED · ${taste.toUpperCase()}` });
@@ -5549,6 +5797,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             thing.trodden = true;
             dust(0.15);
             run.aura = Math.min(1, run.aura + 0.18);
+            creditIngredient(thing, 'flour');
             run.tags.push({ x: thing.x, y: thing.y - 20, t: 0, text: '+ CRUST' });
           }
           continue;
@@ -5627,6 +5876,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       auraMeter.style.setProperty('--filling', String(clamp(run.filling, 0, 1)));
       auraMeter.classList.toggle('is-thin', !whole());
       auraMeter.classList.toggle('is-rich', richness() >= 0.85);
+      if (recipeMeter) {
+        const rid = recipeIdNow();
+        const showRec = rid !== 'warm' || richness() >= 0.72;
+        recipeMeter.hidden = !showRec;
+        if (showRec) {
+          recipeMeter.dataset.recipe = rid;
+          const lbl = recipeMeter.querySelector('b');
+          const charges = run.recipe?.charges > 0 && run.recipe.id === rid ? ` ×${run.recipe.charges}` : '';
+          if (lbl) lbl.textContent = `${(RECIPES[rid]?.short || 'Warm pie')}${charges}`;
+        }
+      }
     }
     root.dataset.cabinetMood = state !== 'running'
       ? ''
@@ -6096,7 +6356,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
           ctx.fillStyle = g;
           ctx.beginPath(); ctx.arc(x + dx, y + dy, 5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = thing.sweetened ? 'rgba(255, 250, 220, 0.8)' : 'rgba(220, 195, 255, 0.55)';
+          ctx.beginPath(); ctx.arc(x + dx - 1.4, y + dy - 1.6, 1.1, 0, Math.PI * 2); ctx.fill();
         });
+        ctx.fillStyle = thing.sweetened ? '#557038' : '#3a4a2a';
+        ctx.beginPath(); ctx.ellipse(x + 4, y - 10, 4, 2, -0.5, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = '#3a4a2a';
         ctx.lineWidth = 1.4;
         ctx.beginPath(); ctx.moveTo(x, y - 8); ctx.lineTo(x - 4, y - 14); ctx.lineTo(x - 2, y - 11); ctx.stroke();
@@ -6285,16 +6549,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'furrow': {
-        // A dug furrow, warm from underneath: pinprick torches along it.
+        // A dug furrow, warm from underneath: pinprick torches along a ridged ember trench.
+        ctx.fillStyle = thing.warmed ? 'rgba(130, 82, 46, 0.55)' : 'rgba(220, 128, 42, 0.22)';
+        ctx.beginPath();
+        ctx.roundRect(x - 28, y - 7, 56, 14, 7);
+        ctx.fill();
         ctx.fillStyle = '#5a3f2a';
+        ctx.strokeStyle = '#3c2616';
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.roundRect(x - 26, y - 5, 52, 10, 5);
         ctx.fill();
+        ctx.stroke();
         for (let i = 0; i < 5; i += 1) {
           const tx = x - 20 + i * 10;
           const flick = thing.warmed ? 0.35 : 0.8 + Math.sin(run.t * 9 + i) * 0.2;
           ctx.fillStyle = `rgba(255, 190, 90, ${flick})`;
-          ctx.beginPath(); ctx.arc(tx, y, 1.8, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(tx, y, 2, 0, Math.PI * 2); ctx.fill();
+          if (!thing.warmed) {
+            ctx.fillStyle = 'rgba(255, 240, 195, 0.75)';
+            ctx.beginPath(); ctx.arc(tx, y - 0.5, 0.8, 0, Math.PI * 2); ctx.fill();
+          }
         }
         break;
       }
@@ -6464,7 +6739,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'berry': {
-        // A boonberry cluster: glassy teal drupelets, each with an amber ember at its core.
+        // A boonberry cluster: glassy teal drupelets, each with an amber ember at its core and a leaf.
         if (thing.wapped) ctx.globalAlpha = Math.max(0, 1 - (thing.wapT - 0.7) * 3);
         [[-5, 2], [5, 2], [0, -5], [-2, 6], [4, -2]].forEach(([dx, dy]) => {
           const g = ctx.createRadialGradient(x + dx, y + dy, 0.5, x + dx, y + dy, 5.5);
@@ -6474,7 +6749,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           g.addColorStop(1, '#235f5b');
           ctx.fillStyle = g;
           ctx.beginPath(); ctx.arc(x + dx, y + dy, 5.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(255, 252, 238, 0.6)';
+          ctx.beginPath(); ctx.arc(x + dx - 1.5, y + dy - 1.7, 1.15, 0, Math.PI * 2); ctx.fill();
         });
+        ctx.fillStyle = '#487a42';
+        ctx.beginPath(); ctx.ellipse(x - 5, y - 10, 4.5, 2.2, 0.45, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = '#3d6a3a';
         ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.moveTo(x, y - 9); ctx.quadraticCurveTo(x + 3, y - 14, x + 7, y - 15); ctx.stroke();
@@ -6700,7 +6979,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           ctx.strokeStyle = 'rgba(80, 40, 34, 0.45)';
           ctx.lineWidth = 0.8;
           ctx.stroke();
+          ctx.fillStyle = 'rgba(255, 255, 252, 0.78)';
+          ctx.beginPath(); ctx.arc(x + dx - 1.6, y + dy - 2.1, 1.2, 0, Math.PI * 2); ctx.fill();
         });
+        ctx.fillStyle = '#5c493b';
+        ctx.beginPath(); ctx.ellipse(x, y - 10, 3, 1.5, 0, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = 'rgba(160, 150, 140, 0.55)';
         ctx.lineWidth = 1.1;
         const drift = reduced?.matches ? 0 : Math.sin((run?.t || 0) * 3 + x) * 1.5;
@@ -6756,6 +7039,22 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.roundRect(x - 22, y - 16, 44, 32, 8);
         ctx.fill();
         ctx.stroke();
+        // Stitched burlap hem and flour sift flecks.
+        ctx.strokeStyle = 'rgba(138, 122, 88, 0.55)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2.5, 2]);
+        ctx.beginPath();
+        ctx.roundRect(x - 19, y - 13, 38, 26, 6);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#a89870';
+        [[-22, -16], [22, -16]].forEach(([ex, ey]) => {
+          ctx.beginPath(); ctx.arc(x + ex * 0.88, y + ey * 0.92, 2.5, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.fillStyle = 'rgba(255, 252, 245, 0.82)';
+        [[-11, -7], [13, 7], [-14, 6]].forEach(([fx, fy]) => {
+          ctx.beginPath(); ctx.arc(x + fx, y + fy, 1.3, 0, Math.PI * 2); ctx.fill();
+        });
         ctx.fillStyle = '#8a7a58';
         ctx.font = '600 8px Georgia, serif';
         ctx.textAlign = 'center';
@@ -7643,38 +7942,92 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.globalAlpha = alpha;
     ctx.translate(x, y);
     ctx.rotate(tilt);
-    // The pie in hand swells with the aura: a rich one rides high on the plate.
+    // The pie in hand swells with the aura: a rich one rides high on the plate, and active recipes glaze its crust.
+    const rec = recipeIdNow();
     const swell = run && !run.spill ? 0.85 + richness() * 0.4 : 1;
     ctx.scale(swell, swell);
-    ctx.fillStyle = '#e9e2d4';
+    ctx.fillStyle = rec === 'royal' ? '#f7f0df' : '#e9e2d4';
     ctx.beginPath();
     ctx.ellipse(0, 3, 21, 5, 0, 0, Math.PI * 2);   // the plate
     ctx.fill();
+    if (rec === 'royal') {
+      ctx.strokeStyle = 'rgba(226, 178, 74, 0.8)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
     const crust = ctx.createLinearGradient(0, -8, 0, 4);
-    crust.addColorStop(0, '#e0a95a');
-    crust.addColorStop(1, '#a8652a');
+    if (rec === 'savoury') {
+      crust.addColorStop(0, '#c88d4e');
+      crust.addColorStop(1, '#78441e');
+    } else if (rec === 'blistered') {
+      crust.addColorStop(0, '#f0ba5a');
+      crust.addColorStop(1, '#924118');
+    } else if (rec === 'thin') {
+      crust.addColorStop(0, '#d8b784');
+      crust.addColorStop(1, '#987246');
+    } else {
+      crust.addColorStop(0, '#e0a95a');
+      crust.addColorStop(1, '#a8652a');
+    }
     ctx.fillStyle = crust;
     ctx.beginPath();
-    ctx.ellipse(0, -1, 17, 6.5, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, -1, rec === 'thin' ? 15.5 : 17, rec === 'savoury' ? 7.2 : 6.5, 0, 0, Math.PI * 2);
     ctx.fill();
     // Scalloped crust flutes around the rim when crust is healthy.
-    if (!run || run.crust >= SLICE_COST) {
-      ctx.fillStyle = '#ecc074';
-      for (let i = -5; i <= 5; i += 1) {
-        const a = (i / 5) * Math.PI * 0.85;
+    if (!run || run.aura >= SLICE_COST) {
+      ctx.fillStyle = rec === 'savoury' ? '#d49b5c' : rec === 'royal' ? '#f6d17a' : '#ecc074';
+      const count = rec === 'thin' ? 3 : 5;
+      for (let i = -count; i <= count; i += 1) {
+        const a = (i / count) * Math.PI * 0.85;
         ctx.beginPath();
-        ctx.arc(Math.sin(a) * 15.5, -1 + Math.cos(a) * 4.5, 1.5, 0, Math.PI * 2);
+        ctx.arc(Math.sin(a) * 15.5, -1 + Math.cos(a) * 4.5, rec === 'royal' ? 1.75 : 1.5, 0, Math.PI * 2);
         ctx.fill();
       }
     }
-    // Vent slits showing berry filling underneath.
-    ctx.strokeStyle = run && run.filling >= SLICE_COST ? colors.berry : 'rgba(90, 40, 10, 0.5)';
-    ctx.lineWidth = 0.95;
-    for (let i = -2; i <= 2; i += 1) {
+    // Vent slits showing berry filling underneath (or ruby lattice / whipped sheen per recipe).
+    if (rec === 'set_jam' || rec === 'royal') {
+      ctx.strokeStyle = '#6c1f4a';
+      ctx.lineWidth = 1.1;
+      for (let i = -2; i <= 2; i += 1) {
+        ctx.beginPath();
+        ctx.moveTo(i * 4.5 - 3, -5);
+        ctx.lineTo(i * 4.5 + 3, 2);
+        ctx.moveTo(i * 4.5 + 3, -5);
+        ctx.lineTo(i * 4.5 - 3, 2);
+        ctx.stroke();
+      }
+      ctx.fillStyle = rec === 'royal' ? '#ffe082' : '#d86aa0';
+      [[-6, -2], [0, -3], [6, -1]].forEach(([fx, fy]) => {
+        ctx.beginPath(); ctx.arc(fx, fy, 1.15, 0, Math.PI * 2); ctx.fill();
+      });
+    } else {
+      ctx.strokeStyle = run && run.filling >= SLICE_COST ? colors.berry : 'rgba(90, 40, 10, 0.5)';
+      ctx.lineWidth = 0.95;
+      for (let i = -2; i <= 2; i += 1) {
+        ctx.beginPath();
+        ctx.moveTo(i * 5 - 2, -5);
+        ctx.lineTo(i * 5 + 2, 2);
+        ctx.stroke();
+      }
+    }
+    if (rec === 'tempered' || rec === 'royal') {
+      ctx.strokeStyle = 'rgba(255, 250, 236, 0.85)';
+      ctx.lineWidth = 1.4;
       ctx.beginPath();
-      ctx.moveTo(i * 5 - 2, -5);
-      ctx.lineTo(i * 5 + 2, 2);
+      ctx.ellipse(-2, -3.2, 10.5, 2.2, -0.1, Math.PI * 0.08, Math.PI * 0.92);
       ctx.stroke();
+    }
+    if (rec === 'blistered') {
+      ctx.fillStyle = 'rgba(84, 28, 12, 0.65)';
+      [[-7, -2], [3, -4], [8, 0], [-2, 1]].forEach(([bx, by]) => {
+        ctx.beginPath(); ctx.arc(bx, by, 1.4, 0, Math.PI * 2); ctx.fill();
+      });
+    }
+    if (rec === 'savoury') {
+      ctx.fillStyle = '#4e6f40';
+      [[-5, -2.5], [1, -3.5], [5, -1.5]].forEach(([hx, hy]) => {
+        ctx.beginPath(); ctx.ellipse(hx, hy, 1.6, 0.9, 0.4, 0, Math.PI * 2); ctx.fill();
+      });
     }
     // Warm steam wisps rising from a rich or warm pie.
     if (!reduced?.matches && run && !run.spill && (richness() >= 0.72 || run.warm > 0)) {
@@ -7879,8 +8232,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.fillText(`${run.chapter}${run.lap ? ` · lap ${run.lap + 1}` : ''}`, x0 + step * at, y + 15);
     ctx.restore();
     // What the land has given, while it lasts.
+    const activeRecipe = recipeIdNow();
     const gifts = [
       poised() && 'poised',
+      activeRecipe !== 'warm' && activeRecipe !== 'thin' && RECIPES[activeRecipe]?.short?.toLowerCase(),
+      run.jazzPocketT > 0 && 'pocket',
+      run.roomPantryT > 0 && 'pantry',
       run.lit > 0 && `lit ${Math.ceil(run.lit)}`,
       run.echoes > 0 && `echoes ${Math.ceil(run.echoes)}`,
       run.lag > 0 && `slow ${Math.ceil(run.lag)}`,
@@ -8093,29 +8450,40 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.restore();
   }
 
-  /* What the room is singing, off the figure's left shoulder: a fifth, then its third, then the colour.
-   * Three seats. A seat still waiting is a hairline. The bed, if it is on, is the room already. */
+  /* What the room is singing, off the figure's left shoulder: a fifth, then its third, then the colour,
+   * paired with local motif tensions (b9 / #11 / sus4) and pocket/pantry resolution across settings clusters. */
   function drawLandQuality() {
-    if (!run || state !== 'running' || !record.sound || record.view.zen) return;
-    const q = landQuality();
+    if (!run || state !== 'running' || record.view.zen) return;
+    const motifMode = setting('motifCues');
+    const q = record.sound ? landQuality() : { stage: 0, bed: false };
     const stage = q.stage || (q.bed ? 1 : 0);
-    if (!stage) return;
+    const m = run.motifState;
+    const activeTension = motifMode !== 'off' && m?.tension;
+    const pocketLive = (run.jazzPocketT || 0) > 0 || (m?.resolvedT || 0) > 0;
+    const pantryLive = (run.roomPantryT || 0) > 0;
+    if (!stage && !activeTension && !pocketLive && !pantryLive) return;
     const lift = run.jumpT > 0 ? jumpLift() : 0;
     const x = Math.max(8, run.x - 50);
     const y = run.y - 24 - lift;
-    const label = q.bed ? 'ROOM' : stage === 1 ? 'FIFTH' : stage === 2 ? 'THIRD' : 'COLOUR';
+    const baseLabel = stage ? (q.bed ? 'ROOM' : stage === 1 ? 'FIFTH' : stage === 2 ? 'THIRD' : 'COLOUR') : '';
+    const tensionCue = activeTension
+      ? (m.tension === 'b9' ? 'b9 HOP' : m.tension === '#11' ? '#11 STEP' : 'sus4 CATCH')
+      : '';
+    const suffix = pocketLive ? 'POCKET' : pantryLive ? 'PANTRY' : tensionCue;
+    const label = baseLabel && suffix ? `${baseLabel} · ${suffix}` : baseLabel || suffix;
+    const highlight = stage === 3 || pocketLive;
     ctx.save();
-    ctx.globalAlpha = q.bed ? 0.8 : 0.95;
+    ctx.globalAlpha = q.bed && !activeTension && !pocketLive ? 0.8 : 0.95;
     ctx.font = '700 9px "JetBrainsMono", ui-monospace, monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     for (let i = 0; i < 3; i += 1) {
-      const open = q.bed ? i < 2 : stage === 1 ? i < 2 : true;
-      const colour = stage === 3 && i === 2;
-      ctx.fillStyle = colour ? '#f2c14e' : open ? colors.accent : mix(colors.ink, colors.paper, 0.72);
+      const open = q.bed ? i < 2 : stage === 1 ? i < 2 : stage >= 2 || pocketLive;
+      const colour = (stage === 3 || pocketLive) && i === 2;
+      ctx.fillStyle = colour ? '#f2c14e' : activeTension && i === 2 ? '#c46a40' : open ? colors.accent : mix(colors.ink, colors.paper, 0.72);
       ctx.fillRect(x, y - i * 5, i === 2 ? 12 : i === 1 ? 8 : 10, open ? 2.4 : 1.1);
     }
-    if (stage === 3) {
+    if (stage === 3 || pocketLive) {
       ctx.strokeStyle = '#f2c14e';
       ctx.lineWidth = 1.2;
       ctx.beginPath();
@@ -8123,12 +8491,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.stroke();
     }
     const tw = ctx.measureText(label).width;
-    const right = x + 12;
-    ctx.fillStyle = stage === 3 ? 'rgba(242, 193, 78, 0.96)' : 'rgba(255, 252, 245, 0.94)';
+    const right = x + Math.max(12, tw + 8);
+    ctx.fillStyle = highlight ? 'rgba(242, 193, 78, 0.96)' : activeTension ? 'rgba(252, 240, 230, 0.96)' : 'rgba(255, 252, 245, 0.94)';
     ctx.beginPath();
     ctx.roundRect(right - tw - 8, y + 5, tw + 8, 13, 3);
     ctx.fill();
-    ctx.fillStyle = stage === 3 ? '#6a4a16' : colors.accent;
+    ctx.fillStyle = highlight ? '#6a4a16' : activeTension ? '#8a391e' : colors.accent;
     ctx.textAlign = 'right';
     ctx.fillText(label, right - 4, y + 15);
     ctx.restore();
@@ -8395,10 +8763,28 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (screenBox) glassWatch.observe(screenBox);
   }
 
+  function syncConductorSwing(chapterNum = run?.chapter || 1) {
+    const swingSetting = setting('swing');
+    const levelSwing = (levelData.levels[chapterNum]?.swing || 50) / 100;
+    const override = swingSetting === 'straight' ? 0.5
+      : swingSetting === 'lilt' ? 0.58
+      : swingSetting === 'deep' ? 0.67
+      : setting('feel') === 'jazz' ? Math.max(levelSwing, 0.66) : null;
+    conductor.setSwingOverride(override);
+  }
+
   function applySetup({ replan = true } = {}) {
     setMusicBed(record.sound && setting('music') === 'full');
     setSoundTextures({ wap: setting('wap'), steps: setting('steps') });
     setSoundFeel(setting('feel'));
+    setSoundConfig({
+      swing: setting('swing'),
+      voicing: setting('voicing'),
+      motifCues: setting('motifCues'),
+      songSpace: setting('songSpace'),
+      mix: setting('mix')
+    });
+    syncConductorSwing();
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');
     // The whole window, if chosen: the plan budgets from the width the voyage then has.
     cabinetVoyage?.classList.toggle('is-wide', setting('wide') === 'window');
@@ -8794,13 +9180,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           writeRecord(record);
           applySetup();
           // A sound chosen is heard at once, so the choice is made by ear.
-          if (record.sound && ['wap', 'steps', 'cues', 'feel'].includes(key)) {
+          if (record.sound && ['wap', 'steps', 'cues', 'feel', 'swing', 'voicing', 'motifCues', 'songSpace', 'mix'].includes(key)) {
             try {
               primeAudio();
               if (key === 'wap') wapSound(1, 0, 0);
               if (key === 'feel') feelSample(value);
               if (key === 'steps') { playTone('step', -1); setTimeout(() => playTone('step', 1), 180); }
               if (key === 'cues' && value !== 'off') { laneWarning(0, 0.8, value === 'one' ? 'one' : 'low'); if (value === 'shaped') setTimeout(() => laneWarning(0, 0.8, 'tall'), 420); }
+              if (key === 'swing') { playTone('pocket', 1); setTimeout(() => playTone('poise', 0), value === 'deep' ? 230 : value === 'lilt' ? 200 : 175); }
+              if (key === 'voicing' || key === 'songSpace' || key === 'mix') { playBoardMotifCue({ action: 'pantry', pan: 0, depth: value === 'hall' ? 0.55 : value === 'close' ? 0.05 : 0.25, kind: 'berry' }); }
+              if (key === 'motifCues' && value !== 'off') { playBoardMotifCue({ action: 'tension', tension: '#11', pan: 0.25, depth: 0.2 }); setTimeout(() => playBoardMotifCue({ action: 'resolve', pan: 0 }), 260); }
             } catch { /* chosen, if not heard */ }
           }
           paintSetup();
@@ -8833,10 +9222,61 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
       return [boardBlock(), holdsList(), nodeOf('p', 'pie-setup-subhead', 'What you see'), list, ...(panelPlan ? [nodeOf('p', 'pie-setup-plan', `${panelPlan.arrangement === 'fill' ? '' : 'Arranged for this screen. '}${panelPlan.why}`)] : [])];
     };
+    const SOUND_CLUSTERS = [
+      ['storybook', 'Storybook', 'Even & folk-scored', { music: 'full', themes: 'themes', glow: 'bar', cues: 'shaped', feel: 'written', swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced' }],
+      ['hearth_jazz', 'Hearth jazz', 'Deep pocket, vibes & cues', { music: 'full', themes: 'themes', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'deep', voicing: 'warm', motifCues: 'board', songSpace: 'hall', mix: 'music' }],
+      ['by_ear', 'By ear', 'Strong lane & motif cues', { music: 'groove', themes: 'calls', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'lilt', voicing: 'bright', motifCues: 'board', songSpace: 'natural', mix: 'ear' }],
+      ['hushed', 'Hushed', 'Close room, straight time', { music: 'quiet', themes: 'calls', glow: 'off', cues: 'one', feel: 'written', swing: 'straight', voicing: 'velvet', motifCues: 'off', songSpace: 'close', mix: 'balanced' }]
+    ];
+    const applyCluster = (values, label) => {
+      applyBoardView(values);
+      if (visitBoard) Object.keys(values).forEach((k) => delete visitBoard.before[k]);
+      lastTerm = 'feel';
+      writeRecord(record);
+      applyView();
+      applySetup();
+      if (record.sound) {
+        try { primeAudio(); playBoardMotifCue({ action: 'pantry', pan: 0, depth: 0.25, kind: 'berry' }); } catch { /* silent cluster switch */ }
+      }
+      paintSetup();
+      requestAnimationFrame(placeSetup);
+      say(`${label}: sound cluster set.`);
+    };
+    const isCustomized = (key) => {
+      const def = SETUP.find(([k]) => k === key)?.[3];
+      return def !== undefined && String(currentOf(key)) !== String(def);
+    };
     const groupBody = (id, keys) => {
       const live = keys.filter((key) => !notInUse(key));
       const resting = keys.filter((key) => notInUse(key));
-      const parts = live.map((key) => rowOf.get(key)).filter(Boolean);
+      const parts = [];
+      if (id === 'music') {
+        const ch = run?.chapter || 1;
+        const lv = levelData.levels[ch] || {};
+        const bar = nodeOf('div', 'pie-setup-cluster-bar');
+        bar.setAttribute('role', 'group');
+        bar.setAttribute('aria-label', 'Sound clusters');
+        SOUND_CLUSTERS.forEach(([cid, label, says, vals]) => {
+          const btn = nodeOf('button', 'pie-setup-cluster-chip');
+          btn.type = 'button';
+          btn.dataset.cluster = cid;
+          const match = Object.entries(vals).every(([k, v]) => String(currentOf(k)) === String(v));
+          btn.setAttribute('aria-pressed', match ? 'true' : 'false');
+          btn.append(nodeOf('b', '', label), nodeOf('small', '', says));
+          btn.addEventListener('click', () => applyCluster(vals, label));
+          bar.append(btn);
+        });
+        parts.push(bar);
+        const swingNow = setting('swing') === 'chapter'
+          ? `${setting('feel') === 'jazz' ? 'jazz ' : ''}${lv.swing || 50}%`
+          : setting('swing');
+        const motifText = Array.isArray(lv.motif) && lv.motif.length ? lv.motif.join(' ') : '0 4 7';
+        const stateTag = run?.motifState?.tension
+          ? `tension ${run.motifState.tension}`
+          : (run?.jazzPocketT || 0) > 0 ? 'pocket open' : 'at rest';
+        parts.push(nodeOf('p', 'pie-setup-motif-readout', `Ch. ${ch}: ${lv.tempo || 96} bpm · swing ${swingNow} · motif [${motifText}] · ${stateTag}`));
+      }
+      parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
       if (resting.length) {
         const fold = nodeOf('details', 'pie-setup-resting');
         fold.append(nodeOf('summary', '', `Not in use just now (${resting.length})`));
@@ -8850,7 +9290,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         parts.push(nodeOf('p', 'pie-setup-rhythms', found.length
           ? `Rhythms you have found: ${found.length}${total ? ` of ${total}` : ''} — ${found.join(', ')}. Each chapter keeps one in a room; play along with it to find it.`
           : `No rhythms found yet${total ? ` (there are ${total})` : ''}. Each chapter keeps one in a room: when the lanes say something here keeps time, step, hop or throw along with it.`));
-        parts.push(nodeOf('p', 'pie-setup-rhythms', 'With the music on (either setting past the first), a room says its chord once as it opens, and a pie tilting past poise is a low tone drifting out of tune on the side it leans to. With the chord held, the bass keeps the bars in fours. On any setting, a chapter carried to its end closes with a cadence that tells how it went.'));
+        parts.push(nodeOf('p', 'pie-setup-rhythms', 'With the music on (either setting past the first), a room says its chord once as it opens, and a pie tilting past poise is a low tone drifting out of tune on the side it leans to. Swung jazz maneuvers open a pocket window and resolve motif tension (b9, #11, sus4).'));
         // The music's unlocks (unlocks.mjs): where the reader stands with each, and its page.
         const said = ['groove', 'in_the_pocket'].map((uid) => [unlockMechanics()[uid], standing(uid)]).filter(([m]) => m);
         if (said.length) {
@@ -8870,10 +9310,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!sections.some(([id]) => id === activeGroup)) activeGroup = 'layouts';
     const head = nodeOf('div', 'pie-setup-head');
     head.append(nodeOf('h2', 'pie-setup-title', 'Setup'));
+    const headActs = nodeOf('div', 'pie-setup-head-actions');
+    const resetBtn = nodeOf('button', 'pie-setup-reset', 'Reset');
+    resetBtn.type = 'button';
+    resetBtn.title = 'Return all Setup choices to their defaults';
+    resetBtn.addEventListener('click', () => {
+      SETUP.forEach(([key, , , def]) => {
+        if (key === 'storyAt') { record.view.story = true; record.view.storyAt = def; }
+        else record.view[key] = def;
+      });
+      visitBoard = null;
+      lastTerm = '';
+      writeRecord(record);
+      applyView();
+      applySetup();
+      paintSetup();
+      requestAnimationFrame(placeSetup);
+      say('Setup returned to defaults.');
+    });
     const close = nodeOf('button', 'pie-setup-close', 'Done');
     close.type = 'button';
     close.addEventListener('click', () => { closeSetup(); setupBtn?.focus({ preventScroll: true }); });
-    head.append(close);
+    headActs.append(resetBtn, close);
+    head.append(headActs);
     const map = nodeOf('div', 'pie-setup-map');
     map.dataset.pieSetupMap = '';
     const tabs = nodeOf('div', 'pie-setup-tabs');
@@ -8933,11 +9392,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (next) choose(next[0]);
     });
     panel.addEventListener('pointercancel', () => { swipe = null; });
-    sections.forEach(([id, title, iconName]) => {
+    sections.forEach(([id, title, iconName, keys]) => {
       const t = nodeOf('button', 'pie-setup-tab');
       t.type = 'button';
       t.setAttribute('role', 'tab');
       t.dataset.tab = id;
+      if (keys?.some(isCustomized)) t.classList.add('is-custom');
       const mark = nodeOf('span', 'pie-setup-tab-icon');
       mark.innerHTML = icon(iconName, { size: 18 });
       t.title = title;
@@ -9244,6 +9704,39 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         at(thing.x, thing.y, SPRITES[kind]?.scale || 1.4);
         drawThing(thing);
       }
+    } finally {
+      ctx = saved.ctx;
+      run = saved.run;
+      state = saved.state;
+    }
+  }
+  function drawRecipeSprite(target, recipeId, size = 64) {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    target.width = size * ratio;
+    target.height = size * ratio;
+    const c = target.getContext('2d');
+    const saved = { ctx, run, state };
+    ctx = c;
+    run = fresh(carrierById('figure'));
+    run.t = 0.6;
+    if (recipeId === 'thin') {
+      run.aura = 0.2;
+      run.filling = 0.25;
+      run.recipe = { id: 'warm', charges: 0 };
+    } else {
+      run.aura = recipeId === 'royal' ? 0.94 : 0.84;
+      run.filling = recipeId === 'royal' ? 0.94 : 0.84;
+      run.warm = recipeId === 'blistered' || recipeId === 'warm' || recipeId === 'royal' ? 4 : 0;
+      run.recipe = { id: recipeId, charges: recipeId === 'royal' ? 5 : 3 };
+    }
+    state = 'title';
+    try {
+      c.setTransform(ratio, 0, 0, ratio, 0, 0);
+      c.clearRect(0, 0, size, size);
+      c.translate(size / 2, size / 2 + 5);
+      c.scale(1.15, 1.15);
+      const tilt = recipeId === 'blistered' ? 0.14 : recipeId === 'tempered' ? -0.14 : 0;
+      drawPie(0, 0, tilt, 1);
     } finally {
       ctx = saved.ctx;
       run = saved.run;
@@ -10571,6 +11064,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         palette_tokens: ['--hub-paper', '--hub-paper-deep', '--hub-ink', '--hub-muted', '--hub-accent', '--hub-gold', '--hub-hearth', '--hub-berry', '--hub-night'],
         scenes: SCENES.map((s) => ({ id: s.id, card: s.card, tint: s.tint, rain: Boolean(s.rain), kinds: s.kinds, low: s.low || ['puddle'], presence: s.presence || null, chapters: Object.entries(CHAPTER_SCENE).filter(([, id]) => id === s.id).map(([n]) => Number(n)) })),
         sprites,
+        recipes: Object.values(RECIPES),
         figures: ['carrier-figure', 'carrier-porter', 'carrier-clerk', 'carrier-genie', 'carrier-clown', 'boon', 'bane', 'boof'],
         to_add_a_level: [
           'a scene: id, card line, tint (a --hub-* mix), rain or not',
@@ -10616,15 +11110,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       li.append(cv, nodeOf('strong', '', sp.id), nodeOf('span', 'pie-asset-meta', meta));
       sprites.append(li);
     });
+    const recipes = nodeOf('ul', 'pie-assets-recipes');
+    manifest.recipes.forEach((rec) => {
+      const li = nodeOf('li', 'pie-asset');
+      const cv = document.createElement('canvas');
+      cv.className = 'pie-asset-sprite';
+      cv.setAttribute('aria-hidden', 'true');
+      drawRecipeSprite(cv, rec.id, 64);
+      li.append(cv, nodeOf('strong', '', rec.name), nodeOf('span', 'pie-asset-line', rec.formula), nodeOf('span', 'pie-asset-meta', rec.summary));
+      recipes.append(li);
+    });
     const copy = nodeOf('button', 'pie-deck-copy', 'Copy the level manifest (JSON)');
     copy.type = 'button';
     const status = nodeOf('p', 'pie-deck-status');
     copy.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(JSON.stringify(manifest, null, 2)); status.textContent = 'Copied: scenes, sprites, hitboxes, flags, palette tokens, and what a new level needs.'; } catch { status.textContent = JSON.stringify(manifest); }
+      try { await navigator.clipboard.writeText(JSON.stringify(manifest, null, 2)); status.textContent = 'Copied: scenes, sprites, recipes, hitboxes, flags, palette tokens, and what a new level needs.'; } catch { status.textContent = JSON.stringify(manifest); }
     });
     const steps = nodeOf('ol', 'pie-assets-steps');
     manifest.to_add_a_level.forEach((line) => steps.append(nodeOf('li', '', line)));
     body.replaceChildren(nodeOf('h3', '', 'Backgrounds: one ground and light for each place'), grounds,
+      nodeOf('h3', '', 'Recipes: crust, berries & tilt'), recipes,
       nodeOf('h3', '', 'Sprites: everyone and everything in the lanes'), sprites,
       nodeOf('h3', '', 'To add a level, or reskin one'), steps,
       nodeOf('p', 'pie-deck-actions'), status);
