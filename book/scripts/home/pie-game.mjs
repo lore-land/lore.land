@@ -203,7 +203,8 @@ import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
 import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_12.A';
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, letGo as letGoKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
-import { initLive, GIFT_ART, BOON_ROSE } from './pie-live.mjs?v=2026_11_12.A';
+import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_12.A';
+import { FINDS, readFind, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_12.A';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
 import {
@@ -1354,12 +1355,54 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     donut.spin = 0;
     const power = seasonPower(SEASON_EXTRAS.donut);
     applyPower(power);
+    // The haggle, found (pie-finds.mjs): every donut counts twice, this carry, or on a stream for the rest of it.
+    if (run.haggled || (donut.gift && liveFound('haggle'))) applyPower(power);
     if (power) run.powersUsed[power.id] = donut.gift ? 'gift' : 'season';
     run.donuts = (run.donuts || 0) + 1;
     sfx('sweet', 0, donut.x, donut.y);
     spawnRing(donut.x, donut.y, 22, '#e98fb0', 0.45);
     run.tags.push({ x: donut.x, y: donut.y - 22, t: 0, text: '+ DONUT · FILLING · SLICES FILL MORE' });
     if (run.donuts === 1) { showToast('A donut', power?.says || '', 3200, 'wonder'); say(`A donut. ${power?.says || ''}`); }
+    noteDeed('eat', 'donut');
+  }
+  /* Finds (pie-finds.mjs): what opens only to a rare carry played well. The lanes say what happened, a deed at a
+   * time; each find's line of Spw is read once and is the rule. A find opens a classic beat (a freeze, then the
+   * moment, drawn and not said), shows a character's own want or limit from a new side, gives the rest of the carry
+   * something, and keeps a sealed line, by play only. On a stream (?live) it deepens that gift for the room. */
+  const FIND_RULES = FINDS.map((find) => ({ find, rule: readFind(find.rule) }));
+  const FINDS_KEY = 'lore.pie.finds.v1';
+  function noteDeed(verb, kind) {
+    if (!run) return;
+    run.deeds = [...(run.deeds || []).filter((d) => run.t - d.t < 30), { verb, kind, t: run.t, lane: laneAt(run.x) }];
+    FIND_RULES.forEach(({ find, rule }) => {
+      if (run.found?.[find.id] || !findOpens(rule, run.deeds, { carrier: run.carrier.id })) return;
+      openFind(find, rule);
+    });
+  }
+  function openFind(find, rule) {
+    (run.found ||= {})[find.id] = true;
+    let first = false;
+    try {
+      const had = JSON.parse(localStorage.getItem(FINDS_KEY) || '{}') || {};
+      const day = new Date().toISOString().slice(0, 10);
+      const taken = takeFind(had, find, { day, chapter: run.chapter, carrier: run.carrier.id });
+      localStorage.setItem(FINDS_KEY, JSON.stringify(taken.record));
+      first = taken.first;
+    } catch { /* found this carry, if not kept */ }
+    // The beat: the lanes hold their breath, then the moment.
+    run.hitStop = Math.max(run.hitStop || 0, 0.35);
+    const at = find.id === 'sniff' && run.lastFoilAt ? run.lastFoilAt : { x: run.x, y: run.y - 80 };
+    (run.moments ||= []).push({ kind: rule.moment, t0: run.t, x: at.x, y: at.y });
+    if (find.id === 'haggle') { run.haggled = true; sfx('catch'); }
+    if (find.id === 'sniff') {
+      run.wilting = true;
+      run.things.forEach((thing) => { if (thing.kind === 'banerose' && !thing.knocked && !thing.cleared) Object.assign(thing, { wilted: true, fatal: false }); });
+      sfx('sweet');
+    }
+    try { if (rule.crosses) noteCrossing(rule.crosses, 'lanes'); } catch { /* the stage waits */ }
+    showToast(`✧ ${find.name}${first ? ' · a find' : ''}`, find.says, 6400, 'wonder', 2);
+    say(`${find.name}. ${find.says}`);
+    if (liveDesk) { markLiveFound(find.id); liveDesk.found(find); }
   }
   /* Gifts from a live stream (pie-live.mjs), only when the address asks (?live): typed on the gift desk or sent
    * by a feed on the streamer's own machine. Each waits for a carry, then lands one at a time: dolphins and donuts
@@ -1402,6 +1445,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const block = makeThing(pick(kinds), Math.floor(Math.random() * LANES));
         block.y = -44 - i * 72;
         block.rival = true;
+        // The sniff, found: bane roses come wilted this carry, and one in two on the rest of a stream.
+        if (block.kind === 'banerose' && (run.wilting || (liveFound('sniff') && Math.random() < 0.5))) Object.assign(block, { wilted: true, fatal: false });
         run.things.push(block);
       }
       run.baneStore = Math.min(5, (run.baneStore || 0) + 1 + Math.floor(gift.count / 25));
@@ -1417,9 +1462,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     if (gift.kind === 'dolphin' || gift.kind === 'donut' || gift.kind === 'berry' || gift.kind === 'boonrose') {
       const n = Math.max(1, Math.min(gift.things ?? Math.floor(gift.count / (gift.per || 1)), gift.most || 4));
+      // Up from the carrier's own lane, one after another: dolphins weave near it; a donut trail walks across the lanes
+      // and back, so it is followed by steering, and a carrier standing still meets one in eight.
+      let walk = run.lane;
+      let dir = run.lane >= LANES - 1 ? -1 : 1;
       for (let i = 0; i < n; i += 1) {
-        // Up the carrier's own lanes, one after another, a winding trail that can be followed.
-        const lane = clamp(run.lane + Math.round(Math.sin(i * 1.3) * (gift.kind === 'donut' ? 1.4 : 1)), 0, LANES - 1);
+        let lane = clamp(run.lane + Math.round(Math.sin(i * 1.3)), 0, LANES - 1);
+        if (gift.kind !== 'dolphin') {
+          lane = walk;
+          if (walk + dir < 0 || walk + dir > LANES - 1) dir = -dir;
+          walk += dir;
+        }
         const thing = makeThing(gift.kind, lane);
         thing.y = -44 - i * (gift.kind === 'dolphin' ? 90 : 46);
         thing.gift = true;
@@ -3216,6 +3269,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.bane = null;
     run.presenceEnded = run.t;
     run.foils += 1;
+    run.lastFoilAt = { x: thing.x ?? W / 2, y: thing.y ?? PRESENCE_Y };
+    noteDeed('foil', 'bane');
     tally('wap', 2, 'foiled');
     lean('foiled');
     meanwhile('bane', 'surprised', 'Not over!', { force: true });
@@ -5380,6 +5435,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           if (thing.fatal || SLIPS.has(thing.kind)) {
             thing.cleared = true;
             run.cleared += 1;
+            noteDeed('hop', thing.kind);
             lean('hop_clear');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
@@ -5584,6 +5640,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           sfx('sweet', 0, thing.x, thing.y);
           spawnRing(thing.x, thing.y, 24, '#d62f4a', 0.45);
           run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: '+ BOON ROSE · FILLING · GLIMPSE' });
+          noteDeed('meet', 'boonrose');
+          continue;
+        }
+        if (thing.kind === 'banerose' && thing.wilted) {
+          // A bane rose wilted by the sniff: walked through, and the crust takes what it was.
+          if (!thing.trodden) {
+            thing.trodden = true;
+            run.aura = Math.min(1, run.aura + 0.06);
+            run.tags.push({ x: thing.x, y: thing.y - 20, t: 0, text: '+ CRUST · A WILTED ROSE' });
+          }
           continue;
         }
         if (thing.kind === 'puddle') {
@@ -6736,7 +6802,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       }
       case 'banerose': {
         // A bane rose, sent to the other side: a dark bloom on a low tangle of thorny stems. It knocks, so it wears
-        // the red zone at its foot like any hazard, and the violet ring of where it came from.
+        // the red zone at its foot like any hazard, and the violet ring of where it came from. Wilted by the sniff,
+        // it droops, greys, and knocks nobody.
+        if (thing.wilted) {
+          ctx.globalAlpha *= 0.7;
+          ctx.translate(x, y + 12);
+          ctx.rotate(0.55);
+          ctx.translate(-x, -(y + 12));
+        }
         // Two stems from one root, leaves on them, thorns along them: a rose bush, not a creature.
         ctx.strokeStyle = '#2f4a26';
         ctx.lineWidth = 2.2;
@@ -6749,7 +6822,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         [[-3, 9, -1], [3, 7, 1], [-2, 3, -1], [2.5, 1, 1]].forEach(([dx, dy, side]) => {
           ctx.beginPath(); ctx.moveTo(x + dx, y + dy - 1.5); ctx.lineTo(x + dx, y + dy + 1.5); ctx.lineTo(x + dx + side * 4, y + dy - 1); ctx.closePath(); ctx.fill();
         });
-        ctx.fillStyle = '#5b1a4a';
+        ctx.fillStyle = thing.wilted ? '#8a7a84' : '#5b1a4a';
         [[0, -6, 7], [-4.5, -3.5, 5], [4.5, -3.5, 5], [0, -1, 5]].forEach(([dx, dy, r]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, r, 0, Math.PI * 2); ctx.fill(); });
         ctx.strokeStyle = '#c9a8ff';
         ctx.lineWidth = 1.2;
@@ -7822,6 +7895,72 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.restore();
     });
   }
+  /* A find's moment (pie-finds.mjs), a classic beat drawn where it happens, not said.
+   *   haggle  a price tag swings over the carrier: a 3, struck through, and a 2 beside it, and a coin handed back
+   *   sniff   where Mr. BaneWAP was foiled: the rose rises to him, three lines of a long sniff, and a heart */
+  function drawMoments() {
+    if (!run?.moments?.length) return;
+    const LIFE = 2.8;
+    run.moments = run.moments.filter((m) => run.t - m.t0 < LIFE);
+    run.moments.forEach((m) => {
+      const age = run.t - m.t0;
+      ctx.save();
+      ctx.globalAlpha = age > LIFE - 0.5 ? Math.max(0, (LIFE - age) / 0.5) : 1;
+      if (m.kind === 'haggle') {
+        const x = run.x;
+        const y = run.y - 92;
+        const swing = reduced?.matches ? 0 : Math.sin(age * 5) * 0.28 * Math.max(0, 1 - age / 2);
+        ctx.strokeStyle = '#5a4a3a';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(x, y - 30); ctx.lineTo(x, y - 14); ctx.stroke();
+        ctx.translate(x, y - 14);
+        ctx.rotate(swing);
+        ctx.fillStyle = '#fff3d6';
+        ctx.strokeStyle = '#3a2a1a';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.roundRect(-22, 0, 44, 28, 5); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 5, 2.2, 0, Math.PI * 2); ctx.stroke();
+        ctx.font = '800 17px "JetBrainsMono", ui-monospace, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#3a2a1a';
+        ctx.fillText('3', -9, 17);
+        const strike = Math.min(1, Math.max(0, (age - 0.6) / 0.3));
+        if (strike > 0) {
+          ctx.strokeStyle = '#c0392b';
+          ctx.lineWidth = 2.4;
+          ctx.beginPath(); ctx.moveTo(-16, 23); ctx.lineTo(-16 + 14 * strike, 23 - 12 * strike); ctx.stroke();
+        }
+        if (age > 1) { ctx.fillStyle = '#c0392b'; ctx.fillText('2', 10, 17); }
+        if (age > 1.3) {
+          const fall = Math.min(40, (age - 1.3) * 60);
+          ctx.fillStyle = '#e8b931';
+          ctx.strokeStyle = '#8a6410';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.arc(14, 36 + fall, 4.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        }
+      } else if (m.kind === 'sniff') {
+        const rise = Math.min(1, age / 0.7);
+        ctx.translate(m.x, m.y - 10 - rise * 16);
+        ctx.scale(1.3, 1.3);
+        GIFT_ART.rose(ctx, age);
+        ctx.strokeStyle = 'rgba(126, 87, 194, 0.85)';
+        ctx.lineWidth = 1.3;
+        for (let i = 0; i < 3; i += 1) {
+          const show = Math.min(1, Math.max(0, (age - 0.4 - i * 0.18) / 0.25));
+          if (!show) continue;
+          ctx.beginPath(); ctx.arc(14 + i * 5, -10 - i * 3, 4 + i * 1.5, Math.PI * 0.9, Math.PI * (0.9 + 0.8 * show)); ctx.stroke();
+        }
+        if (age > 1.1) {
+          const pop = Math.min(1, (age - 1.1) / 0.2);
+          ctx.translate(-14, -22 - (age - 1.1) * 12);
+          ctx.scale(pop, pop);
+          GIFT_ART.heart(ctx, age);
+        }
+      }
+      ctx.restore();
+    });
+  }
   function drawMechanics() {
     if (!run || state !== 'running' || record.view.zen) return;
     const calm = reduced?.matches;
@@ -8515,6 +8654,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawSpill();
     drawBursts();
     drawGiftArt();
+    drawMoments();
     drawWhimsy();
     drawRain();
     drawDust();

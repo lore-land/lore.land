@@ -5906,3 +5906,4 @@ html.pie-settling .pie-voyage {
 @media (prefers-reduced-motion: reduce) {
   .pie-setup-layout { transition: none; }
 }
+.pie-live-gift[data-phase='found'] { box-shadow: 0 0 0 2px #ffd666, 0 4px 18px rgba(255, 214, 102, 0.35); }

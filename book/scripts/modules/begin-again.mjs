@@ -37,6 +37,7 @@ export const READING_MARKS = Object.freeze([
   'lore.pie.v1',
   'lore.pie.chapters.v1',
   'lore.pie.rhythms.v1',
+  'lore.pie.finds.v1',
   'lore.texture.finds.v1',
   'lore.desk.spells.v1',
   'lore.home.curiosities.v1',

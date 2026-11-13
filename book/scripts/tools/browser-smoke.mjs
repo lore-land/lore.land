@@ -17,7 +17,7 @@ import { SEASONS, keptLine } from '../home/pie-seasons.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t), carrier: (id) => { run.carrier = carrierById(id); }, jump: () => jump(), laneX: (l) => laneX(l) };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
@@ -184,6 +184,48 @@ const SCENARIOS = [
     await page.waitFor(`window.__pieTest.state !== 'running' || window.__pieTest.run.t > 10`, { timeoutMs: 40000 });
     const t = await page.ev(`window.__pieTest.state + ' at ' + window.__pieTest.run.t.toFixed(1) + ' s'`);
     if (!t.startsWith('running')) throw new Error(`the carry stopped before ten seconds: ${t}`);
+  }],
+  ['a find opens by skill and not by gifts: the Genie steers three donuts from three lanes, and the haggle plays', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=1&live');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) r.wobble = 0; }, 100)`);
+    /** Three donuts met one after another: from one lane (standing still) or from three (steering). */
+    const eatThree = (/** @type {boolean} */ steer) => page.ev(`(async () => { const t = window.__pieTest; for (let i = 0; i < 3; i += 1) { const r = t.run; r.things = r.things.filter((x) => x.y < 0 && !x.fatal); const lane = ${steer ? 'i + 1' : '2'}; r.x = t.laneX(lane); r.lane = lane; r.things.push({ kind: 'donut', x: r.x, home: r.x, lane, y: r.y - 6, w: 24, h: 22, fatal: false, born: r.t }); await new Promise((ok) => setTimeout(ok, 350)); } return { donuts: t.run.donuts, found: JSON.parse(localStorage.getItem('lore.pie.finds.v1') || '{}') }; })()`);
+    await page.ev(`window.__pieTest.carrier('genie')`);
+    const still = await eatThree(false);
+    if (still.found.haggle) throw new Error('the haggle opened for a Genie standing still in one lane');
+    const porter = await page.ev(`(window.__pieTest.carrier('porter'), true)`) && await eatThree(true);
+    if (porter.found.haggle) throw new Error('the haggle opened for a carrier who is not the Genie');
+    await page.ev(`window.__pieTest.carrier('genie')`);
+    const steered = await eatThree(true);
+    if (!steered.found.haggle?.line?.endsWith(' elggah_}')) throw new Error(`the haggle did not open, or its line is not sealed: ${JSON.stringify(steered.found)}`);
+    const after = await page.ev(`({ haggled: window.__pieTest.run.haggled, moments: (window.__pieTest.run.moments || []).map((m) => m.kind), room: JSON.parse(sessionStorage.getItem('lore.pie.live.finds') || '[]'), said: [...document.querySelectorAll('.pie-live-gift[data-phase=found]')].map((p) => p.textContent) })`);
+    if (!after.haggled || !after.moments.includes('haggle')) throw new Error(`the haggle opened but its moment or its gift did not: ${JSON.stringify(after)}`);
+    if (!after.room.includes('haggle') || !after.said.length) throw new Error(`the room was not told: ${JSON.stringify(after)}`);
+  }],
+  ['a find turns a rival gift by skill: a bane rose hopped, the off switch thrown, and the sniff wilts the thorns', async (page) => {
+    await page.setViewport(1200, 900);
+    await seed(page, { 'lore.pie.v1': { ...PLAYER, reached: 6 } });
+    await page.goto('/pie/?chapter=5');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`window.__pieTest.state === 'running'`);
+    await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) r.wobble = 0; }, 100)`);
+    // A bane rose ahead, and another further up; a hop over the near one.
+    await page.ev(`(() => { const t = window.__pieTest; const r = t.run; r.unkept = 0; r.things = r.things.filter((x) => x.y < 0 && !x.fatal); r.things.push({ kind: 'banerose', rival: true, x: r.x, home: r.x, lane: r.lane, y: -200, w: 30, h: 26, fatal: true, born: r.t }); t.jump(); })()`);
+    // In the hang of the hop, a bane rose arrives under the carrier.
+    await page.waitFor(`window.__pieTest.run.jumpT > 0 && window.__pieTest.run.jumpT < 0.42`, { timeoutMs: 3000 });
+    await page.ev(`(() => { const r = window.__pieTest.run; r.things.push({ kind: 'banerose', rival: true, x: r.x, home: r.x, lane: r.lane, y: r.y, w: 30, h: 26, fatal: true, born: r.t }); })()`);
+    await page.waitFor(`window.__pieTest.run.things.some((x) => x.kind === 'banerose' && x.cleared)`, { timeoutMs: 3000 });
+    // His scheme, and its switch thrown at once.
+    await page.ev(`(() => { const t = window.__pieTest; t.scheme(); const r = t.run; r.things.push({ kind: 'switch', x: r.x, home: r.x, lane: r.lane, y: r.y - 6, w: 26, h: 26, fatal: false, born: r.t }); })()`);
+    await page.waitFor(`JSON.parse(localStorage.getItem('lore.pie.finds.v1') || '{}').sniff`, { timeoutMs: 5000 });
+    const after = await page.ev(`({ moments: (window.__pieTest.run.moments || []).map((m) => m.kind), wilted: window.__pieTest.run.things.filter((x) => x.kind === 'banerose' && !x.cleared).map((x) => x.wilted && !x.fatal) })`);
+    if (!after.moments.includes('sniff') || !after.wilted.length || !after.wilted.every(Boolean)) throw new Error(`the sniff opened but its moment or its wilting did not: ${JSON.stringify(after)}`);
   }],
   ['a chain acts out its edge: a march called, glass ahead', async (page) => {
     await page.setViewport(1200, 900);

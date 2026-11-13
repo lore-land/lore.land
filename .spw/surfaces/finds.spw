@@ -1,0 +1,74 @@
+# Finds — what opens only to a rare carry played well
+# A design, built in part on 2026-11-12. The rules, the words and which finds exist are for the maker to change.
+#>lore_land_surfaces_finds
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The maker asked, live on the twelfth of November 2026, for gifts from a live stream to carry lore shrouded behind gates that open only through statistically unlikely combinations reached by skill, for a beneficial social consequence of discovery, and for gifts to be a reason to give characters a new dimension and Spw a new intricacy. They named surfaces for familiar punchlines told by classic moments rather than words: character temperament, conflicting desire, destiny to become a clown or mime, the relationship with the ants, and the haggling of the discount genie. A find answers that: a gift supplies one half, the hands supply the other, and what opens is a beat everyone already knows, played by someone in the lanes.
+}
+
+^"grounded_in"{
+  powers: "pie-powers.mjs: a rule is a line of Spw read by a small reader with a held vocabulary; the line is what runs"
+  reasons: "characters.mjs REASONS: each character already has a want and a limit; a find shows one from a side the lanes had not shown, and adds no plot"
+  tropes: "book/content/world/tropes.json: a find crosses a trope already there"
+  seasons: "pie-seasons.mjs: a sealed line, its label and the label mirrored, kept by play and nothing else"
+  live: "pie-live.mjs: gifts to my side are boons, gifts to the other side are banes"
+}
+
+^"form"{
+  rule: "?find[name]{ @carrier[id] &verb[kind] %count[n] %lanes[n] ~within[s] ^moment[id] #crosses[trope] }"
+  lanes: "the step before it taken from n different lanes: only steering does that; a carrier standing still takes everything from one"
+  verbs: "eat, hop, foil, meet: what the lanes say happened"
+  order: "steps are taken in order; deeds in between that are not steps do not break the sequence"
+  opens: "on the deed that completes the last step, inside the window, once a carry"
+  line: "^found[name]{_name .day[...] .chapter[n] .carrier[id] eman_}"
+  module: ~"book/scripts/home/pie-finds.mjs"
+  check: ~"book/scripts/tools/finds-check.mjs"
+}
+
+^"haggle"{
+  rule: "?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] }"
+  rests_on: "the Genie, limit: cannot stop pricing"
+  skill: "carry as the Genie and steer across a donut trail, taking three from three different lanes in three seconds; standing still takes them from one lane, and the trail never puts three in a row there"
+  moment: "a price tag swings over the carrier: a 3, struck through, a 2 beside it, and a coin handed back"
+  gives: "for the rest of the carry every donut counts twice"
+  room: "on a stream, every donut sent up the lanes counts twice for the rest of it"
+}
+
+^"sniff"{
+  rule: "?find[sniff]{ &hop[banerose] &foil[bane] ~within[3] ^moment[sniff] #crosses[off-switch] }"
+  rests_on: "Mr. BaneWAP, want: to hold the thing longest; a rose does not last"
+  skill: "hop a bane rose sent to the other side, then throw his off switch within three seconds"
+  moment: "where he was foiled: the rose rises to him, three lines of a long sniff, and a heart"
+  gives: "the bane roses ahead wilt; walked through, they feed the crust"
+  room: "on a stream, one bane rose in two arrives wilted for the rest of it"
+  side: "a gift sent against the carrier, turned to advantage by skill"
+}
+
+^"social"{
+  room: "a find made on a stream deepens that gift for everyone sending it, so whoever finds it finds it for the room"
+  said: "the gift line over the lanes says the find and what it opened, for the stream to see"
+  kept: "a sealed line, kept by play; an address, a paste or the gift desk writes nothing"
+  riddle: "each find has a riddle that says where to look and never how"
+}
+
+^"next"{
+  double_take: "proposed: the clowns, who cannot have a small feeling. A Perfect WAP thrown across lanes, unaided by the post, the wink or the needle, while a dolphin carries the pie: the clown looks at the dolphin, looks back, and takes it twice"
+  tribute: "proposed: the ants (anthills trial). Corn sent from the crowd, then an anthill hopped with nothing knocked in ten seconds: the ants carry the whole cob off over their heads in a procession across the lanes"
+}
+
+!guards[
+  "Gifts alone open nothing: every find needs a half that hands supply, and finds-check runs a carry of gifts with no hands and finds it shut"
+  "A find rests on a want or a limit the character already has; it adds no plot and nobody speaks"
+  "Being there is written by play and nothing else"
+  "Nothing in the game asks for a gift"
+]
+
+?open[
+  "Destiny to become a clown or a mime: whose destiny is it. Staged on the carrier, it would say who the figure in plain lines becomes, which is held"
+  "Should a found line be pasted to show its riddle to someone who has not found it, as a season line is"
+  "Are these the beats, and are these the windows"
+]

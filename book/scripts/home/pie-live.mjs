@@ -17,6 +17,19 @@
  */
 
 const VISIT_KEY = 'lore.pie.live.visit';
+const FOUND_KEY = 'lore.pie.live.finds';
+
+/** Whether a find was made on this stream (this visit), so it deepens that gift for everyone's gifts. @param {string} id */
+export function liveFound(id) {
+  try { return sessionStorage.getItem(VISIT_KEY) !== null && (JSON.parse(sessionStorage.getItem(FOUND_KEY) || '[]') || []).includes(id); } catch { return false; }
+}
+/** A find made on this stream. @param {string} id */
+export function markLiveFound(id) {
+  try {
+    const had = JSON.parse(sessionStorage.getItem(FOUND_KEY) || '[]') || [];
+    if (!had.includes(id)) sessionStorage.setItem(FOUND_KEY, JSON.stringify([...had, id]));
+  } catch { /* found for this carry */ }
+}
 const LIKES_KEY = 'lore.pie.live.likes';
 
 /* The most of one gift a line can hold: likes come by the thousand. */
@@ -376,7 +389,23 @@ export function initLive({ screen, onGift }) {
     open();
   }
 
+  /** A find, said over the lanes for the room: what it opens for everyone's gifts tonight. @param {{ name: string, live: string }} find */
+  const found = (find) => {
+    const pill = document.createElement('p');
+    pill.className = 'pie-live-gift';
+    pill.dataset.phase = 'found';
+    const head = document.createElement('strong');
+    head.textContent = `✧ ${find.name}, found`;
+    const says = document.createElement('span');
+    says.textContent = `: ${find.live}`;
+    pill.append(head, says);
+    line.prepend(pill);
+    window.setTimeout(() => pill.classList.add('is-going'), 9000);
+    window.setTimeout(() => pill.remove(), 9800);
+  };
+
   return {
+    found,
     /** @param {Gift} gift */ waiting: (gift) => show(gift, 'waiting'),
     /** @param {Gift} gift */ landed: (gift) => show(gift, 'landed')
   };

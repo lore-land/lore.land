@@ -65,6 +65,9 @@ jobs:
       - name: reactions:check (who answers a knock, a power taken and a power run out; deeds are narration)
         run: npm run reactions:check
 
+      - name: finds:check (a find's rule reads whole, rests on a want or a limit, opens by skill and never by gifts alone)
+        run: npm run finds:check
+
       - name: rhymes:build (refrains the parser finds across released chapters; a stale rhymes.json fails check)
         run: npm run rhymes:build
 

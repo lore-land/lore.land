@@ -51,6 +51,7 @@
     "kitchen:check": "node book/scripts/tools/kitchen-check.mjs",
     "seasons:check": "node book/scripts/tools/seasons-check.mjs",
     "reactions:check": "node book/scripts/tools/reactions-check.mjs",
+    "finds:check": "node book/scripts/tools/finds-check.mjs",
     "rhymes:build": "tsx book/scripts/tools/rhymes-build.mjs",
     "elaboration:check": "node book/scripts/tools/elaboration-check.mjs",
     "sound:check": "node book/scripts/tools/sound-check.mjs",
