@@ -14,6 +14,8 @@
  * No shelf is a moral ranking; every depth has a path from every shelf; held plot has no ladder.
  */
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
+// @ts-ignore: a page loads it with its version token, which the type checker cannot resolve; forks.mjs is checked on its own.
+import { readForkSmall, signaturesOf, choseLine } from './forks.mjs?v=2026_11_13.B';
 
 /** @typedef {'boon' | 'bane' | 'bone' | 'bonk' | 'honk'} Shelf */
 /** @typedef {Record<Shelf, number>} Vector */
@@ -135,13 +137,23 @@ export function branchOdds(branches, v, { firmness = 1, floor = 0.05 } = {}) {
 
 /** Mr. BaneWAP's schemes (pie-world.mjs SCHEMES) as the first branches with signatures, read from what each scheme
  * does: a rented wind tilts the pie (absurd, and a knock waiting to happen), a tax on every step keeps a ledger, a
- * re-let is pure announcement, a march is the mimes (and every pane they remember). */
-export const SCHEME_SIGNATURES = Object.freeze({
-  wind: { bane: 1, bonk: 1 },
-  tax: { bane: 1, bone: 1 },
-  relet: { bane: 2 },
-  march: { bane: 1, bonk: 2 }
-});
+ * re-let is pure announcement, a march is the mimes (and every pane they remember).
+ *
+ * The fork is the source: one line (forks.mjs) says what forks (his scheme), on what (the shelves), and every place it
+ * can go with the shelves it leans on, named once for each weight. Change the line and the odds change with it; the
+ * signatures below are read from it. shelves:check holds the line whole with the real parser. */
+export const SCHEME_FORK = '?scheme[shelves]{ =bane@banewap{ @wind[bane, bonk] @tax[bane, bone] @relet[bane, bane] @march[bane, bonk, bonk] } }';
+/** @type {Readonly<Record<string, Partial<Record<Shelf, number>>>>} */
+const schemeFork = readForkSmall(SCHEME_FORK);
+export const SCHEME_SIGNATURES = Object.freeze(signaturesOf(schemeFork));
+/**
+ * The line that chose his scheme, for the lanes to show once a carry: the fork's side with its places ranked by what
+ * each weighed this time (first strongest), the place drawn as its own edge, and the odds in words.
+ * @param {{ id: string, p: number }[]} odds
+ * @param {string} drew
+ * @returns {{ ranked: string, drawn: string, words: string } | null} null when the line does not read as a fork: the lanes then say nothing of it
+ */
+export const schemeChose = (odds, drew) => (schemeFork ? choseLine(schemeFork, odds, drew) : null);
 
 /* ─── Chains: a shelf held long enough sets a character's motivation going ─── */
 

@@ -3310,6 +3310,53 @@ strong.xr-chamber { color: var(--sigil-gold, #a67c38); }
   font-size: 0.82rem;
 }
 
+/* What you keep, as lines (kept-lines.mjs, the kept-lines trial): the thing's line, its question answered the first
+ * time, and this chapter's wonders with a dashed hole for each run still to find here. */
+.wonder-card-spw {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0 0 0.55rem;
+}
+
+.wonder-card-spw p {
+  margin: 0;
+}
+
+.wonder-card-was,
+.wonder-card-here-label {
+  color: var(--wonder-ink);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+}
+
+.wonder-card-was code {
+  color: color-mix(in srgb, var(--hue-probe, #2f6688) 70%, var(--color-text-main, #161d2b));
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--wonder-ink) 70%, transparent);
+}
+
+.wonder-card-spw .spell-atom {
+  white-space: nowrap;
+}
+
+.wonder-card-spw .spell-gloss:empty {
+  display: none;
+}
+
+/* Taller with its lines, a sheet scrolls inside itself rather than run off a short screen. */
+.wonder-card.is-sheet:has(.wonder-card-spw) {
+  max-height: calc(100dvh - 1.2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.wonder-card-spw .kept-hole {
+  color: color-mix(in srgb, var(--hue-probe, #2f6688) 70%, var(--spell-ink, currentColor));
+  font-weight: 700;
+  border-bottom: 1px dashed color-mix(in srgb, var(--hue-probe, #2f6688) 60%, transparent);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .wonder-card {
     animation: wonder-card-in 240ms cubic-bezier(0.2, 0.9, 0.3, 1.2);

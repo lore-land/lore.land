@@ -49,6 +49,7 @@
   &competency: "@spw/surfaces/competency.spw"
   &elaboration: "@spw/surfaces/elaboration.spw"
   &finds: "@spw/surfaces/finds.spw"
+  &jokes: "@spw/surfaces/jokes.spw"
   &formulas: "@spw/surfaces/formulas.spw"
   &genie_practice: "@spw/surfaces/genie-practice.spw"
   &gossip_and_kitchens: "@spw/surfaces/gossip-and-kitchens.spw"

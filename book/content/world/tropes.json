@@ -40,7 +40,10 @@
         },
         "lanes": {
           "says": "Every carry ends in exactly one spill. The card says EXACTLY ONE., what the land would say about the cause, and how far the pie was carried.",
-          "kinds": []
+          "kinds": [],
+          "moments": [
+            "spill"
+          ]
         },
         "visual": {
           "says": "A silent-film title card, always night, in the lanes and on the home screen."
@@ -53,11 +56,11 @@
       "crossings": {
         "into_lanes": {
           "says": "The book's prophecy is the lanes' whole rule: every carry ends in exactly one spill, and the card says EXACTLY ONE.",
-          "wired": "pie-game.mjs (the end card)"
+          "wired": "pie-game.mjs spill (the end card)"
         },
         "into_story": {
           "says": "The end of a carry points back into the passage that was going by when the pie spilled; the way back returns to the section the game was found in.",
-          "wired": "pie-segues.mjs"
+          "wired": "pie-game.mjs passageHref → pie-segues.mjs leaveBackNote ; pie-game.mjs returnAnchor → pie-segues.mjs describeReturn"
         }
       },
       "rhymes": [
@@ -108,11 +111,11 @@
       "crossings": {
         "into_lanes": {
           "says": "The people the book crowns by mistake (the porter, a feast clerk, the Genie off-season) take the hat in turn.",
-          "wired": "pie-game.mjs CARRIERS"
+          "wired": "pie-world.mjs CARRIERS"
         },
         "into_story": {
           "says": "A carrier met under the hat turns its card into the one deck the book and the lanes share.",
-          "wired": "collection.mjs (the shared deck)"
+          "wired": "collection.mjs turnCard (the shared deck)"
         }
       },
       "rhymes": [
@@ -161,13 +164,21 @@
       "crossings": {
         "into_lanes": {
           "says": "Mr. BoonWAP comes into the lanes from Six, as in the book, and holds court: clowns flock and every pie finds an eye.",
-          "wired": "pie-game.mjs INTRO (boon from Six)"
+          "wired": "pie-world.mjs INTRO[boon]"
         },
         "into_story": {
           "says": "What the carry gave leans the chapter's reading toward the fairy tale, and the page says why.",
-          "wired": "pie-carries.mjs → pie-projection.mjs"
+          "wired": "pie-game.mjs closeLeg → pie-carries.mjs keepCarry → pie-projection.mjs initPieProjection"
         }
       },
+      "finds": [
+        {
+          "id": "haggle",
+          "deed": "find_haggle",
+          "made": "struck-price-tag",
+          "margin": "rumour-haggle"
+        }
+      ],
       "rhymes": [
         "beyond-the-frame",
         "wap"
@@ -211,11 +222,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Heard in Six's margins, the rumour of clowns going home is said in the lanes as the carry reaches Six.",
-          "wired": "references.json track → pie-game.mjs tickMargins"
+          "wired": "references.json rumour-clowns → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Clowns satisfied in Six's lanes are counted in the rumour's note, which says it is since the lanes.",
-          "wired": "pie-game.mjs keepDeeds → references.mjs trackNote"
+          "wired": "pie-game.mjs closeLeg (satisfied) → keepDeeds → references.json rumour-clowns (satisfied) → references.mjs trackNote"
         }
       },
       "track": [
@@ -282,11 +293,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Heard in Eleven's margins, the blank placard is said in the lanes there; the book's announcing villain organises the march.",
-          "wired": "references.json track → pie-game.mjs tickMargins"
+          "wired": "references.json rumour-placard → pie-game.mjs tickMargins ; pie-world.mjs SCHEMES[march]"
         },
         "into_story": {
           "says": "A chapter the mimes hold goes quiet on its page, and the placard rumour counts the chapters they hold.",
-          "wired": "pie-carries.mjs (maw) → references.mjs trackNote"
+          "wired": "pie-game.mjs closeLeg → pie-carries.mjs keepCarry (maw) → references.json rumour-placard (held) → references.mjs trackNote"
         }
       },
       "track": [
@@ -352,13 +363,21 @@
       "crossings": {
         "into_lanes": {
           "says": "Mr. BaneWAP comes from Four, as in the book, announcing; every scheme leaves its off switch in the lanes.",
-          "wired": "pie-game.mjs SCHEMES"
+          "wired": "pie-world.mjs SCHEMES"
         },
         "into_story": {
           "says": "Foiled, he blurts a line of lore that grounds itself in a chapter of the book.",
-          "wired": "pie-lore.json"
+          "wired": "pie-game.mjs foil → speak → pie-lore.json lines"
         }
       },
+      "finds": [
+        {
+          "id": "sniff",
+          "deed": "find_sniff",
+          "made": "pressed-rose",
+          "margin": "rumour-sniff"
+        }
+      ],
       "rhymes": [
         "silent-protest"
       ]
@@ -400,7 +419,7 @@
       "crossings": {
         "into_lanes": {
           "says": "Baneberries come up the lanes from Four, where the hill first says what they do.",
-          "wired": "pie-game.mjs INTRO"
+          "wired": "pie-world.mjs INTRO[baneberry] ; references.json rumour-unsaid → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Baneberries squashed in the lanes keep the hill's rumour quiet: it counts the foretellings stepped on before they could be said.",
@@ -451,7 +470,7 @@
       "crossings": {
         "into_lanes": {
           "says": "Boonberries come up the lanes from One, as in the book's first field; heard in the margins, the berry that notices its story is said there.",
-          "wired": "pie-game.mjs INTRO"
+          "wired": "references.json boonberry → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Boonberries eaten in the lanes are counted in the margin's note on boonberries: the clear way seen a breath early, and still undecided whether shown or remembered.",
@@ -510,11 +529,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Each sighting noticed in the book steadies the figure in the lanes, a stroke at a time.",
-          "wired": "sightings.mjs → pie-game.mjs"
+          "wired": "sightings.mjs readSightings → pie-game.mjs fresh (strokes)"
         },
         "into_story": {
           "says": "Carrying the pie past a prose sighting (Thirteen, Fourteen, Fifteen) notices it in the book.",
-          "wired": "pie-game.mjs → sightings.mjs"
+          "wired": "pie-game.mjs onPassage → sightings.mjs recordSighting"
         }
       },
       "track": [
@@ -591,7 +610,7 @@
       "crossings": {
         "into_lanes": {
           "says": "Something warm and egg-shaped comes up the lanes, likeliest in the chapters where the book keeps the egg.",
-          "wired": "pie-game.mjs (egg chapters)"
+          "wired": "pie-world.mjs EGG_ODDS"
         },
         "into_story": {
           "says": "Something warm passed close in the lanes is counted in the margin's note on the egg, which still does not say what it is.",
@@ -641,11 +660,11 @@
       "crossings": {
         "into_lanes": {
           "says": "The lanes' glass comes from Three onward, as the book's city does.",
-          "wired": "pie-game.mjs INTRO"
+          "wired": "pie-world.mjs INTRO[pane] ; references.json glass → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Panes struck in the lanes are counted in the margin's lantern glass, one more blow the kiln forgave.",
-          "wired": "pie-game.mjs knock (pane_struck) → references.json glass → references.mjs trackNote"
+          "wired": "pie-game.mjs knock (pane_struck) → closeLeg → keepDeeds → references.json glass (pane_struck) → references.mjs trackNote"
         }
       },
       "rhymes": [
@@ -707,11 +726,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Slow beavers come up the lanes from Two.",
-          "wired": "pie-game.mjs INTRO"
+          "wired": "pie-world.mjs INTRO[beaver] ; references.json rumour-slow-dam → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Time a beaver lent in the lanes is counted beside the dam it came from, and the margin asks whose.",
-          "wired": "pie-game.mjs beaver (beaver_time) → references.json rumour-slow-dam → references.mjs trackNote"
+          "wired": "pie-game.mjs closeLeg (beaver_time) → keepDeeds → references.json rumour-slow-dam (beaver_time) → references.mjs trackNote"
         }
       },
       "rhymes": [
@@ -775,13 +794,19 @@
       "crossings": {
         "into_lanes": {
           "says": "The book's clerks and its porter keep the lanes' damage slips and carry the hat.",
-          "wired": "pie-game.mjs (clerks, carriers)"
+          "wired": "pie-world.mjs KNOCKS[clerk] ; pie-world.mjs CARRIERS"
         },
         "into_story": {
           "says": "Each carry's own account, why it leaned, is written on the chapter's page.",
-          "wired": "pie-carries.mjs why → pie-projection.mjs"
+          "wired": "pie-game.mjs closeLeg → pie-carries.mjs keepCarry (why) → pie-projection.mjs initPieProjection"
         }
       },
+      "jokes": [
+        {
+          "id": "damage",
+          "deed": "joke_damage"
+        }
+      ],
       "rhymes": [
         "forgiving-glass"
       ]
@@ -813,7 +838,10 @@
         },
         "lanes": {
           "says": "In Fourteen's leg nobody comes down the lanes (no clown, clerk, subject or mime; neither pie holds court; nobody blows a horn) until the last of it, when Friday arrives with everyone in it.",
-          "kinds": []
+          "kinds": [],
+          "moments": [
+            "friday"
+          ]
         },
         "visual": {
           "says": "The frosted field, emptied of people; then a row of everyone at once."
@@ -856,6 +884,12 @@
         }
       ],
       "wound_in": "2026_11_09.E",
+      "jokes": [
+        {
+          "id": "priced",
+          "deed": "joke_priced"
+        }
+      ],
       "rhymes": [
         "warm-question"
       ]
@@ -883,7 +917,10 @@
         },
         "lanes": {
           "says": "When the pie spills, the card counts the plates the carry left for the washer-up: one for every WAP.",
-          "kinds": []
+          "kinds": [],
+          "moments": [
+            "plates"
+          ]
         },
         "visual": {
           "says": "A stack of plates by cold spring water, taller than the meal had been."
@@ -896,11 +933,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Heard in Thirteen's margins, the stacked plates are said in the lanes there.",
-          "wired": "references.json track → pie-game.mjs tickMargins"
+          "wired": "references.json rumour-plates → pie-game.mjs tickMargins"
         },
         "into_story": {
           "says": "Every WAP is a plate: counted on the end card, and in the rumour's stack.",
-          "wired": "pie-game.mjs keepDeeds → references.mjs trackNote"
+          "wired": "pie-game.mjs spill (plates) ; pie-game.mjs closeLeg (waps) → keepDeeds → references.json rumour-plates (waps) → references.mjs trackNote"
         }
       },
       "track": [
@@ -965,11 +1002,11 @@
       "crossings": {
         "into_lanes": {
           "says": "Boof comes into the lanes when the passage going by is hers.",
-          "wired": "pie-game.mjs (a passage in Boof's voice)"
+          "wired": "pie-game.mjs onPassage (boofIn)"
         },
         "into_story": {
           "says": "Brushing past her is seeing someone: it casts a room of watchers, kept beside the room on the chapter page.",
-          "wired": "pie-game.mjs castIfRoomAsks → the chapter's rooms"
+          "wired": "pie-game.mjs castIfRoomAsks (CAST_KEY) → lanes-lore.mjs initLanesLore"
         }
       },
       "rhymes": [
@@ -999,7 +1036,6 @@
         "lanes": {
           "says": "Torch-ants light the way through, bring warm furrows and melt the frost ahead; from Fourteen the figure's right arm is drawn a little shorter and warm at the tip.",
           "kinds": [
-            "wonder",
             "furrow"
           ]
         },
@@ -1014,11 +1050,11 @@
       "crossings": {
         "into_lanes": {
           "says": "From Fourteen the figure is drawn with the arm the book shortened.",
-          "wired": "pie-game.mjs (the drawing)"
+          "wired": "pie-game.mjs shortArm (the drawing)"
         },
         "into_story": {
           "says": "Torch-ants kept in the lanes are kept in the almanac and light the chapter's inventory.",
-          "wired": "almanac.mjs → chapter-inventory.mjs"
+          "wired": "pie-game.mjs keep → almanac.mjs collectWonder → chapter-inventory.mjs initChapterInventory"
         }
       },
       "rhymes": [

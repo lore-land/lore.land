@@ -25,7 +25,7 @@
  */
 import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_11.A';
 import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
-import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_11.A';
+import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_13.B';
 import { settle } from './settled.mjs?v=2026_11_09.L';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_11.A';
 

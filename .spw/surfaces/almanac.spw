@@ -18,6 +18,25 @@
   revisit: "Every wonder has a home chapter and at least one echo; a reader's entry fills in place by place."
 }
 
+^"kept_lines"{
+  .status: "trial (switch kept-lines), 2026-11-13"
+  module: "book/scripts/modules/kept-lines.mjs (pure, ts-checked); shown by /almanac/ (almanac-page.mjs) and the chapter wonder card (almanac.mjs)"
+  thing_line: "A thing's likeness (sigil, braces, material, valence, who keeps it, the chapters it lives in) read as Spw, so the seal and the line are two readings of one thing: @torch_ants{ $steam =boon &ants ~burrows .lives[1 2 8 12 14] }. Still to find, the probe stands where the name will be and nobody who keeps it is named: ?creature{ $steam =boon ~burrows .lives[1 2 8 12 14] }. Kept, the kind's own sigil answers it."
+  shelf_line: "The whole almanac as one sealed line, each shelf under its sigil in the book's order, ?n for each run still to find: *shelf{_shelf @creatures[torch_ants ?3 salt_whales ?19] … .day[…] flehs_}. It shows where the gaps fall and nothing of what fills them. The parser says a hole as wonder 3."
+  chapter_line: "On a chapter's wonder card: *chapter[1]{ @torch_ants ?7 }, what is kept here and the shape of what is not."
+  given_line: "A line pasted, or carried in an address (?shelf=), is read beside the reader's own: what both keep, theirs by hint and not by name (the line itself carries its words), the reader's own by name. It is never written to lore.almanac.v1, and it leaves the address once read. A letter, not a key."
+  bench: "The bench knows a combine the book writes (a bracework's terms; & either way round): {frost & hearth} is Hearth-drift, <river ~ moon> is Moonrun. It opens the door to where it is written and keeps nothing."
+  unsaid: "No line names the figure in plain lines (no &figure); the Egg's card and the figure have no line at all."
+  storage: "No new key: every line is read from lore.almanac.v1 and likeness.json."
+  check: "npm run smoke, the two kept lines scenarios. A round trip of all 83 wonders, kept and not, through parse, spokenLine and scanPairLabels was run once by hand (2026-11-13) and is in no check yet."
+}
+
+?open[
+  "Should the bench keep a bracework a reader writes before reading it? Proposed: no; it opens the door to where the book writes it, though kinds.mjs says bracework is combined on the bench"
+  "Should a given shelf line be kept as a letter beside the reader's own, or only read?"
+  "Should the seal itself be drawn from the line (the visual-wonder draft, proposal 3), so the two readings become one drawing?"
+]
+
 ^"registers"{
   creature_wonder: "the dawnward field, the grove, the salt flats, the Watering Eye, the bloom garden, the confluence, the kept Thursday"
   contrivance: "Bonk City, Council Hill, the Quiet Rift hall, Bone.land's great frame, the Round Archive, the parcel gate"

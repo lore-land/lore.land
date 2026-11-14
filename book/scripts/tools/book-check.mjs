@@ -34,9 +34,12 @@ import { FORMER_LIVES } from '../home/pie-mimes.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
 import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
 import { parseWay, waySpell } from '../modules/way-through.mjs';
+import { wayForks, readFork, readForkSmall, forkLine, forkProblems } from '../modules/forks.mjs';
 import { CHARACTERS, REASONS, WEIGHT } from '../modules/characters.mjs';
 import { readMechanics } from '../modules/unlocks.mjs';
 import { CLIENT, clientProblems } from './feedback-client.mjs';
+import { wiredProblems } from './trope-wiring.mjs';
+import { FINDS, deedOf, readFind } from '../home/pie-finds.mjs';
 import { existsSync } from 'node:fs';
 import { CARD_MUTATIONS, ICON_MUTATIONS, SOUND_MUTATIONS, missingMutations, mutationEdge, readSidecar } from '../modules/asset-sidecar.mjs';
 
@@ -381,7 +384,26 @@ function parsedLevels(text) {
   const sampleWay = { aside: [2, 7], apart: (way.pairs || []).map((p) => p.id) };
   if (!reads(waySpell(sampleWay))) error('way', 'a way line does not read whole with the Spw interpreter');
   if (JSON.stringify(parseWay(waySpell(sampleWay))) !== JSON.stringify({ aside: [2, 7], apart: [...sampleWay.apart].sort() })) error('way', 'a way line does not read back as itself');
-  notes.push(`way: ${Object.keys(way.chapters).length} chapters with reasons and wonders, ${(way.pairs || []).length} pairings, ${(way.held || []).length} held together`);
+  /* The way's forks (forks.mjs): one line each, drawn from way.json, never written by hand. Each reads whole with the
+   * parser and the same with the small reader, writes back as itself, and goes only to chapters the book has. */
+  const forks = wayForks(way, Math.max(...knownChapters));
+  forks.forEach((entry) => {
+    const small = readForkSmall(entry.line);
+    const real = parse ? readFork(entry.line, { parse, readBias: readBias || undefined }) : small;
+    if (!real) { error('way', `${entry.id}: the fork ${entry.line} does not read whole`); return; }
+    if (JSON.stringify(real) !== JSON.stringify(small)) error('way', `${entry.id}: the small fork reader and the parser part on ${entry.line}`);
+    if (forkLine(real) !== entry.line) error('way', `${entry.id}: the fork does not write back as itself`);
+    forkProblems(real).forEach((why) => error('way', `${entry.id}: ${why}`));
+    real.sides.forEach((s) => s.where.forEach((w) => { const n = /^c(\d+)$/.exec(w.to); if (n && !knownChapters.has(Number(n[1]))) error('way', `${entry.id}: the fork goes to chapter ${n[1]}, which the book does not have`); }));
+  });
+  // Negative controls: a side that goes nowhere, one side only, a shelf word as a place, an unclosed fork.
+  [['=boon@kept{ } =bane@aside{ @c02[held] }', 'a side that goes nowhere'], ['=boon@kept{ @c01 }', 'one side only'], ['=boon@kept{ @boon } =bane@aside{ @c02 }', 'a shelf word as a place']].forEach(([body, what]) => {
+    const line = `?c01[way]{ ${body} }`;
+    const read = (parse ? readFork(line, { parse, readBias: readBias || undefined }) : null) || readForkSmall(line);
+    if (read && !forkProblems(read).length) error('way', `negative control: ${what} read as a whole fork`);
+  });
+  if (readForkSmall('?c01[way]{ =boon@kept{ @c01 } =bane@aside{ @c02 }') || (parse && readFork('?c01[way]{ =boon@kept{ @c01 } =bane@aside{ @c02 }', { parse }))) error('way', 'negative control: an unclosed fork read whole');
+  notes.push(`way: ${Object.keys(way.chapters).length} chapters with reasons and wonders, ${(way.pairs || []).length} pairings, ${(way.held || []).length} held together; ${forks.length} forks, each one line read whole`);
 }
 
 /* Marks stay marked (book/content/marks.json): each says who, for what and since when, stands beside pages that
@@ -521,6 +543,29 @@ const unit = (x) => typeof x === 'number' && x >= 0 && x <= 1;
   const status = !story || !lanes ? 'stranded' : wired === 2 ? 'winding' : wired === 1 ? 'one-way' : 'parallel';
   track[status].push(trope.id);
 });
+/* Where a crossing is wired (trope-wiring.mjs): every hop names a file the tree has and something declared in it, so
+ * a table that moves takes its wired strings with it. The control: the tables INTRO came from, named where they are
+ * now only used. */
+for (const trope of tropes.tropes || []) {
+  for (const way of ['into_lanes', 'into_story']) {
+    const wired = trope.crossings?.[way]?.wired;
+    if (wired) (await wiredProblems(wired)).forEach((problem) => error(`tropes ${trope.id}`, `crossings.${way}.wired: ${problem}`));
+  }
+}
+if (!(await wiredProblems('pie-game.mjs INTRO')).length) error('tropes', 'negative control: a wired string naming a table where it is only used resolved');
+/* Finds listed where they cross (pie-finds.mjs): a find that hands the book an artifact and a margin is listed, by id,
+ * deed, artifact and margin, on the trope its rule crosses; every listed find is a find. A held find is listed nowhere. */
+{
+  const listed = (tropes.tropes || []).flatMap((trope) => (trope.finds || []).map((entry) => ({ trope: trope.id, ...entry })));
+  FINDS.forEach((find) => {
+    const crosses = readFind(find.rule).crosses;
+    const entry = listed.find((e) => e.id === find.id);
+    if (!find.made || !find.margin) { if (entry) error(`tropes ${entry.trope}`, `lists the find ${find.id}, which is held`); return; }
+    if (!entry) error('tropes', `the find ${find.id} crosses ${crosses} and is not listed there`);
+    else if (entry.trope !== crosses || entry.deed !== deedOf(find) || entry.made !== find.made || entry.margin !== find.margin) error(`tropes ${entry.trope}`, `the find ${find.id} is listed as it does not run (it crosses ${crosses} by ${deedOf(find)}, makes ${find.made}, turns ${find.margin})`);
+  });
+  listed.forEach((e) => { if (!FINDS.some((find) => find.id === e.id)) error(`tropes ${e.trope}`, `lists a find ${e.id} that pie-finds.mjs does not have`); });
+}
 notes.push(`tropes: ${tropeIds.size} on the track — ${track.winding.length} winding, ${track['one-way'].length} one-way (${track['one-way'].join(', ')}), ${track.parallel.length} parallel, ${track.stranded.length} stranded; crossings to lay in .spw/surfaces/tropes.spw`);
 
 /** A sidecar's mutations, as text and, when the interpreter is loaded, as read edges. */

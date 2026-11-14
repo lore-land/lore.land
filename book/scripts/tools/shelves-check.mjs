@@ -11,7 +11,8 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SHELVES, vectorOf, deedsFrom, branchOdds, alignment, CHAINS, chainStart, chainStep, teaseRung, RUNGS, nextDimension, DIMENSIONS, SCHEME_SIGNATURES } from '../modules/valence-shelves.mjs';
+import { SHELVES, vectorOf, deedsFrom, branchOdds, alignment, CHAINS, chainStart, chainStep, teaseRung, RUNGS, nextDimension, DIMENSIONS, SCHEME_SIGNATURES, SCHEME_FORK } from '../modules/valence-shelves.mjs';
+import { readFork, readForkSmall, forkProblems, forkLine, signaturesOf, choseLine } from '../modules/forks.mjs';
 import { SCHEMES } from '../home/pie-world.mjs';
 import { REASONS_IN_THE_ROAD, reasonFor, NOBODY } from '../home/pie-reasons.mjs';
 import { SCENES } from '../home/pie-world.mjs';
@@ -134,6 +135,45 @@ const sum = (/** @type {Record<string, number>} */ v) => Object.values(v).reduce
     if (broken.completeness?.complete && !broken.completeness.proseFallback) fail('negative control: an unclosed link read whole');
     notes.push(`chains: ${read} links read whole by the parser, each leaning forward (boon) or inverse (bane) as written`);
   }
+}
+
+/* ─── His scheme is a fork: one line is the source of every signature (forks.mjs) ─── */
+{
+  const seed = await import('../vendor/spw-seed.mjs').catch(() => null);
+  const small = readForkSmall(SCHEME_FORK);
+  const real = seed ? readFork(SCHEME_FORK, seed) : null;
+  if (!seed) fail('the vendored parser did not load');
+  else if (!real) fail(`${SCHEME_FORK} does not read whole as a fork with the real parser`);
+  else if (JSON.stringify(real) !== JSON.stringify(small)) fail(`the small fork reader and the parser part on the scheme fork: ${JSON.stringify(small)} against ${JSON.stringify(real)}`);
+  forkProblems(real || small).forEach((why) => fail(`the scheme fork: ${why}`));
+  if ((real || small)?.on !== 'shelves') fail('the scheme fork is decided by the shelves');
+  if (forkLine(/** @type {any} */ (real || small)) !== SCHEME_FORK) fail('the scheme fork does not write back as itself');
+  // The signatures the game weighs are the line's: the same table the odds above were tuned on.
+  const tuned = { wind: { bane: 1, bonk: 1 }, tax: { bane: 1, bone: 1 }, relet: { bane: 2 }, march: { bane: 1, bonk: 2 } };
+  if (JSON.stringify(signaturesOf(real || small)) !== JSON.stringify(tuned)) notes.push(`the scheme fork now weighs ${JSON.stringify(SCHEME_SIGNATURES)} (tuned on ${JSON.stringify(tuned)}): the odds above are its own`);
+  // The line that chose: ranked by the odds, first strongest, and the place drawn as its own edge; both read whole.
+  const odds = branchOdds(Object.entries(SCHEME_SIGNATURES).map(([id, signature]) => ({ id, signature })), vectorOf({ shelf: { bane: 2 }, deeds: { bonk: 12 } }), { firmness: 2 });
+  const chose = choseLine(/** @type {any} */ (real || small), odds, 'march');
+  if (!chose.ranked.startsWith('=bane@banewap{ @march')) fail(`a bane shelf with a run of knocks does not rank the march first: ${chose.ranked}`);
+  if (seed) [chose.ranked, chose.drawn].forEach((line) => {
+    const r = seed.parse(line, { lexProfile: 'prose' });
+    if (!r.completeness?.complete || r.completeness.proseFallback) fail(`the line that chose (${line}) does not read whole`);
+  });
+  // Negative controls: a shelf word as a place, a frame without commas, a place no scheme of his is, a side that goes nowhere.
+  const refused = [
+    ['a shelf word as a place', '?scheme[shelves]{ =bane@banewap{ @bane @bonk } }'],
+    ['a frame without commas', '?scheme[shelves]{ =bane@banewap{ @wind[bane bonk] } }'],
+    ['a side that goes nowhere', '?scheme[shelves]{ =bane@banewap{ } }'],
+    ['a place with no shelves named', '?scheme[shelves]{ =bane@banewap{ @wind } }']
+  ];
+  refused.forEach(([what, line]) => {
+    const a = readForkSmall(line);
+    const b = seed ? readFork(line, seed) : null;
+    if ((a && !forkProblems(a).length) || (b && !forkProblems(b).length)) fail(`negative control: ${what} was read as a whole fork`);
+  });
+  const stray = Object.keys(signaturesOf(readForkSmall(SCHEME_FORK.replace('@relet', '@picnic')))).filter((id) => !(id in SCHEMES));
+  if (stray.join() !== 'picnic') fail('negative control: a place that is no scheme of his was not noticed');
+  notes.push(`scheme fork: ${Object.keys(SCHEME_SIGNATURES).length} places read whole from one line; with a bane shelf and a run of knocks the line that chose reads ${chose.ranked}`);
 }
 
 /* ─── Teasing ─── */

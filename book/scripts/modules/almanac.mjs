@@ -140,6 +140,19 @@ export function initAlmanac({ chapterData, announce } = {}) {
 
   const root = document.documentElement;
   const enabled = () => !root.hasAttribute('data-switches-ready') || root.getAttribute('data-switch-wonders') === 'on';
+  // What you keep, as lines (kept-lines.mjs), a trial: the card carries the thing's line, its question answered, and
+  // this chapter's own wonders as a line with a hole for each run still to find here. Loaded only with the trial on.
+  const linesOn = () => root.getAttribute('data-switch-kept-lines') === 'on';
+  let lines = null;
+  const loadLines = () => {
+    lines = lines || Promise.all([
+      import('./kept-lines.mjs?v=2026_11_13.B'),
+      import('./spw-spell.mjs?v=2026_11_12.A'),
+      import('./likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); return mod; })
+    ]).then(([k, s, l]) => ({ k, s, l })).catch(() => null);
+    return lines;
+  };
+  if (linesOn()) loadLines();
   let card = null;
   let openMark = null;
 
@@ -172,8 +185,34 @@ export function initAlmanac({ chapterData, announce } = {}) {
     openMark = null;
   };
 
+  /* The thing's line (its probe answered, the first time), and this chapter's wonders as a line of what is kept here. */
+  const lineBox = (kl, data, wonder, result) => {
+    const kindWord = KIND_WORD[wonder.kind] || wonder.kind;
+    const line = kl.k.wonderLine(wonder, kl.l.likenessItem(`wonder:${wonder.id}`), true);
+    if (!line) return null;
+    const spell = kl.s.renderSpell(line, {
+      cast: result.isNew, layout: 'line', label: `${wonder.name}, as a line`,
+      explain: (atom, sigil, label) => kl.k.explainThing(sigil, label, { found: true, name: wonder.name, kindWord, lead: kl.k.wordOf(wonder.id) })
+    });
+    spell.classList.add('is-compact', 'kept-line');
+    Object.assign(spell.dataset, { keptLine: line, keptSay: `${wonder.name}, as a line: ` });
+    const box = el('div', { className: 'wonder-card-spw' },
+      result.isNew ? el('p', { className: 'wonder-card-was' }, el('code', {}, `?${kl.k.wordOf(kindWord)}`), ', answered:') : null,
+      spell);
+    const here = kl.k.chapterLine(data.wonders, data.places, chapter, result.state);
+    if (here) {
+      const told = kl.k.markHoles(kl.s.renderSpell(here, { cast: false, layout: 'line', label: 'This chapter’s wonders, as a line' }));
+      told.classList.add('is-compact', 'kept-line', 'wonder-card-here');
+      Object.assign(told.dataset, { keptLine: here, keptSay: 'This chapter’s wonders: ' });
+      box.append(el('p', { className: 'wonder-card-here-label' }, 'This chapter’s wonders, kept and still to find'), told);
+    }
+    import('../vendor/spw-seed.mjs').then((m) => kl.k.sayLinesIn(box, m?.spokenLine)).catch(() => {});
+    return box;
+  };
+
   const open = async (mark) => {
     const data = await loadAlmanac();
+    const kl = linesOn() ? await loadLines() : null;
     const wonder = data.byId.get(mark.dataset.wonder);
     if (!wonder) return;
     close();
@@ -209,6 +248,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
       wonder.craft ? el('p', { className: 'wonder-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
       // Its kind's own lines: how a creature moves and who misreads it; an antique's provenance; an artifact's residue.
       ...kindLines(wonder).map(([label, text]) => el('p', { className: 'wonder-card-line' }, el('span', {}, `${label} · `), text)),
+      kl ? lineBox(kl, data, wonder, result) : null,
       el('p', { className: 'wonder-card-status' }, statusLine(result, livesIn, count, data.wonders.length)),
       livesIn.length > 1 ? el('nav', { className: 'wonder-card-places', 'aria-label': `Where ${wonder.name} lives` },
         el('span', { className: 'wonder-card-places-label' }, 'Lives in'), ...doors) : null,

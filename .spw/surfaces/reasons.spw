@@ -52,6 +52,29 @@
   *clowns_and_mimes{ &who["clown, mime"] #name["Clowns and mimes, on different days"] #primes["The lanes send no mimes. The pie words stay as they are, and nobody contests a chapter."] #why["They are the lanes' own quarrel and never share a room in the book. Some people like one and not the other, and some would rather not have either coming at them with feeling."] #costs["No march, no walls, nobody to out-do. A chapter the mimes already hold can still be won back with clowns."] %swaps[0] }
 }
 
+# Every choice of the way is also a fork: what forks, on what, and where each side goes (book/scripts/modules/forks.mjs).
+# boon leans forward, the book as it stands; bane leans inverse, the book turned from itself. Drawn at a chapter end under the forks trial.
+?forks[
+  ?c01[way]{ =boon@kept{ @c01 } =bane@aside{ @c02[held] } }
+  ?c02[way]{ =boon@kept{ @c02 } =bane@aside{ @c03[held] } }
+  ?c03[way]{ =boon@kept{ @c03 } =bane@aside{ @c04[held] } }
+  ?c04[way]{ =boon@kept{ @c04 } =bane@aside{ @c05[held] } }
+  ?c05[way]{ =boon@kept{ @c05 } =bane@aside{ @c06[held] } }
+  ?c06[way]{ =boon@kept{ @c06 } =bane@aside{ @c07[held] } }
+  ?c07[way]{ =boon@kept{ @c07 } =bane@aside{ @c08[held] } }
+  ?c08[way]{ =boon@kept{ @c08 } =bane@aside{ @c09[held] } }
+  ?c09[way]{ =boon@kept{ @c09 } =bane@aside{ @c10[held] } }
+  ?c10[way]{ =boon@kept{ @c10 } =bane@aside{ @c11[held] } }
+  ?c11[way]{ =boon@kept{ @c11 } =bane@aside{ @c12[held] } }
+  ?c12[way]{ =boon@kept{ @c12 } =bane@aside{ @c13[held] } }
+  ?c13[way]{ =boon@kept{ @c13 } =bane@aside{ @c14[held] } }
+  ?c14[way]{ =boon@kept{ @c14 } =bane@aside{ @c15[held] } }
+  ?c15[way]{ =boon@kept{ @c15 } =bane@aside{ @c14[last] } }
+  ?two_pies[way]{ =boon@meet{ @c12 } =bane@apart{ @c12[told] } }
+  ?boof_and_bane[way]{ =boon@meet{ @c04 @c11 @c12 @lanes } =bane@apart{ @c04[aside] @c11[aside] @c12[told] @lanes[apart] } }
+  ?clowns_and_mimes[way]{ =boon@meet{ @lanes } =bane@apart{ @lanes[apart] } }
+]
+
 ^held[
   { &who["boof, ants"] #why["She works for the land and they keep it warm. A chapter without them would be set somewhere else."] }
   { &who["boof, genie"] #why["His price is the plot of both books. Set Chapter Three aside if you like, and the Thursday will still come due."] }

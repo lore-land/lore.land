@@ -52,6 +52,7 @@
     "seasons:check": "node book/scripts/tools/seasons-check.mjs",
     "reactions:check": "node book/scripts/tools/reactions-check.mjs",
     "finds:check": "node book/scripts/tools/finds-check.mjs",
+    "jokes:check": "node book/scripts/tools/jokes-check.mjs",
     "rhymes:build": "tsx book/scripts/tools/rhymes-build.mjs",
     "elaboration:check": "node book/scripts/tools/elaboration-check.mjs",
     "sound:check": "node book/scripts/tools/sound-check.mjs",

@@ -102,6 +102,69 @@ p.way-swapped {
 .way-pairs details { margin-block-start: 0.3rem; font-size: 0.92em; }
 .way-held li + li { margin-block-start: 0.5rem; }
 
+/* Where the book forks (forks.mjs): each fork its line, a trunk and a branch per side. The reader's side is drawn
+ * heavier and says so in words; a bane side (the book turned from itself) is dashed. Never hue alone. */
+.way-forks {
+  margin-block: 1.5rem;
+  padding: 0.85rem 1rem;
+  border-inline-start: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  font-size: 0.95em;
+}
+.way-forks p { text-indent: 0; }
+.way-forks > summary {
+  cursor: pointer;
+  font: 600 0.8rem/1.4 var(--font-mono, ui-monospace, monospace);
+}
+.way-forks[open] > summary { margin-block-end: 0.6rem; }
+
+.way-fork { margin: 1rem 0 0; min-width: 0; }
+.way-fork .spell { margin-block: 0.25rem 0.5rem; max-width: 100%; }
+.way-fork-shape {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 5.5rem) minmax(0, 1fr);
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+}
+.way-fork-draw { width: 100%; height: auto; overflow: visible; color: inherit; }
+.way-fork-trunk,
+.way-fork-branch { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; opacity: 0.45; }
+.way-fork-branch[data-sign="bane"] { stroke-dasharray: 4 3; }
+.way-fork-trunk,
+.way-fork-branch.is-on { stroke-width: 3; opacity: 1; }
+.way-fork-knot { fill: currentColor; }
+.way-fork-end { fill: var(--hub-panel, Canvas); stroke: currentColor; stroke-width: 1.5; opacity: 0.6; }
+.way-fork-end.is-on { fill: currentColor; opacity: 1; }
+
+.way-fork-sides { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; min-width: 0; }
+.way-fork-sides > li { min-width: 0; }
+.way-fork-side,
+.way-fork-sides > li:not(:has(button)) {
+  display: grid;
+  gap: 0.1rem;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 3px;
+  padding: 0.3rem 0.55rem;
+}
+.way-fork-side { cursor: pointer; }
+.way-fork-side:hover { border-color: currentColor; }
+.way-fork-side[data-sign="bane"],
+.way-fork-sides > li[data-sign="bane"] { border-style: dashed; }
+.way-fork-side[aria-pressed="true"],
+.way-fork-sides > li.is-on { border-width: 2px; border-color: currentColor; }
+.way-fork-side:disabled { cursor: default; opacity: 0.7; }
+.way-fork-edge { font: 0.78rem/1.4 var(--font-mono, ui-monospace, monospace); overflow-wrap: anywhere; }
+.way-fork-words { font-size: 0.92em; }
+.way-fork-side small,
+.way-fork-sides small { font: 600 0.7rem/1.3 var(--font-mono, ui-monospace, monospace); opacity: 0.8; }
+.way-pairs .way-fork { margin-block: 0.5rem; }
+.way-fork-ahead { margin-block-start: 1rem; }
+.way-fork-ahead > summary { cursor: pointer; font-size: 0.9em; }
+
 /* The contents, once something is set aside. */
 .hub-chapter-list li.is-aside { opacity: 0.55; }
 .hub-chapter-list li.is-aside .hub-ch-title::after {

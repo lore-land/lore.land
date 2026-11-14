@@ -68,6 +68,9 @@ jobs:
       - name: finds:check (a find's rule reads whole, rests on a want or a limit, opens by skill and never by gifts alone)
         run: npm run finds:check
 
+      - name: jokes:check (a callback's rule reads whole, crosses a trope it is grounded in, and lands only words already written)
+        run: npm run jokes:check
+
       - name: rhymes:build (refrains the parser finds across released chapters; a stale rhymes.json fails check)
         run: npm run rhymes:build
 

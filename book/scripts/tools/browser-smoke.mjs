@@ -11,6 +11,10 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { withHarness } from '../../../tools/browser-harness/index.mjs';
 import { SEASONS, keptLine } from '../home/pie-seasons.mjs';
+import { SHELF_LABEL, mirrored } from '../modules/kept-lines.mjs';
+import { readFileSync } from 'node:fs';
+import { forksOfChapter } from '../modules/forks.mjs';
+import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 
 /** @typedef {import('../../../tools/browser-harness/index.mjs').Page} Page */
 
@@ -21,6 +25,12 @@ const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { retu
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
+
+/* Where the book forks (forks.mjs): the forks trial alone (the way off, so taking a side must turn it on), and the lines
+ * Twelve should draw, written here from way.json by the same module. The shelves trial, for his scheme. */
+const FORKS_ON = { cohort: 'returning', choices: { forks: 'on' }, tried: [], resolved: { forks: 'on' } };
+const SHELVES_ON = { cohort: 'returning', choices: { shelves: 'on' }, tried: [], resolved: { shelves: 'on' } };
+const FORKS_12 = forksOfChapter(12, JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../../content/world/way.json'), 'utf8')), TOTAL_CHAPTERS);
 
 /* A season (pie-seasons.mjs): its switch on, a day inside it, a day after it, and the line it leaves. */
 const SEASON = SEASONS[0];
@@ -92,6 +102,84 @@ const SCENARIOS = [
     await page.waitFor(`sessionStorage.getItem('lore.way.visit')`);
     await page.waitFor(`!location.search.includes('way=')`);
     if (await page.ev(`localStorage.getItem('lore.way.v1')`)) throw new Error('a link wrote the reader\'s own way');
+  }],
+  ['a chapter draws its forks from their own lines, and a side taken there tells it that way at once', async (page) => {
+    await seed(page, { 'lore.switches.v1': FORKS_ON });
+    await page.goto('/book/chapter/12/');
+    await page.waitFor(`document.querySelectorAll('.way-forks[data-way-forks="12"] .way-fork').length === ${FORKS_12.length}`);
+    // Each fork is drawn from its own line: the line shown reads whole with the real parser, and is the line forks.mjs writes.
+    const drawn = await page.ev(`(async () => { const seed = await import('/book/scripts/vendor/spw-seed.mjs'); return [...document.querySelectorAll('.way-fork')].map((f) => { const line = f.querySelector('.spell-line').textContent.replace(/\\s+/g, ' ').trim(); const c = seed.parse(line, { lexProfile: 'prose' }).completeness; return { id: f.dataset.fork, side: f.dataset.side, line, whole: c.complete && !c.proseFallback, sides: f.querySelectorAll('.way-fork-side').length }; }); })()`);
+    FORKS_12.forEach((want) => {
+      const got = drawn.find((/** @type {{ id: string }} */ d) => d.id === want.id);
+      if (!got) throw new Error(`no fork ${want.id} at the end of Twelve`);
+      if (got.line !== want.line) throw new Error(`${want.id} drew ${got.line}, not its own line ${want.line}`);
+      if (!got.whole || got.sides !== 2) throw new Error(`${want.id}: ${JSON.stringify(got)}`);
+      if (got.side !== (want.kind === 'chapter' ? 'kept' : 'meet')) throw new Error(`${want.id}: a reader with no way is on ${got.side}, not the book as it stands`);
+    });
+    if (await page.ev(`document.querySelectorAll('main.chapter .way-swapped').length`)) throw new Error('a passage was told another way before any side was taken');
+    // Take the other side: the way is written, turned on by that hand, and the chapter is told that way at once.
+    await page.ev(`(() => { document.querySelector('.way-forks').open = true; document.querySelector('[data-fork="two_pies"] .way-fork-side[data-side="apart"]').click(); })()`);
+    await page.waitFor(`document.querySelectorAll('main.chapter .way-swapped').length >= 5 && document.querySelector('[data-fork="two_pies"]').dataset.side === 'apart'`);
+    const kept = await page.ev(`({ way: JSON.parse(localStorage.getItem('lore.way.v1')), on: JSON.parse(localStorage.getItem('lore.switches.v1')).choices['way-through'], said: document.querySelector('.way-forks .way-receipt').textContent })`);
+    if (!kept.way?.apart?.includes('two_pies') || kept.on !== 'on') throw new Error(`taking a side did not write the way: ${JSON.stringify(kept)}`);
+    if (!kept.said.includes('^way{ =apart[two_pies] }')) throw new Error(`the receipt did not say the new way: ${kept.said}`);
+    // And back: the words as written, and nothing left marked.
+    await page.ev(`document.querySelector('[data-fork="two_pies"] .way-fork-side[data-side="meet"]').click()`);
+    await page.waitFor(`(() => { const m = document.querySelector('main.chapter'); return m.textContent.includes('received in welcome') && m.querySelectorAll('.way-swapped').length === 0 && document.querySelector('[data-fork="two_pies"]').dataset.side === 'meet'; })()`);
+    // Setting the chapter itself aside says so at its head; taking it back takes the note away.
+    await page.ev(`document.querySelector('[data-fork="c12"] .way-fork-side[data-side="aside"]').click()`);
+    await page.waitFor(`/is set aside/.test(document.querySelector('.way-note')?.textContent || '')`);
+    await page.ev(`document.querySelector('[data-fork="c12"] .way-fork-side[data-side="kept"]').click()`);
+    await page.waitFor(`!document.querySelector('.way-note')`);
+    // A way set before the reader switched it off is read back, not written over, when a side turns it on again.
+    await seed(page, { 'lore.switches.v1': FORKS_ON, 'lore.way.v1': { aside: [2], apart: [], now: [2] } });
+    await page.goto('/book/chapter/12/');
+    await page.waitFor(`document.querySelector('[data-fork="two_pies"] .way-fork-side[data-side="apart"]')`);
+    await page.ev(`document.querySelector('[data-fork="two_pies"] .way-fork-side[data-side="apart"]').click()`);
+    await page.waitFor(`document.querySelector('[data-fork="two_pies"]').dataset.side === 'apart'`);
+    const after = await page.ev(`JSON.parse(localStorage.getItem('lore.way.v1'))`);
+    if (!after?.aside?.includes(2) || !after.apart?.includes('two_pies')) throw new Error(`taking a side wrote over the way the reader had: ${JSON.stringify(after)}`);
+    // With the switch off, a chapter adds no fold and fetches nothing for it.
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: {}, tried: [], resolved: {} } });
+    await page.goto('/book/chapter/12/');
+    await page.waitFor(`document.querySelector('.chapter-turn')`);
+    await new Promise((r) => setTimeout(r, 1200));
+    const off = await page.ev(`({ fold: Boolean(document.querySelector('.way-forks')), fetched: performance.getEntriesByType('resource').filter((e) => /\\/world\\/way\\.json|\\/modules\\/forks\\.mjs/.test(e.name)).map((e) => e.name) })`);
+    if (off.fold || off.fetched.length) throw new Error(`with the switch off: ${JSON.stringify(off)}`);
+  }],
+  ['his scheme, drawn by the shelves, shows the line that chose it once a carry', async (page) => {
+    await seed(page, { 'lore.switches.v1': SHELVES_ON, 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=3');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`__pieTest.state === 'running'`);
+    const t = await page.ev('__pieTest.run.t');
+    await page.waitFor(`__pieTest.run.t > ${t} + 0.5`);
+    await page.ev(`(() => { __pieTest.run.marchNext = false; __pieTest.scheme(); })()`);
+    const first = await page.ev(`(async () => { const r = __pieTest.run; const seed = await import('/book/scripts/vendor/spw-seed.mjs'); const whole = (l) => { const c = seed.parse(l, { lexProfile: 'prose' }).completeness; return c.complete && !c.proseFallback; }; return { fork: r.schemeFork, drew: r.bane?.id, tagged: r.tags.filter((g) => /^=bane@banewap\\{/.test(g.text)).length, whole: r.schemeFork ? whole(r.schemeFork.ranked) && whole(r.schemeFork.drawn) : false }; })()`);
+    if (!first.fork) throw new Error('the shelves drew his scheme and no line said so');
+    if (first.fork.drawn !== `=bane@banewap{ @${first.drew} }` || !first.fork.ranked.includes(`@${first.drew}`)) throw new Error(`the line that chose does not name the scheme drawn (${first.drew}): ${JSON.stringify(first.fork)}`);
+    if (!first.whole || first.tagged !== 1) throw new Error(`the line that chose: ${JSON.stringify(first)}`);
+    // Once a carry: a second scheme keeps the first line and adds no other.
+    await page.ev(`(() => { __pieTest.run.schemeFork.seen = 1; __pieTest.run.bane = null; __pieTest.run.marchNext = false; __pieTest.scheme(); })()`);
+    const second = await page.ev(`({ seen: __pieTest.run.schemeFork.seen, tagged: __pieTest.run.tags.filter((g) => /^=bane@banewap\\{/.test(g.text)).length })`);
+    if (second.seen !== 1 || second.tagged > 1) throw new Error(`the line was shown twice in one carry: ${JSON.stringify(second)}`);
+    // A march the bane chain called was chosen by the chain, not the odds: no line chose it, so none is shown.
+    await page.goto('/pie/?chapter=6');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`__pieTest.state === 'running'`);
+    await page.ev(`(() => { __pieTest.run.marchNext = true; __pieTest.scheme(); })()`);
+    const called = await page.ev(`({ id: __pieTest.run.bane?.id, fork: Boolean(__pieTest.run.schemeFork) })`);
+    if (called.id !== 'march' || called.fork) throw new Error(`a march the chain called: ${JSON.stringify(called)}`);
+    // With the shelves off, no line chose, and none is shown.
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: {}, tried: [], resolved: {} }, 'lore.pie.v1': PLAYER });
+    await page.goto('/pie/?chapter=3');
+    await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+    await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+    await page.waitFor(`__pieTest.state === 'running'`);
+    await page.ev(`__pieTest.scheme()`);
+    if (await page.ev(`Boolean(__pieTest.run.schemeFork)`)) throw new Error('a line was shown with the shelves off');
   }],
   ['a switch hands its room back at once', async (page) => {
     await page.setViewport(1440, 900);
@@ -385,6 +473,62 @@ const SCENARIOS = [
     await page.ev(`(() => { const plate = document.querySelector('.bracework'); plate.scrollIntoView(); plate.querySelector('button, summary')?.click(); })()`);
     await page.waitFor(`/Read by the Spw interpreter/.test(document.querySelector('.bracework').textContent)`);
   }],
+  ['kept lines (a trial): the shelf is one sealed line with holes, a card is a question until kept, a given line is compared and never kept, and the bench knows the book’s bracework', async (page) => {
+    const kept = { 'torch-ants': { first: '2026-11-01', places: [1] }, 'salt-whales': { first: '2026-11-02', places: [3] } };
+    const on = { cohort: 'returning', choices: { 'kept-lines': 'on' }, tried: [], resolved: { 'kept-lines': 'on' } };
+    // Off, the almanac is as it was: no shelf line, no line on any card.
+    await seed(page, { 'lore.almanac.v1': kept });
+    await page.goto('/almanac/');
+    await page.waitFor(`document.querySelector('#wonder-torch-ants')`, { timeoutMs: 8000 });
+    const off = await page.ev(`document.querySelectorAll('#shelf-line, .kept-line').length`);
+    if (off) throw new Error(`with the switch off the almanac shows ${off} lines`);
+    // On: the shelf as one line, holes in place, sealed as the workbench reads it, said by ear by the real parser.
+    await seed(page, { 'lore.almanac.v1': kept, 'lore.switches.v1': on });
+    await page.goto('/almanac/');
+    await page.waitFor(`document.querySelector('#shelf-line .spell-line')?.dataset.said === 'spw-seed'`, { timeoutMs: 10000 });
+    const shelf = await page.ev(`(async () => { const line = document.querySelector('#shelf-line .kept-line').dataset.keptLine; const m = await import('/book/scripts/vendor/spw-seed.mjs'); return { line, sealed: (m.scanPairLabels(line).pairs || []).some((p) => p.label === 'shelf' && p.close?.spelling === 'mirrored'), holes: document.querySelectorAll('#shelf-line .spell-other.kept-hole').length }; })()`);
+    if (!/^\*shelf\{_shelf @creatures\[torch_ants \?\d+ salt_whales \?\d+\]/.test(shelf.line)) throw new Error(`the shelf line does not keep its order and holes: ${shelf.line}`);
+    if (!shelf.sealed || !shelf.holes) throw new Error(`the shelf line is not sealed with holes: ${JSON.stringify(shelf)}`);
+    // A card still to find asks; a kept one answers in its kind's sigil.
+    const cards = await page.ev(`({ asks: document.querySelector('#wonder-echo-wrens .kept-line')?.dataset.keptLine, answers: document.querySelector('#wonder-torch-ants .kept-line')?.dataset.keptLine, seal: document.querySelector('#wonder-echo-wrens .likeness-mark')?.getAttribute('aria-label') || '' })`);
+    if (!/^\?creature\{/.test(cards.asks || '') || /echo|wren/.test(cards.asks) || /wren/i.test(cards.seal)) throw new Error(`an unfound card says more than its hint: ${JSON.stringify(cards)}`);
+    if (!/^@torch_ants\{ .*&ants/.test(cards.answers || '')) throw new Error(`a kept card does not answer: ${cards.answers}`);
+    // The bench knows {frost & hearth} is the book's, opens the door to it, and keeps nothing for it.
+    await page.ev(`(() => { const f = document.querySelector('[data-bench]'); f.elements.a.value = 'hearth'; f.elements.b.value = 'frost'; f.querySelector('input[name=container][value="{}"]').checked = true; f.querySelector('input[name=sigil][value="&"]').checked = true; f.dispatchEvent(new Event('change')); })()`);
+    const bench = await page.ev(`({ canon: document.querySelector('[data-bench-canon]')?.dataset.benchCanon, door: document.querySelector('[data-bench-canon] a')?.getAttribute('href') || '', kept: Object.keys(JSON.parse(localStorage.getItem('lore.almanac.v1') || '{}')) })`);
+    if (bench.canon !== 'hearth-drift' || !/^\/book\/chapter\/\d\d\/#/.test(bench.door)) throw new Error(`the bench did not know Hearth-drift: ${JSON.stringify(bench)}`);
+    if (bench.kept.includes('hearth-drift')) throw new Error('the bench kept a wonder the reader has not found');
+    // Someone's line, carried in an address: read for the visit, compared, gone from the address, and never kept.
+    const theirs = `*${SHELF_LABEL}{_${SHELF_LABEL} @creatures[torch_ants ?1 lag_stag ?21] .antiques[?12] *artifacts[?11] $contrivances[?15] &bracework[?6] #sayings[first_ink_stays ?14] .day["2026-11-10"] ${mirrored(SHELF_LABEL)}_}`;
+    // First as a stranger gets it: the switch off and nothing kept. It is read, and nothing is written.
+    await seed(page, {});
+    await page.goto(`/almanac/?shelf=${encodeURIComponent(theirs)}`);
+    await page.waitFor(`document.querySelector('[data-shelf-read]')?.dataset.shelfRead === 'sealed'`, { timeoutMs: 10000 });
+    const stranger = await page.ev(`({ both: document.querySelector('[data-shelf-read]').dataset.shelfBoth, search: location.search, almanac: localStorage.getItem('lore.almanac.v1'), switches: localStorage.getItem('lore.switches.v1') || '' })`);
+    if (stranger.both !== '0' || stranger.almanac !== null || /kept-lines/.test(stranger.switches) || /shelf=/.test(stranger.search)) throw new Error(`a stranger's visit changed something: ${JSON.stringify(stranger)}`);
+    // Then beside a shelf of one's own.
+    await seed(page, { 'lore.almanac.v1': kept, 'lore.switches.v1': on });
+    await page.goto(`/almanac/?shelf=${encodeURIComponent(theirs)}`);
+    await page.waitFor(`document.querySelector('[data-shelf-read]')?.dataset.shelfRead === 'sealed'`, { timeoutMs: 10000 });
+    const read = await page.ev(`({ ...document.querySelector('[data-shelf-read]').dataset, text: document.querySelector('[data-shelf-read]').textContent, search: location.search, kept: Object.keys(JSON.parse(localStorage.getItem('lore.almanac.v1') || '{}')).sort() })`);
+    if (read.shelfReader !== 'spw-seed' || read.shelfBoth !== '1' || read.shelfOnlyTheirs !== '2') throw new Error(`the given line was misread: ${JSON.stringify(read)}`);
+    if (/shelf=/.test(read.search)) throw new Error(`the line stayed in the address: ${read.search}`);
+    if (read.kept.join() !== 'salt-whales,torch-ants') throw new Error(`a given line wrote to the reader's shelf: ${read.kept}`);
+    if (/Lag-stag|First ink stays/.test(read.text)) throw new Error('a given line named what this reader has not found');
+    // Cut short in passing, it says so.
+    await page.ev(`(() => { const t = document.querySelector('[data-shelf-given]'); t.value = ${JSON.stringify(theirs.slice(0, -9))}; t.dispatchEvent(new Event('input')); })()`);
+    await page.waitFor(`document.querySelector('[data-shelf-read]')?.dataset.shelfRead === 'cracked'`, { timeoutMs: 6000 });
+  }],
+  ['kept lines (a trial): a chapter’s wonder card answers its question and says what is still to find here', async (page) => {
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: { 'kept-lines': 'on' }, tried: [], resolved: { 'kept-lines': 'on', wonders: 'on' } } });
+    await page.setViewport(1200, 900);
+    await page.goto('/book/chapter/01/');
+    await page.waitFor(`document.querySelector('.wonder-mark[data-wonder="torch-ants"][role=button]')`, { timeoutMs: 10000 });
+    await page.ev(`(() => { const m = document.querySelector('.wonder-mark[data-wonder="torch-ants"]'); m.scrollIntoView({ block: 'center' }); m.click(); })()`);
+    await page.waitFor(`document.querySelector('.wonder-card .wonder-card-spw .spell-line')?.dataset.said === 'spw-seed'`, { timeoutMs: 10000 });
+    const lines = await page.ev(`({ was: document.querySelector('.wonder-card-was')?.textContent || '', lines: [...document.querySelectorAll('.wonder-card .kept-line')].map((s) => s.dataset.keptLine) })`);
+    if (!/^\?creature/.test(lines.was) || !/^@torch_ants\{/.test(lines.lines[0] || '') || !/^\*chapter\[1\]\{ @torch_ants \?\d+ \}$/.test(lines.lines[1] || '')) throw new Error(`the card's lines: ${JSON.stringify(lines)}`);
+  }],
   ['a season: before its days nothing is set, and with the switch off nothing is set in them', async (page) => {
     await seed(page, { 'lore.switches.v1': SEASON_ON, 'lore.pie.v1': PLAYER });
     await carryOn(page, `${SEASON.opens.slice(0, 8)}20T12:00:00`);
@@ -518,6 +662,50 @@ const SCENARIOS = [
     await page.waitFor(`window.__pieTest.run.tags.some((t) => /STILL SET/.test(t.text))`, { timeoutMs: 8000 });
     const played = await page.ev(`({ warm: window.__pieTest.run.warm, unkept: window.__pieTest.run.unkept })`);
     if (!(played.warm > 0 && played.warm <= 4) || played.unkept > 0) throw new Error(`a rewritten line played more than the season left: ${JSON.stringify(played)}`);
+  }],
+  ['callbacks (a trial): three clerks and the porter writes his own name; the Genie prices the third of a thing once its margin is heard; off, nothing calls back; a spill meets exactly one', async (page) => {
+    const ON = { cohort: 'returning', choices: { callbacks: 'on' }, tried: [], resolved: { callbacks: 'on' } };
+    // With the tropes trial on too, so a stage that rises at the spill is said between the spill and the end card.
+    const WITH_STAGES = { cohort: 'returning', choices: { callbacks: 'on', 'trope-reveal': 'on' }, tried: [], resolved: { callbacks: 'on', 'trope-reveal': 'on' } };
+    // Three knocks a breath apart, the road ahead cleared and the pie steadied before each, so none of them spills it.
+    const knockThrice = (/** @type {string} */ kind) => `(async () => { const r = window.__pieTest.run; for (let i = 0; i < 3; i += 1) { r.things = r.things.filter((t) => t.y < 0); r.hurtT = 0; r.wobble = 0; window.__pieTest.knock({ kind: '${kind}', x: r.x - 10, y: r.y }); await new Promise((ok) => setTimeout(ok, 700)); } return { state: window.__pieTest.state, callbacks: r.callbacks || null, t: r.t }; })()`;
+    // On, carried by the porter: a slip with a word at the top, what porters write, and what he wrote, in the book's words.
+    await seed(page, { 'lore.switches.v1': WITH_STAGES, 'lore.pie.v1': PLAYER });
+    await carryOn(page, '2026-06-01T12:00:00');
+    const t0 = await page.ev('window.__pieTest.run.t');
+    await page.ev(`window.__pieTest.carrier('porter')`);
+    const porter = await page.ev(knockThrice('clerk'));
+    if (porter.state !== 'running') throw new Error(`three knocks spilled the pie: ${JSON.stringify(porter)}`);
+    if (!(porter.t > t0)) throw new Error('the game clock did not advance');
+    if (!porter.callbacks?.landed?.includes('damage')) throw new Error(`the porter's callback did not land: ${JSON.stringify(porter.callbacks)}`);
+    if (porter.callbacks.said.length !== 3 || porter.callbacks.said[2] !== 'He wrote his own name.') throw new Error(`it landed other words: ${JSON.stringify(porter.callbacks.said)}`);
+    const kept = await page.ev(`({ deeds: JSON.parse(localStorage.getItem('lore.pie.deeds.v1') || '{}'), tropes: JSON.parse(localStorage.getItem('lore.tropes.v1') || '{}') })`);
+    if (!Object.values(kept.deeds).some((d) => d?.joke_damage === 1)) throw new Error(`the landing was not kept as a deed: ${JSON.stringify(kept.deeds)}`);
+    if (!(kept.tropes.records?.crossed?.lanes > 0)) throw new Error(`landing did not meet records in the lanes: ${JSON.stringify(kept.tropes)}`);
+    // A spill meets exactly one in the lanes (tropes.json faces.lanes.moments), and the end card still comes.
+    await page.ev(`(() => { const r = window.__pieTest.run; r.wobble = 1.5; r.rattled = 0.6; })()`);
+    await page.waitFor(`window.__pieTest.state === 'over'`, { timeoutMs: 8000 });
+    const spilled = await page.ev(`JSON.parse(localStorage.getItem('lore.tropes.v1') || '{}')['exactly-one'] || null`);
+    if (!(spilled?.crossed?.lanes > 0)) throw new Error(`a spill did not meet exactly one: ${JSON.stringify(spilled)}`);
+    // The Genie, with Five's margin heard: the third pane lands his own row for glass, once, and not before.
+    await seed(page, { 'lore.switches.v1': ON, 'lore.pie.v1': PLAYER, 'lore.rumours.heard.v1': { 'rumour-haggle': '2026-11-13' } });
+    await carryOn(page, '2026-06-01T12:00:00');
+    await page.ev(`window.__pieTest.carrier('genie')`);
+    const genie = await page.ev(knockThrice('pane'));
+    if (!genie.callbacks?.landed?.includes('priced') || genie.callbacks.said.length !== 1) throw new Error(`the Genie's callback did not land once, on the third: ${JSON.stringify(genie.callbacks)}`);
+    if (genie.callbacks.said[0] !== 'The Genie looks at the glass as if it were a bill.') throw new Error(`the third pane landed other words: ${JSON.stringify(genie.callbacks.said)}`);
+    // The margin not heard: nothing is priced.
+    await seed(page, { 'lore.switches.v1': ON, 'lore.pie.v1': PLAYER });
+    await carryOn(page, '2026-06-01T12:00:00');
+    await page.ev(`window.__pieTest.carrier('genie')`);
+    const unheard = await page.ev(knockThrice('post'));
+    if (unheard.callbacks?.landed?.length) throw new Error(`a callback landed for a reader who never heard its margin: ${JSON.stringify(unheard.callbacks)}`);
+    // Off: nothing calls back.
+    await seed(page, { 'lore.pie.v1': PLAYER });
+    await carryOn(page, '2026-06-01T12:00:00');
+    await page.ev(`window.__pieTest.carrier('porter')`);
+    const off = await page.ev(knockThrice('clerk'));
+    if (off.callbacks) throw new Error(`with the switch off something called back: ${JSON.stringify(off.callbacks)}`);
   }]
 ];
 

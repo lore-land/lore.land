@@ -173,11 +173,11 @@
 
 import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_09.L';
 import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_11.A';
+import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_13.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
-import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_11.A';
+import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_13.B';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
@@ -194,13 +194,14 @@ import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechani
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
-import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_11.A';
+import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_13.B';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
 import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
-import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_11.A';
+import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_13.B';
 import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_11.A';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
-import { reactionFor, powerMoments, ended as timersEnded } from './pie-reactions.mjs?v=2026_11_13.B';
+import { reactionFor, powerMoments, ended as timersEnded, REACTIONS } from './pie-reactions.mjs?v=2026_11_13.B';
+import { meet as meetCallback, saving as callbacksSaving, wordsOf as callbackWords, jokeDeed, QUOTED as CALLBACK_CHAPTERS } from './pie-jokes.mjs?v=2026_11_13.B';
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
@@ -341,6 +342,10 @@ function writeRecord(record) {
  * the book hands the lanes there; the story and the lanes are strands of one track, crossing both ways. ─── */
 const TROPES_URL = '/book/content/world/tropes.json';
 const tropeOfKind = new Map();
+// A trope met at a moment of the carry rather than a thing passed (faces.lanes.moments: the spill, Friday, the plates),
+// and every trope by its id (what a callback crosses).
+const tropesAtMoment = new Map();
+const tropeById = new Map();
 // A thing in more than one trope's lanes belongs to the most particular one (the trope with the fewest kinds):
 // the figure to the plain lines before the floating title, a clown under the hat to WAP.
 fetch(TROPES_URL).then((res) => (res.ok ? res.json() : null)).then((data) => {
@@ -348,6 +353,10 @@ fetch(TROPES_URL).then((res) => (res.ok ? res.json() : null)).then((data) => {
     const had = tropeOfKind.get(kind);
     if (!had || trope.faces.lanes.kinds.length < had.faces.lanes.kinds.length) tropeOfKind.set(kind, trope);
   }));
+  (data?.tropes || []).forEach((trope) => {
+    tropeById.set(trope.id, trope);
+    (trope.faces?.lanes?.moments || []).forEach((moment) => tropesAtMoment.set(moment, [...(tropesAtMoment.get(moment) || []), trope]));
+  });
 }).catch(() => {});
 
 /* ─── The track, from the book's side: rumours heard in a chapter's margins (references.mjs keeps which) are
@@ -598,6 +607,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * grows a step (pie-sound.mjs tropeMotif, with a refrain the canon repeats when there is one). */
   const tropeRevealOn = () => switchOn('trope-reveal');
   let rhymesAsked = false;
+  // A trope met at a moment of the carry (trope-reveal.mjs LANES_MOMENTS), once a carry: exactly one at the spill,
+  // the missing day when Friday arrives, beyond the frame when the end card counts plates.
+  function metAt(moment) {
+    if (!run) return;
+    run.momentsMet = run.momentsMet || {};
+    if (run.momentsMet[moment]) return;
+    run.momentsMet[moment] = true;
+    (tropesAtMoment.get(moment) || []).forEach((trope) => tropeMet(trope));
+  }
   function tropeMet(trope) {
     try { noteCrossing(trope.id, 'lanes'); } catch { /* the stage waits */ }
     if (!tropeRevealOn() || !run) return;
@@ -1304,12 +1322,46 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.reacted = run.reacted || {};
     record.reactions = record.reactions || {};
     const times = run.reacted[moment] || 0;
-    const answer = reactionFor(moment, { carrier: run.carrier.id, present: standingBy(), times, lifetime: record.reactions[moment] || 0 });
+    const answer = reactionFor(moment, { carrier: run.carrier.id, present: standingBy(), times, lifetime: record.reactions[moment] || 0, hold: callbacksHeld() });
     run.reacted[moment] = times + 1;
     record.reactions[moment] = (record.reactions[moment] || 0) + 1;   // kept at the next save a carry makes
     if (!answer) return false;
     meanwhile(answer.who, answer.mood, '');
     if (answer.deed && times < 2) showToast(`Meanwhile, ${shortName(answer.who)}`, answer.deed, 3000, 'flour', 1, 'note');
+    return true;
+  }
+  /* Callbacks (pie-jokes.mjs; .spw/surfaces/jokes.spw; the callbacks trial): a beat met again in one carry comes back
+   * changed, and the last time it lands, in words the book or the lanes already have; a margin heard can set one up.
+   * A payoff the lanes already say is held back from the reactions until it lands. Landing meets the trope it crosses
+   * and is kept as a deed on the chapter (joke_<name>). It needs no other trial on. */
+  const callbacksOn = () => switchOn('callbacks');
+  const callbackChapters = {};
+  let callbackChaptersAsked = false;
+  const callbackAt = () => ({ carrier: run.carrier.id, heard: readStore(HEARD_KEY), counts: (run.callbacks ||= { counts: {}, landed: [], said: [] }).counts });
+  function callbacksHeld() {
+    if (!callbacksOn() || !run) return [];
+    return callbacksSaving(callbackAt(), REACTIONS);
+  }
+  function callbackSaid(moment) {
+    if (!callbacksOn() || !run) return false;
+    if (!callbackChaptersAsked) {
+      callbackChaptersAsked = true;
+      CALLBACK_CHAPTERS.forEach((n) => fetch(`/book/content/chapters/${pad2(n)}.json`).then((res) => (res.ok ? res.json() : null)).then((data) => { if (data) callbackChapters[n] = data; }).catch(() => {}));
+    }
+    const due = meetCallback(moment, callbackAt());
+    if (!due) return false;
+    const trope = tropeById.get(due.rule.crosses);
+    if (due.last) {
+      run.callbacks.landed.push(due.rule.id);
+      keepDeeds(run.chapter, { [jokeDeed(due.rule)]: 1 });
+      if (trope) tropeMet(trope);
+    }
+    const said = callbackWords(due.beat, { reactions: REACTIONS, chapters: callbackChapters, moment });
+    if (!said) return false;   // its words not yet to hand (a chapter still on its way): the lanes answer as they would
+    run.callbacks.said.push(said.words);
+    const who =said.who === 'carrier' || said.who === 'any' ? run.carrier.id : said.who;
+    if (CHARACTERS[who]) meanwhile(who, said.mood, '');
+    showToast(CHARACTERS[who] ? `Meanwhile, ${shortName(who)}` : `${trope?.sigil || ''} ${trope?.name || ''}`.trim(), said.words, 3200, 'flour', 1, 'note');
     return true;
   }
   /* What someone remembers of you (characters.mjs remembers, from the deeds every chapter carried keeps), told once
@@ -2068,6 +2120,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     if (run.friday || progress() < 0.86) return;
     run.friday = true;
+    metAt('friday');
     showToast('Friday', 'Friday arrives with everyone in it.', 3600, 'wonder', 2);
     impact('combo', W / 2, 150, { scale: 0.85, word: 'FRIDAY!' });
     say('Friday arrives with everyone in it.');
@@ -4044,6 +4097,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.reached = Math.max(record.reached, run.chapter);
     // Most of a chapter carried counts for it, spilled or not.
     if (run.leg && progress() >= 0.5) closeLeg();
+    // Exactly one spill is the lanes' whole rule, and every WAP left a plate the end card counts.
+    metAt('spill');
+    if (run.waps > 0) metAt('plates');
     const at = passing();
     lastCarry = { scene: run.sceneId, chapter: run.chapter, href: at ? passageHref(at) : `/book/chapter/${pad2(run.chapter)}/`, cobbles: distance, waps: run.waps, carrier: run.carrier.name };
     const best = distance > record.best;
@@ -4198,7 +4254,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.knockT = 1.6;
     run.lastKnock = thing.kind;
     lean('knocked');
-    if (!react(`knock:${thing.kind}`)) meanwhile(CHARACTERS[run.carrier.id] ? run.carrier.id : 'boof', CHARACTERS[run.carrier.id] ? 'worried' : 'surprised', pick(['Oof.', 'Steady…', 'Mind it!']));
+    if (!callbackSaid(`knock:${thing.kind}`) && !react(`knock:${thing.kind}`)) meanwhile(CHARACTERS[run.carrier.id] ? run.carrier.id : 'boof', CHARACTERS[run.carrier.id] ? 'worried' : 'surprised', pick(['Oof.', 'Steady…', 'Mind it!']));
     if (thing.kind === 'mime' || thing.kind === 'mimewall' || thing.kind === 'march') tally('maw', 1, 'mime_knock');
     sfx('knock', tilt, thing.x, thing.y);
     impact(thing.kind, thing.x, thing.y - 26, { hurt: true });
@@ -4898,6 +4954,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // Panes broken in earlier chapters and carries make the march easier to call (pie-mimes.mjs): never at once.
     if (mimesOn() && ids.includes('march')) ids.push(...Array(marchWeight({ grudge: mimeGrudge(), glassSeen: run.glassSeen || 0 })).fill('march'));
     let id = pick(ids);
+    let chose = null;
     if (shelvesOn()) {
       // The shelves tilt the scheme (a floor of one in twenty keeps every scheme possible); the mimes' extra chances
       // still count, as more weight on the march.
@@ -4907,9 +4964,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const total = weighted.reduce((n, o) => n + o.w, 0);
       let r = Math.random() * total;
       id = weighted.find((o) => (r -= o.w) < 0)?.id || id;
+      // His scheme is a fork on the shelves (valence-shelves.mjs SCHEME_FORK): what each place weighed this time.
+      chose = { odds: weighted.map((o) => ({ id: o.id, p: total ? o.w / total : 0 })), drew: id };
     }
     // The bane chain called a march (=bane@scheme{ @march }): the next scheme is one, if a march may happen here.
-    if (run.marchNext && ids.includes('march')) { id = 'march'; run.marchNext = false; }
+    // Then the chain chose it, not the odds, and no fork line is shown for it.
+    if (run.marchNext && ids.includes('march')) { id = 'march'; run.marchNext = false; chose = null; }
     if (!met('bane')) { record.met.push('bane'); writeRecord(record); }
     const fed = Math.min(5, run.baneStore || 0);
     run.baneStore = 0;
@@ -4918,8 +4978,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.pendingSwitch = true;
     run.lastPresence = 'bane';
     meanwhile('bane', 'thinking', 'Hm. Yes.', { force: true });
-    showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.`, 3400, 'bane');
-    say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.`);
+    // Once a carry, the line that chose: his places ranked by what each weighed (first strongest), and the one drawn.
+    const fork = chose && !run.schemeFork ? schemeChose(chose.odds, chose.drew) : null;
+    if (fork) {
+      run.schemeFork = { ...fork, drew: chose.drew };
+      run.tags.push({ x: W / 2, y: PRESENCE_Y + 28, t: 0, text: fork.drawn });
+    }
+    showToast('Mr. BaneWAP has a scheme.', `${SCHEMES[id].says} Somewhere ahead: an off switch.${fork ? ` Your shelves weighed ${fork.ranked} and drew @${chose.drew}.` : ''}`, fork ? 4600 : 3400, 'bane');
+    say(`Mr. BaneWAP has a scheme. ${SCHEMES[id].says} Find the off switch.${fork ? ` Your shelves drew it: ${fork.words}.` : ''}`);
     voiced('bane');
   };
 

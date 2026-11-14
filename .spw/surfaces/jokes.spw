@@ -1,0 +1,69 @@
+# Callbacks — a beat met again in one carry comes back changed, and the third time it lands
+# A design, built in part on 2026-11-13. The rules are lines of Spw; the words they land are the book's and the lanes', never new ones.
+#>lore_land_surfaces_jokes
+#:surface #!proposal
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+~<rationale>{
+  The maker asked, on the thirteenth of November 2026, to round out the trope ecology for better joke setups. Jokes in this book are classic moments told by arrangement: a setup the reader meets, then a payoff that lands because of it. elaboration.spw already holds the rule: a beat is deepened, never repeated; the first meeting gives the thing, a second its reason, a third its cost. A callback is that rule run inside one carry. The lanes keep count, and the third time the beat lands in words the book or the lanes already have. Nobody says anything new.
+}
+
+^"grounded_in"{
+  finds: "pie-finds.mjs: a rule is a line of Spw read by a small reader with a held vocabulary; the line is what runs"
+  elaboration: "elaboration.spw deepening: the first meeting gives the thing, a second its reason, a third its cost, said as a signed edge"
+  reactions: "pie-reactions.mjs: rows the lanes already say, tiered first, again and often"
+  margins: "references.json: rumours heard beside the prose and kept as heard"
+  tropes: "tropes.json: a callback crosses a trope it is grounded in, by the kind of its setup or the chapter of its margin, and that trope lists it"
+}
+
+^"form"{
+  rule: "?joke[name]{ @carrier[id] &heard[entry] ~setup[moment] %count[n] ^payoff[lanes|chapter_N] #crosses[trope] =bane@who{ @what } }"
+  setup: "a moment the lanes raise (family:thing), or a family counted thing by thing: three of a thing"
+  heard: "a margin heard first: the book sets it up and the lanes pay it off"
+  payoff: "chapter_N, a released paragraph cut by sentence; or lanes, a row the lanes already say, held back from the reactions until it lands"
+  cost: "who pays and for what, as the signed edge of elaboration.spw, read by the workbench (readBias): =bane for a price, =boon for a gift"
+  once: "a callback lands once a carry, at its count; the figure in plain lines never carries one"
+  words: "by reference only: a beat names a row, or a chapter, section, paragraph and sentences, never words of its own"
+  module: ~"book/scripts/home/pie-jokes.mjs"
+  check: ~"book/scripts/tools/jokes-check.mjs"
+  switch: "callbacks, a trial (reading-switches.mjs)"
+}
+
+^"damage"{
+  rule: "?joke[damage]{ @carrier[porter] ~setup[knock:clerk] %count[3] ^payoff[chapter_15] #crosses[records] =bane@porter{ @damage } }"
+  type: "the rule of three, its third a turn: the lanes set it up, the book pays it off"
+  thing: "a clerk knocks the porter: the row the lanes already have, a slip with a word at the top"
+  reason: "Chapter Fifteen, section 3, paragraph 4, its last two sentences: what porters write under that word"
+  cost: "the paragraph after it, whole: what this one wrote. The porter pays"
+  crosses: "records: the clerk is its kind in the lanes, and Fifteen is its chamber"
+}
+
+^"priced"{
+  rule: "?joke[priced]{ @carrier[genie] &heard[rumour-haggle] ~setup[knock] %count[3] ^payoff[lanes] #crosses[missing-day] =bane@genie{ @knock } }"
+  type: "a margin rumour sets up a lanes payoff, and a reaction row lands only once the reader has met the setup"
+  setup: "Chapter Five, in the margin at the crack: the Genie cannot pass three of a thing without pricing them (references.json rumour-haggle)"
+  payoff: "carrying, the third knock from one kind of thing: the row the lanes already have for him on a knock, held back until the third, so it lands on the count the margin named"
+  crosses: "missing-day: the margin sits in Five, one of its chambers, and its statement holds the price of a wish"
+  cost: "he prices his own knock, since he is the one carrying"
+}
+
+^"track"{
+  book_to_lanes: "a margin heard, or the book quoted, sets the beat up or lands it in the lanes"
+  lanes_to_book: "landing meets the trope it crosses (a step toward the turn) and is kept as a deed on its chapter, joke_name, for a margin to retell once its words are written"
+}
+
+!guards[
+  "No new words: every beat resolves to a row of pie-reactions.mjs or to sentences of a released paragraph, and jokes-check fails on one that does not"
+  "Narration only: no quotation marks, no first person, no held word, no slot that turns"
+  "Never a chapter not yet out"
+  "The figure in plain lines carries no callback"
+  "A payoff the lanes already say is not spent before its count"
+]
+
+?open[
+  "Is the Genie pricing a knock the missing day, as here, or never smaller, as the haggle has it, or a trope of his own"
+  "Should a landed callback be retold in its margin, and in what words"
+  "Next, the kiln: a pane struck, then Six on why the panes forgive, then Fifteen on the kiln booked until spring; forgiving glass, with the kiln paying"
+]

@@ -899,3 +899,189 @@ body[data-surface='monument'] .almanac-card:has(.almanac-card-plate) > .almanac-
     min-height: 18.5rem;
   }
 }
+
+/* ─── What you keep, as lines (kept-lines.mjs, the kept-lines trial) ───
+ * A card's line sits under its name or its hint, quiet until lit; a run still to find (?3) is a hole, in the probe's
+ * ink and dashed, so the shape of what is missing reads before any word. */
+body[data-surface='monument'] .almanac-card > .kept-line {
+  margin: 0.15rem 0 0.1rem;
+  border-color: color-mix(in srgb, var(--kind-ink) 35%, transparent);
+}
+
+/* A card's line breaks between its atoms, never between a sigil and its word; its gloss waits until it is lit. */
+body[data-surface='monument'] :is(.almanac-card, .almanac-bench-out) > .kept-line .spell-atom {
+  white-space: nowrap;
+}
+
+body[data-surface='monument'] :is(.almanac-card, .almanac-bench-out) > .kept-line .spell-gloss:empty {
+  display: none;
+}
+
+body[data-surface='monument'] .almanac-card.is-unfound > .kept-line {
+  background: transparent;
+  opacity: 0.86;
+}
+
+.kept-line .kept-hole {
+  color: color-mix(in srgb, var(--hue-probe) 70%, var(--spell-ink));
+  font-weight: 700;
+}
+
+.kept-line .spell-other.kept-hole {
+  margin-left: 0.1em;
+  padding: 0 0.12em;
+  border-bottom: 1px dashed color-mix(in srgb, var(--hue-probe) 60%, transparent);
+}
+
+.kept-line .spell-number.kept-hole {
+  margin-right: 0.1em;
+  border-bottom: 1px dashed color-mix(in srgb, var(--hue-probe) 60%, transparent);
+}
+
+body[data-surface='monument'] .almanac-shelfline {
+  --kind-ink: var(--hub-gold);
+  scroll-margin-top: 6rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline > .kept-line {
+  max-width: 52rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-actions {
+  margin: 0.55rem 0 0;
+}
+
+body[data-surface='monument'] .almanac-shelfline-actions + .almanac-shelfline-other:not([open]) {
+  margin-top: 0.45rem;
+}
+
+body[data-surface='monument'] :is(.almanac-shelfline-link, .almanac-shelfline-other > summary) {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--hub-gold) 50%, var(--hub-line));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hub-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-other {
+  max-width: 52rem;
+  margin-top: 0.7rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-other > summary {
+  display: inline-block;
+  list-style: none;
+}
+
+body[data-surface='monument'] .almanac-shelfline-other > summary::-webkit-details-marker {
+  display: none;
+}
+
+body[data-surface='monument'] .almanac-shelfline-other > p {
+  max-width: 62ch;
+  margin: 0.7rem 0 0.5rem;
+  color: var(--hub-muted);
+  font-family: var(--hub-display);
+  font-size: 0.95rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-given {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.4rem;
+  background: var(--hub-panel);
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.78rem;
+  resize: vertical;
+}
+
+body[data-surface='monument'] .almanac-shelfline-read {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+  font-family: var(--hub-display);
+}
+
+body[data-surface='monument'] .almanac-shelfline-read:empty {
+  display: none;
+}
+
+body[data-surface='monument'] .almanac-shelfline-read p {
+  margin: 0;
+}
+
+body[data-surface='monument'] .almanac-shelfline-read h3 {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .almanac-shelfline-read[data-shelf-read='cracked'] .almanac-shelfline-state {
+  color: color-mix(in srgb, var(--hub-berry) 70%, var(--hub-ink));
+}
+
+body[data-surface='monument'] .almanac-shelfline-hints {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-hints li {
+  max-width: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px dashed var(--hub-line);
+  border-radius: 0.35rem;
+}
+
+body[data-surface='monument'] .almanac-shelfline-hints .kind-badge {
+  color: color-mix(in srgb, var(--hub-gold) 55%, var(--hub-ink));
+}
+
+body[data-surface='monument'] .almanac-shelfline-hint {
+  flex: 1 1 14rem;
+  font-style: italic;
+  color: var(--hub-muted);
+}
+
+body[data-surface='monument'] .almanac-shelfline-hints .almanac-card-places {
+  margin-top: 0 !important;
+  padding-top: 0;
+}
+
+body[data-surface='monument'] .almanac-shelfline-note {
+  color: var(--hub-muted);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+body[data-surface='monument'] .almanac-bench-out > .kept-line {
+  justify-self: start;
+}
+
+body[data-surface='monument'] .almanac-bench-out > .kept-line .spell-line {
+  font-size: 1rem;
+}
+
+body[data-surface='monument'] .almanac-bench-canon {
+  margin: 0;
+  padding-top: 0.35rem;
+  border-top: 1px dashed color-mix(in srgb, var(--hub-berry) 40%, var(--hub-line));
+  color: color-mix(in srgb, var(--hub-berry) 60%, var(--hub-ink));
+  font-size: 0.95rem;
+}

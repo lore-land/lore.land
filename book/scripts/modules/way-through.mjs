@@ -17,7 +17,12 @@
  * a few ways it could come out, and a later chapter to check it against (workbench: docs/theory/spw/wonder-field.spw).
  * A guess is kept in this browser; what closes it is the reader's own word.
  *
- * Switches: way-through and reasons, both trials. Off, this module fetches nothing and adds nothing.
+ * Where the book forks (the forks trial): every choice the way offers is also a fork, one line of Spw drawn from
+ * way.json (forks.mjs): ?two_pies[way]{ =boon@meet{ @c12 } =bane@apart{ @c12[told] } }. A chapter's end draws the
+ * forks that touch it, with the reader's side lit; taking the other side writes the way and tells the chapter again at
+ * once. At the desk, each pairing shows its fork beside its button.
+ *
+ * Switches: way-through, reasons and forks, all trials. Off, this module fetches nothing and adds nothing.
  * Data: book/content/world/way.json, held by book:check.
  */
 
@@ -253,40 +258,125 @@ function reasonFold(n, data) {
     wonderCard(n, c.wonder));
 }
 
-/** Everything a chapter page does with the way. */
-export function initWayThrough({ chapterData } = {}) {
-  takeWayFromAddress();
-  const n = Number(chapterData?.chapterNumber);
-  if (!n) return () => {};
-  const main = document.querySelector('main.chapter');
-  let alive = true;
-  const added = [];
-  let wanted = readWay().source !== 'off';
-  try { wanted = wanted || readSwitches().values.reasons === 'on'; } catch { /* read as it stands */ }
-  if (!wanted) return () => {};
-  loadWay().then((data) => {
-    if (!alive || !data || !main) return;
-    let reasons = false;
-    try { reasons = readSwitches().values.reasons === 'on'; } catch { /* the fold waits */ }
-    if (reasons && data.chapters[n]) {
-      const fold = reasonFold(n, data);
-      const turn = main.querySelector('.chapter-turn');
-      if (turn) turn.before(fold); else main.append(fold);
-      added.push(fold);
-    }
+/* ─── Forks: each choice of the way, drawn from its own line (forks.mjs) ─── */
+
+/* forks.mjs loads only when the forks trial is on: off, a chapter fetches nothing for it. */
+let F = null;
+let forksPromise = null;
+const loadForks = () => {
+  forksPromise = forksPromise || import('./forks.mjs?v=2026_11_13.B').then((m) => { F = m; return m; }).catch(() => null);
+  return forksPromise;
+};
+
+const SIDE_VERBS = { kept: 'Keep it', aside: 'Set it aside', meet: 'Let them meet', apart: 'Keep them apart' };
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}) {
+  const node = document.createElementNS(SVG_NS, tag);
+  Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, String(value)));
+  return node;
+}
+/* A side's sign, boon or bane: the drawing dashes a bane side, and its control says so in its border. */
+const signed = (node, valence) => { node.dataset.sign = valence; return node; };
+const forcedAside = (n, data, way) => (data?.pairs || []).find((p) => way.apart.includes(p.id) && (p.aside || []).includes(n)) || null;
+
+/**
+ * One fork: its line, its shape (a trunk, and a branch for each side; the reader's lit, a bane side dashed), and its
+ * sides with where each goes. With take, each side is a control; without, a drawing.
+ */
+function forkFigure(entry, { on, forced = null, take = null, say = () => {}, caption = true } = {}) {
+  const { sides } = entry.fork;
+  const ys = sides.map((_, i) => (sides.length === 1 ? 40 : 14 + (i * 52) / (sides.length - 1)));
+  const draw = svgEl('svg', { viewBox: '0 0 120 80', class: 'way-fork-draw', 'aria-hidden': 'true', focusable: 'false' });
+  draw.append(svgEl('path', { class: 'way-fork-trunk', d: 'M6 40 H40' }));
+  sides.forEach((s, i) => {
+    const lit = s.side === on ? ' is-on' : '';
+    draw.append(signed(svgEl('path', { class: `way-fork-branch${lit}`, d: `M40 40 C62 40 70 ${ys[i]} 110 ${ys[i]}` }), s.valence));
+    draw.append(signed(svgEl('circle', { class: `way-fork-end${lit}`, cx: 110, cy: ys[i], r: lit ? 5 : 3.5 }), s.valence));
+  });
+  draw.append(svgEl('circle', { class: 'way-fork-knot', cx: 40, cy: 40, r: 4.5 }));
+  const list = el('ol', { className: 'way-fork-sides' }, sides.map((s) => {
+    const lit = s.side === on;
+    const what = F.saySide(s);
+    const body = [el('code', { className: 'way-fork-edge' }, F.sideLine(s)), el('span', { className: 'way-fork-words' }, what)];
+    if (!take) return signed(el('li', { className: lit ? 'is-on' : null }, ...body, lit ? el('small', {}, 'your side') : null), s.valence);
+    const blocked = Boolean(forced) && s.side === 'kept';
+    const would = lit ? `You are on this side: ${what}.` : `${SIDE_VERBS[s.side] || 'Take this side'}: ${what}.`;
+    const b = signed(el('button', { type: 'button', className: 'way-fork-side', 'data-side': s.side, 'aria-pressed': lit ? 'true' : 'false', 'aria-label': would, disabled: blocked },
+      ...body, lit ? el('small', {}, 'your side') : null, blocked ? el('small', {}, `kept aside by: ${forced.name}`) : null), s.valence);
+    b.addEventListener('pointerenter', () => say(would));
+    b.addEventListener('focus', () => say(would));
+    b.addEventListener('click', () => { if (lit) say(would); else take(s.side); });
+    return el('li', {}, b);
+  }));
+  return el('figure', { className: 'way-fork', 'data-fork': entry.id, 'data-side': on },
+    caption ? el('figcaption', { className: 'way-kicker' }, entry.kind === 'chapter' ? `${entry.name}: kept, or set aside` : entry.name) : null,
+    renderSpell(entry.line, { cast: false, layout: 'auto', label: `${entry.name}, as a fork in Spw` }),
+    el('div', { className: 'way-fork-shape' }, draw, list));
+}
+
+/** The forks that touch chapter n, at its end. Taking a side writes the way, then `taken` tells the chapter again. */
+function forksFold(n, data, { taken }) {
+  const fold = el('details', { className: 'way-forks', 'data-way-forks': n });
+  const foot = el('output', { className: 'way-receipt', 'aria-live': 'polite' }, '');
+  const say = (text) => { foot.textContent = text; };
+  const take = (entry, side) => {
+    // Choosing is consent, as at the desk: the way is turned on by the reader's own hand, and turned on first, so a way
+    // they set before switching it off is read back and kept, not written over.
+    setSwitch('way-through', true);
     const way = readWay();
-    if (way.source === 'off') return;
-    const aside = asideNow(way, data);
-    if (way.source === 'visit') { try { store('sessionStorage')?.setItem(VISIT_KEY, JSON.stringify({ aside: way.aside, apart: way.apart, now: aside })); } catch { /* this page */ } }
-    const head = main.querySelector('.chapter-head');
-    const swapping = data.pairs.filter((p) => way.apart.includes(p.id));
-    const undo = swapping.flatMap((p) => applySwaps(main, p, n));
-    if (undo.length) {
-      const note = swapNote(undo, swapping.filter((p) => (p.rooms || []).some((room) => room.chapter === n)), way.source);
-      head?.after(note);
-      added.push(note);
-    }
-    if (!aside.length) return;
+    const base = { aside: way.aside, apart: way.apart };
+    const next = entry.kind === 'chapter'
+      ? { ...base, aside: side === 'aside' ? [...base.aside, n] : base.aside.filter((c) => c !== n) }
+      : { ...base, apart: side === 'apart' ? [...base.apart, entry.pair] : base.apart.filter((id) => id !== entry.pair) };
+    writeWay(next, data);
+    paint();
+    taken();
+    const s = entry.fork.sides.find((x) => x.side === side);
+    say(`Done: ${(SIDE_VERBS[side] || side).toLowerCase()}. ${F.saySide(s)}. Your way through is now ${waySpell(next)}`);
+    settle(fold);
+  };
+  const paint = () => {
+    const way = readWay();
+    const now = asideNow(way, data);
+    const forced = forcedAside(n, data, way);
+    const seen = visitedChapters();
+    const figures = F.forksOfChapter(n, data, TOTAL_CHAPTERS).map((entry) => {
+      const figure = forkFigure(entry, { on: F.sideOf(entry, way, now), forced: entry.kind === 'chapter' ? forced : null, say, take: (side) => take(entry, side) });
+      // A pairing that reaches chapters not yet read names them: folded, as the desk folds what a pairing gives away.
+      const ahead = entry.kind === 'pair' && entry.fork.sides.some((s) => s.where.some((w) => { const c = Number(/^c(\d+)$/.exec(w.to)?.[1]); return c > n && !seen.includes(c); }));
+      return ahead ? el('details', { className: 'way-fork-ahead' }, el('summary', {}, `${entry.name}: where this goes names chapters you have not read yet`), figure) : figure;
+    });
+    fold.replaceChildren(
+      el('summary', {}, 'Where this chapter forks'),
+      el('p', {}, 'Each fork is one line: what forks, on what, and where each side goes. The lit side is the one you are on; take the other and this chapter is told that way at once.'),
+      ...figures,
+      el('p', { className: 'way-foot' }, wayIsOn() ? '' : 'Taking a side turns on your way through, a trial. Every choice can be taken back. ', el('a', { href: '/scriptorium/#way' }, 'Your way through, at the desk')),
+      foot);
+  };
+  paint();
+  return fold;
+}
+
+const once = (fn) => { let done = false; return () => { if (!done) { done = true; fn(); } }; };
+
+/** The reader's way, told on this chapter: notes, swaps and the turn. Returns how to take all of it back. */
+function applyWay(main, n, data) {
+  const way = readWay();
+  if (way.source === 'off') return () => {};
+  const aside = asideNow(way, data);
+  if (way.source === 'visit') { try { store('sessionStorage')?.setItem(VISIT_KEY, JSON.stringify({ aside: way.aside, apart: way.apart, now: aside })); } catch { /* this page */ } }
+  const head = main.querySelector('.chapter-head');
+  const added = [];
+  let live = true;
+  let restoreLink = () => {};
+  const swapping = data.pairs.filter((p) => way.apart.includes(p.id));
+  const undo = swapping.flatMap((p) => applySwaps(main, p, n)).map(once);
+  if (undo.length) {
+    const note = swapNote(undo, swapping.filter((p) => (p.rooms || []).some((room) => room.chapter === n)), way.source);
+    head?.after(note);
+    added.push(note);
+  }
+  if (aside.length) {
     if (aside.includes(n)) {
       const note = el('aside', { className: 'way-note', 'aria-label': 'This chapter is set aside' },
         el('p', { className: 'way-kicker' }, `${words(n)} is set aside`),
@@ -303,7 +393,14 @@ export function initWayThrough({ chapterData } = {}) {
     const next = keptAfter(n, aside);
     const link = main.querySelector('.chapter-turn-link');
     if (link && next !== n + 1 && next > n) {
+      const was = { href: link.getAttribute('href'), rel: link.getAttribute('rel'), html: link.innerHTML };
+      restoreLink = () => {
+        if (was.href == null) link.removeAttribute('href'); else link.setAttribute('href', was.href);
+        if (was.rel == null) link.removeAttribute('rel'); else link.setAttribute('rel', was.rel);
+        link.innerHTML = was.html;
+      };
       fetch('/book/content/catalog.json').then((res) => (res.ok ? res.json() : null)).then((catalog) => {
+        if (!live) return;
         const entry = (catalog?.chapters || []).find((c) => Number(c.number) === next);
         link.href = hrefOf(next);
         link.rel = 'next';
@@ -312,10 +409,36 @@ export function initWayThrough({ chapterData } = {}) {
         if (title && num && entry) { num.textContent = words(next); title.replaceChildren(num, ` ${entry.title}`); }
         const which = link.querySelector('.chapter-turn-in-which');
         if (which && entry?.inWhich) which.textContent = `In which ${entry.inWhich}.`;
-      }).catch(() => { link.href = hrefOf(next); });
+      }).catch(() => { if (live) link.href = hrefOf(next); });
     }
+  }
+  return () => { live = false; undo.forEach((fn) => fn()); added.forEach((node) => node.remove()); restoreLink(); };
+}
+
+/** Everything a chapter page does with the way. */
+export function initWayThrough({ chapterData } = {}) {
+  takeWayFromAddress();
+  const n = Number(chapterData?.chapterNumber);
+  if (!n) return () => {};
+  const main = document.querySelector('main.chapter');
+  let alive = true;
+  const added = [];
+  const switchOn = (id) => { try { return readSwitches().values[id] === 'on'; } catch { return false; } };
+  if (readWay().source === 'off' && !switchOn('reasons') && !switchOn('forks')) return () => {};
+  let undoWay = () => {};
+  loadWay().then((data) => {
+    if (!alive || !data || !main) return;
+    const place = (node) => {
+      const turn = main.querySelector('.chapter-turn');
+      if (turn) turn.before(node); else main.append(node);
+      added.push(node);
+    };
+    if (switchOn('reasons') && data.chapters[n]) place(reasonFold(n, data));
+    undoWay = applyWay(main, n, data);
+    // A side taken at the chapter's end: the chapter is told the new way at once, and the old way taken back first.
+    if (switchOn('forks')) loadForks().then((m) => { if (alive && m) place(forksFold(n, data, { taken: () => { undoWay(); undoWay = applyWay(main, n, data); } })); });
   });
-  return () => { alive = false; added.forEach((node) => node.remove()); };
+  return () => { alive = false; undoWay(); added.forEach((node) => node.remove()); };
 }
 
 /* ─── The desk: the line, the chapters, the pairings ─── */
@@ -326,6 +449,10 @@ export async function mountWayPanel(root) {
   const data = await loadWay();
   if (!root || !data) return;
   const catalog = await fetch('/book/content/catalog.json').then((res) => (res.ok ? res.json() : null)).catch(() => null);
+  // Where the book forks (a trial): each pairing's fork drawn beside its button, the reader's side lit.
+  let forksWanted = false;
+  try { forksWanted = readSwitches().values.forks === 'on'; } catch { /* drawn without */ }
+  if (forksWanted) await loadForks();
   const titleOf = (n) => (catalog?.chapters || []).find((c) => Number(c.number) === n)?.title || '';
   const foot = el('output', { className: 'way-receipt', 'aria-live': 'polite' }, '');
   const say = (text) => { foot.textContent = text; };
@@ -375,6 +502,7 @@ export async function mountWayPanel(root) {
     }
 
     const pairs = el('ul', { className: 'way-pairs' });
+    const forkOf = F && forksWanted ? Object.fromEntries(F.wayForks(data, TOTAL_CHAPTERS).filter((e) => e.kind === 'pair').map((e) => [e.id, e])) : {};
     data.pairs.forEach((p) => {
       const isApart = way.apart.includes(p.id);
       const b = el('button', { type: 'button', className: 'way-pair', 'aria-pressed': isApart ? 'true' : 'false', 'aria-label': `${isApart ? 'Let them meet' : 'Keep apart'}: ${p.name}. ${p.primes}` }, p.name);
@@ -384,7 +512,8 @@ export async function mountWayPanel(root) {
         const next = isApart ? { ...way, apart: way.apart.filter((id) => id !== p.id) } : { ...way, apart: [...way.apart, p.id] };
         apply(next, isApart ? `${p.name}: they may meet again.` : `${p.name}: done.`);
       });
-      pairs.append(el('li', {}, b, el('details', {}, el('summary', {}, 'What this changes, and why it is offered (gives away some of the plot)'), el('p', {}, p.why), el('p', {}, p.costs))));
+      const fork = forkOf[p.id] ? forkFigure(forkOf[p.id], { on: isApart ? 'apart' : 'meet', caption: false }) : null;
+      pairs.append(el('li', {}, b, fork, el('details', {}, el('summary', {}, 'What this changes, and why it is offered (gives away some of the plot)'), el('p', {}, p.why), el('p', {}, p.costs))));
     });
 
     const held = el('ul', { className: 'way-held' }, data.held.map((h) => el('li', {}, h.why)));

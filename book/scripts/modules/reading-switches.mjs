@@ -123,6 +123,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'forks', attribute: 'data-switch-forks', stage: 'trial', layer: 'trial', label: 'Where the book forks',
+    hint: 'At each chapter’s end, a closed fold draws where the book can go another way from there: the chapter kept or set aside, and any people who could be kept apart in it. Each fork is one line of Spw, drawn from its own words, with the side you are on lit. Take the other side there and then, and the chapter is told your way at once. At your desk, every pairing shows its fork too.',
+    effect: { on: 'Each chapter ends with where it forks, and which side you are on.', off: 'Chapters end without the forks; your way through is as you left it.' }, region: '.way-forks',
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'anthills', attribute: 'data-switch-anthills', stage: 'trial', layer: 'trial', label: 'Anthills',
     hint: 'The torch-ants keep anthills by the road. Run into one and they put their crumbs down, lift weights, and gossip: a few words from further on in the chapter. Now and then a line of them rolls a boonberry home, or carries a scrap of the book to the crows.',
     effect: { on: 'Anthills by the road, and the ants\u2019 gossip.', off: 'The ants keep their streets lit and their gossip to themselves.' },
@@ -147,6 +153,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'kept-lines', attribute: 'data-switch-kept-lines', stage: 'trial', layer: 'trial', label: 'What you keep, as lines',
+    hint: 'Every wonder you keep has a line of Spw, read from the same marks its seal is drawn with: what it is made of, which way it leans, who keeps it, where it lives. Before you find it the line is a question; kept, its sigil answers. Your whole almanac is one line, sealed at both ends, with a ? for each run still to find: copy it, give it away, and read someone else’s beside your own. The combining bench knows the bracework the book writes.',
+    effect: { on: 'Your almanac, its cards and each wonder you tap in a chapter carry their lines.', off: 'Seals and cards as they were; nothing you kept has changed.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'bloom-garden', attribute: 'data-switch-bloom-garden', stage: 'trial', layer: 'trial', label: 'The bloom garden',
     hint: 'In Chapter Eleven every bud in the bloom garden opens at once for Mr. BaneWAP. With this on, while he schemes there in the lanes, the garden answers him: thorned roses come up the road, low enough to hop and never in the way through. Something about them is worth finding.',
     effect: { on: 'In Chapter Eleven, his schemes open thorned roses up the lanes.', off: 'His schemes in Chapter Eleven are as they were.' },
@@ -156,6 +168,12 @@ export const SWITCHES = Object.freeze([
     id: 'trope-reveal', attribute: 'data-switch-trope-reveal', stage: 'trial', layer: 'trial', label: 'Tropes deepen as you go',
     hint: 'Each trope shows only as far as you have come with it: seeded, hinted, named, turned, paid off. Read on, carry the pie past it, or write it at the desk, and it says more.',
     effect: { on: 'Tropes show the stage you have reached.', off: 'Tropes show as they always have.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
+    id: 'callbacks', attribute: 'data-switch-callbacks', stage: 'trial', layer: 'trial', label: 'Callbacks',
+    hint: 'A small thing that happens in the lanes, met again in the same carry, comes back changed, and the third time it lands, in words the book or the lanes already have. A rumour heard in the margins can set one up. Nobody speaks.',
+    effect: { on: 'Some beats in the lanes come back, and land the third time.', off: 'Each beat in the lanes is met as it always was.' },
     defaults: { returning: 'off', new: 'off' }
   },
   {

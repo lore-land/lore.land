@@ -2,14 +2,15 @@
 // each thing lives, and a bench for combining found things into small
 // realms (the night school's game; bracework as a toy). Everything is read
 // from this browser's own shelf; nothing is sent anywhere.
-import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_11.A';
+import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_13.B';
 import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.G';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_11.A';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_13.B';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
-import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip } from '../modules/likeness.mjs?v=2026_11_11.A';
+import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip, describeLikeness } from '../modules/likeness.mjs?v=2026_11_11.A';
+import { wonderLine, explainThing, shelfLine, readShelfLine, compareShelves, sealedByWorkbench, benchCanon, wordOf, SHELF_LABEL, mirrored, markHoles, sayLinesIn } from '../modules/kept-lines.mjs?v=2026_11_13.B';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -86,6 +87,61 @@ const promptsOn = (() => {
   } catch { return false; }
 })();
 
+/* ─── What you keep, as lines (kept-lines.mjs), a trial ────────────────
+ * Every card carries its line (its likeness read as Spw: a question until it is kept), the shelves are one sealed
+ * line a reader can give away, and the bench knows the bracework the book writes. A shelf's line carried in an
+ * address (?shelf=) is read for this visit, then leaves the address; it is compared, never kept. */
+const carriedShelf = (() => {
+  try {
+    const url = new URL(location.href);
+    const line = url.searchParams.get('shelf');
+    if (!line) return '';
+    url.searchParams.delete('shelf');
+    history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+    return line;
+  } catch { return ''; }
+})();
+const linesOn = (() => {
+  if (carriedShelf) return true;
+  try {
+    if ((new URLSearchParams(location.search).get('try') || '').split(',').includes('kept-lines')) return true;
+    const sw = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null');
+    return sw?.choices?.['kept-lines'] === 'on' || sw?.resolved?.['kept-lines'] === 'on';
+  } catch { return false; }
+})();
+
+/* The workbench (vendor/spw-seed.mjs), loaded only when a line is on the page: it says each line in the names of
+ * its parts, for whoever reads by ear, and reads a given line's seal for itself. */
+let seedPromise = null;
+const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null); return seedPromise; };
+function sayLines(root = document) {
+  if (!linesOn) return;
+  loadSeed().then((m) => sayLinesIn(root, m?.spokenLine)).catch(() => {});
+}
+
+/** A line, shown: lit by role, its holes marked, said by ear once the workbench arrives. */
+function lineSpell(line, { label, say = '', explain = null, copy = false, layout = 'line' }) {
+  const spell = renderSpell(line, { cast: false, layout, label, explain, copy });
+  spell.classList.add('is-compact', 'kept-line');
+  spell.dataset.keptLine = line;
+  spell.dataset.keptSay = say;
+  return markHoles(spell);
+}
+
+/* A card's line: its likeness read as Spw. Unrecorded, the probe stands where its name will be. */
+function thingLineNode(wonder, kept) {
+  if (!linesOn) return null;
+  const line = wonderLine(wonder, likenessItem(`wonder:${wonder.id}`), Boolean(kept));
+  if (!line) return null;
+  const kindWord = KINDS[wonder.kind]?.word || wonder.kind;
+  const lead = kept ? wordOf(wonder.id) : wordOf(kindWord);
+  return lineSpell(line, {
+    label: kept ? `${wonder.name}, as a line` : `A ${kindWord} still to find, as a line`,
+    say: kept ? `${wonder.name}, as a line: ` : `A ${kindWord} still to find: `,
+    explain: (atom, sigil, label) => explainThing(sigil, label, { found: Boolean(kept), name: wonder.name, kindWord, lead })
+  });
+}
+
 function promptBlock(wonder) {
   const prompt = wonder.prompt;
   if (!promptsOn || !prompt?.hint) return null;
@@ -110,9 +166,10 @@ function promptBlock(wonder) {
 }
 
 /* A thing's likeness (likeness.mjs): its seal in the corner, and the way to what is like it. */
-const likenessSeal = (id) => {
+const likenessSeal = (id, kept = true) => {
   const item = likenessItem(id);
-  return item ? el('span', { className: 'almanac-likeness-seal' }, likenessMark(item, { size: 34 })) : null;
+  // Unrecorded, the seal says what it draws and not the name the card is still keeping back.
+  return item ? el('span', { className: 'almanac-likeness-seal' }, likenessMark(item, { size: 34, ...(kept ? {} : { title: describeLikeness(item) }) })) : null;
 };
 const likenessFind = (id) => (likenessItem(id) ? el('p', { className: 'almanac-likeness' }, findSimilar(id)) : null);
 
@@ -143,10 +200,11 @@ function card(data, wonder, kept) {
   const badge = kindBadgeNode(wonder.kind, { size: 30, label: KINDS[wonder.kind]?.word || wonder.kind });
   if (!kept) {
     return el('li', { className: 'almanac-card is-unfound', id: `wonder-${wonder.id}`, 'data-kind': wonder.kind },
-      likenessSeal(id),
+      likenessSeal(id, false),
       plateFigure(wonder, false),
       el('p', { className: 'almanac-card-kicker' }, badge, ` Unrecorded · ${wonder.region}`),
       el('p', { className: 'almanac-card-hint' }, wonder.hint),
+      thingLineNode(wonder, null),
       clueFor(wonder),
       chips.length ? el('p', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null,
       likenessFind(id));
@@ -156,6 +214,7 @@ function card(data, wonder, kept) {
     plateFigure(wonder, true),
     el('p', { className: 'almanac-card-kicker' }, badge, ` ${wonder.region}`),
     el('p', { className: 'almanac-card-name' }, wonder.name),
+    thingLineNode(wonder, kept),
     el('p', { className: 'almanac-card-note' }, wonder.note),
     wonder.craft ? el('p', { className: 'almanac-card-craft' }, el('span', {}, 'In the workshop · '), wonder.craft) : null,
     ...kindLines(wonder).map(([label, text]) => el('p', { className: 'almanac-card-line' }, el('span', {}, `${label} · `), text)),
@@ -196,6 +255,8 @@ function paintShelves(data) {
       placesFound += [...lives].filter((n) => state[w.id]?.places?.includes(n)).length;
     });
   });
+  paintShelfLine(data, state);
+  sayLines();
   const kept = data.wonders.filter((w) => state[w.id]).length;
   $('[data-almanac-tally]').textContent = kept
     ? `${kept} of ${data.wonders.length} kept · found in ${placesFound} of ${placesTotal} places they live.`
@@ -373,9 +434,127 @@ function placeAtlasStrips() {
     });
 }
 
+/* ─── Your shelf, as one sealed line (kept-lines.mjs, the kept-lines trial) ───
+ * Painted with the shelves, in the same pass, so nothing under it moves after it lands. */
+const localDay = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+
+function paintShelfLine(data, state) {
+  if (!linesOn) return;
+  const line = shelfLine(data.wonders, state, { day: localDay() });
+  const counts = Object.fromEntries(KIND_ORDER.map((k) => {
+    const list = data.wonders.filter((w) => w.kind === k);
+    return [wordOf(KINDS[k].words), [list.filter((w) => state[w.id]).length, list.length, KINDS[k].words]];
+  }));
+  const explain = (atom, sigil, label) => {
+    if (label === SHELF_LABEL) return 'Your shelf: everything kept, between a label and the label mirrored, so a line cut short shows where it stops.';
+    if (label === 'day') return 'The day the line was written.';
+    const c = counts[label];
+    return c ? `${c[0]} of ${c[1]} ${c[2]} kept, in the order the book meets them. Each ?n is a run of n still to find.` : '';
+  };
+  let section = document.getElementById('shelf-line');
+  if (!section) {
+    section = el('section', { className: 'almanac-shelfline', id: 'shelf-line', 'aria-labelledby': 'shelf-line-title' });
+    document.getElementById('bestiary')?.before(section);
+  }
+  const spell = lineSpell(line, { label: 'Your shelf, as one line', say: 'Your shelf, as one line: ', explain, copy: 'lore.land/almanac#shelf-line', layout: 'auto' });
+  const link = el('button', { type: 'button', className: 'almanac-shelfline-link' }, 'Copy a link to it');
+  link.addEventListener('click', () => copyText(link, `${location.origin}/almanac/?shelf=${encodeURIComponent(line)}#shelf-line`, 'Copied a link'));
+  const given = el('textarea', { className: 'almanac-shelfline-given', rows: '3', spellcheck: 'false', 'aria-label': 'A shelf’s line someone gave you', placeholder: `*${SHELF_LABEL}{_${SHELF_LABEL} … ${mirrored(SHELF_LABEL)}_}`, 'data-shelf-given': true });
+  const out = el('div', { className: 'almanac-shelfline-read', 'data-shelf-read': '', 'aria-live': 'polite' });
+  const other = el('details', { className: 'almanac-shelfline-other' },
+    el('summary', {}, 'Read a shelf someone gave you'),
+    el('p', {}, 'Paste their line. It is read beside yours: what you both keep, and where to look for what they found that you have not. The reading gives those by hint and not by name, though the line itself carries its own words. Nothing in it is kept.'),
+    given, out);
+  given.addEventListener('input', () => readGiven(data, given.value, out));
+  section.replaceChildren(
+    el('div', { className: 'almanac-shelf-head' },
+      el('h2', { id: 'shelf-line-title' }, el('span', { className: 'almanac-sigil', 'aria-hidden': 'true' }, '*'), ' Your shelf, as one line'),
+      el('p', { className: 'almanac-shelf-count' }, 'sealed at both ends')),
+    el('p', { className: 'almanac-shelf-lede' }, 'Everything you have kept, in the notation the book is written in: each shelf under its sigil, in the order the book meets it. A ? and a number is a run still to find. It shows where the gaps fall and nothing of what fills them. The line opens with a label and closes with the label mirrored, so a line cut short shows where it stops. Copy it, give it away, and read someone else’s beside it.'),
+    spell,
+    el('p', { className: 'almanac-shelfline-actions' }, link),
+    other);
+  if (carriedShelf) {
+    other.open = true;
+    given.value = carriedShelf;
+    readGiven(data, carriedShelf, out);
+  }
+}
+
+let readingN = 0;
+/* Someone's shelf, read beside this reader's. Compared and shown; never written to lore.almanac.v1. */
+async function readGiven(data, text, out) {
+  const n = (readingN += 1);
+  const src = String(text || '').replace(/#from\["[^"]*"\]/g, '').trim();
+  if (!src) { out.replaceChildren(); out.dataset.shelfRead = ''; return; }
+  const read = readShelfLine(src, data.wonders);
+  if (!read) {
+    out.dataset.shelfRead = 'unread';
+    out.replaceChildren(el('p', {}, `That is not a shelf’s line. One opens *${SHELF_LABEL}{_${SHELF_LABEL} and closes ${mirrored(SHELF_LABEL)}_}.`));
+    return;
+  }
+  // The workbench reads the seal for itself (scanPairLabels); the small reader's view stands until it has loaded.
+  const m = await loadSeed();
+  if (n !== readingN) return;
+  let workbench = null;
+  try { workbench = m?.scanPairLabels ? sealedByWorkbench(m.scanPairLabels(src)) : null; } catch { workbench = null; }
+  const sealed = read.sealed && workbench !== false;
+  const mine = new Set(Object.keys(readAlmanac()).filter((id) => data.byId.has(id)));
+  const { both, onlyTheirs, onlyMine } = compareShelves(mine, read.kept);
+  const parts = [el('p', { className: 'almanac-shelfline-state' }, sealed
+    ? `A sealed line${read.day ? `, written ${read.day}` : ''}. It keeps ${read.kept.size} of ${read.size}. You keep ${mine.size} of ${data.wonders.length}, and ${both.length} of them both.`
+    : `That line does not close. A shelf’s line opens with _${SHELF_LABEL} and ends with ${mirrored(SHELF_LABEL)}_; this one was cut short on the way, so it is read as far as it goes: ${read.kept.size} kept.`)];
+  if (sealed && read.size !== data.wonders.length) parts.push(el('p', {}, `It was written when the almanac held ${read.size}. It holds ${data.wonders.length} now.`));
+  const unread = [...read.unknown, ...read.errors];
+  if (unread.length) parts.push(el('p', { className: 'almanac-shelfline-unknown' }, `Left as written, not guessed: ${unread.slice(0, 6).join('; ')}${unread.length > 6 ? '…' : ''}.`));
+  if (onlyTheirs.length) {
+    const shown = onlyTheirs.slice(0, 30);
+    parts.push(el('h3', {}, `Kept there, still to find here · ${onlyTheirs.length}`),
+      el('ul', { className: 'almanac-shelfline-hints' }, ...shown.map((id) => {
+        const w = data.byId.get(id);
+        const chips = placeChips(data, w, null);
+        return el('li', { 'data-kind': w.kind },
+          kindBadgeNode(w.kind, { size: 22, label: KINDS[w.kind]?.word || w.kind }),
+          el('span', { className: 'almanac-shelfline-hint' }, w.hint),
+          chips.length ? el('span', { className: 'almanac-card-places' }, el('span', {}, 'Look in'), ...chips) : null);
+      })),
+      onlyTheirs.length > shown.length ? el('p', {}, `And ${onlyTheirs.length - shown.length} more.`) : null);
+  }
+  if (onlyMine.length) {
+    parts.push(el('h3', {}, `Kept here, still to find there · ${onlyMine.length}`),
+      el('p', { className: 'almanac-shelfline-yours' }, ...onlyMine.flatMap((id, i) => [i ? ', ' : '', el('a', { href: `#wonder-${id}` }, data.byId.get(id).name.split(':')[0])])));
+  }
+  parts.push(el('p', { className: 'almanac-shelfline-note' }, 'Reading a line keeps nothing. Their shelf stays theirs, and yours stays as it was.'));
+  out.replaceChildren(...parts.filter(Boolean));
+  Object.assign(out.dataset, { shelfRead: sealed ? 'sealed' : 'cracked', shelfReader: workbench === null ? 'small' : 'spw-seed', shelfTheirs: String(read.kept.size), shelfBoth: String(both.length), shelfOnlyTheirs: String(onlyTheirs.length) });
+}
+
+/* The bench answers in Spw (the kept-lines trial): the combine is a line, said by ear, and a combine the book itself
+ * writes is known for what it is, with the door to where it is written. It is still kept by finding it there. */
+function benchExpr(expr) {
+  if (!linesOn) return el('code', { className: 'almanac-bench-expr' }, expr);
+  const spell = lineSpell(expr, { label: 'The combine, as Spw', say: 'The combine: ' });
+  spell.classList.add('almanac-bench-expr');
+  return spell;
+}
+
+function benchCanonNode(data, expr) {
+  if (!linesOn) return null;
+  const w = benchCanon(expr, data.wonders);
+  if (!w) return null;
+  const name = w.name.split(':')[0];
+  if (readAlmanac()[w.id]) {
+    return el('p', { className: 'almanac-bench-canon', 'data-bench-canon': w.id }, 'The book writes this one: ', el('a', { href: `#wonder-${w.id}` }, name), '. It is on your shelf.');
+  }
+  const places = data.places(w.id);
+  const place = places.find((p) => p.c === w.home) || places[0];
+  return el('p', { className: 'almanac-bench-canon', 'data-bench-canon': w.id }, `The makers wrote this before you did, in ${chapterName(w.home)}. `,
+    place ? el('a', { href: `/book/chapter/${pad(place.c)}/#${place.id}` }, 'Find it where it is written →') : null);
+}
+
 /* ─── The bench ─────────────────────────────────────────────────────── */
 
-const STARTERS = ['frost', 'hearth', 'river', 'moon', 'grove', 'dog', 'lantern', 'egg', 'pie', 'bell', 'map', 'Thursday', 'berry', 'snow'];
+const STARTERS =['frost', 'hearth', 'river', 'moon', 'grove', 'dog', 'lantern', 'egg', 'pie', 'bell', 'map', 'Thursday', 'berry', 'snow'];
 
 const CONTAINERS = Object.freeze({
   '[]': { open: '[', close: ']', lead: 'A window. You may only look in.' },
@@ -463,7 +642,8 @@ function initBench(data) {
   const render = () => {
     const values = new FormData(form);
     current = compose(values.get('container'), values.get('sigil'), values.get('a'), values.get('b'));
-    out.replaceChildren(el('code', { className: 'almanac-bench-expr' }, current.expr), el('span', {}, current.text));
+    out.replaceChildren(benchExpr(current.expr), el('span', {}, current.text), ...[benchCanonNode(data, current.expr)].filter(Boolean));
+    sayLines(out);
     out.classList.remove('is-fogging');
     void out.offsetWidth;
     out.classList.add('is-fogging');

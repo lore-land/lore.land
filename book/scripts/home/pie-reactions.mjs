@@ -221,10 +221,11 @@ export function ended(before, after) {
  * carrier does; the carrier's own row before the row for whoever carries; a row for this telling (the first, a
  * repeat, a reader the lanes know) before a row for any telling. null for a moment with no rows.
  * @param {string} moment
- * @param {{ carrier?: string, present?: ReadonlyArray<string>, times?: number, lifetime?: number, rand?: () => number }} [at]
+ * A row held back (hold: its deed) is passed over: a callback (pie-jokes.mjs) is saving it for its payoff.
+ * @param {{ carrier?: string, present?: ReadonlyArray<string>, times?: number, lifetime?: number, rand?: () => number, hold?: ReadonlyArray<string> }} [at]
  * @returns {{ who: string, mood: Mood, deed: string } | null}
  */
-export function reactionFor(moment, { carrier = 'figure', present = [], times = 0, lifetime = 0, rand = Math.random } = {}) {
+export function reactionFor(moment, { carrier = 'figure', present = [], times = 0, lifetime = 0, rand = Math.random, hold = [] } = {}) {
   const own = REACTIONS[moment];
   if (!own) return null;
   const family = REACTIONS[moment.split(':')[0]] || [];
@@ -233,6 +234,7 @@ export function reactionFor(moment, { carrier = 'figure', present = [], times = 
   const scored = [];
   [own, family].forEach((rows, isFamily) => rows.forEach((r) => {
     if (r.when && r.when !== telling) return;
+    if (hold.includes(r.deed)) return;
     const inLanes = r.only !== 'carrying' && present.includes(r.who);
     const carries = r.only !== 'standing' && r.who === carrier;
     const whose = inLanes ? 4 : carries ? 3 : r.who === 'carrier' ? 2 : r.who === 'any' ? 1 : 0;

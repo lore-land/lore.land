@@ -18,6 +18,10 @@
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
 export const STAGES = Object.freeze(['seed', 'hint', 'named', 'turned', 'paid']);
+/** Moments of a carry a trope can be met at in the lanes, when no thing passed is its kind (tropes.json
+ * faces.lanes.moments): the spill every carry ends in, Friday arriving in Fourteen's leg, and the plates the end card
+ * counts. pie-game.mjs meets each at most once a carry (metAt); elaboration-check holds the list to the game. */
+export const LANES_MOMENTS = Object.freeze(['spill', 'friday', 'plates']);
 export const STORE_KEY = 'lore.tropes.v1';
 export const RHYMES_URL = '/book/content/world/rhymes.json';
 

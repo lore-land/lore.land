@@ -31,6 +31,10 @@
   odds: "P(branch) is proportional to exp( k * (signature . v) ): each branch carries a five-part signature, and the shelves decide which grows dominant"
   branches_are: "tellings in a slot, a pairing swapped on the way line, the scheme Mr. BaneWAP picks, a chapter-end variant, who settles under the hat next"
   guard: "a branch never closes another for good: the least likely keeps a floor of one in twenty, so a turned shelf can always bring it back"
+  form: "a branch is one line, ?what[on]{ =boon@side{ @where } =bane@side{ @where } }: what forks, what decides it, and where each side goes. Decided by the way, a reader takes a side whole; decided by the shelves, the land draws one place from the side, weighed. book/scripts/modules/forks.mjs reads it with the parser, and with a small reader the checks hold equal"
+  scheme: "?scheme[shelves]{ =bane@banewap{ @wind[bane, bonk] @tax[bane, bone] @relet[bane, bane] @march[bane, bonk, bonk] } } is the source of every scheme signature (valence-shelves.mjs SCHEME_FORK): each place names the shelves it leans on, once for each weight, comma-separated. Once a carry the lanes show the line that chose, his places ranked by what each weighed and the one drawn"
+  way: "every choice of the way is a fork drawn from way.json, written out as ?forks in reasons.spw by spw:way; a chapter end draws the forks that touch it under the forks trial, and a side can be taken there"
+  checked: "shelves:check (the scheme fork) and book:check (the way forks): each reads whole, the two readers agree, it writes back as itself, and a shelf word as a place, a side that goes nowhere or a frame without commas is refused"
 }
 
 ~chains{
@@ -77,3 +81,7 @@
   "Which branches carry signatures first: the schemes and the tellings are the cheapest"
   "Should a completed chain say its Spw aloud at the desk, or only in Structure mode"
 ]
+
+#proposed{
+  signatures_first: "Proposed 2026-11-13, for the maker to settle: the schemes carry signatures first, as one fork line whose places name their shelves (SCHEME_FORK); the tellings could follow, since each turning phrase is already a fork on the hour, with its variants as places once they have names"
+}

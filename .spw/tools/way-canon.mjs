@@ -9,6 +9,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { wayForks } from '../../book/scripts/modules/forks.mjs';
+import { TOTAL_CHAPTERS } from '../../book/scripts/modules/book-extent.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 /** @type {import('../../book/schema/book-types.mjs').WayData} */
@@ -41,8 +43,10 @@ Object.entries(way.chapters).forEach(([n, c]) => {
 });
 lines.push(']', '', '!company{');
 way.pairs.forEach((p) => lines.push(`  *${p.id}{ &who["${p.who.join(', ')}"] #name["${q(p.name)}"] #primes["${q(p.primes)}"] #why["${q(p.why)}"] #costs["${q(p.costs)}"] ${p.aside ? `!aside[${p.aside.join(', ')}] ` : ''}%swaps[${(p.rooms || []).reduce((sum, r) => sum + r.swaps.length, 0)}] }`));
-lines.push('}', '', '^held[');
+lines.push('}', '', '# Every choice of the way is also a fork: what forks, on what, and where each side goes (book/scripts/modules/forks.mjs).', '# boon leans forward, the book as it stands; bane leans inverse, the book turned from itself. Drawn at a chapter end under the forks trial.', '?forks[');
+wayForks(way, TOTAL_CHAPTERS).forEach((f) => lines.push(`  ${f.line}`));
+lines.push(']', '', '^held[');
 way.held.forEach((h) => lines.push(`  { &who["${h.who.join(', ')}"] #why["${q(h.why)}"] }`));
 lines.push(']', '');
 await writeFile(resolve(ROOT, '.spw/surfaces/reasons.spw'), lines.join('\n'));
-console.log(`[spw:way] ${Object.keys(way.chapters).length} chapters, ${way.pairs.length} pairings → .spw/surfaces/reasons.spw`);
+console.log(`[spw:way] ${Object.keys(way.chapters).length} chapters, ${way.pairs.length} pairings, ${wayForks(way, TOTAL_CHAPTERS).length} forks → .spw/surfaces/reasons.spw`);
