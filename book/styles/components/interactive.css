@@ -1283,3 +1283,10 @@ html[data-js-ready='true'] body::after {
     display: none;
   }
 }
+
+.is-sympathetic-ring {
+  outline: 2px solid color-mix(in srgb, var(--color-gold, #c4922e) 78%, transparent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gold, #c4922e) 20%, transparent);
+  transition: outline-color 0.25s ease, box-shadow 0.25s ease;
+}

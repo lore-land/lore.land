@@ -82,8 +82,8 @@
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0, harmonicTension: 0 };
-const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced' };
+const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0 };
+const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', patternMode: 'chapter', styleVoicing: '' };
 const swingTarget = () => {
   if (musical.swing === 'straight') return 0.5;
   if (musical.swing === 'lilt') return 0.58;
@@ -1575,15 +1575,24 @@ export function setSoundFeel(feel = 'written') {
   try { setHarmony(harmony.sigil); } catch { /* the room keeps its chord until the next */ }
 }
 
-/** Update musicality settings cluster: swing, voicing, motifCues, songSpace, mix. */
-export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix } = {}) {
+/** Update musicality settings cluster: swing, voicing, motifCues, songSpace, mix, plus optional creator style accents. */
+export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, styleVoicing, styleInterval, patternMode } = {}) {
   if (['chapter', 'straight', 'lilt', 'deep'].includes(swing)) musical.swing = swing;
   if (['folk', 'warm', 'bright', 'velvet'].includes(voicing)) musical.voicing = voicing;
   if (['off', 'room', 'board'].includes(motifCues)) musical.motifCues = motifCues;
   if (['natural', 'close', 'hall'].includes(songSpace)) musical.songSpace = songSpace;
   if (['balanced', 'music', 'ear'].includes(mix)) musical.mix = mix;
+  if (['folk', 'warm', 'bright', 'velvet', ''].includes(styleVoicing)) musical.styleVoicing = styleVoicing;
+  if (typeof patternMode === 'string' && patternMode) musical.patternMode = patternMode;
+  if (Number.isFinite(Number(styleInterval))) sound.styleInterval = clamp(Number(styleInterval), 0, 14);
   sound.swing = swingTarget();
   try { retimeSong(); } catch { /* retimed on next context */ }
+}
+
+/** Track the carrier's normalized position on the board (lane 0..4, row 0..3) so harmonic movement answers in pitch and stereo. */
+export function setBoardPosition({ lane = 2, row = 0 } = {}) {
+  sound.lane = clamp(Number(lane) || 0, 0, 4);
+  sound.row = clamp(Number(row) || 0, 0, 4);
 }
 
 /** Audition and interpret local board state via intentional chapter-motif intervals and harmonic tensions. */
@@ -1592,7 +1601,8 @@ export function setBoardHarmonicState({ tension = '', tensionLevel = 0 } = {}) {
   if (!pad.voices || !audio || audio.state !== 'running') return;
   try {
     const now = audio.currentTime;
-    const stretch = sound.jazz && tension === 'b9' ? 1 : sound.jazz && tension === 'sharp11' ? 6 : 0;
+    const norm = tension === '#11' ? 'sharp11' : tension;
+    const stretch = norm === 'b9' ? 1 : norm === 'sharp11' ? 6 : norm === 'sus4' ? 5 : 0;
     const topVoice = pad.voices[PAD_VOICES - 1];
     const topSemi = padNow()[PAD_VOICES - 1];
     if (topVoice && Number.isFinite(topSemi)) {
@@ -1602,20 +1612,27 @@ export function setBoardHarmonicState({ tension = '', tensionLevel = 0 } = {}) {
   } catch { /* pad stays steady */ }
 }
 
-/** Play a brief motif-derived directional or resolution cue interpreting local board state. */
-export function playBoardMotifCue({ action = 'steer', pan = 0, depth = 0.2, kind = 'clear', stepIndex = 0 } = {}) {
+/** Play a brief motif-derived directional, maneuver, tension, story, or resolution cue in the chapter's key. */
+export function playBoardMotifCue({ action = 'steer', pan = 0, depth = 0.2, kind = 'clear', tension = '#11', stepIndex = 0, degOffset = null } = {}) {
   try {
     if (!audio || audio.state !== 'running' || musical.motifCues === 'off') return;
     if (action === 'steer' && musical.motifCues !== 'board') return;
     const t = audio.currentTime + 0.008;
     const cueKey = `motif-cue:${action}:${kind}`;
     const heat = hear(cueKey, t);
-    if (heat === null || heat > 2.4) return;
+    if (heat === null || heat > 2.6) return;
     const s = sixteenth();
     const m = sound.motif?.length ? sound.motif : [0, 2, 4, 7, 4];
-    const base = fallen(m[stepIndex % m.length] ?? 0) + 12;
-    const k = kit(outlet(heat * 0.4, { depth, air: 0.34, song: 0.22, role: 'cue' }), t, clamp(pan, -1, 1) * 0.45);
-    const voice = musical.voicing === 'warm' ? k.vibes : musical.voicing === 'bright' ? k.celesta : k.kalimba;
+    const activeVoicing = musical.styleVoicing || musical.voicing;
+    const base = fallen(degOffset != null ? degOffset : (m[stepIndex % m.length] ?? 0)) + 12;
+    const k = kit(outlet(heat * 0.4, { depth, air: 0.34, song: 0.22, role: action === 'maneuver' ? 'music' : 'cue' }), t, clamp(pan, -1, 1) * 0.45);
+    const voice = activeVoicing === 'warm' ? k.vibes : activeVoicing === 'bright' ? k.celesta : activeVoicing === 'velvet' ? k.musicBox : k.kalimba;
+    if (action === 'tension') {
+      const interval = tension === 'b9' ? 1 : (tension === '#11' || tension === 'sharp11') ? 6 : 5;
+      voice(hz(base), 0.16, 0.024, 0, -0.1);
+      voice(hz(base + interval), 0.28, 0.028, s * 0.85, 0.12);
+      return;
+    }
     if (action === 'resolve') {
       const target = sound.jazz ? 14 : 12;
       voice(hz(base + (sound.jazz ? 1 : 0)), 0.14, 0.028, 0, -0.1);
@@ -1626,6 +1643,21 @@ export function playBoardMotifCue({ action = 'steer', pan = 0, depth = 0.2, kind
     if (action === 'pantry') {
       voice(hz(sungTone(2) + 12), 0.2, 0.024, 0, pan * 0.3);
       voice(hz(sungTone(4) + 12), 0.28, 0.02, s * 1.5, pan * 0.3);
+      return;
+    }
+    if (action === 'story') {
+      const degreeIdx = kind === 'room_cast' ? 4 : kind === 'word_ask' ? 5 : kind === 'word_feed' ? 3 : 2;
+      voice(hz(sungTone(degreeIdx) + 12), 0.24, 0.024, 0, pan * 0.3);
+      if (kind === 'room_cast' || kind === 'parallel') {
+        k.vibes(hz(sungTone(degreeIdx + 2) + 12), 0.38, 0.02, s * 1.4, -pan * 0.25);
+      }
+      return;
+    }
+    if (action === 'maneuver') {
+      const laneInterval = [0, 2, 4, 7, 9][clamp(sound.lane, 0, 4)] ?? 4;
+      const climbLift = sound.row * 2;
+      const note = fallen(laneInterval + (kind === 'climb_up' ? 5 : kind === 'climb_down' ? -2 : 0)) + climbLift;
+      voice(hz(note), 0.14, 0.018, 0, pan * 0.4);
       return;
     }
     // Directional steer / height cue shaped by the chapter's motif.
@@ -1732,26 +1764,93 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
     const t = audio.currentTime + 0.005;
     const heat = hear(kind, t);
     if (heat === null) return;
-    const role = kind === 'step' ? 'step' : ['catch', 'deft', 'berry', 'sweet', 'pantry', 'recipe', 'poise'].includes(kind) ? 'music' : 'fx';
+    const role = ['step', 'climb', 'bump', 'slide'].includes(kind)
+      ? 'step'
+      : ['catch', 'deft', 'berry', 'sweet', 'pantry', 'recipe', 'poise', 'aim', 'story_word', 'story_mark', 'story_feed', 'story_ask', 'room_cast'].includes(kind)
+        ? 'music'
+        : 'fx';
     const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock, sample } = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2, song: SONG[kind] || 0, role }), t, pan + jitter(0.04));
     const answer = toPulse(t);
     const s32 = sixteenth() / 2;
-    const voiceLead = musical.voicing === 'warm' ? vibes : musical.voicing === 'bright' ? musicBox : musical.voicing === 'velvet' ? kalimba : celesta;
+    const activeVoicing = musical.styleVoicing || musical.voicing;
+    const voiceLead = activeVoicing === 'warm' ? vibes : activeVoicing === 'bright' ? musicBox : activeVoicing === 'velvet' ? kalimba : celesta;
     switch (kind) {
-      // Footsteps know the ground: a brush of grass in the field, a tick of cobble in the city; left and right differ.
-      case 'step':
+      // Footsteps know the ground: a brush of grass in the field, a tick of cobble in the city; left and right differ,
+      // and when music or motif cues are active, lateral movement lightly traces a pentatonic contour across the lanes.
+      case 'step': {
+        const dir = typeof param === 'object' && param ? (Number(param.dir) || 1) : (Number(param) || 1);
+        const lane = typeof param === 'object' && param && param.lane != null ? clamp(Number(param.lane), 0, 4) : sound.lane;
+        const row = typeof param === 'object' && param && param.row != null ? clamp(Number(param.row), 0, 4) : sound.row;
         // A chosen texture (=steps[…]): each still says which way, left and right a step apart.
-        if (textures.steps === 'tiptoe') { pluck(hz(sungTone(param > 0 ? 2 : 1)), 0.036); break; }
-        if (textures.steps === 'felt') { tone('sine', param > 0 ? 96 : 88, 60, 0.06, 0.032, 0, { attack: 0.006, cents: 0 }); hiss(500, 300, 0.05, 0.012, 0.7, 0, 'lowpass'); break; }
-        if (textures.steps === 'wood') { tock(param > 0 ? 760 : 680, param > 0 ? 560 : 500, 0.042); break; }
-        if (sound.ground === 'field') {
+        if (textures.steps === 'tiptoe') pluck(hz(sungTone(dir > 0 ? 2 : 1)), 0.036);
+        else if (textures.steps === 'felt') { tone('sine', dir > 0 ? 96 : 88, 60, 0.06, 0.032, 0, { attack: 0.006, cents: 0 }); hiss(500, 300, 0.05, 0.012, 0.7, 0, 'lowpass'); }
+        else if (textures.steps === 'wood') tock(dir > 0 ? 760 : 680, dir > 0 ? 560 : 500, 0.042);
+        else if (sound.ground === 'field') {
           if (!sample('step-field')) {
-            hiss(1400 + (param > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 });
+            hiss(1400 + (dir > 0 ? 220 : 0), 650, 0.06, 0.045, 1.1); tone('sine', 118, 70, 0.05, 0.035, 0, { cents: 40 });
           }
         } else if (!sample('step-city')) {
-          tone('triangle', 150 + (param > 0 ? 14 : 0), 72, 0.04, 0.05, 0, { attack: 0.003, cents: 40 }); hiss(2800, 2000, 0.022, 0.024, 2.5);
+          tone('triangle', 150 + (dir > 0 ? 14 : 0), 72, 0.04, 0.05, 0, { attack: 0.003, cents: 40 }); hiss(2800, 2000, 0.022, 0.024, 2.5);
+        }
+        if (musical.motifCues !== 'off') {
+          const laneDeg = [0, 2, 4, 5, 7][lane] ?? 2;
+          const noteSemi = fallen(laneDeg + row * 2);
+          kalimba(hz(noteSemi), 0.13, 0.014, s32 * 0.5);
         }
         break;
+      }
+      // Advancing or retreating along the rows: climbing up lifts a fourth in anticipation; stepping back settles.
+      case 'climb': {
+        const dir = typeof param === 'object' && param ? (Number(param.dir) || 1) : (Number(param) || 1);
+        const row = typeof param === 'object' && param && param.row != null ? clamp(Number(param.row), 0, 4) : sound.row;
+        const baseSemi = fallen(row * 2);
+        const targetSemi = dir > 0 ? baseSemi + 5 : Math.max(-5, baseSemi - 2);
+        if (sound.ground === 'field') hiss(1200 + (dir > 0 ? 400 : 0), 500, 0.055, 0.03, 1.2);
+        else tock(dir > 0 ? 640 + row * 40 : 520, 440, 0.028);
+        voiceLead(hz(baseSemi + 12), 0.11, 0.016, 0);
+        voiceLead(hz(targetSemi + 12), 0.16, 0.019, s32 * 0.85);
+        break;
+      }
+      // Sliding across frost: crystalline slip shimmer in key.
+      case 'slide':
+        hiss(3400, 5600, 0.16, 0.028, 3.2, 0, 'bandpass', 0.25);
+        tone('sine', hz(sungTone(4) + 12), hz(sungTone(6) + 12), 0.14, 0.024, 0, { cents: 15 });
+        break;
+      // Bumping a lane or row boundary: hollow wood guardrail thud.
+      case 'bump':
+        tock(240, 170, 0.045);
+        tone('triangle', 120, 74, 0.07, 0.035, 0, { attack: 0.002 });
+        break;
+      // Aiming the slice needle: quiet scaled tick that blooms into a harmonic lock when aligned with a target.
+      case 'aim': {
+        const info = typeof param === 'object' && param ? param : { angle: Number(param) || 0 };
+        const idx = clamp(Math.round((info.angle + 0.65) * 4), 0, 6);
+        tock(880 + idx * 55, 620 + idx * 35, 0.014);
+        voiceLead(hz(sungTone(idx) + 12), info.locked ? 0.22 : 0.09, info.locked ? 0.024 : 0.011, 0);
+        if (info.locked) celesta(hz(sungTone(idx + 2) + 12), 0.26, 0.018, s32);
+        break;
+      }
+      // Story road words & room casts: quiet musical punctuation grounded in the passing passage's room key.
+      case 'story_word':
+        kalimba(hz(sungTone(sound.lane % 5)), 0.12, 0.012, 0);
+        break;
+      case 'story_mark':
+        voiceLead(hz(sungTone(3) + 12), 0.2, 0.024, 0);
+        voiceLead(hz(sungTone(5) + 12), 0.24, 0.02, answer);
+        break;
+      case 'story_feed':
+        vibes(hz(sungTone(2) + 12), 0.28, 0.026, 0);
+        vibes(hz(sungTone(4) + 12), 0.34, 0.022, s32);
+        break;
+      case 'story_ask':
+        musicBox(hz(sungTone(4) + 12), 0.26, 0.024, 0);
+        musicBox(hz(sungTone(6) + 12), 0.34, 0.022, s32 * 1.4);
+        break;
+      case 'room_cast': {
+        [0, 2, 4, 7].forEach((semi, idx) => voiceLead(hz(fallen(semi) + 12), 0.36 + idx * 0.08, 0.026, idx * s32, (idx - 1.5) * 0.14));
+        marimba(hz(bassLow()), 0.4, 0.06, 0);
+        break;
+      }
       // A catch: the line's next note answered on the pulse, with warm wood body & jazz enclosure.
       case 'catch': {
         const a = nextNote(t);

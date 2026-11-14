@@ -8,9 +8,10 @@ import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_13.B';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_13.B';
 import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip, describeLikeness } from '../modules/likeness.mjs?v=2026_11_11.A';
 import { wonderLine, explainThing, shelfLine, readShelfLine, compareShelves, sealedByWorkbench, benchCanon, wordOf, SHELF_LABEL, mirrored, markHoles, sayLinesIn } from '../modules/kept-lines.mjs?v=2026_11_13.B';
+import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -660,6 +661,8 @@ function initBench(data) {
     const list = readCombines().filter((item) => item.expr !== current.expr);
     list.unshift({ ...current, at: new Date().toISOString().slice(0, 10) });
     writeCombines(list);
+    noteSpark('sympathetic_almanac', { expr: current.expr, combines: list.length });
+    syncDerivedSparks();
     paintKept();
   });
   $('[data-kept]').addEventListener('click', (event) => {
@@ -705,3 +708,5 @@ loadLikeness().then(() => {
   placeAtlasStrips();
   requestAnimationFrame(landOnHash);
 });
+syncDerivedSparks();
+bindSiteResonance({ root: document, context: 'almanac' });

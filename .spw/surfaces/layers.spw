@@ -100,6 +100,8 @@
   register_combination: { layer: bias, premium: unlock, where: "spw-bias.mjs readBias (combination true); chosen at the desk, unlocks.mjs two_registers", note: "several bias spells layered, the later asked first; any number from a link or a paste, two chosen at the desk once unlocked" }
   rhythm_groove: { layer: reader, premium: unlock, where: "pie-rhythm.mjs groove, unlocks.mjs groove", note: "rhythms found in the lanes play under every carry; unlocked by the first one found" }
   in_the_pocket: { layer: reader, premium: unlock, where: "pie-rhythm.mjs pocket, unlocks.mjs in_the_pocket", note: "moves on the beat of a chapter found rhythm lean toward low magic" }
+  sympathetic_strings: { layer: reader, premium: unlock, where: "intrinsic-rewards.mjs, unlocks.mjs sympathetic_strings", note: "words underfoot, chapter sigils and kept wonders answer softly in key across the site" }
+  parallel_glass: { layer: reader, premium: unlock, where: "pie-values.mjs, unlocks.mjs parallel_glass", note: "shows how parallel values and another carrier meet the same chapter and room" }
   unlock_pages: { layer: ground, premium: never, where: "pie/unlocks/, build-unlocks.mjs", note: "every mechanic says what it does, how it unlocks and what nobody loses, for anyone" }
   own_registers: { layer: bias, premium: unlock, where: "next", note: "registers a reader or a table writes, read by the parser before anyone sees them" }
   kept_registers: { layer: bias, premium: unlock, where: "next", note: "registers and combinations kept past the visit and synced, as a Spw card the reader can read before it goes anywhere" }

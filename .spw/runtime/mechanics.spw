@@ -16,6 +16,7 @@
   *wonders{ #says["wonders kept in the almanac"] ~"lore.almanac.v1" }
   *cards{ #says["cards turned"] ~"lore.cards.v1" }
   *rhythms{ #says["rhythms found in the lanes"] ~"lore.pie.rhythms.v1" }
+  *casts{ #says["rooms cast in the lanes"] ~"lore.rooms.cast.v1" }
   *carries{ #says["carries finished"] %cap[12] ~"lore.pie.v1" }
 }
 
@@ -23,4 +24,6 @@
   *two_registers{ #name["Two registers at once"] #says["Choose two registers at the desk and the lanes answer in both, the later one asked first."] %unlock[8] %weigh{ %rooms[1] %wonders[1] %rhythms[2] %carries[0.5] } &before[open] .page["two-registers"] #floor["One register for a visit is free, always, and a link with two still plays both."] ~"/pie/#pie-bias" }
   *groove{ #name["The rhythm groove"] #says["Rhythms you have found play softly under every carry."] %unlock[1] %weigh{ %rhythms[1] } &before[open] .page["groove"] #floor["Every carry keeps its own sound; the groove only adds what you found."] ~"/pie/" }
   *in_the_pocket{ #name["In the pocket"] #says["Steps, hops and throws on the beat of a chapter's found rhythm count a little toward low magic."] %unlock[4] %weigh{ %rhythms[2] %rooms[0.5] %carries[0.25] } &before[locked] .page["in-the-pocket"] #floor["Every other way to score stays as it was; the pocket only adds."] ~"/pie/" }
+  *sympathetic_strings{ #name["Sympathetic strings"] #says["Words underfoot, chapter sigils and kept wonders answer softly in the room's key when touched."] %unlock[6] %weigh{ %rooms[1] %wonders[1] %casts[1.5] %rhythms[1] } &before[open] .page["sympathetic-strings"] #floor["Reading and carrying stay plain and free; sympathetic strings only add a musical answer."] ~"/almanac/" }
+  *parallel_glass{ #name["The parallel glass"] #says["See how another set of play values and another carrier would have met the same chapter and room."] %unlock[5] %weigh{ %carries[1] %cards[0.5] %casts[1] %rooms[0.5] } &before[open] .page["parallel-glass"] #floor["Every carry keeps its own outcome; the parallel glass only lets you wonder otherwise."] ~"/pie/" }
 }

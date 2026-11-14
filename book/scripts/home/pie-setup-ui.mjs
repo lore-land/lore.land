@@ -4,7 +4,7 @@
  */
 import { crossRead, fuzz, stressReport } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_13.B';
 import { SEASONS, SEASON_SAYS, standing as seasonStanding, letGo as letGoKept } from './pie-seasons.mjs?v=2026_11_12.A';
 
 /**

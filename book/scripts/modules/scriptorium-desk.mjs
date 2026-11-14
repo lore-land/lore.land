@@ -19,7 +19,7 @@
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
 import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_13.B';
 import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_09.L';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_12.A';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_13.B';
 import { BINDINGS } from './reading-nook.mjs?v=2026_11_09.L';
 import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_09.L';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
@@ -31,6 +31,7 @@ import { mergeBoard } from './spw-formulas.mjs?v=2026_11_13.B';
 import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_13.B';
 import { noteCrossing } from './trope-reveal.mjs?v=2026_11_13.B';
 import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_13.B';
+import { bindSiteResonance, curiosityStanding, syncDerivedSparks } from './intrinsic-rewards.mjs';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -802,7 +803,12 @@ export async function initScriptoriumDesk() {
       ['desk-new', '?', 'New'], ['desk-slip', '^', 'Slip'], ['desk-room', '=', 'Room'], ['desk-spellbook', '$', 'Spells']]
       .map(([id, op, label]) => el('a', { href: `#${id}` }, el('span', { className: 'desk-index-sigil', 'aria-hidden': 'true' }, op), label)));
 
-  mount.replaceChildren(slate, hint, reply, index, grid);
+  syncDerivedSparks();
+  const destroyResonance = bindSiteResonance({ root: mount, context: 'scriptorium' });
+  const sparksNow = curiosityStanding();
+  const sparkNote = el('p', { className: 'desk-quiet' }, `${sparksNow.count}/${sparksNow.total} curiosity sparks awakened across chapters, almanac, and lanes.`);
+
+  mount.replaceChildren(slate, hint, reply, index, grid, sparkNote);
   mount.dataset.ready = 'true';
   // A line passed along (?cast=): cast as if written here. It is read and answered; nothing is heard until pressed.
   try {
@@ -810,7 +816,10 @@ export async function initScriptoriumDesk() {
     if (passed) { input.value = passed; cast(passed); }
   } catch { /* no line in the address */ }
 
-  return () => document.removeEventListener('keydown', onSlash);
+  return () => {
+    document.removeEventListener('keydown', onSlash);
+    destroyResonance?.();
+  };
 }
 
 if (typeof document !== 'undefined') {

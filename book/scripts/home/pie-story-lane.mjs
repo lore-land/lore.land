@@ -10,7 +10,7 @@ import { CAPTION, captionsOf, captionSeconds, skipAhead } from './pie-pacing.mjs
  */
 export function initStoryLane({
   getCtx, W, H, record, getPanelPlan, reduced, getColors, mix, getFlowProse,
-  getRun, getState, getGlassFoot, airborne, inLaneOf, lean,
+  getRun, getState, getGlassFoot, airborne, inLaneOf, lean, onStoryKeep,
   showToast, sfx, say, reactionsOn, react, meanwhile
 }) {
   const laneStory = { para: -1, sentences: [], terms: new Set(), at: -1, shownAt: 0, capQ: [], cap: '', capAt: 0, capHeld: 0, stepT: 0, shown: 0, skipped: 0, roadQ: [] };
@@ -164,6 +164,9 @@ export function initStoryLane({
     if (!clean) return;
     run.found = run.found || [];
     run.found.push(clean.toLowerCase());
+    if (how === 'marked') sfx('story_mark', 0, rw.x, rw.y);
+    else if (how === 'fed') sfx('story_feed', 0, rw.x, rw.y);
+    try { onStoryKeep?.({ word: clean, how, foundCount: run.found.length }); } catch { /* optional */ }
     run.tags.push({ x: rw.x, y: rw.y - 18, t: 0, text: `${{ read: 'READ', marked: 'MARKED', fed: 'FED' }[how] || 'KEPT'}: ${clean.toUpperCase()}` });
     if (run.found.length % 5 === 0) {
       const line = run.found.slice(-5).join(' ');
@@ -171,6 +174,7 @@ export function initStoryLane({
       run.foundLines.push(line);
       showToast('A found line', `«${line}» — taken from the road, word by word.`, 3600, 'wonder', 2);
       sfx('wonder', 'saying', rw.x, rw.y);
+      try { onStoryKeep?.({ word: clean, how, foundLine: line, foundCount: run.found.length }); } catch { /* optional */ }
       run.aura = Math.min(1, run.aura + 0.05);
       run.wobble = Math.max(0, run.wobble - 0.08);
     }
@@ -179,6 +183,8 @@ export function initStoryLane({
   function tellWord(rw) {
     const clean = rw.word.replace(/[^\p{L}\p{N}'’ -]/gu, '');
     rw.asked = true;
+    sfx('story_ask', 0, rw.x, rw.y);
+    try { onStoryKeep?.({ word: clean, how: 'asked' }); } catch { /* optional */ }
     showToast(`“${clean}”`, rw.sentence ? `On the road from: ${rw.sentence}` : 'A word of the passage, on the road.', 4200, '');
     say(`${clean}. From the passage: ${rw.sentence || clean}`);
   }
@@ -190,7 +196,10 @@ export function initStoryLane({
     run.roadWords.forEach((rw) => {
       rw.y += run.speed * dt;
       if (!grounded || Math.abs(rw.y - (run.y + 10)) >= 13 || Math.abs(rw.x - run.x) >= rw.w / 2 + 12) return;
-      rw.trod = true;
+      if (!rw.trod) {
+        rw.trod = true;
+        if (!rw.glow) sfx('story_word', 0, rw.x, rw.y);
+      }
       // A glowing word underfoot, on the ground (not in a hop), is read.
       if (rw.glow && !rw.read) {
         rw.read = true;

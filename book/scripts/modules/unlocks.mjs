@@ -98,6 +98,7 @@ const count = (v) => (Array.isArray(v) ? v.length : v && typeof v === 'object' ?
 export function measuresNow() {
   const ls = local();
   const rooms = Object.values(readJSON(ls, 'lore.rooms.v1', {}) || {}).reduce((sum, list) => sum + count(list), 0);
+  const casts = Object.values(readJSON(ls, 'lore.rooms.cast.v1', {}) || {}).reduce((sum, map) => sum + count(map), 0);
   const pie = readJSON(ls, 'lore.pie.v1', {}) || {};
   const cards = new Set([...Object.keys(readJSON(ls, 'lore.cards.v1', {}) || {}), ...(Array.isArray(pie.cards) ? pie.cards : [])]);
   return {
@@ -105,6 +106,7 @@ export function measuresNow() {
     wonders: count(readJSON(ls, 'lore.almanac.v1', {})),
     cards: cards.size,
     rhythms: count(readJSON(ls, 'lore.pie.rhythms.v1', {})),
+    casts,
     carries: Number(pie.runs) || 0
   };
 }

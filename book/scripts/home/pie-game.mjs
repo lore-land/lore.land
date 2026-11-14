@@ -182,15 +182,19 @@ import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, d
 import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
 import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_13.B';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_13.B';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
-import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue } from './pie-sound.mjs?v=2026_11_13.B';
+import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue, setBoardPosition } from './pie-sound.mjs?v=2026_11_13.B';
 import { shelfColor, chainSting, tropeMotif, cadenceVoice, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample } from './pie-sound.mjs?v=2026_11_13.B';
+import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuningDomains, writeTuningDomains, effectiveDomain } from '../modules/pie-tuning.mjs';
+import { VALUE_DEFS, VALUE_IDS, newValueState, noteValueEvent, rankValues, valueBlessing, parallelReflection, recordChapterParallel, readChapterParallels } from '../modules/pie-values.mjs';
+import { BUILTIN_STYLES, parseCreatorStyle, formatCreatorStyle, allCreatorStyles, saveCreatorStyle, activeCreatorStyle, setActiveCreatorStyle, styleLineForProvenance } from '../modules/creator-styles.mjs';
+import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs';
 import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_13.B';
 import { loadMotifs } from './pie-tropes.mjs';
 import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_13.B';
-import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_09.L';
+import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_13.B';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
@@ -205,9 +209,9 @@ import { meet as meetCallback, saving as callbacksSaving, wordsOf as callbackWor
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
-import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.A';
+import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.B';
 import { initPieDraw } from './pie-draw.mjs?v=2026_11_13.B';
-import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_13.A';
+import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_13.B';
 import { FINDS, HAGGLE_BEATS, readFind, deedOf, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.B';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
 import { BIAS_EVENT, initBiasFromURL, loadRegisters, warmBiasParser, biased, setBias, readBias, activeBias, biasLayerNote, biasLink, writeBias } from '../modules/spw-bias.mjs?v=2026_11_09.L';
@@ -897,10 +901,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return 1;
   })();
   let chosenStartChapter = firstChapter;
+  let audioTropes = { patterns: {}, timbres: {}, bindings: {} };
+  let tuningDomains = parseTuningDomains(visitSpells());
+  let chosenIntention = '';
+  let creatorStyle = activeCreatorStyle();
+  const domainTune = (domainId) => effectiveDomain(domainId, tuningDomains);
   const fresh = (carrier = drawCarrierLot(), startChap = chosenStartChapter) => ({
     heardThemes: [],
     carrier,
     charm: activeCombine(),
+    values: newValueState(chosenIntention),
+    intention: chosenIntention,
+    style: creatorStyle,
+    cleanSteps: 0,
+    stepBeat: 0,
     strokes: Object.keys(readSightings()).length,
     waps: 0,
     bursts: [],
@@ -1034,7 +1048,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const fedBonus = run.fed > 0 ? 1.25 : 1;   // a boneberry meal: steadier on your feet
     // Rooms read in this chapter: the pie knows the way here (up to a third steadier).
     const knownBonus = 1 + Math.min(0.32, roomsReadIn(run.chapter) * 0.04);
-    return run.carrier.settle * figureBonus * charmBonus * fedBonus * knownBonus;
+    const tunePoise = domainTune('arcs').recovery_grace || 1;
+    return run.carrier.settle * figureBonus * charmBonus * fedBonus * knownBonus * Number(tunePoise);
   };
   const spawnRing = (x, y, maxR = 28, color = colors.gold, dur = 0.55, dashed = false) => {
     if (!reduced?.matches && run) run.rings.push({ x, y, r: 4, maxR, t: 0, dur, color, dashed });
@@ -1084,6 +1099,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const leanWord = (event) => LEAN_WORDS[event] || FIND_WORDS[event] || event.replace(/_/g, ' ');
   const lean = (event, n = 1) => {
     if (!run?.tally) return;
+    noteValueEvent(run.values, event, n);
     const [cat, w] = leanRow(event);
     if (!cat) return;
     tally(cat, w * n);
@@ -1273,6 +1289,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.roomsCast[r.sigil] = (record.roomsCast[r.sigil] || 0) + (isNew ? 1 : 0);
     writeRecord(record);
     lean('cast');
+    sfx('room_cast', r.n);
+    playBoardMotifCue({ action: 'story', kind: 'room_cast', motif: r.sigil });
+    noteSpark('room_cast', { chapter: r.chapter, room: r.n, verb: play.verb });
     run.tags.push({ x: run.x, y: run.y - 120, t: 0, text: `ROOM ${r.n} CAST: ${play.verb.toUpperCase()}` });
     impact('combo', W / 2, 150, { scale: 0.7, word: `${r.sigil} ${play.verb.toUpperCase()}!` });
     showToast(`Room ${r.n} cast · ${play.verb}`, `${r.sig}${r.title ? ` — ${r.title}` : ''}. ${isNew ? 'Kept on the chapter page, beside the room.' : 'Cast again.'}`, 3200, 'wonder', 2);
@@ -1834,7 +1853,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     say,
     reactionsOn,
     react,
-    meanwhile
+    meanwhile,
+    onStoryKeep: ({ kind, phrase, word } = {}) => {
+      if (run?.values) noteValueEvent(run.values, kind === 'foundLine' ? 'kept' : 'read', 1);
+      noteSpark('word_weaver', { kind, phrase, word });
+      syncDerivedSparks();
+    }
   });
 
   let paintPortraits, paintStress, keepProvenance, paintProvenance;
@@ -1888,9 +1912,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const open = Object.entries(MINIS).filter(([, m]) => m.from <= run.chapter || run.lap > 0).map(([k]) => k);
     const which = id && MINIS[id] ? id : pick(open.length ? open : ['alley']);
     const m = MINIS[which];
-    run.mini = { id: which, t: 0, dur: m.dur * TUNE.mini_dur, score: 0, side: pick([-1, 1]), next: 0.3 };
+    const miniTune = domainTune('minis');
+    const tempoMul = Number(miniTune.mini_tempo) || 1;
+    run.mini = { id: which, t: 0, dur: m.dur * TUNE.mini_dur * (1 / Math.max(0.5, tempoMul)), score: 0, side: pick([-1, 1]), next: 0.3 };
     impact('horn', W / 2, 150, { scale: 1.3, word: m.word });
     sfx('wonder', 'contrivance');
+    playBoardMotifCue({ action: 'story', kind: 'minigame', lane: run.lane, row: run.row });
     showToast(m.title, m.line, 3200, 'wonder');
     say(`${m.title}. ${m.line}`);
     turnCard('horn');
@@ -2041,7 +2068,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const material = sceneWhimsy(id).material;
     if (!record.sound || !material) return;
     if (placesOn()) { sceneMaterial(material, 0, { after }); return; }
-    import('../modules/spw-sound.mjs?v=2026_11_12.A').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
+    import('../modules/spw-sound.mjs?v=2026_11_13.B').then((m) => m.playSpell(`$${material}`, { tempo: 70 })).catch(() => {});
   }
   const drawWhimsy = () => {
     if (!run) return;
@@ -2572,6 +2599,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (next === run.lane) {
       run.wobble = Math.min(1, run.wobble + 0.08); // bumping the edge of the lane jostles it a little
       run.tiltDir = clamp(run.tiltDir + dir * 0.45, -1, 1);
+      setBoardPosition({ lane: run.lane, row: run.row, lanes: LANES, rows: ROWS });
+      sfx('bump', dir);
+      playBoardMotifCue({ action: 'maneuver', kind: 'bump', lane: run.lane, row: run.row, dir });
       return;
     }
     if (slid) {
@@ -2606,7 +2636,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return;
     }
     run.tiltDir = clamp(run.tiltDir * 0.55 + dir * 0.55, -1, 1);
-    sfx('step', dir);
+    setBoardPosition({ lane: run.lane, row: run.row, lanes: LANES, rows: ROWS });
+    sfx(slid ? 'slide' : 'step', { dir, lane: run.lane, row: run.row });
+    run.stepBeat = ((run.stepBeat || 0) + 1) % 16;
+    run.cleanSteps = (run.cleanSteps || 0) + 1;
+    if (run.cleanSteps === 18) noteSpark('quiet_stretch', { chapter: run.chapter });
+    if (slid || patternStep(String(domainTune('characters').pattern_mode || 'euclid'), run.stepBeat).active) {
+      playBoardMotifCue({ action: 'maneuver', kind: slid ? 'slide' : 'step', lane: run.lane, row: run.row, dir });
+    }
     heardAct('step');
     const diagonal = run.t - (run.lastClimb ?? -9) < 0.26 ? 0.6 : 1;
     jostle((swung.swung ? 0.55 : 1) * diagonal);
@@ -2626,6 +2663,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const next = clamp(run.row + dir, 0, ROWS - 1);
     if (next === run.row) {
       run.wobble = Math.min(1, run.wobble + 0.06);
+      setBoardPosition({ lane: run.lane, row: run.row, lanes: LANES, rows: ROWS });
+      sfx('bump', dir);
+      playBoardMotifCue({ action: 'maneuver', kind: 'bump', lane: run.lane, row: run.row, dir });
       return;
     }
     const swung = noteSwungManeuver('climb');
@@ -2635,7 +2675,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.row = next;
     run.moveYT = 0;
     run.stillT = 0;
-    sfx('step', dir);
+    setBoardPosition({ lane: run.lane, row: run.row, lanes: LANES, rows: ROWS });
+    sfx('climb', { dir, lane: run.lane, row: run.row });
+    run.stepBeat = ((run.stepBeat || 0) + 1) % 16;
+    run.cleanSteps = (run.cleanSteps || 0) + 1;
+    if (run.cleanSteps === 18) noteSpark('quiet_stretch', { chapter: run.chapter });
+    playBoardMotifCue({ action: 'maneuver', kind: 'climb', lane: run.lane, row: run.row, dir });
     heardAct('step');
     jostle(0.8 * diagonal * (swung.swung ? 0.55 : 1));
   };
@@ -2742,6 +2787,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!run) return;
     run.aim.a = clamp(run.aim.a + dir * TUNE.aim_step * (run.carrier.id === 'figure' ? 0.7 : 1), -AIM_MAX, AIM_MAX);
     run.aimFocusT = 0.9;   // the carrier's face narrows to the needle
+    sfx('aim', { dir, locked: Boolean(sighted(run.aim.a)) });
   };
   const whole = () => run.aura >= SLICE_COST && run.filling >= SLICE_COST;   // both ingredients on hand
   /* The pies grow with the aura: plenty of flour and boonberries make a bigger slice, and a more satisfying one. */
@@ -3651,6 +3697,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       li.append(b);
       grid.append(li);
     });
+    const rankedVals = rankValues(run.values);
+    const blessing = valueBlessing(run.values);
+    const leanName = run.tally ? describeLean({ boon: 1 + run.tally.boon, bane: 1 + run.tally.bane, bone: 1 + run.tally.bone }) : '';
+    const leanKind = !run.tally ? 'boon' : (run.tally.bane >= run.tally.boon && run.tally.bane >= run.tally.bone ? 'bane' : run.tally.bone >= run.tally.boon ? 'bone' : 'boon');
+    const parallel = parallelReflection({ chapter: run.chapter, carrier: run.carrier.id, state: run.values, lean: leanKind });
+    const reflectBox = nodeOf('div', 'pie-values-reflect');
+    const activeStyleNow = run.style || creatorStyle;
+    const styleNote = styleLineForProvenance(activeStyleNow) || `@style[@${activeStyleNow.handle}]{ #name["${activeStyleNow.name}"] }`;
+    reflectBox.append(
+      nodeOf('p', 'pie-values-head', `What this carry valued${run.intention && VALUE_DEFS[run.intention] ? ` · held beside ${VALUE_DEFS[run.intention].name.toLowerCase()}` : ''}: ${rankedVals.primary.def.name}`),
+      nodeOf('p', 'pie-values-blessing', rankedVals.primary.def.blessing || ''),
+      nodeOf('p', 'pie-values-style', `${styleNote}${leanName ? ` · chapter ${leanName}` : ''}`),
+      nodeOf('p', 'pie-values-parallel', parallel.line)
+    );
+    void blessing;
     const spell = lastProvenance ? renderSpell(lastProvenance, { cast: true, play: true, copy: 'lore.land/pie#carry', label: 'This carry, as Spw' }) : null;
     const copy = nodeOf('button', 'pie-tool', '⧉ Copy as a prompt');
     copy.type = 'button';
@@ -3661,6 +3722,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       nodeOf('p', 'pie-flow-head', 'The carry, inspected'),
       nodeOf('p', 'pie-ach-lede', `${chapterWords(run.chapter)}, under ${run.carrier.name}. Tap any of these for what it is and how it counted.`),
       grid, detail,
+      reflectBox,
       ...(spell ? [nodeOf('p', 'pie-ach-sub', 'The carry, as Spw: read back by the parser, kept with the provenance cards.'), spell] : []),
       (() => { const p = nodeOf('p', 'pie-ach-actions'); p.append(copy); return p; })(), status
     );
@@ -3887,6 +3949,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const worn = tropeOfKind.get(`carrier-${run.carrier.id}`);
     if (worn) tropeMet(worn);
     const lean = describeLean({ boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone });
+    const topVal = rankValues(run.values).primary.id;
+    recordChapterParallel(n, { value: topVal, carrier: run.carrier.id, lean, style: run.style?.handle || creatorStyle.handle });
+    if (Object.keys(readChapterParallels()).length >= 2) noteSpark('parallel_pilgrim', { chapter: n, value: topVal });
     run.outcomes.push({ n, outcome, lean });
     if (outcome === 'won') return `Mimes Against WAP take ${chapterWords(n)}: it will be harder to wonder about pie there until you win it back.`;
     if (outcome === 'back') return `${chapterWords(n)} won back from the mimes: its pie words come back.`;
@@ -4071,6 +4136,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     record.kept = (record.kept || 0) + run.kept;
     record.shared = (record.shared || 0) + run.shared;
     record.sweetened = (record.sweetened || 0) + run.sweetened;
+    const topVal = rankValues(run.values).primary.id;
+    recordChapterParallel(run.chapter, {
+      value: topVal,
+      carrier: run.carrier.id,
+      lean: describeLean({ boon: 1 + run.tally.boon, bane: 1 + run.tally.bane, bone: 1 + run.tally.bone }),
+      style: (run.style || creatorStyle).handle
+    });
+    if ((run.style || creatorStyle).id !== 'house') noteSpark('creator_hand', { handle: (run.style || creatorStyle).handle });
+    if (Object.keys(readChapterParallels()).length >= 2) noteSpark('parallel_pilgrim', { chapter: run.chapter, value: topVal });
+    syncDerivedSparks();
     // The carry, written back as Spw: how this pie came to be where it spilled (pie-powers.mjs).
     keepProvenance(lastProvenance = carryProvenance({
       date: new Date().toISOString().slice(0, 10),
@@ -4245,6 +4320,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     run.wobble = Math.min(1.2, run.wobble + tilt);
     run.stillT = 0;
+    run.cleanSteps = 0;
     run.tiltDir = clamp(run.tiltDir + (thing.x < run.x ? 0.65 : -0.65), -1, 1);
     // A knock turns the carrier, and the needle turns with them, away from what hit.
     if (!(run.aimLock > 0)) run.aim.a = clamp(run.aim.a + (thing.x < run.x ? TUNE.knock_swing : -TUNE.knock_swing), -AIM_MAX, AIM_MAX);
@@ -4326,6 +4402,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       sprites: { ...(bookRules?.whimsy || {}), ...(visitRead?.whimsy || {}) },
       scenes: { ...(bookRules?.scenes || {}), ...(visitRead?.scenes || {}) }
     };
+    tuningDomains = parseTuningDomains(visitSpells());
   };
   const readVisit = async () => { visitRead = visitSpells() ? await readRules(visitSpells()) : null; compose(); };
   // The rules are read by the real parser (650 KB): it loads when someone first reaches for the game (a touch, a
@@ -4338,6 +4415,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   whenQuiet(async () => {
     bookRules = await loadRules();
+    loadAudioTropes().then((tropes) => { audioTropes = tropes; }).catch(() => {});
     await readVisit();
     paintBench?.();
     paintStress?.();
@@ -4797,14 +4875,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     const t = run.tally;
     const ahead = mawAhead();
-    const key = ['live', t.boon, t.bane, t.bone, t.wap, t.maw, t.mawSeen, ahead, run.chapter, run.carrier.id, run.strokes].map((v) => (typeof v === 'number' ? Math.round(v * 2) : v)).join('|');
+    const topVal = run.values ? rankValues(run.values).primary : null;
+    const styleNow = run.style || creatorStyle;
+    const key = ['live', t.boon, t.bane, t.bone, t.wap, t.maw, t.mawSeen, ahead, run.chapter, run.carrier.id, run.strokes, topVal?.id, topVal?.score, styleNow?.handle].map((v) => (typeof v === 'number' ? Math.round(v * 2) : v)).join('|');
     if (key === nowKey) return;
     nowKey = key;
     const lean = { boon: 1 + t.boon, bane: 1 + t.bane, bone: 1 + t.bone };
     const bar = makeLeanBar(lean);
     const whoParts = [
       `Under the hat: ${run.carrier.name}${run.carrier.id === 'figure' && run.strokes ? ` (${run.strokes}/9 strokes steadying)` : ''}${run.carrier.knack ? ` · knack: ${run.carrier.knack.name.toLowerCase()}` : ''}`,
-      run.charm ? `charm ${run.charm.expr}` : null
+      run.charm ? `charm ${run.charm.expr}` : null,
+      topVal && topVal.score > 0 ? `value: ${topVal.def.name.toLowerCase()}` : null,
+      styleNow && styleNow.id !== 'house' ? `style @${styleNow.handle}` : null
     ].filter(Boolean);
     const rows = [
       span('pie-flow-now-head', `${chapterWords(run.chapter)}, so far`),
@@ -6106,6 +6188,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const defaultSceneId = CHAPTER_SCENE[chosenStartChapter] || 'lanes';
     const s = run ? scene() : (SCENES.find((entry) => entry.id === defaultSceneId) || SCENES[2]);
     let [top, bottom] = skyFor(s);
+    const sceneTune = domainTune('scenes');
+    const warmth = Number(sceneTune.sky_warmth);
+    if (warmth && warmth !== 1) {
+      const k = clamp((warmth - 1) * 0.25, -0.22, 0.3);
+      if (k > 0) top = mix(top, colors.deep, k);
+      else bottom = mix(bottom, colors.paper, -k);
+    }
     if (run && run.prevScene != null && run.sceneT < 1) {
       const [fromTop, fromBottom] = skyFor(SCENES.find((entry) => entry.id === run.prevScene) || s);
       top = mix(fromTop, top, run.sceneT);
@@ -7863,10 +7952,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.scale(sx, sy);
       ctx.translate(-x, -(y + 16));
     }
-    ctx.strokeStyle = ink;
-    ctx.fillStyle = ink;
-    ctx.lineWidth = 2;
+    const activeStyle = run?.style || creatorStyle;
+    const styleInk = activeStyle?.id && activeStyle.id !== 'house' && activeStyle.accent
+      ? mix(colors.ink, activeStyle.accent, 0.35)
+      : colors.ink;
+    const strokeMul = Number(domainTune('characters').stroke_weight) || 1;
+    ctx.strokeStyle = styleInk;
+    ctx.fillStyle = styleInk;
+    ctx.lineWidth = (activeStyle?.stroke === 'woodcut' ? 2.75 : activeStyle?.stroke === 'chalk' ? 2.45 : activeStyle?.stroke === 'hand' ? 2.25 : 1.9) * strokeMul;
     ctx.lineCap = 'round';
+    if (activeStyle?.accent && activeStyle.id !== 'house' && !reduced?.matches) {
+      ctx.save();
+      ctx.globalAlpha = 0.24;
+      ctx.strokeStyle = activeStyle.accent;
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.arc(x, y - 16, 20, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
     // A step is a line segment and a corner tick (∟): the ghost of where he was, for a moment.
     if (run && run.moveT < 1) {
       ctx.globalAlpha = 0.35 * (1 - run.moveT);
@@ -8884,12 +8989,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     setMusicBed(record.sound && setting('music') === 'full');
     setSoundTextures({ wap: setting('wap'), steps: setting('steps') });
     setSoundFeel(setting('feel'));
+    const styleNow = run?.style || creatorStyle;
+    const charTune = domainTune('characters');
     setSoundConfig({
       swing: setting('swing'),
       voicing: setting('voicing'),
       motifCues: setting('motifCues'),
       songSpace: setting('songSpace'),
-      mix: setting('mix')
+      mix: setting('mix'),
+      styleVoicing: styleNow.voicing,
+      styleInterval: styleNow.interval,
+      patternMode: String(charTune.pattern_mode || 'chapter')
     });
     syncConductorSwing();
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');
@@ -10580,12 +10690,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     return `=lean{ ${Object.entries(ways).map(([cat, atoms]) => `&${WAYS_OF[cat]}{ ${atoms.join(' ')} }`).join(' ')} }`;
   };
   const deskScenesText = () => `!scenes{ ${Object.keys(SCENE_WHIMSY_DEFAULTS).map((id) => { const w = sceneWhimsy(id); return `*${id}{ $${w.material || 'ink'} %drama[${fmt(w.drama ?? 1)}] }`; }).join(' ')} }`;
+  let activeDomainTab = 'characters';
+  const deskDomainText = (domainId = activeDomainTab) => writeTuningDomains({ [domainId]: domainTune(domainId) }, [domainId]);
   let deskTimer = null;
-  // Keep the desk's spells as this visit's, replacing any earlier =tune / =lean / !scenes block.
+  // Keep the desk's spells as this visit's, replacing any earlier =tune / =lean / !scenes / !tune_domains block.
   const keepDesk = (block, text) => {
     clearTimeout(deskTimer);
     deskTimer = setTimeout(async () => {
-      const pattern = { tune: /=tune\{[^{}]*\}/g, lean: /=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, scenes: /!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g }[block];
+      const pattern = { tune: /=tune\{[^{}]*\}/g, lean: /=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, scenes: /!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g, tune_domains: /!tune_domains\{(?:[^{}]|\{[^{}]*\})*\}/g }[block];
       const rest = visitSpells().replace(pattern, '').trim();
       setVisitSpells([rest, text].filter(Boolean).join('\n'));
       await readVisit();
@@ -10598,6 +10710,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const tune = desk.querySelector('[data-pie-desk-tune]');
     const leanOut = desk.querySelector('[data-pie-desk-lean]');
     const scenes = desk.querySelector('[data-pie-desk-scenes]');
+    const domainsOut = desk.querySelector('[data-pie-desk-domains]');
+    const focusOut = desk.querySelector('[data-pie-values-focus]');
+    const loomOut = desk.querySelector('[data-pie-creator-loom]');
     tune?.replaceChildren(renderSpell(deskTuneText(), {
       cast: false, play: true, copy: 'lore.land/pie#tune', explain: explainAtom('tune'),
       scrub: {
@@ -10616,10 +10731,104 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       cast: false, play: true, copy: 'lore.land/pie#scenes', explain: explainAtom('scenes'),
       scrub: { range: () => [0, 3], change: (text) => keepDesk('scenes', text) }
     }));
+    if (domainsOut) {
+      const tabs = nodeOf('div', 'pie-domain-tabs');
+      DOMAIN_ORDER.forEach((id) => {
+        const meta = TUNING_DOMAINS[id];
+        const btn = nodeOf('button', `pie-domain-tab${activeDomainTab === id ? ' is-active' : ''}`, meta.title);
+        btn.type = 'button';
+        btn.setAttribute('aria-pressed', activeDomainTab === id ? 'true' : 'false');
+        btn.addEventListener('click', () => { activeDomainTab = id; paintDesk(); });
+        tabs.append(btn);
+      });
+      const spell = renderSpell(deskDomainText(activeDomainTab), {
+        cast: false, play: true, copy: `lore.land/pie#domain:${activeDomainTab}`,
+        scrub: {
+          range: (label) => {
+            const spec = TUNING_DOMAINS[activeDomainTab]?.dials?.[label];
+            return spec ? [spec.min, spec.max] : [0.3, 1.8];
+          },
+          change: (text) => {
+            const parsed = parseTuningDomains(text);
+            if (parsed[activeDomainTab]) tuningDomains = { ...tuningDomains, [activeDomainTab]: parsed[activeDomainTab] };
+            applySetup({ replan: false });
+            keepDesk('tune_domains', writeTuningDomains(tuningDomains, Object.keys(tuningDomains)));
+          }
+        }
+      });
+      domainsOut.replaceChildren(nodeOf('p', 'pie-desk-sub', 'Music & aesthetics by domain (characters, scenes, storylines, challenges, minigames, unlocks):'), tabs, spell);
+    }
+    if (focusOut) {
+      const row = nodeOf('div', 'pie-focus-pills');
+      [['', 'No preset intention'], ...VALUE_IDS.map((id) => [id, VALUE_DEFS[id].name])].forEach(([id, label]) => {
+        const btn = nodeOf('button', `pie-focus-pill${chosenIntention === id ? ' is-active' : ''}`, label);
+        btn.type = 'button';
+        btn.setAttribute('aria-pressed', chosenIntention === id ? 'true' : 'false');
+        btn.title = id ? VALUE_DEFS[id].says : 'Let the carry’s values emerge without focusing one.';
+        btn.addEventListener('click', () => {
+          chosenIntention = id;
+          if (run?.values) { run.values.intention = id || 'auto'; run.intention = id; }
+          paintDesk();
+          paintNow();
+          say(id ? `Intention set beside the lanes: ${VALUE_DEFS[id].name}.` : 'Carry intention cleared.');
+        });
+        row.append(btn);
+      });
+      focusOut.replaceChildren(nodeOf('p', 'pie-desk-sub', 'Play values & intention (guides nuance alongside boon · bane · bone, never locks a lean):'), row);
+    }
+    if (loomOut) {
+      const styles = allCreatorStyles();
+      const row = nodeOf('div', 'pie-style-pills');
+      styles.forEach((st) => {
+        const active = st.handle === creatorStyle.handle;
+        const btn = nodeOf('button', `pie-style-pill${active ? ' is-active' : ''}`, `@${st.handle} · ${st.name}`);
+        btn.type = 'button';
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        btn.style.setProperty('--style-accent', st.accent);
+        btn.addEventListener('click', () => {
+          creatorStyle = setActiveCreatorStyle(st.handle, { persist: true });
+          if (run) run.style = creatorStyle;
+          applySetup({ replan: false });
+          sfx('aim', { dir: 1, locked: true });
+          paintDesk();
+          paintNow();
+          say(`Creator style active: ${creatorStyle.name} (@${creatorStyle.handle}).`);
+        });
+        row.append(btn);
+      });
+      const activeSpell = renderSpell(formatCreatorStyle(creatorStyle), { cast: false, play: true, copy: `lore.land/pie#style:${creatorStyle.handle}` });
+      const form = nodeOf('form', 'pie-style-editor');
+      const area = document.createElement('textarea');
+      area.rows = 3;
+      area.className = 'pie-style-input';
+      area.value = formatCreatorStyle(creatorStyle);
+      area.setAttribute('aria-label', 'Edit or paste a creator @style spell');
+      const saveBtn = nodeOf('button', 'pie-tool', 'Apply & keep @style');
+      saveBtn.type = 'submit';
+      form.append(area, saveBtn);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const parsed = parseCreatorStyle(area.value);
+        if (!parsed) { say('That did not read as @style[handle]{ ... }.'); return; }
+        saveCreatorStyle(parsed);
+        creatorStyle = setActiveCreatorStyle(parsed.handle, { persist: true });
+        if (run) run.style = creatorStyle;
+        noteSpark('creator_hand', { handle: creatorStyle.handle });
+        applySetup({ replan: false });
+        paintDesk();
+        paintNow();
+        say(`Saved @style[${creatorStyle.handle}] for your carries.`);
+      });
+      loomOut.replaceChildren(nodeOf('p', 'pie-desk-sub', 'Resident & peer creator style packs (visual ink, harmonic voicing, & provenance attribution):'), row, activeSpell, form);
+    }
   }
   desk?.querySelector('[data-pie-desk-reset]')?.addEventListener('click', async () => {
-    setVisitSpells(visitSpells().replace(/=tune\{[^{}]*\}/g, '').replace(/=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, '').replace(/!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g, '').trim());
+    setVisitSpells(visitSpells().replace(/=tune\{[^{}]*\}/g, '').replace(/=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, '').replace(/!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g, '').replace(/!tune_domains\{(?:[^{}]|\{[^{}]*\})*\}/g, '').trim());
+    tuningDomains = {};
+    creatorStyle = setActiveCreatorStyle('house', { persist: true });
+    if (run) run.style = creatorStyle;
     await readVisit();
+    applySetup({ replan: false });
     paintDesk();
     paintBench();
   });
@@ -10634,6 +10843,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const text = raw.replace(/#from\["[^"]*"\]/g, '').trim();
     const say2 = (msg) => { if (pasteNote) pasteNote.textContent = msg; say(msg); };
     const cardKind = (/card:([a-z-]+)/.exec(from) || [])[1] || (Object.keys(CARDS).find((k) => new RegExp(`^@${k.replace(/-/g, '_')}\\{`).test(text)));
+    if (/^!tune_domains\{/.test(text)) {
+      const parsed = parseTuningDomains(text);
+      tuningDomains = { ...tuningDomains, ...parsed };
+      keepDesk('tune_domains', writeTuningDomains(tuningDomains, Object.keys(tuningDomains)));
+      applySetup({ replan: false });
+      paintDesk();
+      say2('Tuning domains pasted: characters, scenes, storylines, challenges, minigames, and unlocks retuned for this visit.');
+      return;
+    }
+    if (/^@style\[/.test(text)) {
+      const parsed = parseCreatorStyle(text);
+      if (parsed) {
+        saveCreatorStyle(parsed);
+        creatorStyle = setActiveCreatorStyle(parsed.handle, { persist: true });
+        if (run) run.style = creatorStyle;
+        noteSpark('creator_hand', { handle: creatorStyle.handle });
+        applySetup({ replan: false });
+        paintDesk();
+        paintNow();
+        say2(`Creator style pasted and kept: @${parsed.handle} (${parsed.name}).`);
+        return;
+      }
+    }
     if (/^=meme\b/.test(text) || /^=bane\s+meme\b/.test(text)) {
       const result = setBias(text, { from: 'paste' });
       paintBias();
@@ -11526,6 +11758,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   }
   paintDesk();
   paintPortraits();
+  syncDerivedSparks();
+  const destroyResonance = bindSiteResonance({ root: document, context: 'pie' });
   loadLore().then((data) => {
     lore = data;
     paintLore();
@@ -11535,6 +11769,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     cancelAnimationFrame(frame);
     resize.disconnect();
     recolor.disconnect();
+    destroyResonance?.();
     document.removeEventListener('keydown', onKey);
     document.removeEventListener('visibilitychange', onVisibility);
   };
