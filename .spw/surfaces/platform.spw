@@ -139,15 +139,22 @@
     keep: [
       "view() timelines gated by prefers-reduced-motion and @supports",
       "overflow containment on Spw rails (minmax 0, overflow-wrap)",
-      "atmosphere ornaments print-suppressed"
+      "atmosphere ornaments print-suppressed",
+      "cross-document @view-transition + pagereveal direction in reading.css and chapter.html",
+      "native [popover] + popovertarget top-layer drawers and settled cards (settled.mjs, constellation.mjs, ebook-navigation.mjs)",
+      "speculationrules prefetch on chapter next/neighbor links",
+      "hidden=until-found sealed rooms in rooms.mjs so find-in-page and text-fragments stay alive"
     ]
     next: [
-      "View Transitions for chamber continuity",
-      "content-visibility on long sections",
-      "@container for aside density",
-      "text-wrap balance on hero titles"
+      "move content-visibility: auto in sections.css off section 1 (:nth-of-type(n+2)) so above-the-fold layout does not pay boundary evaluation",
+      "add link[rel=expect][href=#chapter-title][blocking=render] (initial viewport only) so cross-document view transitions never snapshot half-parsed DOM",
+      "verify beforematch state sync on hidden=until-found sealed rooms and contentvisibilityautostatechange hooks for offscreen effects",
+      "adopt @supports (color: oklch(from red l c h)) + @supports (color: contrast-color(red)) for dynamic chapter palettes and bindings",
+      "add font-size-adjust: from-font and meta[name=text-scale][content=scale] with rem/unitless typography (c031 zero-reflow safe)",
+      "use @container style() for progressive token density/texture while preserving :where([data-*]) Baseline selectors",
+      "mirror /pie/ canvas state into standard ARIA/DOM regions without relying on Origin Trials"
     ]
-    explore: "PLAN.C shadow track already partially lived (chapter sigils); PLAN.D houdini remains exploration"
+    explore: "PLAN.C shadow track already partially lived (chapter sigils); PLAN.D houdini remains exploration; Origin Trials (canvas-html, webmcp) stay off unless explicitly opted in"
   }
 
   ^domain["spw_links"]{
@@ -169,6 +176,19 @@
     never_public: ["_workbench/", "tools/"]
   }
 ]
+
+^"modern_web_guidance"{
+  .reviewed: "2026-11-14 via modern-web-guidance@latest"
+  already_aligned: "Native [popover] + popovertarget, @view-transition with prefers-reduced-motion, pagereveal direction, speculationrules prefetch, hidden=until-found sealed rooms, content-visibility: auto, pre-paint CSS variables"
+  implications_and_tensions: [
+    "Above-the-fold hazard: sections.css applies content-visibility: auto to all [data-ebook-section] including section 1 — scope to :nth-of-type(n+2) and verify linear keyboard reachability",
+    "Transition snapshot consistency: pair @view-transition + pagereveal with link[rel=expect][href=#chapter-title][blocking=render] and clear temporary view-transition-name properties on viewTransition.finished so bfcache holds",
+    "Discovery vs anti-bot tension: hidden=until-found (+ beforematch sync) and <details> keep prose searchable for human Find-in-Page; spoiler/bot resilience belongs in progression gating and variant separation, never breaking native search",
+    "Dynamic palette contrast: bindings, chapter palettes, and @style packs benefit from @supports (color: contrast-color(red)) layered over Relative Color Syntax (oklch(from ...))",
+    "OS text scale and font swaps: opt into meta[name=text-scale][content=scale] (keeping html/root font-size untouched) and font-size-adjust: from-font alongside CLS < 0.1 (c031)",
+    "Origin Trial firewall: canvas-html (expose-canvas-content-to-browser-features) and declarative-webmcp / document-modelcontext (webmcp) require explicit opt-in; keep /pie/ accessibility in standard DOM ARIA mirrors and agent legibility in /.spw/** + JSON-LD"
+  ]
+}
 
 ^"phases"[
   .note: "implementation order — each phase leaves the monument usable; maps to audit P0–P2"
@@ -233,14 +253,16 @@
   }
 
   ^phase[08: "Fonts + perf"]{
-    task: "font-display + preconnect or self-host mono; consider WOFF2 display"
-    verify: "no render-blocking third-party font without display policy"
+    task: "font-display + self-host mono; font-size-adjust + above-the-fold content-visibility hygiene"
+    verify: "no render-blocking third-party font; CLS < 0.1 (c031); offscreen sections skip layout"
+    status: "self-hosted jetbrains-mono WOFF2 + pre-paint theme live; font-size-adjust and sections.css :nth-of-type(n+2) queued in PLAN.F f35"
   }
 
   ^phase[09: "Share + view transitions (delight)"]{
-    task: "navigator.share/copy-link; optional View Transitions between chambers"
+    task: "navigator.share/copy-link; View Transitions between chambers with render-blocking snapshot anchor"
     deferred: false
-    verify: "reduced-motion still calm; share no-ops gracefully when API absent"
+    verify: "reduced-motion still calm; link[rel=expect][href=#chapter-title][blocking=render] keeps transitions free of partial-parse flash"
+    status: "live in reading.css §9 + chapter.html pagereveal + speculationrules; snapshot anchor and bfcache cleanup tracked in f35"
   }
 ]
 

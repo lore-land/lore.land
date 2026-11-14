@@ -51,3 +51,43 @@
   ~#receipt: "db9b613"
   ~#answer(2026-11-10): "After it merged the maker reported the layout selection was not mobile responsive. The list was too tall for a short sheet, and choosing a layout could throw when a panel stood in the side column"
 }
+
+^grant[workbench_47c178e_pair_and_speech]{
+  !wish: "Check sealed Spw lines with the workbench pair scanner and give Setup a spoken board reading"
+  ~#expect: "Exporting scanPairLabels and spokenLine lets checks and Setup agree with the workbench without writing duplicate parsers"
+  =boon@string_pair_checks{ @real_pair_scanner_and_spoken_line }
+  =bane@bundle_174kb{ @bundle_206kb_lazy }
+  ~#receipt: "2a0dca7"
+}
+
+^grant[kept_lines_forks_and_tropes]{
+  !wish: "Make collecting, chapter forks, jokes, and trope stages first-class Spw trials"
+  ~#expect: "A single readable Spw shape across almanac shelves, chapter ends, and trope tracks makes each choice inspectable"
+  =boon@untracked_flags{ @three_trials_and_trope_registry }
+  =bane@compact_rail{ @more_switches_and_checks_to_tend }
+  ~#receipt: "dfb73ed"
+}
+
+^grant[sound_values_and_styles]{
+  !wish: "Let board audio hear size and give play values, resonance, and creator @style packs room to breathe"
+  ~#expect: "Weighting knocks by tilt, separating six sound domains, and exposing parallel values makes play reflective rather than points-only"
+  =boon@flat_sound_and_one_goal{ @weighted_audio_and_creator_styles }
+  =bane@small_sound_table{ @larger_audition_gap_until_human_listen }
+  ~#receipt: "76d7850"
+}
+
+^grant[sticker_studio_editor]{
+  !wish: "Let readers compose seals, recipes, and Spw invites visually at /editor/"
+  ~#expect: "Reusing lore.land emblems and meme registers for PNG/SVG export turns reader affinity into shareable artifacts"
+  =boon@text_only_invites{ @visual_sticker_and_invite_studio }
+  =bane@fewer_public_doors{ @one_more_vite_entry_and_smoke_target }
+  ~#receipt: "f61bef4"
+}
+
+^grant[workbench_84cf313_and_parser_integration]{
+  !wish: "Bump workbench to 84cf313, make .spw idiomatic, and integrate real AST/slot/template primitives across tooling and runtime"
+  ~#expect: "Exporting readLine/writeLine, slotHash, readRegisterStamps, readMarks, and hydrateSnippet replaces regex duplication with one grammar while keeping sync fallbacks off first paint"
+  =boon@regex_clauses_and_loose_strings{ @real_ast_pathrefs_and_templates }
+  =bane@bundle_206kb{ @bundle_213kb_lazy_and_stricter_lint }
+  ~#receipt: "875784a"
+}

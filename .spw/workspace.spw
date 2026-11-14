@@ -98,7 +98,24 @@
   c030: "passing — one pack (spwashi, a maker, at ?/texture.website/@spwashi) in book/content/packs/index.json; book:check holds its route, sources, files, page, scheme and curriculum (2026_11_09.H)"
   c031: "passing — measured 2026-11-09 on a local server: home 0, chapters 0–0.08, almanac 0.001, pie 0.06, folios 0.008, scriptorium 0.005, texture 0.06, zine 0.007 (were up to 0.31); hub-main holds its room at the end (align-content: start), the desk, wall and spell reserve theirs, the reading band ships in the chapter template, the rail keeps a reserve until its panels arrive, the pie voyage settles unseen (2026_11_09.I)"
   c032: "passing — 148 files referenced, one token each; story-lexicon.mjs was instantiated four times on a chapter, likeness, characters and spw-spell twice on the desk (2026_11_09.I)"
-  c033: "trial — switch way-through off by default; book:check holds every wonder to one edit, every swap to its place, and the line to the interpreter."
+  c033: "trial — switch way-through off by default; book:check holds every wonder to one edit, every swap to its place, and the line to the interpreter (way-through.mjs now reads ^way{ !aside =apart } with spw-seed when loaded)."
+  .note_parser_integration: "as of workbench 84cf313 integration 2026-11-14 (875784a): spw-seed.mjs (213.1KB lazy) exports readLine/writeLine, slotHash/textHash, readRegisterStamps, readMarks/formatLineReading/checkLine, hydrateSnippet/parseBindings; spw-lint validates *chapter_page slots and hydrates templates; projection.mjs, spw-spell.mjs, way-through.mjs, and unlocks.mjs read ASTs when loaded"
+}
+
+^"browser_support_policy"{
+  .source: "modern-web-guidance review 2026-11-14"
+  core_reading: "Baseline Widely Available, zero JS required: chapter prose, landmarks, links, and reading modes (c012, c016)"
+  progressive_enhancements: "Baseline Newly Available and graceful Limited-availability APIs (@view-transition, speculationrules, [popover], content-visibility, hidden=until-found, font-size-adjust, meta[text-scale], @container style(), contrast-color via @supports oklch RCS) permitted with zero external polyfill bundles, <=20-line native fallbacks where needed, CLS < 0.1, and reduced-motion calm"
+  origin_trials: "Do not ship experimental Origin Trial APIs (canvas-html, declarative-webmcp, document-modelcontext) unless the maker explicitly opts in; keep /pie/ accessibility in standard ARIA live regions and agent legibility in static /.spw/** + JSON-LD"
+}
+
+^"agent_metacognition"{
+  .note: "Orientation invariants for future agents and automated tools reading this repository"
+  watch_story_vs_tooling_drift: "Run npm run spw:plans first; read the next stone before surveys. Code velocity regularly outruns story chapters (0/30 recent commits touching book/content/chapters/), so prioritize work that advances story re-derivation, prose stones, or concrete reader clarity over unrequested infra churn"
+  separate_live_from_proposed: "Check contract_status, .spw/state/grants.spw, and npm run check before assuming a feature is missing or settled; slices marked proposed or later in PLAN.F carry explicit decides owners for maker judgment"
+  dual_path_parser_contract: "Keep book/scripts/vendor/spw-seed.mjs lazy off first paint alongside synchronous fallback readers, and verify parity in book:check. Always check completeness.complete && !completeness.proseFallback rather than parse().success alone (spw-stress quiet_prose_fallback)"
+  canon_and_projection_boundary: "book/content/chapters/*.json remains prose SoT; .spw templates (.spw/surfaces/projection.spw) hydrate frames, clauses, and derived copy without letting runtime game play overwrite variant zero"
+  honest_grants: "Every landed architectural milestone belongs in .spw/state/grants.spw with a real commit receipt, beforehand guess, =boon@ gain, AND =bane@ cost"
 }
 
 &lifecycle{

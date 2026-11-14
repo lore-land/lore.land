@@ -19,9 +19,9 @@
   dialect: spw_native
   style: curriculum_lessons
   normative_voice: direction
-  status: "2026-11-10: every open increment carries its operation, files, who decides, and the command that checks it. Those fields are an agent's proposals, for the maker to keep or strike"
+  status: "2026-11-10: every open increment carries its operation, files, who decides, and the command that checks it; 2026-11-14: updated for workbench 84cf313 parser/template integration, L30-L31 web/projection lessons, and modern-web-guidance review. Agent proposals stay clearly marked for the maker to keep or strike"
   do_not: "Do not start a slice with no check. Do not mark a root from memory. Do not write the maker's decisions as an agent's."
-  lesson_count: 28
+  lesson_count: 31
   dependency_model: lessons_with_prerequisites
   &curriculum_reader: "a future maker of lore.land, or of another book built on its engine"
   &workspace: ~".spw/workspace.spw#lore_land_workspace"
@@ -242,6 +242,18 @@
     increment: "every chapter keeps a palette mixed from a laminated folio (or its plate), named for a place, with colour and lettering; finishing the chapter keeps a layer of it, one for each way of finishing (read to its end: colour; carried through the lanes: type; its wonders kept: light), and the chapter wears what is kept, mixed with its binding; cards for everyone in the book turn where they are first met, in the prose or the lanes, into one deck; the almanac shelves both, and a kept palette can be carried away as a Spw atom or CSS tokens"
     done_when: "no points, streaks or totals for their own sake; every keeping says so where it happens; the projection spell names the palette worn (=palette[id]{ layers }) and the counts (%kept{}); a link can set a palette aside for a visit but never lend one; every chapter reads at AA wearing its palette in light and dark bindings"
   }
+  ^lesson[L30]{
+    #name: "the platform holds the room"
+    prerequisites: [L01, L25]
+    increment: "modern web craft as Baseline progressive enhancement: cross-document @view-transition paired with link[rel=expect][blocking=render] on above-the-fold headings and bfcache cleanup; content-visibility: auto scoped past the initial viewport section; hidden=until-found synced on beforematch; font-size-adjust and meta[name=text-scale] with rem spacing; contrast-color() layered over oklch relative-color @supports; Origin Trials (canvas-html, webmcp) excluded unless explicitly opted in"
+    done_when: "every enhancement sits over Baseline Widely Available prose (c016), measures CLS under 0.1 (c031), uses no external polyfill bundle, and respects reduced motion (c012)"
+  }
+  ^lesson[L31]{
+    #name: "re-derived from its own seeds"
+    prerequisites: [L01, L14, L27]
+    increment: "Spw templates (.spw/surfaces/projection.spw: *chapter_page, *reader_projection, *story_beat, *chapter_clause) hydrated with spw-seed hydrateSnippet/readLine/slotHash project structural metadata and derived story/landing copy cleanly into static HTML builds without altering canonical prose SoT"
+    done_when: "template slots match built HTML templates 1:1 in spw:lint and build-chapters, derived copy rebuilds deterministically from .spw + chapter JSON, and emergent load-bearing motifs (such as the Thursday nobody kept) project coherently across chapters and landing surfaces"
+  }
   ^lesson[L18]{
     #name: "an engine for the next book"
     prerequisites: [L08, L13]
@@ -334,13 +346,13 @@
   ^root[L05]{ !state: live .at: "semantic.json" note: "folded by lore-fold.mjs" }
   ^root[L06]{ !state: live .at: "sightings.mjs" note: "nine strokes, no name" }
   ^root[L07]{ !state: live .at: "/almanac/" note: "81 wonders, 15 of them sayings" }
-  ^root[L08]{ !state: live .at: "serial.json" note: "next stone 2026-11-13" }
+  ^root[L08]{ !state: live .at: "book/content/serial.json" note: "ch15 live; ch16 due 2026-11-13 (1 day late)" }
   ^root[L09]{ !state: prototype .at: "chapter-render.mjs" note: "Wonders here on every colophon; no dead-end probe (c027)" }
   ^root[L10]{ !state: live .at: "almanac-page.mjs" note: "66 of 81 carry a prompt; the 15 without are the sayings" }
   ^root[L11]{ !state: prototype .at: "stage-directions.mjs" note: "Frame this is live; the wonder card has no snapshot face" }
   ^root[L12]{ !state: prototype .at: "book/styles/chapter/reading.css" note: "an ink per kind; no breath, no tick" }
   ^root[L13]{ !state: live .at: "book/schema/book-types.mjs" note: "book:check in CI" }
-  ^root[L14]{ !state: live .at: "bracework.mjs" note: "six plates" }
+  ^root[L14]{ !state: live .at: "bracework.mjs, projection.mjs, spw-spell.mjs" note: "six plates; spw-seed 84cf313 (213.1KB lazy) now also backs readLine/writeLine, slotHash, readMarks, and hydrateSnippet" }
   ^root[L15]{ !state: live .at: "living.mjs" note: "a trial, ?try=living" }
   ^root[L16]{ !state: live .at: "reading.css" note: "soil-glint rides the living trial" }
   ^root[L17]{ !state: proposed .at: "trope-prompt.mjs" note: "no spw:scene-seed in package.json" }
@@ -354,7 +366,10 @@
   ^root[L25]{ !state: live .at: "bindings.css" note: "six bindings" }
   ^root[L26]{ !state: live .at: "bindery.mjs" }
   ^root[L27]{ !state: live .at: "story-directions.mjs" note: "and ?spell= (projection.mjs)" }
-  ^root[L28]{ !state: live .at: "/pie/" note: "cards, carries, segues; 38 lore lines; themes per character" }
+  ^root[L28]{ !state: live .at: "/pie/" note: "cards, carries, segues; Setup holds & sound feel; /editor/ studio live; canvas ARIA mirror pending" }
+  ^root[L29]{ !state: live .at: "book/content/world/palettes.json" note: "chapter palettes, deck cards, and collector shelves live" }
+  ^root[L30]{ !state: prototype .at: "book/templates/chapter.html, book/styles/chapter/sections.css" note: "@view-transition, popover, speculationrules, hidden=until-found live; missing rel=expect blocking=render, section-1 content-visibility exclusion, text-scale, font-size-adjust, and contrast-color" }
+  ^root[L31]{ !state: prototype .at: ".spw/surfaces/projection.spw, book/scripts/tools/build-chapters.mjs" note: "*chapter_page slot check and *chapter_clause hydration wired; derived landing/story copy projection ahead" }
   ^root[north_star]{ !state: prototype note: "alive while read is live; an engine to pour into waits on L18" }
   ^root[living]{ !state: live .at: "living.mjs" }
   ^root[model]{ !state: prototype .at: "book/scripts/modules/" note: "22 of 86 modules mention Boof, BoonWAP or Bonk" }
@@ -426,5 +441,6 @@
   ]
   turns: [
     "2026-11-08 · axis: none, a ground turn · roots read from code and pages; aspiration, six branches and three wonders seeded; lesson_count 22 → 28 · next: sketch the reel as a lesson, or run the way-in probe"
+    "2026-11-14 · axis: canon vs site parser + web platform · workbench 84cf313 integrated (875784a); L30–L31 and modern-web-guidance review added; lesson_count 28 → 31 · next: project re-derived story/landing copy via projection.spw or set stone ch16"
   ]
 }

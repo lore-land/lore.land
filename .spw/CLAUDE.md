@@ -19,10 +19,12 @@ Loaded when working under `.spw/`. The routing table is `.spw/index.spw`; read i
 
 **The real spw-workbench parser is available in the browser, not just Node.**
 
-- `book/scripts/vendor/spw-seed.mjs` is an esbuild bundle of `.spw/_workbench/packages/spw-seed/src/index.ts`, tree-shaken to the names in `EXPORTS` in `book/scripts/tools/bundle-spw-seed.mjs` (currently `parse`, `readBias`, `scanPairLabels` and `spokenLine`; add a name there to use another). It is a checked-in, GENERATED file (banner says so; don't hand-edit).
+- `book/scripts/vendor/spw-seed.mjs` is an esbuild bundle of `.spw/_workbench/packages/spw-seed/src/index.ts`, tree-shaken to the names in `EXPORTS` in `book/scripts/tools/bundle-spw-seed.mjs` (`parse`, `readBias`, `scanPairLabels`, `spokenLine`, `readLine`, `writeLine`, `joinParts`, `slotHash`, `textHash`, `readRegisterStamps`, `summarizeRegisterStamps`, `readMarks`, `formatLineReading`, `checkLine`, `hydrateSnippet`, `parseBindings` — 213.1KB lazy; add a name there to use another). It is a checked-in, GENERATED file (banner says so; don't hand-edit).
 - Import it like any plain module: `import { parse, readBias } from './vendor/spw-seed.mjs'`.
 - Re-run `npm run spw:seed-bundle` after every workbench update. `spw:seed-bundle:verify` is a CI step (so `npm run check` runs it) and catches drift if you forget.
-- `bracework.mjs`, `spw-bias.mjs`, `scriptorium-desk.mjs` and `home/pie-spw.mjs` load it lazily and fall back silently if an export is missing. After changing `EXPORTS`, confirm the real path ran: `pie-spw`'s `loadRules()` reports `reader: 'spw-seed'`, and `npm run smoke` has a scenario for it.
+- Browser modules (`bracework.mjs`, `spw-bias.mjs`, `scriptorium-desk.mjs`, `projection.mjs`, `spw-spell.mjs`, `way-through.mjs`, `unlocks.mjs`, and `home/pie-spw.mjs`) load it lazily off first paint and fall back synchronously if unloaded or offline. After changing `EXPORTS`, confirm the real path ran: `pie-spw`'s `loadRules()` reports `reader: 'spw-seed'`, `book:check` verifies parser parity, and `npm run smoke` confirms browser execution.
+
+**Web standards & Origin Trial boundary**: `lore.land` ships Baseline Widely Available prose with zero JS required (`c012`, `c016`), permits Baseline Newly Available / graceful CSS/DOM enhancements (`@view-transition`, `[popover]`, `speculationrules`, `content-visibility: auto`, `hidden="until-found"`, `font-size-adjust`, `<meta name="text-scale">`, `@supports` `oklch` RCS / `contrast-color()`) without external polyfill bundles and at `< 0.1` CLS (`c031`), and **never enables Origin Trial APIs** (`canvas-html`, `declarative-webmcp`, `document-modelcontext`) unless explicitly opted in by the maker. See `.spw/workspace.spw#browser_support_policy` and `.spw/surfaces/platform.spw#modern_web_guidance`.
 
 **`spw:lint` is a real parser, not a heuristic.**
 
