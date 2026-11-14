@@ -1283,6 +1283,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * chapter (pie-ants.mjs). A bump, not a spill; heard as the honk shelf, and a whisper when the shelves are on. */
   function anthillBump(hill) {
     hill.bumped = true;
+    sfx('anthill', 0, hill.x, hill.y);
     hill.liftAt = run.t;
     run.wobble = Math.min(1.2, run.wobble + 0.12);
     const at = passing();
@@ -1503,6 +1504,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.tags.push({ x: W / 2, y: PRESENCE_Y + 30, t: 0, text: `${gift.count} ${gift.name.toUpperCase()}${gift.count === 1 ? '' : 'S'} · TO THE OTHER SIDE` });
       say(`${gift.count} ${gift.name}${gift.count === 1 ? '' : 's'}, to the other side. ${canBane ? gift.lands : 'Mr. BaneWAP is not in the book until Chapter Four; what he was given waits for him.'}`);
       react('gift:rival');
+      sfx('gift', -gift.count, W / 2, PRESENCE_Y);
       liveDesk?.landed(gift);
       return;
     }
@@ -1551,6 +1553,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (gift.art) (run.giftArt ||= []).push({ art: gift.art, t0: run.t, x: run.x });
     say(`${gift.count} ${gift.name}${gift.count === 1 ? '' : 's'}${gift.who ? ` from ${gift.who}` : ''}: ${gift.lands}`);
     react(gift.key === 'finger heart' ? 'gift:finger_heart' : gift.key === 'hi bear' ? 'gift:hi_bear' : 'gift:mine');
+    sfx('gift', gift.count, run.x, run.y);
     liveDesk?.landed(gift);
   }
   if (liveDesk) {
@@ -3309,7 +3312,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.bursts.push({ x: thing.x, y: thing.y - 14, t: 0, size: ((perfect ? 1.25 : 1) + Math.min(run.combo, 6) * 0.06) * (0.85 + Math.min(1, TUNE.drama) * 0.3) });
     impact(perfect ? 'perfect' : 'clown', thing.x, thing.y - 52);
     if (run.combo >= 3) impact('combo', thing.x, thing.y - 84, { scale: 0.5 + run.combo * 0.15, word: `COMBO ×${run.combo}!` });
-    if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y), { recipe: manners?.recipe || recipeIdNow() });
+    if (record.sound) wapSound(run.combo, panOf(thing.x), depthOf(thing.y), { recipe: manners?.recipe || recipeIdNow(), perfect: perfect || Boolean(manners?.trueLine), satisfied });
     const by = how === 'boon' ? ' Mr. BoonWAP threw that one.' : manners?.trueLine ? ' Dead centre. It counts twice, and the pie is ready for another.' : perfect ? ' Perfectly timed: it counts twice, and the pie steadies.' : how === 'near' ? ' Close: the pie steadies a little.' : '';
     say(run.waps === 1
       ? `WAP. A clown got the pie in the eye, and loved it. The pie on the plate is no smaller.${by}`
@@ -4197,7 +4200,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     lean('knocked');
     if (!react(`knock:${thing.kind}`)) meanwhile(CHARACTERS[run.carrier.id] ? run.carrier.id : 'boof', CHARACTERS[run.carrier.id] ? 'worried' : 'surprised', pick(['Oof.', 'Steady…', 'Mind it!']));
     if (thing.kind === 'mime' || thing.kind === 'mimewall' || thing.kind === 'march') tally('maw', 1, 'mime_knock');
-    sfx('knock');
+    sfx('knock', tilt, thing.x, thing.y);
     impact(thing.kind, thing.x, thing.y - 26, { hurt: true });
     const lines = [`${cost.label || 'KNOCK'} · TILT +${Math.round(tilt * 100)}%`];
     if (cost.crust) { run.aura = Math.max(0, run.aura - cost.crust); lines.push('− CRUST'); }
@@ -5763,7 +5766,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           applyPower(power);
           if (power) run.powersUsed[power.id] = 'gift';
           if (run.found?.unwritten || liveFound('unwritten')) run.unkept = Math.max(run.unkept || 0, 1.5);
-          sfx('sweet', 0, thing.x, thing.y);
+          sfx('rose', 0, thing.x, thing.y);
           spawnRing(thing.x, thing.y, 24, '#d62f4a', 0.45);
           run.tags.push({ x: thing.x, y: thing.y - 24, t: 0, text: '+ BOON ROSE · FILLING · GLIMPSE' });
           lean('boonrose');
@@ -5810,6 +5813,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         run.boof.x += run.boof.vx * dt;
         if (!run.boof.touched && Math.abs(run.boof.x - run.x) < 32 && Math.abs(run.boof.y - (run.y - 10)) < 36) {
           run.boof.touched = true;
+          sfx('brush', 0, run.boof.x, run.boof.y);
           lean('boof');
           run.wobble = 0;
           run.tiltDir = 0;

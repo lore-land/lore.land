@@ -117,6 +117,8 @@
   haggle: "the haggle is heard as it is drawn: a wooden tock a step lower for each struck price, then two bright clinks for the coin handed back; HAGGLE_BEATS in pie-finds.mjs keeps the time for both"
   engine: ~"book/scripts/home/pie-sound.mjs"
   listened: "nobody has listened yet; sound:check measures the plans, not how they sound"
+  sizes: "with the scored trial on, an event is heard at its size: a knock lower, longer and fuller by how far it tilts the pie (pigeon 122 Hz, stone 91 Hz, against 108 for both before); the off switch with the room bass and a two-note chord under it; a Perfect as one high ting and a satisfied clown as the chord climbing home, by length and not loudness, the WAP itself unchanged; a brush past Boof as fur and her first note. Off, every one of these sounds as it did"
+  voices: "what had no voice of its own now does, for everyone: a boon rose is bowed where a donut is struck; a gift landing is one note to four by its order of magnitude, with a low bloom from a hundred, up the chord for my side and down it in wood for the other; an anthill bumped is four tiny ticks at once, small and many"
   ear_line: "proposed: the workbench now reads ^ear{ } (readEarcons, workbench 47c178e) in the same sigil roles as the board line, so =wap[…] =steps[…] =cues[…] =feel[…] could move into one ^ear line beside the brace sound settings and travel as one line of sound; a reader would hand the words it does not use to the game"
 }
 

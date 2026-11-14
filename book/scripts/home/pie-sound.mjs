@@ -609,7 +609,8 @@ const AIR = Object.freeze({
   step: 0.03, land: 0.05, flour: 0.14, throw: 0.08, hop: 0.12, knock: 0.1, squash: 0.06, wap: 0.16,
   catch: 0.28, deft: 0.25, glass: 0.4, post: 0.32, ramp: 0.2, berry: 0.35, sweet: 0.42, share: 0.28,
   wonder: 0.45, bone: 0.18, foretell: 0.5, fulfil: 0.3, beaver: 0.25, foil: 0.25, egg: 0.6, spill: 0.3,
-  haggle: 0.22, coin: 0.35, pocket: 0.14, poise: 0.32, pantry: 0.38, recipe: 0.4
+  haggle: 0.22, coin: 0.35, pocket: 0.14, poise: 0.32, pantry: 0.38, recipe: 0.4,
+  rose: 0.45, gift: 0.4, anthill: 0.08, brush: 0.15
 });
 
 /* How much of each sound the song's echo repeats: the sung things, a little; the struck things, nothing. */
@@ -1662,7 +1663,7 @@ export function setSoundTextures({ wap, steps } = {}) {
 
 /* ─── The sounds ──────────────────────────────────────────────────── */
 
-export function wapSound(combo = 1, pan = 0, depth = 0, { recipe = '' } = {}) {
+export function wapSound(combo = 1, pan = 0, depth = 0, { recipe = '', perfect = false, satisfied = false } = {}) {
   try {
     if (!context()) return;
     const t = audio.currentTime + 0.005;
@@ -1711,6 +1712,15 @@ export function wapSound(combo = 1, pan = 0, depth = 0, { recipe = '' } = {}) {
     if (recipe === 'set_jam' || recipe === 'royal') vibes(hz(sungTone(4) + 12), 0.36, 0.022, first, 0.15);
     else if (recipe === 'tempered') celesta(hz(sungTone(5) + 12), 0.28, 0.02, first, -0.15);
     else if (recipe === 'savoury') marimba(hz(sungTone(1)), 0.24, 0.028, first);
+    // Scored: a Perfect and a satisfied clown are heard by length, not loudness. A Perfect gets one high ting on the
+    // next pulse; a clown satisfied gets the chord climbing home, long and soft, after the honks. The WAP itself is
+    // the WAP everyone knows.
+    if (designOn() && (perfect || satisfied)) {
+      const { vibes: ring, celesta: ting } = kit(outlet(heat, { depth, air: 0.4 }), t, pan);
+      const after = pulseFrom(t, 0.15);
+      if (perfect) ting(hz(sungTone(6) + 12), 0.5, 0.03, after(2));
+      if (satisfied) [2, 4, 7].forEach((i, n) => ring(hz(sungTone(i)), 0.7 - n * 0.1, 0.022, after(2) + n * sixteenth(), (n - 1) * 0.15));
+    }
     swellPad(t, WORTH.wap);
   } catch { /* a silent WAP is still a WAP */ }
 }
@@ -1825,6 +1835,33 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         break;
       }
       case 'sweet': [0, 1, 2, 3].forEach((k) => vibes(hz(sungTone(k + 3)), 0.55, 0.042, k * s32, (k - 1.5) * 0.15)); celesta(hz(sungTone(5) + 12), 0.65, 0.022, s32 * 4); break;
+      // A boon rose kept: bowed rather than struck, so it is never mistaken for a donut's four vibes.
+      case 'rose':
+        swell('sine', hz(sungTone(5) + 12), 0.7, 0.032);
+        celesta(hz(sungTone(4) + 12), 0.45, 0.034, s32 * 2, 0.1);
+        celesta(hz(sungTone(6) + 12), 0.5, 0.026, s32 * 4, -0.1);
+        break;
+      // A gift landing, by its order of magnitude (param: the count; negative when sent to the other side): one
+      // note for a few, up to four for thousands, and from a hundred a low bloom under them. Up the chord for my
+      // side, down it in the marimba's wood for the other. A gift leans nothing: this is size, not worth.
+      case 'gift': {
+        const n = Math.abs(Number(param) || 1);
+        const rival = Number(param) < 0;
+        const mag = clamp(Math.floor(Math.log10(Math.max(1, n))) + 1, 1, 4);
+        for (let i = 0; i < mag; i += 1) (rival ? marimba : celesta)(hz(sungTone(rival ? 3 - i : 2 + i) + (rival ? -12 : 12)), 0.3 + 0.1 * i, 0.03, i * s32 * 2, (i - (mag - 1) / 2) * 0.2);
+        if (mag >= 3) swell('sine', hz(bassLow()), 0.9, 0.035);
+        break;
+      }
+      // An anthill bumped: the ants lift their weights, a tiny tick for each, all at once. Small, and many.
+      case 'anthill':
+        [0, 1, 2, 3].forEach((i) => tock(1500 + i * 140, 1100 + i * 90, 0.011, i * 0.028));
+        break;
+      // Brushing past Boof (scored): fur, and the first note of her three.
+      case 'brush':
+        if (!designOn()) break;
+        hiss(900, 400, 0.12, 0.02, 0.8, 0, 'lowpass');
+        marimba(hz(fallen(0) - 12), 0.3, 0.035, s32);
+        break;
       // The haggle (pie-finds.mjs): each price struck is a wooden tock a step lower, and a soft vibes note that falls
       // with it, so the price is heard going down; then the coin handed back, two bright clinks and a glint. Cozy, and
       // a little silly, since nobody was selling.
@@ -1872,14 +1909,25 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       }
       // A knock: two notes a minor second apart, falling. Out of key on purpose, so it cannot be a step
       // or the beaver; it breaks the spell. No sample — a recording cannot sit outside the chapter's key.
-      case 'knock':
-        tone('sine', 108, 50, 0.24, 0.16, 0, { attack: 0.003, cents: 12 });
-        tone('sine', 114.5, 53, 0.2, 0.12, 0.012, { attack: 0.004, cents: 8 });
-        hiss(460, 120, 0.16, 0.07, 1);
+      // A knock: two notes a minor second apart, out of key. Scored (the trial), its size is heard: a pigeon's
+      // brush is higher, shorter and lighter than a stone's thud, by how far it tilts the pie. Otherwise as it was.
+      case 'knock': {
+        const k = designOn() ? clamp((Number(param) || 0.4) - 0.4, -0.3, 0.4) : 0;
+        const f = 2 ** (-k * 1.2);
+        const dur = 1 + k;
+        const vol = 1 + k * 0.6;
+        tone('sine', 108 * f, 50 * f, 0.24 * dur, 0.16 * vol, 0, { attack: 0.003, cents: 12 });
+        tone('sine', 114.5 * f, 53 * f, 0.2 * dur, 0.12 * vol, 0.012, { attack: 0.004, cents: 8 });
+        hiss(460 * f, 120, 0.16 * dur, 0.07 * vol, 1);
         hushPad(t);
         break;
+      }
       // A scheme foiled: Mr. BaneWAP's plans going down, then the line coming back up on the pulse.
-      case 'foil': { tone('square', 520, 180, 0.2, 0.07, 0, { cut: 1200 }); const a = nextNote(t); celesta(hz(a), 0.2, 0.05, answer); celesta(hz(sungFrom(a)), 0.3, 0.045, pulseFrom(t)(1), 0.1); break; }
+      case 'foil': { tone('square', 520, 180, 0.2, 0.07, 0, { cut: 1200 });
+        // Scored: the off switch is the pie side's biggest score, and was quieter than any WAP. The room's bass gives
+        // it a floor, and the line lands on a chord rather than a single note.
+        if (designOn()) { tone('triangle', hz(bassLow()), hz(bassLow()) * 0.98, 0.4, 0.13, 0, { attack: 0.006, cents: 0 }); vibes(hz(sungTone(2) + 12), 0.5, 0.035, answer, -0.15); vibes(hz(sungTone(4) + 12), 0.55, 0.03, answer, 0.15); }
+        const a = nextNote(t); celesta(hz(a), 0.2, 0.05, answer); celesta(hz(sungFrom(a)), 0.3, 0.045, pulseFrom(t)(1), 0.1); break; }
       // The Egg: a hum belonging to no chapter's key.
       case 'egg': tone('sine', 130.8, 131.2, 0.5, 0.1, 0, { attack: 0.08, cents: 0, side: -0.15 }); tone('sine', 196, 196.5, 0.5, 0.07, 0.03, { attack: 0.08, cents: 0, side: 0.15 }); break;
       // The spill: the pie goes down, the floor takes it, then home — five, three, one. Exactly one.

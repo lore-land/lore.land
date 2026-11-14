@@ -160,7 +160,7 @@ export const SWITCHES = Object.freeze([
   },
   {
     id: 'sound-design', attribute: 'data-switch-sound-design', stage: 'trial', layer: 'trial', label: 'The lanes are scored',
-    hint: 'The game\u2019s sound follows the story: the shelves colour it, a motivation setting off has its own sting, each trope has a motif that grows as the trope does, and the characters keep their own time.',
+    hint: 'The game\u2019s sound follows the story: the shelves colour it, a motivation setting off has its own sting, each trope has a motif that grows as the trope does, and the characters keep their own time. Sizes are heard too: a heavy knock thuds lower and longer than a light one, throwing Mr. BaneWAP\u2019s off switch rings fuller, a Perfect throw and a satisfied clown are heard by how long the sound lasts rather than how loud, and brushing past Boof has its own sound.',
     effect: { on: 'The sound follows the story.', off: 'The lanes sound as they always have.' },
     defaults: { returning: 'off', new: 'off' }
   },
