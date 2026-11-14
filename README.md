@@ -12,11 +12,11 @@ The homepage is a static, minimalist entrance. Progressive enhancement may offer
 
 The monument is entertainment. Under the fantasy names sit **civic offices**—the Commons Scale, kitchens, council, archive—that encode real values and process pressure (audit, delivery, governance, memory). A folded “second reading” on [Civic magic](/world/civic-magic.html) makes the craft analogy available without making the site about business owners.
 
-The [Scriptorium](/scriptorium/) shows the writing team as an in-world order, including **patron seals** (honest sponsorship / paid thresholds) and a quiet atelier door for anyone who wants a neighboring monument raised elsewhere.
+The [Scriptorium](/scriptorium/) is the reader's desk: pick up where you left off, keep the book offline, see what changed, search every chapter and write to the scribes, each a Spw spell learned by tapping. Its **patron seals** section ("Marks stay marked") says how anything paid for would show (honest sponsorship / paid thresholds). A quiet atelier door at the foot of the home page's list leads to worlds raised elsewhere.
 
 ### Discovery & identity sediment
 
-[Topics](/topics/) are portable handles—promise, voice, audience, memory, polarity, motif, cadence, provenance, **reward**, **guide**—that resemble stages of public-identity development while staying in fantasy dress. Chambers can declare `topics` and `relatedRoutes` in JSON; the chapter runtime renders chips and a continue rail for internal linking.
+[Topics](/topics/) are portable handles—promise, voice, audience, memory, polarity, motif, cadence, provenance, **reward**, wonder, experience, **guide**—that resemble stages of public-identity development while staying in fantasy dress. Chambers can declare `topics` and `relatedRoutes` in JSON; the chapter runtime renders chips and a continue rail for internal linking.
 
 ### Boof · dog guide
 
@@ -32,8 +32,8 @@ Lore.Land separates authored chapter content from the shared reading shell:
 | `book/templates/chapter.html` | Shared shell: metadata, nav, a11y, assets |
 | `book/scripts/home/data.mjs` | Chamber index (titles + loglines) |
 | `index.html` + `book/styles/home/hub.css` | Monument entrance |
-| `npm run chapters:build` | Validates 13 chapter contracts and regenerates HTML |
-| `npm run build` | Chapters first, then Vite multi-page package |
+| `npm run chapters:build` | Validates every chapter's contract (`01`…`NN`, at least 13) and regenerates the chapter pages |
+| `npm run build` | Chapters, Spw export and canon first, then the Vite multi-page package |
 
 Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html` files.
 
@@ -41,9 +41,11 @@ Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html`
 
 | Field | Role |
 |-------|------|
+| `chapterNumber` | Required; must match the file name |
 | `title`, `logline`, `epigraph` | Reading frame before prose |
+| `inWhich` | Optional "in which" line under the title (also set on the share card) |
 | `description` | SEO / share text |
-| `pillars` | Seed materials: `worldbuilding` · `code-craft` · `marketing` · `intrigue` |
+| `pillars` | Seed materials, named in the byline: `worldbuilding` · `wish-physics` · `wonder` · `intrigue` · `code-craft` |
 | `mood`, `period` | Optional stylesheet hooks |
 | `topics`, `relatedRoutes` | Discovery chips + continue rail |
 | `lexicon` | Optional thematic terms for language exploration (`id`, `label`, `href?`, `terms[]`) |
@@ -52,9 +54,11 @@ Edit chapter JSON rather than hand-editing generated `book/chapter/*/index.html`
 | `sections[].climate` | Optional copy hook: `tempo` · `tint` · `hook` · `strength` (drives scroll lighting) |
 | `sections[].room` | Required on every section and voice: `{ "spw": "~{warm_furrow}@boof", "air": "…" }`, the room's Spw signature and its one-line air (see Rooms below) |
 | `sections[].status`, `sections[].due` | `"drafting"` + `"YYYY-MM-DD"`: the room ships as a sealed door (signature, air, the day it opens) until it is set |
+| `sections[]["data-motif"]`, `["data-trope"]`, `["data-foreshadow"]` | Optional hand-set marks on a section (`book/styles/components/motifs.css`) |
 | `lore.loreItems` | Field notes for the aside collector |
+| `table` | Optional "At the table" page: the chapter as a place to play (place, light, people, hooks, encounters) |
 
-Render order in `book/scripts/script.mjs`: **logline → title → epigraph → byline → pillars → topics → sections → related routes**.
+Render order (`book/scripts/modules/chapter-render.mjs`, run at build so the prose is in the page before any script; `script.mjs` runs it only when a page arrives without prerendered prose): **title → "in which" line → epigraph → room strip → sections → turn to the next chapter → at the table → threads (topics) → byline with pillars → related routes**. The logline sits above the title, hidden unless the `logline` switch keeps it.
 
 Optional progressive enhancement (JS on): **scene sketches** (collapsed), **language exploration** (thematic marks + resonance), **copy climate** (tempo/tint lighting from section hooks as you scroll), motif vault, Spw runtime. The full canon remains readable without JavaScript.
 
@@ -84,12 +88,12 @@ The doorplate (signature, air, "room n of m") is set in each room at build time,
 
 Editorial surface plan (scriptorium desk, seal checklist, phases): `.spw/surfaces/editorial.spw`.  
 Platform ship plan (PWA, social meta, Vite entries, canon-sync): `.spw/surfaces/platform.spw`.  
-Active platform audit: `.spw/audits/platform-ship-audit-2026-07-16.spw`.
+Platform ship audit (2026-07-16): `.spw/audits/platform-ship-audit-2026-07-16.spw`.
 
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current cache release token: `2026_11_13.B` (`book/scripts/modules/cache-context.mjs`, `build-chapters.mjs`).
+Current release token: `2026_11_13.B`. The release steps (the four places the token is set, `changes.json`, `tokens:align`, `chapters:build`) are under Releasing in `CLAUDE.md`.
 
 ## Spw-Workbench Integration
 
@@ -97,7 +101,7 @@ This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
 - Local submodule in this workspace: `./.spw/_workbench`
-- Current submodule pin: `be2df2f` (spw-workbench main, 2026-11-09)
+- Current submodule pin: `9ef3d22` (spw-workbench main, 2026-11-11)
 
 ### Runtime Bridge In lore.land
 
@@ -171,16 +175,18 @@ Dependency flows inward: `pragmatics → semantics → grammar` (never reversed)
 | **Semantics**| planes, axes, polarity, spirit seq  | `registries/`, `applications/` |
 | **Pragmatics**| shelves, editing, biome, process   | `conventions/`, `patterns/`|
 
+Surfaces are workbench paths: `src/seed/` at its root, `core/` under `lib/spw-v0.2.0-alpha/`, the rest under its `.spw/`.
+
 Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantics` → `^`, `pragmatics` → `!`.
 
 ### Model Ebook Navigation
 
 - `book/scripts/modules/ebook-navigation.mjs`
-  Chapter-level ebook architecture with section mapping, TOC handles, concept routes, persisted resume state, keyboard navigation, and reader/engineer register modes.
+  Chapter-level ebook architecture with section mapping, TOC handles, concept routes, persisted resume state, keyboard navigation, and reader/scribe register modes (`engineer` in code).
 - `book/scripts/script.mjs`
   Composes chapter runtime: content mount -> chapter routes -> ebook navigation -> Spw runtime enhancement -> progression/effects.
-- `book/styles/fixtures/root.css`
-  Styles hierarchy and navigation surfaces for both software-heavy and book-heavy reading modes.
+- `book/styles/chapter/panels.css` + `book/styles/chapter/sections.css`
+  Page grid, aside and section states (breadth/depth) for both software-heavy and book-heavy reading modes.
 
 ### Keyboard Shortcuts (Chapter Pages)
 
@@ -189,8 +195,9 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
 |----------------|-----------------------------|
 | `Alt+Left`     | Previous chapter            |
 | `Alt+Right`    | Next chapter                |
-| `Alt+H`        | Home (`/`)                  |
+| `Alt+H` / `Alt+Home` | Home (`/`)            |
 | `Alt+T`        | Timeline                    |
+| `Alt+P`        | Spw index (`.spw/index.spw`) |
 
 #### Section navigation
 | Key / Gesture        | Action                                            |
@@ -213,17 +220,17 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
 ### Ethos Integration
 
 - Claim protocol ethos from `spw-workbench` is surfaced in-runtime as selectable claim layers and testable claim cards.
-- Chapter surfaces include an ethos panel in `aside` and home includes an ethos atlas near the grammar observatory.
+- Chapter surfaces include an ethos panel in `aside`.
 - Runtime events (`lore:spw-selection`, `lore:ebook-section-change`) update ethos probe status so claims stay tied to observable interaction.
 
 ### `.spw` Canon Surface
 
 - Repository-local canon root: `.spw/`
 - Prose source of truth: `book/content/chapters/*.json` (HTML embed via `chapters:build`)
-- Chapter semantic mirrors: `.spw/chapters/01.spw` ... `.spw/chapters/13.spw` (must stay in sync — workspace contract **c001**)
+- Chapter semantic mirrors: `.spw/chapters/NN.spw`, one per chapter (must stay in sync — workspace contract **c001**)
 - Indexes, claims, process:
   - `.spw/index.spw` — mount + direction
-  - `.spw/workspace.spw` — contracts c001–c010 + maintenance
+  - `.spw/workspace.spw` — numbered contracts (`c001`…) + maintenance
   - `.spw/chapters/index.spw` — live titles index
   - `.spw/claims/chapter-claims.spw` — lore-cNNN probe chain (incl. platform/social claims)
 - Runtime, surfaces, audits:
@@ -241,28 +248,30 @@ Claim layers in the ethos panel map to this kernel: `grammar` → `.`, `semantic
   - `PLAN.B.spw` — ethos hydration + walkable refs
   - `PLAN.C.spw` — Shadow DOM / Chrome (sigils already lived)
   - `PLAN.D.spw` — Houdini / Firefox (P0 platform work outranks)
+  - `PLAN.E.spw` — the living book: the season's direction and curriculum
+  - `PLAN.F.spw` — how the serial keeps changing without wearing out its maker, its readers or its meaning (publishing dimensions)
 - After chapter prose changes: `npm run spw:export` (regenerates `.spw/chapters/*` from HTML embeds; workspace **c001**)
 - Public canon for Pages / Vite dist (claim hydration + walkable ethos refs):
   - `npm run spw:verify` — required lore paths present
   - `npm run spw:project` — emit allowlist → `dist/.spw/` (never `_workbench/` or `tools/`)
-  - `npm run build` chains `chapters:build → spw:export → vite build → spw:project → dist:static`
+  - `npm run build` chains `chapters:build → spw:export → canon:build → vite build → spw:project → dist:static`
   - `npm run dist:verify` checks shell assets + public `.spw` allowlist under `dist/`
   - Spec: `.spw/surfaces/publish.spw#spw_public_projection`
 
 Chapter `.spw` mirrors are long-form references for extension and semantic diffing. Titles must match JSON SoT after export.
 
-**GitHub Pages:** dist deploys need `spw:project` or `fetch /.spw/claims/chapter-claims.spw` falls back and walkable lore refs 404. Branch-root deploys already expose committed lore `.spw`; still export after prose edits.
+**GitHub Pages:** lore.land is served from the `main` branch root, so committed lore `.spw` is already public; still export after prose edits. A `dist` deploy would need `spw:project`, or `fetch /.spw/claims/chapter-claims.spw` falls back and walkable lore refs 404.
 
 ### Cache + Release Coupling
 
 Spw runtime assets are released through the shared cache profile:
 
-- release token: `2026_11_13.B` (single source: `cache-context.mjs` + `build-chapters.mjs`)
+- release token: the one under Release cadence above (`DEFAULT_CACHE_RELEASE` in `cache-context.mjs`)
 - query key: `v`
 - context key: `ctx`
 - implementation: `book/scripts/modules/cache-context.mjs`
 
-Use this when introducing new Spw routing/interactions/effects so chapters and home surfaces load coherent runtime behavior after deploy. Bump the same token when shell CSS/JS or SW precache changes.
+Use this when introducing new Spw routing/interactions/effects so chapters and home surfaces load coherent runtime behavior after deploy. Bump the release when shell CSS/JS or SW precache changes. Each file carries one `?v=` token wherever it is linked or imported: `npm run tokens:align` gives a file changed since the last commit the release token, and `-- --check` (a CI step) fails on drift.
 
 ### Seed Folder Convention
 

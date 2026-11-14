@@ -105,7 +105,7 @@ export function buildLand(d) {
       '%': said(`Called ${(w.terms || [w.name]).length} way${(w.terms || [w.name]).length === 1 ? '' : 's'} in the book: ${(w.terms || [w.name]).join(', ')}.`, 'its names'),
       '$': said(at(d.kinds, w.kind)?.shelf && `Shelved in ${at(d.kinds, w.kind).shelf}.`, 'its shelf')
     };
-    add([w.id, w.name, ...(w.terms || [])], { type: 'wonder', title: w.name, href: `/almanac/#${w.id}`, fields: clean(f), texts: [w.note, w.hint, w.misread].filter(Boolean) });
+    add([w.id, w.name, ...(w.terms || [])], { type: 'wonder', title: w.name, href: `/almanac/#wonder-${w.id}`, fields: clean(f), texts: [w.note, w.hint, w.misread].filter(Boolean) });
   });
 
   // The tropes.

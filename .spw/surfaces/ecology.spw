@@ -4,13 +4,15 @@
 # the desk, the projection, the build's chapter spells, the checks. One registry, so a new kind (or a
 # change to one) is made in one place and reaches all of them; this surface is what each kind does there.
 #>ecology
-#:canon #:architecture #!working
+#:surface #!canon #!architecture
+#:layer #!pragmatics
+#:status #!working
 
 ^"ecology"{
   .registry: ~"book/scripts/modules/kinds.mjs"
   .data: ~"book/content/world/almanac.json"
   .tokens: "core/tokens.css --kind-creature … --kind-saying (consumers keep a literal fallback)"
-  .checked_by: "npm run book:check (book/schema/book-types.mjs reads WONDER_KINDS and kindProblems from the registry)"
+  .checked_by: "npm run book:check (book/schema/book-types.mjs reads KIND_ORDER (its WONDER_KINDS) and kindProblems from the registry)"
   &almanac: ~".spw/surfaces/almanac.spw#almanac"
   &tropes: ~".spw/surfaces/tropes.spw#tropes"
   rule: "A kind is a role in every feature at once: how it is drawn, how it is found, how it moves in the lanes, what it gives, what an artist needs to paint it, and what it carries along the track between the book and the lanes."

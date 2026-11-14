@@ -268,7 +268,7 @@
   atelier: "13 chapter plates shipped; studies graduated through -vN without ledger debt"
 }
 
-?<open_questions>[
+?open[
   "Are chapter plates unique art per chamber, or a series template with seal overprint? (carried from audit)"
   "Does the complaint channel need a public affordance (report-a-seam link), or do ethos probes + issues suffice for v1?"
   "Which pass owns typography ink-trap/optical-size work — p2 rhythm or p3 material?"

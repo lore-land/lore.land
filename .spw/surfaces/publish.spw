@@ -81,11 +81,12 @@
       steps: [
         "npm run chapters:build",
         "npm run spw:export",
+        "npm run canon:build",
         "vite build",
         "npm run spw:project",
         "npm run dist:static"
       ]
-      note: "npm run build chains all five steps; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
+      note: "npm run build chains all six steps; dist:static copies sw/manifest/seeds/images/icons/sitemap/robots"
     }
     validate: {
       checks: [
@@ -101,7 +102,7 @@
       ]
       refs: [
         ~".spw/surfaces/platform.spw#seal_checklist_additions",
-        ".spw/state/alignment-ledger.spw",
+        ~".spw/state/alignment-ledger.spw",
         ~".spw/surfaces/publish.spw#spw_public_projection"
       ]
     }
@@ -173,9 +174,9 @@
   size_posture: "lore tree is small plain text; workbench submodule stays git-side"
   content_type: "unknown extensions as application/octet-stream are fine for fetch().text()"
   refs: [
-    ".spw/tools/project-public-spw.mjs",
-    "book/scripts/modules/spw-ethos.mjs",
-    "book/scripts/modules/spw-routing.mjs"
+    ~".spw/tools/project-public-spw.mjs",
+    ~"book/scripts/modules/spw-ethos.mjs",
+    ~"book/scripts/modules/spw-routing.mjs"
   ]
 }
 
@@ -201,7 +202,7 @@
   }
   surfaces: [
     "/",
-    "/book/chapter/01/" .. "/book/chapter/13/",
+    "/book/chapter/01/" .. "/book/chapter/15/",
     "/topics/",
     "/scriptorium/",
     "/zine/",
@@ -221,5 +222,5 @@
     "navigate network-first; offline.html fallback",
     "icon purpose any and maskable as separate assets"
   ]
-  refs: [~".spw/surfaces/platform.spw#domain.pwa", ".spw/audits/platform-ship-audit-2026-07-16.spw"]
+  refs: [~".spw/surfaces/platform.spw#domain.pwa", ~".spw/audits/platform-ship-audit-2026-07-16.spw"]
 }

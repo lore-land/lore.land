@@ -48,7 +48,7 @@
 }
 
 ^"worktable"{
-  .note: "The maker's real laminated folios, scanned, live at spwashi.com (design/folios/, design/folios/october-2026/; canon .spw/surfaces/folio-archive.spw in that repo, local at ~/air/spwashi.com). lore.land shows the ones that stand near a place in the land — book/content/world/worktable.json, book/scripts/home/worktable.mjs — on the folio wall (#worktable) and beside Exactly One Pie."
+  .note: "The maker's real laminated folios, scanned, live at spwashi.com (design/folios/, design/folios/october-2026/; canon .spw/surfaces/folio-archive.spw in that repo). lore.land shows the ones that stand near a place in the land — book/content/world/worktable.json, book/scripts/home/worktable.mjs — on the folio wall (#worktable) and beside Exactly One Pie."
   origin: "spwashi.com is the origin and the shop. lore.land points (images served from spwashi.com, links across) and never copies, reprices or claims a piece: lore.land is a second source for new pieces, never the origin of the archive; community and lore.land contributions are not folio inventory."
   stands_near: "each piece names where in the land it stands, loosely — a folio is not an episode, and the land is not one campaign"
   asks: "a piece's own question (the archive's opens) is quoted as it asks; none is written for a piece that does not ask"
@@ -116,6 +116,6 @@
 
 ~"not_yet_built"{
   desk_spell: "*[folio]{scan} — add a folio to your shelf from the Scriptorium desk (a proposal; the desk has no upload surface yet)"
-  gallery: "a folio wall: the maker's scans first, then readers', each layered where updated"
+  gallery: "readers' folios on the folio wall; the wall itself is built (/folios/, book/scripts/modules/folio-wall.mjs) and shows only the maker's so far"
   canon_rule: "a folio may propose a scene; only a written chamber can make it happen — same as the Egg's unknowns"
 }

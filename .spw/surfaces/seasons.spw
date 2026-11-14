@@ -32,7 +32,7 @@
   form: "^kept[thursday]{_thursday .day[\"2026-11-27\"] .chapter[15] .carrier[porter] *kept_place{ ~warm[4] } yadsruht_}"
   holds: "the day the reader was there, the chapter and the carrier, and what is left of the season as a spell"
   sealed: "the body opens with the season as a label and closes with the label mirrored; a line cut short on the way does not close, and is refused"
-  plays: "after the season the line is the key and not the spell: what plays at the place is the season own residue, whatever a line handed over or rewritten may hold"
+  plays: "after the season the line is the key and not the spell: what plays at the place is the season's own residue, whatever a line handed over or rewritten may hold"
   where: "with the carries, under Provenance, where it can be copied (with where it is from) or let go"
   reads: "whole in the real parser, where the label and its mirror are two words in the body; the seal is read by the game"
 }

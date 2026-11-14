@@ -1,8 +1,8 @@
 # Sound and voice — a plan for what the lanes sound like, and who speaks in them
-# Written 2026-11-09 after the user said the dialogue in the archived WAV pipeline was never chosen, and
+# Written 2026-11-09 after the maker said the dialogue in the archived WAV pipeline was never chosen, and
 # asked to plan the dialogue and the sounds better, with open sounds that are free to use and modify.
 # This is a plan, not canon for any line: no spoken words are written here. Every line a character says
-# is chosen by the user before it ships (^dialogue rule); until then a moment has a slot, not a line.
+# is chosen by the maker before it ships (^dialogue rule); until then a moment has a slot, not a line.
 #>lore_land_surfaces_sound_and_voice
 #:surface #!plan
 #:layer #!pragmatics
@@ -16,7 +16,7 @@
   &engine: ~"book/scripts/home/pie-sound.mjs"
   &levels: ~".spw/runtime/pie-levels.spw"
   &audition: ~"tools/audio_synthesis/pie-sound-audition.html"
-  &archive: "removed 2026-11-09 at the user's word: synth_pie_audio.py, its macOS system-sound extracts and say voices, and the 21 MB of WAVs it rendered (moved to the Trash). The six designs worth keeping live on in tools/audio_synthesis/pie-sketchbook.html (live Web Audio, no files, git-ignored)"
+  &archive: "removed 2026-11-09 at the maker's word: synth_pie_audio.py, its macOS system-sound extracts and say voices, and the 21 MB of WAVs it rendered (moved to the Trash). The six designs worth keeping live on in tools/audio_synthesis/pie-sketchbook.html (live Web Audio, no files, git-ignored)"
   &library: ~"book/content/sound-library.json"
   &fetch: "npm run sounds:fetch (book/scripts/tools/sound-library.mjs) into sound-library/, git-ignored, with INDEX.json naming every file, its source and license"
   &audio: ~"book/audio/index.spw"
@@ -32,7 +32,7 @@
   floor: "the game plays whole with no files at all. A sample may colour a sound; if it fails to load, the synthesized voice plays instead, and nothing waits on a download."
   every_sound_is_an_event: "each sound is written down as an event: the moment it answers, what it means, whose it is, how it sits in the key, how often it may sound, and where its sound comes from (synth or a sample by id)."
   budget: "a carry is hundreds of moments. Each event has a budget (how often in ten seconds, whether it may repeat a pitch), and the ear that tires (pie-sound heat) holds it."
-  chosen_words: "no character says a word on a page or in the lanes unless the user chose that line. Proposals carry !state[proposed]; only !state[chosen] plays; book:check refuses the rest."
+  chosen_words: "no character says a word on a page or in the lanes unless the maker chose that line. Proposals carry !state[proposed]; only !state[chosen] plays; book:check refuses the rest."
   wordless_first: "a character can be heard before they are given words: a leitmotif (Boof has three notes), an instrument, a babble shaped by a chosen line and pitched to the chapter key, with the words shown as a caption."
   licenses: "CC0 first; CC BY 4.0 only with the credit recorded and shown; never NC, never a license that forbids serving the file on its own (a static site serves every file on its own), never macOS system sounds or voices"
 }
@@ -71,7 +71,7 @@
   ways: {
     leitmotif: "notes only, in the chapter key (cheapest, never tiring, works in every language)"
     babble: "a voice-like instrument (formants) speaking the rhythm of a chosen line, in key, with the words as a caption"
-    recorded: "a person reading a chosen line, with a signed release; casting is the user to do"
+    recorded: "a person reading a chosen line, with a signed release; casting is for the maker to do"
     synthesized_speech: "TTS only with a voice model whose license allows commercial use and serving files; most do not, so it is last"
   }
 }
@@ -130,7 +130,7 @@
 !next[
   "fill ^events with meaning, owner and budget for every sound: drafted as .spw/runtime/audio-tropes.spw. Its !motifs are live as of 2026-11-10 (pie-tropes.mjs reads them; Setup, Characters); !patterns, !timbres and !bindings are next"
   "bring the six archived designs into pie-sound.mjs as synthesized events, auditioned against the current mix"
-  "a dialogue sheet (.spw/runtime/pie-lines.spw) with moments and empty slots; the user writes or chooses each line; book:check plays only chosen"
+  "a dialogue sheet (.spw/runtime/pie-lines.spw) with moments and empty slots; the maker writes or chooses each line; book:check plays only chosen"
   "babble voices: a formant instrument that speaks the rhythm of a chosen line in the chapter key"
   "physical moments are in: wap, step-field, step-city, flour, land, spill, beaver, each a folder of takes with sidecars (npm run sounds:prepare). Knocks stay synthesized, out of key. The synth plays when a file has not arrived"
   "WAV export on the audition page (synth_pie_audio.py and its voices are retired)"

@@ -242,7 +242,7 @@
   }
 }
 
-?<open_questions>[
+?open[
   "Should the desk live under /scriptorium/desk/ (public, read-only) or only as a local npm script?"
   "Do multi-word lexicon terms need phrase-level authoring UI, or is JSON enough for v1?"
   "Should editorial-check.mjs fail CI if chapter .spw titles diverge from JSON?"

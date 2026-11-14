@@ -4,7 +4,9 @@
 # lore.land it is a lab for routes and URL structure: an address that begins ?/ reads part by part, the way
 # Spw is read, and a pack answers it. Held to one core value: Intergenerational Media Literacy.
 #>texture_website
-#:canon #:architecture #!working
+#:surface #!canon #!architecture
+#:layer #!pragmatics
+#:status #!working
 
 ^"texture_website"{
   .grammar: ~"book/scripts/modules/texture-routes.mjs"
@@ -34,7 +36,7 @@
   "$": "what it is made on"
   "?": "asked"
   encoding: "spaces travel as +; % # / + and quotes are escaped; @ ~ ! = * & ^ $ ? stay as they are, so the address stays legible"
-  order: "surface, @whose, ~motif, *thing, !words, =tuning, &with — written in that order, so one state is one address"
+  order: "surface, @whose, ~motif, $material, *thing, !words, =tuning, .field, &with, ?verb — written in that order, so one state is one address"
 }
 
 !"experiments"[

@@ -24,7 +24,7 @@
   gift: "gift:mine, gift:finger_heart, gift:hi_bear and gift:rival: on a stream (pie-live.mjs, ?live) the lanes answer what is sent, someone standing first; a gift to the other side is answered by Mr. BaneWAP accepting it on their behalf"
   story: "story:boon and story:bane: a passage going by that leans one way is answered by someone who leans with it (pie-story-lane.mjs)"
   table: ~"book/scripts/home/pie-reactions.mjs"
-  size: "41 moments and 64 rows on 2026-11-12; reactions:check holds every knock, timed power and spell word to an answer for each of the five carriers"
+  size: "48 moments and 83 rows on 2026-11-13; reactions:check holds every knock, timed power and spell word to an answer for each of the five carriers"
 }
 
 ^"who_answers"{

@@ -494,6 +494,19 @@ function initBench(data) {
   paintKept();
 }
 
+/* A link to one card (/almanac/#wonder-…, from a chapter's wonder card, the lanes' Ask, a search) lands on it.
+ * The cards are painted after the almanac is fetched, so the browser's own jump finds nothing: go once they are
+ * there, and again once the shelves above have settled, unless the reader has already moved. */
+let readerMoved = false;
+['wheel', 'touchstart', 'keydown'].forEach((type) => window.addEventListener(type, () => { readerMoved = true; }, { once: true, passive: true }));
+function landOnHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id || readerMoved) return;
+  const target = document.getElementById(id) || document.getElementById(`wonder-${id}`);
+  if (target) target.scrollIntoView({ block: 'start' });
+}
+window.addEventListener('hashchange', () => { readerMoved = false; landOnHash(); });
+
 paintFigure();
 // The likeness index rides along: a seal and "find similar" on every card, when it arrives.
 Promise.all([loadAlmanac(), loadLikeness()]).then(([data]) => {
@@ -504,9 +517,11 @@ Promise.all([loadAlmanac(), loadLikeness()]).then(([data]) => {
   paintShelves(data);
   paintPalettes(data);
   initBench(data);
+  landOnHash();
 });
 paintDeck();
 loadLikeness().then(() => {
   paintDeck();
   placeAtlasStrips();
+  requestAnimationFrame(landOnHash);
 });

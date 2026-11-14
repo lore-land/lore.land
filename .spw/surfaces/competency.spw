@@ -1,5 +1,5 @@
 # The long arc: the mathematics a pupil grows into, a quarter at a time, over 26 years
-# A design, proposed. book/scripts/modules/competency.mjs holds the same table as data; nothing reads it yet but the day event, ?/day.lore.land.
+# A design, proposed. book/scripts/modules/competency.mjs holds the same table as data; only the day event (?/day.lore.land) and the desk formulas (spw-formulas.mjs) read it yet.
 #>lore_land_surfaces_competency
 #:surface #!proposal
 #:operation #!prime
@@ -33,7 +33,7 @@
 
 !guards[
   "Never ask a reader their age. A reach is chosen by the reader, like a lens, and may be changed at any time"
-  "Nothing is stored but that choice, on the reader device. No score, no grade, no record of a wrong answer"
+  "Nothing is stored but that choice, on the reader's device. No score, no grade, no record of a wrong answer"
   "The night-school pupils are grown-ups. Children are never portraits, and no band is a school year"
   "A band says what a hand of cards can do. It never says what a person can do"
 ]

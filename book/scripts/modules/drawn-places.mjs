@@ -5,7 +5,7 @@
  * carry starting there. It is added after the chapter's words and changes none of them.
  */
 import { readSwitches } from './reading-switches.mjs?v=2026_11_13.B';
-import { placeSVG, PLACES } from './panel-art.mjs?v=2026_11_12.A';
+import { placeSVG, PLACES } from './panel-art.mjs?v=2026_11_13.B';
 import { CHAPTER_SCENE } from '../home/pie-world.mjs?v=2026_11_13.B';
 
 export function initDrawnPlaces({ chapterData } = {}) {

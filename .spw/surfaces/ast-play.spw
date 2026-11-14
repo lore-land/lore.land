@@ -35,7 +35,7 @@
 }
 
 ^"levels_from_this_tree"{
-  pie_rules: "1178 nodes, 361 places, 94 areas, 258 arenas; 16 rooms on the road with 808 things; 361 cards in 11 suits; all 94 regions open in 4 rounds; about 10 to the 12 floors; one concept gate"
+  pie_rules: "1208 nodes, 371 places, 96 areas, 266 arenas; 16 rooms on the road with 828 things; 371 cards in 11 suits; all 96 regions open in 4 rounds; about 10 to the 12 floors; one concept gate"
   chapter_01: "305 nodes, depth 15; 12 rooms, 226 things; 40 cards in 10 suits; 19 of 26 regions open in 2 rounds, 7 sealed; 16016 floors; ladder 26 literal, 28 instance, 1 pattern, 11 concept"
   chapter_14: "303 nodes, depth 15; 12 rooms, 220 things; 42 cards in 12 suits; 15 of 25 regions open, 10 sealed; 26208 floors; 16 concept gates"
   liminal_physics: "170 nodes; 14 rooms; 2 of 3 regions open, 1 sealed; 12 floors"

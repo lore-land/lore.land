@@ -2731,6 +2731,14 @@ html:not([data-chrome-hidden='true']) .pie-index {
   color: var(--hub-ink);
 }
 
+/* A wonder's name, asked about: a way to its card in the almanac. */
+.pie-cardface-ask-wonder > a:first-child {
+  font-weight: 700;
+  color: var(--hub-ink);
+  text-decoration-color: color-mix(in srgb, var(--hub-accent) 70%, transparent);
+  text-underline-offset: 0.18em;
+}
+
 .pie-cabinet.is-asking .pie-screen canvas {
   cursor: help;
 }

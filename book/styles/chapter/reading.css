@@ -3501,13 +3501,21 @@ main.chapter .bracework-source {
   align-items: center;
   gap: 0.3rem;
   padding: 0.18rem 0.6rem 0.18rem 0.3rem;
-  border: 1px solid color-mix(in srgb, var(--hub-ink, #161d2b) 22%, transparent);
+  /* The chapter's own ink, so the chip reads in every binding (a dark one had pale words on a pale pill). */
+  border: 1px solid color-mix(in srgb, var(--color-text-main, #161d2b) 24%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--hub-paper, #f3ede1) 70%, transparent);
-  color: inherit;
+  background: color-mix(in srgb, var(--color-text-main, #161d2b) 5%, transparent);
+  color: var(--color-text-main, inherit);
   font: inherit;
   font-size: 0.82rem;
   cursor: pointer;
+}
+
+.chapter-trope-chip:hover,
+.chapter-trope-chip:focus-visible,
+.chapter-trope-chip[aria-expanded='true'] {
+  border-color: color-mix(in srgb, var(--color-text-main, #161d2b) 55%, transparent);
+  background: color-mix(in srgb, var(--color-text-main, #161d2b) 10%, transparent);
 }
 
 .chapter-trope-chip[data-stage='seed'],
@@ -3522,8 +3530,9 @@ main.chapter .bracework-source {
 
 .chapter-trope-emblem svg {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
 }
 
 .chapter-trope-detail {

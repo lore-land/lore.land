@@ -8,7 +8,7 @@
  */
 import { readSwitches } from './reading-switches.mjs?v=2026_11_13.B';
 import { revealStage, tropeSignals, noteCrossing, loadRhymes, chambersOf } from './trope-reveal.mjs?v=2026_11_11.A';
-import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_12.A';
+import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_13.B';
 import { leanScores } from './valence-lens.mjs?v=2026_09_27.A';
 
 const TROPES_URL = '/book/content/world/tropes.json';
@@ -48,7 +48,7 @@ export function initTropeStrip({ chapterData, root = document } = {}) {
       const shown = revealStage(t, tropeSignals(t.id, { trope: t, lean: leanScores(`${t.statement} ${t.faces?.story?.says || ''}`) }));
       const chip = el('button', { type: 'button', className: 'chapter-trope-chip', 'data-stage': shown.stage, 'aria-expanded': String(open === t.id), title: shown.deepen });
       const art = el('span', { className: 'chapter-trope-emblem', 'aria-hidden': 'true' });
-      art.innerHTML = tropeEmblemSVG(t.id, { size: 18, sigil: t.sigil, label: '' });
+      art.innerHTML = tropeEmblemSVG(t.id, { size: 22, sigil: t.sigil, label: '', stage: shown.stage });
       chip.append(art, el('span', { text: LABEL[shown.stage](t) }));
       chip.addEventListener('click', () => { open = open === t.id ? '' : t.id; paint(); });
       return { chip, shown, t };

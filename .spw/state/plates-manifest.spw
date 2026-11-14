@@ -1,5 +1,5 @@
 # Lore.Land Plate Production Manifest
-# Machine-checkable gate state for the thirteen chapter plates — companion to
+# Machine-checkable gate state for each chapter plate — companion to
 # .spw/surfaces/plates.spw (the drafting table, prose) and
 # .spw/state/alignment-ledger.spw#AL-001 (the complaint this closes).
 # Read by .spw/tools/plates-manifest.mjs and .spw/tools/alignment-probes.mjs;

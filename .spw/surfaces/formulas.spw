@@ -8,14 +8,14 @@
 #:layer #!pragmatics
 
 ~<rationale>{
-  A formula is an expression whose shape is its meaning. The grammar already says what each sigil and container does; a formula makes that true of something a reader can hold: a hand of cards is a combination and its body says which, a slice is a fraction of the pie, a lean is a share of three genres, an edge leans forward or back, a board line is how a screen holds the lanes. When the theory computes, a reader can test it by writing it, and the answer comes back in plain words and numbers. When it does not compute, it can still be said, and the land can still answer in the book own words. Every form below was parsed by the vendored parser; whole means it read complete with no prose fallback, in the prose profile lint uses and in the default profile.
+  A formula is an expression whose shape is its meaning. The grammar already says what each sigil and container does; a formula makes that true of something a reader can hold: a hand of cards is a combination and its body says which, a slice is a fraction of the pie, a lean is a share of three genres, an edge leans forward or back, a board line is how a screen holds the lanes. When the theory computes, a reader can test it by writing it, and the answer comes back in plain words and numbers. When it does not compute, it can still be said, and the land can still answer in the words of the book. Every form below was parsed by the vendored parser; whole means it read complete with no prose fallback, in the prose profile lint uses and in the default profile.
 }
 
 ^"frames_and_bodies"{
   board: { form: "^board{ @hold[two_thumbs] =frame[fill] %lanes[0.9] }" reads: "how a screen holds the lanes, one term per choice" theory: "@ whose hands, % how much, = what it is tuned to" plays: "Setup at /pie/; cast at the desk it is kept for the lanes" cast: "yes" whole: "both" }
   frame_body: { form: "[lanes]{ world }" reads: "a frame around a body: what is seen, around what is there" theory: "[] selects, {} holds; the board is a screen of any shape around a world of one size" plays: "pie-frame.mjs" cast: "yes" whole: "both" }
   probe_ground: { form: "?{ haze } .{ ground }" reads: "a look, then what holds" theory: "probe before ground" plays: "the haze and ground of a filled screen" cast: "yes" whole: "both" }
-  pocket: { form: "<pocket>{ }" reads: "a capsule with no inside: a passage, not a store" theory: "<> as channel" plays: "proposed in liminal-physics.spw; the land answers it" cast: "yes" whole: "both" }
+  pocket: { form: "<pocket>{ }" reads: "a capsule with no inside: a passage, not a store" theory: "<> as channel" plays: "proposed in liminal-physics.spw; the land answers it" cast: "no" whole: "both" }
 }
 
 ^"leans_and_weights"{
@@ -47,7 +47,7 @@
 ^"perspective"{
   hands_and_route: { form: "&[ ^board{ @hold[two_thumbs] } ^way{ !aside[7] } ]" reads: "hands and route together: two lines in one confluence, neither changing the other" theory: "& joins lines without merging them" plays: "proposed: one link carrying both" cast: "yes" whole: "both" }
   route: { form: "?/texture.website/*folio-ampersand-hair-cube" reads: "a route: one piece of texture.website, a thing itself on the surface" theory: "the ?/ door: a surface, @ whose, * a thing itself (texture-routes.mjs)" plays: "the desk opens any ?/ line at /texture/" cast: "yes" whole: "both" }
-  window: { form: "%{window}@genie" reads: "the reader window, as the Genie measures it" theory: "a page as a room (spw-proposals P13)" plays: "proposed: genie-practice.spw" cast: "no" whole: "both" }
+  window: { form: "%{window}@genie" reads: "the reader's window, as the Genie measures it" theory: "a page as a room (spw-proposals P13)" plays: "proposed: genie-practice.spw" cast: "no" whole: "both" }
 }
 
 ^"containers_and_minds"{
@@ -78,12 +78,12 @@
 }
 
 ^"the_land_answers"{
-  what: "Write something specific, under any sign, and the land acknowledges it in the book own words and points to where the book has it: a character, a wonder, a room, a trope, a kind, a gift, a berry, a folio of texture.website, an invention, a piece of the physics. A name inside another body is a meeting the book can count (Boof and the ants share rooms). An expression the land does not know is answered honestly: what was read, and the nearest things it knows"
-  composed_from: "characters.mjs (line, temperament, traits, knack, want, limit, escape, weight), kinds.mjs, almanac.json, tropes.json, likeness.json, the texture.website folios (packs/texture.website/@spwashi/folios.json), berries.json, pie-powers.mjs, inventions.spw, liminal-physics.spw, read through each sigil in spw-resonance.mjs. The maker reasons stay folded where they are and are never quoted"
-  coverage: "with the texture.website folios read, 337 things by 563 names and 3003 name and sigil answers (12012 single-name forms in four shapes: bare, @[x], @x{ }, @{x}); without them, 219 things, 2302 answers, 9208 forms; every pair of names can meet in a body; 38 hand-picked pairings answered more specifically, each from named canon fields. npm run formulas:check prints the live numbers"
+  what: "Write something specific, under any sign, and the land acknowledges it in the words of the book and points to where the book has it: a character, a wonder, a room, a trope, a kind, a gift, a berry, a folio of texture.website, an invention, a piece of the physics. A name inside another body is a meeting the book can count (Boof and the ants share rooms). An expression the land does not know is answered honestly: what was read, and the nearest things it knows"
+  composed_from: "characters.mjs (line, temperament, traits, knack, want, limit, escape, weight), kinds.mjs, almanac.json, tropes.json, likeness.json, the texture.website folios (packs/texture.website/@spwashi/folios.json), berries.json, pie-powers.mjs, inventions.spw, liminal-physics.spw, read through each sigil in spw-resonance.mjs. The maker's reasons stay folded where they are and are never quoted"
+  coverage: "with the texture.website folios read, 339 things by 565 names and 3025 name and sigil answers (12100 single-name forms in four shapes: bare, @[x], @x{ }, @{x}); without them, 221 things, 2324 answers, 9296 forms; every pair of names can meet in a body; 38 hand-picked pairings answered more specifically, each from named canon fields. npm run formulas:check prints the live numbers"
   specials: "*beaver{ ~lag }, @boof{ ?scent }, &ants{ !torch }, =bane@pie{ @mime }, ^[porter]{ .storm_weight }, %[slice]{ 1/8 }, <pocket>{ }, @genie{ %price }, ?[thursday], ~boof{ .furrow }, %clerk{ #slip }, *boneberry, <boon>.land@boof and the rest in land-answers.mjs SPECIAL"
   held: "the figure, the hat, the Egg, and anything naming who is under the hat are acknowledged as nothing at all, and never offered as near"
-  desk: "anything with a sign or a container that is not one of the desk own spells goes to the land; the desk spells keep their meanings"
+  desk: "anything with a sign or a container that is not one of the desk's own spells goes to the land; the desk spells keep their meanings"
 }
 
 ?open[

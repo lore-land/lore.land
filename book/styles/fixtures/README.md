@@ -1,12 +1,12 @@
 # Fixtures Style Guide
 
-These styles are written as readable scaffolding for story authors.
+These styles are written as readable scaffolding for story authors. The stylesheets that once lived in this folder now sit in `book/styles/core/`, `chapter/`, `components/` and `home/`; this guide covers them, and the folder holds only it.
 
 ## Layering Order
 
-1. `fonts.css` - typeface loading only
-2. `baseline.css` - shared tokens + page defaults
-3. Scene stylesheet (`home.css`, `root.css`, etc.) - page/chapter specific composition
+1. `core/fonts.css` - typeface loading only
+2. `core/layers.css` (the global `@layer` stack: tokens, base, interactive, motion; formerly `baseline.css`), then `core/tokens.css`, `core/themes.css`, `core/reset.css` - shared tokens + page defaults
+3. Page stylesheets (`chapter/*.css` and `components/*.css` on chapters, `home/*.css` on the home page; `chapter/panels.css` was `root.css`) - page/chapter specific composition
 
 Keep this order in HTML so story-specific rules override defaults without hacks.
 
@@ -40,7 +40,6 @@ The lifecycle bridge also exposes:
 - `book/scripts/modules/experience-core.mjs`: ARIA live status, preference persistence, progressive reveal, lazy-image enhancement, and service worker registration.
 - `book/scripts/modules/chapter-progression.mjs`: deterministic chapter rewards and unique chapter mode states (no streak loops / no addictive mechanics).
 - `book/scripts/home/seeds.mjs`: Midjourney seed manifest and chapter visual mapping.
-- `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions.
 - `book/scripts/modules/spw-interactions.mjs`: browser runtime bridge that surfaces `spw-workbench` parser/register concepts through clickable Spw expressions, plus in-page inspection affordances (code-lens style links and inlay hints).
 - `book/scripts/modules/ebook-navigation.mjs`: model ebook layer (section hierarchy, concept handles, resume state, reader/engineer register mode).
 - `book/scripts/modules/spw-ethos.mjs`: claim-protocol bridge (layered claims + operator-phase ethos + probe status tied to runtime events).
@@ -58,13 +57,13 @@ It emits query params:
 - optional `b` ad-hoc bust key
 
 Runtime overrides:
-- `data-cache-release` / `data-cache-context` on `<html>`
+- `data-cache-release` / `data-cache-context` / `data-cache-bust` on `<html>`
 - URL params: `cache_release`, `cache_context`, `cache_bust`
 
 ## Extending Story Experiences
 
 When adding a new experience:
-1. Create a new page stylesheet in `book/styles/fixtures/` or a dedicated folder.
+1. Create a new page stylesheet in the folder it belongs to (`chapter/`, `components/`, `home/`) or a dedicated one.
 2. Reuse baseline tokens instead of new hard-coded values.
 3. Assign a clear cache context channel (for example `archive:layout`, `kernel:mood-dream`).
 4. Keep interactions/effects in scripts; keep CSS declarative and readable.

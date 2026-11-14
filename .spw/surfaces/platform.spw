@@ -262,7 +262,7 @@
   build: "npm run build includes zine and offline"
 }
 
-?<open_questions>[
+?open[
   "Charm surface: keep public in Vite, archive, or leave out of production dist?"
   "Should SW update force skipWaiting or wait for seal-keeper refresh CTA?"
 ]

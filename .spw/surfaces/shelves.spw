@@ -1,5 +1,5 @@
 # Shelves — the five modifiers as tunable genre shelves, and the formula that moves the story with them
-# A design, proposed. One formula for what grows dominant, what gets teased, what a dimension brings, and why a thing is in the road.
+# A design, now a trial in the game (the shelves switch). One formula for what grows dominant, what gets teased, what a dimension brings, and why a thing is in the road.
 #>lore_land_surfaces_shelves
 #:surface #!proposal
 #:operation #!prime
@@ -61,7 +61,7 @@
 #reasons{
   rule: "every obstacle in the road says whose it is and why it is there, grounded in a passage: a pane is somebody's window, a banner is somebody's announcement, a spool is somebody's thread"
   shown: "under Ask, beside what the book says, folded with the reasons so the lanes stay quick"
-  table: "book/scripts/home/pie-reasons.mjs (to be built): kind, whose, why, shelf, dimension, ground"
+  table: "book/scripts/home/pie-reasons.mjs REASONS_IN_THE_ROAD: kind, whose, why, shelf, dimension, ground"
 }
 
 !guards[

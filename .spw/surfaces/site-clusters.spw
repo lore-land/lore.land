@@ -39,7 +39,7 @@
 
 ^"addresses"{
   .note: "The live law is texture.website. New doors below are proposed. One state is one address. A verb that changes a line leaves the address changed and itself gone; a verb that reads stays."
-  law: "lore.land/?/<surface>/@whose/~motif/*thing/!words/=tuning/$material/&with/?verb — operators keep their meanings (texture-website.spw routes)"
+  law: "lore.land/?/<surface>/@whose/~motif/$material/*thing/!words/=tuning/&with/?verb — operators keep their meanings (texture-website.spw routes)"
   live: [
     "lore.land/?/texture.website/@spwashi/$storm/!parcel+gate/&factshift.center/?ground",
     "factshift.center/?spw=<line> with the force parameters its app already reads",
@@ -100,7 +100,7 @@
     "a projection spell passed as a link (projection.spw)",
     "addresses that read part by part (texture-website.spw)",
     "gossip as a beat-late scrap of the book (gossip-and-kitchens.spw)",
-    "a charm a reader writes and keeps (autonomous-feedback)"
+    "a charm a reader writes and keeps (autonomous-feedback.spw)"
   ]
   next_capture_desk: "a page that fills a capture card from the frame in front of the reader: say, cue, address, palette, span. It copies the card. It does not upload."
   next_mouth_card: "the shortest address plus one sentence, kept in lore.mouth.v1, copied by hand"

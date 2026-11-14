@@ -17,7 +17,7 @@
   .note: "book/scripts/modules/spw-sound.mjs; a play button on any spell (spw-spell.mjs play option)"
   voices: "? a rising fourth left open · ~ a slow pad · @ a pluck placed by name · & a third · * a bell · ^ three notes climbing · ! a knock and a thump · # a glass ping · . a low ground note · = the filter turned · % ticks, n of them · $ a texture by material"
   time: "[ ] one after another · { } held over a ground · ( ) all at once · < > a passage, each note gliding into the next"
-  pitch: "a label chooses a degree of the spell own pentatonic key; the whole text chooses the key, so every spell has its own"
+  pitch: "a label chooses a degree of the spell's own pentatonic key; the whole text chooses the key, so every spell has its own"
   words: "a quoted string is breathed, a syllable at a time, under the music"
   lit: "each atom lights as it sounds, so a spell can be followed by ear and eye at once"
 }
@@ -32,8 +32,8 @@
 ^dials{
   .note: "scrub option of spw-spell.mjs; the tuning desk on /pie/ (=tune, =lean, !scenes)"
   turn: "scroll over a number, drag it up or down, or focus it and use the arrow keys (shift for ten); it is held to its range"
-  effect: "the game retunes at once, and the spell is kept as the visit own, beside the bench"
-  tunables: "aim step, knock swing, pad pace, slow land, foretelling, flinch, in kind, swipe across, swipe along, ahead bonus, drama"
+  effect: "the game retunes at once, and the spell is kept as the visit's own, beside the bench"
+  tunables: "aim step, knock swing, pad pace, slow land, foretelling, flinch, in kind, swipe across, swipe along, ahead bonus, drama, hop lift, hop chain, hop window, arrow hold, horn chance, mini duration"
 }
 
 ^copy_and_paste{
@@ -44,7 +44,7 @@
 
 ^prime_and_cast{
   .note: "spw-spell.mjs enablePriming, after spwashi.com: .spw/conventions/charge-cycle.spw, the factshift lifecycle (primed, held, actualized, residue), spw.quest pivot (a tap primes, a second tap acts)"
-  tap: "a first tap primes an atom: nothing is written, and its next step is said (what it would do in the game, and its discharge kind); a second tap while it is charged casts it: one change, a receipt in the sigil own verb, and residue (a faint halo stays)"
+  tap: "a first tap primes an atom: nothing is written, and its next step is said (what it would do in the game, and its discharge kind); a second tap while it is charged casts it: one change, a receipt in the sigil's own verb, and residue (a faint halo stays)"
   lifetime: "a prime holds a charge of 0.82 that bleeds 0.18 every 2.8 s and goes quiet below 0.08, back to ground; Escape or a tap elsewhere lets it go at once"
   kinds: "release ? ! (at once, and over) · transfer ~ @ & $ (carries something on, for a while) · ground # = . % (sets a value, and stays) · project ^ * (binds upward, and is kept)"
   verbs: "? answered · ! struck · ~ taken · @ seen · & joined · $ made · # marked · = tuned · . let go · % measured · ^ lifted · * kept"
@@ -60,7 +60,7 @@
 ^whimsy{
   .note: "!whimsy{} and !scenes{} in pie-rules.spw; impact() in pie-game.mjs"
   impacts: "a word pops (BONK!, SPLAT!, BZZT!), bits fly (juice, crumbs, feathers, glass, confetti, stars, flour), the view leans in, and at the best moments the world holds its breath"
-  scale: "=drama times the sprite own drama times the scene own; calm under reduced motion and zen"
+  scale: "=drama times the sprite's own drama times the scene's own; calm under reduced motion and zen"
 }
 
 ^points{
@@ -80,7 +80,7 @@
 }
 
 ^mechanics_drawn{
-  .note: "pie-game.mjs drawMechanics, drawFace, moodOf; carrierStats and the knacks in CARRIERS"
+  .note: "pie-draw.mjs drawMechanics, drawFace, moodOf; pie-world.mjs carrierStats and the knacks in CARRIERS"
   gifts: "every gift in force is a badge over the hat with what is left of it as an arc (echoes as a count)"
   catch: "when the pie leans, a chevron on the side to step to says CATCH"
   combo: "a combo is pips over the hat and a bar of the time left to keep it going"
@@ -99,7 +99,7 @@
 }
 
 ^cabinet_setup{
-  .note: "pie-game.mjs SETUP, applySetup, paintSetup, the hand pinch; reading-gestures.mjs for the chapter pages"
+  .note: "pie-frame.mjs SETUP; pie-game.mjs applySetup, paintSetup, the hand pinch; reading-gestures.mjs for the chapter pages"
   top: "the controls sit at the top of the cabinet, two rows of five: pause, sound, story, zen, full; ask, labels, show, hands (touch), setup"
   pause: "a ❚❚ Pause button for screens without Esc; it reads ▶ Resume while paused"
   configurable: "cabinet size (small, medium, large, larger), pace (gentle 0.8×, as written, brisk 1.2×: the whole world on one clock), the story (beside the screen, under the screen in the cabinet, folded away), the story words (four sizes), the heights strip (shown or hidden, and its parts in its own row), the show (off, inset, board), labels, ask, zen, the hand the pad sits under"
@@ -123,7 +123,7 @@
 }
 
 ^lanes_story{
-  .note: "pie-game.mjs laneStoryTick, laneStoryStep, paveSentence, drawLaneCaption, drawRoadWords; ⚙ Setup: story in the lanes"
+  .note: "pie-story-lane.mjs laneStoryTick, laneStoryStep, paveSentence, drawLaneCaption, drawRoadWords; ⚙ Setup: story in the lanes"
   why: "the carry goes through a chapter far faster than anyone reads (a passage a second or so), and on a phone the story beside is out of sight while playing; so the lanes tell it at reading speed"
   caption: "the sentence (a long one in clauses) as a subtitle at the top of the screen, up for as long as its words take to read; when it falls more than four behind it skips ahead to the carry, and says … where it did"
   road: "a phrase at a time painted on the cobbles, coming down with the world, five or so on the road at once; a stream of glimpses that keeps up by dropping the oldest; a wonder's own words glow, and stepping onto one underfoot reads it: a little crust, and the chapter leans toward the fairy tale (=lean read)"

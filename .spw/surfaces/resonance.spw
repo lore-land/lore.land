@@ -24,7 +24,7 @@
   audience: ["maker", "scribe", "whoever builds spwashi.com's demo", "a reader who likes libraries"]
   engineering_register: ~"book/scripts/modules/spw-interactions.mjs"
   literary_register: ~"book/scripts/modules/spw-resonance.mjs"
-  shelf_list: "book/content/world/shelf-list.json"
+  shelf_list: ~"book/content/world/shelf-list.json"
   spec: ~".spw/_workbench/lib/spw-v0.2.0-alpha/core/OPERATORS.md"
   related: {
     inoculant: ~".spw/surfaces/inoculant.spw"
@@ -113,7 +113,7 @@
   bone_brings: "the notation surfaces under the bone lens: margin sigils and numbered paragraphs"
   spell: "=[lens]{boon|bane|bone|balanced} at the Scriptorium desk"
   law: "the story is whole under every lens; only its weight moves"
-  dial: "genre is a blend, not a mode: a triangle with boon (fairy tale), bane (absurd reality) and bone (low magic) at its corners; the reader's point sets three weights, each lean's paragraphs sit at 0.4 + 0.6 × weight, and a land holding 60% becomes the lens"
+  dial: "genre is a blend, not a mode: a triangle with boon (fairy tale), bane (absurd reality) and bone (low magic) at its corners; the reader's point sets three weights, each lean's paragraphs sit at 0.68 + 0.32 × weight, and a land holding 60% becomes the lens"
   blend_spell: "=[genre]{boon:2 bone:1}"
   readability: "2026-09-27: 29 wall paragraphs split into beats at sentence boundaries (text asserted unchanged) and ten over-long sentences broken at their turns; beats are also where the dry comedy lands"
 }

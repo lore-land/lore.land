@@ -4,9 +4,10 @@
  *
  * Until an artifact has a painted plate, it has a study: one object in one light, drawn in cream ink over the
  * series ground (leaf-dark, teal and amber lit from within, vignette and grain), the way plates 14 and 15 began as
- * drawn studies. Each is an SVG in book/images/studies/artifact-<id>-v1.svg; almanac.json points to it
+ * drawn studies. Each is an SVG in book/images/studies/artifact-<id>-v<v>.svg; almanac.json points to it
  * (`plate: { src, state: "study" }`), and the plate prompt beside it is what a painted plate is made from.
- * Authoring-time only; the outputs are committed. Re-run after changing a drawing (bump its v).
+ * Authoring-time only; the outputs are committed. Re-run after changing a drawing: bump its `v` (the file becomes
+ * artifact-<id>-v<v>.svg), point almanac.json at the new file, and remove the old one.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -147,21 +148,34 @@ const STUDIES = {
     </g>`
   },
   'relit-torch': {
+    // v2: the ant drawn near enough to read at card width (v1 was a speck), with its six legs, its feelers and the
+    // torch held up in one foreleg; the street ruled straight to it, and the arm's warm tip a spark short of the pith.
+    v: 2,
     title: 'The relit torch',
     desc: 'A ruled ant-street running dead straight across frosted loam to one ant holding up a tiny torch, lit again from the warm tip of a long drawn line that ends a little early.',
-    glow: { glowX: 420, glowY: 220, warm: 0.7 },
+    glow: { glowX: 450, glowY: 200, warm: 0.72 },
     body: `
-    ${Array.from({ length: 22 }, (_, i) => `<path d="M${30 + i * 26} ${300 + (i % 3) * 14}l12 -4" stroke="${INK}" stroke-opacity="0.18" stroke-width="1.2"/>`).join('')}
-    <path d="M40 252L420 236M40 284L420 256" stroke-width="1.8" stroke-opacity="0.75"/>
-    ${Array.from({ length: 10 }, (_, i) => `<path d="M${70 + i * 34} ${280 - i * 2.2}L${70 + i * 34} ${250 - i * 1.6}" stroke-opacity="0.25" stroke-width="1"/>`).join('')}
-    <ellipse cx="428" cy="250" rx="9" ry="5" fill="${INK}" fill-opacity="0.85" stroke="none"/>
-    <circle cx="440" cy="246" r="4" fill="${INK}" fill-opacity="0.85" stroke="none"/>
-    <path d="M420 250l-8 6M424 252l-4 9M432 252l2 9" stroke-width="1.4"/>
-    <path d="M440 244L446 214" stroke-width="2"/>
-    <circle cx="447" cy="210" r="7" fill="${AMBER}" stroke="none" filter="url(#relit-torch-soft)"/>
-    <circle cx="447" cy="210" r="3" fill="#fff4d6" stroke="none"/>
-    <path d="M60 120L436 206" stroke-width="2.6"/>
-    <circle cx="438" cy="206" r="3.2" fill="${AMBER}" stroke="none"/>`
+    ${Array.from({ length: 22 }, (_, i) => `<path d="M${30 + i * 26} ${318 + (i % 3) * 16}l12 -4" stroke="${INK}" stroke-opacity="0.2" stroke-width="1.2"/>`).join('')}
+    ${Array.from({ length: 14 }, (_, i) => `<circle cx="${40 + ((i * 97) % 520)}" cy="${300 + ((i * 53) % 80)}" r="1.4" fill="${INK}" fill-opacity="0.35" stroke="none"/>`).join('')}
+    <path d="M30 252L380 244M30 292L380 270" stroke-width="2" stroke-opacity="0.8"/>
+    ${Array.from({ length: 11 }, (_, i) => `<path d="M${52 + i * 30} ${290 - i * 2}L${52 + i * 30} ${251 - i * 0.7}" stroke-opacity="0.28" stroke-width="1.1"/>`).join('')}
+    <g fill="${INK}" fill-opacity="0.92" stroke="none">
+      <ellipse cx="398" cy="258" rx="20" ry="13" transform="rotate(-8 398 258)"/>
+      <ellipse cx="426" cy="251" rx="10" ry="7.5"/>
+      <circle cx="446" cy="244" r="9"/>
+    </g>
+    <circle cx="449" cy="241" r="1.8" fill="#15221c" stroke="none"/>
+    <path d="M418 256l-12 16l-8 2M426 258l-2 18l-7 5M433 256l12 14l8 1" stroke-width="2.4"/>
+    <path d="M420 253l-16 10l-8 0M428 255l4 15" stroke-width="2" stroke-opacity="0.55"/>
+    <path d="M451 236q6 -12 16 -13M446 235q1 -13 9 -19" stroke-width="1.8"/>
+    <path d="M434 247l10 -20l6 -6" stroke-width="2.4"/>
+    <path d="M447 224L456 196" stroke="#c99a5a" stroke-width="3.4"/>
+    <circle cx="458" cy="188" r="15" fill="${AMBER}" stroke="none" filter="url(#relit-torch-soft)" opacity="0.85"/>
+    <path d="M458 196q-8 -8 0 -20q8 12 0 20z" fill="${AMBER}" stroke="none"/>
+    <circle cx="458" cy="190" r="3.4" fill="#fff4d6" stroke="none"/>
+    <path d="M60 104L440 180" stroke-width="2.8"/>
+    <circle cx="441" cy="180" r="3.6" fill="${AMBER}" stroke="none"/>
+    <path d="M445 182l5 2M447 177l4 -1" stroke="${AMBER}" stroke-width="1.4" stroke-opacity="0.8"/>`
   },
   'criers-note': {
     title: 'The crier\'s note',
@@ -277,7 +291,7 @@ const STUDIES = {
 
 await mkdir(OUT, { recursive: true });
 for (const [id, s] of Object.entries(STUDIES)) {
-  const file = resolve(OUT, `artifact-${id}-v1.svg`);
+  const file = resolve(OUT, `artifact-${id}-v${s.v || 1}.svg`);
   await writeFile(file, svg(id, s.title, s.desc, s.body, s.glow));
   console.log(`[assets:studies] ${file.replace(`${ROOT}/`, '')}`);
 }

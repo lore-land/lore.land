@@ -169,12 +169,39 @@ const PROPS = Object.freeze({
 });
 const GROUND_BY_SIGIL = Object.freeze({ '!': 'maroon', '~': 'dusk', '%': 'bronze', '&': 'plum', '=': 'storm', '?': 'violet', '@': 'leaf', '*': 'ember', '#': 'teal', '.': 'grey' });
 
-/** A trope's emblem: its prop in ink on a painted tile with a stepped foot, the ground chosen by its sigil. */
-export function tropeEmblemSVG(id, { size = 48, sigil = '', label = '' } = {}) {
-  const prop = PROPS[id];
-  if (!prop) return '';
-  const ground = COLORS[GROUND_BY_SIGIL[sigil] || 'dusk'];
-  return `<svg class="lore-emblem-svg" viewBox="0 0 64 64" width="${size}" height="${size}" ${label ? `role="img" aria-label="${label.replace(/"/g, '&quot;')}"` : 'aria-hidden="true"'} xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="4" fill="${ground}"/><path d="M0 58 h12 v-4 h12 v3 h14 v-5 h12 v4 h14 V64 H0Z" fill="#1b1622" opacity="0.35"/><g fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${prop}</g></svg>`;
+/* Before a trope is named, its tile has no sigil's colour yet: the prop alone, on a plain dark ground. */
+const UNNAMED_GROUND = '#34303d';
+
+/**
+ * A trope's emblem: its prop in ink on a painted tile with a stepped foot, the ground chosen by its sigil.
+ *
+ * Drawn small (a chip is 22px) the ink keeps a readable weight: every stroke thickens as the tile shrinks, the
+ * stepped foot is left off, and the figure's two dots grow with it (they are never dropped). A faint ink rim keeps
+ * the tile's edge on a dark binding.
+ *
+ * `stage` (trope-reveal.mjs: seed, hint, named, turned, paid) dresses the tile as far as this reader has come:
+ * a seed is the prop half-seen on a plain ground, a hint the prop clear, a name gives the tile its sigil's colour,
+ * a turn folds its corner over (it has crossed between the book and the lanes), and a payoff gilds its edge.
+ * Without a stage it is drawn named, as it always was.
+ */
+export function tropeEmblemSVG(id, { size = 48, sigil = '', label = '', stage = '' } = {}) {
+  const raw = PROPS[id];
+  if (!raw) return '';
+  const k = Math.max(1, (1.2 * 64) / size / 1.6);
+  const small = size < 30;
+  const prop = k === 1 ? raw : raw
+    .replace(/stroke-width="([\d.]+)"/g, (_, w) => `stroke-width="${n1(Number(w) * k)}"`)
+    .replace(/r="0\.9"/g, `r="${n1(Math.min(0.9 * k, 1.7))}"`);
+  const named = !stage || !['seed', 'hint'].includes(stage);
+  const ground = named ? COLORS[GROUND_BY_SIGIL[sigil] || 'dusk'] : UNNAMED_GROUND;
+  const foot = small ? '' : '<path d="M0 58 h12 v-4 h12 v3 h14 v-5 h12 v4 h14 V64 H0Z" fill="#1b1622" opacity="0.35"/>';
+  const fold = stage === 'turned' || stage === 'paid' ? `<path d="M46 0 H60 Q64 0 64 4 V18Z" fill="${GOLD}" opacity="0.9"/><path d="M46 0 L64 18" stroke="#1b1622" stroke-width="${n1(1.2 * k)}" opacity="0.45"/>` : '';
+  const rim = stage === 'paid'
+    ? `<rect x="${n1(1.4 * k)}" y="${n1(1.4 * k)}" width="${n1(64 - 2.8 * k)}" height="${n1(64 - 2.8 * k)}" rx="3" fill="none" stroke="${GOLD}" stroke-width="${n1(2.4 * k)}"/>`
+    : `<rect x="0.6" y="0.6" width="62.8" height="62.8" rx="3.6" fill="none" stroke="${INK}" stroke-opacity="0.32" stroke-width="${n1(1.2 * k)}"/>`;
+  const ink = stage === 'seed' ? ' opacity="0.55"' : '';
+  const a11y = label ? `role="img" aria-label="${label.replace(/"/g, '&quot;')}"` : 'aria-hidden="true"';
+  return `<svg class="lore-emblem-svg" viewBox="0 0 64 64" width="${size}" height="${size}" ${a11y}${stage ? ` data-stage="${stage}"` : ''} xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="4" fill="${ground}"/>${foot}<g fill="none" stroke="${INK}" stroke-width="${n1(1.6 * k)}" stroke-linecap="round" stroke-linejoin="round"${ink}>${prop}</g>${fold}${rim}</svg>`;
 }
 export const EMBLEMS = Object.freeze(Object.keys(PROPS));
 

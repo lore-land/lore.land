@@ -183,7 +183,7 @@
 ^"probe_kit"{
   .note: "the scriptable half of the probes runs as one command (atelier phase 03)"
   !command: "npm run spw:probes (--strict exits 1 on defects)"
-  &tool: ".spw/tools/alignment-probes.mjs"
+  &tool: ~".spw/tools/alignment-probes.mjs"
   &precipitate: ".spw/audits/alignment-probes-YYYY-MM-DD.spw — findings are ledger-ready"
   covers: ["canonical_mirror", "share_parity", "plate_weight", "precache_existence", "reduced_motion_gates", "theme_parity", "attribute_parity"]
   manual_remainder: ["baseline overlay", "live theme-switch flash", "print fold parity"]

@@ -4,7 +4,8 @@
 # spw-stress.spw. None is built. Language proposals go upstream (spw-seed, the workbench); runtime proposals
 # live in lore.land as portable modules spw.quest could take up.
 #>spw_proposals
-#:canon #:proposal #!open
+#:surface #!canon #!proposal
+#:status #!open
 
 ^"proposals"{
   .from: "release 2026_11_09.H (texture-routes.mjs, spwashi-hand.mjs readTuning, quest-middleware.mjs, texture-materials.mjs) and the findings in spw-stress.spw"

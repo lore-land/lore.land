@@ -71,7 +71,7 @@
   thesis: "Ground notation design in embodied pre-verbal communication alongside explicit force visualization."
   dog_communication: {
     subject: "Boof"
-    observation: "Saying a dog name acts as a grounding anchor; matching the pace, intervals, and inflection of her barking turns exchange into shared temporal rhythm before lexical complexity."
+    observation: "Saying a dog's name acts as a grounding anchor; matching the pace, intervals, and inflection of her barking turns exchange into shared temporal rhythm before lexical complexity."
     design_implication: "Favor responsive call-and-response timing, short grounding tokens, and legible cadence mirroring over verbose chrome."
   }
   factshift_visualization: {
@@ -89,7 +89,7 @@
   developmental_arc: [
     "early_career: awaken direct wonder and tactile curiosity toward computers and live computation",
     "mid_career: counter technical alienation by turning tools back into expressive, inspectable instruments",
-    "late_career: cultivate mentoring capacity and structural empathy — seeing the codebase and interface through another person eyes"
+    "late_career: cultivate mentoring capacity and structural empathy — seeing the codebase and interface through another person's eyes"
   ]
   somatics_law: "Tactile care, pacing, and developed attention belong inside core routing and efficiency engineering: knowing where meaningful transformation happens along the path matters more than arriving instantaneously at a sterile endpoint."
 }

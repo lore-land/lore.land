@@ -90,7 +90,7 @@
   trial_resonance: { layer: trial, premium: never, where: "reading-switches.mjs resonance" }
   trial_prompts: { layer: trial, premium: never, where: "reading-switches.mjs prompts" }
   trial_bias: { layer: trial, premium: never, where: "reading-switches.mjs bias", note: "the switch that lets the land answer in a register; on with no spell cast, it casts the house register of the day" }
-  rules_link: { layer: table, premium: floor, where: "pie-game.mjs the bench link (powersLink)", note: "a rule set passed along as a link, for anyone who opens it" }
+  rules_link: { layer: table, premium: floor, where: "pie-game.mjs the bench link (pie-powers.mjs powersLink)", note: "a rule set passed along as a link, for anyone who opens it" }
   qa_notes: { layer: table, premium: floor, where: "pie-game.mjs ?qa, record.qa", note: "how a card felt, with the game’s own numbers, copied as Spw" }
   design_table: { layer: table, premium: floor, where: "pie-game.mjs ?design", note: "every section of a card named, and a note for it copied as Spw" }
   proposals: { layer: table, premium: floor, where: ".spw/state/proposals.spw (f6, next)", note: "a link of rules or a telling saved as a proposal, read by the parser, accepted with credit" }

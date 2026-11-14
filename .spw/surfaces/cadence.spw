@@ -1,5 +1,5 @@
 # A reading for every day, layered: day, week, month, quarter
-# A design, proposed. book/scripts/modules/daily.mjs computes it and the event route ?/day.lore.land shows it (route-events.mjs); nothing links to it yet.
+# A design, proposed. book/scripts/modules/daily.mjs computes it and the event route ?/day.lore.land shows it (route-events.mjs); the route lab at /texture/ links to it.
 #>lore_land_surfaces_cadence
 #:surface #!proposal
 #:operation #!prime
@@ -14,7 +14,7 @@
   "It does not replace the stones. New chapters are still set on the 13th and 26th. Stone 16 is due on 2026-11-13 and has no chapter yet; a daily page is no reason to wait on it or to rush it"
   "Zero new prose. A day shows a room title, its signature, the first lines of its own text, a trope statement and a lens question, all already published"
   "Never an unreleased chapter. The rooms come from likeness.json, cut at book-extent.mjs TOTAL_CHAPTERS"
-  "The reader local calendar day: a day starts at their own midnight"
+  "The reader's local calendar day: a day starts at their own midnight"
   "Nothing is stored except a reach the reader chooses for themselves"
 ]
 

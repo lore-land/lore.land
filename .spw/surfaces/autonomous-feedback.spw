@@ -4,7 +4,9 @@
 # lore.land is one of its clients. Here lore.land keeps its client file, sends charms to it, and plays it
 # through the route lab beside texture.website, so a reader can see what the post asks before going there.
 #>autonomous_feedback
-#:canon #:architecture #!working
+#:surface #!canon #!architecture
+#:layer #!pragmatics
+#:status #!working
 
 ^"autonomous_feedback"{
   .client: ~".well-known/autonomous-feedback.json"

@@ -3,7 +3,8 @@
 # Every entry must DO something in a scene (cost, help, misread, remember) — no catalogue dumps.
 # Lowercase compound nouns by preference; proper names are rare and earned.
 #>almanac
-#:canon #!worldbuilding #!working
+#:surface #!canon #!worldbuilding
+#:status #!working
 
 ^"almanac"{
   .status: "working"
@@ -11,7 +12,7 @@
   &boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
   rule: "The world believes its impossible premises completely. A wonder has a habit, a cost, and someone who misreads it."
-  data: "book/content/world/almanac.json (81 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes; a creature's motion and misread, an antique's provenance, an artifact's residue and made_by)"
+  data: "book/content/world/almanac.json (83 collectible wonders: id, name, kind, region, terms, note, hint, home, echoes; a creature's motion and misread, an antique's provenance, an artifact's residue and made_by)"
   kinds: "book/scripts/modules/kinds.mjs — the one registry every feature reads (sigil, shelf, ink token, motion in the lanes, how it is found, art fields, badge); how the kinds live across the site: .spw/surfaces/ecology.spw"
   runtime: "chapter-render.mjs marks the first naming of each wonder per chapter (.wonder-mark); almanac.mjs collects on tap (lore.almanac.v1); /almanac/ shows the collection and the combining bench; desk ?[almanac]; switch wonders"
   revisit: "Every wonder has a home chapter and at least one echo; a reader's entry fills in place by place."

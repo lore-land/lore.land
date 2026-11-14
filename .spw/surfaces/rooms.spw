@@ -101,7 +101,7 @@
   "( ) after an operator attaches to the expression, not to the operation, unlike [ ] and { }"
   "the valence words read as modifiers only when whole: bone_yard is a name, bone is not"
   "a capsule records its name twice, as tag and as channel"
-  "the same swallow reaches block heads: ? or # before a quoted name and an open bracket take the line as prose and orphan the close, so this block is ?parser_notes[ with a bare name"
+  "the same swallow reaches block heads: ? or # before a quoted name and an open bracket take the line as prose and orphan the close, so this block is ?parser_notes[ with a bare name (fixed upstream 2026-11-11, workbench 9ef3d22, see spw-stress.spw probe_list_newline; the bare name stays)"
 ]
 
 &canon{

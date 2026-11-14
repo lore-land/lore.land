@@ -181,7 +181,7 @@ import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_08.K';
 import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
-import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_12.A';
+import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_13.B';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_12.A';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
@@ -6213,6 +6213,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
 
   const HAZARD_SCALE = 1.2;
+  /* A wonder in the lanes wears its likeness seal (likeness.mjs), the one in the corner of its almanac card: its
+   * chapter's colours and petals, its material, its berry. Two creatures are no longer the same medallion, and the one
+   * met here is known again there. Each seal is drawn once into an image; until the index has loaded, the plain
+   * medallion stands in. `seals.mod` is set where the likeness module arrives (whenQuiet, below). */
+  const seals = { mod: null, images: new Map() };
+  const SEAL_SIZE = { creature: 25, antique: 19, artifact: 18, contrivance: 21, bracework: 21 };
+  const sealImage = (wonder) => {
+    if (!seals.mod || !wonder?.id || !SEAL_SIZE[wonder.kind]) return null;
+    let img = seals.images.get(wonder.id);
+    if (img === undefined) {
+      const item = seals.mod.likenessItem(`wonder:${wonder.id}`);
+      img = item ? new Image() : null;
+      if (img) img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(seals.mod.likenessMarkup(item, { size: 64, decorative: true }))}`;
+      seals.images.set(wonder.id, img);
+    }
+    return img?.complete && img.naturalWidth ? img : null;
+  };
   const drawThing = (thing) => {
     const { x, y } = thing;
     ctx.save();
@@ -6640,15 +6657,35 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         medallionPath(wk, x, y + bob);
         ctx.fill();
         ctx.stroke();
+        // Its seal at the heart of its frame, and the kind's sigil kept legible over the seal's own small one.
+        const seal = sealImage(thing.wonder);
+        if (seal) {
+          const d = SEAL_SIZE[wk];
+          ctx.drawImage(seal, x - d / 2, y + bob - d / 2, d, d);
+        }
         if (motion === 'burrows') {
           ctx.fillStyle = mix(colors.paper, colors.ink, 0.25);
           ctx.fillRect(x - 16, y + bob + 3, 32, 12);
         }
-        ctx.fillStyle = colors.accent;
-        ctx.font = '800 14px "JetBrainsMono", ui-monospace, monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(KIND_SIGIL[thing.wonder?.kind] || '@', x, y + bob + 1);
+        if (seal && KIND_SIGIL[wk] === '.') {
+          // The ground's sigil is a point (as the badges draw it): a full stop would sit on its baseline, not the heart.
+          ctx.fillStyle = '#fffaf0';
+          ctx.strokeStyle = 'rgba(24, 18, 28, 0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(x, y + bob, 2.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        } else if (seal) {
+          ctx.font = '800 12px "JetBrainsMono", ui-monospace, monospace';
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'rgba(24, 18, 28, 0.6)';
+          ctx.strokeText(KIND_SIGIL[wk] || '@', x, y + bob + 1);
+          ctx.fillStyle = '#fffaf0';
+        } else {
+          ctx.fillStyle = colors.accent;
+          ctx.font = '800 14px "JetBrainsMono", ui-monospace, monospace';
+        }
+        if (!seal || KIND_SIGIL[wk] !== '.') ctx.fillText(KIND_SIGIL[wk] || '@', x, y + bob + 1);
         ctx.textBaseline = 'alphabetic';
         if (thing.wonder?.name && !thing.wapped && !thing.leaving) {
           ctx.font = '700 8px "JetBrainsMono", ui-monospace, monospace';
@@ -10129,7 +10166,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (ask.wonder) {
         const w = ask.wonder;
         const p = nodeOf('p', 'pie-cardface-ask-wonder');
-        p.append(nodeOf('b', '', w.name || 'A wonder'), w.note ? ` — ${w.note}` : '');
+        // Its name leads to its card in the almanac (a new tab, as the passage below does, so the carry waits).
+        const name = nodeOf(w.id ? 'a' : 'b', '', w.name || 'A wonder');
+        if (w.id) Object.assign(name, { href: `/almanac/#wonder-${w.id}`, target: '_blank', rel: 'noopener' });
+        p.append(name, w.note ? ` — ${w.note}` : '');
         inBook.append(p);
       }
       if (ask.passage) {
@@ -10864,7 +10904,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintLore();
   }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; seals.mod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();

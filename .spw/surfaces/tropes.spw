@@ -4,7 +4,7 @@
 # crossings that carry something from one strand into the other, and (where it winds) its stations
 # chapter by chapter. This surface is the contract.
 #>tropes
-#:story #:game #!track
+#:surface #!story #!game #!track
 
 ^"tropes"{
   .registry: ~"book/content/world/tropes.json"
