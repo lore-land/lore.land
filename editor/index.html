@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-wonder="rich" data-lighting="raking" data-cache-release="2026_11_13.B" data-cache-context="editor" data-theme="paper">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sticker &amp; Profile Card Studio · Lore.Land</title>
+  <meta name="description" content="Compose painted Lore.Land profile cards and shareable meme seals: layer scene washes, trope tiles, carrier medallions, recipes, and Spw register lines, then export SVG, PNG, or a playable invite link.">
+  <meta name="theme-color" content="#f3ede1">
+  <link rel="canonical" href="https://lore.land/editor/">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/book/pwa/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/book/pwa/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/book/pwa/icons/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sticker &amp; Profile Card Studio · Lore.Land">
+  <meta property="og:description" content="Layer scene washes, trope tiles, carrier medallions, and Spw meme registers into shareable 1200×630 cards and playable board invites.">
+  <meta property="og:url" content="https://lore.land/editor/">
+  <meta property="og:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="628">
+  <meta property="og:image:alt" content="LORE . LAND in gold capitals over a dark teal lake at night; a bare sapling stands on a small island beneath a gold seed-bud sigil.">
+  <meta property="og:site_name" content="Lore.Land">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sticker &amp; Profile Card Studio · Lore.Land">
+  <meta name="twitter:description" content="Layer scene washes, trope tiles, carrier medallions, and Spw meme registers into shareable cards and playable board invites.">
+  <meta name="twitter:image" content="https://lore.land/book/images/covers/lore-land-cover-v2-og.jpg">
+  <script>
+    try {
+      const covers = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
+      const asCover = { rag: 'paper', glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' };
+      const q = new URLSearchParams(location.search);
+      const story = q.get('story') === 'mine' ? {} : JSON.parse(sessionStorage.getItem('lore.story.v1') || '{}') || {};
+      let cover = asCover[q.get('binding')] || asCover[story.binding] || localStorage.getItem('lore.monument.theme');
+      if (!covers.includes(cover)) {
+        const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+        cover = asCover[nook.binding] || '';
+      }
+      if (cover) document.documentElement.dataset.theme = cover;
+    } catch { /* default paper cover */ }
+  </script>
+  <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
+  <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/tokens.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/themes.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/reset.css?v=2026_11_09.H&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/core/typography.css?v=2026_11_09.H&ctx=home:scene">
+  <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.L&ctx=home:hub">
+  <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_05.C&ctx=canon:baseline">
+  <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_09.L&ctx=home:atmosphere">
+  <link rel="stylesheet" href="/book/styles/home/editor.css?v=2026_11_13.B&ctx=editor:studio">
+  <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_13.B"></script>
+  <script defer type="module" src="/book/scripts/home/editor-page.mjs?v=2026_11_13.B"></script>
+</head>
+<body data-surface="monument" data-presence="threshold" data-current-scene="editor">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="hub-shell">
+    <header class="hub-topbar">
+      <a class="hub-mark" href="/">Lore.Land</a>
+      <nav class="hub-nav" aria-label="Primary">
+        <a href="/book/chapter/01/">Read</a>
+        <a href="/#chambers">Chapters</a>
+        <a href="/pie/">Play</a>
+        <a href="/almanac/">Almanac</a>
+        <a href="/scriptorium/">Scriptorium</a>
+        <a href="/folios/">Folios</a>
+        <a href="/zine/">Broadside</a>
+        <a href="/world/civic-magic.html">The world</a>
+      </nav>
+    </header>
+
+    <main id="main-content" class="hub-main editor-main">
+      <section class="hub-hero editor-hero" aria-labelledby="editor-title">
+        <p class="hub-eyebrow">Sticker &amp; profile card studio · Spw</p>
+        <h1 id="editor-title">Card &amp; sticker table</h1>
+        <p class="hub-lede">Compose a profile plate or meme card in the land’s own paint, medallions, trope tiles, and register voice. Every card exports clean vector/PNG art and carries an optional playable invite back to <a href="/pie/">Exactly One Pie</a>.</p>
+      </section>
+
+      <div class="editor-workbench" data-editor-root>
+        <section class="editor-stage-panel" aria-label="Card canvas">
+          <div class="editor-format-bar" role="group" aria-label="Card format" data-editor-formats></div>
+          <div class="editor-stage-frame" data-editor-stage></div>
+          <p class="editor-stage-hint">Drag any sticker directly on the plate (or select one and use arrow keys to nudge). Every vector layer comes straight from Lore.Land’s own panels and portraits.</p>
+
+          <div class="editor-inspector" data-editor-inspector aria-label="Selected sticker controls"></div>
+
+          <div class="editor-export-bar">
+            <button type="button" class="editor-btn editor-btn-primary" data-editor-download-png>Download PNG</button>
+            <button type="button" class="editor-btn" data-editor-download-svg>Download SVG</button>
+            <button type="button" class="editor-btn" data-editor-copy-link>Copy share link</button>
+            <button type="button" class="editor-btn" data-editor-copy-spw>Copy as Spw</button>
+            <a class="editor-btn editor-btn-link" data-editor-play-invite href="/pie/">Play invite in Pie →</a>
+            <button type="button" class="editor-btn" data-editor-reset>Reset plate</button>
+          </div>
+          <p class="editor-status" data-editor-status role="status" aria-live="polite"></p>
+          <pre class="editor-spw-preview" data-editor-spw aria-label="Card as Spw"></pre>
+        </section>
+
+        <aside class="editor-controls-panel" aria-label="Composition controls and stickers">
+          <section class="editor-group" aria-labelledby="ed-ground-h">
+            <h2 id="ed-ground-h">1 · Ground, light &amp; wash</h2>
+            <div class="editor-chips" data-editor-scenes role="group" aria-label="Scene"></div>
+            <div class="editor-row-split">
+              <div>
+                <span class="editor-sublabel">Light</span>
+                <div class="editor-chips" data-editor-lights role="group" aria-label="Lighting"></div>
+              </div>
+              <div>
+                <span class="editor-sublabel">Frame tone</span>
+                <div class="editor-chips" data-editor-tones role="group" aria-label="Frame tone"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="editor-group" aria-labelledby="ed-profile-h">
+            <h2 id="ed-profile-h">2 · Portrait, recipe &amp; voice</h2>
+            <div class="editor-chips" data-editor-carriers role="group" aria-label="Portrait"></div>
+            <div class="editor-row-split">
+              <div>
+                <span class="editor-sublabel">Mood</span>
+                <div class="editor-chips" data-editor-moods role="group" aria-label="Mood"></div>
+              </div>
+              <div>
+                <span class="editor-sublabel">Signature recipe</span>
+                <div class="editor-chips" data-editor-recipes role="group" aria-label="Pie recipe"></div>
+              </div>
+            </div>
+            <label class="editor-field">
+              <span>Name / handle</span>
+              <input type="text" maxlength="36" placeholder="boof-of-bonk" data-editor-handle>
+            </label>
+            <label class="editor-field">
+              <span>Card title / line</span>
+              <input type="text" maxlength="72" placeholder="Carried level through the Frost Furrows" data-editor-title>
+            </label>
+            <label class="editor-field">
+              <span>Subline / note</span>
+              <input type="text" maxlength="96" placeholder="Two dots watching; the hat stays unlanded." data-editor-note>
+            </label>
+            <div>
+              <span class="editor-sublabel">Meme register (=meme[…])</span>
+              <div class="editor-chips" data-editor-registers role="group" aria-label="Meme register"></div>
+            </div>
+            <label class="editor-field">
+              <span>Optional ^board{ … } line (for playable invite)</span>
+              <input type="text" spellcheck="false" placeholder="^board{ @feel[jazz] =swing[deep] }" data-editor-board>
+            </label>
+          </section>
+
+          <section class="editor-group" aria-labelledby="ed-stickers-h">
+            <h2 id="ed-stickers-h">3 · Stickers (stamp onto plate)</h2>
+            <div class="editor-row-split">
+              <div>
+                <span class="editor-sublabel">Trope tile stage</span>
+                <div class="editor-chips" data-editor-stages role="group" aria-label="Tile stage"></div>
+              </div>
+            </div>
+            <div class="editor-sticker-grid" data-editor-trope-stickers aria-label="Trope tile stickers"></div>
+            <span class="editor-sublabel">Standing figures &amp; pie props</span>
+            <div class="editor-sticker-grid" data-editor-figure-stickers aria-label="Standing figure stickers"></div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="hub-footer">
+      <p>Raised by <a href="https://spwashi.com/?from=lore.land" rel="noopener noreferrer">Spwashi</a> · share cards carry no tracking, only paint and Spw</p>
+      <p class="hub-footer-note">Story first · process in the grain · marks stay marked</p>
+    </footer>
+  </div>
+</body>
+</html>

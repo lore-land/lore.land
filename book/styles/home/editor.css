@@ -1,0 +1,260 @@
+/* ─── /editor/: Sticker & Profile Card Studio ──────────────────────────────────────── */
+
+.editor-main {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.editor-hero {
+  max-width: 58rem;
+}
+
+.editor-workbench {
+  display: grid;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .editor-workbench {
+    grid-template-columns: minmax(0, 1.18fr) minmax(19rem, 0.82fr);
+  }
+}
+
+.editor-stage-panel,
+.editor-controls-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--hub-panel) 94%, transparent);
+}
+
+@media (min-width: 60rem) {
+  .editor-stage-panel {
+    position: sticky;
+    top: 4.5rem;
+  }
+}
+
+.editor-format-bar,
+.editor-chips,
+.editor-export-bar,
+.editor-inspector-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+}
+
+.editor-stage-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--hub-paper-deep) 78%, transparent);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.editor-stage-frame svg.editor-canvas-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+  border-radius: 0.45rem;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--hub-ink) 20%, transparent);
+  user-select: none;
+}
+
+.editor-sticker-node {
+  cursor: grab;
+  outline: none;
+}
+
+.editor-sticker-node:active {
+  cursor: grabbing;
+}
+
+.editor-sticker-node .editor-sticker-ring {
+  opacity: 0;
+  transition: opacity 0.14s ease;
+}
+
+.editor-sticker-node:hover .editor-sticker-ring,
+.editor-sticker-node:focus-visible .editor-sticker-ring,
+.editor-sticker-node.is-selected .editor-sticker-ring {
+  opacity: 1;
+}
+
+.editor-stage-hint,
+.editor-status {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--hub-muted);
+}
+
+.editor-inspector {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px dashed var(--hub-line);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--hub-paper) 55%, transparent);
+  font-size: 0.82rem;
+}
+
+.editor-inspector-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.76rem;
+}
+
+.editor-spw-preview {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--hub-line);
+  background: color-mix(in srgb, var(--hub-paper) 65%, transparent);
+  color: var(--hub-ink);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.editor-group {
+  display: grid;
+  gap: 0.55rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--hub-line);
+}
+
+.editor-group:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.editor-group h2 {
+  margin: 0;
+  font-family: var(--hub-display, Georgia, serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.editor-sublabel {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hub-muted);
+}
+
+.editor-row-split {
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 34rem) {
+  .editor-row-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.editor-chip,
+.editor-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hub-paper) 75%, transparent);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.72rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.editor-chip:hover,
+.editor-btn:hover,
+.editor-chip:focus-visible,
+.editor-btn:focus-visible {
+  border-color: var(--hub-ink);
+}
+
+.editor-chip[aria-pressed='true'],
+.editor-btn-primary {
+  border-color: var(--hub-ink);
+  background: color-mix(in srgb, var(--hub-gold) 28%, var(--hub-panel));
+  font-weight: 700;
+}
+
+.editor-btn-link {
+  border-color: color-mix(in srgb, var(--hub-accent) 60%, var(--hub-line));
+}
+
+.editor-field {
+  display: grid;
+  gap: 0.22rem;
+  font-size: 0.78rem;
+  color: var(--hub-muted);
+}
+
+.editor-field input {
+  width: 100%;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--hub-paper) 88%, transparent);
+  color: var(--hub-ink);
+  font-family: inherit;
+  font-size: 0.86rem;
+}
+
+.editor-sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr));
+  gap: 0.4rem;
+}
+
+.editor-sticker-btn {
+  display: grid;
+  justify-items: center;
+  gap: 0.22rem;
+  padding: 0.38rem 0.25rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--hub-paper) 72%, transparent);
+  color: var(--hub-ink);
+  font-family: var(--font-family-heading, monospace);
+  font-size: 0.62rem;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+}
+
+.editor-sticker-btn:hover,
+.editor-sticker-btn:focus-visible {
+  border-color: var(--hub-gold);
+  background: color-mix(in srgb, var(--hub-gold) 14%, var(--hub-panel));
+}
+
+.editor-sticker-btn svg {
+  display: block;
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+}

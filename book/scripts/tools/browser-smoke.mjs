@@ -706,6 +706,17 @@ const SCENARIOS = [
     await page.ev(`window.__pieTest.carrier('porter')`);
     const off = await page.ev(knockThrice('clerk'));
     if (off.callbacks) throw new Error(`with the switch off something called back: ${JSON.stringify(off.callbacks)}`);
+  }],
+  ['editor: the sticker & profile card studio renders, stamps stickers, and writes Spw invites', async (page) => {
+    await page.goto('/editor/');
+    await page.waitFor(`Boolean(document.querySelector('svg.editor-canvas-svg [data-sticker-id]'))`, { timeoutMs: 8000 });
+    const beforeCount = await page.ev(`document.querySelectorAll('svg.editor-canvas-svg [data-sticker-id]').length`);
+    await page.ev(`document.querySelector('[data-editor-trope-stickers] .editor-sticker-btn')?.click()`);
+    await page.waitFor(`document.querySelectorAll('svg.editor-canvas-svg [data-sticker-id]').length > ${beforeCount}`, { timeoutMs: 4000 });
+    const out = await page.ev(`({ spw: document.querySelector('[data-editor-spw]')?.textContent || '', invite: document.querySelector('[data-editor-play-invite]')?.getAttribute('href') || '', stickers: document.querySelectorAll('svg.editor-canvas-svg [data-sticker-id]').length })`);
+    if (out.stickers !== beforeCount + 1) throw new Error(`stamping did not add one sticker: ${JSON.stringify(out)}`);
+    if (!/^\^card\[profile\]/.test(out.spw)) throw new Error(`missing Spw card output: ${out.spw}`);
+    if (!out.invite.includes('/pie/?')) throw new Error(`missing playable pie invite href: ${out.invite}`);
   }]
 ];
 

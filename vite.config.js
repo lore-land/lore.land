@@ -49,6 +49,7 @@ export default defineConfig({
                 folios: resolve(__dirname, 'folios/index.html'),
                 almanac: resolve(__dirname, 'almanac/index.html'),
                 pie: resolve(__dirname, 'pie/index.html'),
+                editor: resolve(__dirname, 'editor/index.html'),
                 texture: resolve(__dirname, 'texture/index.html'),
                 charm: resolve(__dirname, 'charm/index.html'),
                 // SW precaches offline.html — it must exist in dist or install rejects
