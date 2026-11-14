@@ -170,9 +170,105 @@ export function projectionSpell(clauses) {
   return ['@reader{', ...clauses.map((c) => `  ${clauseText(c)}`), '}'].join('\n');
 }
 
-/** A spell, read back: the parts a link may carry. Unknown lines are ignored, not guessed. */
-export function parseSpell(text) {
+let seedPromise = null;
+const loadSeed = () => {
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  return seedPromise;
+};
+
+const unquote = (s) => String(s ?? '').replace(/^"(.*)"$/s, '$1');
+const walkAst = (node, visit) => {
+  if (Array.isArray(node)) { node.forEach((c) => walkAst(c, visit)); return; }
+  if (!node || typeof node !== 'object') return;
+  visit(node);
+  for (const [k, v] of Object.entries(node)) if (k !== 'span') walkAst(v, visit);
+};
+
+function frameValues(frame) {
+  return (frame?.content || []).map((part) => {
+    const v = part?.value;
+    if (!v) return '';
+    if (v.type === 'Literal') return unquote(v.token?.value);
+    if (v.type === 'Expression') {
+      return [
+        ...(v.terms || []).map((t) => (t.type === 'Literal' ? unquote(t.token?.value) : t.token?.value ?? t.raw ?? '')),
+        ...(v.modifiers?.modifiers || []).map((m) => m.value)
+      ].filter(Boolean).join(' ');
+    }
+    return '';
+  }).filter(Boolean);
+}
+
+/**
+ * A spell, read back: the parts a link may carry. Unknown lines are ignored, not guessed.
+ * When `parse` (spw-seed) is passed, parses the AST whole (`complete && !proseFallback`), ignoring comments and string
+ * literals; computes deterministic slot hashes (`slotHash`) and reader summary (`readMarks`/`formatLineReading`).
+ */
+export function parseSpell(text, { parse = null, readMarks = null, formatLineReading = null, slotHash = null } = {}) {
   const src = String(text || '');
+  const hash = typeof slotHash === 'function' ? slotHash(src.split('\n')[0] || src, { seed: 'lore.land' }) : null;
+
+  if (typeof parse === 'function') {
+    try {
+      const result = parse(src, { lexProfile: 'prose' });
+      const whole = Boolean(result?.success && result.completeness?.complete && !result.completeness?.proseFallback);
+      if (whole && result.ast) {
+        const story = {};
+        let audience = null;
+        let plain = false;
+        let plainPalette = false;
+        walkAst(result.ast, (node) => {
+          if (node.type !== 'Operation') return;
+          const sigil = node.operator?.value;
+          const label = String(node.operatorLabel?.value || node.modifiers?.modifiers?.[0]?.value || '').toLowerCase();
+          if (sigil === '!' && label === 'plain') {
+            const items = frameValues(node.frame).map((v) => v.toLowerCase());
+            if (items.includes('carries')) plain = true;
+            if (items.includes('palette')) plainPalette = true;
+            return;
+          }
+          if (sigil !== '=') return;
+          if (label === 'genre' && node.body) {
+            const genre = {};
+            for (const expr of node.body?.sequence?.expressions || []) {
+              const binding = (expr.terms || [])[0];
+              if (binding?.type === 'Binding') {
+                const k = String(binding.key?.token?.value || '').toLowerCase();
+                const n = Number(binding.value?.terms?.[0]?.token?.value);
+                if (['boon', 'bane', 'bone'].includes(k) && Number.isFinite(n)) genre[k] = n;
+              }
+            }
+            if (Object.values(genre).some((n) => n > 0)) story.genre = genre;
+            return;
+          }
+          const vals = frameValues(node.frame).map((v) => v.toLowerCase());
+          const first = vals[0];
+          if (label === 'lens' && first && LENSES.includes(first)) story.lens = first;
+          else if (label === 'room' && first && ROOMS.includes(first)) story.room = first;
+          else if (label === 'binding' && first && BINDINGS.includes(first)) story.binding = first;
+          else if (label === 'edition' && first) story.edition = first;
+          else if (label === 'audience' && first && AUDIENCES.includes(first)) audience = first;
+          else if (label === 'with') {
+            const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
+            if (list.length) story.with = list;
+          } else if (label === 'without') {
+            const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
+            if (list.length) story.without = list;
+          }
+        });
+        const reading = typeof readMarks === 'function' && typeof formatLineReading === 'function'
+          ? formatLineReading(readMarks(result.ast))
+          : '';
+        return { story, audience, plain, plainPalette, reader: 'spw-seed', whole: true, reading, hash, errors: [] };
+      }
+      const errors = (result?.errors || []).map((e) => `${e.position?.line || 0}:${e.position?.column || 0} ${e.data?.message || 'parse error'}`);
+      return { ...parseSpellSmall(src), reader: 'small', whole: false, reading: '', hash, errors };
+    } catch { /* fall through to small reader */ }
+  }
+  return { ...parseSpellSmall(src), reader: 'small', whole: null, reading: '', hash, errors: [] };
+}
+
+function parseSpellSmall(src) {
   const one = (key, allowed) => {
     const m = new RegExp(`=${key}\\[([a-z0-9-]+)\\]`, 'i').exec(src);
     const v = m?.[1]?.toLowerCase();
@@ -210,8 +306,8 @@ export function parseSpell(text) {
 }
 
 /** Read this page through a spell: a link of story directions (never saved), the audience only lowered. */
-export function spellHref(text, href = location.href) {
-  const { story, audience, plain, plainPalette } = parseSpell(text);
+export function spellHref(text, href = location.href, seed = null) {
+  const { story, audience, plain, plainPalette } = parseSpell(text, seed || undefined);
   const url = new URL(storyLink({ story, href }));
   url.searchParams.delete('spell');
   if (audience === 'pg') url.searchParams.set('audience', 'pg');
@@ -265,19 +361,36 @@ export function initProjectionSpell({ chapterData } = {}) {
   area.value = projectionSpell(clauses);
   const status = el('p', { className: 'projection-spell-status', role: 'status' });
   const read = el('button', { type: 'button', className: 'projection-spell-go' }, 'Read it this way');
-  read.addEventListener('click', () => { location.href = spellHref(area.value); });
+  let seedLoaded = null;
+  const inspectSpell = async (src) => {
+    const seed = seedLoaded || await loadSeed();
+    if (seed) seedLoaded = seed;
+    const parsed = parseSpell(src, seed || undefined);
+    if (parsed.reader === 'spw-seed' && parsed.whole) {
+      status.textContent = `Read whole by the Spw parser (${parsed.reading || 'spell'}).`;
+    } else if (seed && parsed.whole === false) {
+      status.textContent = `Did not read whole (${parsed.errors[0] || 'incomplete'}); recognized clauses still apply.`;
+    }
+    return { seed, parsed };
+  };
+  read.addEventListener('click', async () => {
+    const { seed } = await inspectSpell(area.value);
+    location.href = spellHref(area.value, location.href, seed);
+  });
   const copy = el('button', { type: 'button', className: 'projection-spell-copy' }, 'Copy a link that reads this way');
   copy.addEventListener('click', async () => {
+    const { parsed } = await inspectSpell(area.value);
     const url = new URL(location.href);
     url.search = '';
     url.searchParams.set('spell', area.value);
     try {
       await navigator.clipboard.writeText(url.toString());
-      status.textContent = 'Copied. Whoever opens it reads this chapter through your spell, for their visit only; their own settings stay theirs.';
+      status.textContent = `Copied (${parsed.reader === 'spw-seed' ? 'verified with spw-seed' : 'small reader'}). Whoever opens it reads this chapter through your spell, for their visit only; their own settings stay theirs.`;
     } catch {
       status.textContent = url.toString();
     }
   });
+  area.addEventListener('change', () => { inspectSpell(area.value); });
   const peekText = () => clauses.filter((c) => c.source !== 'book' && c.key !== 'chapter').map(clauseText).join(' ') || '@reader{ the book’s own }';
   // Each line lit as a spell: its sigils in their roles, and what it does said as it is touched.
   const lineItems = () => clauses.map((c) => {

@@ -111,7 +111,8 @@ let grants = 0;
 
 /* The index points at something real. */
 {
-  const active = read('.spw/index.spw').match(/audit_active:\s*"@spw\/([^"]+)"/)?.[1];
+  const indexText = read('.spw/index.spw');
+  const active = indexText.match(/audit_active:\s*~?"(?:@spw\/|\.spw\/)?([^"]+)"/)?.[1];
   if (!active || !fs.existsSync(path.join(ROOT, '.spw', active))) hard.push(`.spw/index.spw: audit_active points at ${active ?? 'nothing'}`);
 }
 

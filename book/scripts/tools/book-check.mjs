@@ -34,6 +34,7 @@ import { FORMER_LIVES } from '../home/pie-mimes.mjs';
 import { readLevels } from '../home/pie-rhythm.mjs';
 import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
 import { parseWay, waySpell } from '../modules/way-through.mjs';
+import { parseSpell, projectionSpell } from '../modules/projection.mjs';
 import { wayForks, readFork, readForkSmall, forkLine, forkProblems } from '../modules/forks.mjs';
 import { CHARACTERS, REASONS, WEIGHT } from '../modules/characters.mjs';
 import { readMechanics } from '../modules/unlocks.mjs';
@@ -64,8 +65,11 @@ const isPublished = (section) => section?.status !== 'drafting';
 
 let parse = null;
 let readBias = null;
+let readMarks = null;
+let formatLineReading = null;
+let slotHash = null;
 try {
-  ({ parse, readBias } = await import('../vendor/spw-seed.mjs'));
+  ({ parse, readBias, readMarks, formatLineReading, slotHash } = await import('../vendor/spw-seed.mjs'));
 } catch {
   notes.push('Spw interpreter unavailable; bracework and room signatures are checked for shape only.');
 }
@@ -384,6 +388,35 @@ function parsedLevels(text) {
   const sampleWay = { aside: [2, 7], apart: (way.pairs || []).map((p) => p.id) };
   if (!reads(waySpell(sampleWay))) error('way', 'a way line does not read whole with the Spw interpreter');
   if (JSON.stringify(parseWay(waySpell(sampleWay))) !== JSON.stringify({ aside: [2, 7], apart: [...sampleWay.apart].sort() })) error('way', 'a way line does not read back as itself');
+  if (parse) {
+    const parsedWay = parseWay(waySpell(sampleWay), { parse });
+    if (JSON.stringify(parsedWay) !== JSON.stringify(parseWay(waySpell(sampleWay)))) error('way', 'parseWay and the Spw interpreter disagree on sampleWay');
+    if (parseWay('^way{ !aside[2] =unknown[foo] }', { parse }) !== null) error('way', 'parseWay accepted an unknown operation under spw-seed');
+    if (parseWay('^way{ !aside[2]', { parse }) !== null) error('way', 'parseWay accepted an unclosed line under spw-seed');
+  }
+  {
+    const sampleSpell = projectionSpell([
+      { key: 'lens', value: 'bone', source: 'yours' },
+      { key: 'audience', value: 'pg', source: 'book' },
+      { key: 'room', value: 'lamp', source: 'yours' },
+      { key: 'binding', value: 'glass', source: 'yours' },
+      { key: 'plain', value: 'carries', source: 'visit' },
+      { key: 'chapter', value: 1, source: 'page' }
+    ]);
+    const smallSpell = parseSpell(sampleSpell);
+    const seedSpell = parse ? parseSpell(sampleSpell, { parse, readMarks, formatLineReading, slotHash }) : null;
+    if (smallSpell.story.lens !== 'bone' || smallSpell.story.room !== 'lamp' || smallSpell.story.binding !== 'glass' || !smallSpell.plain) {
+      error('projection', 'parseSpell failed to read a sample projection spell');
+    }
+    if (seedSpell) {
+      if (!seedSpell.whole || seedSpell.reader !== 'spw-seed') error('projection', 'sample projection spell did not read whole with spw-seed');
+      if (JSON.stringify(seedSpell.story) !== JSON.stringify(smallSpell.story) || seedSpell.audience !== smallSpell.audience || seedSpell.plain !== smallSpell.plain) {
+        error('projection', 'parseSpell small reader and spw-seed reader disagreed on sample projection');
+      }
+      const guarded = parseSpell('@reader{\n  =lens[boon]\n  # =audience[pg13] comment ignored\n}', { parse });
+      if (guarded.audience !== null || guarded.story.lens !== 'boon') error('projection', 'spw-seed parseSpell let a commented clause set audience');
+    }
+  }
   /* The way's forks (forks.mjs): one line each, drawn from way.json, never written by hand. Each reads whole with the
    * parser and the same with the small reader, writes back as itself, and goes only to chapters the book has. */
   const forks = wayForks(way, Math.max(...knownChapters));
@@ -464,6 +497,10 @@ function parsedLevels(text) {
         const mine = mechanics[id] && { unlock: mechanics[id].unlock, weigh: mechanics[id].weigh, page: mechanics[id].page };
         if (JSON.stringify(mine) !== JSON.stringify(read[id])) error('unlocks', `unlock ${id}: the game's reader and the Spw interpreter read it differently (${JSON.stringify(mine)} vs ${JSON.stringify(read[id])})`);
       });
+      const astDirect = readMechanics(mechText, { parse });
+      if (JSON.stringify(astDirect) !== JSON.stringify({ measures, mechanics })) {
+        error('unlocks', 'readMechanics({ parse }) disagreed with regex readMechanics() on mechanics.spw');
+      }
     }
   }
   notes.push(`unlocks: ${list.length} mechanics, each with its page (${list.map((m) => m.page).join(', ')})`);

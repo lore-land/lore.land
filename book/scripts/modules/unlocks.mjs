@@ -46,11 +46,66 @@ const weighOf = (body) => {
   return Object.fromEntries([...inner.matchAll(/%([a-z_]+)\[([0-9.]+)\]/g)].map((m) => [m[1], Number(m[2])]));
 };
 
-/** The registry's text → { measures: { id: { says, cap, key } }, mechanics: { id: { … } } }. Never throws. */
-export function readMechanics(text = '') {
+/**
+ * The registry's text → { measures: { id: { says, cap, key } }, mechanics: { id: { … } } }.
+ * When `parse` (spw-seed's parse) is provided, reads the AST directly; falls back cleanly otherwise. Never throws.
+ */
+export function readMechanics(text = '', { parse = null } = {}) {
   const measures = {};
   const mechanics = {};
   try {
+    if (typeof parse === 'function') {
+      const res = parse(String(text || ''), { lexProfile: 'prose' });
+      if (res?.completeness?.complete && !res.completeness?.proseFallback) {
+        const exprs = (body) => body?.sequence?.expressions || [];
+        const unq = (s) => String(s ?? '').replace(/^"(.*)"$/s, '$1');
+        const val = (p) => {
+          const v = p?.value;
+          if (v?.type === 'Literal') return unq(v.token?.value);
+          if (v?.type === 'Expression') return [...(v.terms || []).map((t) => t.token?.value ?? t.raw ?? ''), ...(v.modifiers?.modifiers || []).map((x) => x.value)].join(' ');
+          return '';
+        };
+        const fieldsOf = (body) => {
+          const out = {};
+          let path = null;
+          exprs(body).forEach((e) => (e.terms || []).forEach((t) => {
+            if (t.type === 'PathRef') { path = unq(t.path?.token?.value); return; }
+            const op = t.type === 'Reference' ? '@' : t.operator?.value;
+            const label = t.type === 'Reference' ? t.raw : t.operatorLabel?.value;
+            if (!op || !label) return;
+            const frame = t.frame || e.frame;
+            out[op + label] = !frame && t.body ? fieldsOf(t.body) : (frame?.content || []).map(val);
+          }));
+          return { out, path };
+        };
+        const top = res.ast?.expression?.expressions || res.ast?.expressions || [];
+        top.flatMap((e) => e.terms || []).forEach((block) => {
+          if (block?.type !== 'Operation' || block.operator?.value !== '!') return;
+          const kind = block.operatorLabel?.value;
+          exprs(block.body).flatMap((x) => x.terms || []).filter((x) => x.operatorLabel).forEach((entry) => {
+            const id = entry.operatorLabel.value;
+            const { out, path } = fieldsOf(entry.body);
+            if (kind === 'measures') {
+              measures[id] = { says: out['#says']?.[0] || id, cap: Number(out['%cap']?.[0]) || null, key: path || null };
+            } else if (kind === 'mechanics') {
+              const weigh = Object.fromEntries(Object.entries(out['%weigh']?.out || {}).map(([k, v]) => [k.replace(/^%/, ''), Number(v?.[0])]));
+              mechanics[id] = {
+                id,
+                name: out['#name']?.[0] || id,
+                says: out['#says']?.[0] || '',
+                unlock: Number(out['%unlock']?.[0]) || 0,
+                weigh,
+                before: out['&before']?.[0] || 'locked',
+                page: out['.page']?.[0] || id.replace(/_/g, '-'),
+                floor: out['#floor']?.[0] || '',
+                where: path || null
+              };
+            }
+          });
+        });
+        if (Object.keys(mechanics).length) return { measures, mechanics };
+      }
+    }
     entriesOf(blockOf(text, 'measures')).forEach(([id, body]) => {
       measures[id] = { says: field(body, '#', 'says') || id, cap: Number(field(body, '%', 'cap')) || null, key: (body.match(/~"([^"]+)"/) || [])[1] || null };
     });

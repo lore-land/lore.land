@@ -21,8 +21,26 @@ const ROOT = process.cwd();
 const ENTRY = path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/index.ts');
 /* Only what lore.land imports, so the rest of the kernel shakes out (about a quarter of the bytes). Add a name here to use it. */
 // scanPairLabels reads a sealed line's label and its mirrored close (finds, seasons); spokenLine says a line in the
-// names of its parts (the board line, for whoever reads Setup by ear). Both arrived with workbench 47c178e.
-const EXPORTS = ['parse', 'readBias', 'scanPairLabels', 'spokenLine'];
+// names of its parts (the board line, for whoever reads Setup by ear). readLine/writeLine/slotHash/readRegisterStamps/
+// readMarks/checkLine/hydrateSnippet arrived with workbench 84cf313 for slot-level interpretation and template hydration.
+const EXPORTS = [
+  'parse',
+  'readBias',
+  'scanPairLabels',
+  'spokenLine',
+  'readLine',
+  'writeLine',
+  'joinParts',
+  'slotHash',
+  'textHash',
+  'readRegisterStamps',
+  'summarizeRegisterStamps',
+  'readMarks',
+  'formatLineReading',
+  'checkLine',
+  'hydrateSnippet',
+  'parseBindings'
+];
 const OUTFILE = path.join(ROOT, 'book/scripts/vendor/spw-seed.mjs');
 const VERIFY = process.argv.includes('--verify');
 

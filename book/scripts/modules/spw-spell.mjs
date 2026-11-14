@@ -124,7 +124,65 @@ const KIND_SAYS = Object.freeze({
 });
 const CHARGE = Object.freeze({ primed: 0.82, step: 0.18, tickMs: 2800, quiet: 0.08 });
 
-export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false, onCast = null, layout = 'auto' } = {}) {
+let seedPromise = null;
+const loadSeed = () => {
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  return seedPromise;
+};
+
+/**
+ * Edit one slot of a single-line Spw spell losslessly through spw-seed's readLine + writeLine.
+ * Keeps every byte outside the changed slot untouched; falls back to string return if seed is absent.
+ */
+export function rewriteSlot(line, slotKey, value, seed) {
+  const src = String(line || '');
+  if (!seed?.readLine || !seed?.writeLine) return src;
+  const reading = seed.readLine(src);
+  return seed.writeLine(reading, { slots: { [slotKey]: value } });
+}
+
+/**
+ * Enrich a rendered `.spell` element with real `spw-seed` semantics (AST completeness, reader marks,
+ * single-line slot order & deterministic slotHash, informing register stamps) without moving layout.
+ */
+export function enhanceSpell(root, text, seed) {
+  if (!root || !seed?.parse) return null;
+  const src = String(text || '');
+  try {
+    const result = seed.parse(src, { lexProfile: 'prose' });
+    const whole = Boolean(result?.success && result.completeness?.complete && !result.completeness?.proseFallback);
+    root.dataset.spwReader = whole ? 'spw-seed' : 'small';
+    const reading = whole && seed.readMarks && seed.formatLineReading
+      ? seed.formatLineReading(seed.readMarks(result.ast))
+      : '';
+    if (reading) root.dataset.spwReading = reading;
+    if (!src.includes('\n') && seed.readLine) {
+      const lr = seed.readLine(src);
+      if (lr.order?.length) root.dataset.spwSlots = lr.order.join(',');
+      if (seed.slotHash) {
+        const sh = seed.slotHash(lr, { seed: 'lore.land', length: 8 });
+        const hex = lr.order.map((k) => sh.components[k]).filter(Boolean).join('.');
+        if (hex) root.dataset.spwHash = hex;
+      }
+    }
+    if (seed.readRegisterStamps && seed.summarizeRegisterStamps) {
+      const stamps = seed.readRegisterStamps(src);
+      if (stamps.length) {
+        const s = seed.summarizeRegisterStamps(stamps);
+        root.dataset.spwStamps = `${s.informing}/${s.total}`;
+      }
+    }
+    const lineEl = root.querySelector('.spell-line');
+    if (lineEl && reading && !lineEl.getAttribute('title')) {
+      lineEl.setAttribute('title', `Read as Spw: ${reading}`);
+    }
+    return { whole, reading };
+  } catch {
+    return null;
+  }
+}
+
+export function renderSpell(text, { explain = null, cast = true, link = null, label = '', play = false, scrub = null, copy = false, onCast = null, layout = 'auto', seed = null, real = false } = {}) {
   const root = document.createElement('div');
   root.className = `spell${cast ? ' is-uncast' : ''}`;
   // Made of something: the first $material it names gives it that material's ground and sheen.
@@ -285,6 +343,8 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
 
   enablePriming(root, line, gloss, explain, onCast);
   if (cast) castWhenSeen(root);
+  if (seed?.parse) enhanceSpell(root, text, seed);
+  else if (real) loadSeed().then((mod) => { if (mod && root.isConnected) enhanceSpell(root, text, mod); }).catch(() => {});
   return root;
 }
 

@@ -28,6 +28,48 @@
   integration: "^projects[chapter, game, folio_value] — what the projection is bound into"
 }
 
+^"templates"{
+  .note: "Instantiable Spw templates for build projection and reader spells: hydrateSnippet expands ${slot=default} holes without mutating the seed; readLine reads any one-line slot reading (word [mode] {body} (scene) <concept>) losslessly."
+  *chapter_page{
+    !template: ~"book/templates/chapter.html"
+    !builder: ~"book/scripts/tools/build-chapters.mjs"
+    slots: [
+      "CANONICAL_URL", "CHAPTER_BODY", "CHAPTER_CODA", "CHAPTER_DATA", "CHAPTER_EDGE",
+      "CHAPTER_NUMBER", "CHAPTER_SLUG", "CHAPTER_TITLE", "DESCRIPTION", "FEEDBACK_URL",
+      "MARKS", "MOOD", "NEXT_HREF", "NEXT_NUMBER", "NEXT_TITLE", "OG_IMAGE", "OG_IMAGE_ALT",
+      "PAGE_TITLE", "PREV_HREF", "PREV_NUMBER", "PREV_TITLE", "RELEASE", "STRUCTURED_DATA"
+    ]
+  }
+  *reader_projection{
+    !source: "@reader{ =lens[${lens=balanced}] =audience[${audience=pg}] =room[${room=day}] =binding[${binding=rag}] ^way{ !aside[${aside}] =apart[${apart}] } .chapter[${chapter=1}] ^projects[chapter, game, folio_value] }"
+  }
+  *story_beat{
+    !source: "?beat[${id=beat_01}]{ @who[${actor=boof}] <motif>{ ${concept=unspent_wish} } .{ ${ground=frozen_furrow} } !turn[${shift=warm}] #says[${line}] }"
+  }
+  *chapter_clause{
+    !source: "@c${nn=01}[${air=warm}]{ .room[${room=01}] =lens[${lens=balanced}] =edition[${edition=first}] %scenes[${count=0}] }"
+  }
+}
+
+^[reg=projection]{
+  .note: "Standalone informing register stamp for the projection surface."
+}
+
+^"slot_contract"{
+  .note: "Workbench 84cf313 parser primitives integrated across site tooling and runtime modules."
+  line_reader: "readLine / writeLine / joinParts — lossless edits to word, mode [ ], body { }, scene ( ), concept < >"
+  slot_hash: "slotHash / textHash — deterministic per-slot SHA-256 identity and unit vectors in Node and browser"
+  register_stamps: "readRegisterStamps / summarizeRegisterStamps — only informing [reg=...] stamps (not restating facet/set/scope/capsule)"
+  reader_marks: "readMarks / formatLineReading / checkLine — real AST-backed role and shape checks"
+  snippet_hydrate: "hydrateSnippet / parseBindings — fill ${slot=default} holes without mutating the source seed"
+  &module: ~"book/scripts/modules/projection.mjs"
+  &spell_ui: ~"book/scripts/modules/spw-spell.mjs"
+  &way: ~"book/scripts/modules/way-through.mjs"
+  &editorial: ~"./editorial.spw"
+  &stories: ~"./stories.spw"
+  &mechanics: ~"../runtime/mechanics.spw"
+}
+
 ^"orthogonality"{
   .status: "proposed reading, 2026-11-10; the mechanics named are live"
   claim: "The story and the lanes are at right angles. A carry cannot change what happened in the book, and a chapter cannot change the rules of the lanes. Because neither can move the other, each can cast a shadow on the other without either being overwritten, and that shadow is the projection."

@@ -63,10 +63,56 @@ export function waySpell(way) {
   return parts.length ? `^way{ ${parts.join(' ')} }` : '^way{ }';
 }
 
-/** A line read back; null when it is not a way. book:check holds this small reader to the Spw interpreter. */
-export function parseWay(text) {
+let seedPromise = null;
+const loadSeed = () => {
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  return seedPromise;
+};
+
+/**
+ * A line read back; null when it is not a way.
+ * When `parse` (spw-seed's parse) is provided, parses the AST whole (`!aside[...]` and `=apart[...]`),
+ * refusing prose fallbacks and unknown operations; falls back to the small reader otherwise.
+ */
+export function parseWay(text, { parse = null } = {}) {
   const src = String(text || '').trim();
   if (!/^\^way\s*\{[\s\S]*\}$/.test(src)) return null;
+  if (typeof parse === 'function') {
+    try {
+      const result = parse(src, { lexProfile: 'prose' });
+      if (!result?.success || !result.completeness?.complete || result.completeness?.proseFallback) return null;
+      const topExprs = result.ast?.expression?.expressions || result.ast?.expressions || [];
+      const topTerms = topExprs.flatMap((e) => e.terms || []);
+      if (topTerms.length !== 1) return null;
+      const root = topTerms[0];
+      if (root?.type !== 'Operation' || root.operator?.value !== '^' || root.operatorLabel?.value !== 'way' || !root.body) return null;
+      const aside = [];
+      const apart = [];
+      const innerExprs = root.body?.sequence?.expressions || [];
+      for (const expr of innerExprs) {
+        const terms = expr.terms || [];
+        for (const term of terms) {
+          if (term?.type !== 'Operation' || !term.frame) return null;
+          const sigil = term.operator?.value;
+          const label = term.operatorLabel?.value;
+          const vals = (term.frame.content || [])
+            .map((p) => {
+              const v = p?.value;
+              if (v?.type === 'Literal') return String(v.token?.value ?? '').replace(/^"(.*)"$/s, '$1');
+              const id = (v?.terms || []).find((t) => t.type === 'Identifier');
+              return id?.token?.value ?? '';
+            })
+            .filter(Boolean);
+          if (sigil === '!' && label === 'aside') aside.push(...vals);
+          else if (sigil === '=' && label === 'apart') apart.push(...vals);
+          else return null;
+        }
+      }
+      return clean({ aside, apart });
+    } catch {
+      return null;
+    }
+  }
   const list = (op, name) => {
     const m = new RegExp(`\\${op}${name}\\[([^\\]]*)\\]`).exec(src);
     return m ? m[1].split(/[,\s]+/).filter(Boolean) : [];
@@ -472,14 +518,30 @@ export async function mountWayPanel(root) {
 
     const field = el('input', { className: 'way-line-input', value: waySpell(way), 'aria-label': 'Your way through, as a line of Spw', spellcheck: 'false', autocomplete: 'off' });
     const take = el('button', { type: 'button', className: 'way-pick', 'aria-label': 'Take this line as your way through' }, 'Take this line');
-    field.addEventListener('input', () => {
-      const read = parseWay(field.value);
+    let seedLoaded = null;
+    loadSeed().then((mod) => { seedLoaded = mod; }).catch(() => {});
+    const summarizeWay = (read, usedSeed) => {
       if (!read) { say('That line is not a way yet. It starts ^way{ and ends }.'); return; }
       const parts = [read.aside.length && `set aside ${read.aside.map(words).join(', ')}`, read.apart.length && `keep ${read.apart.length} pairing${read.apart.length > 1 ? 's' : ''} apart`].filter(Boolean);
-      say(parts.length ? `This line would ${parts.join(' and ')}.` : 'This line would read the whole book as it is.');
+      const via = usedSeed ? ' (read by the Spw parser)' : '';
+      say(`${parts.length ? `This line would ${parts.join(' and ')}.` : 'This line would read the whole book as it is.'}${via}`);
+    };
+    field.addEventListener('input', () => {
+      const value = field.value;
+      if (seedLoaded?.parse) {
+        summarizeWay(parseWay(value, { parse: seedLoaded.parse }), true);
+      } else {
+        summarizeWay(parseWay(value), false);
+        loadSeed().then((mod) => {
+          if (mod?.parse && field.isConnected && field.value === value) {
+            seedLoaded = mod;
+            summarizeWay(parseWay(value, { parse: mod.parse }), true);
+          }
+        }).catch(() => {});
+      }
     });
     take.addEventListener('click', () => {
-      const read = parseWay(field.value);
+      const read = parseWay(field.value, { parse: seedLoaded?.parse || null }) || parseWay(field.value);
       if (read) apply(read, `Done. Your way through is now ${waySpell(read)}`);
     });
     const share = `/book/chapter/01/?way=${encodeURIComponent(waySpell(way))}`;
