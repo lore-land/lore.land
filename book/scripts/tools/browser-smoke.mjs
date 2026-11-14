@@ -328,6 +328,8 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('.pie-setup-board-line')`, { timeoutMs: 3000 });
     const line = await page.ev(`document.querySelector('.pie-setup-board-line').textContent`);
     if (!chosen.every(([key, value]) => line.includes(`=${key}[${value}]`))) throw new Error(`the board line does not say the sounds chosen: ${line}`);
+    // Said by ear in the names of its parts (the workbench's spokenLine), once the parser has loaded.
+    await page.waitFor(`/^The board line: /.test(document.querySelector('.pie-setup-board-line')?.getAttribute('aria-label') || '')`, { timeoutMs: 8000 });
   }],
   ['Setup can be walked end to end on a phone by its steps, a swipe goes back, and it opens where it was left', async (page) => {
     await page.setViewport(390, 844, { mobile: true });

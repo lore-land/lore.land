@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { FINDS, LEANS, MOMENTS, VERBS, deedOf, foundLine, mirrored, opens, readFind, take } from '../home/pie-finds.mjs';
 import { REASONS } from '../modules/characters.mjs';
 // @ts-ignore: the vendored parser carries its own declaration; only parse is used here.
-import { parse } from '../vendor/spw-seed.mjs';
+import { parse, scanPairLabels } from '../vendor/spw-seed.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /** @type {string[]} */
@@ -95,6 +95,11 @@ for (const find of FINDS) {
   const at = { day: '2026-11-12', chapter: 5, carrier };
   const line = foundLine(find, at);
   if (!line.includes(`{_${find.id} `) || !line.endsWith(` ${mirrored(find.id)}_}`)) fail(`${name}: its line is not sealed by the name and its mirror`);
+  // The workbench reads the seal itself (scanPairLabels): a pair labeled with the find's name whose close is mirrored,
+  // and no such pair once the mirror is cut away.
+  const sealOf = (/** @type {string} */ text) => (scanPairLabels(text)?.pairs || []).find((/** @type {any} */ p) => p.label === find.id && p.close?.spelling === 'mirrored');
+  if (!sealOf(line)) fail(`${name}: the workbench does not read its line as sealed by ${find.id} and its mirror`);
+  if (sealOf(line.replace(` ${mirrored(find.id)}_}`, ' }'))) fail(`${name}: negative control: a line with its mirror cut away still reads as sealed`);
   const lineRead = parse(line, { lexProfile: 'prose' }).completeness;
   if (!lineRead?.complete || lineRead.proseFallback) fail(`${name}: its line does not read whole as Spw`);
   const once = take({}, find, at);

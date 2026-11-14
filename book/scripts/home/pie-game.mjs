@@ -9097,6 +9097,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const box = nodeOf('div', 'pie-setup-board');
     const line = lineNow();
     const code = nodeOf('code', 'pie-setup-board-line');
+    // Said in the names of its parts (the workbench's spokenLine), for whoever reads Setup by ear: the sigils read as
+    // what they mean rather than as punctuation. Read as written until the parser has loaded.
+    loadParser().then((m) => {
+      const said = m?.spokenLine?.(line);
+      if (said?.clauses?.length && code.isConnected !== false) code.setAttribute('aria-label', `The board line: ${said.clauses.map((/** @type {any} */ c) => c.says).join(', ')}`);
+    }).catch(() => {});
     const changed = lastTerm ? `${lastTerm === 'fill' ? 'frame' : lastTerm === 'share' ? 'lanes' : lastTerm.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`)}[` : '';
     line.split(/(\s+)/).forEach((part) => {
       if (changed && part.slice(1).startsWith(changed)) code.append(nodeOf('mark', '', part));

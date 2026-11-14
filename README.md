@@ -101,7 +101,7 @@ This project integrates Spw kernel ideas from:
 
 - Repository: `https://github.com/spwashi/spw-workbench`
 - Local submodule in this workspace: `./.spw/_workbench`
-- Current submodule pin: `9ef3d22` (spw-workbench main, 2026-11-11)
+- Current submodule pin: `47c178e` (spw-workbench main, 2026-11-13)
 
 ### Runtime Bridge In lore.land
 

@@ -94,6 +94,7 @@
 ^"upstream"{
   trial: "The workbench holds what a label on a brace pair means as a trial (wonder_trial_pair_label); this is one use of the mirrored close proved in play: a check that a line arrived whole"
   ask: "A pair label the parser reads would let the seal be read by the same reader that reads the line; until then the label and its mirror are members"
+  ~#answer(2026-11-13): "workbench 47c178e reads it: scanPairLabels (spw.pair-labels/1) finds a labeled pair and calls its close mirrored. seasons-check and finds-check now hold every kept line and every found line to that reading, and a line with its mirror cut away to none, beside the game own readKept. The parse itself is unchanged, so the label and its mirror are still members to the tree"
 }
 
 ^"next"{

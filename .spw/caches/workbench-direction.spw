@@ -103,6 +103,7 @@
 ^"proposed_answers"{
   .filed: "2026-11-13, proposed from the pie, not settled"
   audio_map: "the first slice is live in /pie/ as board terms, three lines at most: ^board{ =cues[shaped] =wap[pillow] =steps[tiptoe] } (pie-frame.mjs SETUP, pie-sound.mjs TEXTURES). The same shape could carry container cues for an editor, ^ear{ =open[pluck] =dwell[pad] =close[tock] %pan[0.3] }"
+  upstream: "answered upstream in workbench 47c178e: readEarcons and writeEarcons read ^ear{ %body[392] %frame[523] %step[2] =voice[modal] } with a number led by % and a choice by =, as the board line writes them, so one ^ear line can carry a host textures beside the brace sound settings. pairSound gives every brace a click whose timbre follows its label, and pairMoves says which pairs a caret leaves and enters. lore.land has not yet moved its textures into an ^ear line; the board terms stay until it does"
   threat_cues: "the laneWarning gap is closed: something low enough to hop is two pulses that rise, something that stands tall two that fall, chosen or turned off as =cues[shaped|one|off]"
 }
 

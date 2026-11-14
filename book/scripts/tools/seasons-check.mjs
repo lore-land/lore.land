@@ -18,7 +18,7 @@ import { reasonFor } from '../home/pie-reasons.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
 import { CARRIERS } from '../home/pie-world.mjs';
 // @ts-ignore: the vendored parser carries its own declaration; only parse is used here.
-import { parse } from '../vendor/spw-seed.mjs';
+import { parse, scanPairLabels } from '../vendor/spw-seed.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /** @type {string[]} */
@@ -82,6 +82,8 @@ for (const season of SEASONS) {
     const problems = keptProblems(line, parse);
     if (problems.length) fail(`${name}: a line has problems: ${problems.join('; ')}`);
     if (!line.includes(`{_${season.id} `) || !line.endsWith(` ${mirrored(season.id)}_}`)) fail(`${name}: a line is not sealed by its label and the label mirrored`);
+    // The workbench's own reading of the seal (scanPairLabels) agrees with the game's (readKept).
+    if (!(scanPairLabels(line)?.pairs || []).some((/** @type {any} */ p) => p.label === season.id && p.close?.spelling === 'mirrored')) fail(`${name}: the workbench does not read the line as sealed by its label and the label mirrored`);
     for (let cut = 1; cut < line.length; cut += 1) if (readKept(line.slice(0, cut))?.sealed) { fail(`${name}: a line cut at ${cut} still closes`); break; }
     if (readKept(`${line}\n#from["lore.land/pie#kept:${season.id}"]`)?.sealed !== true) fail(`${name}: a line copied with where it is from no longer closes`);
   }

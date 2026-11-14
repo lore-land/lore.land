@@ -20,7 +20,9 @@ import path from 'node:path';
 const ROOT = process.cwd();
 const ENTRY = path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/index.ts');
 /* Only what lore.land imports, so the rest of the kernel shakes out (about a quarter of the bytes). Add a name here to use it. */
-const EXPORTS = ['parse', 'readBias'];
+// scanPairLabels reads a sealed line's label and its mirrored close (finds, seasons); spokenLine says a line in the
+// names of its parts (the board line, for whoever reads Setup by ear). Both arrived with workbench 47c178e.
+const EXPORTS = ['parse', 'readBias', 'scanPairLabels', 'spokenLine'];
 const OUTFILE = path.join(ROOT, 'book/scripts/vendor/spw-seed.mjs');
 const VERIFY = process.argv.includes('--verify');
 

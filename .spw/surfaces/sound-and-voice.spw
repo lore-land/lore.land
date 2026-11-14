@@ -117,6 +117,7 @@
   haggle: "the haggle is heard as it is drawn: a wooden tock a step lower for each struck price, then two bright clinks for the coin handed back; HAGGLE_BEATS in pie-finds.mjs keeps the time for both"
   engine: ~"book/scripts/home/pie-sound.mjs"
   listened: "nobody has listened yet; sound:check measures the plans, not how they sound"
+  ear_line: "proposed: the workbench now reads ^ear{ } (readEarcons, workbench 47c178e) in the same sigil roles as the board line, so =wap[…] =steps[…] =cues[…] =feel[…] could move into one ^ear line beside the brace sound settings and travel as one line of sound; a reader would hand the words it does not use to the game"
 }
 
 ?decide{
