@@ -113,7 +113,8 @@
 }
 
 &plans{
-  .note: "Root PLAN.*.spw files are the long-arc specs; surfaces carry ship-facing phases. PLAN.E and PLAN.F are live and held by npm run spw:plans. PLAN.A to PLAN.D do not parse and are read as reference, never as a source of slices."
+  .note: "Topical plan folders live under .spw/plans/ (modeled on spwashi.com); root PLAN.E and PLAN.F hold live checks held by npm run spw:plans. PLAN.A to PLAN.D do not parse and remain reference archives."
+  plan_folders: ~"./plans/index.spw"
   structure: ~"../PLAN.A.spw"
   ethos: ~"../PLAN.B.spw"
   shadow_chrome: ~"../PLAN.C.spw"

@@ -1,0 +1,29 @@
+# Platform, Prose & Baseline Architecture Plan Index
+#>lore_land_plan_platform_and_prose
+#:plan #!platform #!prose #!baseline
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "platform-and-prose"
+  .updated: "2026-11-16"
+  .status: "active_iteration"
+  .slices: ["f15", "f16", "f17", "f18", "f35", "f36"]
+  .check: "npm run check && npm run smoke"
+  .root_index: ~"../index.spw#lore_land_plans_index"
+  .narrative_plan: ~"./PLAN.md"
+}
+
+&owners{
+  platform_surface: ~"../../surfaces/platform.spw#lore_land_surfaces_platform"
+  editorial_surface: ~"../../surfaces/editorial.spw#lore_land_surfaces_editorial"
+  plan_gate: ~"../../tools/plan-gate.mjs"
+  chapter_template: ~"../../../book/templates/chapter.html"
+}
+
+&notes{
+  web_baseline: "f35 landed in 2026_11_16.A (content-visibility scoped past section 1, @view-transition + blocking=render heading expect, font-size-adjust, oklch + contrast-color, beforematch sync, deferred idle imports)."
+  origin_trials: "Keep Origin Trials (canvas-html, webmcp) off by default; pursue standard ARIA/semantic DOM mirroring for /pie/ under f36."
+  chapters_pace: "spw:plans observes commit reach (26/30 recent commits reached readers; 0 touched chapter JSON directly while Book Two foundations and game/music polish landed)."
+}

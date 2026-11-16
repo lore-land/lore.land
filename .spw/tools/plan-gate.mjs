@@ -109,6 +109,23 @@ let grants = 0;
   if (!active || !fs.existsSync(path.join(ROOT, '.spw', active))) hard.push(`.spw/index.spw: audit_active points at ${active ?? 'nothing'}`);
 }
 
+/* Topical plan folders (.spw/plans/*, patterned after spwashi.com): each non-archive folder owns index.spw + PLAN.md. */
+let planFolders = 0;
+{
+  const plansRoot = path.join(ROOT, '.spw/plans');
+  if (fs.existsSync(plansRoot)) {
+    parsed('.spw/plans/index.spw');
+    for (const entry of fs.readdirSync(plansRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory() || entry.name === 'archive') continue;
+      planFolders += 1;
+      const rel = `.spw/plans/${entry.name}`;
+      if (!fs.existsSync(path.join(ROOT, rel, 'index.spw'))) hard.push(`${rel}: missing index.spw`);
+      else parsed(`${rel}/index.spw`);
+      if (!fs.existsSync(path.join(ROOT, rel, 'PLAN.md'))) warn.push(`${rel}: missing PLAN.md`);
+    }
+  }
+}
+
 /* The open questions, and whether any has been let go. */
 /** @type {{ file: string, items: number, when: string }[]} */ const asked = [];
 let answered = 0;
@@ -141,7 +158,7 @@ if (!shallow) {
 }
 
 if (stoneLine) console.log(`plans[stone]{ ${stoneLine} }`);
-console.log(`plans[count]{ ${openSlices} open slices · ${grants} grants · ${questions} open questions, ${answered} answered · ${spend} }`);
+console.log(`plans[count]{ ${openSlices} open slices · ${planFolders} plan folders · ${grants} grants · ${questions} open questions, ${answered} answered · ${spend} }`);
 for (const entry of asked.slice(0, 5)) console.log(`  oldest  ${entry.when}  ${entry.file} (${entry.items})`);
 console.log('  unread  PLAN.A to PLAN.D do not parse, so nothing here holds them');
 for (const line of warn) console.log(`  warn  ${line}`);

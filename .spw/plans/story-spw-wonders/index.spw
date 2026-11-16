@@ -1,0 +1,31 @@
+# Story, Spw Integration, Tropes & Collectible Wonders Plan Index
+#>lore_land_plan_story_spw_wonders
+#:plan #!story #!tropes #!wonders #!spw
+#:operation #!realize
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "story-spw-wonders"
+  .updated: "2026-11-16"
+  .status: "active_iteration"
+  .slices: ["f31", "f34", "f40"]
+  .check: "npm run elaboration:check && npm run book:check"
+  .root_index: ~"../index.spw#lore_land_plans_index"
+  .narrative_plan: ~"./PLAN.md"
+}
+
+&owners{
+  trope_strip: ~"../../../book/scripts/modules/trope-strip.mjs"
+  trope_reveal: ~"../../../book/scripts/modules/trope-reveal.mjs"
+  almanac_mod: ~"../../../book/scripts/modules/almanac.mjs"
+  chapter_inventory: ~"../../../book/scripts/modules/chapter-inventory.mjs"
+  story_lane: ~"../../../book/scripts/home/pie-story-lane.mjs"
+  projection_surface: ~"../../surfaces/projection.spw#lore_land_surfaces_projection"
+  elaboration_surface: ~"../../surfaces/elaboration.spw#lore_land_surfaces_elaboration"
+}
+
+?open{
+  saying_minting: "Should `#saying[cN]{ ... }` expressions minted from every 5th road word also collect into a reader's Almanac pocket or stay scoped to the post-carry receipt?"
+  trope_margin_sound: "Now that trope-strip renders playable renderSpell controls inside the trope detail disclosure, should Structure mode stay the only place raw syntax expands inline in chapter prose?"
+}

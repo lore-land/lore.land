@@ -1,0 +1,33 @@
+# Archive Plan Index — Historical & Landed References
+#>lore_land_plans_archive
+#:plan #!archive
+#:operation #!archive
+#:fixity #!cold
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "archive"
+  .updated: "2026-11-16"
+  .note: "Historical plan documents (PLAN.A through PLAN.D) remain at repo root for citation continuity and do not parse under spw-seed. Landed slices retain their commit receipts in .spw/state/grants.spw and PLAN.E / PLAN.F."
+  .root_index: ~"../index.spw#lore_land_plans_index"
+}
+
+&historical_roots{
+  plan_a: ~"../../../PLAN.A.spw"
+  plan_b: ~"../../../PLAN.B.spw"
+  plan_c: ~"../../../PLAN.C.spw"
+  plan_d: ~"../../../PLAN.D.spw"
+}
+
+&landed_in_f_and_grants{
+  f1_rooms_unit: "2026_11_08.J"
+  f2_real_parser_rules: "2026_11_08.J"
+  f9_sigil_audit: "2026_11_08.K"
+  f10_spw_as_play: "2026_11_08.K"
+  f12_bias_layer: "2026_11_08.N"
+  f13_unlock_mechanics: "2026_11_09.L"
+  f14_one_door_tooling: "2026_11_10.A"
+  f14b_workbench_cf41ca22: "2026_11_16.A"
+  f20_fill_and_setup: "2026_11_13.B"
+  f35_baseline_load: "2026_11_16.A"
+}

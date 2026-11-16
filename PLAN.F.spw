@@ -15,12 +15,13 @@
 ^meta{
   source: "PLAN.F.spw (written 2026-11-08)"
   dialect: spw_native
-  status: "2026-11-10: open increments carry operation, files, decides, check; 2026-11-14: updated after 2026_11_13.B..875784a landings, modern-web-guidance review, and open trajectory increments f34-f37 (still agent proposals for the maker to keep or strike)"
+  status: "2026-11-16: open increments f3-f40 organized by topical owner folders in .spw/plans/index.spw; receipts logged in grants.spw through e96b885; Book Two ch14-15 live with serial.next unscheduled"
   do_not: "Do not start a slice with no check. Do not widen a slice to finish a neighbour."
   style: dimensions_and_increments
   normative_voice: direction
   &reader: "the maker of lore.land, a writing table helping them, or a future book poured into the engine"
   &follows: ~"PLAN.E.spw#plan_e"
+  &plans_dir: ~".spw/plans/index.spw#lore_land_plans_index"
   &rooms: ~".spw/surfaces/rooms.spw"
   &stress: ~".spw/surfaces/spw-stress.spw#lore_land_surfaces_spw_stress"
   &rules: ~".spw/runtime/pie-rules.spw#lore_land_runtime_pie_rules"
@@ -103,7 +104,8 @@
   continuity: "returning readers keep their way of reading: new modes are trials or switches (c019), and the default read is unchanged unless they choose"
   sustenance: "the work is sustained by folios (originals with a low chance of fulfilment, interpretations, prints), priced by an auditable spell, never by ledgering the land in the story"
   durability: "static pages, no runtime services, offline reading, print; the canon is text in a git repository; a parser that cannot load falls back to a smaller one"
-  upstream: "the language is made in spw-workbench; lore.land is its heaviest reader, and sends back what it learns"
+  upstream: "the language is made in spw-workbench; lore.land is its heaviest reader, and sends back proposals across spwashi.com, factshift.center, and spw.quest (.spw/surfaces/workbench-proposals.spw, .spw/caches/factshift-quest-navigation.spw)"
+  plan_topology: "root PLAN.E/F hold machine-checked slices and contracts while topical folders in .spw/plans/*/ (index.spw + PLAN.md + archive/) mirror spwashi.com ownership by domain"
 }
 
 ^premium{
@@ -148,7 +150,7 @@
   f2: { dimension: [rules, valence, grammar], release: "2026_11_08.J", note: "the game reads its rules with the real parser (tune, knocks, powers, lean), dispatches references, and stress-tests the language; cards show their spells, lit" }
   f3: { dimension: [valence], release: "next", done_when: "a release note can say for each chapter which way readers carried it, from counts the reader chose to share, never from tracking", operation: "prime", files: "book/scripts/modules/pie-carries.mjs, the autonomous.feedback client", decides: "the maker: whether readers are asked at all", check: "a shared count is a card the reader sees before sending; the network tab shows nothing without it" }
   f4: { dimension: [prose, world, rules], release: "next", done_when: "npm run book:meaning compares this release with the last (rooms set, wonders, palettes, harmonies, rules) and writes the first draft of its changes.json line", operation: "contract", files: "a new book/scripts/tools/book-meaning.mjs, reading catalog.json, almanac.json and pie-rules.spw at the last tag", decides: "the agent; the maker edits the draft", check: "npm run book:meaning prints what changed in meaning since the last release" }
-  f5: { dimension: [grammar], release: "next", done_when: "every finding in spw-stress.spw has an upstream issue drafted, and a pin bump says which it answers", operation: "audit", receipt: "2026-11-10: pin be2df2f; lint warnings 18 to 11; valence_words_reserved answered in part; probe_list_newline re-tested and still open", files: ".spw/surfaces/spw-stress.spw, one upstream: field a finding", decides: "the maker files upstream", check: "every finding has an upstream: field; a pin bump adds an answered: field" }
+  f5: { dimension: [grammar], release: "next", done_when: "every finding in spw-stress.spw has an upstream issue drafted, and a pin bump says which it answers", operation: "audit", receipt: "2026-11-10 pin be2df2f (lint 18->11); 2026-11-16 cf41ca22 + cross-host proposals p1-p4 (workbench-proposals.spw) & navigation triad (factshift-quest-navigation.spw)", files: ".spw/surfaces/spw-stress.spw, .spw/surfaces/workbench-proposals.spw", decides: "the maker files upstream", check: "every finding has an upstream: field; a pin bump adds an answered: field" }
   f6: { dimension: [tables], release: "next", done_when: "a link of rules or a telling can be saved as a proposal in .spw/state/proposals.spw, read by the parser, and accepted with credit", operation: "prime", files: ".spw/state/proposals.spw, book/scripts/home/pie-spw.mjs", decides: "the maker accepts each proposal", check: "a link of rules saved as a proposal reads whole with the interpreter under book:check" }
   f7: { dimension: [marks], release: "next", done_when: "a reader can carry their marks to another device as one Spw card they copy and paste, read back by the parser, never sent anywhere", operation: "contract", files: "book/scripts/modules/collection.mjs, begin-again.mjs READING_MARKS", decides: "the agent", check: "a card pasted in a fresh headless profile restores the marks, and no request carries it" }
   f8: { dimension: [world], release: "next", done_when: "the folio value spell (formula only, %fulfill, -25% to +15%) is auditable from a carry provenance card", operation: "contract", files: "book/scripts/modules/projection.mjs, .spw/surfaces/projection.spw", decides: "the maker: the formula and the tiers", check: "a carry provenance card shows the spell that produced the price" }
@@ -182,6 +184,9 @@
   f35: { dimension: [pages, structure], release: "2026_11_16.A", note: "baseline + load architecture pass: sections.css keeps :first-of-type visible, living.mjs pauses skipped sections via contentvisibilityautostatechange, chapter.html + index.html add meta[text-scale], chapter.html adds link[rel=expect][href=#chapter-title][blocking=render], font-size-adjust: from-font on body & h1-h3, bindings.css adds @supports oklch RCS + contrast-color(), rooms.mjs syncs markHere on beforematch, load-lifecycle.mjs fast-paths prerendered acoustics, script.mjs defers 7 idle modules via Promise.all dynamic import()" }
   f36: { dimension: [play, pages], release: "proposed", done_when: "/pie/ canvas state (lanes, tilt, active threats, captions) mirrors cleanly into accessible DOM live/semantic regions without relying on Origin Trials", operation: "realize", files: "pie/index.html, book/scripts/home/pie-game.mjs", decides: "the agent, checked with keyboard/screen-reader flow", check: "npm run board:check" }
   f37: { dimension: [grammar, structure], release: "proposed", done_when: "remaining .spw/surfaces string refs use PathRef/roots, aging ?open items carry ~#answer or ~#retired dates, and spw-ethos/export-chapters regexes are reviewed against spw-seed", operation: "align", files: ".spw/surfaces/index.spw, .spw/surfaces/spw-stress.spw, book/scripts/modules/spw-ethos.mjs", decides: "the agent; maker resolves open design questions", check: "npm run spw:plans" }
+  f38: { dimension: [world, play], release: "proposed", done_when: "in-lane carriers share vector Path2D contours with characters.mjs, cache palette-baked parts offscreen on theme switches, and drive articulated joints from tilt/hop/beatState while preserving Figure plain-line minimalism", operation: "realize", files: "book/scripts/home/pie-game.mjs, book/scripts/home/pie-draw.mjs, book/scripts/modules/characters.mjs", decides: "the maker: silhouette changes; the agent: caching & rig", check: "npm run smoke" }
+  f39: { dimension: [sound, play], release: "proposed", done_when: "human audition across phone speakers and headphones tunes the 16-step beat pocket, polyrhythmic groove interlock, and high-combo ducking across straight and swung chapters", operation: "realize", files: "book/scripts/home/pie-sound.mjs, book/scripts/home/pie-rhythm.mjs, tools/audio_synthesis/pie-sound-audition.html", decides: "the maker by ear", check: "npm run sound:check" }
+  f40: { dimension: [story, grammar, marks], release: "proposed", done_when: "road-word #saying[cN] spells, trope-strip 5-stage syntax ladders, and wonder/inventory spells project cleanly between runs and almanac pockets without adding noise during play", operation: "contract", files: "book/scripts/home/pie-story-lane.mjs, book/scripts/modules/trope-strip.mjs, book/scripts/modules/almanac.mjs", decides: "the maker: Almanac retention rules", check: "npm run elaboration:check" }
 ]
 
 ?open{
@@ -190,4 +195,5 @@
   proposal_trust: "how a table proposal is reviewed before it reaches a reader (f6)"
   fill_default: "f20 shipped Fill, holds, and board:check in 2026_11_13.B; whether Fill becomes the default for new players remains the maker call"
   origin_trial_gate: "~#answer(2026-11-14): Keep Origin Trials (canvas-html, webmcp) off by default; mirror /pie/ canvas state in standard ARIA DOM and publish canon in /.spw/** + JSON-LD unless explicitly opted in"
+  canvas_rig_scope: "For f38, which silhouette parts beyond hats, straps, lapels, and collars should unify via shared Path2D strings between SVG portraits and Canvas lanes?"
 }

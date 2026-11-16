@@ -1,0 +1,33 @@
+# Audio, Jazz Theory & Rhythm Pocket Plan Index
+#>lore_land_plan_audio_jazz_rhythm
+#:plan #!audio #!jazz #!rhythm
+#:operation #!realize
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "audio-jazz-rhythm"
+  .updated: "2026-11-16"
+  .status: "active_iteration"
+  .slices: ["f29", "f32", "f39"]
+  .check: "npm run sound:check && npm run cadence:check"
+  .root_index: ~"../index.spw#lore_land_plans_index"
+  .narrative_plan: ~"./PLAN.md"
+  .grant_receipt: ~"../../state/grants.spw#lore_land_state_grants"
+}
+
+&owners{
+  pie_sound: ~"../../../book/scripts/home/pie-sound.mjs"
+  pie_rhythm: ~"../../../book/scripts/home/pie-rhythm.mjs"
+  spw_sound: ~"../../../book/scripts/modules/spw-sound.mjs"
+  intrinsic_rewards: ~"../../../book/scripts/modules/intrinsic-rewards.mjs"
+  pie_levels: ~"../../runtime/pie-levels.spw"
+  scored_surface: ~"../../surfaces/scored.spw#lore_land_surfaces_scored"
+  sound_and_voice: ~"../../surfaces/sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
+  sound_check: ~"../../../book/scripts/tools/sound-check.mjs"
+}
+
+?open{
+  human_audition: "After listening in the audition harness and live carries, does the 4-beat walking bass + brushed/wood backbeat stay unobtrusive under rapid multi-row dodges, or should backbeat level duck during dense obstacled phrases?"
+  rhythm_interlock_mix: "When visiting rhythms play in answer mode inside conductor.groove(), is stereo offset +/-0.22 clear on phone speakers as well as headphones?"
+}

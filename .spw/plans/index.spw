@@ -1,0 +1,32 @@
+# Lore.Land Plans Directory Index
+# Topical plan folders modeled after spwashi.com: each owner folder carries an index.spw contract and PLAN.md beside root PLAN.E / PLAN.F slices.
+#>lore_land_plans_index
+#:plans #!index #!dispatch
+#:layer #!pragmatics
+#:status #!active
+
+^"meta"{
+  .updated: "2026-11-16"
+  .pattern_source: "spwashi.com (.agents/plans + .spw/slices)"
+  .role: "Route agents and makers to topical plan folders (one owner per domain) paired with executable slices in PLAN.E.spw and PLAN.F.spw."
+  .parent_index: ~"../index.spw#lore_land_spw_index"
+  .root_living_book: ~"../../PLAN.E.spw#plan_e"
+  .root_sustainable_serial: ~"../../PLAN.F.spw#plan_f"
+  .grants: ~"../state/grants.spw#lore_land_state_grants"
+}
+
+&folders{
+  characters_canvas_rig: ~"./characters-canvas-rig/index.spw#lore_land_plan_characters_canvas_rig"
+  audio_jazz_rhythm: ~"./audio-jazz-rhythm/index.spw#lore_land_plan_audio_jazz_rhythm"
+  story_spw_wonders: ~"./story-spw-wonders/index.spw#lore_land_plan_story_spw_wonders"
+  ecosystem_workbench: ~"./ecosystem-workbench/index.spw#lore_land_plan_ecosystem_workbench"
+  platform_and_prose: ~"./platform-and-prose/index.spw#lore_land_plan_platform_and_prose"
+  archive: ~"./archive/index.spw#lore_land_plans_archive"
+}
+
+&invariants[
+  "Every topical folder under .spw/plans/ (except archive/) holds both index.spw (Spw contract, owners, slices, checks) and PLAN.md (diagnosis, phases, verification)."
+  "Open implementation slices stay machine-checked in PLAN.F.spw / PLAN.E.spw via npm run spw:plans; plan folders provide focused domain context without duplicating canon prose."
+  "Landed improvements record their wish, pre-guess, boon/bane edges, and git receipt in .spw/state/grants.spw."
+  "Canvas/SVG/DOM character art preserves the plain-line Figure rule (one circle, one rectangle, four lines, two dots. Always ink.)."
+]

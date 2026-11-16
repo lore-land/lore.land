@@ -1,0 +1,31 @@
+# Cross-Host & Spw-Workbench Ecosystem Plan Index
+#>lore_land_plan_ecosystem_workbench
+#:plan #!ecosystem #!workbench #!factshift #!quest
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "ecosystem-workbench"
+  .updated: "2026-11-16"
+  .status: "active_coordination"
+  .slices: ["f5", "f14b", "f37"]
+  .check: "npm run spw:lint -- --strict && npm run spw:plans -- --strict"
+  .root_index: ~"../index.spw#lore_land_plans_index"
+  .narrative_plan: ~"./PLAN.md"
+  .grant_receipt: ~"../../state/grants.spw#lore_land_state_grants"
+}
+
+&owners{
+  workbench_proposals: ~"../../surfaces/workbench-proposals.spw#lore_land_surfaces_workbench_proposals"
+  factshift_quest_cache: ~"../../caches/factshift-quest-navigation.spw#lore_land_factshift_quest_navigation"
+  workbench_direction: ~"../../caches/workbench-direction.spw#lore_land_workbench_direction"
+  spw_stress: ~"../../surfaces/spw-stress.spw#lore_land_surfaces_spw_stress"
+  spw_lint: ~"../../tools/spw-lint.mjs"
+}
+
+&cross_host_proposals{
+  spw_workbench: "p1 (zero-trace fast path when collect: false), p2 (unify line + spw.pivots/1 with byte spans), p3 (four-register operator table across parser/factshift/audio), p4 (parseable crumbs & stills)"
+  factshift_center: "f1-f5 (edge-scrub & rail asymmetry, velocity-gated brace-fold pinching, dipole/thermal stratum 2 locality, name-conserving merges, 3-way read-back receipts)"
+  spw_quest: "q1-q4 (worker cold-parse speedup, shared pivot byte spans in /pivot & /guide, operator congruence cards, cross-surface semiotic triads)"
+}

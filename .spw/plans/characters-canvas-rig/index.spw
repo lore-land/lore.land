@@ -1,0 +1,35 @@
+# Character Rendering & Canvas Rig Plan Index
+#>lore_land_plan_characters_canvas_rig
+#:plan #!characters #!canvas #!svg
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+^"meta"{
+  .owner: "characters-canvas-rig"
+  .updated: "2026-11-16"
+  .status: "proposed"
+  .slices: ["f38", "f19", "f23"]
+  .check: "npm run check && npm run smoke"
+  .root_index: ~"../index.spw#lore_land_plans_index"
+  .narrative_plan: ~"./PLAN.md"
+}
+
+&owners{
+  game_renderer: ~"../../../book/scripts/home/pie-game.mjs"
+  draw_helpers: ~"../../../book/scripts/home/pie-draw.mjs"
+  portraits_svg: ~"../../../book/scripts/modules/characters.mjs"
+  canon_characters: ~"../../surfaces/characters.spw#lore_land_surfaces_characters"
+  tuning: ~"../../surfaces/knobs.spw#lore_land_surfaces_knobs"
+}
+
+&diagnosis{
+  question: "Does HTML Canvas 2D limit character design?"
+  answer: "No — Canvas 2D supports Bezier curves, Path2D(svgPathD), gradients, blend modes, and offscreen image caching. The actual bottlenecks are imperative ctx.* duplication separated from characters.mjs SVG definitions, lack of offscreen sprite-part caching, and single-sine unarticulated rigs."
+  canon_guard: "The default figure in plain lines keeps its intentional minimalism: one circle, one rectangle, four lines, two dots, always ink (drawFigure)."
+}
+
+?open{
+  path2d_sharing: "Which silhouette shapes (hats, aprons, Genie coat, Porter cap, BaneWAP switch, BoonWAP scallops, Boof collar) should share SVG path data between characters.mjs and pie-draw.mjs via Path2D?"
+  offscreen_bake: "At 30-50px lane width, which static carrier parts benefit most from per-palette offscreen canvas caching without blurring on 2x DPR?"
+}

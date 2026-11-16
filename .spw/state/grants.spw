@@ -91,3 +91,27 @@
   =bane@bundle_206kb{ @bundle_213kb_lazy_and_stricter_lint }
   ~#receipt: "875784a"
 }
+
+^grant[characters_and_obstacles_silhouettes]{
+  !wish: "Bring in-lane carriers, presences, Boof, portraits, and road obstacles into sharper silhouette harmony without breaking Figure minimalism"
+  ~#expect: "Distinct props and surface details improve instant readability across canvas obstacles while keeping canvas draw loops decoupled from portrait SVG strings until Path2D unification"
+  =boon@flat_obstacle_primitives{ @distinct_cast_props_and_road_silhouettes }
+  =bane@simple_shapes{ @more_imperative_canvas_draw_lines_until_f38 }
+  ~#receipt: "cebb1de"
+}
+
+^grant[cross_host_navigation_cache]{
+  !wish: "Capture cognitive, interactive, and semiotic navigation theory plus workbench proposals across spw-workbench, spwashi.com, factshift.center, spw.quest, and lore.land"
+  ~#expect: "Documenting p1-p4 workbench upgrades and the Text <-> Shape <-> Motion <-> Place triad surfaces reusable ergonomics without locking experimental worker syntax prematurely"
+  =boon@siloed_repo_notes{ @shared_proposals_and_navigation_cache }
+  =bane@single_repo_docs{ @two_new_cross_host_surfaces_to_keep_aligned }
+  ~#receipt: "0d6771e"
+}
+
+^grant[jazz_rhythm_wonder_integration]{
+  !wish: "Deepen jazz theory, musical development across chapters, 16-step beat pocket, polyrhythmic interlock, and trope/wonder Spw playability"
+  ~#expect: "Connecting chapterDevelopmentPlan, backdoor/upper-structure voicings, beatPocketPlan, groove interlock, and playable wonder/trope Spw spells turns reading and dodging into one musical system"
+  =boon@sparse_beats_and_passive_badges{ @pocket_driven_groove_and_playable_syntax_wonders }
+  =bane@lightweight_pulse{ @dense_subdivisions_awaiting_f39_human_audition }
+  ~#receipt: "e96b885"
+}
