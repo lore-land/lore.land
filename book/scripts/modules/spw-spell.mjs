@@ -28,6 +28,8 @@
  *   - texture: a spell that names a material ($glass, $frost, …) wears it (materials.css tokens)
  */
 
+import { parseProseSpw } from './spw-ast.mjs?v=2026_11_13.B';
+
 export const SIGIL_ROLES = Object.freeze({
   '?': { role: 'probe', says: 'asks' },
   '~': { role: 'potential', says: 'lasts, or might' },
@@ -149,11 +151,11 @@ export function enhanceSpell(root, text, seed) {
   if (!root || !seed?.parse) return null;
   const src = String(text || '');
   try {
-    const result = seed.parse(src, { lexProfile: 'prose' });
-    const whole = Boolean(result?.success && result.completeness?.complete && !result.completeness?.proseFallback);
+    const parsed = parseProseSpw(src, seed.parse);
+    const whole = parsed.whole;
     root.dataset.spwReader = whole ? 'spw-seed' : 'small';
-    const reading = whole && seed.readMarks && seed.formatLineReading
-      ? seed.formatLineReading(seed.readMarks(result.ast))
+    const reading = whole && parsed.ast && seed.readMarks && seed.formatLineReading
+      ? seed.formatLineReading(seed.readMarks(parsed.ast))
       : '';
     if (reading) root.dataset.spwReading = reading;
     if (!src.includes('\n') && seed.readLine) {

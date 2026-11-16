@@ -23,6 +23,8 @@ export const UNLOCK_EVENT = 'lore:unlock';
 const STORE = 'lore.unlocks.v1';
 const VISIT = 'lore.unlocks.visit';
 
+import { parseProseSpw, topExpressions, bodyExpressions, frameItems, unquoteText } from './spw-ast.mjs?v=2026_11_13.B';
+
 /* ─── Reading the registry: a small reader for a plain, regular file ─── */
 
 const blockOf = (text, name) => {
@@ -55,34 +57,25 @@ export function readMechanics(text = '', { parse = null } = {}) {
   const mechanics = {};
   try {
     if (typeof parse === 'function') {
-      const res = parse(String(text || ''), { lexProfile: 'prose' });
-      if (res?.completeness?.complete && !res.completeness?.proseFallback) {
-        const exprs = (body) => body?.sequence?.expressions || [];
-        const unq = (s) => String(s ?? '').replace(/^"(.*)"$/s, '$1');
-        const val = (p) => {
-          const v = p?.value;
-          if (v?.type === 'Literal') return unq(v.token?.value);
-          if (v?.type === 'Expression') return [...(v.terms || []).map((t) => t.token?.value ?? t.raw ?? ''), ...(v.modifiers?.modifiers || []).map((x) => x.value)].join(' ');
-          return '';
-        };
+      const parsed = parseProseSpw(text, parse);
+      if (parsed.whole && parsed.ast) {
         const fieldsOf = (body) => {
           const out = {};
           let path = null;
-          exprs(body).forEach((e) => (e.terms || []).forEach((t) => {
-            if (t.type === 'PathRef') { path = unq(t.path?.token?.value); return; }
+          bodyExpressions(body).forEach((e) => (e.terms || []).forEach((t) => {
+            if (t.type === 'PathRef') { path = unquoteText(t.path?.token?.value); return; }
             const op = t.type === 'Reference' ? '@' : t.operator?.value;
             const label = t.type === 'Reference' ? t.raw : t.operatorLabel?.value;
             if (!op || !label) return;
             const frame = t.frame || e.frame;
-            out[op + label] = !frame && t.body ? fieldsOf(t.body) : (frame?.content || []).map(val);
+            out[op + label] = !frame && t.body ? fieldsOf(t.body) : frameItems(frame);
           }));
           return { out, path };
         };
-        const top = res.ast?.expression?.expressions || res.ast?.expressions || [];
-        top.flatMap((e) => e.terms || []).forEach((block) => {
+        topExpressions(parsed.ast).flatMap((e) => e.terms || []).forEach((block) => {
           if (block?.type !== 'Operation' || block.operator?.value !== '!') return;
           const kind = block.operatorLabel?.value;
-          exprs(block.body).flatMap((x) => x.terms || []).filter((x) => x.operatorLabel).forEach((entry) => {
+          bodyExpressions(block).flatMap((x) => x.terms || []).filter((x) => x.operatorLabel).forEach((entry) => {
             const id = entry.operatorLabel.value;
             const { out, path } = fieldsOf(entry.body);
             if (kind === 'measures') {

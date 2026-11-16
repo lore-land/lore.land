@@ -37,6 +37,7 @@ import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_13.B';
 import { readWay, waySpell } from './way-through.mjs?v=2026_11_13.B';
+import { parseProseSpw, walkAst, frameItems, opInfo, bindingInfo, bodyExpressions } from './spw-ast.mjs?v=2026_11_13.B';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
@@ -176,29 +177,6 @@ const loadSeed = () => {
   return seedPromise;
 };
 
-const unquote = (s) => String(s ?? '').replace(/^"(.*)"$/s, '$1');
-const walkAst = (node, visit) => {
-  if (Array.isArray(node)) { node.forEach((c) => walkAst(c, visit)); return; }
-  if (!node || typeof node !== 'object') return;
-  visit(node);
-  for (const [k, v] of Object.entries(node)) if (k !== 'span') walkAst(v, visit);
-};
-
-function frameValues(frame) {
-  return (frame?.content || []).map((part) => {
-    const v = part?.value;
-    if (!v) return '';
-    if (v.type === 'Literal') return unquote(v.token?.value);
-    if (v.type === 'Expression') {
-      return [
-        ...(v.terms || []).map((t) => (t.type === 'Literal' ? unquote(t.token?.value) : t.token?.value ?? t.raw ?? '')),
-        ...(v.modifiers?.modifiers || []).map((m) => m.value)
-      ].filter(Boolean).join(' ');
-    }
-    return '';
-  }).filter(Boolean);
-}
-
 /**
  * A spell, read back: the parts a link may carry. Unknown lines are ignored, not guessed.
  * When `parse` (spw-seed) is passed, parses the AST whole (`complete && !proseFallback`), ignoring comments and string
@@ -209,61 +187,56 @@ export function parseSpell(text, { parse = null, readMarks = null, formatLineRea
   const hash = typeof slotHash === 'function' ? slotHash(src.split('\n')[0] || src, { seed: 'lore.land' }) : null;
 
   if (typeof parse === 'function') {
-    try {
-      const result = parse(src, { lexProfile: 'prose' });
-      const whole = Boolean(result?.success && result.completeness?.complete && !result.completeness?.proseFallback);
-      if (whole && result.ast) {
-        const story = {};
-        let audience = null;
-        let plain = false;
-        let plainPalette = false;
-        walkAst(result.ast, (node) => {
-          if (node.type !== 'Operation') return;
-          const sigil = node.operator?.value;
-          const label = String(node.operatorLabel?.value || node.modifiers?.modifiers?.[0]?.value || '').toLowerCase();
-          if (sigil === '!' && label === 'plain') {
-            const items = frameValues(node.frame).map((v) => v.toLowerCase());
-            if (items.includes('carries')) plain = true;
-            if (items.includes('palette')) plainPalette = true;
-            return;
+    const parsed = parseProseSpw(src, parse);
+    if (parsed.whole && parsed.ast) {
+      const story = {};
+      let audience = null;
+      let plain = false;
+      let plainPalette = false;
+      walkAst(parsed.ast, (node) => {
+        const info = opInfo(node);
+        if (!info) return;
+        const label = info.label.toLowerCase();
+        if (info.sigil === '!' && label === 'plain') {
+          const items = info.frame.map((v) => v.toLowerCase());
+          if (items.includes('carries')) plain = true;
+          if (items.includes('palette')) plainPalette = true;
+          return;
+        }
+        if (info.sigil !== '=') return;
+        if (label === 'genre' && node.body) {
+          const genre = {};
+          for (const expr of bodyExpressions(node)) {
+            const b = bindingInfo(expr.terms?.[0]);
+            const k = b?.label.toLowerCase();
+            const n = b ? Number(b.text) : NaN;
+            if (k && ['boon', 'bane', 'bone'].includes(k) && Number.isFinite(n)) genre[k] = n;
           }
-          if (sigil !== '=') return;
-          if (label === 'genre' && node.body) {
-            const genre = {};
-            for (const expr of node.body?.sequence?.expressions || []) {
-              const binding = (expr.terms || [])[0];
-              if (binding?.type === 'Binding') {
-                const k = String(binding.key?.token?.value || '').toLowerCase();
-                const n = Number(binding.value?.terms?.[0]?.token?.value);
-                if (['boon', 'bane', 'bone'].includes(k) && Number.isFinite(n)) genre[k] = n;
-              }
-            }
-            if (Object.values(genre).some((n) => n > 0)) story.genre = genre;
-            return;
-          }
-          const vals = frameValues(node.frame).map((v) => v.toLowerCase());
-          const first = vals[0];
-          if (label === 'lens' && first && LENSES.includes(first)) story.lens = first;
-          else if (label === 'room' && first && ROOMS.includes(first)) story.room = first;
-          else if (label === 'binding' && first && BINDINGS.includes(first)) story.binding = first;
-          else if (label === 'edition' && first) story.edition = first;
-          else if (label === 'audience' && first && AUDIENCES.includes(first)) audience = first;
-          else if (label === 'with') {
-            const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
-            if (list.length) story.with = list;
-          } else if (label === 'without') {
-            const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
-            if (list.length) story.without = list;
-          }
-        });
-        const reading = typeof readMarks === 'function' && typeof formatLineReading === 'function'
-          ? formatLineReading(readMarks(result.ast))
-          : '';
-        return { story, audience, plain, plainPalette, reader: 'spw-seed', whole: true, reading, hash, errors: [] };
-      }
-      const errors = (result?.errors || []).map((e) => `${e.position?.line || 0}:${e.position?.column || 0} ${e.data?.message || 'parse error'}`);
-      return { ...parseSpellSmall(src), reader: 'small', whole: false, reading: '', hash, errors };
-    } catch { /* fall through to small reader */ }
+          if (Object.values(genre).some((n) => n > 0)) story.genre = genre;
+          return;
+        }
+        const vals = info.frame.map((v) => v.toLowerCase());
+        const first = vals[0];
+        if (label === 'lens' && first && LENSES.includes(first)) story.lens = first;
+        else if (label === 'room' && first && ROOMS.includes(first)) story.room = first;
+        else if (label === 'binding' && first && BINDINGS.includes(first)) story.binding = first;
+        else if (label === 'edition' && first) story.edition = first;
+        else if (label === 'audience' && first && AUDIENCES.includes(first)) audience = first;
+        else if (label === 'with') {
+          const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
+          if (list.length) story.with = list;
+        } else if (label === 'without') {
+          const list = vals.flatMap((v) => v.split(/[,\s]+/)).filter((s) => /^[a-z][a-z-]*$/.test(s));
+          if (list.length) story.without = list;
+        }
+      });
+      const reading = typeof readMarks === 'function' && typeof formatLineReading === 'function'
+        ? formatLineReading(readMarks(parsed.ast))
+        : '';
+      return { story, audience, plain, plainPalette, reader: 'spw-seed', whole: true, reading, hash, errors: [] };
+    }
+    const errors = parsed.errors.map((e) => `${e.position?.line || 0}:${e.position?.column || 0} ${e.data?.message || 'parse error'}`);
+    return { ...parseSpellSmall(src), reader: 'small', whole: false, reading: '', hash, errors };
   }
   return { ...parseSpellSmall(src), reader: 'small', whole: null, reading: '', hash, errors: [] };
 }

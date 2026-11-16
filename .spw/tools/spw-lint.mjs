@@ -22,18 +22,11 @@ const SEED_SOURCE = '../_workbench/packages/spw-seed/src/index.ts';
 const seed = await import(SEED_SOURCE);
 const { parse, readRegisterStamps, summarizeRegisterStamps, hydrateSnippet, readLine, slotHash } = seed;
 import { spwFiles } from './spw-files.mjs';
+import { parseProseSpw, readProjectionTemplates } from '../../book/scripts/modules/spw-ast.mjs';
 
 const ROOT = process.cwd();
 const SPW_ROOT = path.join(ROOT, '.spw');
 const STRICT = process.argv.includes('--strict');
-
-/** Walk any parsed AST node depth-first. @param {unknown} node @param {(n: Record<string, any>) => void} visit */
-function walkAst(node, visit) {
-  if (Array.isArray(node)) { node.forEach((child) => walkAst(child, visit)); return; }
-  if (!node || typeof node !== 'object') return;
-  visit(/** @type {Record<string, any>} */ (node));
-  for (const [k, v] of Object.entries(node)) if (k !== 'span') walkAst(v, visit);
-}
 
 /* The canon, and the root plans that are kept as records. PLAN.A to PLAN.D predate the parser's rules and do not read; see the tooling audit. */
 const rootFiles = ['PLAN.E.spw', 'PLAN.F.spw'].map((name) => path.join(ROOT, name));
@@ -83,40 +76,25 @@ for (const file of files) {
 let templatesChecked = 0;
 const projectionPath = path.join(SPW_ROOT, 'surfaces', 'projection.spw');
 if (fs.existsSync(projectionPath)) {
-  const projAst = parse(fs.readFileSync(projectionPath, 'utf8'), { lexProfile: 'prose' }).ast;
-  walkAst(projAst, (node) => {
-    if (node.type !== 'Binding') return;
-    const isSource = node.key?.operator?.value === '!' && node.key?.operatorLabel?.value === 'source';
-    const isSlots = node.key?.token?.value === 'slots';
-    if (isSlots) {
-      const tplPath = path.join(ROOT, 'book/templates/chapter.html');
-      if (fs.existsSync(tplPath)) {
-        const htmlSlots = new Set([...fs.readFileSync(tplPath, 'utf8').matchAll(/\{\{([A-Z0-9_]+)\}\}/g)].map((m) => m[1]));
-        const items = node.value?.terms?.[0]?.content || node.value?.terms?.[0]?.frame?.content || [];
-        /** @type {Set<string>} */
-        const declared = new Set();
-        for (const p of items) {
-          const val = p?.value?.token?.value ?? p?.value?.terms?.[0]?.token?.value;
-          if (typeof val === 'string' && val.length >= 2) declared.add(val.slice(1, -1));
-        }
-        const missing = [...htmlSlots].filter((s) => !declared.has(s));
-        const extra = [...declared].filter((s) => !htmlSlots.has(s));
-        if (missing.length || extra.length) {
-          failCount += 1;
-          errorTotal += 1;
-          console.log(`[spw:lint] FAIL *chapter_page slots in projection.spw (missing: ${missing.join(', ') || 'none'}; extra: ${extra.join(', ') || 'none'})`);
-        }
-      }
-      return;
+  const proj = parseProseSpw(fs.readFileSync(projectionPath, 'utf8'), parse);
+  const { slots, sources } = readProjectionTemplates(proj.ast);
+  const tplPath = path.join(ROOT, 'book/templates/chapter.html');
+  if (slots.length && fs.existsSync(tplPath)) {
+    const htmlSlots = new Set([...fs.readFileSync(tplPath, 'utf8').matchAll(/\{\{([A-Z0-9_]+)\}\}/g)].map((m) => m[1]));
+    const declared = new Set(slots);
+    const missing = [...htmlSlots].filter((s) => !declared.has(s));
+    const extra = [...declared].filter((s) => !htmlSlots.has(s));
+    if (missing.length || extra.length) {
+      failCount += 1;
+      errorTotal += 1;
+      console.log(`[spw:lint] FAIL *chapter_page slots in projection.spw (missing: ${missing.join(', ') || 'none'}; extra: ${extra.join(', ') || 'none'})`);
     }
-    if (!isSource) return;
-    const raw = node.value?.terms?.[0]?.token?.value;
-    if (typeof raw !== 'string') return;
-    const tpl = raw.slice(1, -1);
-    const hydrated = hydrateSnippet(tpl, {}, { applyDefaults: true });
-    const check = parse(hydrated.text, { lexProfile: 'prose' });
+  }
+  for (const { source } of sources) {
+    const hydrated = hydrateSnippet(source, {}, { applyDefaults: true });
+    const check = parseProseSpw(hydrated.text, parse);
     templatesChecked += 1;
-    if (!check.success || !check.completeness?.complete || check.completeness?.proseFallback) {
+    if (!check.whole) {
       failCount += 1;
       errorTotal += check.errors.length || 1;
       console.log(`[spw:lint] FAIL template in .spw/surfaces/projection.spw: ${hydrated.text}`);
@@ -128,7 +106,7 @@ if (fs.existsSync(projectionPath)) {
         console.log(`[spw:lint] FAIL template slotHash for ${hydrated.text}`);
       }
     }
-  });
+  }
 }
 
 console.log(

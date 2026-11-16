@@ -63,6 +63,7 @@
   reader_marks: "readMarks / formatLineReading / checkLine — real AST-backed role and shape checks"
   snippet_hydrate: "hydrateSnippet / parseBindings — fill ${slot=default} holes without mutating the source seed"
   &module: ~"book/scripts/modules/projection.mjs"
+  &ast_helpers: ~"book/scripts/modules/spw-ast.mjs"
   &spell_ui: ~"book/scripts/modules/spw-spell.mjs"
   &way: ~"book/scripts/modules/way-through.mjs"
   &editorial: ~"./editorial.spw"

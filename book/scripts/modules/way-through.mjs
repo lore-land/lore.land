@@ -30,6 +30,7 @@ import { settle } from './settled.mjs?v=2026_11_09.L';
 import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_13.B';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_13.B';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
+import { parseProseSpw, topExpressions, bodyExpressions, opInfo } from './spw-ast.mjs?v=2026_11_13.B';
 
 export const WAY_URL = '/book/content/world/way.json?v=2026_11_10.A';
 const WAY_KEY = 'lore.way.v1';
@@ -78,40 +79,25 @@ export function parseWay(text, { parse = null } = {}) {
   const src = String(text || '').trim();
   if (!/^\^way\s*\{[\s\S]*\}$/.test(src)) return null;
   if (typeof parse === 'function') {
-    try {
-      const result = parse(src, { lexProfile: 'prose' });
-      if (!result?.success || !result.completeness?.complete || result.completeness?.proseFallback) return null;
-      const topExprs = result.ast?.expression?.expressions || result.ast?.expressions || [];
-      const topTerms = topExprs.flatMap((e) => e.terms || []);
-      if (topTerms.length !== 1) return null;
-      const root = topTerms[0];
-      if (root?.type !== 'Operation' || root.operator?.value !== '^' || root.operatorLabel?.value !== 'way' || !root.body) return null;
-      const aside = [];
-      const apart = [];
-      const innerExprs = root.body?.sequence?.expressions || [];
-      for (const expr of innerExprs) {
-        const terms = expr.terms || [];
-        for (const term of terms) {
-          if (term?.type !== 'Operation' || !term.frame) return null;
-          const sigil = term.operator?.value;
-          const label = term.operatorLabel?.value;
-          const vals = (term.frame.content || [])
-            .map((p) => {
-              const v = p?.value;
-              if (v?.type === 'Literal') return String(v.token?.value ?? '').replace(/^"(.*)"$/s, '$1');
-              const id = (v?.terms || []).find((t) => t.type === 'Identifier');
-              return id?.token?.value ?? '';
-            })
-            .filter(Boolean);
-          if (sigil === '!' && label === 'aside') aside.push(...vals);
-          else if (sigil === '=' && label === 'apart') apart.push(...vals);
-          else return null;
-        }
+    const parsed = parseProseSpw(src, parse);
+    if (!parsed.whole || !parsed.ast) return null;
+    const topTerms = topExpressions(parsed.ast).flatMap((e) => e.terms || []);
+    if (topTerms.length !== 1) return null;
+    const root = topTerms[0];
+    const rootInfo = opInfo(root);
+    if (!rootInfo || rootInfo.sigil !== '^' || rootInfo.label !== 'way' || !root.body) return null;
+    const aside = [];
+    const apart = [];
+    for (const expr of bodyExpressions(root)) {
+      for (const term of expr.terms || []) {
+        const info = opInfo(term);
+        if (!info || !term.frame) return null;
+        if (info.sigil === '!' && info.label === 'aside') aside.push(...info.frame);
+        else if (info.sigil === '=' && info.label === 'apart') apart.push(...info.frame);
+        else return null;
       }
-      return clean({ aside, apart });
-    } catch {
-      return null;
     }
+    return clean({ aside, apart });
   }
   const list = (op, name) => {
     const m = new RegExp(`\\${op}${name}\\[([^\\]]*)\\]`).exec(src);

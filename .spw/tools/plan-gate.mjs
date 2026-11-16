@@ -18,6 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse, readBias } from '../../book/scripts/vendor/spw-seed.mjs';
 import { spwFiles } from './spw-files.mjs';
+import { walkAst, parseProseSpw, nodeText, bindingInfo } from '../../book/scripts/modules/spw-ast.mjs';
 
 /** @typedef {Record<string, any>} Node */
 
@@ -33,22 +34,11 @@ const git = (/** @type {string[]} */ ...args) => {
 /** @type {string[]} */ const hard = [];
 /** @type {string[]} */ const warn = [];
 
-/** Every node in a parsed file, depth first. @param {unknown} node @param {(n: Node) => void} visit */
-function walk(node, visit) {
-  if (Array.isArray(node)) { node.forEach((child) => walk(child, visit)); return; }
-  if (!node || typeof node !== 'object') return;
-  visit(/** @type {Node} */ (node));
-  for (const [key, value] of Object.entries(node)) if (key !== 'span') walk(value, visit);
-}
-const textOf = (/** @type {Node | undefined} */ expr) => {
-  const token = expr?.terms?.[0]?.token;
-  return token?.kind === '"' ? String(token.value).slice(1, -1) : token?.value !== undefined ? String(token.value) : '';
-};
 const parsed = (/** @type {string} */ file) => {
   const text = read(file);
-  const result = parse(text, { lexProfile: 'prose' });
-  if (!result.completeness?.complete) hard.push(`${file}: does not read whole, so nothing in it can be checked`);
-  return { text, ast: /** @type {Node} */ (result.ast) };
+  const { result, ast } = parseProseSpw(text, parse);
+  if (!result?.completeness?.complete) hard.push(`${file}: does not read whole, so nothing in it can be checked`);
+  return { text, ast: /** @type {Node} */ (ast) };
 };
 
 /* Optional scheduled stone in serial.json (dormant when serial.next is null). */
@@ -69,12 +59,12 @@ const scripts = JSON.parse(read('package.json')).scripts;
 let openSlices = 0;
 for (const file of ['PLAN.E.spw', 'PLAN.F.spw']) {
   const { ast } = parsed(file);
-  walk(ast, (node) => {
+  walkAst(ast, (node) => {
     if (node.type !== 'Parameter' || !/^[fi]\d+s?$/.test(node.name?.value ?? '')) return;
     /** @type {Record<string, string>} */ const fields = {};
     for (const expr of node.value?.terms?.[0]?.sequence?.expressions ?? []) {
-      const binding = expr.terms?.[0];
-      if (binding?.type === 'Binding') fields[binding.key?.token?.value] = textOf(binding.value);
+      const b = bindingInfo(expr.terms?.[0]);
+      if (b) fields[b.name] = b.text;
     }
     if (!OPEN_RELEASES.has(fields.release)) return;
     openSlices += 1;
@@ -96,13 +86,13 @@ let grants = 0;
 {
   const file = '.spw/state/grants.spw';
   const { text, ast } = parsed(file);
-  walk(ast, (node) => {
+  walkAst(ast, (node) => {
     if (node.type !== 'Operation' || node.operator?.value !== '^' || node.operatorLabel?.value !== 'grant') return;
     grants += 1;
-    const id = textOf(node.frame?.content?.[0]?.value) || `at ${node.span.start.line}`;
+    const id = nodeText(node.frame?.content?.[0]?.value) || `at ${node.span.start.line}`;
     const body = text.slice(node.span.start.offset, node.span.end.offset);
     /** @type {string[]} */ const signs = [];
-    walk(node.body, (inner) => { if (inner.type === 'Operation' && inner.operator?.value === '=') signs.push(.../** @type {string[]} */ (/** @type {any} */ (readBias(inner))?.valence ?? [])); });
+    walkAst(node.body, (inner) => { if (inner.type === 'Operation' && inner.operator?.value === '=') signs.push(.../** @type {string[]} */ (/** @type {any} */ (readBias(inner))?.valence ?? [])); });
     for (const [mark, words] of [[/!wish:/, 'wish'], [/~#expect:/, 'guess made beforehand']]) if (!/** @type {RegExp} */ (mark).test(body)) hard.push(`grant ${id}: no ${words}`);
     if (!signs.includes('boon')) hard.push(`grant ${id}: says nothing it gave (a =boon edge)`);
     if (!signs.includes('bane')) hard.push(`grant ${id}: says nothing it took (a =bane edge); nothing granted is free`);
@@ -115,7 +105,7 @@ let grants = 0;
 /* The index points at something real. */
 {
   const indexText = read('.spw/index.spw');
-  const active = indexText.match(/audit_active:\s*~?"(?:@spw\/|\.spw\/)?([^"]+)"/)?.[1];
+  const active = indexText.match(/audit_active:\s*~?"(?:@spw\/|\.spw\/|\.\.\/|\.\/)?([^"]+)"/)?.[1];
   if (!active || !fs.existsSync(path.join(ROOT, '.spw', active))) hard.push(`.spw/index.spw: audit_active points at ${active ?? 'nothing'}`);
 }
 
@@ -127,7 +117,7 @@ for (const full of [...spwFiles(path.join(ROOT, '.spw')), path.join(ROOT, 'PLAN.
   const text = read(file);
   const result = parse(text, { lexProfile: 'prose' });
   let items = 0;
-  walk(result.ast, (node) => {
+  walkAst(result.ast, (node) => {
     if (node.type !== 'Operation' || node.operator?.value !== '?' || !QUESTION_LABELS.has(node.operatorLabel?.value)) return;
     items += node.frame?.content?.length ?? node.body?.sequence?.expressions?.length ?? 0;
     answered += (text.slice(node.span.start.offset, node.span.end.offset).match(/~#(answer|retired)\(\d{4}-\d{2}-\d{2}\)/g) ?? []).length;

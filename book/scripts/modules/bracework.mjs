@@ -15,6 +15,7 @@
  * pretending. Without script, the block is still the expression and gloss.
  */
 import { CONTAINER_RESONANCE, OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
+import { isWholeSpw, referenceName } from './spw-ast.mjs?v=2026_11_13.B';
 
 const CONTAINERS = Object.freeze({
   Frame: { open: '[', close: ']', word: 'a window', what: 'you can only look into it' },
@@ -55,8 +56,8 @@ export function readTree(ast) {
     }
     if (node.type === 'Reference') {
       tokens.push({ kind: 'sigil', text: '@' });
-      const value = JSON.stringify(node).match(/"type":"IDENTIFIER","value":"([^"]+)"/);
-      if (value) tokens.push({ kind: 'thing', text: value[1] });
+      const value = referenceName(node);
+      if (value) tokens.push({ kind: 'thing', text: value });
       return;
     }
     if (node.type === 'Operation') {
@@ -81,7 +82,7 @@ function el(tag, className, text) {
 function draw(figure, result) {
   figure.querySelector('.bracework-reading')?.remove();
   const reading = el('div', 'bracework-reading');
-  if (!result?.success || result.completeness?.proseFallback) {
+  if (!isWholeSpw(result)) {
     reading.append(el('div', 'bracework-note', 'The interpreter reads this as prose: the makers’ shorthand runs ahead of the grammar here, and the land keeps it anyway.'));
     figure.dataset.read = 'prose';
     figure.append(reading);

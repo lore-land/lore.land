@@ -8,6 +8,7 @@ import { MATERIALS, materialScores } from '../modules/materials.mjs';
 import { describeChapter, chapterInventory, renderChapterInventory, spellProblems } from '../modules/chapter-spell.mjs';
 import { CANON_REFUSALS } from '../../schema/book-types.mjs';
 import { parse as parseSpw, hydrateSnippet, readLine, slotHash } from '../vendor/spw-seed.mjs';
+import { parseProseSpw, readProjectionTemplates } from '../modules/spw-ast.mjs';
 import { createMiniDocument } from './mini-dom.mjs';
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
@@ -41,32 +42,13 @@ const template = await readFile(TEMPLATE_PATH, 'utf8');
 let chapterClauseTemplate = '@c${nn=01}[${air=warm}]{ .room[${room=01}] =lens[${lens=balanced}] =edition[${edition=first}] %scenes[${count=0}] }';
 {
   const projPath = resolve(ROOT, '.spw/surfaces/projection.spw');
-  const projResult = parseSpw(await readFile(projPath, 'utf8'), { lexProfile: 'prose' });
-  const walkAst = (node, visit) => {
-    if (Array.isArray(node)) { node.forEach((c) => walkAst(c, visit)); return; }
-    if (!node || typeof node !== 'object') return;
-    visit(node);
-    for (const [k, v] of Object.entries(node)) if (k !== 'span') walkAst(v, visit);
-  };
-  let foundSlots = null;
-  walkAst(projResult.ast, (node) => {
-    if (node.type === 'Binding' && node.key?.token?.value === 'slots') {
-      const items = node.value?.terms?.[0]?.content || node.value?.terms?.[0]?.frame?.content || [];
-      foundSlots = [];
-      for (const p of items) {
-        const v = p?.value?.token?.value ?? p?.value?.terms?.[0]?.token?.value;
-        if (typeof v === 'string' && v.length >= 2) foundSlots.push(v.slice(1, -1));
-      }
-    } else if (node.type === 'Operation' && node.operator?.value === '*' && node.operatorLabel?.value === 'chapter_clause') {
-      const exprs = node.body?.sequence?.expressions || [];
-      const b = exprs.flatMap((e) => e.terms || []).find((t) => t.type === 'Binding' && t.key?.operator?.value === '!' && t.key?.operatorLabel?.value === 'source');
-      const raw = b?.value?.terms?.[0]?.token?.value;
-      if (typeof raw === 'string') chapterClauseTemplate = raw.slice(1, -1);
-    }
-  });
-  if (foundSlots?.length) {
+  const proj = parseProseSpw(await readFile(projPath, 'utf8'), parseSpw);
+  const { slots, sources } = readProjectionTemplates(proj.ast);
+  const clauseEntry = sources.find((s) => s.name === 'chapter_clause');
+  if (clauseEntry) chapterClauseTemplate = clauseEntry.source;
+  if (slots.length) {
     const htmlSlots = new Set([...template.matchAll(/\{\{([A-Z0-9_]+)\}\}/g)].map((m) => m[1]));
-    const declared = new Set(foundSlots);
+    const declared = new Set(slots);
     const missing = [...htmlSlots].filter((s) => !declared.has(s));
     if (missing.length) throw new Error(`projection.spw *chapter_page is missing template slots: ${missing.join(', ')}`);
   }
