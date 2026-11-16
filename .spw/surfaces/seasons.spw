@@ -35,6 +35,7 @@
   plays: "after the season the line is the key and not the spell: what plays at the place is the season's own residue, whatever a line handed over or rewritten may hold"
   where: "with the carries, under Provenance, where it can be copied (with where it is from) or let go"
   reads: "whole in the real parser, where the label and its mirror are two words in the body; the seal is read by the game"
+  joinery: ~"./joinery.spw#three_sealed_lines"
 }
 
 ^"standing"{
@@ -89,6 +90,7 @@
   rival_kinds: "RIVAL_GIFTS in pie-live.mjs: a gift sent to the other side names the obstacles it becomes (a hi bear, sticky trails and snails; TGIF, mimes and hurrying clerks; a happy twinkle, glass and frost); any other gift comes by its size"
   signs: "one object under two signs. What is sent to my side is =boon@carrier{ @gift }, and the same gift sent to the other side is =bane@carrier{ @gift }: the signed edge elaboration.spw writes for a gift and for a price. The sign is the side, never the gift, which is why every gift has both a boon and a bane form"
   counted: "a gift landing leans nothing and keeps nothing. Only what hands do with it is a deed (a dolphin ridden, a donut eaten, a boon rose kept, a wilted rose walked through, a thing the other side sent hopped), tallied with the other deeds of the leg and kept on its chapter for the margins"
+  joinery: ~"./joinery.spw#a_gift_two_ways"
 }
 
 ^"upstream"{

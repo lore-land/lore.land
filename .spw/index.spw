@@ -17,6 +17,7 @@
   claims: ~"./claims/chapter-claims.spw"
   process: ~"./workspace.spw"
   surfaces: ~"./surfaces/index.spw"
+  joinery: ~"./surfaces/joinery.spw"
   publish: ~"./surfaces/publish.spw"
   editorial: ~"./surfaces/editorial.spw"
   platform: ~"./surfaces/platform.spw"
@@ -127,6 +128,7 @@
   probe_chain: "^[claim-chain]{claim -> spec -> impl -> probe}"
   platform_chain: "^[platform/*]{sw | social | vite | canon-sync}"
   atelier_chain: "^[atelier/*]{wonder | ledger | ladder | passes}"
+  design_chain: ~"./surfaces/joinery.spw#walks"
 }
 
 ~direction{

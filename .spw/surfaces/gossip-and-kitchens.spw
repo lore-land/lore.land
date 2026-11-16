@@ -39,6 +39,7 @@
   gifts: "a line of ants carrying a crumb and a scrap of paper to the edge of the road, where a crow or a raven takes it and goes; on a filled screen the bird stands on the verge"
   mimes: "when gossip has just been heard and a mime is in view, the mime has a baneberry dish (a bowl and a spoon) if a baneberry was sweetened this carry, the order having reached a chef who can make one; otherwise a busy kitchen read the order its own way, and the mime waits"
   ask: "Ask on an anthill or a line of ants says whose it is, why it is there, and what scrap they carry, from where in the book"
+  joinery: ~"./joinery.spw#a_rumour_around"
 }
 
 =wish_kitchen{

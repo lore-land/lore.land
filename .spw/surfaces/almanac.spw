@@ -6,6 +6,10 @@
 #:surface #!canon #!worldbuilding
 #:status #!working
 
+~<rationale>{
+  Makes possible: a wonder met in a chapter, kept, and met again somewhere else. Every entry does something in a scene (it costs, helps, is misread or remembers), so the almanac reads as a map of habits a reader can follow place by place, and what a carry makes by a deed in the lanes arrives here as an object with a residue.
+}
+
 ^"almanac"{
   .status: "working"
   purpose: "Give every region a texture of its own: creature wonder where the land is wild, inventive contrivances where people build, and bracework (Spw as an in-world craft) where makers combine things into small realms."
@@ -29,6 +33,7 @@
   unsaid: "No line names the figure in plain lines (no &figure); the Egg's card and the figure have no line at all."
   storage: "No new key: every line is read from lore.almanac.v1 and likeness.json."
   check: "npm run smoke, the two kept lines scenarios. A round trip of all 83 wonders, kept and not, through parse, spokenLine and scanPairLabels was run once by hand (2026-11-13) and is in no check yet."
+  joinery: ~"./joinery.spw#three_sealed_lines"
 }
 
 ?open[
@@ -111,6 +116,7 @@
   found: "horn_button (Fifteen, lost in Six), waxed_slice (Six, Ten, Fourteen), gate_book_entry and damage_slip (Fifteen), relit_torch and criers_note (Fourteen), bridge_receipts (Twelve, Fifteen)"
   made_in_the_lanes: "stacked_plate (the first WAP of any carry), found_line (five words kept from the road)"
   rule: "Terms are the scene's own phrase, not a common word (a torch that had gone out, both receipts, saw a hat), so an artifact is marked where it was left and nowhere it merely shares a noun."
+  joinery: ~"./joinery.spw#the_one_track"
 }
 
 ^"bracework"{

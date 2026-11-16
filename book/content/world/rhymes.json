@@ -3242,7 +3242,7 @@
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 6,
-      "instances": 2,
+      "instances": 3,
       "files": [
         ".spw/surfaces/tropes.spw"
       ],
@@ -3253,17 +3253,19 @@
           "kind": "Operation",
           "fillers": [
             "physics",
-            "book_two"
+            "book_two",
+            "joinery"
           ],
-          "distinct": 2
+          "distinct": 3
         },
         {
           "kind": "Literal",
           "fillers": [
             "\".spw/story-boonhonk.spw#lore_land_story_boonhonk\"",
-            "\".spw/surfaces/wonder-about-pie.spw#book_two\""
+            "\".spw/surfaces/wonder-about-pie.spw#book_two\"",
+            "\".spw/surfaces/joinery.spw#the_one_track\""
           ],
-          "distinct": 2
+          "distinct": 3
         }
       ],
       "tropes": []

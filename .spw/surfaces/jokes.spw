@@ -52,6 +52,7 @@
 ^"track"{
   book_to_lanes: "a margin heard, or the book quoted, sets the beat up or lands it in the lanes"
   lanes_to_book: "landing meets the trope it crosses (a step toward the turn) and is kept as a deed on its chapter, joke_name, for a margin to retell once its words are written"
+  joinery: ~"./joinery.spw#the_one_track"
 }
 
 !guards[

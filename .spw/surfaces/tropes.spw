@@ -12,6 +12,7 @@
   .for: "trope.wiki: stable ids, aliases, the classic tropes each one bends, faces by medium, crossings both ways, stations, rhymes"
   &physics: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   &book_two: ~".spw/surfaces/wonder-about-pie.spw#book_two"
+  &joinery: ~".spw/surfaces/joinery.spw#the_one_track"
 }
 
 ^"contract"{

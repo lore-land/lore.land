@@ -36,6 +36,7 @@
   book: "a chapter opened that tells the trope counts toward the name, and its paying chamber toward the payoff (noteCrossing read)"
   desk: "writing the trope at the desk counts as meeting it in a strand of its own (noteCrossing desk)"
   shelves: "with the shelves trial on, a reader whose shelves lean the way a trope already leans moves it a little sooner; no shelf closes a trope"
+  joinery: ~"./joinery.spw#the_one_track"
 }
 
 *refrains{

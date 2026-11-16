@@ -24,6 +24,7 @@
   &prepare: "npm run sounds:prepare (book/scripts/tools/prepare-pie-sounds.mjs). Each take is book/audio/<event>/<n>.m4a beside <n>.spw: the sidecar says what the take is and lists the mutations that made it"
   &sidecars: "asset-sidecar.mjs. A derived file keeps a sidecar: #says, and =@anchor{ @target } for each mutation, in order. Share cards and the bud icons use the same shape. The cast of the lanes is pie-world.mjs, imported, because it is the rules and not a derived file"
   &characters: ~".spw/surfaces/characters.spw"
+  &joinery: ~".spw/surfaces/joinery.spw#the_ear"
   &care: "audience care: the same PG floor and gate as the prose; no real names; no cloned or imitated real voices; no borrowed dialects (the bias rules)"
 }
 

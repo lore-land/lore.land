@@ -25,6 +25,7 @@
   deeds: "the lanes' lean tallies (pie-rules.spw =lean): fairy_tale to boon, absurd_reality to bane, low_magic to bone, and two new ways: bonk from knocked, splat, wap, boxed, shattered; honk from rhythms found, grooves kept, echoes heard"
   attention: "time on paragraphs the valence lens leans (valence-lens.mjs leanScores), and desk spells cast under each modifier"
   firmness: "k from 1 (loose shelves, every branch stays likely) to 4 (firm shelves, the leaning branch dominates); the reader sets it, as a shelf is set"
+  joinery: ~"./joinery.spw#a_gift_two_ways"
 }
 
 =branches{

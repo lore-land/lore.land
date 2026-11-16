@@ -26,6 +26,7 @@
   texture_website: ~".spw/surfaces/texture-website.spw#texture_website"
   story_boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   plan_f: ~"PLAN.F.spw#plan_f"
+  joinery: ~".spw/surfaces/joinery.spw#the_ear"
 }
 
 ^"experimental_chamber"{

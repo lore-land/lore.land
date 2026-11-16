@@ -13,6 +13,9 @@
 }
 
 ^"surfaces"{
+  start_here: {
+    &joinery: ~"./joinery.spw"
+  }
   platform_and_publish: {
     &publish: ~"./publish.spw"
     &editorial: ~"./editorial.spw"

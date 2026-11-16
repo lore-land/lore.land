@@ -1,0 +1,247 @@
+# Joinery — how the systems of the land are joined: nodes, edges, walks, crossroads and seams
+# A map drawn 2026-11-16 from the surfaces as they stand. It adds no canon: every node is a passage a surface already
+# writes, every edge a sentence one already says, every seam a question one already asks.
+# Walk it: npm run spw -- resolve --from .spw/surfaces/joinery.spw --warn (every node should resolve), and
+# spw say --line '=kept@find{ @deed }' (an edge said in the names of its parts; the workbench CLI run directly,
+# since npm run spw keeps a shorter read list).
+#>lore_land_surfaces_joinery
+#:surface #!map
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  Makes possible: following one thread of the land and arriving somewhere. Each system built this week (finds, seasons, callbacks, shelves and forks, kept lines, the level lines, the ear, the ants and the bees) says in its own surface what it touches, and none says it for the others. Joinery sets those sentences side by side as Spw. A node is a passage, an edge is a labeled lean from one node to the next, a walk is an order of edges, a crossroads is one story element several systems meet, and a seam is a question two surfaces ask from different sides. The almanac says a plan written in braces can be leaned on and read by strangers; this is that, for the design.
+}
+
+^"how_to_walk"{
+  node: "name: ~\"path#anchor\", the form the tree writes most (see idioms). An anchor is a #> line, a quoted ^ block, or a field at the start of a line: the places spw resolve looks"
+  edge: "=how@from{ @to }: from and to are nodes, how is the word the surface itself uses. readBias reads the anchor and the targets; the word is the operation label, which readBias does not keep"
+  sign: "a signed edge, =boon@who{ @what } or =bane@who{ @what }, is kept for a gift and a price, as elaboration.spw writes them; every other edge is labeled"
+  walk: "read a walk by its says, then follow its edges in order, opening each node; read a crossroads the other way, from one story element out to every system that meets it"
+  new: "the labeled anchored edge is new to the tree here: the bias registry names labeled (=ref{ }) and anchored (=@old{ @new }) forms apart, and the parser reads them together whole"
+}
+
+^"nodes"{
+  hands: ~"./seasons.spw#counted"
+  find: ~"./finds.spw#track"
+  callback: ~"./jokes.spw#track"
+  deed: ~"./tropes.spw#done"
+  artifact: ~"./almanac.spw#artifacts"
+  rumour: ~"./tropes.spw#heard"
+  lanes_say: ~"./tropes.spw#said"
+  margin: ~"./tropes.spw#retold"
+  trope: ~"./tropes.spw#contract"
+  turn: ~"./elaboration.spw#lanes"
+  cost: ~"./elaboration.spw#cost"
+  gift: ~"./seasons.spw#live_gifts"
+  carrier: ~"./classes.spw#a_class_as_a_line"
+  shelves: ~"./shelves.spw#deeds"
+  fork: ~"./shelves.spw#form"
+  way: ~"./reasons.spw#lore_land_surfaces_reasons"
+  chain: ~"./shelves.spw#rule"
+  tease: ~"./shelves.spw#ladder"
+  gossip: ~"./gossip-and-kitchens.spw#in_the_lanes"
+  whisper: ~"./gossip-and-kitchens.spw#shelves"
+  season: ~"./seasons.spw#season"
+  almanac: ~"./almanac.spw#kept_lines"
+  found_line: ~"./finds.spw#line"
+  kept_line: ~"./seasons.spw#the_line"
+  shelf_line: ~"./almanac.spw#shelf_line"
+  given: ~"./seasons.spw#a_line_given_away"
+  pair_reader: ~"./seasons.spw#upstream"
+  level: ~"../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  board: ~"./liminal-physics.spw#line"
+  textures: ~"./sound-and-voice.spw#where"
+  feel: ~"./sound-and-voice.spw#feel"
+  ear_line: ~"./sound-and-voice.spw#ear_line"
+  workbench: ~"../caches/workbench-direction.spw#upstream"
+}
+
+^"walks"{
+  the_one_track: {
+    says: "Hands supply what a gift cannot, and a find opens. It is kept at once as a deed on the chapter it opened in, and so is a callback that lands, which also says who pays. The deed makes its artifact in the almanac and turns a rumour in that chapter's margin, retold with a count; opening the find meets its trope in the lanes, which counts toward the turn. The haggle and the sniff walk all of it; the unwritten is held from the book and stops at its line."
+    edges: [
+      =opens@hands{ @find }
+      =kept@find{ @deed }
+      =kept@callback{ @deed }
+      =pays@callback{ @cost }
+      =makes@deed{ @artifact }
+      =turns@deed{ @margin }
+      =meets@find{ @trope }
+      =counts@trope{ @turn }
+    ]
+  }
+  a_rumour_around: {
+    says: "A rumour beside the prose is kept as heard. When a carry reaches its chapter the lanes say it, a breath after the room says its name. What the leg does is kept as deeds, and the margin is retold with the count and says it is since the lanes. The ants carry the book a few words at a time, and a gossiped scrap is a whisper: the same first rung of the tease ladder a margin rumour stands on."
+    edges: [
+      =reached@rumour{ @lanes_say }
+      =retold@deed{ @margin }
+      =crosses@margin{ @trope }
+      =carried@gossip{ @whisper }
+      =rung@whisper{ @tease }
+      =rung@rumour{ @tease }
+    ]
+  }
+  a_gift_two_ways: {
+    says: "One gift, two signs. Sent to my side it is a boon, and the same gift sent to the other side is a bane: the sign is the side, never the gift. A gift landing leans nothing and keeps nothing. Hands decide: a gift supplies one half of a find, and what hands do with it is a deed, tallied as a lean on the shelves, which weigh the forks, fire the chains and climb the tease ladder (with the shelves trial on)."
+    edges: [
+      =boon@carrier{ @gift }
+      =bane@carrier{ @gift }
+      =halves@gift{ @find }
+      =counted@hands{ @deed }
+      =leans@deed{ @shelves }
+      =weighs@shelves{ @fork }
+      =drawn@way{ @fork }
+      =fires@shelves{ @chain }
+      =climbs@shelves{ @tease }
+    ]
+  }
+  three_sealed_lines: {
+    says: "Three systems keep what play earned as one line sealed by its own name: a found line, a kept line and a shelf line, each opening with a label and closing with it mirrored, so a line cut short on the way does not close. The workbench reads the seal (scanPairLabels); finds-check and seasons-check hold their lines to it, and the almanac lines were run through it once, by hand, and are in no check yet. A kept line and a shelf line already have a rule for being given (shown or read, never kept as earned); a found line has only half of one."
+    edges: [
+      =seals@find{ @found_line }
+      =seals@season{ @kept_line }
+      =seals@almanac{ @shelf_line }
+      =reads@pair_reader{ @found_line @kept_line }
+      =gives@kept_line{ @given }
+    ]
+  }
+  the_ear: {
+    says: "Each chapter has a level line: tempo, key, motif, lean, and a rhythm the land keeps in one room, found by stepping in time with its hits. A texture chosen in Setup travels in the board line, the first Spw a reader writes. The jazz feel swings at least a triplet, whatever swing the level wrote. The ear line is proposed to carry the textures and the feel beside the brace sounds the workbench now reads, so one line of sound could tune a game and an editor."
+    edges: [
+      =found@hands{ @level }
+      =swings@feel{ @level }
+      =carries@board{ @textures }
+      =proposed@textures{ @ear_line }
+      =reads@workbench{ @ear_line }
+    ]
+  }
+}
+
+^"crossroads"{
+  .read: "one story element that several systems already meet; each line cites what one of them says, and the wonder line says only what they say together"
+  the_genie_prices: {
+    find: ~"./finds.spw#haggle"
+    callback: ~"./jokes.spw#priced"
+    sound: ~"./sound-and-voice.spw#haggle"
+    kitchen: ~"./gossip-and-kitchens.spw#genie"
+    almanac: ~"./almanac.spw#wish_scale"
+    level: ~"../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+    wonder: "He cannot stop pricing, and system after system hears it. The haggle loses to silence in three struck prices; the priced callback has him price his own third knock; the sound steps a wooden tock lower for each struck price and gives back two clinks for the coin; the wish kitchen makes his wish a projection onto what boonberries can do, less a price; the almanac keeps his pan scale, balanced against coincidences; Chapter Three carries his theme. Two surfaces cross his pricing with different tropes, and that is a seam, not an error."
+  }
+  the_bloom: {
+    find: ~"./finds.spw#bloom"
+    bees: ~"./almanac.spw#early_bees"
+    wasps: ~"./almanac.spw#crown_wasps"
+    jazz: ~"./gossip-and-kitchens.spw#bees_jazz"
+    feel: ~"./sound-and-voice.spw#feel"
+    level: ~"../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+    wonder: "Chapter Eleven opens every bud in the garden at once. Its rhythm is Before the seed, every hit a little before the beat; a bane rose may open up the lanes there while Mr. BaneWAP schemes, so the sniff needs no stream; the almanac keeps bees that arrive before a flower opens and wasps that build hollow crowns; the maker says bees are mostly moved by jazz; the game has a jazz feel. Its level line writes no swing. Nothing yet says whether these are one thing."
+  }
+  the_slip: {
+    season: ~"./seasons.spw#place"
+    callback: ~"./jokes.spw#damage"
+    kitchen: ~"./gossip-and-kitchens.spw#wrong_orders"
+    artifact: ~"./almanac.spw#found"
+    level: ~"../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+    wonder: "Chapter Fifteen keeps records of one stranger. The damage callback is paid off there, in what porters write under a word; the kitchens read a misheard order as exactly such a slip; the almanac keeps the damage slip as an artifact found there; the level knocks one stranger three ways, and all three are right. The same chapter sets a place at the head of the long table, and the first season sets one by the road in every chapter."
+  }
+}
+
+^idioms[
+  .note: "The forms the tree writes most, counted 2026-11-16 before this pass (so this surface, which adds its own nodes, two live signed edges and one more quoted sealed line, is in no count) over the hand-written canon (surfaces, runtime, state, caches, ecologies, workspace, story-boonhonk, index and claims) with npm run spw -- form --rhymes and --match, and the signed edges and sealed lines read with the parser. A count is a snapshot: rerun to see it move. Each idiom recurs across systems; plates.spw keeps a different idiomarium, phrases for thinking with the plates."
+
+  ^idiom["point, then say"]{
+    form: "name: ~\"path#anchor\" and &name: ~\"path\""
+    read: "a field that holds a path is a thread: a bare field points, & cites and merges evidence, and spw resolve says whether either still leads somewhere"
+    census: "the two commonest shapes in the tree: _: ~_ 215 times in 30 files, &_: ~_ 173 times in 23"
+    seen: ~"./almanac.spw#almanac"
+  }
+
+  ^idiom["why before what"]{
+    form: "~<rationale>{ } then ^\"grounded_in\"{ }"
+    read: "a surface says why before what, and a design names the passage it stands on before it says what it does"
+    census: "a rationale opens 48 of 64 surfaces, every chapter ecology and their index (27), five runtime surfaces and both caches; form --match finds 47 of the 48, since it does not see the one in plates.spw, whose prose holds apostrophes. grounded_in stands in 5 (finds, seasons, jokes, gossip and kitchens, reactions in the lanes)"
+    seen: ~"./finds.spw#grounded_in"
+  }
+
+  ^idiom["refuse, then ask"]{
+    form: "!guards[ ] then ?open[ ]"
+    read: "a system ends with what it must never do and what it does not yet know; a guard wants a step that can fail (finds-check runs a carry of gifts with no hands and finds it shut), and a question waits for the maker"
+    census: "guards in 20 surfaces; open questions in 34 surfaces and the direction cache"
+    seen: ~"./finds.spw#lore_land_surfaces_finds"
+  }
+
+  ^idiom["a rule is a line"]{
+    form: "?find[haggle]{ @carrier[genie] &eat[donut] %count[3] %lanes[3] ~within[3] ^moment[haggle] #crosses[never-smaller] =lean[bone] }"
+    read: "a design runs as one line whose slots keep their roles from system to system: @ who, & what is done, % how many, ~ a window or what is held in potential, ^ what lands, # the tag that travels, = the lean. The line in the surface is the line that runs: finds-check and jokes-check fail when the two differ"
+    census: "four systems write rules this way: ?find (3), ?joke (2), ~season (2) and the level lines, *chNN (15)"
+    seen: ~"./finds.spw#form"
+  }
+
+  ^idiom["one object, two signs"]{
+    form: "=boon@carrier{ @gift } and =bane@carrier{ @gift }"
+    read: "a gift and a price are one edge under two signs, and the sign is the side; the design surfaces speak of signed edges far more often than they write them, and the walk a_gift_two_ways writes the first two outside the way and the grants"
+    census: "written live 55 times in two files only, reasons.spw (36, the way forks spw:way writes) and grants.spw (19, a gain and a price for every grant); 35 more inside quoted strings, in eight surfaces and grants.spw, 16 of them in shelves"
+    seen: ~"./seasons.spw#signs"
+  }
+
+  ^idiom["sealed by its own name"]{
+    form: "^kept[thursday]{_thursday .day[\"2026-11-27\"] .chapter[15] .carrier[porter] *kept_place{ ~warm[4] } yadsruht_}"
+    read: "a line that opens with a label and closes with it mirrored arrives whole or is refused; the seal is held by the checks and the game, so the tree itself holds none"
+    census: "three sealed lines (found, kept, shelf), all inside quoted strings; spw pairs finds no labeled pair in any hand-written canon file, and reads each of the three as mirrored when handed it with --line"
+    seen: ~"./seasons.spw#the_line"
+  }
+
+  ^idiom["the third time pays"]{
+    form: "%count[3]"
+    read: "elaboration says why three: the first meeting gives the thing, a second its reason, a third its cost"
+    census: "the haggle (three from three lanes in three seconds, then three struck prices), the priced callback (the third knock), the damage callback (three knocks by a clerk), the porter knock of Chapter Fifteen (one stranger, knocked three ways), the Ring Tide (three days)"
+    seen: ~"./elaboration.spw#cost"
+  }
+]
+
+?seams[
+  {
+    asks: "In what words is a margin retold, and what may it name"
+    from: [~"./finds.spw#lore_land_surfaces_finds", ~"./jokes.spw#lore_land_surfaces_jokes", ~"./tropes.spw#tropes"]
+    opens: "finds asks whether a margin is where a find is retold, callbacks ask whether a landed callback is retold there and in what words, and the track asks whether the lanes should say a retold rumour differently. One answer would let the find, the callback and the rumour share a voice in the margin, and would decide whether the margin is where the history of the carries is read"
+  }
+  {
+    asks: "When is a line of Spw said aloud"
+    from: [~"./elaboration.spw#lore_land_surfaces_elaboration", ~"./shelves.spw#lore_land_surfaces_shelves"]
+    opens: "a trope at its payoff and a completed chain each wait on whether their Spw is said in the margin, at the desk, or only in Structure mode. The workbench already says any line in the names of its parts (spokenLine), and Setup gives the board line that reading as its accessible name, so the answer would decide where reading the grammar aloud becomes a reward"
+  }
+  {
+    asks: "May a sealed line be given to someone who did not earn it"
+    from: [~"./finds.spw#lore_land_surfaces_finds", ~"./almanac.spw#kept_lines", ~"./seasons.spw#a_line_given_away"]
+    opens: "seasons gives its kept line a rule (shown, not kept, and never saying anyone was there); the almanac reads a given shelf line beside the reader's own and asks whether to keep it as a letter; finds says a pasted found line writes nothing and asks whether it may show its riddle. An answer would say whether the three sealed lines travel between readers the same way"
+  }
+  {
+    asks: "Which trope does the pricing of the Genie cross"
+    from: [~"./finds.spw#haggle", ~"./jokes.spw#priced"]
+    opens: "the haggle crosses never-smaller and the priced callback crosses the missing day, both resting on his one limit, cannot stop pricing; callbacks ask whether it is either, or a trope of his own. An answer would say whether his pricing is one strand on the track or two"
+  }
+  {
+    asks: "Are the early bees the jazz"
+    from: [~"./gossip-and-kitchens.spw#bees_jazz", ~"./almanac.spw#early_bees", ~"./sound-and-voice.spw#feel"]
+    opens: "the kitchens ask whether the bees of Chapter Eleven humming at closed petals is the jazz, and whether bees come sooner to a carry played in the jazz feel. An answer would say whether a creature, a rhythm and a feel are one thing; today the level line of Chapter Eleven writes no swing"
+  }
+  {
+    asks: "What is the least ear line a blind programmer could retune"
+    from: [~"../caches/workbench-direction.spw#lore_land_workbench_direction", ~"./sound-and-voice.spw#ear_line"]
+    opens: "the direction cache asks for an audio map of three lines at most; the game already keeps three board terms for its textures, the workbench reads ^ear lines, and the ear line is proposed to carry both. An answer would make one setting the game and an editor share, written in the grammar the book teaches"
+  }
+]
+
+!guards[
+  "Joinery adds no canon: every node is a passage already written, every edge a sentence a surface already says, every seam a question a surface already asks"
+  "An edge never answers an open question; where two surfaces disagree, both stand and the disagreement is a seam"
+  "Nothing here names the figure in plain lines or explains the Egg; a walk that reaches held material stops there and says so"
+  "A node that stops resolving is a thread to mend, never one to cut: npm run spw -- resolve --from .spw/surfaces/joinery.spw --warn names it"
+]
+
+?open[
+  "Should spw:lint hold every node here to resolve, so a renamed field breaks the build rather than a thread"
+  "Should the walks be drawn, beside the seed atlas or in Structure mode, so a reader could follow the threads an agent follows"
+]
