@@ -185,8 +185,8 @@ import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_16.B';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
 import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_16.B';
-import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
-import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_13.B';
+import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_16.B';
+import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_16.B';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
@@ -207,7 +207,7 @@ import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainS
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
 import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
 import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_13.B';
-import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_11.A';
+import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_16.B';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
 import { reactionFor, powerMoments, ended as timersEnded, REACTIONS } from './pie-reactions.mjs?v=2026_11_13.B';
 import { meet as meetCallback, saving as callbacksSaving, wordsOf as callbackWords, jokeDeed, QUOTED as CALLBACK_CHAPTERS } from './pie-jokes.mjs?v=2026_11_13.B';
@@ -215,7 +215,7 @@ import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
 import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.B';
-import { initPieDraw } from './pie-draw.mjs?v=2026_11_13.B';
+import { initPieDraw } from './pie-draw.mjs?v=2026_11_16.B';
 import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_16.B';
 import { FINDS, HAGGLE_BEATS, readFind, deedOf, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.B';
 import { icon, iconForGlyph } from '../modules/icons.mjs?v=2026_11_09.G';
@@ -6489,7 +6489,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * moves in step; none with reduced motion, and none once it is knocked, hopped or WAPped. */
   const BREATHES = new Set(['beaver', 'dolphin', 'snail', 'pigeon', 'clerk', 'clown', 'subject']);
   const FLOATS = new Set(['wasps', 'wonder', 'egg']);
-  const SWAYS = new Set(['boonrose', 'banerose']);
+  const SWAYS = new Set(['boonrose', 'banerose', 'banner']);
   const lifeOf = (thing) => {
     const b = thingLook().bounce;
     if (!b || reduced?.matches || state !== 'running' || !run || thing.knocked || thing.cleared || thing.wapped) return null;
@@ -6632,21 +6632,36 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'pane': {
-        // A pane of Bonk glass on its edge: it remembers being struck.
-        ctx.fillStyle = 'rgba(150, 205, 210, 0.42)';
-        ctx.strokeStyle = 'rgba(70, 120, 130, 0.9)';
-        ctx.lineWidth = 1.5;
+        // A pane of Bonk glass on its edge: leaded corners, specular prism sheen, and fracture memory.
+        const glassGrad = ctx.createLinearGradient(x - 15, y - 15, x + 15, y + 14);
+        glassGrad.addColorStop(0, 'rgba(190, 238, 242, 0.58)');
+        glassGrad.addColorStop(0.5, 'rgba(130, 198, 206, 0.36)');
+        glassGrad.addColorStop(1, 'rgba(170, 224, 230, 0.52)');
+        ctx.fillStyle = glassGrad;
+        ctx.strokeStyle = 'rgba(58, 108, 118, 0.92)';
+        ctx.lineWidth = 1.6;
         ctx.beginPath();
         ctx.moveTo(x - 15, y + 12); ctx.lineTo(x - 12, y - 15); ctx.lineTo(x + 15, y - 12); ctx.lineTo(x + 13, y + 14); ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
-        ctx.lineWidth = 1;
+        // Leaded glazier corner brackets.
+        ctx.fillStyle = '#3a5a62';
+        [[-12, -15], [15, -12], [13, 14], [-15, 12]].forEach(([cx, cy]) => {
+          ctx.beginPath(); ctx.arc(x + cx * 0.88, y + cy * 0.88, 1.6, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+        ctx.lineWidth = 1.1;
         ctx.beginPath();
         ctx.moveTo(x - 3, y - 2); ctx.lineTo(x - 9, y - 10);
         ctx.moveTo(x - 3, y - 2); ctx.lineTo(x + 8, y - 6);
         ctx.moveTo(x - 3, y - 2); ctx.lineTo(x + 2, y + 10);
+        ctx.moveTo(x - 10, y + 6); ctx.lineTo(x + 6, y - 10);
         ctx.stroke();
+        if (run && run.sliceReady >= 1 && !thing.knocked && !thing.wapped) {
+          ctx.strokeStyle = 'rgba(242, 193, 78, 0.65)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.arc(x + 9, y - 9, 2.2, 0, Math.PI * 2); ctx.stroke();
+        }
         break;
       }
       case 'baneberry': {
@@ -7031,17 +7046,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.moveTo(x - 9, y - 8); ctx.lineTo(x - 12, y + 11); ctx.lineTo(x + 11, y + 11); ctx.lineTo(x + 8, y - 8);
         ctx.closePath();
         ctx.fill();
+        // Patched shoulder cape & brass cloak pin.
+        ctx.fillStyle = '#4e5c46';
+        ctx.beginPath(); ctx.ellipse(x - 1, y - 4, 10, 4.5, 0, 0, Math.PI); ctx.fill();
+        ctx.fillStyle = '#c4922e';
+        ctx.beginPath(); ctx.arc(x - 1, y - 5, 1.5, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#2c3828';
         ctx.fillRect(x - 12, y + 7, 23, 4);
         ctx.fillStyle = '#e2b48c';
         ctx.beginPath();
         ctx.arc(x - 1, y - 13, 6.2, 0, Math.PI * 2);
         ctx.fill();
+        ctx.fillStyle = '#2c3828';
+        ctx.beginPath(); ctx.arc(x - 1, y - 15, 6.4, Math.PI, 0); ctx.fill();
         if (thing.loaf || thing.shared) {
           ctx.fillStyle = thing.shared ? '#f2c14e' : '#c98a3e';
           ctx.beginPath();
           ctx.ellipse(x + 11, y + 1, 7, 4, -0.3, 0, Math.PI * 2);
           ctx.fill();
+          ctx.strokeStyle = '#7a4a1c';
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.moveTo(x + 8, y); ctx.lineTo(x + 13, y + 2); ctx.stroke();
         } else {
           ctx.fillStyle = '#c9b08a';
           ctx.fillRect(x + 8, y - 2, 10, 8);
@@ -7349,16 +7374,28 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'post': {
+        // A turned Bonk City bronze bollard: plinth, fluted column, neck ring, and resonant orb finial.
+        ctx.fillStyle = '#4a3010';
+        ctx.beginPath(); ctx.ellipse(x, y + 18, 8, 3, 0, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#6a4418';
-        ctx.fillRect(x - 2.5, y + 6, 5, 14);
+        ctx.fillRect(x - 4, y + 5, 8, 13);
+        ctx.fillStyle = '#b88636';
+        ctx.fillRect(x - 5.5, y + 4, 11, 2.5);
         const g = ctx.createRadialGradient(x - 4, y - 4, 2, x, y, 13);
-        g.addColorStop(0, '#f0c97a');
-        g.addColorStop(1, '#8a5a1e');
+        g.addColorStop(0, '#f8dc94');
+        g.addColorStop(0.55, '#d49a3a');
+        g.addColorStop(1, '#7a4d16');
         ctx.fillStyle = g;
+        ctx.strokeStyle = '#52320c';
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
-        ctx.arc(x, y, 11, 0, Math.PI * 2);
+        ctx.arc(x, y - 1, 11, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = 'rgba(255, 220, 140, 0.25)';
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(255, 244, 200, 0.55)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(x, y - 1, 13.5, -Math.PI * 0.78, -Math.PI * 0.22); ctx.stroke();
+        ctx.fillStyle = 'rgba(255, 220, 140, 0.28)';
         ctx.beginPath();
         ctx.arc(x, y - 16, 7, 0, Math.PI * 2);
         ctx.fill();
@@ -7445,18 +7482,27 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       case 'spool': {
         const way = Math.sign(thing.vx || 1);
         ctx.strokeStyle = colors.berry;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 1.3;
         ctx.beginPath();
         ctx.moveTo(x, y);
-        ctx.quadraticCurveTo(x - way * 14, y + 8, x - way * 22, y + 1);
+        ctx.quadraticCurveTo(x - way * 14, y + 8, x - way * 24, y + 1);
         ctx.stroke();
         ctx.translate(x, y);
         ctx.rotate(run.t * (thing.vx > 0 ? 6 : -6));
         ctx.fillStyle = colors.berry;
-        ctx.fillRect(-8, -5, 16, 10);
+        ctx.fillRect(-8, -5.5, 16, 11);
+        ctx.strokeStyle = 'rgba(255, 220, 230, 0.45)';
+        ctx.lineWidth = 0.8;
+        for (let i = -5; i <= 5; i += 2.5) {
+          ctx.beginPath(); ctx.moveTo(i, -5.5); ctx.lineTo(i, 5.5); ctx.stroke();
+        }
         ctx.fillStyle = '#c8a46a';
-        ctx.fillRect(-8, -8, 3, 16);
-        ctx.fillRect(5, -8, 3, 16);
+        ctx.strokeStyle = '#6a4a24';
+        ctx.lineWidth = 1;
+        ctx.fillRect(-9.5, -8.5, 3.5, 17);
+        ctx.strokeRect(-9.5, -8.5, 3.5, 17);
+        ctx.fillRect(6, -8.5, 3.5, 17);
+        ctx.strokeRect(6, -8.5, 3.5, 17);
         break;
       }
       case 'pigeon': {
@@ -7489,10 +7535,26 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         ctx.beginPath();
         ctx.roundRect(x - 11, y - 10, 22, 24, 6);
         ctx.fill();
-        ctx.fillRect(x - 9, y - 20, 18, 4);
-        ctx.beginPath(); ctx.ellipse(x, y - 16, 10, 3.2, 0, 0, Math.PI * 2); ctx.fill();
+        // Crimson waistcoat collar & spectacles under hat brim.
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 1.1;
+        ctx.beginPath(); ctx.moveTo(x - 4, y - 10); ctx.lineTo(x, y - 5); ctx.lineTo(x + 4, y - 10); ctx.stroke();
+        ctx.fillStyle = '#e8c4a0';
+        ctx.beginPath(); ctx.arc(x, y - 13, 5.2, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#1d1d22';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.arc(x - 2, y - 13, 1.6, 0, Math.PI * 2); ctx.arc(x + 2, y - 13, 1.6, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = colors.night;
+        ctx.fillRect(x - 9, y - 21, 18, 4);
+        ctx.beginPath(); ctx.ellipse(x, y - 17, 10, 3.2, 0, 0, Math.PI * 2); ctx.fill();
+        // Red nib quill tucked at the hatband.
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(x + 6, y - 18); ctx.lineTo(x + 12, y - 24); ctx.stroke();
         ctx.fillStyle = '#f7f1e2';
         ctx.fillRect(x - 7, y - 6, 14, 14);
+        ctx.fillStyle = '#3a2a20';
+        ctx.fillRect(x - 3, y - 7, 6, 2);
         ctx.strokeStyle = 'rgba(90, 70, 40, 0.45)';
         ctx.lineWidth = 0.6;
         ctx.beginPath();
@@ -7568,30 +7630,47 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         break;
       }
       case 'chair':
-        ctx.fillStyle = '#8a5a34';
-        ctx.fillRect(x - 12, y - 2, 24, 5);
-        ctx.fillRect(x - 11, y - 16, 3, 15);
-        ctx.fillRect(x + 8, y - 16, 3, 15);
-        ctx.fillRect(x - 8, y - 12, 16, 2);
-        ctx.fillRect(x - 8, y - 7, 16, 2);
-        ctx.strokeStyle = '#6a4024';
-        ctx.lineWidth = 2;
+        // A carved oak chair from the long table: turned finials, rails, and crimson seat cushion.
+        ctx.fillStyle = '#7a4c2a';
+        ctx.fillRect(x - 11, y - 17, 3, 16);
+        ctx.fillRect(x + 8, y - 17, 3, 16);
+        ctx.beginPath(); ctx.arc(x - 9.5, y - 18, 2.2, 0, Math.PI * 2); ctx.arc(x + 9.5, y - 18, 2.2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#96623a';
+        ctx.fillRect(x - 8, y - 13, 16, 2.4);
+        ctx.fillRect(x - 8, y - 7.5, 16, 2.4);
+        ctx.fillStyle = '#a8564a';
+        ctx.beginPath(); ctx.roundRect(x - 12, y - 3, 24, 4.5, 2); ctx.fill();
+        ctx.fillStyle = '#6a4024';
+        ctx.fillRect(x - 12, y + 1, 24, 3);
+        ctx.strokeStyle = '#5a341c';
+        ctx.lineWidth = 2.1;
         ctx.beginPath();
-        ctx.moveTo(x - 10, y + 3); ctx.lineTo(x - 14, y + 14);
-        ctx.moveTo(x + 10, y + 3); ctx.lineTo(x + 14, y + 14);
-        ctx.moveTo(x - 3, y + 3); ctx.lineTo(x - 1, y + 14);
-        ctx.moveTo(x + 3, y + 3); ctx.lineTo(x + 1, y + 14);
+        ctx.moveTo(x - 10, y + 3); ctx.lineTo(x - 13, y + 14);
+        ctx.moveTo(x + 10, y + 3); ctx.lineTo(x + 13, y + 14);
+        ctx.moveTo(x - 4, y + 3); ctx.lineTo(x - 2, y + 14);
+        ctx.moveTo(x + 4, y + 3); ctx.lineTo(x + 2, y + 14);
         ctx.stroke();
         break;
       case 'dividers': {
         const [a, b] = thing.lanes.map(laneX);
+        const midX = (a + b) / 2;
+        // Hinged brass pie-dividers with degree scale arc & clerk cuffs.
+        ctx.strokeStyle = 'rgba(196, 154, 58, 0.55)';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath(); ctx.arc(midX, y - 14, Math.abs(b - a) * 0.28, 0.18 * Math.PI, 0.82 * Math.PI); ctx.stroke();
+        ctx.setLineDash([]);
         ctx.strokeStyle = '#c49a3a';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3.2;
         ctx.beginPath();
-        ctx.moveTo(a + 8, y);
-        ctx.lineTo((a + b) / 2, y - 12);
-        ctx.lineTo(b - 8, y);
+        ctx.moveTo(a + 8, y + 2);
+        ctx.lineTo(midX, y - 14);
+        ctx.lineTo(b - 8, y + 2);
         ctx.stroke();
+        ctx.fillStyle = '#f2c14e';
+        ctx.strokeStyle = '#6a4e14';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(midX, y - 14, 3.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
         [a, b].forEach((cx) => {
           ctx.fillStyle = '#243044';
           ctx.beginPath();
@@ -7615,16 +7694,29 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           if (thing.kind === 'banner') {
             ctx.fillStyle = [colors.berry, colors.gold, colors.accent, colors.hearth][lane % 4];
             ctx.fillRect(lx, top, LANE_W, thing.h);
-            ctx.fillStyle = 'rgba(255,255,255,0.18)';
+            ctx.fillStyle = 'rgba(255,255,255,0.22)';
             ctx.fillRect(lx, top + thing.h - 4, LANE_W, 4);
+            // Gold cross-cord & central pennant emblem.
+            ctx.strokeStyle = '#f2c14e';
+            ctx.lineWidth = 1.2;
+            ctx.beginPath(); ctx.moveTo(lx, top + 1.5); ctx.lineTo(lx + LANE_W, top + 1.5); ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 250, 232, 0.65)';
+            ctx.beginPath(); ctx.arc(lx + LANE_W / 2, top + thing.h / 2, 2.6, 0, Math.PI * 2); ctx.fill();
           } else {
-            ctx.fillStyle = '#7a4e2c';
+            ctx.fillStyle = '#6a4022';
             ctx.fillRect(lx, top, LANE_W, thing.h);
-            ctx.fillStyle = '#f4ece0';
-            ctx.fillRect(lx + 2, top + 2, LANE_W - 4, thing.h - 10);
+            ctx.fillStyle = '#f6efe2';
+            ctx.fillRect(lx + 2, top + 2, LANE_W - 4, thing.h - 9);
+            ctx.strokeStyle = 'rgba(184, 134, 11, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(lx + 4, top + 4, LANE_W - 8, thing.h - 13);
             ctx.fillStyle = colors.gold;
             ctx.beginPath();
-            ctx.arc(lx + LANE_W / 2, top + 12, 6, 0, Math.PI * 2);
+            ctx.arc(lx + LANE_W / 2, top + 12, 5.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fffaf0';
+            ctx.beginPath();
+            ctx.arc(lx + LANE_W / 2, top + 12, 3.2, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -7790,6 +7882,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     crust.addColorStop(1, '#b06a2a');
     ctx.fillStyle = crust;
     ctx.beginPath(); ctx.ellipse(x, y, 34, 18, 0, 0, Math.PI * 2); ctx.fill();
+    // Scalloped golden crust edge & teal boonberry glaze ribbon.
+    ctx.fillStyle = '#ecc074';
+    for (let i = -5; i <= 5; i += 1) {
+      ctx.beginPath(); ctx.arc(x + i * 6, y - 13 + Math.abs(i) * 0.7, 2.6, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.strokeStyle = '#4d9f97';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(x - 28, y + 6); ctx.quadraticCurveTo(x, y + 12, x + 28, y + 6); ctx.stroke();
     ctx.strokeStyle = 'rgba(110, 50, 14, 0.55)';
     ctx.lineWidth = 1.2;
     for (let i = -3; i <= 3; i += 1) { ctx.beginPath(); ctx.moveTo(x + i * 8 - 3, y - 12); ctx.lineTo(x + i * 8 + 3, y + 8); ctx.stroke(); }
@@ -7850,6 +7950,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.strokeStyle = '#1d1d22';                                                                // a moustache, twirled
     ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x - 10, y + 10, x - 16, y + 2); ctx.moveTo(x, y + 4); ctx.quadraticCurveTo(x + 10, y + 10, x + 16, y + 2); ctx.stroke();
+    // His signature OFF switch on his flank ("he keeps an off switch in every scheme").
+    ctx.fillStyle = '#1f1426';
+    ctx.fillRect(x + 25, y - 16, 9, 6);
+    ctx.strokeStyle = '#d6473e';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.moveTo(x + 29, y - 13); ctx.lineTo(x + 33, y - 19); ctx.stroke();
+    ctx.fillStyle = '#d6473e';
+    ctx.beginPath(); ctx.arc(x + 33, y - 19, 2, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
     // The scheme, shown before it happens. Wind streaks across. A re-let redraws the lane edges.
     const soon = b.id !== 'tax' && b.nextBeat < 0.7;
@@ -8023,8 +8131,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.beginPath();
     ctx.ellipse(14, -14, 3, 6, -0.6, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillRect(-14, 6, 4, 8 + trot);
-    ctx.fillRect(10, 6, 4, 8 - trot);
+    // Tan muzzle, working collar (#c86d2c), and four trotting paws.
+    ctx.fillStyle = '#d9b48a';
+    ctx.beginPath(); ctx.ellipse(21, -7, 4.5, 3.2, -0.1, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#c86d2c';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(9, -12); ctx.quadraticCurveTo(11, -3, 8, 3); ctx.stroke();
+    ctx.fillStyle = '#9a5e2c';
+    ctx.fillRect(-14, 6, 3.5, 8 + trot);
+    ctx.fillRect(-8, 6, 3.5, 8 - trot * 0.7);
+    ctx.fillRect(6, 6, 3.5, 8 + trot * 0.7);
+    ctx.fillRect(11, 6, 3.5, 8 - trot);
     ctx.beginPath();
     ctx.moveTo(-17, -3);
     ctx.quadraticCurveTo(-28, -14 + trot, -24, -18);
@@ -8033,8 +8150,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.stroke();
     ctx.fillStyle = '#2a1a10';
     ctx.beginPath();
-    ctx.arc(22, -9, 1.6, 0, Math.PI * 2);
+    ctx.arc(24, -8, 1.8, 0, Math.PI * 2);
+    ctx.arc(17, -10, 1.3, 0, Math.PI * 2);
     ctx.fill();
+    if (!reduced?.matches) {
+      ctx.strokeStyle = 'rgba(42, 26, 16, 0.45)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(27, -9); ctx.quadraticCurveTo(30, -12, 33, -9); ctx.stroke();
+    }
     ctx.restore();
     if (b.touched && run.steadied > 0) {
       ctx.fillStyle = colors.ink;
@@ -8230,36 +8353,61 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     };
     if (who === 'porter') {
       legs('#4a3426');
-      ctx.fillStyle = '#7a5236';
+      ctx.fillStyle = '#5d6a73';
       ctx.beginPath(); ctx.roundRect(x - 13, y - 35, 26, 30, 7); ctx.fill();
+      // Diagonal parcel strap & brass buckle.
+      ctx.strokeStyle = '#b9773a';
+      ctx.lineWidth = 2.6;
+      ctx.beginPath(); ctx.moveTo(x - 11, y - 33); ctx.lineTo(x + 10, y - 8); ctx.stroke();
+      ctx.fillStyle = '#f2c14e';
+      ctx.fillRect(x - 2, y - 22, 4, 4);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';   // flour, from the sacks he carried in
       [[-6, -28], [5, -22], [-2, -14], [7, -31]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, 2.2, 0, Math.PI * 2); ctx.fill(); });
       head('#d9a679');
+      // Peaked porter's cap visor under the floating hat.
+      ctx.fillStyle = '#22262a';
+      ctx.fillRect(x - 9, y - 52, 18, 2.5);
     } else if (who === 'clerk') {
       legs('#1d2a3a');
       ctx.fillStyle = colors.night;
       ctx.beginPath(); ctx.roundRect(x - 8, y - 34, 16, 28, 5); ctx.fill();
+      ctx.strokeStyle = '#c0392b';
+      ctx.lineWidth = 1.1;
+      ctx.beginPath(); ctx.moveTo(x - 4, y - 34); ctx.lineTo(x, y - 27); ctx.lineTo(x + 4, y - 34); ctx.stroke();
       ctx.fillStyle = '#f7f1e2';
-      ctx.fillRect(x + 3, y - 31, 5, 8);              // a slip in the pocket
+      ctx.fillRect(x + 2, y - 30, 5.5, 8.5);           // a DAMAGE slip in the pocket
+      ctx.fillStyle = '#c0392b';
+      ctx.fillRect(x + 2, y - 30, 5.5, 2);
       head('#e8c4a0');
+      ctx.strokeStyle = '#22262a';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.arc(x - 3, y - 45, 2.2, 0, Math.PI * 2); ctx.arc(x + 3, y - 45, 2.2, 0, Math.PI * 2); ctx.stroke();
     } else if (who === 'genie') {
-      // Off-season: neat as a handkerchief, dressed like a clerk, no feet to speak of.
-      ctx.fillStyle = '#c9ccd2';
+      // Off-season: neat as a handkerchief, dressed like a clerk, no feet to speak of, brass price coin at cuff.
+      ctx.fillStyle = '#7fb4c0';
       ctx.beginPath();
       ctx.moveTo(x - 10, y - 34);
       ctx.lineTo(x + 10, y - 34);
       ctx.quadraticCurveTo(x + 9, y, x + 2 + Math.sin((run?.t || 0) * 3) * 4, y + 14);
       ctx.quadraticCurveTo(x - 6, y, x - 10, y - 34);
       ctx.fill();
+      ctx.fillStyle = '#2b5aa6';
+      ctx.beginPath(); ctx.roundRect(x - 10, y - 34, 20, 14, 4); ctx.fill();
       ctx.fillStyle = '#ffffff';
-      ctx.beginPath(); ctx.moveTo(x - 7, y - 30); ctx.lineTo(x - 2, y - 30); ctx.lineTo(x - 4.5, y - 26); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x - 5, y - 34); ctx.lineTo(x + 5, y - 34); ctx.lineTo(x, y - 27); ctx.fill();
+      ctx.fillStyle = '#c4922e';
+      ctx.beginPath(); ctx.arc(x + 9, y - 22, 2.2, 0, Math.PI * 2); ctx.fill();
       head('#b9d4e8');
     } else if (who === 'clown') {
       legs('#3a6ab0');
+      ctx.fillStyle = '#2a2026';
+      ctx.beginPath(); ctx.ellipse(x - 6 - stride, y + 16, 4.5, 2, 0, 0, Math.PI * 2); ctx.ellipse(x + 6 + stride, y + 16, 4.5, 2, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = '#e8c34a';
       ctx.beginPath(); ctx.roundRect(x - 11, y - 34, 22, 28, 8); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      for (let i = -2; i <= 2; i += 1) { ctx.beginPath(); ctx.arc(x + i * 3.8, y - 34, 2.5, 0, Math.PI * 2); ctx.fill(); }
       ctx.fillStyle = '#d6473e';
-      [[-5, -28], [5, -20], [-3, -13]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, 2.4, 0, Math.PI * 2); ctx.fill(); });
+      [[-5, -26], [5, -20], [0, -13]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(x + dx, y + dy, 2.4, 0, Math.PI * 2); ctx.fill(); });
       ctx.fillStyle = '#e0582e';
       ctx.beginPath(); ctx.arc(x - 9, y - 47, 5, 0, Math.PI * 2); ctx.arc(x + 9, y - 47, 5, 0, Math.PI * 2); ctx.fill();
       head('#fbf6ee');
@@ -11410,7 +11558,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintLore();
   }).catch(() => {}));
   // Likeness (likeness.mjs): every card wears its seal and can show what in the book is like it.
-  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; seals.mod = mod; paintDeck(); }).catch(() => {}));
+  whenQuiet(() => import('../modules/likeness.mjs?v=2026_11_16.B').then(async (mod) => { await mod.loadLikeness(); likenessMod = mod; seals.mod = mod; paintDeck(); }).catch(() => {}));
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();

@@ -204,30 +204,33 @@ export function initPieDraw({
     const my = hy + (who === 'clown' ? 6 : 4.6);
     ctx.save();
     ctx.globalAlpha *= alpha;
-    ctx.strokeStyle = who === 'figure' ? colors.ink : who === 'clown' ? '#c0392b' : '#3a2a20';
-    ctx.lineWidth = 1.25;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    if (mood === 'glad') {
-      ctx.arc(x, my - 2, 3.4, 0.12 * Math.PI, 0.88 * Math.PI);
-      ctx.moveTo(x - 5, hy - 4.6); ctx.quadraticCurveTo(x - 3.2, hy - 6.4, x - 1.4, hy - 4.6);
-      ctx.moveTo(x + 1.4, hy - 4.6); ctx.quadraticCurveTo(x + 3.2, hy - 6.4, x + 5, hy - 4.6);
-    } else if (mood === 'worried') {
-      ctx.moveTo(x - 3.2, my); ctx.quadraticCurveTo(x - 1.6, my - 1.6, x, my); ctx.quadraticCurveTo(x + 1.6, my + 1.6, x + 3.2, my);
-      ctx.moveTo(x - 5.2, hy - 4.4); ctx.lineTo(x - 1.6, hy - 6.2);
-      ctx.moveTo(x + 5.2, hy - 4.4); ctx.lineTo(x + 1.6, hy - 6.2);
-    } else if (mood === 'ouch') {
-      ctx.arc(x, my, 1.7, 0, Math.PI * 2);
-      ctx.moveTo(x - 5.2, hy - 6.2); ctx.lineTo(x - 1.6, hy - 4.6);
-      ctx.moveTo(x + 5.2, hy - 6.2); ctx.lineTo(x + 1.6, hy - 4.6);
-    } else if (mood === 'focused') {
-      ctx.moveTo(x - 2.2, my); ctx.lineTo(x + 2.2, my);
-      ctx.moveTo(x - 5, hy - 4.4); ctx.lineTo(x - 1.6, hy - 4.4);
-      ctx.moveTo(x + 1.6, hy - 4.4); ctx.lineTo(x + 5, hy - 4.4);
-    } else {
-      ctx.arc(x, my - 2.4, 2.6, 0.25 * Math.PI, 0.75 * Math.PI);
+    // Canon: the figure in plain lines has no mien — two dots stay two dots; only the sweat bead beside the head shows high tilt.
+    if (who !== 'figure') {
+      ctx.strokeStyle = who === 'clown' ? '#c0392b' : '#3a2a20';
+      ctx.lineWidth = 1.25;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      if (mood === 'glad') {
+        ctx.arc(x, my - 2, 3.4, 0.12 * Math.PI, 0.88 * Math.PI);
+        ctx.moveTo(x - 5, hy - 4.6); ctx.quadraticCurveTo(x - 3.2, hy - 6.4, x - 1.4, hy - 4.6);
+        ctx.moveTo(x + 1.4, hy - 4.6); ctx.quadraticCurveTo(x + 3.2, hy - 6.4, x + 5, hy - 4.6);
+      } else if (mood === 'worried') {
+        ctx.moveTo(x - 3.2, my); ctx.quadraticCurveTo(x - 1.6, my - 1.6, x, my); ctx.quadraticCurveTo(x + 1.6, my + 1.6, x + 3.2, my);
+        ctx.moveTo(x - 5.2, hy - 4.4); ctx.lineTo(x - 1.6, hy - 6.2);
+        ctx.moveTo(x + 5.2, hy - 4.4); ctx.lineTo(x + 1.6, hy - 6.2);
+      } else if (mood === 'ouch') {
+        ctx.arc(x, my, 1.7, 0, Math.PI * 2);
+        ctx.moveTo(x - 5.2, hy - 6.2); ctx.lineTo(x - 1.6, hy - 4.6);
+        ctx.moveTo(x + 5.2, hy - 6.2); ctx.lineTo(x + 1.6, hy - 4.6);
+      } else if (mood === 'focused') {
+        ctx.moveTo(x - 2.2, my); ctx.lineTo(x + 2.2, my);
+        ctx.moveTo(x - 5, hy - 4.4); ctx.lineTo(x - 1.6, hy - 4.4);
+        ctx.moveTo(x + 1.6, hy - 4.4); ctx.lineTo(x + 5, hy - 4.4);
+      } else {
+        ctx.arc(x, my - 2.4, 2.6, 0.25 * Math.PI, 0.75 * Math.PI);
+      }
+      ctx.stroke();
     }
-    ctx.stroke();
     if (mood === 'worried' && run?.wobble > 0.8) {
       ctx.fillStyle = '#7fb4c0';
       ctx.beginPath();

@@ -206,21 +206,27 @@ const DRAW = Object.freeze({
     <ellipse cx="50" cy="70" rx="34" ry="7" ${f('c')} opacity="0.18"/>
     <path d="M18 60 Q20 34 50 30 Q80 34 82 60 Q66 68 50 68 Q34 68 18 60Z" ${f('a')} stroke-width="1.5" ${s('c')}/>
     <path d="M28 40 L72 60 M28 60 L72 40 M50 30 L50 68 M20 50 L80 50" stroke-width="1.6" ${s('b')} opacity="0.7"/>
+    ${[[36, 44], [64, 44], [36, 56], [64, 56], [50, 39]].map(([x, y]) => `<rect x="${x - 1.5}" y="${y - 1.5}" width="3" height="3" rx="0.6" ${f('c')} opacity="0.65"/>`).join('')}
     ${mien({ calm: `<circle cx="41" cy="45" r="2.6" ${f('c')}/><circle cx="59" cy="45" r="2.6" ${f('c')}/><path d="M42 56 h16" stroke-width="2" ${s('c')}/>`, glad: `<circle cx="41" cy="45" r="2.6" ${f('c')}/><circle cx="59" cy="45" r="2.6" ${f('c')}/><path d="M42 55 h16 l-2 3" stroke-width="2" ${s('c')} fill="none"/>`, worried: `<circle cx="41" cy="46" r="2.6" ${f('c')}/><circle cx="59" cy="46" r="2.6" ${f('c')}/><path d="M42 57 l8 -2 l8 2" stroke-width="2" ${s('c')} fill="none"/>`, surprised: `<circle cx="41" cy="45" r="3.4" fill="none" stroke-width="1.8" ${s('c')}/><circle cx="59" cy="45" r="3.4" fill="none" stroke-width="1.8" ${s('c')}/><path d="M47 56 h6" stroke-width="2" ${s('c')}/>`, thinking: `<path d="M38 45 h6" stroke-width="2.4" ${s('c')}/><circle cx="59" cy="45" r="2.6" ${f('c')}/><path d="M42 56 h16" stroke-width="2" ${s('c')}/>` })}
     <path d="M78 22 l-12 14" stroke-width="3" ${s('c')}/><rect x="74" y="14" width="12" height="8" rx="3" ${f('b')}/>`,
   porter: (f) => `
     <rect x="34" y="40" width="32" height="36" rx="6" ${f('a')}/>
+    <path d="M36 42 L60 72" stroke-width="3" ${s('b')} opacity="0.85"/><rect x="46" y="54" width="5" height="5" rx="1" ${f('c')}/>
     <circle cx="50" cy="30" r="10" ${f('b')}/>
     <path d="M38 24 Q50 14 62 24 L64 26 L36 26Z" ${f('c')}/>
+    <circle cx="50" cy="21" r="1.8" ${f('b')}/>
     ${mien({ calm: `<circle cx="46" cy="30" r="1.6" ${f('c')}/><circle cx="54" cy="30" r="1.6" ${f('c')}/>`, glad: `<path d="M44 30 q2 -2 4 0 M52 30 q2 -2 4 0" stroke-width="1.3" ${s('c')} fill="none"/><path d="M46 35 q4 2.5 8 0" stroke-width="1.2" ${s('c')} fill="none"/>`, worried: `<circle cx="46" cy="31" r="1.6" ${f('c')}/><circle cx="54" cy="31" r="1.6" ${f('c')}/><path d="M46 36 q4 -2 8 0" stroke-width="1.2" ${s('c')} fill="none"/>`, surprised: `<circle cx="46" cy="30" r="2.2" ${f('c')}/><circle cx="54" cy="30" r="2.2" ${f('c')}/><circle cx="50" cy="36" r="1.5" ${f('c')}/>`, thinking: `<path d="M44 30 h4" stroke-width="1.6" ${s('c')}/><circle cx="54" cy="30" r="1.6" ${f('c')}/>` })}
     <path d="M40 46 v26 M60 46 v26" stroke-width="1" ${s('c')} opacity="0.3"/>
-    <rect x="58" y="52" width="22" height="16" rx="2" ${f('b')}/><path d="M58 60 h22 M69 52 v16" stroke-width="1.4" ${s('c')}/>`,
+    <rect x="58" y="52" width="22" height="16" rx="2" ${f('b')}/><path d="M58 60 h22 M69 52 v16" stroke-width="1.4" ${s('c')}/><circle cx="69" cy="60" r="2" ${f('c')}/>`,
   clerk: (f) => `
     <rect x="40" y="40" width="20" height="38" rx="5" ${f('a')}/>
     <circle cx="50" cy="30" r="8" ${f('d')}/>
+    <circle cx="47" cy="30" r="2.8" fill="none" stroke-width="0.9" ${s('c')} opacity="0.65"/><circle cx="53" cy="30" r="2.8" fill="none" stroke-width="0.9" ${s('c')} opacity="0.65"/>
+    <path d="M56 24 l7 -6" stroke-width="1.4" ${s('b')} stroke-linecap="round"/>
     ${mien({ calm: `<circle cx="47" cy="30" r="1.4" ${f('c')}/><circle cx="53" cy="30" r="1.4" ${f('c')}/>`, glad: `<circle cx="47" cy="30" r="1.4" ${f('c')}/><circle cx="53" cy="30" r="1.4" ${f('c')}/><path d="M47 34 q3 2 6 0" stroke-width="1" ${s('c')} fill="none"/>`, worried: `<circle cx="47" cy="30" r="1.4" ${f('c')}/><circle cx="53" cy="30" r="1.4" ${f('c')}/><path d="M44 26 l4 -1.4 M56 26 l-4 -1.4" stroke-width="1.1" ${s('c')}/><path d="M47.5 35 q2.5 -2 5 0" stroke-width="1" ${s('c')} fill="none"/>`, surprised: `<circle cx="47" cy="30" r="2" ${f('c')}/><circle cx="53" cy="30" r="2" ${f('c')}/><circle cx="50" cy="35" r="1.2" ${f('c')}/>`, thinking: `<circle cx="48" cy="29" r="1.4" ${f('c')}/><circle cx="54" cy="29" r="1.4" ${f('c')}/><path d="M47.5 34.4 h5" stroke-width="1" ${s('c')}/>` })}
     <path d="M45 40 l5 7 l5 -7" stroke-width="1" ${s('b')} fill="none" opacity="0.7"/>
     <rect x="58" y="34" width="22" height="28" rx="1.5" fill="#fffdf6" stroke-width="1" ${s('c')}/>
+    <rect x="65" y="32" width="8" height="3" rx="1" ${f('c')}/>
     <text x="69" y="43" font-size="5.5" font-family="ui-monospace, monospace" font-weight="700" text-anchor="middle" ${f('b')}>DAMAGE</text>
     <path d="M61 50 h16 M61 55 h12" stroke-width="1" ${s('c')} opacity="0.6"/>`,
   figure: (f) => `

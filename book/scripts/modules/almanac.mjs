@@ -148,7 +148,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
     lines = lines || Promise.all([
       import('./kept-lines.mjs?v=2026_11_13.B'),
       import('./spw-spell.mjs?v=2026_11_16.B'),
-      import('./likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); return mod; })
+      import('./likeness.mjs?v=2026_11_16.B').then(async (mod) => { await mod.loadLikeness(); return mod; })
     ]).then(([k, s, l]) => ({ k, s, l })).catch(() => null);
     return lines;
   };

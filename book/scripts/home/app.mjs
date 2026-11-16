@@ -31,10 +31,10 @@ import { readStory } from '../modules/story-directions.mjs?v=2026_11_16.B';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_16.B';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
 import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_16.B';
-import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_16.B';
 import { loadWay, readWay, asideNow } from '../modules/way-through.mjs?v=2026_11_16.B';
 import { bindSiteResonance, syncDerivedSparks } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
-import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_11.A';
+import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_16.B';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';
 const THEME_KEY = 'lore.monument.theme';

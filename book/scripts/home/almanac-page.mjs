@@ -7,9 +7,9 @@ import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_16.B';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
-import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
+import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_16.B';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
-import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip, describeLikeness } from '../modules/likeness.mjs?v=2026_11_11.A';
+import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip, describeLikeness } from '../modules/likeness.mjs?v=2026_11_16.B';
 import { wonderLine, explainThing, shelfLine, readShelfLine, compareShelves, sealedByWorkbench, benchCanon, wordOf, SHELF_LABEL, mirrored, markHoles, sayLinesIn } from '../modules/kept-lines.mjs?v=2026_11_13.B';
 import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
 

@@ -27,7 +27,7 @@
  * given, says whether the line read whole; the loop is read token by token either way, and says which.
  */
 // @ts-ignore: a page loads it with its version token, which the type checker cannot resolve; the shapes are characters.mjs's.
-import { CHARACTERS, identitySpell, portraitSVG } from './characters.mjs?v=2026_11_11.A';
+import { CHARACTERS, identitySpell, portraitSVG } from './characters.mjs?v=2026_11_16.B';
 
 /** @typedef {{ at: number, dur: number, accent: number, pitch: number, voice: string, rest: boolean, chord?: boolean, ask?: boolean, timbre?: string }} Step */
 /** @typedef {{ steps: Step[], meter: number, length: number, bars: number, mode: string, who: string, says: string, whole: boolean | null, reader: string, line: string }} Cadence */

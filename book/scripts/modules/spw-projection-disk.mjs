@@ -48,8 +48,8 @@ import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-
 import {
   loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,
   SIGILS, DIMENSIONS, SET_VALENCE, chapterName
-} from './likeness.mjs?v=2026_11_11.A';
-import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_11.A';
+} from './likeness.mjs?v=2026_11_16.B';
+import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_16.B';
 import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
 
 export const STORE_KEY = 'lore.disk.loops.v1';

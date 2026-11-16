@@ -26,7 +26,7 @@ import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
 import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.W';
 import { roomsRead } from './rooms.mjs?v=2026_11_16.B';
 import { readAlmanac } from './almanac.mjs?v=2026_11_16.B';
-import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_11.A';
+import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_16.B';
 import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_16.B';
 import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_11.A';
 
@@ -240,7 +240,7 @@ export function initChapterInventory({ chapterData } = {}) {
     if (!likeness) {
       likeness = false;
       try {
-        const mod = await import('./likeness.mjs?v=2026_11_11.A');
+        const mod = await import('./likeness.mjs?v=2026_11_16.B');
         await mod.loadLikeness();
         likeness = mod;
       } catch { return; }

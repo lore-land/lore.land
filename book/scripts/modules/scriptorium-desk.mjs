@@ -28,7 +28,7 @@ import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=202
 import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
 import { mergeBoard } from './spw-formulas.mjs?v=2026_11_13.B';
-import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_13.B';
+import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_16.B';
 import { noteCrossing } from './trope-reveal.mjs?v=2026_11_13.B';
 import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_13.B';
 import { bindSiteResonance, curiosityStanding, syncDerivedSparks } from './intrinsic-rewards.mjs?v=2026_11_16.B';
@@ -276,7 +276,7 @@ export async function initScriptoriumDesk() {
   let playing = null;
   const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   async function cadenceBlock(text, seed) {
-    try { cadenceMod = cadenceMod || await import('./spw-cadence.mjs?v=2026_11_11.A'); } catch { return null; }
+    try { cadenceMod = cadenceMod || await import('./spw-cadence.mjs?v=2026_11_16.B'); } catch { return null; }
     const mod = cadenceMod;
     const named = mod.playerFor(/@([A-Za-z_-]+)/.exec(text)?.[1] || '');
     let current = mod.cadenceOf(text, named || 'boof', { bars: 2, parse: seed?.parse || null });

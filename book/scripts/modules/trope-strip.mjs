@@ -8,7 +8,7 @@
  */
 import { readSwitches } from './reading-switches.mjs?v=2026_11_16.B';
 import { revealStage, tropeSignals, noteCrossing, loadRhymes, chambersOf } from './trope-reveal.mjs?v=2026_11_13.B';
-import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_13.B';
+import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_16.B';
 import { leanScores } from './valence-lens.mjs?v=2026_09_27.A';
 
 const TROPES_URL = '/book/content/world/tropes.json';

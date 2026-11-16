@@ -364,7 +364,7 @@ export function loadLand({ withWeight = false } = {}) {
   const json = (/** @type {string} */ url) => fetch(url).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const text = (/** @type {string} */ url) => fetch(url).then((r) => (r.ok ? r.text() : '')).catch(() => '');
   landPromise = Promise.all([
-    import('./characters.mjs?v=2026_11_11.A'),
+    import('./characters.mjs?v=2026_11_16.B'),
     import('./kinds.mjs?v=2026_11_09.G'),
     import('../home/pie-powers.mjs?v=2026_11_09.F'),
     import('./spw-resonance.mjs?v=2026_09_26.C'),
