@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/02.json"
+  prose_json: ~"../../../book/content/chapters/02.json"
   canon_mirror: ~"../../chapters/02.spw"
-  plate: ~"book/images/02.png"
+  plate: ~"../../../book/images/02.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-02.jpg"
+  og_card: ~"../../../book/images/og/chapter-02.jpg"
   palette: "grove-echo"
   characters_met: []
   lanes_introduced: ["ditch", "puddle", "beaver"]
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "delayed causality carried forward by the lag-stag and echo-wren throws"
   !digestive_watch: "four wonders heavy on creature kin; closes strongly on ^<cedar_fork>@boof"
+}
+
+^"navigation"{
+  &prev: ~"../01/ecology.spw"
+  &next: ~"../03/ecology.spw"
+  &octave_twin: ~"../15/ecology.spw#chapter_15_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 261.63
+  note_name: "C4"
+  %tempo: 92
+  %swing: 58
+  mode: "Dorian call"
+  tonal_role: "antiphonal call-and-response answered a beat late"
+  ~motif: [7 4 7 4 2 0]
+  @theme: echo
+  *rhythm: echo_wrens
+  pattern: "X..x....X..x...."
+}
+
+^"valence_edges"{
+  =boon@chapter_02_ecology{ @chapter_15_ecology }
+  =bane@annotation_2{ @chapter_02_irritant }
+  =bone@chapter_02_ecology{ @tonal_ring }
 }

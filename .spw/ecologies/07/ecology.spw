@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/07.json"
+  prose_json: ~"../../../book/content/chapters/07.json"
   canon_mirror: ~"../../chapters/07.spw"
-  plate: ~"book/images/07.png"
+  plate: ~"../../../book/images/07.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-07.jpg"
+  og_card: ~"../../../book/images/og/chapter-07.jpg"
   palette: "oath"
   characters_met: []
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "one unassigned good coincidence left intentionally uncollected until Book Two"
   !digestive_watch: "low count lull (total 5) intentionally pacing a quiet oath after ch06 kiln density"
+}
+
+^"navigation"{
+  &prev: ~"../06/ecology.spw"
+  &next: ~"../08/ecology.spw"
+  &octave_twin: ~"../20/ecology.spw#chapter_20_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 293.66
+  note_name: "D4"
+  %tempo: 96
+  %swing: 56
+  mode: "Dorian uneven"
+  tonal_role: "tonic return darkened into asymmetrical 56% counting"
+  ~motif: [2 4 7 4 2 0]
+  @theme: oath
+  *rhythm: oath_fruit
+  pattern: "X..x..x...x..x.."
+}
+
+^"valence_edges"{
+  =boon@chapter_07_ecology{ @chapter_20_ecology }
+  =bane@confluence_7{ @chapter_07_irritant }
+  =bone@chapter_07_ecology{ @tonal_ring }
 }

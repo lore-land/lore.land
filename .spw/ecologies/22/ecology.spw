@@ -56,3 +56,25 @@
   compost: "pure <> crossing space preparing players for wrapping/channel physics across Ring 2"
   !digestive_watch: "Ring 2 Slot 9 (<>): keep Ch09 jagged passage energy; never let travelers camp inside a chute"
 }
+
+^"navigation"{
+  &prev: ~"../21/ecology.spw"
+  &next: ~"../23/ecology.spw"
+  &octave_twin: ~"../09/ecology.spw#chapter_09_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 392
+  mode: "Mixolydian-Blues 9/8"
+  tonal_role: "high-swing G4 with the ninth honk missing and warm (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_22_ecology{ @chapter_09_ecology }
+  =bane@capsule_9{ @chapter_22_irritant }
+  =bone@chapter_22_ecology{ @tonal_ring }
+}

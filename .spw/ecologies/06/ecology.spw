@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/06.json"
+  prose_json: ~"../../../book/content/chapters/06.json"
   canon_mirror: ~"../../chapters/06.spw"
-  plate: ~"book/images/06.png"
+  plate: ~"../../../book/images/06.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-06.jpg"
+  og_card: ~"../../../book/images/og/chapter-06.jpg"
   palette: "kiln"
   characters_met: ["boon"]
   lanes_introduced: ["clerk", "dividers", "chair", "march", "boon"]
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "the uncollected button (recovered in ch15), lost-margin pie slice, and furnace glassing rules"
   !digestive_watch: "high density (10 wonders, 6 echoes); serves as Book 1 artifact hub (*)"
+}
+
+^"navigation"{
+  &prev: ~"../05/ecology.spw"
+  &next: ~"../07/ecology.spw"
+  &octave_twin: ~"../19/ecology.spw#chapter_19_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 349.23
+  note_name: "F4"
+  %tempo: 108
+  %swing: 60
+  mode: "Ionian +6 mediant"
+  tonal_role: "bright relative major F4 over glass bells and fairground brass"
+  ~motif: [0 4 7 12 7 4]
+  @theme: clowns
+  *rhythm: lantern_glass
+  pattern: "X.x.x...X.x.x..."
+}
+
+^"valence_edges"{
+  =boon@chapter_06_ecology{ @chapter_19_ecology }
+  =bane@value_6{ @chapter_06_irritant }
+  =bone@chapter_06_ecology{ @tonal_ring }
 }

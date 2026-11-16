@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import * as sound from '../home/pie-sound.mjs';
 import { CHAPTER_SCENE, SCENES, SCENE_WHIMSY_DEFAULTS } from '../home/pie-world.mjs';
 import { cadenceOf } from '../modules/spw-cadence.mjs';
+import { chapterKey, transitionPlan, playNavigationTransition } from '../modules/spw-sound.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /** @type {string[]} */
@@ -279,6 +280,41 @@ const notes = [];
   const blue = sound.colourPlan('!', { jazz: true });
   if (!blue.pcs.includes(10) || !blue.pcs.includes(5)) fail(`jazz ! is not fourths stacked with the flat seven (${blue.pcs})`);
   notes.push(`feel: as written, the twelve colours as they were; jazz adds ${tensions} tones across them, ^ becomes ${lifted.pcs.join(' ')} over ${lifted.bass} (the flat nine), ! becomes ${blue.pcs.join(' ')}`);
+}
+
+// Navigation consequence: chapter keys & voice-led room/chapter transition plans stay in key, quiet, and silent with no speaker.
+{
+  const anchors = [
+    [1, 293.66],
+    [4, 311.13],
+    [5, 277.18],
+    [10, 220],
+    [13, 293.66],
+    [14, 261.63]
+  ];
+  anchors.forEach(([ch, expected]) => {
+    const k = chapterKey(ch);
+    if (!k || Math.abs(k.root - expected) > 0.01) fail(`chapter ${ch} tonic mismatch: got ${k?.root}, expected ${expected}`);
+  });
+  if (chapterKey(0) !== null || chapterKey(-3) !== null) fail('invalid chapter number produced a key');
+
+  const pairs = [
+    { fromSigil: '.', toSigil: '?', toChapter: 1 },
+    { fromSigil: '~', toSigil: '^', toChapter: 4, direction: 1 },
+    { fromSigil: '*', toSigil: '@', toChapter: 10, direction: -1 },
+    { fromChapter: 1, toChapter: 2, fromSigil: '*', toSigil: '.' },
+    { fromChapter: 13, toChapter: 14, direction: 1 }
+  ];
+  pairs.forEach((opts, idx) => {
+    const plan = transitionPlan(opts);
+    if (!plan.notes.length || plan.notes.length > 3) fail(`navigation plan ${idx} has ${plan.notes.length} notes`);
+    plan.notes.forEach((n) => {
+      if (!Number.isFinite(n.f0) || n.f0 < 80 || n.f0 > 2400) fail(`navigation plan ${idx} frequency out of range: ${n.f0}`);
+      if (!Number.isFinite(n.vol) || n.vol <= 0 || n.vol > 0.055) fail(`navigation plan ${idx} volume exceeds whisper bound: ${n.vol}`);
+    });
+  });
+  if (playNavigationTransition({ fromSigil: '.', toSigil: '^', toChapter: 1 })) fail('navigation transition sounded with no browser/AudioContext');
+  notes.push('navigation: chapter tonics Ch01 D4..Ch14 C4 aligned; room & chapter-door voice leading bounded <= 0.055, silent without speaker');
 }
 
 notes.forEach((n) => console.log(`  ${n}`));

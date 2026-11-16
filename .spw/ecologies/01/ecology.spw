@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/01.json"
+  prose_json: ~"../../../book/content/chapters/01.json"
   canon_mirror: ~"../../chapters/01.spw"
-  plate: ~"book/images/01.png"
+  plate: ~"../../../book/images/01.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-01.jpg"
+  og_card: ~"../../../book/images/og/chapter-01.jpg"
   palette: "pool"
   characters_met: ["boof", "ants"]
   lanes_introduced: ["stone", "hole", "frost", "furrow", "pigeon", "snail"]
@@ -55,4 +55,32 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "an unspent wish without a receipt that keeps one furrow warm across all books"
   !digestive_watch: "balanced entry (~ opening present); closes on &(grove_mouth) before formal echo (#)"
+}
+
+^"navigation"{
+  &next: ~"../02/ecology.spw"
+  &octave_twin: ~"../14/ecology.spw#chapter_14_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 293.66
+  note_name: "D4"
+  %tempo: 96
+  %swing: 50
+  mode: "Lydian #4"
+  tonal_role: "suspended shimmer opening a held wish before it is receipted"
+  ~motif: [0 2 4 7 9 7]
+  @theme: boof
+  *rhythm: torch_march
+  pattern: "X...x...X...x..."
+}
+
+^"valence_edges"{
+  =boon@chapter_01_ecology{ @chapter_14_ecology }
+  =bane@potential_1{ @chapter_01_irritant }
+  =bone@chapter_01_ecology{ @tonal_ring }
 }

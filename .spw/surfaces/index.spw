@@ -82,6 +82,7 @@
     &inoculant: ~"./inoculant.spw"
     &inventions: ~"./inventions.spw"
     &liminal_physics: ~"./liminal-physics.spw"
+    &poetics: ~"./poetics.spw"
     &prompts: ~"./prompts.spw"
     &resonance: ~"./resonance.spw"
     &tellings_and_bindings: ~"./tellings-and-bindings.spw"

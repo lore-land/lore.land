@@ -56,3 +56,24 @@
   compost: "completes Ring 2 (^), leaves the Egg mysterious, and opens December doors into Ring 3 (~)"
   !digestive_watch: "Ring 2 Slot 13 (^): preserve prophecy ambiguity; spills exactly one pie without ending curiosity"
 }
+
+^"navigation"{
+  &prev: ~"../25/ecology.spw"
+  &octave_twin: ~"../13/ecology.spw#chapter_13_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 293.66
+  mode: "Ionian tonic cadence"
+  tonal_role: "authentic octave return to D4 preparing the Book Two step-down (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_26_ecology{ @chapter_13_ecology }
+  =bane@integration_13{ @chapter_26_irritant }
+  =bone@chapter_26_ecology{ @tonal_ring }
+}

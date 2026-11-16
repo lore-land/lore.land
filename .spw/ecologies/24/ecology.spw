@@ -56,3 +56,25 @@
   compost: "aligns directly with /pie/ split-panel UI and paradoxical rule lenses ([])"
   !digestive_watch: "Ring 2 Slot 11 ([]): avoid turning frames into cold riddleboxes—keep visual slapstick vivid"
 }
+
+^"navigation"{
+  &prev: ~"../23/ecology.spw"
+  &next: ~"../25/ecology.spw"
+  &octave_twin: ~"../11/ecology.spw#chapter_11_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 246.94
+  mode: "Locrian / Raised-6th"
+  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_24_ecology{ @chapter_11_ecology }
+  =bane@frame_11{ @chapter_24_irritant }
+  =bone@chapter_24_ecology{ @tonal_ring }
+}

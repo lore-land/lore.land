@@ -56,3 +56,25 @@
   compost: "deepens Bone.land bench camaraderie into geometry practice for the looming Feast"
   !digestive_watch: "Ring 2 Slot 10 (()): strictly adult night-school per wonder-about-pie.spw care rules"
 }
+
+^"navigation"{
+  &prev: ~"../22/ecology.spw"
+  &next: ~"../24/ecology.spw"
+  &octave_twin: ~"../10/ecology.spw#chapter_10_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 220
+  mode: "Aeolian / Quartal"
+  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_23_ecology{ @chapter_10_ecology }
+  =bane@scope_10{ @chapter_23_irritant }
+  =bone@chapter_23_ecology{ @tonal_ring }
+}

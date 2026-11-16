@@ -54,6 +54,7 @@
   texture_finds: ~"./surfaces/texture-finds.spw"
   formulas: ~"./surfaces/formulas.spw"
   cadence: ~"./surfaces/cadence.spw"
+  poetics: ~"./surfaces/poetics.spw"
   competency: ~"./surfaces/competency.spw"
   inventions: ~"./surfaces/inventions.spw"
   liminal_physics: ~"./surfaces/liminal-physics.spw"

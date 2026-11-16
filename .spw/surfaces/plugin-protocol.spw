@@ -46,4 +46,29 @@
     output: "markdown"
     status: "planned"
   }
+  "spw-pivot-gutter": {
+    workbench_plan: ~"../_workbench/.agents/plans/first-plugin/wip.spw"
+    kernel: "spw.pivots/1 (readFragments, pivotsOf, pivotReadCounts @ cf41ca22)"
+    selectors: ["$^[\"observed_open_room\"]@spw/ecologies", "$^[\"rooms\"]@spw/surfaces"]
+    role: "Surface one-nuance prefix/postfix & wall pivots beside three-reader status (line, parser, spoken) as authoring lenses."
+    status: "proposed"
+  }
+  "spw-cadence-lens": {
+    workbench_plan: ~"../_workbench/.agents/plans/editor-inspection-instruments/wip.spw"
+    selectors: ["$*[\"levels\"]@spw/runtime", "$^[\"music\"]@spw/ecologies"]
+    role: "CodeLens + WebAudio preview rendering root pitch, mode, %swing, and character cadence right from chapter & level blocks."
+    status: "proposed"
+  }
+  "lore-ring-parity": {
+    workbench_plan: ~"../_workbench/.agents/plans/citation-navigation/wip.spw"
+    selectors: ["$^[\"grammar\"]@spw/ecologies", "$&[\"ecologies\"]@spw/ecologies"]
+    role: "Verify Ring 1 (01..13) <-> Ring 2 (14..26) construct symmetry, octave twin citations, and unkept Thursday invariants."
+    status: "proposed"
+  }
+  "lore-valence-atlas": {
+    workbench_plan: ~"../_workbench/.agents/plans/vscode-workspace-atlas/wip.spw"
+    selectors: ["$=[\"walk\"]@spw/surfaces/joinery.spw", "$=[\"valence_edges\"]@spw/ecologies"]
+    role: "Interactive tree and LSP hover projecting signed =boon / =bane / =bone edges across story, ecology, and acoustics."
+    status: "proposed"
+  }
 ]

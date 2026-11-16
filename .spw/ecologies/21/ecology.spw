@@ -56,3 +56,25 @@
   compost: "grounds Ch08 observer inversion in embodied dog-height phenomenology"
   !digestive_watch: "Ring 2 Slot 8 (@): keep children absent from civic alleys; Boof stays literal, never coy"
 }
+
+^"navigation"{
+  &prev: ~"../20/ecology.spw"
+  &next: ~"../22/ecology.spw"
+  &octave_twin: ~"../08/ecology.spw#chapter_08_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 261.63
+  mode: "Mixolydian reflection"
+  tonal_role: "mirrored subtonic C4 echoing depths from the well (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_21_ecology{ @chapter_08_ecology }
+  =bane@perspective_8{ @chapter_21_irritant }
+  =bone@chapter_21_ecology{ @tonal_ring }
+}

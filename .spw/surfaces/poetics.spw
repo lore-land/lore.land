@@ -1,0 +1,79 @@
+# Poetics — Spw as a Surface for Literature, Meter, and Double-Reading
+# Formalizes how Spw constructs serve prosody, stanzaic containment, metrical transposition (spw.pivots/1),
+# and dual-register craft (adventure surface · workshop veil) without altering canonical variant zero.
+#>lore_land_surfaces_poetics
+#:surface #!theory #!poetics
+#:layer #!pragmatics
+#:status #!working
+
+~<rationale>{
+  Prose on a page reads left to right; poetry adds vertical return, caesura, rhyme across distance,
+  and syntactic ambiguity held on purpose. Spw already encodes those exact forces as brackets, prefix/postfix
+  operators, labeled bonds, and dual-valence edges. Reading Spw as a literary surface — rather than only
+  a configuration format — connects chapter voice, web typography, musical meter (cadences.spw), and
+  one-nuance structural pivots (spw.pivots/1) under a single notation.
+}
+
+^"meta"{
+  &grammar: ~"./resonance.spw#lore_land_surfaces_resonance"
+  &cadences: ~"./cadences.spw#lore_land_surfaces_cadences"
+  &sound: ~"./sound-and-voice.spw#tonal_ring"
+  &tellings: ~"./tellings-and-bindings.spw#tellings_and_bindings"
+  &ecologies: ~"../ecologies/index.spw#lore_land_ecologies_index"
+  &plugins: ~"./plugin-protocol.spw#lore_land_plugin_protocol"
+}
+
+^"prosody_of_the_ring"[
+  ~{ symbol: "~" role: "caesura / held breath" meter: "sustained vowel before the bar falls; unclosed potential" }
+  #{ symbol: "#" role: "marginal refrain" meter: "extrinsic stamp that echoes across stanzas" }
+  .{ symbol: "." role: "end-stop / turf" meter: "caesural period settling pitch to the tonic ground" }
+  ?{ symbol: "?" role: "volta / apostrophe" meter: "rising pickup asking without demanding closure" }
+  !{ symbol: "!" role: "enjambed turn" meter: "accent on the beat breaking an established state" }
+  *{ symbol: "*" role: "emblem / concrete noun" meter: "struck image held in the hand" }
+  &{ symbol: "&" role: "hemistich braid" meter: "two voices sounded at once without erasing either" }
+  @{ symbol: "@" role: "persona / mask" meter: "allocates point of view and soloist octave" }
+  <>{ symbol: "<>" role: "strophe / antistrophe channel" meter: "call across a threshold, answered a step down" }
+  (){ symbol: "()" role: "chorus / tuplet" meter: "simultaneous gathering inside one beat" }
+  []{ symbol: "[]" role: "metrical foot / window" meter: "ordered selection filling one bar; the first syllable stressed" }
+  {}{ symbol: "{}" role: "stanza / chamber" meter: "self-contained stanza looped twice or sealed by mirrored close" }
+  ^{ symbol: "^" role: "envoi / crown" meter: "capstone bind releasing accumulated measure into the next octave" }
+]
+
+^"poetic_mechanisms"{
+  prefix_vs_postfix: {
+    principle: "Moving an operator across a word or container wall mirrors iambic vs trochaic inversion."
+    example: "=(oath_stone)@boof <-> (oath_stone)=@boof"
+    reading: "Prefix = emphasizes configuration before naming the stone; postfix = discovers the bond clinging after the stone is named."
+    engine: "book/scripts/vendor/spw-seed.mjs (spw.pivots/1: readFragments, pivotsOf, pivotReadCounts)"
+  }
+  mirrored_seal: {
+    principle: "Stanzaic enclosure via inverted mirror labels: { _name ... name_ }."
+    property: "An unclosed verse stops answering its mirror, making truncation visible at a glance (scanPairLabels)."
+    examples: ["{ _shelf ... shelf_ }", "{ _found ... found_ }"]
+  }
+  semantic_steganography: {
+    principle: "Every utterance maintains two true readings at once: story-surface plain words (c016) and machine/workshop structure (c021)."
+    example: "=boon@the_hatch{ @long_table }"
+    reading: "Reads as plain narrative gratitude beside its literal bias edge anchored in the AST (readBias)."
+  }
+  quantitative_syllable_meter: {
+    principle: "Vowel contours (a e i o u y -> scale degrees) and sigil beats align spoken line weight with Web Audio pitch and tempo."
+    carrier: ~"./cadences.spw#containers"
+  }
+  negative_space_and_silence: {
+    principle: "A mime or an empty ninth slot is written as explicit missingness (~pattern[missing], =missing[thursday]), letting silence count in the measure."
+    example: "nine_honks: X.x.x.x.x.x.x.x. (eight heard, ninth warm)"
+  }
+}
+
+^"design_opportunities"{
+  #verse_rooms: "Author micro-poems whose .spw stanza line drives chamber ambient harmony while remaining plain prose to screen readers."
+  #pivot_drafting: "Inspect all one-nuance rewrites (side, mark, walls, bond, spacing, exchange, attach) beside line/parser/spoken parity while composing titles and room chips."
+  #octave_couplets: "Pair Ring k in Book One with Ring k in Book Two (e.g., 01 ~ warm_furrow <-> 14 ~ kitchen_door) as responsive stanza couplets."
+  #braille_and_ear: "Pair spokenLine() with syllable scansion so screen-reader pacing matches metrical intent."
+}
+
+?open[
+  "Should chapter epigraphs expose an optional inspectable Spw couplet in the scribe desk?"
+  "Can spw.pivots/1 power a poetry-loom panel at /scriptorium/ where readers transpose a chapter room signature and hear its cadence shift?"
+]

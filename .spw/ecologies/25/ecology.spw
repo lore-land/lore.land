@@ -56,3 +56,25 @@
   compost: "accumulates full Ring 2 tension right before the Feast of the Uneven Slice spills over"
   !digestive_watch: "Ring 2 Slot 12 ({}): mirror ch12 convergence while keeping the hat unsettled until ch26"
 }
+
+^"navigation"{
+  &prev: ~"../24/ecology.spw"
+  &next: ~"../26/ecology.spw"
+  &octave_twin: ~"../12/ecology.spw#chapter_12_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 329.63
+  mode: "Dorian polyrhythm"
+  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2 (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_25_ecology{ @chapter_12_ecology }
+  =bane@body_12{ @chapter_25_irritant }
+  =bone@chapter_25_ecology{ @tonal_ring }
+}

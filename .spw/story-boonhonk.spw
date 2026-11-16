@@ -191,7 +191,7 @@
   "What does Boof know about WAPboy before WAPboy knows it about himself?"
 ]
 
-~"canon_boundary"{
+^"canon_boundary"{
   .durable: ["WAPboy's visual grammar", "the three questions of the lands", "the serious treatment of absurd premises", "Boof's animal sincerity", "the media surfaces remain independently legible"]
   .revisable: ["the engineer's name", "the rocket's exact destination", "the portal's origin", "the timing of the explicit WAPboy reveal", "whether the moon story enters the main serial", "the public name of the lift"]
 }
@@ -318,7 +318,7 @@
     joke: "The engineer and dog agree enthusiastically on the destination while meaning different moons."
     depth: "Their agreement expresses trust. Discovering its limits creates both a practical problem and a relationship to repair."
   }
-  ~"comic_returns"[
+  ^"comic_returns"[
     { beat: "setup" possibility: "The engineer labels the destination GOOD. The dog approves. Both are competent readers of the label." }
     { beat: "complication" possibility: "Every correction makes the navigation more accurate about the wrong moon." }
     { beat: "return" possibility: "After the argument, the engineer leaves a second destination field blank for the dog. The dog puts a paw on the seat beside them." }
@@ -344,7 +344,7 @@
 
 # Scene anchors are possibilities. Each can be entered independently and returned changed.
 #>boonhonk_anchor_hat_clearance
-~"hat_clearance"{
+^"hat_clearance"{
   #status: "seed"
   &physics: ~".spw/story-boonhonk.spw#boonhonk_material_passage"
   object: "A lintel and the visible gap beneath WAPboy's hat."
@@ -448,7 +448,7 @@
 }
 
 #>boonhonk_anchor_two_moons
-~"two_moons"{
+^"two_moons"{
   #status: "seed"
   &humor: ~".spw/story-boonhonk.spw#boonhonk_humor_depth"
   object: "A navigation mark read as both destination and reward."
@@ -462,7 +462,7 @@
 }
 
 #>boonhonk_anchor_borrowed_bone
-~"borrowed_bone"{
+^"borrowed_bone"{
   #status: "seed"
   object: "A bone that is both desirable to the dog and necessary to a structure."
   local_plot: "A Bone.land keeper must keep a crossing open."
@@ -475,7 +475,7 @@
 }
 
 #>boonhonk_anchor_last_slice
-~"last_slice"{
+^"last_slice"{
   #status: "seed"
   object: "A whole pie and a finite number of clean plates."
   local_plot: "A Boon.land feast promises nobody will go without."
@@ -499,7 +499,7 @@ $"substrate_physics"{
     convention: "The host universe's expectation: a locked door excludes, a prophecy foretells, a crown authorizes."
     witness: "A situated reader notices some properties and misses others; belief alone does not grant every imagined effect."
   }
-  ~"transfers"[
+  ^"transfers"[
     { property: "crease" condition: "A foldable carrier is established." trope: "A long journey brings two marked places into contact." limit: "Contact does not establish a safe crossing; unfolding can separate travelers." residue: "The route retains a hinge where it once bent." }
     { property: "wicking" condition: "Mobile pigment meets a porous carrier." trope: "A title or curse spreads into an adjacent name." limit: "The original lettering loses definition as it spreads." residue: "A stain preserves adjacency after the words become unreadable." }
     { property: "erasure" condition: "The inscription can be removed by the chosen tool." trope: "A prohibition loses a stroke that made it binding." limit: "Abrasion weakens the carrier; removing a rule cannot undo earlier harm." residue: "An indentation can remain legible to a different witness." }
@@ -525,7 +525,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_local_transfer
-~"local_transfer"{
+^"local_transfer"{
   &anchor: ~".spw/story-boonhonk.spw#boonhonk_anchor_hat_clearance"
   expression: $[carrier, inscription, depiction] @(witness) &[host_convention, material_contact] ~<local_transfer>{ %[reach, resistance] *{changed_affordance, exposure} } ^
   inputs: {
@@ -543,7 +543,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_orthogonal_coupling
-~"orthogonal_coupling"{
+^"orthogonal_coupling"{
   expression: @[host_plot, wapboy_attention] &[shared_prop, conflicting_wants] ~<crossing>{ %[angle, contact] *{local_consequence} } ^
   inputs: {
     theta: "Angle between the local plot's aim and WAPboy's attention; a metaphor for narrative direction."
@@ -556,7 +556,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_residue
-~"residue_after_departure"{
+^"residue_after_departure"{
   expression: $[marked_object] &[encounter, repair] ~<after_departure>{ %[retellings, persistence] *{scar, obligation} } ^
   inputs: {
     R: "Current visible material residue."
@@ -571,7 +571,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_translation
-~"translation_between_media"{
+^"translation_between_media"{
   expression: $[source_carrier, source_mark] ~<translation>{ &[target_carrier, retained_geometry] ?[lost_property, acquired_property] *{edition} } ^
   inputs: {
     q_i: "Retention of one specified property at reproduction step i."
@@ -584,7 +584,7 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_comic_return
-~"comic_return_pressure"{
+^"comic_return_pressure"{
   &anchor: ~".spw/story-boonhonk.spw#boonhonk_anchor_two_moons"
   expression: @[engineer, dog] &[shared_word, incompatible_rewards] ~<return>{ ?[who_laughs, who_pays] %[recognition, mismatch] *{changed_trust, practical_problem} } ^
   inputs: {
@@ -600,13 +600,13 @@ $"substrate_physics"{
 }
 
 #>boonhonk_formula_scene_seed
-~"scene_formula_seed"{
+^"scene_formula_seed"{
   &physics: ~".spw/story-boonhonk.spw#boonhonk_substrate_physics"
   &transfer: ~".spw/story-boonhonk.spw#boonhonk_formula_local_transfer"
   &residue: ~".spw/story-boonhonk.spw#boonhonk_formula_residue"
   expression: ?[want, convention] ~<possibility>{ $[carrier, inscription] @(witness) &[origin_property, host_trope] %[contact, resistance] !{choice} *{cost, remainder} } ^
   recipe: "Choose one grounded property, one host expectation, two defensible wants, and one costly response. Use the formulas to vary pressure, then write the actual encounter."
-  ~"variations"[
+  ^"variations"[
     { setting: "high resistance" reading: "The lintel holds its conventional shape; the hat catches. The porter must act." }
     { setting: "low resistance" reading: "The drawn gap influences the gate's clearance. The passage opens, but the closure must be checked before the storm." }
     { setting: "high persistence" reading: "A later traveler encounters the changed gate after WAPboy leaves; responsibility outlasts the gag." }

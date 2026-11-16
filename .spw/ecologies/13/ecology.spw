@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/13.json"
+  prose_json: ~"../../../book/content/chapters/13.json"
   canon_mirror: ~"../../chapters/13.spw"
-  plate: ~"book/images/13.png"
+  plate: ~"../../../book/images/13.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-13.jpg"
+  og_card: ~"../../../book/images/og/chapter-13.jpg"
   palette: "shell-swirl"
   characters_met: []
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "21 echoes + an unclosed shell brace opening directly onto Ch14 without losing prior warmth"
   !digestive_watch: "Ring 1 hinge (13 ^): strong visual closure, though rooms end on !<shell_door> instead of ^{...}"
+}
+
+^"navigation"{
+  &prev: ~"../12/ecology.spw"
+  &next: ~"../14/ecology.spw"
+  &octave_twin: ~"../26/ecology.spw#chapter_26_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 293.66
+  note_name: "D4"
+  %tempo: 96
+  %swing: 50
+  mode: "Ionian tonic cadence"
+  tonal_role: "authentic octave return to D4 preparing the Book Two step-down"
+  ~motif: [2 4 7 9 7 4]
+  @theme: door
+  *rhythm: shell_door
+  pattern: "X...x.x.X...x.x."
+}
+
+^"valence_edges"{
+  =boon@chapter_13_ecology{ @chapter_26_ecology }
+  =bane@integration_13{ @chapter_13_irritant }
+  =bone@chapter_13_ecology{ @tonal_ring }
 }

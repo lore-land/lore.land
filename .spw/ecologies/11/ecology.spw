@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/11.json"
+  prose_json: ~"../../../book/content/chapters/11.json"
   canon_mirror: ~"../../chapters/11.spw"
-  plate: ~"book/images/11.png"
+  plate: ~"../../../book/images/11.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-11.jpg"
+  og_card: ~"../../../book/images/og/chapter-11.jpg"
   palette: "pale-moon"
   characters_met: []
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "the bloom-garden trial logic in /pie/ and BaneWAP self-refuting clauses"
   !digestive_watch: "strong [] paradoxical framing in court rules; opens directly on !(bloom_garden)"
+}
+
+^"navigation"{
+  &prev: ~"../10/ecology.spw"
+  &next: ~"../12/ecology.spw"
+  &octave_twin: ~"../24/ecology.spw#chapter_24_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 246.94
+  note_name: "B3"
+  %tempo: 100
+  %swing: 50
+  mode: "Locrian / Raised-6th"
+  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed"
+  ~motif: [4 7 9 7 4 2]
+  @theme: bloom
+  *rhythm: early_bloom
+  pattern: "..x...x...x...X."
+}
+
+^"valence_edges"{
+  =boon@chapter_11_ecology{ @chapter_24_ecology }
+  =bane@frame_11{ @chapter_11_irritant }
+  =bone@chapter_11_ecology{ @tonal_ring }
 }

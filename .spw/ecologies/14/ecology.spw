@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/14.json"
+  prose_json: ~"../../../book/content/chapters/14.json"
   canon_mirror: ~"../../chapters/14.spw"
-  plate: ~"book/images/14.png"
+  plate: ~"../../../book/images/14.png"
   plate_state: "study"
-  og_card: ~"book/images/og/chapter-14.jpg"
+  og_card: ~"../../../book/images/og/chapter-14.jpg"
   palette: "hill-moon"
   characters_met: ["figure"]
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "a shortened right arm warming an ant-street and a gap left rectangular in the hawthorn hedge"
   !digestive_watch: "slot 1 (~) chapter currently has 0 ~ rooms (?{kitchen_door} opens; @{warm_furrow} mid)—prime re-derivation candidate"
+}
+
+^"navigation"{
+  &prev: ~"../13/ecology.spw"
+  &next: ~"../15/ecology.spw"
+  &octave_twin: ~"../01/ecology.spw#chapter_01_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 261.63
+  note_name: "C4"
+  %tempo: 90
+  %swing: 50
+  mode: "Lydian #4"
+  tonal_role: "suspended shimmer opening a held wish before it is receipted"
+  ~motif: [7 4 2 0]
+  @theme: thursday
+  *rhythm: kept_thursday
+  pattern: "X..............."
+}
+
+^"valence_edges"{
+  =boon@chapter_14_ecology{ @chapter_01_ecology }
+  =bane@potential_1{ @chapter_14_irritant }
+  =bone@chapter_14_ecology{ @tonal_ring }
 }

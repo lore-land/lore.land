@@ -523,7 +523,12 @@ function playButton(text, line) {
     button.textContent = '■';
     button.classList.add('is-playing');
     const all = atoms();
+    const chapterAttr = button.closest('[data-chapter]')?.getAttribute('data-chapter')
+      || document.querySelector?.('[data-chapter]')?.getAttribute('data-chapter')
+      || window.location?.pathname?.match(/\/chapter\/(\d+)/)?.[1];
+    const chapter = chapterAttr && Number.isFinite(Number(chapterAttr)) ? Number(chapterAttr) : null;
     stop = sound.playSpell(text, {
+      chapter,
       onAtom: (i) => {
         const a = all[i];
         if (!a) return;

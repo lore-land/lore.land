@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/12.json"
+  prose_json: ~"../../../book/content/chapters/12.json"
   canon_mirror: ~"../../chapters/12.spw"
-  plate: ~"book/images/12.png"
+  plate: ~"../../../book/images/12.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-12.jpg"
+  og_card: ~"../../../book/images/og/chapter-12.jpg"
   palette: "rain-bonk"
   characters_met: []
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "fourteen echoes braided here plus the explicitly open warm furrow for ch14 arrival"
   !digestive_watch: "high permeability (14 echoes); ends on ~<moon_lane> leading to final Book 1 door"
+}
+
+^"navigation"{
+  &prev: ~"../11/ecology.spw"
+  &next: ~"../13/ecology.spw"
+  &octave_twin: ~"../25/ecology.spw#chapter_25_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 329.63
+  note_name: "E4"
+  %tempo: 104
+  %swing: 54
+  mode: "Dorian polyrhythm"
+  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2"
+  ~motif: [0 4 2 7 4 9]
+  @theme: rivers
+  *rhythm: confluence
+  pattern: "X..x..x.X..x..x."
+}
+
+^"valence_edges"{
+  =boon@chapter_12_ecology{ @chapter_25_ecology }
+  =bane@body_12{ @chapter_12_irritant }
+  =bone@chapter_12_ecology{ @tonal_ring }
 }

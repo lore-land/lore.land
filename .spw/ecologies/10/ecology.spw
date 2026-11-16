@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/10.json"
+  prose_json: ~"../../../book/content/chapters/10.json"
   canon_mirror: ~"../../chapters/10.spw"
-  plate: ~"book/images/10.png"
+  plate: ~"../../../book/images/10.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-10.jpg"
+  og_card: ~"../../../book/images/og/chapter-10.jpg"
   palette: "land-tree"
   characters_met: ["bonewap"]
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "structural load vocabulary carried forward directly into Bone.land triad architecture"
   !digestive_watch: "strong gathering acoustics (^(anchor_stones)@the_valley); carries warm ch06 slice unbroken"
+}
+
+^"navigation"{
+  &prev: ~"../09/ecology.spw"
+  &next: ~"../11/ecology.spw"
+  &octave_twin: ~"../23/ecology.spw#chapter_23_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 220
+  note_name: "A3"
+  %tempo: 84
+  %swing: 50
+  mode: "Aeolian / Quartal"
+  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall"
+  ~motif: [0 2 7 9 12 9]
+  @theme: hall
+  *rhythm: bone_hall
+  pattern: "X.....x.....x..."
+}
+
+^"valence_edges"{
+  =boon@chapter_10_ecology{ @chapter_23_ecology }
+  =bane@scope_10{ @chapter_10_irritant }
+  =bone@chapter_10_ecology{ @tonal_ring }
 }

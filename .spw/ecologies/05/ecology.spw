@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/05.json"
+  prose_json: ~"../../../book/content/chapters/05.json"
   canon_mirror: ~"../../chapters/05.spw"
-  plate: ~"book/images/05.png"
+  plate: ~"../../../book/images/05.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-05.jpg"
+  og_card: ~"../../../book/images/og/chapter-05.jpg"
   palette: "rift"
   characters_met: []
   lanes_introduced: ["mime"]
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "the first mimes and acoustic crack discipline feeding Bone.land later in ch10"
   !digestive_watch: "lacks direct ! action room despite slot 5 ! role—tension is carried via = and ^"
+}
+
+^"navigation"{
+  &prev: ~"../04/ecology.spw"
+  &next: ~"../06/ecology.spw"
+  &octave_twin: ~"../18/ecology.spw#chapter_18_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 277.18
+  note_name: "C#4"
+  %tempo: 100
+  %swing: 50
+  mode: "Chromatic leading-tone"
+  tonal_role: "-1 semitone below tonic D4: hairline fracture before release"
+  ~motif: [9 7 4 2 4 7]
+  @theme: rift
+  *rhythm: quiet_rift
+  pattern: "X.......X.x....."
+}
+
+^"valence_edges"{
+  =boon@chapter_05_ecology{ @chapter_18_ecology }
+  =bane@action_5{ @chapter_05_irritant }
+  =bone@chapter_05_ecology{ @tonal_ring }
 }

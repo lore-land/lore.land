@@ -7,7 +7,7 @@
 #>lore_land_plates_manifest
 #:state #!ledger
 
-~"gate_vocabulary"{
+^"gate_vocabulary"{
   draft: "scene-seed drafted in plates.spw; not yet copied into chapter JSON"
   grounded: "scene landed in chapter JSON (!ground_scene fired); plate not yet re-rendered from it"
   study: "rendered per !make_study naming (plate-NN-slug-vN.png); not yet graduated"

@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/15.json"
+  prose_json: ~"../../../book/content/chapters/15.json"
   canon_mirror: ~"../../chapters/15.spw"
-  plate: ~"book/images/15.png"
+  plate: ~"../../../book/images/15.png"
   plate_state: "study"
-  og_card: ~"book/images/og/chapter-15.jpg"
+  og_card: ~"../../../book/images/og/chapter-15.jpg"
   palette: "three-stools"
   characters_met: ["porter", "clerk"]
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "three valid pinned slips, the lost ch06 button returned, and a city convinced the dog is chosen"
   !digestive_watch: "flag c15_spike: 17 collectibles + 17 echoes in one chapter—spread or pace into ch16 during revision"
+}
+
+^"navigation"{
+  &prev: ~"../14/ecology.spw"
+  &next: ~"../16/ecology.spw"
+  &octave_twin: ~"../02/ecology.spw#chapter_02_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 349.23
+  note_name: "F4"
+  %tempo: 108
+  %swing: 57
+  mode: "Dorian call"
+  tonal_role: "antiphonal call-and-response answered a beat late"
+  ~motif: [0 7 4 7 0 9]
+  @theme: porter
+  *rhythm: parcel_knock
+  pattern: "X..x..X........."
+}
+
+^"valence_edges"{
+  =boon@chapter_15_ecology{ @chapter_02_ecology }
+  =bane@annotation_2{ @chapter_15_irritant }
+  =bone@chapter_15_ecology{ @tonal_ring }
 }

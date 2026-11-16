@@ -56,3 +56,25 @@
   compost: "revisits the unspent ch07 coincidence as an administrative puzzle nobody owns"
   !digestive_watch: "Ring 2 Slot 4 (?): needs a puzzle with zero clean civic answer to preserve Ch04 echo"
 }
+
+^"navigation"{
+  &prev: ~"../16/ecology.spw"
+  &next: ~"../18/ecology.spw"
+  &octave_twin: ~"../04/ecology.spw#chapter_04_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 311.13
+  mode: "Phrygian / sus2"
+  tonal_role: "+1 semitone wind shear against D4 tonic open without resolution (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_17_ecology{ @chapter_04_ecology }
+  =bane@probe_4{ @chapter_17_irritant }
+  =bone@chapter_17_ecology{ @tonal_ring }
+}

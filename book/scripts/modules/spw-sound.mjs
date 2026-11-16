@@ -23,7 +23,43 @@ import { tokenize } from './spw-spell.mjs?v=2026_11_16.B';
 
 const MATERIAL_WORDS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
 const PENTA = [0, 2, 4, 7, 9];
+const BOOK2_ROOTS = Object.freeze([261.63, 293.66, 329.63, 349.23, 392, 220, 246.94, 261.63, 311.13, 329.63, 293.66]);
+const CHAPTER_ROOTS = Object.freeze([293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23]);
+const CHAPTER_TEMPOS = Object.freeze([96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108]);
+const SIGIL_COLOURS = Object.freeze({
+  '.': { bass: 0, pcs: [0, 4, 7] },
+  '!': { bass: 0, pcs: [0, 7] },
+  '?': { bass: 0, pcs: [0, 2, 7] },
+  '~': { bass: 5, pcs: [0, 4, 5, 9] },
+  '@': { bass: 9, pcs: [0, 4, 9] },
+  '&': { bass: 0, pcs: [0, 2, 4, 7] },
+  '*': { bass: 0, pcs: [0, 4, 7, 9] },
+  '^': { bass: 7, pcs: [0, 2, 7] },
+  '#': { bass: 4, pcs: [4, 7, 11] },
+  '=': { bass: 2, pcs: [2, 9] },
+  '%': { bass: 2, pcs: [2, 5, 9] },
+  '$': { bass: 5, pcs: [0, 5, 9] }
+});
+const SCALE_PRESETS = Object.freeze({
+  penta: [0, 2, 4, 7, 9],
+  minor: [0, 3, 5, 7, 10],
+  open: [0, 2, 5, 7, 10],
+  lydian: [0, 2, 4, 6, 7, 9, 11],
+  dorian: [0, 2, 3, 5, 7, 9, 10],
+  mixolydian: [0, 2, 4, 5, 7, 9, 10]
+});
 const hash = (s) => [...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+
+/**
+ * Chapter tonic frequency (Hz) and tempo matching `.spw/runtime/pie-levels.spw` and `pie-sound.mjs`.
+ * @param {number | null | undefined} chapter
+ */
+export function chapterKey(chapter) {
+  const n = Math.floor(Number(chapter));
+  if (!Number.isFinite(n) || n < 1) return null;
+  if (n <= CHAPTER_ROOTS.length) return { chapter: n, root: CHAPTER_ROOTS[n - 1], tempo: CHAPTER_TEMPOS[n - 1] };
+  return { chapter: n, root: BOOK2_ROOTS[(n - CHAPTER_ROOTS.length - 1) % BOOK2_ROOTS.length], tempo: 96 };
+}
 
 /* ─── The score ────────────────────────────────────────────────────── */
 
@@ -150,10 +186,66 @@ function ensureAudio() {
   return ctx;
 }
 
-const freqOf = (root, degree, octave = 0) => {
-  const d = Math.max(0, degree);
-  return root * 2 ** (octave + Math.floor(d / 5) + PENTA[d % 5] / 12);
+const resolveScale = (scale) => {
+  if (Array.isArray(scale) && scale.length) return scale;
+  if (typeof scale === 'string' && SCALE_PRESETS[scale]) return SCALE_PRESETS[scale];
+  return PENTA;
 };
+
+const freqOf = (root, degree, octave = 0, scale = PENTA) => {
+  const sc = resolveScale(scale);
+  const d = Math.max(0, degree);
+  return root * 2 ** (octave + Math.floor(d / sc.length) + sc[d % sc.length] / 12);
+};
+
+/**
+ * Pure voice-leading transition plan between two rooms (`sigil`) or chapters (no AudioContext needed).
+ * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number }} [opts]
+ */
+export function transitionPlan({ fromSigil = '.', toSigil = '.', fromChapter = null, toChapter = null, direction = 1, volume = 0.38 } = {}) {
+  const gain = Math.max(0.05, Math.min(1.4, Number.isFinite(volume) ? volume : 0.38));
+  const dir = direction < 0 ? -1 : 1;
+  const fromK = fromChapter != null ? chapterKey(fromChapter) : null;
+  const toK = toChapter != null ? chapterKey(toChapter) : null;
+  const root = toK?.root || fromK?.root || CHAPTER_ROOTS[0];
+  const clampNote = (f, vol, at, len, type = 'sine', attack = 0.015) => ({
+    f0: Math.max(80, Math.min(2400, f)),
+    vol: Math.min(0.055, Math.max(0.004, vol)),
+    at,
+    len,
+    type,
+    attack
+  });
+  // Chapter-to-chapter harmonic door: voice-lead from outgoing tonic fifth/ninth into the next chapter's tonic.
+  if (fromK && toK && fromK.chapter !== toK.chapter) {
+    const semiShift = 12 * Math.log2(toK.root / fromK.root);
+    const wrappedLead = fromK.root * 2 ** (((Math.round(semiShift) + (dir > 0 ? 7 : 2)) % 12 - 12 * (semiShift > 4 ? 1 : 0)) / 12);
+    return {
+      root: toK.root,
+      notes: [
+        clampNote(wrappedLead > 480 ? wrappedLead / 2 : wrappedLead, 0.028 * gain, 0, 0.24, 'triangle', 0.02),
+        clampNote(toK.root, 0.042 * gain, 0.09, 0.38, 'sine', 0.018),
+        clampNote(toK.root * 2 ** (7 / 12), 0.022 * gain, 0.16, 0.32, 'sine', 0.025)
+      ]
+    };
+  }
+  const fromC = SIGIL_COLOURS[fromSigil] || SIGIL_COLOURS['.'];
+  const toC = SIGIL_COLOURS[toSigil] || SIGIL_COLOURS['.'];
+  const shared = toC.pcs.find((pc) => fromC.pcs.includes(pc));
+  const leadPc = shared != null ? shared : fromC.bass;
+  const targetPc = toC.bass;
+  const rawDiff = targetPc - leadPc;
+  const nearestPc = rawDiff > 6 ? targetPc - 12 : rawDiff < -6 ? targetPc + 12 : targetPc;
+  const colourPc = toC.pcs.find((pc) => pc !== toC.bass && pc !== 0) ?? toC.pcs[toC.pcs.length - 1] ?? 7;
+  const notes = [
+    clampNote(root * 2 ** (leadPc / 12), 0.028 * gain, 0, 0.22, 'triangle', 0.018),
+    clampNote(root * 2 ** (nearestPc / 12), 0.042 * gain, 0.08, 0.34, 'sine', 0.015)
+  ];
+  if (dir > 0 || ['^', '*', '#', '?', '~'].includes(toSigil)) {
+    notes.push(clampNote(root * 2 ** ((colourPc + (dir > 0 ? 12 : 0)) / 12), 0.022 * gain, 0.15, 0.32, 'sine', 0.022));
+  }
+  return { root, notes };
+}
 
 function voice(at, { type = 'sine', f0, f1, len, vol = 0.12, attack = 0.01, pan = 0, out = bus.input }) {
   const osc = ctx.createOscillator();
@@ -175,7 +267,7 @@ function voice(at, { type = 'sine', f0, f1, len, vol = 0.12, attack = 0.01, pan 
   osc.stop(at + len + 0.05);
 }
 
-function noise(at, { len, f0, f1, q = 1.2, vol = 0.08, type = 'bandpass', clicks = 0 }) {
+function noise(at, { len, f0, f1, q = 1.2, vol = 0.08, type = 'bandpass', clicks = 0, out = bus.input }) {
   const n = Math.max(1, Math.floor(ctx.sampleRate * len));
   const buf = ctx.createBuffer(1, n, ctx.sampleRate);
   const ch = buf.getChannelData(0);
@@ -202,61 +294,84 @@ function noise(at, { len, f0, f1, q = 1.2, vol = 0.08, type = 'bandpass', clicks
   g.gain.setValueAtTime(0.0001, at);
   g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.08, len * 0.3));
   g.gain.exponentialRampToValueAtTime(0.0001, at + len);
-  src.connect(flt).connect(g).connect(bus.input);
+  src.connect(flt).connect(g).connect(out);
   src.start(at);
 }
 
 /* Each material, as a texture (and the same vocabulary as materials.mjs). */
 const TEXTURES = Object.freeze({
-  glass: (at, len, root) => { [3, 4.02, 5.01].forEach((m, k) => voice(at + k * 0.03, { f0: root * m * 2, len, vol: 0.035, attack: 0.3 })); noise(at, { len, f0: 7000, q: 6, vol: 0.02, type: 'highpass' }); },
-  flour: (at, len) => { for (let k = 0; k < 4; k += 1) noise(at + k * (len / 4), { len: len / 3, f0: 900, f1: 300, q: 0.7, vol: 0.05 }); },
-  berry: (at, _len, root) => { [0, 2, 4].forEach((d, k) => voice(at + k * 0.12, { type: 'triangle', f0: freqOf(root, d, 1), len: 0.3, vol: 0.08 })); },
-  frost: (at, len) => noise(at, { len, f0: 5000, q: 2, vol: 0.12, clicks: Math.round(len * 14) }),
-  ink: (at, len, root) => voice(at, { type: 'triangle', f0: root / 2, f1: root / 2 * 1.01, len, vol: 0.06, attack: 0.4 }),
-  brass: (at, len, root) => { [1, 2.76, 5.4].forEach((m, k) => voice(at, { f0: root * m, len: len * (1 - k * 0.2), vol: 0.06 / (k + 1) })); },
-  steam: (at, len) => noise(at, { len, f0: 400, f1: 2400, q: 1.5, vol: 0.06 }),
-  oak: (at, _len, root) => { voice(at, { f0: root * 0.75, f1: root * 0.6, len: 0.25, vol: 0.14 }); noise(at, { len: 0.04, f0: 2500, q: 3, vol: 0.06 }); }
+  glass: (at, len, root, out, scale) => { [3, 4.02, 5.01].forEach((m, k) => voice(at + k * 0.03, { f0: root * m * 2, len, vol: 0.035, attack: 0.3, out })); noise(at, { len, f0: 7000, q: 6, vol: 0.02, type: 'highpass', out }); },
+  flour: (at, len, _root, out) => { for (let k = 0; k < 4; k += 1) noise(at + k * (len / 4), { len: len / 3, f0: 900, f1: 300, q: 0.7, vol: 0.05, out }); },
+  berry: (at, _len, root, out, scale) => { [0, 2, 4].forEach((d, k) => voice(at + k * 0.12, { type: 'triangle', f0: freqOf(root, d, 1, scale), len: 0.3, vol: 0.08, out })); },
+  frost: (at, len, _root, out) => noise(at, { len, f0: 5000, q: 2, vol: 0.12, clicks: Math.round(len * 14), out }),
+  ink: (at, len, root, out) => voice(at, { type: 'triangle', f0: root / 2, f1: root / 2 * 1.01, len, vol: 0.06, attack: 0.4, out }),
+  brass: (at, len, root, out) => { [1, 2.76, 5.4].forEach((m, k) => voice(at, { f0: root * m, len: len * (1 - k * 0.2), vol: 0.06 / (k + 1), out })); },
+  steam: (at, len, _root, out) => noise(at, { len, f0: 400, f1: 2400, q: 1.5, vol: 0.06, out }),
+  oak: (at, _len, root, out) => { voice(at, { f0: root * 0.75, f1: root * 0.6, len: 0.25, vol: 0.14, out }); noise(at, { len: 0.04, f0: 2500, q: 3, vol: 0.06, out }); }
 });
 
-function sound(e, at, beat, root) {
-  const f = freqOf(root, e.degree || 0);
+function sound(e, at, beat, root, out = bus.input, scale = PENTA) {
+  const f = freqOf(root, e.degree || 0, 0, scale);
   const len = Math.max(0.12, e.len * beat);
   const pan = ((hash(e.label || '') % 9) - 4) / 5;
   switch (e.sigil) {
-    case '?': voice(at, { f0: f, len: len * 0.5, vol: 0.09 }); voice(at + len * 0.45, { f0: f * 1.335, len: len * 0.6, vol: 0.08 }); break;
-    case '~': voice(at, { f0: f, len, vol: 0.06, attack: len * 0.4 }); voice(at, { type: 'triangle', f0: f * 1.5, len, vol: 0.03, attack: len * 0.5 }); break;
-    case '@': voice(at, { type: 'triangle', f0: f, len: len * 0.8, vol: 0.1, pan }); break;
-    case '&': voice(at, { f0: f, len, vol: 0.07 }); voice(at, { f0: f * 1.26, len, vol: 0.06 }); break;
-    case '*': [1, 2.01, 3.03].forEach((m, k) => voice(at, { f0: f * m, len: len * (1 - k * 0.25), vol: 0.07 / (k + 1) })); break;
-    case '^': [0, 2, 4].forEach((d, k) => voice(at + k * len * 0.28, { f0: freqOf(root, (e.degree || 0) + d), len: len * 0.4, vol: 0.08 })); break;
-    case '!': noise(at, { len: 0.08, f0: 1800, q: 1, vol: 0.14 }); voice(at, { f0: 110, f1: 55, len: 0.2, vol: 0.16 }); break;
-    case '#': voice(at, { f0: f * 4, f1: f * 4.01, len: len * 1.4, vol: 0.05 }); break;
-    case '.': voice(at, { type: 'triangle', f0: root / 2, len, vol: 0.09, attack: 0.05 }); break;
-    case '=': if (bus) { bus.filter.frequency.setTargetAtTime(1600, at, 0.08); bus.filter.frequency.setTargetAtTime(9000, at + len, 0.3); } voice(at, { type: 'square', f0: f / 2, len: len * 0.5, vol: 0.025 }); break;
-    case '%': for (let k = 0; k < (e.count || 2); k += 1) voice(at + k * beat * 0.25, { f0: 1760, len: 0.03, vol: 0.05 }); break;
-    case '$': (TEXTURES[e.material] || TEXTURES.ink)(at, len, root); break;
-    case '"': for (let k = 0; k < (e.syllables || 1); k += 1) noise(at + k * beat * 0.25, { len: beat * 0.2, f0: 600 + (k % 3) * 300, q: 4, vol: 0.025 }); break;
-    case '{': voice(at, { type: 'sine', f0: root / 4, len, vol: 0.05, attack: 0.3 }); break;
+    case '?': voice(at, { f0: f, len: len * 0.5, vol: 0.09, out }); voice(at + len * 0.45, { f0: f * 1.335, len: len * 0.6, vol: 0.08, out }); break;
+    case '~': voice(at, { f0: f, len, vol: 0.06, attack: len * 0.4, out }); voice(at, { type: 'triangle', f0: f * 1.5, len, vol: 0.03, attack: len * 0.5, out }); break;
+    case '@': voice(at, { type: 'triangle', f0: f, len: len * 0.8, vol: 0.1, pan, out }); break;
+    case '&': voice(at, { f0: f, len, vol: 0.07, out }); voice(at, { f0: f * 1.26, len, vol: 0.06, out }); break;
+    case '*': [1, 2.01, 3.03].forEach((m, k) => voice(at, { f0: f * m, len: len * (1 - k * 0.25), vol: 0.07 / (k + 1), out })); break;
+    case '^': [0, 2, 4].forEach((d, k) => voice(at + k * len * 0.28, { f0: freqOf(root, (e.degree || 0) + d, 0, scale), len: len * 0.4, vol: 0.08, out })); break;
+    case '!': noise(at, { len: 0.08, f0: 1800, q: 1, vol: 0.14, out }); voice(at, { f0: 110, f1: 55, len: 0.2, vol: 0.16, out }); break;
+    case '#': voice(at, { f0: f * 4, f1: f * 4.01, len: len * 1.4, vol: 0.05, out }); break;
+    case '.': voice(at, { type: 'triangle', f0: root / 2, len, vol: 0.09, attack: 0.05, out }); break;
+    case '=': if (bus) { bus.filter.frequency.setTargetAtTime(1600, at, 0.08); bus.filter.frequency.setTargetAtTime(9000, at + len, 0.3); } voice(at, { type: 'square', f0: f / 2, len: len * 0.5, vol: 0.025, out }); break;
+    case '%': for (let k = 0; k < (e.count || 2); k += 1) voice(at + k * beat * 0.25, { f0: 1760, len: 0.03, vol: 0.05, out }); break;
+    case '$': (TEXTURES[e.material] || TEXTURES.ink)(at, len, root, out, scale); break;
+    case '"': for (let k = 0; k < (e.syllables || 1); k += 1) noise(at + k * beat * 0.25, { len: beat * 0.2, f0: 600 + (k % 3) * 300, q: 4, vol: 0.025, out }); break;
+    case '{': voice(at, { type: 'sine', f0: root / 4, len, vol: 0.05, attack: 0.3, out }); break;
     default: break;
   }
-  if (e.glide && e.sigil !== '!' && e.sigil !== '%') voice(at, { f0: f * 0.94, f1: f, len: Math.min(len, 0.3), vol: 0.03 });
+  if (e.glide && e.sigil !== '!' && e.sigil !== '%') voice(at, { f0: f * 0.94, f1: f, len: Math.min(len, 0.3), vol: 0.03, out });
 }
 
 /**
  * Play a spell. onAtom(i) is called as the i-th sigil sounds; onEnd() when it is done.
- * Returns stop(). Sound starts only from a gesture (the ▶ the reader pressed).
+ * Optional `chapter`, `root`, `scale`, and `volume` anchor spells to the room/chapter key.
+ * Returns stop(). Sound starts only from a gesture.
+ * @param {string} text
+ * @param {{ onAtom?: ((i: number) => void) | null, onEnd?: (() => void) | null, tempo?: number | null, volume?: number, root?: number | null, scale?: number[] | string | null, chapter?: number | null }} [opts]
  */
-export function playSpell(text, { onAtom = null, onEnd = null, tempo = 112 } = {}) {
+export function playSpell(text, { onAtom = null, onEnd = null, tempo = null, volume = 1, root = null, scale = null, chapter = null } = {}) {
   if (!ensureAudio()) { onEnd?.(); return () => {}; }
   const { events, beats, key } = scoreOf(text);
-  const beat = 60 / tempo;
-  const root = 196 * 2 ** (PENTA[key % 5] / 12);
+  const ch = chapter != null ? chapterKey(chapter) : null;
+  const resolvedTempo = Number.isFinite(tempo) && tempo > 0 ? tempo : (ch?.tempo || 112);
+  const beat = 60 / resolvedTempo;
+  const resolvedRoot = Number.isFinite(root) && root > 20 ? root : (ch?.root || 196 * 2 ** (PENTA[key % 5] / 12));
+  const resolvedScale = resolveScale(scale);
+  const gainScale = Math.max(0.05, Math.min(1.4, Number.isFinite(volume) ? volume : 1));
+  const callGain = ctx.createGain();
+  callGain.gain.value = gainScale;
+  callGain.connect(bus.input);
   const start = ctx.currentTime + 0.08;
   const timers = [];
   events.forEach((e) => {
-    sound(e, start + e.t * beat, beat, root);
+    sound(e, start + e.t * beat, beat, resolvedRoot, callGain, resolvedScale);
     if (onAtom && e.index != null) timers.push(setTimeout(() => onAtom(e.index), (e.t * beat + 0.08) * 1000));
   });
   timers.push(setTimeout(() => onEnd?.(), (beats * beat + 0.6) * 1000));
-  return () => { timers.forEach(clearTimeout); onEnd?.(); };
+  return () => { timers.forEach(clearTimeout); callGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.02); onEnd?.(); };
+}
+
+/**
+ * Play a soft voice-led interval when the reader intentionally navigates between rooms or chapters.
+ * Silent when Web Audio is unavailable.
+ * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number }} [opts]
+ */
+export function playNavigationTransition(opts = {}) {
+  if (typeof window === 'undefined' || !ensureAudio()) return false;
+  const plan = transitionPlan(opts);
+  const start = ctx.currentTime + 0.02;
+  plan.notes.forEach((n) => voice(start + n.at, n));
+  return true;
 }

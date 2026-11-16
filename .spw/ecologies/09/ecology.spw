@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/09.json"
+  prose_json: ~"../../../book/content/chapters/09.json"
   canon_mirror: ~"../../chapters/09.spw"
-  plate: ~"book/images/09.png"
+  plate: ~"../../../book/images/09.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-09.jpg"
+  og_card: ~"../../../book/images/og/chapter-09.jpg"
   palette: "clown-downtown"
   characters_met: []
   lanes_introduced: []
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "corner-honk topologyfeeding jazz feel and hopper dynamics in /pie/"
   !digestive_watch: "opens with # instead of <> capsule, though middle and close rely on <chimney_rim> and <pass_road>"
+}
+
+^"navigation"{
+  &prev: ~"../08/ecology.spw"
+  &next: ~"../10/ecology.spw"
+  &octave_twin: ~"../22/ecology.spw#chapter_22_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 392
+  note_name: "G4"
+  %tempo: 112
+  %swing: 62
+  mode: "Mixolydian-Blues 9/8"
+  tonal_role: "high-swing G4 with the ninth honk missing and warm"
+  ~motif: [7 9 12 9 7 4]
+  @theme: honks
+  *rhythm: nine_honks
+  pattern: "X.x.x.x.x.x.x.x."
+}
+
+^"valence_edges"{
+  =boon@chapter_09_ecology{ @chapter_22_ecology }
+  =bane@capsule_9{ @chapter_09_irritant }
+  =bone@chapter_09_ecology{ @tonal_ring }
 }

@@ -56,3 +56,25 @@
   compost: "first explicit view into maintenance labor behind infinite bounty (links into Book 3 commons)"
   !digestive_watch: "seeded in wonder-about-pie.spw#c16; ideal Slot 3 (.) chapter grounding invisible physical care"
 }
+
+^"navigation"{
+  &prev: ~"../15/ecology.spw"
+  &next: ~"../17/ecology.spw"
+  &octave_twin: ~"../03/ecology.spw#chapter_03_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 329.63
+  mode: "Mixolydian ground"
+  tonal_role: "b7 earth pedal beneath dual signals and stones (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_16_ecology{ @chapter_03_ecology }
+  =bane@ground_3{ @chapter_16_irritant }
+  =bone@chapter_16_ecology{ @tonal_ring }
+}

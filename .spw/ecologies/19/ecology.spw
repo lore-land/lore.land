@@ -56,3 +56,25 @@
   compost: "directly braids bane.land priced-window satire into Bonk City winter architecture"
   !digestive_watch: "Ring 2 Slot 6 (*): mirror of Ch06 lanterns—let objects stay weird and under-explained"
 }
+
+^"navigation"{
+  &prev: ~"../18/ecology.spw"
+  &next: ~"../20/ecology.spw"
+  &octave_twin: ~"../06/ecology.spw#chapter_06_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 349.23
+  mode: "Ionian +6 mediant"
+  tonal_role: "bright relative major F4 over glass bells and fairground brass (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_19_ecology{ @chapter_06_ecology }
+  =bane@value_6{ @chapter_19_irritant }
+  =bone@chapter_19_ecology{ @tonal_ring }
+}

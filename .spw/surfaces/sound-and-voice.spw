@@ -131,6 +131,49 @@
   first_designs: "Which archived designs come in first: the Jazz-Geese, the Thursday week, the hat, the step tax, the rented wind, the stamps?"
 }
 
+#>tonal_ring
+^tonal_ring{
+  #theory: "Book One traces a complete D-centric tonal arc (D4 = 293.66 Hz in Ch01 -> Ch13), flanked by semitone wind-shear in Ch04-Ch05 and anchored by A3 Dominant weight in Ch10 before stepping down a whole tone to C4 (261.63 Hz) to begin Book Two."
+  tonic_axis: {
+    ring_1_anchor: "ch01 D4 (293.66 Hz, 96 BPM) — Lydian warmth (~)"
+    semitone_flank_upper: "ch04 Eb4 (311.13 Hz, 88 BPM) — +1 half-step wind shear above D4"
+    semitone_flank_lower: "ch05 C#4 (277.18 Hz, 100 BPM) — -1 half-step leading-tone rift below D4"
+    relative_mediant: "ch06 F4 (349.23 Hz, 108 BPM, swing 60) — bright carnival Ionian (+3 semitones over D)"
+    tonic_return_dorian: "ch07 D4 (293.66 Hz, 96 BPM, swing 56) — minor-color oath in uneven counting"
+    subdominant_swing: "ch09 G4 (392.00 Hz, 112 BPM, swing 62) — nine-honk Mixolydian drive"
+    dominant_pedal: "ch10 A3 (220.00 Hz, 84 BPM) — lowest register in the book (V of D), quartal Bone Hall"
+    pre_cadential_paradox: "ch11 B3 (246.94 Hz, 100 BPM) — raised-sixth ambiguity, anticipate hits before the beat"
+    supertonic_braid: "ch12 E4 (329.63 Hz, 104 BPM, swing 54) — V/V confluence preparing final return"
+    ring_13_resolution: "ch13 D4 (293.66 Hz, 96 BPM) — Ionian tonic return closing Ring 1"
+    book_2_step_down: "ch14 C4 (261.63 Hz, 90 BPM) -> ch15 F4 (349.23 Hz, 108 BPM) — unkept Thursday drops a whole step below Book 1 tonic"
+  }
+  construct_to_mode: {
+    "~": "Lydian #4 shimmer (unresolved suspended 4th tending upward)"
+    "#": "Dorian call-and-response (raised 6th answering minor 3rd)"
+    ".": "Mixolydian ground pedal (b7 settling earthward)"
+    "?": "Phrygian / sus2 inquiry (half-step sigh or ungrounded rootless fifth)"
+    "!": "Chromatic semitone turn (sudden modulation or cross-accent)"
+    "*": "Ionian added-sixth kept resonance (0 4 7 9)"
+    "&": "Polyrhythmic mediant braid (two harmonic axes sounding concurrently)"
+    "@": "Aeolian relative perspective (pitch set heard from vi / submediant bass)"
+    "<>": "Incomplete asymmetric threshold (e.g., 8 of 9 beats filled)"
+    "()": "Quartal unison & fourth stack [0, 2, 5, 7, 10] — Bone.land structural load"
+    "[]": "Locrian/diminished paradox filter (tritone tension resolved by stepping aside)"
+    "{}": "Dominant chamber accumulation (V9 / dominant seventh gathering homeward mass)"
+    "^": "Authentic cadence (V -> I / IV -> I releasing accumulated charge)"
+  }
+  valence_tuning: {
+    boon: "Just 5-limit major third & sixth (3:5 mediant glow, Ionian/Lydian extensions)"
+    bane: "Chromatic appoggiatura & semitone flank (Eb/C# against D; minor-second clerk stamps)"
+    bone: "Pythagorean 3:2 fifths & stacked open fourths [0, 2, 5, 7, 10] (vibrates cleanly without third bias)"
+  }
+  navigation_consequence: {
+    chapter_keyed_spells: "playSpell({ chapter, root, scale, volume }) anchors embedded chapter spells, wonders, and clicked sigils to the chapter's tonic Hz and tempo instead of an unanchored hash key (spw-sound.mjs, spw-spell.mjs, intrinsic-rewards.mjs)."
+    intentional_room_steps: "After a user gesture with sympathetic_strings or sparks awake and sound enabled, stepping intentionally between chapter rooms (room chips, prev/next buttons, TOC, [ / ], PageUp/PageDown) voices a 2–3 note voice-led transition connecting outgoing and incoming sigil chords via shared tones or nearest fifth in the chapter's key; passive init and scroll never sound (intrinsic-rewards.mjs)."
+    chapter_door_modulation: "Clicking prev/next chapter doors or chapter cards modulates gently across adjacent chapter tonics (e.g. Ch01 D4 -> Ch02 C4 whole-step drop, Ch12 E4 -> Ch13 D4 -> Ch14 C4), scaled by Setup's sympathetic_gain dial (lore.pie.tuning.v1)."
+  }
+}
+
 !next[
   "fill ^events with meaning, owner and budget for every sound: drafted as .spw/runtime/audio-tropes.spw. Its !motifs are live as of 2026-11-10 (pie-tropes.mjs reads them; Setup, Characters); !patterns, !timbres and !bindings are next"
   "bring the six archived designs into pie-sound.mjs as synthesized events, auditioned against the current mix"

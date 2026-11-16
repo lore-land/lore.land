@@ -11,7 +11,7 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_16.B';
-import { playSpell } from './spw-sound.mjs?v=2026_11_16.B';
+import { playSpell, playNavigationTransition } from './spw-sound.mjs?v=2026_11_16.B';
 import { open as unlockOpen } from './unlocks.mjs?v=2026_11_16.B';
 
 export const CURIOSITY_KEY = 'lore.curiosities.v1';
@@ -126,41 +126,159 @@ export function curiosityStanding() {
   };
 }
 
+const PASSIVE_NAV_SOURCES = new Set(['init', 'scroll', '']);
+
+function chapterFromPath(href = '') {
+  const m = String(href).match(/\/chapter\/(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+
+function readSympatheticGain() {
+  try {
+    const raw = local()?.getItem('lore.pie.tuning.v1');
+    const parsed = raw ? JSON.parse(raw) : null;
+    const g = Number(parsed?.unlocks?.sympathetic_gain);
+    return Number.isFinite(g) ? Math.max(0.2, Math.min(1.6, g)) : 1;
+  } catch {
+    return 1;
+  }
+}
+
+function roomSigilOf(sectionEl) {
+  if (!sectionEl) return '.';
+  const raw = sectionEl.querySelector(':scope > .room-head .room-sig .room-sig-op')?.textContent
+    || sectionEl.querySelector(':scope > .room-head .room-sig')?.textContent
+    || '';
+  const m = raw.trim().match(/^[.!?~@&*^#%=$]/);
+  return m ? m[0] : '.';
+}
+
 /**
  * Enable subtle key-responsive sound & tactile settle responses across non-game pages
- * (chapter sigils, almanac wonders/combines, cards) once `sympathetic_strings` or sparks wake them.
- * Never overrides reading flow; only responds directly to user taps/clicks.
+ * (chapter sigils, intentional room/chapter navigation, almanac wonders/combines, cards)
+ * once `sympathetic_strings` or sparks wake them.
+ * Never overrides reading flow or auto-plays on scroll; only responds directly to user gestures.
+ * @param {{ root?: Document | Element, context?: string, chapter?: number | null }} [opts]
  */
-export function bindSiteResonance({ root = document, context = 'site' } = {}) {
+export function bindSiteResonance({ root = document, context = 'site', chapter = null } = {}) {
   if (!root || typeof window === 'undefined') return;
   syncDerivedSparks();
   const awake = () => unlockOpen('sympathetic_strings') || readSparks().count >= 1;
   const pieSoundOn = () => {
     try { return JSON.parse(local()?.getItem('lore.pie.v1') || 'null')?.sound !== false; } catch { return true; }
   };
+  const currentChapter = () => {
+    if (Number.isFinite(chapter) && Number(chapter) > 0) return Number(chapter);
+    const attr = (root instanceof Element ? root : document.documentElement).closest?.('[data-chapter]')?.getAttribute('data-chapter')
+      || document.querySelector?.('[data-chapter]')?.getAttribute('data-chapter');
+    if (attr && Number.isFinite(Number(attr))) return Number(attr);
+    return chapterFromPath(window.location.pathname);
+  };
+
+  let hasUserGesture = false;
+  let lastSectionIndex = 0;
+  let lastSigil = '.';
+  let lastNavAt = 0;
+
+  const markGesture = () => { hasUserGesture = true; };
 
   const resonanceSelector = context === 'almanac'
     ? '[data-wonder], .almanac-combine-card, .spw-spell, [data-sigil]'
     : '.resonance-sigil, .spw-spell, [data-wonder-term], .chapter-room-sig, [data-card-kind]';
+  const doorSelector = 'nav.chapter-navigation a.prev, nav.chapter-navigation a.next, a.hub-chapter-card[href*="/chapter/"], a.chapter-card[href*="/chapter/"]';
 
+  /** @param {Event} event */
   const onClick = (event) => {
+    markGesture();
     if (!awake() || !pieSoundOn()) return;
-    const target = event.target instanceof Element ? event.target.closest(resonanceSelector) : null;
-    if (!target) return;
-    const expr = target.getAttribute('data-spw')
-      || target.getAttribute('data-wonder-term')
-      || target.textContent?.trim().slice(0, 64)
-      || '*echo';
+    if (!(event.target instanceof Element)) return;
+    const gain = readSympatheticGain();
+    const target = event.target.closest(resonanceSelector);
+    if (target) {
+      const expr = target.getAttribute('data-spw')
+        || target.getAttribute('data-wonder-term')
+        || target.textContent?.trim().slice(0, 64)
+        || '*echo';
+      const cardAttr = target.closest('[data-chapter]')?.getAttribute('data-chapter');
+      const cardChapter = cardAttr && Number.isFinite(Number(cardAttr)) ? Number(cardAttr) : currentChapter();
+      try {
+        playSpell(
+          expr.includes('{') || /^[!?~@&*^#.=%$]/.test(expr) ? expr : `*${expr.toLowerCase().replace(/[^a-z0-9_]/g, '_').slice(0, 18)}`,
+          { volume: 0.42 * gain, chapter: cardChapter }
+        );
+        target.classList.add('is-sympathetic-ring');
+        setTimeout(() => target.classList.remove('is-sympathetic-ring'), 420);
+        if (context === 'almanac' && target.closest('.almanac-combine-card')) {
+          const res = noteSpark('sympathetic_almanac');
+          if (res?.isNew) settle(`✦ ${res.spark.name}: ${res.spark.gesture}`);
+        }
+      } catch { /* silent fallback */ }
+      return;
+    }
+
+    const door = event.target.closest(doorSelector);
+    if (door) {
+      const targetChapter = chapterFromPath(door.getAttribute('href') || '');
+      const fromChapter = currentChapter();
+      if (targetChapter && targetChapter !== fromChapter) {
+        try {
+          playNavigationTransition({
+            fromChapter,
+            toChapter: targetChapter,
+            fromSigil: lastSigil,
+            toSigil: '.',
+            direction: fromChapter && targetChapter < fromChapter ? -1 : 1,
+            volume: 0.36 * gain
+          });
+        } catch { /* silent fallback */ }
+      }
+    }
+  };
+
+  /** @param {Event} event */
+  const onSectionChange = (event) => {
+    if (context !== 'chapter' || !(event instanceof CustomEvent)) return;
+    const detail = event.detail || {};
+    const sectionIndex = Number(detail.sectionIndex || 0);
+    const sectionEl = detail.sectionId ? document.getElementById(String(detail.sectionId)) : null;
+    const nextSigil = roomSigilOf(sectionEl);
+    const source = String(detail.source || '');
+    const prevIndex = lastSectionIndex;
+    const prevSigil = lastSigil;
+    lastSectionIndex = sectionIndex || prevIndex;
+    lastSigil = nextSigil;
+
+    if (PASSIVE_NAV_SOURCES.has(source) || !hasUserGesture || !awake() || !pieSoundOn()) return;
+    if (!sectionIndex || sectionIndex === prevIndex) return;
+    const now = Date.now();
+    if (now - lastNavAt < 200) return;
+    lastNavAt = now;
+
+    const ch = Number(detail.chapterNumber || 0) || currentChapter();
     try {
-      playSpell(expr.includes('{') || /^[!?~@&*^#.=%$]/.test(expr) ? expr : `*${expr.toLowerCase().replace(/[^a-z0-9_]/g, '_').slice(0, 18)}`, { volume: 0.42 });
-      target.classList.add('is-sympathetic-ring');
-      setTimeout(() => target.classList.remove('is-sympathetic-ring'), 420);
-      if (context === 'almanac' && target.closest('.almanac-combine-card')) {
-        const res = noteSpark('sympathetic_almanac');
-        if (res?.isNew) settle(`✦ ${res.spark.name}: ${res.spark.gesture}`);
+      playNavigationTransition({
+        fromSigil: prevSigil,
+        toSigil: nextSigil,
+        toChapter: ch,
+        direction: prevIndex && sectionIndex < prevIndex ? -1 : 1,
+        volume: 0.36 * readSympatheticGain()
+      });
+      const chip = document.querySelector(`.room-strip .room-chip[data-room-index="${sectionIndex}"]`);
+      if (chip) {
+        chip.classList.add('is-sympathetic-ring');
+        setTimeout(() => chip.classList.remove('is-sympathetic-ring'), 420);
       }
     } catch { /* silent fallback */ }
   };
+
+  root.addEventListener('pointerdown', markGesture, { passive: true });
+  root.addEventListener('keydown', markGesture, { passive: true });
   root.addEventListener('click', onClick);
-  return () => root.removeEventListener('click', onClick);
+  window.addEventListener('lore:ebook-section-change', onSectionChange);
+  return () => {
+    root.removeEventListener('pointerdown', markGesture);
+    root.removeEventListener('keydown', markGesture);
+    root.removeEventListener('click', onClick);
+    window.removeEventListener('lore:ebook-section-change', onSectionChange);
+  };
 }

@@ -56,3 +56,25 @@
   compost: "ambient flour ignition echoes ch05 crack discipline and establishes acoustic muffling physics"
   !digestive_watch: "Ring 2 Slot 5 (!): needs a crisp irreversible sound-and-flour turn without stalling momentum"
 }
+
+^"navigation"{
+  &prev: ~"../17/ecology.spw"
+  &next: ~"../19/ecology.spw"
+  &octave_twin: ~"../05/ecology.spw#chapter_05_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "planned"
+  %planned_octave_twin_root: 277.18
+  mode: "Chromatic leading-tone"
+  tonal_role: "-1 semitone below tonic D4: hairline fracture before release (transposed into Book Two's C-axis continuation)"
+}
+
+^"valence_edges"{
+  =boon@chapter_18_ecology{ @chapter_05_ecology }
+  =bane@action_5{ @chapter_18_irritant }
+  =bone@chapter_18_ecology{ @tonal_ring }
+}

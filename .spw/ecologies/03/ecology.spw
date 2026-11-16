@@ -39,11 +39,11 @@
 }
 
 ^"assets"{
-  prose_json: ~"book/content/chapters/03.json"
+  prose_json: ~"../../../book/content/chapters/03.json"
   canon_mirror: ~"../../chapters/03.spw"
-  plate: ~"book/images/03.png"
+  plate: ~"../../../book/images/03.png"
   plate_state: "public"
-  og_card: ~"book/images/og/chapter-03.jpg"
+  og_card: ~"../../../book/images/og/chapter-03.jpg"
   palette: "legal-pad"
   characters_met: ["genie"]
   lanes_introduced: ["sack", "post", "spool", "pane", "boneberry"]
@@ -55,4 +55,33 @@
   permeability: "live page + /pie/ voyage leg + ?/ doors"
   compost: "the Genie bargain structure (a wish leaves a coincidence and a missing day owed)"
   !digestive_watch: "rich contrivance flora (4); ground (.) discipline sits inside %/% measurements cleanly"
+}
+
+^"navigation"{
+  &prev: ~"../02/ecology.spw"
+  &next: ~"../04/ecology.spw"
+  &octave_twin: ~"../16/ecology.spw#chapter_16_ecology"
+  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"music"{
+  #status: "live"
+  %root: 329.63
+  note_name: "E4"
+  %tempo: 104
+  %swing: 50
+  mode: "Mixolydian ground"
+  tonal_role: "b7 earth pedal beneath dual signals and stones"
+  ~motif: [0 7 9 7 4 2]
+  @theme: genie
+  *rhythm: sand_signals
+  pattern: "X.x.....X.x....."
+}
+
+^"valence_edges"{
+  =boon@chapter_03_ecology{ @chapter_16_ecology }
+  =bane@ground_3{ @chapter_03_irritant }
+  =bone@chapter_03_ecology{ @tonal_ring }
 }
