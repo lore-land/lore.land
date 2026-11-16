@@ -165,6 +165,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'off' }
   },
   {
+    id: 'chapter-tuned', attribute: 'data-switch-chapter-tuned', stage: 'trial', layer: 'trial', label: 'Each leg plays its chapter',
+    hint: 'Each chapter’s leg of the carry plays as that chapter does in the book. Nothing comes down the lanes before the chapter that first names it, so pane-snails wait for Bonk City. A chapter that is tense early is busiest early. Who comes, who schemes and what is passed on the road follow where the book has got to.',
+    effect: { on: 'Each leg brings in, and builds, as its chapter does.', off: 'The lanes bring things in and build as they always have.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'trope-reveal', attribute: 'data-switch-trope-reveal', stage: 'trial', layer: 'trial', label: 'Tropes deepen as you go',
     hint: 'Each trope shows only as far as you have come with it: seeded, hinted, named, turned, paid off. Read on, carry the pie past it, or write it at the desk, and it says more.',
     effect: { on: 'Tropes show the stage you have reached.', off: 'Tropes show as they always have.' },

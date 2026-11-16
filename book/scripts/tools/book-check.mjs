@@ -31,7 +31,8 @@ import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signatu
 import { packProblems } from '../modules/packs.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
 import { FORMER_LIVES } from '../home/pie-mimes.mjs';
-import { readLevels } from '../home/pie-rhythm.mjs';
+import { readLevels, legTerms, castId, meetsOf, BEATS } from '../home/pie-rhythm.mjs';
+import { INTRO, SCENES, CHAPTER_SCENE, WIDE, SCHEMES } from '../home/pie-world.mjs';
 import { readMotifs, motifNotes } from '../home/pie-tropes.mjs';
 import { parseWay, waySpell } from '../modules/way-through.mjs';
 import { parseSpell, projectionSpell } from '../modules/projection.mjs';
@@ -192,6 +193,8 @@ const ids = new Set();
 const plateChecks = [];
 const proseOf = Object.fromEntries(chapters.map((c) => [c.chapterNumber,
   c.sections.filter(isPublished).flatMap((s) => (s.content || []).filter((x) => x.type === 'paragraph').map((x) => `${canonicalText(x)} ${(x.children || []).map((k) => k.text || '').join(' ')}`)).join(' ')]));
+// The same, under a name the levels block can reach (a block below keeps its own proseOf).
+const chapterProse = proseOf;
 almanac.wonders.forEach((wonder) => {
   if (ids.has(wonder.id)) error('almanac', `duplicate id ${wonder.id}`);
   ids.add(wonder.id);
@@ -263,7 +266,8 @@ function parsedLevels(text) {
       motif: (f['~motif'] || []).map(Number).filter(Number.isFinite),
       theme: f['@theme']?.[0] ?? null,
       rhythm: f['*rhythm']?.[0] ?? null,
-      room: f['.room']?.[0] ?? null
+      room: f['.room']?.[0] ?? null,
+      leg: legTerms((op, label) => f[op + label] ?? null)
     };
   });
   const rhythms = {};
@@ -310,6 +314,100 @@ function parsedLevels(text) {
     if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);
   });
   notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find`);
+
+  /* How each leg plays as its chapter develops it (the chapter-tuned trial; the mechanics terms on each level), held to
+   * the released prose and canon. !grounds says where the book first names a thing: a phrase found in that chapter and
+   * in none before (or .native[lanes], for what only the lanes have). Nothing comes down a leg before its ground, each
+   * thing the lanes introduce is met once, a leg keeps two solid things in its own place, a cast names only who the
+   * book has met, a beat is played in the chapter it is grounded in, and no leg from a turn on undoes it (!turns). */
+  const blocks = parse ? spwBlocks(levelsText) : null;
+  if (parse && !blocks) error('legs', 'pie-levels.spw does not read whole with the Spw interpreter');
+  const released = new Set(chapters.map((c) => c.chapterNumber));
+  const firstNamed = (term) => [...released].sort((a, b) => a - b).find((n) => (chapterProse[n] || '').includes(term)) ?? null;
+  const grounds = {};
+  (blocks?.grounds || []).forEach(([id, f]) => {
+    grounds[castId(id)] = { chapter: Number(f['&chapter']?.[0]) || null, term: f['#term']?.[0] ?? null, native: Boolean(f['.native']) };
+  });
+  const turns = (blocks?.turns || []).map(([id, f]) => ({
+    id: castId(id), from: Number(f['&from']?.[0]) || null, ends: f['!ends']?.[0] ?? null, chapter: Number(f['&chapter']?.[0]) || null, term: f['#term']?.[0] ?? null
+  }));
+  if (blocks && !Object.keys(grounds).length) error('legs', 'pie-levels.spw has no !grounds');
+  if (blocks && !turns.length) error('legs', 'pie-levels.spw has no !turns');
+  Object.entries(grounds).forEach(([id, g]) => {
+    if (g.native) return;
+    if (!g.chapter || !g.term) { error('legs', `ground ${id}: needs a &chapter and a #term, or .native[lanes]`); return; }
+    if (!released.has(g.chapter)) { error('legs', `ground ${id}: ch${pad(g.chapter)} is not released`); return; }
+    const first = firstNamed(g.term);
+    if (first !== g.chapter) error('legs', `ground ${id}: "${g.term}" is ${first ? `first in ch${pad(first)}` : 'in no chapter'}, not ch${pad(g.chapter)}`);
+  });
+  const metAt = meetsOf(levels);
+  const seen = {};
+  const KNOWN = new Set([...Object.keys(INTRO), ...SCENES.flatMap((s) => [...s.kinds, ...(s.low || [])]), 'clown']);
+  chapters.forEach((c) => {
+    const n = c.chapterNumber;
+    const leg = levels[n]?.leg;
+    if (!leg) return;
+    const at = `ch${pad(n)}`;
+    if (!leg.cast) warn('legs', `${at}: no @cast (who may come keeps the game's own rule)`);
+    if (!leg.pace) warn('legs', `${at}: no ~pace (the leg builds to its end, as every leg did)`);
+    if (leg.egg == null) warn('legs', `${at}: no %egg (the leg keeps the game's own odds)`);
+    if (leg.pace && (leg.pace.length !== 5 || leg.pace.some((v) => v < 0 || v > 9))) error('legs', `${at}: ~pace is five points from 0 to 9, not ${leg.pace.join(' ')}`);
+    if (leg.egg != null && (leg.egg < 0 || leg.egg > 100)) error('legs', `${at}: %egg is a chance in a hundred, not ${leg.egg}`);
+    (leg.meets || []).forEach((kind) => {
+      if (seen[kind]) error('legs', `${at}: ${kind} is already met in ch${pad(seen[kind])}`);
+      seen[kind] = seen[kind] || n;
+      const g = grounds[kind];
+      if (!KNOWN.has(kind)) error('legs', `${at}: &meets has ${kind}, not a thing the lanes have`);
+      else if (!g) error('legs', `${at}: ${kind} has no ground (where the book first names it, or .native[lanes])`);
+      else if (!g.native && g.chapter > n) error('legs', `${at}: ${kind} comes down the lanes before ch${pad(g.chapter)} names it`);
+      else if (!g.native && n - g.chapter > 3) warn('legs', `${at}: ${kind} comes ${n - g.chapter} chapters after the book names it`);
+    });
+    (leg.kinds || []).forEach((kind) => {
+      if (!KNOWN.has(kind)) error('legs', `${at}: &kinds has ${kind}, not a thing the lanes have`);
+      else if (kind in metAt && metAt[kind] > n) error('legs', `${at}: &kinds has ${kind}, met only in ch${pad(metAt[kind])}`);
+    });
+    const place = SCENES.find((s) => s.id === (CHAPTER_SCENE[n] || 'lanes'));
+    const pool = new Set((leg.kinds || place?.kinds || []).filter((kind) => !WIDE.has(kind) && (!(kind in metAt) || metAt[kind] <= n)));
+    if (pool.size < 2) error('legs', `${at}: only ${[...pool].join(', ') || 'nothing'} comes down this leg in its own place`);
+    (leg.cast || []).forEach((who) => {
+      const g = grounds[who];
+      if (!g) error('legs', `${at}: @cast names ${who}, who has no ground`);
+      else if (!g.native && g.chapter > n) error('legs', `${at}: @cast names ${who} before ch${pad(g.chapter)} meets them`);
+      if (CHARACTERS[who]?.first > n) error('legs', `${at}: @cast names ${who}, whose card says first in ch${pad(CHARACTERS[who].first)}`);
+    });
+    (leg.schemes || []).forEach((id) => { if (!(id in SCHEMES)) error('legs', `${at}: !schemes names ${id}, not one of his schemes`); });
+    if (leg.schemes && !(leg.cast || ['bane']).includes('bane')) error('legs', `${at}: !schemes, with Mr. BaneWAP not in the @cast`);
+    if ((leg.schemes || []).includes('march') && (metAt.march || Infinity) > n) error('legs', `${at}: a march before the leg that meets it`);
+    if (leg.beat) {
+      const g = grounds[leg.beat];
+      if (!(leg.beat in BEATS)) error('legs', `${at}: ^beat ${leg.beat} is not a beat the game plays`);
+      if (!g || g.native) error('legs', `${at}: ^beat ${leg.beat} has no ground`);
+      else if (g.chapter !== n) error('legs', `${at}: ^beat ${leg.beat} is grounded in ch${pad(g.chapter)}, not here`);
+    }
+  });
+  // Every beat the game plays is on its own chapter's line and no other: a beat is read with the trial off too.
+  Object.entries(BEATS).forEach(([beat, fallback]) => {
+    const g = grounds[beat];
+    if (!g || g.native) { error('legs', `beat ${beat}: no ground`); return; }
+    if (g.chapter !== fallback) error('legs', `beat ${beat}: grounded in ch${pad(g.chapter)}, but the game falls back to ch${pad(fallback)}`);
+    const on = chapters.map((c) => c.chapterNumber).filter((n) => levels[n]?.leg?.beat === beat);
+    if (on.length !== 1 || on[0] !== g.chapter) error('legs', `beat ${beat}: on ${on.length ? on.map((n) => `ch${pad(n)}`).join(', ') : 'no line'}, not on ch${pad(g.chapter)}'s line alone (every player meets it there)`);
+  });
+  // Every thing the lanes introduce is met in some leg (the presences come by @cast).
+  Object.keys(INTRO).filter((kind) => kind !== 'boon' && kind !== 'bane' && !seen[kind]).forEach((kind) => error('legs', `${kind} is met in no leg (&meets)`));
+  turns.forEach((turn) => {
+    if (!turn.chapter || !released.has(turn.chapter) || !turn.term || !(chapterProse[turn.chapter] || '').includes(turn.term)) error('legs', `turn ${turn.id}: "${turn.term}" is not in ch${pad(turn.chapter || 0)}`);
+    if (!turn.from || turn.from < (turn.chapter || Infinity)) error('legs', `turn ${turn.id}: binds from ch${pad(turn.from || 0)}, before the chapter that turns it`);
+    if (!['schemes', 'egg'].includes(turn.ends)) { error('legs', `turn ${turn.id}: ends ${turn.ends}, which this check cannot hold`); return; }
+    chapters.forEach((c) => {
+      const n = c.chapterNumber;
+      const leg = levels[n]?.leg;
+      if (!turn.from || n < turn.from || !leg) return;
+      if (turn.ends === 'schemes' && ((leg.cast || [turn.id]).includes(turn.id) || leg.schemes)) error('legs', `ch${pad(n)}: ${turn.id} may still scheme after the turn in ch${pad(turn.chapter)} (leave them out of the @cast, and no !schemes)`);
+      if (turn.ends === 'egg' && leg.egg !== 0) error('legs', `ch${pad(n)}: the Egg may still be passed after ch${pad(turn.chapter)} (%egg[0])`);
+    });
+  });
+  notes.push(`legs: ${Object.keys(seen).length} things met, ${Object.keys(grounds).length} grounds, ${turns.length} turns held`);
 
   /* Whose it is (.spw/runtime/audio-tropes.spw; pie-tropes.mjs): the game's reader agrees with the interpreter, and the
    * three WAPs are one shape turned three ways. */

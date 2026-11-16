@@ -93,7 +93,7 @@ Platform ship audit (2026-07-16): `.spw/audits/platform-ship-audit-2026-07-16.sp
 ### Release cadence
 
 Aligned with Spwashi practice: public ship windows on the **13th** and **26th**.
-Current release token: `2026_11_13.B`. The release steps (the four places the token is set, `changes.json`, `tokens:align`, `chapters:build`) are under Releasing in `CLAUDE.md`.
+Current release token: `2026_11_16.A`. The release steps (the four places the token is set, `changes.json`, `tokens:align`, `chapters:build`) are under Releasing in `CLAUDE.md`.
 
 ## Spw-Workbench Integration
 

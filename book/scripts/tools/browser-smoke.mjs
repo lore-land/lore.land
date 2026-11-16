@@ -21,7 +21,7 @@ import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /* Reaches the game's closure as the file is served. The repository carries no test hook. */
 const HOOK_AT = '  const update = (rawDt) => {';
-const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t), carrier: (id) => { run.carrier = carrierById(id); }, jump: () => jump(), laneX: (l) => laneX(l), ring: (...a) => spawnRing(...a) };\n';
+const HOOK = 'window.__pieTest = { get run() { return run; }, get state() { return state; }, get board() { return board; }, actOutChain: (f) => actOutChain(f), scheme: () => scheme(), enterChapter: (...a) => enterChapter(...a), closeLeg: () => closeLeg(), knock: (t) => knock(t), setClock: (iso) => { seasonClock = () => new Date(iso); }, paste: (t) => pasteSpell(t), carrier: (id) => { run.carrier = carrierById(id); }, jump: () => jump(), laneX: (l) => laneX(l), ring: (...a) => spawnRing(...a), get levels() { return levelData; }, allowed: (k) => allowed(k), spawnRow: () => spawnRow(), tension: () => legTension(), progress: () => progress() };\n';
 const SWITCHES = { cohort: 'returning', choices: { 'way-through': 'on', reasons: 'on' }, tried: [], resolved: { 'way-through': 'on', reasons: 'on' } };
 /* A new player's story cards stop the clock. */
 const PLAYER = { best: 1, runs: 3, view: { story: false, zen: true, focusOnPlay: false }, sound: false, met: [], cards: [] };
@@ -359,13 +359,98 @@ const SCENARIOS = [
     // Hopped (one brought under the carrier in the hang, as steering would), then his switch thrown: the sniff, unstreamed.
     await page.ev(`(() => { const r = window.__pieTest.run; r.unkept = 0; window.__pieTest.jump(); })()`);
     await page.waitFor(`window.__pieTest.run.jumpT > 0 && window.__pieTest.run.jumpT < 0.42`, { timeoutMs: 3000 });
-    await page.ev(`(() => { const r = window.__pieTest.run; const rose = r.things.find((x) => x.bloom && !x.cleared); Object.assign(rose, { x: r.x, home: r.x, lane: r.lane, y: r.y }); })()`);
+    // Held under the carrier through the hang, not placed once: on a loaded machine a frame can be long enough for a
+    // rose placed once to fall past the hop window between two frames.
+    await page.ev(`(() => { const t = window.__pieTest; const rose = t.run.things.find((x) => x.bloom && !x.cleared); const pin = setInterval(() => { const r = t.run; if (!r || rose.cleared || !(r.jumpT > 0)) { clearInterval(pin); return; } Object.assign(rose, { x: r.x, home: r.x, lane: r.lane, y: r.y }); }, 10); })()`);
     await page.waitFor(`window.__pieTest.run.things.some((x) => x.bloom && x.cleared)`, { timeoutMs: 3000 });
     await page.ev(`(() => { const r = window.__pieTest.run; r.things.push({ kind: 'switch', x: r.x, home: r.x, lane: r.lane, y: r.y - 6, w: 26, h: 26, fatal: false, born: r.t }); })()`);
     await page.waitFor(`JSON.parse(localStorage.getItem('lore.pie.finds.v1') || '{}').sniff`, { timeoutMs: 5000 });
     await page.waitFor(`JSON.parse(localStorage.getItem('lore.almanac.v1') || '{}')['pressed-rose']`, { timeoutMs: 6000 });
     const deeds = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.deeds.v1') || '{}')`);
     if (deeds[11]?.find_sniff !== 1) throw new Error(`the sniff was not kept on Chapter Eleven: ${JSON.stringify(deeds)}`);
+  }],
+  ['each leg plays its chapter (a trial): nothing before the book names it, a shape like the chapter, no scheme after his turn, no Egg after the shell; off, as it was', async (page) => {
+    await page.setViewport(1200, 900);
+    // A regular who has met everything, him included: what was met must not reopen what a tuned leg holds back.
+    const REGULAR = { ...PLAYER, reached: 15, met: ['bane', 'boon', 'throne', 'subject', 'wasps', 'banner', 'clerk', 'pigeon', 'snail', 'post', 'pane', 'spool', 'beaver'], view: { ...PLAYER.view, cardPace: 'quiet' } };
+    const TUNED = { cohort: 'returning', choices: { 'chapter-tuned': 'on' }, tried: [], resolved: { 'chapter-tuned': 'on' } };
+    /** Start a carry at a chapter, once its level lines are read. @param {number} n */
+    const start = async (n) => {
+      await page.goto(`/pie/?chapter=${n}`);
+      await page.waitFor(`window.__pieTest && document.querySelector('[data-pie-card-action]')`);
+      await page.ev(`document.querySelector('[data-pie-card-action]').click()`);
+      await page.waitFor(`window.__pieTest.state === 'running' && Boolean(window.__pieTest.levels.levels[${n}]?.leg)`);
+      await page.ev(`setInterval(() => { const r = window.__pieTest.run; if (r) r.wobble = 0; }, 100)`);
+    };
+    /** Enter a chapter mid-carry and wait for its leg. @param {number} n */
+    const enter = async (n) => {
+      await page.ev(`window.__pieTest.enterChapter(${n}, { closed: 'carried', note: '' })`);
+      await page.waitFor(`window.__pieTest.run.chapter === ${n} && window.__pieTest.run.leg?.n === ${n}`, { timeoutMs: 6000 });
+    };
+    const EARLY = ['throne', 'subject', 'wasps', 'banner', 'clerk', 'pigeon', 'snail', 'post', 'pane', 'spool', 'beaver', 'table'];
+    /* Eighty rows of the leg in hand: every kind they bring, and any whose line meets it in a later leg. */
+    const MEETS = `(() => { const lv = window.__pieTest.levels.levels; const at = {}; Object.keys(lv).map(Number).sort((a, b) => a - b).forEach((k) => (lv[k].leg?.meets || []).forEach((kind) => { if (!(kind in at)) at[kind] = k; })); return at; })()`;
+    /** @param {number} n */
+    const rowsAt = (n) => page.ev(`(() => { const t = window.__pieTest; const r = t.run; const at = ${MEETS}; const seen = new Set(); for (let i = 0; i < 80; i += 1) { r.breath = 0; r.rows = 9; const before = r.things.length; t.spawnRow(); r.things.slice(before).forEach((x) => seen.add(x.kind)); r.things = r.things.slice(0, before); } return { seen: [...seen], early: [...seen].filter((k) => (at[k] || 0) > ${n}) }; })()`);
+
+    await seed(page, { 'lore.switches.v1': TUNED, 'lore.pie.v1': REGULAR });
+    await start(12);
+    // After his turn, called straight (as the bane shelf's chain and a passage that names him call him), he does not come.
+    await page.ev(`window.__pieTest.scheme()`);
+    const called = await page.ev(`({ bane: Boolean(window.__pieTest.run.bane), allowed: window.__pieTest.allowed('bane') })`);
+    if (called.bane || called.allowed) throw new Error(`Mr. BaneWAP schemes in Chapter Twelve, after his turn: ${JSON.stringify(called)}`);
+    // The presence timer falling to him: the moment stays quiet, and the clock goes on.
+    const t0 = await page.ev(`window.__pieTest.run.t`);
+    await page.ev(`(() => { const r = window.__pieTest.run; r.boon = null; r.bane = null; r.lastPresence = 'boon'; r.mimeFlourAt = -99; r.rivalCall = false; r.nextPresence = 0; })()`);
+    await page.waitFor(`window.__pieTest.run.t > ${t0} + 1.5`, { timeoutMs: 8000 });
+    const timer = await page.ev(`({ bane: Boolean(window.__pieTest.run.bane), boon: Boolean(window.__pieTest.run.boon), next: window.__pieTest.run.nextPresence })`);
+    if (timer.bane || timer.boon || !(timer.next > 0)) throw new Error(`the presence timer, falling to him after his turn: ${JSON.stringify(timer)}`);
+    // ...and the next moment is Mr. BoonWAP's, as it would have been: the quiet does not swallow every turn after it.
+    await page.ev(`window.__pieTest.run.nextPresence = 0`);
+    await page.waitFor(`Boolean(window.__pieTest.run.boon)`, { timeoutMs: 4000 });
+    await page.ev(`window.__pieTest.run.boon = null`);
+    // Every leg, in its own place: nothing comes down it that its line meets later, for a regular who has met it all.
+    for (let n = 1; n <= 15; n += 1) {
+      await enter(n);
+      const leg = await rowsAt(n);
+      if (leg.early.length) throw new Error(`leg ${n}, tuned, brought in ${leg.early.join(', ')} before the leg that meets them: ${JSON.stringify(leg.seen)}`);
+    }
+    // Friday in Fourteen arrives with everyone the book has by then: the feast clerks wait for Fifteen.
+    await enter(14);
+    await page.ev(`(() => { const t = window.__pieTest; const r = t.run; r.legStart -= (0.9 - t.progress()) * r.legLength; })()`);
+    await page.waitFor(`window.__pieTest.run.friday === true`, { timeoutMs: 6000 });
+    const friday = await page.ev(`window.__pieTest.run.things.map((x) => x.kind)`);
+    if (friday.includes('clerk') || !friday.includes('subject')) throw new Error(`Friday's row, tuned: ${JSON.stringify(friday)}`);
+    // Leg Four, for a regular who has met them all: the rented court's things and Bonk City's wait for their chapters.
+    await enter(4);
+    // The boon shelf's chain calls him straight: before Bonk City, a tuned leg keeps him out.
+    await page.ev(`(() => { const t = window.__pieTest; t.run.boon = null; t.run.bane = null; t.actOutChain({ shelf: 'boon', line: '', says: 'court', complete: false }); })()`);
+    if (await page.ev(`Boolean(window.__pieTest.run.boon)`)) throw new Error('the boon chain brought Mr. BoonWAP into leg Four');
+    const four = { kinds: (await rowsAt(4)).seen, throne: await page.ev(`window.__pieTest.allowed('throne')`), chair: await page.ev(`window.__pieTest.allowed('chair')`), bane: await page.ev(`window.__pieTest.allowed('bane')`), boon: await page.ev(`window.__pieTest.allowed('boon')`) };
+    if (four.kinds.some((/** @type {string} */ k) => EARLY.includes(k)) || four.throne || !four.chair || !four.bane || four.boon) throw new Error(`leg Four, tuned: ${JSON.stringify(four)}`);
+    // Its own mix (&kinds: the bane-side chair, the hill's stones): no chair comes down the rented court's mix.
+    if (!four.kinds.includes('chair')) throw new Error(`leg Four did not keep its own mix: ${JSON.stringify(four.kinds)}`);
+    // Chapter Eleven peaks first: its leg is tautest at the start and slack at the end.
+    await enter(11);
+    const shape = await page.ev(`(() => { const t = window.__pieTest; const r = t.run; const at = (p) => { r.legStart -= (p - t.progress()) * r.legLength; return t.tension(); }; return { start: at(0.02), end: at(0.97) }; })()`);
+    if (!(shape.start > 0.8 && shape.end < 0.35)) throw new Error(`Chapter Eleven's leg does not fall as the chapter does: ${JSON.stringify(shape)}`);
+    // The shell is left empty in Thirteen: the Egg is not passed in Fourteen, and the Thursday still keeps people out.
+    // (Friday, forced above, is kept for the carry: a carry meets the Thursday once, so it is set back for this look.)
+    await enter(14);
+    const fourteen = await page.ev(`(window.__pieTest.run.friday = false, { egg: Number.isFinite(window.__pieTest.run.eggAt), clown: window.__pieTest.allowed('clown') })`);
+    if (fourteen.egg || fourteen.clown) throw new Error(`leg Fourteen, tuned: ${JSON.stringify(fourteen)}`);
+
+    // Off, for the same regular: his scheme, the court's things, the build every leg had and the Thursday, as they were.
+    await seed(page, { 'lore.switches.v1': { cohort: 'returning', choices: {}, tried: [], resolved: {} }, 'lore.pie.v1': REGULAR });
+    await start(12);
+    await page.ev(`window.__pieTest.scheme()`);
+    if (!(await page.ev(`Boolean(window.__pieTest.run.bane)`))) throw new Error('with the trial off, Mr. BaneWAP no longer schemes in Chapter Twelve');
+    await page.ev(`window.__pieTest.run.bane = null`);
+    await enter(4);
+    const off = { throne: await page.ev(`window.__pieTest.allowed('throne')`), flat: await page.ev(`Math.abs(window.__pieTest.tension() - window.__pieTest.progress()) < 1e-9`) };
+    await enter(14);
+    const offThursday = await page.ev(`window.__pieTest.allowed('clown')`);
+    if (!off.throne || !off.flat || offThursday) throw new Error(`with the trial off: ${JSON.stringify({ ...off, clownOnThursday: offThursday })}`);
   }],
   ['carried by a dolphin, the pie still takes its donuts and roses, and still passes what would knock it', async (page) => {
     // Unkept used to pass everything, so a Ring Tide dolphin carried the pie straight past the tide's own donuts.

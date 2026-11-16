@@ -143,6 +143,11 @@
  *              with what it does, a NEW over it while it is in view (lore.pie.v1 met).
  *   rhythm     each chapter builds toward its end; a section break in the words is a breath in
  *              the lanes (a § rule across them, a row or two with nothing to knock).
+ *   tuned      the chapter-tuned trial: each leg plays as its chapter develops, as its line in
+ *              pie-levels.spw says (&meets, &kinds, @cast, !schemes, ~pace, %egg, ^beat): nothing
+ *              before the chapter that names it, a tension shaped like the chapter's, no scheme
+ *              after Mr. BaneWAP's turn, no Egg after its shell is left empty. book:check holds
+ *              each line to the released prose.
  *   carries    every chapter finished (or mostly carried when it spilled) keeps a mark
  *              (pie-carries.mjs): its tally of boon (satisfied, kept, warm), bane (knocked,
  *              boxed, fed to BaneWAP) and bone (hopped, perfect, over the mimes) leans that
@@ -191,9 +196,9 @@ import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuning
 import { VALUE_DEFS, VALUE_IDS, newValueState, noteValueEvent, rankValues, valueBlessing, parallelReflection, recordChapterParallel, readChapterParallels } from '../modules/pie-values.mjs';
 import { BUILTIN_STYLES, parseCreatorStyle, formatCreatorStyle, allCreatorStyles, saveCreatorStyle, activeCreatorStyle, setActiveCreatorStyle, styleLineForProvenance } from '../modules/creator-styles.mjs';
 import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs';
-import { loadLevels, createConductor, foundRhythms } from './pie-rhythm.mjs?v=2026_11_13.B';
+import { loadLevels, createConductor, foundRhythms, meetsOf, paceAt, BEATS } from './pie-rhythm.mjs?v=2026_11_16.A';
 import { loadMotifs } from './pie-tropes.mjs';
-import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_13.B';
+import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_16.A';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_13.B';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
@@ -581,6 +586,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const ahead = (kind, lane = pick(open)) => { const t = makeThing(kind, lane); t.y = -60; run.things.push(t); return t; };
     const pair = () => { const l = pick(open.filter((x) => x + 1 < LANES && x + 1 !== run.safe)); return l == null ? null : [l, l + 1]; };
     const link = CHAINS[fired.shelf]?.findIndex((c) => c.line === fired.line) ?? 0;
+    // A tuned leg (chapter-tuned) puts ahead only what its chapter has met: the edge is still shown, and said.
+    const fits = (kind) => !tunedLeg() || allowed(kind);
     if (fired.shelf === 'boon') {
       if (!run.boon && !run.bane) holdCourt();
       if (link >= 1) { ahead('clown'); ahead('clown'); }
@@ -588,14 +595,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else if (fired.shelf === 'bane') {
       if (link === 0 && !run.bane && !run.boon) scheme();
       if (link >= 1) run.marchNext = true;
-      if (fired.complete) { const p = pair(); if (p) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
+      if (fired.complete) { const p = pair(); if (p && fits('mime')) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
     } else if (fired.shelf === 'bone') {
       const p = pair();
-      if (link >= 1 && p) { const d = ahead('dividers', p[0]); d.lanes = p; d.x = (laneX(p[0]) + laneX(p[1])) / 2; d.w = LANE_W * 2 - 14; d.h = 22; }
+      if (link >= 1 && p && fits('dividers')) { const d = ahead('dividers', p[0]); d.lanes = p; d.x = (laneX(p[0]) + laneX(p[1])) / 2; d.w = LANE_W * 2 - 14; d.h = 22; }
       if (link === 0) run.tags.push({ x: W / 2, y: PRESENCE_Y + 44, t: 0, text: 'A RECEIPT, POSTED' });
     } else if (fired.shelf === 'bonk') {
-      if (link === 0) ahead('pane');
-      if (fired.complete || link >= 1) { const p = pair(); if (p) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
+      if (link === 0 && fits('pane')) ahead('pane');
+      if (fired.complete || link >= 1) { const p = pair(); if (p && fits('mime')) { const mime = ahead('mime', p[0]); mime.facing = 1; ahead('mimewall', p[1]); } }
     } else if (fired.shelf === 'honk') {
       spawnRing(run.x, run.y - 30, 34, colors.gold, 0.6);
       setTimeout(() => { if (run) spawnRing(run.x, run.y - 30, 26, colors.gold, 0.45); }, 520);   // the echo, a beat late
@@ -730,9 +737,25 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const conductor = createConductor({ onFound: (r) => foundRhythm(r) });
   loadLevels().then((data) => {
     levelData = data;
+    meetsAt = meetsOf(data.levels);
     conductor.setLevels(data);
     if (run?.chapter) conductor.setChapter(run.chapter, data.levels[run.chapter]);
   });
+  /* How each leg plays as its chapter develops it (pie-levels.spw: &meets, &kinds, @cast, !schemes, ~pace, %egg, ^beat),
+   * a trial (chapter-tuned): what a leg brings in first, the mix it keeps in its own place, who may come and which of
+   * his schemes, how taut it is through its length, and whether the Egg is passed. With the trial off, a term left out,
+   * or the levels not read yet, the game keeps its own rule. A beat is read either way: the lines say where it plays. */
+  let meetsAt = null;
+  const tunedOn = () => switchOn('chapter-tuned');
+  const linesRead = () => Object.keys(levelData.levels).length > 0;
+  const tunedLeg = (n = run?.chapter) => (tunedOn() ? levelData.levels[n]?.leg || null : null);
+  const beatHere = (beat) => (linesRead() ? levelData.levels[run?.chapter]?.leg?.beat === beat : run?.chapter === BEATS[beat]);
+  const tunedIntro = (kind) => (tunedOn() && meetsAt && kind in meetsAt ? meetsAt[kind] : null);
+  const introOf = (kind) => tunedIntro(kind) ?? INTRO[kind];
+  // Who a leg's cast leaves out stays out, whatever was met before: after his turn, a regular has met him long since.
+  const castBars = (who) => Boolean(tunedLeg()?.cast) && !tunedLeg().cast.includes(who);
+  // How taut the leg is here (0..1): its ~pace through its length, or the straight build every leg had.
+  const legTension = () => { const p = progress(); const pace = tunedLeg()?.pace; return pace?.length ? paceAt(pace, p) : p; };
   /* Whose it is: each character's theme (.spw/runtime/audio-tropes.spw), and the reader's way through (way-through.mjs). */
   loadMotifs().then((motifs) => setThemes(motifs));
   takeWayFromAddress();
@@ -2120,10 +2143,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * comes down the lanes (no clown, clerk, subject or mime; neither pie holds court or schemes; nobody
    * blows a horn) until the last of it, when Friday arrives with everyone in it. */
   const NOBODY_ON_THURSDAY = new Set(['clown', 'clerk', 'subject', 'mime', 'mimewall', 'march', 'dividers', 'boon', 'bane', 'horn']);
-  const thursday = () => run?.chapter === 14 && !run.friday;
+  const thursday = () => beatHere('thursday') && !run.friday;
+  /* With the chapter-tuned trial, a thing comes down a leg only from the leg its line meets it in (the book has named it
+   * by then; a lap round the book frees it), and Mr. BoonWAP or Mr. BaneWAP only where the leg's cast has them. */
   const allowed = (kind) => !(thursday() && NOBODY_ON_THURSDAY.has(kind))
     && !droppedKinds().has(kind)
-    && (!(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind));
+    && !((kind === 'boon' || kind === 'bane') && castBars(kind))
+    && (tunedIntro(kind) != null ? tunedIntro(kind) <= run.chapter || run.lap > 0
+      : (!(kind in INTRO) || INTRO[kind] <= run.chapter || run.lap > 0 || met(kind)));
   /* A rumour heard in this chapter's margins, said in the lanes as the carry reaches it. */
   function tickMargins() {
     if (run.marginSaid || run.marginAt == null || run.t < run.marginAt) return;
@@ -2138,7 +2165,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     say(rumour.track.lanes);
   }
   function tickThursday(dt) {
-    if (run.chapter !== 14) return;
+    if (!beatHere('thursday')) return;
     // Said a breath in, after the first room has said its own name.
     run.thursdayT = (run.thursdayT || 0) + dt;
     if (!run.thursdaySaid && run.thursdayT > 3.4) {
@@ -2154,7 +2181,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // Everyone at once: a row of the people the day did not have, a way left through.
     const way = run.safe;
     [...Array(LANES).keys()].filter((lane) => lane !== way).forEach((lane, i) => {
-      const who = makeThing(['clown', 'subject', 'clown', 'clerk'][i % 4], lane);
+      // (A tuned leg brings in only who its chapter has named: the feast clerks wait for the parcel gate.)
+      const kind = ['clown', 'subject', 'clown', 'clerk'][i % 4];
+      const who = makeThing(tunedLeg() && !allowed(kind) ? 'clown' : kind, lane);
       who.y -= 24 + i * 6;
       run.things.push(who);
     });
@@ -2214,12 +2243,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   const spawnRow = () => {
     // Each chapter builds toward its end; a section break in the words is a breath in the lanes.
-    const d = clamp(difficulty() * (0.8 + progress() * 0.4), 0, 1);
+    // (With the chapter-tuned trial, the leg's own ~pace: a chapter that peaks early is busiest early.)
+    const d = clamp(difficulty() * (0.8 + legTension() * 0.4), 0, 1);
     const calm = run.breath > 0;
     const s = scene();
-    const kinds = s.kinds.filter(allowed);
+    // A tuned leg in its own place keeps the mix its line names (&kinds); a door to another place brings that place's.
+    const own = tunedLeg()?.kinds && run.sceneId === (CHAPTER_SCENE[run.chapter] || 'lanes') ? tunedLeg().kinds : s.kinds;
+    const kinds = own.filter(allowed);
     const solid = kinds.filter((kind) => !WIDE.has(kind));
-    const solids = solid.length ? solid : [s.kinds.find((kind) => !WIDE.has(kind)) || 'post'];
+    const solids = solid.length ? solid : [(tunedLeg() ? 'stone' : s.kinds.find((kind) => !WIDE.has(kind))) || 'post'];
     const lanes = [...Array(LANES).keys()];
     // The way through: never more than one step from the last. (Torch-ants light it.)
     run.safe = clamp(run.safe + pick([-1, 0, 0, 1]), 0, LANES - 1);
@@ -2258,7 +2290,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (kind === 'dividers' || kind === 'mime') {
         const pair = [lane + 1, lane - 1].find((other) => other >= 0 && other < LANES && other !== run.safe && !blocked.has(other));
         if (pair == null) {
-          kind = 'post';
+          kind = tunedLeg() && !allowed('post') ? 'stone' : 'post';   // (a tuned leg before Bonk City has no bronze posts)
         } else if (kind === 'mime') {
           // A mime, and beside it the wall it is miming: invisible, and also there.
           const mime = makeThing('mime', lane);
@@ -4019,7 +4051,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.legStart = cobbles();
     run.leg = null;
     run.wonderQueue = [];
-    run.eggAt = Math.random() < (EGG_ODDS[n] ?? 0.2) ? rand(0.3, 0.8) : Infinity;
+    run.eggAt = Math.random() < (tunedLeg(n)?.egg != null ? tunedLeg(n).egg / 100 : EGG_ODDS[n] ?? 0.2) ? rand(0.3, 0.8) : Infinity;
     if (!first) run.rowIn = Math.max(run.rowIn, 1.2);
     const ticket = run;
     prepareLeg(n).then((leg) => {
@@ -5010,6 +5042,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
   /* Two of the quinary five, one at a time. */
   const holdCourt = () => {
+    // A tuned leg whose cast does not have him yet (before Bonk City) keeps him out, however he is called.
+    if (castBars('boon')) return;
     run.boon = { t: 0, dur: 8.5, lobIn: 0.9 };
     cadenceVoice('boon', cadenceFor('boon'));
     turnCard('boon');
@@ -5031,8 +5065,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     say(`Mr. BoonWAP holds court; clowns flock to him. ${said ? said.text : ''}`);
   };
   const scheme = () => {
+    // After his turn (a tuned leg whose cast leaves him out), nothing is schemed and nothing is said, however he was
+    // called: the presence timer, a passage that names him, the bane shelf's chain, a gift to the other side.
+    if (castBars('bane')) return;
+    const may = tunedLeg()?.schemes;
+    const ids = Object.keys(SCHEMES).filter((key) => (key !== 'march' || allowed('march')) && (!may || may.includes(key)));
+    if (!ids.length) return;
     recall('bane');
-    const ids = Object.keys(SCHEMES).filter((key) => key !== 'march' || allowed('march'));
     // Panes broken in earlier chapters and carries make the march easier to call (pie-mimes.mjs): never at once.
     if (mimesOn() && ids.includes('march')) ids.push(...Array(marchWeight({ grudge: mimeGrudge(), glassSeen: run.glassSeen || 0 })).fill('march'));
     let id = pick(ids);
@@ -5193,10 +5232,16 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // The cast arrives as the book does: Mr. BaneWAP from Chapter Four, Mr. BoonWAP from Six.
           const canBoon = allowed('boon');
           const canBane = allowed('bane');
+          // After his turn (chapter-tuned), the moment that would have been his stays quiet: Mr. BoonWAP does not take it,
+          // and the turn passes as if it had been his, so the next falls to Mr. BoonWAP as it always would have.
+          const his = !boon && castBars('bane');
           if (!canBoon) boon = false;
           if (!canBane) boon = true;
-          if (!canBoon && !canBane) run.nextPresence = rand(10, 15);
-          else if (boon) holdCourt(); else scheme();
+          if (his || (!canBoon && !canBane)) {
+            run.nextPresence = rand(10, 15);
+            if (his) run.lastPresence = 'bane';
+          } else if (boon) holdCourt(); else scheme();
+          if (!run.boon && !run.bane && run.nextPresence <= 0) run.nextPresence = rand(10, 15);
         }
       }
       if (run.boon) {
@@ -5233,7 +5278,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         // a bane rose opens up the lanes soon after he begins, and later ones may: thorned, low enough to hop, never in
         // the lane that is the way through as it opens (the way moves on with the next row; a rose can always be
         // hopped), three at most a scheme.
-        if (switchOn('bloom-garden') && run.chapter === 11 && (b.roses || 0) < 3) {
+        if (switchOn('bloom-garden') && beatHere('bloom') && (b.roses || 0) < 3) {
           b.bloomIn = (b.bloomIn ?? 1.6) - dt;
           if (b.bloomIn <= 0) {
             b.bloomIn = 2.2;
@@ -10099,7 +10144,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     else if (KNOCKS[kind] && (Z[kind] ?? 2) >= 3) chips.push('in the air: step aside');
     else if (KNOCKS[kind]) chips.push('▮ too tall to hop');
     if (SLIPS.has(kind)) chips.push('slips');
-    const from = INTRO[kind] || INTRO[kind.replace('carrier-', '')];
+    const from = introOf(kind) || introOf(kind.replace('carrier-', ''));
     if (from) chips.push(`in the lanes from Chapter ${from}`);
     return chips;
   }
@@ -10510,7 +10555,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const kind = cardKindOf(t);
       if (!kind || t.wapped || t.y < 20 || t.y > H) return;
       const c = CARDS[kind];
-      const from = c.chapter || INTRO[t.kind] || null;
+      const from = c.chapter || introOf(t.kind) || null;
       const label = t.former && mimesOn() ? `Mime · ${t.former.bakes ? 'bakes' : `once a ${t.former.id.replace(/_/g, ' ')}`}` : `${(t.wonder?.name || c.name).replace(/^(A|An|The) /, '').slice(0, 16)}${from ? ` · ${from}` : ''}`;
       const w = ctx.measureText(label).width + 8;
       ctx.fillStyle = 'rgba(20, 18, 24, 0.78)';

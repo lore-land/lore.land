@@ -22,7 +22,7 @@
  */
 
 /* The token is the release the levels last changed in, so a returning player's kept copy is not last release's. */
-export const LEVELS_URL = '/.spw/runtime/pie-levels.spw?v=2026_11_09.S';
+export const LEVELS_URL = '/.spw/runtime/pie-levels.spw?v=2026_11_16.A';
 export const STORE = 'lore.pie.rhythms.v1';
 export const WINDOW = 0.075;
 const NEED = 6;
@@ -49,6 +49,54 @@ const field = (body, op, label) => {
   return m ? (m[2] !== undefined ? m[2] : m[1].trim()) : null;
 };
 
+/* ─── How a leg plays: its mechanics terms (the chapter-tuned trial, pie-game.mjs) ─── */
+
+const words = (raw) => (raw == null ? null : String(Array.isArray(raw) ? raw.join(' ') : raw).split(/[\s,]+/).filter(Boolean));
+/* The cast is written by the pies' own names (a valence word alone reads as a modifier in the grammar); the game knows them as boon and bane. */
+export const castId = (name) => ({ banewap: 'bane', boonwap: 'boon' }[name] || name);
+
+/**
+ * A level line's mechanics, from a getter that hands back a term's raw frame (a string, or the interpreter's values):
+ * &meets what the leg brings in first, &kinds its own mix, @cast who may come, !schemes what Mr. BaneWAP may try,
+ * ~pace how taut at five points through the leg (0 to 9), %egg the chance in a hundred, ^beat a beat played there.
+ * A term left out is null, and the game keeps its own rule for it. Both readers come through here, so book:check can
+ * hold them to one shape.
+ */
+export function legTerms(get) {
+  const pace = words(get('~', 'pace'));
+  const egg = words(get('%', 'egg'));
+  return {
+    meets: words(get('&', 'meets')),
+    kinds: words(get('&', 'kinds')),
+    cast: words(get('@', 'cast'))?.map(castId) ?? null,
+    schemes: words(get('!', 'schemes')),
+    pace: pace ? pace.map(Number).filter(Number.isFinite) : null,
+    egg: egg?.length && Number.isFinite(Number(egg[0])) ? Number(egg[0]) : null,
+    beat: words(get('^', 'beat'))?.[0] ?? null
+  };
+}
+
+/* The beats the game plays, and the chapter each falls back to before the lines are read. A beat is read whether the
+ * trial is on or not (the Thursday nobody kept is everyone's), so book:check holds each to its chapter's line. */
+export const BEATS = Object.freeze({ bloom: 11, thursday: 14 });
+
+/** Which leg first brings each thing in, from the lines' &meets: { kind: chapter }. */
+export function meetsOf(levels = {}) {
+  const at = {};
+  Object.keys(levels).map(Number).sort((a, b) => a - b).forEach((n) => (levels[n]?.leg?.meets || []).forEach((kind) => { if (!(kind in at)) at[kind] = n; }));
+  return at;
+}
+
+/** How taut a leg is at a point through it (0..1), from its ~pace points spread evenly across the leg. */
+export function paceAt(pace = [], p = 0) {
+  const x = clamp(Number(p) || 0, 0, 1);
+  if (!pace?.length) return x;
+  if (pace.length === 1) return clamp(pace[0] / 9, 0, 1);
+  const at = x * (pace.length - 1);
+  const i = Math.min(pace.length - 2, Math.floor(at));
+  return clamp((pace[i] + (pace[i + 1] - pace[i]) * (at - i)) / 9, 0, 1);
+}
+
 /** Read the levels file's text into { levels: {1: …}, rhythms: {name: …} }. Nothing here can throw. */
 export function readLevels(text = '') {
   const levels = {};
@@ -64,7 +112,8 @@ export function readLevels(text = '') {
         motif: (field(body, '~', 'motif') || '').split(/\s+/).filter(Boolean).map(Number).filter(Number.isFinite),
         theme: field(body, '@', 'theme'),
         rhythm: field(body, '*', 'rhythm'),
-        room: field(body, '.', 'room')
+        room: field(body, '.', 'room'),
+        leg: legTerms((op, label) => field(body, op, label))
       };
     });
     entriesOf(blockOf(text, 'rhythms')).forEach(([id, body]) => {

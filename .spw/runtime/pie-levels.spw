@@ -5,6 +5,12 @@
 # spells out, and the rhythm the land keeps in one of its rooms. A level may lean: %swing says where in
 # the eighth its off-sixteenths fall (50 even, 66 a triplet; left out, it is even). The game keeps its own
 # defaults; these tune them. A new level is a new *chNN{} block; a new rhythm, a new block under !rhythms.
+# Each level also says how its leg plays, as the chapter develops it (the chapter-tuned trial, pie-game.mjs): &meets
+# what the leg brings in for the first time, &kinds the mix it keeps in its own place, @cast who may come, !schemes
+# what Mr. BaneWAP may try, ~pace how taut the leg is at five points through it (0 to 9), %egg the chance in a hundred
+# that the Egg is passed, ^beat a beat the game plays there. A term left out leaves the game its own rule. !grounds
+# says where the book first names each thing (a phrase book:check finds in that chapter and none before), and !turns
+# what a chapter ends for every leg after it.
 #>lore_land_runtime_pie_levels
 #:surface #!runtime
 #:layer #!pragmatics
@@ -15,21 +21,21 @@
 }
 
 !levels{
-  *ch01{ %tempo[96] %root[293.66] ~motif[0 2 4 7 9 7] @theme[boof] *rhythm[torch_march] .room["warm_furrow"] }
-  *ch02{ %tempo[92] %root[261.63] %swing[58] ~motif[7 4 7 4 2 0] @theme[echo] *rhythm[echo_wrens] .room["forked_path"] }
-  *ch03{ %tempo[104] %root[329.63] ~motif[0 7 9 7 4 2] @theme[genie] *rhythm[sand_signals] .room["signal_stones"] }
-  *ch04{ %tempo[88] %root[311.13] ~motif[4 2 4 7 4 0] @theme[council] *rhythm[crosswind] .room["weather_pane"] }
-  *ch05{ %tempo[100] %root[277.18] ~motif[9 7 4 2 4 7] @theme[rift] *rhythm[quiet_rift] .room["crack_gauge"] }
-  *ch06{ %tempo[108] %root[349.23] %swing[60] ~motif[0 4 7 12 7 4] @theme[clowns] *rhythm[lantern_glass] .room["lamp_ladder"] }
-  *ch07{ %tempo[96] %root[293.66] %swing[56] ~motif[2 4 7 4 2 0] @theme[oath] *rhythm[oath_fruit] .room["oath_stone"] }
-  *ch08{ %tempo[92] %root[261.63] ~motif[0 0 2 2 4 2] @theme[well] *rhythm[well_drips] .room["well_rim"] }
-  *ch09{ %tempo[112] %root[392] %swing[62] ~motif[7 9 12 9 7 4] @theme[honks] *rhythm[nine_honks] .room["eight_shards"] }
-  *ch10{ %tempo[84] %root[220] ~motif[0 2 7 9 12 9] @theme[hall] *rhythm[bone_hall] .room["timber_hall"] }
-  *ch11{ %tempo[100] %root[246.94] ~motif[4 7 9 7 4 2] @theme[bloom] *rhythm[early_bloom] .room["bloom_garden"] }
-  *ch12{ %tempo[104] %root[329.63] %swing[54] ~motif[0 4 2 7 4 9] @theme[rivers] *rhythm[confluence] .room["bridge_deck"] }
-  *ch13{ %tempo[96] %root[293.66] ~motif[2 4 7 9 7 4] @theme[door] *rhythm[shell_door] .room["shell_door"] }
-  *ch14{ %tempo[90] %root[261.63] ~motif[7 4 2 0] @theme[thursday] *rhythm[kept_thursday] .room["frost_lane"] }
-  *ch15{ %tempo[108] %root[349.23] %swing[57] ~motif[0 7 4 7 0 9] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] }
+  *ch01{ %tempo[96] %root[293.66] ~motif[0 2 4 7 9 7] @theme[boof] *rhythm[torch_march] .room["warm_furrow"] &meets[stone, hole, frost, furrow, baneberry] @cast[boof] ~pace[2 6 4 3 7] %egg[50] }
+  *ch02{ %tempo[92] %root[261.63] %swing[58] ~motif[7 4 7 4 2 0] @theme[echo] *rhythm[echo_wrens] .room["forked_path"] &meets[ditch, puddle] @cast[boof] ~pace[3 4 4 6 4] %egg[20] }
+  *ch03{ %tempo[104] %root[329.63] ~motif[0 7 9 7 4 2] @theme[genie] *rhythm[sand_signals] .room["signal_stones"] &meets[sack] &kinds[stone, stone, hole, ditch] @cast[boof] ~pace[3 5 4 6 3] %egg[20] }
+  *ch04{ %tempo[88] %root[311.13] ~motif[4 2 4 7 4 0] @theme[council] *rhythm[crosswind] .room["weather_pane"] &meets[chair, vane, arrow, horn] &kinds[chair, chair, stone, hole] @cast[boof, banewap] !schemes[wind, tax, relet] ~pace[3 5 7 5 7] %egg[20] }
+  *ch05{ %tempo[100] %root[277.18] ~motif[9 7 4 2 4 7] @theme[rift] *rhythm[quiet_rift] .room["crack_gauge"] &meets[mime] &kinds[stone, hole, chair, mime] @cast[boof, banewap] !schemes[wind, tax, relet] ~pace[5 6 6 5 3] %egg[20] }
+  *ch06{ %tempo[108] %root[349.23] %swing[60] ~motif[0 4 7 12 7 4] @theme[clowns] *rhythm[lantern_glass] .room["lamp_ladder"] &meets[post, pane, snail, pigeon, boneberry, dividers, march] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[6 5 3 4 6] %egg[20] }
+  *ch07{ %tempo[96] %root[293.66] %swing[56] ~motif[2 4 7 4 2 0] @theme[oath] *rhythm[oath_fruit] .room["oath_stone"] &meets[spool] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[4 3 6 3 2] %egg[20] }
+  *ch08{ %tempo[92] %root[261.63] ~motif[0 0 2 2 4 2] @theme[well] *rhythm[well_drips] .room["well_rim"] &meets[beaver] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[3 6 5 3 4] %egg[20] }
+  *ch09{ %tempo[112] %root[392] %swing[62] ~motif[7 9 12 9 7 4] @theme[honks] *rhythm[nine_honks] .room["eight_shards"] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[4 6 8 4 3] %egg[20] }
+  *ch10{ %tempo[84] %root[220] ~motif[0 2 7 9 12 9] @theme[hall] *rhythm[bone_hall] .room["timber_hall"] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[3 4 6 4 8] %egg[20] }
+  *ch11{ %tempo[100] %root[246.94] ~motif[4 7 9 7 4 2] @theme[bloom] *rhythm[early_bloom] .room["bloom_garden"] &meets[throne, subject, wasps, banner] @cast[boof, banewap, boonwap] !schemes[wind, tax, relet, march] ~pace[9 8 6 4 2] %egg[70] ^beat[bloom] }
+  *ch12{ %tempo[104] %root[329.63] %swing[54] ~motif[0 4 2 7 4 9] @theme[rivers] *rhythm[confluence] .room["bridge_deck"] @cast[boof, boonwap] ~pace[3 4 3 4 2] %egg[20] }
+  *ch13{ %tempo[96] %root[293.66] ~motif[2 4 7 9 7 4] @theme[door] *rhythm[shell_door] .room["shell_door"] @cast[boof, boonwap] ~pace[7 3 2 2 4] %egg[90] }
+  *ch14{ %tempo[90] %root[261.63] ~motif[7 4 2 0] @theme[thursday] *rhythm[kept_thursday] .room["frost_lane"] @cast[boof, boonwap] ~pace[2 4 3 5 7] %egg[0] ^beat[thursday] }
+  *ch15{ %tempo[108] %root[349.23] %swing[57] ~motif[0 7 4 7 0 9] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] &meets[clerk, table] &kinds[sack, sack, pigeon, post, ditch, clerk, dividers] @cast[boof, boonwap] ~pace[5 8 4 4 7] %egg[0] }
 }
 
 !rhythms{
@@ -48,4 +54,46 @@
   *shell_door{ .steps["X...x.x.X...x.x."] !voice[vibes] &chapter[13] #name["The door that stays open"] #says["It knocks, and leaves room after the knock."] ~"book/chapter/13" }
   *kept_thursday{ .steps["X..............."] !voice[tock] &chapter[14] #name["The Thursday nobody kept"] #says["One beat to the bar, and the rest of the week missing. The field keeps it anyway."] ~"book/chapter/14" }
   *parcel_knock{ .steps["X..x..X........."] !voice[tock] &chapter[15] #name["The porter's knock"] #says["One stranger, knocked three ways. All three are right."] ~"book/chapter/15" }
+}
+
+!grounds{
+  *boof{ &chapter[1] #term["Boof"] }
+  *banewap{ &chapter[4] #term["Mr. BaneWAP"] }
+  *boonwap{ &chapter[6] #term["BoonWAP"] }
+  *stone{ &chapter[1] #term["stone"] }
+  *hole{ &chapter[1] #term["the hole"] }
+  *frost{ &chapter[1] #term["frost"] }
+  *furrow{ &chapter[1] #term["furrow"] }
+  *ditch{ &chapter[1] #term["into the ditch"] }
+  *baneberry{ &chapter[1] #term["baneberries"] }
+  *sack{ &chapter[1] #term["feed-sack"] }
+  *chair{ &chapter[4] #term["the bane-side chair"] }
+  *vane{ &chapter[4] #term["weathercock"] }
+  *post{ &chapter[6] #term["bronze posts"] }
+  *pane{ &chapter[6] #term["leaning panes"] }
+  *snail{ &chapter[6] #term["pane-snails"] }
+  *pigeon{ &chapter[6] #term["gate-pigeons"] }
+  *boneberry{ &chapter[6] #term["boneberries"] }
+  *dividers{ &chapter[6] #term["pie-dividers"] }
+  *spool{ &chapter[7] #term["a rolling spool"] }
+  *beaver{ &chapter[8] #term["beavers"] }
+  *throne{ &chapter[11] #term["gilt over pine"] }
+  *subject{ &chapter[11] #term["Subjects arrived"] }
+  *wasps{ &chapter[11] #term["crown-wasps"] }
+  *banner{ &chapter[11] #term["Banners came after"] }
+  *clerk{ &chapter[15] #term["The feast clerks keep a slip"] }
+  *table{ &chapter[15] #term["set a second place"] }
+  *bloom{ &chapter[11] #term["Every bud in the garden opened at once"] }
+  *thursday{ &chapter[14] #term["The people were not in this day"] }
+  *clown{ .native[lanes] }
+  *mime{ .native[lanes] }
+  *march{ .native[lanes] }
+  *puddle{ .native[lanes] }
+  *arrow{ .native[lanes] }
+  *horn{ .native[lanes] }
+}
+
+!turns{
+  *banewap{ &from[12] !ends[schemes] &chapter[12] #term["re-sweetened him from the inside out"] ~"book/chapter/12#both-receipts-posted" }
+  *egg{ &from[14] !ends[egg] &chapter[13] #term["On the desk sat the shell"] ~"book/chapter/13" }
 }
