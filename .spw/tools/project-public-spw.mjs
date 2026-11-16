@@ -31,6 +31,7 @@ const PUBLIC_TREES = Object.freeze([
   'workspace.spw',
   'claims',
   'chapters',
+  'ecologies',
   'runtime',
   'state',
   'surfaces',

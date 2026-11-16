@@ -1,0 +1,58 @@
+# Chapter 26 Ecology — The Feast of the Uneven Slice
+#>chapter_26_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!planned
+
+~<rationale>{
+  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 13 of 13: ^ integration.
+}
+
+^"identity"{
+  chapter: 26
+  book: 2
+  ring: 13
+  title: "The Feast of the Uneven Slice"
+  mood: "planned"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "^"
+  construct_name: "integration"
+  construct_kind: "integration"
+  opening_lens: "capstone bind gathering the twelve preceding steps"
+  closing_perspective: "hinges into the next ring (~)"
+  represents: "Summary, emission, and octave recursion"
+  next_construct: "~ (potential)"
+  planned_open_posture: "^ entry"
+  planned_close_posture: "hands cleanly into ~"
+  modulators: { config: "integration (year-turn octave)" measure: "%slice[pi]" substrate: "$porcelain_brass_and_frost" }
+}
+
+^"biome"{
+  terrain: "Bonk City Great Table spanning plaza, gate, and river mist at Turning of the Year"
+  metabolite: "steaming pie air, ringing fork brass, and confetti made of voided Thursday slips"
+  symbiotes: "everyone named across Books One and Two, one figure standing ninety degrees to the seating plan"
+  irritant: "prophecy demanding exactly one spill so an unclosed circle can turn onward without resetting"
+  circulation: "what ends at the table integrates into three permeable lands for Book Three in December"
+}
+
+^"assets"{
+  prose_status: "unwritten — seed at book/content/chapters/26.json when drafted"
+  canon_mirror: "generated upon first chapters:build + spw:export"
+  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
+  plate_state: "planned"
+  og_card: "pending chapter build"
+  palette: "unassigned — mixes into Book 2 cycle"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  wonder_ids: []
+  permeability: "ring slot mapped; awaiting prose + wonders"
+  compost: "completes Ring 2 (^), leaves the Egg mysterious, and opens December doors into Ring 3 (~)"
+  !digestive_watch: "Ring 2 Slot 13 (^): preserve prophecy ambiguity; spills exactly one pie without ending curiosity"
+}

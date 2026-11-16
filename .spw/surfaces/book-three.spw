@@ -1,0 +1,75 @@
+# Book Three — Third Ring Seed (December Horizon, Chapters 27–39)
+# Imagines a third octave while Books One and Two stay open to re-derivation:
+# revision ripples become spatial physics across boon.land, bane.land, and bone.land.
+#>lore_land_book_three
+#:surface #!story #!book-three
+#:layer #!pragmatics
+#:status #!proposed
+
+~<rationale>{
+  If Book One lives its constructs implicitly as soil and Book Two lives them orthographically across city records and lanes, Book Three turns public re-derivation itself into the atmosphere of the December solstice. Instead of hiding revisions behind frozen print, the Three Lands show what happens when an earlier wish, ledger, or bridge gets reworked in full view.
+}
+
+^"octave_frame"{
+  .chambers: "27..39 (Ring 3 — pending Book Two maturation and active re-derivations)"
+  .season: "December solstice through Turning of the Year (zero streaks, zero penalty for pacing by room)"
+  &ring_model: ~"./rooms.spw#ring_tour"
+  &three_lands: ~"./three-lands.spw#lore_land_surfaces_three_lands"
+  &book_two: ~"./wonder-about-pie.spw#book_two"
+  &domains: ~"./domains.spw#lore_land_domain_architecture"
+  &ecologies: ~"../ecologies/index.spw"
+}
+
+^"ecosystem_dimensionality"{
+  triad: "Each Book Three chapter anchors inside twin rooms across boon.land (what could become), bane.land (what it invoices), and bone.land (what holds load under a tap)."
+  neighbor_doors: "Chapters cross naturally into neighbor surfaces via ?/ routes: texture.website for scanned grain, autonomous.feedback for reader slips, factshift.center for call-and-response momentum graphs, and @style packs for tonal shifts."
+  strata_continuity: "Borrowing bone.land strata_library: upstream re-derivations in Book One or Two leave readable geological layers beneath Book Three rather than erasing what earlier readers stood on."
+}
+
+^"december_pacing"{
+  policy: "Zero missed-day guilt or advent streaks (PLAN.F never). Short solstice rooms release individually and wait without penalty."
+  octave_rhymes: "Chapters rhyme vertically across all three rings by construct slot (01 ~ / 14 ~ / 27 ~; 02 # / 15 # / 28 #; ... 13 ^ / 26 ^ / 39 ^) so revising Book 1 or 2 resonates immediately inside Book 3."
+}
+
+^"revision_as_worldbuilding"{
+  unspent_orchard: "In boon.land, re-derived scenes rehearse cleanly before canon variant zero chooses which draft settles."
+  receipt_office: "In bane.land, clerks solemnly bill upstream edits to a missing calendar Thursday that no month claims."
+  strata_library: "In bone.land, joiners tap every repaired bridge to tell the chisel mark from Boof's older tooth mark, plus the washer-up still clears plates from endless bounty."
+}
+
+^"interactive_elaboration"{
+  construct_physics: "In /pie/ legs across Book Three, the chapter's ring construct tunes lane geometry: <> wraps edges as channels, () scores grouped chord catches, [] filters active hazard windows, and {} accumulates ambient room charge discharged at exit."
+  derivation_twins: "Readers can inspect variant zero alongside alternate Spw projection twins (projection.spw + forks.mjs) or cast harmless ?spell= invitations from /editor/ without altering kept marks."
+}
+
+^"academic_wonders"{
+  note: "Reasons to wonder about real disciplines emerged playfully from story pressure, never lectured (c029)."
+  compilers_and_provenance: "Incremental builds, slotHash identity, and AST vs prose ambiguity when upstream definitions shift."
+  commons_and_maintenance: "Ostrom commons governance and invisible care labor behind zero-marginal-cost copying (never-smaller still makes dirty plates)."
+  acoustics_and_geometry: "Harmonic temperament across the 13-step ring, psychoacoustic habituation, pi incommensurability, and hyperbolic map folding."
+  epigraphy_and_semiotics: "Palimpsests, textual criticism, and Peircean interpretants when one doorstep records three incompatible classifications."
+  ecological_perception: "Gibson affordances via nose, timber-tap, and 90-degree orthogonal attention vs civic indexing."
+}
+
+^"philosophical_humor"{
+  tonal_anchor: "Earliest story-boonhonk and three-lands deadpan: impossible revisions treated as ordinary municipal weather."
+  bits: [
+    "Joiners filing a slip because a bridge lengthened by two meters overnight during a parser cleanup ('held load before, holds more cleanly now; both marks kept')."
+    "An empire one hallway wide whose single resident is also the gatekeeper, arguing with himself about whether Book One or Book Three owes the toll."
+    "Municipal clerks attempting to translate city bylaws into dog-nose elevation after Book Two mistakes Boof for the Destined One."
+  ]
+}
+
+^"dynamic_establishment"{
+  rule: "Game mechanics enter dynamically when lived narrative physics establishes their need—avoiding flat mid-book item spikes (progression.spw c15_spike)."
+  sequence: [
+    "Lived spatial rule in a chapter room (e.g. a timber crossing that holds only while tapped on beat)."
+    "Closing crystal at chapter turn distilling the mechanic into one readable Spw spell (^card)."
+    "Pie lanes register the established mechanic dynamically with provenance back to its birth chapter (?try= stays open for immediate sampling)."
+  ]
+}
+
+?open[
+  "Which Book 1–2 chapters should stabilize their re-derived projection templates before Chapter 27 enters drafting?"
+  "Which container physics (<>, (), [], {}) feels best first inside /pie/ without crowding phone thumb controls?"
+]

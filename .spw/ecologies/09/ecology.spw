@@ -1,0 +1,58 @@
+# Chapter 09 Ecology — Shards of Nine Honks
+#>chapter_09_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 9 of 13: <> capsule.
+}
+
+^"identity"{
+  chapter: 9
+  book: 1
+  ring: 9
+  title: "Shards of Nine Honks"
+  mood: "puzzle"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "<>"
+  construct_name: "capsule"
+  construct_kind: "container"
+  opening_lens: "threshold conduit built only to cross through"
+  closing_perspective: "empties into a shared gathering (())"
+  represents: "Channels, boundaries, and interfaces"
+  next_construct: "() (scope)"
+  observed_open_room: "#{roof_ridge}@boof"
+  observed_close_room: "=<pass_road>@boof"
+  modulators: { config: "puzzle (syncopated)" measure: "%shards[9]" substrate: "$terracotta_and_soot" }
+}
+
+^"biome"{
+  terrain: "tile roofs, narrow brick chimney rims, and wind-cut ridge passes"
+  metabolite: "kiln soot, fractured earthenware dust, and brass horn harmonics"
+  symbiotes: "jazz-geese calling in triplets, chimney-swifts banking through flues, shard sorters"
+  irritant: "nine honks scattering across ten roof corners so no map reconciles the tenth corner"
+  circulation: "air rushes up warm flues and flings shards along rooftop passages from lane to lane"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/09.json"
+  canon_mirror: ~"../../chapters/09.spw"
+  plate: ~"book/images/09.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-09.jpg"
+  palette: "clown-downtown"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 1 }
+  wonder_ids: ["jazz-geese", "chimney-swifts", "shard-rack", "one-shard-at-a-time"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "corner-honk topologyfeeding jazz feel and hopper dynamics in /pie/"
+  !digestive_watch: "opens with # instead of <> capsule, though middle and close rely on <chimney_rim> and <pass_road>"
+}

@@ -26,26 +26,42 @@ const almanac = await read('book/content/world/almanac.json');
 const palettes = await read('book/content/world/palettes.json');
 const lore = await read('book/content/world/pie-lore.json');
 const { CHARACTERS } = await import(resolve(ROOT, 'book/scripts/modules/characters.mjs'));
-// The lanes introduce things chapter by chapter (INTRO in pie-game.mjs, read as text: the module is for the page).
-const game = await readFile(resolve(ROOT, 'book/scripts/home/pie-game.mjs'), 'utf8');
-const introBlock = (/const INTRO = Object\.freeze\(\{([\s\S]*?)\}\);/.exec(game) || [])[1] || '';
+const { INTRO } = await import(resolve(ROOT, 'book/scripts/home/pie-world.mjs'));
+const { ringSlotFor } = await import(resolve(ROOT, 'book/scripts/modules/spw-ast.mjs'));
 /** @type {Record<string, string[]>} */
 const intro = {};
-[...introBlock.matchAll(/([a-z]+):\s*(\d+)/g)].forEach(([, kind, n]) => { (intro[n] = intro[n] || []).push(kind); });
+Object.entries(INTRO || {}).forEach(([kind, n]) => { const ch = String(n); (intro[ch] = intro[ch] || []).push(kind); });
 
-/** @type {{ n: number, title: string, rooms: number, wonders: number, people: number, lanes: number, lines: number, palette: number, total: number, laneKinds: string[] }[]} */
+/** @type {{ n: number, title: string, ring: number, construct: string, openRoom: string, closeRoom: string, rooms: number, wonders: number, people: number, lanes: number, lines: number, palette: number, total: number, laneKinds: string[] }[]} */
 const chapters = [];
 for (let n = 1; n <= 15; n += 1) {
   let data;
   try { data = await read(`book/content/chapters/${pad(n)}.json`); } catch { continue; }
-  const rooms = (data.sections || []).filter((/** @type {{ room?: unknown }} */ s) => s.room).length;
+  const slot = ringSlotFor(n);
+  const roomSpecs = (data.sections || []).map((/** @type {{ room?: { spw?: string } }} */ s) => s.room?.spw).filter(Boolean);
+  const rooms = roomSpecs.length;
   const wonders = (almanac.wonders || []).filter((/** @type {{ home: number }} */ w) => Number(w.home) === n).length;
   const people = Object.values(CHARACTERS).filter((c) => Number(c.first) === n).length;
   const lanes = (intro[n] || []).length;
   const lines = (lore.lines || []).filter((/** @type {{ ground?: { chapter: number } }} */ l) => Number(l.ground?.chapter) === n).length;
   const palette = (palettes.palettes || []).filter((/** @type {{ chapter: number }} */ p) => Number(p.chapter) === n).length;
   const total = wonders + people + lanes + lines + palette;
-  chapters.push({ n, title: data.title, rooms, wonders, people, lanes, lines, palette, total, laneKinds: intro[n] || [] });
+  chapters.push({
+    n,
+    title: data.title,
+    ring: slot.ring,
+    construct: slot.symbol,
+    openRoom: String(roomSpecs[0] || ''),
+    closeRoom: String(roomSpecs[roomSpecs.length - 1] || ''),
+    rooms,
+    wonders,
+    people,
+    lanes,
+    lines,
+    palette,
+    total,
+    laneKinds: intro[n] || []
+  });
 }
 const avg = chapters.reduce((s, c) => s + c.total, 0) / Math.max(1, chapters.length);
 let running = 0;
@@ -67,7 +83,7 @@ const lines = [
 ];
 chapters.forEach((c) => {
   running += c.total;
-  lines.push(`  c${pad(c.n)}: { title: "${q(c.title)}" rooms: ${c.rooms} wonders: ${c.wonders} people: ${c.people} lanes: ${c.lanes} lore: ${c.lines} palette: ${c.palette} total: ${c.total} so_far: ${running} lanes_bring: "${c.laneKinds.join(' ') || 'nothing new'}" }`);
+  lines.push(`  c${pad(c.n)}: { title: "${q(c.title)}" ring: ${c.ring} beat: "${c.construct}" open: "${q(c.openRoom)}" close: "${q(c.closeRoom)}" rooms: ${c.rooms} wonders: ${c.wonders} people: ${c.people} lanes: ${c.lanes} lore: ${c.lines} palette: ${c.palette} total: ${c.total} so_far: ${running} lanes_bring: "${c.laneKinds.join(' ') || 'nothing new'}" &ecology: ~".spw/ecologies/${pad(c.n)}/ecology.spw" }`);
 });
 lines.push('}', '');
 /** @type {string[]} */

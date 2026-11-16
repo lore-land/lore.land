@@ -5,77 +5,92 @@
 &[chapters][
   c01: {
     title: "Dawn in Boon.land"
-    &file: @spw/chapters/01.spw
+    &file: ~".spw/chapters/01.spw"
+    &ecology: ~".spw/ecologies/01/ecology.spw"
     sections: 7
   }
   c02: {
     title: "The First Echo"
-    &file: @spw/chapters/02.spw
+    &file: ~".spw/chapters/02.spw"
+    &ecology: ~".spw/ecologies/02/ecology.spw"
     sections: 7
   }
   c03: {
     title: "Signals in the Sand"
-    &file: @spw/chapters/03.spw
+    &file: ~".spw/chapters/03.spw"
+    &ecology: ~".spw/ecologies/03/ecology.spw"
     sections: 6
   }
   c04: {
     title: "Crosswind Council"
-    &file: @spw/chapters/04.spw
+    &file: ~".spw/chapters/04.spw"
+    &ecology: ~".spw/ecologies/04/ecology.spw"
     sections: 6
   }
   c05: {
     title: "The Quiet Rift"
-    &file: @spw/chapters/05.spw
+    &file: ~".spw/chapters/05.spw"
+    &ecology: ~".spw/ecologies/05/ecology.spw"
     sections: 6
   }
   c06: {
     title: "Lanterns of Bonk City"
-    &file: @spw/chapters/06.spw
+    &file: ~".spw/chapters/06.spw"
+    &ecology: ~".spw/ecologies/06/ecology.spw"
     sections: 6
   }
   c07: {
     title: "Blueberry Oath"
-    &file: @spw/chapters/07.spw
+    &file: ~".spw/chapters/07.spw"
+    &ecology: ~".spw/ecologies/07/ecology.spw"
     sections: 6
   }
   c08: {
     title: "Songs of the Watering Eye"
-    &file: @spw/chapters/08.spw
+    &file: ~".spw/chapters/08.spw"
+    &ecology: ~".spw/ecologies/08/ecology.spw"
     sections: 6
   }
   c09: {
     title: "Shards of Nine Honks"
-    &file: @spw/chapters/09.spw
+    &file: ~".spw/chapters/09.spw"
+    &ecology: ~".spw/ecologies/09/ecology.spw"
     sections: 6
   }
   c10: {
     title: "Bone.land Resonance"
-    &file: @spw/chapters/10.spw
+    &file: ~".spw/chapters/10.spw"
+    &ecology: ~".spw/ecologies/10/ecology.spw"
     sections: 6
   }
   c11: {
     title: "Paradox Bloom"
-    &file: @spw/chapters/11.spw
+    &file: ~".spw/chapters/11.spw"
+    &ecology: ~".spw/ecologies/11/ecology.spw"
     sections: 6
   }
   c12: {
     title: "The Last Confluence"
-    &file: @spw/chapters/12.spw
+    &file: ~".spw/chapters/12.spw"
+    &ecology: ~".spw/ecologies/12/ecology.spw"
     sections: 6
   }
   c13: {
     title: "The Shell-Shaped Door"
-    &file: @spw/chapters/13.spw
+    &file: ~".spw/chapters/13.spw"
+    &ecology: ~".spw/ecologies/13/ecology.spw"
     sections: 6
   }
   c14: {
     title: "The Thursday Nobody Kept"
-    &file: @spw/chapters/14.spw
+    &file: ~".spw/chapters/14.spw"
+    &ecology: ~".spw/ecologies/14/ecology.spw"
     sections: 9
   }
   c15: {
     title: "Pupil, Parcel, or Door"
-    &file: @spw/chapters/15.spw
+    &file: ~".spw/chapters/15.spw"
+    &ecology: ~".spw/ecologies/15/ecology.spw"
     sections: 7
   }
 ]
@@ -101,5 +116,10 @@
 ~[apocrypha]{
   ={ ~".spw/chapters/apocrypha.spw#chapter_apocrypha" }
   note: "Hand-authored companion shelf; spw:export leaves it untouched."
+}
+
+~[ecologies]{
+  ={ ~".spw/ecologies/index.spw#lore_land_ecologies_index" }
+  note: "Book One and Two (01..26) internal chapter ecologies, assets, and gut health."
 }
 

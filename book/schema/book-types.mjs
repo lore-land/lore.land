@@ -18,7 +18,9 @@ import { KIND_ORDER, kindProblems } from '../scripts/modules/kinds.mjs';
 /** @typedef {'boon'|'bane'|'bone'} Lean — how a paragraph weighs (c023). */
 /** @typedef {'minute'|'hour'|'day'} Clock — how often a living slot turns (c024). */
 /** @typedef {'creature'|'antique'|'artifact'|'contrivance'|'bracework'|'saying'} WonderKind — kinds.mjs; a saying carries a piece of the makers' philosophy (PLAN.E as theme). */
-/** @typedef {'!'|'?'|'~'|'@'|'&'|'*'|'^'} Beat — what a section does (the spirit sequence). */
+/** @typedef {'!'|'?'|'~'|'@'|'&'|'*'|'^'} Beat — seven-phase core action beat (spw-interactions OPERATOR_SEQUENCE). */
+/** @typedef {'~'|'#'|'.'|'?'|'!'|'*'|'&'|'@'|'<>'|'()'|'[]'|'{}'|'^'} RingConstruct — 13-element chapter opening/closing tour across a Ring of Thirteen. */
+/** @typedef {'='|'%'|'$'} ModulatorSigil — horizontal chapter modulators (lean, measure, substrate). */
 
 /**
  * @typedef {object} Slot

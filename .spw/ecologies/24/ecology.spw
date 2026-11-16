@@ -1,0 +1,58 @@
+# Chapter 24 Ecology — Four Windows in One Wall
+#>chapter_24_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!planned
+
+~<rationale>{
+  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 11 of 13: [] frame.
+}
+
+^"identity"{
+  chapter: 24
+  book: 2
+  ring: 11
+  title: "Four Windows in One Wall"
+  mood: "planned"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "[]"
+  construct_name: "frame"
+  construct_kind: "container"
+  opening_lens: "selective window contrasting paradoxical rules"
+  closing_perspective: "accumulates charge inside a body ({})"
+  represents: "Indexing, filtering, and borderline paradox"
+  next_construct: "{} (body)"
+  planned_open_posture: "[] entry"
+  planned_close_posture: "hands cleanly into {}"
+  modulators: { config: "frame (contrastive index)" measure: "%shutters[4]" substrate: "$painted_pine_and_felt" }
+}
+
+^"biome"{
+  terrain: "partitioned judging booth with four masking shutters cutting a courtyard scene into incompatible frames"
+  metabolite: "paint thinner, shutter hinge squeak, and conflicting scorecards slipping under dividers"
+  symbiotes: "judges each watching a different corner of the same lane, a figure passing silently behind all four"
+  irritant: "each window proves a cleanly opposite law while covering one quarter of the truth"
+  circulation: "opening two shutters at once throws crossing shadows that cancel each frame independently"
+}
+
+^"assets"{
+  prose_status: "unwritten — seed at book/content/chapters/24.json when drafted"
+  canon_mirror: "generated upon first chapters:build + spw:export"
+  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
+  plate_state: "planned"
+  og_card: "pending chapter build"
+  palette: "unassigned — mixes into Book 2 cycle"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  wonder_ids: []
+  permeability: "ring slot mapped; awaiting prose + wonders"
+  compost: "aligns directly with /pie/ split-panel UI and paradoxical rule lenses ([])"
+  !digestive_watch: "Ring 2 Slot 11 ([]): avoid turning frames into cold riddleboxes—keep visual slapstick vivid"
+}

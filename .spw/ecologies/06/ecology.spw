@@ -1,0 +1,58 @@
+# Chapter 06 Ecology — Lanterns of Bonk City
+#>chapter_06_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 6 of 13: * value.
+}
+
+^"identity"{
+  chapter: 6
+  book: 1
+  ring: 6
+  title: "Lanterns of Bonk City"
+  mood: "labyrinth"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "*"
+  construct_name: "value"
+  construct_kind: "operator"
+  opening_lens: "concrete artifact, keepsake, or lantern in hand"
+  closing_perspective: "invites meeting and exchange (&)"
+  represents: "Reified objects and portable tokens"
+  next_construct: "& (confluence)"
+  observed_open_room: "${kiln_gate}@boof"
+  observed_close_room: "~<iron_gate>@boof"
+  modulators: { config: "labyrinth (dense exchange)" measure: "%plates[stacked]" substrate: "$cullet_glass_and_wax" }
+}
+
+^"biome"{
+  terrain: "running-bond cobblestone plaza beneath glass kilns and paper gutters"
+  metabolite: "molten cullet glow, chime rain, and warm BoonWAP pie steam"
+  symbiotes: "pane-snails healing cracks, chimney gutters, Mr. BoonWAP holding court, lost-button sweepers"
+  irritant: "the uncounted arithmetic bill: pie never shrinks while stacks of dirty dishes grow off-frame"
+  circulation: "glass blown hot cools into panes whose reflections double every lantern on the square"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/06.json"
+  canon_mirror: ~"../../chapters/06.spw"
+  plate: ~"book/images/06.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-06.jpg"
+  palette: "kiln"
+  characters_met: ["boon"]
+  lanes_introduced: ["clerk", "dividers", "chair", "march", "boon"]
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 10 creatures: 1 lore_lines: 3 }
+  wonder_ids: ["pane-snails", "bonk-kiln", "dent-lanterns", "chime-gutters", "lamp-ladders", "folio-press", "brace-boxes", "pane-faces", "glass-over-never-scrape", "waxed-slice"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "the uncollected button (recovered in ch15), lost-margin pie slice, and furnace glassing rules"
+  !digestive_watch: "high density (10 wonders, 6 echoes); serves as Book 1 artifact hub (*)"
+}

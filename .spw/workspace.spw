@@ -10,6 +10,7 @@
   @surfaces: ~"./surfaces"
   @runtime: ~"./runtime"
   @chapters: ~"./chapters"
+  @ecologies: ~"./ecologies"
   @claims: ~"./claims"
   @state: ~"./state"
   @audits: ~"./audits"

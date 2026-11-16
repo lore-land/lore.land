@@ -1,0 +1,58 @@
+# Chapter 12 Ecology — The Last Confluence
+#>chapter_12_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 12 of 13: {} body.
+}
+
+^"identity"{
+  chapter: 12
+  book: 1
+  ring: 12
+  title: "The Last Confluence"
+  mood: "path"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "{}"
+  construct_name: "body"
+  construct_kind: "container"
+  opening_lens: "enclosed chamber gathering full semantic mass"
+  closing_perspective: "discharges upward into integration (^)"
+  represents: "Containment, state accumulation, and release"
+  next_construct: "^ (integration)"
+  observed_open_room: "*{plank_bridge}@boof"
+  observed_close_room: "~<moon_lane>@boof"
+  modulators: { config: "path (confluence)" measure: "%echoes[14]" substrate: "$wet_timber_and_ferry_iron" }
+}
+
+^"biome"{
+  terrain: "converging timber ferry bridge spanning tidal mist between groves"
+  metabolite: "sweetened baneberry pulp, warm river steam, and pinned iron ferrule oil"
+  symbiotes: "seam-otters stitching waterlines, ink-herons wading reeds, ferrymen ringing crossing bells"
+  irritant: "a bridge receipt stamped twice while one furrow on the far bank deliberately stays unplanted"
+  circulation: "two springs meet under the deck so bitter and sweet currents swirl without canceling"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/12.json"
+  canon_mirror: ~"../../chapters/12.spw"
+  plate: ~"book/images/12.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-12.jpg"
+  palette: "rain-bonk"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 4 }
+  wonder_ids: ["seam-otters", "ink-herons", "rail-pins", "ferry-bell", "moonrun", "two-springs-one-bed", "bridge-receipts"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "fourteen echoes braided here plus the explicitly open warm furrow for ch14 arrival"
+  !digestive_watch: "high permeability (14 echoes); ends on ~<moon_lane> leading to final Book 1 door"
+}

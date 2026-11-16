@@ -1,0 +1,58 @@
+# Chapter 08 Ecology — Songs of the Watering Eye
+#>chapter_08_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 8 of 13: @ perspective.
+}
+
+^"identity"{
+  chapter: 8
+  book: 1
+  ring: 8
+  title: "Songs of the Watering Eye"
+  mood: "game"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "@"
+  construct_name: "perspective"
+  construct_kind: "operator"
+  opening_lens: "observer shift—through a beast, mirror, well, or hat"
+  closing_perspective: "opens a directional crossing (<>)"
+  represents: "Standpoint and observer-relative truth"
+  next_construct: "<> (capsule)"
+  observed_open_room: ".[folded_faces]@the_well"
+  observed_close_room: "~<rocky_ridge>@boof"
+  modulators: { config: "game (observer inversion)" measure: "%fathoms[well]" substrate: "$limestone_and_wet_hemp" }
+}
+
+^"biome"{
+  terrain: "subterranean limestone wellhead and deep timber winch shaft"
+  metabolite: "rising cold well vapor and rope-hemp grease under bucket echoes"
+  symbiotes: "remembrancers tending pulley notches, well-winch singers, quiet observers from below"
+  irritant: "buckets hauled up full of reflection when readers expected bucketed facts"
+  circulation: "singing down the well returns the song slower, pitched to the depth of water left"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/08.json"
+  canon_mirror: ~"../../chapters/08.spw"
+  plate: ~"book/images/08.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-08.jpg"
+  palette: "watering-eye"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["remembrancers", "well-winch", "the-winch-song-underneath"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "sub-surface perspective shift (@) priming ch14 and the subterranean salt under Bonk City"
+  !digestive_watch: "another low lull (total 5); strong @ observer keeper (@the_well), zero lanes intro yet"
+}

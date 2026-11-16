@@ -1,0 +1,58 @@
+# Chapter 13 Ecology — The Shell-Shaped Door
+#>chapter_13_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 13 of 13: ^ integration.
+}
+
+^"identity"{
+  chapter: 13
+  book: 1
+  ring: 13
+  title: "The Shell-Shaped Door"
+  mood: "reflection"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "^"
+  construct_name: "integration"
+  construct_kind: "integration"
+  opening_lens: "capstone bind gathering the twelve preceding steps"
+  closing_perspective: "hinges into the next ring (~)"
+  represents: "Summary, emission, and octave recursion"
+  next_construct: "~ (potential)"
+  observed_open_room: "!{round_archive}@the_land"
+  observed_close_room: "!<shell_door>@boof"
+  modulators: { config: "reflection (capstone)" measure: "%echoes[21]" substrate: "$shell_lime_and_linen_ink" }
+}
+
+^"biome"{
+  terrain: "curved starlight archive capped by a shell-shaped calcium door"
+  metabolite: "pressed linen oil, shell lime powder, and drying black ink across stacked plates"
+  symbiotes: "shelf-owls reading over shoulders, pressing screws, Boof spotting a hat down the road"
+  irritant: "the impulse to close a book neatly instead of leaving one brace unlatched for return"
+  circulation: "every thread in chapters 01..12 folds through the spiral lintel and warms the outer threshold"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/13.json"
+  canon_mirror: ~"../../chapters/13.spw"
+  plate: ~"book/images/13.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-13.jpg"
+  palette: "shell-swirl"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["shelf-owls", "glassing-press", "open-brace", "leave-room-for-the-path", "stacked-plate"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "21 echoes + an unclosed shell brace opening directly onto Ch14 without losing prior warmth"
+  !digestive_watch: "Ring 1 hinge (13 ^): strong visual closure, though rooms end on !<shell_door> instead of ^{...}"
+}

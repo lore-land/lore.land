@@ -1,0 +1,50 @@
+# Lore.Land Chapter Ecologies Index (01..26)
+# Accounts for every chapter in Ring 1 (Book One: 01..13) and Ring 2 (Book Two: 14..26),
+# separated cleanly from the generated .spw/chapters/NN.spw build mirrors.
+#>lore_land_ecologies_index
+#:canon #!ecologies
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  Chapters need distinct internal physiology—substrate, metabolites, symbiotes, irritants, assets, and gut health—rather than flat uniform containers. Organizing folders 01 through 26 under .spw/ecologies/ keeps generated chapter mirrors clean under .spw/chapters/ while letting Books One and Two compare octave resonance (~ # . ? ! * & @ <> () [] {} ^) and balance re-derivations before Book Three opens.
+}
+
+^"meta"{
+  total_chapters: 26
+  books: 2
+  sequence: "~ # . ? ! * & @ <> () [] {} ^"
+  &world_ecology: ~"../surfaces/ecology.spw#ecology"
+  &ring_tour: ~"../surfaces/rooms.spw#ring_tour"
+  &book_three: ~"../surfaces/book-three.spw#lore_land_book_three"
+  &progression: ~"../audits/progression.spw#lore_land_audits_progression"
+}
+
+&[ecologies][
+  c01: { title: "Dawn in Boon.land" book: 1 ring: 1 construct: "~" status: "live" &ecology: ~"./01/ecology.spw" }
+  c02: { title: "The First Echo" book: 1 ring: 2 construct: "#" status: "live" &ecology: ~"./02/ecology.spw" }
+  c03: { title: "Signals in the Sand" book: 1 ring: 3 construct: "." status: "live" &ecology: ~"./03/ecology.spw" }
+  c04: { title: "Crosswind Council" book: 1 ring: 4 construct: "?" status: "live" &ecology: ~"./04/ecology.spw" }
+  c05: { title: "The Quiet Rift" book: 1 ring: 5 construct: "!" status: "live" &ecology: ~"./05/ecology.spw" }
+  c06: { title: "Lanterns of Bonk City" book: 1 ring: 6 construct: "*" status: "live" &ecology: ~"./06/ecology.spw" }
+  c07: { title: "Blueberry Oath" book: 1 ring: 7 construct: "&" status: "live" &ecology: ~"./07/ecology.spw" }
+  c08: { title: "Songs of the Watering Eye" book: 1 ring: 8 construct: "@" status: "live" &ecology: ~"./08/ecology.spw" }
+  c09: { title: "Shards of Nine Honks" book: 1 ring: 9 construct: "<>" status: "live" &ecology: ~"./09/ecology.spw" }
+  c10: { title: "Bone.land Resonance" book: 1 ring: 10 construct: "()" status: "live" &ecology: ~"./10/ecology.spw" }
+  c11: { title: "Paradox Bloom" book: 1 ring: 11 construct: "[]" status: "live" &ecology: ~"./11/ecology.spw" }
+  c12: { title: "The Last Confluence" book: 1 ring: 12 construct: "{}" status: "live" &ecology: ~"./12/ecology.spw" }
+  c13: { title: "The Shell-Shaped Door" book: 1 ring: 13 construct: "^" status: "live" &ecology: ~"./13/ecology.spw" }
+  c14: { title: "The Thursday Nobody Kept" book: 2 ring: 1 construct: "~" status: "live" &ecology: ~"./14/ecology.spw" }
+  c15: { title: "Pupil, Parcel, or Door" book: 2 ring: 2 construct: "#" status: "live" &ecology: ~"./15/ecology.spw" }
+  c16: { title: "The Second Place" book: 2 ring: 3 construct: "." status: "seeded" &ecology: ~"./16/ecology.spw" }
+  c17: { title: "Ledger of Unasked Questions" book: 2 ring: 4 construct: "?" status: "planned" &ecology: ~"./17/ecology.spw" }
+  c18: { title: "Flour in the Bell-Tower" book: 2 ring: 5 construct: "!" status: "planned" &ecology: ~"./18/ecology.spw" }
+  c19: { title: "The Priced Window" book: 2 ring: 6 construct: "*" status: "planned" &ecology: ~"./19/ecology.spw" }
+  c20: { title: "Two Springs Under the Sill" book: 2 ring: 7 construct: "&" status: "planned" &ecology: ~"./20/ecology.spw" }
+  c21: { title: "At the Nose of the Work" book: 2 ring: 8 construct: "@" status: "planned" &ecology: ~"./21/ecology.spw" }
+  c22: { title: "Through the Chute With No Receipt" book: 2 ring: 9 construct: "<>" status: "planned" &ecology: ~"./22/ecology.spw" }
+  c23: { title: "Rehearsal of the Night School" book: 2 ring: 10 construct: "()" status: "planned" &ecology: ~"./23/ecology.spw" }
+  c24: { title: "Four Windows in One Wall" book: 2 ring: 11 construct: "[]" status: "planned" &ecology: ~"./24/ecology.spw" }
+  c25: { title: "The Warm Hearth Before the Feast" book: 2 ring: 12 construct: "{}" status: "planned" &ecology: ~"./25/ecology.spw" }
+  c26: { title: "The Feast of the Uneven Slice" book: 2 ring: 13 construct: "^" status: "planned" &ecology: ~"./26/ecology.spw" }
+]

@@ -494,7 +494,8 @@ function main() {
   summary.forEach((item) => {
     lines.push(`  c${item.id}: {`);
     lines.push(`    title: "${String(item.title).replace(/"/g, '\\"')}"`);
-    lines.push(`    &file: @spw/chapters/${item.id}.spw`);
+    lines.push(`    &file: ~".spw/chapters/${item.id}.spw"`);
+    lines.push(`    &ecology: ~".spw/ecologies/${item.id}/ecology.spw"`);
     lines.push(`    sections: ${item.sections}`);
     lines.push('  }');
   });
@@ -507,12 +508,16 @@ function main() {
   lines.push('}');
   lines.push('');
 
-  /* Hand-authored neighbor — this exporter regenerates every NN.spw and
-     this index, never the apocrypha shelf. The reflexive bias reads in the
-     mount sense: the shelf's canon lives there. */
+  /* Hand-authored companions — this exporter regenerates every NN.spw and
+     this index; chapter ecologies live under .spw/ecologies/. */
   lines.push('~[apocrypha]{');
   lines.push('  ={ ~".spw/chapters/apocrypha.spw#chapter_apocrypha" }');
   lines.push('  note: "Hand-authored companion shelf; spw:export leaves it untouched."');
+  lines.push('}');
+  lines.push('');
+  lines.push('~[ecologies]{');
+  lines.push('  ={ ~".spw/ecologies/index.spw#lore_land_ecologies_index" }');
+  lines.push('  note: "Book One and Two (01..26) internal chapter ecologies, assets, and gut health."');
   lines.push('}');
   lines.push('');
 

@@ -1,0 +1,58 @@
+# Chapter 01 Ecology — Dawn in Boon.land
+#>chapter_01_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 1 of 13: ~ potential.
+}
+
+^"identity"{
+  chapter: 1
+  book: 1
+  ring: 1
+  title: "Dawn in Boon.land"
+  mood: "boon"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "~"
+  construct_name: "potential"
+  construct_kind: "operator"
+  opening_lens: "unspent latency without a receipt"
+  closing_perspective: "invites an external mark (#)"
+  represents: "What waits before being named"
+  next_construct: "# (annotation)"
+  observed_open_room: "~{warm_furrow}@boof"
+  observed_close_room: "&(grove_mouth)@boof"
+  modulators: { config: "boon (dawnward hope)" measure: "%heat[unspent]" substrate: "$loam_and_beeswax" }
+}
+
+^"biome"{
+  terrain: "frosted furrow loam beside the map-house threshold and sloe hedge"
+  metabolite: "sub-surface ant-warmth and candle-snuff wax meeting morning frost"
+  symbiotes: "Boof (nose-first surveyor), torch-ants heating tree roots, leaning berry rows"
+  irritant: "uncatalogued egg refusing wet archival ink on map paper"
+  circulation: "warmth runs from deep soil through roots to pond to mill wheel"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/01.json"
+  canon_mirror: ~"../../chapters/01.spw"
+  plate: ~"book/images/01.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-01.jpg"
+  palette: "pool"
+  characters_met: ["boof", "ants"]
+  lanes_introduced: ["stone", "hole", "frost", "furrow", "pigeon", "snail"]
+}
+
+%"gut_health"{
+  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["torch-ants", "press-stones", "drying-line", "first-ink-stays"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "an unspent wish without a receipt that keeps one furrow warm across all books"
+  !digestive_watch: "balanced entry (~ opening present); closes on &(grove_mouth) before formal echo (#)"
+}

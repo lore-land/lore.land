@@ -1,0 +1,58 @@
+# Chapter 10 Ecology — Bone.land Resonance
+#>chapter_10_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 10 of 13: () scope.
+}
+
+^"identity"{
+  chapter: 10
+  book: 1
+  ring: 10
+  title: "Bone.land Resonance"
+  mood: "bonk"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "()"
+  construct_name: "scope"
+  construct_kind: "container"
+  opening_lens: "ephemeral gathering where voices convene at once"
+  closing_perspective: "narrows into a framed selection ([])"
+  represents: "Harmonic councils and scoped ensembles"
+  next_construct: "[] (frame)"
+  observed_open_room: ".{timber_hall}@boof"
+  observed_close_room: "~<rear_archway>@boof"
+  modulators: { config: "bonk (bone-led)" measure: "%load[bearing]" substrate: "$seasoned_oak_and_chalk" }
+}
+
+^"biome"{
+  terrain: "exposed oak truss hall rooted atop dry chalk strata"
+  metabolite: "seasoned timber creak, chalk mark powder, and tapped mallet echoes"
+  symbiotes: "load-beetles testing mortises, BoneWAP munching savory lunches, joiners with mallets"
+  irritant: "ornament pretending to bear weight when tapped with a mallet"
+  circulation: "every beam transfers stress aloud across joints until the weakest chalk mark flakes off"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/10.json"
+  canon_mirror: ~"../../chapters/10.spw"
+  plate: ~"book/images/10.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-10.jpg"
+  palette: "land-tree"
+  characters_met: ["bonewap"]
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["load-beetles", "listening-mallet", "load-bells", "mortise-marks", "chalk-is-cheaper-than-oak"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "structural load vocabulary carried forward directly into Bone.land triad architecture"
+  !digestive_watch: "strong gathering acoustics (^(anchor_stones)@the_valley); carries warm ch06 slice unbroken"
+}

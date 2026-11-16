@@ -1,0 +1,58 @@
+# Chapter 11 Ecology — Paradox Bloom
+#>chapter_11_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 11 of 13: [] frame.
+}
+
+^"identity"{
+  chapter: 11
+  book: 1
+  ring: 11
+  title: "Paradox Bloom"
+  mood: "awakening"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "[]"
+  construct_name: "frame"
+  construct_kind: "container"
+  opening_lens: "selective window contrasting paradoxical rules"
+  closing_perspective: "accumulates charge inside a body ({})"
+  represents: "Indexing, filtering, and borderline paradox"
+  next_construct: "{} (body)"
+  observed_open_room: "!(bloom_garden)@banewap"
+  observed_close_room: "=<blackthorn_gap>@boof"
+  modulators: { config: "awakening (paradox bloom)" measure: "%thorns[hopped]" substrate: "$blackthorn_and_wasp_wax" }
+}
+
+^"biome"{
+  terrain: "rented court garden fenced by blackthorn gaps and cold forcing glass"
+  metabolite: "prickly thorn sap, unripe quince scent, and bitter-sweet pollen haze"
+  symbiotes: "crown-wasps guarding blooms, early bees braving frost, BaneWAP posting legalisms on petals"
+  irritant: "an off switch printed right inside the villainous clause while roses grow across every lane"
+  circulation: "frost holds stems stiff until a hopped breath shakes nectar loose from the thorns"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/11.json"
+  canon_mirror: ~"../../chapters/11.spw"
+  plate: ~"book/images/11.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-11.jpg"
+  palette: "pale-moon"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 4 }
+  wonder_ids: ["crown-wasps", "early-bees", "open-nothing-before-it-has-filled", "pressed-rose"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "the bloom-garden trial logic in /pie/ and BaneWAP self-refuting clauses"
+  !digestive_watch: "strong [] paradoxical framing in court rules; opens directly on !(bloom_garden)"
+}

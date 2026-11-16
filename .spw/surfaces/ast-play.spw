@@ -47,8 +47,9 @@
 
 ^"links"{
   formulas: "book/scripts/modules/spw-formulas.mjs and .spw/surfaces/formulas.spw, the castable side: formulas read, said and computed at the desk"
-  gradients: "@spw/surfaces/gradients.spw, the reasons for a sigil by scale, span and abstraction"
-  physics: "@spw/surfaces/liminal-physics.spw, the sigils as the physics of the page"
+  gradients: ~"./gradients.spw"
+  physics: ~"./liminal-physics.spw"
+  .gradient_note: "gradients reads the reasons for a sigil by scale, span and abstraction; liminal-physics reads the sigils as the physics of the page"
 }
 
 !guards[

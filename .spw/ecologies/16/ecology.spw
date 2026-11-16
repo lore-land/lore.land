@@ -1,0 +1,58 @@
+# Chapter 16 Ecology — The Second Place
+#>chapter_16_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 3 of 13: . ground.
+}
+
+^"identity"{
+  chapter: 16
+  book: 2
+  ring: 3
+  title: "The Second Place"
+  mood: "planned"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "."
+  construct_name: "ground"
+  construct_kind: "operator"
+  opening_lens: "physical footing, soil, or invariant furniture"
+  closing_perspective: "raises an open question (?)"
+  represents: "What holds regardless of opinion"
+  next_construct: "? (probe)"
+  planned_open_posture: ". entry"
+  planned_close_posture: "hands cleanly into ?"
+  modulators: { config: "bone (maintenance truth)" measure: "%plates_washed[many]" substrate: "$linen_brass_and_soapsuds" }
+}
+
+^"biome"{
+  terrain: "long banquet trestle laid with coarse linen, brass place markers, and scullery steam"
+  metabolite: "dishwater soap suds, warm glaze vapor, and unspoken wrist-ache behind the curtain"
+  symbiotes: "the unnamed washer-up drying endless plates, Boof wearing a hat-shadow title she never asked for"
+  irritant: "magic arithmetic pretending a pie never shrinks while real hands still wash real plates"
+  circulation: "plates circulate from table to tub faster than BoonWAP speeches finish a sentence"
+}
+
+^"assets"{
+  prose_status: "unwritten — seed at book/content/chapters/16.json when drafted"
+  canon_mirror: "generated upon first chapters:build + spw:export"
+  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
+  plate_state: "planned"
+  og_card: "pending chapter build"
+  palette: "unassigned — mixes into Book 2 cycle"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  wonder_ids: []
+  permeability: "ring slot mapped; awaiting prose + wonders"
+  compost: "first explicit view into maintenance labor behind infinite bounty (links into Book 3 commons)"
+  !digestive_watch: "seeded in wonder-about-pie.spw#c16; ideal Slot 3 (.) chapter grounding invisible physical care"
+}

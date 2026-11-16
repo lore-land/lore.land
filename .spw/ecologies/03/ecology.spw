@@ -1,0 +1,58 @@
+# Chapter 03 Ecology — Signals in the Sand
+#>chapter_03_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 3 of 13: . ground.
+}
+
+^"identity"{
+  chapter: 3
+  book: 1
+  ring: 3
+  title: "Signals in the Sand"
+  mood: "paradox"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "."
+  construct_name: "ground"
+  construct_kind: "operator"
+  opening_lens: "physical footing, soil, or invariant furniture"
+  closing_perspective: "raises an open question (?)"
+  represents: "What holds regardless of opinion"
+  next_construct: "? (probe)"
+  observed_open_room: "?{signal_stones}@boof"
+  observed_close_room: "&<one_turn>@boof"
+  modulators: { config: "paradox (double edge)" measure: "%grain[drift]" substrate: "$silica_and_salt" }
+}
+
+^"biome"{
+  terrain: "salt-crusted dune flats and sand-scoured boundary desks"
+  metabolite: "windblown silica, brine evaporation, and bottle-cork amber"
+  symbiotes: "salt-whales beneath shallow pans, signal-skinks writing transient dashes, the Genie off-hours"
+  irritant: "signals erased by tide before the scale can tally why the want needle swung"
+  circulation: "heat draws water up, leaving readable salt ridges that crack into signals"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/03.json"
+  canon_mirror: ~"../../chapters/03.spw"
+  plate: ~"book/images/03.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-03.jpg"
+  palette: "legal-pad"
+  characters_met: ["genie"]
+  lanes_introduced: ["sack", "post", "spool", "pane", "boneberry"]
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 1 }
+  wonder_ids: ["salt-whales", "signal-skinks", "want-needle", "resolution-glass", "wish-scale", "bottle-desk", "build-where-it-leans"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "the Genie bargain structure (a wish leaves a coincidence and a missing day owed)"
+  !digestive_watch: "rich contrivance flora (4); ground (.) discipline sits inside %/% measurements cleanly"
+}

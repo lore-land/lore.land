@@ -1,0 +1,58 @@
+# Chapter 15 Ecology — Pupil, Parcel, or Door
+#>chapter_15_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 2 of 13: # annotation.
+}
+
+^"identity"{
+  chapter: 15
+  book: 2
+  ring: 2
+  title: "Pupil, Parcel, or Door"
+  mood: "labyrinth"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "#"
+  construct_name: "annotation"
+  construct_kind: "operator"
+  opening_lens: "competing marks, rumours, or records beside the thing"
+  closing_perspective: "hits bedrock physical facts (.)"
+  represents: "How observers classify and frame the same event"
+  next_construct: ". (ground)"
+  observed_open_room: "=<back_lane>@the_city"
+  observed_close_room: "=(long_table)@the_city"
+  modulators: { config: "labyrinth (triplicated)" measure: "%records[3]" substrate: "$wet_cobble_and_ledger_chalk" }
+}
+
+^"biome"{
+  terrain: "night-lit back cobblestones beneath a heavy snowed parcel gate lintel"
+  metabolite: "damp woolen sleet, stamping-pad tallow, spoiled feast flour, and night-school chalk"
+  symbiotes: "gate-pigeons roosting on timber beams, night-school pie-dividers, the porter signing his own name"
+  irritant: "three mutually incompatible institutional labels nailed beside a doorway shorter than a floating hat"
+  circulation: "bundles pass under the lintel while classifications bounce off it and pile on the posting board"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/15.json"
+  canon_mirror: ~"../../chapters/15.spw"
+  plate: ~"book/images/15.png"
+  plate_state: "study"
+  og_card: ~"book/images/og/chapter-15.jpg"
+  palette: "three-stools"
+  characters_met: ["porter", "clerk"]
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 6 sections: 7 wonders: 11 creatures: 2 lore_lines: 3 }
+  wonder_ids: ["gate-pigeons", "pie-dividers", "storm-weight", "door-rule", "hearth-drift", "a-box-for-what-you-do-not-know", "remainder-moths", "sliver-tin", "horn-button", "gate-book-entry", "damage-slip"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "three valid pinned slips, the lost ch06 button returned, and a city convinced the dog is chosen"
+  !digestive_watch: "flag c15_spike: 17 collectibles + 17 echoes in one chapter—spread or pace into ch16 during revision"
+}

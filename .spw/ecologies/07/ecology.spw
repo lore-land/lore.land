@@ -1,0 +1,58 @@
+# Chapter 07 Ecology — Blueberry Oath
+#>chapter_07_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 7 of 13: & confluence.
+}
+
+^"identity"{
+  chapter: 7
+  book: 1
+  ring: 7
+  title: "Blueberry Oath"
+  mood: "shadow"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "&"
+  construct_name: "confluence"
+  construct_kind: "operator"
+  opening_lens: "two strands braided without erasing either"
+  closing_perspective: "reveals how each side sees the other (@)"
+  represents: "Oaths, merges, and non-destructive composition"
+  next_construct: "@ (perspective)"
+  observed_open_room: "=(oath_stone)@boof"
+  observed_close_room: "~<long_alley>@the_stranger"
+  modulators: { config: "shadow (two-sided)" measure: "%coincidence[1]" substrate: "$blueberry_stain_and_slate" }
+}
+
+^"biome"{
+  terrain: "dyed slate alleyways beside berry cooling-stones"
+  metabolite: "indigo berry juice staining limestone and cool night dew"
+  symbiotes: "oath-moths fluttering toward blue lamps, oath-scale keepers, strangers carrying small coincidences"
+  irritant: "vows spoken lightly crystallizing into heavy stoneweights on the pocket hem"
+  circulation: "berry stain seeps downward while spoken oaths cool into solid tiles underfoot"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/07.json"
+  canon_mirror: ~"../../chapters/07.spw"
+  plate: ~"book/images/07.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-07.jpg"
+  palette: "oath"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["oath-moths", "oath-scale", "promise-the-next-stone"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "one unassigned good coincidence left intentionally uncollected until Book Two"
+  !digestive_watch: "low count lull (total 5) intentionally pacing a quiet oath after ch06 kiln density"
+}

@@ -1,0 +1,58 @@
+# Chapter 02 Ecology — The First Echo
+#>chapter_02_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 2 of 13: # annotation.
+}
+
+^"identity"{
+  chapter: 2
+  book: 1
+  ring: 2
+  title: "The First Echo"
+  mood: "grove"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "#"
+  construct_name: "annotation"
+  construct_kind: "operator"
+  opening_lens: "competing marks, rumours, or records beside the thing"
+  closing_perspective: "hits bedrock physical facts (.)"
+  represents: "How observers classify and frame the same event"
+  next_construct: ". (ground)"
+  observed_open_room: "?{hollow_cedar}@boof"
+  observed_close_room: "^<cedar_fork>@boof"
+  modulators: { config: "grove (curious drift)" measure: "%delay[one_beat]" substrate: "$cedar_and_resin" }
+}
+
+^"biome"{
+  terrain: "hollow cedar grove where sound arrives slower than speech"
+  metabolite: "delayed timber resonance, moth scale dust, and sap mist"
+  symbiotes: "echo-wrens nesting in bark splits, the lag-stag (hoofprints a beat late), rehearsal-moths"
+  irritant: "borrowed voices mimicking questions before anyone asks them cleanly"
+  circulation: "an utterance bounces twice through wood cavities and drops off its spare vowel"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/02.json"
+  canon_mirror: ~"../../chapters/02.spw"
+  plate: ~"book/images/02.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-02.jpg"
+  palette: "grove-echo"
+  characters_met: []
+  lanes_introduced: ["ditch", "puddle", "beaver"]
+}
+
+%"gut_health"{
+  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 3 lore_lines: 1 }
+  wonder_ids: ["echo-wrens", "lag-stag", "rehearsal-moths", "try-it-again"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "delayed causality carried forward by the lag-stag and echo-wren throws"
+  !digestive_watch: "four wonders heavy on creature kin; closes strongly on ^<cedar_fork>@boof"
+}

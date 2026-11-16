@@ -104,9 +104,30 @@
   "the same swallow reaches block heads: ? or # before a quoted name and an open bracket take the line as prose and orphan the close, so this block is ?parser_notes[ with a bare name (fixed upstream 2026-11-11, workbench 9ef3d22, see spw-stress.spw probe_list_newline; the bare name stays)"
 ]
 
+^"ring_tour"{
+  .note: "Across each Ring of Thirteen chapters (Book 1: 01–13, Book 2: 14–26, Book 3: 27–39), the 13-construct sequence (~ # . ? ! * & @ <> () [] {} ^) anchors each chapter's opening lens and closing hand-off while middle rooms roam freely and = % $ modulate horizontally."
+  sequence: [
+    "01 / 14  ~   potential    — unspent latency without a receipt → invites a mark (#)"
+    "02 / 15  #   annotation   — competing marks or echoes beside one event → hits ground (.)"
+    "03 / 16  .   ground       — footing, soil, or physical invariant → raises a question (?)"
+    "04 / 17  ?   probe        — council, riddle, or ambiguity held open → provokes action (!)"
+    "05 / 18  !   action       — rupture, spark, or irreversible turn → leaves value (*)"
+    "06 / 19  *   value        — concrete artifact, token, or lantern → invites exchange (&)"
+    "07 / 20  &   confluence   — two strands joined without erasing either → reveals perspective (@)"
+    "08 / 21  @   perspective  — observer shift through beast, mirror, well, or hat → opens passage (<>)"
+    "09 / 22  <>  capsule      — directional channel built for crossing → gathers voices (())"
+    "10 / 23  ()  scope        — ensemble shared while convened → narrows to selection ([])"
+    "11 / 24  []  frame        — selective window contrasting rules → builds body charge ({})"
+    "12 / 25  {}  body         — enclosed chamber storing and releasing mass → integrates upward (^)"
+    "13 / 26  ^   integration  — capstone bind folding twelve beats into a hinge → opens next octave (~)"
+  ]
+  modulators: "= config (chapter lean), % measure (cost and count), $ substrate (physical material) cross-cut every step cleanly without occupying a linear slot."
+}
+
 &canon{
-  bench: "@spw/surfaces/almanac.spw"
-  collecting: "@spw/surfaces/collecting.spw"
-  stress: "@spw/surfaces/spw-stress.spw"
+  bench: ~"./almanac.spw"
+  collecting: ~"./collecting.spw"
+  stress: ~"./spw-stress.spw"
+  ecologies: ~"../ecologies/index.spw"
   continuity: "reading-switches.mjs trials, contract c019"
 }

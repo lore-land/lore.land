@@ -1,0 +1,58 @@
+# Chapter 21 Ecology — At the Nose of the Work
+#>chapter_21_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!planned
+
+~<rationale>{
+  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 8 of 13: @ perspective.
+}
+
+^"identity"{
+  chapter: 21
+  book: 2
+  ring: 8
+  title: "At the Nose of the Work"
+  mood: "planned"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "@"
+  construct_name: "perspective"
+  construct_kind: "operator"
+  opening_lens: "observer shift—through a beast, mirror, well, or hat"
+  closing_perspective: "opens a directional crossing (<>)"
+  represents: "Standpoint and observer-relative truth"
+  next_construct: "<> (capsule)"
+  planned_open_posture: "@ entry"
+  planned_close_posture: "hands cleanly into <>"
+  modulators: { config: "perspective (animal empiricism)" measure: "%scent_trails[3]" substrate: "$cobble_damp_and_tallow" }
+}
+
+^"biome"{
+  terrain: "low-angle cobblestone run seen exclusively from fourteen inches off the paving slabs"
+  metabolite: "shoe leather polish, dropped berry crumbs, drain grate steam, and dog-ear breeze"
+  symbiotes: "Boof trailing three scents at once, street ants routing around giant boots, puddles reading sky"
+  irritant: "tall tables hiding both faces and intentions while lower crumbs tell the whole political plot"
+  circulation: "scent plumes hug warm drains and reveal where clerks hurried before bells rang"
+}
+
+^"assets"{
+  prose_status: "unwritten — seed at book/content/chapters/21.json when drafted"
+  canon_mirror: "generated upon first chapters:build + spw:export"
+  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
+  plate_state: "planned"
+  og_card: "pending chapter build"
+  palette: "unassigned — mixes into Book 2 cycle"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  wonder_ids: []
+  permeability: "ring slot mapped; awaiting prose + wonders"
+  compost: "grounds Ch08 observer inversion in embodied dog-height phenomenology"
+  !digestive_watch: "Ring 2 Slot 8 (@): keep children absent from civic alleys; Boof stays literal, never coy"
+}

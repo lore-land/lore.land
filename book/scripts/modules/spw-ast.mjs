@@ -216,3 +216,41 @@ export function readProjectionTemplates(ast) {
   });
   return { slots, sources };
 }
+
+/** Canonical 13-element Ring progression (`~ # . ? ! * & @ <> () [] {} ^`): opening lens and closing hand-off per chapter. */
+export const RING_SEQUENCE = Object.freeze([
+  { ring: 1, symbol: '~', name: 'potential', kind: 'operator', openingSense: 'unspent latency without a receipt', closingTurn: 'invites an external mark (#)', represents: 'What waits before being named' },
+  { ring: 2, symbol: '#', name: 'annotation', kind: 'operator', openingSense: 'competing marks, rumours, or records beside the thing', closingTurn: 'hits bedrock physical facts (.)', represents: 'How observers classify and frame the same event' },
+  { ring: 3, symbol: '.', name: 'ground', kind: 'operator', openingSense: 'physical footing, soil, or invariant furniture', closingTurn: 'raises an open question (?)', represents: 'What holds regardless of opinion' },
+  { ring: 4, symbol: '?', name: 'probe', kind: 'operator', openingSense: 'council, riddle, or ambiguity held without forcing', closingTurn: 'provokes a decisive act (!)', represents: 'Inquiry before commitment' },
+  { ring: 5, symbol: '!', name: 'action', kind: 'operator', openingSense: 'rupture, spark, or irreversible turn', closingTurn: 'settles into a durable value (*)', represents: 'State transition and consequence' },
+  { ring: 6, symbol: '*', name: 'value', kind: 'operator', openingSense: 'concrete artifact, keepsake, or lantern in hand', closingTurn: 'invites meeting and exchange (&)', represents: 'Reified objects and portable tokens' },
+  { ring: 7, symbol: '&', name: 'confluence', kind: 'operator', openingSense: 'two strands braided without erasing either', closingTurn: 'reveals how each side sees the other (@)', represents: 'Oaths, merges, and non-destructive composition' },
+  { ring: 8, symbol: '@', name: 'perspective', kind: 'operator', openingSense: 'observer shift—through a beast, mirror, well, or hat', closingTurn: 'opens a directional crossing (<>)', represents: 'Standpoint and observer-relative truth' },
+  { ring: 9, symbol: '<>', name: 'capsule', kind: 'container', openingSense: 'threshold conduit built only to cross through', closingTurn: 'empties into a shared gathering (())', represents: 'Channels, boundaries, and interfaces' },
+  { ring: 10, symbol: '()', name: 'scope', kind: 'container', openingSense: 'ephemeral gathering where voices convene at once', closingTurn: 'narrows into a framed selection ([])', represents: 'Harmonic councils and scoped ensembles' },
+  { ring: 11, symbol: '[]', name: 'frame', kind: 'container', openingSense: 'selective window contrasting paradoxical rules', closingTurn: 'accumulates charge inside a body ({})', represents: 'Indexing, filtering, and borderline paradox' },
+  { ring: 12, symbol: '{}', name: 'body', kind: 'container', openingSense: 'enclosed chamber gathering full semantic mass', closingTurn: 'discharges upward into integration (^)', represents: 'Containment, state accumulation, and release' },
+  { ring: 13, symbol: '^', name: 'integration', kind: 'integration', openingSense: 'capstone bind gathering the twelve preceding steps', closingTurn: 'hinges into the next ring (~)', represents: 'Summary, emission, and octave recursion' }
+]);
+
+/** Horizontal tuning modulators orthogonal to the 13-step ring: lean (=), count (%), material ($). */
+export const MODULATOR_SIGILS = Object.freeze(['=', '%', '$']);
+
+/**
+ * Resolve a 1-based chapter number onto its Ring of Thirteen slot (`1..13`), octave book (`1..`), and next construct.
+ * @param {number} chapterNumber
+ */
+export function ringSlotFor(chapterNumber) {
+  const n = Math.max(1, Math.floor(Number(chapterNumber) || 1));
+  const index = (n - 1) % RING_SEQUENCE.length;
+  const current = RING_SEQUENCE[index];
+  const next = RING_SEQUENCE[(index + 1) % RING_SEQUENCE.length];
+  return {
+    chapter: n,
+    book: Math.floor((n - 1) / RING_SEQUENCE.length) + 1,
+    ...current,
+    nextSymbol: next.symbol,
+    nextName: next.name
+  };
+}

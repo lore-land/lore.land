@@ -1,0 +1,58 @@
+# Chapter 04 Ecology — Crosswind Council
+#>chapter_04_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 4 of 13: ? probe.
+}
+
+^"identity"{
+  chapter: 4
+  book: 1
+  ring: 4
+  title: "Crosswind Council"
+  mood: "mirror"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "?"
+  construct_name: "probe"
+  construct_kind: "operator"
+  opening_lens: "council, riddle, or ambiguity held without forcing"
+  closing_perspective: "provokes a decisive act (!)"
+  represents: "Inquiry before commitment"
+  next_construct: "! (action)"
+  observed_open_room: "&(council_table)@boof"
+  observed_close_room: "~<hill_stairs>@boof"
+  modulators: { config: "mirror (reversible)" measure: "%quorum[split]" substrate: "$brass_and_rag_paper" }
+}
+
+^"biome"{
+  terrain: "wind-tilted council hall over open slope stairs"
+  metabolite: "draft crosswinds, parchment shavings, and key-bench brass filings"
+  symbiotes: "weathercocks spinning on gable pins, council-slab scribes, Mr. BaneWAP arriving by clause"
+  irritant: "procedural objections multiplying faster than anyone files a key"
+  circulation: "every draught pushes smoke back across the table so opponents read each other backwards"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/04.json"
+  canon_mirror: ~"../../chapters/04.spw"
+  plate: ~"book/images/04.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-04.jpg"
+  palette: "announce"
+  characters_met: ["bane"]
+  lanes_introduced: ["throne", "subject", "wasps", "banner", "baneberry", "bane", "arrow", "vane", "horn"]
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["weathercocks", "key-file-bench", "crosswind-loom", "council-slab", "write-it-before-you-argue-it"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "first braced contract (&[boon, bane]{table}) held honestly as prose + BaneWAP clause habit"
+  !digestive_watch: "strong probing spine; closes on ~<hill_stairs> leaving council verdicts unsettled"
+}

@@ -1,0 +1,58 @@
+# Chapter 05 Ecology — The Quiet Rift
+#>chapter_05_ecology
+#:ecology #!book-1
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 5 of 13: ! action.
+}
+
+^"identity"{
+  chapter: 5
+  book: 1
+  ring: 5
+  title: "The Quiet Rift"
+  mood: "song"
+  period: "spring"
+}
+
+^"grammar"{
+  construct: "!"
+  construct_name: "action"
+  construct_kind: "operator"
+  opening_lens: "rupture, spark, or irreversible turn"
+  closing_perspective: "settles into a durable value (*)"
+  represents: "State transition and consequence"
+  next_construct: "* (value)"
+  observed_open_room: "={arched_hall}@boof"
+  observed_close_room: "^<archway>@boof"
+  modulators: { config: "song (bone-weighted)" measure: "%aperture[mm]" substrate: "$split_oak_and_chord" }
+}
+
+^"biome"{
+  terrain: "arched timber rift split down a desk and quiet stone passage"
+  metabolite: "acoustic standing waves trapped in structural cracks"
+  symbiotes: "hum-crickets gauging seam width, crack-gauges, musicians listening before hammering"
+  irritant: "price tags hung directly over structural fractures instead of shimming them"
+  circulation: "pitch drops an octave whenever the hall widens by a millimeter under load"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/05.json"
+  canon_mirror: ~"../../chapters/05.spw"
+  plate: ~"book/images/05.png"
+  plate_state: "public"
+  og_card: ~"book/images/og/chapter-05.jpg"
+  palette: "rift"
+  characters_met: []
+  lanes_introduced: ["mime"]
+}
+
+%"gut_health"{
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 1 lore_lines: 1 }
+  wonder_ids: ["hum-crickets", "crack-gauge", "listen-before-you-mend", "struck-price-tag"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "the first mimes and acoustic crack discipline feeding Bone.land later in ch10"
+  !digestive_watch: "lacks direct ! action room despite slot 5 ! role—tension is carried via = and ^"
+}

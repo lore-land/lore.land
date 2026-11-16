@@ -30,6 +30,8 @@
   plates_manifest: ~"./state/plates-manifest.spw"
   story_boonhonk: ~"./story-boonhonk.spw"
   book_two: ~"./surfaces/wonder-about-pie.spw"
+  book_three: ~"./surfaces/book-three.spw"
+  chapter_ecologies: ~"./ecologies/index.spw"
   dragon_egg: ~"./surfaces/dragon-egg.spw"
   cullet_deck: ~"./surfaces/cullet-deck.spw"
   tropes: ~"./surfaces/tropes.spw"

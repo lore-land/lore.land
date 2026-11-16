@@ -1,0 +1,58 @@
+# Chapter 14 Ecology — The Thursday Nobody Kept
+#>chapter_14_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!live
+
+~<rationale>{
+  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 1 of 13: ~ potential.
+}
+
+^"identity"{
+  chapter: 14
+  book: 2
+  ring: 1
+  title: "The Thursday Nobody Kept"
+  mood: "path"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "~"
+  construct_name: "potential"
+  construct_kind: "operator"
+  opening_lens: "unspent latency without a receipt"
+  closing_perspective: "invites an external mark (#)"
+  represents: "What waits before being named"
+  next_construct: "# (annotation)"
+  observed_open_room: "?{kitchen_door}@boof"
+  observed_close_room: "=<field_edge>@boof"
+  modulators: { config: "path (zero-person day)" measure: "%absent[thursday]" substrate: "$winter_frost_and_ember" }
+}
+
+^"biome"{
+  terrain: "frozen white lane ruling straight across empty pasture under teal winter glare"
+  metabolite: "unspent Thursday silence, beeswax ember, and clean snow unbroken by footprints"
+  symbiotes: "page-foxes skirting margins, hob-deer leaping fences, torch-ant line-crews lit from an arm tip"
+  irritant: "a calendar day missing from every townsfolk pocket, leaving Friday crowded at the border"
+  circulation: "one figure steps at 90 degrees across frozen contours, lighting a dead ant-torch with his own short arm"
+}
+
+^"assets"{
+  prose_json: ~"book/content/chapters/14.json"
+  canon_mirror: ~"../../chapters/14.spw"
+  plate: ~"book/images/14.png"
+  plate_state: "study"
+  og_card: ~"book/images/og/chapter-14.jpg"
+  palette: "hill-moon"
+  characters_met: ["figure"]
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 8 sections: 9 wonders: 7 creatures: 3 lore_lines: 3 }
+  wonder_ids: ["hob-deer", "page-fox", "keep-the-morning", "frill-lichen", "relit-torch", "criers-note", "found-line"]
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+  compost: "a shortened right arm warming an ant-street and a gap left rectangular in the hawthorn hedge"
+  !digestive_watch: "slot 1 (~) chapter currently has 0 ~ rooms (?{kitchen_door} opens; @{warm_furrow} mid)—prime re-derivation candidate"
+}

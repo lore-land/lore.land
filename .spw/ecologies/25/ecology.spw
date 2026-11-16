@@ -1,0 +1,58 @@
+# Chapter 25 Ecology — The Warm Hearth Before the Feast
+#>chapter_25_ecology
+#:ecology #!book-2
+#:layer #!pragmatics
+#:status #!planned
+
+~<rationale>{
+  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 12 of 13: {} body.
+}
+
+^"identity"{
+  chapter: 25
+  book: 2
+  ring: 12
+  title: "The Warm Hearth Before the Feast"
+  mood: "planned"
+  period: "winter"
+}
+
+^"grammar"{
+  construct: "{}"
+  construct_name: "body"
+  construct_kind: "container"
+  opening_lens: "enclosed chamber gathering full semantic mass"
+  closing_perspective: "discharges upward into integration (^)"
+  represents: "Containment, state accumulation, and release"
+  next_construct: "^ (integration)"
+  planned_open_posture: "{} entry"
+  planned_close_posture: "hands cleanly into ^"
+  modulators: { config: "body (peak containment)" measure: "%charge[full]" substrate: "$fire_brick_and_yeast" }
+}
+
+^"biome"{
+  terrain: "crowded bakehouse vault where every unfinished ingredient from Book Two simmers in one room"
+  metabolite: "rising yeast carbonation, berry steam, oak ember radiate heat, and taut anticipation"
+  symbiotes: "bakers, hungry clowns waiting politely outdoors, mimes leaning invisibly against warming racks"
+  irritant: "the ambient charge rising faster than vents can release without popping crust seals"
+  circulation: "heat cycles across brick arches until every character converges under one enclosed roof"
+}
+
+^"assets"{
+  prose_status: "unwritten — seed at book/content/chapters/25.json when drafted"
+  canon_mirror: "generated upon first chapters:build + spw:export"
+  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
+  plate_state: "planned"
+  og_card: "pending chapter build"
+  palette: "unassigned — mixes into Book 2 cycle"
+  characters_met: []
+  lanes_introduced: []
+}
+
+%"gut_health"{
+  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  wonder_ids: []
+  permeability: "ring slot mapped; awaiting prose + wonders"
+  compost: "accumulates full Ring 2 tension right before the Feast of the Uneven Slice spills over"
+  !digestive_watch: "Ring 2 Slot 12 ({}): mirror ch12 convergence while keeping the hat unsettled until ch26"
+}

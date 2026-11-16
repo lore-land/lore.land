@@ -22,7 +22,7 @@
   ^layer[day]{ unit: "one room" from: "likeness.json rooms joined to search.json passages" shows: "chapter, room title, its Spw signature read by room-signature.mjs, the first lines of the passage, a link to read it" }
   ^layer[week]{ unit: "one trope" from: "tropes.json faces.story.chambers" rule: "every day of the week is a room in a chapter the trope is in; a different room each day until they run out; every trope once a cycle, never the same two weeks running" }
   ^layer[month]{ unit: "one lens" from: "valence-lens.mjs LENSES" rule: "boon, bane, bone, one a calendar month, so a quarter turns the triangle once. The day links into the chapter with ?lens= so the same room reads differently across the quarter. Each week, a day in each month it touches is a room already leaning that way, when the trope has one" }
-  ^layer[quarter]{ unit: "a band and a teaching metaphor" from: ~"@spw/surfaces/competency.spw" rule: "the land keeps its own quarter of the 104; the cluster facing the pupil turns each quarter; a reader may choose a reach of their own" }
+  ^layer[quarter]{ unit: "a band and a teaching metaphor" from: ~"./competency.spw" rule: "the land keeps its own quarter of the 104; the cluster facing the pupil turns each quarter; a reader may choose a reach of their own" }
 ]
 
 ^"why_months"{
