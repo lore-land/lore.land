@@ -6473,15 +6473,55 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }
     return img?.complete && img.naturalWidth ? img : null;
   };
+  /* How things in the road look, from the characters domain (Setup's fine-tuning, or !tune_domains{ *characters{} }):
+   * hazard contrast and how alive they are. Read once per change of tuning (the dials replace tuningDomains), not
+   * once per thing per frame. */
+  let thingLookOf = { src: null, val: { contrast: 1, bounce: 1 } };
+  const thingLook = () => {
+    if (thingLookOf.src !== tuningDomains) {
+      const tune = domainTune('characters');
+      thingLookOf = { src: tuningDomains, val: { contrast: clamp(Number(tune.obstacle_contrast) || 1, 0.7, 1.5), bounce: clamp(Number(tune.bounce_scale ?? 1), 0, 1.8) } };
+    }
+    return thingLookOf.val;
+  };
+  /* A thing's idle life: creatures breathe (a squash about the foot), floating things bob and their shadow shrinks,
+   * roses sway from the stem. The mimes hold still: that is what they do. Phased by where each is, so a row never
+   * moves in step; none with reduced motion, and none once it is knocked, hopped or WAPped. */
+  const BREATHES = new Set(['beaver', 'dolphin', 'snail', 'pigeon', 'clerk', 'clown', 'subject']);
+  const FLOATS = new Set(['wasps', 'wonder', 'egg']);
+  const SWAYS = new Set(['boonrose', 'banerose']);
+  const lifeOf = (thing) => {
+    const b = thingLook().bounce;
+    if (!b || reduced?.matches || state !== 'running' || !run || thing.knocked || thing.cleared || thing.wapped) return null;
+    const ph = run.t * 2.4 + thing.x * 0.071 + (Number(thing.born) || 0) * 1.3;
+    if (BREATHES.has(thing.kind)) { const s = Math.sin(ph * 1.6) * 0.04 * b; return { sx: 1 - s * 0.6, sy: 1 + s, lift: 0, rot: 0 }; }
+    if (FLOATS.has(thing.kind)) return { sx: 1, sy: 1, lift: (1 + Math.sin(ph)) * 2.2 * b, rot: 0 };
+    if (SWAYS.has(thing.kind)) return { sx: 1, sy: 1, lift: 0, rot: Math.sin(ph * 0.8) * 0.06 * b };
+    return null;
+  };
+
   const drawThing = (thing) => {
     const { x, y } = thing;
+    const { contrast } = thingLook();
+    const life = lifeOf(thing);
     ctx.save();
-    // Every thing touches the ground: a shadow under it, and hazards drawn a size larger.
+    // Every thing touches the ground: a soft contact shadow, darkest under its middle, smaller under what floats.
+    // (Hazards are drawn a size larger.)
     if (!WIDE.has(thing.kind) && !['puddle', 'frost', 'furrow', 'hole'].includes(thing.kind) && !thing.wapped) {
-      ctx.fillStyle = 'rgba(20, 16, 10, 0.18)';
-      ctx.beginPath();
-      ctx.ellipse(x, y + thing.h * 0.55, thing.w * 0.55, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
+      const lift = life?.lift || 0;
+      const rx = thing.w * 0.58 * (1 - lift * 0.03);
+      const ry = 4 + Math.min(3, thing.h * 0.05);
+      const a = 0.26 * (1 - lift * 0.05);
+      ctx.save();
+      ctx.translate(x, y + thing.h * 0.55);
+      ctx.scale(1, ry / rx);
+      const shade = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+      shade.addColorStop(0, `rgba(20, 16, 10, ${a})`);
+      shade.addColorStop(0.6, `rgba(20, 16, 10, ${a * 0.5})`);
+      shade.addColorStop(1, 'rgba(20, 16, 10, 0)');
+      ctx.fillStyle = shade;
+      ctx.beginPath(); ctx.arc(0, 0, rx, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
     }
     // What it does, at its foot: a red zone knocks the pie, a blue one slips it. (Friends glow gold.)
     // A hazard coming down the carrier's own lane pulses, so the one that matters reads first.
@@ -6491,9 +6531,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         && (WIDE.has(thing.kind) ? thing.gap !== run.lane : Math.abs(thing.x - run.x) < (thing.w + 20) / 2);
       const pulse = coming && !reduced?.matches ? 0.5 + Math.sin(run.t * 12) * 0.5 : coming ? 1 : 0;
       const rgb = hurt ? '200, 56, 40' : '40, 110, 170';
-      ctx.fillStyle = `rgba(${rgb}, ${(hurt ? 0.2 : 0.16) + pulse * 0.14})`;
-      ctx.strokeStyle = `rgba(${rgb}, ${0.75 + pulse * 0.25})`;
-      ctx.lineWidth = (hurt ? 2.2 : 1.8) + pulse * 1.2;
+      // Hazard contrast (characters domain) turns the zone up for an eye that needs it, or down to calm it.
+      ctx.fillStyle = `rgba(${rgb}, ${((hurt ? 0.2 : 0.16) + pulse * 0.14) * contrast})`;
+      ctx.strokeStyle = `rgba(${rgb}, ${Math.min(1, (0.75 + pulse * 0.25) * (0.6 + 0.4 * contrast))})`;
+      ctx.lineWidth = ((hurt ? 2.2 : 1.8) + pulse * 1.2) * contrast;
       if (!hurt) ctx.setLineDash([4, 3]);
       if (WIDE.has(thing.kind)) {
         const top = y - thing.h / 2 - 3;
@@ -6526,10 +6567,23 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ctx.setLineDash([]);
     }
     if (thing.knocked || thing.cleared) ctx.globalAlpha = 0.4;   // already knocked, or hopped: it cannot again
+    // Past plain contrast, a live hazard stands on a paper ground of its own, so its outline reads on any place's
+    // light (a night court, a berry dusk).
+    if (contrast > 1.02 && thing.fatal && !WIDE.has(thing.kind) && !thing.knocked && !thing.cleared && !thing.wapped) {
+      ctx.fillStyle = `rgba(255, 252, 244, ${Math.min(0.5, (contrast - 1) * 0.9)})`;
+      ctx.beginPath(); ctx.ellipse(x, y, thing.w * 0.62 * HAZARD_SCALE + 3, thing.h * 0.58 * HAZARD_SCALE + 3, 0, 0, Math.PI * 2); ctx.fill();
+    }
     if (thing.fatal && !WIDE.has(thing.kind)) {
       ctx.translate(x, y);
       ctx.scale(HAZARD_SCALE, HAZARD_SCALE);
       ctx.translate(-x, -y);
+    }
+    if (life) {
+      const foot = y + thing.h * 0.5;
+      ctx.translate(x, foot - life.lift);
+      if (life.rot) ctx.rotate(life.rot);
+      ctx.scale(life.sx, life.sy);
+      ctx.translate(-x, -foot);
     }
     // From the other side, on a live stream (pie-live.mjs): a violet ring, dashed, so it reads as sent.
     if (thing.rival && !thing.wapped) {
@@ -6543,7 +6597,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // Friends glow: go toward these.
     if ((['clown', 'switch', 'berry', 'boneberry', 'wonder', 'egg', 'beaver', 'donut', 'boonrose'].includes(thing.kind) || (thing.kind === 'dolphin' && !thing.met) || (thing.kind === 'baneberry' && thing.sweetened)) && !thing.wapped) {
       const halo = ctx.createRadialGradient(x, y - 4, 4, x, y - 4, 30);
-      halo.addColorStop(0, 'rgba(255, 214, 102, 0.45)');
+      halo.addColorStop(0, `rgba(255, 214, 102, ${0.45 * Math.max(0.7, contrast)})`);
       halo.addColorStop(1, 'rgba(255, 214, 102, 0)');
       ctx.fillStyle = halo;
       ctx.beginPath();
@@ -9604,10 +9658,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
       if (id === 'music') {
         const domainFold = nodeOf('details', 'pie-setup-domains-fold');
-        domainFold.append(nodeOf('summary', '', 'Fine-tune 6 domains (voice, air, bloom, tension, unlocks)'));
+        domainFold.append(nodeOf('summary', '', 'Fine-tune 6 domains (voice, contrast, life, jazz lean, air, bloom, tension, unlocks)'));
         const domainGrid = nodeOf('div', 'pie-setup-domains-grid');
         [
           ['characters', 'voice_presence'],
+          ['characters', 'obstacle_contrast'],
+          ['characters', 'bounce_scale'],
+          ['characters', 'jazz_lean'],
           ['scenes', 'room_air'],
           ['storylines', 'chord_bloom'],
           ['arcs', 'tension_depth'],
@@ -9631,8 +9688,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             const v = Number(input.value);
             valSpan.textContent = `${Math.round(v * 100)}%`;
             const cur = domainTune(domId);
-            tuningDomains = { ...tuningDomains, [domId]: { ...cur, values: { ...(cur.values || {}), [dialKey]: v } } };
-            try { localStorage.setItem('lore.pie.tuning.v1', JSON.stringify(Object.fromEntries(DOMAIN_ORDER.map((d) => [d, effectiveDomain(d, tuningDomains).values])))); } catch { /* local only */ }
+            tuningDomains = { ...tuningDomains, [domId]: { ...cur, [dialKey]: v } };
+            try { localStorage.setItem('lore.pie.tuning.v1', JSON.stringify(Object.fromEntries(DOMAIN_ORDER.map((d) => [d, effectiveDomain(d, tuningDomains)])))); } catch { /* local only */ }
             applySetup({ replan: false });
           });
           wrap.append(headSpan, input);
