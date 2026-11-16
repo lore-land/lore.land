@@ -2,9 +2,9 @@
  * pie-setup-ui.mjs — secondary drawer panels: character portraits & reasons, Spw stress test, and provenance cards.
  * Extracted from pie-game.mjs so UI panel painters stay modular and easy to trace.
  */
-import { crossRead, fuzz, stressReport } from './pie-spw.mjs?v=2026_11_08.K';
+import { crossRead, fuzz, stressReport } from './pie-spw.mjs?v=2026_11_16.B';
 import { CHARACTERS, MODELS, MOODS, REASONS, WEIGHT, remembers, portraitSVG, charactersSheet, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_11.A';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.A';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
 import { SEASONS, SEASON_SAYS, standing as seasonStanding, letGo as letGoKept } from './pie-seasons.mjs?v=2026_11_12.A';
 
 /**

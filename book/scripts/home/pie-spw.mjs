@@ -22,7 +22,7 @@ import { buildPower, readSpells, POWER_SPELLS } from './pie-powers.mjs?v=2026_11
 const RULES_URL = '/.spw/runtime/pie-rules.spw';
 let parserPromise = null;
 export const loadParser = () => {
-  parserPromise = parserPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  parserPromise = parserPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null);
   return parserPromise;
 };
 

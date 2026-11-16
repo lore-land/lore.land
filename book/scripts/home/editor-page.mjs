@@ -8,7 +8,7 @@
 
 import { CHARACTERS, MOODS, portraitSVG, figureGroup } from '../modules/characters.mjs?v=2026_11_11.A';
 import { PLACES, COLORS, EMBLEMS, placeSVG, tropeEmblemSVG } from '../modules/panel-art.mjs?v=2026_11_13.B';
-import { loadRegisters } from '../modules/spw-bias.mjs?v=2026_11_09.L';
+import { loadRegisters } from '../modules/spw-bias.mjs?v=2026_11_16.B';
 import { readBoardLine } from './pie-frame.mjs?v=2026_11_13.B';
 
 const DRAFT_KEY = 'lore.editor.draft.v1';

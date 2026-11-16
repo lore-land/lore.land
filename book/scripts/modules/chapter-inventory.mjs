@@ -22,12 +22,12 @@
  * Additive: collapsed at the chapter's end, nothing anyone had is moved.
  */
 
-import { renderSpell } from './spw-spell.mjs?v=2026_11_16.A';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
 import { readRoom, roomSentence } from './room-signature.mjs?v=2026_11_08.W';
-import { roomsRead } from './rooms.mjs?v=2026_11_16.A';
-import { readAlmanac } from './almanac.mjs?v=2026_11_16.A';
+import { roomsRead } from './rooms.mjs?v=2026_11_16.B';
+import { readAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_11.A';
-import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_16.A';
+import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_16.B';
 import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_11.A';
 
 const PROGRESS_KEY = 'lore.chapter.progress.v1';

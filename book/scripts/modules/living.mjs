@@ -32,9 +32,9 @@
  * — and ?tell=kitchen-smell.3 pins one phrase on this page, as if a reader
  * had turned it there.
  */
-import { loadAlmanac } from './almanac.mjs?v=2026_11_16.A';
+import { loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { readStage } from './stage-directions.mjs?v=2026_11_06.F';
-import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_09.L';
+import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_16.B';
 
 const PERIOD = Object.freeze({ minute: 60_000, hour: 3_600_000, day: 86_400_000 });
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;

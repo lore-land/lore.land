@@ -43,14 +43,14 @@
  *
  * Canon: .spw/surfaces/spw-architecture.spw (why linked Spw is hyperbolic, and which loops it has).
  */
-import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_16.A';
+import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_16.B';
 import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-signature.mjs?v=2026_11_08.W';
 import {
   loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,
   SIGILS, DIMENSIONS, SET_VALENCE, chapterName
 } from './likeness.mjs?v=2026_11_11.A';
 import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_11.A';
-import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_16.A';
+import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
 
 export const STORE_KEY = 'lore.disk.loops.v1';
 export const STEP = 1.2;        // hyperbolic distance between rings

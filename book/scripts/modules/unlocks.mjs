@@ -23,7 +23,7 @@ export const UNLOCK_EVENT = 'lore:unlock';
 const STORE = 'lore.unlocks.v1';
 const VISIT = 'lore.unlocks.visit';
 
-import { parseProseSpw, topExpressions, bodyExpressions, frameItems, unquoteText } from './spw-ast.mjs?v=2026_11_16.A';
+import { parseProseSpw, topExpressions, bodyExpressions, frameItems, unquoteText } from './spw-ast.mjs?v=2026_11_16.B';
 
 /* ─── Reading the registry: a small reader for a plain, regular file ─── */
 

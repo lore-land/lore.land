@@ -28,7 +28,7 @@
  *   - texture: a spell that names a material ($glass, $frost, …) wears it (materials.css tokens)
  */
 
-import { parseProseSpw, describeLinePivots } from './spw-ast.mjs?v=2026_11_16.A';
+import { parseProseSpw, describeLinePivots } from './spw-ast.mjs?v=2026_11_16.B';
 
 export const SIGIL_ROLES = Object.freeze({
   '?': { role: 'probe', says: 'asks' },
@@ -128,7 +128,7 @@ const CHARGE = Object.freeze({ primed: 0.82, step: 0.18, tickMs: 2800, quiet: 0.
 
 let seedPromise = null;
 const loadSeed = () => {
-  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null);
   return seedPromise;
 };
 
@@ -518,7 +518,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_16.A').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_16.B').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

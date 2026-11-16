@@ -5,8 +5,8 @@
  * page also keeps any mechanic whose weight is already reached (earn), so an unlock never waits for a carry.
  * Everything here is read from this browser; nothing is sent anywhere.
  */
-import { loadMechanics, standing, standingWords, measuresNow, earn } from '../modules/unlocks.mjs?v=2026_11_16.A';
-import { syncDerivedSparks, curiosityStanding, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.A';
+import { loadMechanics, standing, standingWords, measuresNow, earn } from '../modules/unlocks.mjs?v=2026_11_16.B';
+import { syncDerivedSparks, curiosityStanding, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
 
 async function start() {
   await loadMechanics();

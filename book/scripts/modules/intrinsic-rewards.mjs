@@ -10,9 +10,9 @@
  * Stored in `lore.curiosities.v1` (registered in `READING_MARKS` in begin-again.mjs).
  */
 
-import { settle } from './settled.mjs?v=2026_11_09.L';
-import { playSpell } from './spw-sound.mjs?v=2026_11_16.A';
-import { open as unlockOpen } from './unlocks.mjs?v=2026_11_16.A';
+import { settle } from './settled.mjs?v=2026_11_16.B';
+import { playSpell } from './spw-sound.mjs?v=2026_11_16.B';
+import { open as unlockOpen } from './unlocks.mjs?v=2026_11_16.B';
 
 export const CURIOSITY_KEY = 'lore.curiosities.v1';
 export const SPARK_EVENT = 'lore:spark';

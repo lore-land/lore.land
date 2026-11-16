@@ -2,16 +2,16 @@
 // each thing lives, and a bench for combining found things into small
 // realms (the night school's game; bracework as a toy). Everything is read
 // from this browser's own shelf; nothing is sent anywhere.
-import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_16.A';
+import { loadAlmanac, readAlmanac, collectWonder } from '../modules/almanac.mjs?v=2026_11_16.B';
 import { KINDS, KIND_ORDER, MOTIONS, kindBadgeNode, kindLines } from '../modules/kinds.mjs?v=2026_11_09.G';
 import { SIGHTINGS, readSightings, sightingsFigure } from '../modules/sightings.mjs?v=2026_11_05.B';
-import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_16.A';
+import { loadPalettes, reconcile, readPaletteState, layersOf, paletteTokens, paletteExtraction, readCards, cardsTurned, allCards, LAYERS, LAYER_WAYS } from '../modules/collection.mjs?v=2026_11_16.B';
 import { CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
-import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.A';
+import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
 import { loadLikeness, likenessItem, likenessMark, findSimilar, dressAsset, atlasStrip, describeLikeness } from '../modules/likeness.mjs?v=2026_11_11.A';
 import { wonderLine, explainThing, shelfLine, readShelfLine, compareShelves, sealedByWorkbench, benchCanon, wordOf, SHELF_LABEL, mirrored, markHoles, sayLinesIn } from '../modules/kept-lines.mjs?v=2026_11_13.B';
-import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.A';
+import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
 
 const COMBINES_KEY = 'lore.almanac.combines.v1';
 // The series look, as chapter-render.mjs PLATE_PROMPT_STYLE / _FLAGS (kept in step by hand).
@@ -114,7 +114,7 @@ const linesOn = (() => {
 /* The workbench (vendor/spw-seed.mjs), loaded only when a line is on the page: it says each line in the names of
  * its parts, for whoever reads by ear, and reads a given line's seal for itself. */
 let seedPromise = null;
-const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null); return seedPromise; };
+const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null); return seedPromise; };
 function sayLines(root = document) {
   if (!linesOn) return;
   loadSeed().then((m) => sayLinesIn(root, m?.spokenLine)).catch(() => {});

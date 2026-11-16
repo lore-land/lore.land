@@ -2,6 +2,13 @@
   "note": "Reader-facing release notes for returning readers (modules/reading-switches.mjs). Newest first. Plain words, no internals.",
   "releases": [
     {
+      "release": "2026_11_16.B",
+      "date": "2026_11_16",
+      "notes": [
+        "Chapters load less up front and pause offscreen work while hidden below the fold; the pie game also keeps a shifted bloom rose clear of the way through after a re-let."
+      ]
+    },
+    {
       "release": "2026_11_16.A",
       "date": "2026-11-16",
       "notes": [

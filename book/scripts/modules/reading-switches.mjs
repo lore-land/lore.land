@@ -19,11 +19,11 @@
  * the offline shelf starts on, because installing is consent to keep the book.
  */
 
-import { settle } from './settled.mjs?v=2026_11_09.L';
-import { visitSwitches, dropSwitch, readStory } from './story-directions.mjs?v=2026_11_09.L';
+import { settle } from './settled.mjs?v=2026_11_16.B';
+import { visitSwitches, dropSwitch, readStory } from './story-directions.mjs?v=2026_11_16.B';
 import { chapterPath } from './chapter-links.mjs?v=2026_11_10.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
-import { activeBias, setBias, castHouseRegister, initBiasFromURL } from './spw-bias.mjs?v=2026_11_09.L';
+import { activeBias, setBias, castHouseRegister, initBiasFromURL } from './spw-bias.mjs?v=2026_11_16.B';
 
 const SWITCHES_KEY = 'lore.switches.v1';
 const SEEN_RELEASE_KEY = 'lore.release.seen';

@@ -17,7 +17,7 @@
  * The page that opens after a restart says so (a settle card), because a
  * change should leave a visible mark.
  */
-import { settle } from './settled.mjs?v=2026_11_09.L';
+import { settle } from './settled.mjs?v=2026_11_16.B';
 
 const KEPT_KEY = 'lore.again.kept.v1';
 const JUST_KEY = 'lore.again.just';

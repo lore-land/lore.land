@@ -15,7 +15,7 @@
  * pretending. Without script, the block is still the expression and gloss.
  */
 import { CONTAINER_RESONANCE, OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { isWholeSpw, referenceName } from './spw-ast.mjs?v=2026_11_16.A';
+import { isWholeSpw, referenceName } from './spw-ast.mjs?v=2026_11_16.B';
 
 const CONTAINERS = Object.freeze({
   Frame: { open: '[', close: ']', word: 'a window', what: 'you can only look into it' },
@@ -26,7 +26,7 @@ const CONTAINERS = Object.freeze({
 
 let parser = null;
 const loadParser = () => {
-  parser = parser || import('../vendor/spw-seed.mjs').then((mod) => mod.parse).catch(() => null);
+  parser = parser || import('../vendor/spw-seed.mjs?v=2026_11_16.B').then((mod) => mod.parse).catch(() => null);
   return parser;
 };
 

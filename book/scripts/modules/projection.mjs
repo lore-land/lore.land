@@ -33,11 +33,11 @@
  * the reader's own unless they keep it) and can only ever lower the audience.
  */
 
-import { readStory, storyLink } from './story-directions.mjs?v=2026_11_09.L';
+import { readStory, storyLink } from './story-directions.mjs?v=2026_11_16.B';
 import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
-import { renderSpell } from './spw-spell.mjs?v=2026_11_16.A';
-import { readWay, waySpell } from './way-through.mjs?v=2026_11_16.A';
-import { parseProseSpw, walkAst, frameItems, opInfo, bindingInfo, bodyExpressions } from './spw-ast.mjs?v=2026_11_16.A';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
+import { readWay, waySpell } from './way-through.mjs?v=2026_11_16.B';
+import { parseProseSpw, walkAst, frameItems, opInfo, bindingInfo, bodyExpressions } from './spw-ast.mjs?v=2026_11_16.B';
 
 const NOOK_KEY = 'lore.nook.v1';
 const AUDIENCE_KEY = 'lore.audience.v1';
@@ -173,7 +173,7 @@ export function projectionSpell(clauses) {
 
 let seedPromise = null;
 const loadSeed = () => {
-  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null);
   return seedPromise;
 };
 

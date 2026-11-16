@@ -17,21 +17,21 @@
  */
 
 import { OPERATOR_RESONANCE } from './spw-resonance.mjs?v=2026_09_26.C';
-import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_16.A';
-import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_09.L';
-import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_13.B';
-import { BINDINGS } from './reading-nook.mjs?v=2026_11_09.L';
-import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_09.L';
+import { SWITCHES, readSwitches, setSwitch, keepChapters } from './reading-switches.mjs?v=2026_11_16.B';
+import { readHeard, heardCount, loadTellingTotals } from './tellings.mjs?v=2026_11_16.B';
+import { openBeginAgain, fromTheTop } from './begin-again.mjs?v=2026_11_16.B';
+import { BINDINGS } from './reading-nook.mjs?v=2026_11_16.B';
+import { readStory, describeStory, hasStory } from './story-directions.mjs?v=2026_11_16.B';
 import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_08.J';
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
-import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_16.A';
+import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
 import { mergeBoard } from './spw-formulas.mjs?v=2026_11_13.B';
 import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_13.B';
 import { noteCrossing } from './trope-reveal.mjs?v=2026_11_13.B';
 import { readBoardLine } from '../home/pie-frame.mjs?v=2026_11_13.B';
-import { bindSiteResonance, curiosityStanding, syncDerivedSparks } from './intrinsic-rewards.mjs?v=2026_11_16.A';
+import { bindSiteResonance, curiosityStanding, syncDerivedSparks } from './intrinsic-rewards.mjs?v=2026_11_16.B';
 
 const CATALOG_URL = '/book/content/catalog.json';
 const SEMANTIC_URL = '/book/content/semantic.json';
@@ -42,7 +42,7 @@ const HISTORY_KEY = 'lore.desk.spells.v1';
 const PIE_KEY = 'lore.pie.v1';
 /* The real parser, loaded only when a formula is cast. */
 let seedPromise = null;
-const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null); return seedPromise; };
+const loadSeed = () => { seedPromise = seedPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null); return seedPromise; };
 /* What the desk's own spells answer, by operator: anything else with a sign is the land's to answer (land-answers.mjs). */
 const DESK_OWNS = Object.freeze({
   '@': /^(folios?|pie|game|play|home|entrance|chapter\/\d+|\d{1,2})$/i,

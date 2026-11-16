@@ -147,7 +147,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
   const loadLines = () => {
     lines = lines || Promise.all([
       import('./kept-lines.mjs?v=2026_11_13.B'),
-      import('./spw-spell.mjs?v=2026_11_16.A'),
+      import('./spw-spell.mjs?v=2026_11_16.B'),
       import('./likeness.mjs?v=2026_11_11.A').then(async (mod) => { await mod.loadLikeness(); return mod; })
     ]).then(([k, s, l]) => ({ k, s, l })).catch(() => null);
     return lines;
@@ -206,7 +206,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
       Object.assign(told.dataset, { keptLine: here, keptSay: 'This chapter’s wonders: ' });
       box.append(el('p', { className: 'wonder-card-here-label' }, 'This chapter’s wonders, kept and still to find'), told);
     }
-    import('../vendor/spw-seed.mjs').then((m) => kl.k.sayLinesIn(box, m?.spokenLine)).catch(() => {});
+    import('../vendor/spw-seed.mjs?v=2026_11_16.B').then((m) => kl.k.sayLinesIn(box, m?.spokenLine)).catch(() => {});
     return box;
   };
 

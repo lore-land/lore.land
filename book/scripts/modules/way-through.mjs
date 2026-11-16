@@ -26,11 +26,11 @@
  * Data: book/content/world/way.json, held by book:check.
  */
 
-import { settle } from './settled.mjs?v=2026_11_09.L';
-import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_16.A';
-import { renderSpell } from './spw-spell.mjs?v=2026_11_16.A';
+import { settle } from './settled.mjs?v=2026_11_16.B';
+import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_16.B';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
-import { parseProseSpw, topExpressions, bodyExpressions, opInfo } from './spw-ast.mjs?v=2026_11_16.A';
+import { parseProseSpw, topExpressions, bodyExpressions, opInfo } from './spw-ast.mjs?v=2026_11_16.B';
 
 export const WAY_URL = '/book/content/world/way.json?v=2026_11_10.A';
 const WAY_KEY = 'lore.way.v1';
@@ -66,7 +66,7 @@ export function waySpell(way) {
 
 let seedPromise = null;
 const loadSeed = () => {
-  seedPromise = seedPromise || import('../vendor/spw-seed.mjs').catch(() => null);
+  seedPromise = seedPromise || import('../vendor/spw-seed.mjs?v=2026_11_16.B').catch(() => null);
   return seedPromise;
 };
 

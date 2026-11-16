@@ -140,7 +140,7 @@ export function loadRegisters() {
 
 /** Let readBias use the real parser too (lazily; shares the instance pie-spw.mjs loads). */
 export function warmBiasParser() {
-  return import('../vendor/spw-seed.mjs').then((mod) => { seed = mod; return true; }).catch(() => false);
+  return import('../vendor/spw-seed.mjs?v=2026_11_16.B').then((mod) => { seed = mod; return true; }).catch(() => false);
 }
 
 /* ─── Reading spells ──────────────────────────────────────────────────── */
