@@ -1,0 +1,189 @@
+# Factshift.Center & Spw.Quest — Cognitive, Interactive & Semiotic Design Cache
+# Concrete design proposals and navigation theory bridging factshift.center, spw.quest, and lore.land.
+#>lore_land_factshift_quest_navigation
+#:cache #!factshift #!quest #!navigation #!semiotics
+#:layer #!pragmatics
+#:status #!active
+
+^"meta"{
+  .updated: "2026-11-16"
+  .role: "Cross-surface design proposals for factshift.center and spw.quest grounded in cognitive, interactive, and semiotic navigation theory"
+  .consumer: "factshift.center + spw.quest + spw-workbench + lore.land"
+  .companion_surface: ~".spw/surfaces/workbench-proposals.spw#lore_land_surfaces_workbench_proposals"
+  .upstream_caches: [
+    "spwashi.com:.spw/caches/motion-and-marks-2026-11.spw",
+    "spwashi.com:.spw/caches/brace-literal-local-law-2026-11.spw",
+    "spwashi.com:.spw/caches/language-surface-wonders-2026-11.spw"
+  ]
+}
+
+&refs{
+  index: ~"../index.spw#lore_land_spw_index"
+  caches: ~"./index.spw#lore_land_caches_index"
+  workbench_direction: ~"./workbench-direction.spw#lore_land_workbench_direction"
+  workbench_proposals: ~"../surfaces/workbench-proposals.spw#lore_land_surfaces_workbench_proposals"
+  spw_architecture: ~"../surfaces/spw-architecture.spw#lore_land_surfaces_spw_architecture"
+  rooms: ~"../surfaces/rooms.spw#lore_land_surfaces_rooms"
+  sound_and_voice: ~"../surfaces/sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
+}
+
+^"semiotic_triad_across_surfaces"{
+  thesis: "spw.quest, factshift.center, and lore.land enact one triadic semiotic cycle over a single conserved Spw line: Text -> Shape -> Motion -> Place -> Text."
+  surfaces: {
+    spw_quest: {
+      direction: "Text -> Shape (Comparative Decomposition & Corpus Kinship)"
+      organs: ["/guide", "/build", "/pivot", "/constructs", "/specimens", "/physics"]
+      role: "Reveals that a mark says what a word is doing and a brace says which slot it fills. Connects every edited line back to the 26-guide corpus shelf via kinValues and structural formulas."
+    }
+    factshift_center: {
+      direction: "Shape <-> Motion <-> Text (Embodied Force & Stratum Folding)"
+      organs: ["edge-scrub.ts", "pinch.ts", "body-gestures.ts", "brace-folds.ts", "reading.ts", "line-edit.ts", "line-joints.ts"]
+      role: "Holds the line conserved while letting its picture settle under local operator laws, fold across three reading strata (0 as-written, 1 by-parts, 2 as-particles), and rewrite through tactile rail/joint gestures."
+    }
+    lore_land: {
+      direction: "Text -> Place & Sound (Chamber Ecology & Musical Consequence)"
+      organs: ["spw-architecture.spw", "rooms.spw", "pie-rules.spw", "spw-sound.mjs", "chapter-spell.mjs"]
+      role: "Turns expressions into traversable rooms (~{warm_furrow}@boof) and key-anchored harmonic intervals: its spell is always there, its meaning once stood on, its use once walked round."
+    }
+  }
+}
+
+^"cognitive_navigation_theory"{
+  epistemic_actions: {
+    principle: "Kirsh & Maglio Epistemic Action vs Pragmatic Action"
+    mechanism: "In both factshift.center and spw.quest/pivot, gestures default to epistemic priming (~ potential) before pragmatic commitment (! action -> * receipt). Scrubbing the operator slider or edge rail shows the resulting expression, spoken gloss, and force shift in place before the user commits."
+    cognitive_gain: "Eliminates mental lookahead burden and syntax-error anxiety: learners explore the grammar by reversible physical probing rather than blind typing."
+  }
+  embodied_image_schemas: {
+    principle: "Lakoff/Johnson Sensorimotor Containers & Talmy Force Dynamics"
+    containers: [
+      "{ } body/definition: Sunken well with a solid rim when open (1 by-parts); raised card when folded (0 as-written); +q/-q planar 1/d dipole pair when read as particles (2 as-particles).",
+      "[ ] mode/lens: Tight atom bonded flush to its word (garden-[care]), never drifting apart.",
+      "( ) scene/scope: Sleeve wrapping the word and its body as a shared situational frame.",
+      "< > concept/projection: Directed field hull orienting where the reading projects."
+    ]
+    force_laws: [
+      ". ground: settles 6-8px lower (gravitational rest)",
+      "^ ascension: lifts 6-8px higher (buoyancy)",
+      "* value: stiffens spring (stiff = 2.6, committed mass)",
+      "~ potential: softens spring (stiff = 0.3, compliant drift)",
+      "@ perspective: gathers parts toward body center (+0.25 centripetal focus)",
+      "? wonder: opens parts away from center (-0.25 centrifugal inquiry) and refuses to fold because hiding a question is not answering it",
+      "! action: clears repulsive room (+5px neighbor clearance)",
+      "% measure: levels vertical variance across sibling rings"
+    ]
+  }
+  attentional_foveation: {
+    principle: "Working-Memory Chunking (4 ± 1 items) via Stratum Folding & Fractal Force Decay"
+    mechanism: "Combining per-body strata (brace-folds.ts: 0 | 1 | 2) with exponential depth attenuation (reading.ts: depthShare = share ** depth across alike=1.0, softer=0.6, faint=0.3) creates a cognitive fovea. Only the currently entered body moves at full amplitude and granularity; deeper bodies rest as calm literals or softened sub-frames until pinched open."
+  }
+}
+
+^"interactive_navigation_theory"{
+  bimanual_kinematic_chain: {
+    principle: "Guiard's Bimanual Asymmetry (Left Hand = Coarse Frame, Right Hand = Fine Action)"
+    left_rail_where: "Contravariant / Prefix Arms / Opening Brace. Sets the spatial coordinate frame, mode (@modes), place, or AST focus path BEFORE action."
+    right_rail_how: "Covariant / Postfix Discharges / Closing Brace. Applies the verb, operator swatch, joint turn, or pivot orbit AFTER focus is established."
+    one_kind_per_rail: "Locking one homogeneous stop-kind per rail turns thumb scrubbing into a smooth 1D fiber bundle projection rather than a 34-stop heterogeneous jump."
+  }
+  velocity_gated_phase_transitions: {
+    principle: "Continuous Metric Manipulation vs Discrete Topological Catastrophe"
+    slow_regime: "dt >= 280ms: continuous metric adjustment (dragging node seats, resizing body radius r, warming local 2s thermal clock, previewing rail scrub parameter γ(t) ∈ [0,1])."
+    fast_regime: "dt < 280ms (flick >= 36px or pinch crossing 0.8/1.25 and 0.65/1.35): discrete topological transition across AST depth and reading strata (↑/↓ steps 0 <-> 1 <-> 2; left/right edge flick frames prev/next sibling body; pinch/spread folds {…} or enters/ascends frame)."
+  }
+  electrostatic_and_thermal_locality: {
+    principle: "Closed Braces as Neutral Dipoles & Scoped Thermal Clocks"
+    law: "Because an opener (+q) and closer (-q) cancel outside their hull in 2D (1/d planar Gauss law), touching or heating a body warms only its own parts and (by depthShare) its inner children—never spilling across sibling braces. Unclosed lines carry net ionic charge, visually and physically signaling owed closers."
+  }
+}
+
+^"semiotic_navigation_theory"{
+  peircean_triad_in_one_line: {
+    symbol_stratum_0: "0 as written ({seed, water}): Peircean Symbol — arbitrary, compact, conserved byte sequence."
+    icon_stratum_1: "1 by its parts: Peircean Diagrammatic Icon — spatial isomorphism where containment is a well and body joins (. , ; ~>) are drawn as chain, ring, row, and rising path."
+    index_stratum_2: "2 as particles + local forces + * receipts: Peircean Dynamical Index — physical trace of charge (+q/-q), spring stiffness, and action residue."
+  }
+  jakobson_orthogonal_axes: {
+    syntagmatic_combination_axis: "Horizontal / Left-to-Right traversal across co-present slots (charge -> subject -> [mode] -> {body} -> (scene) -> <projection>) and body joins (. , ; ~>).",
+    paradigmatic_selection_axis: "Vertical / Rail scrub across substitution orbits at the focused slot (pivotsOf: turning walls [] <-> {} <-> () <-> <>, swapping kinValues from the shelf, cycling front marks, or turning seams)."
+  }
+  molecular_isomers_and_kin: {
+    structural_formula: "Stripping words from ~soup[warm]{beans, salt}<food> yields its molecular skeleton ~·[]{,}<>. Lines sharing a skeleton are structural homologs; the same words rearranged across slots or wall types are syntactic isomers."
+    corpus_kinship: "spw.quest/pivot ranks candidate slot substitutions by shared anchor slots on the shelf (kinValues), turning isolated syntax edits into navigation across a living literary/technical corpus."
+  }
+}
+
+^"proposed_improvements_factshift_center"{
+  f1_upgrade_pin_and_unify_pivots: {
+    target: "workers/factshift-center/app (package.json, line-anatomy.ts, line-joints.ts)"
+    proposal: [
+      "Advance spw-workbench pin from 2026.11.07-pre.1 (3f53adf2) to current HEAD.",
+      "Replace bespoke line-anatomy.ts / line-slots.ts with spw-seed/line + spw.pivots/1 extended with byte spans and seam pivots.",
+      "Surface the 3-way read-back badge (line + parser + spoken) on the Right Rail while scrubbing a joint or mark turn, so invalid rewrites remain visible with their exact diagnostic reason."
+    ]
+  }
+  f2_parseable_rail_crumbs_and_axis_lock: {
+    target: "workers/factshift-center/app/src/js/ui/edge-scrub.ts"
+    proposal: [
+      "Replace unparseable rail stop labels (@node › #select[2/6]) with valid Spw path expressions (@node#select[2/6] and @node/select[2/6]!all[1/5]).",
+      "Bind Left Rail strictly to Syntagmatic/Contravariant focus (Where: frame depth, @modes, bodyRegions, slot handle selection) and Right Rail strictly to Paradigmatic/Covariant transformation (How: pivotsOf(focus), operator swatches, seam turns, stratum step, and ephemera receipt scrub)."
+    ]
+  }
+  f3_ionic_ghost_particles_and_scene_sleeve: {
+    target: "workers/factshift-center/app/src/ts/simulation/particles.ts, region-rects.ts"
+    proposal: [
+      "Answer wonder_line_as_ion: when a held line owes closing braces, render the owed closers on the canvas as translucent ghost particles carrying the missing -q charge, pulling gently toward the open hull until Tab or a pinch-close commits them into the line.",
+      "Answer wonder_scene_material: replace the detached dashed ( ) box with a soft capsule sleeve that wraps the word and its { } well together, visually honoring that (scene) qualifies the whole word-and-body unit."
+    ]
+  }
+  f4_tilde_arrival_and_local_part_marks: {
+    target: "workers/factshift-center/app/src/js/modes/spw/brace-folds.ts, operator-physics.ts"
+    proposal: [
+      "Answer wonder_literal_until_stood_on: let ~ bodies arrive at Stratum 0 (folded as-written literal) when nested at depth >= 1, unfolding to Stratum 1 (by-parts) when touched or stood on—aligning the canvas with lore.land's disk law (spell first, meaning when stood on, use when walked).",
+      "Answer wonder_every_law_local: add a toggle in the Forces menu scoping part-level @ and ! marks to their enclosing brace hull so sibling bodies never perturb each other's internal equilibrium unless unbraced."
+    ]
+  }
+  f5_bidirectional_spw64_and_earcon_bridge: {
+    target: "workers/factshift-center/app/src/js/modes/spw/, lore.land spw-sound.mjs"
+    proposal: [
+      "Add a one-tap 'Open in spw.quest /pivot or /physics' action alongside the existing #spw64= bridge to /build, preserving the active focused line and trail.",
+      "Adopt the ^ear{ %body[392] %frame[523] %step[2] =voice[modal] } contract from spw-workbench 47c178e so stratum steps (0 <-> 1 <-> 2), dipole closure, and rail detents emit subtle, user-tunable harmonic earcons matching lore.land."
+    ]
+  }
+}
+
+^"proposed_improvements_spw_quest"{
+  q1_zero_trace_parse_and_precomputed_shelf: {
+    target: "workers/spw-quest/src/file-reader.js, public/js/semantic/spw-workbench-reader.js"
+    proposal: [
+      "Consume the zero-trace parse(input) fast path (collect: false skipping performance.now() and generator trace yields) to cut cold-start CPU time by ~70% and prevent Cloudflare Worker 1102/1027 limits.",
+      "Precompute SPECIMENS slot readings and USAGE counts at build time in carry-guide.mjs alongside assets/index.html so Worker isolates start with zero cold-parse work."
+    ]
+  }
+  q2_unify_pivot_with_workbench_pivots_and_spoken_diff: {
+    target: "workers/spw-quest/src/pivot.js"
+    proposal: [
+      "Back /pivot with spw-workbench's spw.pivots/1 (pivotsOf) while keeping spw.quest's corpus-aware kinValues ranking on top.",
+      "Display the spoken-reading diff (read.spoken and spokenChanged from pivots.ts) on every primed slot turn and operator slider tick, so learners see both the syntactic change and how the sentence's plain-English meaning shifts."
+    ]
+  }
+  q3_braces_as_wells_and_dipole_Floor_in_physics: {
+    target: "workers/spw-quest/src/physics.js, workers/spw-quest/src/build.js"
+    proposal: [
+      "Bring factshift.center's 3-stratum toggle (0 as-written, 1 by-parts, 2 as-particles) and well/card material cues directly into spw.quest/physics so the 340px resting floor and the full canvas share one visual and physical vocabulary.",
+      "Show the structural formula (~·[]{,}<>) on /pivot and /constructs cards with a one-click filter for structural isomers and homologs across the shelf."
+    ]
+  }
+  q4_progressive_trail_as_spw_expression: {
+    target: "workers/spw-quest/src/pivot.js, public/js/runtime/experiential/breadcrumb-spell.js"
+    proposal: [
+      "Render the /pivot trail (origin ~> step ~> now) as a single copyable, valid Spw movement expression {origin ~> step ~> now} that can be opened whole in /build or sent via #spw64= to factshift.center as a connected docThread."
+    ]
+  }
+}
+
+?open[
+  "When a ~ body arrives folded as-written at depth >= 1, should its outer spring stiffness still reflect ~ (0.3 drift) while its inner parts remain unexpanded?",
+  "Should spw.quest/pivot rank syntactic isomers (same words, turned walls) ahead of corpus kin (shared anchor slots, new word) when priming a handle tap?",
+  "How should the ^ear line encode dipole charge tension when a line on factshift.center owes two or more closing braces?"
+]

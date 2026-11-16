@@ -23,6 +23,7 @@
   plugin_protocol: ~"./plugin-protocol.spw#lore_land_surfaces_plugin_protocol"
   spw_proposals: ~"./spw-proposals.spw#spw_proposals"
   workbench_direction: ~"../caches/workbench-direction.spw#lore_land_workbench_direction"
+  factshift_quest_navigation: ~"../caches/factshift-quest-navigation.spw#lore_land_factshift_quest_navigation"
   sound_and_voice: ~"./sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
   poetics: ~"./poetics.spw#lore_land_surfaces_poetics"
 }

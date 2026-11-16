@@ -108,6 +108,7 @@
   dregg_release_cache: ~"./audits/dregg-release-cache-2026-09-26.spw"
   caches: ~"./caches/index.spw"
   workbench_direction: ~"./caches/workbench-direction.spw"
+  factshift_quest_navigation: ~"./caches/factshift-quest-navigation.spw"
   mount: ~"./mount.spw"
 }
 

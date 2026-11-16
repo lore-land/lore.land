@@ -11,5 +11,6 @@
 ^"caches"{
   .consumer: "lore.land (mounted via .spw/mount.spw to .spw/_workbench)"
   workbench_direction: ~".spw/caches/workbench-direction.spw#lore_land_workbench_direction"
+  factshift_quest_navigation: ~".spw/caches/factshift-quest-navigation.spw#lore_land_factshift_quest_navigation"
   dregg_release_snapshot: ~".spw/audits/dregg-release-cache-2026-09-26.spw#dregg_release_cache_2026_09_26"
 }

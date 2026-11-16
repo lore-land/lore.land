@@ -24,6 +24,7 @@
   sound_and_voice: ~".spw/surfaces/sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
   spw_proposals: ~".spw/surfaces/spw-proposals.spw#spw_proposals"
   workbench_proposals: ~".spw/surfaces/workbench-proposals.spw#lore_land_surfaces_workbench_proposals"
+  factshift_quest_navigation: ~".spw/caches/factshift-quest-navigation.spw#lore_land_factshift_quest_navigation"
   texture_website: ~".spw/surfaces/texture-website.spw#texture_website"
   story_boonhonk: ~".spw/story-boonhonk.spw#lore_land_story_boonhonk"
   plan_f: ~"PLAN.F.spw#plan_f"
