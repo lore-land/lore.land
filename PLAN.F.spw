@@ -137,7 +137,7 @@
 
 ^"metacognition"{
   .note: "What agents and systems should hold in mind across sessions"
-  drift_check: "Watch tooling vs story balance via npm run spw:plans; chapters still wait at ch15 while tooling sprints ahead"
+  drift_check: "Use npm run spw:plans to watch reader reach vs tooling churn; serial.next stays null/optional while story re-derivation and projection evolve"
   hypothesis_vs_fact: "Slices marked proposed or later are hypotheses with explicit decides owners; verify contract_status, grants.spw, and npm run check before treating proposals as absent or final"
   two_readers_one_truth: "Lazy spw-seed.mjs (213.1KB) + sync fallback readers + book:check parity tests let offline/initial paint stay fast while AST parsing catches syntax and fallback traps"
   emergent_story_seeds: "Honor motifs discovered in play (the Thursday nobody kept, room resonances, @style packs) by promoting them into structured Spw seeds rather than leaving copy scattered across HTML"

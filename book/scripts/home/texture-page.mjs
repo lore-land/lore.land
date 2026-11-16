@@ -480,8 +480,14 @@ async function paintEvent(event) {
     return;
   }
   if (event.view === 'stone') {
-    const { chapter, date } = NEXT_STONE;
     const pad = (n) => String(n).padStart(2, '0');
+    if (!NEXT_STONE) {
+      body.replaceChildren(
+        el('p', {}, 'No next chapter date is scheduled right now; chapters grow when ready.'),
+        el('p', {}, el('a', { href: `/book/chapter/${pad(TOTAL_CHAPTERS)}/` }, `Meanwhile, Chapter ${TOTAL_CHAPTERS} \u2192`)));
+      return;
+    }
+    const { chapter, date } = NEXT_STONE;
     if (TOTAL_CHAPTERS >= chapter) { body.replaceChildren(el('p', {}, el('a', { href: `/book/chapter/${pad(chapter)}/` }, `Chapter ${chapter} is here \u2192`))); return; }
     const days = daysBetween(localDay(new Date()), date);
     body.replaceChildren(

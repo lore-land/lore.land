@@ -1,9 +1,9 @@
 {
-  "note": "The serial's shape: its books and the next stone. Read by book/scripts/tools/build-chapters.mjs, which writes book/scripts/modules/book-extent.mjs and the catalog. Update `next` on every release.",
-  "cadence": "New chapters are set on the 13th and 26th of each month.",
+  "note": "The serial's shape: its book rings and an optional next chapter date (null when unscheduled). Read by book/scripts/tools/build-chapters.mjs to write book/scripts/modules/book-extent.mjs.",
+  "cadence": "Chapters release at the maker's own pace; optional `next` may hold { chapter, date } when a release date is scheduled.",
   "books": [
     { "number": 1, "title": "The Unspent Wish", "first": 1, "last": 13 },
     { "number": 2, "title": "Wonder About Pi(e)", "first": 14, "last": 26 }
   ],
-  "next": { "chapter": 16, "date": "2026-11-13" }
+  "next": null
 }

@@ -346,7 +346,7 @@
   ^root[L05]{ !state: live .at: "semantic.json" note: "folded by lore-fold.mjs" }
   ^root[L06]{ !state: live .at: "sightings.mjs" note: "nine strokes, no name" }
   ^root[L07]{ !state: live .at: "/almanac/" note: "81 wonders, 15 of them sayings" }
-  ^root[L08]{ !state: live .at: "book/content/serial.json" note: "ch15 live; ch16 due 2026-11-13 (1 day late)" }
+  ^root[L08]{ !state: live .at: "book/content/serial.json" note: "ch15 live; serial.next is null (no unscheduled stone deadline)" }
   ^root[L09]{ !state: prototype .at: "chapter-render.mjs" note: "Wonders here on every colophon; no dead-end probe (c027)" }
   ^root[L10]{ !state: live .at: "almanac-page.mjs" note: "66 of 81 carry a prompt; the 15 without are the sayings" }
   ^root[L11]{ !state: prototype .at: "stage-directions.mjs" note: "Frame this is live; the wonder card has no snapshot face" }
@@ -441,6 +441,7 @@
   ]
   turns: [
     "2026-11-08 · axis: none, a ground turn · roots read from code and pages; aspiration, six branches and three wonders seeded; lesson_count 22 → 28 · next: sketch the reel as a lesson, or run the way-in probe"
-    "2026-11-14 · axis: canon vs site parser + web platform · workbench 84cf313 integrated (875784a); L30–L31 and modern-web-guidance review added; lesson_count 28 → 31 · next: project re-derived story/landing copy via projection.spw or set stone ch16"
+    "2026-11-14 · axis: canon vs site parser + web platform · workbench 84cf313 integrated (875784a); L30–L31 and modern-web-guidance review added; lesson_count 28 → 31 · next: project re-derived story/landing copy via projection.spw or clear phantom stone 16 schedule"
+    "2026-11-16 · axis: intentional pacing vs unused ceremony · serial.next cleared to null and treated as optional across plan-gate, serial.json, and agent orientation notes"
   ]
 }

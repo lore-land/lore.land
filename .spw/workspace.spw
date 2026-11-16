@@ -111,7 +111,7 @@
 
 ^"agent_metacognition"{
   .note: "Orientation invariants for future agents and automated tools reading this repository"
-  watch_story_vs_tooling_drift: "Run npm run spw:plans first; read the next stone before surveys. Code velocity regularly outruns story chapters (0/30 recent commits touching book/content/chapters/), so prioritize work that advances story re-derivation, prose stones, or concrete reader clarity over unrequested infra churn"
+  watch_story_vs_tooling_drift: "Run npm run spw:plans first to review open slices, grants, and how much work reaches readers; serial.next is optional/dormant while story re-derivation and template projection evolve"
   separate_live_from_proposed: "Check contract_status, .spw/state/grants.spw, and npm run check before assuming a feature is missing or settled; slices marked proposed or later in PLAN.F carry explicit decides owners for maker judgment"
   dual_path_parser_contract: "Keep book/scripts/vendor/spw-seed.mjs lazy off first paint alongside synchronous fallback readers, and verify parity in book:check. Always check completeness.complete && !completeness.proseFallback rather than parse().success alone (spw-stress quiet_prose_fallback)"
   canon_and_projection_boundary: "book/content/chapters/*.json remains prose SoT; .spw templates (.spw/surfaces/projection.spw) hydrate frames, clauses, and derived copy without letting runtime game play overwrite variant zero"

@@ -51,15 +51,18 @@ const parsed = (/** @type {string} */ file) => {
   return { text, ast: /** @type {Node} */ (result.ast) };
 };
 
-/* The next stone. */
+/* Optional scheduled stone in serial.json (dormant when serial.next is null). */
 const serial = JSON.parse(read('book/content/serial.json'));
-const now = new Date();
-const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));   // the maker's calendar day, not UTC's
-const days = Math.round((Date.parse(`${serial.next.date}T00:00:00Z`) - today.getTime()) / 86400000);
-const stoneFile = `book/content/chapters/${String(serial.next.chapter).padStart(2, '0')}.json`;
-const stoneExists = fs.existsSync(path.join(ROOT, stoneFile));
-if (!stoneExists && days <= 7) warn.push(`stone ${serial.next.chapter} is ${days < 0 ? 'late' : `due in ${days} days`} and has no chapter`);
-const stoneLine = `stone ${serial.next.chapter} is due ${serial.next.date} (${days < 0 ? `${-days} days late` : `in ${days} days`}); ${stoneExists ? 'its chapter exists' : 'it has no chapter yet'}`;
+let stoneLine = null;
+if (serial.next?.chapter && serial.next?.date) {
+  const now = new Date();
+  const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));   // the maker's calendar day, not UTC's
+  const days = Math.round((Date.parse(`${serial.next.date}T00:00:00Z`) - today.getTime()) / 86400000);
+  const stoneFile = `book/content/chapters/${String(serial.next.chapter).padStart(2, '0')}.json`;
+  const stoneExists = fs.existsSync(path.join(ROOT, stoneFile));
+  if (!stoneExists && days <= 7) warn.push(`stone ${serial.next.chapter} is ${days < 0 ? 'late' : `due in ${days} days`} and has no chapter`);
+  stoneLine = `stone ${serial.next.chapter} is due ${serial.next.date} (${days < 0 ? `${-days} days late` : `in ${days} days`}); ${stoneExists ? 'its chapter exists' : 'it has no chapter yet'}`;
+}
 
 /* The slices. */
 const scripts = JSON.parse(read('package.json')).scripts;
@@ -143,11 +146,11 @@ if (!shallow) {
   const reader = commits.filter((files) => files.some(reaches)).length;
   const chapters = commits.filter((files) => files.some((f) => f.startsWith('book/content/chapters/'))).length;
   spend = `${reader} of the last ${commits.length} commits reached a reader, ${chapters} touched a chapter`;
-  if (commits.length >= 10 && chapters === 0) warn.push(`none of the last ${commits.length} commits touched a chapter`);
+  if (serial.next?.chapter && commits.length >= 10 && chapters === 0) warn.push(`none of the last ${commits.length} commits touched a chapter`);
   if (commits.length && reader / commits.length < 0.5) warn.push(`${spend}: the tools are outrunning the book`);
 }
 
-console.log(`plans[stone]{ ${stoneLine} }`);
+if (stoneLine) console.log(`plans[stone]{ ${stoneLine} }`);
 console.log(`plans[count]{ ${openSlices} open slices · ${grants} grants · ${questions} open questions, ${answered} answered · ${spend} }`);
 for (const entry of asked.slice(0, 5)) console.log(`  oldest  ${entry.when}  ${entry.file} (${entry.items})`);
 console.log('  unread  PLAN.A to PLAN.D do not parse, so nothing here holds them');
