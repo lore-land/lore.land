@@ -317,6 +317,53 @@ const notes = [];
   notes.push('navigation: chapter tonics Ch01 D4..Ch14 C4 aligned; room & chapter-door voice leading bounded <= 0.055, silent without speaker');
 }
 
+// Board movement, maneuvering tricks, and power-up / obstacle story cues stay in key, quiet, and unvoiced without AudioContext.
+{
+  const stepLeft = sound.boardStepPlan({ lane: 0, row: 0, prevLane: 2, prevRow: 0 });
+  const stepRight = sound.boardStepPlan({ lane: 4, row: 1, prevLane: 2, prevRow: 0, diagonal: true, towardSafe: true });
+  const bump = sound.boardStepPlan({ kind: 'bump', lane: 0, row: 0 });
+  if (!stepLeft.notes.length || stepRight.notes.length < 2 || bump.notes[0].semiOffset >= 0) fail('board step plans lost directional contour');
+  [stepLeft, stepRight, bump].forEach((p, idx) => {
+    if (p.notes.some((n) => !Number.isFinite(n.vol) || n.vol <= 0 || n.vol > 0.03)) fail(`board step plan ${idx} volume out of bounds`);
+  });
+
+  ['hop_clear', 'apex', 'mime_glass', 'pierce', 'shield_hold', 'frill_catch', 'unkept_pass', 'bank_score'].forEach((kind) => {
+    const t = sound.trickPlan(kind, { high: kind === 'hop_clear', clears: 2, count: 2 });
+    if (!t.notes.length || t.notes.some((n) => n.vol <= 0 || n.vol > 0.045)) fail(`trickPlan(${kind}) out of bounds`);
+  });
+
+  const pLag = sound.powerStoryPlan({ timed: { lag: 5 } });
+  const pLit = sound.powerStoryPlan({ timed: { lit: 7 } });
+  const pUnkept = sound.powerStoryPlan({ timed: { unkept: 4.5 } });
+  const pEcho = sound.powerStoryPlan({ charges: { echoes: 3 } });
+  if (pLag.role !== 'lag' || pLag.notes[1].at < 0.2 || pLit.role !== 'lit' || pUnkept.role !== 'unkept' || pEcho.role !== 'echoes') {
+    fail('powerStoryPlan roles or timing mismatch');
+  }
+
+  const banePass = sound.obstacleStoryPlan('clerk');
+  const bonePass = sound.obstacleStoryPlan('stone');
+  const boonPass = sound.obstacleStoryPlan('furrow');
+  if (banePass?.lean !== 'bane' || bonePass?.lean !== 'bone' || boonPass?.lean !== 'boon') fail('obstacleStoryPlan leaning mismatch');
+  if ([banePass, bonePass, boonPass].some((p) => !p || p.notes.some((n) => n.vol > 0.025))) fail('obstacleStoryPlan exceeded quiet ceiling');
+
+  sound.playTone('trick', { kind: 'mime_glass' });
+  sound.playTone('power_story', { timed: { lit: 7 } });
+  sound.playTone('story_pass', { kind: 'clerk' });
+
+  const movements = [0.1, 0.4, 0.7, 0.9].map((p) => sound.chapterArcPlan({ progress: p, bar: 1, step: 8, stage: 3 }).movement);
+  if (movements.join(',') !== 'opening,rising,bridge,turnaround') fail(`chapterArcPlan movements mismatch: ${movements}`);
+  const jzPoise = sound.jazzPhrasePlan({ wobble: 0.08, combo: 0, richness: 0.4 });
+  const jzEnclosure = sound.jazzPhrasePlan({ wobble: 0.38, combo: 2, richness: 0.6, step: 6 });
+  const jzAltered = sound.jazzPhrasePlan({ wobble: 0.72, combo: 4, richness: 0.85, step: 6 });
+  const jzBoon = sound.jazzPhrasePlan({ presence: 'boon', richness: 0.8 });
+  const jzBane = sound.jazzPhrasePlan({ presence: 'bane', richness: 0.8 });
+  if (jzPoise.style !== 'poised_69' || jzEnclosure.style !== 'enclosure' || !jzEnclosure.enclosure || jzAltered.style !== 'altered_dominant' || jzBoon.style !== 'lydian_court' || jzBane.style !== 'bebop_bite') {
+    fail('jazzPhrasePlan failed to reflect gameplay dimensions');
+  }
+  if (!(jzAltered.compSemis.length > jzPoise.compSemis.length)) fail('jazzPhrasePlan voicing density did not grow with richness/combo');
+  notes.push('board & story cues: 4-movement chapter arc, 5 jazz gameplay dimensions, lane/row step contour, 8 trick plans & story pass cues verified');
+}
+
 notes.forEach((n) => console.log(`  ${n}`));
 if (fails.length) {
   console.error(`[sound] ${fails.length} problem${fails.length === 1 ? '' : 's'}:`);
