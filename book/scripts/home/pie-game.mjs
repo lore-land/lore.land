@@ -196,7 +196,7 @@ import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuning
 import { VALUE_DEFS, VALUE_IDS, newValueState, noteValueEvent, rankValues, valueBlessing, parallelReflection, recordChapterParallel, readChapterParallels } from '../modules/pie-values.mjs';
 import { BUILTIN_STYLES, parseCreatorStyle, formatCreatorStyle, allCreatorStyles, saveCreatorStyle, activeCreatorStyle, setActiveCreatorStyle, styleLineForProvenance } from '../modules/creator-styles.mjs';
 import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
-import { loadLevels, createConductor, foundRhythms, meetsOf, paceAt, BEATS } from './pie-rhythm.mjs?v=2026_11_16.A';
+import { loadLevels, createConductor, foundRhythms, meetsOf, paceAt, BEATS } from './pie-rhythm.mjs?v=2026_11_16.B';
 import { loadMotifs } from './pie-tropes.mjs';
 import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_16.B';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_16.B';
@@ -214,7 +214,7 @@ import { meet as meetCallback, saving as callbacksSaving, wordsOf as callbackWor
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
 import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
-import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_13.B';
+import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_16.B';
 import { initPieDraw } from './pie-draw.mjs?v=2026_11_16.B';
 import { initPieSetupUI } from './pie-setup-ui.mjs?v=2026_11_16.B';
 import { FINDS, HAGGLE_BEATS, readFind, deedOf, opens as findOpens, take as takeFind } from './pie-finds.mjs?v=2026_11_13.B';
@@ -638,9 +638,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const was = record.tropeStages[trope.id] ?? -1;
     if (reveal.index <= was) return;
     record.tropeStages[trope.id] = reveal.index;
+    run.lastTropeStage = reveal.stage;
     writeRecord(record);
     if (was < 0 && reveal.index === 0) return;   // a seed is planted quietly; the hint is the first thing said
-    run.tags.push({ x: W / 2, y: 96, t: 0, text: `${trope.sigil || ''} ${trope.name.toUpperCase()} · ${reveal.stage.toUpperCase()}`.trim() });
+    run.tags.push({ x: W / 2, y: 96, t: 0, text: `${trope.sigil || ''} ${trope.name.toUpperCase()} · ${reveal.spw || reveal.stage.toUpperCase()}`.trim() });
     // One trope a room is said aloud and heard; the rest rise quietly (their tag, and the carry's sheet).
     if (run.tropeSaidRoom === roomShown) return;
     run.tropeSaidRoom = roomShown;
@@ -791,11 +792,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   const heardAct = (kind) => {
     const heard = conductor.act(kind);
-    if (heard?.on && heard.onCount >= 3 && run) run.tags.push({ x: run.x, y: run.y - 40, t: 0, text: '♪'.repeat(Math.min(3, heard.onCount - 2)) });
+    if (heard?.on && heard.onCount >= 2 && run) {
+      const glyph = heard.accuracy === 'perfect' ? '♬' : '♪';
+      run.tags.push({ x: run.x, y: run.y - 40, t: 0, text: glyph.repeat(Math.min(3, Math.max(1, heard.onCount - 1))) });
+      if (heard.accuracy === 'perfect') spawnRing(run.x, run.y - 8, 16, colors.gold, 0.32);
+    }
     // In the pocket (an unlock): on a hit of the chapter's own found rhythm, anywhere in the chapter.
-    if (run && state === 'running' && unlockOpen('in_the_pocket') && conductor.pocket()) {
+    const pock = run && state === 'running' && unlockOpen('in_the_pocket') ? conductor.pocket() : null;
+    if (pock) {
       lean('pocket');
-      run.tags.push({ x: run.x + 18, y: run.y - 58, t: 0, text: '♪' });
+      run.tags.push({ x: run.x + 18, y: run.y - 58, t: 0, text: pock.accuracy === 'perfect' ? '♬' : '♪' });
+      if (pock.strong) spawnRing(run.x, run.y - 10, 18, colors.gold, 0.35);
     }
   };
   // Mechanics unlocked by weight (unlocks.mjs): said once, when kept.
@@ -4330,7 +4337,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const leftover = (run.found?.length || 0) % 5;
       if (run.foundLines?.length || leftover) {
         const lines = [...(run.foundLines || []), ...(leftover ? [`${run.found.slice(-leftover).join(' ')} …`] : [])];
-        links.unshift(nodeOf('span', 'pie-card-found', `Found on the road: ${lines.map((line) => `«${line}»`).join(' ')}`));
+        const foundWrap = nodeOf('span', 'pie-card-found', `Found on the road: ${lines.map((line) => `«${line}»`).join(' ')}`);
+        if (run.foundSpells?.length) {
+          const spellEl = renderSpell(run.foundSpells[run.foundSpells.length - 1], { cast: false, play: true, copy: 'lore.land/pie#found-line', layout: 'line', label: 'Found road line, as Spw' });
+          spellEl.classList.add('is-compact');
+          foundWrap.append(' ', spellEl);
+        }
+        links.unshift(foundWrap);
       }
       cardLinks?.replaceChildren(...links);
       say(`Spilled. ${CAUSES[cause]} ${run.carrier.name}, ${distance} cobbles.${served}`);
@@ -4679,9 +4692,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.spin = 0;
     thing.kept = true;
     run.kept += 1;
+    run.lastWonderKind = w.kind;
     (run.keptIds ||= []).push(w.id);
     lean('kept');
-    sfx(powerFor(w.id)?.refs?.sound || 'wonder', w.kind);
+    const prog = progress();
+    const mov = prog < 0.25 ? 'opening' : prog < 0.55 ? 'rising' : prog < 0.82 ? 'bridge' : 'turnaround';
+    sfx(powerFor(w.id)?.refs?.sound || 'wonder', { kind: w.kind, id: w.id, found: true, movement: mov });
     spawnRing(thing.x, thing.y, 34, colors.gold, 0.55);
     let isNew = false;
     try { isNew = Boolean(collectWonder(w.id, run.chapter)?.isNew); } catch { /* kept in the run, if not the almanac */ }
@@ -4692,8 +4708,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     applyPower(gift, { boost, charmLit });
     run.escort = { id: gift?.id || w.id, t: 3.5 };
     const sigil = KIND_SIGIL[w.kind] || '@';
-    run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()}` });
-    showToast(`${sigil} ${w.name}${isNew ? ' · new to your almanac' : ' · kept'}`, gift?.says || '', 3200, gift?.refs?.voice || 'wonder');
+    const syntaxAtom = `${sigil}${String(w.id || 'wonder').replace(/-/g, '_')}[${w.kind}]`;
+    run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()} · ${syntaxAtom}` });
+    showToast(`${sigil} ${w.name}${isNew ? ' · new to your almanac' : ' · kept'}`, `${gift?.says || ''} (${syntaxAtom})`.trim(), 3200, gift?.refs?.voice || 'wonder');
     say(`${w.name}, kept${isNew ? ', and new to your almanac' : ''}. ${gift.says}`);
     markWonder(w.id, 'kept');
   }
@@ -5230,9 +5247,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const progNow = progress();
         const richNow = richness();
         const presNow = run.boon ? 'boon' : run.bane ? 'bane' : '';
-        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow }));
+        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow, tropeStage: run.lastTropeStage || '', wonderKind: run.lastWonderKind || '' }));
         conductor.hitsIn(music.ahead).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35, step: h.step, in: h.in }));
-        if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, in: h.in }));
+        if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, interlock: h.interlock || 'primary', in: h.in }));
       }
       run.boofIn -= dt;
       if (run.boofIn <= 0 && !run.boof && !(run.bane && keptApart('boof', 'bane'))) {
@@ -6316,9 +6333,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     } else {
       drawGroundFor(s.id, scroll, 1);
     }
-    // The lanes: faint lines, the grammar he moves in.
-    ctx.strokeStyle = mix(colors.muted, colors.paper, 0.6);
-    ctx.setLineDash([6, 10]);
+    // The lanes: faint lines, the grammar he moves in, breathing gently with the beat.
+    const beatSnap = (!reduced?.matches && !record.view.zen && state === 'running') ? conductor.beatState?.() : null;
+    const beatPulse = beatSnap ? Math.exp(-beatSnap.phase * 4.5) : 0;
+    ctx.strokeStyle = mix(colors.muted, colors.paper, clamp(0.6 - beatPulse * 0.14, 0.4, 0.65));
+    ctx.setLineDash([6 + beatPulse * 1.5, 10 - beatPulse * 1.5]);
     for (let lane = 1; lane < LANES; lane += 1) {
       ctx.beginPath();
       ctx.moveTo(lane * LANE_W, board.y0);
@@ -6328,17 +6347,20 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.setLineDash([]);
     // The lane being carried in, lit a little: where you are is never in doubt.
     if (run && state !== 'title') {
+      const laneAlpha = (0.26 + beatPulse * 0.08).toFixed(2);
       const glow = ctx.createLinearGradient(0, 0, 0, H);
       glow.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      glow.addColorStop(1, mix(colors.paper, 'rgb(255, 255, 255)', 0.5).replace('rgb(', 'rgba(').replace(')', ', 0.28)'));
+      glow.addColorStop(1, mix(colors.paper, 'rgb(255, 255, 255)', 0.5).replace('rgb(', 'rgba(').replace(')', `, ${laneAlpha})`));
       ctx.fillStyle = glow;
       ctx.fillRect(run.x - LANE_W / 2, 0, LANE_W, H);
-      // How far up the lanes: four marks on each wall, the carrier's lit.
+      // How far up the lanes: four marks on each wall, the carrier's lit and the beat index subtly ticked.
       for (let row = 0; row < ROWS; row += 1) {
         const ty = rowY(row) - 18;
-        ctx.fillStyle = row === run.row ? colors.gold : mix(colors.ink, colors.paper, 0.72);
-        ctx.fillRect(0, ty - 1.5, row === run.row ? 9 : 5, 3);
-        ctx.fillRect(W - (row === run.row ? 9 : 5), ty - 1.5, row === run.row ? 9 : 5, 3);
+        const isBeatRow = beatSnap && ((3 - beatSnap.beatIndex) === row);
+        const wMark = row === run.row ? 9 + beatPulse * 2.5 : isBeatRow ? 7 : 5;
+        ctx.fillStyle = row === run.row ? colors.gold : isBeatRow ? mix(colors.gold, colors.paper, 0.48) : mix(colors.ink, colors.paper, 0.72);
+        ctx.fillRect(0, ty - 1.5, wMark, 3);
+        ctx.fillRect(W - wMark, ty - 1.5, wMark, 3);
       }
     }
     // A boonberry's glimpse: the clear way up the lanes, in teal, a breath before you need it.

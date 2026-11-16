@@ -162,19 +162,27 @@ export function initStoryLane({
     rw.kept = how;
     const clean = rw.word.replace(/[^\p{L}\p{N}'’-]/gu, '');
     if (!clean) return;
+    const atomWord = clean.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'word';
+    const howSigil = how === 'marked' ? '#' : how === 'fed' ? '*' : '.';
     run.found = run.found || [];
     run.found.push(clean.toLowerCase());
+    run.foundAtoms = run.foundAtoms || [];
+    run.foundAtoms.push(`${howSigil}${atomWord}`);
     if (how === 'marked') sfx('story_mark', 0, rw.x, rw.y);
     else if (how === 'fed') sfx('story_feed', 0, rw.x, rw.y);
     try { onStoryKeep?.({ word: clean, how, foundCount: run.found.length }); } catch { /* optional */ }
-    run.tags.push({ x: rw.x, y: rw.y - 18, t: 0, text: `${{ read: 'READ', marked: 'MARKED', fed: 'FED' }[how] || 'KEPT'}: ${clean.toUpperCase()}` });
+    run.tags.push({ x: rw.x, y: rw.y - 18, t: 0, text: `${{ read: '. READ', marked: '# MARKED', fed: '* FED' }[how] || 'KEPT'}: ${clean.toUpperCase()}` });
     if (run.found.length % 5 === 0) {
       const line = run.found.slice(-5).join(' ');
+      const atoms = (run.foundAtoms || []).slice(-5).join(' ');
+      const sayingSpw = `#saying[c${run.chapter || 1}]{ ${atoms} }`;
       run.foundLines = run.foundLines || [];
       run.foundLines.push(line);
-      showToast('A found line', `«${line}» — taken from the road, word by word.`, 3600, 'wonder', 2);
-      sfx('wonder', 'saying', rw.x, rw.y);
-      try { onStoryKeep?.({ word: clean, how, foundLine: line, foundCount: run.found.length }); } catch { /* optional */ }
+      run.foundSpells = run.foundSpells || [];
+      run.foundSpells.push(sayingSpw);
+      showToast('A found line · #saying', `«${line}» — ${sayingSpw}`, 3800, 'wonder', 2);
+      sfx('wonder', { kind: 'saying', id: atomWord, found: true }, rw.x, rw.y);
+      try { onStoryKeep?.({ word: clean, how, foundLine: line, foundSpell: sayingSpw, foundCount: run.found.length }); } catch { /* optional */ }
       run.aura = Math.min(1, run.aura + 0.05);
       run.wobble = Math.max(0, run.wobble - 0.08);
     }
@@ -198,7 +206,8 @@ export function initStoryLane({
       if (!grounded || Math.abs(rw.y - (run.y + 10)) >= 13 || Math.abs(rw.x - run.x) >= rw.w / 2 + 12) return;
       if (!rw.trod) {
         rw.trod = true;
-        if (!rw.glow) sfx('story_word', 0, rw.x, rw.y);
+        run.roadStep = ((run.roadStep || 0) + 1) % 5;
+        if (!rw.glow) sfx('story_word', { deg: run.roadStep }, rw.x, rw.y);
       }
       // A glowing word underfoot, on the ground (not in a hop), is read.
       if (rw.glow && !rw.read) {

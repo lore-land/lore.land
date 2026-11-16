@@ -204,7 +204,7 @@ export function createConductor({ onFound = () => {} } = {}) {
   };
 
   c.tick = (dt, { speed = 150, travel = 2, gap = 220, rate = 1 } = {}) => {
-    const out = { steps: [], ahead: [], beat: false, bar: false, row: false, late: 0 };
+    const out = { steps: [], ahead: [], beat: false, subbeat: false, bar: false, beatIndex: 0, phraseBar: 0, row: false, late: 0 };
     if (!(dt > 0)) return out;
     const s = sixteenth();
     const r = clamp(rate || 1, 0.05, 4);
@@ -221,7 +221,14 @@ export function createConductor({ onFound = () => {} } = {}) {
     // Every step passed this frame (a slow frame can pass two); the row is decided on the last.
     for (let k = Math.max(c.step + 1, now - 4); k <= now; k += 1) {
       out.steps.push(k);
-      if (k % 4 === 0) { out.beat = true; out.late = ((c.pos - k) * s) / r; }
+      if (k % 4 === 0) {
+        out.beat = true;
+        out.beatIndex = ((Math.floor(k / 4) % 4) + 4) % 4;
+        out.phraseBar = ((Math.floor(k / 16) % 4) + 4) % 4;
+        out.late = ((c.pos - k) * s) / r;
+      } else if (k % 4 === 2) {
+        out.subbeat = true;
+      }
       if (k % 16 === 0) out.bar = true;
     }
     if (!out.steps.length) return out;
@@ -259,7 +266,9 @@ export function createConductor({ onFound = () => {} } = {}) {
   c.act = (kind) => {
     if (!c.inRoom || !c.rhythm) return null;
     const near = nearHit();
-    const on = Boolean(near) && Math.abs(near.off) <= WINDOW;
+    const absOff = near ? Math.abs(near.off) : Infinity;
+    const on = Boolean(near) && absOff <= WINDOW;
+    const accuracy = !near ? 'miss' : absOff <= WINDOW * 0.45 ? 'perfect' : absOff <= WINDOW ? 'good' : near.off < 0 ? 'early' : 'late';
     c.heard.push(on);
     if (c.heard.length > OF) c.heard.shift();
     const onCount = c.heard.filter(Boolean).length;
@@ -267,7 +276,7 @@ export function createConductor({ onFound = () => {} } = {}) {
       if (keepFound(c.rhythm.id, c.chapter)) onFound(c.rhythm);
       c.heard = [];
     }
-    return { on, onCount, kind };
+    return { on, onCount, kind, accuracy, offMs: near ? Math.round(near.off * 1000) : 0 };
   };
 
   /** In the pocket (an unlock, unlocks.mjs): an action on a hit of the chapter's own rhythm, once found, anywhere
@@ -278,7 +287,9 @@ export function createConductor({ onFound = () => {} } = {}) {
     if (!near || Math.abs(near.off) > WINDOW) return false;
     if (near.k === c.lastPocket) return false;
     c.lastPocket = near.k;
-    return true;
+    const step = ((near.k % 16) + 16) % 16;
+    const accuracy = Math.abs(near.off) <= WINDOW * 0.45 ? 'perfect' : 'good';
+    return { inPocket: true, accuracy, step, strong: c.rhythm.steps[step] === 'X' };
   };
 
   /** Check whether an action falls on a swung beat or triplet off-beat for Jazz maneuver synergy. */
@@ -311,7 +322,9 @@ export function createConductor({ onFound = () => {} } = {}) {
     return steps.map(said).filter((e) => c.rhythm.steps[inBar(e.k)] !== '.').map((e) => ({ step: inBar(e.k), strong: c.rhythm.steps[inBar(e.k)] === 'X', in: e.in }));
   };
 
-  /** The rhythms to play under the carry: the chapter's own if found, and one more found elsewhere, in turn. */
+  /** The rhythms to play under the carry: the chapter's own if found, and one more found elsewhere, in turn.
+   *  When both rhythms hit on the same step, the visiting rhythm interlocks as a softer harmonic complement;
+   *  when the visiting rhythm falls in a rest of the chapter's own rhythm, it answers in call-and-response. */
   c.groove = (steps) => {
     const found = foundRhythms();
     const kept = Object.keys(found).map((id) => c.rhythms[id]).filter(Boolean);
@@ -322,14 +335,39 @@ export function createConductor({ onFound = () => {} } = {}) {
     const out = [];
     steps.map(said).forEach((e) => {
       const i = inBar(e.k);
-      [[own, 1], [visiting, own ? 0.55 : 0.8]].forEach(([r, level]) => {
-        if (r && r.steps[i] !== '.') out.push({ rhythm: r, step: i, strong: r.steps[i] === 'X', level, in: e.in });
-      });
+      const ownHits = Boolean(own && own.steps[i] !== '.');
+      const visHits = Boolean(visiting && visiting.steps[i] !== '.');
+      if (ownHits && own) {
+        out.push({ rhythm: own, step: i, strong: own.steps[i] === 'X', level: 1, interlock: 'primary', in: e.in });
+      }
+      if (visHits && visiting) {
+        const interlock = ownHits ? 'complement' : own ? 'answer' : 'primary';
+        const level = ownHits ? 0.42 : own ? 0.68 : 0.82;
+        out.push({ rhythm: visiting, step: i, strong: visiting.steps[i] === 'X', level, interlock, in: e.in });
+      }
     });
     return out;
   };
 
   /** Where in the beat the lanes are, 0 to 1. */
   c.phase = () => (((c.pos % 4) + 4) % 4) / 4;
+
+  /** Snapshot of the current beat, bar, step, and swing state for visual & audio pocket sync. */
+  c.beatState = () => {
+    const curStep = Math.floor(c.pos);
+    const stepInBar = inBar(curStep);
+    const beatIndex = Math.floor(stepInBar / 4);
+    const phraseBar = ((Math.floor(curStep / 16) % 4) + 4) % 4;
+    return {
+      phase: c.phase(),
+      stepInBar,
+      beatIndex,
+      phraseBar,
+      swing: c.swing,
+      tempo: c.tempo,
+      inRoom: c.inRoom,
+      rhythmId: c.rhythm?.id || null
+    };
+  };
   return c;
 }

@@ -191,7 +191,7 @@ export function initAlmanac({ chapterData, announce } = {}) {
     const line = kl.k.wonderLine(wonder, kl.l.likenessItem(`wonder:${wonder.id}`), true);
     if (!line) return null;
     const spell = kl.s.renderSpell(line, {
-      cast: result.isNew, layout: 'line', label: `${wonder.name}, as a line`,
+      cast: result.isNew, layout: 'line', play: true, copy: `lore.land/almanac#${wonder.id}`, label: `${wonder.name}, as a line`,
       explain: (atom, sigil, label) => kl.k.explainThing(sigil, label, { found: true, name: wonder.name, kindWord, lead: kl.k.wordOf(wonder.id) })
     });
     spell.classList.add('is-compact', 'kept-line');

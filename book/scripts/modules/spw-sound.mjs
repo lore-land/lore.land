@@ -40,6 +40,20 @@ const SIGIL_COLOURS = Object.freeze({
   '%': { bass: 2, pcs: [2, 5, 9] },
   '$': { bass: 5, pcs: [0, 5, 9] }
 });
+const JAZZ_COLOURS = Object.freeze({
+  '.': { bass: 0, pcs: [0, 4, 7, 11] },
+  '!': { bass: 0, pcs: [0, 5, 10] },
+  '?': { bass: 0, pcs: [0, 2, 7, 9] },
+  '~': { bass: 5, pcs: [0, 4, 5, 7, 9] },
+  '@': { bass: 9, pcs: [0, 4, 7, 9] },
+  '&': { bass: 0, pcs: [0, 2, 4, 7, 11] },
+  '*': { bass: 0, pcs: [0, 2, 4, 7, 9] },
+  '^': { bass: 7, pcs: [2, 5, 7, 8, 11] },
+  '#': { bass: 4, pcs: [2, 4, 7, 11] },
+  '=': { bass: 2, pcs: [0, 2, 5, 9] },
+  '%': { bass: 2, pcs: [0, 2, 4, 5, 9] },
+  '$': { bass: 5, pcs: [0, 4, 5, 9, 11] }
+});
 const SCALE_PRESETS = Object.freeze({
   penta: [0, 2, 4, 7, 9],
   minor: [0, 3, 5, 7, 10],
@@ -199,10 +213,52 @@ const freqOf = (root, degree, octave = 0, scale = PENTA) => {
 };
 
 /**
- * Pure voice-leading transition plan between two rooms (`sigil`) or chapters (no AudioContext needed).
- * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number }} [opts]
+ * Pure chapter musical-development plan across sections/rooms (`opening -> rising -> bridge -> turnaround`).
+ * @param {{ chapter?: number | null, sectionIndex?: number, totalSections?: number, sigil?: string, jazz?: boolean }} [opts]
  */
-export function transitionPlan({ fromSigil = '.', toSigil = '.', fromChapter = null, toChapter = null, direction = 1, volume = 0.38 } = {}) {
+export function chapterDevelopmentPlan({ chapter = 1, sectionIndex = 1, totalSections = 4, sigil = '.', jazz = false } = {}) {
+  const k = chapterKey(chapter || 1) || { chapter: 1, root: CHAPTER_ROOTS[0], tempo: 96 };
+  const total = Math.max(1, Number(totalSections) || 4);
+  const idx = Math.max(1, Math.min(total, Number(sectionIndex) || 1));
+  const progress = total <= 1 ? 0 : (idx - 1) / (total - 1);
+  const movement = progress < 0.25 ? 'opening' : progress < 0.55 ? 'rising' : progress < 0.82 ? 'bridge' : 'turnaround';
+  const table = jazz ? JAZZ_COLOURS : SIGIL_COLOURS;
+  const chord = table[sigil] || table['.'];
+  const scaleName = movement === 'bridge'
+    ? (jazz ? 'dorian' : 'minor')
+    : movement === 'rising' && jazz
+      ? 'lydian'
+      : movement === 'turnaround' && jazz
+        ? 'mixolydian'
+        : 'penta';
+  const guidePc = movement === 'opening'
+    ? chord.pcs[0] ?? 0
+    : movement === 'rising'
+      ? (chord.pcs[1] ?? 4)
+      : movement === 'bridge'
+        ? (jazz ? 10 : 9)
+        : (jazz ? 11 : 7);
+  const cadenceOffset = movement === 'turnaround' ? (jazz ? 1 : 7) : movement === 'bridge' ? (jazz ? 10 : 9) : movement === 'rising' ? 5 : 0;
+  return {
+    chapter: k.chapter,
+    root: k.root,
+    tempo: k.tempo,
+    progress,
+    movement,
+    scaleName,
+    scale: SCALE_PRESETS[scaleName] || PENTA,
+    bassPc: chord.bass,
+    pcs: [...chord.pcs],
+    guidePc,
+    cadenceOffset
+  };
+}
+
+/**
+ * Pure voice-leading transition plan between two rooms (`sigil`) or chapters (no AudioContext needed).
+ * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number, sectionIndex?: number, totalSections?: number, jazz?: boolean }} [opts]
+ */
+export function transitionPlan({ fromSigil = '.', toSigil = '.', fromChapter = null, toChapter = null, direction = 1, volume = 0.38, sectionIndex = 1, totalSections = 4, jazz = false } = {}) {
   const gain = Math.max(0.05, Math.min(1.4, Number.isFinite(volume) ? volume : 0.38));
   const dir = direction < 0 ? -1 : 1;
   const fromK = fromChapter != null ? chapterKey(fromChapter) : null;
@@ -220,31 +276,37 @@ export function transitionPlan({ fromSigil = '.', toSigil = '.', fromChapter = n
   if (fromK && toK && fromK.chapter !== toK.chapter) {
     const semiShift = 12 * Math.log2(toK.root / fromK.root);
     const wrappedLead = fromK.root * 2 ** (((Math.round(semiShift) + (dir > 0 ? 7 : 2)) % 12 - 12 * (semiShift > 4 ? 1 : 0)) / 12);
+    const topInterval = jazz ? 11 : 7;
     return {
       root: toK.root,
+      movement: 'turnaround',
       notes: [
         clampNote(wrappedLead > 480 ? wrappedLead / 2 : wrappedLead, 0.028 * gain, 0, 0.24, 'triangle', 0.02),
         clampNote(toK.root, 0.042 * gain, 0.09, 0.38, 'sine', 0.018),
-        clampNote(toK.root * 2 ** (7 / 12), 0.022 * gain, 0.16, 0.32, 'sine', 0.025)
+        clampNote(toK.root * 2 ** (topInterval / 12), 0.022 * gain, 0.16, 0.32, 'sine', 0.025)
       ]
     };
   }
-  const fromC = SIGIL_COLOURS[fromSigil] || SIGIL_COLOURS['.'];
-  const toC = SIGIL_COLOURS[toSigil] || SIGIL_COLOURS['.'];
+  const dev = chapterDevelopmentPlan({ chapter: toChapter ?? fromChapter ?? 1, sectionIndex, totalSections, sigil: toSigil, jazz });
+  const table = jazz ? JAZZ_COLOURS : SIGIL_COLOURS;
+  const fromC = table[fromSigil] || table['.'];
+  const toC = table[toSigil] || table['.'];
   const shared = toC.pcs.find((pc) => fromC.pcs.includes(pc));
   const leadPc = shared != null ? shared : fromC.bass;
   const targetPc = toC.bass;
   const rawDiff = targetPc - leadPc;
   const nearestPc = rawDiff > 6 ? targetPc - 12 : rawDiff < -6 ? targetPc + 12 : targetPc;
-  const colourPc = toC.pcs.find((pc) => pc !== toC.bass && pc !== 0) ?? toC.pcs[toC.pcs.length - 1] ?? 7;
+  const colourPc = dev.movement === 'bridge' || dev.movement === 'turnaround'
+    ? dev.guidePc
+    : (toC.pcs.find((pc) => pc !== toC.bass && pc !== 0) ?? toC.pcs[toC.pcs.length - 1] ?? 7);
   const notes = [
     clampNote(root * 2 ** (leadPc / 12), 0.028 * gain, 0, 0.22, 'triangle', 0.018),
     clampNote(root * 2 ** (nearestPc / 12), 0.042 * gain, 0.08, 0.34, 'sine', 0.015)
   ];
-  if (dir > 0 || ['^', '*', '#', '?', '~'].includes(toSigil)) {
+  if (dir > 0 || ['^', '*', '#', '?', '~'].includes(toSigil) || jazz) {
     notes.push(clampNote(root * 2 ** ((colourPc + (dir > 0 ? 12 : 0)) / 12), 0.022 * gain, 0.15, 0.32, 'sine', 0.022));
   }
-  return { root, notes };
+  return { root, movement: dev.movement, notes };
 }
 
 function voice(at, { type = 'sine', f0, f1, len, vol = 0.12, attack = 0.01, pan = 0, out = bus.input }) {
@@ -334,21 +396,31 @@ function sound(e, at, beat, root, out = bus.input, scale = PENTA) {
   if (e.glide && e.sigil !== '!' && e.sigil !== '%') voice(at, { f0: f * 0.94, f1: f, len: Math.min(len, 0.3), vol: 0.03, out });
 }
 
+function storedJazzFeel() {
+  try {
+    return JSON.parse(globalThis.localStorage?.getItem('lore.pie.v1') || 'null')?.view?.feel === 'jazz';
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Play a spell. onAtom(i) is called as the i-th sigil sounds; onEnd() when it is done.
- * Optional `chapter`, `root`, `scale`, and `volume` anchor spells to the room/chapter key.
+ * Optional `chapter`, `root`, `scale`, `sectionIndex`, `totalSections`, `jazz`, and `volume` anchor spells to the room/chapter key.
  * Returns stop(). Sound starts only from a gesture.
  * @param {string} text
- * @param {{ onAtom?: ((i: number) => void) | null, onEnd?: (() => void) | null, tempo?: number | null, volume?: number, root?: number | null, scale?: number[] | string | null, chapter?: number | null }} [opts]
+ * @param {{ onAtom?: ((i: number) => void) | null, onEnd?: (() => void) | null, tempo?: number | null, volume?: number, root?: number | null, scale?: number[] | string | null, chapter?: number | null, sectionIndex?: number, totalSections?: number, jazz?: boolean }} [opts]
  */
-export function playSpell(text, { onAtom = null, onEnd = null, tempo = null, volume = 1, root = null, scale = null, chapter = null } = {}) {
+export function playSpell(text, { onAtom = null, onEnd = null, tempo = null, volume = 1, root = null, scale = null, chapter = null, sectionIndex = 1, totalSections = 4, jazz = undefined } = {}) {
   if (!ensureAudio()) { onEnd?.(); return () => {}; }
   const { events, beats, key } = scoreOf(text);
+  const useJazz = jazz !== undefined ? Boolean(jazz) : storedJazzFeel();
   const ch = chapter != null ? chapterKey(chapter) : null;
+  const dev = ch ? chapterDevelopmentPlan({ chapter: ch.chapter, sectionIndex, totalSections, sigil: events[0]?.sigil || '.', jazz: useJazz }) : null;
   const resolvedTempo = Number.isFinite(tempo) && tempo > 0 ? tempo : (ch?.tempo || 112);
   const beat = 60 / resolvedTempo;
   const resolvedRoot = Number.isFinite(root) && root > 20 ? root : (ch?.root || 196 * 2 ** (PENTA[key % 5] / 12));
-  const resolvedScale = resolveScale(scale);
+  const resolvedScale = scale ? resolveScale(scale) : (dev?.scale || PENTA);
   const gainScale = Math.max(0.05, Math.min(1.4, Number.isFinite(volume) ? volume : 1));
   const callGain = ctx.createGain();
   callGain.gain.value = gainScale;
@@ -366,11 +438,12 @@ export function playSpell(text, { onAtom = null, onEnd = null, tempo = null, vol
 /**
  * Play a soft voice-led interval when the reader intentionally navigates between rooms or chapters.
  * Silent when Web Audio is unavailable.
- * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number }} [opts]
+ * @param {{ fromSigil?: string, toSigil?: string, fromChapter?: number | null, toChapter?: number | null, direction?: number, volume?: number, sectionIndex?: number, totalSections?: number, jazz?: boolean }} [opts]
  */
 export function playNavigationTransition(opts = {}) {
   if (typeof window === 'undefined' || !ensureAudio()) return false;
-  const plan = transitionPlan(opts);
+  const useJazz = opts.jazz !== undefined ? Boolean(opts.jazz) : storedJazzFeel();
+  const plan = transitionPlan({ ...opts, jazz: useJazz });
   const start = ctx.currentTime + 0.02;
   plan.notes.forEach((n) => voice(start + n.at, n));
   return true;

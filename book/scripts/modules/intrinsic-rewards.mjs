@@ -255,11 +255,14 @@ export function bindSiteResonance({ root = document, context = 'site', chapter =
     lastNavAt = now;
 
     const ch = Number(detail.chapterNumber || 0) || currentChapter();
+    const totalSections = document.querySelectorAll('main.chapter > .room, main.chapter > [data-ebook-section]').length || 4;
     try {
       playNavigationTransition({
         fromSigil: prevSigil,
         toSigil: nextSigil,
         toChapter: ch,
+        sectionIndex,
+        totalSections,
         direction: prevIndex && sectionIndex < prevIndex ? -1 : 1,
         volume: 0.36 * readSympatheticGain()
       });

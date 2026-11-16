@@ -190,7 +190,7 @@ export function initChapterInventory({ chapterData } = {}) {
       if (item.spelled || !item.expr || !item.spell) return;
       if (item.kind !== 'room' && item.state !== 'found') return;
       // One line, as written: a list of verses would stand taller than the list itself.
-      const spell = renderSpell(item.spell, { cast: false, layout: 'line', explain: explainItem(item) });
+      const spell = renderSpell(item.spell, { cast: false, play: true, layout: 'line', explain: explainItem(item) });
       spell.classList.add('is-compact');
       item.expr.replaceChildren(spell);
       item.spelled = true;

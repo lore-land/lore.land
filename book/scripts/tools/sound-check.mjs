@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 import * as sound from '../home/pie-sound.mjs';
 import { CHAPTER_SCENE, SCENES, SCENE_WHIMSY_DEFAULTS } from '../home/pie-world.mjs';
 import { cadenceOf } from '../modules/spw-cadence.mjs';
-import { chapterKey, transitionPlan, playNavigationTransition } from '../modules/spw-sound.mjs';
+import { chapterKey, chapterDevelopmentPlan, transitionPlan, playNavigationTransition } from '../modules/spw-sound.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /** @type {string[]} */
@@ -352,15 +352,40 @@ const notes = [];
 
   const movements = [0.1, 0.4, 0.7, 0.9].map((p) => sound.chapterArcPlan({ progress: p, bar: 1, step: 8, stage: 3 }).movement);
   if (movements.join(',') !== 'opening,rising,bridge,turnaround') fail(`chapterArcPlan movements mismatch: ${movements}`);
+  const arcForms = [0.1, 0.4, 0.7, 0.9].map((p) => sound.chapterArcPlan({ progress: p, bar: 1, step: 8, stage: 3 }).motifForm);
+  if (arcForms.join(',') !== 'prime,answer,inversion,resolve') fail(`chapterArcPlan motifForms mismatch: ${arcForms}`);
+  const devMovements = [1, 3, 6, 8].map((idx) => chapterDevelopmentPlan({ chapter: 4, sectionIndex: idx, totalSections: 8, sigil: '&', jazz: true }).movement);
+  if (devMovements.join(',') !== 'opening,rising,bridge,turnaround') fail(`chapterDevelopmentPlan movements mismatch: ${devMovements}`);
+  const devOpen = chapterDevelopmentPlan({ chapter: 4, sectionIndex: 1, totalSections: 8, sigil: '.', jazz: false });
+  const devTurn = chapterDevelopmentPlan({ chapter: 4, sectionIndex: 8, totalSections: 8, sigil: '.', jazz: true });
+  if (!(devTurn.pcs.length > devOpen.pcs.length) || devTurn.guidePc == null) fail('chapterDevelopmentPlan did not enrich harmonic color across chapter progression');
   const jzPoise = sound.jazzPhrasePlan({ wobble: 0.08, combo: 0, richness: 0.4 });
   const jzEnclosure = sound.jazzPhrasePlan({ wobble: 0.38, combo: 2, richness: 0.6, step: 6 });
   const jzAltered = sound.jazzPhrasePlan({ wobble: 0.72, combo: 4, richness: 0.85, step: 6 });
   const jzBoon = sound.jazzPhrasePlan({ presence: 'boon', richness: 0.8 });
   const jzBane = sound.jazzPhrasePlan({ presence: 'bane', richness: 0.8 });
+  const jzBackdoor = sound.jazzPhrasePlan({ progress: 0.65, bar: 1, step: 14, wobble: 0.12 });
+  const jzUpper = sound.jazzPhrasePlan({ tropeStage: 'paid', wobble: 0.12 });
   if (jzPoise.style !== 'poised_69' || jzEnclosure.style !== 'enclosure' || !jzEnclosure.enclosure || jzAltered.style !== 'altered_dominant' || jzBoon.style !== 'lydian_court' || jzBane.style !== 'bebop_bite') {
     fail('jazzPhrasePlan failed to reflect gameplay dimensions');
   }
+  if (jzBackdoor.style !== 'backdoor_cadence' || !jzBackdoor.backdoor || jzUpper.style !== 'upper_structure') {
+    fail('jazzPhrasePlan failed to reflect backdoor cadence or trope-stage upper structure');
+  }
   if (!(jzAltered.compSemis.length > jzPoise.compSemis.length)) fail('jazzPhrasePlan voicing density did not grow with richness/combo');
+  // Collectible wonder syntax plans: unfound wonders probe with `?`, found wonders voice their answered sigil and container.
+  ['creature', 'antique', 'artifact', 'contrivance', 'bracework', 'saying'].forEach((kind) => {
+    const unfound = sound.wonderSyntaxPlan(kind, { found: false });
+    const found = sound.wonderSyntaxPlan({ kind, spw: `*${kind}[c01]{ ~name }` }, { found: true, movement: 'rising' });
+    if (unfound.sigil !== '?' || found.sigil === '?' || !(found.notes.length > unfound.notes.length)) {
+      fail(`wonderSyntaxPlan(${kind}) did not distinguish unfound probe from answered wonder`);
+    }
+    if ([...unfound.notes, ...found.notes].some((n) => !Number.isFinite(n.vol) || n.vol <= 0 || n.vol > 0.045)) {
+      fail(`wonderSyntaxPlan(${kind}) volume out of bounds`);
+    }
+  });
+  sound.playTone('wonder', { kind: 'saying', spw: '#saying[c01]{ "hello" }' });
+  sound.playTone('story_word', { deg: 2 });
   // One jazz vocabulary: every lean resolves to a style; gestures stay as written until the lean passes plain jazz.
   Object.entries(sound.JAZZ_LEANS).forEach(([who, style]) => { if (!sound.JAZZ_STYLES[style]) fail(`JAZZ_LEANS.${who} names no style (${style})`); });
   const honk = sound.powerStoryPlan({ acts: ['honk'] }).notes;
@@ -369,7 +394,7 @@ const notes = [];
   const quartal = sound.inflectGesture(sound.obstacleStoryPlan('stone')?.notes || [], { lean: 'bone', amount: 1.5 });
   if (!(leant.length > honk.length) || !leant.some((n) => n.semi) || leant.some((n) => n.vol > 0.045 || n.at < 0)) fail('inflectGesture did not approach a landing within bounds');
   if (leant.some((n, i) => i && n.at < leant[i - 1].at) || !quartal.some((n) => n.semi === -2)) fail('inflectGesture out of order, or a lean lost its side');
-  notes.push('board & story cues: 4-movement chapter arc, 5 jazz gameplay dimensions, lane/row step contour, 8 trick plans & story pass cues verified');
+  notes.push('board & story cues: 4-movement chapter arc + reading development, 7 jazz styles (incl. backdoor & upper structure), 6 wonder syntax plans, lane/row step contour, 8 trick plans & story pass cues verified');
 }
 
 notes.forEach((n) => console.log(`  ${n}`));

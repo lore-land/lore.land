@@ -7,11 +7,13 @@
  * the chapter's end counts as reading its tropes (noteCrossing read), once a chapter a day. Off, nothing is added.
  */
 import { readSwitches } from './reading-switches.mjs?v=2026_11_16.B';
-import { revealStage, tropeSignals, noteCrossing, loadRhymes, chambersOf } from './trope-reveal.mjs?v=2026_11_13.B';
+import { STAGES, revealStage, stageSpw, tropeSignals, noteCrossing, loadRhymes, chambersOf } from './trope-reveal.mjs?v=2026_11_13.B';
 import { tropeEmblemSVG } from './panel-art.mjs?v=2026_11_16.B';
 import { leanScores } from './valence-lens.mjs?v=2026_09_27.A';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
 
 const TROPES_URL = '/book/content/world/tropes.json';
+const STAGE_SIGIL = Object.freeze({ seed: '~', hint: '?', named: '#', turned: '&', paid: '^' });
 /* How a chip is labelled at each stage: the seed is only the prop, the hint asks, the name names, the turn crosses. */
 const LABEL = Object.freeze({
   seed: (t) => t.prop || t.name,
@@ -54,11 +56,35 @@ export function initTropeStrip({ chapterData, root = document } = {}) {
       return { chip, shown, t };
     });
     const detail = chips.find((c) => c.t.id === open);
-    row.replaceChildren(el('span', { className: 'chapter-threads-label', text: 'Tropes here' }), ...chips.map((c) => c.chip),
-      ...(detail ? [el('div', { className: 'chapter-trope-detail', 'data-stage': detail.shown.stage },
+    let detailNode = null;
+    if (detail) {
+      const allSpw = stageSpw(detail.t);
+      const ladder = el('div', { className: 'chapter-trope-ladder', 'aria-label': 'Trope syntax progression' },
+        ...STAGES.map((st, idx) => {
+          const reachedStage = idx <= detail.shown.index;
+          return el('span', {
+            className: `chapter-trope-step${reachedStage ? ' is-reached' : ' is-veiled'}${idx === detail.shown.index ? ' is-current' : ''}`,
+            title: reachedStage ? `${st}: ${allSpw[st]}` : `${st}: still ahead`
+          }, `${STAGE_SIGIL[st] || '*'} ${reachedStage ? st : '?'}`);
+        }));
+      const spwWrap = el('div', { className: 'chapter-trope-spw' });
+      const spellEl = renderSpell(detail.shown.spw, {
+        cast: false,
+        play: true,
+        copy: `lore.land/trope#${detail.t.id}`,
+        layout: 'line',
+        label: `${detail.t.name} (${detail.shown.stage}), as Spw`
+      });
+      spellEl.classList.add('is-compact');
+      spwWrap.append(spellEl);
+      detailNode = el('div', { className: 'chapter-trope-detail', 'data-stage': detail.shown.stage },
         el('p', { className: 'chapter-trope-words', text: detail.shown.words }),
+        ladder,
         el('p', { className: 'chapter-trope-deepen', text: detail.shown.deepen }),
-        el('code', { className: 'chapter-trope-spw', text: detail.shown.spw }))] : []));
+        spwWrap);
+    }
+    row.replaceChildren(el('span', { className: 'chapter-threads-label', text: 'Tropes here' }), ...chips.map((c) => c.chip),
+      ...(detailNode ? [detailNode] : []));
     if (!row.isConnected) {
       const after = colophon.querySelector('.chapter-wonder-row');
       if (after) after.after(row); else colophon.prepend(row);

@@ -3599,13 +3599,47 @@ main.chapter .bracework-source {
   opacity: 0.8;
 }
 
-.chapter-trope-spw {
-  display: none;
-  font-size: 0.8em;
+.chapter-trope-ladder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin-top: 0.15rem;
 }
 
-main[data-xray] .chapter-trope-spw {
+.chapter-trope-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-text-main, #161d2b) 22%, transparent);
+  font-family: "JetBrainsMono", var(--font-family-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+
+.chapter-trope-step.is-veiled {
+  border-style: dashed;
+  opacity: 0.42;
+}
+
+.chapter-trope-step.is-reached {
+  opacity: 0.88;
+  border-color: color-mix(in srgb, var(--sigil-gold, #a67c38) 45%, transparent);
+}
+
+.chapter-trope-step.is-current {
+  opacity: 1;
+  font-weight: 600;
+  border-color: var(--sigil-gold, #a67c38);
+  background: color-mix(in srgb, var(--sigil-gold, #a67c38) 14%, transparent);
+}
+
+.chapter-trope-spw {
   display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8em;
 }
 
 /* ─── Wonders here (colophon; c027) ─────────────────────────────────── */
