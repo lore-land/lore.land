@@ -1,0 +1,181 @@
+# Workbench Proposals, Factshift Semantics & Symbolic Manipulation
+# Cross-repository synthesis of spw-workbench, spwashi.com, factshift.center, spw.quest, and lore.land.
+#>lore_land_surfaces_workbench_proposals
+#:surface #!workbench
+#:layer #!pragmatics
+
+^"meta"{
+  .updated: "2026-11-16"
+  .role: "Cross-host architectural proposals for spw-workbench, factshift.center interaction semantics, and CS foundations of guided Spw manipulation"
+  .rationale: "spw-workbench now serves four live host surfaces: spw.quest (Cloudflare Worker guide and interactive pivot/entry puzzles), factshift.center (force-directed spatial canvas, edge-rail scrubbing, body-pinch folding, and joint/seam rewriting), spwashi.com (personal hub, book-club shelves, and workbench cache exchange), and lore.land (26-chapter illustrated serial, musical AST sonification, and lane play). Reviewing their commit histories together exposes where parser mechanics, spatial gestures, Computer Science abstractions, and guided symbolic manipulation converge into one shared substrate."
+  .hosts_reviewed: [
+    "spw-workbench (cf41ca22 .. 12864744)",
+    "spwashi.com (248c2379 .. 110e3f67)",
+    "factshift.center (d4e3979 .. c4b0ca1)",
+    "spw.quest (248c2379 .. 21afe8f4)",
+    "lore.land (cebb1de .. 9c3fb07)"
+  ]
+}
+
+&refs{
+  index: ~"../index.spw#lore_land_spw_index"
+  surfaces: ~"./index.spw#lore_land_surfaces_index"
+  plugin_protocol: ~"./plugin-protocol.spw#lore_land_surfaces_plugin_protocol"
+  spw_proposals: ~"./spw-proposals.spw#spw_proposals"
+  workbench_direction: ~"../caches/workbench-direction.spw#lore_land_workbench_direction"
+  sound_and_voice: ~"./sound-and-voice.spw#lore_land_surfaces_sound_and_voice"
+  poetics: ~"./poetics.spw#lore_land_surfaces_poetics"
+}
+
+^"commit_history_synthesis"{
+  spw_quest_and_site: {
+    commits: ["248c2379", "de8f9490", "e7038495", "bbbf9e97", "7fe2032d"]
+    findings: [
+      "Cloudflare Worker error 1102 (CPU limit exceeded) and error 1027 (request quota exhausted) forced spw.quest to memoize parsed guide shelves per isolate (e7038495) and pre-render / into static assets/index.html (248c2379).",
+      "Profiling in motion-and-marks-2026-11.spw (bbbf9e97) proved that parseStream(input, { collect: false }) still allocates enter/exit trace events with performance.now() on every grammar rule (281ms) and re-yields them through every lazy rule generator (135ms), while pathological rule backtracking makes the 242-char revision specimen take 41ms vs 2ms for the 460-char notebook specimen.",
+      "spw.quest's front-page pivot toy (pivot.js, forms.js) duplicates mark-stripping and brace-swapping logic that spw-workbench later formalized in spw.pivots/1 (f0bba2d3)."
+    ]
+  }
+  factshift_center: {
+    commits: ["d4e3979", "423f520", "1a4157a", "3d71517", "eb31c06", "bd2e7ad", "c4b0ca1", "517c036"]
+    findings: [
+      "Pinned at spw-workbench 2026.11.07-pre.1 (3f53adf2), before spw-seed/line and spw.pivots/1 existed.",
+      "Built rich tactile grammar manipulation locally: edge-scrub.ts (left rail = where, right rail = how, 1 kind per rail), pinch.ts (3-tier target resolution + 0.65/1.35 frame enter/up thresholds), body-gestures.ts (slow drag/pinch = metric resize; quick flick/pinch = structural fold/unfold/stratum step/sibling frame), line-edit.ts (outward/inward AST selection, part swap, owed-closer completion), and line-joints.ts (withFrontMark, withRoom, turned, withSeam, withBetween).",
+      "Because it predates spw-seed/line and pivots.ts, factshift.center maintains its own bespoke parser in line-anatomy.ts / line-slots.ts and emits unparseable UI breadcrumbs (@node › #select[2/6]) rather than valid Spw lines."
+    ]
+  }
+  spw_workbench: {
+    commits: ["cf41ca22", "f0bba2d3", "339728cf", "84cf313e", "1f87112f", "6716d590", "8daec374", "42204b66"]
+    findings: [
+      "Delivered spw.pivots/1 (pivotsOf, readFragments, splitMarks, pivotReadCounts) with 7 conservative pivot kinds (side, mark, walls, bond, spacing, exchange, attach), 3-way read-back checks (line, parser, spoken), and strict name-set conservation.",
+      "Established act-chain theory (docs/theory/spw/act-chains.spw): two adjacent marks are never a compound operator; prefix marks act before operand evaluation (arms / intent) and postfix marks act after operand evaluation (discharges / consequence).",
+      "Delivered spw.quantity-sheet/1 (exact rational exponents over 7 SI base dimensions, Buckingham Pi null-space basis, natural-unit projection, forward-derivative uncertainty propagation)."
+    ]
+  }
+}
+
+^"workbench_core_proposals"{
+  p1_zero_trace_fast_path: {
+    target: "packages/spw-seed/src/combinators.ts, packages/spw-seed/src/grammar/*"
+    problem: "parseStream allocates trace objects and calls performance.now() on every rule enter/exit even when collect: false, costing ~416ms across the 26 guide files and triggering Worker 1102 CPU timeouts."
+    solution: [
+      "Compile a synchronous, non-generator fast path (or branch on options.collect === false before rule wrapping) that skips trace allocation, performance.now(), and yield* trace propagation.",
+      "Add a backtracking budget lint in spw:check that flags any corpus specimen whose rule-enter count per byte exceeds 25x (catching the 242-char revision specimen bottleneck)."
+    ]
+  }
+  p2_unify_line_and_pivots_with_byte_spans: {
+    target: "packages/spw-seed/src/line/index.ts, packages/spw-seed/src/experimental/pivots.ts"
+    problem: "Four hosts maintain divergent line/slot/joint readers because Fragment and Bond in pivots.ts do not yet carry byte spans { start, end } or seam cycling (withSeam, withBetween) needed by factshift.center's inline editor."
+    solution: [
+      "Promote spw.pivots/1 into spw-seed/line and attach exact UTF-16/byte spans { start, end, markSpan, bodySpan } to every Fragment, Wall, and Bond.",
+      "Add seam-cycling pivots (seam: . | , | ; | ~> and between: ~ | ^ | & | @) to pivotsOf so factshift.center's line-joints.ts and spw.quest's pivot.js both consume one canonical engine.",
+      "Advance factshift.center's workbench pin from 3f53adf2 to current HEAD and delete bespoke line-anatomy.ts / line-slots.ts duplication."
+    ]
+  }
+  p3_four_register_operator_table: {
+    target: "packages/spw-seed/src/canon/operators.ts"
+    problem: "Hosts drift between spirit-sequence mnemonics (~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, ^ integration), parser canon names (reference, perspective, subject), literary roles, and physics force laws (LAW_SAYS)."
+    solution: "Publish one versioned operator table carrying all four registers per sigil: { glyph, canon, mnemonic, arms_prefix, discharges_postfix, force_law, earcon_interval }."
+  }
+  p4_parseable_crumbs_and_stills: {
+    target: "packages/spw-seed/src/line/contracts.ts"
+    problem: "factshift.center edge rails emit @node › #select[2/6] (unparseable › separator), and screenshot tools split between still[pocket]{...} and spell[wander]{...}(pocket)<still>."
+    solution: [
+      "Standardize spw.crumb/1 as a parseable Spw path chain: @node#select[2/6] or @node/select[2/6]!all[1/5] so every rail stop can be copied, parsed, and replayed as a command.",
+      "Standardize spw.still/1 as still[device]{route.state}(reason)<slug> with a lossless projection to and from spell[mode]{...} cards."
+    ]
+  }
+}
+
+^"left_right_gradient_and_step_abstraction"{
+  thesis: "Unify the four competing spatial readings across factshift.center and spw-workbench (Where vs How, Opening vs Closing Brace, Objective vs Subjective, and Prefix Arms vs Postfix Discharges) into a single Contravariant-to-Covariant Frame Gradient."
+  unified_polarity: {
+    left_rail: {
+      pole: "Opening / Prefix / Contravariant / Where / Arms"
+      syntax: "prefix marks ($ ~ ? @ # . ^) + opening walls ([ ( < {)"
+      semantics: "Selects the domain, coordinate frame, address, and preconditions BEFORE evaluation. Moves from coarse context toward the focal site."
+      factshift_examples: ["@modes", "places", "spwTreeItems", "bodyRegions", "selectedLabels", "concept-step"]
+    }
+    center_canvas: {
+      pole: "Focal Nucleus / Site / Redex"
+      syntax: "focus body + inner slots + active seam"
+      semantics: "The live locus of evaluation where left-rail context (where/domain) meets right-rail action (how/codomain)."
+    }
+    right_rail: {
+      pole: "Closing / Postfix / Covariant / How / Discharges"
+      syntax: "closing walls (} > ) ]) + postfix marks (* % # ! $)"
+      semantics: "Selects the verb, projection, commitment, swatch, or receipt AFTER evaluation. Moves from the focal site outward into consequence and synthesis."
+      factshift_examples: ["hotkey-verb", "swatches", "press-control", "recentActivations", "pivotsOf(focus)"]
+    }
+  }
+  gradient_vs_step: {
+    continuous_gradient: {
+      gesture: "Continuous thumb/pointer scrub along the rail or slow two-finger pinch"
+      mark_state: "~ (potential / preview)"
+      law: "Parameterized path γ(t) ∈ [0, 1] across a single homogeneous fiber (1 kind per rail). Previews camera framing, force field weighting, or candidate pivot highlight without mutating source text until release/commit."
+    }
+    discrete_step: {
+      gesture: "Detent crossing, tap, flick (← → ↑ ↓), or keyboard step ([ / ])"
+      mark_state: "! -> * (action committed to value receipt)"
+      law: "Quantized index transition k -> k ± 1 over an algebraic orbit (sibling part, stratum level, or valid pivot). Emits a parseable Spw receipt (* line) and preserves nameSet invariance."
+    }
+  }
+}
+
+^"scrubbing_pinching_merging"{
+  scrubbing: {
+    role: "1D Fiber Traversal & Ephemera Time-Reversal"
+    mechanics: [
+      "Spatial fiber scrub: Holding one rail kind locks a typed 1D slice (e.g., all #spwTreeItems on Left, or all valid pivotsOf(site) on Right) so 34 heterogeneous stops never jumble into hyperbolic disorientation.",
+      "Temporal residue scrub: Scrubbing the ephemera clock (motion-and-marks-2026-11.spw) replays recentActivations and * receipts without an explicit undo stack, turning history into a scrubbable spatial dimension."
+    ]
+  }
+  pinching: {
+    role: "Metric-to-Topological Scale Functor (Continuous Zoom -> Discrete Stratum Phase Transition)"
+    mechanics: [
+      "Velocity-gated bifurcation (body-gestures.ts + pinch.ts): Slow pinch (dt >= 280ms) acts on metric geometry (continuous box radius r and camera zoom k). Quick pinch/spread (dt < 280ms across 0.8 / 1.25 or 0.65 / 1.35 thresholds) acts on AST topology.",
+      "Stratum ladder (brace-folds.ts): Pinching closed steps up the abstraction lattice (particles -> parts -> as-written -> folded {…} -> parent frame ^up); spreading open steps down the concretization lattice (folded {…} -> as-written -> by-parts -> enter child frame #>enter)."
+    ]
+  }
+  merging: {
+    role: "Conservative Algebraic Confluence (& Join, Seam Cycling, and Tight-Bond Attachment)"
+    mechanics: [
+      "Line/Node Confluence: Dragging two bodies or lines into mutual proximity previews their join under & (confluence), ~> (stream pipe), or shared outer walls { a, b }.",
+      "Seam & Bond Resolution: Once merged, scrubbing across the seam cycles withSeam (. , ; ~>), withBetween (~ ^ & @), or tight attachment (a@(b) <-> a@ (b) <-> a @(b)).",
+      "Conservation Law: Every merge is gated by pivots.ts invariance — nameSet(merged) === nameSet(left) ∪ nameSet(right) and all 3 readers (line, parser, spoken) must return ok: true."
+    ]
+  }
+}
+
+^"computer_science_abstractions"{
+  huet_zipper_and_comonads: {
+    spw_construct: "Site in pivots.ts ({ focus, up: (text) => string }) and outward/inward in line-edit.ts"
+    cs_theory: "Huet's Functional Zipper & Comonadic Context (W a = (Context, a)). extract(site) yields the focused fragment; duplicate(site) yields the neighborhood of sibling and parent sites; extend(pivotsOf, site) computes all valid local rewrites in context in O(1) hole-plugging time."
+  }
+  bidirectional_lenses: {
+    spw_construct: "line-kit contracts (readLine / writeLine, write-back identity, one-span edits)"
+    cs_theory: "Well-behaved Asymmetric Lenses & Concrete Syntax Preserving Printing (PutGet, GetPut, PutPut laws). Modifying a single slot or mark updates only its byte span while preserving surrounding whitespace, comments, and sibling formatting."
+  }
+  term_rewriting_and_egraphs: {
+    spw_construct: "spw rewrite (_1, _2, _0 templates) and pivotsOf 7-kind neighborhood graph"
+    cs_theory: "Term Rewriting Systems (TRS) & Equality Saturation (E-Graphs). pivotsOf enumerates the 1-step equivalence class of an expression under mark/side/wall/bond permutations, partitioned by whether they preserve AST structure (syntactic congruence) or intentionally shift operator polarity."
+  }
+  operational_semantics_and_effect_systems: {
+    spw_construct: "act-chains.spw prefix arms ($ ~ ?) vs postfix discharges (* % # !)"
+    cs_theory: "Call-by-Push-Value (CBPV) & Algebraic Effect Handlers. Prefix marks type the computation suspension/thunk (~ lazy, ? prompt/continuation, $ meta-quote/address); the bracketed body is the carrier; postfix marks handle or discharge the result (* memoize/value, % sample/telemetry, # project/index, ! linear channel emit). Non-commutativity (~*x != *~x) directly reflects handler-thunk composition order."
+  }
+  abstract_interpretation_and_galois_connections: {
+    spw_construct: "line-summary.ts & brace-folds.ts (as-written <-> by-parts <-> particles <-> folded {…})"
+    cs_theory: "Galois Connection (α, γ) between Concrete ASTs and Bounded-Width Abstract Summaries. Pinching applies α_budget(tree) to monotonically fold deepest subtrees first until length <= budget; spreading applies γ to restore exact subtrees."
+  }
+}
+
+^"guided_symbolic_manipulation"{
+  thesis: "Spw turns abstract syntax manipulation into a self-validating tactile calculus — bridging algebra tiles, structural editors (Paredit/Tree-sitter), and interactive proof assistants."
+  four_pillars: [
+    "1. Conservation of Names (No Silent Drops): Every gesture (pivot, swap, fold, merge) checks nameSet(after) === nameSet(before). Users can freely experiment with mark placement and bracketing knowing their domain identifiers cannot vanish.",
+    "2. Three-Way Read-Back Receipts (line + parser + spoken): Every candidate pivot in pivotsOf is pre-checked against the line reader, the full AST parser, and the spoken-gloss generator. Invalid moves remain visible in the orbit with their exact failure diagnosis rather than failing silently or breaking the file.",
+    "3. Physical & Acoustic Intuition for Algebraic Laws: In factshift.center (LAW_SAYS local forces) and lore.land (spw-sound.mjs / ^ear), each operator carries a distinct physical force and harmonic interval, allowing users to feel and hear when an expression shifts from potential (~) to committed value (*) or action (!).",
+    "4. Dimensional & Structural Verification (spw.quantity-sheet/1): Combining symbolic Spw frames with exact rational dimensional analysis and Buckingham Pi null-space derivation lets users manipulate physical formulas and system invariants with live unit and dimensionless-group feedback."
+  ]
+}

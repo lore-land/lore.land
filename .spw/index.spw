@@ -42,6 +42,7 @@
   affordances: ~"./surfaces/affordances.spw"
   sound_and_voice: ~"./surfaces/sound-and-voice.spw"
   spw_proposals: ~"./surfaces/spw-proposals.spw"
+  workbench_proposals: ~"./surfaces/workbench-proposals.spw"
   almanac: ~"./surfaces/almanac.spw"
   fold_and_materials: ~"./surfaces/fold-and-materials.spw"
   projection: ~"./surfaces/projection.spw"

@@ -28,6 +28,7 @@
     &autonomous_feedback: ~"./autonomous-feedback.spw"
     &layers: ~"./layers.spw"
     &spw_proposals: ~"./spw-proposals.spw"
+    &workbench_proposals: ~"./workbench-proposals.spw"
   }
   story_world_and_canon: {
     &stories: ~"./stories.spw"
