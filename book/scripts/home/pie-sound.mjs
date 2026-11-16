@@ -83,7 +83,7 @@ let audio = null;
 let bus = null;
 let noiseBuffer = null;
 const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0, prevLane: 2, prevRow: 0 };
-const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', patternMode: 'chapter', styleVoicing: '' };
+const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', patternMode: 'chapter', styleVoicing: '', jazzLean: 1 };
 const swingTarget = () => {
   if (musical.swing === 'straight') return 0.5;
   if (musical.swing === 'lilt') return 0.58;
@@ -1233,6 +1233,63 @@ export function chapterArcPlan({ progress = 0, bar = 0, step = 0, stage = 1 } = 
   };
 }
 
+/* ─── One jazz vocabulary for the land, the spells, the cast and the things in the road ───
+ * Each style is a way of leaning: the comping it voices (semitones over the bass), whether its line encloses a
+ * landing (approaches it from a semitone off), how far it sits behind the beat, and the bass's passing tone
+ * (`pass`; null walks by the phrase: a semitone under on the fourth bar, else the fifth). The land's phrasing
+ * (jazzPhrasePlan) picks one from the pie's balance or the court it is in; a gesture (a spell's story, a dodged
+ * obstacle, a trick, a character) names its lean, and inflectGesture plays it in that style. */
+export const JAZZ_STYLES = Object.freeze({
+  poised_69: Object.freeze({ voicing: [4, 7, 9, 14], enclosure: false, layback: 0.014, pass: null, approach: -1 }),     // at ease: a six-nine, laid back
+  enclosure: Object.freeze({ voicing: [3, 7, 10, 14], enclosure: true, layback: 0.004, pass: 6, approach: 1 }),         // searching: lands by surrounding the note
+  altered_dominant: Object.freeze({ voicing: [4, 8, 10, 13], enclosure: true, layback: 0.004, pass: 1, approach: 1 }),  // tipping: flat nine, sharp five, wants home
+  lydian_court: Object.freeze({ voicing: [4, 6, 9, 14], enclosure: false, layback: 0.014, pass: null, approach: -1 }),  // Boon: the sharp eleven, bright and unhurried
+  bebop_bite: Object.freeze({ voicing: [1, 6, 10, 13], enclosure: true, layback: 0.004, pass: 1, approach: 1 }),        // Bane: the semitone that bites, on the beat
+  open_quartal: Object.freeze({ voicing: [5, 10, 14, 19], enclosure: false, layback: 0.009, pass: 7, approach: -2 })    // Bone: stacked fourths, load-bearing, no third
+});
+/* Who leans which way. The three courts first; spells by the role their story plays (powerStoryPlan); tricks by
+ * what they do; the cast by the themes they already have (the Genie's stacked fifths are Lydian, the clerk closes
+ * sour). Anything unnamed is at ease. */
+export const JAZZ_LEANS = Object.freeze({
+  boon: 'lydian_court', bane: 'bebop_bite', bone: 'open_quartal',
+  lag: 'poised_69', lit: 'lydian_court', unkept: 'enclosure', echoes: 'poised_69', honk: 'bebop_bite', true_aim: 'enclosure', settle: 'open_quartal', glimpse: 'lydian_court',
+  hop_clear: 'enclosure', apex: 'poised_69', mime_glass: 'altered_dominant', pierce: 'bebop_bite', shield_hold: 'open_quartal', frill_catch: 'poised_69', unkept_pass: 'enclosure', bank_score: 'altered_dominant',
+  genie: 'lydian_court', clerk: 'bebop_bite', bonewap: 'open_quartal', boof: 'poised_69'
+});
+/** @param {string} lean a court, a spell's story role, a trick, or a character id */
+export const jazzStyleFor = (lean) => (JAZZ_STYLES[lean] ? lean : JAZZ_LEANS[lean] || 'poised_69');
+
+/** How far a gesture leans in jazz feel: 0 written, 1 as jazz has it (gestures take the jazz chord through the
+ *  room, nothing more), up to 2, where they approach their landing note and sit back. (Setup: Characters, jazz_lean.) */
+const jazzLean = () => (sound.jazz ? musical.jazzLean : 0);
+
+/**
+ * A gesture played in its lean's style, past plain jazz: the landing note (the last on a chord tone) is approached
+ * from the style's side by a quick grace note, and the whole gesture sits back by the style's layback. At an
+ * amount of 1 or less the notes come back as they were: the written feel and plain jazz sound as they always have.
+ * Notes are in renderNotes' terms (`deg` a chord tone, `octave` and `semi` semitones, `at` seconds).
+ * @template {{ deg?: number, bass?: number, octave?: number, semi?: number, at: number, dur: number, vol: number, voice?: string, side?: number }} N
+ * @param {N[]} notes
+ * @param {{ lean?: string, amount?: number }} [opts]
+ * @returns {(N & { semi?: number })[]}
+ */
+export function inflectGesture(notes, { lean = '', amount = 0 } = {}) {
+  const extra = clamp((Number(amount) || 0) - 1, 0, 1);
+  if (!extra || !notes?.length) return notes;
+  const spec = JAZZ_STYLES[jazzStyleFor(lean)];
+  const sit = spec.layback * 2 * extra;
+  let land = -1;
+  notes.forEach((n, i) => { if (n.deg != null && (land < 0 || n.at >= notes[land].at)) land = i; });
+  const grace = 0.045 * extra;
+  const out = notes.map((n, i) => ({ ...n, at: n.at + sit + (i === land ? grace : 0) }));
+  if (land >= 0) {
+    const to = notes[land];
+    out.push({ ...to, semi: (to.semi || 0) + spec.approach, at: to.at + sit, dur: 0.06, vol: to.vol * 0.55 });
+    if (spec.enclosure && extra >= 0.5) out.push({ ...to, semi: (to.semi || 0) - spec.approach, at: to.at + sit + grace * 0.5, dur: 0.05, vol: to.vol * 0.45 });
+  }
+  return out.sort((a, b) => a.at - b.at);
+}
+
 /**
  * Multi-dimensional jazz phrasing plan reflecting balance (`wobble`), streak (`combo`),
  * pie fullness (`richness`), story court (`presence`), and chapter `progress`.
@@ -1243,38 +1300,18 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
   const c = Math.max(0, Math.floor(Number(combo) || 0));
   const r = clamp(Number(richness) ?? 0.5, 0, 1);
   const inPhrase = ((Math.floor(Number(bar) || 0) % 4) + 4) % 4;
-  const style = presence === 'bane'
-    ? 'bebop_bite'
-    : presence === 'boon'
-      ? 'lydian_court'
-      : w >= 0.58
-        ? 'altered_dominant'
-        : w >= 0.22
-          ? 'enclosure'
-          : 'poised_69';
-  const rawVoicing = style === 'bebop_bite'
-    ? [1, 6, 10, 13]
-    : style === 'lydian_court'
-      ? [4, 6, 9, 14]
-      : style === 'altered_dominant'
-        ? [4, 8, 10, 13]
-        : style === 'enclosure'
-          ? [3, 7, 10, 14]
-          : [4, 7, 9, 14];
+  const style = (presence === 'boon' || presence === 'bane') ? jazzStyleFor(presence) : w >= 0.58 ? 'altered_dominant' : w >= 0.22 ? 'enclosure' : 'poised_69';
+  const spec = JAZZ_STYLES[style];
   const voiceCount = r >= 0.72 || c >= 3 ? 4 : r >= 0.42 || c >= 1 ? 3 : 2;
-  const compSemis = rawVoicing.slice(0, voiceCount);
+  const compSemis = spec.voicing.slice(0, voiceCount);
   const charleston = step === 0 || (step === 6 && (c >= 1 || r >= 0.5 || progress >= 0.5 || inPhrase === 2));
   const walkingPass = step === 10 || step === 14;
-  const passOffset = style === 'altered_dominant' || style === 'bebop_bite'
-    ? 1
-    : style === 'enclosure'
-      ? 6
-      : inPhrase === 3 ? -1 : 7;
+  const passOffset = spec.pass ?? (inPhrase === 3 ? -1 : 7);
   return {
     style,
     compSemis,
-    enclosure: style === 'enclosure' || style === 'altered_dominant' || style === 'bebop_bite',
-    layback: style === 'poised_69' || style === 'lydian_court' ? 0.014 : 0.004,
+    enclosure: spec.enclosure,
+    layback: spec.layback,
     charleston,
     walkingPass,
     passOffset,
@@ -1709,7 +1746,7 @@ export function setSoundFeel(feel = 'written') {
 }
 
 /** Update musicality settings cluster: swing, voicing, motifCues, songSpace, mix, plus optional creator style accents. */
-export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, styleVoicing, styleInterval, patternMode } = {}) {
+export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, styleVoicing, styleInterval, patternMode, jazzLean: leaning } = {}) {
   if (['chapter', 'straight', 'lilt', 'deep'].includes(swing)) musical.swing = swing;
   if (['folk', 'warm', 'bright', 'velvet'].includes(voicing)) musical.voicing = voicing;
   if (['off', 'room', 'board'].includes(motifCues)) musical.motifCues = motifCues;
@@ -1718,6 +1755,7 @@ export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, styl
   if (['folk', 'warm', 'bright', 'velvet', ''].includes(styleVoicing)) musical.styleVoicing = styleVoicing;
   if (typeof patternMode === 'string' && patternMode) musical.patternMode = patternMode;
   if (Number.isFinite(Number(styleInterval))) sound.styleInterval = clamp(Number(styleInterval), 0, 14);
+  if (leaning != null && Number.isFinite(Number(leaning))) musical.jazzLean = clamp(Number(leaning), 0, 2);
   sound.swing = swingTarget();
   try { retimeSong(); } catch { /* retimed on next context */ }
 }
@@ -2184,9 +2222,10 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         : 'fx';
     const kitMap = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2, song: SONG[kind] || 0, role }), t, pan + jitter(0.04));
     const { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, tock, sample } = kitMap;
-    const renderNotes = (list, delay = 0) => list.forEach((n) => {
+    // A gesture's notes, leaning the way its role, court or carrier does when the feel is jazz (inflectGesture).
+    const renderNotes = (list, delay = 0, lean = '') => inflectGesture(list, { lean, amount: jazzLean() }).forEach((n) => {
       const fn = kitMap[n.voice] || voiceLead;
-      const pitch = hz(n.bass != null ? bassLow() + n.bass : sungTone(n.deg || 0) + (n.octave || 0));
+      const pitch = hz((n.bass != null ? bassLow() + n.bass : sungTone(n.deg || 0) + (n.octave || 0)) + (n.semi || 0));
       fn(pitch, n.dur, n.vol, delay + n.at, n.side || 0);
     });
     const answer = toPulse(t);
@@ -2486,20 +2525,21 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         const plan = trickPlan(info.kind, info);
         if (info.kind === 'mime_glass') hiss(4800, 7400, 0.16, 0.016, 4, 0, 'highpass', 0.35);
         else if (info.kind === 'frill_catch') hiss(1200, 480, 0.09, 0.024, 1.4);
-        renderNotes(plan.notes, info.inTime ? answer : 0);
+        // A trick is the carrier's own move: with themes on, it leans the way they do; otherwise the way the trick does.
+        renderNotes(plan.notes, info.inTime ? answer : 0, JAZZ_LEANS[sound.carrier] ? sound.carrier : info.kind);
         break;
       }
       // Power-up story signature: scheduled one pulse after pickup so item feel and narrative rule both sound clearly.
       case 'power_story': {
         const plan = powerStoryPlan(param && typeof param === 'object' ? param : null);
-        if (plan.notes.length) renderNotes(plan.notes, answer);
+        if (plan.notes.length) renderNotes(plan.notes, answer, plan.role);
         break;
       }
       // Obstacles dodged cleanly: resolves its story tension (Bane chromatic resolve, Bone open fifth, Boon major sixth).
       case 'story_pass': {
         const info = typeof param === 'object' && param ? param : { kind: String(param || '') };
         const plan = obstacleStoryPlan(info.kind);
-        if (plan?.notes?.length) renderNotes(plan.notes, 0);
+        if (plan?.notes?.length) renderNotes(plan.notes, 0, plan.lean);
         break;
       }
       // Warm furrow stepped on: cozy toast resonance, blooming brighter when caramelizing a tilt.

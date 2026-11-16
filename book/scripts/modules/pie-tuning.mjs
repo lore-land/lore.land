@@ -28,12 +28,13 @@ export const TUNING_DOMAINS = Object.freeze({
       voice_presence: { label: 'Voice presence', sigil: '%', min: 0.3, max: 1.8, step: 0.05, says: 'How forward character phrases and obstacle cues sit in the mix.' },
       stroke_weight: { label: 'Line weight', sigil: '%', min: 0.7, max: 1.8, step: 0.05, says: 'Outline crispness on silhouettes across the canvas.' },
       obstacle_contrast: { label: 'Hazard contrast', sigil: '%', min: 0.7, max: 1.5, step: 0.05, says: 'Visual emphasis between low hoppables, tall stops, and helpers.' },
-      bounce_scale: { label: 'Kinetic squash', sigil: '%', min: 0.2, max: 1.8, step: 0.05, says: 'Motion squash, bobbing, and impact reaction scale.' }
+      bounce_scale: { label: 'Kinetic squash', sigil: '%', min: 0.2, max: 1.8, step: 0.05, says: 'Motion squash, bobbing, and impact reaction scale.' },
+      jazz_lean: { label: 'Jazz lean', sigil: '%', min: 0, max: 2, step: 0.05, says: 'In jazz feel, how far spells, dodged obstacles, tricks and the carrier lean into their own style: 1 as jazz plays them, past it each approaches its landing note from its side and sits back.' }
     },
     choices: {
       pattern_mode: ['chapter', 'euclid', 'golden', 'missing', 'anticipate']
     },
-    defaults: { voice_presence: 1, stroke_weight: 1, obstacle_contrast: 1, bounce_scale: 1, pattern_mode: 'chapter' }
+    defaults: { voice_presence: 1, stroke_weight: 1, obstacle_contrast: 1, bounce_scale: 1, jazz_lean: 1, pattern_mode: 'chapter' }
   },
   scenes: {
     id: 'scenes',

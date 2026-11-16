@@ -9083,7 +9083,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       mix: setting('mix'),
       styleVoicing: styleNow.voicing,
       styleInterval: styleNow.interval,
-      patternMode: String(charTune.pattern_mode || 'chapter')
+      patternMode: String(charTune.pattern_mode || 'chapter'),
+      jazzLean: Number(charTune.jazz_lean ?? 1)
     });
     syncConductorSwing();
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');

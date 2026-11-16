@@ -361,6 +361,14 @@ const notes = [];
     fail('jazzPhrasePlan failed to reflect gameplay dimensions');
   }
   if (!(jzAltered.compSemis.length > jzPoise.compSemis.length)) fail('jazzPhrasePlan voicing density did not grow with richness/combo');
+  // One jazz vocabulary: every lean resolves to a style; gestures stay as written until the lean passes plain jazz.
+  Object.entries(sound.JAZZ_LEANS).forEach(([who, style]) => { if (!sound.JAZZ_STYLES[style]) fail(`JAZZ_LEANS.${who} names no style (${style})`); });
+  const honk = sound.powerStoryPlan({ acts: ['honk'] }).notes;
+  if (sound.inflectGesture(honk, { lean: 'honk', amount: 1 }) !== honk || sound.inflectGesture(honk, { lean: 'honk', amount: 0 }) !== honk) fail('inflectGesture changed a gesture at plain jazz or as written');
+  const leant = sound.inflectGesture(honk, { lean: 'honk', amount: 2 });
+  const quartal = sound.inflectGesture(sound.obstacleStoryPlan('stone')?.notes || [], { lean: 'bone', amount: 1.5 });
+  if (!(leant.length > honk.length) || !leant.some((n) => n.semi) || leant.some((n) => n.vol > 0.045 || n.at < 0)) fail('inflectGesture did not approach a landing within bounds');
+  if (leant.some((n, i) => i && n.at < leant[i - 1].at) || !quartal.some((n) => n.semi === -2)) fail('inflectGesture out of order, or a lean lost its side');
   notes.push('board & story cues: 4-movement chapter arc, 5 jazz gameplay dimensions, lane/row step contour, 8 trick plans & story pass cues verified');
 }
 
