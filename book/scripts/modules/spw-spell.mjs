@@ -28,7 +28,7 @@
  *   - texture: a spell that names a material ($glass, $frost, …) wears it (materials.css tokens)
  */
 
-import { parseProseSpw } from './spw-ast.mjs?v=2026_11_13.B';
+import { parseProseSpw, describeLinePivots } from './spw-ast.mjs?v=2026_11_16.A';
 
 export const SIGIL_ROLES = Object.freeze({
   '?': { role: 'probe', says: 'asks' },
@@ -165,6 +165,12 @@ export function enhanceSpell(root, text, seed) {
         const sh = seed.slotHash(lr, { seed: 'lore.land', length: 8 });
         const hex = lr.order.map((k) => sh.components[k]).filter(Boolean).join('.');
         if (hex) root.dataset.spwHash = hex;
+      }
+      if (seed.readFragments && seed.pivotsOf) {
+        const piv = describeLinePivots(src, seed);
+        if (piv.fragments.length) root.dataset.spwFragments = piv.fragments.map((f) => f.name).join(',');
+        if (piv.readPivots.length) root.dataset.spwPivots = String(piv.readPivots.length);
+        if (piv.nextPivot?.line) root.dataset.spwNextPivot = piv.nextPivot.line;
       }
     }
     if (seed.readRegisterStamps && seed.summarizeRegisterStamps) {
@@ -512,7 +518,7 @@ function playButton(text, line) {
   };
   button.addEventListener('click', async () => {
     if (stop) { stop(); return; }
-    const sound = await import('./spw-sound.mjs?v=2026_11_13.B').catch(() => null);
+    const sound = await import('./spw-sound.mjs?v=2026_11_16.A').catch(() => null);
     if (!sound) return;
     button.textContent = '■';
     button.classList.add('is-playing');

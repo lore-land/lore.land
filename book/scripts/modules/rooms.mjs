@@ -419,7 +419,10 @@ export function initRooms({ chapterData, nav = null, announce } = {}) {
   // Find-in-page or a text fragment reached sealed prose: open the room it is in.
   const onMatch = (event) => {
     const room = roomOf(event.target);
-    if (room && byRoom) open(room.n, { arriving: false });
+    if (room && byRoom) {
+      open(room.n, { arriving: false });
+      markHere(room.n);
+    }
   };
   main.addEventListener('beforematch', onMatch);
 

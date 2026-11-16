@@ -11,8 +11,8 @@
  */
 
 import { settle } from './settled.mjs?v=2026_11_09.L';
-import { playSpell } from './spw-sound.mjs?v=2026_11_13.B';
-import { open as unlockOpen } from './unlocks.mjs?v=2026_11_13.B';
+import { playSpell } from './spw-sound.mjs?v=2026_11_16.A';
+import { open as unlockOpen } from './unlocks.mjs?v=2026_11_16.A';
 
 export const CURIOSITY_KEY = 'lore.curiosities.v1';
 export const SPARK_EVENT = 'lore:spark';

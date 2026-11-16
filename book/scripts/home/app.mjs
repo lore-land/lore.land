@@ -10,7 +10,7 @@ import {
   enhanceLazyImages,
   registerStoryServiceWorker
 } from '../modules/experience-core.mjs?v=2026_08_27.A';
-import { injectSvgFilters } from '../modules/svg-filters.mjs';
+import { injectSvgFilters } from '../modules/svg-filters.mjs?v=2026_11_13.B';
 import { renderChamberSeals } from '../modules/chamber-seals.mjs?v=2026_11_05.A';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { initHubMenu, initScrollChrome } from '../modules/reading-chrome.mjs?v=2026_08_27.A';
@@ -30,10 +30,10 @@ import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_
 import { readStory } from '../modules/story-directions.mjs?v=2026_11_09.L';
 import { chapterWords } from '../modules/pie-segues.mjs?v=2026_11_09.L';
 import { carriesSummary, readCarries, chapterList } from '../modules/pie-carries.mjs?v=2026_11_08.J';
-import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_13.B';
+import { loadPalettes, reconcile, readPaletteState, layersOf } from '../modules/collection.mjs?v=2026_11_16.A';
 import { CHARACTERS, portraitSVG, hasMet } from '../modules/characters.mjs?v=2026_11_11.A';
 import { loadWay, readWay, asideNow } from '../modules/way-through.mjs?v=2026_11_16.A';
-import { bindSiteResonance, syncDerivedSparks } from '../modules/intrinsic-rewards.mjs';
+import { bindSiteResonance, syncDerivedSparks } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.A';
 import { loadLikeness, likenessItem, dressAsset, findSimilar } from '../modules/likeness.mjs?v=2026_11_11.A';
 
 const RESUME_KEY = 'lore.reading.resume-chapter';

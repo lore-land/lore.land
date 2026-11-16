@@ -254,3 +254,29 @@ export function ringSlotFor(chapterNumber) {
     nextName: next.name
   };
 }
+
+/** The 9 operator symbols of the Ring in canonical progression order (`~ # . ? ! * & @ ^`). */
+export const RING_OPERATOR_ORDER = Object.freeze(
+  RING_SEQUENCE.filter((entry) => entry.kind !== 'container').map((entry) => entry.symbol)
+);
+
+/**
+ * Read a single-line Spw expression's fragments, bonds, and one-nuance pivots along the 9-operator ring.
+ * @param {string} line
+ * @param {any} seed
+ */
+export function describeLinePivots(line, seed) {
+  const src = String(line ?? '').trim();
+  if (!src || src.includes('\n') || typeof seed?.readFragments !== 'function' || typeof seed?.pivotsOf !== 'function') {
+    return { fragments: [], bonds: [], pivots: [], readPivots: [], nextPivot: null };
+  }
+  try {
+    const { fragments = [], bonds = [] } = seed.readFragments(src);
+    const pivots = seed.pivotsOf(src, { order: RING_OPERATOR_ORDER });
+    const readPivots = pivots.filter((/** @type {any} */ p) => p.status === 'read');
+    const nextPivot = readPivots.find((/** @type {any} */ p) => p.read?.line && p.read?.parser && p.read?.spoken) || readPivots[0] || null;
+    return { fragments, bonds, pivots, readPivots, nextPivot };
+  } catch {
+    return { fragments: [], bonds: [], pivots: [], readPivots: [], nextPivot: null };
+  }
+}

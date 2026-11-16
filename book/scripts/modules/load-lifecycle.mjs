@@ -77,6 +77,12 @@ function estimateAcoustics(target) {
     };
   }
 
+  const hasPrerenderedAcoustics = Boolean(
+    target?.dataset?.prerendered &&
+    document.body?.dataset?.acoustics &&
+    document.body?.dataset?.readabilityBand
+  );
+
   let totalWords = 0;
   let totalSpacing = 0;
   let totalChars = 0;
@@ -95,20 +101,24 @@ function estimateAcoustics(target) {
       totalSentences += sentences || 1;
     }
 
-    const computed = window.getComputedStyle(node);
-    totalSpacing += parseFloat(computed.marginBottom || '0');
+    if (!hasPrerenderedAcoustics) {
+      const computed = window.getComputedStyle(node);
+      totalSpacing += parseFloat(computed.marginBottom || '0');
+    }
   });
 
   const avgWords = totalWords / nodes.length;
-  const avgSpacing = totalSpacing / nodes.length;
+  const avgSpacing = hasPrerenderedAcoustics ? 8 : totalSpacing / nodes.length;
   const avgChars = totalChars / nodes.length;
   const avgSentenceWords = totalSentences > 0 ? totalWords / totalSentences : avgWords;
 
-  let label = 'balanced';
-  if (avgWords > 30 || avgSpacing < 6.3 || avgSentenceWords > 25 || avgChars > 178) {
-    label = 'dense';
-  } else if (avgWords < 9 || avgSpacing > 26 || avgSentenceWords < 7.2 || avgChars < 44) {
-    label = 'airy';
+  let label = hasPrerenderedAcoustics ? document.body.dataset.acoustics : 'balanced';
+  if (!hasPrerenderedAcoustics) {
+    if (avgWords > 30 || avgSpacing < 6.3 || avgSentenceWords > 25 || avgChars > 178) {
+      label = 'dense';
+    } else if (avgWords < 9 || avgSpacing > 26 || avgSentenceWords < 7.2 || avgChars < 44) {
+      label = 'airy';
+    }
   }
 
   let texture = 'lyric';
@@ -118,11 +128,13 @@ function estimateAcoustics(target) {
     texture = 'staccato';
   }
 
-  let readability = 'comfortable';
-  if (label === 'dense' || avgSpacing < 7.2 || avgSentenceWords > 22) {
-    readability = 'tight';
-  } else if (label === 'airy' || avgSpacing > 22 || avgSentenceWords < 9) {
-    readability = 'open';
+  let readability = hasPrerenderedAcoustics ? document.body.dataset.readabilityBand : 'comfortable';
+  if (!hasPrerenderedAcoustics) {
+    if (label === 'dense' || avgSpacing < 7.2 || avgSentenceWords > 22) {
+      readability = 'tight';
+    } else if (label === 'airy' || avgSpacing > 22 || avgSentenceWords < 9) {
+      readability = 'open';
+    }
   }
 
   return {

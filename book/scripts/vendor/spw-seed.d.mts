@@ -127,3 +127,50 @@ export function hydrateSnippet(
   opts?: { applyDefaults?: boolean; strict?: boolean }
 ): HydrateResult;
 export function parseBindings(pairs: string[]): Record<string, string>;
+
+/** Fragment and bond pivots one nuance away (spw.pivots/1). */
+export type PivotSide = 'left' | 'right';
+export type PivotKind = 'side' | 'mark' | 'walls' | 'bond' | 'spacing' | 'exchange' | 'attach';
+export interface PivotFragment {
+  name: string;
+  before: string[];
+  after: string[];
+  walls: PairKey[];
+  outside: { before: string[]; after: string[] };
+  sides: PivotSide[];
+  slot: SlotKey;
+}
+export interface PivotBond {
+  mark: string;
+  bond: string;
+  spaced: boolean;
+  sides: PivotSide[];
+  attaches: Array<'after_left' | 'before_right'>;
+}
+export interface PivotReadBack {
+  line: boolean;
+  parser: boolean;
+  spoken: boolean;
+}
+export interface Pivot {
+  kind: PivotKind;
+  fragment: string | null;
+  line: string;
+  from: Record<string, unknown>;
+  to: Record<string, unknown>;
+  read: PivotReadBack;
+  status: 'read' | 'not_read';
+}
+export interface PivotNames {
+  marks: Readonly<Record<string, string>>;
+  walls: Readonly<Record<PairKey, string>>;
+  bonds: Readonly<Record<string, string>>;
+  sides: Readonly<{ before: string; after: string }>;
+}
+export interface PivotOptions {
+  order?: readonly string[];
+}
+export function splitMarks(word: string): { before: string[]; name: string; after: string[] };
+export function readFragments(line: string): { fragments: PivotFragment[]; bonds: PivotBond[] };
+export function pivotsOf(line: string, options?: PivotOptions, names?: PivotNames): Pivot[];
+export function pivotReadCounts(pivots: readonly Pivot[]): Record<PivotKind, { total: number; line: number; parser: number; spoken: number }>;

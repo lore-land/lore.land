@@ -255,14 +255,14 @@
   ^phase[08: "Fonts + perf"]{
     task: "font-display + self-host mono; font-size-adjust + above-the-fold content-visibility hygiene"
     verify: "no render-blocking third-party font; CLS < 0.1 (c031); offscreen sections skip layout"
-    status: "self-hosted jetbrains-mono WOFF2 + pre-paint theme live; font-size-adjust and sections.css :nth-of-type(n+2) queued in PLAN.F f35"
+    status: "self-hosted jetbrains-mono WOFF2 + pre-paint theme + font-size-adjust + sections.css :first-of-type visible override + contentvisibilityautostatechange pause live (f35)"
   }
 
   ^phase[09: "Share + view transitions (delight)"]{
     task: "navigator.share/copy-link; View Transitions between chambers with render-blocking snapshot anchor"
     deferred: false
     verify: "reduced-motion still calm; link[rel=expect][href=#chapter-title][blocking=render] keeps transitions free of partial-parse flash"
-    status: "live in reading.css §9 + chapter.html pagereveal + speculationrules; snapshot anchor and bfcache cleanup tracked in f35"
+    status: "live in reading.css §9 + chapter.html pagereveal + link[rel=expect][blocking=render] + speculationrules (f35)"
   }
 ]
 

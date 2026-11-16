@@ -42,6 +42,7 @@ body {
   font-size: var(--font-size-body);
   line-height: var(--line-height-main);
   font-family: var(--font-family-body);
+  font-size-adjust: from-font;
   text-rendering: optimizeLegibility;
   /* Paper under one light (tokens.css): a pool where the light lands, and
    * the sheet a shade deeper toward its foot. The page's character is its

@@ -28,9 +28,9 @@
 
 import { settle } from './settled.mjs?v=2026_11_09.L';
 import { readSwitches, setSwitch } from './reading-switches.mjs?v=2026_11_16.A';
-import { renderSpell } from './spw-spell.mjs?v=2026_11_13.B';
+import { renderSpell } from './spw-spell.mjs?v=2026_11_16.A';
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
-import { parseProseSpw, topExpressions, bodyExpressions, opInfo } from './spw-ast.mjs?v=2026_11_13.B';
+import { parseProseSpw, topExpressions, bodyExpressions, opInfo } from './spw-ast.mjs?v=2026_11_16.A';
 
 export const WAY_URL = '/book/content/world/way.json?v=2026_11_10.A';
 const WAY_KEY = 'lore.way.v1';

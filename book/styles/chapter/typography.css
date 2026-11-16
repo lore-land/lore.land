@@ -34,6 +34,7 @@
   .chapter h2,
   .chapter h3 {
     color: var(--color-text-main);
+    font-size-adjust: from-font;
   }
 
   .chapter h1 {

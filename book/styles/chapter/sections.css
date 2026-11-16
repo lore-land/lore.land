@@ -17,6 +17,12 @@ main.chapter>[data-ebook-section="true"] {
     box-shadow var(--transition-duration) var(--transition-function);
 }
 
+main.chapter>[data-ebook-section="true"]:first-of-type {
+  /* Above-the-fold first section pays zero content-visibility boundary cost */
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
 main.chapter>section[data-ebook-section="true"] {
   counter-increment: ebook-section;
 }

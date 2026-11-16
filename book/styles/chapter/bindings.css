@@ -378,3 +378,17 @@ html[data-binding-tone="dark"] :is(nav.chapter-navigation, .section-navigation) 
 @media (prefers-reduced-motion: reduce) {
   .binding-spine { transition: none; }
 }
+
+/* Progressive relative color & contrast-color() legibility on bound pages (PLAN.F f35). */
+@supports (color: oklch(from red l c h)) {
+  html[data-binding] {
+    --surface-chip-derived: oklch(from var(--bg-color-content) calc(l - 0.03) c h / 0.88);
+    --border-accent-soft: oklch(from var(--accent-color-main) l c h / 0.28);
+  }
+}
+
+@supports (color: contrast-color(red)) {
+  html[data-binding] {
+    --ink-on-accent: contrast-color(var(--accent-color-main));
+  }
+}

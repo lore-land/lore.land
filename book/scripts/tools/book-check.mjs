@@ -28,6 +28,7 @@ import {
 import { CUSTOM_ELEMENT_TYPES } from '../modules/story-lexicon.mjs';
 import { SIGHTINGS } from '../modules/sightings.mjs';
 import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signature.mjs';
+import { RING_OPERATOR_ORDER } from '../modules/spw-ast.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
 import { FORMER_LIVES } from '../home/pie-mimes.mjs';
@@ -69,8 +70,10 @@ let readBias = null;
 let readMarks = null;
 let formatLineReading = null;
 let slotHash = null;
+let readFragments = null;
+let pivotsOf = null;
 try {
-  ({ parse, readBias, readMarks, formatLineReading, slotHash } = await import('../vendor/spw-seed.mjs'));
+  ({ parse, readBias, readMarks, formatLineReading, slotHash, readFragments, pivotsOf } = await import('../vendor/spw-seed.mjs'));
 } catch {
   notes.push('Spw interpreter unavailable; bracework and room signatures are checked for shape only.');
 }
@@ -93,6 +96,16 @@ function checkRoom(section, at, names) {
     problems.forEach((p) => error(at, `room.spw ${room.spw}: ${p}`));
     if (names.has(reading.label)) error(at, `room.spw ${room.spw}: another room in this chapter is already called ${reading.label}`);
     names.add(reading.label);
+    if (readFragments && pivotsOf) {
+      const fragNames = (line) => readFragments(line).fragments.map((f) => f.name).sort();
+      const baseNames = fragNames(room.spw);
+      if (!baseNames.length) error(at, `room.spw ${room.spw}: spw.pivots/1 found no fragments`);
+      for (const pivot of pivotsOf(room.spw, { order: RING_OPERATOR_ORDER })) {
+        if (pivot.status === 'read' && fragNames(pivot.line).join('\0') !== baseNames.join('\0')) {
+          error(at, `room.spw ${room.spw}: pivot "${pivot.line}" failed fragment conservation`);
+        }
+      }
+    }
   }
   if (typeof room.air !== 'string' || !room.air.trim()) error(at, 'room.air: one line of the room’s air');
   else if (/[\r\n]/.test(room.air)) error(at, 'room.air must be one line');

@@ -32,7 +32,7 @@
  * — and ?tell=kitchen-smell.3 pins one phrase on this page, as if a reader
  * had turned it there.
  */
-import { loadAlmanac } from './almanac.mjs?v=2026_11_13.B';
+import { loadAlmanac } from './almanac.mjs?v=2026_11_16.A';
 import { readStage } from './stage-directions.mjs?v=2026_11_06.F';
 import { readStory, readTells, editionIndex } from './story-directions.mjs?v=2026_11_09.L';
 
@@ -65,7 +65,14 @@ export function initLiving({ chapterData } = {}) {
   const slots = [...main.querySelectorAll('.living-slot[data-variants]')].map((node) => {
     let variants = [];
     try { variants = JSON.parse(node.dataset.variants); } catch { variants = []; }
-    return { node, name: node.dataset.slot, clock: node.dataset.clock, variants, waiting: null };
+    return {
+      node,
+      name: node.dataset.slot,
+      clock: node.dataset.clock,
+      variants,
+      waiting: null,
+      section: node.closest('[data-ebook-section="true"]')
+    };
   }).filter((slot) => slot.variants.length);
   const marks = [...main.querySelectorAll('.wonder-mark[data-wonder]')];
   if (!slots.length && !marks.length) return () => {};
@@ -93,6 +100,7 @@ export function initLiving({ chapterData } = {}) {
   if (staged) root.setAttribute('data-stage-phrases', 'turn');
   let timer = 0;
   let soiled = false;
+  const skippedSections = new WeakSet();
 
   const inReadingBand = (node) => {
     const box = node.getBoundingClientRect();
@@ -154,6 +162,10 @@ export function initLiving({ chapterData } = {}) {
       if (slot.held) return;
       const text = tellingFor(slot, now);
       if (text === slot.node.textContent) return;
+      if (slot.section && skippedSections.has(slot.section)) {
+        slot.waiting = text;
+        return;
+      }
       if (band && inReadingBand(slot.node)) {
         slot.waiting = text;
         return;
@@ -180,7 +192,23 @@ export function initLiving({ chapterData } = {}) {
 
   const onScroll = () => {
     slots.forEach((slot) => {
+      if (slot.section && skippedSections.has(slot.section)) return;
       if (slot.waiting != null && !inReadingBand(slot.node)) turn(slot, slot.waiting, true);
+    });
+  };
+
+  const onContentVisibility = (event) => {
+    const section = event.target;
+    if (!(section instanceof Element)) return;
+    if (event.skipped) {
+      skippedSections.add(section);
+      return;
+    }
+    skippedSections.delete(section);
+    slots.forEach((slot) => {
+      if (slot.section === section && slot.waiting != null && !inReadingBand(slot.node)) {
+        turn(slot, slot.waiting, false);
+      }
     });
   };
 
@@ -241,6 +269,7 @@ export function initLiving({ chapterData } = {}) {
 
   const watcher = new MutationObserver(apply);
   watcher.observe(root, { attributes: true, attributeFilter: ['data-switch-living'] });
+  main.addEventListener('contentvisibilityautostatechange', onContentVisibility, true);
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('lore:telling', onTelling);
   window.addEventListener('lore:stage-clock', onStageClock);
@@ -249,7 +278,9 @@ export function initLiving({ chapterData } = {}) {
 
   return () => {
     clearTimeout(timer);
+    slots.forEach((slot) => clearTimeout(slot.rolling));
     watcher.disconnect();
+    main.removeEventListener('contentvisibilityautostatechange', onContentVisibility, true);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('lore:telling', onTelling);
     window.removeEventListener('lore:stage-clock', onStageClock);

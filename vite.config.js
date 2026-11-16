@@ -60,6 +60,9 @@ export default defineConfig({
             output: {
                 // Keep heavy Spw tooling out of the critical path when possible.
                 manualChunks(id) {
+                    if (id.includes('spw-seed') || id.includes('spw-ast')) {
+                        return 'spw-seed';
+                    }
                     if (id.includes('spw-interactions') || id.includes('spw-register-bank') || id.includes('spw-selector-parser')) {
                         return 'spw-runtime';
                     }

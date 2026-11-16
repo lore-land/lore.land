@@ -22,7 +22,7 @@ const ENTRY = path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/index.ts');
 /* Only what lore.land imports, so the rest of the kernel shakes out (about a quarter of the bytes). Add a name here to use it. */
 // scanPairLabels reads a sealed line's label and its mirrored close (finds, seasons); spokenLine says a line in the
 // names of its parts (the board line, for whoever reads Setup by ear). readLine/writeLine/slotHash/readRegisterStamps/
-// readMarks/checkLine/hydrateSnippet arrived with workbench 84cf313 for slot-level interpretation and template hydration.
+// readMarks/checkLine/hydrateSnippet arrived with workbench 84cf313; splitMarks/readFragments/pivotsOf/pivotReadCounts (spw.pivots/1) arrived with cf41ca22.
 const EXPORTS = [
   'parse',
   'readBias',
@@ -39,7 +39,11 @@ const EXPORTS = [
   'formatLineReading',
   'checkLine',
   'hydrateSnippet',
-  'parseBindings'
+  'parseBindings',
+  'splitMarks',
+  'readFragments',
+  'pivotsOf',
+  'pivotReadCounts'
 ];
 const OUTFILE = path.join(ROOT, 'book/scripts/vendor/spw-seed.mjs');
 const VERIFY = process.argv.includes('--verify');

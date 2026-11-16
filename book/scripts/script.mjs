@@ -1,6 +1,6 @@
 // scripts/script.mjs
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_16.A';
-import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_11_09.I';
+import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_11_16.A';
 import { CUSTOM_ELEMENTS_SELECTOR } from './modules/story-lexicon.mjs?v=2026_09_26.A';
 import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_09.I';
 import { TOTAL_CHAPTERS } from './modules/book-extent.mjs';
@@ -17,22 +17,18 @@ import {
 } from './modules/experience-core.mjs?v=2026_08_27.A';
 import { initChapterProgression } from './modules/chapter-progression.mjs?v=2026_02_28.I';
 import { chapterSeedMap } from './home/seeds.mjs?v=2026_11_08.N';
-import { initSpwLanguageRuntime } from './modules/spw-interactions.mjs?v=2026_07_23.D';
 import { initEbookNavigation } from './modules/ebook-navigation.mjs?v=2026_11_09.I';
 import { initReadingScale, initReadingGestures } from './modules/reading-gestures.mjs?v=2026_11_09.L';
 import { initPinchPacking } from './modules/viewport-packing.mjs?v=2026_09_16.A';
 import { deriveChapterLinks } from './modules/chapter-links.mjs?v=2026_11_10.A';
-import { initSpwEthosIntegration } from './modules/spw-ethos.mjs?v=2026_11_09.I';
 import { normalizeSpwSource, withSiteBase } from './modules/spw-routing.mjs?v=2026_03_02.A';
 import { registerCustomElements } from './custom/register.mjs?v=2026_11_09.I';
 import { assignGrammarRoles } from './modules/grammar-roles.mjs?v=2026_11_09.I';
 import { initBookScrollObserver } from './modules/book-scroll-observer.mjs?v=2026_09_26.A';
 import { setupPrintContext } from './modules/print-context.mjs?v=2026_03_02.A';
-import { initGlyphDiscovery } from './modules/glyph-discovery.mjs?v=2026_03_02.A';
 import { initLayoutObserver } from './modules/book-layout-observer.mjs?v=2026_03_02.A';
-import { injectSvgFilters } from './modules/svg-filters.mjs';
+import { injectSvgFilters } from './modules/svg-filters.mjs?v=2026_11_13.B';
 import { renderChamberSeals } from './modules/chamber-seals.mjs?v=2026_11_05.A';
-import { initLanguageExploration } from './modules/language-exploration.mjs?v=2026_11_08.N';
 import {
   initChapterChrome,
   initScrollChrome
@@ -46,11 +42,8 @@ import {
   initPointerCraft
 } from './modules/interaction-surface.mjs?v=2026_08_27.A';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
-import { initReferences } from './modules/references.mjs?v=2026_11_09.E';
-import { initTropeStrip } from './modules/trope-strip.mjs?v=2026_11_16.A';
-import { initSightings } from './modules/sightings.mjs?v=2026_11_05.B';
-import { initAlmanac } from './modules/almanac.mjs?v=2026_11_13.B';
-import { initLiving } from './modules/living.mjs?v=2026_11_13.B';
+import { initAlmanac } from './modules/almanac.mjs?v=2026_11_16.A';
+import { initLiving } from './modules/living.mjs?v=2026_11_16.A';
 import { initTellings } from './modules/tellings.mjs?v=2026_11_09.L';
 import { initStoryDirections } from './modules/story-directions.mjs?v=2026_11_09.L';
 import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_09.L';
@@ -58,13 +51,13 @@ import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_09.L';
 import { initWayThrough } from './modules/way-through.mjs?v=2026_11_16.A';
 import { initDrawnPlaces } from './modules/drawn-places.mjs?v=2026_11_16.A';
 import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
-import { bindSiteResonance, syncDerivedSparks } from './modules/intrinsic-rewards.mjs';
+import { bindSiteResonance, syncDerivedSparks } from './modules/intrinsic-rewards.mjs?v=2026_11_16.A';
 import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_16.A';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_13.B';
-import { initCollection } from './modules/collection.mjs?v=2026_11_13.B';
-import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_13.B';
+import { initCollection } from './modules/collection.mjs?v=2026_11_16.A';
+import { initChapterInventory } from './modules/chapter-inventory.mjs?v=2026_11_16.A';
 import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_11.A';
-import { initBracework } from './modules/bracework.mjs?v=2026_11_13.B';
+import { initBracework } from './modules/bracework.mjs?v=2026_11_16.A';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_09.L';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_09.L';
@@ -74,7 +67,7 @@ import { initLensControl } from './modules/lens-control.mjs?v=2026_11_09.L';
 import { initXrayReading } from './modules/xray-reading.mjs?v=2026_11_09.L';
 import { initConstellation } from './modules/constellation.mjs?v=2026_11_08.J';
 import { initSettled } from './modules/settled.mjs?v=2026_11_09.L';
-import { initRooms } from './modules/rooms.mjs?v=2026_11_09.L';
+import { initRooms } from './modules/rooms.mjs?v=2026_11_16.A';
 
 const CHAPTER_SEED_LOOKUP = chapterSeedMap(TOTAL_CHAPTERS, '01');
 
@@ -244,6 +237,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Secondary enhancement: defer until idle so first paint/input stay free.
+    let isDisposed = false;
     let languageExplore = null;
     let destroyAttention = null;
     let destroyShader = null;
@@ -255,28 +249,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     let cancelIdle = () => {};
 
     cancelIdle = whenIdle(async () => {
-      initSpwEthosIntegration({
-        context: 'chapter',
-        container: document.querySelector('aside'),
-        announce
-      });
-      setupMotifDiscovery(chapterData, announce);
-      await mountChapterSigil(chapterData, announce);
-      initSpwLanguageRuntime({ root: document, announce });
-      languageExplore = initLanguageExploration(chapterData, {
-        root: chapterContent || document.getElementById('chapter-content'),
-        announce
-      });
-      destroyAttention = initAttentionDetails({ root });
-      destroyShader = initSemanticShader({ root });
-      destroySpatial = initSpatialPerspective({ root });
-      destroyGenre = initGenreCombinatorics({ root, announce });
-      // Sightings listen first: the references' opening paint may already surface one.
-      destroySightings = initSightings({ chapterData });
-      destroyReferences = await initReferences({ chapterData, announce });
-      // The tropes this chapter tells, each at the stage this reader has reached (the trope-reveal trial).
-      destroyTropes = initTropeStrip({ chapterData, root: chapterContent || document });
-      requestAnimationFrame(() => initGlyphDiscovery(chapterContent, glyphTier));
+      try {
+        const idleModulesPromise = Promise.all([
+          import('./modules/spw-ethos.mjs?v=2026_11_09.I'),
+          import('./modules/spw-interactions.mjs?v=2026_07_23.D'),
+          import('./modules/language-exploration.mjs?v=2026_11_08.N'),
+          import('./modules/sightings.mjs?v=2026_11_05.B'),
+          import('./modules/references.mjs?v=2026_11_09.E'),
+          import('./modules/trope-strip.mjs?v=2026_11_16.A'),
+          import('./modules/glyph-discovery.mjs?v=2026_03_02.A')
+        ]);
+        setupMotifDiscovery(chapterData, announce);
+        destroyAttention = initAttentionDetails({ root });
+        destroyShader = initSemanticShader({ root });
+        destroySpatial = initSpatialPerspective({ root });
+        destroyGenre = initGenreCombinatorics({ root, announce });
+        await mountChapterSigil(chapterData, announce);
+        if (isDisposed) return;
+        const [
+          { initSpwEthosIntegration },
+          { initSpwLanguageRuntime },
+          { initLanguageExploration },
+          { initSightings },
+          { initReferences },
+          { initTropeStrip },
+          { initGlyphDiscovery }
+        ] = await idleModulesPromise;
+        if (isDisposed) return;
+        initSpwEthosIntegration({
+          context: 'chapter',
+          container: document.querySelector('aside'),
+          announce
+        });
+        initSpwLanguageRuntime({ root: document, announce });
+        languageExplore = initLanguageExploration(chapterData, {
+          root: chapterContent || document.getElementById('chapter-content'),
+          announce
+        });
+        // Sightings listen first: the references' opening paint may already surface one.
+        destroySightings = initSightings({ chapterData });
+        destroyReferences = await initReferences({ chapterData, announce });
+        if (isDisposed) {
+          destroyReferences?.();
+          destroySightings?.();
+          languageExplore?.destroy?.();
+          return;
+        }
+        // The tropes this chapter tells, each at the stage this reader has reached (the trope-reveal trial).
+        destroyTropes = initTropeStrip({ chapterData, root: chapterContent || document });
+        requestAnimationFrame(() => {
+          if (!isDisposed) initGlyphDiscovery(chapterContent, glyphTier);
+        });
+      } catch (error) {
+        console.warn('Idle chapter enhancements skipped:', error);
+      }
     }, { timeout: 900 });
 
     if (ebookNav && announce) {
@@ -287,6 +313,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     lifecycle.honk(`resolution + harmony (${acoustics.label})`);
 
     window.__loreCleanup = () => {
+      isDisposed = true;
       cancelIdle();
       destroyBootstrap();
       if (destroyGestures) destroyGestures();
