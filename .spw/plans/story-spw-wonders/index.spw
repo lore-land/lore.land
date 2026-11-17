@@ -28,6 +28,7 @@
 ?open{
   saying_minting: "Should `#saying[cN]{ ... }` expressions minted from every 5th road word also collect into a reader's Almanac pocket and export via `#spw64=` to factshift.center / spw.quest, or stay scoped to the post-carry receipt?"
   trope_margin_sound: "Now that trope-strip renders playable renderSpell controls inside the trope detail disclosure, should Structure mode stay the only place raw syntax expands inline in chapter prose?"
-  kinds_vs_instances: "Where lore.land writes kinds in `[ ]` (.type[character], #saying[cN]) while spwashi.com and spw.quest put concepts/kinds in `< >` under word[mode]{body}(scene)<concept>, which canonical projection bridges both cleanly in #spw64= exports (f42)?"
+  kinds_vs_instances: "Where lore.land writes kinds in `[ ]` (.type[character], #saying[cN]) while spwashi.com, attention.productions, texture.website, and spw.quest put concepts/kinds in `< >` under word[mode]{body}(scene)<concept>, which canonical projection bridges both cleanly in #spw64= exports (f42)?"
+  extended_wonder_parity: "Should lore.land's intentionally persistent veiled wonders map onto spwashi.com's kept_open contour state and workbench ?[never_closes] alongside spw.quest's pre-reveal ~#expect hypothesis step?"
   wap_mom_math_doors: "Which Book Two mathematical undercurrent (frill_lichen / remainder_moths / sliver_tin) should open the first static ^pie[...]{...} return door with wap.mom?"
 }

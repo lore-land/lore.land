@@ -72,32 +72,32 @@
 
 ^"workbench_core_proposals"{
   p1_zero_trace_fast_path: {
-    target: "packages/spw-seed/src/combinators.ts, packages/spw-seed/src/grammar/*"
-    problem: "parseStream allocates trace objects and calls performance.now() on every rule enter/exit even when collect: false, costing ~416ms across the 26 guide files and triggering Worker 1102 CPU timeouts."
+    target: "packages/spw-seed/src/combinators/utilities.ts, packages/spw-lsp/src/handlers/outline.ts"
+    problem: "Through pin cf41ca22, parseStream/named() allocated enter/exit events and called performance.now() even when traces were discarded. Upstream bcf0da18 landed rule_trace_when_kept (3,337 to 113 events on revision; 8.55 s to 105.8 ms in spwashi.com). Remaining gap at 722c3ba9: spw-lsp outlineFromSource still calls parse(doc.text) with trace enabled instead of reusing warm AST state or passing eventPolicy none."
     solution: [
-      "Compile a synchronous, non-generator fast path (or branch on options.collect === false before rule wrapping) that skips trace allocation, performance.now(), and yield* trace propagation.",
-      "Add a backtracking budget lint in spw:check that flags any corpus specimen whose rule-enter count per byte exceeds 25x (catching the 242-char revision specimen bottleneck)."
+      "Bump lore.land workbench pin past cf41ca22 to bcf0da18+ so workers/builds inherit rule_trace_when_kept immediately.",
+      "Update outlineFromSource in spw-lsp to reuse warm document parses (or pass eventPolicy none) and add a rule-per-byte lint for prose-heavy bodies."
     ]
   }
   p2_unify_line_and_pivots_with_byte_spans: {
     target: "packages/spw-seed/src/line/index.ts, packages/spw-seed/src/experimental/pivots.ts"
-    problem: "Four hosts maintain divergent line/slot/joint readers because Fragment and Bond in pivots.ts do not yet carry byte spans { start, end } or seam cycling (withSeam, withBetween) needed by factshift.center's inline editor."
+    problem: "Four hosts maintain divergent line/slot/joint readers because Fragment and Bond in pivots.ts do not yet carry byte spans { start, end } or full interstitial delimiter cycling (. , ; ~> -> || :) needed by factshift.center as both brace-pair and separator physics medium."
     solution: [
-      "Promote spw.pivots/1 into spw-seed/line and attach exact UTF-16/byte spans { start, end, markSpan, bodySpan } to every Fragment, Wall, and Bond.",
-      "Add seam-cycling pivots (seam: . | , | ; | ~> and between: ~ | ^ | & | @) to pivotsOf so factshift.center's line-joints.ts and spw.quest's pivot.js both consume one canonical engine.",
-      "Advance factshift.center's workbench pin from 3f53adf2 to current HEAD and delete bespoke line-anatomy.ts / line-slots.ts duplication."
+      "Promote spw.pivots/1 into spw-seed/line and attach exact UTF-16/byte spans { start, end, markSpan, bodySpan } to every Fragment, Wall, Separator, and Bond.",
+      "Add typed interstitial delimiter turns (delim: . | , | ; | ~> | -> | || | :) alongside existing inter-line bond pivots (withBetween ~ | ^ | & | @) so factshift.center joint physics and spw.quest pivot turns share one engine.",
+      "Advance factshift.center off prerelease/March bundles onto dated .d.ts typed variants carrying spw.pivots/1."
     ]
   }
   p3_four_register_operator_table: {
     target: "packages/spw-seed/src/canon/operators.ts"
-    problem: "Hosts drift between spirit-sequence mnemonics (~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, ^ integration), parser canon names (reference, perspective, subject), literary roles, and physics force laws (LAW_SAYS)."
-    solution: "Publish one versioned operator table carrying all four registers per sigil: { glyph, canon, mnemonic, arms_prefix, discharges_postfix, force_law, earcon_interval }."
+    problem: "Hosts drift between spirit-sequence mnemonics (~ potential, # vibration, . ground, ? wonder, ! action, * value, & something, @ someone, ^ integration), parser canon names, bracket ordering (Circle <>, (), [], {} vs Atlas [], {}, (), <>), literary roles, physics force laws, and ecosystem domain clusters."
+    solution: "Publish one versioned operator table carrying all registers per sigil plus domain-cluster role mappings (quest, factshift, texture, attention, mutex, stripes, wap, lore, smut, feedback) and canonical data-op / BRACKET_OP metadata."
   }
   p4_parseable_crumbs_and_stills: {
     target: "packages/spw-seed/src/line/contracts.ts"
-    problem: "factshift.center edge rails emit @node › #select[2/6] (unparseable › separator), and screenshot tools split between still[pocket]{...}, spell[wander]{...}(pocket)<still>, and lore.land's capture card props (say, cue, address, palette, span, kind)."
+    problem: "factshift.center edge rails emit @node > #select[2/6] (unparseable separator), whereas @node#select[2/6] reads #select inside the identifier (confirmed by workbench 9f941e5c reply); screenshot tools split between still[pocket]{...}, spell[wander]{...}(pocket)<still>, and lore.land capture cards (say, cue, address, palette, span, kind)."
     solution: [
-      "Standardize spw.crumb/1 as a parseable Spw path chain: @node#select[2/6] or @node/select[2/6]!all[1/5] so every rail stop can be copied, parsed, and replayed as a command.",
+      "Standardize spw.crumb/1 on valid Slot syntax such as node[select], body[fold], or @node/select so every rail stop parses cleanly through readLine and pivotsOf without collapsing # into names.",
       "Standardize spw.still/1 as still[device]{route.state}(reason)<slug> with lossless round-trip mapping to spell[mode]{...} and lore.land capture cards."
     ]
   }
@@ -138,20 +138,20 @@
   thesis: "Unify the four competing spatial readings across factshift.center and spw-workbench (Where vs How, Opening vs Closing Brace, Objective vs Subjective, and Prefix Arms vs Postfix Discharges) into a single Contravariant-to-Covariant Frame Gradient."
   unified_polarity: {
     left_rail: {
-      pole: "Opening / Prefix / Contravariant / Where / Arms"
-      syntax: "prefix marks ($ ~ ? @ # . ^) + opening walls ([ ( < {)"
-      semantics: "Selects the domain, coordinate frame, address, and preconditions BEFORE evaluation. Moves from coarse context toward the focal site."
+      pole: "Opening / Prefix / Contravariant / Where / Entry Arms"
+      syntax: "prefix placement of any mark ($ ~ ? @ # . ^ & * = %) + opening walls ([ ( < {)"
+      semantics: "Selects coordinate frame, preconditions, and domain BEFORE operand evaluation (per workbench act-chains.spw and 9f941e5c reply: side belongs to position relative to operand, not fixed per-sigil ownership of left vs right)."
       factshift_examples: ["@modes", "places", "spwTreeItems", "bodyRegions", "selectedLabels", "concept-step"]
     }
     center_canvas: {
-      pole: "Focal Nucleus / Site / Redex"
-      syntax: "focus body + inner slots + active seam"
-      semantics: "The live locus of evaluation where left-rail context (where/domain) meets right-rail action (how/codomain)."
+      pole: "Focal Nucleus / Site / Interstitial Seam"
+      syntax: "focus body + inner brace slots + interstitial delimiters (. , ; ~> -> || :)"
+      semantics: "Live evaluation site where opening context meets closing consequence across typed brace hulls and separator springs."
     }
     right_rail: {
-      pole: "Closing / Postfix / Covariant / How / Discharges"
-      syntax: "closing walls (} > ) ]) + postfix marks (* % # ! $)"
-      semantics: "Selects the verb, projection, commitment, swatch, or receipt AFTER evaluation. Moves from the focal site outward into consequence and synthesis."
+      pole: "Closing / Postfix / Covariant / How / Exit Discharges"
+      syntax: "closing walls (} > ) ]) + postfix placement of any mark (* % # ! $ @ ~)"
+      semantics: "Selects verb, projection, commitment, swatch, or receipt AFTER operand evaluation."
       factshift_examples: ["hotkey-verb", "swatches", "press-control", "recentActivations", "pivotsOf(focus)"]
     }
   }
@@ -249,4 +249,13 @@
     planes: "visit (sessionStorage / #spw64= / ?direction) -> browser (localStorage, visible & per-item clearable) -> file (~/.spw/ exported snapshots) -> repository (static canon)."
     pie_loop_doors: "wap.mom issues (Pi, 22/7, 355/113, Needles) open doors into lore.land plays and unlocks; lore.land's mathematical undercurrents (frill_lichen, remainder_moths, sliver_tin) return via carried ^pie[...]{...} / #spw64= keys."
   }
+}
+
+^"number_theory_collectibles_and_extended_wonder"{
+  number_theory_bridges: {
+    continued_fractions: "wap.mom Archimedes 96-gon & convergents (22/7, 355/113) pair with lore.land Pythagorean comma convergents (log2(3/2) -> 1/2, 3/5, 7/12 vs 2^(7/12)) and workbench spw.quantity-sheet/1 exact rationals + readNumberForm ratios."
+    modular_and_golden_cycles: "spwashi.com topics/math/number-theory mod-clock (i -> k*i mod n), lore.land chapter octave equivalence mod 13 + 16-step beat pockets, and mutex.buzz mod-97 golden-angle phyllotaxis align with seed math/loop.ts orbit and period detection."
+  }
+  collectible_slot_handles: "attention.productions compose.js (<a class=\"slot\"> with MARK_OP/BRACKET_OP data-op horizontal scrubbers) and texture.website four-slot cards (~material[...]{layer}(scene)<format>) share collectible slot-handle structure with lore.land #saying[cN]{...}, chapter-inventory cards, and #spw64= round-trips."
+  extended_wonder: "story-spw-wonders veiling and persistent mysteries converge with workbench ?[never_closes], factshift.center refusal to fold ? bodies, spw-inquiry-loop kept_open contour state, spw.quest pre-reveal ~#expect hypotheses, and multi-seat disagreement wonders."
 }

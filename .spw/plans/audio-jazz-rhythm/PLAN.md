@@ -1,6 +1,6 @@
 # Plan — Jazz Theory, Musical Development & Rhythm Pocket
 
-- **Status**: `active_iteration` (`2026-11-16`, owner `audio-jazz-rhythm`, slices `f29`, `f32`, `f39`)
+- **Status**: `active_iteration` (`2026-11-17`, owner `audio-jazz-rhythm`, slices `f29`, `f32`, `f39`)
 - **Recent Landed Receipt**: `e96b885` (`9c3fb07`, `aeaf5ca`, `0202d4d` precede it)
 - **Primary Files**:
   - `book/scripts/home/pie-sound.mjs`
@@ -26,4 +26,4 @@
 ## Next Work (`f39` & Cross-Host `^ear` Bridge)
 
 - Human ear calibration on `tools/audio_synthesis/pie-sound-audition.html` and live `/pie/` runs (phone speakers + headphones): verify density ducking under high-combo runs and calibrate swing pocket feel across Ch02, Ch06, Ch07, Ch09, Ch12, Ch15.
-- Cross-host acoustic bridge (`spwashi.com` `gemini-4-argon-2026-11.spw#sensory_exports` & `factshift-quest-navigation.spw#f5`): share `lore.land`'s `^ear{}` & `chapterDevelopmentPlan` conventions back to `spwashi.com` / `factshift.center` so stratum folds (`0 <-> 1 <-> 2`), dipole brace tension, and mathematical convergent ratios (`1/2`, `3/5`, `7/12` in continued fractions) gain tested, non-intrusive earcons.
+- Cross-host acoustic bridge (`spwashi.com` `gemini-4-argon-2026-11.spw#sensory_exports` & `factshift-quest-navigation.spw#f5`): share `lore.land`'s `^ear{}` & `chapterDevelopmentPlan` conventions back to `spwashi.com` / `factshift.center` so stratum folds (`0 <-> 1 <-> 2`), dipole brace tension, and number-theory bridges (continued-fraction Pythagorean comma convergents `1/2`, `3/5`, `7/12` vs `2^(7/12)`, `mod 13` chapter octave equivalence, `wap.mom` `22/7` / `355/113`, `mutex.buzz` `mod 97` cycle, and upstream `spw.quantity-sheet/1` exact rationals) gain tested, non-intrusive earcons.

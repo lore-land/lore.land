@@ -1,6 +1,6 @@
 # Plan — Story Integration, Trope Development & Collectible Syntax Wonders
 
-- **Status**: `active_iteration` (`2026-11-16`, owner `story-spw-wonders`, slices `f31`, `f34`, `f40`)
+- **Status**: `active_iteration` (`2026-11-17`, owner `story-spw-wonders`, slices `f31`, `f34`, `f40`, `f42`)
 - **Recent Landed Receipt**: `e96b885`
 - **Primary Files**:
   - `book/scripts/modules/trope-strip.mjs`
@@ -24,7 +24,8 @@
 
 - Complete `f34`: project emergent motifs (such as *the Thursday nobody kept*) from `.spw/surfaces/projection.spw` + chapter JSON into HTML builds without modifying canonical variant zero.
 - Slice `f40`: unify road-word `#saying[cN]{ ... }` receipts, chapter inventory keepsakes, and carry provenance into one inspectable Spw expression card without adding clutter during active play.
-- Slice `f42` (Cross-Host Semantics & `factshift.center` Doors):
-  - Align `lore.land`'s `( )` gathering and `[ ]` vs `< >` slot semantics with `spwashi.com`'s `word[mode]{body}(scene)<concept>` model so tropes, wonders, and sayings serialize cleanly into `#spw64=` links for tactile mutation on `factshift.center` and structural comparison on `spw.quest`.
-  - Pair mathematical undercurrents (`frill_lichen`, `remainder_moths`, `sliver_tin` in `.spw/surfaces/fold-and-materials.spw`) with `wap.mom` return doors carrying a single visible `^pie[...]{...}` key across `visit` and `browser` memory planes.
+- Slice `f42` (Cross-Host Semantics, Collectible Affordances & Extended Wonder):
+  - Align `lore.land`'s `( )` gathering and `[ ]` vs `< >` slot semantics with `spwashi.com`'s `word[mode]{body}(scene)<concept>` model and `attention.productions` (`MARK_OP` / `BRACKET_OP` slot handles) + `texture.website` four-slot cards so tropes, wonders, and sayings serialize cleanly into `#spw64=` links for tactile mutation on `factshift.center` and structural comparison on `spw.quest`.
+  - Pair extended wonders (`kept_open` / `never_closes` veiled questions and pre-reveal `~#expect` curiosity hooks) with `spwashi.com` `spw-inquiry-loop` and `spw-workbench` `inquiry-loop`.
+  - Pair mathematical undercurrents (`frill_lichen`, `remainder_moths`, `sliver_tin` in `.spw/surfaces/fold-and-materials.spw`) and `mod 13` octave twins with `wap.mom` return doors carrying a single visible `^pie[...]{...}` key across `visit` and `browser` memory planes.
 - Monitor Book Two progression (`ch14`, `ch15` already released; prepare stone tooling whenever `serial.next` is scheduled).
