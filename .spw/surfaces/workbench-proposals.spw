@@ -5,15 +5,15 @@
 #:layer #!pragmatics
 
 ^"meta"{
-  .updated: "2026-11-16"
+  .updated: "2026-11-17"
   .role: "Cross-host architectural proposals for spw-workbench, factshift.center interaction semantics, and CS foundations of guided Spw manipulation"
-  .rationale: "spw-workbench now serves four live host surfaces: spw.quest (Cloudflare Worker guide and interactive pivot/entry puzzles), factshift.center (force-directed spatial canvas, edge-rail scrubbing, body-pinch folding, and joint/seam rewriting), spwashi.com (personal hub, book-club shelves, and workbench cache exchange), and lore.land (26-chapter illustrated serial, musical AST sonification, and lane play). Reviewing their commit histories together exposes where parser mechanics, spatial gestures, Computer Science abstractions, and guided symbolic manipulation converge into one shared substrate."
+  .rationale: "spw-workbench now serves four live host surfaces: spw.quest (Cloudflare Worker guide and interactive pivot/entry puzzles), factshift.center (force-directed spatial canvas, edge-rail scrubbing, body-pinch folding, and joint/seam rewriting), spwashi.com (personal hub, 1,322-surface corpus, upstream-workbench-recommendations, and algorithmic/linguistic affordance caches), and lore.land (illustrated serial, musical AST sonification, and lane play). Reviewing their histories, telemetry, and stress audits together exposes where parser mechanics, spatial gestures, Computer Science abstractions, and guided symbolic manipulation converge into one shared substrate."
   .hosts_reviewed: [
-    "spw-workbench (cf41ca22 .. 12864744)",
-    "spwashi.com (248c2379 .. 110e3f67)",
+    "spw-workbench (cf41ca22 .. bcf0da18b840)",
+    "spwashi.com (248c2379 .. upstream-workbench-recommendations 2026-11-17)",
     "factshift.center (d4e3979 .. c4b0ca1)",
-    "spw.quest (248c2379 .. 21afe8f4)",
-    "lore.land (cebb1de .. 9c3fb07)"
+    "spw.quest (248c2379 .. cf23af1c)",
+    "lore.land (cebb1de .. ffaa254)"
   ]
 }
 
@@ -53,6 +53,21 @@
       "Delivered spw.quantity-sheet/1 (exact rational exponents over 7 SI base dimensions, Buckingham Pi null-space basis, natural-unit projection, forward-derivative uncertainty propagation)."
     ]
   }
+  spwashi_com_recommendations: {
+    sources: [
+      "spwashi.com/.spw/reviews/upstream-workbench-recommendations.spw (+ 14 theme asks, 2026-11-17)",
+      "spwashi.com/.spw/workbench-report.spw#corpus_audit_2026_11_17 (pin bcf0da18b840)",
+      "spwashi.com/.spw/caches/workbench-algorithmic-practicality-2026-11.spw",
+      "spwashi.com/.spw/caches/linguistic-affordances-2026-11.spw"
+    ]
+    findings: [
+      "Corpus census across 1,322 tracked .spw files (8.41 MB): 1,311 clean, 3 hard errors, 9 prose-degradation surfaces, and 1,018 distinct HTML expressions with 0 errors/warnings.",
+      "Benchmark on a 153 KB surface (site-semantics.spw) confirms trace-skipping speedup: 715.6ms (default trace) -> 117.7ms (diagnostics) -> 105.8ms (none) (~6.8x faster).",
+      "Greedy digraph priority (>>, ((, <=, >=) overrides paired bracket stacks in algorithmic/type notation such as list<Module<T>>, O((V + E) log V), and ?[latency <= 400], while )) already obeys the bracket stack.",
+      "Six diverging tokenizers coexist (spw-seed lex, lite scan, spw-lsp regex semantic tokens, spw.tmLanguage.json, operator-detection.js, expression-query.js), and 3,977 alias declarations / 2,947 uses across 252 files lack a file-scoped binder.",
+      "434-file affordance scan exposes non-recursive {([^}]*)} secondary extractors, 9/27 partial herbarium specimens (part: true), single-operator compound-join splitting, and demand for parameterized template expansion / anti-unification F(X), coproducts {a|b}, and ranges a..b."
+    ]
+  }
 }
 
 ^"workbench_core_proposals"{
@@ -80,10 +95,41 @@
   }
   p4_parseable_crumbs_and_stills: {
     target: "packages/spw-seed/src/line/contracts.ts"
-    problem: "factshift.center edge rails emit @node › #select[2/6] (unparseable › separator), and screenshot tools split between still[pocket]{...} and spell[wander]{...}(pocket)<still>."
+    problem: "factshift.center edge rails emit @node › #select[2/6] (unparseable › separator), and screenshot tools split between still[pocket]{...}, spell[wander]{...}(pocket)<still>, and lore.land's capture card props (say, cue, address, palette, span, kind)."
     solution: [
       "Standardize spw.crumb/1 as a parseable Spw path chain: @node#select[2/6] or @node/select[2/6]!all[1/5] so every rail stop can be copied, parsed, and replayed as a command.",
-      "Standardize spw.still/1 as still[device]{route.state}(reason)<slug> with a lossless projection to and from spell[mode]{...} cards."
+      "Standardize spw.still/1 as still[device]{route.state}(reason)<slug> with lossless round-trip mapping to spell[mode]{...} and lore.land capture cards."
+    ]
+  }
+  p5_bracket_stack_digraphs_and_capsule_symmetry: {
+    target: "packages/spw-seed/src/lexer/*, packages/spw-seed/src/grammar/containers.ts, packages/spw-seed/src/grammar/expressions.ts"
+    problem: "Greedy digraphs (>>, ((, <=, >=) break paired brackets (list<Module<T>>, O((V + E) log V)), comparisons (?keep{qty > 0}) collide with >, %errors[0.1%] lexes % as an operator, and capsule (<...>) uses dual-interior backtracking and different operator attachment than (), [], {} (causing .<boon> drops and capsule_attachment_varies)."
+    solution: [
+      "Make digraph resolution bracket-stack aware (matching how )) already closes nested parens cleanly) and allow unit/comparison tokens in measure/check frames.",
+      "Unify capsule (<>) attachment with scope (), frame [], and body {} in expressions.ts so all four PAIRED_BOUNDARY_KINDS obey one attachment and postfix-@ seam law."
+    ]
+  }
+  p6_block_recovery_and_scoped_dialects: {
+    target: "packages/spw-seed/src/grammar/seed.ts, packages/spw-seed/src/grammar/prose.ts, packages/spw-seed/src/combinators/stream.ts"
+    problem: "seedNode rewinds the whole TokenStream to offset 0 on any failure (discarding valid ASTs), combinators lack partial memoization, and backward token scans (startsItsLine, lastSignificantLine) + global dialect preprocessors block clean per-container dialect switching."
+    solution: [
+      "Recover at top-level statement/block boundaries instead of file-wide binary rewinds so healthy sibling blocks keep full ASTs for highlighting and refactoring.",
+      "Emit line-start / indent flags once in the lexer and scope prose/query/strict contexts to containers (~<...>{...}, Spw.q, Spw.m) with lightweight block memoization."
+    ]
+  }
+  p7_unified_particles_and_file_binder: {
+    target: "packages/spw-seed/src/canonical/particles.ts, packages/spw-lsp/*"
+    problem: "Deixis (#>), case (#:), and mood (#!) parse as ParticleNode while aspect (~#) remains on legacy AnnotationNode; 3,977 alias declarations and 2,947 uses lack file-scoped definition/reference resolution; and spw-lsp, TextMate, and site readers use 6 unaligned tokenizers."
+    solution: [
+      "Unify ~# aspect with #>, #:, and #! under ParticleNode so dialect signatures and ParticleMix never rescan raw source.",
+      "Build a file-scoped alias binder over the AST and generate TextMate / semantic tokens from one operator table checked by compareLex against lex() and lite/scan()."
+    ]
+  }
+  p8_anti_unification_and_scientific_affordances: {
+    target: "packages/spw-seed/src/experimental/*, packages/spw-seed/src/grammar/expressions.ts"
+    problem: "Site and science corpora reach beyond current support for parameterized template/element shapes F(X), multi-way compound joins (A ~ B ^ C), coproducts {a|b}, intervals a..b, and periodic/molecular stoichiometry equations."
+    solution: [
+      "Support n-ary associative joins in readLine/expression readers, coproduct/range primitives, and parameterized shape templates (connecting spw expand, anti-unification LGG, spw.quantity-sheet/1, and periodic element/valence schemas)."
     ]
   }
 }

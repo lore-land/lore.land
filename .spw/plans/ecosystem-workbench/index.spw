@@ -7,9 +7,9 @@
 
 ^"meta"{
   .owner: "ecosystem-workbench"
-  .updated: "2026-11-16"
+  .updated: "2026-11-17"
   .status: "active_coordination"
-  .slices: ["f5", "f14b", "f37"]
+  .slices: ["f5", "f14b", "f37", "f41"]
   .check: "npm run spw:lint -- --strict && npm run spw:plans -- --strict"
   .root_index: ~"../index.spw#lore_land_plans_index"
   .narrative_plan: ~"./PLAN.md"
@@ -22,10 +22,18 @@
   workbench_direction: ~"../../caches/workbench-direction.spw#lore_land_workbench_direction"
   spw_stress: ~"../../surfaces/spw-stress.spw#lore_land_surfaces_spw_stress"
   spw_lint: ~"../../tools/spw-lint.mjs"
+  materials_ontology: ~"../../_workbench/docs/theory/spw/materials-ontology.spw"
+  valence_architecture: ~"../../_workbench/docs/theory/spw/valence-architecture.spw"
 }
 
 &cross_host_proposals{
-  spw_workbench: "p1 (zero-trace fast path when collect: false), p2 (unify line + spw.pivots/1 with byte spans), p3 (four-register operator table across parser/factshift/audio), p4 (parseable crumbs & stills)"
+  spw_workbench: "p1 (zero-trace fast path, 6.8x speedup on 153KB), p2 (spw.pivots/1 + byte spans), p3 (four-register operator table), p4 (parseable crumbs & still/capture schema), p5 (bracket-aware digraphs + capsule symmetry), p6 (block recovery + scoped dialects), p7 (4-aim ParticleNode unification + file alias binder + 1 tokenizer), p8 (parameterized templates + joins/ranges)"
+  spwashi_com_peer_reviews: "upstream-workbench-recommendations.spw (+ 14 theme asks), workbench-report.spw#corpus_audit_2026_11_17 (1,322 files @ bcf0da18b840), workbench-algorithmic-practicality-2026-11.spw, linguistic-affordances-2026-11.spw"
   factshift_center: "f1-f5 (edge-scrub & rail asymmetry, velocity-gated brace-fold pinching, dipole/thermal stratum 2 locality, name-conserving merges, 3-way read-back receipts)"
-  spw_quest: "q1-q4 (worker cold-parse speedup, shared pivot byte spans in /pivot & /guide, operator congruence cards, cross-surface semiotic triads)"
+  spw_quest: "q1-q4 (worker cold-parse speedup, shared pivot byte spans in /pivot & /guide, algorithmic practicality >= / <= / (( )), cross-surface semiotic triads)"
+}
+
+?open{
+  periodic_and_molecules: "After p5 (uniform capsule/container attachment) and p8 (parameterized shapes), what minimal .spw periodic element and molecular stoichiometry schema bridges materials-ontology.spw, spwashi.com/topics/materials, and spw.quantity-sheet/1?"
+  still_capture_parity: "How should lore.land's capture card fields (say, cue, address, palette, span, kind) map deterministically onto spwashi.com's spw.still/1 (still[device]{route.state}(reason)<slug>) under p4?"
 }
