@@ -20,8 +20,11 @@
 3. **Story-Road Atom Gathering**:
    - `pie-story-lane.mjs` logs `.read`, `#marked`, and `*fed` syntax atoms as road words pass, minting a playable `#saying[cN]{ ... }` spell every 5th road word on the post-carry card.
 
-## Next Work (`f34`, `f40`)
+## Next Work (`f34`, `f40`, `f42`)
 
 - Complete `f34`: project emergent motifs (such as *the Thursday nobody kept*) from `.spw/surfaces/projection.spw` + chapter JSON into HTML builds without modifying canonical variant zero.
 - Slice `f40`: unify road-word `#saying[cN]{ ... }` receipts, chapter inventory keepsakes, and carry provenance into one inspectable Spw expression card without adding clutter during active play.
+- Slice `f42` (Cross-Host Semantics & `factshift.center` Doors):
+  - Align `lore.land`'s `( )` gathering and `[ ]` vs `< >` slot semantics with `spwashi.com`'s `word[mode]{body}(scene)<concept>` model so tropes, wonders, and sayings serialize cleanly into `#spw64=` links for tactile mutation on `factshift.center` and structural comparison on `spw.quest`.
+  - Pair mathematical undercurrents (`frill_lichen`, `remainder_moths`, `sliver_tin` in `.spw/surfaces/fold-and-materials.spw`) with `wap.mom` return doors carrying a single visible `^pie[...]{...}` key across `visit` and `browser` memory planes.
 - Monitor Book Two progression (`ch14`, `ch15` already released; prepare stone tooling whenever `serial.next` is scheduled).

@@ -226,3 +226,27 @@
     "4. Dimensional & Structural Verification (spw.quantity-sheet/1): Combining symbolic Spw frames with exact rational dimensional analysis and Buckingham Pi null-space derivation lets users manipulate physical formulas and system invariants with live unit and dimensionless-group feedback."
   ]
 }
+
+^"ecosystem_harmonies_and_factshift_mutation"{
+  .sources: [
+    "spwashi.com/.spw/caches/cross-product-rederivation-2026-11.spw",
+    "spwashi.com/.spw/caches/gemini-4-argon-2026-11.spw",
+    "spwashi.com/.spw/caches/bidirectional-parsing-runtime-evolution-2026-11.spw",
+    "spwashi.com/.spw/caches/pie-loop-memory-2026-11.spw"
+  ]
+  re_derivation_rule: "text_first and derived_not_authored: only what sits in the Spw line or URL (#spw64= / ?spell=) crosses hosts, so any interpreter holding one shared table re-derives the same geometry, physics, or music from bare text."
+  slot_and_kind_reconciliation: {
+    slot_grammar: "Converge on word[mode]{body}(scene)<concept> where [ ] holds mode/instances, { } holds body joins (. , ; ~>), ( ) holds gathering/scene (matching lore.land's ast-play.spw reading where (tool{windows, submenus, edges}) arrives whole), and < > holds kind/concept."
+    bidirectional_braces: "Labeled boundaries {_label ... }_label isolate missing closers to one named class when scanned forward or backward, complementing factshift.center's ionic ghost -q particles on unclosed frames."
+  }
+  factshift_representation_and_mutation: {
+    optical_slot_materials: "Even with glyph labels hidden, each slot shows its structural physics optically: [mode] as a bonded glass collar, {body} as a recessed matte well lifted into a specular card when folded, (scene) as a wrapping paper mat over word+body, and <concept> as an enterable threshold rim."
+    mutating_lore_land_spw: "Trope ladders (~ -> ? -> # -> & -> ^), road-word sayings (#saying[cN]{ .read #marked *fed }), =meme[pov] valence registers, ^board{}, ^ear{}, and ~{room}@cast lines export via #spw64= to factshift.center, where nested ~ bodies arrive folded at Stratum 0 until touched, owed closers act as ionic charges, local @/! marks clamp inside their brace hull, and Right Rail pivots return edited lines cleanly to /scriptorium/ or spw.quest."
+    digraph_round_trip: "Entering a nested concept like !fix[timeout]{checkout; retries}(service)<team<cache>> and saving back through writeLineSlots must preserve >> as two capsule closes rather than STREAM_CLOSE prose degradation."
+  }
+  sensory_export_parity: "spwashi.com already bundles spokenLine, scanPairLabels, pairSound, readEarcons, TEXTURES, PAIR_SOUND, and wavBytes with zero active host callers; lore.land's spw-sound.mjs, pie-sound.mjs, and sound-check.mjs establish the live Web Audio & ^ear testing loop that bridges stratum steps (0 <-> 1 <-> 2), dipole tension, and math-as-music (continued fractions / harmonic ratios) back to factshift.center and spw.quest."
+  four_plane_memory_and_wap_loop: {
+    planes: "visit (sessionStorage / #spw64= / ?direction) -> browser (localStorage, visible & per-item clearable) -> file (~/.spw/ exported snapshots) -> repository (static canon)."
+    pie_loop_doors: "wap.mom issues (Pi, 22/7, 355/113, Needles) open doors into lore.land plays and unlocks; lore.land's mathematical undercurrents (frill_lichen, remainder_moths, sliver_tin) return via carried ^pie[...]{...} / #spw64= keys."
+  }
+}

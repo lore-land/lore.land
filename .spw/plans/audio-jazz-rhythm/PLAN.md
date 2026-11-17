@@ -23,6 +23,7 @@
    - `rhythmVoice`, `placeInBar`, and `conductor.groove()` contour pitches across the bar and weave found primary + visiting rhythms via `primary`, `complement` (+third, softer), and `answer` (call-and-response in rests).
    - `conductor.act()` and `conductor.pocket()` grade hit timing (`perfect` vs `good`), and `conductor.beatState()` drives a gentle visual beat-breathing cue on the lanes.
 
-## Next Work (`f39`)
+## Next Work (`f39` & Cross-Host `^ear` Bridge)
 
 - Human ear calibration on `tools/audio_synthesis/pie-sound-audition.html` and live `/pie/` runs (phone speakers + headphones): verify density ducking under high-combo runs and calibrate swing pocket feel across Ch02, Ch06, Ch07, Ch09, Ch12, Ch15.
+- Cross-host acoustic bridge (`spwashi.com` `gemini-4-argon-2026-11.spw#sensory_exports` & `factshift-quest-navigation.spw#f5`): share `lore.land`'s `^ear{}` & `chapterDevelopmentPlan` conventions back to `spwashi.com` / `factshift.center` so stratum folds (`0 <-> 1 <-> 2`), dipole brace tension, and mathematical convergent ratios (`1/2`, `3/5`, `7/12` in continued fractions) gain tested, non-intrusive earcons.

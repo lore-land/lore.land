@@ -7,7 +7,7 @@
 
 ^"meta"{
   .owner: "audio-jazz-rhythm"
-  .updated: "2026-11-16"
+  .updated: "2026-11-17"
   .status: "active_iteration"
   .slices: ["f29", "f32", "f39"]
   .check: "npm run sound:check && npm run cadence:check"
@@ -30,4 +30,5 @@
 ?open{
   human_audition: "After listening in the audition harness and live carries, does the 4-beat walking bass + brushed/wood backbeat stay unobtrusive under rapid multi-row dodges, or should backbeat level duck during dense obstacled phrases?"
   rhythm_interlock_mix: "When visiting rhythms play in answer mode inside conductor.groove(), is stereo offset +/-0.22 clear on phone speakers as well as headphones?"
+  cross_host_sensory_parity: "How can lore.land's tested ^ear / chapterDevelopmentPlan / wonderSyntaxPlan conventions inform spwashi.com's unconsumed spw-workbench-reader.js exports (spokenLine, scanPairLabels, pairSound, readEarcons, TEXTURES) for factshift.center stratum transitions?"
 }

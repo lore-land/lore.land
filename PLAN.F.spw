@@ -15,7 +15,7 @@
 ^meta{
   source: "PLAN.F.spw (written 2026-11-08)"
   dialect: spw_native
-  status: "2026-11-17: open increments f3-f41 organized by topical owner folders in .spw/plans/index.spw; ecosystem proposals p1-p8 resynthesized with spwashi.com corpus_audit_2026_11_17; Book Two ch14-15 live with serial.next unscheduled"
+  status: "2026-11-17: open increments f3-f42 organized by topical owner folders in .spw/plans/index.spw; Spw semantics, spwashi.com cross-product re-derivation, and factshift.center #spw64= round-trips harmonized"
   do_not: "Do not start a slice with no check. Do not widen a slice to finish a neighbour."
   style: dimensions_and_increments
   normative_voice: direction
@@ -188,6 +188,7 @@
   f39: { dimension: [sound, play], release: "proposed", done_when: "human audition across phone speakers and headphones tunes the 16-step beat pocket, polyrhythmic groove interlock, and high-combo ducking across straight and swung chapters", operation: "realize", files: "book/scripts/home/pie-sound.mjs, book/scripts/home/pie-rhythm.mjs, tools/audio_synthesis/pie-sound-audition.html", decides: "the maker by ear", check: "npm run sound:check" }
   f40: { dimension: [story, grammar, marks], release: "proposed", done_when: "road-word #saying[cN] spells, trope-strip 5-stage syntax ladders, and wonder/inventory spells project cleanly between runs and almanac pockets without adding noise during play", operation: "contract", files: "book/scripts/home/pie-story-lane.mjs, book/scripts/modules/trope-strip.mjs, book/scripts/modules/almanac.mjs", decides: "the maker: Almanac retention rules", check: "npm run elaboration:check" }
   f41: { dimension: [grammar, pages], release: "proposed", done_when: "cross-host parity checks verify spw-seed vs lite/scan alignment, capture still slot mapping (p4), and capsule/digraph regression cases from spw-stress.spw and spwashi.com recommendations", operation: "align", files: ".spw/surfaces/workbench-proposals.spw, .spw/surfaces/spw-stress.spw, .spw/plans/ecosystem-workbench/index.spw", decides: "the agent; maker selects upstream pin bumps", check: "npm run spw:lint" }
+  f42: { dimension: [grammar, tables, play], release: "proposed", done_when: "lore.land tropes, wonders, and board/ear lines reconcile slot/kind mapping (word[mode]{body}(scene)<concept>) and round-trip cleanly via #spw64= to/from factshift.center, spw.quest, and wap.mom", operation: "contract", files: "book/scripts/modules/spw-spell.mjs, .spw/surfaces/ast-play.spw, .spw/caches/factshift-quest-navigation.spw", decides: "the maker: kind vs instance convention", check: "npm run check" }
 ]
 
 ?open{
