@@ -1328,12 +1328,13 @@ export function inflectGesture(notes, { lean = '', amount = 0 } = {}) {
 /**
  * Multi-dimensional jazz phrasing plan reflecting balance (`wobble`), streak (`combo`),
  * pie fullness (`richness`), story court (`presence`), trope stage (`tropeStage`),
- * collectible wonder kind (`wonderKind`), and chapter `progress`.
- * @param {{ progress?: number, wobble?: number, combo?: number, richness?: number, presence?: string, step?: number, bar?: number, tropeStage?: string, wonderKind?: string }} [opts]
+ * collectible wonder kind (`wonderKind`), wonder chain (`wonderChain`), and chapter `progress`.
+ * @param {{ progress?: number, wobble?: number, combo?: number, richness?: number, presence?: string, step?: number, bar?: number, tropeStage?: string, wonderKind?: string, wonderChain?: number }} [opts]
  */
-export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', step = 0, bar = 0, tropeStage = '', wonderKind = '' } = {}) {
+export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', step = 0, bar = 0, tropeStage = '', wonderKind = '', wonderChain = 0 } = {}) {
   const w = clamp(Number(wobble) || 0, 0, 1);
   const c = Math.max(0, Math.floor(Number(combo) || 0));
+  const wc = Math.max(0, Math.floor(Number(wonderChain) || 0));
   const r = clamp(Number(richness) ?? 0.5, 0, 1);
   const p = clamp(Number(progress) || 0, 0, 1);
   const inPhrase = ((Math.floor(Number(bar) || 0) % 4) + 4) % 4;
@@ -1342,21 +1343,25 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
     ? jazzStyleFor(presence)
     : tropeStage && JAZZ_LEANS[tropeStage]
       ? jazzStyleFor(tropeStage)
-      : wonderKind && JAZZ_LEANS[wonderKind]
-        ? jazzStyleFor(wonderKind)
-        : w >= 0.58
-          ? 'altered_dominant'
-          : w >= 0.22
-            ? 'enclosure'
-            : p >= 0.82 && inPhrase === 3
-              ? 'upper_structure'
-              : p >= 0.55 && p < 0.82 && inPhrase === 1
-                ? 'backdoor_cadence'
-                : 'poised_69';
+      : wc >= 3
+        ? 'upper_structure'
+        : wonderKind && JAZZ_LEANS[wonderKind]
+          ? jazzStyleFor(wonderKind)
+          : w >= 0.58
+            ? 'altered_dominant'
+            : w >= 0.22
+              ? 'enclosure'
+              : p >= 0.82 && inPhrase === 3
+                ? 'upper_structure'
+                : p >= 0.55 && p < 0.82 && inPhrase === 1
+                  ? 'backdoor_cadence'
+                  : 'poised_69';
   const spec = JAZZ_STYLES[style];
-  const voiceCount = r >= 0.72 || c >= 3 ? 4 : r >= 0.42 || c >= 1 ? 3 : 2;
+  const voiceCount = r >= 0.72 || c >= 3 || wc >= 2 ? 4 : r >= 0.42 || c >= 1 ? 3 : 2;
   const compSemis = spec.voicing.slice(0, voiceCount);
-  const charleston = step === 0 || (step === 6 && (c >= 1 || r >= 0.5 || p >= 0.5 || inPhrase === 2));
+  if (wc >= 2 && !compSemis.includes(14)) compSemis.push(14);
+  if (wc >= 4 && !compSemis.includes(21)) compSemis.push(21);
+  const charleston = step === 0 || (step === 6 && (c >= 1 || wc >= 2 || r >= 0.5 || p >= 0.5 || inPhrase === 2));
   const walkingPass = step === 10 || step === 14;
   const tritoneSub = Boolean(p >= 0.82 && inPhrase === 3);
   const backdoor = Boolean(p >= 0.55 && p < 0.82 && inPhrase === 1);
@@ -1418,7 +1423,7 @@ export function beatPocketPlan({ step = 0, bar = 0, progress = 0, stage = 1, swi
  *  chapter's four movements (opening pedal -> rising walk -> bridge expansion -> cadential turnaround toward the door),
  *  keeping a warm heartbeat on 1 & 3, a brushed/wood backbeat on 2 & 4, swung ride/shaker subdivisions, and in
  *  jazz feel adding Charleston comping, guide-tone voice leading, and walking chromatic/tritone approach tones. */
-export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', tropeStage = '', wonderKind = '' } = {}) {
+export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', tropeStage = '', wonderKind = '', wonderChain = 0 } = {}) {
   try {
     if (![0, 2, 4, 6, 7, 8, 10, 12, 14, 15].includes(step)) return;
     if (!audio || audio.state !== 'running') return;
@@ -1427,7 +1432,7 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
     const { stage } = landQuality();
     const arc = chapterArcPlan({ progress, bar, step, stage });
     const pocket = beatPocketPlan({ step, bar, progress, stage, swing: sound.swing, jazz: sound.jazz, ground: sound.ground, combo, bedOn: bed.on });
-    const jz = sound.jazz ? jazzPhrasePlan({ progress, wobble, combo, richness, presence, step, bar, tropeStage, wonderKind }) : null;
+    const jz = sound.jazz ? jazzPhrasePlan({ progress, wobble, combo, richness, presence, step, bar, tropeStage, wonderKind, wonderChain }) : null;
 
     if (step === 0) {
       breathePad(t);

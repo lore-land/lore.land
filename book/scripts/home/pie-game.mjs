@@ -4693,6 +4693,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     thing.kept = true;
     run.kept += 1;
     run.lastWonderKind = w.kind;
+    run.wonderChain = Math.min(6, (run.wonderChain || 0) + 1);
+    run.wonderChainT = 6.5;
     (run.keptIds ||= []).push(w.id);
     lean('kept');
     const prog = progress();
@@ -4709,7 +4711,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.escort = { id: gift?.id || w.id, t: 3.5 };
     const sigil = KIND_SIGIL[w.kind] || '@';
     const syntaxAtom = `${sigil}${String(w.id || 'wonder').replace(/-/g, '_')}[${w.kind}]`;
-    run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()} · ${syntaxAtom}` });
+    const chainN = run.wonderChain || 1;
+    if (chainN >= 2) {
+      run.sliceReady = Math.min(1, run.sliceReady + 0.08 * chainN);
+      if (jazzOn()) run.jazzPocketT = Math.max(run.jazzPocketT || 0, 1.1 + chainN * 0.25);
+    }
+    const chainLabel = chainN >= 2 ? ` · ♪×${chainN}${chainN >= 4 ? ' UPPER' : chainN >= 3 ? ' #11' : ' +9'}` : '';
+    run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()} · ${syntaxAtom}${chainLabel}` });
     showToast(`${sigil} ${w.name}${isNew ? ' · new to your almanac' : ' · kept'}`, `${gift?.says || ''} (${syntaxAtom})`.trim(), 3200, gift?.refs?.voice || 'wonder');
     say(`${w.name}, kept${isNew ? ', and new to your almanac' : ''}. ${gift.says}`);
     markWonder(w.id, 'kept');
@@ -5247,7 +5255,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const progNow = progress();
         const richNow = richness();
         const presNow = run.boon ? 'boon' : run.bane ? 'bane' : '';
-        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow, tropeStage: run.lastTropeStage || '', wonderKind: run.lastWonderKind || '' }));
+        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow, tropeStage: run.lastTropeStage || '', wonderKind: run.lastWonderKind || '', wonderChain: run.wonderChain || 0 }));
         conductor.hitsIn(music.ahead).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35, step: h.step, in: h.in }));
         if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, interlock: h.interlock || 'primary', in: h.in }));
       }
@@ -5453,8 +5461,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (record.sound && state === 'running') ['unkept', 'lit', 'lag', 'glimpse', 'fed', 'warm'].forEach((key) => {
       if (run[key] > 1 && run[key] - dt <= 1) powerEnding();
     });
-    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool', 'gladT', 'aimFocusT', 'jazzPocketT', 'roomPantryT'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
+    ['lit', 'lag', 'unkept', 'warm', 'fed', 'glimpse', 'aimLock', 'landT', 'slideT', 'hurtT', 'rattled', 'shake', 'comboT', 'knockT', 'breath', 'meetCool', 'gladT', 'aimFocusT', 'jazzPocketT', 'roomPantryT', 'wonderChainT'].forEach((key) => { if (run[key] > 0) run[key] = Math.max(0, run[key] - dt); });
     if (!(run.jazzPocketT > 0)) run.jazzChain = 0;
+    if (!(run.wonderChainT > 0)) run.wonderChain = 0;
     // A timed power that has just run out is noticed (pie-reactions.mjs, the reactions trial): it used to end with
     // nothing said. Read against the last frame, so wherever a timer is counted down it is seen.
     if (reactionsOn()) {

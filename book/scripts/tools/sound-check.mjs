@@ -366,6 +366,11 @@ const notes = [];
   const jzBane = sound.jazzPhrasePlan({ presence: 'bane', richness: 0.8 });
   const jzBackdoor = sound.jazzPhrasePlan({ progress: 0.65, bar: 1, step: 14, wobble: 0.12 });
   const jzUpper = sound.jazzPhrasePlan({ tropeStage: 'paid', wobble: 0.12 });
+  const jzWonderBase = sound.jazzPhrasePlan({ wonderKind: 'creature', wonderChain: 0, richness: 0.5 });
+  const jzWonderChain = sound.jazzPhrasePlan({ wonderKind: 'creature', wonderChain: 4, richness: 0.5 });
+  if (jzWonderChain.style !== 'upper_structure' || !(jzWonderChain.compSemis.length > jzWonderBase.compSemis.length)) {
+    fail('jazzPhrasePlan failed to deepen voicing for chained wonders');
+  }
   if (jzPoise.style !== 'poised_69' || jzEnclosure.style !== 'enclosure' || !jzEnclosure.enclosure || jzAltered.style !== 'altered_dominant' || jzBoon.style !== 'lydian_court' || jzBane.style !== 'bebop_bite') {
     fail('jazzPhrasePlan failed to reflect gameplay dimensions');
   }
