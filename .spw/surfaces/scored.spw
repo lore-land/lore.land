@@ -12,9 +12,11 @@
 
 ^"hooks"{
   shelfColor: "the five shelves colour the bed (pie-sound.mjs shelfColorParams): boon brighter and roomier, bone darker and closer to the fundamental, bonk drier and struck, honk with more echo, bane forward and close, as an announcement is. An even vector is the bed as it always was"
-  chainSting: "a shelf motivation sets off (valence-shelves.mjs chainStep): a short sting in its own voice, boon a rising vibraphone with a glimpse of air, bane the bass with the semitone over it, bone two wood strokes a fourth apart, bonk a tock and a glass ping, honk a kazoo and its echo a beat late; a completed chain adds a fuller cadence"
+  chainSting: "a shelf motivation sets off (valence-shelves.mjs chainStep): a short sting in its own voice, boon a rising vibraphone with a glimpse of air, bane the bass with the semitone over it, bone two wood strokes a fourth apart, bonk a tock and a glass ping that ends on bane's semitone, honk a kazoo and boon's colour a beat late; a completed chain adds a fuller cadence, and while the lanes are pulsing that cadence waits for bar 4. Bone's cadence puts the tension down on the fifth, then the root. The link that fired colours the phrase until the shelf lets go (jazzPhrasePlan motivation), and it outranks the court"
   tropeMotif: "each trope has a leitmotif drawn from its name, the same tune in every key, and it grows with the trope (trope-reveal.mjs stages)"
-  cadenceVoice: "a character keeps their own time (spw-cadence.mjs) as a quiet voice in the lanes, one at a time and seldom; the mime is the rest, the figure is unvoiced"
+  cadenceVoice: "a character keeps their own time (spw-cadence.mjs) as a quiet voice in the lanes, one at a time and seldom; the mime is the rest, the figure is unvoiced. When a chain has just fired their link and the feel is jazz, that voice borrows the link's approach note"
+  levelCell: "with a chapter number, that chapter owns one cell of the shared form, taken from the rhythm its level already keeps: 2 the bridge is the backdoor, 6 the Charleston against the four, 7 the swing and no other change, 9 the turnaround withholds its cadence, 10 the pedal holds through the rising, 11 the guide tone arrives a sixteenth early, 12 two basses, 14 one beat, 15 three tries and the third lands. From 12 a wobble alone cannot bring the bite back. With no chapter, the clock still chooses, as the older checks require"
+  foreshadow: "a foreshadow id keeps one scale degree, never the root (foreshadowPlan). It is heard once, far off, while it is owed. Only the last chapter that carries the mark may put that degree on a downbeat, and a mark that lives in one chapter waits for its turnaround. The chapter before the last may borrow the backdoor. The altered dominant and the tritone are for an open bane debt or that turned rung, not for a late room that owes nothing"
 }
 
 %"trope_stages"[
@@ -47,7 +49,6 @@
 }
 
 ?open[
-  "Should a completed chain cadence wait for the next bar line, or land at once"
   "Should a trope motif be heard in the reading pages too (the margin, the almanac), or only in the lanes"
   "Is the bane colour (forward and close) right, or should bane only be heard through the schemes it already has"
   "Should the characters own time play only while they are in view, or also as they are mentioned in the passage going by"

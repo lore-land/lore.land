@@ -109,6 +109,7 @@
   caches: ~"./caches/index.spw"
   workbench_direction: ~"./caches/workbench-direction.spw"
   factshift_quest_navigation: ~"./caches/factshift-quest-navigation.spw"
+  phrase_plan: ~"./caches/phrase-plan.spw"
   mount: ~"./mount.spw"
 }
 

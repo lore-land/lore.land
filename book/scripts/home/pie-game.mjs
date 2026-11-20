@@ -191,7 +191,7 @@ import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue, setBoardPosition } from './pie-sound.mjs?v=2026_11_16.B';
-import { shelfColor, chainSting, tropeMotif, cadenceVoice, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample, auditionChapterProgression } from './pie-sound.mjs?v=2026_11_16.B';
+import { shelfColor, chainSting, tropeMotif, cadenceVoice, foreshadowHear, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample, auditionChapterProgression } from './pie-sound.mjs?v=2026_11_16.B';
 import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuningDomains, writeTuningDomains, effectiveDomain } from '../modules/pie-tuning.mjs';
 import { VALUE_DEFS, VALUE_IDS, newValueState, noteValueEvent, rankValues, valueBlessing, parallelReflection, recordChapterParallel, readChapterParallels } from '../modules/pie-values.mjs';
 import { BUILTIN_STYLES, parseCreatorStyle, formatCreatorStyle, allCreatorStyles, saveCreatorStyle, activeCreatorStyle, setActiveCreatorStyle, styleLineForProvenance } from '../modules/creator-styles.mjs';
@@ -612,6 +612,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     showToast(`${fired.shelf} · ${fired.says}`, `${fired.line}${fired.complete ? ' That chain is complete.' : ''}`, 3400, CHAIN_VOICE[fired.shelf] || '', fired.complete ? 2 : 1, 'chain');
     say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? '. That chain is complete.' : '.'}`);
     chainSting(fired.shelf, { complete: fired.complete });
+    // The link colours the phrase until the shelf lets go, or until the chain completes and the cadence answers it.
+    run.motivation = fired.complete ? '' : fired.invokes;
+    const who = { boon: 'boon', bane: 'bane', bone: 'bonewap', bonk: 'clown', honk: 'boof' }[fired.shelf];
+    if (who && !fired.complete) cadenceVoice(who, cadenceFor(who), { lean: fired.invokes });
   }
   /* Trope development as a mechanic (trope-reveal.mjs): a thing of a trope's kinds, carried past, is a crossing in the
    * lanes; with the trope-reveal trial on, a trope whose stage rises says so (its stage and its Spw) and its motif
@@ -1690,6 +1694,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.chains = stepped.state;
       const fired = stepped.fired[0];
       if (fired) actOutChain(fired);
+      else if (run.motivation) {
+        const shelf = Object.entries(CHAINS).find(([, links]) => links.some((link) => link.invokes === run.motivation))?.[0];
+        if (!shelf || !(run.shelfV?.[shelf] >= 0.3)) run.motivation = '';
+      }
     }
     if (run && state === 'running') textureFind({ room: r.sig, chapter: r.chapter, sigils: [r.sigil], carry: run }).then(findSaid);
     const play = ROOM_PLAY[r.sigil];
@@ -3888,6 +3896,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     }).catch(() => {});
   }
   const legs = new Map();
+  /* Which chapters carry each foreshadow (semantic.json marks). A plant may sound before the index arrives;
+   * the paying chapter is known once it has. */
+  let foreshadowIndex = {};
+  const foreshadowChaptersOf = (id) => (id && foreshadowIndex[id]) || [];
+  fetch('/book/content/semantic.json').then((res) => (res.ok ? res.json() : null)).then((data) => {
+    const out = {};
+    Object.entries(data?.marks?.foreshadow || {}).forEach(([id, list]) => {
+      out[id] = [...new Set((list || []).map((place) => place.c))].filter((n) => n > 0).sort((a, b) => a - b);
+    });
+    foreshadowIndex = out;
+  }).catch(() => {});
   const voiceName = (type) => (/^custom-/.test(type || '') ? type.replace(/^custom-/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase()) : null);
   async function loadLeg(n) {
     const [chapter, almanac] = await Promise.all([
@@ -3904,7 +3923,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           // Variant zero: the book's own words; slots stay ready to turn with the carry's lean.
           const rawText = String(item.text);
           const text = rawText.replace(/\{\{([a-z0-9-]+)\}\}/gi, (_, name) => item.slots?.[name]?.variants?.[0] ?? '');
-          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, roomNo: roomNoOf.get(sec) || null, voice: voiceName(section.type), room: section.room?.spw || null, title: section.title || null });
+          paras.push({ text, rawText, slots: item.slots || null, id: section.id || null, sec, roomNo: roomNoOf.get(sec) || null, voice: voiceName(section.type), room: section.room?.spw || null, title: section.title || null, foreshadow: section['data-foreshadow'] || '' });
         } else if (Array.isArray(item.content)) {
           walk(item);
         }
@@ -5080,6 +5099,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.breath = 1.5;
       run.rules.push({ y: -16 });
     }
+    const planted = para.foreshadow || '';
+    if (planted !== (run.foreshadow || '')) {
+      run.foreshadow = planted;
+      if (planted) foreshadowHear(planted, { chapter: run.chapter, appearances: foreshadowChaptersOf(planted) });
+    }
     run.lastSection = para.sec;
     const quiet = run.t - (run.presenceEnded ?? -99) > 3;
     if (para.cue && !run.boon && !run.bane && quiet && allowed(para.cue)) {
@@ -5260,7 +5284,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         const progNow = progress();
         const richNow = richness();
         const presNow = run.boon ? 'boon' : run.bane ? 'bane' : '';
-        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow, tropeStage: run.lastTropeStage || '', wonderKind: run.lastWonderKind || '', wonderChain: run.wonderChain || 0 }));
+        const paceNow = paceAt(levelData.levels[run.chapter]?.leg?.pace, progNow);
+        music.ahead.forEach((h) => landPulse({ ...h, progress: progNow, wobble: run.wobble, combo: run.combo, richness: richNow, presence: presNow, tropeStage: run.lastTropeStage || '', wonderKind: run.lastWonderKind || '', wonderChain: run.wonderChain || 0, chapter: run.chapter, motivation: run.motivation || '', pace: paceNow, foreshadow: run.foreshadow || '', foreshadowChapters: foreshadowChaptersOf(run.foreshadow) }));
         conductor.hitsIn(music.ahead).forEach((h) => rhythmHit({ voice: conductor.rhythm.voice, strong: h.strong, whisper: true, pan: 0.35, step: h.step, in: h.in }));
         if (setting('music') !== 'quiet' && unlockOpen('groove')) conductor.groove(music.ahead).forEach((h) => rhythmHit({ voice: h.rhythm.voice, strong: h.strong, level: h.level, pan: h.level < 1 ? -0.3 : 0, step: h.step, interlock: h.interlock || 'primary', in: h.in }));
       }

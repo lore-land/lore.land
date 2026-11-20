@@ -23,6 +23,12 @@
    - `rhythmVoice`, `placeInBar`, and `conductor.groove()` contour pitches across the bar and weave found primary + visiting rhythms via `primary`, `complement` (+third, softer), and `answer` (call-and-response in rests).
    - `conductor.act()` and `conductor.pocket()` grade hit timing (`perfect` vs `good`), and `conductor.beatState()` drives a gentle visual beat-breathing cue on the lanes.
 
+## Landed In The Phrase (`2026-11-19`)
+
+- A live chain link (`motivation`) outranks the court in `jazzPhrasePlan`. Bonk ends on bane's semitone, honk's echo is boon's colour a beat late, and bone's cadence puts a tension down. A completed chain waits for bar 4 while the lanes pulse.
+- `LEVEL_CELLS` gives chapters 2, 6, 7, 9, 10, 11, 12, 14 and 15 the one change their rhythm already describes. Passing a chapter retires clock-triggered backdoors and tritone substitutions. From chapter 12 a wobble alone cannot select the bite.
+- `foreshadowPlan` parks one scale degree per mark. The last chapter that carries it may land that degree; a turned mark may borrow the backdoor.
+
 ## Next Work (`f39` & Cross-Host `^ear` Bridge)
 
 - Human ear calibration on `tools/audio_synthesis/pie-sound-audition.html` and live `/pie/` runs (phone speakers + headphones): verify density ducking under high-combo runs and calibrate swing pocket feel across Ch02, Ch06, Ch07, Ch09, Ch12, Ch15.

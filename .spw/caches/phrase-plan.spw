@@ -1,0 +1,75 @@
+# Phrase Plan — Motivation, Level Cell, Parked Foreshadow
+# Workshop retention for the jazz phrase that landed 2026-11-19.
+# Cache posture: keep the listener's account and the engineering handles. Do not alter story canon, and do not treat a measured plan as something a person has heard.
+#>lore_land_phrase_plan
+#:cache #!phrase #!jazz #!audio
+#:layer #!pragmatics
+#:status #!active
+
+~<rationale>{
+  jazzPhrasePlan used to choose from the court, the wobble, or the clock. It now also reads a live chain link, the chapter's own cell, and a foreshadow that is still owed. This cache holds that account for mounted workbench agents. The sound-design trial stays off by default. npm run sound:check measures the plan. How it sounds remains a person's work.
+}
+
+^"meta"{
+  .updated: "2026-11-19"
+  .role: "Engineering handle for the three jobs the phrase now follows: a live motivation, the chapter's cell, and a parked foreshadow degree"
+  .consumer: "lore.land"
+  .posture: "workshop retention, not chapter canon; plans measured, a listener still owed"
+}
+
+&refs{
+  caches: ~"./index.spw#lore_land_caches_index"
+  workbench_direction: ~"./workbench-direction.spw#lore_land_workbench_direction"
+  scored: ~"../surfaces/scored.spw#lore_land_surfaces_scored"
+  levels: ~"../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  plan: ~"../plans/audio-jazz-rhythm/PLAN.md"
+  phrase: "book/scripts/home/pie-sound.mjs"
+  carry: "book/scripts/home/pie-game.mjs"
+  shelves: "book/scripts/modules/valence-shelves.mjs"
+  check: "book/scripts/tools/sound-check.mjs"
+}
+
+^"three_jobs"{
+  thesis: "The phrase follows a live motivation, the chapter's own cell, and a parked foreshadow degree. With no chapter number the old clock still chooses, so the older sound checks still pass. Passing a chapter retires a clock-driven tritone and a clock-driven backdoor unless that chapter's cell or an open debt asks for them."
+  motivation: "A fired chain link outranks the ambient court for as long as that link is alive: from the room it fires until the chain completes, or until that shelf's vector falls below 0.3. Bonk ends on bane's semitone. Honk's echo is boon's colour, a beat late. Bone's cadence puts the tension down, the fifth and then the root. A completed chain's fuller cadence waits for bar 4 while the lanes are pulsing, and lands at once in the audition, where no pulse is running. Bonk and honk are how bane and boon are entered. They do not keep styles of their own. A shelf leaves the key unchanged, and the minor stays the mime cue."
+  cell: "A level owns one cell of the shared four-movement form. The cells come from rhythms already written in pie-levels.spw. LEVEL_CELLS in pie-sound.mjs is the reading of those rhythms. The level file itself stays as it was. The level's pace, from 0 to 1, scales how many voices the phrase keeps: a taut pace adds one, a spare pace drops one, and a bone link drops one more."
+  foreshadow: "A mark keeps one scale degree, never the root, stable for that id. It is heard once, far off, at seed volume, while it is owed. Only the last chapter that carries the mark may put that degree on a downbeat, and a mark that lives in one chapter waits for its turnaround. The chapter before the last may borrow the backdoor or the tritone. The paying chapter lands the degree on the turnaround downbeat and does not also play the plant. Until the appearances arrive, a heard mark is a whisper and still plants. Reading-page motifs stay on the page. The hairline stays the book's version. The altered dominant and the tritone belong to an open bane debt or that turned rung."
+}
+
+^"cells"{
+  .source: "Chapters named here are the ones whose rhythm already asked for one change. Other chapters keep the shared form."
+  ch2: "late echo. On the bridge, bar 2, the bass steps the backdoor."
+  ch6: "threes. The comp lands on steps 0, 6, and 10."
+  ch7: "uneven oath. Swing, and no wobble or clock substitution. A live motivation, the court, a trope stage, and a wonder still apply."
+  ch9: "the ninth withheld. The turnaround keeps the tonic off the bass, and the motif degree stays empty."
+  ch10: "three in four. The rising holds a pedal. Walking bass only on steps 0 and 8."
+  ch11: "early bloom. The guide tone arrives a sixteenth early."
+  ch12: "two currents. A quieter bass a fifth up during the rising and the bridge. From this chapter on, a wobble alone cannot bring the bite or the altered dominant back. An explicit bane, or a motivation that has earned one, still can."
+  ch14: "one beat. The turnaround is a single downbeat: no backbeat, no ride, no pickup."
+  ch15: "three knocks. The turnaround bass walks 2, then 7, then 5, then the root. The third attempt lands."
+}
+
+^"wiring"{
+  carry: "The pie passes the chapter, the live link, the level's pace, and the mark on the current paragraph into landPulse. Presence from the game is boon or bane. The link colours the phrase even when the court is the other shelf."
+  appearances: "Paragraphs carry the section's data-foreshadow. The chapter list for an id is filled from book/content/semantic.json when the pie module evaluates. A parked degree steps off written bass even when the jazz feel is off."
+  cadence: "One pending cadence. A second completed chain before bar 4 replaces the first. Any live motivation counts as earned for the chapter-12 bite ban, so a link keeps its own style. After chapter 12 a wobble can still choose the enclosure."
+  quiet: "Scored hooks stay in the room's chord, scale, or bass. Under a catch the voice stays quiet. The sting keeps its gap, and a trope motif keeps its longer gap."
+}
+
+^"holds"{
+  measured: "npm run sound:check exits 0 on the cells, on a scheme outranking the court, and on one parked degree. The check's closing line still says that nobody has listened and that how it sounds is not judged there."
+  still_open: "Ear calibration on chapters 2, 6, 7, 9, 12, and 15, on phone speakers and on headphones, remains the next human work. The plan names that work and this cache does not close it."
+  unscoped: "A call that passes no chapter still expects the clock: a backdoor in the bridge, the altered dominant from a high wobble, upper structure from a paid trope or a long wonder chain."
+}
+
+^"listener_account"{
+  wonder: "The account is compelling enough to wonder about a card. It describes a plan a person can measure. It becomes something to tell after a person has heard it and still wants the sentence."
+  account: "The phrase follows a live motivation, the chapter's own cell, and a parked foreshadow degree. A bonk ends on the semitone, a honk's echo is the bright colour a beat late, and a bone puts the tension down. The finished chain waits for the fourth bar. Each late chapter keeps the one change its rhythm already named. A hint is one degree, never the root, heard once far off, and it lands in the chapter that owes it."
+  sayable: [
+    "A motive outranks the room.",
+    "Each late chapter keeps one change of its own.",
+    "A hint is one parked note, until the chapter that owes it."
+  ]
+  card: "One of those sentences can sit on a card after someone has listened, on phone speakers and on headphones, and still wants it. Share cards stay the chapter plates from npm run assets:brand. This cache does not author one."
+  leave_off: "Mark names and plot beats stay off the card. The sentence is the mechanic."
+}
