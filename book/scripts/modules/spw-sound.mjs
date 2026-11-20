@@ -171,11 +171,31 @@ export function scoreOf(text) {
 
 let ctx = null;
 let bus = null;
+function unlockAudio(c) {
+  if (!c) return;
+  try {
+    const nav = /** @type {Navigator & { audioSession?: { type: string } }} */ (
+      typeof navigator === 'undefined' ? {} : navigator
+    );
+    if (nav.audioSession && nav.audioSession.type !== 'playback') nav.audioSession.type = 'playback';
+  } catch { /* ignore */ }
+  if (c.state !== 'running') {
+    c.resume().catch(() => {});
+    try {
+      const buf = c.createBuffer(1, 1, 22050);
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      src.connect(c.destination);
+      src.start(0);
+    } catch { /* ignore */ }
+  }
+}
+
 function ensureAudio() {
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   if (!AudioCtx) return null;
   ctx = ctx || new AudioCtx();
-  if (ctx.state !== 'running') ctx.resume().catch(() => {});
+  if (ctx.state !== 'running') unlockAudio(ctx);
   if (!bus) {
     const input = ctx.createGain();
     const filter = ctx.createBiquadFilter();

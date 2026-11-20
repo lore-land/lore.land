@@ -238,6 +238,17 @@ function createHearth() {
     // Embers only join once the rain is established.
     emberBus.gain.setTargetAtTime(Math.max(0, value - 0.35) * 0.9, now, 0.5);
     if (value > 0 && ctx.state !== 'running') {
+      try {
+        const nav = /** @type {Navigator & { audioSession?: { type: string } }} */ (
+          typeof navigator === 'undefined' ? {} : navigator
+        );
+        if (nav.audioSession && nav.audioSession.type !== 'playback') nav.audioSession.type = 'playback';
+        const buf = ctx.createBuffer(1, 1, 22050);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.connect(ctx.destination);
+        src.start(0);
+      } catch { /* ignore */ }
       await ctx.resume().catch(() => {});
     }
     scheduleEmbers();

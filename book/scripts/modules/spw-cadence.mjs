@@ -389,7 +389,22 @@ export function playCadence(c, { bpm = 96, loops = 1, gain = 0.07 } = {}) {
   if (!AC) return null;
   audio = audio || new AC();
   if (!audio) return null;
-  if (audio.state === 'suspended') audio.resume().catch(() => {});
+  try {
+    const nav = /** @type {Navigator & { audioSession?: { type: string } }} */ (
+      typeof navigator === 'undefined' ? {} : navigator
+    );
+    if (nav.audioSession && nav.audioSession.type !== 'playback') nav.audioSession.type = 'playback';
+  } catch { /* ignore */ }
+  if (audio.state !== 'running') {
+    audio.resume().catch(() => {});
+    try {
+      const buf = audio.createBuffer(1, 1, 22050);
+      const src = audio.createBufferSource();
+      src.buffer = buf;
+      src.connect(audio.destination);
+      src.start(0);
+    } catch { /* ignore */ }
+  }
   const ctx = audio;
   const master = ctx.createGain();
   master.gain.value = Math.min(0.12, Math.max(0, gain));
