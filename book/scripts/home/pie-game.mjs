@@ -1060,6 +1060,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     stepBuffer: null,
     jazzPocketT: 0,
     jazzChain: 0,
+    autoHopCharges: 0,
+    autoHopUsed: false,
     roomPantryT: 0,
     pantryHeard: new Set(),
     recipe: { id: 'warm', charges: 0, earnedAt: -9 },
@@ -4715,6 +4717,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (chainN >= 2) {
       run.sliceReady = Math.min(1, run.sliceReady + 0.08 * chainN);
       if (jazzOn()) run.jazzPocketT = Math.max(run.jazzPocketT || 0, 1.1 + chainN * 0.25);
+      // Re-up auto-hop charges on chained wonders, at odds with pie poise (wobble).
+      run.autoHopCharges = Math.min(3, (run.autoHopCharges || 0) + 1);
+      run.wobble = Math.min(1.2, run.wobble + 0.07);
     }
     const chainLabel = chainN >= 2 ? ` · ♪×${chainN}${chainN >= 4 ? ' UPPER' : chainN >= 3 ? ' #11' : ' +9'}` : '';
     run.tags.push({ x: thing.x, y: thing.y - 30, t: 0, text: `${sigil} ${w.name.toUpperCase()} · ${syntaxAtom}${chainLabel}` });
@@ -5435,6 +5440,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           run.wobble = Math.min(1.2, run.wobble + 0.05);
         }
         run.highHop = false;
+        run.autoHopUsed = false;
         if (!clears) run.inTime = 0;
         run.deftHop = false;
         run.hopClears = 0;
@@ -5800,6 +5806,17 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
 
       for (const thing of run.things) {
         if (thing.ghost || thing.wapped || thing.knocked || thing.cleared || !hits(thing)) continue;
+        if (!airborne() && (run.autoHopCharges || 0) > 0 && (thing.fatal || SLIPS.has(thing.kind)) && (LOW.has(thing.kind) || HIGH_CLEARS.has(thing.kind))) {
+          run.autoHopCharges -= 1;
+          run.jumpT = JUMP_DUR;
+          run.hopPower = 1 + 2 * TUNE.hop_chain;
+          run.highHop = true;
+          run.autoHopUsed = true;
+          run.wobble = Math.min(1.2, run.wobble + 0.08);
+          sfx('hop', 2);
+          spawnRing(run.x, run.y + 12, 22, colors.gold, 0.45);
+          run.tags.push({ x: run.x, y: run.y - 46, t: 0, text: `AUTO HOP (${run.autoHopCharges} LEFT)` });
+        }
         if (airborne() && (LOW.has(thing.kind) || (run.highHop && HIGH_CLEARS.has(thing.kind)))) {
           // Cleared in a hop: a hazard or a slip passed under is passed for good, and a slice readies.
           if (thing.fatal || SLIPS.has(thing.kind)) {
@@ -5810,8 +5827,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             if (thing.rival) lean('turned');
             run.hopClears = (run.hopClears || 0) + 1;
             run.sliceReady = Math.min(1, run.sliceReady + 0.3);
-            // In time: cleared in the hang, the flat top of the hop. A run of them is a rhythm.
-            const inTime = inHang();
+            // In time: cleared in the hang, the flat top of the hop. A run of them is a rhythm (manual hops only).
+            const inTime = !run.autoHopUsed && inHang();
             if (inTime) {
               run.inTime = (run.inTime || 0) + 1;
               run.inTimeTotal = (run.inTimeTotal || 0) + 1;
