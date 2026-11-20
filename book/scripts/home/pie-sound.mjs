@@ -602,6 +602,7 @@ export function setSoundPlace({ chapter = 1, held = false, level = null, after =
   sound.ground = place.ground;
   sound.room = place.room;
   line.last = -9;
+  lastCompVoicing = null;
   placeAfter = clamp(Number(after) || 0, 0, 4);
   setHarmony('.');
   placeAfter = 0;
@@ -850,6 +851,23 @@ function kit(out, t, pan = 0) {
     tone('sine', f0 * 2.25, 0, 0.03, vol * 0.3, delay, { attack: 0.002, cents: 25 });
     hiss(2500, 2300, 0.014, vol * 0.3, 3, delay);
   };
+  // Upright pizzicato bass: woody finger pluck transient + warm fundamental with slight acoustic scoop and body resonance.
+  const uprightBass = (f, dur, vol, delay = 0, side = 0) => {
+    tone('triangle', f * 0.992, f, dur, vol, delay, { attack: 0.008, cents: 3, side });
+    tone('sine', f, 0, dur * 1.12, vol * 0.65, delay, { attack: 0.012, cents: 2, side });
+    hiss(1100, 420, 0.022, vol * 0.16, 1.4, delay, 'bandpass', 0.06);
+  };
+  // Jazz ride cymbal ("spang-a-lang"): quiet metallic shimmer + two inharmonic bell partials, softly articulated.
+  const ride = (vol, delay = 0, { accent = false, skip = false, side = 0.14 } = {}) => {
+    const dur = skip ? 0.042 : accent ? 0.085 : 0.062;
+    hiss(accent ? 8200 : 7600, skip ? 5600 : 5100, dur, vol, skip ? 2.8 : 2.2, delay, 'bandpass', 0.18);
+    tone('sine', accent ? 3180 : 3020, 0, dur * 0.7, vol * (skip ? 0.14 : 0.22), delay, { attack: 0.002, cents: 14, side });
+    tone('sine', accent ? 4680 : 4440, 0, dur * 0.45, vol * (skip ? 0.08 : 0.12), delay, { attack: 0.002, cents: 18, side: -side });
+  };
+  // Hi-hat chick on beats 2 & 4: crisp, short, high-passed brush closure.
+  const hihatChick = (vol, delay = 0) => {
+    hiss(7400, 6200, 0.028, vol, 2.6, delay, 'highpass', 0.12);
+  };
   // A recorded take, through the same place as the voices, and through a filter that keeps its
   // register: the crack high, the grass in the middle, the floor under everything. False if none has arrived.
   const sample = (event, gain = 1, delay = 0, shape = null) => {
@@ -872,7 +890,7 @@ function kit(out, t, pan = 0) {
     src.start(t + delay);
     return true;
   };
-  return { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, honk, tock, sample };
+  return { tone, hiss, pluck, swell, celesta, marimba, vibes, kalimba, musicBox, honk, tock, uprightBass, ride, hihatChick, sample };
 }
 
 /* ─── The land joins in: a run of good things fills the room's chord in, a fifth, then its third, then its colour ─── */
@@ -1117,8 +1135,9 @@ function sayRoom() {
     const k = kit(outlet(heat, { depth: 0.3, air: 0.5, song: 0.22 }), now + wait, 0);
     const tones = harmony.sigil === '.' ? roomTones().reverse() : roomTones();
     const gap = sixteenth() / 2;
-    tones.forEach((semi, i) => k.pluck(hz(semi), 0.036 * (i === tones.length - 1 ? 1.15 : 1), i * gap));
-    if (harmony.sigil !== '?') k.tone('sine', hz(bassLow()), 0, 0.5, 0.034, harmony.sigil === '.' ? (tones.length - 1) * gap : 0, { attack: 0.02, cents: 0 });
+    const strumAt = (i) => (sound.jazz ? i * gap * (i % 2 ? 1.18 : 0.92) : i * gap);
+    tones.forEach((semi, i) => k.pluck(hz(semi), 0.036 * (i === tones.length - 1 ? 1.15 : 1), strumAt(i)));
+    if (harmony.sigil !== '?') k.tone('sine', hz(bassLow()), 0, 0.5, 0.034, harmony.sigil === '.' ? strumAt(tones.length - 1) : 0, { attack: 0.02, cents: 0 });
   } catch { /* the room opens all the same */ }
 }
 
@@ -1422,6 +1441,118 @@ export function inflectGesture(notes, { lean = '', amount = 0 } = {}) {
 }
 
 /**
+ * Pure rootless voice-led jazz comping plan: transposes `compSemis` over the bar's `bassOffset`,
+ * adapts to `minor`/`open` mode, folds into the warm mid-register `[0, 16]`, and voice-leads
+ * smoothly from `prevVoicing` (minimal semitone motion, Bill Evans A/B rootless form style).
+ * Keeps a `parked` foreshadow scale degree off the top voice until its paying chapter.
+ * @param {{ bassOffset?: number, compSemis?: number[], minor?: boolean, open?: boolean, prevVoicing?: number[] | null, parked?: number | null }} [opts]
+ * @returns {number[]}
+ */
+export function compVoicingPlan({ bassOffset = 0, compSemis = [4, 7, 9, 14], minor = false, open = false, prevVoicing = null, parked = null } = {}) {
+  const bass = Number(bassOffset) || 0;
+  const modal = (pc) => (minor ? (FALLS[pc] ?? pc) : open ? (RAISES[pc] ?? pc) : pc);
+  const rawPcs = [...new Set((compSemis || [4, 7, 9]).map((s) => modal(((bass + s) % 12 + 12) % 12)))];
+  const foldIn = (pc, anchor) => {
+    const candidates = [pc, pc + 12, pc - 12].filter((x) => x >= 0 && x <= 16);
+    if (!candidates.length) return clamp(pc, 0, 16);
+    if (anchor == null) return candidates[0];
+    return candidates.reduce((best, c) => (Math.abs(c - anchor) < Math.abs(best - anchor) ? c : best), candidates[0]);
+  };
+  let voiced;
+  if (Array.isArray(prevVoicing) && prevVoicing.length) {
+    const used = new Set();
+    voiced = rawPcs.map((pc, idx) => {
+      const anchor = prevVoicing[Math.min(idx, prevVoicing.length - 1)];
+      let note = foldIn(pc, anchor);
+      if (used.has(note)) {
+        const alt = [pc, pc + 12].find((x) => x >= 0 && x <= 16 && !used.has(x));
+        if (alt != null) note = alt;
+      }
+      used.add(note);
+      return note;
+    }).sort((a, b) => a - b);
+  } else {
+    voiced = rawPcs.map((pc, idx) => {
+      const base = idx === 0 && pc > 9 ? pc - 12 : pc;
+      return clamp(base < 0 ? base + 12 : base, 0, 16);
+    }).sort((a, b) => a - b);
+  }
+  if (parked != null && voiced.length) {
+    const parkedPc = debtPc(parked);
+    const topIdx = voiced.length - 1;
+    if (((voiced[topIdx] % 12) + 12) % 12 === parkedPc) {
+      voiced[topIdx] = clamp(voiced[topIdx] + 2, 0, 16);
+      voiced.sort((a, b) => a - b);
+    }
+  }
+  return voiced;
+}
+
+/**
+ * Pure 4-beat target-driven jazz walking bass plan connecting this bar's chord root (`bassOffset`)
+ * to the next bar's chord root (`nextBass`), with chromatic/dominant beat-4 approach tones.
+ * Respects level cells (`pedalHolds`, `withhold`, `single`) and harmonic debts (`tritoneSub`, `backdoor`, `feeds`).
+ * @param {{ progress?: number, bar?: number, chapter?: number, jazz?: boolean, minor?: boolean, tritoneSub?: boolean, backdoor?: boolean, feeds?: string, passOffset?: number | null }} [opts]
+ * @returns {{ notes: number[], target: number, approach: 'chromatic_up' | 'chromatic_down' | 'tritone' | 'backdoor' | 'dominant' | 'pedal' | 'withhold' | 'single' }}
+ */
+export function walkingBassPlan({ progress = 0, bar = 0, chapter = 0, jazz = true, minor = false, tritoneSub = false, backdoor = false, feeds = '', passOffset = null } = {}) {
+  const arc = chapterArcPlan({ progress, bar, step: 0, stage: 2, chapter });
+  const nextArc = chapterArcPlan({ progress, bar: (Number(bar) || 0) + 1, step: 0, stage: 2, chapter });
+  const root = arc.bassOffset;
+  const target = nextArc.bassOffset;
+  if (arc.single) return { notes: [0, 0, 0, 0], target, approach: 'single' };
+  if (arc.pedalHolds) return { notes: [root, root, root, root], target, approach: 'pedal' };
+  if (arc.withhold) return { notes: [root, root + (minor ? 3 : 4), root + 7, 7], target, approach: 'withhold' };
+  const third = minor ? 3 : 4;
+  const diff = target - root;
+  const beat2 = diff > 2 ? root + 2 : diff < -2 ? root - 2 : root + third;
+  const beat3 = diff === 0 ? root + 7 : Math.abs(target - (root + 7)) <= 5 ? root + 7 : target + (diff > 0 ? -2 : 2);
+  let beat4;
+  /** @type {'chromatic_up' | 'chromatic_down' | 'tritone' | 'backdoor' | 'dominant' | 'pedal' | 'withhold' | 'single'} */
+  let approach = 'chromatic_up';
+  if (tritoneSub || feeds === 'bane') {
+    beat4 = target + 1;
+    approach = 'tritone';
+  } else if (backdoor) {
+    beat4 = 10;
+    approach = 'backdoor';
+  } else if (feeds === 'clear') {
+    beat4 = target + 7 > 11 ? target - 5 : target + 7;
+    approach = 'dominant';
+  } else if (!jazz) {
+    beat4 = arc.turnOffset;
+    approach = 'dominant';
+  } else if (passOffset != null && (arc.inPhrase === 3 || arc.movement === 'turnaround')) {
+    beat4 = passOffset === -1 ? target - 1 : passOffset === 1 ? target + 1 : target - 1;
+    approach = beat4 > target ? 'chromatic_down' : 'chromatic_up';
+  } else if (diff < 0) {
+    beat4 = target + 1;
+    approach = 'chromatic_down';
+  } else {
+    beat4 = target - 1;
+    approach = 'chromatic_up';
+  }
+  return { notes: [root, beat2, beat3, beat4], target, approach };
+}
+
+/**
+ * Pure rhythm-section density ducking under high-combo or dense activity runs:
+ * gives the player's soloist line (catches, WAPs, tricks) breathing room while keeping the walking bass anchored.
+ * @param {{ combo?: number, stage?: number, pace?: number | null, recentHeat?: number }} [opts]
+ * @returns {{ compGain: number, rideGain: number, maxVoices: number, skipOffComp: boolean }}
+ */
+export function densityDuckFactor({ combo = 0, stage = 1, pace = null, recentHeat = 0 } = {}) {
+  const c = Math.max(0, Number(combo) || 0);
+  const h = Math.max(0, Number(recentHeat) || 0);
+  const taut = pace == null ? 0.5 : clamp(Number(pace) > 1 ? Number(pace) / 9 : Number(pace), 0, 1);
+  const pressure = clamp((Math.max(0, c - 2) * 0.065) + (h * 0.08) + (stage >= 3 ? 0.06 : 0) + (taut > 0.75 ? 0.05 : 0), 0, 0.45);
+  const compGain = clamp(1 - pressure, 0.55, 1);
+  const rideGain = clamp(1 - pressure * 0.85, 0.58, 1);
+  const maxVoices = pressure >= 0.34 ? 2 : pressure >= 0.18 ? 3 : 4;
+  return { compGain, rideGain, maxVoices, skipOffComp: pressure >= 0.38 };
+}
+
+/**
  * Multi-dimensional jazz phrasing plan reflecting balance (`wobble`), streak (`combo`),
  * pie fullness (`richness`), story court (`presence`), trope stage (`tropeStage`),
  * collectible wonder kind (`wonderKind`), wonder chain (`wonderChain`), and chapter `progress`.
@@ -1490,9 +1621,17 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
   if (feeds === 'bane') passOffset = 1;
   if (feeds === 'clear' && (passOffset === 1 || passOffset === -1)) passOffset = 7;
   if (arc.withhold) passOffset = 7;
+  const parked = owed && !owed.mayLand ? owed.degree : null;
+  const landing = owed?.mayLand ? owed.degree : null;
+  const walkLine = walkingBassPlan({ progress: p, bar, chapter: ch, jazz: true, tritoneSub, backdoor, feeds, passOffset });
+  const compVoicing = compVoicingPlan({ bassOffset: arc.bassOffset, compSemis, parked });
+  const duck = densityDuckFactor({ combo: c, stage: r >= 0.72 ? 3 : r >= 0.42 ? 2 : 1, pace: taut });
   return {
     style,
     compSemis,
+    compVoicing,
+    walkLine,
+    duck,
     enclosure: spec.enclosure,
     layback: spec.layback,
     charleston,
@@ -1505,8 +1644,8 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
     blueSlide: c >= 2 || p >= 0.55,
     cell: arc.cell,
     feeds,
-    parked: owed && !owed.mayLand ? owed.degree : null,
-    landing: owed?.mayLand ? owed.degree : null
+    parked,
+    landing
   };
 }
 
@@ -1561,6 +1700,8 @@ export function beatPocketPlan({ step = 0, bar = 0, progress = 0, stage = 1, swi
  * An audition that never pulses plays the cadence at once. */
 let pulseSeen = -9;
 let pendingCadence = null;
+/** Last voice-led jazz comping chord, so consecutive bars move smoothly by step or common tone. */
+let lastCompVoicing = null;
 /** A downbeat, steered off a parked foreshadow, or onto one the paying chapter is allowed to land. */
 function downbeatBass(semi, { jz = null, arc = null, step = 0 } = {}) {
   let out = semi;
@@ -1575,10 +1716,32 @@ function downbeatBass(semi, { jz = null, arc = null, step = 0 } = {}) {
   return out;
 }
 
+/** Play a voice-led rootless jazz comping stab, tapered by voice height and density ducking. */
+function playJazzComp(k, jz, arc, duck, { dur = 0.2, gain = 1, roll = 0.008 } = {}) {
+  if (!jz || !k) return;
+  const voiced = compVoicingPlan({
+    bassOffset: arc.bassOffset,
+    compSemis: jz.compSemis,
+    minor: sound.minor,
+    open: sound.open,
+    prevVoicing: lastCompVoicing,
+    parked: jz.parked
+  });
+  lastCompVoicing = voiced;
+  const count = Math.min(voiced.length, Math.max(2, duck.maxVoices));
+  const tones = voiced.slice(0, count);
+  const center = (tones.length - 1) / 2;
+  tones.forEach((semi, idx) => {
+    const taper = idx < 2 ? 1 : idx === 2 ? 0.86 : 0.72;
+    k.vibes(hz(semi + 12), dur, 0.014 * gain * duck.compGain * taper, jz.layback + idx * roll, (idx - center) * 0.14);
+  });
+}
+
 /** The land's bass, beat pocket, and chapter progression, step by step. Bars come in fours, evolving across the
  *  chapter's four movements (opening pedal -> rising walk -> bridge expansion -> cadential turnaround toward the door),
  *  keeping a warm heartbeat on 1 & 3, a brushed/wood backbeat on 2 & 4, swung ride/shaker subdivisions, and in
- *  jazz feel adding Charleston comping, guide-tone voice leading, and walking chromatic/tritone approach tones. */
+ *  jazz feel adding voice-led Charleston comping, target-driven upright walking bass, ride spang-a-lang, hi-hat
+ *  chicks on 2 & 4, and combo density ducking. */
 export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', tropeStage = '', wonderKind = '', wonderChain = 0, chapter = 0, motivation = '', pace = null, foreshadow = '', foreshadowChapters = [] } = {}) {
   try {
     if (![0, 2, 4, 6, 7, 8, 10, 12, 14, 15].includes(step)) return;
@@ -1593,6 +1756,9 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
     const jz = sound.jazz ? jazzPhrasePlan({ progress, wobble, combo, richness, presence, step, bar, tropeStage, wonderKind, wonderChain, chapter: ch, motivation, pace, foreshadow, foreshadowChapters }) : null;
     const owed = foreshadow ? foreshadowPlan(foreshadow, { chapter: ch || 1, appearances: foreshadowChapters, movement: arc.movement }) : null;
     const steer = jz || { parked: owed && !owed.mayLand ? owed.degree : null, landing: owed?.mayLand ? owed.degree : null };
+    const recentHeat = (heard.get('catch')?.heat || 0) * 0.5 + (heard.get('wap')?.heat || 0) * 0.6;
+    const duck = densityDuckFactor({ combo, stage, pace, recentHeat });
+    const walk = jz ? walkingBassPlan({ progress, bar, chapter: ch, jazz: true, minor: sound.minor, tritoneSub: jz.tritoneSub, backdoor: jz.backdoor, feeds: jz.feeds, passOffset: jz.passOffset }) : null;
     if (step === 0 && pendingCadence && arc.inPhrase === 3) {
       const armed = pendingCadence;
       pendingCadence = null;
@@ -1606,22 +1772,29 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
       const heat = hear('land-pulse', t);
       if (heat === null) return;
       const k = kit(outlet(heat * 0.22, { air: 0.25 }), t, 0);
-      const bassNote = downbeatBass(bassLow() + fallen(arc.bassOffset), { jz: steer, arc, step });
+      const bassNote = downbeatBass(bassLow() + fallen(walk ? walk.notes[0] : arc.bassOffset), { jz: steer, arc, step });
       const volScale = stage === 3 ? 1.25 : stage === 2 ? 1.05 : stage === 1 ? 0.85 : 0.68;
-      k.tone('sine', hz(bassNote), 0, stage < 2 ? 0.28 : 0.2, 0.028 * volScale * arc.volMul, 0, { attack: 0.014, cents: 0 });
+      if (sound.jazz) {
+        k.uprightBass(hz(bassNote), stage < 2 ? 0.3 : 0.24, 0.03 * volScale * arc.volMul, 0);
+      } else {
+        k.tone('sine', hz(bassNote), 0, stage < 2 ? 0.28 : 0.2, 0.028 * volScale * arc.volMul, 0, { attack: 0.014, cents: 0 });
+      }
       if (arc.complement && (stage >= 1 || bed.on)) {
         k.tone('sine', hz(bassLow() + fallen(arc.bassOffset + 7)), 0, 0.16, 0.011 * volScale, 0.03, { attack: 0.02, cents: 0 });
       }
       if (pocket.ridePing && sound.jazz) {
-        k.hiss(7600, 5200, 0.04, 0.009 * volScale, 2.4, 0, 'bandpass', 0.18);
+        k.ride(0.011 * volScale * duck.rideGain, 0, { accent: true, skip: false, side: 0.16 });
+      }
+      if (jz && jz.charleston && (stage >= 1 || combo >= 1)) {
+        playJazzComp(k, jz, arc, duck, { dur: 0.17, gain: 0.88, roll: 0.006 });
       }
       if (stage >= 2 && arc.movement !== 'opening' && !arc.anticipate) {
         const guideSemi = fallen(arc.guideToneOffset) + 12;
-        k.vibes(hz(guideSemi), 0.24, 0.011, jz ? jz.layback : 0.006, -0.1);
+        k.vibes(hz(guideSemi), 0.24, 0.011 * duck.compGain, jz ? jz.layback : 0.006, -0.1);
       }
       if (stage === 3) {
         const topSemi = harmony.pcs[harmony.pcs.length - 1] + 12 + (arc.movement === 'turnaround' ? 2 : 0);
-        k.celesta(hz(topSemi), 0.22, 0.012, jz ? jz.layback : 0, 0.1);
+        k.celesta(hz(topSemi), 0.22, 0.012 * duck.compGain, jz ? jz.layback : 0, 0.1);
       }
       return;
     }
@@ -1633,34 +1806,41 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
       const k = kit(outlet(0.18, { air: 0.2, role: 'music' }), t, step === 4 ? -0.08 : 0.08);
       const gain = (stage >= 2 ? 1 : 0.76) * (pocket.backbeatStrong ? 1.12 : 0.95);
       if (pocket.walkingBass && (stage >= 1 || bed.on)) {
-        const walkSemi = bassLow() + fallen(step === 12 && jz ? jz.passOffset : pocket.bassSemi);
-        k.marimba(hz(walkSemi), 0.18, 0.018 * gain, jz ? jz.layback * 0.5 : 0);
+        if (sound.jazz && walk) {
+          const walkSemi = bassLow() + (step === 4 ? fallen(walk.notes[1]) : walk.notes[3]);
+          k.uprightBass(hz(walkSemi), 0.21, 0.022 * gain, jz ? jz.layback * 0.5 : 0);
+        } else {
+          const walkSemi = bassLow() + fallen(step === 12 && jz ? jz.passOffset : pocket.bassSemi);
+          k.marimba(hz(walkSemi), 0.18, 0.018 * gain, jz ? jz.layback * 0.5 : 0);
+        }
+      }
+      if (sound.jazz && pocket.ridePing) {
+        k.ride(0.01 * gain * duck.rideGain, jz ? jz.layback * 0.5 : 0, { accent: step === 12, skip: false, side: 0.15 });
+        k.hihatChick(0.012 * gain * duck.rideGain, jz ? jz.layback : 0);
       }
       if (pocket.percussionVoice === 'wood') {
-        k.tock(pocket.backbeatStrong ? 590 : 660, pocket.backbeatStrong ? 420 : 480, 0.016 * gain, jz ? jz.layback : 0);
+        k.tock(pocket.backbeatStrong ? 590 : 660, pocket.backbeatStrong ? 420 : 480, 0.016 * gain * (sound.jazz ? duck.rideGain : 1), jz ? jz.layback : 0);
       } else {
-        k.hiss(5800, 3900, 0.045, 0.013 * gain, 1.9, jz ? jz.layback : 0, 'bandpass', 0.14);
+        k.hiss(5800, 3900, 0.045, 0.013 * gain * (sound.jazz ? duck.rideGain : 1), 1.9, jz ? jz.layback : 0, 'bandpass', 0.14);
       }
       if (step === 12 && arc.motifDeg != null && stage >= 2) {
-        k.celesta(hz(sungTone(arc.motifDeg) + 12), 0.24, 0.014, jz ? jz.layback : 0, 0.15);
+        k.celesta(hz(sungTone(arc.motifDeg) + 12), 0.24, 0.014 * duck.compGain, jz ? jz.layback : 0, 0.15);
       }
       return;
     }
 
     // Jazz Charleston off-beat comping on step 6 ("and" of beat 2), or straight eighth subdivision on steps 2 & 6.
     if (step === 2 || step === 6) {
-      if (step === 6 && jz && jz.charleston && (stage >= 1 || combo >= 2)) {
+      if (step === 6 && jz && jz.charleston && (stage >= 1 || combo >= 2) && !duck.skipOffComp) {
         if (hear('land-comp', t) === null) return;
         const k = kit(outlet(0.2, { air: 0.3, song: 0.18, role: 'music' }), t, 0);
-        jz.compSemis.slice(0, 3).forEach((semi, idx) => {
-          k.vibes(hz(semi + 12), 0.18, 0.014, jz.layback + idx * 0.008, (idx - 1) * 0.16);
-        });
+        playJazzComp(k, jz, arc, duck, { dur: 0.22, gain: 1, roll: 0.008 });
         return;
       }
       if (pocket.ridePing && (stage >= 2 || combo >= 3)) {
         if (hear(`land-sub:${step}`, t) === null) return;
         const k = kit(outlet(0.25, { air: 0.16, role: 'music' }), t, step === 2 ? -0.14 : 0.14);
-        k.hiss(6800, 5100, 0.032, 0.008, 2.4, 0, 'bandpass', 0.1);
+        k.hiss(6800, 5100, 0.032, 0.008 * duck.rideGain, 2.4, 0, 'bandpass', 0.1);
       }
       return;
     }
@@ -1670,12 +1850,16 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
       if (!pocket.ridePing && !pocket.pickupFill) return;
       if (hear(`land-skip:${step}`, t) === null) return;
       const k = kit(outlet(0.2, { air: 0.2, role: 'music' }), t, step === 7 ? 0.16 : -0.16);
-      k.hiss(7800, 5600, 0.036, 0.01 * (stage >= 2 ? 1.15 : 0.85), 2.5, jz ? jz.layback * 0.6 : 0, 'bandpass', 0.18);
+      if (sound.jazz) {
+        k.ride(0.009 * (stage >= 2 ? 1.15 : 0.85) * duck.rideGain, jz ? jz.layback * 0.6 : 0, { accent: false, skip: true, side: step === 7 ? 0.16 : -0.16 });
+      } else {
+        k.hiss(7800, 5600, 0.036, 0.01 * (stage >= 2 ? 1.15 : 0.85), 2.5, jz ? jz.layback * 0.6 : 0, 'bandpass', 0.18);
+      }
       if (step === 15 && arc.anticipate && stage >= 2 && arc.movement !== 'opening') {
-        k.vibes(hz(fallen(arc.guideToneOffset) + 12), 0.2, 0.01, 0, 0.12);
+        k.vibes(hz(fallen(arc.guideToneOffset) + 12), 0.2, 0.01 * duck.compGain, 0, 0.12);
       }
       if (step === 15 && pocket.pickupFill && (stage >= 1 || bed.on)) {
-        k.kalimba(hz(sungTone(1)), 0.14, 0.013, 0, 0.1);
+        k.kalimba(hz(sungTone(1)), 0.14, 0.013 * duck.compGain, 0, 0.1);
       }
       return;
     }
@@ -1685,8 +1869,13 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
       if (!pocket.walkingBass && stage < 1) return;
       if (hear('land-motif', t) === null) return;
       const k = kit(outlet(0.2, { air: 0.3, song: 0.18, role: 'music' }), t, arc.movement === 'bridge' ? -0.18 : 0.12);
-      const halfBass = downbeatBass(bassLow() + fallen(arc.bassOffset + (arc.movement === 'opening' ? 0 : 7)), { jz: steer, arc, step });
-      k.tone('sine', hz(halfBass), 0, 0.2, 0.02 * (stage >= 2 ? 1 : 0.75) * arc.volMul, 0, { attack: 0.014, cents: 0 });
+      const halfBass = downbeatBass(bassLow() + fallen(walk ? walk.notes[2] : (arc.bassOffset + (arc.movement === 'opening' ? 0 : 7))), { jz: steer, arc, step });
+      if (sound.jazz) {
+        k.uprightBass(hz(halfBass), 0.22, 0.023 * (stage >= 2 ? 1 : 0.78) * arc.volMul, 0);
+        if (pocket.ridePing) k.ride(0.01 * duck.rideGain, 0, { accent: false, skip: false, side: 0.15 });
+      } else {
+        k.tone('sine', hz(halfBass), 0, 0.2, 0.02 * (stage >= 2 ? 1 : 0.75) * arc.volMul, 0, { attack: 0.014, cents: 0 });
+      }
       if (arc.motifDeg != null && stage >= 2) {
         const m = sound.motif?.length ? sound.motif : [0, 2, 4, 7];
         const rawSemi = m[arc.motifDeg % m.length] ?? sungTone(arc.motifDeg);
@@ -1697,22 +1886,26 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
             : rawSemi;
         const degSemi = fallen(transformed) + 12;
         if (jz && jz.enclosure) {
-          k.vibes(hz(degSemi + 1), 0.08, 0.013, 0, -0.1);
-          k.vibes(hz(degSemi - 1), 0.08, 0.013, sixteenth() * 0.5, 0.05);
-          k.vibes(hz(degSemi), 0.22, 0.018, sixteenth(), 0.12);
+          k.vibes(hz(degSemi + 1), 0.08, 0.013 * duck.compGain, 0, -0.1);
+          k.vibes(hz(degSemi - 1), 0.08, 0.013 * duck.compGain, sixteenth() * 0.5, 0.05);
+          k.vibes(hz(degSemi), 0.22, 0.018 * duck.compGain, sixteenth(), 0.12);
         } else {
-          k.kalimba(hz(degSemi), 0.22, 0.016, jz ? jz.layback : 0);
+          k.kalimba(hz(degSemi), 0.22, 0.016 * duck.compGain, jz ? jz.layback : 0);
         }
       }
       return;
     }
 
-    // Jazz walking bass passing tone on step 10 when in active pocket or high stage.
+    // Jazz walking bass passing tone on step 10 (and Chapter 6's third Charleston comp stab on step 10).
     if (step === 10) {
-      if (!jz || !jz.walkingPass || (stage < 1 && combo < 2)) return;
-      if (hear('land-walk', t) === null) return;
+      if (!jz || (stage < 1 && combo < 2)) return;
+      if (jz.charleston && !duck.skipOffComp && hear('land-comp:10', t) !== null) {
+        const kComp = kit(outlet(0.2, { air: 0.28, song: 0.16, role: 'music' }), t, 0);
+        playJazzComp(kComp, jz, arc, duck, { dur: 0.19, gain: 0.92, roll: 0.007 });
+      }
+      if (!jz.walkingPass || hear('land-walk', t) === null) return;
       const k = kit(outlet(0.15, { air: 0.22 }), t, 0);
-      k.marimba(hz(bassLow() + jz.passOffset), 0.16, 0.018, jz.layback);
+      k.uprightBass(hz(bassLow() + jz.passOffset), 0.16, 0.017, jz.layback);
       return;
     }
 
@@ -1721,7 +1914,8 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
     if (hear('land-turn', t) === null) return;
     const k = kit(outlet(0, { air: 0.25 }), t, 0);
     const turnSemi = bassLow() + (jz ? jz.passOffset : arc.turnOffset);
-    k.tone('sine', hz(turnSemi), 0, 0.2, 0.022, 0, { attack: 0.012, cents: 0 });
+    if (sound.jazz) k.uprightBass(hz(turnSemi), 0.18, 0.022, jz ? jz.layback * 0.5 : 0);
+    else k.tone('sine', hz(turnSemi), 0, 0.2, 0.022, 0, { attack: 0.012, cents: 0 });
   } catch { /* the bar still turns */ }
 }
 
@@ -2010,6 +2204,27 @@ export function chapterCadence(outcome = 'carried') {
     (sound.minor ? [7, 10] : sound.open ? [7, 10] : [7, 9]).forEach((semi, i) => k.marimba(hz(semi), 0.24, 0.042, at(i * 2), (i - 0.5) * 0.2));
     k.tone('sine', hz(-17), 0, 0.34, 0.045, at(0), { attack: 0.012, cents: 0 });
     const home = at(4);
+    if (sound.jazz) {
+      // Jazz ii7 -> V7(b9) -> Imaj9 / Im6/9 (or deceptive bVImaj7 when taken by the mimes).
+      k.uprightBass(hz(-10), 0.26, 0.044, at(0));
+      [5, 9, 12].forEach((semi, i) => k.vibes(hz(fallen(semi)), 0.24, 0.02, at(0) + i * 0.012, (i - 1) * 0.14));
+      k.uprightBass(hz(-17), 0.28, 0.046, at(2));
+      [5, 8, 11].forEach((semi, i) => k.vibes(hz(semi), 0.26, 0.022, at(2) + i * 0.012, (i - 1) * 0.14));
+      if (outcome === 'won') {
+        k.uprightBass(hz(-16), 0.72, 0.048, home);
+        [12, 15, 19].forEach((semi, i) => k.vibes(hz(semi), 0.8, 0.024, home + i * 0.018, (i - 1) * 0.15));
+      } else if (outcome === 'back') {
+        k.uprightBass(hz(-12), 0.75, 0.05, home);
+        [11, 14, 16, 19].forEach((semi, i) => k.celesta(hz(semi), i === 3 ? 0.95 : 0.55, 0.026, home + i * sixteenth() * 0.45, (i - 1.5) * 0.16));
+      } else if (outcome === 'held' || sound.minor) {
+        k.uprightBass(hz(-12), 0.7, 0.048, home);
+        [9, 14, 15].forEach((semi, i) => k.vibes(hz(semi), 0.72, 0.024, home + i * 0.018, (i - 1) * 0.14));
+      } else {
+        k.uprightBass(hz(-12), 0.75, 0.05, home);
+        [11, 14, 16].forEach((semi, i) => k.vibes(hz(semi), 0.82, 0.026, home + i * 0.018, (i - 1) * 0.14));
+      }
+      return home + sixteenth() * 4;
+    }
     const bass = (semi) => k.tone('sine', hz(semi), 0, 0.7, 0.05, home, { attack: 0.015, cents: 0 });
     if (outcome === 'won') {
       bass(-15);
@@ -2510,11 +2725,13 @@ export function auditionChapterProgression(feel = sound.jazz ? 'jazz' : 'written
     stages.forEach((p, idx) => {
       const arc = chapterArcPlan({ progress: p, bar: idx, step: 8, stage: 3, chapter: sound.chapter });
       const at = idx * beat * 1.35;
-      k.marimba(hz(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
+      if (jazz) k.uprightBass(hz(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
+      else k.marimba(hz(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
       const lead = fallen(m[idx % m.length] ?? sungTone(idx + 1)) + 12;
       if (jazz) {
         const jz = jazzPhrasePlan({ progress: p, wobble: idx === 2 ? 0.42 : 0.1, combo: idx, richness: 0.7, step: 6, bar: idx, chapter: sound.chapter });
-        jz.compSemis.slice(0, 3).forEach((s, ci) => k.vibes(hz(s + 12), 0.34, 0.018, at + ci * 0.025, (ci - 1) * 0.14));
+        const voiced = compVoicingPlan({ bassOffset: arc.bassOffset, compSemis: jz.compSemis, minor: sound.minor, open: sound.open });
+        voiced.slice(0, 4).forEach((s, ci) => k.vibes(hz(s + 12), 0.34, 0.016, at + ci * 0.02, (ci - 1.5) * 0.14));
         if (jz.enclosure) {
           k.celesta(hz(lead + 1), 0.1, 0.02, at + beat * 0.35, -0.1);
           k.celesta(hz(lead - 1), 0.1, 0.02, at + beat * 0.52, 0.08);

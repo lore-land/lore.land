@@ -49,6 +49,7 @@
   <div class="bar">
     <label>Chapter <select id="chapter"></select></label>
     <label>Room <select id="room"></select></label>
+    <label><input type="checkbox" id="jazz"> jazz feel (=feel[jazz])</label>
     <label><input type="checkbox" id="held"> the mimes hold it (minor)</label>
     <label><input type="checkbox" id="slow"> slow time (a beaver)</label>
     <button id="all">measure every row, before and after</button>
@@ -147,6 +148,26 @@ const play = (engine, { kind, param = 0, lane = 2, room = null, depth = 0, hook 
 };
 const repeat = (kind, count, every, f = (i) => ({ param: 0, lane: i % 5 })) => Array.from({ length: count }, (_, i) => ({ t: i * every, kind, ...f(i) }));
 
+const pulseBars = (bars, { chapter = null, progress = 0.45, combo = 1, richness = 0.72, startAt = 0, bpm = 96, swing = 0.66, motivation = '', presence = '' } = {}) => {
+  const s = 60 / bpm / 4;
+  const lean = (swing - 0.5) * 2 * s;
+  const out = [];
+  if (chapter != null) out.push({ t: startAt, hook: 'setSoundPlace', args: [{ chapter }] });
+  out.push({ t: startAt, hook: 'setSoundFeel', args: ['jazz'] });
+  out.push({ t: startAt, hook: 'setMusicBed', args: [true] });
+  const activeSteps = [0, 2, 4, 6, 7, 8, 10, 12, 14, 15];
+  for (let b = 0; b < bars; b += 1) {
+    activeSteps.forEach((step) => {
+      const k = b * 16 + step;
+      const t = startAt + k * s + (k % 2 ? lean : 0);
+      const comboNow = typeof combo === 'function' ? combo(b, step) : combo;
+      out.push({ t, hook: 'landPulse', args: [{ step, bar: b, progress, combo: comboNow, richness, chapter: chapter || 0, motivation, presence }] });
+    });
+  }
+  out.push({ t: startAt + bars * 16 * s + 0.1, hook: 'setMusicBed', args: [false] });
+  return out;
+};
+
 const ROWS = [
   { what: 'Footsteps', how: '30 steps, three a second, left and right', events: repeat('step', 30, 0.3, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 + (i % 2) })) },
   { what: 'Catches', how: '16, two a second', events: repeat('catch', 16, 0.5) },
@@ -191,6 +212,18 @@ const ROWS = [
   { what: 'Scored: characters keep their own time', how: 'the same line in Boof\u2019s time, the Genie\u2019s, a clown\u2019s; then a mime (the groove rests a bar) and the figure (nothing) (cadenceVoice)', events: [
     ...repeat('step', 40, 0.5, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 })),
     ...['boof', 'genie', 'clown', 'mime', 'figure'].map((who, i) => ({ t: 0.3 + i * 4, hook: 'cadenceVoice', args: [who, cadence.cadenceOf('@boof{ ?scent !dig ~ &berry ^up .ground }', who)] }))
+  ] },
+  { what: 'Jazz: 4-bar walking pocket & Charleston comp', how: 'target-driven upright walking bass, ride spang-a-lang, hi-hat chick on 2 & 4, and voice-led rootless comping across 4 bars (landPulse)', events: pulseBars(4, { progress: 0.45, combo: 2, richness: 0.72 }) },
+  { what: 'Jazz: level cells (Ch02, Ch06, Ch09, Ch12, Ch15)', how: 'two bars each: Ch02 backdoor bridge, Ch06 Charleston threes (steps 0/6/10), Ch09 withheld turnaround, Ch12 two currents, Ch15 three knocks', events: [
+    ...pulseBars(2, { chapter: 2, progress: 0.7, startAt: 0, bpm: 92 }),
+    ...pulseBars(2, { chapter: 6, progress: 0.45, startAt: 5.4, bpm: 108 }),
+    ...pulseBars(2, { chapter: 9, progress: 0.9, startAt: 10.0, bpm: 112 }),
+    ...pulseBars(2, { chapter: 12, progress: 0.45, startAt: 14.5, bpm: 104 }),
+    ...pulseBars(2, { chapter: 15, progress: 0.9, startAt: 19.3, bpm: 108 })
+  ] },
+  { what: 'Jazz: high-combo density ducking', how: '2 bars at combo 1, then 2 bars at combo 8 with catches layered over the pocket so the rhythm section ducks and breathes', events: [
+    ...pulseBars(4, { progress: 0.65, combo: (b) => (b < 2 ? 1 : 8), richness: 0.8 }),
+    ...repeat('catch', 10, 0.48, (i) => ({ lane: i % 5 })).map((e) => ({ ...e, t: e.t + 5.0 }))
   ] }
 ];
 
@@ -203,6 +236,7 @@ const roomSel = $('#room');
 const place = () => {
   Object.values(ENGINES).forEach((m) => {
     m.setSoundPlace({ chapter: Number(chapterSel.value), held: $('#held').checked });
+    m.setSoundFeel?.($('#jazz').checked ? 'jazz' : 'written');
     m.setSoundRoom?.(roomSel.value);
     m.setSoundMood({ muffled: $('#slow').checked });
   });

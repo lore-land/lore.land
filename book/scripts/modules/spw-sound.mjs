@@ -226,6 +226,25 @@ const resolveScale = (scale) => {
   return PENTA;
 };
 
+/**
+ * Pure jazz swing timing offset for a beat position `t`: keeps downbeats (`0, 1, 2...`) anchored
+ * and leans off-beat eighth/sixteenth subdivisions late by `swing` (`0.5` straight .. `0.67` triplet).
+ * @param {number} t
+ * @param {number} [swing]
+ */
+export function swingBeat(t, swing = 0.62) {
+  const s = Math.max(0.5, Math.min(0.67, Number(swing) || 0.5));
+  if (s <= 0.501) return t;
+  const whole = Math.floor(t);
+  const frac = t - whole;
+  if (frac < 1e-6) return t;
+  const shift = (s - 0.5) * 2;
+  if (Math.abs(frac - 0.5) < 0.08) return whole + 0.5 + shift * 0.5 * 0.5;
+  if (Math.abs(frac - 0.25) < 0.08) return whole + 0.25 + shift * 0.25 * 0.5;
+  if (Math.abs(frac - 0.75) < 0.08) return whole + 0.75 + shift * 0.25 * 0.5;
+  return t;
+}
+
 const freqOf = (root, degree, octave = 0, scale = PENTA) => {
   const sc = resolveScale(scale);
   const d = Math.max(0, degree);
@@ -324,7 +343,8 @@ export function transitionPlan({ fromSigil = '.', toSigil = '.', fromChapter = n
     clampNote(root * 2 ** (nearestPc / 12), 0.042 * gain, 0.08, 0.34, 'sine', 0.015)
   ];
   if (dir > 0 || ['^', '*', '#', '?', '~'].includes(toSigil) || jazz) {
-    notes.push(clampNote(root * 2 ** ((colourPc + (dir > 0 ? 12 : 0)) / 12), 0.022 * gain, 0.15, 0.32, 'sine', 0.022));
+    const guideShift = jazz && dir < 0 ? 0 : (dir > 0 ? 12 : 0);
+    notes.push(clampNote(root * 2 ** ((colourPc + guideShift) / 12), 0.022 * gain, jazz ? 0.16 : 0.15, jazz ? 0.36 : 0.32, 'sine', 0.022));
   }
   return { root, movement: dev.movement, notes };
 }
@@ -392,15 +412,27 @@ const TEXTURES = Object.freeze({
   oak: (at, _len, root, out) => { voice(at, { f0: root * 0.75, f1: root * 0.6, len: 0.25, vol: 0.14, out }); noise(at, { len: 0.04, f0: 2500, q: 3, vol: 0.06, out }); }
 });
 
-function sound(e, at, beat, root, out = bus.input, scale = PENTA) {
+function sound(e, at, beat, root, out = bus.input, scale = PENTA, jazz = false) {
   const f = freqOf(root, e.degree || 0, 0, scale);
   const len = Math.max(0.12, e.len * beat);
   const pan = ((hash(e.label || '') % 9) - 4) / 5;
   switch (e.sigil) {
     case '?': voice(at, { f0: f, len: len * 0.5, vol: 0.09, out }); voice(at + len * 0.45, { f0: f * 1.335, len: len * 0.6, vol: 0.08, out }); break;
-    case '~': voice(at, { f0: f, len, vol: 0.06, attack: len * 0.4, out }); voice(at, { type: 'triangle', f0: f * 1.5, len, vol: 0.03, attack: len * 0.5, out }); break;
+    case '~':
+      voice(at, { f0: f, len, vol: 0.06, attack: len * 0.4, out });
+      voice(at, { type: 'triangle', f0: f * 1.5, len, vol: 0.03, attack: len * 0.5, out });
+      if (jazz) voice(at + len * 0.08, { f0: freqOf(root, (e.degree || 0) + 1, 1, scale), len: len * 0.9, vol: 0.018, attack: len * 0.35, out });
+      break;
     case '@': voice(at, { type: 'triangle', f0: f, len: len * 0.8, vol: 0.1, pan, out }); break;
-    case '&': voice(at, { f0: f, len, vol: 0.07, out }); voice(at, { f0: f * 1.26, len, vol: 0.06, out }); break;
+    case '&':
+      voice(at, { f0: f, len, vol: 0.07, out });
+      if (jazz) {
+        voice(at, { f0: freqOf(root, (e.degree || 0) + 2, 0, scale), len, vol: 0.05, out });
+        voice(at + 0.015, { f0: freqOf(root, (e.degree || 0) + 6, 0, scale), len: len * 0.9, vol: 0.03, out });
+      } else {
+        voice(at, { f0: f * 1.26, len, vol: 0.06, out });
+      }
+      break;
     case '*': [1, 2.01, 3.03].forEach((m, k) => voice(at, { f0: f * m, len: len * (1 - k * 0.25), vol: 0.07 / (k + 1), out })); break;
     case '^': [0, 2, 4].forEach((d, k) => voice(at + k * len * 0.28, { f0: freqOf(root, (e.degree || 0) + d, 0, scale), len: len * 0.4, vol: 0.08, out })); break;
     case '!': noise(at, { len: 0.08, f0: 1800, q: 1, vol: 0.14, out }); voice(at, { f0: 110, f1: 55, len: 0.2, vol: 0.16, out }); break;
@@ -410,7 +442,10 @@ function sound(e, at, beat, root, out = bus.input, scale = PENTA) {
     case '%': for (let k = 0; k < (e.count || 2); k += 1) voice(at + k * beat * 0.25, { f0: 1760, len: 0.03, vol: 0.05, out }); break;
     case '$': (TEXTURES[e.material] || TEXTURES.ink)(at, len, root, out, scale); break;
     case '"': for (let k = 0; k < (e.syllables || 1); k += 1) noise(at + k * beat * 0.25, { len: beat * 0.2, f0: 600 + (k % 3) * 300, q: 4, vol: 0.025, out }); break;
-    case '{': voice(at, { type: 'sine', f0: root / 4, len, vol: 0.05, attack: 0.3, out }); break;
+    case '{':
+      voice(at, { type: 'sine', f0: root / 4, len, vol: 0.05, attack: 0.3, out });
+      if (jazz) voice(at, { type: 'sine', f0: root * 1.5 / 4, len, vol: 0.022, attack: 0.35, out });
+      break;
     default: break;
   }
   if (e.glide && e.sigil !== '!' && e.sigil !== '%') voice(at, { f0: f * 0.94, f1: f, len: Math.min(len, 0.3), vol: 0.03, out });
@@ -448,8 +483,9 @@ export function playSpell(text, { onAtom = null, onEnd = null, tempo = null, vol
   const start = ctx.currentTime + 0.08;
   const timers = [];
   events.forEach((e) => {
-    sound(e, start + e.t * beat, beat, resolvedRoot, callGain, resolvedScale);
-    if (onAtom && e.index != null) timers.push(setTimeout(() => onAtom(e.index), (e.t * beat + 0.08) * 1000));
+    const beatAt = useJazz ? swingBeat(e.t, 0.62) : e.t;
+    sound(e, start + beatAt * beat, beat, resolvedRoot, callGain, resolvedScale, useJazz);
+    if (onAtom && e.index != null) timers.push(setTimeout(() => onAtom(e.index), (beatAt * beat + 0.08) * 1000));
   });
   timers.push(setTimeout(() => onEnd?.(), (beats * beat + 0.6) * 1000));
   return () => { timers.forEach(clearTimeout); callGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.02); onEnd?.(); };

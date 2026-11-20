@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 import * as sound from '../home/pie-sound.mjs';
 import { CHAPTER_SCENE, SCENES, SCENE_WHIMSY_DEFAULTS } from '../home/pie-world.mjs';
 import { cadenceOf } from '../modules/spw-cadence.mjs';
-import { chapterKey, chapterDevelopmentPlan, transitionPlan, playNavigationTransition } from '../modules/spw-sound.mjs';
+import { chapterKey, chapterDevelopmentPlan, transitionPlan, playNavigationTransition, swingBeat } from '../modules/spw-sound.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 /** @type {string[]} */
@@ -451,6 +451,36 @@ const notes = [];
   const quartal = sound.inflectGesture(sound.obstacleStoryPlan('stone')?.notes || [], { lean: 'bone', amount: 1.5 });
   if (!(leant.length > honk.length) || !leant.some((n) => n.semi) || leant.some((n) => n.vol > 0.045 || n.at < 0)) fail('inflectGesture did not approach a landing within bounds');
   if (leant.some((n, i) => i && n.at < leant[i - 1].at) || !quartal.some((n) => n.semi === -2)) fail('inflectGesture out of order, or a lean lost its side');
+  // Rootless voice-led jazz comping, target-driven walking bass, combo density ducking, and swung spell timing.
+  const vIi = sound.compVoicingPlan({ bassOffset: 2, compSemis: [3, 7, 10, 14] });
+  const vV = sound.compVoicingPlan({ bassOffset: 7, compSemis: [4, 8, 10, 13], prevVoicing: vIi });
+  const vI = sound.compVoicingPlan({ bassOffset: 0, compSemis: [4, 7, 9, 14], prevVoicing: vV });
+  if ([...vIi, ...vV, ...vI].some((s) => s < 0 || s > 16)) fail('compVoicingPlan escaped warm mid-register [0, 16]');
+  const avgMove = vV.reduce((sum, note, i) => sum + Math.abs(note - vIi[Math.min(i, vIi.length - 1)]), 0) / vV.length;
+  if (!(avgMove <= 4)) fail(`compVoicingPlan ii->V jump too wide (avg ${avgMove.toFixed(2)} semitones)`);
+  const vParked = sound.compVoicingPlan({ bassOffset: 0, compSemis: [4, 7, 9, 14], parked: 2 }); // degree 2 -> pc 4
+  if (vParked[vParked.length - 1] % 12 === 4) fail('compVoicingPlan left a parked foreshadow degree on the top voice');
+  const walkRising = sound.walkingBassPlan({ progress: 0.4, bar: 0, jazz: true });
+  const walkTritone = sound.walkingBassPlan({ progress: 0.9, bar: 3, jazz: true, tritoneSub: true });
+  const walkPedal = sound.walkingBassPlan({ progress: 0.4, bar: 1, chapter: 10, jazz: true });
+  const walkWithhold = sound.walkingBassPlan({ progress: 0.9, bar: 0, chapter: 9, jazz: true });
+  const walkSingle = sound.walkingBassPlan({ progress: 0.9, bar: 0, chapter: 14, jazz: true });
+  if (walkRising.notes.length !== 4 || walkRising.notes[0] !== 0 || Math.abs(walkRising.notes[3] - walkRising.target) > 2) {
+    fail(`walkingBassPlan did not approach next bar root (${walkRising.notes.join(',')} -> ${walkRising.target})`);
+  }
+  if (walkTritone.approach !== 'tritone' || walkTritone.notes[3] !== walkTritone.target + 1) fail('walkingBassPlan tritone approach mismatch');
+  if (walkPedal.approach !== 'pedal' || walkPedal.notes.some((n) => n !== 0)) fail('walkingBassPlan did not hold Ch10 pedal');
+  if (walkWithhold.approach !== 'withhold' || walkWithhold.notes[3] !== 7) fail('walkingBassPlan did not withhold Ch09 turnaround');
+  if (walkSingle.approach !== 'single' || walkSingle.notes.some((n) => n !== 0)) fail('walkingBassPlan did not keep Ch14 single beat');
+  const duckLow = sound.densityDuckFactor({ combo: 0, stage: 1, recentHeat: 0 });
+  const duckHigh = sound.densityDuckFactor({ combo: 8, stage: 3, recentHeat: 2.5 });
+  if (!(duckHigh.compGain < duckLow.compGain && duckHigh.rideGain < duckLow.rideGain && duckHigh.compGain >= 0.55 && duckHigh.rideGain >= 0.58)) {
+    fail('densityDuckFactor failed to duck comping/ride cleanly under high combo');
+  }
+  if (swingBeat(1.5, 0.5) !== 1.5 || !(swingBeat(1.5, 0.62) > 1.5) || swingBeat(2, 0.62) !== 2) {
+    fail('spw-sound swingBeat did not preserve downbeats or swing offbeats');
+  }
+  notes.push(`jazz voice-leading & pocket: ii->V avg move ${avgMove.toFixed(1)}st, walk ${walkRising.notes.join('->')} (target ${walkRising.target}), duck ${duckLow.compGain.toFixed(2)}->${duckHigh.compGain.toFixed(2)}, spell swing 1.5->${swingBeat(1.5, 0.62).toFixed(2)}`);
   notes.push('board & story cues: 4-movement chapter arc + reading development, 7 jazz styles (incl. backdoor & upper structure), 6 wonder syntax plans, lane/row step contour, 8 trick plans & story pass cues verified');
 }
 
