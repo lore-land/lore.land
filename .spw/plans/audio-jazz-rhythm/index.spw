@@ -7,7 +7,7 @@
 
 ^"meta"{
   .owner: "audio-jazz-rhythm"
-  .updated: "2026-11-17"
+  .updated: "2026-11-22"
   .status: "active_iteration"
   .slices: ["f29", "f32", "f39"]
   .check: "npm run sound:check && npm run cadence:check"
@@ -17,6 +17,7 @@
 }
 
 &owners{
+  audio_model: ~"../../../book/scripts/modules/audio-model.mjs"
   pie_sound: ~"../../../book/scripts/home/pie-sound.mjs"
   pie_rhythm: ~"../../../book/scripts/home/pie-rhythm.mjs"
   spw_sound: ~"../../../book/scripts/modules/spw-sound.mjs"
@@ -28,7 +29,7 @@
 }
 
 ?open{
-  human_audition: "After listening in the audition harness and live carries, does the 4-beat walking bass + brushed/wood backbeat stay unobtrusive under rapid multi-row dodges, or should backbeat level duck during dense obstacled phrases?"
+  human_audition: "After listening in the audition harness and live carries, do HRTF depth and the eight-form motif development stay clear without masking the 4-beat walking bass, or should their room share and level duck further in dense phrases?"
   rhythm_interlock_mix: "When visiting rhythms play in answer mode inside conductor.groove(), is stereo offset +/-0.22 clear on phone speakers as well as headphones?"
   cross_host_sensory_parity: "How can lore.land's tested ^ear / chapterDevelopmentPlan / wonderSyntaxPlan conventions inform spwashi.com's unconsumed spw-workbench-reader.js exports (spokenLine, scanPairLabels, pairSound, readEarcons, TEXTURES) for factshift.center stratum transitions?"
 }

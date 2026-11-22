@@ -104,11 +104,13 @@ class Tapped extends Native {
 window.AudioContext = Tapped;
 window.webkitAudioContext = Tapped;
 
-const [after, before, cadence] = await Promise.all([
+const [after, before, cadence, rhythm] = await Promise.all([
   import(`/book/scripts/home/pie-sound.mjs?fresh=${Date.now()}`),
   import('./pie-sound-before.mjs'),
-  import('/book/scripts/modules/spw-cadence.mjs')
+  import('/book/scripts/modules/spw-cadence.mjs'),
+  import('/book/scripts/home/pie-rhythm.mjs')
 ]);
+const LEVELS = await fetch(rhythm.LEVELS_URL).then((res) => res.ok ? res.text() : '').then((text) => rhythm.readLevels(text).levels).catch(() => ({}));
 const ENGINES = { before, after };
 // The scored hooks (the sound-design trial) are heard here whatever the switch says; the before engine has none,
 // so a scored row's before is the same carry without them, and its after is the carry scored.
@@ -152,7 +154,7 @@ const pulseBars = (bars, { chapter = null, progress = 0.45, combo = 1, richness 
   const s = 60 / bpm / 4;
   const lean = (swing - 0.5) * 2 * s;
   const out = [];
-  if (chapter != null) out.push({ t: startAt, hook: 'setSoundPlace', args: [{ chapter }] });
+  if (chapter != null) out.push({ t: startAt, hook: 'setSoundPlace', args: [{ chapter, level: LEVELS[chapter] || null }] });
   out.push({ t: startAt, hook: 'setSoundFeel', args: ['jazz'] });
   out.push({ t: startAt, hook: 'setMusicBed', args: [true] });
   const activeSteps = [0, 2, 4, 6, 7, 8, 10, 12, 14, 15];
@@ -213,7 +215,7 @@ const ROWS = [
     ...repeat('step', 40, 0.5, (i) => ({ param: i % 2 ? 1 : -1, lane: 2 })),
     ...['boof', 'genie', 'clown', 'mime', 'figure'].map((who, i) => ({ t: 0.3 + i * 4, hook: 'cadenceVoice', args: [who, cadence.cadenceOf('@boof{ ?scent !dig ~ &berry ^up .ground }', who)] }))
   ] },
-  { what: 'Jazz: 4-bar walking pocket & Charleston comp', how: 'target-driven upright walking bass, ride spang-a-lang, hi-hat chick on 2 & 4, and voice-led rootless comping across 4 bars (landPulse)', events: pulseBars(4, { progress: 0.45, combo: 2, richness: 0.72 }) },
+  { what: 'Jazz: Spw motif development & walking pocket', how: 'Chapter 12 authors an 8-bar prime, sequence, inversion, answer, fragment, retrograde, augmentation and resolution over target-driven upright bass, ride spang-a-lang, and voice-led rootless comping (landPulse)', events: pulseBars(8, { chapter: 12, progress: 0.45, combo: 2, richness: 0.72, bpm: 104 }) },
   { what: 'Jazz: level cells (Ch02, Ch06, Ch09, Ch12, Ch15)', how: 'two bars each: Ch02 backdoor bridge, Ch06 Charleston threes (steps 0/6/10), Ch09 withheld turnaround, Ch12 two currents, Ch15 three knocks', events: [
     ...pulseBars(2, { chapter: 2, progress: 0.7, startAt: 0, bpm: 92 }),
     ...pulseBars(2, { chapter: 6, progress: 0.45, startAt: 5.4, bpm: 108 }),
@@ -235,7 +237,8 @@ const roomSel = $('#room');
 ['.', '!', '?', '~', '@', '&', '*', '^', '#', '=', '%', '$'].forEach((sigil) => roomSel.append(new Option(sigil, sigil)));
 const place = () => {
   Object.values(ENGINES).forEach((m) => {
-    m.setSoundPlace({ chapter: Number(chapterSel.value), held: $('#held').checked });
+    const chapter = Number(chapterSel.value);
+    m.setSoundPlace({ chapter, held: $('#held').checked, level: LEVELS[chapter] || null });
     m.setSoundFeel?.($('#jazz').checked ? 'jazz' : 'written');
     m.setSoundRoom?.(roomSel.value);
     m.setSoundMood({ muffled: $('#slow').checked });

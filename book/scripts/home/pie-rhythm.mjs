@@ -2,9 +2,10 @@
  * pie-rhythm.mjs — the lanes keep time: each chapter's level, the musical clock, and rhythms to find.
  *
  * Levels live in .spw/runtime/pie-levels.spw: a chapter's tempo, its key (a root in hertz), its lean (%swing), the
- * motif its catches spell out, whose theme it carries, and the rhythm the land keeps in one of its rooms. A small reader here reads
- * them at once (the file is plain and regular, and the game need not wait for the parser); book:check reads the
- * file again with the Spw interpreter and holds the two reads to agree.
+ * motif its catches spell out, its authored development forms, whose theme it carries, and the rhythm the land
+ * keeps in one of its rooms. A small reader here reads them at once (the file is plain and regular, and the game
+ * need not wait for the parser); book:check reads the file again with the Spw interpreter and holds the two reads
+ * to agree.
  *
  * The conductor is the clock the lanes keep: sixteen steps to the bar at the level's tempo, advanced by the
  * game's own time (so a pause pauses it). It counts in steps, not seconds, so a chapter with a new tempo goes on
@@ -22,7 +23,7 @@
  */
 
 /* The token is the release the levels last changed in, so a returning player's kept copy is not last release's. */
-export const LEVELS_URL = '/.spw/runtime/pie-levels.spw?v=2026_11_16.A';
+export const LEVELS_URL = '/.spw/runtime/pie-levels.spw?v=2026_11_22.A';
 export const STORE = 'lore.pie.rhythms.v1';
 export const WINDOW = 0.075;
 const NEED = 6;
@@ -110,6 +111,7 @@ export function readLevels(text = '') {
         root: Number(field(body, '%', 'root')) || null,
         swing: Number(field(body, '%', 'swing')) || null,
         motif: (field(body, '~', 'motif') || '').split(/\s+/).filter(Boolean).map(Number).filter(Number.isFinite),
+        development: words(field(body, '=', 'develop')),
         theme: field(body, '@', 'theme'),
         rhythm: field(body, '*', 'rhythm'),
         room: field(body, '.', 'room'),

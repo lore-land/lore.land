@@ -451,6 +451,41 @@ const notes = [];
   const quartal = sound.inflectGesture(sound.obstacleStoryPlan('stone')?.notes || [], { lean: 'bone', amount: 1.5 });
   if (!(leant.length > honk.length) || !leant.some((n) => n.semi) || leant.some((n) => n.vol > 0.045 || n.at < 0)) fail('inflectGesture did not approach a landing within bounds');
   if (leant.some((n, i) => i && n.at < leant[i - 1].at) || !quartal.some((n) => n.semi === -2)) fail('inflectGesture out of order, or a lean lost its side');
+  // Four-bar motif memory: state is derived from the phrase/bar, so the cell repeats deterministically and develops
+  // prime -> answer -> inversion -> resolve without mutable playback state.
+  const motifPhrase = [0, 1, 2, 3].map((bar) => sound.motifMemoryPlan({ motif: [0, 2, 4, 7], bar, guideTone: 5 }));
+  const motifRepeat = sound.motifMemoryPlan({ motif: [0, 2, 4, 7], bar: 0, guideTone: 5 });
+  if (motifPhrase.map((p) => p.form).join(',') !== 'prime,answer,inversion,resolve') fail('motifMemoryPlan did not develop a four-bar phrase');
+  if (motifPhrase[0].notes.join(',') !== motifRepeat.notes.join(',')) fail('motifMemoryPlan did not remember the same phrase seed deterministically');
+  if (motifPhrase[1].notes.join(',') === motifPhrase[0].notes.join(',') || motifPhrase[2].notes.join(',') === motifPhrase[0].notes.join(',')) fail('motifMemoryPlan answer/inversion did not transform the cell');
+  if (motifPhrase[3].notes.at(-1) !== 5) fail(`motifMemoryPlan did not resolve to its guide tone (${motifPhrase[3].notes})`);
+  const motifSafe = sound.motifMemoryPlan({ motif: [NaN, Infinity], bar: -1, guideTone: 14, parked: 2 });
+  if (motifSafe.notes.length < 2 || motifSafe.notes.some((n) => !Number.isFinite(n) || ((n % 12) + 12) % 12 === 4)) fail('motifMemoryPlan did not sanitize input or keep a parked degree out');
+  const motifUnknownForm = sound.motifMemoryPlan({ development: ['unknown'], bar: 0 });
+  if (motifUnknownForm.form !== 'prime' || motifUnknownForm.phraseLength !== 4) fail('motifMemoryPlan did not fall back from an invalid development sequence');
+  const development = ['prime', 'fragment', 'sequence', 'retrograde', 'inversion', 'augment', 'answer', 'resolve'];
+  const developed = development.map((_form, bar) => sound.motifMemoryPlan({ motif: [0, 2, 4, 7, 9, 7], development, bar, guideTone: 5 }));
+  if (developed.map((p) => p.form).join(',') !== development.join(',')) fail('motifMemoryPlan did not follow the Spw-authored development sequence');
+  if (developed[1].notes.length !== 2 || developed[3].notes.join(',') !== [...developed[3].source].reverse().join(',')) fail('motifMemoryPlan did not fragment or retrograde its remembered cell');
+  const primeEnd = developed[0].events.at(-1)?.at;
+  const augmentedEnd = developed[5].events.at(-1)?.at;
+  if (!(typeof primeEnd === 'number' && typeof augmentedEnd === 'number' && Number.isFinite(primeEnd) && Number.isFinite(augmentedEnd) && augmentedEnd > primeEnd) || developed[7].notes.at(-1) !== 5) fail('motifMemoryPlan did not augment its rhythm or resolve its longer arc');
+  const nextCell = sound.motifMemoryPlan({ motif: [0, 2, 4, 7, 9, 7], development, bar: development.length, guideTone: 5 });
+  if (nextCell.source.join(',') === developed[0].source.join(',')) fail('motifMemoryPlan did not develop the next cell from the full chapter motif');
+  // Effects are planned in musical terms, then rendered through Web Audio. Distance darkens and recedes while the
+  // named room profile controls reverb/echo independently; all values stay safe for browser AudioParams.
+  const nearEffect = sound.acousticEffectPlan({ depth: 0, air: 0.35, song: 0.25, heat: 0, space: 'natural' });
+  const farEffect = sound.acousticEffectPlan({ depth: 1, air: 0.35, song: 0.25, heat: 2, space: 'natural' });
+  const closeEffect = sound.acousticEffectPlan({ depth: 0.4, air: 0.35, song: 0.25, space: 'close' });
+  const hallEffect = sound.acousticEffectPlan({ depth: 0.4, air: 0.35, song: 0.25, space: 'hall' });
+  if (!(farEffect.distance > nearEffect.distance && farEffect.directGain < nearEffect.directGain && farEffect.cutoffHz < nearEffect.cutoffHz && farEffect.roomSend > nearEffect.roomSend)) fail('acousticEffectPlan did not turn depth into distance, darkness, and room share');
+  if (!(hallEffect.roomSend > closeEffect.roomSend && hallEffect.echoSend > closeEffect.echoSend)) fail('acousticEffectPlan did not keep named space profiles distinct');
+  const safeEffect = sound.acousticEffectPlan({ depth: Infinity, air: -9, song: 12, heat: NaN, space: 'nowhere', role: 'music', mix: 'music', voicing: 'bright', dry: 4 });
+  if (Object.values(safeEffect).some((v) => typeof v === 'number' && !Number.isFinite(v)) || safeEffect.roomSend < 0 || safeEffect.roomSend > 1 || safeEffect.echoSend < 0 || safeEffect.echoSend > 0.6) fail('acousticEffectPlan did not sanitize effect controls');
+  const leftPosition = sound.acousticPositionPlan(farEffect, -1);
+  const rightPosition = sound.acousticPositionPlan(farEffect, 1);
+  const safePosition = sound.acousticPositionPlan({ distance: Infinity }, NaN);
+  if (!(leftPosition.x < 0 && rightPosition.x > 0 && leftPosition.z === -farEffect.distance && Math.abs(leftPosition.x) <= 1.8) || Object.values(safePosition).some((v) => !Number.isFinite(v))) fail('acousticPositionPlan did not map lane/depth to bounded browser coordinates');
   // Rootless voice-led jazz comping, target-driven walking bass, combo density ducking, and swung spell timing.
   const vIi = sound.compVoicingPlan({ bassOffset: 2, compSemis: [3, 7, 10, 14] });
   const vV = sound.compVoicingPlan({ bassOffset: 7, compSemis: [4, 8, 10, 13], prevVoicing: vIi });
@@ -480,7 +515,7 @@ const notes = [];
   if (swingBeat(1.5, 0.5) !== 1.5 || !(swingBeat(1.5, 0.62) > 1.5) || swingBeat(2, 0.62) !== 2) {
     fail('spw-sound swingBeat did not preserve downbeats or swing offbeats');
   }
-  notes.push(`jazz voice-leading & pocket: ii->V avg move ${avgMove.toFixed(1)}st, walk ${walkRising.notes.join('->')} (target ${walkRising.target}), duck ${duckLow.compGain.toFixed(2)}->${duckHigh.compGain.toFixed(2)}, spell swing 1.5->${swingBeat(1.5, 0.62).toFixed(2)}`);
+  notes.push(`jazz voice-leading & pocket: motif ${motifPhrase.map((p) => p.form).join('->')} / ${development.join('->')}, depth ${nearEffect.distance.toFixed(1)}->${farEffect.distance.toFixed(1)}, ii->V avg move ${avgMove.toFixed(1)}st, walk ${walkRising.notes.join('->')} (target ${walkRising.target}), duck ${duckLow.compGain.toFixed(2)}->${duckHigh.compGain.toFixed(2)}, spell swing 1.5->${swingBeat(1.5, 0.62).toFixed(2)}`);
   notes.push('board & story cues: 4-movement chapter arc + reading development, 7 jazz styles (incl. backdoor & upper structure), 6 wonder syntax plans, lane/row step contour, 8 trick plans & story pass cues verified');
 }
 

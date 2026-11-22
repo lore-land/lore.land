@@ -1,8 +1,9 @@
 # Plan — Jazz Theory, Musical Development & Rhythm Pocket
 
-- **Status**: `active_iteration` (`2026-11-17`, owner `audio-jazz-rhythm`, slices `f29`, `f32`, `f39`)
+- **Status**: `active_iteration` (`2026-11-22`, owner `audio-jazz-rhythm`, slices `f29`, `f32`, `f39`)
 - **Recent Landed Receipt**: `e96b885` (`9c3fb07`, `aeaf5ca`, `0202d4d` precede it)
 - **Primary Files**:
+  - `book/scripts/modules/audio-model.mjs`
   - `book/scripts/home/pie-sound.mjs`
   - `book/scripts/home/pie-rhythm.mjs`
   - `book/scripts/modules/spw-sound.mjs`
@@ -23,13 +24,17 @@
    - `rhythmVoice`, `placeInBar`, and `conductor.groove()` contour pitches across the bar and weave found primary + visiting rhythms via `primary`, `complement` (+third, softer), and `answer` (call-and-response in rests).
    - `conductor.act()` and `conductor.pocket()` grade hit timing (`perfect` vs `good`), and `conductor.beatState()` drives a gentle visual beat-breathing cue on the lanes.
 
-## Landed In The Phrase (`2026-11-19`)
+## Landed In The Phrase (`2026-11-22`)
 
 - A live chain link (`motivation`) outranks the court in `jazzPhrasePlan`. Bonk ends on bane's semitone, honk's echo is boon's colour a beat late, and bone's cadence puts a tension down. A completed chain waits for bar 4 while the lanes pulse.
 - `LEVEL_CELLS` gives chapters 2, 6, 7, 9, 10, 11, 12, 14 and 15 the one change their rhythm already describes. Passing a chapter retires clock-triggered backdoors and tritone substitutions. From chapter 12 a wobble alone cannot select the bite.
 - `foreshadowPlan` parks one scale degree per mark. The last chapter that carries it may land that degree; a turned mark may borrow the backdoor.
+- `audio-model.mjs` separates deterministic musical/acoustic plans from browser rendering. `motifMemoryPlan` keeps one three-note cell through an authored development, then advances an overlapping cell through the full chapter motif; the four-bar prime/answer/inversion/resolve remains the default.
+- Five levels now author `=develop[...]` in Spw, choosing among prime, fragment, sequence, retrograde, inversion, augmentation, answer and resolution. The small runtime reader and full Spw interpreter are held to the same result by `book:check`.
+- `acousticEffectPlan` turns semantic depth, room, echo, role and mix controls into bounded tone/send/distance values. The renderer uses HRTF `PannerNode` placement when available and an equivalent gain plus stereo-pan fallback otherwise.
+- Rootless comping now voice-leads between bars, walking bass targets the next root, and high-combo density ducks comping and ride while leaving the bass anchored.
 
 ## Next Work (`f39` & Cross-Host `^ear` Bridge)
 
-- Human ear calibration on `tools/audio_synthesis/pie-sound-audition.html` and live `/pie/` runs (phone speakers + headphones): verify density ducking under high-combo runs and calibrate swing pocket feel across Ch02, Ch06, Ch07, Ch09, Ch12, Ch15.
+- Human ear calibration on `tools/audio_synthesis/pie-sound-audition.html` and live `/pie/` runs (phone speakers + headphones): verify HRTF depth/fallback balance, the eight-bar Spw motif arc, density ducking under high-combo runs, and swing pocket feel across Ch02, Ch06, Ch07, Ch09, Ch12, Ch15.
 - Cross-host acoustic bridge (`spwashi.com` `gemini-4-argon-2026-11.spw#sensory_exports` & `factshift-quest-navigation.spw#f5`): share `lore.land`'s `^ear{}` & `chapterDevelopmentPlan` conventions back to `spwashi.com` / `factshift.center` so stratum folds (`0 <-> 1 <-> 2`), dipole brace tension, and number-theory bridges (continued-fraction Pythagorean comma convergents `1/2`, `3/5`, `7/12` vs `2^(7/12)`, `mod 13` chapter octave equivalence, `wap.mom` `22/7` / `355/113`, `mutex.buzz` `mod 97` cycle, and upstream `spw.quantity-sheet/1` exact rationals) gain tested, non-intrusive earcons.

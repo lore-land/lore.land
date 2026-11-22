@@ -79,10 +79,14 @@
  *                          kazoo; struck things are a few partials, the higher dying the sooner
  */
 
+import { acousticEffectPlan, acousticPositionPlan, motifMemoryPlan } from '../modules/audio-model.mjs';
+
+export { acousticEffectPlan, acousticPositionPlan, motifMemoryPlan };
+
 let audio = null;
 let bus = null;
 let noiseBuffer = null;
-const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0, prevLane: 2, prevRow: 0, chapter: 1 };
+const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, development: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0, prevLane: 2, prevRow: 0, chapter: 1 };
 const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', patternMode: 'chapter', styleVoicing: '', jazzLean: 1 };
 const swingTarget = () => {
   if (musical.swing === 'straight') return 0.5;
@@ -594,6 +598,7 @@ export function setSoundPlace({ chapter = 1, held = false, level = null, after =
   sound.written = clamp((Number(level?.swing) || 50) / 100, 0.5, 0.67);
   sound.swing = swingTarget();
   sound.motif = Array.isArray(level?.motif) && level.motif.length ? level.motif : null;
+  sound.development = Array.isArray(level?.development) && level.development.length ? level.development : null;
   line.motifAt = 0;
   // How the chapter leans (the reader's lens, or their carries), heard: low magic opens the key. The minor stays the mimes' alone.
   sound.minor = held;
@@ -656,31 +661,28 @@ const AIR = Object.freeze({
 
 /* How much of each sound the song's echo repeats: the sung things, a little; the struck things, nothing. */
 const SONG = Object.freeze({ catch: 0.2, deft: 0.14, glass: 0.3, post: 0.2, berry: 0.26, sweet: 0.28, share: 0.2, wonder: 0.34, poise: 0.22, pantry: 0.28, recipe: 0.26, trick: 0.22, power_story: 0.28, story_pass: 0.16, furrow: 0.14 });
+const outletAcoustics = new WeakMap();
 
-/** Where one sound goes: a level and an edge that soften as the ear tires and with distance, then
- *  into the bus, and some of it into the room. Far off, less of a sound reaches you directly while
- *  the room stays about as loud, so the far is quieter, darker, and more room than sound. */
+/** Render a pure acoustic plan into the shared edge, room and song buses. `kit` renders its distance and side with
+ *  a PannerNode when the browser has one, or the equivalent bounded gain and StereoPanner fallback when it does not. */
 function outlet(heat, { depth = 0, air = 0, song = 0, role = 'fx' } = {}) {
   const b = ensureBus();
   const level = audio.createGain();
-  const mixGain = musical.mix === 'music' ? (role === 'music' ? 1.18 : 0.84) : musical.mix === 'ear' ? (role === 'cue' || role === 'step' ? 1.24 : role === 'music' ? 0.78 : 1) : 1;
-  level.gain.value = Math.max(0.45, 1 / (1 + 0.13 * heat)) * spread(0.12) * (1 - 0.6 * depth) * mixGain;
+  const plan = acousticEffectPlan({ heat, depth, air, song, role, space: musical.songSpace, mix: musical.mix, voicing: musical.voicing, dry: sound.dry });
+  const spatial = plan.distance > 1.001 && typeof audio.createPanner === 'function';
+  level.gain.value = (spatial ? plan.spatialGain : plan.directGain) * spread(0.12);
+  outletAcoustics.set(level, { ...plan, spatial });
   const edge = audio.createBiquadFilter();
   edge.type = 'lowpass';
   edge.Q.value = 0;
-  const voiceBright = musical.voicing === 'bright' ? 1.22 : musical.voicing === 'velvet' ? 0.65 : musical.voicing === 'warm' ? 0.85 : 1;
-  edge.frequency.value = Math.max(1400, (15000 / (1 + 0.3 * heat)) * (1 - 0.6 * depth) * voiceBright);
+  edge.frequency.value = plan.cutoffHz;
   level.connect(edge).connect(b.input);
   const send = audio.createGain();
-  const spaceMul = musical.songSpace === 'close' ? 0.42 : musical.songSpace === 'hall' ? 1.55 : 1;
-  // A bonk-leaning story is heard drier (scored: shelfColor): the struck lose more of the room than the said.
-  const dried = air * spaceMul * (1 - (sound.dry || 0) * (air < 0.15 ? 1 : 0.4));
-  send.gain.value = Math.min(1, (dried + 0.1 * depth) / (1 - 0.6 * depth));
+  send.gain.value = plan.roomSend;
   edge.connect(send).connect(b.air);
-  const songMul = musical.songSpace === 'close' ? 0.5 : musical.songSpace === 'hall' ? 1.35 : 1;
-  if (song > 0 && b.song) {
+  if (plan.echoSend > 0 && b.song) {
     const sung = audio.createGain();
-    sung.gain.value = Math.min(0.6, song * songMul);
+    sung.gain.value = plan.echoSend;
     edge.connect(sung).connect(b.song);
   }
   return level;
@@ -729,10 +731,28 @@ function pluckBuffer(f) {
 function kit(out, t, pan = 0) {
   const places = new Map();
   const place = (side = 0) => {
-    if (!audio.createStereoPanner) return out;
     const p = clamp(pan + side, -0.9, 0.9);
     const key = p.toFixed(2);
     if (!places.has(key)) {
+      const acoustic = outletAcoustics.get(out);
+      if (acoustic?.spatial) {
+        const node = audio.createPanner();
+        node.panningModel = acoustic.panningModel;
+        node.distanceModel = acoustic.distanceModel;
+        node.refDistance = acoustic.refDistance;
+        node.maxDistance = acoustic.maxDistance;
+        node.rolloffFactor = acoustic.rolloffFactor;
+        const position = acousticPositionPlan(acoustic, p);
+        if (node.positionX && node.positionY && node.positionZ) {
+          node.positionX.value = position.x;
+          node.positionY.value = position.y;
+          node.positionZ.value = position.z;
+        } else node.setPosition(position.x, position.y, position.z);
+        node.connect(out);
+        places.set(key, node);
+        return node;
+      }
+      if (!audio.createStereoPanner) return out;
       const node = audio.createStereoPanner();
       node.pan.value = p;
       node.connect(out);
@@ -1560,9 +1580,9 @@ export function densityDuckFactor({ combo = 0, stage = 1, pace = null, recentHea
  * substitutions: the backdoor and the tritone belong to that chapter's cell, or to a debt
  * (an open bane link, a foreshadow at the turned rung), and from chapter 12 a wobble alone
  * cannot bring the bite back. With no chapter, the clock still owns them, as the checks grew up with.
- * @param {{ progress?: number, wobble?: number, combo?: number, richness?: number, presence?: string, step?: number, bar?: number, tropeStage?: string, wonderKind?: string, wonderChain?: number, chapter?: number, motivation?: string, pace?: number | null, foreshadow?: string, foreshadowChapters?: number[] }} [opts]
+ * @param {{ progress?: number, wobble?: number, combo?: number, richness?: number, presence?: string, step?: number, bar?: number, tropeStage?: string, wonderKind?: string, wonderChain?: number, chapter?: number, motivation?: string, pace?: number | null, foreshadow?: string, foreshadowChapters?: number[], motif?: number[], development?: string[] | null }} [opts]
  */
-export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', step = 0, bar = 0, tropeStage = '', wonderKind = '', wonderChain = 0, chapter = 0, motivation = '', pace = null, foreshadow = '', foreshadowChapters = [] } = {}) {
+export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness = 0.5, presence = '', step = 0, bar = 0, tropeStage = '', wonderKind = '', wonderChain = 0, chapter = 0, motivation = '', pace = null, foreshadow = '', foreshadowChapters = [], motif = [0, 2, 4, 7], development = null } = {}) {
   const w = clamp(Number(wobble) || 0, 0, 1);
   const c = Math.max(0, Math.floor(Number(combo) || 0));
   const wc = Math.max(0, Math.floor(Number(wonderChain) || 0));
@@ -1625,6 +1645,7 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
   const landing = owed?.mayLand ? owed.degree : null;
   const walkLine = walkingBassPlan({ progress: p, bar, chapter: ch, jazz: true, tritoneSub, backdoor, feeds, passOffset });
   const compVoicing = compVoicingPlan({ bassOffset: arc.bassOffset, compSemis, parked });
+  const motifPlan = motifMemoryPlan({ motif, development, bar, guideTone: arc.guideToneOffset, parked, landing: landing == null ? null : debtPc(landing) });
   const duck = densityDuckFactor({ combo: c, stage: r >= 0.72 ? 3 : r >= 0.42 ? 2 : 1, pace: taut });
   return {
     style,
@@ -1640,7 +1661,9 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
     tritoneSub,
     backdoor,
     guideTone: arc.guideToneOffset,
-    motifForm: arc.motifForm,
+    motifForm: motifPlan.form,
+    motif: motifPlan,
+    developmentForm: arc.motifForm,
     blueSlide: c >= 2 || p >= 0.55,
     cell: arc.cell,
     feeds,
@@ -1753,7 +1776,7 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
     const ch = Math.floor(Number(chapter) || sound.chapter || 0);
     const arc = chapterArcPlan({ progress, bar, step, stage, chapter: ch });
     const pocket = beatPocketPlan({ step, bar, progress, stage, swing: sound.swing, jazz: sound.jazz, ground: sound.ground, combo, bedOn: bed.on, chapter: ch });
-    const jz = sound.jazz ? jazzPhrasePlan({ progress, wobble, combo, richness, presence, step, bar, tropeStage, wonderKind, wonderChain, chapter: ch, motivation, pace, foreshadow, foreshadowChapters }) : null;
+    const jz = sound.jazz ? jazzPhrasePlan({ progress, wobble, combo, richness, presence, step, bar, tropeStage, wonderKind, wonderChain, chapter: ch, motivation, pace, foreshadow, foreshadowChapters, motif: sound.motif, development: sound.development }) : null;
     const owed = foreshadow ? foreshadowPlan(foreshadow, { chapter: ch || 1, appearances: foreshadowChapters, movement: arc.movement }) : null;
     const steer = jz || { parked: owed && !owed.mayLand ? owed.degree : null, landing: owed?.mayLand ? owed.degree : null };
     const recentHeat = (heard.get('catch')?.heat || 0) * 0.5 + (heard.get('wap')?.heat || 0) * 0.6;
@@ -1876,22 +1899,17 @@ export function landPulse({ step = 0, bar = 0, in: wait = 0, progress = 0, wobbl
       } else {
         k.tone('sine', hz(halfBass), 0, 0.2, 0.02 * (stage >= 2 ? 1 : 0.75) * arc.volMul, 0, { attack: 0.014, cents: 0 });
       }
-      if (arc.motifDeg != null && stage >= 2) {
-        const m = sound.motif?.length ? sound.motif : [0, 2, 4, 7];
-        const rawSemi = m[arc.motifDeg % m.length] ?? sungTone(arc.motifDeg);
-        const transformed = arc.motifForm === 'inversion'
-          ? 2 * (m[0] ?? 0) - rawSemi
-          : arc.motifForm === 'answer'
-            ? rawSemi + 2
-            : rawSemi;
-        const degSemi = fallen(transformed) + 12;
-        if (jz && jz.enclosure) {
-          k.vibes(hz(degSemi + 1), 0.08, 0.013 * duck.compGain, 0, -0.1);
-          k.vibes(hz(degSemi - 1), 0.08, 0.013 * duck.compGain, sixteenth() * 0.5, 0.05);
-          k.vibes(hz(degSemi), 0.22, 0.018 * duck.compGain, sixteenth(), 0.12);
-        } else {
-          k.kalimba(hz(degSemi), 0.22, 0.016 * duck.compGain, jz ? jz.layback : 0);
-        }
+      if (stage >= 2 && (arc.motifDeg != null || jz?.motif)) {
+        const phrase = jz?.motif?.events || [{ semi: sound.motif?.[arc.motifDeg % (sound.motif?.length || 1)] ?? sungTone(arc.motifDeg), at: 0, dur: 0.9, accent: 1 }];
+        phrase.forEach((event, idx) => {
+          const degSemi = fallen(event.semi) + 12;
+          const at = (jz?.layback || 0) + event.at * sixteenth();
+          const vol = (0.012 + event.accent * 0.005) * duck.compGain;
+          if (jz?.enclosure && idx === phrase.length - 1) {
+            k.vibes(hz(degSemi + 1), 0.07, vol * 0.7, Math.max(0, at - sixteenth() * 0.5), -0.1);
+          }
+          k.kalimba(hz(degSemi), Math.max(0.08, event.dur * sixteenth()), vol, at, (idx - 1) * 0.1);
+        });
       }
       return;
     }

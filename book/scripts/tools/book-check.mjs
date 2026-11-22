@@ -31,6 +31,7 @@ import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signatu
 import { RING_OPERATOR_ORDER } from '../modules/spw-ast.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
+import { MOTIF_FORMS } from '../modules/audio-model.mjs';
 import { FORMER_LIVES } from '../home/pie-mimes.mjs';
 import { readLevels, legTerms, castId, meetsOf, BEATS } from '../home/pie-rhythm.mjs';
 import { INTRO, SCENES, CHAPTER_SCENE, WIDE, SCHEMES } from '../home/pie-world.mjs';
@@ -277,6 +278,7 @@ function parsedLevels(text) {
       root: Number(f['%root']?.[0]) || null,
       swing: Number(f['%swing']?.[0]) || null,
       motif: (f['~motif'] || []).map(Number).filter(Number.isFinite),
+      development: f['=develop']?.flatMap((form) => String(form).split(/[\s,]+/).filter(Boolean)) ?? null,
       theme: f['@theme']?.[0] ?? null,
       rhythm: f['*rhythm']?.[0] ?? null,
       room: f['.room']?.[0] ?? null,
@@ -322,11 +324,13 @@ function parsedLevels(text) {
     if (!level) { warn('levels', `chapter ${c.chapterNumber} has no level (its lanes keep the game's defaults)`); return; }
     if (!level.tempo || !level.root) error('levels', `ch${pad(c.chapterNumber)}: a level needs a %tempo and a %root`);
     if (level.swing && (level.swing < 50 || level.swing > 66)) error('levels', `ch${pad(c.chapterNumber)}: %swing is where in the eighth the off-sixteenth falls, 50 (even) to 66 (a triplet), not ${level.swing}`);
+    if (level.development?.length > 16) error('levels', `ch${pad(c.chapterNumber)}: =develop has ${level.development.length} forms; the audio model accepts at most 16`);
+    (level.development || []).filter((form) => !MOTIF_FORMS.includes(form)).forEach((form) => error('levels', `ch${pad(c.chapterNumber)}: =develop names ${form}, not one of ${MOTIF_FORMS.join(', ')}`));
     if (level.rhythm && !rhythms[level.rhythm]) error('levels', `ch${pad(c.chapterNumber)}: rhythm ${level.rhythm} is not under !rhythms (or its steps are not sixteen of X x .)`);
     const rooms = (c.sections || []).map((sec) => sec.room?.spw).filter(Boolean);
     if (level.room && !rooms.some((sig) => sig.includes(level.room))) error('levels', `ch${pad(c.chapterNumber)}: the rhythm's room ${level.room} is not a room of this chapter`);
   });
-  notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find`);
+  notes.push(`levels: ${Object.keys(levels).length} levels, ${Object.keys(rhythms).length} rhythms to find, ${Object.values(levels).filter((level) => level.development).length} authored motif developments`);
 
   /* How each leg plays as its chapter develops it (the chapter-tuned trial; the mechanics terms on each level), held to
    * the released prose and canon. !grounds says where the book first names a thing: a phrase found in that chapter and
