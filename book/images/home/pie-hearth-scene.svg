@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" role="img" aria-labelledby="title description">
+  <title id="title">The pie at the edge of the warm furrow</title>
+  <desc id="description">A berry pie with one slice missing rests on a cloth beside a lantern. Crumbs lead from the table into blue fields beneath a crescent moon.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#102d3a"/>
+      <stop offset="0.52" stop-color="#315967"/>
+      <stop offset="1" stop-color="#d49259"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#315848"/>
+      <stop offset="0.55" stop-color="#173f3d"/>
+      <stop offset="1" stop-color="#0c292f"/>
+    </linearGradient>
+    <radialGradient id="lanternGlow">
+      <stop stop-color="#ffd98b" stop-opacity=".92"/>
+      <stop offset=".38" stop-color="#e8a34e" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#e8a34e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pieTop" cx="43%" cy="36%">
+      <stop stop-color="#d8a456"/>
+      <stop offset=".7" stop-color="#a9602e"/>
+      <stop offset="1" stop-color="#704023"/>
+    </radialGradient>
+    <linearGradient id="crust" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#f0c172"/>
+      <stop offset=".52" stop-color="#c47b36"/>
+      <stop offset="1" stop-color="#744326"/>
+    </linearGradient>
+    <linearGradient id="filling" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7f2239"/>
+      <stop offset=".55" stop-color="#3f1831"/>
+      <stop offset="1" stop-color="#1d1728"/>
+    </linearGradient>
+    <pattern id="cloth" width="52" height="52" patternUnits="userSpaceOnUse" patternTransform="rotate(7)">
+      <rect width="52" height="52" fill="#d5c49e"/>
+      <path d="M0 0H52M0 26H52M0 52H52M0 0V52M26 0V52M52 0V52" stroke="#61766d" stroke-width="3" opacity=".28"/>
+      <path d="M0 13H52M13 0V52M39 0V52" stroke="#f1e4c7" opacity=".28"/>
+    </pattern>
+    <pattern id="paperGrain" width="90" height="90" patternUnits="userSpaceOnUse">
+      <path d="M5 18l22-4M54 9l29 6M13 67l35 5M63 53l20-3M31 38l14 2" stroke="#fff" stroke-width="2" opacity=".045"/>
+      <path d="M8 45l18 3M49 78l34-5M60 29l24 4" stroke="#071c22" stroke-width="2" opacity=".06"/>
+    </pattern>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feGaussianBlur stdDeviation="17"/>
+    </filter>
+    <filter id="crumbGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="pieBody">
+      <path d="M420 424c-8-104 93-180 238-180 139 0 244 73 238 174-5 91-104 158-238 158-132 0-231-65-238-152Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1440" height="810" fill="url(#sky)"/>
+  <circle cx="1117" cy="137" r="58" fill="#f4dda3" opacity=".9"/>
+  <circle cx="1142" cy="117" r="61" fill="#173a46"/>
+  <g fill="#f7dfaa" opacity=".72">
+    <circle cx="197" cy="108" r="2.5"/><circle cx="279" cy="175" r="2"/><circle cx="402" cy="83" r="3"/>
+    <circle cx="731" cy="111" r="2"/><circle cx="821" cy="63" r="2.5"/><circle cx="1269" cy="209" r="2"/>
+  </g>
+  <path d="M0 387C163 303 293 363 438 320c159-47 281 6 407-35 179-57 333 26 595-52v335H0Z" fill="#50705d" opacity=".72"/>
+  <path d="M0 447c188-91 343-14 495-69 175-63 337 49 514-22 146-58 270-19 431 22v294H0Z" fill="url(#field)"/>
+  <g fill="none" stroke-linecap="round" opacity=".33">
+    <path d="M-20 558c199-100 367-77 539 13" stroke="#86a17e" stroke-width="12"/>
+    <path d="M813 461c205-102 420-79 662 20" stroke="#789474" stroke-width="10"/>
+    <path d="M79 455c104-49 215-51 332-8M963 391c94-35 204-36 322 1" stroke="#bdd0a0" stroke-width="3"/>
+  </g>
+  <g fill="#b7d19c" opacity=".55">
+    <ellipse cx="116" cy="438" rx="8" ry="4"/><ellipse cx="139" cy="427" rx="6" ry="3"/>
+    <ellipse cx="1222" cy="385" rx="8" ry="4"/><ellipse cx="1251" cy="391" rx="6" ry="3"/>
+  </g>
+
+  <ellipse cx="871" cy="589" rx="380" ry="159" fill="#111c22" opacity=".35" filter="url(#softShadow)"/>
+  <path d="M105 602c164-66 344-29 488 17 180 58 391-53 742-54l105 245H0Z" fill="#422d27"/>
+  <path d="M247 572c219 11 360 70 550 50 177-18 280-86 502-42l-76 230H186Z" fill="url(#cloth)"/>
+  <path d="M247 572c219 11 360 70 550 50 177-18 280-86 502-42" fill="none" stroke="#eee0bd" stroke-width="8" opacity=".5"/>
+
+  <circle cx="1087" cy="448" r="232" fill="url(#lanternGlow)"/>
+  <g transform="translate(1004 286)" stroke="#302622" stroke-linejoin="round">
+    <path d="M38 61C35 17 58 1 83 1s49 16 45 60" fill="none" stroke-width="16"/>
+    <path d="M24 65h118l-13 213H38Z" fill="#372e28" stroke-width="7"/>
+    <path d="M44 86h78l-8 159H53Z" fill="#efb854" stroke-width="5"/>
+    <path d="M83 94v145M48 164h70" fill="none" stroke-width="5" opacity=".6"/>
+    <path d="M15 65h136v25H15ZM25 278h116l-15 24H40Z" fill="#211d1c" stroke-width="5"/>
+    <ellipse cx="83" cy="184" rx="18" ry="43" fill="#ffe09a" stroke="none" opacity=".72"/>
+  </g>
+
+  <g aria-hidden="true">
+    <ellipse cx="658" cy="554" rx="286" ry="86" fill="#24191a" opacity=".58" filter="url(#softShadow)"/>
+    <path d="M420 424c-8-104 93-180 238-180 139 0 244 73 238 174-5 91-104 158-238 158-132 0-231-65-238-152Z" fill="url(#crust)" stroke="#5d3823" stroke-width="13"/>
+    <g clip-path="url(#pieBody)">
+      <ellipse cx="658" cy="391" rx="218" ry="137" fill="url(#pieTop)"/>
+      <path d="M625 272 866 464M500 316l262 235M472 407l182 151M687 264 465 468M766 284 532 539M838 337 630 566" stroke="#edc278" stroke-width="28" opacity=".88"/>
+      <path d="M625 272 866 464M500 316l262 235M472 407l182 151M687 264 465 468M766 284 532 539M838 337 630 566" stroke="#8b4e29" stroke-width="5" opacity=".54"/>
+      <g fill="#76243d" opacity=".9">
+        <circle cx="553" cy="359" r="15"/><circle cx="647" cy="330" r="13"/><circle cx="731" cy="374" r="16"/>
+        <circle cx="605" cy="439" r="14"/><circle cx="787" cy="446" r="13"/>
+      </g>
+    </g>
+    <path d="M659 389 853 526c51-62 57-125 24-181Z" fill="#311a22" opacity=".96"/>
+    <path d="M659 389 879 346c24 47 17 115-27 180Z" fill="url(#filling)" stroke="#52252b" stroke-width="7"/>
+    <path d="M659 389 879 346" stroke="#f0c274" stroke-width="25" stroke-linecap="round"/>
+    <path d="M659 389 851 526" stroke="#b66d36" stroke-width="17" stroke-linecap="round"/>
+    <path d="M452 392c35-96 120-137 210-139 106-2 187 42 220 117" fill="none" stroke="#f3c981" stroke-width="34" stroke-linecap="round" opacity=".92"/>
+    <path d="M455 393c38-91 119-128 207-130 99-2 176 38 216 110" fill="none" stroke="#8e542d" stroke-width="7" stroke-dasharray="5 20" stroke-linecap="round" opacity=".7"/>
+  </g>
+
+  <g transform="translate(892 533) rotate(12)">
+    <ellipse cx="116" cy="111" rx="126" ry="34" fill="#2a2020" opacity=".38" filter="url(#softShadow)"/>
+    <path d="M0 102 153 30l74 101c-72 38-151 30-227-29Z" fill="url(#filling)" stroke="#5d3527" stroke-width="7"/>
+    <path d="m0 102 153-72 18 25L22 126Z" fill="#e6b866" stroke="#754426" stroke-width="7"/>
+    <path d="m153 30 74 101" stroke="#efc477" stroke-width="24" stroke-linecap="round"/>
+    <circle cx="122" cy="79" r="12" fill="#9d3151"/><circle cx="163" cy="91" r="9" fill="#c5475f"/>
+  </g>
+
+  <g fill="#edc477" stroke="#75472b" stroke-width="3" filter="url(#crumbGlow)">
+    <path d="m1130 686 15-6 10 12-12 11-16-5Z"/>
+    <path d="m1192 661 11-8 13 7-5 14-14 1Z"/>
+    <path d="m1251 625 10-4 8 10-8 10-12-5Z"/>
+    <path d="m1298 578 8-7 11 6-2 12-12 2Z"/>
+    <path d="m1324 522 7-4 8 6-4 9-9-2Z"/>
+  </g>
+  <path d="M1138 692c94-15 174-79 187-172 9-67-18-119-75-146" fill="none" stroke="#f2cf83" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 18" opacity=".62"/>
+  <rect width="1440" height="810" fill="url(#paperGrain)"/>
+  <path d="M0 0h1440v810H0Z" fill="none" stroke="#f8e6b8" stroke-width="18" opacity=".12"/>
+</svg>
