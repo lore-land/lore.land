@@ -9741,6 +9741,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   };
   function paintSetup() {
     if (!setupOut) return;
+    // Preserve scroll positions across full DOM reconstruction, so choosing an option does not jump
+    // the outer sheet or the section panel back to the top.
+    const savedSetupScroll = setupOut.scrollTop;
+    const savedPanelScroll = setupOut.querySelector('.pie-setup-panel')?.scrollTop ?? 0;
     const focused = document.activeElement && setupOut.contains(document.activeElement) ? document.activeElement : null;
     const refocus = focused?.dataset?.key ? `[data-key="${focused.dataset.key}"][data-value="${focused.dataset.value}"]` : focused?.dataset?.tab ? `[data-tab="${focused.dataset.tab}"]` : '';
     const currentOf = (key) => (key === 'storyAt' && record.view.story === false ? 'off' : key === 'storyIn' ? storyInMode() : key === 'controlsPlace' ? placeNow() : setting(key));
@@ -10009,7 +10013,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     jumpWrap.append(jump);
     const panel = nodeOf('div', 'pie-setup-panel');
     panel.setAttribute('role', 'tabpanel');
-    const choose = (id, { focus = false } = {}) => {
+    const choose = (id, { focus = false, keepScroll = false } = {}) => {
       activeGroup = id;
       jump.value = id;
       tabs.querySelectorAll('[role="tab"]').forEach((t) => {
@@ -10021,7 +10025,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       });
       const [, , , keys] = sections.find(([sid]) => sid === id);
       panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'tuning' ? tuningBody() : id === 'guide' ? guideBody() : groupBody(id, keys)), stepper(id));
-      panel.scrollTop = 0;
+      // keepScroll: when re-painting in place (option chosen), restore the scroll position rather
+      // than jumping back to the top; a deliberate tab switch always resets.
+      panel.scrollTop = keepScroll ? savedPanelScroll : 0;
       // The chosen tab stays in sight in a strip that scrolls, and the place is kept for next time.
       tabs.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       if (record.view.setupTab !== id) { record.view.setupTab = id; writeRecord(record); }
@@ -10096,7 +10102,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     handle.addEventListener('pointermove', (event) => {
       if (!lift) return;
       const h = clamp(lift.h - (event.clientY - lift.y), window.innerHeight * 0.28, window.innerHeight * 0.9);
-      if (Math.abs(event.clientY - lift.y) > 4) lift.moved = true;
+      if (Math.abs(event.clientY - lift.y) > 4) { lift.moved = true; setupOut.dataset.customHeight = 'true'; }
       setupOut.style.height = `${Math.round(h)}px`;
     });
     const letGo = () => {
@@ -10110,7 +10116,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     handle.addEventListener('pointerup', letGo);
     handle.addEventListener('pointercancel', letGo);
     setupOut.replaceChildren(handle, head, map, jumpWrap, tabs, panel);
-    choose(activeGroup);
+    // keepScroll: on a repaint triggered by an option choice, restore where the user was rather than
+    // jumping to the top — a fresh open always starts at the top (keepScroll is false by default).
+    choose(activeGroup, { keepScroll: true });
+    setupOut.scrollTop = savedSetupScroll;
     paintSetupMap();
     if (refocus) setupOut.querySelector(refocus)?.focus({ preventScroll: true });
   }
@@ -10206,7 +10215,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   });
   /* The sheet stands where the lanes stay in view: a drawer on whichever side of the cabinet has the room, or, with no
    * room either side, a sheet up from the foot of the window. It lives in the top layer, so nothing on the page clips it. */
-  const placeSetup = () => {
+  const placeSetup = ({ initial = false } = {}) => {
     if (!setupOut || setupOut.hidden) return;
     const vw = document.documentElement.clientWidth;
     const vh = window.innerHeight;
@@ -10227,16 +10236,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       style.left = right >= left ? 'auto' : `${gap}px`;
       style.right = right >= left ? `${gap}px` : 'auto';
     } else {
-      // A sheet from the foot: the lanes go to the top of the window first (unless the screen is already filled),
-      // and the sheet stops short of them, so at least 42% of the lanes stays in view to watch a choice work.
+      // A sheet from the foot: on first open the lanes scroll to the top of the window (unless already
+      // filled) so the sheet can sit below them. On subsequent calls (option taps, resize) we skip the
+      // page-scroll so the user stays exactly where they were.
       let lanes = root.querySelector('.pie-screen')?.getBoundingClientRect();
-      if (lanes && lanes.height && lanes.top > 12 && !filling()) {
+      if (initial && lanes && lanes.height && lanes.top > 12 && !filling()) {
         window.scrollBy({ top: lanes.top - 8, behavior: 'instant' });
         lanes = root.querySelector('.pie-screen')?.getBoundingClientRect();
       }
       const keep = lanes && lanes.height ? Math.max(0, lanes.top) + lanes.height * 0.42 : vh * 0.38;
       style.width = 'auto';
-      style.height = `${Math.round(Math.max(vh * 0.42, Math.min(vh * 0.62, vh - keep)))}px`;
+      // If the user dragged the handle to set a custom height, honour it rather than overwriting it
+      // on every option tap. Only resize when the sheet first opens or the window resizes.
+      if (!setupOut.dataset.customHeight || initial) {
+        style.height = `${Math.round(Math.max(vh * 0.42, Math.min(vh * 0.62, vh - keep)))}px`;
+      }
       style.top = 'auto';
       style.bottom = '0px';
       style.left = '0px';
@@ -10248,6 +10262,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (!setupOut || setupOut.hidden) return;
     if (setupOut.matches(':popover-open')) setupOut.hidePopover();
     setupOut.hidden = true;
+    delete setupOut.dataset.customHeight;
     setupBtn?.setAttribute('aria-expanded', 'false');
   };
   setupBtn?.addEventListener('click', () => {
@@ -10257,7 +10272,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     setupOut.showPopover?.();
     setupBtn.setAttribute('aria-expanded', 'true');
     paintSetup();
-    placeSetup();
+    placeSetup({ initial: true });
     setupOut.querySelector('[role="tab"][aria-selected="true"]')?.focus({ preventScroll: true });
   });
   // A tap outside the sheet, or Escape, puts it away (Escape does not also pause while it is open).
