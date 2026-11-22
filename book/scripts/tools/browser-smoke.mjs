@@ -511,6 +511,8 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
     await page.waitFor(`document.querySelector('.pie-setup-steps')`);
+    const jump = await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); return { shown: Boolean(s?.offsetParent), sections: s?.options.length || 0 }; })()`);
+    if (!jump.shown || jump.sections < 8) throw new Error(`the phone has no complete Setup section menu: ${JSON.stringify(jump)}`);
     const walked = await page.ev(`(async () => { const seen = []; for (let i = 0; i < 12; i += 1) { const tab = document.querySelector('[data-pie-setup] [aria-selected=true]')?.dataset.tab; seen.push(tab); const next = document.querySelector('.pie-setup-step.is-on'); if (!next) break; next.click(); await new Promise((r) => setTimeout(r, 60)); } return seen; })()`);
     if (walked.length < 6 || walked[walked.length - 1] !== 'guide' || new Set(walked).size !== walked.length) throw new Error(`the steps did not walk Setup once through: ${walked.join(' > ')}`);
     const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1')).view.setupTab`);
@@ -520,6 +522,30 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup] [aria-selected=true]')`);
     const reopened = await page.ev(`document.querySelector('[data-pie-setup] [aria-selected=true]').dataset.tab`);
     if (reopened !== 'guide') throw new Error(`Setup reopened at ${reopened}, not where it was left`);
+  }],
+  ['game and music tuning is reachable on a phone, kept across a visit, and reset with Setup', async (page) => {
+    await page.setViewport(390, 844, { mobile: true });
+    await seed(page, { 'lore.pie.v1': { ...PLAYER, sound: true } });
+    await page.goto('/pie/');
+    await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
+    await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-jump')`);
+    await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); s.value = 'tuning'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+    await page.waitFor(`document.querySelector('.pie-setup-dial input[data-domain=arcs][data-dial=recovery_grace]')`);
+    await page.ev(`(() => { const i = document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]'); i.value = '1.4'; i.dispatchEvent(new Event('input', { bubbles: true })); })()`);
+    const stored = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.tuning.v1') || '{}').arcs?.recovery_grace`);
+    if (stored !== 1.4) throw new Error(`game tuning was not stored (${stored})`);
+    await page.goto('/pie/');
+    await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
+    await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-jump')`);
+    await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); s.value = 'tuning'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+    await page.waitFor(`document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]')`);
+    const restored = await page.ev(`Number(document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]').value)`);
+    if (restored !== 1.4) throw new Error(`game tuning returned as ${restored}, not 1.4`);
+    await page.ev(`document.querySelector('.pie-setup-reset').click()`);
+    const reset = await page.ev(`localStorage.getItem('lore.pie.tuning.v1')`);
+    if (reset !== null) throw new Error(`Reset left tuning behind: ${reset}`);
   }],
   ['a chain acts out its edge: a march called, glass ahead', async (page) => {
     await page.setViewport(1200, 900);

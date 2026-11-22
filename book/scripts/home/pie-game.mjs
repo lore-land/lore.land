@@ -936,7 +936,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   })();
   let chosenStartChapter = firstChapter;
   let audioTropes = { patterns: {}, timbres: {}, bindings: {} };
-  let tuningDomains = parseTuningDomains(visitSpells());
+  const TUNING_KEY = 'lore.pie.tuning.v1';
+  const readSavedTuning = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(TUNING_KEY) || '{}');
+      return saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+    } catch { return {}; }
+  };
+  let savedTuningDomains = readSavedTuning();
+  let tuningDomains = { ...savedTuningDomains, ...parseTuningDomains(visitSpells()) };
+  const keepTuningDomains = () => {
+    try { localStorage.setItem(TUNING_KEY, JSON.stringify(Object.fromEntries(DOMAIN_ORDER.map((id) => [id, effectiveDomain(id, savedTuningDomains)])))); } catch { /* this visit only */ }
+  };
   let chosenIntention = '';
   let creatorStyle = activeCreatorStyle();
   const domainTune = (domainId) => effectiveDomain(domainId, tuningDomains);
@@ -4486,7 +4497,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       sprites: { ...(bookRules?.whimsy || {}), ...(visitRead?.whimsy || {}) },
       scenes: { ...(bookRules?.scenes || {}), ...(visitRead?.scenes || {}) }
     };
-    tuningDomains = parseTuningDomains(visitSpells());
+    tuningDomains = { ...savedTuningDomains, ...parseTuningDomains(visitSpells()) };
   };
   const readVisit = async () => { visitRead = visitSpells() ? await readRules(visitSpells()) : null; compose(); };
   // The rules are read by the real parser (650 KB): it loads when someone first reaches for the game (a touch, a
@@ -9831,6 +9842,46 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const def = SETUP.find(([k]) => k === key)?.[3];
       return def !== undefined && String(currentOf(key)) !== String(def);
     };
+    const tuningGrid = (kind) => {
+      const dials = kind === 'game'
+        ? [['characters', 'obstacle_contrast'], ['characters', 'bounce_scale'], ['arcs', 'recovery_grace'], ['minis', 'mini_tempo']]
+        : [['characters', 'voice_presence'], ['characters', 'jazz_lean'], ['scenes', 'room_air'], ['storylines', 'chord_bloom'], ['arcs', 'tension_depth'], ['minis', 'banner_flourish'], ['unlocks', 'groove_level'], ['unlocks', 'pocket_sparkle'], ['unlocks', 'sympathetic_gain']];
+      const grid = nodeOf('div', 'pie-setup-domains-grid');
+      dials.forEach(([domId, dialKey]) => {
+        const spec = TUNING_DOMAINS[domId]?.dials?.[dialKey];
+        if (!spec) return;
+        const wrap = nodeOf('label', 'pie-setup-dial');
+        const curVal = Number(domainTune(domId)[dialKey] ?? 1);
+        const valSpan = nodeOf('b', '', `${Math.round(curVal * 100)}%`);
+        const headSpan = nodeOf('span', 'pie-setup-dial-head');
+        headSpan.append(nodeOf('span', '', spec.label), valSpan);
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.min = String(spec.min);
+        input.max = String(spec.max);
+        input.step = String(spec.step || 0.05);
+        input.value = String(curVal);
+        input.dataset.domain = domId;
+        input.dataset.dial = dialKey;
+        input.setAttribute('aria-description', spec.says);
+        input.addEventListener('input', () => {
+          const value = Number(input.value);
+          valSpan.textContent = `${Math.round(value * 100)}%`;
+          const next = { ...effectiveDomain(domId, savedTuningDomains), [dialKey]: value };
+          savedTuningDomains = { ...savedTuningDomains, [domId]: next };
+          tuningDomains = { ...tuningDomains, [domId]: next };
+          keepTuningDomains();
+          applySetup({ replan: false });
+        });
+        wrap.append(headSpan, input, nodeOf('small', 'pie-setup-dial-says', spec.says));
+        grid.append(wrap);
+      });
+      return grid;
+    };
+    const tuningBody = () => [
+      nodeOf('p', 'pie-setup-note', 'Tune how strongly the road presses back. Every dial takes effect immediately and stays on this device.'),
+      tuningGrid('game')
+    ];
     const groupBody = (id, keys) => {
       const live = keys.filter((key) => !notInUse(key));
       const resting = keys.filter((key) => notInUse(key));
@@ -9879,44 +9930,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
       if (id === 'music') {
         const domainFold = nodeOf('details', 'pie-setup-domains-fold');
-        domainFold.append(nodeOf('summary', '', 'Fine-tune 6 domains (voice, contrast, life, jazz lean, air, bloom, tension, unlocks)'));
-        const domainGrid = nodeOf('div', 'pie-setup-domains-grid');
-        [
-          ['characters', 'voice_presence'],
-          ['characters', 'obstacle_contrast'],
-          ['characters', 'bounce_scale'],
-          ['characters', 'jazz_lean'],
-          ['scenes', 'room_air'],
-          ['storylines', 'chord_bloom'],
-          ['arcs', 'tension_depth'],
-          ['minis', 'banner_flourish'],
-          ['unlocks', 'sympathetic_gain']
-        ].forEach(([domId, dialKey]) => {
-          const spec = TUNING_DOMAINS[domId]?.dials?.[dialKey];
-          if (!spec) return;
-          const wrap = nodeOf('label', 'pie-setup-dial');
-          const curVal = Number(domainTune(domId)[dialKey] ?? 1);
-          const valSpan = nodeOf('b', '', `${Math.round(curVal * 100)}%`);
-          const headSpan = nodeOf('span', 'pie-setup-dial-head');
-          headSpan.append(nodeOf('span', '', spec.label), valSpan);
-          const input = document.createElement('input');
-          input.type = 'range';
-          input.min = String(spec.min);
-          input.max = String(spec.max);
-          input.step = String(spec.step || 0.05);
-          input.value = String(curVal);
-          input.addEventListener('input', () => {
-            const v = Number(input.value);
-            valSpan.textContent = `${Math.round(v * 100)}%`;
-            const cur = domainTune(domId);
-            tuningDomains = { ...tuningDomains, [domId]: { ...cur, [dialKey]: v } };
-            try { localStorage.setItem('lore.pie.tuning.v1', JSON.stringify(Object.fromEntries(DOMAIN_ORDER.map((d) => [d, effectiveDomain(d, tuningDomains)])))); } catch { /* local only */ }
-            applySetup({ replan: false });
-          });
-          wrap.append(headSpan, input);
-          domainGrid.append(wrap);
-        });
-        domainFold.append(domainGrid);
+        domainFold.append(nodeOf('summary', '', 'Fine-tune the musical shape'), tuningGrid('music'));
         parts.push(domainFold);
       }
       if (resting.length) {
@@ -9948,7 +9962,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return parts;
     };
     const guideBody = () => [viewsMatrix(), nodeOf('p', 'pie-setup-note', 'By hand: pinch the story to size its words; pinch the cabinet’s frame (not the lanes), or drag its corner ◢, to size the cabinet. On a trackpad, ctrl and scroll does the same.')];
-    const sections = [['layouts', 'Layouts', 'screen', null], ...groups.map(([id, title, iconName, keys]) => [id, title, iconName, keys]), ['guide', 'Guide', 'book', null]];
+    const sections = [['layouts', 'Layouts', 'screen', null], ...groups.map(([id, title, iconName, keys]) => [id, title, iconName, keys]), ['tuning', 'Game tuning', 'setup', null], ['guide', 'Guide', 'book', null]];
     if (!sections.some(([id]) => id === activeGroup)) activeGroup = 'layouts';
     const head = nodeOf('div', 'pie-setup-head');
     head.append(nodeOf('h2', 'pie-setup-title', 'Setup'));
@@ -9961,6 +9975,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (key === 'storyAt') { record.view.story = true; record.view.storyAt = def; }
         else record.view[key] = def;
       });
+      savedTuningDomains = {};
+      tuningDomains = parseTuningDomains(visitSpells());
+      try { localStorage.removeItem(TUNING_KEY); } catch { /* this visit only */ }
       visitBoard = null;
       lastTerm = '';
       writeRecord(record);
@@ -9980,10 +9997,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const tabs = nodeOf('div', 'pie-setup-tabs');
     tabs.setAttribute('role', 'tablist');
     tabs.setAttribute('aria-label', 'Sections');
+    const jumpWrap = nodeOf('label', 'pie-setup-jump-wrap');
+    jumpWrap.append(nodeOf('span', '', 'Setup section'));
+    const jump = nodeOf('select', 'pie-setup-jump');
+    sections.forEach(([id, title]) => {
+      const option = document.createElement('option');
+      option.value = id;
+      option.textContent = title;
+      jump.append(option);
+    });
+    jumpWrap.append(jump);
     const panel = nodeOf('div', 'pie-setup-panel');
     panel.setAttribute('role', 'tabpanel');
     const choose = (id, { focus = false } = {}) => {
       activeGroup = id;
+      jump.value = id;
       tabs.querySelectorAll('[role="tab"]').forEach((t) => {
         const on = t.dataset.tab === id;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -9992,12 +10020,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (on) panel.setAttribute('aria-label', t.textContent);
       });
       const [, , , keys] = sections.find(([sid]) => sid === id);
-      panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'guide' ? guideBody() : groupBody(id, keys)), stepper(id));
+      panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'tuning' ? tuningBody() : id === 'guide' ? guideBody() : groupBody(id, keys)), stepper(id));
       panel.scrollTop = 0;
       // The chosen tab stays in sight in a strip that scrolls, and the place is kept for next time.
       tabs.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       if (record.view.setupTab !== id) { record.view.setupTab = id; writeRecord(record); }
     };
+    jump.addEventListener('change', () => choose(jump.value));
     /* Across the configuration, in order: at the foot of every section, the one before and the one after, so Setup
      * can be walked through from Layouts to Guide without reaching back up to the tabs. */
     const stepper = (id) => {
@@ -10080,7 +10109,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     };
     handle.addEventListener('pointerup', letGo);
     handle.addEventListener('pointercancel', letGo);
-    setupOut.replaceChildren(handle, head, map, tabs, panel);
+    setupOut.replaceChildren(handle, head, map, jumpWrap, tabs, panel);
     choose(activeGroup);
     paintSetupMap();
     if (refocus) setupOut.querySelector(refocus)?.focus({ preventScroll: true });

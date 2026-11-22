@@ -5242,6 +5242,10 @@ html.pie-settling .pie-voyage {
   border-block-end: 2px solid var(--hub-line);
 }
 
+.pie-setup-jump-wrap {
+  display: none;
+}
+
 .pie-setup-tab {
   position: relative;
   flex: 1 0 auto;
@@ -6302,6 +6306,11 @@ html.pie-settling .pie-voyage {
   accent-color: var(--hub-gold, #d99b26);
 }
 
+.pie-setup-dial-says {
+  color: var(--hub-muted);
+  font: 0.68rem/1.35 var(--font-family-body, Georgia, serif);
+}
+
 .pie-cabinet .pie-steps .pie-step {
   touch-action: manipulation;
   user-select: none;
@@ -6319,6 +6328,46 @@ html.pie-settling .pie-voyage {
 }
 
 @media (max-width: 36rem) {
+  .pie-setup-jump-wrap {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.55rem;
+    font: 600 0.66rem var(--font-family-heading, monospace);
+    color: var(--hub-muted);
+  }
+
+  .pie-setup-jump {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0.35rem 2rem 0.35rem 0.65rem;
+    border: 1px solid var(--hub-ink);
+    border-radius: 0.42rem;
+    background: var(--hub-panel);
+    color: var(--hub-ink);
+    font: 600 0.78rem var(--font-family-heading, monospace);
+  }
+
+  .pie-setup-tabs {
+    display: none;
+  }
+
+  .pie-setup-domains-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+
+  .pie-setup-dial {
+    padding: 0.45rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--hub-line) 55%, transparent);
+    border-radius: 0.42rem;
+    background: color-mix(in srgb, var(--hub-panel) 65%, transparent);
+  }
+
+  .pie-setup-dial input[type='range'] {
+    min-height: 2rem;
+  }
+
   .pie-card {
     max-height: min(84dvh, calc(100% - 0.75rem));
     overflow-y: auto;
