@@ -192,7 +192,7 @@
         <ol>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <rect x="4" y="8" width="112" height="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="4" y="8" width="112" height="60" rx="2" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="1.5"/>
               <line x1="32" y1="8" x2="32" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
               <line x1="60" y1="8" x2="60" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
               <line x1="88" y1="8" x2="88" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
@@ -201,46 +201,62 @@
           </li>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <rect x="4" y="8" width="112" height="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="4" y1="38" x2="116" y2="38" stroke="currentColor" stroke-dasharray="3 3"/>
+              <rect x="4" y="8" width="112" height="60" rx="2" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="32" y1="8" x2="32" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.45"/>
+              <line x1="60" y1="8" x2="60" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.45"/>
+              <line x1="88" y1="8" x2="88" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.45"/>
+              <line x1="4" y1="38" x2="116" y2="38" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1.8"/>
             </svg>
             <p>Fold in half long-edge to long-edge. Unfold. Eight panels now hold their creases.</p>
           </li>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <rect x="4" y="8" width="112" height="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="32" y1="8" x2="32" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
-              <line x1="60" y1="8" x2="60" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
-              <line x1="88" y1="8" x2="88" y2="68" stroke="currentColor" stroke-dasharray="3 3"/>
-              <line class="fold-cut" x1="32" y1="38" x2="88" y2="38" stroke-width="2.5" stroke="currentColor"/>
+              <rect x="4" y="8" width="112" height="60" rx="2" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="32" y1="8" x2="32" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+              <line x1="60" y1="8" x2="60" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+              <line x1="88" y1="8" x2="88" y2="68" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+              <line class="fold-cut" x1="32" y1="38" x2="88" y2="38" stroke-width="2.5" stroke="currentColor" stroke-linecap="round"/>
+              <circle cx="32" cy="38" r="2" fill="currentColor"/>
+              <circle cx="88" cy="38" r="2" fill="currentColor"/>
+              <g transform="translate(60 38) scale(0.9)">
+                <circle cx="-10" cy="-6" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                <circle cx="-10" cy="6" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M-7 -4 L6 5 M-7 4 L6 -5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
             </svg>
             <p>Fold in half short-edge again and cut along the center crease from the fold — a slit across the two middle panels only.</p>
           </li>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <line x1="10" y1="38" x2="110" y2="38" stroke="currentColor" stroke-width="2"/>
-              <path d="M52 38 L60 28 L68 38 L60 48 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M22 38 h-8 m4 -4 l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(180 18 38)"/>
-              <path d="M106 38 h-8 m4 -4 l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M14 38 H44 M76 38 H106" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="44,38 60,18 76,38 60,58" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <line x1="60" y1="18" x2="60" y2="58" stroke="currentColor" stroke-dasharray="2 3" opacity="0.4"/>
+              <path d="M8 38 H18 M14 33 L19 38 L14 43" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M112 38 H102 M106 33 L101 38 L106 43" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <p>Fold long-edge again, grip both ends, and push toward the middle. The slit opens into a diamond.</p>
           </li>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <rect x="48" y="26" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="48" y1="26" x2="30" y2="12" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="72" y1="26" x2="90" y2="12" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="48" y1="50" x2="30" y2="64" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="72" y1="50" x2="90" y2="64" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M60 14 V62 M36 38 H84" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="60" cy="38" r="3" fill="currentColor"/>
+              <path d="M78 24 C86 28 88 34 84 46" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <path d="M81 48 L84 46 L87 50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M42 24 C34 28 32 34 36 46" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <path d="M39 48 L36 46 L33 50" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <p>Keep pushing until the panels form a plus sign, then wrap them flat around the cover.</p>
           </li>
           <li>
             <svg viewBox="0 0 120 76" aria-hidden="true">
-              <rect x="38" y="14" width="44" height="48" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="60" cy="34" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="60" y1="25" x2="60" y2="21" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="46" y1="52" x2="74" y2="52" stroke="currentColor"/>
+              <rect x="42" y="16" width="44" height="48" rx="2" fill="currentColor" fill-opacity="0.04" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+              <rect x="40" y="14" width="44" height="48" rx="2" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1" opacity="0.55"/>
+              <rect x="38" y="12" width="44" height="48" rx="2" fill="currentColor" fill-opacity="0.06" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="42" y1="12" x2="42" y2="60" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+              <circle cx="62" cy="30" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M62 23 C62 20 65 19 66 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="48" y1="44" x2="76" y2="44" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="52" y1="49" x2="72" y2="49" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
             </svg>
             <p>Crease everything hard. If the pages land out of order, refold the other way — the zine forgives.</p>
           </li>

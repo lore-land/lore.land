@@ -51,14 +51,36 @@
     <clipPath id="pieBody">
       <path d="M420 424c-8-104 93-180 238-180 139 0 244 73 238 174-5 91-104 158-238 158-132 0-231-65-238-152Z"/>
     </clipPath>
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#f4dda3" stop-opacity=".32"/>
+      <stop offset=".4" stop-color="#f4dda3" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#f4dda3" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="crescentMoon">
+      <rect width="1440" height="810" fill="#000"/>
+      <circle cx="1117" cy="137" r="58" fill="#fff"/>
+      <circle cx="1142" cy="117" r="61" fill="#000"/>
+    </mask>
   </defs>
 
   <rect width="1440" height="810" fill="url(#sky)"/>
-  <circle cx="1117" cy="137" r="58" fill="#f4dda3" opacity=".9"/>
-  <circle cx="1142" cy="117" r="61" fill="#173a46"/>
-  <g fill="#f7dfaa" opacity=".72">
-    <circle cx="197" cy="108" r="2.5"/><circle cx="279" cy="175" r="2"/><circle cx="402" cy="83" r="3"/>
-    <circle cx="731" cy="111" r="2"/><circle cx="821" cy="63" r="2.5"/><circle cx="1269" cy="209" r="2"/>
+  <circle cx="1105" cy="142" r="130" fill="url(#moonGlow)"/>
+  <circle cx="1117" cy="137" r="58" fill="#f4dda3" opacity=".92" mask="url(#crescentMoon)"/>
+  <g fill="#f7dfaa">
+    <circle cx="112" cy="74" r="1.5" opacity=".55"/>
+    <circle cx="197" cy="108" r="2.5" opacity=".75"/>
+    <circle cx="279" cy="175" r="2" opacity=".65"/>
+    <circle cx="348" cy="52" r="1.8" opacity=".6"/>
+    <circle cx="402" cy="83" r="3" opacity=".88"/>
+    <path d="M402 77v12M396 83h12" stroke="#f7dfaa" stroke-width="0.8" opacity=".4"/>
+    <circle cx="516" cy="134" r="1.4" opacity=".5"/>
+    <circle cx="628" cy="68" r="1.6" opacity=".6"/>
+    <circle cx="731" cy="111" r="2" opacity=".7"/>
+    <circle cx="821" cy="63" r="2.5" opacity=".8"/>
+    <circle cx="945" cy="92" r="1.8" opacity=".55"/>
+    <circle cx="1022" cy="48" r="1.5" opacity=".5"/>
+    <circle cx="1269" cy="209" r="2" opacity=".7"/>
+    <circle cx="1340" cy="118" r="1.7" opacity=".6"/>
   </g>
   <path d="M0 387C163 303 293 363 438 320c159-47 281 6 407-35 179-57 333 26 595-52v335H0Z" fill="#50705d" opacity=".72"/>
   <path d="M0 447c188-91 343-14 495-69 175-63 337 49 514-22 146-58 270-19 431 22v294H0Z" fill="url(#field)"/>
@@ -79,12 +101,16 @@
 
   <circle cx="1087" cy="448" r="232" fill="url(#lanternGlow)"/>
   <g transform="translate(1004 286)" stroke="#302622" stroke-linejoin="round">
-    <path d="M38 61C35 17 58 1 83 1s49 16 45 60" fill="none" stroke-width="16"/>
+    <path d="M38 61C35 17 58 1 83 1s49 16 45 60" fill="none" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="38" cy="61" r="9" fill="#211d1c" stroke-width="4"/>
+    <circle cx="128" cy="61" r="9" fill="#211d1c" stroke-width="4"/>
     <path d="M24 65h118l-13 213H38Z" fill="#372e28" stroke-width="7"/>
     <path d="M44 86h78l-8 159H53Z" fill="#efb854" stroke-width="5"/>
+    <path d="M52 90 L110 90 L88 238 L48 238 Z" fill="#ffffff" fill-opacity=".12" stroke="none"/>
     <path d="M83 94v145M48 164h70" fill="none" stroke-width="5" opacity=".6"/>
     <path d="M15 65h136v25H15ZM25 278h116l-15 24H40Z" fill="#211d1c" stroke-width="5"/>
-    <ellipse cx="83" cy="184" rx="18" ry="43" fill="#ffe09a" stroke="none" opacity=".72"/>
+    <path d="M83 148 C72 172 70 196 75 208 C80 220 86 220 91 208 C96 196 94 172 83 148 Z" fill="#ffb84d" stroke="none" opacity=".85"/>
+    <ellipse cx="83" cy="198" rx="8" ry="18" fill="#fff4cf" stroke="none" opacity=".95"/>
   </g>
 
   <g aria-hidden="true">
@@ -105,6 +131,11 @@
     <path d="M659 389 851 526" stroke="#b66d36" stroke-width="17" stroke-linecap="round"/>
     <path d="M452 392c35-96 120-137 210-139 106-2 187 42 220 117" fill="none" stroke="#f3c981" stroke-width="34" stroke-linecap="round" opacity=".92"/>
     <path d="M455 393c38-91 119-128 207-130 99-2 176 38 216 110" fill="none" stroke="#8e542d" stroke-width="7" stroke-dasharray="5 20" stroke-linecap="round" opacity=".7"/>
+    <!-- Gentle steam wisps rising from the warm pie into the chill dawn air -->
+    <g fill="none" stroke="#f4dda3" stroke-linecap="round" opacity=".35">
+      <path d="M785 330 C775 295 805 270 790 235 C780 210 795 185 788 165" stroke-width="3"/>
+      <path d="M820 350 C808 318 834 295 824 260 C816 235 828 218 822 198" stroke-width="2.2" opacity=".7"/>
+    </g>
   </g>
 
   <g transform="translate(892 533) rotate(12)">
