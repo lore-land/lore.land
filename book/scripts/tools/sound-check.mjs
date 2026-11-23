@@ -371,6 +371,10 @@ const notes = [];
   if (jzWonderChain.style !== 'upper_structure' || !(jzWonderChain.compSemis.length > jzWonderBase.compSemis.length)) {
     fail('jazzPhrasePlan failed to deepen voicing for chained wonders');
   }
+  const jzChainHome = sound.jazzPhrasePlan({ chapter: 6, wonderKind: 'creature', wonderChain: 4, richness: 0.5, wobble: 0.05, step: 0 });
+  if (jzChainHome.style === 'upper_structure' || !jzChainHome.charleston || !jzChainHome.compSemis.includes(14) || !jzChainHome.compSemis.includes(21)) {
+    fail('a wonder chain replaced chapter 6 instead of stacking on its threes');
+  }
   if (jzPoise.style !== 'poised_69' || jzEnclosure.style !== 'enclosure' || !jzEnclosure.enclosure || jzAltered.style !== 'altered_dominant' || jzBoon.style !== 'lydian_court' || jzBane.style !== 'bebop_bite') {
     fail('jazzPhrasePlan failed to reflect gameplay dimensions');
   }

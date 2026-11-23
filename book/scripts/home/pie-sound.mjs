@@ -1602,7 +1602,7 @@ export function jazzPhrasePlan({ progress = 0, wobble = 0, combo = 0, richness =
       ? jazzStyleFor(presence)
       : tropeStage && JAZZ_LEANS[tropeStage]
         ? jazzStyleFor(tropeStage)
-        : wc >= 3
+        : wc >= 3 && !ch
           ? 'upper_structure'
           : wonderKind && JAZZ_LEANS[wonderKind]
             ? jazzStyleFor(wonderKind)
