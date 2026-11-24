@@ -10112,8 +10112,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const tabs = nodeOf('div', 'pie-setup-tabs');
     tabs.setAttribute('role', 'tablist');
     tabs.setAttribute('aria-label', 'Sections');
+    /* The same sections as the tabs, said in words. On a phone the tabs are icons, and this list is how to choose without reading them. */
     const jumpWrap = nodeOf('label', 'pie-setup-jump-wrap');
-    jumpWrap.append(nodeOf('span', '', 'Setup section'));
+    jumpWrap.append(nodeOf('span', '', 'By name'));
     const jump = nodeOf('select', 'pie-setup-jump');
     sections.forEach(([id, title]) => {
       const option = document.createElement('option');
@@ -10226,7 +10227,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     };
     handle.addEventListener('pointerup', letGo);
     handle.addEventListener('pointercancel', letGo);
-    setupOut.replaceChildren(handle, head, map, jumpWrap, tabs, panel);
+    const nav = nodeOf('div', 'pie-setup-nav');
+    nav.append(jumpWrap, tabs);
+    setupOut.replaceChildren(handle, head, map, nav, panel);
     // keepScroll: on a repaint triggered by an option choice, restore where the user was rather than
     // jumping to the top — a fresh open always starts at the top (keepScroll is false by default).
     choose(activeGroup, { keepScroll: true });

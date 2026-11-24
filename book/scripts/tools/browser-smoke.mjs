@@ -489,6 +489,8 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
     await page.waitFor(`document.querySelector('[data-pie-setup] [data-tab=music]')`);
+    const wide = await page.ev(`(() => { const pane = document.querySelector('[data-pie-setup]').getBoundingClientRect(); const words = document.querySelector('.pie-setup-tab-words')?.getBoundingClientRect(); const narrow = pane.width <= 480; return { tabs: Boolean(document.querySelector('.pie-setup-tab')?.offsetParent), jump: Boolean(document.querySelector('.pie-setup-jump')?.offsetParent), narrow, wordsHidden: !words || (words.width < 2 && words.height < 2) }; })()`);
+    if (!wide.tabs || (wide.narrow ? !wide.jump || !wide.wordsHidden : wide.jump)) throw new Error(`Setup tabs and the name menu disagree with the pane: ${JSON.stringify(wide)}`);
     await page.ev(`document.querySelector('[data-pie-setup] [data-tab=music]').click()`);
     const chosen = [['feel', 'jazz'], ['wap', 'cream'], ['steps', 'tiptoe'], ['cues', 'shaped']];
     for (const [key, value] of chosen) {
@@ -511,8 +513,8 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
     await page.waitFor(`document.querySelector('.pie-setup-steps')`);
-    const jump = await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); return { shown: Boolean(s?.offsetParent), sections: s?.options.length || 0 }; })()`);
-    if (!jump.shown || jump.sections < 8) throw new Error(`the phone has no complete Setup section menu: ${JSON.stringify(jump)}`);
+    const jump = await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); const words = document.querySelector('.pie-setup-tab-words')?.getBoundingClientRect(); return { shown: Boolean(s?.offsetParent), tabs: Boolean(document.querySelector('.pie-setup-tab')?.offsetParent), sections: s?.options.length || 0, wordsHidden: !words || (words.width < 2 && words.height < 2) }; })()`);
+    if (!jump.shown || !jump.tabs || jump.sections < 8 || !jump.wordsHidden) throw new Error(`the phone Setup wants icon tabs and a named menu: ${JSON.stringify(jump)}`);
     const walked = await page.ev(`(async () => { const seen = []; for (let i = 0; i < 12; i += 1) { const tab = document.querySelector('[data-pie-setup] [aria-selected=true]')?.dataset.tab; seen.push(tab); const next = document.querySelector('.pie-setup-step.is-on'); if (!next) break; next.click(); await new Promise((r) => setTimeout(r, 60)); } return seen; })()`);
     if (walked.length < 6 || walked[walked.length - 1] !== 'guide' || new Set(walked).size !== walked.length) throw new Error(`the steps did not walk Setup once through: ${walked.join(' > ')}`);
     const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1')).view.setupTab`);
@@ -522,6 +524,10 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup] [aria-selected=true]')`);
     const reopened = await page.ev(`document.querySelector('[data-pie-setup] [aria-selected=true]').dataset.tab`);
     if (reopened !== 'guide') throw new Error(`Setup reopened at ${reopened}, not where it was left`);
+    await page.ev(`document.querySelector('[data-pie-setup] [data-tab=layouts]').click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-board-line')`);
+    const named = await page.ev(`document.querySelector('.pie-setup-jump').value`);
+    if (named !== 'layouts') throw new Error(`the name menu did not follow the tab (${named})`);
   }],
   ['game and music tuning is reachable on a phone, kept across a visit, and reset with Setup', async (page) => {
     await page.setViewport(390, 844, { mobile: true });
