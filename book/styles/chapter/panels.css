@@ -31,11 +31,23 @@
   --spw-panel-shadow: 0 14px 26px color-mix(in srgb, var(--theme-accent-main) 14%, transparent 86%);
   --spw-control-height: 2rem;
   --spw-focus-ring: color-mix(in srgb, var(--theme-accent-main) 60%, transparent 40%);
-  --chapter-reading-measure: 66ch;
-  --chapter-reading-line-height: 1.68;
-  --chapter-reading-gap: 0.84rem;
+  --chapter-reading-measure: 68ch;
+  --chapter-reading-line-height: 1.72;
+  --chapter-reading-gap: 0.9rem;
   --chapter-reading-accent: color-mix(in srgb, var(--theme-accent-main) 52%, var(--theme-paper) 48%);
   --chapter-reading-ink: color-mix(in srgb, var(--theme-text-main) 88%, #0b1627 12%);
+
+  /* ─── Panel island interaction tokens ─────────────────────────────── */
+  /* Engaged: when a panel is the active focus (is-ebook-active, hover, being dragged). */
+  --panel-island-lift: -3px;
+  --panel-island-lift-drag: -6px;
+  --panel-island-shadow-engaged:
+    inset 4px 0 0 color-mix(in srgb, var(--theme-accent-main) 72%, transparent 28%),
+    0 8px 28px color-mix(in srgb, var(--theme-accent-main) 18%, transparent 82%),
+    0 0 0 1px color-mix(in srgb, var(--theme-accent-main) 18%, transparent 82%);
+  --panel-island-shadow-drag:
+    0 18px 44px color-mix(in srgb, var(--theme-accent-main) 28%, transparent 72%),
+    0 0 0 2px color-mix(in srgb, var(--color-gold, #c4922e) 55%, transparent 45%);
 }
 
 body>nav.chapter-navigation,

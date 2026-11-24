@@ -12,9 +12,22 @@ main.chapter>[data-ebook-section="true"] {
   /* Skip layout/paint for far offscreen sections while reading */
   content-visibility: auto;
   contain-intrinsic-size: auto 28rem;
+  cursor: grab;
   transition:
     background-color var(--transition-duration) var(--transition-function),
-    box-shadow var(--transition-duration) var(--transition-function);
+    box-shadow var(--transition-duration) var(--transition-function),
+    transform var(--transition-duration) var(--transition-function);
+}
+
+main.chapter>[data-ebook-section="true"]:hover {
+  box-shadow: var(--panel-island-shadow-engaged, 0 4px 18px rgba(0, 0, 0, 0.08));
+  transform: var(--panel-island-lift, translateY(-2px));
+}
+
+main.chapter>[data-ebook-section="true"][data-swipe-lean] {
+  cursor: grabbing;
+  box-shadow: var(--panel-island-shadow-drag, 0 14px 34px rgba(0, 0, 0, 0.16));
+  transform: var(--panel-island-lift-drag, translateY(-4px) scale(1.01));
 }
 
 main.chapter>[data-ebook-section="true"]:first-of-type {
@@ -57,6 +70,7 @@ main.chapter>[data-ebook-section="true"]>h2::before {
 
 main.chapter>[data-ebook-section="true"].is-ebook-active {
   box-shadow:
+    var(--panel-island-shadow-engaged, 0 8px 24px rgba(0, 0, 0, 0.08)),
     inset 3px 0 0 color-mix(in srgb, var(--theme-accent-main) 56%, transparent 44%),
     0 4px 20px color-mix(in srgb, var(--theme-accent-main) 10%, transparent 90%),
     0 0 2.2rem color-mix(in srgb, var(--color-gold, #c4922e) calc(var(--heat, 0) * 18%), transparent);
@@ -67,7 +81,7 @@ main.chapter>[data-ebook-section="true"].is-ebook-active {
       transparent 62%
     ),
     color-mix(in srgb, var(--theme-paper) 86%, rgba(42, 111, 127, 0.14) 14%);
-  transform: translateY(-0.5px);
+  transform: var(--panel-island-lift, translateY(-2px));
   z-index: 2;
   transition:
     background-color var(--transition-duration) var(--transition-function),

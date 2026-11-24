@@ -227,7 +227,7 @@ html[data-packing='compact'] .wonder-cabinet-head { flex-direction: column; alig
  * and gives every band the same edge, with prose held to its own measure.
  */
 body[data-surface='monument'] {
-  --hub-display: Georgia, 'Times New Roman', serif;
+  --hub-display: var(--font-family-display, Georgia, 'Times New Roman', serif);
   --hub-band-gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 

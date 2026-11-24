@@ -202,6 +202,9 @@ import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modu
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_16.B';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
+import { sceneVector, handleOf } from './pie/tune/scene.mjs';
+import { teachLine, handsLine, leanSentence, jokeOf, nudgeLine } from './pie/menu/teach.mjs';
+import { thresholdBranch } from './pie/story/thresholds.mjs';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
 import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_13.B';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
@@ -541,9 +544,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const mimesOn = () => switchOn('mimes-remember');
   const mimeGrudge = () => grudgeOf(record.mimes?.shattered || 0);
   /* Five shelves (valence-shelves.mjs, .spw/surfaces/shelves.spw), a trial: boon, bane, bone, bonk and honk, weighed from
-   * how the reader tuned the genre dial (the nook's genre, boon/bane/bone; bonk and honk even), what this carry has done,
-   * and nothing else. Each room the vector is taken again, a shelf held three rooms sets a motivation going, and Mr.
-   * BaneWAP's scheme is drawn from odds the shelves tilt. */
+   * how the reader tuned the genre dial (the nook's genre, boon/bane/bone; bonk and honk even), the semantic handles
+   * they chose in Setup (pie/tune/scene.mjs: a jazz feel leans honk, felt steps lean bane), and what this carry has done.
+   * Each room the vector is taken again, a shelf held three rooms sets a motivation going, and Mr.
+   * BaneWAP's scheme is drawn from odds the shelves tilt. A shelf that crosses the line also opens the character's
+   * misreading of that motive (pie/story/thresholds.mjs), once a shelf a carry. */
+  // Default on, including a resolved map saved before this switch existed. An explicit off is kept.
+  const teachOn = () => {
+    if (triedHere.includes('teach-menu')) return true;
+    if (!switchValues) { try { switchValues = JSON.parse(localStorage.getItem('lore.switches.v1') || 'null')?.resolved || {}; } catch { switchValues = {}; } }
+    if (!Object.prototype.hasOwnProperty.call(switchValues, 'teach-menu')) return true;
+    return switchValues['teach-menu'] === 'on';
+  };
   const shelvesOn = () => switchOn('shelves');
   // Anthills (pie-ants.mjs), a trial: the torch-ants' hills by the road, their gossip, and their gifts to the crows.
   const anthillsOn = () => switchOn('anthills');
@@ -574,14 +586,24 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const shelfTuning = () => {
     try {
       const g = JSON.parse(localStorage.getItem('lore.nook.v1') || 'null')?.genre || {};
-      return { boon: Number(g.boon) || 1, bane: Number(g.bane) || 1, bone: Number(g.bone) || 1, bonk: 1, honk: 1 };
-    } catch { return {}; }
+      return sceneVector(record.view || {}, g);
+    } catch { return sceneVector(record.view || {}, {}); }
+  };
+  const nudgeFor = (shelf) => {
+    const view = record.view || {};
+    for (const [key, value] of Object.entries(view)) {
+      if (handleOf(key, value)?.shelf === shelf) {
+        const nudge = nudgeLine(key, value);
+        if (nudge) return nudge;
+      }
+    }
+    return '';
   };
   /* A chain's link acts out its Spw edge with what the lanes already have (valence-shelves.mjs CHAINS), and the edge
    * is shown as it acts: boon brings Mr. BoonWAP to court and the clowns flock; bane makes the next scheme a march; bone
    * measures the road; bonk puts glass ahead, then imaginary glass; honk sounds an echo, and then a rhythm to keep. */
   const CHAIN_VOICE = { boon: 'boon', bane: 'bane', bone: 'wonder', bonk: 'flour', honk: 'wonder' };
-  function actOutChain(fired) {
+  function actOutChain(fired, branch = null) {
     const open = [...Array(LANES).keys()].filter((l) => l !== run.safe);
     const ahead = (kind, lane = pick(open)) => { const t = makeThing(kind, lane); t.y = -60; run.things.push(t); return t; };
     const pair = () => { const l = pick(open.filter((x) => x + 1 < LANES && x + 1 !== run.safe)); return l == null ? null : [l, l + 1]; };
@@ -609,8 +631,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (link >= 1 || fired.complete) showToast('Something here keeps time', 'Listen for it. Step, hop or throw along with it, and it is yours.', 3400, 'wonder', 1, 'note');
     }
     run.tags.push({ x: W / 2, y: PRESENCE_Y + 28, t: 0, text: fired.line });
-    showToast(`${fired.shelf} · ${fired.says}`, `${fired.line}${fired.complete ? ' That chain is complete.' : ''}`, 3400, CHAIN_VOICE[fired.shelf] || '', fired.complete ? 2 : 1, 'chain');
-    say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? '. That chain is complete.' : '.'}`);
+    const myopia = branch && branch.shelf === fired.shelf ? ` ${branch.aside}` : '';
+    showToast(`${fired.shelf} · ${fired.says}`, `${fired.line}${fired.complete ? ' That chain is complete.' : ''}${myopia}`, myopia ? 4600 : 3400, CHAIN_VOICE[fired.shelf] || '', fired.complete ? 2 : 1, 'chain');
+    say(`The ${fired.shelf} shelf: ${fired.says}${fired.complete ? '. That chain is complete.' : '.'}${myopia}`);
     chainSting(fired.shelf, { complete: fired.complete });
     // The link colours the phrase until the shelf lets go, or until the chain completes and the cadence answers it.
     run.motivation = fired.complete ? '' : fired.invokes;
@@ -1703,9 +1726,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     if (run && state === 'running' && shelvesOn()) {
       const stepped = chainStep(run.chains || chainStart(), run.shelfV);
       run.chains = stepped.state;
+      run.shelvesSaid = run.shelvesSaid || [];
+      const branch = thresholdBranch(run.shelfV, run.shelvesSaid);
+      if (branch) {
+        run.shelvesSaid.push(branch.shelf);
+        const nudge = nudgeFor(branch.shelf);
+        if (nudge) branch.aside = `${branch.aside} What warmed it: ${nudge}.`;
+      }
       const fired = stepped.fired[0];
-      if (fired) actOutChain(fired);
-      else if (run.motivation) {
+      if (fired) actOutChain(fired, branch);
+      if (branch && branch.shelf !== fired?.shelf) {
+        run.tags.push({ x: W / 2, y: PRESENCE_Y + 44, t: 0, text: branch.toward });
+        showToast(`${branch.shelf} · what they notice`, branch.aside, 4200, CHAIN_VOICE[branch.shelf] || '', 1, 'chain');
+        say(`${branch.aside} ${branch.toward}`);
+      }
+      else if (!fired && run.motivation) {
         const shelf = Object.entries(CHAINS).find(([, links]) => links.some((link) => link.invokes === run.motivation))?.[0];
         if (!shelf || !(run.shelfV?.[shelf] >= 0.3)) run.motivation = '';
       }
@@ -9766,6 +9801,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         b.type = 'button';
         b.dataset.key = key;
         b.dataset.value = String(value);
+        const about = teachLine(key, value);
+        if (about) {
+          b.title = about;
+          b.setAttribute('aria-description', about);
+        }
         b.setAttribute('aria-pressed', String(current) === String(value) ? 'true' : 'false');
         b.addEventListener('click', () => {
           // A placement chosen by hand is a choice to arrange the panels by hand.
@@ -9794,10 +9834,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
           }
           paintSetup();
           requestAnimationFrame(placeSetup);   // the controls may have moved under it
+          if (teachOn()) {
+            const joke = jokeOf(key, value);
+            if (joke) say(joke.teach);
+          }
         });
         opts.append(b);
       });
       row.append(opts);
+      if (teachOn()) {
+        const lesson = teachLine(key, current);
+        if (lesson) row.append(nodeOf('p', 'pie-setup-teach', lesson));
+      }
       return row;
     });
     const rowOf = new Map(SETUP.map(([key], i) => [key, rows[i]]));
@@ -9868,9 +9916,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         input.dataset.domain = domId;
         input.dataset.dial = dialKey;
         input.setAttribute('aria-description', spec.says);
+        input.setAttribute('aria-valuetext', `${spec.label}, ${Math.round(curVal * 100)} percent. ${spec.says}`);
         input.addEventListener('input', () => {
           const value = Number(input.value);
           valSpan.textContent = `${Math.round(value * 100)}%`;
+          input.setAttribute('aria-valuetext', `${spec.label}, ${Math.round(value * 100)} percent. ${spec.says}`);
           const next = { ...effectiveDomain(domId, savedTuningDomains), [dialKey]: value };
           savedTuningDomains = { ...savedTuningDomains, [domId]: next };
           tuningDomains = { ...tuningDomains, [domId]: next };
@@ -9930,6 +9980,18 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         });
         readout.append(readoutText, auditionBtn);
         parts.push(readout);
+      }
+      if (teachOn() && id === 'music') {
+        let genre = {};
+        try { genre = JSON.parse(localStorage.getItem('lore.nook.v1') || 'null')?.genre || {}; } catch { genre = {}; }
+        parts.push(nodeOf('p', 'pie-setup-teach', leanSentence(record.view || {}, genre)));
+      }
+      if (teachOn() && id === 'touch') {
+        parts.push(nodeOf('p', 'pie-setup-teach', handsLine({
+          tap: currentOf('tap'),
+          doubleTap: currentOf('doubleTap'),
+          swipeUp: currentOf('swipeUp')
+        })));
       }
       parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
       if (id === 'music') {

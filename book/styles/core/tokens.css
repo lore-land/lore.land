@@ -167,6 +167,8 @@
   --color-hover-bg: var(--hover-bg-color);
 
   --font-family-heading: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
+  /* Display serif: used for chapter titles, section h2s, and narrative hierarchy. */
+  --font-family-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --font-family-body: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --font-family-mono: "JetBrainsMono", "IBM Plex Mono", "Fira Code", monospace;
   --font-size-body: 1.08rem;
@@ -177,7 +179,7 @@
   --font-size-h2-mobile: 1.35rem;
   --font-size-caption: 0.96rem;
   --font-size-button: 1rem;
-  --line-height-main: 1.7;
+  --line-height-main: 1.72;
 
   --spacing-extra-small: 0.5rem;
   --spacing-small: 0.8rem;

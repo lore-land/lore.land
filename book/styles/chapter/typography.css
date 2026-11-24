@@ -33,11 +33,13 @@
   .chapter h1,
   .chapter h2,
   .chapter h3 {
+    font-family: var(--font-family-display, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif);
     color: var(--color-text-main);
     font-size-adjust: from-font;
   }
 
   .chapter h1 {
+    font-family: var(--font-family-display, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif);
     font-size: clamp(2.6rem, 5.5vw, 4rem);
     line-height: 1.05;
     margin-bottom: var(--spacing-large);
@@ -327,6 +329,7 @@
   }
 
   .chapter h2 {
+    font-family: var(--font-family-display, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif);
     font-size: clamp(1.5rem, 3vw, 2rem);
     margin-top: calc(var(--spacing-large) * 1.6);
     margin-bottom: var(--spacing-medium);

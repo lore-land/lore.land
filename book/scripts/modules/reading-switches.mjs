@@ -262,6 +262,13 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'off', new: 'on' }
   },
   {
+    id: 'teach-menu', attribute: 'data-switch-teach-menu', stage: 'trial', layer: 'reader', label: 'Setup teaches the choice',
+    hint: 'Each option in Setup says what it leans, which joke it unlocks, and what your hands just agreed to. A long press says the line either way.',
+    effect: { on: 'The chosen option says what it leans and which joke it keeps.', off: 'The options keep their names. A long press still says the line.' },
+    region: '.pie-setup',
+    defaults: { returning: 'on', new: 'on' }
+  },
+  {
     id: 'bias', attribute: 'data-switch-bias', stage: 'trial', layer: 'trial', label: 'Answers in a register',
     hint: 'The small answers (a pop in the lanes, a notice, the receipt that says what changed) now and then come back in a meme register, cast as a spell: POV, plot twist, core memory unlocked. On, it casts the house register of the day; a link with ?bias=pov casts another for the visit. One register at a time is always free; layering several is a trial for now. The story keeps every word of its own.',
     effect: { on: 'Now and then the land answers in a register; the story keeps its own words.', off: 'Every answer is plain again; nothing you kept has changed.' },

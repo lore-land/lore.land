@@ -159,21 +159,22 @@ body[data-surface='monument'] .pie-main {
 
 .pie-flow-para {
   max-width: 34rem;
-  padding: 0.25rem 0.55rem 0.25rem 0.7rem;
+  padding: 0.3rem 0.6rem 0.3rem 0.75rem;
   border-left: 2px solid transparent;
   border-radius: 0 0.4rem 0.4rem 0;
   font-family: var(--font-family-body, Georgia, serif);
-  font-size: calc(0.9rem * var(--flow-scale, 1));
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--hub-ink) 66%, transparent);
-  transition: color 400ms ease, border-color 400ms ease, background-color 400ms ease;
+  font-size: calc(0.98rem * var(--flow-scale, 1));
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--hub-ink) 78%, transparent);
+  transition: color 400ms ease, border-color 400ms ease, background-color 400ms ease, font-size 200ms ease;
 }
 
 .pie-flow-para.is-passing {
-  border-left-color: var(--hub-gold);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--hub-gold) 11%, transparent), transparent 85%);
+  border-left: 3px solid var(--hub-gold);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--hub-gold) 14%, transparent), transparent 85%);
   color: var(--hub-ink);
-  font-size: calc(0.94rem * var(--flow-scale, 1));
+  font-size: calc(1.06rem * var(--flow-scale, 1));
+  box-shadow: -2px 0 10px color-mix(in srgb, var(--hub-gold) 35%, transparent);
 }
 
 /* A wonder's own words in the passage: they light while it waits up the lanes, and stay lit once kept. */
@@ -201,7 +202,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-flow-voice {
-  display: block;
+  display: none !important; /* Voice label removed to prevent redundancy and keep story flow immersion intact */
   margin-bottom: 0.15rem;
   font-family: var(--font-family-heading, monospace);
   font-size: 0.6rem;
@@ -560,6 +561,7 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-step {
+  min-height: 44px;
   padding: 0.68rem 0.45rem;
   border: 1px solid var(--hub-line);
   border-radius: 0.7rem;
@@ -571,7 +573,9 @@ body[data-surface='monument'] .pie-main {
   font-size: 0.84rem;
   letter-spacing: 0.04em;
   touch-action: manipulation;
-  transition: border-color 160ms ease, background-color 160ms ease, transform 100ms ease;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 100ms ease, box-shadow 100ms ease;
 }
 
 .pie-step:hover,
@@ -580,8 +584,10 @@ body[data-surface='monument'] .pie-main {
 }
 
 .pie-step:active {
-  background: color-mix(in srgb, var(--hub-gold) 20%, transparent);
-  transform: translateY(1px);
+  background: color-mix(in srgb, var(--hub-gold) 28%, transparent);
+  transform: translateY(2px) scale(0.97);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--hub-gold) 50%, transparent);
+  transition-duration: 40ms;
 }
 
 .pie-jump {
@@ -2198,6 +2204,8 @@ html.pie-immersive {
   font-family: var(--font-family-heading, monospace);
   touch-action: none;
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
   transition: transform 90ms ease, box-shadow 90ms ease;
 }
 
@@ -2215,8 +2223,9 @@ html.pie-immersive {
 
 .pie-thumb:active,
   .pie-thumb.is-aiming {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent);
+  transform: translateY(2px) scale(0.96);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--thumb-edge) 60%, transparent), 0 0 14px color-mix(in srgb, var(--hub-gold) 40%, transparent);
+  transition-duration: 40ms;
 }
 
 .pie-thumb-throw {
@@ -4229,19 +4238,20 @@ html:not([data-chrome-hidden='true']) .pie-index {
 .pie-grip {
   /* Hung on the cabinet's corner, outside its buttons, so it never takes a tap meant for one. */
   position: absolute;
-  right: -0.55rem;
-  bottom: -0.55rem;
+  right: -0.85rem;
+  bottom: -0.85rem;
   z-index: 3;
   display: grid;
   place-items: center;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
   padding: 0;
   border: 1px solid var(--hub-line);
   border-radius: 50%;
   background: var(--hub-panel);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
   color: color-mix(in srgb, var(--hub-ink) 55%, transparent);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   line-height: 1;
   cursor: nwse-resize;
   touch-action: none;
@@ -4252,6 +4262,7 @@ html:not([data-chrome-hidden='true']) .pie-index {
   outline: none;
   background: color-mix(in srgb, var(--hub-gold) 22%, transparent);
   color: var(--hub-ink);
+  transform: scale(1.08);
 }
 
 .pie-strip-grip {
@@ -5424,16 +5435,24 @@ html.pie-settling .pie-voyage {
     column-gap: 0.7rem;
   }
 
-  .pie-setup-why {
+  .pie-setup-why,
+  .pie-setup-teach {
     grid-column: 2;
   }
 }
 
-.pie-setup-why {
+.pie-setup-why,
+.pie-setup-teach {
   margin: 0;
   font-size: 0.76rem;
+  line-height: 1.35;
   font-style: italic;
   color: var(--hub-muted);
+}
+
+.pie-setup-teach {
+  flex: 1 1 100%;
+  margin-top: 0.15rem;
 }
 
 .pie-setup-resting {
