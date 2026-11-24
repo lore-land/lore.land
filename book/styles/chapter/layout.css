@@ -28,18 +28,13 @@
             border-radius: 0;
             border-left: none;
             border-right: none;
-            --chapter-measure: 100%;
+            --chapter-measure: min(100%, 62ch);
             --chapter-line-height: 1.76;
             --chapter-flow-gap: 0.7rem;
             --chapter-letter-spacing: 0.002em;
             font-size: calc(1rem * var(--reader-scale, 1));
         }
 
-        main.chapter p,
-        main.chapter li,
-        main.chapter blockquote,
-        main.chapter ul,
-        main.chapter ol,
         main.chapter h1,
         main.chapter section>h2,
         .chapter-byline {
