@@ -162,9 +162,9 @@
  *              close, and Mr. BoonWAP mimes rather than speaks. Finish a chapter with them ahead
  *              and they hold it — its pie words go quiet on the page too — until a carry
  *              through it out-does them again.
- *   ?chapter=  1–15: start the carry there. ?scene= (a door from a chapter) starts it in that
- *              door's chapter; ?from= remembers where the reader found the game, to send them
- *              back (pie-segues.mjs). Found from a chapter page, the carry starts there.
+ *   ?chapter=  1–15: start the carry there. ?scene= (a door) starts in the chapter named
+ *              by ?from= when that chapter has the scene, otherwise the scene's home
+ *              chapter. ?from= also sends the reader back (pie-segues.mjs).
  *
  * Drawn on a canvas in the page's own colours (the reader's binding: --hub-*),
  * except the figure, who is always the same plain ink drawing. He is never named
@@ -950,10 +950,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       const q = new URLSearchParams(window.location.search);
       const asked = Number(q.get('chapter'));
       if (asked >= 1 && asked <= TOTAL_CHAPTERS) return asked;
-      const segue = segueFor(q.get('scene'));
+      const came = q.get('from') || document.referrer || '';
+      const segue = segueFor(q.get('scene'), came);
       if (segue) return segue.chapter;
-      const came = /\/book\/chapter\/(\d{2})\//.exec(q.get('from') || document.referrer || '');
-      if (came) return Number(came[1]);
+      const chapter = /\/book\/chapter\/(\d{2})\//.exec(came);
+      if (chapter) return Number(chapter[1]);
     } catch { /* from the beginning */ }
     return 1;
   })();
@@ -1011,6 +1012,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     wonderQueue: [],
     pendingWonder: null,
     kept: 0,
+    eggs: 0,
     shared: 0,
     sweetened: 0,
     row: 0,
@@ -1312,6 +1314,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   });
   const CAST_KEY = 'lore.rooms.cast.v1';
   const readCasts = () => { try { return JSON.parse(window.localStorage.getItem(CAST_KEY) || '{}') || {}; } catch { return {}; } };
+  /* The page's anchor for a room: its own id, or the build's slug of its title. */
+  const roomAnchor = (para) => para?.id || (para?.title ? para.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '');
   /* The room passing now: its number, signature, sigil, how far through it the carry is, and the next one. */
   function roomNow() {
     const at = passing();
@@ -1326,7 +1330,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     const within = clamp(progress() * n - first, 0, span) / span;
     const nextPara = leg.paras.slice(last + 1).find((p) => p.room);
     // The page gives a titled room an anchor from its title (the build's slug), when it has no id of its own.
-    const anchor = para.id || (para.title ? para.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : null);
+    const anchor = roomAnchor(para);
     return { chapter: leg.n, n: para.roomNo, sig: para.room, sigil: para.room.charAt(0), title: para.title, id: anchor, within, next: nextPara ? nextPara.room.charAt(0) : null };
   }
   const roomRef = () => { const r = roomNow(); return r ? { chapter: r.chapter, n: r.n, sig: r.sig, sigil: r.sigil, id: r.id } : null; };
@@ -3492,6 +3496,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.wobble = Math.max(0, run.wobble - 0.1 * Math.min(run.combo, 4));
       if (run.combo >= 3) run.sliceReady = 1;
       run.bestCombo = Math.max(run.bestCombo || 0, run.combo);
+      if (run.combo === 3 || run.combo === 5) {
+        if (record.sound && themesOn()) sfx('theme_flourish', { who: run.carrier?.id || 'boof', event: 'combo' });
+      }
     }
     if (missing) {
       // A thin pie, and the clown is satisfied anyway: it counts once, never twice.
@@ -3894,15 +3901,21 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     out.replaceChildren(nodeOf('span', 'pie-card-next-head', 'Next'), make(first, true), ...rest.slice(0, 1).map((t) => make(t, false)));
     out.hidden = false;
   }
+  const carryNote = (path, place, source) => ({
+    path,
+    place,
+    cobbles: source?.cobbles ?? null,
+    waps: source?.waps || 0,
+    carrier: source?.carrier || null,
+    wonders: source?.kept || 0,
+    eggs: source?.eggs || 0
+  });
   const goBack = () => {
     if (!from) return;
-    leaveBackNote({
-      path: from,
-      place: lastCarry ? chapterWords(lastCarry.chapter) : null,
-      cobbles: lastCarry?.cobbles ?? null,
-      waps: lastCarry?.waps || 0,
-      carrier: lastCarry?.carrier || null
-    });
+    const live = state === 'running' && run;
+    leaveBackNote(carryNote(from, live ? chapterWords(run.chapter) : (lastCarry ? chapterWords(lastCarry.chapter) : null), live
+      ? { cobbles: null, waps: run.waps, carrier: run.carrier?.name || null, kept: run.kept, eggs: run.eggs }
+      : lastCarry));
   };
   if (returnLink && from) {
     returnLink.href = from;
@@ -3986,7 +3999,8 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       else if (lower[i].includes('banewap')) para.cue = 'bane';
     });
     SEGUES.filter((segue) => segue.chapter === n).forEach((segue) => {
-      const i = segue.anchor ? paras.findIndex((para) => para.id === segue.anchor) : lower.findIndex((text) => text.includes(plain(segue.find)));
+      const titled = (para) => roomAnchor({ title: para.title });
+      const i = segue.anchor ? paras.findIndex((para) => para.id === segue.anchor || titled(para) === segue.anchor) : lower.findIndex((text) => text.includes(plain(segue.find)));
       if (i >= 0) paras[i].scene = segue.scene;
     });
     SIGHTINGS.filter((s) => s.chapter === n && s.phrase).forEach((s) => {
@@ -4298,7 +4312,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     metAt('spill');
     if (run.waps > 0) metAt('plates');
     const at = passing();
-    lastCarry = { scene: run.sceneId, chapter: run.chapter, href: at ? passageHref(at) : `/book/chapter/${pad2(run.chapter)}/`, cobbles: distance, waps: run.waps, carrier: run.carrier.name };
+    lastCarry = { scene: run.sceneId, chapter: run.chapter, href: at ? passageHref(at) : `/book/chapter/${pad2(run.chapter)}/`, cobbles: distance, waps: run.waps, carrier: run.carrier.name, kept: run.kept || 0, eggs: run.eggs || 0 };
     const best = distance > record.best;
     if (best) record.best = distance;
     writeRecord(record);
@@ -4354,7 +4368,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         read.href = lastCarry.href;
         read.className = 'pie-card-link';
         read.textContent = `Read where it spilled, in ${chapterWords(lastCarry.chapter)} →`;
-        read.addEventListener('click', () => leaveBackNote({ path: lastCarry.href, place: chapterWords(lastCarry.chapter), cobbles: distance, waps: run.waps, carrier: run.carrier.name }));
+        read.addEventListener('click', () => leaveBackNote(carryNote(lastCarry.href, chapterWords(lastCarry.chapter), { cobbles: distance, waps: run.waps, carrier: run.carrier.name, kept: run.kept, eggs: run.eggs })));
         links.push(read);
       }
       if (run.outcomes.length) {
@@ -4798,9 +4812,14 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.shield = true;
     lean('egg');
     sfx('egg');
+    sfx('easter_egg', 'egg_warmth');
     spawnRing(thing.x, thing.y, 40, '#f0ad58', 0.65);
+    run.eggs = (run.eggs || 0) + 1;
     record.eggs = (record.eggs || 0) + 1;
     writeRecord(record);
+    if (record.eggs >= 3) {
+      sfx('easter_egg', 'shepard');
+    }
     run.tags.push({ x: thing.x, y: thing.y - 34, t: 0, text: 'WARM' });
     // It is not explained. It is only passed, close enough to feel.
     showToast('Something warm, egg-shaped', record.eggs === 1 ? 'You did not take it. You are warmer anyway.' : 'It was there again. You did not take it this time either.', 3600, 'egg');
@@ -4813,6 +4832,36 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const flowTitle = document.querySelector('[data-pie-flow-title]');
   const flowWonders = document.querySelector('[data-pie-flow-wonders]');
   const flowKept = document.querySelector('[data-pie-flow-kept]');
+  let titleTaps = 0;
+  let titleTapTimer = null;
+  if (flowTitle) {
+    flowTitle.addEventListener('click', () => {
+      titleTaps += 1;
+      clearTimeout(titleTapTimer);
+      titleTapTimer = setTimeout(() => { titleTaps = 0; }, 1200);
+      if (titleTaps >= 3) {
+        titleTaps = 0;
+        sfx('easter_egg', 'pi');
+        showToast('The 1pi(e) prophecy', '3.141592653589793… sung in key', 3400, 'flour');
+      }
+    });
+  }
+  let wondersTaps = 0;
+  let wondersTapTimer = null;
+  if (flowWonders) {
+    flowWonders.addEventListener('click', (e) => {
+      if (e.target.closest('.pie-flow-wonder.is-quiet')) {
+        wondersTaps += 1;
+        clearTimeout(wondersTapTimer);
+        wondersTapTimer = setTimeout(() => { wondersTaps = 0; }, 1200);
+        if (wondersTaps >= 3) {
+          wondersTaps = 0;
+          sfx('easter_egg', 'golden');
+          showToast('Remainder moths', 'Phi golden spiral round the flame', 3400, 'wonder');
+        }
+      }
+    });
+  }
   let flowAt = -1;
   let flowShift = null;
   let flowMeasure = [];
@@ -12245,7 +12294,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   paintSound();
   // Found in the story? Say where the carry begins: the book goes by, chapter by chapter, from there.
   const entry = (() => {
-    try { return segueFor(new URLSearchParams(window.location.search).get('scene')); } catch { return null; }
+    try {
+      const scene = new URLSearchParams(window.location.search).get('scene');
+      const segue = segueFor(scene, from);
+      return segue && segue.chapter === firstChapter ? segue : null;
+    } catch { return null; }
   })();
   paintCardArt(firstChapter);
   showCard('Someone is destined to spill exactly one pie.',

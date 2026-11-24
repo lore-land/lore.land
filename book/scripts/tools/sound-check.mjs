@@ -447,6 +447,24 @@ const notes = [];
   });
   sound.playTone('wonder', { kind: 'saying', spw: '#saying[c01]{ "hello" }' });
   sound.playTone('story_word', { deg: 2 });
+  // Audio easter eggs and character theme flourishes: mathematical prophecies, golden spirals, infinite sliver tin, and theme responses.
+  ['pi', 'golden', 'shepard', 'egg_warmth', 'boof_perk', 'genie_wish'].forEach((kind) => {
+    const egg = sound.easterEggPlan(kind);
+    if (!egg.notes.length || egg.notes.some((n) => !Number.isFinite(n.vol) || n.vol <= 0 || n.vol > 0.045)) {
+      fail(`easterEggPlan(${kind}) failed or volume out of bounds`);
+    }
+  });
+  if (sound.easterEggPlan('pi').notes.length !== 16) fail('easterEggPlan(pi) does not have 16 prophecy digits');
+  if (sound.easterEggPlan('golden').notes.length !== 8) fail('easterEggPlan(golden) does not have 8 golden spiral steps');
+  if (sound.easterEggPlan('shepard').notes.length !== 6) fail('easterEggPlan(shepard) does not have 6 partials');
+  ['boof', 'boon', 'bane', 'bonewap', 'genie', 'porter', 'clerk', 'ants', 'figure'].forEach((who) => {
+    const fl = sound.themeFlourishPlan(who);
+    if (!fl.notes.length || fl.notes.some((n) => !Number.isFinite(n.vol) || n.vol <= 0 || n.vol > 0.045)) {
+      fail(`themeFlourishPlan(${who}) failed or volume out of bounds`);
+    }
+  });
+  sound.playTone('easter_egg', 'pi');
+  sound.playTone('theme_flourish', { who: 'boof' });
   // One jazz vocabulary: every lean resolves to a style; gestures stay as written until the lean passes plain jazz.
   Object.entries(sound.JAZZ_LEANS).forEach(([who, style]) => { if (!sound.JAZZ_STYLES[style]) fail(`JAZZ_LEANS.${who} names no style (${style})`); });
   const honk = sound.powerStoryPlan({ acts: ['honk'] }).notes;

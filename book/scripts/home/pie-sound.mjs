@@ -637,7 +637,7 @@ export function setSoundMood({ muffled = false, thin = false } = {}) {
 /* How tired the ear is of each sound: one more each time it plays, halving every HALF_LIFE seconds.
  * The carry's own sounds tire it most (they come constantly); what the land gives, least. */
 const HALF_LIFE = 1.2;
-const TIRES = Object.freeze({ step: 1.3, land: 1, flour: 1, throw: 0.9, hop: 0.7, knock: 0.7, catch: 0.6, deft: 0.6, glass: 0.5, post: 0.5, ramp: 0.5, wap: 0.45, 'land-pulse': 0.35, 'near:berry': 1.6, 'near:boneberry': 1.6, trick: 0.45, power_story: 0.5, story_pass: 1.2, furrow: 0.65, splash: 0.7 });
+const TIRES = Object.freeze({ step: 1.3, land: 1, flour: 1, throw: 0.9, hop: 0.7, knock: 0.7, catch: 0.6, deft: 0.6, glass: 0.5, post: 0.5, ramp: 0.5, wap: 0.45, 'land-pulse': 0.35, 'near:berry': 1.6, 'near:boneberry': 1.6, trick: 0.45, power_story: 0.5, story_pass: 1.2, furrow: 0.65, splash: 0.7, easter_egg: 0.3, theme_flourish: 0.4 });
 const heard = new Map();
 
 /** Hear a sound: how tired the ear already is of it (null: it was just heard, this instant). */
@@ -656,11 +656,12 @@ const AIR = Object.freeze({
   wonder: 0.45, bone: 0.18, foretell: 0.5, fulfil: 0.3, beaver: 0.25, foil: 0.25, egg: 0.6, spill: 0.3,
   haggle: 0.22, coin: 0.35, pocket: 0.14, poise: 0.32, pantry: 0.38, recipe: 0.4,
   rose: 0.45, gift: 0.4, anthill: 0.08, brush: 0.15,
-  trick: 0.28, power_story: 0.36, story_pass: 0.24, furrow: 0.22, splash: 0.14
+  trick: 0.28, power_story: 0.36, story_pass: 0.24, furrow: 0.22, splash: 0.14,
+  easter_egg: 0.52, theme_flourish: 0.38
 });
 
 /* How much of each sound the song's echo repeats: the sung things, a little; the struck things, nothing. */
-const SONG = Object.freeze({ catch: 0.2, deft: 0.14, glass: 0.3, post: 0.2, berry: 0.26, sweet: 0.28, share: 0.2, wonder: 0.34, poise: 0.22, pantry: 0.28, recipe: 0.26, trick: 0.22, power_story: 0.28, story_pass: 0.16, furrow: 0.14 });
+const SONG = Object.freeze({ catch: 0.2, deft: 0.14, glass: 0.3, post: 0.2, berry: 0.26, sweet: 0.28, share: 0.2, wonder: 0.34, poise: 0.22, pantry: 0.28, recipe: 0.26, trick: 0.22, power_story: 0.28, story_pass: 0.16, furrow: 0.14, easter_egg: 0.32, theme_flourish: 0.22 });
 const outletAcoustics = new WeakMap();
 
 /** Render a pure acoustic plan into the shared edge, room and song buses. `kit` renders its distance and side with
@@ -1419,7 +1420,9 @@ export const JAZZ_LEANS = Object.freeze({
   scheme: 'bebop_bite', march: 'bebop_bite', mimes: 'bebop_bite',
   receipt: 'open_quartal', frame: 'open_quartal', dividers: 'open_quartal',
   mimewall: 'altered_dominant', grudge: 'altered_dominant',
-  echo: 'backdoor_cadence', rhythm: 'lydian_court'
+  echo: 'backdoor_cadence', rhythm: 'lydian_court',
+  easter_egg: 'poised_69', theme_flourish: 'lydian_court', egg_warmth: 'lydian_court',
+  pi: 'poised_69', golden: 'lydian_court', shepard: 'open_quartal', boof_perk: 'poised_69', genie_wish: 'lydian_court'
 });
 /* Where a fired link leans the next bar: bonk into bane's semitone, honk into boon, bone putting a tension down. */
 const MOTIVATION_FEEDS = Object.freeze({
@@ -2622,6 +2625,212 @@ export function wonderSyntaxPlan(kindOrWonder, { found = true, movement = 'openi
   };
 }
 
+/**
+ * Pure musical plan for audio easter eggs: mathematical prophecies, golden spirals, infinite sliver tin, celestial egg harmonics.
+ * boof_perk and genie_wish are plans the check plays; the lanes call themeFlourishPlan for those two.
+ * @param {string} kind 'pi' | 'golden' | 'shepard' | 'egg_warmth' | 'boof_perk' | 'genie_wish'
+ * @param {{ combo?: number, inTime?: boolean, chapter?: number }} [opts]
+ */
+export function easterEggPlan(kind = 'pi', { combo = 1, inTime = false, chapter = 1 } = {}) {
+  const PI_DIGITS = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3];
+  switch (kind) {
+    case 'pi': {
+      // The Prophecy of 1pi(e): digits of pi mapped musically to pentatonic scale degrees with jazz swing
+      const notes = PI_DIGITS.map((d, i) => {
+        const deg = d % 5;
+        const octave = d >= 5 ? 12 : 0;
+        const swing = i % 2 === 1 ? 0.024 : 0;
+        return {
+          voice: i % 2 === 0 ? 'musicBox' : 'celesta',
+          deg,
+          octave: octave + 12,
+          at: i * 0.09 + swing,
+          dur: 0.14,
+          vol: 0.022,
+          side: Number((((i % 4) - 1.5) * 0.12).toFixed(2))
+        };
+      });
+      return { kind: 'pi', role: 'easter_egg', lean: 'poised_69', notes };
+    }
+    case 'golden': {
+      // Remainder Moths Golden Ratio Spiral: 8 steps at frac(n * phi), stepping across the stereo field
+      const phi = 0.61803398875;
+      const notes = Array.from({ length: 8 }, (_, i) => {
+        const pos = (i * phi) % 1;
+        const deg = Math.floor(pos * 5);
+        const pan = (pos - 0.5) * 1.5;
+        return {
+          voice: i % 3 === 0 ? 'celesta' : 'vibes',
+          deg,
+          octave: 12 + (pos > 0.5 ? 7 : 0),
+          at: i * 0.085,
+          dur: 0.22,
+          vol: 0.024,
+          side: Number(pan.toFixed(2))
+        };
+      });
+      return { kind: 'golden', role: 'easter_egg', lean: 'lydian_court', notes };
+    }
+    case 'shepard': {
+      // The Sliver Tin Shepard Tone: 6 octave partials weighted by a bell curve envelope
+      const partials = [-12, 0, 12, 24, 36, 48];
+      const bell = [0.15, 0.45, 0.9, 0.85, 0.4, 0.1];
+      const notes = partials.map((semi, i) => ({
+        voice: 'vibes',
+        deg: 0,
+        octave: 12,
+        semi,
+        at: i * 0.02,
+        dur: 0.65,
+        vol: Number((0.025 * bell[i]).toFixed(4)),
+        side: (i % 2 === 0 ? -1 : 1) * 0.1
+      }));
+      return { kind: 'shepard', role: 'easter_egg', lean: 'open_quartal', notes };
+    }
+    case 'egg_warmth': {
+      // The warm egg celestial overtone chord
+      return {
+        kind: 'egg_warmth',
+        role: 'easter_egg',
+        lean: 'lydian_court',
+        notes: [
+          { voice: 'marimba', deg: 0, octave: 0, at: 0, dur: 0.45, vol: 0.032, side: -0.15 },
+          { voice: 'vibes', deg: 2, octave: 12, at: 0.06, dur: 0.52, vol: 0.026, side: 0.15 },
+          { voice: 'celesta', deg: 4, octave: 12, at: 0.12, dur: 0.58, vol: 0.024, side: 0 },
+          { voice: 'musicBox', deg: 6, octave: 24, at: 0.18, dur: 0.62, vol: 0.02, side: 0.18 }
+        ]
+      };
+    }
+    case 'boof_perk': {
+      // Boof's cheerful tail-wag ear-perk: motif 0-3-2 followed by a bright fifth and whistle
+      return {
+        kind: 'boof_perk',
+        role: 'easter_egg',
+        lean: 'poised_69',
+        notes: [
+          { voice: 'marimba', deg: 0, octave: 12, at: 0, dur: 0.18, vol: 0.03, side: -0.1 },
+          { voice: 'marimba', deg: 3, octave: 12, at: 0.08, dur: 0.22, vol: 0.032, side: 0 },
+          { voice: 'marimba', deg: 2, octave: 12, at: 0.16, dur: 0.26, vol: 0.03, side: 0.1 },
+          { voice: 'celesta', deg: 4, octave: 24, at: 0.26, dur: 0.35, vol: 0.022, side: 0.2 }
+        ]
+      };
+    }
+    case 'genie_wish': {
+      // Genie's pure Pythagorean fifths and comma shimmer
+      return {
+        kind: 'genie_wish',
+        role: 'easter_egg',
+        lean: 'lydian_court',
+        notes: [
+          { voice: 'vibes', deg: 0, octave: 12, at: 0, dur: 0.38, vol: 0.026, side: -0.2 },
+          { voice: 'vibes', deg: 4, octave: 12, at: 0.09, dur: 0.42, vol: 0.024, side: -0.05 },
+          { voice: 'celesta', deg: 1, octave: 24, at: 0.18, dur: 0.48, vol: 0.022, side: 0.1 },
+          { voice: 'celesta', deg: 5, octave: 24, at: 0.28, dur: 0.55, vol: 0.02, side: 0.25 }
+        ]
+      };
+    }
+    default:
+      return {
+        kind: 'pi',
+        role: 'easter_egg',
+        lean: 'poised_69',
+        notes: [{ voice: 'celesta', deg: 3, octave: 12, at: 0, dur: 0.2, vol: 0.025 }]
+      };
+  }
+}
+
+/**
+ * Thematic flourish for a character during gameplay (on combos, high trick vaults, or character milestones).
+ * @param {string} who
+ * @param {string} [event]
+ * @returns {{ who: string, event: string, lean: string, notes: { voice: string, deg?: number, bass?: number, octave?: number, at: number, dur: number, vol: number, side?: number }[] }}
+ */
+export function themeFlourishPlan(who = 'boof', event = 'trick') {
+  const norm = String(who || 'figure').toLowerCase();
+  switch (norm) {
+    case 'boof':
+      return {
+        who: 'boof', event, lean: 'poised_69',
+        notes: [
+          { voice: 'marimba', deg: 0, octave: 12, at: 0, dur: 0.15, vol: 0.028, side: -0.1 },
+          { voice: 'marimba', deg: 3, octave: 12, at: 0.07, dur: 0.18, vol: 0.03, side: 0 },
+          { voice: 'kalimba', deg: 4, octave: 12, at: 0.14, dur: 0.24, vol: 0.024, side: 0.15 }
+        ]
+      };
+    case 'boon':
+    case 'boonwap':
+      return {
+        who: 'boon', event, lean: 'lydian_court',
+        notes: [
+          { voice: 'honk', deg: 0, octave: 12, at: 0, dur: 0.12, vol: 0.032, side: -0.1 },
+          { voice: 'honk', deg: 2, octave: 12, at: 0.06, dur: 0.14, vol: 0.034, side: 0 },
+          { voice: 'celesta', deg: 4, octave: 24, at: 0.12, dur: 0.28, vol: 0.025, side: 0.18 }
+        ]
+      };
+    case 'bane':
+    case 'banewap':
+      return {
+        who: 'bane', event, lean: 'bebop_bite',
+        notes: [
+          { voice: 'honk', deg: 4, octave: 12, at: 0, dur: 0.12, vol: 0.03, side: 0.1 },
+          { voice: 'honk', deg: 2, octave: 12, at: 0.06, dur: 0.14, vol: 0.032, side: 0 },
+          { voice: 'tock', bass: 1, at: 0.12, dur: 0.08, vol: 0.036, side: -0.15 }
+        ]
+      };
+    case 'bonewap':
+      return {
+        who: 'bonewap', event, lean: 'open_quartal',
+        notes: [
+          { voice: 'marimba', deg: 3, octave: 0, at: 0, dur: 0.2, vol: 0.035, side: -0.12 },
+          { voice: 'marimba', deg: 0, octave: 12, at: 0.08, dur: 0.24, vol: 0.035, side: 0.12 }
+        ]
+      };
+    case 'genie':
+      return {
+        who: 'genie', event, lean: 'lydian_court',
+        notes: [
+          { voice: 'vibes', deg: 0, octave: 12, at: 0, dur: 0.32, vol: 0.025, side: -0.15 },
+          { voice: 'celesta', deg: 4, octave: 24, at: 0.09, dur: 0.38, vol: 0.022, side: 0.15 }
+        ]
+      };
+    case 'porter':
+      return {
+        who: 'porter', event, lean: 'backdoor_cadence',
+        notes: [
+          { voice: 'tock', at: 0, dur: 0.05, vol: 0.035 },
+          { voice: 'marimba', deg: 2, octave: 12, at: 0.07, dur: 0.18, vol: 0.028 },
+          { voice: 'tock', at: 0.15, dur: 0.05, vol: 0.035 }
+        ]
+      };
+    case 'clerk':
+      return {
+        who: 'clerk', event, lean: 'bebop_bite',
+        notes: [
+          { voice: 'tock', at: 0, dur: 0.04, vol: 0.032 },
+          { voice: 'tock', at: 0.06, dur: 0.04, vol: 0.034 },
+          { voice: 'marimba', deg: 4, octave: 12, at: 0.13, dur: 0.22, vol: 0.03, side: 0.12 }
+        ]
+      };
+    case 'ants':
+      return {
+        who: 'ants', event, lean: 'open_quartal',
+        notes: [
+          { voice: 'marimba', deg: 0, octave: 12, at: 0, dur: 0.14, vol: 0.025, side: -0.15 },
+          { voice: 'marimba', deg: 2, octave: 12, at: 0.05, dur: 0.16, vol: 0.025, side: 0 },
+          { voice: 'marimba', deg: 4, octave: 12, at: 0.1, dur: 0.2, vol: 0.025, side: 0.15 }
+        ]
+      };
+    default:
+      return {
+        who: 'figure', event, lean: 'poised_69',
+        notes: [
+          { voice: 'kalimba', deg: 2, octave: 12, at: 0, dur: 0.18, vol: 0.024 },
+          { voice: 'celesta', deg: 4, octave: 12, at: 0.08, dur: 0.22, vol: 0.022 }
+        ]
+      };
+  }
+}
+
 /** Track the carrier's normalized position on the board (lane 0..4, row 0..3) so harmonic movement answers in pitch and stereo. */
 export function setBoardPosition({ lane = 2, row = 0 } = {}) {
   sound.prevLane = sound.lane;
@@ -2844,7 +3053,7 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
     if (heat === null) return;
     const role = ['step', 'climb', 'bump', 'slide'].includes(kind)
       ? 'step'
-      : ['catch', 'deft', 'berry', 'sweet', 'pantry', 'recipe', 'poise', 'aim', 'story_word', 'story_mark', 'story_feed', 'story_ask', 'room_cast', 'trick', 'power_story', 'story_pass', 'furrow'].includes(kind)
+      : ['catch', 'deft', 'berry', 'sweet', 'pantry', 'recipe', 'poise', 'aim', 'story_word', 'story_mark', 'story_feed', 'story_ask', 'room_cast', 'trick', 'power_story', 'story_pass', 'furrow', 'easter_egg', 'theme_flourish'].includes(kind)
         ? 'music'
         : 'fx';
     const kitMap = kit(outlet(heat, { depth, air: AIR[kind] ?? 0.2, song: SONG[kind] || 0, role }), t, pan + jitter(0.04));
@@ -3164,6 +3373,12 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         else if (info.kind === 'frill_catch') hiss(1200, 480, 0.09, 0.024, 1.4);
         // A trick is the carrier's own move: with themes on, it leans the way they do; otherwise the way the trick does.
         renderNotes(plan.notes, info.inTime ? answer : 0, JAZZ_LEANS[sound.carrier] ? sound.carrier : info.kind);
+        if (sound.carrier && (info.chain >= 3 || info.clears >= 2)) {
+          const flourish = themeFlourishPlan(sound.carrier, info.kind);
+          if (flourish?.notes?.length) {
+            renderNotes(flourish.notes, answer + sixteenth() * 2, JAZZ_LEANS[sound.carrier] || 'poised_69');
+          }
+        }
         break;
       }
       // Power-up story signature: scheduled one pulse after pickup so item feel and narrative rule both sound clearly.
@@ -3192,6 +3407,29 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         hiss(1600, 380, 0.14, 0.036, 1.8, 0, 'bandpass', 0.2);
         tone('sine', 210, 82, 0.12, 0.045, 0, { cents: 20 });
         break;
+      // Audio Easter Eggs: mathematical prophecies, golden spirals, infinite sliver tin, celestial egg harmonics, and theme flourishes.
+      case 'easter_egg': {
+        const info = typeof param === 'object' && param ? param : { kind: String(param || 'pi') };
+        const plan = easterEggPlan(info.kind, info);
+        if (plan?.notes?.length) {
+          renderNotes(plan.notes, plan.delay || 0, plan.lean || sound.carrier || 'poised_69');
+        }
+        if (info.kind === 'egg_warmth') {
+          tone('sine', 130.81, 131.2, 0.7, 0.08, 0, { attack: 0.09, cents: 0, side: -0.2 });
+          tone('sine', 196.0, 196.5, 0.7, 0.06, 0.04, { attack: 0.09, cents: 0, side: 0.2 });
+          tone('sine', 317.0, 318.0, 0.6, 0.035, 0.08, { attack: 0.12, cents: 2, side: 0 });
+        }
+        break;
+      }
+      // A character's thematic flourish during play (e.g. on tricks, streaks, or meeting milestones):
+      case 'theme_flourish': {
+        const who = typeof param === 'string' ? param : (param?.who || sound.carrier || 'boof');
+        const plan = themeFlourishPlan(who, param?.event || 'trick');
+        if (plan?.notes?.length) {
+          renderNotes(plan.notes, answer, JAZZ_LEANS[who] || 'poised_69');
+        }
+        break;
+      }
       default: break;
     }
     if (WORTH[kind]) swellPad(t, WORTH[kind]);

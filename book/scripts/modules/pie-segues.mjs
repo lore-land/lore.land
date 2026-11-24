@@ -9,11 +9,15 @@
  * to the very section the reader left — where a small note says how the
  * carry went.
  *
- *   gate    the parcel gate, in a storm          Chapter Fifteen  #the-parcel-gate
- *   lanes   the lanes, which curve for everyone  Chapter Six      (text: Fool’s Labyrinth)
- *   plaza   the plaza, where the pie holds court  Chapter Six     #the-pie-at-the-table
- *   court   the rented court, arriving in pieces Chapter Eleven  #the-wish-that-would-not-finish
- *   table   the long table, a second place set   Chapter Fifteen  (text: a second place)
+ * A scene may have more than one door. The chapter in `from` wins when that
+ * chapter has the scene; otherwise the scene opens on its home chapter:
+ *
+ *   field   the warm furrow                          Chapter One
+ *   lanes   the lanes, which curve for everyone      Chapter Six
+ *   plaza   the plaza, where the pie holds court     Chapter Six
+ *   court   the rented court, arriving in pieces     Chapter Eleven
+ *   table   the long table, a second place set       Chapter Fifteen
+ *   gate    the parcel gate, in a storm              Chapter Fifteen
  *
  * A section without an id is found by a phrase it holds, and linked to by a
  * text fragment (#:~:text=). The same table drives the doors (chapter pages)
@@ -27,14 +31,39 @@ const pad = (n) => String(n).padStart(2, '0');
 const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
 
 export const SEGUES = Object.freeze([
-  { scene: 'gate', chapter: 15, anchor: 'the-parcel-gate', door: 'Carry the pie through the storm', place: 'the parcel gate', trope: 'a gate held open in a storm' },
+  { scene: 'field', chapter: 1, anchor: 'the-warm-furrow', door: 'Carry the pie along the warm furrow', place: 'the warm furrow', trope: 'a furrow kept warm' },
+  { scene: 'field', chapter: 3, anchor: 'the-seam-in-the-sand', door: 'Carry the pie across the sand seam', place: 'the seam in the sand', trope: 'signals in the sand' },
+  { scene: 'court', chapter: 4, anchor: 'no-key-covers-the-egg', door: 'Carry the pie past Council Hill', place: 'Council Hill', trope: 'an unassigned council' },
   { scene: 'lanes', chapter: 6, find: 'Fool’s Labyrinth', door: 'Carry the pie through the lanes', place: 'the lanes of Bonk City', trope: 'lanes that curve for everyone' },
   { scene: 'plaza', chapter: 6, anchor: 'the-pie-at-the-table', door: 'Carry a pie past the court', place: 'the plaza, where the pie holds court', trope: 'a pie holding court' },
+  { scene: 'plaza', chapter: 7, anchor: 'the-shadow-price', door: 'Carry the pie past the cooling stone', place: 'the cooling stone', trope: 'an oath’s shadow at dusk' },
+  { scene: 'field', chapter: 8, anchor: 'the-unpriceable-want', door: 'Carry the pie to the well’s rim', place: 'the unpriceable want', trope: 'a want the well will not price' },
+  { scene: 'court', chapter: 10, anchor: 'what-the-frame-would-bear', door: 'Carry the pie along the timber frame', place: 'Bone.land’s timber frame', trope: 'a frame that bears the weight' },
   { scene: 'court', chapter: 11, anchor: 'the-wish-that-would-not-finish', door: 'Carry the pie through the rented court', place: 'the rented court', trope: 'an empire arriving in pieces' },
+  { scene: 'field', chapter: 12, anchor: 'both-receipts-posted', door: 'Carry the pie to the confluence', place: 'the confluence', trope: 'two springs at once' },
+  { scene: 'table', chapter: 13, anchor: 'the-blank-last-line', door: 'Carry the pie to the shell-shaped door', place: 'the shell-shaped door', trope: 'a door waiting for a question' },
+  { scene: 'field', chapter: 14, anchor: 'the-hat-above-the-furrow', door: 'Carry the pie through the missing Thursday', place: 'the furrow on Thursday', trope: 'the Thursday nobody kept' },
+  { scene: 'gate', chapter: 15, anchor: 'the-parcel-gate', door: 'Carry the pie through the storm', place: 'the parcel gate', trope: 'a gate held open in a storm' },
   { scene: 'table', chapter: 15, find: 'a second place', door: 'Carry the pie to the second place', place: 'the long table', trope: 'a second place, set' }
 ]);
 
-export const segueFor = (scene) => SEGUES.find((segue) => segue.scene === scene) || null;
+/** The chapter a bare ?scene= opens on, when `from` names no chapter of that scene. */
+const SCENE_HOME = Object.freeze({ field: 1, lanes: 6, plaza: 6, court: 11, table: 15, gate: 15 });
+
+const chapterIn = (from) => {
+  const found = /\/book\/chapter\/(\d{2})\//.exec(String(from || ''));
+  return found ? Number(found[1]) : 0;
+};
+
+/** The door for a scene. A from-path that names a chapter of that scene wins; otherwise the scene's home chapter. */
+export const segueFor = (scene, from) => {
+  const matches = SEGUES.filter((segue) => segue.scene === scene);
+  if (!matches.length) return null;
+  const n = chapterIn(from);
+  return matches.find((segue) => segue.chapter === n)
+    || matches.find((segue) => segue.chapter === SCENE_HOME[scene])
+    || matches[0];
+};
 export const chapterWords = (n) => `Chapter ${WORDS[n] || n}`;
 
 /** Where in the story a level happens: the section by id, or by its phrase. */
@@ -124,6 +153,8 @@ export function initPieSegues({ chapterData } = {}) {
   } catch { note = null; }
   if (note && note.path && location.pathname === note.path.split('#')[0]) {
     const waps = note.waps ? ` ${note.waps} clown${note.waps === 1 ? '' : 's'} got WAP.` : '';
+    const wonders = note.wonders ? ` ${note.wonders} wonder${note.wonders === 1 ? '' : 's'} kept in your almanac.` : '';
+    const eggs = note.eggs ? ' Something warm passed close.' : '';
     const carry = carryFor(n);
     const mark = carry
       ? (carry.maw === 'won'
@@ -136,8 +167,8 @@ export function initPieSegues({ chapterData } = {}) {
       sigil: '◎',
       title: `Back from ${note.place || 'the lanes'}`,
       detail: note.cobbles != null
-        ? `${note.carrier ? `${note.carrier.charAt(0).toUpperCase()}${note.carrier.slice(1)}` : 'Someone'} carried it ${note.cobbles} cobbles.${waps}${mark} Exactly one pie, as promised.`
-        : 'The pie is still level. The page is where you left it.',
+        ? `${note.carrier ? `${note.carrier.charAt(0).toUpperCase()}${note.carrier.slice(1)}` : 'Someone'} carried it ${note.cobbles} cobbles.${waps}${wonders}${eggs}${mark} Exactly one pie, as promised.`
+        : `The pie is still level. The page is where you left it.${wonders}${eggs}`,
       region: 'main.chapter',
       lifetime: 5600
     }), 900);
