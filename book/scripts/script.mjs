@@ -60,6 +60,7 @@ import { initLanesLore } from './modules/lanes-lore.mjs?v=2026_11_16.B';
 import { initBracework } from './modules/bracework.mjs?v=2026_11_16.B';
 import { initSceneLight } from './modules/scene-light.mjs?v=2026_11_16.B';
 import { initLineShare } from './modules/line-share.mjs?v=2026_09_26.A';
+import { initRoomShare } from './modules/room-share.mjs?v=2026_11_16.B';
 import { initReadingNook } from './modules/reading-nook.mjs?v=2026_11_16.B';
 import { initReadingSwitches } from './modules/reading-switches.mjs?v=2026_11_16.B';
 import { initResonanceLayer } from './modules/resonance-layer.mjs?v=2026_11_08.J';
@@ -204,6 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // What the pies let slip in the lanes, set back beside the room it is about (and the way to what is still unheard).
     const destroyLanesLore = initLanesLore({ chapterData });
     const destroyLineShare = initLineShare({ announce });
+    const destroyRoomShare = initRoomShare({ announce });
     setupAuthorAttribution(announce);
     setupLoreCollector(chapterData);
     setupPrimaryAction(chapterData);
@@ -319,6 +321,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (destroyGestures) destroyGestures();
       if (destroyPacking) destroyPacking();
       if (destroyLineShare) destroyLineShare();
+      if (destroyRoomShare) destroyRoomShare();
       if (destroyNook) destroyNook();
       if (destroySettled) destroySettled();
       if (destroySwitches) destroySwitches();
