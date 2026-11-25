@@ -203,6 +203,8 @@ import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechani
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
 import { IDENTITY, frameFor, shapeOf, SETUP, SETUP_GROUPS, HOLDS, suggestHold, holdMini, boardLine, readBoardLine, ALLOWED } from './pie-frame.mjs?v=2026_11_13.B';
 import { sceneVector, handleOf } from './pie/tune/scene.mjs';
+import { voicePlan, CARRIER_TUNES } from './pie/tune/personality.mjs';
+import { warmthMark, hushMark, hushToast, voiceMark } from './pie/story/eggs.mjs';
 import { teachLine, handsLine, leanSentence, jokeOf, nudgeLine } from './pie/menu/teach.mjs';
 import { thresholdBranch } from './pie/story/thresholds.mjs';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
@@ -542,6 +544,13 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   window.addEventListener('storage', (event) => { if (!event.key || event.key === 'lore.switches.v1') switchValues = null; });
   // The mimes remember (pie-mimes.mjs), a trial: former lives, bakeries, and imaginary panes that are not forgotten.
   const mimesOn = () => switchOn('mimes-remember');
+  const voiceOn = () => switchOn('carrier-tune');
+  const carrierSpeak = (gesture, x, y) => {
+    if (!voiceOn() || !run) return;
+    const plan = voicePlan(run.carrier?.id, gesture);
+    sfx('voice', plan);
+    (run.marks ||= []).push(voiceMark(plan.color, x ?? run.x, y ?? run.y));
+  };
   const mimeGrudge = () => grudgeOf(record.mimes?.shattered || 0);
   /* Five shelves (valence-shelves.mjs, .spw/surfaces/shelves.spw), a trial: boon, bane, bone, bonk and honk, weighed from
    * how the reader tuned the genre dial (the nook's genre, boon/bane/bone; bonk and honk even), the semantic handles
@@ -3498,6 +3507,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       run.bestCombo = Math.max(run.bestCombo || 0, run.combo);
       if (run.combo === 3 || run.combo === 5) {
         if (record.sound && themesOn()) sfx('theme_flourish', { who: run.carrier?.id || 'boof', event: 'combo' });
+        carrierSpeak('wap', run.x, run.y);
       }
     }
     if (missing) {
@@ -4814,6 +4824,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     sfx('egg');
     sfx('easter_egg', 'egg_warmth');
     spawnRing(thing.x, thing.y, 40, '#f0ad58', 0.65);
+    if (voiceOn()) {
+      carrierSpeak('egg', thing.x, thing.y);
+      (run.marks ||= []).push(warmthMark(thing.x, thing.y - 6, run.eggs + 1));
+    }
     run.eggs = (run.eggs || 0) + 1;
     record.eggs = (record.eggs || 0) + 1;
     writeRecord(record);
@@ -4842,7 +4856,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (titleTaps >= 3) {
         titleTaps = 0;
         sfx('easter_egg', 'pi');
-        showToast('The 1pi(e) prophecy', '3.141592653589793… sung in key', 3400, 'flour');
+        if (voiceOn()) {
+          const said = hushToast('pi');
+          (run.marks ||= []).push(hushMark('pi', run.x, run.y - 20));
+          showToast(said.title, said.body, 3400, 'flour');
+        } else showToast('The 1pi(e) prophecy', '3.141592653589793… sung in key', 3400, 'flour');
       }
     });
   }
@@ -4857,7 +4875,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (wondersTaps >= 3) {
           wondersTaps = 0;
           sfx('easter_egg', 'golden');
-          showToast('Remainder moths', 'Phi golden spiral round the flame', 3400, 'wonder');
+          if (voiceOn()) {
+            const said = hushToast('golden');
+            (run.marks ||= []).push(hushMark('golden', run.x, run.y - 20));
+            showToast(said.title, said.body, 3400, 'wonder');
+          } else showToast('Remainder moths', 'Phi golden spiral round the flame', 3400, 'wonder');
         }
       }
     });
@@ -5958,6 +5980,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
               if (run.inTime >= 2) meanwhile('boof', 'glad', run.inTime >= 3 ? '♪ ♪' : '♪');
             }
             sfx('trick', { kind: 'hop_clear', clears: run.hopClears, high: Boolean(run.highHop && !LOW.has(thing.kind)), inTime, count: run.inTime || run.hopClears }, thing.x, thing.y);
+            carrierSpeak('trick', thing.x, thing.y);
             run.tags.push({ x: thing.x, y: thing.y - 26, t: 0, text: inTime ? (run.inTime >= 2 ? `IN TIME ×${run.inTime}` : 'IN TIME') : run.highHop && !LOW.has(thing.kind) ? 'OVER THE TOP' : 'CLEARED' });
             if (run.highHop && !LOW.has(thing.kind)) { meanwhile('boof', 'surprised', '!'); run.highClears = (run.highClears || 0) + 1; }
             if (run.mini) run.mini.score += 1;
@@ -5974,6 +5997,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
             run.aim.a = clamp(thing.angle, -AIM_MAX, AIM_MAX);
             run.aimLock = TUNE.arrow_hold * (run.carrier.id === 'porter' ? 1.5 : 1);
             sfx('catch');
+            carrierSpeak('catch', thing.x, thing.y);
             impact('arrow', thing.x, thing.y - 24, { scale: 0.7 });
             lean('aimed');
           }
@@ -6251,6 +6275,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       ring.r = 4 + (ring.maxR - 4) * Math.min(1, ring.t / ring.dur);
     });
     run.rings = run.rings.filter((ring) => ring.t < ring.dur);
+    if (run.marks) {
+      run.marks.forEach((mark) => { mark.t += dt; });
+      run.marks = run.marks.filter((mark) => mark.t < mark.life);
+    }
     run.trails.forEach((tr) => { tr.t += dt; });
     run.trails = run.trails.filter((tr) => tr.t < 0.28);
     run.tags.forEach((tag) => { tag.t += dt; });
@@ -9168,6 +9196,69 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     ctx.restore();
   }
 
+  function drawCarrierTune() {
+    if (!voiceOn() || !run?.carrier) return;
+    const tune = CARRIER_TUNES[run.carrier.id] || CARRIER_TUNES.figure;
+    if (!reduced?.matches) {
+      ctx.save();
+      ctx.globalAlpha = 0.16 + Math.sin(run.t * 2) * 0.05;
+      ctx.fillStyle = tune.color;
+      ctx.beginPath();
+      ctx.ellipse(run.x, run.y + 14, 16, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    for (const mark of run.marks || []) {
+      const k = reduced?.matches ? 0.7 : Math.max(0, 1 - mark.t / mark.life);
+      if (k <= 0) continue;
+      ctx.save();
+      ctx.globalAlpha = k * 0.9;
+      ctx.lineWidth = 1.4;
+      if (mark.kind === 'warmth') {
+        ctx.strokeStyle = '#f0ad58';
+        for (let i = 0; i < (mark.rings || 1); i += 1) {
+          const grow = (1 - k) * (16 + i * 9);
+          ctx.beginPath();
+          ctx.ellipse(mark.x, mark.y, 8 + grow, 11 + grow * 0.75, 0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      } else if (mark.kind === 'digits') {
+        ctx.strokeStyle = '#f4e2b0';
+        ctx.beginPath();
+        for (let i = 0; i < 12; i += 1) {
+          const a = i * 0.9 + mark.t * 2;
+          const r = 6 + (i % 4) * 6 * k;
+          const px = mark.x + Math.cos(a) * r;
+          const py = mark.y + Math.sin(a) * r * 0.55;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      } else if (mark.kind === 'spiral') {
+        ctx.strokeStyle = '#e7c56a';
+        ctx.beginPath();
+        for (let i = 0; i < 16; i += 1) {
+          const a = i * 2.399 + mark.t;
+          const r = 3 + i * 1.5 * (0.4 + k);
+          const px = mark.x + Math.cos(a) * r;
+          const py = mark.y + Math.sin(a) * r * 0.62;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      } else if (mark.kind === 'voice') {
+        ctx.fillStyle = mark.color || tune.color;
+        for (let i = 0; i < 3; i += 1) {
+          ctx.globalAlpha = k * (0.85 - i * 0.2);
+          ctx.beginPath();
+          ctx.arc(mark.x + (i - 1) * 7, mark.y - 26 - (1 - k) * (8 + i * 7), 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+  }
+
   function draw() {
     if (!canvas.width) return;
     ctx.save();
@@ -9208,6 +9299,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     drawWhimsy();
     drawRain();
     drawDust();
+    drawCarrierTune();
     if (run?.lag > 0) {
       // The land at a beaver's pace: a cool hush over everything but the carrier's own time.
       ctx.fillStyle = `rgba(70, 120, 160, ${Math.min(1, run.lag) * 0.08})`;

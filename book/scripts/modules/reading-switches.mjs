@@ -269,6 +269,12 @@ export const SWITCHES = Object.freeze([
     defaults: { returning: 'on', new: 'on' }
   },
   {
+    id: 'carrier-tune', attribute: 'data-switch-carrier-tune', stage: 'trial', layer: 'trial', label: 'The carrier has a tune',
+    hint: 'Whoever is under the hat keeps three notes of their own. A catch, a WAP and a trick play them. Passing the warm thing leaves a light, and two quiet taps in the margin draw a count or a spiral without saying what they are.',
+    effect: { on: 'The carrier has a tune, and the quiet finds leave a mark.', off: 'The lanes sound as they always have, and the finds stay where they were.' },
+    defaults: { returning: 'off', new: 'off' }
+  },
+  {
     id: 'bias', attribute: 'data-switch-bias', stage: 'trial', layer: 'trial', label: 'Answers in a register',
     hint: 'The small answers (a pop in the lanes, a notice, the receipt that says what changed) now and then come back in a meme register, cast as a spell: POV, plot twist, core memory unlocked. On, it casts the house register of the day; a link with ?bias=pov casts another for the visit. One register at a time is always free; layering several is a trial for now. The story keeps every word of its own.',
     effect: { on: 'Now and then the land answers in a register; the story keeps its own words.', off: 'Every answer is plain again; nothing you kept has changed.' },

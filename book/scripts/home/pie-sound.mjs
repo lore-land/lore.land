@@ -3430,6 +3430,12 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
         }
         break;
       }
+      // The carrier's three steps, already planned (pie/tune/personality.mjs).
+      case 'voice': {
+        const plan = typeof param === 'object' ? param : null;
+        if (plan?.notes?.length) renderNotes(plan.notes, 0, plan.lean || 'poised_69');
+        break;
+      }
       default: break;
     }
     if (WORTH[kind]) swellPad(t, WORTH[kind]);
