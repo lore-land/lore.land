@@ -274,6 +274,9 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
         node.setAttribute('role', 'spinbutton');
         node.setAttribute('aria-label', `${atom?.dataset.label || 'number'}: scroll, drag or use the arrow keys to change`);
         node.setAttribute('aria-valuenow', t.text);
+        const [minimum, maximum] = scrub.range?.(node.dataset.label, node.dataset.sigil) || [];
+        if (Number.isFinite(minimum)) node.setAttribute('aria-valuemin', minimum);
+        if (Number.isFinite(maximum)) node.setAttribute('aria-valuemax', maximum);
         numberN += 1;
       }
       (atom || line).append(node);
@@ -314,8 +317,9 @@ export function renderSpell(text, { explain = null, cast = true, link = null, la
     });
     head.append(shape);
   }
-  if (play) head.append(playButton(text, line));
-  if (copy) head.append(copyButton(() => tokens.map((t) => t.text).join(''), typeof copy === 'string' ? copy : ''));
+  const currentText = () => tokens.map((t) => t.text).join('');
+  if (play) head.append(playButton(currentText, line));
+  if (copy) head.append(copyButton(currentText, typeof copy === 'string' ? copy : ''));
   if (head.childElementCount) root.append(head);
   if (scrub && numberN) enableScrub(line, tokens, scrub);
   root.append(line);
@@ -431,10 +435,10 @@ function enableScrub(line, tokens, scrub) {
   const nudge = (node, steps) => {
     const position = Number(node.dataset.position);
     const before = tokens[position].text;
-    const step = stepOf(before);
+    const step = scrub.step?.(node.dataset.label, node.dataset.sigil) || stepOf(before);
     const [lo, hi] = scrub.range?.(node.dataset.label, node.dataset.sigil) || [-Infinity, Infinity];
     const value = Math.min(hi, Math.max(lo, Number(before) + steps * step));
-    const decimals = (String(step).split('.')[1] || '').length;
+    const decimals = Math.max(...[step, lo, hi].map((n) => (String(n).split('.')[1] || '').length));
     const text = decimals ? value.toFixed(decimals) : String(Math.round(value));
     if (text === before) return;
     tokens[position].text = text;
@@ -501,7 +505,7 @@ function copyButton(textOf, from) {
 }
 
 /* ▶: the spell played, each atom lit as it sounds (spw-sound.mjs, loaded only when pressed). */
-function playButton(text, line) {
+function playButton(getText, line) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'spell-play';
@@ -527,7 +531,7 @@ function playButton(text, line) {
       || document.querySelector?.('[data-chapter]')?.getAttribute('data-chapter')
       || window.location?.pathname?.match(/\/chapter\/(\d+)/)?.[1];
     const chapter = chapterAttr && Number.isFinite(Number(chapterAttr)) ? Number(chapterAttr) : null;
-    stop = sound.playSpell(text, {
+    stop = sound.playSpell(getText(), {
       chapter,
       onAtom: (i) => {
         const a = all[i];

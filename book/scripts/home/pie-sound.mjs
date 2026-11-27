@@ -50,7 +50,7 @@ export {
 let audio = null;
 let bus = null;
 const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, development: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0, prevLane: 2, prevRow: 0, chapter: 1, room: null, dry: 0, padTone: 1 };
-const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', ear: 'open', patternMode: 'chapter', styleVoicing: '', jazzLean: 1 };
+const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', ear: 'open', patternMode: 'chapter', styleVoicing: '', jazzLean: 1, roomAir: 1 };
 
 const swingTarget = () => {
   if (musical.swing === 'straight') return 0.5;
@@ -458,7 +458,7 @@ function outlet(heat, { depth = 0, air = 0, song = 0, role = 'fx' } = {}) {
   edge.frequency.value = plan.cutoffHz;
   level.connect(edge).connect(b.input);
   const send = audio.createGain();
-  send.gain.value = plan.roomSend;
+  send.gain.value = clamp(plan.roomSend * musical.roomAir, 0, 1);
   edge.connect(send).connect(b.air);
   if (plan.echoSend > 0 && b.song) {
     const sung = audio.createGain();
@@ -1259,7 +1259,7 @@ export function setSoundFeel(feel = 'written') {
   try { setHarmony(harmony.sigil); } catch { /* room keeps chord */ }
 }
 
-export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, ear, styleVoicing, styleInterval, patternMode, jazzLean: leaning } = {}) {
+export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, ear, styleVoicing, styleInterval, patternMode, jazzLean: leaning, roomAir } = {}) {
   if (['chapter', 'straight', 'lilt', 'deep'].includes(swing)) musical.swing = swing;
   if (['folk', 'warm', 'bright', 'velvet'].includes(voicing)) musical.voicing = voicing;
   if (['off', 'room', 'board'].includes(motifCues)) musical.motifCues = motifCues;
@@ -1269,6 +1269,7 @@ export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, ear,
   if (['folk', 'warm', 'bright', 'velvet', ''].includes(styleVoicing)) musical.styleVoicing = styleVoicing;
   if (typeof patternMode === 'string' && patternMode) musical.patternMode = patternMode;
   if (Number.isFinite(Number(styleInterval))) sound.styleInterval = clamp(Number(styleInterval), 0, 14);
+  if (roomAir != null && Number.isFinite(Number(roomAir))) musical.roomAir = clamp(Number(roomAir), 0.4, 1.8);
   if (leaning != null && Number.isFinite(Number(leaning))) musical.jazzLean = clamp(Number(leaning), 0, 2);
   sound.swing = swingTarget();
   try { retimeSong(); } catch { /* retimed on next context */ }
@@ -1373,32 +1374,36 @@ export function feelSample(feel = 'written') {
   } catch { /* chosen, if unheard */ }
 }
 
-export function auditionChapterProgression(feel = sound.jazz ? 'jazz' : 'written') {
+export function auditionChapterProgression(feel = sound.jazz ? 'jazz' : 'written', { swing, tempo, chapter = sound.chapter, level } = {}) {
   try {
     if (!context()) return;
     const t = audio.currentTime + 0.04;
     const k = kit(outlet(0, { air: 0.38, song: 0.16, role: 'music' }), t, 0);
     const jazz = feel === 'jazz';
-    const beat = 60 / (sound.pulse || 96);
-    const swung = jazz ? 2 / 3 : 0.5;
+    const beat = 60 / (tempo || sound.pulse || 96);
+    const swung = clamp(swing ?? (jazz ? 2 / 3 : 0.5), 0.5, 0.67);
     const stages = [0.1, 0.4, 0.68, 0.92];
-    const m = sound.motif?.length ? sound.motif : [0, 2, 4, 7];
+    const notes = level ? level.motif : sound.motif;
+    const m = notes?.length ? notes : [0, 2, 4, 7];
+    const root = level?.root || ROOTS[(chapter - 1) % ROOTS.length] || sound.root;
+    const pitch = (semi) => root * 2 ** (semi / 12);
     stages.forEach((p, idx) => {
-      const arc = chapterArcPlan({ progress: p, bar: idx, step: 8, stage: 3, chapter: sound.chapter });
-      const at = idx * beat * 1.35;
-      if (jazz) k.uprightBass(hz(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
-      else k.marimba(hz(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
+      const arc = chapterArcPlan({ progress: p, bar: idx, step: 8, stage: 3, chapter });
+      const at = idx * beat;
       const leadNote = fallen(m[idx % m.length] ?? sungTone(idx + 1)) + 12;
+      k.celesta(pitch(leadNote), 0.14, 0.014, at + beat * (swung / 2), -0.18);
+      if (jazz) k.uprightBass(pitch(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
+      else k.marimba(pitch(bassLow() + fallen(arc.bassOffset)), 0.42, 0.045, at);
       if (jazz) {
-        const jz = jazzPhrasePlan({ progress: p, wobble: idx === 2 ? 0.42 : 0.1, combo: idx, richness: 0.7, step: 6, bar: idx, chapter: sound.chapter });
+        const jz = jazzPhrasePlan({ progress: p, wobble: idx === 2 ? 0.42 : 0.1, combo: idx, richness: 0.7, step: 6, bar: idx, chapter });
         compVoicingPlan({ bassOffset: arc.bassOffset, compSemis: jz.compSemis, minor: sound.minor, open: sound.open })
-          .slice(0, 4).forEach((s, ci) => k.vibes(hz(s + 12), 0.34, 0.016, at + ci * 0.02, (ci - 1.5) * 0.14));
+          .slice(0, 4).forEach((s, ci) => k.vibes(pitch(s + 12), 0.34, 0.016, at + ci * 0.02, (ci - 1.5) * 0.14));
         if (jz.enclosure) {
-          k.celesta(hz(leadNote + 1), 0.1, 0.02, at + beat * 0.35, -0.1);
-          k.celesta(hz(leadNote - 1), 0.1, 0.02, at + beat * 0.52, 0.08);
+          k.celesta(pitch(leadNote + 1), 0.1, 0.02, at + beat * 0.35, -0.1);
+          k.celesta(pitch(leadNote - 1), 0.1, 0.02, at + beat * 0.52, 0.08);
         }
       }
-      k.celesta(hz(leadNote), idx === 3 ? 0.65 : 0.36, 0.024, at + beat * swung, (idx - 1.5) * 0.12);
+      k.celesta(pitch(leadNote), idx === 3 ? 0.65 : 0.36, 0.024, at + beat * (0.5 + swung / 2), (idx - 1.5) * 0.12);
     });
   } catch { /* silent preview fallback */ }
 }
@@ -1560,11 +1565,12 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       case 'pocket': {
         const info = typeof param === 'object' && param ? param : { chain: Number(param) || 1 };
         const chain = Number(info.chain ?? param) || 1;
-        hiss(6800, 5200, 0.05, 0.028, 3, 0, 'highpass', 0.22);
+        const sparkle = clamp(Number(info.sparkle ?? 1), 0.3, 1.8);
+        hiss(6800, 5200, 0.05, 0.028 * sparkle, 3, 0, 'highpass', 0.22);
         marimba(hz(bassLow() + (chain > 1 ? 7 : 0)), 0.14, 0.046);
         if (sound.jazz) {
           const jz = jazzPhrasePlan({ wobble: info.wobble || 0, combo: info.combo || chain, richness: info.richness ?? 0.6, presence: info.presence || '', progress: info.progress || 0, chapter: sound.chapter });
-          jz.compSemis.slice(0, chain >= 3 ? 3 : 2).forEach((semi, idx) => vibes(hz(semi + 12), 0.22, 0.016, jz.layback + idx * s32 * 0.6, (idx - 0.5) * 0.16));
+          jz.compSemis.slice(0, chain >= 3 ? 3 : 2).forEach((semi, idx) => vibes(hz(semi + 12), 0.22, 0.016 * sparkle, jz.layback + idx * s32 * 0.6, (idx - 0.5) * 0.16));
         } else if (chain >= 3) voiceLead(hz(sungTone(3) + 12), 0.2, 0.018, s32);
         break;
       }

@@ -58,7 +58,7 @@ export function initPieSetup({
   primeAudio, wapSound, feelSample, playTone, laneWarning, playBoardMotifCue, auditionChapterProgression,
   setMusicBed, setSoundTextures, setSoundFeel, setSoundConfig, setSoundCarrier,
   conductor, levelData, heightsPanel,
-  getRun, getBoard, getFullOn, getPanelPlan, setPanelPlan, setGlassFoot,
+  getRun, getChosenStartChapter, getBoard, getFullOn, getPanelPlan, setPanelPlan, setGlassFoot,
   getVisitBoard, setVisitBoard, getFlowProse, getFlowMeasure, setFlowMeasure,
   getCreatorStyle, getSavedTuningDomains, setSavedTuningDomains, getTuningDomains, setTuningDomains, keepTuningDomains,
   domainTune, writeRecord, applyBoardView, applyView, applyShow, setFull, fit,
@@ -72,6 +72,8 @@ export function initPieSetup({
   const setting = (key) => { const def = SETUP.find(([k]) => k === key)?.[3]; return record.view[key] ?? def; };
   const filling = () => getFullOn() && setting('fill') === 'fill';
   let activeGroup = record.view?.setupTab || 'layouts';
+  let boardExchangeOpen = false;
+  let soundPresetsOpen = false;
 
   const coarseQuery = window.matchMedia('(pointer: coarse)');
   function shortWindow() { return window.innerHeight < 36 * 16 && window.innerWidth > window.innerHeight * 1.15; }
@@ -177,14 +179,17 @@ export function initPieSetup({
     if (screenBox) glassWatch.observe(screenBox);
   }
 
-  function syncConductorSwing(chapterNum = getRun()?.chapter || 1) {
+  function configuredSwing(chapterNum) {
     const swingSetting = setting('swing');
     const levelSwing = (levelData.levels[chapterNum]?.swing || 50) / 100;
-    const override = swingSetting === 'straight' ? 0.5
+    return swingSetting === 'straight' ? 0.5
       : swingSetting === 'lilt' ? 0.58
       : swingSetting === 'deep' ? 0.67
       : setting('feel') === 'jazz' ? Math.max(levelSwing, 0.66) : null;
-    conductor.setSwingOverride(override);
+  }
+
+  function syncConductorSwing(chapterNum = getRun()?.chapter || getChosenStartChapter()) {
+    conductor.setSwingOverride(configuredSwing(chapterNum));
   }
 
   let lastTerm = '';
@@ -209,7 +214,8 @@ export function initPieSetup({
       styleVoicing: styleNow.voicing,
       styleInterval: styleNow.interval,
       patternMode: String(charTune.pattern_mode || 'chapter'),
-      jazzLean: Number(charTune.jazz_lean ?? 1)
+      jazzLean: Number(charTune.jazz_lean ?? 1),
+      roomAir: Number(domainTune('scenes').room_air ?? 1)
     });
     syncConductorSwing();
     setSoundCarrier(themesOn() && run ? run.carrier.id : '');
@@ -388,7 +394,6 @@ export function initPieSetup({
     if (key === 'panelsAt' && !wideEnough) return 'Only on a wide window.';
     if (key === 'wide' && !wideEnough) return 'Only on a wide window.';
     if (key === 'swipeUp' && !coarseQuery.matches) return 'Only on a touch screen.';
-    if (key === 'glow' && setting('music') === 'quiet') return 'Only with the music on.';
     if (key === 'share' && !filling()) return 'Only when the lanes fill a full screen (⛶, with Fill chosen above).';
     return '';
   };
@@ -582,7 +587,11 @@ export function initPieSetup({
               if (key === 'feel') feelSample(value);
               if (key === 'steps') { playTone('step', -1); setTimeout(() => playTone('step', 1), 180); }
               if (key === 'cues' && value !== 'off') { laneWarning(0, 0.8, value === 'one' ? 'one' : 'low'); if (value === 'shaped') setTimeout(() => laneWarning(0, 0.8, 'tall'), 420); }
-              if (key === 'swing') { playTone('pocket', 1); setTimeout(() => playTone('poise', 0), value === 'deep' ? 230 : value === 'lilt' ? 200 : 175); }
+              if (key === 'swing') {
+                const chapter = run?.chapter || getChosenStartChapter();
+                const level = levelData.levels[chapter];
+                auditionChapterProgression(setting('feel'), { chapter, level, swing: conductor.beatState().swing, tempo: (level?.tempo || 96) * setting('pace') });
+              }
               if (key === 'voicing' || key === 'songSpace' || key === 'mix') { playBoardMotifCue({ action: 'pantry', pan: 0, depth: value === 'hall' ? 0.55 : value === 'close' ? 0.05 : 0.25, kind: 'berry' }); }
               if (key === 'motifCues' && value !== 'off') { playBoardMotifCue({ action: 'tension', tension: '#11', pan: 0.25, depth: 0.2 }); setTimeout(() => playBoardMotifCue({ action: 'resolve', pan: 0 }), 260); }
             } catch { /* chosen, if not heard */ }
@@ -623,7 +632,11 @@ export function initPieSetup({
         list.append(b);
       });
       const plan = getPanelPlan();
-      return [boardBlock(), holdsList(), nodeOf('p', 'pie-setup-subhead', 'What you see'), list, ...(plan ? [nodeOf('p', 'pie-setup-plan', `${plan.arrangement === 'fill' ? '' : 'Arranged for this screen. '}${plan.why}`)] : [])];
+      const exchange = nodeOf('details', 'pie-setup-exchange');
+      exchange.open = boardExchangeOpen || Boolean(getVisitBoard());
+      exchange.addEventListener('toggle', () => { boardExchangeOpen = exchange.open; });
+      exchange.append(nodeOf('summary', '', 'Share or read a board line · Spw'), boardBlock());
+      return [holdsList(), nodeOf('p', 'pie-setup-subhead', 'What you see'), list, exchange, ...(plan ? [nodeOf('p', 'pie-setup-plan', `${plan.arrangement === 'fill' ? '' : 'Arranged for this screen. '}${plan.why}`)] : [])];
     };
     const applyCluster = (values, label) => {
       applyBoardView(values);
@@ -644,10 +657,10 @@ export function initPieSetup({
       const def = SETUP.find(([k]) => k === key)?.[3];
       return def !== undefined && String(currentOf(key)) !== String(def);
     };
-    const tuningGrid = (kind) => {
+    const tuningGrid = (kind, onChange) => {
       const dials = kind === 'game'
         ? [['characters', 'obstacle_contrast'], ['characters', 'bounce_scale'], ['arcs', 'recovery_grace'], ['minis', 'mini_tempo']]
-        : [['characters', 'voice_presence'], ['characters', 'jazz_lean'], ['scenes', 'room_air'], ['storylines', 'chord_bloom'], ['arcs', 'tension_depth'], ['minis', 'banner_flourish'], ['unlocks', 'groove_level'], ['unlocks', 'pocket_sparkle'], ['unlocks', 'sympathetic_gain']];
+        : [['characters', 'voice_presence'], ['characters', 'jazz_lean'], ['scenes', 'sky_warmth'], ['scenes', 'room_air'], ['storylines', 'chord_bloom'], ['arcs', 'tension_depth'], ['minis', 'banner_flourish'], ['unlocks', 'groove_level'], ['unlocks', 'pocket_sparkle'], ['unlocks', 'sympathetic_gain']];
       const grid = nodeOf('div', 'pie-setup-domains-grid');
       dials.forEach(([domId, dialKey]) => {
         const spec = TUNING_DOMAINS[domId]?.dials?.[dialKey];
@@ -676,6 +689,7 @@ export function initPieSetup({
           setTuningDomains({ ...getTuningDomains(), [domId]: next });
           keepTuningDomains();
           applySetup({ replan: false });
+          onChange?.();
         });
         wrap.append(headSpan, input, nodeOf('small', 'pie-setup-dial-says', spec.says));
         grid.append(wrap);
@@ -683,15 +697,18 @@ export function initPieSetup({
       return grid;
     };
     const tuningBody = () => [
-      nodeOf('p', 'pie-setup-note', 'Tune how strongly the road presses back. Every dial takes effect immediately and stays on this device.'),
-      tuningGrid('game')
+      nodeOf('p', 'pie-setup-note', 'Tune legibility, movement, recovery and minigame energy independently. These dials take effect as you move them and stay on this device.'),
+      tuningGrid('game'),
+      Object.assign(nodeOf('a', 'pie-setup-desk-link', 'Open the Spw tuning desk'), { href: '#pie-tuning-desk', onclick: () => closeSetup() })
     ];
     const groupBody = (id, keys) => {
       const live = keys.filter((key) => !notInUse(key));
       const resting = keys.filter((key) => notInUse(key));
       const parts = [];
+      let presets;
+      let updateRhythm;
       if (id === 'music') {
-        const ch = run?.chapter || 1;
+        const ch = run?.chapter || getChosenStartChapter();
         const lv = levelData.levels[ch] || {};
         const bar = nodeOf('div', 'pie-setup-cluster-bar');
         bar.setAttribute('role', 'group');
@@ -706,10 +723,37 @@ export function initPieSetup({
           btn.addEventListener('click', () => applyCluster(vals, label));
           bar.append(btn);
         });
-        parts.push(bar);
-        const swingNow = setting('swing') === 'chapter'
-          ? `${setting('feel') === 'jazz' ? 'jazz ' : ''}${lv.swing || 50}%`
-          : setting('swing');
+        presets = nodeOf('details', 'pie-setup-exchange');
+        presets.open = soundPresetsOpen;
+        presets.addEventListener('toggle', () => { soundPresetsOpen = presets.open; });
+        presets.append(nodeOf('summary', '', 'Sound presets'), bar);
+        const snap = conductor.beatState();
+        const tempo = (lv.tempo || snap.tempo) * Number(setting('pace') || 1);
+        const swing = configuredSwing(ch) ?? clamp((lv.swing || 50) / 100, 0.5, 0.67);
+        const glow = setting('glow');
+        const rhythm = nodeOf('div', 'pie-setup-rhythm');
+        const rhythmHead = nodeOf('div', 'pie-setup-rhythm-head');
+        rhythmHead.append(nodeOf('strong', '', `${Math.round(tempo)} BPM · ${Math.round(swing * 100)}% swing`));
+        rhythm.append(rhythmHead);
+        const measure = nodeOf('div', 'pie-setup-measure');
+        measure.setAttribute('aria-hidden', 'true');
+        measure.style.setProperty('--pickup', `${swing * 50}%`);
+        Array.from({ length: 4 }, (_, beat) => {
+          const cell = nodeOf('span', 'pie-setup-beat', String(beat + 1));
+          cell.dataset.glow = glow === 'beat' || (glow === 'bar' && beat === 0) ? 'on' : 'off';
+          cell.append(nodeOf('i', ''));
+          measure.append(cell);
+        });
+        const effects = nodeOf('small', '');
+        updateRhythm = () => {
+          const offbeat = setting('feel') === 'jazz' && swing > 0.5 && glow === 'beat'
+            && Number(domainTune('characters').jazz_lean) > 0;
+          measure.querySelectorAll('i').forEach((dot) => dot.classList.toggle('is-lit', offbeat));
+          effects.textContent = `${glow === 'off' ? 'Lane glow off' : glow === 'bar' ? 'Gold on the first beat' : 'Gold on every beat'}${offbeat ? ' · teal on swung pickups' : ''}. Swing shifts the timing of the jazz pocket.${record.view.zen ? ' Zen keeps the lanes still.' : ''}`;
+        };
+        rhythm.append(measure, effects);
+        updateRhythm();
+        parts.push(rhythm);
         const motifText = Array.isArray(lv.motif) && lv.motif.length ? lv.motif.join(' ') : '0 4 7';
         const progNow = run ? progress() : 0;
         const arcMove = progNow < 0.25 ? 'I · Opening' : progNow < 0.55 ? 'II · Rising' : progNow < 0.82 ? 'III · Bridge' : 'IV · Turnaround';
@@ -721,14 +765,15 @@ export function initPieSetup({
               ? (run?.wobble >= 0.58 ? 'altered b9' : run?.wobble >= 0.22 ? 'enclosure' : '6/9 poise')
               : 'at rest';
         const readout = nodeOf('div', 'pie-setup-motif-readout');
-        const readoutText = nodeOf('span', 'pie-setup-motif-text', `Ch. ${ch} (${arcMove}) · ${lv.tempo || 96} bpm · swing ${swingNow} · motif [${motifText}] · ${stateTag}`);
-        const auditionBtn = nodeOf('button', 'pie-setup-audition-btn', '▶ Progression');
+        const readoutText = nodeOf('span', 'pie-setup-motif-text', `Ch. ${ch} (${arcMove}) · motif [${motifText}] · ${stateTag}`);
+        const auditionBtn = nodeOf('button', 'pie-setup-audition-btn', '▶ Hear it');
         auditionBtn.type = 'button';
         auditionBtn.title = 'Hear this chapter’s four-movement progression in the active feel';
         auditionBtn.addEventListener('click', () => {
-          try { primeAudio(); auditionChapterProgression(setting('feel')); } catch { /* silent fallback */ }
+          try { primeAudio(); auditionChapterProgression(setting('feel'), { chapter: ch, level: lv, swing, tempo }); } catch { /* silent fallback */ }
         });
-        readout.append(readoutText, auditionBtn);
+        rhythmHead.append(auditionBtn);
+        readout.append(readoutText);
         parts.push(readout);
       }
       if (teachOn() && id === 'music') {
@@ -743,10 +788,22 @@ export function initPieSetup({
           swipeUp: currentOf('swipeUp')
         })));
       }
-      parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
+      if (id === 'music') {
+        const pairs = [
+          ['Timing & lane light', ['feel', 'swing', 'glow']],
+          ['Harmony & space', ['music', 'themes', 'voicing', 'songSpace']],
+          ['Signals & touch', ['motifCues', 'cues', 'wap', 'steps', 'mix', 'ear']]
+        ];
+        pairs.forEach(([label, members]) => {
+          const rows = members.filter((key) => live.includes(key)).map((key) => rowOf.get(key));
+          if (rows.length) parts.push(nodeOf('p', 'pie-setup-subhead', label), ...rows);
+        });
+      } else {
+        parts.push(...live.map((key) => rowOf.get(key)).filter(Boolean));
+      }
       if (id === 'music') {
         const domainFold = nodeOf('details', 'pie-setup-domains-fold');
-        domainFold.append(nodeOf('summary', '', 'Fine-tune the musical shape'), tuningGrid('music'));
+        domainFold.append(nodeOf('summary', '', 'Fine-tune sound and lane light'), tuningGrid('music', updateRhythm));
         parts.push(domainFold);
       }
       if (resting.length) {
@@ -756,6 +813,7 @@ export function initPieSetup({
         parts.push(fold);
       }
       if (id === 'music') {
+        parts.push(presets);
         const found = Object.keys(foundRhythms()).map((rid) => levelData.rhythms[rid]?.name).filter(Boolean);
         const total = Object.keys(levelData.rhythms).length;
         parts.push(nodeOf('p', 'pie-setup-rhythms', found.length
@@ -811,35 +869,23 @@ export function initPieSetup({
     const tabs = nodeOf('div', 'pie-setup-tabs');
     tabs.setAttribute('role', 'tablist');
     tabs.setAttribute('aria-label', 'Sections');
-    const jumpWrap = nodeOf('label', 'pie-setup-jump-wrap');
-    jumpWrap.append(nodeOf('span', '', 'By name'));
-    const jump = nodeOf('select', 'pie-setup-jump');
-    sections.forEach(([id, title]) => {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = title;
-      jump.append(option);
-    });
-    jumpWrap.append(jump);
     const panel = nodeOf('div', 'pie-setup-panel');
     panel.setAttribute('role', 'tabpanel');
+    panel.id = 'pie-setup-panel';
     const choose = (id, { focus = false, keepScroll = false } = {}) => {
       activeGroup = id;
-      jump.value = id;
       tabs.querySelectorAll('[role="tab"]').forEach((t) => {
         const on = t.dataset.tab === id;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
         if (on && focus) t.focus({ preventScroll: true });
-        if (on) panel.setAttribute('aria-label', t.textContent);
+        if (on) panel.setAttribute('aria-labelledby', t.id);
       });
       const [, , , keys] = sections.find(([sid]) => sid === id);
       panel.replaceChildren(...(id === 'layouts' ? layoutsBody() : id === 'tuning' ? tuningBody() : id === 'guide' ? guideBody() : groupBody(id, keys)), stepper(id));
       panel.scrollTop = keepScroll ? savedPanelScroll : 0;
-      tabs.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       if (record.view.setupTab !== id) { record.view.setupTab = id; writeRecord(record); }
     };
-    jump.addEventListener('change', () => choose(jump.value));
     const stepper = (id) => {
       const at = sections.findIndex(([sid]) => sid === id);
       const nav = nodeOf('nav', 'pie-setup-steps');
@@ -877,18 +923,23 @@ export function initPieSetup({
       t.type = 'button';
       t.setAttribute('role', 'tab');
       t.dataset.tab = id;
+      t.id = `pie-setup-tab-${id}`;
+      t.setAttribute('aria-controls', panel.id);
+      t.setAttribute('aria-label', title);
       if (keys?.some(isCustomized)) t.classList.add('is-custom');
       const mark = nodeOf('span', 'pie-setup-tab-icon');
       mark.innerHTML = icon(iconName, { size: 18 });
       t.title = title;
-      t.append(mark, nodeOf('span', 'pie-setup-tab-words', { screen: 'Screen', controls: 'Buttons', touch: 'Touch', story: 'Story', cards: 'Cards', music: 'Sound' }[id] || title));
+      t.append(mark, nodeOf('span', 'pie-setup-tab-words', { screen: 'Screen', controls: 'Buttons', touch: 'Touch', story: 'Story', cards: 'Cards', music: 'Sound', tuning: 'Tuning' }[id] || title));
       t.addEventListener('click', () => choose(id));
       t.addEventListener('keydown', (event) => {
         const at = sections.findIndex(([sid]) => sid === activeGroup);
         const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-        if (!step) return;
+        const index = event.key === 'Home' ? 0 : event.key === 'End' ? sections.length - 1
+          : step ? (at + step + sections.length) % sections.length : null;
+        if (index == null) return;
         event.preventDefault();
-        choose(sections[(at + step + sections.length) % sections.length][0], { focus: true });
+        choose(sections[index][0], { focus: true });
       });
       tabs.append(t);
     });
@@ -918,7 +969,7 @@ export function initPieSetup({
     handle.addEventListener('pointerup', letGo);
     handle.addEventListener('pointercancel', letGo);
     const nav = nodeOf('div', 'pie-setup-nav');
-    nav.append(jumpWrap, tabs);
+    nav.append(tabs);
     setupOut.replaceChildren(handle, head, map, nav, panel);
     choose(activeGroup, { keepScroll: true });
     setupOut.scrollTop = savedSetupScroll;

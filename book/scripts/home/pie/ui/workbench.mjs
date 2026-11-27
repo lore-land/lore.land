@@ -10,6 +10,7 @@ const SHOW_SAYS = Object.freeze({
   inset: 'The show: a window under the screen keeps the last thing that happened, with what it was worth; between times, the board in small.',
   board: 'The board: every thing in the lanes as a token by what it does, a mark where a hop clears it; the lanes as drawn are in the window under the screen.'
 });
+const DOMAIN_LABELS = Object.freeze({ characters: 'Cast', scenes: 'Scenes', storylines: 'Story', arcs: 'Challenges', minis: 'Minigames', unlocks: 'Unlocks' });
 const QUIET_FEED = new Set(['ahead', 'furrow', 'boonberry', 'boof', 'boneberry']);
 const fmt = (v) => (Number.isInteger(v) ? String(v) : String(Math.round(v * 100) / 100));
 
@@ -141,11 +142,11 @@ export function initPieWorkbench({
   const deskDomainText = (domainId = activeDomainTab) => writeTuningDomains({ [domainId]: domainTune(domainId) }, [domainId]);
   let deskTimer = null;
   const keepDesk = (block, text) => {
+    const pattern = { tune: /=tune\{[^{}]*\}/g, lean: /=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, scenes: /!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g, tune_domains: /!tune_domains\{(?:[^{}]|\{[^{}]*\})*\}/g }[block];
+    const rest = visitSpells().replace(pattern, '').trim();
+    setVisitSpells([rest, text].filter(Boolean).join('\n'));
     clearTimeout(deskTimer);
     deskTimer = setTimeout(async () => {
-      const pattern = { tune: /=tune\{[^{}]*\}/g, lean: /=lean\{(?:[^{}]|\{[^{}]*\})*\}/g, scenes: /!scenes\{(?:[^{}]|\{[^{}]*\})*\}/g, tune_domains: /!tune_domains\{(?:[^{}]|\{[^{}]*\})*\}/g }[block];
-      const rest = visitSpells().replace(pattern, '').trim();
-      setVisitSpells([rest, text].filter(Boolean).join('\n'));
       await readVisit();
       if (benchArea) { benchArea.value = visitSpells(); paintBenchRead(); }
       paintBench();
@@ -167,6 +168,7 @@ export function initPieWorkbench({
       cast: false, play: true, copy: 'lore.land/pie#tune', explain: explainAtom('tune'),
       scrub: {
         range: (label) => TUNE_RANGE[label] || [0, 10],
+        step: (label) => (TUNE_RANGE[label]?.[1] - TUNE_RANGE[label]?.[0] > 10 ? 1 : 0.05),
         change: (text, { label, value }) => { if (TUNE_RANGE[label]) TUNE[label] = clamp(value, TUNE_RANGE[label][0], TUNE_RANGE[label][1]); keepDesk('tune', text); }
       }
     }));
@@ -174,6 +176,7 @@ export function initPieWorkbench({
       cast: false, play: true, copy: 'lore.land/pie#lean', explain: explainAtom('lean'),
       scrub: {
         range: () => [0, 3],
+        step: () => 0.05,
         change: (text, { label, value }) => {
           const cur = getLeanRules();
           const cat = (cur[label] || LEAN_DEFAULTS[label] || [])[0];
@@ -185,34 +188,54 @@ export function initPieWorkbench({
     }));
     scenes?.replaceChildren(renderSpell(deskScenesText(), {
       cast: false, play: true, copy: 'lore.land/pie#scenes', explain: explainAtom('scenes'),
-      scrub: { range: () => [0, 3], change: (text) => keepDesk('scenes', text) }
+      scrub: { range: () => [0, 3], step: () => 0.05, change: (text) => keepDesk('scenes', text) }
     }));
     if (domainsOut) {
+      const domain = activeDomainTab;
+      const meta = TUNING_DOMAINS[domain];
       const tabs = nodeOf('div', 'pie-domain-tabs');
       DOMAIN_ORDER.forEach((id) => {
-        const meta = TUNING_DOMAINS[id];
-        const btn = nodeOf('button', `pie-domain-tab${activeDomainTab === id ? ' is-active' : ''}`, meta.title);
+        const title = TUNING_DOMAINS[id].title;
+        const btn = nodeOf('button', `pie-domain-tab${domain === id ? ' is-active' : ''}`, DOMAIN_LABELS[id] || title);
         btn.type = 'button';
+        btn.title = title;
         btn.setAttribute('aria-pressed', activeDomainTab === id ? 'true' : 'false');
-        btn.addEventListener('click', () => { activeDomainTab = id; paintDesk(); });
+        btn.dataset.domain = id;
+        btn.addEventListener('click', () => {
+          activeDomainTab = id;
+          paintDesk();
+          domainsOut.querySelector(`[data-domain="${id}"]`)?.focus({ preventScroll: true });
+        });
         tabs.append(btn);
       });
-      const spell = renderSpell(deskDomainText(activeDomainTab), {
-        cast: false, play: true, copy: `lore.land/pie#domain:${activeDomainTab}`,
+      const consequence = nodeOf('p', 'pie-desk-consequence', meta.says);
+      const explainDial = (label) => {
+        const dial = meta.dials[label];
+        consequence.textContent = dial ? `${dial.label} · ${dial.says}` : meta.says;
+      };
+      const spell = renderSpell(deskDomainText(domain), {
+        cast: false, play: true, copy: `lore.land/pie#domain:${domain}`,
+        explain: (label) => meta.dials[label]?.says || '',
         scrub: {
           range: (label) => {
-            const spec = TUNING_DOMAINS[activeDomainTab]?.dials?.[label];
+            const spec = meta.dials[label];
             return spec ? [spec.min, spec.max] : [0.3, 1.8];
           },
-          change: (text) => {
+          step: (label) => meta.dials[label]?.step,
+          change: (text, { label }) => {
+            explainDial(label);
             const parsed = parseTuningDomains(text);
-            if (parsed[activeDomainTab]) setTuningDomains({ ...getTuningDomains(), [activeDomainTab]: parsed[activeDomainTab] });
+            if (parsed[domain]) setTuningDomains({ ...getTuningDomains(), [domain]: parsed[domain] });
             applySetup({ replan: false });
             keepDesk('tune_domains', writeTuningDomains(getTuningDomains(), Object.keys(getTuningDomains())));
           }
         }
       });
-      domainsOut.replaceChildren(nodeOf('p', 'pie-desk-sub', 'Music & aesthetics by domain (characters, scenes, storylines, challenges, minigames, unlocks):'), tabs, spell);
+      spell.addEventListener('focusin', (event) => explainDial(event.target.dataset?.label));
+      spell.addEventListener('pointerdown', (event) => {
+        if (event.target.dataset?.label) explainDial(event.target.dataset.label);
+      });
+      domainsOut.replaceChildren(tabs, consequence, spell);
     }
     if (focusOut) {
       const row = nodeOf('div', 'pie-focus-pills');

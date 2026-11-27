@@ -196,17 +196,28 @@ export function initHudRenderer({
     ctx.fillStyle = edge;
     ctx.fillRect(0, board.y0, W, board.h);
     const beatSnap = (!reduced?.matches && !record.view.zen && state === 'running') ? conductor.beatState?.() : null;
-    const beatPulse = beatSnap ? Math.exp(-beatSnap.phase * 4.5) : 0;
+    const glowMode = setting('glow');
+    const beatPulse = beatSnap && (glowMode === 'beat' || (glowMode === 'bar' && beatSnap.beatIndex === 0))
+      ? Math.exp(-beatSnap.phase * 7) * (beatSnap.beatIndex === 0 ? 1 : 0.72) : 0;
+    const pickupPulse = beatSnap?.pickup && glowMode === 'beat' && setting('feel') === 'jazz'
+      ? Math.exp(-beatSnap.sinceStep * 5) * (beatSnap.swing - 0.5) / 0.17
+        * clamp(Number(domainTune('characters').jazz_lean ?? 1) * 0.65, 0, 1)
+      : 0;
     if (run && state !== 'title' && !record.view.zen) {
       const left = run.lane * LANE_W;
       const light = ctx.createLinearGradient(0, 0, 0, H);
       light.addColorStop(0, rgba(colors.gold, 0));
-      light.addColorStop(0.75, rgba(colors.gold, 0.21));
+      light.addColorStop(0.75, rgba(colors.gold, 0.21 + beatPulse * 0.17));
       light.addColorStop(1, rgba(colors.gold, 0.06));
       ctx.fillStyle = light;
       ctx.fillRect(left + 2, 0, LANE_W - 4, H);
       ctx.fillRect(left + 2, 0, 2, H);
       ctx.fillRect(left + LANE_W - 4, 0, 2, H);
+      if (pickupPulse > 0.01) {
+        ctx.fillStyle = rgba(colors.accent, pickupPulse * 0.8);
+        ctx.fillRect(left + 2, 0, 3, H);
+        ctx.fillRect(left + LANE_W - 5, 0, 3, H);
+      }
       ctx.strokeStyle = rgba(colors.ink, 0.24);
       ctx.lineWidth = 1;
       for (let row = 0; row < ROWS; row += 1) {
@@ -232,7 +243,7 @@ export function initHudRenderer({
     if (run && state !== 'title') {
       for (let row = 0; row < ROWS; row += 1) {
         const ty = rowY(row) - 18;
-        const isBeatRow = beatSnap && ((3 - beatSnap.beatIndex) === row);
+        const isBeatRow = beatPulse > 0.035 && ((3 - beatSnap.beatIndex) === row);
         const wMark = row === run.row ? 9 + beatPulse * 2.5 : isBeatRow ? 7 : 5;
         ctx.fillStyle = row === run.row ? colors.gold : isBeatRow ? mix(colors.gold, colors.paper, 0.48) : mix(colors.ink, colors.paper, 0.72);
         ctx.fillRect(0, ty - 1.5, wMark, 3);
@@ -638,6 +649,7 @@ export function initHudRenderer({
     const activeTension = motifMode !== 'off' && m?.tension;
     const pocketLive = (run.jazzPocketT || 0) > 0 || (m?.resolvedT || 0) > 0;
     const pantryLive = (run.roomPantryT || 0) > 0;
+    const glint = pocketLive ? Number(domainTune('unlocks').pocket_sparkle ?? 1) : 1;
     if (!stage && !activeTension && !pocketLive && !pantryLive) return;
     const lift = run.jumpT > 0 ? jumpLift() : 0;
     const x = Math.max(8, run.x - 50);
@@ -662,8 +674,8 @@ export function initHudRenderer({
     }
     if (stage === 3 || pocketLive) {
       ctx.strokeStyle = '#f2c14e';
-      ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.arc(x + 6, y - 16, 3.4, 0, Math.PI * 2); ctx.stroke();
+      ctx.lineWidth = 1.2 * glint;
+      ctx.beginPath(); ctx.arc(x + 6, y - 16, 2.4 + glint, 0, Math.PI * 2); ctx.stroke();
     }
     const tw = ctx.measureText(label).width;
     const right = x + Math.max(12, tw + 8);

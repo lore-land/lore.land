@@ -4964,23 +4964,6 @@ html.pie-settling .pie-voyage {
   visibility: hidden;
 }
 
-/* ─── Glow with the music (⚙ Setup › Glow): the screen's edge breathes on the beat, or on each bar ───
- * A glow, not a flash: soft, short, in the lanes' own gold; the first of a bar a little brighter. */
-@keyframes pie-pulse {
-  from { box-shadow: 0 0 0 1px color-mix(in srgb, var(--hub-gold) 60%, transparent), 0 0 18px 2px color-mix(in srgb, var(--hub-gold) 38%, transparent); }
-  to { box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent; }
-}
-
-@keyframes pie-pulse-strong {
-  from { box-shadow: 0 0 0 2px color-mix(in srgb, var(--hub-gold) 75%, transparent), 0 0 28px 5px color-mix(in srgb, var(--hub-gold) 50%, transparent); }
-  to { box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .pie-cabinet.is-pulse .pie-screen { animation: pie-pulse 380ms ease-out; }
-  .pie-cabinet.is-pulse-strong .pie-screen { animation: pie-pulse-strong 420ms ease-out; }
-}
-
 /* The rhythms found, under the music in ⚙ Setup. */
 .pie-setup-rhythms {
   grid-column: 1 / -1;
@@ -5260,26 +5243,6 @@ html.pie-settling .pie-voyage {
   overflow-x: auto;
   scrollbar-width: none;
   border-block-end: 2px solid var(--hub-line);
-}
-
-.pie-setup-jump-wrap {
-  display: none;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 0.55rem;
-  font: 600 0.66rem var(--font-family-heading, monospace);
-  color: var(--hub-muted);
-}
-
-.pie-setup-jump {
-  width: 100%;
-  min-height: 2.5rem;
-  padding: 0.35rem 2rem 0.35rem 0.65rem;
-  border: 1px solid var(--hub-ink);
-  border-radius: 0.42rem;
-  background: var(--hub-panel);
-  color: var(--hub-ink);
-  font: 600 0.78rem var(--font-family-heading, monospace);
 }
 
 .pie-setup-tab {
@@ -5633,31 +5596,24 @@ html.pie-settling .pie-voyage {
     -webkit-line-clamp: 2;
   }
 
-  /* The row is icons. The names are in the dropdown, so none of them have to be read off the icon. */
-  .pie-setup-jump-wrap {
-    display: grid;
-  }
-
   .pie-setup-tabs {
-    gap: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.2rem;
+    overflow: visible;
   }
 
   .pie-setup-tab {
-    flex: 1 1 0;
-    min-width: 2.4rem;
-    padding-inline: 0.05rem;
+    min-width: 0;
+    min-height: 2.6rem;
+    padding-inline: 0;
+    margin: 0;
+    border-radius: 0.35rem 0.35rem 0 0;
+    font-size: 0.58rem;
   }
 
-  .pie-setup-tab-words {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .pie-setup-tab[aria-selected='true'] {
+    background: color-mix(in srgb, var(--hub-gold) 25%, var(--hub-panel));
   }
 
   .pie-setup-tab.is-custom::after {
@@ -5696,21 +5652,6 @@ html.pie-settling .pie-voyage {
     display: none;
   }
 
-  .pie-setup-jump-wrap {
-    display: grid;
-  }
-
-  .pie-setup-tab-words {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
 }
 
 
@@ -6387,22 +6328,6 @@ html.pie-settling .pie-voyage {
 }
 
 @media (max-width: 36rem) {
-  .pie-setup-jump-wrap {
-    display: grid;
-  }
-
-  .pie-setup-tab-words {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   .pie-setup-tab.is-custom::after {
     top: 0.12rem;
     right: 0.1rem;
@@ -6499,4 +6424,100 @@ html.pie-settling .pie-voyage {
   object-fit: contain;
   border-radius: 0.25rem;
   background: #22232e;
+}
+
+
+.pie-setup-exchange {
+  padding: 0.45rem;
+  border: 1px solid var(--hub-line);
+  border-radius: 0.45rem;
+}
+
+.pie-setup-exchange > summary { cursor: pointer; }
+.pie-setup-exchange[open] > summary { margin-block-end: 0.45rem; }
+
+.pie-setup-rhythm {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.55rem;
+  color: var(--hub-ink);
+  background: var(--hub-paper);
+  border: 1px solid var(--hub-line);
+  border-radius: 0.45rem;
+}
+
+.pie-setup-rhythm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.pie-setup-measure {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.pie-setup-beat {
+  position: relative;
+  padding: 0.16rem 0.35rem;
+  border-inline-start: 0.2rem solid var(--hub-line);
+  border-block-end: 1px solid var(--hub-line);
+  font: 650 0.68rem var(--font-family-heading, monospace);
+}
+
+.pie-setup-beat[data-glow='on'] { border-inline-start-color: var(--hub-gold); }
+
+.pie-setup-beat i {
+  position: absolute;
+  inset-inline-start: var(--pickup);
+  inset-block-end: -0.16rem;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--hub-muted);
+}
+
+.pie-setup-beat i.is-lit { background: var(--hub-accent); }
+
+
+.pie-desk h3 { margin: 0; }
+
+.pie-desk-consequence {
+  margin: 0.35rem 0;
+  padding: 0.45rem 0.65rem;
+  border-inline-start: 3px solid var(--hub-gold);
+  background: var(--hub-paper);
+}
+
+.pie-desk .spell-number.is-scrub {
+  display: inline-block;
+  padding: 0.18em 0.35em;
+  background: color-mix(in srgb, var(--hub-gold) 19%, var(--hub-panel));
+  border: 1px solid var(--hub-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.pie-desk .spell-number.is-scrub:focus-visible {
+  outline: 2px solid var(--hub-ink);
+  outline-offset: 2px;
+}
+
+.pie-desk-advanced > summary { cursor: pointer; }
+
+
+@media (max-width: 36rem) {
+  .pie-desk .pie-domain-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pie-desk .pie-domain-tab {
+    min-height: 2.5rem;
+    padding-inline: 0.2rem;
+    border-radius: 0.4rem;
+    font-size: 0.66rem;
+  }
 }

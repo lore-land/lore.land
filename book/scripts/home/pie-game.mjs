@@ -670,16 +670,6 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     beat();
     setTimeout(() => unlockSaid(earn()), 5600);
   }
-  // The lanes glow with the music (⚙ Setup › Glow): on every beat, or on the first of each bar.
-  let glowTimer = 0;
-  const glow = (strong) => {
-    if (reduced?.matches || record.view.zen) return;
-    cabinetEl.classList.remove('is-pulse', 'is-pulse-strong');
-    void cabinetEl.offsetWidth;
-    cabinetEl.classList.add(strong ? 'is-pulse-strong' : 'is-pulse');
-    clearTimeout(glowTimer);
-    glowTimer = setTimeout(() => cabinetEl.classList.remove('is-pulse', 'is-pulse-strong'), 420);
-  };
   const paintBest = () => {
     if (!bestOut) return;
     bestOut.textContent = record.runs
@@ -2291,6 +2281,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       if (sw.freshHit && record.sound && setting('music') !== 'quiet') {
         playTone('pocket', {
           chain: run.jazzChain,
+          sparkle: domainTune('unlocks').pocket_sparkle,
           wobble: run.wobble,
           combo: run.combo,
           richness: richness(),
@@ -5041,10 +5032,6 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         }
       }
       if (music.beat) markBeat(music.late);
-      if (music.steps.length) {
-        const glowAt = setting('glow');
-        if ((glowAt === 'beat' && music.beat) || (glowAt === 'bar' && music.bar)) glow(music.bar);
-      }
       if (music.ahead.length && record.sound) {
         // The land's bass keeps the bar, develops through the chapter's four movements, and turns every fourth;
         // it keeps its rhythm softly in its room; rhythms found play under the carry (⚙ Setup › Music).
@@ -6092,8 +6079,12 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     recipeIdNow,
     throwFrom,
     getBeatPulse: () => {
-      const snap = (!reduced?.matches && !record.view.zen && state === 'running') ? conductor.beatState?.() : null;
-      return snap ? Math.exp(-snap.phase * 4.5) : 0;
+      if (reduced?.matches || record.view.zen || state !== 'running') return 0;
+      const snap = conductor.beatState();
+      const pickup = jazzOn() && snap.pickup
+        ? Math.exp(-snap.sinceStep * 5) * (snap.swing - 0.5) * Number(domainTune('characters').jazz_lean)
+        : 0;
+      return Math.max(Math.exp(-snap.phase * 7), pickup);
     },
     isShortArm: shortArm
   });
@@ -6310,6 +6301,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     setMusicBed, setSoundTextures, setSoundFeel, setSoundConfig, setSoundCarrier,
     conductor, levelData, heightsPanel,
     getRun: () => run,
+    getChosenStartChapter: () => chosenStartChapter,
     getBoard: () => board,
     getFullOn: () => fullOn,
     getPanelPlan: () => panelPlan,

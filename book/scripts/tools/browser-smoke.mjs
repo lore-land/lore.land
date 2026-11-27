@@ -489,14 +489,24 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
     await page.waitFor(`document.querySelector('[data-pie-setup] [data-tab=music]')`);
-    const wide = await page.ev(`(() => { const pane = document.querySelector('[data-pie-setup]').getBoundingClientRect(); const words = document.querySelector('.pie-setup-tab-words')?.getBoundingClientRect(); const narrow = pane.width <= 480; return { tabs: Boolean(document.querySelector('.pie-setup-tab')?.offsetParent), jump: Boolean(document.querySelector('.pie-setup-jump')?.offsetParent), narrow, wordsHidden: !words || (words.width < 2 && words.height < 2) }; })()`);
-    if (!wide.tabs || (wide.narrow ? !wide.jump || !wide.wordsHidden : wide.jump)) throw new Error(`Setup tabs and the name menu disagree with the pane: ${JSON.stringify(wide)}`);
     await page.ev(`document.querySelector('[data-pie-setup] [data-tab=music]').click()`);
     const chosen = [['feel', 'jazz'], ['wap', 'cream'], ['steps', 'tiptoe'], ['cues', 'shaped']];
     for (const [key, value] of chosen) {
       await page.waitFor(`document.querySelector('.pie-setup-opt[data-key=${key}][data-value=${value}]')`, { timeoutMs: 3000 });
       await page.ev(`document.querySelector('.pie-setup-opt[data-key=${key}][data-value=${value}]').click()`);
     }
+    await page.ev(`document.querySelector('[data-key=swing][data-value=deep]').click()`);
+    await page.ev(`document.querySelector('[data-key=glow][data-value=beat]').click()`);
+    await page.waitFor(`document.querySelector('.pie-setup-rhythm').textContent.includes('67% swing') && document.querySelectorAll('.pie-setup-beat[data-glow=on] i.is-lit').length === 4`);
+    await page.ev(`(() => {
+      const dial = document.querySelector('input[data-dial=jazz_lean]');
+      dial.closest('details').open = true;
+      dial.value = '0';
+      dial.dispatchEvent(new Event('input', { bubbles: true }));
+    })()`);
+    await page.waitFor(`document.querySelectorAll('.pie-setup-beat[data-glow=on]').length === 4 && !document.querySelector('.pie-setup-beat i.is-lit')`);
+    await page.ev(`document.querySelector('[data-key=glow][data-value=bar]').click()`);
+    await page.waitFor(`document.querySelectorAll('.pie-setup-beat[data-glow=on]').length === 1`);
     const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1') || '{}').view || {}`);
     if (chosen.some(([key, value]) => kept[key] !== value)) throw new Error(`the sounds chosen were not kept: ${JSON.stringify(kept)}`);
     await page.ev(`document.querySelector('[data-pie-setup] [data-tab=layouts]')?.click()`);
@@ -513,8 +523,16 @@ const SCENARIOS = [
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
     await page.waitFor(`document.querySelector('.pie-setup-steps')`);
-    const jump = await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); const words = document.querySelector('.pie-setup-tab-words')?.getBoundingClientRect(); return { shown: Boolean(s?.offsetParent), tabs: Boolean(document.querySelector('.pie-setup-tab')?.offsetParent), sections: s?.options.length || 0, wordsHidden: !words || (words.width < 2 && words.height < 2) }; })()`);
-    if (!jump.shown || !jump.tabs || jump.sections < 8 || !jump.wordsHidden) throw new Error(`the phone Setup wants icon tabs and a named menu: ${JSON.stringify(jump)}`);
+    const tabs = await page.ev(`(() => {
+      const pane = document.querySelector('.pie-setup-tabs');
+      const labels = [...pane.querySelectorAll('[role=tab]')].every((tab) => {
+        const b = tab.getBoundingClientRect();
+        const label = tab.querySelector('.pie-setup-tab-words').getBoundingClientRect();
+        return b.width > 0 && label.width > 2 && label.height > 2;
+      });
+      return { count: pane.childElementCount, labels, overflow: pane.scrollWidth > pane.clientWidth, dropdown: Boolean(document.querySelector('.pie-setup-jump')) };
+    })()`);
+    if (tabs.count < 8 || !tabs.labels || tabs.overflow || tabs.dropdown) throw new Error(`Setup's phone tabs do not fit: ${JSON.stringify(tabs)}`);
     const walked = await page.ev(`(async () => { const seen = []; for (let i = 0; i < 12; i += 1) { const tab = document.querySelector('[data-pie-setup] [aria-selected=true]')?.dataset.tab; seen.push(tab); const next = document.querySelector('.pie-setup-step.is-on'); if (!next) break; next.click(); await new Promise((r) => setTimeout(r, 60)); } return seen; })()`);
     if (walked.length < 6 || walked[walked.length - 1] !== 'guide' || new Set(walked).size !== walked.length) throw new Error(`the steps did not walk Setup once through: ${walked.join(' > ')}`);
     const kept = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.v1')).view.setupTab`);
@@ -526,8 +544,12 @@ const SCENARIOS = [
     if (reopened !== 'guide') throw new Error(`Setup reopened at ${reopened}, not where it was left`);
     await page.ev(`document.querySelector('[data-pie-setup] [data-tab=layouts]').click()`);
     await page.waitFor(`document.querySelector('.pie-setup-board-line')`);
-    const named = await page.ev(`document.querySelector('.pie-setup-jump').value`);
-    if (named !== 'layouts') throw new Error(`the name menu did not follow the tab (${named})`);
+    const linked = await page.ev(`(() => {
+      const selected = document.querySelector('.pie-setup-tab[aria-selected=true]');
+      const panel = document.querySelector('.pie-setup-panel');
+      return selected.dataset.tab === 'layouts' && panel.getAttribute('aria-labelledby') === selected.id;
+    })()`);
+    if (!linked) throw new Error('the selected Setup tab does not label its panel');
   }],
   ['game and music tuning is reachable on a phone, kept across a visit, and reset with Setup', async (page) => {
     await page.setViewport(390, 844, { mobile: true });
@@ -535,8 +557,8 @@ const SCENARIOS = [
     await page.goto('/pie/');
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
-    await page.waitFor(`document.querySelector('.pie-setup-jump')`);
-    await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); s.value = 'tuning'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+    await page.waitFor(`document.querySelector('.pie-setup-tab[data-tab=tuning]')`);
+    await page.ev(`document.querySelector('.pie-setup-tab[data-tab=tuning]').click()`);
     await page.waitFor(`document.querySelector('.pie-setup-dial input[data-domain=arcs][data-dial=recovery_grace]')`);
     await page.ev(`(() => { const i = document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]'); i.value = '1.4'; i.dispatchEvent(new Event('input', { bubbles: true })); })()`);
     const stored = await page.ev(`JSON.parse(localStorage.getItem('lore.pie.tuning.v1') || '{}').arcs?.recovery_grace`);
@@ -544,8 +566,8 @@ const SCENARIOS = [
     await page.goto('/pie/');
     await page.waitFor(`document.querySelector('[data-pie-setup-toggle]')`);
     await page.ev(`document.querySelector('[data-pie-setup-toggle]').click()`);
-    await page.waitFor(`document.querySelector('.pie-setup-jump')`);
-    await page.ev(`(() => { const s = document.querySelector('.pie-setup-jump'); s.value = 'tuning'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+    await page.waitFor(`document.querySelector('.pie-setup-tab[data-tab=tuning]')`);
+    await page.ev(`document.querySelector('.pie-setup-tab[data-tab=tuning]').click()`);
     await page.waitFor(`document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]')`);
     const restored = await page.ev(`Number(document.querySelector('input[data-domain=arcs][data-dial=recovery_grace]').value)`);
     if (restored !== 1.4) throw new Error(`game tuning returned as ${restored}, not 1.4`);

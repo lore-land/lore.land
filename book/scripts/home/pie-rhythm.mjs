@@ -357,11 +357,14 @@ export function createConductor({ onFound = () => {} } = {}) {
   /** Snapshot of the current beat, bar, step, and swing state for visual & audio pocket sync. */
   c.beatState = () => {
     const curStep = Math.floor(c.pos);
+    const soundingStep = c.pos < stepPos(curStep) ? curStep - 1 : curStep;
     const stepInBar = inBar(curStep);
     const beatIndex = Math.floor(stepInBar / 4);
     const phraseBar = ((Math.floor(curStep / 16) % 4) + 4) % 4;
     return {
       phase: c.phase(),
+      pickup: inBar(soundingStep) % 2 === 1,
+      sinceStep: c.pos - stepPos(soundingStep),
       stepInBar,
       beatIndex,
       phraseBar,

@@ -396,12 +396,16 @@
           <h2 id="powers-title">Every gift is a spell you can change</h2>
           <p>Each power-up is the land doing in the lanes what it does in the book, and each is written as one short Spw spell: <code>~</code> for what lasts, <code>%</code> for how much, <code>*</code> for charges, <code>!</code> for what happens at once, <code>&amp;with</code> and <code>&amp;without</code> for how the land answers, <code>#says</code> for what is said under the screen. Copy one into the bench, change it, and carry with it for this visit; or copy a link, and whoever opens it carries with your spells. The bench also takes <code>=tune{ =aim_step[0.2] }</code> to change how the lanes feel and <code>!knocks{ *wasps{ %tilt[0.1] } }</code> to change what a knock costs. Their own game stays theirs. Numbers are held to a range, so a spell can change the game but never break it.</p>
         </div>
-        <div class="pie-desk" data-pie-desk>
-          <p class="pie-desk-lede"><strong>The tuning desk.</strong> Every number here is a dial: scroll over it, drag it up or down, or focus it and use the arrow keys (shift for ten). The lanes retune at once, for this visit; ⧉ copies the spell to pass along, ▶ plays it.</p>
-          <div class="pie-desk-spell" data-pie-desk-tune></div>
-          <div class="pie-desk-spell" data-pie-desk-lean></div>
-          <div class="pie-desk-spell" data-pie-desk-scenes></div>
+        <div class="pie-desk" id="pie-tuning-desk" data-pie-desk>
+          <h3>Tuning desk</h3>
+          <p class="pie-desk-lede">Choose a domain, then drag a highlighted number or focus it and use the arrow keys. Changes apply for this visit. Use ⧉ to copy the expression or ▶ to hear it.</p>
           <div class="pie-desk-domains" data-pie-desk-domains></div>
+          <details class="pie-desk-advanced">
+            <summary>Motion, story weights and scene expressions</summary>
+            <div class="pie-desk-spell" data-pie-desk-tune></div>
+            <div class="pie-desk-spell" data-pie-desk-lean></div>
+            <div class="pie-desk-spell" data-pie-desk-scenes></div>
+          </details>
           <div class="pie-values-focus" data-pie-values-focus></div>
           <div class="pie-creator-loom" data-pie-creator-loom></div>
           <div class="pie-bias" id="pie-bias" data-pie-bias>
