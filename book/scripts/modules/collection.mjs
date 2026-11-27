@@ -24,7 +24,7 @@
  * Spw atom: =palette[id] (the projection spell names the one being worn).
  */
 import { CARDS, CARD_TYPES } from '../home/pie-cards.mjs?v=2026_11_11.A';
-import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
+import { readCarries } from './pie-carries.mjs?v=2026_11_16.B';
 import { readAlmanac, loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { settle } from './settled.mjs?v=2026_11_16.B';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_16.B';
@@ -89,7 +89,8 @@ function writeJSON(key, value) {
 }
 const today = () => new Date().toISOString().slice(0, 10);
 const words = (n) => ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve',
-  'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'][n] || String(n);
+  'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty',
+  'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'][n] || String(n);
 
 /* ─── Cards ─────────────────────────────────────────────────────────── */
 

@@ -6,7 +6,7 @@
  */
 import { readSwitches } from './reading-switches.mjs?v=2026_11_16.B';
 import { placeSVG, PLACES } from './panel-art.mjs?v=2026_11_16.B';
-import { CHAPTER_SCENE } from '../home/pie-world.mjs?v=2026_11_13.B';
+import { CHAPTER_SCENE } from '../home/pie-world.mjs?v=2026_11_16.B';
 
 export function initDrawnPlaces({ chapterData } = {}) {
   const n = Number(chapterData?.chapterNumber);

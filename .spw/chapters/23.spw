@@ -1,0 +1,117 @@
+# Chapter 23 Canon Reference
+# Generated from /book/chapter/23/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_23
+#:chapter-canon #!reference
+
+^[chapter/23]{
+  title: "Rehearsal of the Night School"
+  description: "Chapter 23 of Lore.Land: Rehearsal of the Night School. In Bonk City's after-hours adult classroom, Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill, and the quiet new pupil drawn in plain lines sit at one oak bench with wooden ..."
+  mood: "reflection"
+  period: "winter"
+  chapter_path: "/book/chapter/23/"
+}
+
+$[chapter/23/made_of]{
+  spell: ^chapter[23]{
+    .rooms[ .(night_bench)@teacher %(chalk_circle)@the_land &(night_choir)@teacher
+      ^(sliver_left)@boof ]
+    @told_by[narrator song reflection]
+    $ink $brass $oak
+    =palette[night_chalk]
+    ~berries{ $boneberry[rib_tips] }
+  }
+  rooms: "Four rooms: four ( ) gatherings; two kept by teacher, the rest by the land and Boof."
+  told_by: "Told by the narrator, a song and the record."
+  made_of: "Made most of ink and line, then brass and bronze, then oak and frame."
+  palette: "Its palette is night chalk, earned a layer at a time: slate blue evening, tallow gold, and an unclosed chalk circle on a bench."
+  berries: "A boneberry in this chapter tastes of rib tips."
+}
+
+&[chapter/23/routes]{
+  web: "/book/chapter/23/"
+  timeline: "/book/timeline.html#chapter-23"
+  motif: ~[motif/chapter-23]{optional}
+}
+
+^[chapter/23/spine]{
+  =prev{ ~".spw/chapters/22.spw#chapter_22" }
+  =next{ ~".spw/chapters/24.spw#chapter_24" }
+  weave: "{} [] <> <> {}"
+  reading: "the telling opens; the plate catches the light; a song slips through the wards; the reflection reads back by candlelight; the telling settles"
+}
+
+^[chapter/23/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "After the Lamps Are Lit"
+    room: .(night_bench)@teacher
+    air: "Warm tallow smoke, tired adult hands, and wooden dividers shared across one long oak bench."
+    excerpt: "The night school opened only after the street lamps were lit and the day’s haul was put away. Every seat along the oak bench held a grown working citizen: Clem Furrow still smelling of harness grease, Ida Bell with la..."
+    route: ^[chapter/23/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/23.png"
+    route: ^[chapter/23/s02]{open}
+  ]
+  s03: <
+    handle: "custom-song/03"
+    type: "custom-song"
+    room: %(chalk_circle)@the_land
+    air: "Three widths across and a stubborn sliver over: twine and chalk refuse a tidy integer."
+    excerpt: "Noor wrapped the twine snug round the pie tin’s rim, pinched the overlap with her thumb, and laid the length straight across the tin’s middle. One width. Two widths. Three widths — and then a brisk, unapologetic slive..."
+    route: ^[chapter/23/s03]{open}
+  >
+  s04: <
+    handle: "custom-reflection/04"
+    type: "custom-reflection"
+    room: &(night_choir)@teacher
+    air: "Unison humming holds one open fourth steady enough for tired hands to meet at the center."
+    excerpt: "Hands that have hauled sacks and wrung wet sheets all day shake slightly when asked to draw fine lines by tallow light. Seeing the dividers tremble on the slate, the mistress did not correct anyone’s grip. Instead she..."
+    route: ^[chapter/23/s04]{open}
+  >
+  s05: {
+    handle: "section/05"
+    type: "section"
+    title: "Roll Called Quietly"
+    room: ^(sliver_left)@boof
+    air: "The roll closes with one blank line kept cleanly, and nobody rounds the sliver away."
+    excerpt: "At the doorframe, Boof rested her chin on her front paws, listening to the low humming fade into {{quiet-room}}. She had watched councils argue over straight lines for weeks; watching six grown neighbours steady one s..."
+    route: ^[chapter/23/s05]{open}
+  }
+]
+
+&[chapter/23/cast]{
+  song: <
+    register: "a melody that pockets what the minutes leave out and hums it elsewhere"
+    .enters: "custom-song/03"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/04"
+  >
+}
+
+%[chapter/23/measures]{
+  %sections: 5
+  %prose: 2
+  %plates: 1
+  %voices: 2
+}
+
+#[chapter/23/lore]{
+  notes: [
+    "Bonk City's night school is strictly an after-hours classroom for adult workers — carters, laundresses, dockers, and millers — sharing one oak bench by tallow light."
+    "Measuring a pie tin with string and wooden dividers proves every circle carries a stubborn sliver past three widths that cannot be forced closed without making the oak's load-beetles click."
+    "When the adult pupils hum an open fourth in unison, tired hands steady enough for every ruler to meet cleanly at the circle's center."
+  ]
+}
+
+~[chapter/23/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

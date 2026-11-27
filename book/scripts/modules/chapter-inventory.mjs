@@ -28,7 +28,7 @@ import { roomsRead } from './rooms.mjs?v=2026_11_16.B';
 import { readAlmanac } from './almanac.mjs?v=2026_11_16.B';
 import { CHARACTERS, portraitSVG } from './characters.mjs?v=2026_11_16.B';
 import { cardsTurned, readPaletteState, layersOf, LAYERS, LAYER_WAYS } from './collection.mjs?v=2026_11_16.B';
-import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_11.A';
+import { spellText, glossFor } from './chapter-spell.mjs?v=2026_11_16.B';
 
 const PROGRESS_KEY = 'lore.chapter.progress.v1';
 

@@ -1,0 +1,333 @@
+{
+  "chapterNumber": 20,
+  "title": "Two Springs Under the Sill",
+  "logline": "At a swollen canal lock where sweetened brine meets bitter orchard runoff, the gates learn to share one chamber by taking turns every third chime — while Mr. BaneWAP sits on the wall tasting bitter jam.",
+  "epigraph": "Two waters need never pretend to be one in order to share a sill.",
+  "inWhich": "two canal gates share a swollen sill by taking turns every third chime, while Mr. BaneWAP tastes bitter jam",
+  "description": "Chapter 20 of Lore.Land: Two Springs Under the Sill. Where Boon.land's sweet canal meets bitter orchard runoff, wet oak lock gates swell shut because one gate belongs to the commons and the other invoices tolls. Seam-otters knot rush reeds, a mime paddles without a boat, and a re-sweetened Mr. BaneWAP samples bitter jam on the stone wall as the chamber learns to alternate every third chime.",
+  "mood": "path",
+  "period": "winter",
+  "pillars": [
+    "worldbuilding",
+    "stewardship",
+    "wonder"
+  ],
+  "topics": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 19 · The Priced Window",
+      "href": "/book/chapter/19/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 21 · At the Nose of the Work",
+      "href": "/book/chapter/21/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "paws",
+        "nose",
+        "coping"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "lock",
+        "gates",
+        "sill",
+        "seam-otters",
+        "ink-herons",
+        "springs",
+        "chime"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "toll",
+        "rail-pins",
+        "oak",
+        "lockkeeper",
+        "BaneWAP",
+        "jam"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "brine",
+        "runoff",
+        "mime",
+        "reeds",
+        "seam",
+        "lines"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Swollen Lock",
+      "room": {
+        "spw": "&{canal_lock}@lockkeeper",
+        "air": "Sweetened brine on one beam, bitter orchard water on the other, and wet oak swelling shut between them."
+      },
+      "data-motif": "confluence",
+      "climate": {
+        "tempo": "day",
+        "tint": "teal",
+        "hook": "swollen-lock"
+      },
+      "scene": {
+        "vantage": "waterline beside a stone canal lock chamber where two differently coloured streams press against swollen oak gates",
+        "light": "late afternoon winter amber skimming across berry-dark brine on one side and pale bitter runoff on the other",
+        "scent": "wet oak timber, tart orchard apples, sweet river brine, crushed rushes, cold canal stone",
+        "edges": [
+          "twin oak lock gates held fast by iron rail-pins; one painted with Boon.land leaves, the other stenciled with toll columns",
+          "seam-otters diving along the narrow foam line, knotting green rush reeds into loose buoys",
+          "ink-herons standing motionless on the mudbank above their own dried reflections",
+          "the plain-line figure standing dry-shod on the narrow stone sill directly between both gates"
+        ],
+        "hint": "a stone canal lock at golden hour holding two unblended waters — berry-purple brine and pale bitter orchard runoff — between swollen oak gates; seam-otters knotting reeds on the foam line while a plain-line ink figure stands balanced on the narrow sill"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Below the old kiln, where the town’s drainage meets the river meadows, sat a narrow stone canal lock that nobody liked to hurry through. Two waters pressed against its timber doors: sweetened river brine on the townward side, and tart, bitter orchard runoff coming down off {{orchard-slope}}.",
+          "slots": {
+            "orchard-slope": {
+              "clock": "day",
+              "variants": [
+                "the plum terrace",
+                "the winter cider rows",
+                "the cold quince bank",
+                "the stony orchard rise"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "The lock’s oak gates had swollen tight in the rain. Worse, they answered to two separate charters: the upper leaf belonged to Boon.land’s commons and opened for nothing, while the lower leaf had been bolted with brass rail-pins by an old toll guild that still expected every gallon to declare its errand."
+        },
+        {
+          "type": "paragraph",
+          "text": "Try to crank both sluices at once and the currents fought each other into a standstill froth. Along the muddy bank, ink-herons stood so motionless watching the stalemate that their reflections had dried matte black onto the wet clay.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/20.png",
+        "alt": "The flooded canal lock: swollen oak gates holding purple-sweet brine and bitter amber orchard runoff side by side; seam-otters knot rush reeds along the seam while a mime paddles an invisible skiff and the plain-line figure stands dry on the stone sill.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Two Springs Under the Sill: alternating gates every third chime lets both waters pass without blending."
+    },
+    {
+      "type": "custom-path",
+      "room": {
+        "spw": "&<third_chime>@the_land",
+        "air": "The otters knot reeds, a mime paddles without a boat, and the sill takes turns by threes."
+      },
+      "data-motif": "confluence",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "gold",
+        "hook": "third-chime"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "In the center of the lock chamber, seam-otters rolled happily along the unblended boundary, one paw in sweet water and one in bitter, knotting green rush reeds into small floating rings. Directly above them, a serious mime perched on the empty air six inches over the swirl and paddled smoothly across with an invisible oar, paying neither water a toll.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The lockkeeper leaned both elbows on his iron crank and sighed. “Two springs, one bed, the bridge folk say — easy to say when you don’t have swollen oak jammed in both grooves.”"
+        },
+        {
+          "type": "paragraph",
+          "text": "Standing dry on the narrow stone sill between the gates, the figure lifted one straight ink arm on the tower’s first chime, waited through the second, and pointed cleanly at the upper rail-pin on the third. The lockkeeper shrugged, pulled one pin alone, and let the sweet water drop cleanly into the chamber. Three chimes later he pulled the lower pin instead. Neither gate had to agree with the other; alternating every third chime, both currents passed straight down the reach.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "@{bitter_jam}@boof",
+        "air": "On the coping stone, Mr. BaneWAP sits without a single scheme, tasting jam from a tin spoon."
+      },
+      "data-motif": "berries",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "hearth",
+        "hook": "bitter-jam"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "On the dry coping wall beside the lower sluice sat Mr. BaneWAP — smaller, tidier, and far quieter than he had been back in Book One, before his schemes gave out at the confluence. Beside his crust rested a little stone jar of dark orchard preserve, sharp with {{jam-note}}.",
+          "slots": {
+            "jam-note": {
+              "clock": "hour",
+              "variants": [
+                "bitter quince rind",
+                "crushed sloe skins",
+                "tart green peel",
+                "sharp winter plum"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "He dipped a tin spoon in, tasted thoughtfully, and offered Boof the clean back of the handle to sniff. Not a whiff of rented wind or tax ledgers clung to him; only cooked fruit and a single honest pinch of baneberry keeping the sweetness from turning cloying.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "“A pinch sets a jam,” Mr. BaneWAP remarked mildly, watching the seam-otters ride out through the lower gate. “A whole bowl ruins supper. I admit it took me twelve chapters to tell the difference.”"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{tide_sill}@lockkeeper",
+        "air": "The oak holds its grain, the rush rings float downstream, and neither current loses its taste."
+      },
+      "data-motif": "confluence",
+      "climate": {
+        "tempo": "night",
+        "tint": "archive",
+        "hook": "tide-sill"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof gave BaneWAP one polite tail-thump against the coping stone — neither forgiveness nor suspicion, simply the respect a working dog shows an instrument that has finally found its right measure.",
+          "lean": "bone"
+        },
+        {
+          "type": "bracework",
+          "spw": "&{sweet_gate & toll_gate}",
+          "gloss": "Confluence by rhythm rather than force: two incompatible gates share one sill by taking turns on the third chime.",
+          "maker": "the canal lockkeeper"
+        },
+        {
+          "type": "paragraph",
+          "text": "Below the lock, the purple-dark and pale-bitter streams ran side by side into the dusk, seam-otters rolling between them like stitches in a coat. On the sill, the figure stepped down onto the towpath, dry to the ankles, with his hat sailing smoothly above the mist."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Where Boon.land's sweet canal meets bitter orchard runoff, swollen oak gates refuse to open at once until they alternate every third chime."
+      },
+      {
+        "description": "Seam-otters knot rush reeds along the unblended water boundary while a mime paddles smoothly across without a boat."
+      },
+      {
+        "description": "Having left his schemes behind in Book One, Mr. BaneWAP sits quietly on the lock wall sampling bitter orchard jam, noting that one pinch sets a jam while a whole bowl ruins supper."
+      }
+    ]
+  },
+  "table": {
+    "place": "A stone canal lock chamber between the old kiln and the river meadows, where berry-sweet brine and bitter orchard runoff press against swollen oak gates pinned with brass rail-pins.",
+    "light": "Low winter amber shining across two unblended water colours, with matte-black heron reflections dried onto the clay banks.",
+    "people": [
+      {
+        "name": "the canal lockkeeper",
+        "want": "both barges through before frost freezes the sluice paddles shut",
+        "voice": "broad-shouldered, counts chimes under his breath"
+      },
+      {
+        "name": "Mr. BaneWAP (re-sweetened)",
+        "want": "to perfect the exact pinch of bitterness that wakes a berry preserve without spoiling it",
+        "voice": "still theatrical, now oddly courteous, carries a pocket tin spoon"
+      },
+      {
+        "name": "a toll-guild boatman",
+        "want": "a receipt that proves his barge passed through without paying twice",
+        "voice": "grumbles at otters, secretly feeds them crusts"
+      }
+    ],
+    "hooks": [
+      "A reed ring knotted by seam-otters has snagged the lower rail-pin; retrieve it without disturbing the ink-herons' dried bank reflections.",
+      "Two barges — one carrying sweet flour, one carrying bitter cider apples — arrive at opposite gates at dusk and both claim the third chime.",
+      "Mr. BaneWAP asks the party to carry a small stone jar of bitter jam to the bakehouse vault before the feast, swearing there is no scheme inside it."
+    ],
+    "encounters": [
+      "The lock chimes a third beat and the oak gate swings lightly on its own, leaving a rush-knot floating at the bow.",
+      "A mime paddles past mid-air across the flooded lock, throwing up no spray at all.",
+      "Two seam-otters trade a brass rail-pin back and forth across the boundary line until someone offers an apple core.",
+      "An ink-heron lifts off the mudbank, leaving its shadow printed behind like a woodblock stamp.",
+      "Swollen timber groans; forcing both gates together jams the crank until somebody counts to three.",
+      "Mr. BaneWAP offers a tiny taste from his tin spoon — sharp enough to clear a head clouded by too many speeches."
+    ],
+    "finds": [
+      {
+        "wonder": "seam-otters",
+        "use": "Follow a knotted rush ring to find the exact boundary where two quarrelling rules can run side by side without collapsing."
+      },
+      {
+        "wonder": "rail-pins",
+        "use": "Pull one pin at a time on a steady three-count to open stubborn gates that jam under hurry."
+      }
+    ],
+    "bracework": {
+      "spw": "&{sweet_gate & toll_gate}",
+      "does": "Coordinates two opposing charters by giving each its own alternate turn on the third beat.",
+      "costs": "Nobody gets through in a single rush; every barge waits one full beat for the water to trade."
+    },
+    "question": "What two currents in your work hold cleaner when they alternate than when they are forced to mix?"
+  }
+}

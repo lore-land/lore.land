@@ -56,7 +56,7 @@
       "name": "Exactly One Pie: carry the book",
       "short_name": "Play",
       "url": "/pie/?source=pwa-shortcut",
-      "description": "The small game that carries the whole book, chapter by chapter, past its words.",
+      "description": "The small game that carries the whole book, chapter by chapter.",
       "icons": [
         {
           "src": "/book/pwa/icons/shortcut-pie.png",
@@ -76,7 +76,7 @@
           "type": "image/png"
         }
       ],
-      "description": "Pick up where you left off, search the book, keep it offline, see when the next chapter lands, and write to the scribes."
+      "description": "Pick up where you left off, search every chapter, keep the book offline, and write to the scribes."
     },
     {
       "name": "Your almanac: what you have found",

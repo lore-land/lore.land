@@ -20,10 +20,12 @@
  * No DOM at import; the game, the chapter pages and the entrance share it.
  */
 
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
+
 const KEY = 'lore.pie.chapters.v1';
 const PROJECTION_KEY = 'lore.pie.projection';
 export const LEAN_NAMES = Object.freeze({ boon: 'fairy tale', bane: 'absurd reality', bone: 'low magic' });
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 const words = (n) => WORDS[n] || String(n);
 
 const normalize = (lean) => {
@@ -204,7 +206,7 @@ function el(tag, attrs = {}, ...children) {
  * The game page's account of it: every chapter's mark, the switch, and a way to forget.
  * mount: an element to fill (pie/index.html [data-pie-carries]).
  */
-export function renderCarriesPanel(mount, { totalChapters = 15, onChange } = {}) {
+export function renderCarriesPanel(mount, { totalChapters = TOTAL_CHAPTERS, onChange } = {}) {
   if (!mount) return;
   const all = readCarries();
   const on = projectionOn();

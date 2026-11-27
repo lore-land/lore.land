@@ -83,11 +83,13 @@
       "prop": "the hat",
       "faces": {
         "story": {
-          "says": "The crier mistakes the figure for a scarecrow and writes that she saw a hat; the city decides the destined one is the dog; in the next stone Boof wears the title for one scene at Mr. BoonWAP's table.",
+          "says": "The crier mistakes the figure for a scarecrow and writes that she saw a hat; the city decides the destined one is the dog; in Chapter Sixteen Boof wears the title for one supper at Mr. BoonWAP's table before laying it beside the scullery apron.",
           "chambers": [
             13,
             14,
-            15
+            15,
+            16,
+            26
           ]
         },
         "lanes": {
@@ -909,11 +911,12 @@
       "prop": "a plate",
       "faces": {
         "story": {
-          "says": "In the margins of the oculus room: plates stacked by the cold spring water, taller than the meal had been, and nobody saw who washed them. The next stone asks why the person serving a pie that is never smaller still gets tired.",
+          "says": "In the margins of the oculus room: plates stacked by the cold spring water, taller than the meal had been, and nobody saw who washed them. In The Second Place the figure dries plates beside the unnamed washer-up and asks why the hands serving an endless pie still tire.",
           "chambers": [
-            13
-          ],
-          "pending": "The Second Place (next stone, 2026-11-13): the figure dries plates beside the washer-up nobody has asked the name of."
+            13,
+            16,
+            26
+          ]
         },
         "lanes": {
           "says": "When the pie spills, the card counts the plates the carry left for the washer-up: one for every WAP.",
@@ -954,7 +957,12 @@
         {
           "chapter": 16,
           "in": "story",
-          "beat": "the next stone: the figure dries plates beside the washer-up"
+          "beat": "the second place: the figure dries plates beside the washer-up"
+        },
+        {
+          "chapter": 26,
+          "in": "story",
+          "beat": "the feast of the uneven slice: the washer-up sits at the table while BoonWAP carries plates"
         }
       ],
       "wound_in": "2026_11_09.E",

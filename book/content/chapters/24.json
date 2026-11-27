@@ -1,0 +1,338 @@
+{
+  "chapterNumber": 24,
+  "title": "Four Windows in One Wall",
+  "logline": "Four judges peer through four masking shutters cut in the same wall and prove four cleanly opposite laws while the unnamed figure strolls unbroken behind all of them.",
+  "epigraph": "Each shutter proved a flawless law and missed three quarters of the courtyard.",
+  "inWhich": "four masking shutters prove four opposite laws until two open at once and show the unbroken courtyard",
+  "description": "Chapter 24 of Lore.Land: Four Windows in One Wall. Inside a partitioned judging booth smelling of paint thinner and squeaking hinges, four municipal judges watch four separate masking shutters overlooking one courtyard. Each proves an airtight contradictory ruling as a basket, a clown's sleeve, Boof's tail, and a floating bowler pass behind the wall — until Boof nudges two shutters open at once and crossing shadows reveal the single lane.",
+  "mood": "labyrinth",
+  "period": "winter",
+  "pillars": [
+    "intrigue",
+    "wonder",
+    "worldbuilding"
+  ],
+  "topics": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 23 · Rehearsal of the Night School",
+      "href": "/book/chapter/23/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 25 · The Warm Hearth Before the Feast",
+      "href": "/book/chapter/25/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "booth",
+        "judges",
+        "shutter",
+        "shutters",
+        "scorecards",
+        "door-rule",
+        "law",
+        "laws"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "frame",
+        "windows",
+        "shadows",
+        "brace-boxes",
+        "paint thinner",
+        "hinge"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "shoulder",
+        "tail",
+        "paws"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "courtyard",
+        "broom",
+        "hat",
+        "clown",
+        "porter"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Partitioned Booth",
+      "room": {
+        "spw": "=[shutter_wall]@judge",
+        "air": "Four wooden partitions, four hinged masking shutters, and fresh paint thinner stinging every nose."
+      },
+      "data-motif": "frame",
+      "climate": {
+        "tempo": "day",
+        "tint": "archive",
+        "hook": "shutter-wall"
+      },
+      "scene": {
+        "vantage": "inside a wooden judging gallery divided into four narrow booths overlooking one sunlit winter courtyard through four small masking shutters",
+        "light": "bright sharp winter sun sliced into four distinct squares on the booth floor",
+        "scent": "turpentine paint thinner, dry pine planks, rusty shutter hinges, red sealing wax, fresh paper scorecards",
+        "edges": [
+          "four solemn judges sitting in four separate wooden stalls, each looking out one small masked square",
+          "conflicting scorecards being slipped furiously under the bottom gaps of the timber dividers",
+          "a carpenter's door-rule and two fogged brace-boxes stacked on the central clerk's stool",
+          "outside all four shutters, one sunny courtyard where a porter, a clown, Boof, and the plain-line figure carrying a broom cross at once"
+        ],
+        "hint": "a partitioned wooden judging booth with four small masking windows looking onto one courtyard; four separate cropped glimpses (a floating hat, a pie rim, a dog's tail, a broom) while the plain-line ink figure strolls cleanly behind the whole wall"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Before Bonk City could declare the courtyard ready for the Turning of the Year, four feast judges sat down inside the newly painted viewing booth along the yard wall. The booth smelled briskly of turpentine paint thinner and {{booth-smell}}, and was divided by tall pine partitions into four tidy stalls.",
+          "slots": {
+            "booth-smell": {
+              "clock": "hour",
+              "variants": [
+                "fresh shavings",
+                "hot sealing wax",
+                "oiled iron hinges",
+                "damp spruce"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Each stall had one small hinged masking shutter cut straight through the wall so no judge could be distracted by what another judge was scoring. Under the dividers ran a narrow slot for passing scorecards once every ruling had been inked — write it before you argue it, the council motto read over the door, directly beside the old &[boon, bane]{table} carving."
+        },
+        {
+          "type": "paragraph",
+          "text": "The hinges squeaked in four different keys as all four shutters swung open onto the exact same quiet winter courtyard.",
+          "lean": "bane"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/24.png",
+        "alt": "Four framed masking shutters cut into one dark timber wall, each cropping one quarter of the courtyard — a floating bowler hat, a warm pie rim, a shaggy dog's tail, and a sweeping broom — while behind the frames the plain-line ink figure walks unbroken across the stones.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Four Windows in One Wall: four airtight rulings from one courtyard, until two shutters open together."
+    },
+    {
+      "type": "custom-paradox",
+      "room": {
+        "spw": "?[four_shutters]@the_land",
+        "air": "One lane crosses behind the wall; four boxes invent four completely incompatible universes."
+      },
+      "data-motif": "frame",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "four-shutters"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At that exact minute, an ordinary courtyard errand occurred: a porter carried a basket of warm crusts past a polite clown holding a dishcloth, Boof trotted past checking the cobbles, and the figure in plain lines walked steadily along the far kerb carrying a yard broom beneath his floating bowler hat.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Judge One’s shutter framed only the upper left air. Seeing an unaccompanied black hat gliding smoothly above empty flagstones, she scribbled: LAW OF GRAVITY SUSPENDED — COURTYARD UNSAFE FOR TALL GUESTS. Judge Two’s shutter caught only the clown’s ruffled sleeve and a rising pie rim, and ruled: EXCESSIVE MERRIMENT — NO CLEANING IN PROGRESS.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Judge Three saw nothing but a sweeping broom moving steadily past a door-rule propped against the kerb, and declared: AUTONOMOUS MAINTENANCE — NO CITIZENS PRESENT. Judge Four saw Boof’s black tail wag once beside two fogged brace-boxes and wrote: ONE DESTINED DOG HOLDING QUORUM ALONE. Scorecards slid furiously under every partition until the floor looked like a snowdrift."
+        }
+      ]
+    },
+    {
+      "type": "custom-game",
+      "room": {
+        "spw": "![double_shutter]@boof",
+        "air": "Boof leans her shoulder against two latches, and crossing shadows put the courtyard back in one piece."
+      },
+      "data-motif": "frame",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "teal",
+        "hook": "double-shutter"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hearing the squeak of four furious quills and smelling four flavours of municipal panic through the cracks, Boof trotted round the side step of the gallery, slipped inside the open back door, and leaned her sturdy dark shoulder cleanly against the latch between Stall Two and Stall Three.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The pine divider folded back on its brass bolt, throwing both masking shutters wide at once. Instantly the light from Window Two crossed the light from Window Three, laying sharp criss-cross shadows straight across the scattered scorecards and knitting the broken yard back into one sunlit space."
+        },
+        {
+          "type": "paragraph",
+          "text": "All four judges blinked together. There was the porter, setting down his basket. There was the clown, politely shaking crumbs out of his cloth. And just turning the far arch toward the bakehouse, broom over one straight ink line and hat riding level overhead, was the figure — whole, quiet, and already done sweeping the kerb.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".[open_courtyard]@judge",
+        "air": "Every quarter happened, none of them was the lane, and all four scorecards go into one honest stack."
+      },
+      "data-motif": "frame",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "archive",
+        "hook": "open-courtyard"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Judge One picked up her scorecard, looked out across the double opening, and set her pen down beside {{ink-pot}}. “Every word I wrote happened,” she admitted, rubbing a smudge of turpentine off her thumb. “And every word was wrong about the afternoon.”",
+          "slots": {
+            "ink-pot": {
+              "clock": "minute",
+              "variants": [
+                "the brass sander",
+                "the red wax stick",
+                "the blotter pad",
+                "the wooden ruler"
+              ]
+            }
+          }
+        },
+        {
+          "type": "bracework",
+          "spw": "=[four_shutters & one_courtyard]",
+          "gloss": "A frame calibrated against its own blind spots: open two windows at once before calling one corner the law.",
+          "maker": "the four judges"
+        },
+        {
+          "type": "paragraph",
+          "text": "None of the judges tore up their scorecards. They pinned all four together with a single brass clip, propped every masking shutter wide open on its hook, and walked out together toward the smell of rising yeast drifting down from the bakehouse vault."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bonk City's partitioned judging booth cuts one courtyard into four separate masking windows so no judge is distracted by another's square."
+      },
+      {
+        "description": "Watching one quarter each, four judges prove four cleanly opposite laws about the same quiet walk across the cobblestones."
+      },
+      {
+        "description": "Opening two masking shutters together throws crossing shadows across the scorecards and reveals the single unbroken courtyard."
+      }
+    ]
+  },
+  "table": {
+    "place": "A partitioned pine judging booth smelling of paint thinner and red wax, with four hinged masking shutters cut into one wall overlooking the sunlit feast courtyard.",
+    "light": "Four bright separate window-squares of winter sun that cross into crisp woven shadows the moment two shutters stand open together.",
+    "people": [
+      {
+        "name": "Judge One (Upper Left)",
+        "want": "a ruling on why a bowler hat travels with no visible head underneath it",
+        "voice": "precise, alarmed, underlined in crimson ink"
+      },
+      {
+        "name": "Judge Two (Merriment)",
+        "want": "proof that somebody is actually sweeping the courtyard before tonight's feast",
+        "voice": "peering sideways, suspicious of ruffled sleeves"
+      },
+      {
+        "name": "Judge Three (Maintenance)",
+        "want": "credit assigned properly for a spotless kerb",
+        "voice": "measures broom handles with a folding door-rule"
+      },
+      {
+        "name": "Judge Four (Quorum)",
+        "want": "Boof's signature on the courtyard clearance sheet",
+        "voice": "solemn, keeps biscuits in her coat pocket just in case"
+      }
+    ],
+    "hooks": [
+      "Four contradictory municipal fines were issued in the same ten seconds from the booth; show all four judges the single errand that caused them before the baker's cart is impounded.",
+      "One of the four masking shutters has jammed shut with fresh paint, leaving three judges arguing over a corner nobody can see.",
+      "A pair of brace-boxes left on the booth stool has begun projecting shadows of what happened in the courtyard last winter."
+    ],
+    "encounters": [
+      "A shutter hinge squeaks in a sharp minor second and three scorecards slide under the divider at once.",
+      "Opening two shutters simultaneously casts a crossing shadow that points straight to a dropped key on the cobbles.",
+      "A clown waves cheerfully through Window Two while a broom sweeps neatly past Window Three, driving both judges to compare notes.",
+      "The smell of paint thinner makes a lantern flare pale blue for five heartbeats.",
+      "A judge hands out a blank scorecard with four quarters ruled on it, asking the party to fill only the corner they actually stood in.",
+      "Through all four open shutters, the courtyard looks twice as wide as the sum of its windows."
+    ],
+    "finds": [
+      {
+        "wonder": "door-rule",
+        "use": "Hold it across any narrow framing; it clicks open to show whether the window you are looking through is cutting off the doorway."
+      },
+      {
+        "wonder": "brace-boxes",
+        "use": "Warm two boxes side by side to let two partial accounts fog into one shared view."
+      }
+    ],
+    "bracework": {
+      "spw": "=[four_shutters & one_courtyard]",
+      "does": "Forces two isolated vantage frames open together so crossing shadows expose what each frame cropped out.",
+      "costs": "No single judge gets to sign the final verdict alone."
+    },
+    "question": "Which airtight argument falls apart the second you unlatch the shutter beside it?"
+  }
+}

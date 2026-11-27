@@ -132,7 +132,10 @@ export const MEET = Object.freeze({
 });
 
 /* The voyage: every chapter is a leg of the carry, in the place it happens. */
-export const CHAPTER_SCENE = Object.freeze({ 1: 'field', 2: 'field', 3: 'lanes', 4: 'court', 5: 'lanes', 6: 'plaza', 7: 'lanes', 8: 'field', 9: 'lanes', 10: 'lanes', 11: 'court', 12: 'field', 13: 'table', 14: 'field', 15: 'gate' });
+export const CHAPTER_SCENE = Object.freeze({
+  1: 'field', 2: 'field', 3: 'lanes', 4: 'court', 5: 'lanes', 6: 'plaza', 7: 'lanes', 8: 'field', 9: 'lanes', 10: 'lanes', 11: 'court', 12: 'field', 13: 'table',
+  14: 'field', 15: 'gate', 16: 'table', 17: 'court', 18: 'lanes', 19: 'lanes', 20: 'field', 21: 'lanes', 22: 'gate', 23: 'table', 24: 'court', 25: 'plaza', 26: 'table'
+});
 /* Where the Egg is likelier to be passed: the field it was found in, the theft, the door. */
 export const EGG_ODDS = Object.freeze({ 1: 0.5, 11: 0.7, 13: 0.9, 14: 0.5 });
 export const pad2 = (n) => String(n).padStart(2, '0');

@@ -14,7 +14,7 @@
  * and pass along. The address bar shows the route as lore.land/?/…, the way it was given.
  */
 import { loadPacks, schemeParts, PLAN_STATES } from '../modules/packs.mjs?v=2026_11_11.A';
-import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_11.A';
+import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_16.B';
 import { loadEvents, eventState, daysBetween, localDay } from '../modules/route-events.mjs?v=2026_11_11.A';
 import { TOTAL_CHAPTERS, NEXT_STONE } from '../modules/book-extent.mjs';
 import { MATERIALS, PHYSICS, factshiftAddress, physicsDelta } from '../modules/texture-materials.mjs?v=2026_11_09.H';
@@ -483,8 +483,8 @@ async function paintEvent(event) {
     const pad = (n) => String(n).padStart(2, '0');
     if (!NEXT_STONE) {
       body.replaceChildren(
-        el('p', {}, 'No next chapter date is scheduled right now; chapters grow when ready.'),
-        el('p', {}, el('a', { href: `/book/chapter/${pad(TOTAL_CHAPTERS)}/` }, `Meanwhile, Chapter ${TOTAL_CHAPTERS} \u2192`)));
+        el('p', {}, `All ${TOTAL_CHAPTERS} chapters across Book One and Book Two are set and open.`),
+        el('p', {}, el('a', { href: `/book/chapter/${pad(TOTAL_CHAPTERS)}/` }, `Read Chapter ${TOTAL_CHAPTERS} \u2192`)));
       return;
     }
     const { chapter, date } = NEXT_STONE;

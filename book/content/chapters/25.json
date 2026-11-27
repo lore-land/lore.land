@@ -1,0 +1,335 @@
+{
+  "chapterNumber": 25,
+  "title": "The Warm Hearth Before the Feast",
+  "logline": "Inside Bonk City's crowded bakehouse vault, every unfinished ingredient from Book Two simmers under one brick arch while hungry clowns wait with startling politeness outside the doors.",
+  "epigraph": "Open nothing before it has filled; wait one breath too long, and the vault opens itself.",
+  "inWhich": "every unfinished ingredient from the season simmers under one bakehouse vault while hungry clowns wait politely outside",
+  "description": "Chapter 25 of Lore.Land: The Warm Hearth Before the Feast. Beneath the glowing brick arches of the great bakehouse vault, every ingredient gathered across Book Two — boonberries, smoked boneberries, a sharp pinch of orchard jam, sifted flour, rising yeast — builds warmth faster than the flues can vent. Bakers hustle, clowns wait politely outside the arch, mimes lean against invisible warming racks, and the bowler hat still floats unsettled above the figure until the feast itself.",
+  "mood": "boon",
+  "period": "winter",
+  "pillars": [
+    "wonder",
+    "worldbuilding",
+    "stewardship"
+  ],
+  "topics": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 24 · Four Windows in One Wall",
+      "href": "/book/chapter/24/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Boonberry commons",
+      "href": "/world/boonberry-commons.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 26 · The Feast of the Uneven Slice",
+      "href": "/book/chapter/26/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "bakehouse",
+        "vault",
+        "hearth",
+        "yeast",
+        "ovens",
+        "clowns",
+        "BoonWAP",
+        "crust"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "hearth-drift",
+        "bonk-kiln",
+        "early bees",
+        "embers",
+        "steam",
+        "vents"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "hearth",
+        "latch",
+        "nose",
+        "paws"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "bakers",
+        "mimes",
+        "racks",
+        "hat",
+        "fork",
+        "chime"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "Under One Vault",
+      "room": {
+        "spw": "&{bakehouse_vault}@baker",
+        "air": "Oak embers, rising yeast carbonation, and every ingredient from eleven chambers simmering under one arch."
+      },
+      "data-motif": "hearth",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "ember",
+        "hook": "bakehouse-vault"
+      },
+      "scene": {
+        "vantage": "inside a crowded domed brick bakehouse vault glowing with twin oak-fired hearth arches",
+        "light": "rich orange-gold ember light pouring off brick domes through thick amber berry steam",
+        "scent": "rising sourdough yeast, simmering boonberries, smoked boneberries, sharp bitter orchard jam, oak embers, hot iron",
+        "edges": [
+          "long tables stacked with crust tins holding every ingredient carried in across the season",
+          "bakers sliding wooden peels in and out of the glowing oven mouths beside the shared flue from the bonk-kiln",
+          "a crowd of hungry clowns waiting with extraordinary politeness in single file outside the open courtyard arch",
+          "the plain-line ink figure holding an iron oven-latch coolly ajar under his still-floating bowler hat"
+        ],
+        "hint": "a warm glowing brick bakehouse vault filled with amber berry steam and rising loaves; bakers tending oak embers; polite clowns peering warmly through the arched doorway outside; mimes leaning against invisible warming racks; a plain-line figure beside the oven door"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "An hour before dusk on the Turning of the Year, everything unfinished in Book Two landed under one curved brick ceiling: the great bakehouse vault whose back flue warmed the bonk-kiln next door. Inside, oak embers hummed red-gold and rising yeast filled the air with a bright, prickling {{vault-scent}}.",
+          "slots": {
+            "vault-scent": {
+              "clock": "hour",
+              "variants": [
+                "fizz of bread-air",
+                "singing crust-warmth",
+                "fermenting sweetness",
+                "toasted grain-glow"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Every table carried an arrival from the winter’s roads: teal boonberries thawed by torch-ants from the dawnward furrows, savoury smoked boneberries from Bone.land, dry flour hauled down from the belfry loft, and one small stone jar of Mr. BaneWAP’s bitter orchard jam set neatly beside the sugar bowl with a tin spoon standing in it."
+        },
+        {
+          "type": "paragraph",
+          "text": "Steam curled up into the brickwork faster than the high iron vents could carry it away, dusting the rafters with warm hearth-drift that smelled like summer remembered through a thick coat.",
+          "lean": "boon"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/25.png",
+        "alt": "The crowded brick bakehouse vault before the feast: golden oak embers, billowing berry steam, stacked pie tins, hungry clowns waiting politely outside the arched doorway, mimes leaning against invisible warming racks, and the plain-line ink figure steadying an oven door under his floating hat.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "The Warm Hearth Before the Feast: every ingredient under one vault, rising faster than the vents can let it go."
+    },
+    {
+      "type": "custom-boonberry",
+      "room": {
+        "spw": "~{warming_rack}@boonwap",
+        "air": "Hungry clowns wait outdoors with astonishing manners while mimes lean invisibly against warm air."
+      },
+      "data-motif": "feast",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "gold",
+        "hook": "warming-rack"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Outside the wide arched doorway, forty hungry clowns stood in a remarkably orderly queue on the winter flagstones, hats tucked under their arms, sniffing the berry steam without jostling a single elbow. Not one of them crossed the sill uninvited; even a clown knows you open nothing before it has filled.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Inside along the warm brick wall, six off-duty mimes leaned comfortably with crossed ankles against completely invisible warming racks, warming their white-gloved palms in front of imaginary dampers while real bakers hurried past carrying genuine loaves."
+        },
+        {
+          "type": "paragraph",
+          "text": "In the middle of the commotion stood Mr. BoonWAP, directing three oven doors at once like a choirmaster while the washer-up from the scullery sat on an upturned flour tub drinking hot cider nobody had asked her to pour. Along the sunlit window ledge, early bees woken by the kiln warmth sat humming patiently against the glass."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "%{ember_pressure}@boof",
+        "air": "The room's charge climbs faster than the flues can pull, and the hat still hovers untouched."
+      },
+      "data-motif": "hat",
+      "climate": {
+        "tempo": "night",
+        "tint": "hearth",
+        "hook": "ember-pressure"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof paced a slow circle around the center brick pier, reading the room’s temperature through the pads of her paws. Every neighbour from the last eleven chambers seemed to have wandered in for a moment’s warmth: the porter with dry sleeves, Ida Bell and Noor from the night school, the lockkeeper smelling of canal oak, even the oldest glazier carrying one unpriced windowpane for a serving tray.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "The ambient charge inside the domed vault rose beat by beat — yeast pushing against lids, oak embers ticking louder, berry juice bubbling over crust edges in amber beads. Every wall hummed like a kettle two seconds before its whistle."
+        },
+        {
+          "type": "paragraph",
+          "text": "Beside the central oven door stood the figure in plain lines, watching the crust turn gold. Above his circle head, the black bowler hat still floated at its exact quiet distance, refusing to settle even here. Whatever waited for the Turning of the Year had not yet landed.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{feast_eve}@the_land",
+        "air": "Boof nudges the damper latch before a crust can scorch, and the first fork rings out in the plaza."
+      },
+      "data-motif": "hearth",
+      "climate": {
+        "tempo": "night",
+        "tint": "archive",
+        "hook": "feast-eve"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Two heartbeats before the great central pie could catch along its rim, Boof stepped calmly forward and nudged the brass vent lever with her nose. The high damper swung open with {{damper-sound}}, sending a bright ribbon of sweet berry steam curling straight out over the plaza roofs.",
+          "slots": {
+            "damper-sound": {
+              "clock": "minute",
+              "variants": [
+                "a clean iron clack",
+                "a warm brass sigh",
+                "a soft brick thrum",
+                "a crisp metallic ring"
+              ]
+            }
+          }
+        },
+        {
+          "type": "bracework",
+          "spw": "{yeast_rise & open_vent}",
+          "gloss": "A body held at full charge: keep the warmth inside until the crust sets, then unlatch the vent before anything scorches.",
+          "maker": "the bakehouse vault"
+        },
+        {
+          "type": "paragraph",
+          "text": "Out in the twilight plaza, somebody tapped a brass fork three times against a water glass. The waiting clowns beamed, the mimes stepped off their invisible racks, and the bakers hoisted the long peels onto their shoulders. The feast was ready to walk outside.",
+          "lean": "boon"
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bonk City's brick bakehouse vault shares a back flue with the bonk-kiln; on Feast Eve, every ingredient gathered across Book Two simmers together under its arches."
+      },
+      {
+        "description": "Hungry clowns wait outside the bakehouse arch in polite single file while off-duty mimes lean invisibly against imaginary warming racks inside."
+      },
+      {
+        "description": "Even inside the charged warmth of the vault, the figure's bowler hat stays unsettled until the Great Table gathers in Chapter Twenty-Six."
+      }
+    ]
+  },
+  "table": {
+    "place": "The crowded brick bakehouse vault on Feast Eve: twin oak-fired hearths glowing red-gold, billowing berry steam, rising yeast tubs, stacked peels, and an open archway onto the twilight plaza.",
+    "light": "Deep ember orange reflected off vaulted brick, catching warm hearth-drift and golden crust steam.",
+    "people": [
+      {
+        "name": "the head baker",
+        "want": "forty pies out of the brick mouths without a single scorched rim",
+        "voice": "flour to the elbows, counts oven seconds in his head"
+      },
+      {
+        "name": "the polite clown captain",
+        "want": "every clown kept strictly outside the threshold until the first fork chimes",
+        "voice": "whispers urgently while hiding three spare napkins"
+      },
+      {
+        "name": "the washer-up (off duty)",
+        "want": "to finish her mug of hot cider before anyone remembers where the towels live",
+        "voice": "relaxed, smiling, refuses to rise from the flour tub"
+      }
+    ],
+    "hooks": [
+      "The shared flue between the bakehouse and the bonk-kiln has trapped too much ember pressure; release the high damper before the sugar glass melts.",
+      "Someone misplaced Mr. BaneWAP's small jar of bitter jam; find it before the bakers glaze the main pie too sweet to hold its crust.",
+      "Early bees woken by the kiln warmth have settled on the oven latch; persuade them onto a saucer of warm syrup without losing a minute."
+    ],
+    "encounters": [
+      "Yeast carbonation pops the wooden lid off a dough trough with a cheerful drum-note.",
+      "A mime leans against thin air right where a baker meant to set a cooling rack, forcing a graceful unspoken negotiation.",
+      "Warm hearth-drift falls softly from the brick vault like toasted snow.",
+      "Two polite clowns peek around the arch, bow simultaneously, and step back three paces.",
+      "Early bees hum a tight warm chord along the sunlit window glass.",
+      "The first brass fork chime echoes across the plaza, and every tin in the vault seems to lift half an ounce."
+    ],
+    "finds": [
+      {
+        "wonder": "hearth-drift",
+        "use": "Catch a pinch of warm vault-snow in a pocket; it keeps cold fingers steady through an entire winter crossing."
+      },
+      {
+        "wonder": "early-bees",
+        "use": "Set a warm saucer by a shut door; their steady hum tells you exactly when a room is ready to open."
+      }
+    ],
+    "bracework": {
+      "spw": "{yeast_rise & open_vent}",
+      "does": "Holds a crowded room's energy right at peak warmth without boiling over until the moment the door opens.",
+      "costs": "Wait one beat too long to touch the damper and the whole vault smells faintly of singed crust."
+    },
+    "question": "How do you tell the exact breath between letting a thing finish rising and letting it scorch?"
+  }
+}

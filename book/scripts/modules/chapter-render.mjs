@@ -807,7 +807,7 @@ function renderTurn(h, next, withBase) {
   const stone = next.wraps && next.upcoming ? stoneDay(next.upcoming.date) : '';
   const kicker = stone
     ? `${chapterOrdinal(next.upcoming.chapter)} is set ${stone} · until then, begin again`
-    : next.wraps ? 'The serial continues · begin again' : 'Turn the page';
+    : next.wraps ? 'Begin again · Book One' : 'Turn the page';
   const link = h('a', {
     className: 'chapter-turn-link',
     href: withBase(next.href),

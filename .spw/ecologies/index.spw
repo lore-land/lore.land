@@ -36,15 +36,15 @@
   c13: { title: "The Shell-Shaped Door" book: 1 ring: 13 construct: "^" status: "live" &ecology: ~"./13/ecology.spw" }
   c14: { title: "The Thursday Nobody Kept" book: 2 ring: 1 construct: "~" status: "live" &ecology: ~"./14/ecology.spw" }
   c15: { title: "Pupil, Parcel, or Door" book: 2 ring: 2 construct: "#" status: "live" &ecology: ~"./15/ecology.spw" }
-  c16: { title: "The Second Place" book: 2 ring: 3 construct: "." status: "seeded" &ecology: ~"./16/ecology.spw" }
-  c17: { title: "Ledger of Unasked Questions" book: 2 ring: 4 construct: "?" status: "planned" &ecology: ~"./17/ecology.spw" }
-  c18: { title: "Flour in the Bell-Tower" book: 2 ring: 5 construct: "!" status: "planned" &ecology: ~"./18/ecology.spw" }
-  c19: { title: "The Priced Window" book: 2 ring: 6 construct: "*" status: "planned" &ecology: ~"./19/ecology.spw" }
-  c20: { title: "Two Springs Under the Sill" book: 2 ring: 7 construct: "&" status: "planned" &ecology: ~"./20/ecology.spw" }
-  c21: { title: "At the Nose of the Work" book: 2 ring: 8 construct: "@" status: "planned" &ecology: ~"./21/ecology.spw" }
-  c22: { title: "Through the Chute With No Receipt" book: 2 ring: 9 construct: "<>" status: "planned" &ecology: ~"./22/ecology.spw" }
-  c23: { title: "Rehearsal of the Night School" book: 2 ring: 10 construct: "()" status: "planned" &ecology: ~"./23/ecology.spw" }
-  c24: { title: "Four Windows in One Wall" book: 2 ring: 11 construct: "[]" status: "planned" &ecology: ~"./24/ecology.spw" }
-  c25: { title: "The Warm Hearth Before the Feast" book: 2 ring: 12 construct: "{}" status: "planned" &ecology: ~"./25/ecology.spw" }
-  c26: { title: "The Feast of the Uneven Slice" book: 2 ring: 13 construct: "^" status: "planned" &ecology: ~"./26/ecology.spw" }
+  c16: { title: "The Second Place" book: 2 ring: 3 construct: "." status: "live" &ecology: ~"./16/ecology.spw" }
+  c17: { title: "Ledger of Unasked Questions" book: 2 ring: 4 construct: "?" status: "live" &ecology: ~"./17/ecology.spw" }
+  c18: { title: "Flour in the Bell-Tower" book: 2 ring: 5 construct: "!" status: "live" &ecology: ~"./18/ecology.spw" }
+  c19: { title: "The Priced Window" book: 2 ring: 6 construct: "*" status: "live" &ecology: ~"./19/ecology.spw" }
+  c20: { title: "Two Springs Under the Sill" book: 2 ring: 7 construct: "&" status: "live" &ecology: ~"./20/ecology.spw" }
+  c21: { title: "At the Nose of the Work" book: 2 ring: 8 construct: "@" status: "live" &ecology: ~"./21/ecology.spw" }
+  c22: { title: "Through the Chute With No Receipt" book: 2 ring: 9 construct: "<>" status: "live" &ecology: ~"./22/ecology.spw" }
+  c23: { title: "Rehearsal of the Night School" book: 2 ring: 10 construct: "()" status: "live" &ecology: ~"./23/ecology.spw" }
+  c24: { title: "Four Windows in One Wall" book: 2 ring: 11 construct: "[]" status: "live" &ecology: ~"./24/ecology.spw" }
+  c25: { title: "The Warm Hearth Before the Feast" book: 2 ring: 12 construct: "{}" status: "live" &ecology: ~"./25/ecology.spw" }
+  c26: { title: "The Feast of the Uneven Slice" book: 2 ring: 13 construct: "^" status: "live" &ecology: ~"./26/ecology.spw" }
 ]

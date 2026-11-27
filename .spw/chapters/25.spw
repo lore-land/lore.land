@@ -1,0 +1,120 @@
+# Chapter 25 Canon Reference
+# Generated from /book/chapter/25/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_25
+#:chapter-canon #!reference
+
+^[chapter/25]{
+  title: "The Warm Hearth Before the Feast"
+  description: "Chapter 25 of Lore.Land: The Warm Hearth Before the Feast. Beneath the glowing brick arches of the great bakehouse vault, every ingredient gathered across Book Two — boonberries, smoked boneberries, a sharp pinch of orchard jam, sifted f..."
+  mood: "boon"
+  period: "winter"
+  chapter_path: "/book/chapter/25/"
+}
+
+$[chapter/25/made_of]{
+  spell: ^chapter[25]{
+    .rooms[ &{bakehouse_vault}@baker ~{warming_rack}@boonwap %{ember_pressure}@boof
+      .{feast_eve}@the_land ]
+    @told_by[narrator boonberry boof reflection]
+    $steam $flour $oak
+    =palette[hearth_vault]
+    ~berries{ boonberry $boneberry[roast_chestnut_and_sage] }
+  }
+  rooms: "Four rooms: four { } rooms; one kept by baker, the rest by Mr. BoonWAP, Boof and the land."
+  told_by: "Told by the narrator, the boonberries, Boof and the record."
+  made_of: "Made most of steam and warmth, then flour, then oak and frame."
+  palette: "Its palette is hearth vault, earned a layer at a time: warm brick glow, rising yeast cream, and oak ember red before the latch opens."
+  berries: "Here boonberries foresee; a boneberry in this chapter tastes of roast chestnut and sage."
+}
+
+&[chapter/25/routes]{
+  web: "/book/chapter/25/"
+  timeline: "/book/timeline.html#chapter-25"
+  motif: ~[motif/chapter-25]{optional}
+}
+
+^[chapter/25/spine]{
+  =prev{ ~".spw/chapters/24.spw#chapter_24" }
+  =next{ ~".spw/chapters/26.spw#chapter_26" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; the boonberries kindle; Boof pads in on a thread of scent; the reflection reads back by candlelight"
+}
+
+^[chapter/25/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "Under One Vault"
+    room: &{bakehouse_vault}@baker
+    air: "Oak embers, rising yeast carbonation, and every ingredient from eleven chambers simmering under one arch."
+    excerpt: "An hour before dusk on the Turning of the Year, everything unfinished in Book Two landed under one curved brick ceiling: the great bakehouse vault whose back flue warmed the bonk-kiln next door. Inside, oak embers hum..."
+    route: ^[chapter/25/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/25.png"
+    route: ^[chapter/25/s02]{open}
+  ]
+  s03: <
+    handle: "custom-boonberry/03"
+    type: "custom-boonberry"
+    room: ~{warming_rack}@boonwap
+    air: "Hungry clowns wait outdoors with astonishing manners while mimes lean invisibly against warm air."
+    excerpt: "Outside the wide arched doorway, forty hungry clowns stood in a remarkably orderly queue on the winter flagstones, hats tucked under their arms, sniffing the berry steam without jostling a single elbow. Not one of the..."
+    route: ^[chapter/25/s03]{open}
+  >
+  s04: <
+    handle: "custom-boof/04"
+    type: "custom-boof"
+    room: %{ember_pressure}@boof
+    air: "The room's charge climbs faster than the flues can pull, and the hat still hovers untouched."
+    excerpt: "Boof paced a slow circle around the center brick pier, reading the room’s temperature through the pads of her paws. Every neighbour from the last eleven chambers seemed to have wandered in for a moment’s warmth: the p..."
+    route: ^[chapter/25/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{feast_eve}@the_land
+    air: "Boof nudges the damper latch before a crust can scorch, and the first fork rings out in the plaza."
+    excerpt: "Two heartbeats before the great central pie could catch along its rim, Boof stepped calmly forward and nudged the brass vent lever with her nose. The high damper swung open with {{damper-sound}}, sending a bright ribb..."
+    route: ^[chapter/25/s05]{open}
+  >
+]
+
+&[chapter/25/cast]{
+  boonberry: <
+    register: "lantern-fruit of the grove; kindles wherever a phrase is repeated until it hardens into law"
+    .enters: "custom-boonberry/03"
+  >
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/25/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/25/lore]{
+  notes: [
+    "Bonk City's brick bakehouse vault shares a back flue with the bonk-kiln; on Feast Eve, every ingredient gathered across Book Two simmers together under its arches."
+    "Hungry clowns wait outside the bakehouse arch in polite single file while off-duty mimes lean invisibly against imaginary warming racks inside."
+    "Even inside the charged warmth of the vault, the figure's bowler hat stays unsettled until the Great Table gathers in Chapter Twenty-Six."
+  ]
+}
+
+~[chapter/25/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

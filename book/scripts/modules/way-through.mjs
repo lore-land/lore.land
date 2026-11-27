@@ -37,7 +37,7 @@ const WAY_KEY = 'lore.way.v1';
 const VISIT_KEY = 'lore.way.visit';
 export const ASKED_KEY = 'lore.wonders.asked.v1';
 const PROGRESS_KEY = 'lore.chapter.progress.v1';
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 const words = (n) => `Chapter ${WORDS[n] || n}`;
 const pad = (n) => String(n).padStart(2, '0');
 const hrefOf = (n) => `/book/chapter/${pad(n)}/`;
@@ -296,7 +296,7 @@ function reasonFold(n, data) {
 let F = null;
 let forksPromise = null;
 const loadForks = () => {
-  forksPromise = forksPromise || import('./forks.mjs?v=2026_11_13.B').then((m) => { F = m; return m; }).catch(() => null);
+  forksPromise = forksPromise || import('./forks.mjs?v=2026_11_16.B').then((m) => { F = m; return m; }).catch(() => null);
   return forksPromise;
 };
 

@@ -12,8 +12,8 @@
       "surface": "stone.lore.land",
       "kind": "release",
       "view": "stone",
-      "title": "The next stone",
-      "says": "When the next chapter is set, and where it is once it has come."
+      "title": "The set stones",
+      "says": "Where the two books stand, and where to open the latest chamber."
     },
     { "surface": "ringtide.lore.land", "kind": "promo", "view": "promo", "title": "The Ring Tide",
       "opens": "2026-11-12", "closes": "2026-11-14",

@@ -1,0 +1,335 @@
+{
+  "chapterNumber": 18,
+  "title": "Flour in the Bell-Tower",
+  "logline": "Up steep wooden stairs dusted in feast flour, one misplaced step lifts a white cloud that muffles Bonk City's loudest bell into an irreversible hush.",
+  "epigraph": "A bell does not need to ring to make the whole square look up.",
+  "inWhich": "one misplaced step fills the belfry with flour, and the city’s loudest bell strikes in white silence",
+  "description": "Chapter 18 of Lore.Land: Flour in the Bell-Tower. High above Bonk City's square, porters stack dry feast flour beneath the belfry louvres where chimney-swifts and rehearsal moths shelter. One loose plank turns the whole timber loft into suspended white haze, a mime leans against an invisible bell rope, and the great bronze clapper lands in soft flour-hushed silence.",
+  "mood": "labyrinth",
+  "period": "winter",
+  "pillars": [
+    "wonder",
+    "worldbuilding",
+    "intrigue"
+  ],
+  "topics": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 17 · Ledger of Unasked Questions",
+      "href": "/book/chapter/17/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 19 · The Priced Window",
+      "href": "/book/chapter/19/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "flour",
+        "bell",
+        "belfry",
+        "clapper",
+        "louvres",
+        "chimney-swifts",
+        "rehearsal moths",
+        "load-bells"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "strike",
+        "hour",
+        "rope",
+        "mime",
+        "silence",
+        "haze"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "ears",
+        "nose",
+        "paws"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "porter",
+        "sacks",
+        "plank",
+        "rafters",
+        "watches"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Steep Timber Stair",
+      "room": {
+        "spw": "![belfry_stair]@porter",
+        "air": "Ninety narrow oak treads coated in fine white meal, rising into bright slats of winter sun."
+      },
+      "data-motif": "flour",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "belfry-stair"
+      },
+      "scene": {
+        "vantage": "looking up a steep spiraling oak stairway dusted white with bakery flour toward slatted belfry louvres",
+        "light": "sharp shafts of low amber afternoon sun slicing through suspended flour dust",
+        "scent": "sweet sifted wheat, dry oak dust, old hemp rope, cold bronze, woodsmoke from the chimney-swifts",
+        "edges": [
+          "porters hoisting spare sacks of feast flour to the dry upper loft below the great bell",
+          "chimney-swifts wheeling in and out of the timber louvres carrying small loops of street noise",
+          "small brass load-bells hanging quietly from the tie-beams to warn when the loft takes too many sacks",
+          "crisp black footprints of a plain-line figure climbing without lifting a speck of flour"
+        ],
+        "hint": "steep timber belfry stairs coated in fine flour; golden shafts of light through louvres; stacked flour sacks beneath a great bronze bell; chimney-swifts banking in the white haze"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "After three sacks spoiled at the parcel gate, Bonk City’s porters moved the remaining feast flour to the driest room in town: the timber loft directly under the belfry louvres. Ninety narrow treads wound up the inside of the tower, every step powdered soft as {{step-powder}}.",
+          "slots": {
+            "step-powder": {
+              "clock": "hour",
+              "variants": [
+                "fresh chalk",
+                "winter rime",
+                "milled wheat",
+                "dry snow"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Small brass load-bells hung from the rafters on waxed twine — Bone.land joinery borrowed for the tower so the beams could ring softly if anyone stacked one sack too many. Above them hung the city’s great hour bell, cast thick enough to rattle teacups across three wards."
+        },
+        {
+          "type": "paragraph",
+          "text": "Chimney-swifts threaded the slatted louvres in quick dark arcs, carrying fragments of square-chatter higher than anyone meant them to go. Boof climbed patiently behind the porter’s heels, shaking white dust off her whiskers every tenth tread. Ahead of both of them, the plain-line figure climbed the center of the stair without smudging his ink."
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/18.png",
+        "alt": "Inside the timber belfry filled with swirling luminous flour haze: shafts of gold sun slice through wooden louvres around a swinging bronze bell; chimney-swifts bank near the rafters while the plain-line ink figure stands untouched in crisp black lines beside a mime leaning on an invisible rope.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Flour in the Bell-Tower: one misplaced step turns the hour into white silence."
+    },
+    {
+      "type": "custom-bonk",
+      "room": {
+        "spw": "!{flour_cloud}@the_land",
+        "air": "One loose board tips, and twenty pounds of sifted wheat become the room's whole weather."
+      },
+      "data-motif": "flour",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "ember",
+        "hook": "flour-cloud"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At the top landing, a single floorboard had worked its oak peg half an inch proud. Nobody had noticed it while stacking sacks. When a hurried apprentice bell-ringer stepped down hard on its lip to check the strike-cord, the far end kicked upward like a seesaw and tipped an open bin of pastry flour clean into the draft.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "The action was crisp and completely irreversible. In two breaths the belfry ceased to be a room with air in it and became a slow white lantern. Every shaft of sun through the louvres turned solid enough to lean a coat on. Rehearsal moths, woken early from the beams, spun drunken loops through the haze with tomorrow’s weather blurred across their wings."
+        },
+        {
+          "type": "paragraph",
+          "text": "The apprentice froze with one hand over his mouth. “Don’t touch the strike-cord,” the porter called from the stair, coughing softly. “Listen before you mend — let it settle first.”",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-echo",
+      "room": {
+        "spw": "@[silent_rope]@mime",
+        "air": "A mime pulls an invisible bell rope, and the real bronze clapper answers in thick white velvet."
+      },
+      "data-motif": "silence",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "teal",
+        "hook": "silent-rope"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Nobody touched the real strike-cord. Across the loft, however, a solitary mime who had wandered up from the square to escape a troupe rehearsal had already gripped an invisible rope with both white-gloved palms and leaned his whole weight backward at the exact second the clockwork tripped.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "The great bronze bell swung. Inside the thick white cloud, the heavy clapper met the lip — and instead of a brass roar that shook every roof in Bonk City, it landed with a soft, velvety {{bell-sound}}. A ring of pure flour puffed straight out of all four louvres at once, hanging above the square like a pale halo.",
+          "slots": {
+            "bell-sound": {
+              "clock": "minute",
+              "variants": [
+                "muffled thump",
+                "wool-wrapped knock",
+                "pillow-soft bump",
+                "hushed click"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "In the center of the white cloud, every person, sack, and beam wore a coat of pale meal — everyone except the figure in plain lines. Not a grain clung to him. He stood sharp black ink against the suspended whiteness, looking calmly up at the silent bell."
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{settled_loft}@boof",
+        "air": "Down in the square, everyone looks up at the missed chime and sets their watches together."
+      },
+      "data-motif": "flour",
+      "climate": {
+        "tempo": "night",
+        "tint": "archive",
+        "hook": "after-the-strike"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Down in the plaza, three hundred conversations stopped at once. People in Bonk City can talk through any brass chime without missing a comma, yet a single hour that fails to ring stops every boot on the cobbles. Heads tilted upward toward the pale halo drifting off the louvres.",
+          "lean": "boon"
+        },
+        {
+          "type": "bracework",
+          "spw": "!{dropped_heel & muffled_clapper}",
+          "gloss": "An action that cannot be undone turns loud brass into a pause everybody hears at once.",
+          "maker": "the belfry loft"
+        },
+        {
+          "type": "paragraph",
+          "text": "Half the square pulled out pocket watches and compared them while the white cloud drifted over the roofs; for the first time all winter, every watch in town agreed to the minute. Up in the loft, Boof sneezed twice, tapped the loose floorboard back into its mortise with one steady paw, and led the way down the dusty stairs."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bonk City stores its dry feast flour in the timber loft directly under the belfry louvres, guarded by Bone.land load-bells."
+      },
+      {
+        "description": "One loose floorboard launches a suspended flour cloud that muffles the great bronze bell into a soft white halo above the square."
+      },
+      {
+        "description": "Even inside thick airborne flour, not a grain clings to the figure drawn in plain black ink."
+      },
+      {
+        "description": "When the hour strikes in silence, every citizen in the square looks up and sets their watch to the same minute."
+      }
+    ]
+  },
+  "table": {
+    "place": "The timber belfry loft high above Bonk City square: ninety oak treads dusted in flour, slatted louvres letting in low sun, brass load-bells on twine, and a massive bronze hour bell.",
+    "light": "Solid golden shafts cutting across drifting white flour haze; crisp ink shadows where light refuses to scatter.",
+    "people": [
+      {
+        "name": "the apprentice bell-ringer",
+        "want": "the loft swept and the loose plank nailed before the feast warden inspects the sacks",
+        "voice": "flour-dusted eyebrows, speaks in hurried whispers"
+      },
+      {
+        "name": "the loft mime",
+        "want": "to rehearse pulling a rope that makes no noise at all",
+        "voice": "silent; gestures with astonishing precision toward rafters nobody else sees"
+      },
+      {
+        "name": "the tower porter",
+        "want": "the remaining dry sacks kept dry and off the tie-beams",
+        "voice": "steady, unhurried, listens to timber before lifting"
+      }
+    ],
+    "hooks": [
+      "The muffled four-o'clock puff drifted over the watchmakers' street and stopped seven pendulum clocks; trace which watch kept moving and why.",
+      "One of the brass load-bells has started ringing softly even though no new sacks were brought up the stair; find what invisible weight is leaning on the tie-beam.",
+      "Rehearsal moths dusted in flour have scattered illegible weather forecasts over the market; gather three clean wings before the baker sets tomorrow's ovens."
+    ],
+    "encounters": [
+      "A chimney-swift dives through the louvres carrying half a sentence overheard three alleys away.",
+      "A loose floorboard creaks; stepping lightly turns it into a hidden cache of old rope-tags.",
+      "The loft mime pulls an invisible cord and a very real draft slams the lower hatch.",
+      "Flour drifts through the sunbeams so thick that lanterns appear two yards closer than they are.",
+      "A load-bell chimes a single clear note when someone tells a boast too heavy for the beam.",
+      "Through the louvres, the whole square stops to watch a white ring float lazily across the rooftops."
+    ],
+    "finds": [
+      {
+        "wonder": "load-bells",
+        "use": "Hang one from any beam or bargain; it rings clearly the instant someone asks a structure to carry more than it agreed to."
+      },
+      {
+        "wonder": "chimney-swifts",
+        "use": "Whisper a short message near a warm flue at dusk; the swifts will drop it neatly one ward farther than your voice can reach."
+      }
+    ],
+    "bracework": {
+      "spw": "!{dropped_heel & muffled_clapper}",
+      "does": "Turns one noisy announcement into a brief, unmistakable hush that gets the entire square looking up together.",
+      "costs": "Everything in the room except plain ink wears a fine coat of white dust until morning."
+    },
+    "question": "What becomes audible only when the loudest bell in town misses its note?"
+  }
+}

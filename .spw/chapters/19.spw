@@ -1,0 +1,120 @@
+# Chapter 19 Canon Reference
+# Generated from /book/chapter/19/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_19
+#:chapter-canon #!reference
+
+^[chapter/19]{
+  title: "The Priced Window"
+  description: "Chapter 19 of Lore.Land: The Priced Window. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they can afford,..."
+  mood: "labyrinth"
+  period: "winter"
+  chapter_path: "/book/chapter/19/"
+}
+
+$[chapter/19/made_of]{
+  spell: ^chapter[19]{
+    .rooms[ *[tariff_pane]@glazier @[putty_frame]@glazier *{silver_trail}@boof
+      .{unpriced_glass}@the_land ]
+    @told_by[narrator mirror boof reflection]
+    $glass $ink $oak
+    =palette[priced_pane]
+    ~berries{ $boneberry[burnt_ends] }
+  }
+  rooms: "Four rooms: two [ ] windows and two { } rooms; two kept by glazier, the rest by Boof and the land."
+  told_by: "Told by the narrator, the mirror, Boof and the record."
+  made_of: "Made most of Bonk glass, then ink and line, then oak and frame."
+  palette: "Its palette is the priced pane, earned a layer at a time: cool window teal, linseed putty, and amber lantern-light clearing along a snail trail."
+  berries: "A boneberry in this chapter tastes of burnt ends."
+}
+
+&[chapter/19/routes]{
+  web: "/book/chapter/19/"
+  timeline: "/book/timeline.html#chapter-19"
+  motif: ~[motif/chapter-19]{optional}
+}
+
+^[chapter/19/spine]{
+  =prev{ ~".spw/chapters/18.spw#chapter_18" }
+  =next{ ~".spw/chapters/20.spw#chapter_20" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; the mirror turns its silver; Boof pads in on a thread of scent; the reflection reads back by candlelight"
+}
+
+^[chapter/19/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Glaziers’ Alley"
+    room: *[tariff_pane]@glazier
+    air: "Linseed putty, clinking small change, and chalk prices ticking upward by the unbroken hour."
+    excerpt: "Between the lantern market and the old kiln ran the glaziers’ alley, narrow enough that two umbrellas had to negotiate. Every shopfront leaned wooden easels into the lane, displaying framed panes fresh from cooling, s..."
+    route: ^[chapter/19/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/19.png"
+    route: ^[chapter/19/s02]{open}
+  ]
+  s03: <
+    handle: "custom-mirror/03"
+    type: "custom-mirror"
+    room: @[putty_frame]@glazier
+    air: "Every glazier peers only through panes they can afford, so half the alley stays unseen."
+    excerpt: "By custom in that alley, nobody looked through a pane they could not afford to replace. Apprentices squinted down the cheap cloudy squares near the gutter; master glaziers inspected the street through tall clear recta..."
+    route: ^[chapter/19/s03]{open}
+  >
+  s04: <
+    handle: "custom-boof/04"
+    type: "custom-boof"
+    room: *{silver_trail}@boof
+    air: "At dusk the pane-snails come out, grazing chalk numerals off the glass without scratching an inch."
+    excerpt: "When the glaziers shuttered their lamps and went indoors for supper, Boof stayed in the lane with her nose an inch from the lowest frame. She heard it before she saw it: a faint, patient grazing sound, quieter than {{..."
+    route: ^[chapter/19/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{unpriced_glass}@the_land
+    air: "By dawn the dearest pane in the alley is the clearest, worth nothing in coin and showing the whole street."
+    excerpt: "When the oldest glazier opened his shutters at first light, his most expensive pane stood completely blank of chalk. Through it he could see a cat on a wet sill, a bread cart turning the bend, Boof sitting calmly by t..."
+    route: ^[chapter/19/s05]{open}
+  >
+]
+
+&[chapter/19/cast]{
+  mirror: <
+    register: "a glass that returns the council’s procedure with the spell reversed"
+    .enters: "custom-mirror/03"
+  >
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/19/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/19/lore]{
+  notes: [
+    "In Bonk City's glaziers' alley, chalk tariffs rise every unbroken hour a pane survives, causing lantern light to catch and bend at every sticker corner."
+    "Glaziers peer only through glass within their purse, leaving neighbours standing side by side looking at different halves of the street."
+    "At dusk, translucent pane-snails crawl out of the mortar and graze chalk prices back into clear, unpriced glass."
+  ]
+}
+
+~[chapter/19/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

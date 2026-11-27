@@ -16,11 +16,11 @@
  * plainly (it holds for every chapter) and a door back into the carry.
  */
 
-import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_08.J';
+import { carryFor, projectionOn, setProjection, projectedGenre, describeLean, PIE_WORDS } from './pie-carries.mjs?v=2026_11_16.B';
 import { applyGenre, readGenre } from './lens-control.mjs?v=2026_11_16.B';
 import { readStory } from './story-directions.mjs?v=2026_11_16.B';
 
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);

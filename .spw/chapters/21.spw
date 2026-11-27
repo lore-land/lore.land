@@ -1,0 +1,116 @@
+# Chapter 21 Canon Reference
+# Generated from /book/chapter/21/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_21
+#:chapter-canon #!reference
+
+^[chapter/21]{
+  title: "At the Nose of the Work"
+  description: "Chapter 21 of Lore.Land: At the Nose of the Work. Seen entirely from Boof's own vantage fourteen inches above Bonk City's paving slabs, the civic lanes become a bright map of shoe polish, drain-grate steam, torch-ant detours, and dropped..."
+  mood: "path"
+  period: "winter"
+  chapter_path: "/book/chapter/21/"
+}
+
+$[chapter/21/made_of]{
+  spell: ^chapter[21]{
+    .rooms[ @{cobble_level}@boof &[three_scents]@boof @(under_table)@the_land
+      .{drain_steam}@boof ]
+    @told_by[boof narrator reflection]
+    $flour $steam $ink
+    =palette[cobble_nose]
+    ~berries{ boonberry $boneberry[burnt_ends] }
+  }
+  rooms: "Four rooms: two { } rooms, a [ ] window and a ( ) gathering; three kept by Boof, the rest by the land."
+  told_by: "Told by Boof, the narrator and the record."
+  made_of: "Made most of flour, then steam and warmth, then ink and line."
+  palette: "Its palette is cobble level, earned a layer at a time: wet granite setts, grate steam, and teal puddle sky seen fourteen inches up."
+  berries: "Here boonberries foresee; a boneberry in this chapter tastes of burnt ends."
+}
+
+&[chapter/21/routes]{
+  web: "/book/chapter/21/"
+  timeline: "/book/timeline.html#chapter-21"
+  motif: ~[motif/chapter-21]{optional}
+}
+
+^[chapter/21/spine]{
+  =prev{ ~".spw/chapters/20.spw#chapter_20" }
+  =next{ ~".spw/chapters/22.spw#chapter_22" }
+  weave: "<> [] <> {} <>"
+  reading: "Boof pads in on a thread of scent; the plate catches the light; Boof doubles back along the scent-thread; the telling gathers; the reflection reads back by candlelight"
+}
+
+^[chapter/21/sections][
+  s01: <
+    handle: "custom-boof/01"
+    type: "custom-boof"
+    room: @{cobble_level}@boof
+    air: "Fourteen inches off the paving slabs: tallow polish, drain steam, and the whole town in plain boots."
+    excerpt: "At six feet up, Bonk City is mostly gables, speeches, and people holding their hats in the breeze. At fourteen inches up — which is where Boof keeps her nose and where the actual work of the town lands — the paving sl..."
+    route: ^[chapter/21/s01]{open}
+  >
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/21.png"
+    route: ^[chapter/21/s02]{open}
+  ]
+  s03: <
+    handle: "custom-boof/03"
+    type: "custom-boof"
+    room: &[three_scents]@boof
+    air: "Warm crust, cold canal iron, and dry ink paper braided cleanly along the kerb."
+    excerpt: "Boof did not chase one scent when three were running together. Along the wet kerb she read them side by side without tangling a thread: hot berry crust pulling toward the bakehouse, cold wet iron still dripping off th..."
+    route: ^[chapter/21/s03]{open}
+  >
+  s04: {
+    handle: "section/04"
+    type: "section"
+    title: "Under the Tall Tables"
+    room: @(under_table)@the_land
+    air: "Above the linen, everyone faces the podium. Beneath it, shoes point where their owners actually mean to go."
+    excerpt: "In the guild yard, three tall trestle tables had been set up for the feast committee. From above the cloth came dignified voices negotiating lantern spacing, seating order, and who ought to carry the first platter. Fr..."
+    route: ^[chapter/21/s04]{open}
+  }
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{drain_steam}@boof
+    air: "She keeps it literal, never coy: noses trust what leaves a trail on real stone."
+    excerpt: "Boof paused beside a warm iron grate where cinnamon vapour drifted up from the kitchens below. A puddle near her left paw held a clear blue triangle of winter sky and the tiny rim of a floating bowler hat turning the ..."
+    route: ^[chapter/21/s05]{open}
+  >
+]
+
+&[chapter/21/cast]{
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/01"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/21/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 2
+}
+
+#[chapter/21/lore]{
+  notes: [
+    "Seen from Boof's height fourteen inches above Bonk City's cobblestones, guild boots, dropped berry crumbs, and drain-grate steam map the city more honestly than its speeches."
+    "Torch-ants keep winter detour trails running around heavy porters' boots along warm mortar seams."
+    "Under the feast committee's tall tables, tucked receipts and flour-dusted toes point straight toward the bakehouse and cellar chute."
+  ]
+}
+
+~[chapter/21/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

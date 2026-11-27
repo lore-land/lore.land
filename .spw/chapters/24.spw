@@ -1,0 +1,120 @@
+# Chapter 24 Canon Reference
+# Generated from /book/chapter/24/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_24
+#:chapter-canon #!reference
+
+^[chapter/24]{
+  title: "Four Windows in One Wall"
+  description: "Chapter 24 of Lore.Land: Four Windows in One Wall. Inside a partitioned judging booth smelling of paint thinner and squeaking hinges, four municipal judges watch four separate masking shutters overlooking one courtyard. Each proves an ai..."
+  mood: "labyrinth"
+  period: "winter"
+  chapter_path: "/book/chapter/24/"
+}
+
+$[chapter/24/made_of]{
+  spell: ^chapter[24]{
+    .rooms[ =[shutter_wall]@judge ?[four_shutters]@the_land ![double_shutter]@boof
+      .[open_courtyard]@judge ]
+    @told_by[narrator paradox game reflection]
+    $brass $oak $ink
+    =palette[four_shutters]
+    ~berries{ $boneberry[salted_flatbread] }
+  }
+  rooms: "Four rooms: four [ ] windows; two kept by judge, the rest by the land and Boof."
+  told_by: "Told by the narrator, a paradox, the fold and the record."
+  made_of: "Made most of brass and bronze, then oak and frame, then ink and line."
+  palette: "Its palette is four shutters, earned a layer at a time: partitioned booth stone, crimson judge wax, and four quarters of one courtyard."
+  berries: "A boneberry in this chapter tastes of salted flatbread."
+}
+
+&[chapter/24/routes]{
+  web: "/book/chapter/24/"
+  timeline: "/book/timeline.html#chapter-24"
+  motif: ~[motif/chapter-24]{optional}
+}
+
+^[chapter/24/spine]{
+  =prev{ ~".spw/chapters/23.spw#chapter_23" }
+  =next{ ~".spw/chapters/25.spw#chapter_25" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; a paradox braids the path; the game declares its enchanted rules; the reflection reads back by candlelight"
+}
+
+^[chapter/24/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Partitioned Booth"
+    room: =[shutter_wall]@judge
+    air: "Four wooden partitions, four hinged masking shutters, and fresh paint thinner stinging every nose."
+    excerpt: "Before Bonk City could declare the courtyard ready for the Turning of the Year, four feast judges sat down inside the newly painted viewing booth along the yard wall. The booth smelled briskly of turpentine paint thin..."
+    route: ^[chapter/24/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/24.png"
+    route: ^[chapter/24/s02]{open}
+  ]
+  s03: <
+    handle: "custom-paradox/03"
+    type: "custom-paradox"
+    room: ?[four_shutters]@the_land
+    air: "One lane crosses behind the wall; four boxes invent four completely incompatible universes."
+    excerpt: "At that exact minute, an ordinary courtyard errand occurred: a porter carried a basket of warm crusts past a polite clown holding a dishcloth, Boof trotted past checking the cobbles, and the figure in plain lines walk..."
+    route: ^[chapter/24/s03]{open}
+  >
+  s04: <
+    handle: "custom-game/04"
+    type: "custom-game"
+    room: ![double_shutter]@boof
+    air: "Boof leans her shoulder against two latches, and crossing shadows put the courtyard back in one piece."
+    excerpt: "Hearing the squeak of four furious quills and smelling four flavours of municipal panic through the cracks, Boof trotted round the side step of the gallery, slipped inside the open back door, and leaned her sturdy dar..."
+    route: ^[chapter/24/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .[open_courtyard]@judge
+    air: "Every quarter happened, none of them was the lane, and all four scorecards go into one honest stack."
+    excerpt: "Judge One picked up her scorecard, looked out across the double opening, and set her pen down beside {{ink-pot}}. “Every word I wrote happened,” she admitted, rubbing a smudge of turpentine off her thumb. “And every w..."
+    route: ^[chapter/24/s05]{open}
+  >
+]
+
+&[chapter/24/cast]{
+  paradox: <
+    register: "twin truths braided into one rope, pulling opposite ways"
+    .enters: "custom-paradox/03"
+  >
+  game: <
+    register: "rules that enchant only the players who notice them"
+    .enters: "custom-game/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/24/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/24/lore]{
+  notes: [
+    "Bonk City's partitioned judging booth cuts one courtyard into four separate masking windows so no judge is distracted by another's square."
+    "Watching one quarter each, four judges prove four cleanly opposite laws about the same quiet walk across the cobblestones."
+    "Opening two masking shutters together throws crossing shadows across the scorecards and reveals the single unbroken courtyard."
+  ]
+}
+
+~[chapter/24/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

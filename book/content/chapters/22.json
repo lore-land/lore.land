@@ -1,0 +1,333 @@
+{
+  "chapterNumber": 22,
+  "title": "Through the Chute With No Receipt",
+  "logline": "Behind the guild basements, a sloped copper parcel chute turns every bundle into a description of what someone else packed, while receipts blow backward up the return duct.",
+  "epigraph": "Never camp inside a chute; gravity takes the bundle, and the draft keeps the paper.",
+  "inWhich": "parcels slide down a copper chute as descriptions of someone else’s bundle while receipts blow up the return duct",
+  "description": "Chapter 22 of Lore.Land: Through the Chute With No Receipt. Twisting behind Bonk City's kitchen walls and guild cellars runs a riveted copper parcel chute humming with brass static and warm cinnamon air. Cellar mice ride ribbon ends, the Fool makes a single sideways cameo through an unmarked hatch, bundles emerge described as somebody else's packing, and pink receipts sail straight back up the parallel return duct.",
+  "mood": "labyrinth",
+  "period": "winter",
+  "pillars": [
+    "wonder",
+    "intrigue",
+    "worldbuilding"
+  ],
+  "topics": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 21 · At the Nose of the Work",
+      "href": "/book/chapter/21/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 23 · Rehearsal of the Night School",
+      "href": "/book/chapter/23/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "chute",
+        "duct",
+        "parcel",
+        "receipt",
+        "receipts",
+        "twine",
+        "hatch",
+        "porter"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "copper",
+        "brass",
+        "gate-pigeons",
+        "sliver tin",
+        "ribbon",
+        "mice"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "ears",
+        "paws",
+        "nose"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "cinnamon",
+        "Fool",
+        "bundle",
+        "kitchen",
+        "hat"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Copper Drop",
+      "room": {
+        "spw": "~<copper_chute>@porter",
+        "air": "Riveted copper humming with static, warm cinnamon air, and two gate-pigeons asleep on the upper latch."
+      },
+      "data-motif": "receipt",
+      "climate": {
+        "tempo": "day",
+        "tint": "ember",
+        "hook": "copper-drop"
+      },
+      "scene": {
+        "vantage": "inside a low stone cellar beside a wide sloped copper chute riveted behind the bakehouse kitchens",
+        "light": "warm copper reflections from a hanging tallow lamp, static sparks tiny along sliding parcel twine",
+        "scent": "hot rubbed copper, cinnamon steam, brown butcher paper, cellar stone, wax twine",
+        "edges": [
+          "a gleaming sloped copper parcel chute curving out of the stone ceiling into a woven landing hamper",
+          "a narrow parallel brass return duct whistling upward with pink receipt slips",
+          "two plump gate-pigeons snoozing peacefully on top of the brass intake latch",
+          "the plain-line figure standing calmly beside the lower hatch while his floating hat hovers clear of the copper lip"
+        ],
+        "hint": "a vaulted cellar behind guild kitchens with a gleaming sloped copper parcel chute and a parallel brass return duct blowing pink receipts upward; ribbon-riding cellar mice; a plain-line ink figure waiting by the lower hatch under a floating bowler hat"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Behind Bonk City’s kitchens and guild basements twisted the old copper parcel chute, riveted together by tinsmiths who believed stairs were an insult to flour. Warm cinnamon air rolled down its polished throat, charged with dry {{chute-air}} that made Boof’s ear-tufts lift a fraction of an inch.",
+          "slots": {
+            "chute-air": {
+              "clock": "hour",
+              "variants": [
+                "brass static",
+                "spiced draft",
+                "peppery warmth",
+                "oven breeze"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Up by the alley intake, two gate-pigeons had migrated off the parcel gate’s counterweight to nap on the warm copper latch, riding it lightly whenever a crate pushed through. Nobody woke them. Below in the cellar, the porter stood beside the woven landing hamper holding both receipts from the morning’s deliveries and looking deeply unconvinced."
+        },
+        {
+          "type": "paragraph",
+          "text": "Beside the main copper drop ran a narrow parallel return duct that roared softly upward like a chimney draft. Every time a baker dropped a signed receipt in at the bottom, the duct snatched it away and spat it back out three roofs higher, where nobody was expecting paper.",
+          "lean": "bane"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/22.png",
+        "alt": "Cutaway cellar study of the sloped copper parcel chute behind Bonk City's kitchens: brown-wrapped bundles sliding downward while cellar mice ride trailing ribbon ends, pink receipts blowing upward through the parallel return duct, and the plain-line figure standing calmly by the lower hatch under his floating hat.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Through the Chute With No Receipt: gravity moves parcels down, and the return duct blows paper back up."
+    },
+    {
+      "type": "custom-fool",
+      "room": {
+        "spw": "!<unmarked_hatch>@fool",
+        "air": "A brief passing streak of bells and ribbon ends: you go through a chute, you never camp in it."
+      },
+      "data-motif": "chute",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "unmarked-hatch"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Halfway along the cellar wall, an unmarked brass inspection hatch clacked open on its own. For precisely two seconds the Boonberry Fool slid straight past inside the copper elbow, heels first, balancing a saucer on one boot and tipping an invisible cap to three cellar mice who were riding a trailing ribbon end like a sled.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "“Never camp inside a passage!” the Fool called over his shoulder as copper static lifted his collar. Before the porter could reach the latch, the Fool had shot cleanly out the far bend toward the canal vaults, leaving only a stray bell-note ringing in the brass.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "He did not come back, and nobody expected him to; this season belonged to heavier tables and plainer lines, and even the Fool knew when a cameo was enough."
+        }
+      ]
+    },
+    {
+      "type": "custom-labyrinth",
+      "room": {
+        "spw": "*<parcel_bundle>@the_land",
+        "air": "Every bundle packed upstairs lands downstairs as a clean description of somebody else's parcel."
+      },
+      "data-motif": "receipt",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "teal",
+        "hook": "parcel-bundle"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Then the feast supplies began to drop. A laundress two alleys up dropped a neatly tied bundle of clean table napkins into the copper throat. When it thumped into the cellar hamper, the twine still held, yet the butcher paper opened on a tidy handwritten slip describing three pounds of smoked salt and a brass sliver tin packed by a joiner across the plaza.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "The next bundle — sent as a jar of orchard jam — arrived wrapped around a careful inventory of lamp-wicks and two yards of blue chalk. Nothing had been stolen; downstairs, every parcel simply became the honest description of what another neighbour was packing at the same moment."
+        },
+        {
+          "type": "paragraph",
+          "text": "The cellar mice hopped cheerfully off the ribbon ends and curled up inside the hamper while the porter turned the paper over twice. “Promise the next stone, not the road,” he muttered, eyeing the whistling return duct. “At least when you carry a tin by hand, it stays a tin.”",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{return_duct}@porter",
+        "air": "The porter stops chasing pink slips up the draft and carries the warm pie tin by hand."
+      },
+      "data-motif": "receipt",
+      "climate": {
+        "tempo": "night",
+        "tint": "archive",
+        "hook": "return-duct"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "One last pink receipt fluttered out of the return duct, danced on the warm draft, and settled gently on Boof’s broad dark brow. She shook it off onto the stone beside the hamper. It had no sender, no weight, and {{slip-line}} written neatly across its face.",
+          "slots": {
+            "slip-line": {
+              "clock": "minute",
+              "variants": [
+                "received in passing",
+                "carried without delay",
+                "kept warm below",
+                "delivered by hand"
+              ]
+            }
+          }
+        },
+        {
+          "type": "bracework",
+          "spw": "~<copper_chute & return_duct>",
+          "gloss": "A capsule that moves weight one way and paper the other: pass through quickly, and carry by hand what cannot bear translation.",
+          "maker": "the cellar tinsmiths"
+        },
+        {
+          "type": "paragraph",
+          "text": "The porter latched the copper hatch shut, picked up a warm pie tin in both calloused hands, and nodded toward the cellar stairs. Beside him, the figure caught a drifting loop of parcel twine on his shorter right arm, tied it in a single clean bow around the hamper handle, and stepped silently out into the dusk."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "A sloped copper parcel chute winds behind Bonk City's kitchens; bundles dropped inside emerge as clean descriptions of what a neighbour packed at the same moment."
+      },
+      {
+        "description": "A parallel brass return duct blows receipts straight back upward into the roofs, defeating anyone who tries to paper the chute's deliveries."
+      },
+      {
+        "description": "The Boonberry Fool makes his only brief cameo of Book Two sliding heels-first past an unmarked cellar hatch, reminding everyone never to camp inside a passage."
+      }
+    ]
+  },
+  "table": {
+    "place": "A low vaulted guild cellar behind Bonk City's kitchens, crossed by a gleaming sloped copper parcel chute and a whistling parallel brass return duct.",
+    "light": "Warm copper reflections from a single tallow lantern, punctured by tiny static sparks whenever twine slides past the bend.",
+    "people": [
+      {
+        "name": "the cellar porter",
+        "want": "a warm pie tin delivered to the bakehouse without turning into an inventory of lamp-wicks",
+        "voice": "gruff, practical, deeply skeptical of pipes"
+      },
+      {
+        "name": "an unseen tinsmith upstairs",
+        "want": "the return duct unblocked so her lunch slip stops circling the third floor",
+        "voice": "echoes hollowly down the copper elbow"
+      },
+      {
+        "name": "the cellar mice",
+        "want": "loose ribbon ends and undisturbed cinnamon crumbs inside the hamper",
+        "voice": "tiny rhythmic squeaks timed to the chute thumps"
+      }
+    ],
+    "hooks": [
+      "A vital bakehouse spice bundle came down the chute as a careful written description of a locksmith's toolbox; track the locksmith before supper.",
+      "The return duct has started blowing back receipts from three winters ago, including one signed for an extra Thursday.",
+      "Find where the unmarked inspection hatch leads without staying inside the copper pipe longer than three breaths."
+    ],
+    "encounters": [
+      "A ribbon end whips out of the hamper carrying two cellar mice who bow once and vanish behind a flour barrel.",
+      "Static crackles along the copper wall, lifting every loose hair and pulling compass needles toward the ovens.",
+      "A pink receipt shoots backward down the wrong pipe and sticks flat to the nearest lantern glass.",
+      "Two gate-pigeons drop a single warm grey feather through the intake latch without waking.",
+      "A muffled bell-jingle echoes through the bend — someone went through fast and left no footprints.",
+      "The chute delivers a heavy tin that turns out to hold exactly what the person beside you meant to pack ten minutes ago."
+    ],
+    "finds": [
+      {
+        "wonder": "gate-pigeons",
+        "use": "Set a sleeping pigeon on any latch or lever; it rides the whole mechanism steadily without tipping the balance."
+      },
+      {
+        "wonder": "bridge-receipts",
+        "use": "Keep both halves when an exchange crosses a boundary; if the draft takes one, the other still proves what passed."
+      }
+    ],
+    "bracework": {
+      "spw": "~<copper_chute & return_duct>",
+      "does": "Sends a parcel swiftly down a concealed passage while launching its paper trail in the opposite direction.",
+      "costs": "Whatever travels unsupervised arrives described in someone else's words."
+    },
+    "question": "What loses its body when you trust a pipe to carry it instead of your own two hands?"
+  }
+}

@@ -34,7 +34,7 @@
  */
 
 import { readStory, storyLink } from './story-directions.mjs?v=2026_11_16.B';
-import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_08.J';
+import { readCarries, leanOf, projectionOn } from './pie-carries.mjs?v=2026_11_16.B';
 import { renderSpell } from './spw-spell.mjs?v=2026_11_16.B';
 import { readWay, waySpell } from './way-through.mjs?v=2026_11_16.B';
 import { parseProseSpw, walkAst, frameItems, opInfo, bindingInfo, bodyExpressions } from './spw-ast.mjs?v=2026_11_16.B';

@@ -24,8 +24,14 @@ import { tokenize } from './spw-spell.mjs?v=2026_11_16.B';
 const MATERIAL_WORDS = Object.freeze(['glass', 'flour', 'berry', 'frost', 'ink', 'brass', 'steam', 'oak']);
 const PENTA = [0, 2, 4, 7, 9];
 const BOOK2_ROOTS = Object.freeze([261.63, 293.66, 329.63, 349.23, 392, 220, 246.94, 261.63, 311.13, 329.63, 293.66]);
-const CHAPTER_ROOTS = Object.freeze([293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23]);
-const CHAPTER_TEMPOS = Object.freeze([96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108]);
+const CHAPTER_ROOTS = Object.freeze([
+  293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66,
+  261.63, 349.23, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66
+]);
+const CHAPTER_TEMPOS = Object.freeze([
+  96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96,
+  90, 108, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96
+]);
 const SIGIL_COLOURS = Object.freeze({
   '.': { bass: 0, pcs: [0, 4, 7] },
   '!': { bass: 0, pcs: [0, 7] },

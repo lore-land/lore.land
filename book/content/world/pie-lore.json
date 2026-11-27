@@ -503,6 +503,171 @@
         "anchor": "the-blank-last-line",
         "label": "the blank last line"
       }
+    },
+    {
+      "id": "boon-scullery-plates",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 16
+      },
+      "hint": "Carry the pie as far as Chapter Sixteen.",
+      "line": "I had genuinely assumed the plates rinsed themselves on the way behind the curtain. Stoneware, it turns out, is remarkably heavy when wet.",
+      "ground": {
+        "chapter": 16,
+        "anchor": "behind-the-curtain",
+        "label": "behind the curtain"
+      }
+    },
+    {
+      "id": "bane-unasked-trays",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 17
+      },
+      "hint": "Carry the pie as far as Chapter Seventeen.",
+      "line": "Filing the answers before noon was my best idea in years, and an owl ruined it simply by sitting in one empty pigeonhole.",
+      "ground": {
+        "chapter": 17,
+        "anchor": "the-checkered-pavilion",
+        "label": "the checkered pavilion"
+      }
+    },
+    {
+      "id": "boon-flour-hush",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 18
+      },
+      "hint": "Carry the pie as far as Chapter Eighteen.",
+      "line": "A whole tower of brass rang out in sifted wheat, and not a soul missed a word. Silence, properly dusted in flour, carries remarkably well.",
+      "ground": {
+        "chapter": 18,
+        "anchor": "the-clapper-in-white-air",
+        "label": "the clapper in white air"
+      }
+    },
+    {
+      "id": "boon-priced-glass",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 19
+      },
+      "hint": "Carry the pie as far as Chapter Nineteen.",
+      "line": "Put chalk in the corner of a window and the street bends out of shape. Let a snail eat the price and you get the whole alley back for free.",
+      "ground": {
+        "chapter": 19,
+        "anchor": "the-glaziers-alley",
+        "label": "the glaziers' alley"
+      }
+    },
+    {
+      "id": "bane-bitter-pinch",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 20
+      },
+      "hint": "Carry the pie as far as Chapter Twenty.",
+      "line": "A single pinch of baneberry sets a pot of jam cleanly. A whole scheme ruins supper. I do not enjoy admitting that, yet the spoon agrees.",
+      "ground": {
+        "chapter": 20,
+        "anchor": "jam-on-the-coping-stone",
+        "label": "jam on the coping stone"
+      }
+    },
+    {
+      "id": "boon-fourteen-inches",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 21
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-One.",
+      "line": "From fourteen inches off the cobbles, every grand speech looks remarkably like two fidgeting boots and a trail of dropped crumbs.",
+      "ground": {
+        "chapter": 21,
+        "anchor": "under-the-tall-tables",
+        "label": "under the tall tables"
+      }
+    },
+    {
+      "id": "bane-copper-chute",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 22
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-Two.",
+      "line": "I once tried sending a proclamation down the copper chute. It came out in the cellar as an honest list of somebody else's lamp-wicks.",
+      "ground": {
+        "chapter": 22,
+        "anchor": "the-copper-drop",
+        "label": "the copper drop"
+      }
+    },
+    {
+      "id": "boon-unclosed-circle",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 23
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-Three.",
+      "line": "Three widths of twine and one stubborn sliver over. I am a round pie myself, and I have never once consented to being rounded off.",
+      "ground": {
+        "chapter": 23,
+        "anchor": "the-string-around-the-tin",
+        "label": "the string around the tin"
+      }
+    },
+    {
+      "id": "bane-four-shutters",
+      "speaker": "bane",
+      "unlock": {
+        "kind": "reached",
+        "n": 24
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-Four.",
+      "line": "Give four judges four narrow windows and they will invent four splendid emergencies before lunch. Open two shutters and the whole disaster turns into a broom.",
+      "ground": {
+        "chapter": 24,
+        "anchor": "four-cleanly-opposite-laws",
+        "label": "four cleanly opposite laws"
+      }
+    },
+    {
+      "id": "boon-warm-vault",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 25
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-Five.",
+      "line": "Forty hungry clowns waiting politely outside a steaming bakehouse arch is the finest piece of civic manners Bonk City has ever pulled off.",
+      "ground": {
+        "chapter": 25,
+        "anchor": "waiting-outside-the-arch",
+        "label": "waiting outside the arch"
+      }
+    },
+    {
+      "id": "boon-uneven-slice",
+      "speaker": "boon",
+      "unlock": {
+        "kind": "reached",
+        "n": 26
+      },
+      "hint": "Carry the pie as far as Chapter Twenty-Six.",
+      "line": "Exactly one uneven slice met the cobbles, the torch-ants warmed it, and the ring turned cleanly onward. Never smaller — only finally shared whole.",
+      "ground": {
+        "chapter": 26,
+        "anchor": "exactly-one-spill",
+        "label": "exactly one spill"
+      }
     }
   ]
 }

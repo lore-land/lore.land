@@ -1,0 +1,120 @@
+# Chapter 17 Canon Reference
+# Generated from /book/chapter/17/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_17
+#:chapter-canon #!reference
+
+^[chapter/17]{
+  title: "Ledger of Unasked Questions"
+  description: "Chapter 17 of Lore.Land: Ledger of Unasked Questions. Beneath the checkered tiles of the inquiry pavilion on Council Hill, clerks sort pre-stamped replies into yes-and-no boxes while shelf-owls guard empty pigeonholes. When the figure su..."
+  mood: "inquiry"
+  period: "winter"
+  chapter_path: "/book/chapter/17/"
+}
+
+$[chapter/17/made_of]{
+  spell: ^chapter[17]{
+    .rooms[ ?[blank_ledger]@clerk ?{four_corners}@the_land &(stray_coincidence)@boof
+      .{blotter_dust}@clerk ]
+    @told_by[narrator labyrinth boof reflection]
+    $ink $brass $berry
+    =palette[blotter_check]
+    ~berries{ $boneberry[salted_flatbread] }
+  }
+  rooms: "Four rooms: two { } rooms, a [ ] window and a ( ) gathering; two kept by clerk, the rest by the land and Boof."
+  told_by: "Told by the narrator, the labyrinth, Boof and the record."
+  made_of: "Made most of ink and line, then brass and bronze, then boonberries."
+  palette: "Its palette is blotter check, earned a layer at a time: cool slate tiles, blotter dust, and blue ink on an unasked question."
+  berries: "A boneberry in this chapter tastes of salted flatbread."
+}
+
+&[chapter/17/routes]{
+  web: "/book/chapter/17/"
+  timeline: "/book/timeline.html#chapter-17"
+  motif: ~[motif/chapter-17]{optional}
+}
+
+^[chapter/17/spine]{
+  =prev{ ~".spw/chapters/16.spw#chapter_16" }
+  =next{ ~".spw/chapters/18.spw#chapter_18" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; the labyrinth grows a new corridor; Boof pads in on a thread of scent; the reflection reads back by candlelight"
+}
+
+^[chapter/17/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Checkered Pavilion"
+    room: ?[blank_ledger]@clerk
+    air: "Black-and-white tiles, blotter paper, and six shelves of stamped answers waiting for a question."
+    excerpt: "At the windy edge of Council Hill stood the inquiry pavilion: sixteen open pillars over a checkered floor where the iron weathercocks creaked overhead and cross-breeze dust drifted across blotter paper. Inside, three ..."
+    route: ^[chapter/17/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/17.png"
+    route: ^[chapter/17/s02]{open}
+  ]
+  s03: <
+    handle: "custom-labyrinth/03"
+    type: "custom-labyrinth"
+    room: ?{four_corners}@the_land
+    air: "Every municipal box has two sides. The drawing placed on the counter has four."
+    excerpt: "The figure placed a square sheet of coarse paper on the blotter. Drawn on it in clean black ink were four right-angled corners pointing out toward four separate edges, with nothing written inside the middle. The first..."
+    route: ^[chapter/17/s03]{open}
+  >
+  s04: <
+    handle: "custom-boof/04"
+    type: "custom-boof"
+    room: &(stray_coincidence)@boof
+    air: "An old blueberry-stained slip from the market stone waits in a tray nobody claims."
+    excerpt: "While the clerks debated hinges, Boof worked her nose along the lowest shelf, where forgotten slips gather under {{shelf-lint}}. Halfway back, wedged behind a brass paperweight, she caught the unmistakable sweet-slate..."
+    route: ^[chapter/17/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{blotter_dust}@clerk
+    air: "The owl keeps the gap clear; the unspent coincidence goes back into the open air."
+    excerpt: "The figure reached across the counter — careful not to touch the oath-moths — and tapped the empty pigeonhole where the shelf-owl sat. The owl blinked once, tucked one wing over the blue-stained slip, and settled roun..."
+    route: ^[chapter/17/s05]{open}
+  >
+]
+
+&[chapter/17/cast]{
+  labyrinth: <
+    register: "a maze that grows a corridor for every wrong turn, and remembers each one"
+    .enters: "custom-labyrinth/03"
+  >
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/17/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/17/lore]{
+  notes: [
+    "In the checkered inquiry pavilion on Council Hill, clerks stamp Yes and No answers before petitioners arrive, leaving no tray for a four-cornered drawing."
+    "A round grey shelf-owl guards one open pigeonhole in the pavilion wall, keeping space for questions not yet posed."
+    "The unspent coincidence from Chapter Seven's market oath resurfaces in the pavilion's orphan tray, verified by two oath-moths and kept unspent under the owl's wing."
+  ]
+}
+
+~[chapter/17/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

@@ -1,6 +1,6 @@
 {
-  "note": "The serial's shape: its book rings and an optional next chapter date (null when unscheduled). Read by book/scripts/tools/build-chapters.mjs to write book/scripts/modules/book-extent.mjs.",
-  "cadence": "Chapters release at the maker's own pace; optional `next` may hold { chapter, date } when a release date is scheduled.",
+  "note": "The serial's shape: two complete book rings of thirteen chambers (twenty-six chapters total). Read by book/scripts/tools/build-chapters.mjs to write book/scripts/modules/book-extent.mjs.",
+  "cadence": "Two complete books of thirteen chambers — twenty-six chapters in all.",
   "books": [
     { "number": 1, "title": "The Unspent Wish", "first": 1, "last": 13 },
     { "number": 2, "title": "Wonder About Pi(e)", "first": 14, "last": 26 }

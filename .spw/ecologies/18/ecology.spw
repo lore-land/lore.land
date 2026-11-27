@@ -2,7 +2,7 @@
 #>chapter_18_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 5 of 13: ! action.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 277.18
   mode: "Chromatic leading-tone"
   tonal_role: "-1 semitone below tonic D4: hairline fracture before release (transposed into Book Two's C-axis continuation)"

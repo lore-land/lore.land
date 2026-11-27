@@ -37,6 +37,17 @@
   *ch13{ %tempo[96] %root[293.66] ~motif[2 4 7 9 7 4] @theme[door] *rhythm[shell_door] .room["shell_door"] @cast[boof, boonwap] ~pace[7 3 2 2 4] %egg[90] }
   *ch14{ %tempo[90] %root[261.63] ~motif[7 4 2 0] @theme[thursday] *rhythm[kept_thursday] .room["frost_lane"] @cast[boof, boonwap] ~pace[2 4 3 5 7] %egg[0] ^beat[thursday] }
   *ch15{ %tempo[108] %root[349.23] %swing[57] ~motif[0 7 4 7 0 9] =develop[prime fragment sequence answer inversion augment retrograde resolve] @theme[porter] *rhythm[parcel_knock] .room["parcel_gate"] &meets[clerk, table] &kinds[sack, sack, pigeon, post, ditch, clerk, dividers] @cast[boof, boonwap] ~pace[5 8 4 4 7] %egg[0] }
+  *ch16{ %tempo[104] %root[329.63] ~motif[0 4 7 4 2 0] @theme[scullery] *rhythm[scullery_stack] .room["scullery_steam"] &kinds[table, chair, clerk, dividers] @cast[boof, boonwap] ~pace[3 5 6 4 3] %egg[0] }
+  *ch17{ %tempo[88] %root[311.13] ~motif[0 2 5 7 5 2] @theme[pavilion] *rhythm[unasked_stamp] .room["blank_ledger"] &kinds[chair, clerk, vane, stone] @cast[boof, boonwap] ~pace[3 4 6 5 4] %egg[0] }
+  *ch18{ %tempo[100] %root[277.18] ~motif[7 4 2 7 4 0] @theme[belfry] *rhythm[flour_hush] .room["flour_cloud"] &kinds[sack, mime, post, pigeon] @cast[boof, boonwap] ~pace[4 7 8 3 2] %egg[0] }
+  *ch19{ %tempo[108] %root[349.23] %swing[58] ~motif[0 4 7 9 7 4] @theme[glazier] *rhythm[snail_clear] .room["tariff_pane"] &kinds[pane, snail, post, clerk] @cast[boof, boonwap] ~pace[4 5 6 4 3] %egg[0] }
+  *ch20{ %tempo[96] %root[293.66] %swing[56] ~motif[0 2 5 7 5 0] =develop[prime answer sequence inversion fragment retrograde augment resolve] @theme[canal] *rhythm[third_chime] .room["canal_lock"] &kinds[ditch, puddle, mime, beaver] @cast[boof, boonwap] ~pace[3 5 5 6 4] %egg[0] }
+  *ch21{ %tempo[92] %root[261.63] ~motif[0 2 4 7 4 2] @theme[cobble] *rhythm[fourteen_inches] .room["cobble_level"] &kinds[stone, puddle, post, sack] @cast[boof, boonwap] ~pace[3 4 5 5 4] %egg[0] }
+  *ch22{ %tempo[112] %root[392] %swing[62] ~motif[7 9 12 7 4 2] =develop[prime fragment sequence retrograde answer inversion augment resolve] @theme[chute] *rhythm[copper_drop] .room["copper_chute"] &kinds[sack, pigeon, post, clerk] @cast[boof, boonwap] ~pace[5 7 7 5 4] %egg[0] }
+  *ch23{ %tempo[84] %root[220] ~motif[0 5 7 5 2 0] @theme[night_school] *rhythm[night_dividers] .room["chalk_circle"] &kinds[dividers, chair, table, clerk] @cast[boof, boonwap] ~pace[2 3 5 4 3] %egg[0] }
+  *ch24{ %tempo[100] %root[246.94] ~motif[0 3 7 10 7 3] @theme[shutters] *rhythm[four_shutters] .room["four_shutters"] &kinds[pane, chair, clerk, mime] @cast[boof, boonwap] ~pace[4 6 7 6 4] %egg[0] }
+  *ch25{ %tempo[104] %root[329.63] %swing[54] ~motif[0 4 7 9 12 9] =develop[prime sequence answer inversion fragment augment retrograde resolve] @theme[vault] *rhythm[hearth_vent] .room["bakehouse_vault"] &kinds[sack, table, mime, dividers] @cast[boof, boonwap] ~pace[5 6 8 7 5] %egg[0] }
+  *ch26{ %tempo[96] %root[293.66] %swing[56] ~motif[0 2 4 7 9 12] =develop[prime answer sequence inversion fragment retrograde augment resolve] @theme[feast] *rhythm[uneven_slice] .room["great_table"] &kinds[table, chair, dividers, clerk, pigeon] @cast[boof, boonwap] ~pace[4 5 7 5 3] %egg[0] }
 }
 
 !rhythms{
@@ -55,6 +66,17 @@
   *shell_door{ .steps["X...x.x.X...x.x."] !voice[vibes] &chapter[13] #name["The door that stays open"] #says["It knocks, and leaves room after the knock."] ~"book/chapter/13" }
   *kept_thursday{ .steps["X..............."] !voice[tock] &chapter[14] #name["The Thursday nobody kept"] #says["One beat to the bar, and the rest of the week missing. The field keeps it anyway."] ~"book/chapter/14" }
   *parcel_knock{ .steps["X..x..X........."] !voice[tock] &chapter[15] #name["The porter's knock"] #says["One stranger, knocked three ways. All three are right."] ~"book/chapter/15" }
+  *scullery_stack{ .steps["X...x..xX...x..."] !voice[drip] &chapter[16] #name["Plates behind the curtain"] #says["Every toast at the front answers with a stoneware rinse at the back."] ~"book/chapter/16#behind-the-curtain" }
+  *unasked_stamp{ .steps["X.x...x.X...x..."] !voice[tock] &chapter[17] #name["Stamps before the question"] #says["Yes and no stamped early, with one open rest the owl keeps clear."] ~"book/chapter/17#the-checkered-pavilion" }
+  *flour_hush{ .steps["X.......x...x..."] !voice[shaker] &chapter[18] #name["Clapper in white air"] #says["One soft puff where the bronze chime belonged, and a silence the whole square hears."] ~"book/chapter/18#the-clapper-in-white-air" }
+  *snail_clear{ .steps["X..x....x..x...."] !voice[glass] &chapter[19] #name["Grazed clear by dusk"] #says["Slow silver loops wiping chalk numerals clean off the pane."] ~"book/chapter/19#the-snails-own-tariff" }
+  *third_chime{ .steps["X..x..X..x..X..."] !voice[kalimba] &chapter[20] #name["Every third chime"] #says["Two swollen lock gates taking turns cleanly without blending their waters."] ~"book/chapter/20#one-gate-at-a-time" }
+  *fourteen_inches{ .steps["X.x.x...X...x.x."] !voice[marimba] &chapter[21] #name["Fourteen inches up"] #says["Boot-heels, grate steam, and ant detours keeping brisk time along the kerb."] ~"book/chapter/21#fourteen-inches-up" }
+  *copper_drop{ .steps["X..x.x..X..x.x.."] !voice[shaker] &chapter[22] #name["Down the copper chute"] #says["Bundles slide down on the strong beat while pink receipts blow back up the off-beat."] ~"book/chapter/22#the-copper-drop" }
+  *night_dividers{ .steps["X....x....x....."] !voice[vibes] &chapter[23] #name["Three widths and a sliver"] #says["Three even steps round the tin, and an honest remainder left ringing."] ~"book/chapter/23#the-string-around-the-tin" }
+  *four_shutters{ .steps["X...X...X...x..."] !voice[tock] &chapter[24] #name["Four shutters in one wall"] #says["Four separate frames knocking out four laws until two swing open together."] ~"book/chapter/24#four-cleanly-opposite-laws" }
+  *hearth_vent{ .steps["X.x..x..X.x..x.."] !voice[bass] &chapter[25] #name["Embers before the latch"] #says["Oak heat and rising yeast pressing steadily against the bakehouse damper."] ~"book/chapter/25#under-one-vault" }
+  *uneven_slice{ .steps["X..x..x.X..x.x.."] !voice[honk] &chapter[26] #name["The uneven slice"] #says["Nine geese overhead, fork brass along the linen, and one honest spill that turns the ring."] ~"book/chapter/26#exactly-one-spill" }
 }
 
 !grounds{

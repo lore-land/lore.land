@@ -2,7 +2,7 @@
 #>chapter_16_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!seeded
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 3 of 13: . ground.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 329.63
   mode: "Mixolydian ground"
   tonal_role: "b7 earth pedal beneath dual signals and stones (transposed into Book Two's C-axis continuation)"

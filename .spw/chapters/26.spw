@@ -1,0 +1,120 @@
+# Chapter 26 Canon Reference
+# Generated from /book/chapter/26/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_26
+#:chapter-canon #!reference
+
+^[chapter/26]{
+  title: "The Feast of the Uneven Slice"
+  description: "Chapter 26 of Lore.Land: The Feast of the Uneven Slice. Stretching from Bonk City's plaza past the parcel gate into the winter river mist, the Great Table gathers every neighbour across Books One and Two while confetti cut from voided Th..."
+  mood: "reflection"
+  period: "turning"
+  chapter_path: "/book/chapter/26/"
+}
+
+$[chapter/26/made_of]{
+  spell: ^chapter[26]{
+    .rooms[ ^{great_table}@boonwap @(seating_plan)@boof !{uneven_slice}@the_land
+      ^{open_ring}@boof ]
+    @told_by[narrator boof awakening reflection]
+    $steam $ink $oak
+    =palette[uneven_feast]
+    ~berries{ $boneberry[burnt_ends] }
+  }
+  rooms: "Four rooms: three { } rooms and a ( ) gathering; two kept by Boof, the rest by Mr. BoonWAP and the land."
+  told_by: "Told by the narrator, Boof, the bloom and the record."
+  made_of: "Made most of steam and warmth, then ink and line, then oak and frame."
+  palette: "Its palette is the uneven slice, earned a layer at a time: parchment linen, lantern gold, and deep feast teal at the Turning of the Year."
+  berries: "A boneberry in this chapter tastes of burnt ends."
+}
+
+&[chapter/26/routes]{
+  web: "/book/chapter/26/"
+  timeline: "/book/timeline.html#chapter-26"
+  motif: ~[motif/chapter-26]{optional}
+}
+
+^[chapter/26/spine]{
+  =prev{ ~".spw/chapters/25.spw#chapter_25" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; Boof pads in on a thread of scent; something old stirs awake; the reflection reads back by candlelight"
+}
+
+^[chapter/26/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Great Table"
+    room: ^{great_table}@boonwap
+    air: "Linen stretching from plaza to parcel gate into river mist, bright with lanterns and voided Thursday slips."
+    excerpt: "At the Turning of the Year, Bonk City ran its Great Table out past the plaza, straight through the propped-open parcel gate, and down the cobbled slope until its far trestles vanished into the cold river mist. Overhea..."
+    route: ^[chapter/26/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/26.png"
+    route: ^[chapter/26/s02]{open}
+  ]
+  s03: <
+    handle: "custom-boof/03"
+    type: "custom-boof"
+    room: @(seating_plan)@boof
+    air: "Everyone takes a chair except one ink silhouette standing cleanly at ninety degrees to the cloth."
+    excerpt: "Halfway down the benches, Mr. BaneWAP passed a little stone pot of sharp orchard jam to a delighted clown, who spread a careful pinch across a warm wedge and declared it the finest supper of the decade. Across from th..."
+    route: ^[chapter/26/s03]{open}
+  >
+  s04: <
+    handle: "custom-awakening/04"
+    type: "custom-awakening"
+    room: !{uneven_slice}@the_land
+    air: "One heel catches a voided Thursday slip, and exactly one warm slice meets the winter cobbles."
+    excerpt: "Then the great ceremonial pie came down the line — the uneven slice cut slightly wider than its neighbours by the night school’s brass dividers, steaming teal and amber on a flat stoneware dish. The carrier was neithe..."
+    route: ^[chapter/26/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: ^{open_ring}@boof
+    air: "Beyond the lanterns, the Round Archive keeps its open brace, and the warm furrow stays unexplained."
+    excerpt: "Fork brass rang again along the linen, laughter rose warm into the river mist, and the figure lifted his shorter right arm once — a brief, quiet turn of one line — before stepping smoothly along the open lane where th..."
+    route: ^[chapter/26/s05]{open}
+  >
+]
+
+&[chapter/26/cast]{
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/03"
+  >
+  awakening: <
+    register: "the hour the archive opens one eye and finds itself being read"
+    .enters: "custom-awakening/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/26/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/26/lore]{
+  notes: [
+    "At the Turning of the Year, Bonk City's Great Table stretches from the plaza through the parcel gate into the river mist, showered with confetti cut from voided Thursday slips."
+    "At the Great Table, the unnamed washer-up sits in honour while Mr. BoonWAP carries steaming stoneware plates himself."
+    "A single spilled uneven slice satisfies the prophecy while preserving its ambiguity: nobody knows whether it was luck, manners, or arithmetic, only that the ring turns onward."
+    "The figure in plain lines stands ninety degrees to the seating plan and leaves still unnamed; out in the dawnward furrow, the Egg remains warm and unexplained."
+  ]
+}
+
+~[chapter/26/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

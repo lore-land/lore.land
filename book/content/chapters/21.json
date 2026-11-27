@@ -1,0 +1,336 @@
+{
+  "chapterNumber": 21,
+  "title": "At the Nose of the Work",
+  "logline": "Read strictly from fourteen inches off the cobblestones, Bonk City's dropped berry crumbs, boot polish, and grate steam tell the whole civic plot tall tables hide.",
+  "epigraph": "Above the cloth they debate who leads the feast; below it, every crumb already points to the ovens.",
+  "inWhich": "the whole city is read from fourteen inches above the cobblestones, where crumbs tell what tall tables hide",
+  "description": "Chapter 21 of Lore.Land: At the Nose of the Work. Seen entirely from Boof's own vantage fourteen inches above Bonk City's paving slabs, the civic lanes become a bright map of shoe polish, drain-grate steam, torch-ant detours, and dropped berry crumbs. Tall tables hide polite faces above the linen, while boot-heels and puddles tell the plain truth underneath.",
+  "mood": "path",
+  "period": "winter",
+  "pillars": [
+    "worldbuilding",
+    "wonder",
+    "stewardship"
+  ],
+  "topics": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 20 · Two Springs Under the Sill",
+      "href": "/book/chapter/20/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Boof · dog of the land",
+      "href": "/characters/boof.html",
+      "kicker": "Guide"
+    },
+    {
+      "label": "Chamber 22 · Through the Chute With No Receipt",
+      "href": "/book/chapter/22/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "nose",
+        "paws",
+        "ears",
+        "scent",
+        "scents",
+        "fourteen inches"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "cobblestones",
+        "paving",
+        "puddles",
+        "chime-gutters",
+        "torch-ants",
+        "steam",
+        "boots"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "crumbs",
+        "berry",
+        "bakehouse",
+        "cloth",
+        "table",
+        "tables"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "found line",
+        "grate",
+        "polish",
+        "heels",
+        "lane"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "@{cobble_level}@boof",
+        "air": "Fourteen inches off the paving slabs: tallow polish, drain steam, and the whole town in plain boots."
+      },
+      "data-motif": "scent",
+      "data-trope": "right-angle-companion",
+      "climate": {
+        "tempo": "morning",
+        "tint": "teal",
+        "hook": "cobble-level"
+      },
+      "scene": {
+        "vantage": "fourteen inches above wet cobblestones looking down a busy adult guild lane of boots, wheel-rims, iron grates, and sky-bright puddles",
+        "light": "low winter sun glancing across wet paving slabs and rising warm mist from cellar grates",
+        "scent": "boot blacking, dropped boonberry crumbs, warm laundry steam from iron grates, wet granite, dry unshaded paper",
+        "edges": [
+          "heavy porters' boots, apron hems, and iron-rimmed barrow wheels moving briskly past",
+          "single-file torch-ants routing cleanly around a boot heel along a warm mortar seam",
+          "shallow rainwater puddles reflecting the upper roofs and chime-gutters upside down",
+          "two crisp black ink shoes stepping at a neat right angle through the steam"
+        ],
+        "hint": "extreme low-angle dog's-eye view fourteen inches above wet Bonk City cobblestones; tall adult boots and apron hems passing; rising steam from iron grates; tiny torch-ants rerouting around heels; puddles reflecting sky; two plain-line ink feet crossing at a right angle"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At six feet up, Bonk City is mostly gables, speeches, and people holding their hats in the breeze. At fourteen inches up — which is where Boof keeps her nose and where the actual work of the town lands — the paving slabs tell a much {{slab-tone}} story.",
+          "slots": {
+            "slab-tone": {
+              "clock": "hour",
+              "variants": [
+                "plainer",
+                "busier",
+                "sharper",
+                "truer"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Every guild boot in the morning lane smelled of its own trade: pine tar from the dock porters, tallow blacking from the clerks, warm flour from the bakers, linseed oil from the glaziers. Iron drain grates breathed up white kitchen steam that tickled the underside of Boof’s chin as she trotted through."
+        },
+        {
+          "type": "paragraph",
+          "text": "Rain puddles laid the whole sky flat between the stones, upside down and bright as mirrors. From the eaves overhead, chime-gutters dripped a lazy three-note tune into the runoff whenever a cart shook the kerb.",
+          "lean": "boon"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/21.png",
+        "alt": "A low-angle cobblestone view fourteen inches off the ground: adult boots, cartwheels, warm drain-grate steam, torch-ants routing along mortar seams, bright puddles reflecting roofs, and the lower half of the plain-line ink figure stepping past at a right angle.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "At the Nose of the Work: fourteen inches above the slabs, every crumb and boot-heel tells the civic plot."
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "&[three_scents]@boof",
+        "air": "Warm crust, cold canal iron, and dry ink paper braided cleanly along the kerb."
+      },
+      "data-motif": "scent",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "three-scents"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof did not chase one scent when three were running together. Along the wet kerb she read them side by side without tangling a thread: hot berry crust pulling toward the bakehouse, cold wet iron still dripping off the lockkeeper’s cuffs, and the crisp, dry, unshaded-paper scent of the figure’s ink steps.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Between two granite setts, a column of torch-ants had built a temporary winter detour round a porter’s resting boot. Each ant carried a tiny ember no wider than a pinhead and kept the lane moving without a single whistle. Build where the land already leans, the ants’ streets said plainly — and step around the heel that has not moved yet."
+        },
+        {
+          "type": "paragraph",
+          "text": "Every twenty yards a dropped boonberry crumb sat beside a wheel rut, bruised blue-gold against the grey stone. Boof left them where they lay. A dog who works for the land reads crumbs the way an archivist reads signposts; you do not eat the sign while you are still following the road."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Under the Tall Tables",
+      "room": {
+        "spw": "@(under_table)@the_land",
+        "air": "Above the linen, everyone faces the podium. Beneath it, shoes point where their owners actually mean to go."
+      },
+      "data-motif": "feast",
+      "climate": {
+        "tempo": "day",
+        "tint": "hearth",
+        "hook": "under-tall-tables"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "In the guild yard, three tall trestle tables had been set up for the feast committee. From above the cloth came dignified voices negotiating lantern spacing, seating order, and who ought to carry the first platter. From fourteen inches off the paving, Boof saw the real meeting.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every polished boot under the table was tapping a different impatience. One steward had tucked a crumpled delivery tally behind his left heel. Another had flour thick on his toes from visiting the bakehouse without telling the committee. A third stood directly on a found line chalked neatly across the flagstones pointing straight toward the cellar chute."
+        },
+        {
+          "type": "paragraph",
+          "text": "Nobody above the linen looked down long enough to notice Boof pass, or to notice two plain ink feet step neatly round the bench leg and follow the warm cellar draft out of the yard.",
+          "lean": "boon"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{drain_steam}@boof",
+        "air": "She keeps it literal, never coy: noses trust what leaves a trail on real stone."
+      },
+      "data-motif": "scent",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "archive",
+        "hook": "drain-steam"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Boof paused beside a warm iron grate where cinnamon vapour drifted up from the kitchens below. A puddle near her left paw held a clear blue triangle of winter sky and the tiny rim of a floating bowler hat turning the far corner toward {{next-lane}}.",
+          "slots": {
+            "next-lane": {
+              "clock": "minute",
+              "variants": [
+                "the cellar alley",
+                "the bakehouse yard",
+                "the copper chute",
+                "the back steps"
+              ]
+            }
+          }
+        },
+        {
+          "type": "bracework",
+          "spw": "@{fourteen_inches & whole_lane}",
+          "gloss": "A perspective anchored near the stones: what a committee hides above the cloth shows plainly in the scuffs underneath.",
+          "maker": "Boof"
+        },
+        {
+          "type": "paragraph",
+          "text": "She never guessed at intentions when boot polish, crust crumbs, and warm grates already gave the whole map. Ears level, paws sure on the wet granite, Boof followed the cinnamon draft straight toward the guild basements.",
+          "lean": "bone"
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Seen from Boof's height fourteen inches above Bonk City's cobblestones, guild boots, dropped berry crumbs, and drain-grate steam map the city more honestly than its speeches."
+      },
+      {
+        "description": "Torch-ants keep winter detour trails running around heavy porters' boots along warm mortar seams."
+      },
+      {
+        "description": "Under the feast committee's tall tables, tucked receipts and flour-dusted toes point straight toward the bakehouse and cellar chute."
+      }
+    ]
+  },
+  "table": {
+    "place": "Bonk City's cobblestone guild lanes seen strictly from fourteen inches up: wet granite setts, warm kitchen grates, boot heels, barrow rims, ant detours, and sky-mirror puddles.",
+    "light": "Low raking sun across glistening stones, reflected upside down in puddles and softened by white steam rising through iron grates.",
+    "people": [
+      {
+        "name": "a dockside porter (boots only)",
+        "want": "a dry wheel-rut for his barrow before the kerb narrows",
+        "voice": "pine-tar boots, whistles in flat thirds overhead"
+      },
+      {
+        "name": "the feast committee steward",
+        "want": "nobody noticing the flour on his boots or the tally tucked by his heel",
+        "voice": "booming above the cloth, fidgeting nervously underneath it"
+      },
+      {
+        "name": "a torch-ant route-keeper",
+        "want": "three inches of undisturbed mortar seam beside the grate",
+        "voice": "clicks antennae once to turn the entire column left"
+      }
+    ],
+    "hooks": [
+      "A committee steward dropped an unsigned feast tally under the table and kicked it into a warm grate; trace it down the steam trail before the ovens over-bake.",
+      "Three distinct scents cross at the corner puddle — berry crust, canal iron, and fresh ink; choose which trail reaches the guild basement first.",
+      "A torch-ant detour has revealed a forgotten chalk mark under the mortar pointing to an unmarked cellar hatch."
+    ],
+    "encounters": [
+      "A warm iron grate puffs cinnamon steam, briefly erasing every sight above knee height.",
+      "A rainwater puddle shows a silhouette crossing a high roof three seconds before its shadow hits the cobbles.",
+      "An iron barrow wheel trundles past, kicking a single bruised boonberry neatly across the kerb.",
+      "Chime-gutters above the alley ring a wet chord as a door slams two streets over.",
+      "Torch-ants redirect their single-file column cleanly around a dropped copper coin without touching it.",
+      "Two crisp ink shoes step past at a right angle, smelling faintly of clean paper and leaving no mud on the granite."
+    ],
+    "finds": [
+      {
+        "wonder": "torch-ants",
+        "use": "Watch where they bend their winter street; their detours always mark the warmest seam and the safest footing."
+      },
+      {
+        "wonder": "found-line",
+        "use": "Follow a chalk line nobody remembers drawing; it runs straight beneath the tables people argue across."
+      }
+    ],
+    "bracework": {
+      "spw": "@{fourteen_inches & whole_lane}",
+      "does": "Drops a room's vantage down to floor height, exposing every hidden scuff, trail, and tucked slip underneath.",
+      "costs": "Nobody standing tall notices you until you have already walked past their heels."
+    },
+    "question": "What does the floor of the room know that the tabletop refuses to mention?"
+  }
+}

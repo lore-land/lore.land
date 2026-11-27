@@ -1,0 +1,22 @@
+# Chapter Nineteen, The Priced Window: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_19
+!card{
+  *chapter_19{
+    .file["chapter-19.jpg"]
+    .plate["book/images/19.png"]
+    #title["The Priced Window"]
+    #in_which["glaziers chalk rising tariffs onto every pane while pane-snails slowly graze the prices back to clear glass"]
+    #says["Chapter Nineteen, The Priced Window: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

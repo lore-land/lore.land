@@ -26,7 +26,7 @@ import { constellationFor, semanticIndex } from './constellation.mjs?v=2026_11_0
 import { TOTAL_CHAPTERS, NEXT_STONE } from './book-extent.mjs';
 import { SIGHTINGS, readSightings, sightingsFigure } from './sightings.mjs?v=2026_11_05.B';
 import { loadAlmanac, readAlmanac } from './almanac.mjs?v=2026_11_16.B';
-import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_08.J';
+import { readCarries, carriesSummary, chapterList, describeLean } from './pie-carries.mjs?v=2026_11_16.B';
 import { mergeBoard } from './spw-formulas.mjs?v=2026_11_13.B';
 import { loadLand, answer as landAnswer } from './land-answers.mjs?v=2026_11_16.B';
 import { noteCrossing } from './trope-reveal.mjs?v=2026_11_13.B';
@@ -426,8 +426,12 @@ export async function initScriptoriumDesk() {
         document.getElementById('desk-spellbook')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else if (handle === 'next') {
         const stone = nextStone();
-        const when = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric' }).format(stone.date);
-        say(op, el('p', {}, stone.days === 0 ? `Today, ${when}, is a stone day.` : `The next stone is set ${when} — in ${stone.days} day${stone.days === 1 ? '' : 's'}.`));
+        if (NEXT_STONE?.date && stone) {
+          const when = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric' }).format(stone.date);
+          say(op, el('p', {}, stone.days === 0 ? `Today, ${when}, is a stone day.` : `The next stone is set ${when} — in ${stone.days} day${stone.days === 1 ? '' : 's'}.`));
+        } else {
+          say(op, el('p', {}, `All ${TOTAL} chambers are set and open: Book One (01–13) and Book Two (14–26).`));
+        }
       } else if (handle === 'new') {
         const latest = changes?.releases?.[0];
         say(op, latest ? el('ul', {}, (latest.notes || []).map((note) => el('li', {}, note))) : el('p', {}, 'No notes yet.'));
@@ -773,9 +777,13 @@ export async function initScriptoriumDesk() {
 
   const grid = el('div', { className: 'desk-grid' },
     card('desk-resume', '~', 'Pick up where you left off', '~[resume]', ...resumeBody),
-    card('desk-next', '?', 'When the next chapter lands', '?[next]',
-      el('p', { className: 'desk-big' }, stone.days === 0 ? 'Today' : when),
-      el('p', { className: 'desk-quiet' }, stone.days === 0 ? 'Today is a stone day.' : `In ${stone.days} day${stone.days === 1 ? '' : 's'}. New chapters are set on the 13th and 26th.`)),
+    NEXT_STONE?.date
+      ? card('desk-next', '?', 'When the next chapter lands', '?[next]',
+        el('p', { className: 'desk-big' }, stone.days === 0 ? 'Today' : when),
+        el('p', { className: 'desk-quiet' }, stone.days === 0 ? 'Today is a stone day.' : `In ${stone.days} day${stone.days === 1 ? '' : 's'}.`))
+      : card('desk-next', '?', 'Two books, whole', '?[next]',
+        el('p', { className: 'desk-big' }, `${TOTAL} chapters`),
+        el('p', { className: 'desk-quiet' }, 'Book One (01–13) and Book Two (14–26) are complete and ready to read.')),
     card('desk-book', '%', 'Your copy of the book', '%[read]',
       el('p', { className: 'desk-quiet' }, `${state.visited.size} of ${TOTAL} opened.`), bookList),
     card('desk-shelf', '!', 'Read without a signal', '![keep]{shelf}',

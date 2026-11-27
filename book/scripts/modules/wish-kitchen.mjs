@@ -25,7 +25,7 @@ export const AXES = Object.freeze(['sweet', 'sour', 'bitter', 'savoury', 'warm',
 /** The land's dishes, each grounded where the book or its canon has it. @type {ReadonlyArray<Dish>} */
 export const DISHES = Object.freeze([
   { id: 'pie', name: 'a warm boonberry pie', v: { sweet: 0.7, warm: 0.8, crisp: 0.5, soft: 0.4, round: 1 }, ground: 'the pie in the lanes, never smaller (characters.mjs, BoonWAP)' },
-  { id: 'uneven_slice', name: 'an uneven slice', v: { sweet: 0.5, warm: 0.4, crisp: 0.6, soft: 0.3, round: 0.2 }, ground: 'Chapter 15: the Feast of the Uneven Slice' },
+  { id: 'uneven_slice', name: 'an uneven slice', v: { sweet: 0.5, warm: 0.4, crisp: 0.6, soft: 0.3, round: 0.2 }, ground: 'Chapter 26: the Feast of the Uneven Slice' },
   { id: 'jam', name: 'a boonberry jam', v: { sweet: 0.9, sour: 0.3, soft: 0.5, spread: 1 }, ground: 'berries.json kitchen: a pinch of baneberry sets a jam' },
   { id: 'pickle', name: 'a baneberry pickle', v: { sour: 0.9, bitter: 0.5, crisp: 0.6, savoury: 0.3 }, ground: 'berries.json kitchen: a pinch keeps a pickle' },
   { id: 'regional', name: 'the regional savoury', v: { savoury: 1, warm: 0.6, soft: 0.4, bitter: 0.1 }, ground: 'the boneberry feeds, and tastes of where it grew (pie-game boneFlavour)' },

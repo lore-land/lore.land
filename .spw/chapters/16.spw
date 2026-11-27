@@ -1,0 +1,117 @@
+# Chapter 16 Canon Reference
+# Generated from /book/chapter/16/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_16
+#:chapter-canon #!reference
+
+^[chapter/16]{
+  title: "The Second Place"
+  description: "Chapter 16 of Lore.Land: The Second Place. At Mr. BoonWAP's long trestle table, Boof endures a brass place marker and a city convinced the destined one is a dog. Behind the baize curtain, cold spring water meets hot plates in stacks tall..."
+  mood: "boon"
+  period: "winter"
+  chapter_path: "/book/chapter/16/"
+}
+
+$[chapter/16/made_of]{
+  spell: ^chapter[16]{
+    .rooms[ .{brass_marker}@boonwap @{second_place}@boof &[scullery_steam]@washer ?{endless_stack}@the_land ]
+    @told_by[narrator boof reflection]
+    $flour $ink $brass
+    =palette[scullery_steam]
+    ~berries{ $boneberry[burnt_ends] }
+  }
+  rooms: "Four rooms: three { } rooms and a [ ] window; one kept by Mr. BoonWAP, the rest by Boof, washer and the land."
+  told_by: "Told by the narrator, Boof and the record."
+  made_of: "Made most of flour, then ink and line, then brass and bronze."
+  palette: "Its palette is scullery steam, earned a layer at a time: coarse linen, warm brass markers, and wet stoneware behind a baize curtain."
+  berries: "A boneberry in this chapter tastes of burnt ends."
+}
+
+&[chapter/16/routes]{
+  web: "/book/chapter/16/"
+  timeline: "/book/timeline.html#chapter-16"
+  motif: ~[motif/chapter-16]{optional}
+}
+
+^[chapter/16/spine]{
+  =prev{ ~".spw/chapters/15.spw#chapter_15" }
+  =next{ ~".spw/chapters/17.spw#chapter_17" }
+  weave: "{} [] <> {} <>"
+  reading: "the telling opens; the plate catches the light; Boof pads in on a thread of scent; the telling gathers; the reflection reads back by candlelight"
+}
+
+^[chapter/16/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Brass Place Marker"
+    room: .{brass_marker}@boonwap
+    air: "Coarse linen, polished brass, and a pie that loses nothing while the crowd applauds the dog."
+    excerpt: "Mr. BoonWAP’s long trestle table took half the width of the plaza and smelled of hot crust, starched coarse linen, and {{table-scent}}. Before Boof’s chin stood a brass place marker polished until it threw back a curv..."
+    route: ^[chapter/16/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/16.png"
+    route: ^[chapter/16/s02]{open}
+  ]
+  s03: <
+    handle: "custom-boof/03"
+    type: "custom-boof"
+    room: @{second_place}@boof
+    air: "She wears the title for one honest course, then follows the cold water under the baize."
+    excerpt: "Boof gave the city one full course of good manners. She kept her paws off the cloth. She let three elders shake her front foot and call her the keeper of the table. She did not growl when a musician struck a celebrato..."
+    route: ^[chapter/16/s03]{open}
+  >
+  s04: {
+    handle: "section/04"
+    type: "section"
+    title: "Behind the Curtain"
+    room: &[scullery_steam]@washer
+    air: "Cold spring water, red knuckles, and a plate from the stack handed cleanly to two ink lines."
+    excerpt: "The scullery was half the height of the hall and twice as damp. Cold spring water ran from an iron spout into a deep slate tub, sending up ribbons of {{steam-kind}} whenever a hot stoneware dish went under. Along the ..."
+    route: ^[chapter/16/s04]{open}
+  }
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: ?{endless_stack}@the_land
+    air: "Arithmetic makes a pie endless. Arithmetic has never once dried a stoneware dish."
+    excerpt: "The washer-up glanced down at Boof, wiped a streak of suds off her forearm, and let out a breath that was neither complaint nor praise. “He doesn’t drop them,” she said, nodding toward the figure. “And he doesn’t give..."
+    route: ^[chapter/16/s05]{open}
+  >
+]
+
+&[chapter/16/cast]{
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/03"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/16/measures]{
+  %sections: 5
+  %prose: 2
+  %plates: 1
+  %voices: 2
+}
+
+#[chapter/16/lore]{
+  notes: [
+    "Boof wears Bonk City's chosen ribbon for one honest supper course at Mr. BoonWAP's second place, then leaves it neatly on a dry peg in the scullery."
+    "Behind the baize curtain of the plaza feast, cold spring water feeds a deep slate tub where an unnamed washer-up cleans plates taller than the meal."
+    "The figure in plain lines dries stoneware saucers beside the washer-up; his shorter right arm folds a flour-sack towel cleanly round every rim."
+    "Infinite arithmetic keeps a pie from shrinking, yet it does not wash a single dish."
+  ]
+}
+
+~[chapter/16/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

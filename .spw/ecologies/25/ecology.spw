@@ -2,7 +2,7 @@
 #>chapter_25_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 12 of 13: {} body.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 329.63
   mode: "Dorian polyrhythm"
   tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2 (transposed into Book Two's C-axis continuation)"

@@ -35,7 +35,7 @@ export const SIGNS = Object.freeze({ boon: 'forward', bane: 'inverse' });
 export const DECIDERS = Object.freeze(['way', 'shelves']);
 const SHELF_WORDS = Object.freeze(['boon', 'bane', 'bone', 'bonk', 'honk']);
 const NAME = '[a-z_][a-z0-9_]*';
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 /** @param {number} n */
 export const chapterWords = (n) => `Chapter ${WORDS[n] || n}`;
 /** @param {number} n */

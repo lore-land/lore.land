@@ -24,11 +24,11 @@
  * and the way out (pie-game.mjs).
  */
 import { settle } from './settled.mjs?v=2026_11_16.B';
-import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_08.J';
+import { carryFor, describeLean, mimesHold } from './pie-carries.mjs?v=2026_11_16.B';
 
 const BACK_KEY = 'lore.pie.back';
 const pad = (n) => String(n).padStart(2, '0');
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 
 export const SEGUES = Object.freeze([
   { scene: 'field', chapter: 1, anchor: 'the-warm-furrow', door: 'Carry the pie along the warm furrow', place: 'the warm furrow', trope: 'a furrow kept warm' },
@@ -44,7 +44,18 @@ export const SEGUES = Object.freeze([
   { scene: 'table', chapter: 13, anchor: 'the-blank-last-line', door: 'Carry the pie to the shell-shaped door', place: 'the shell-shaped door', trope: 'a door waiting for a question' },
   { scene: 'field', chapter: 14, anchor: 'the-hat-above-the-furrow', door: 'Carry the pie through the missing Thursday', place: 'the furrow on Thursday', trope: 'the Thursday nobody kept' },
   { scene: 'gate', chapter: 15, anchor: 'the-parcel-gate', door: 'Carry the pie through the storm', place: 'the parcel gate', trope: 'a gate held open in a storm' },
-  { scene: 'table', chapter: 15, find: 'a second place', door: 'Carry the pie to the second place', place: 'the long table', trope: 'a second place, set' }
+  { scene: 'table', chapter: 15, find: 'a second place', door: 'Carry the pie to the second place', place: 'the long table', trope: 'a second place, set' },
+  { scene: 'table', chapter: 16, anchor: 'the-brass-place-marker', door: 'Carry the pie to the second place', place: 'the long table and the scullery curtain', trope: 'someone still washing plates behind the frame' },
+  { scene: 'court', chapter: 17, anchor: 'the-checkered-pavilion', door: 'Carry the pie past the inquiry pavilion', place: 'the checkered pavilion', trope: 'answers filed before any question' },
+  { scene: 'lanes', chapter: 18, anchor: 'the-steep-timber-stair', door: 'Carry the pie under the flour-hushed belfry', place: 'the bell-tower lane', trope: 'a bell muffled in white wheat' },
+  { scene: 'lanes', chapter: 19, anchor: 'the-glaziers-alley', door: 'Carry the pie down the glaziers’ alley', place: 'the glaziers’ alley', trope: 'unpriced glass cleared by snails' },
+  { scene: 'field', chapter: 20, anchor: 'the-swollen-lock', door: 'Carry the pie across the swollen canal lock', place: 'the canal sill', trope: 'two springs taking turns every third chime' },
+  { scene: 'lanes', chapter: 21, anchor: 'fourteen-inches-up', door: 'Carry the pie at fourteen inches up', place: 'the cobblestone kerb', trope: 'the city read from boot-height' },
+  { scene: 'gate', chapter: 22, anchor: 'the-copper-drop', door: 'Carry the pie past the copper parcel chute', place: 'the guild cellar', trope: 'a parcel carried by hand' },
+  { scene: 'table', chapter: 23, anchor: 'after-the-lamps-are-lit', door: 'Carry the pie past the night school bench', place: 'the adult night school', trope: 'three widths and an honest sliver' },
+  { scene: 'court', chapter: 24, anchor: 'the-partitioned-booth', door: 'Carry the pie past the four masking shutters', place: 'the judging booth', trope: 'two shutters opened at once' },
+  { scene: 'plaza', chapter: 25, anchor: 'under-one-vault', door: 'Carry the pie past the warm bakehouse vault', place: 'the bakehouse vault', trope: 'forty clowns waiting politely outside' },
+  { scene: 'table', chapter: 26, anchor: 'the-great-table', door: 'Carry the pie along the Great Table', place: 'the Feast of the Uneven Slice', trope: 'exactly one spill to turn the ring' }
 ]);
 
 /** The chapter a bare ?scene= opens on, when `from` names no chapter of that scene. */

@@ -1,0 +1,22 @@
+# Chapter Sixteen, The Second Place: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_16
+!card{
+  *chapter_16{
+    .file["chapter-16.jpg"]
+    .plate["book/images/16.png"]
+    #title["The Second Place"]
+    #in_which["Boof wears the chosen title for one supper, and the figure dries plates behind the curtain beside the unnamed washer-up"]
+    #says["Chapter Sixteen, The Second Place: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

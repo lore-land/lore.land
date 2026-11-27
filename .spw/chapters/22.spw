@@ -1,0 +1,120 @@
+# Chapter 22 Canon Reference
+# Generated from /book/chapter/22/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_22
+#:chapter-canon #!reference
+
+^[chapter/22]{
+  title: "Through the Chute With No Receipt"
+  description: "Chapter 22 of Lore.Land: Through the Chute With No Receipt. Twisting behind Bonk City's kitchen walls and guild cellars runs a riveted copper parcel chute humming with brass static and warm cinnamon air. Cellar mice ride ribbon ends, the..."
+  mood: "labyrinth"
+  period: "winter"
+  chapter_path: "/book/chapter/22/"
+}
+
+$[chapter/22/made_of]{
+  spell: ^chapter[22]{
+    .rooms[ ~<copper_chute>@porter !<unmarked_hatch>@fool *<parcel_bundle>@the_land
+      .{return_duct}@porter ]
+    @told_by[narrator fool labyrinth reflection]
+    $brass $steam $ink
+    =palette[copper_chute]
+    ~berries{ boonberry $boneberry[falafel] }
+  }
+  rooms: "Four rooms: three < > passages and a { } room; two kept by porter, the rest by fool and the land."
+  told_by: "Told by the narrator, the Fool, the labyrinth and the record."
+  made_of: "Made most of brass and bronze, then steam and warmth, then ink and line."
+  palette: "Its palette is copper chute, earned a layer at a time: warm riveted copper, cinnamon cellar air, and pink return slips rising in a draft."
+  berries: "Here boonberries foresee; a boneberry in this chapter tastes of falafel."
+}
+
+&[chapter/22/routes]{
+  web: "/book/chapter/22/"
+  timeline: "/book/timeline.html#chapter-22"
+  motif: ~[motif/chapter-22]{optional}
+}
+
+^[chapter/22/spine]{
+  =prev{ ~".spw/chapters/21.spw#chapter_21" }
+  =next{ ~".spw/chapters/23.spw#chapter_23" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; the Fool sidles in through a painted door; the labyrinth grows a new corridor; the reflection reads back by candlelight"
+}
+
+^[chapter/22/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Copper Drop"
+    room: ~<copper_chute>@porter
+    air: "Riveted copper humming with static, warm cinnamon air, and two gate-pigeons asleep on the upper latch."
+    excerpt: "Behind Bonk City’s kitchens and guild basements twisted the old copper parcel chute, riveted together by tinsmiths who believed stairs were an insult to flour. Warm cinnamon air rolled down its polished throat, charge..."
+    route: ^[chapter/22/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/22.png"
+    route: ^[chapter/22/s02]{open}
+  ]
+  s03: <
+    handle: "custom-fool/03"
+    type: "custom-fool"
+    room: !<unmarked_hatch>@fool
+    air: "A brief passing streak of bells and ribbon ends: you go through a chute, you never camp in it."
+    excerpt: "Halfway along the cellar wall, an unmarked brass inspection hatch clacked open on its own. For precisely two seconds the Boonberry Fool slid straight past inside the copper elbow, heels first, balancing a saucer on on..."
+    route: ^[chapter/22/s03]{open}
+  >
+  s04: <
+    handle: "custom-labyrinth/04"
+    type: "custom-labyrinth"
+    room: *<parcel_bundle>@the_land
+    air: "Every bundle packed upstairs lands downstairs as a clean description of somebody else's parcel."
+    excerpt: "Then the feast supplies began to drop. A laundress two alleys up dropped a neatly tied bundle of clean table napkins into the copper throat. When it thumped into the cellar hamper, the twine still held, yet the butche..."
+    route: ^[chapter/22/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{return_duct}@porter
+    air: "The porter stops chasing pink slips up the draft and carries the warm pie tin by hand."
+    excerpt: "One last pink receipt fluttered out of the return duct, danced on the warm draft, and settled gently on Boof’s broad dark brow. She shook it off onto the stone beside the hamper. It had no sender, no weight, and {{sli..."
+    route: ^[chapter/22/s05]{open}
+  >
+]
+
+&[chapter/22/cast]{
+  fool: <
+    register: "trickster of honest masks; walks in through doors that were only painted, wearing a face the chamber has not closed"
+    .enters: "custom-fool/03"
+  >
+  labyrinth: <
+    register: "a maze that grows a corridor for every wrong turn, and remembers each one"
+    .enters: "custom-labyrinth/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/22/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/22/lore]{
+  notes: [
+    "A sloped copper parcel chute winds behind Bonk City's kitchens; bundles dropped inside emerge as clean descriptions of what a neighbour packed at the same moment."
+    "A parallel brass return duct blows receipts straight back upward into the roofs, defeating anyone who tries to paper the chute's deliveries."
+    "The Boonberry Fool makes his only brief cameo of Book Two sliding heels-first past an unmarked cellar hatch, reminding everyone never to camp inside a passage."
+  ]
+}
+
+~[chapter/22/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

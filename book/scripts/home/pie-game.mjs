@@ -177,7 +177,7 @@
  */
 
 import { SEGUES, segueFor, chapterWords, safeReturn, describeReturn, leaveBackNote } from '../modules/pie-segues.mjs?v=2026_11_16.B';
-import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_08.J';
+import { carryFor, keepCarry, mimesHold, readCarries, carriesSummary, chapterList, describeLean, leanOf, renderCarriesPanel, PIE_WORDS, LEAN_NAMES, activeCombine, recordHeardTelling, readLoreTies } from '../modules/pie-carries.mjs?v=2026_11_16.B';
 import { collectWonder, KIND_SIGIL } from '../modules/almanac.mjs?v=2026_11_16.B';
 import { SIGHTINGS, readSightings, recordSighting } from '../modules/sightings.mjs?v=2026_11_05.B';
 import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
@@ -189,7 +189,7 @@ import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as character
 import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_16.B';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
 import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
-import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_13.B';
+import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_16.B';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue, setBoardPosition } from './pie-sound.mjs?v=2026_11_16.B';
 import { shelfColor, chainSting, tropeMotif, cadenceVoice, foreshadowHear, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample, auditionChapterProgression } from './pie-sound.mjs?v=2026_11_16.B';
 import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuningDomains, writeTuningDomains, effectiveDomain } from '../modules/pie-tuning.mjs';
@@ -208,7 +208,7 @@ import { warmthMark, hushMark, hushToast, voiceMark } from './pie/story/eggs.mjs
 import { teachLine, handsLine, leanSentence, jokeOf, nudgeLine } from './pie/menu/teach.mjs';
 import { thresholdBranch } from './pie/story/thresholds.mjs';
 import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLOUR } from './pie-mimes.mjs?v=2026_11_11.A';
-import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_13.B';
+import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_16.B';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
 import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
 import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_13.B';
@@ -217,7 +217,7 @@ import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
 import { reactionFor, powerMoments, ended as timersEnded, REACTIONS } from './pie-reactions.mjs?v=2026_11_13.B';
 import { meet as meetCallback, saving as callbacksSaving, wordsOf as callbackWords, jokeDeed, QUOTED as CALLBACK_CHAPTERS } from './pie-jokes.mjs?v=2026_11_13.B';
 import { SEASONS, SEASON_KINDS, SEASON_SAYS, SEASON_EXTRAS, openSeason, standing as seasonStanding, take as takeSeason, receive as receiveKept, keptProblems } from './pie-seasons.mjs?v=2026_11_12.A';
-import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_11.A';
+import { orderAsRead } from '../modules/wish-kitchen.mjs?v=2026_11_16.B';
 import { initLive, GIFT_ART, BOON_ROSE, liveFound, markLiveFound } from './pie-live.mjs?v=2026_11_13.A';
 import { initStoryLane } from './pie-story-lane.mjs?v=2026_11_16.B';
 import { initPieDraw } from './pie-draw.mjs?v=2026_11_16.B';
@@ -229,7 +229,7 @@ import {
   BIT_COLORS, CAUSES, CARRIERS, CHAPTER_SCENE, DIMENSIONS_GAINED, EGG_ODDS, HIGH_CLEARS,
   HOP_HANG, hopCurve, INTRO, JUMP_DUR, KNOCKS, LOW, MEET, MINIS, SCENES, SCENE_WHIMSY_DEFAULTS, SCHEMES, SLIPS,
   WHIMSY_DEFAULTS, WIDE, Z, carrierById, carrierStats, drawCarrierLot, pad2,
-} from './pie-world.mjs?v=2026_11_13.B';
+} from './pie-world.mjs?v=2026_11_16.B';
 import {
   W, H, LANES, LANE_W, PLAYER_Y, COBBLE, PRESENCE_Y, ROWS, ROW_H, rowY,
   SLICE_COST, WASTE_COST, FLOUR_GIVES, BERRY_GIVES,

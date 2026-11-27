@@ -1,0 +1,354 @@
+{
+  "chapterNumber": 26,
+  "title": "The Feast of the Uneven Slice",
+  "logline": "At the Turning of the Year, Bonk City's Great Table spans plaza, gate, and river mist — and asks for exactly one spill so an unclosed circle can turn onward without resetting.",
+  "epigraph": "Exactly one pie spills, the sliver stays unrounded, and the ring turns cleanly on.",
+  "inWhich": "Bonk City’s Great Table gathers every voice, exactly one slice spills, and the ring closes whole without resetting",
+  "description": "Chapter 26 of Lore.Land: The Feast of the Uneven Slice. Stretching from Bonk City's plaza past the parcel gate into the winter river mist, the Great Table gathers every neighbour across Books One and Two while confetti cut from voided Thursday slips drifts overhead. The unnamed figure stands ninety degrees to the seating plan, one slice spills cleanly to satisfy the prophecy without erasing its mystery, and in the quiet furrow beyond the town the warm Egg remains unexplained.",
+  "mood": "reflection",
+  "period": "turning",
+  "pillars": [
+    "wonder",
+    "stewardship",
+    "worldbuilding"
+  ],
+  "topics": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 25 · The Warm Hearth Before the Feast",
+      "href": "/book/chapter/25/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "All 26 Chambers · Timeline",
+      "href": "/book/timeline.html",
+      "kicker": "Rings"
+    },
+    {
+      "label": "Book One · Dawn in Boon.land",
+      "href": "/book/chapter/01/",
+      "kicker": "Begin Again"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "Great Table",
+        "feast",
+        "slice",
+        "spill",
+        "prophecy",
+        "pie",
+        "BoonWAP",
+        "Turning"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "nose",
+        "furrow",
+        "paws",
+        "ears"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "hat",
+        "lines",
+        "torch-ants",
+        "jazz-geese",
+        "open brace",
+        "egg",
+        "confetti"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "Thursday",
+        "slips",
+        "washer",
+        "Genie",
+        "BoneWAP",
+        "BaneWAP",
+        "seating"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Great Table",
+      "room": {
+        "spw": "^{great_table}@boonwap",
+        "air": "Linen stretching from plaza to parcel gate into river mist, bright with lanterns and voided Thursday slips."
+      },
+      "data-motif": "feast",
+      "data-trope": "exactly-one",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "gold",
+        "hook": "great-table"
+      },
+      "scene": {
+        "vantage": "looking along Bonk City's Great Table stretched end-to-end from the plaza past the parcel gate out into the twilight river mist",
+        "light": "hundreds of amber lanterns warming deep teal winter dusk; confetti of voided paper slips glinting in the breeze",
+        "scent": "steaming boonberry crust, hot spiced cider, clean starched linen, brass forks, cold winter river air",
+        "edges": [
+          "the washer-up seated comfortably in the place of honour while Mr. BoonWAP carries a steaming tray of plates himself",
+          "Clem Furrow, Ida Bell, Noor, the porter, the glazier, Mx. BoneWAP, Mr. BaneWAP, and the Genie off-season gathered along the same cloth",
+          "nine jazz-geese banking in uneven rhythm high across the lantern-lit dusk",
+          "standing ninety degrees to the entire seating plan, the unnamed plain-line figure beneath his calm floating hat beside one spilled amber slice"
+        ],
+        "hint": "a panoramic lantern-lit twilight feast table stretching from Bonk City plaza through the parcel gate into river mist; confetti of voided slips drifting; every character seated; Boof watching beside the leg; the unnamed plain-line figure standing ninety degrees to the table beside one single spilled slice of pie"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At the Turning of the Year, Bonk City ran its Great Table out past the plaza, straight through the propped-open parcel gate, and down the cobbled slope until its far trestles vanished into the cold river mist. Overhead swung three hundred dent-lanterns, and from the upper windows clerks tossed cheerful handfuls of confetti cut from voided Thursday slips — bright specks drifting like {{confetti-kind}}.",
+          "slots": {
+            "confetti-kind": {
+              "clock": "hour",
+              "variants": [
+                "dry snow",
+                "paper petals",
+                "pale chaff",
+                "winter moths"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Every voice from Books One and Two found a bench without needing a brass marker. The porter sat next to the carpenter who had measured the lintel; the night school’s adult pupils filled a whole section with Clem Furrow’s laugh and Noor’s cider cups; Mx. BoneWAP tapped the longest trestle leg once with a felt mallet and declared the joinery sound."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the head of the linen, sitting comfortably with dry hands and a clean napkin in her lap, sat the washer-up from behind the curtain. Beside her stood Mr. BoonWAP — beaming wider than anyone had ever seen him — carrying a stack of warm stoneware plates out from the bakehouse himself.",
+          "lean": "boon"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/26.png",
+        "alt": "The Feast of the Uneven Slice: Bonk City's lantern-lit Great Table stretching from the plaza through the parcel gate into river mist, confetti of voided slips falling through teal dusk, Boof sitting watch by the trestle, and the unnamed plain-line figure standing ninety degrees to the seating plan beside one spilled amber slice.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "The Feast of the Uneven Slice: one spill kept honestly, so the circle turns onward without resetting."
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "@(seating_plan)@boof",
+        "air": "Everyone takes a chair except one ink silhouette standing cleanly at ninety degrees to the cloth."
+      },
+      "data-motif": "hat",
+      "data-trope": "floating-title",
+      "climate": {
+        "tempo": "night",
+        "tint": "hearth",
+        "hook": "seating-plan"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Halfway down the benches, Mr. BaneWAP passed a little stone pot of sharp orchard jam to a delighted clown, who spread a careful pinch across a warm wedge and declared it the finest supper of the decade. Across from them sat the Genie off-season, balancing a teacup on one palm and refusing to price a single laugh within earshot.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Boof sat calmly beside the trestle leg with a marrow bone set honestly beside her paws — no ribbon, no chosen title, no speeches asked of her. From fourteen inches up she could see every boot settled comfortably under the cloth, and one pair of crisp black ink shoes standing just past the end of the table."
+        },
+        {
+          "type": "paragraph",
+          "text": "The figure in plain lines stood ninety degrees to the entire seating plan, facing out toward the open lane rather than down the benches. One circle, one rectangle, four lines, two dots — always ink, never named. Above him, the black bowler hat hovered steady in the lantern breeze, neither landing nor leaving.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-awakening",
+      "room": {
+        "spw": "!{uneven_slice}@the_land",
+        "air": "One heel catches a voided Thursday slip, and exactly one warm slice meets the winter cobbles."
+      },
+      "data-motif": "pie",
+      "data-trope": "exactly-one",
+      "climate": {
+        "tempo": "night",
+        "tint": "ember",
+        "hook": "uneven-slice"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Then the great ceremonial pie came down the line — the uneven slice cut slightly wider than its neighbours by the night school’s brass dividers, steaming teal and amber on a flat stoneware dish. The carrier was neither a hero nor a herald: merely a laughing feast clerk stepping backward out of a clown’s enthusiastic bow.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "His left boot caught a single curled scrap of voided Thursday confetti on the damp stones. The stoneware saucer tilted two degrees past saving, and exactly one warm slice slid cleanly off the rim and landed crust-up on the cobblestones right between the table leg and the figure’s ink shoes."
+        },
+        {
+          "type": "paragraph",
+          "text": "For three heartbeats the Great Table went quiet. Up in the teal dusk, nine jazz-geese banked overhead in uneven swinging time, honking all nine notes cleanly across the plaza. Down between the granite setts, a polite column of torch-ants hurried out with tiny lifted embers to warm the fallen berries so nothing went to waste.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Nobody could say afterward whether the spill had been prophecy, clumsy boots, arithmetic, or simple manners toward the street — and nobody tried to force the question into a yes-or-no tray. A circle closed too tight can only repeat itself; an uneven slice lets the ring turn onward without resetting.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": "^{open_ring}@boof",
+        "air": "Beyond the lanterns, the Round Archive keeps its open brace, and the warm furrow stays unexplained."
+      },
+      "data-motif": "egg",
+      "climate": {
+        "tempo": "night",
+        "tint": "teal",
+        "hook": "open-ring"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Fork brass rang again along the linen, laughter rose warm into the river mist, and the figure lifted his shorter right arm once — a brief, quiet turn of one line — before stepping smoothly along the open lane where the lanterns met the meadow. Above him, the hat followed at its own exact distance.",
+          "lean": "boon"
+        },
+        {
+          "type": "bracework",
+          "spw": "^{uneven_slice & open_ring}",
+          "gloss": "Integration that keeps its remainder: when one slice spills honestly, thirteen chambers close whole and still leave room for the path.",
+          "maker": "Bonk City"
+        },
+        {
+          "type": "paragraph",
+          "text": "Late that night, Boof trotted past the Round Archive, where the shell-shaped door stood cracked open on its quiet open brace — leave room for the path, the archive’s oldest law said. Out beyond the wall, the dawnward field lay quiet under {{midnight-frost}}. Under the roots where the story began, the warmth that remembered the Egg sat calm, whole, and utterly unexplained, waiting for nobody to finish it for the land.",
+          "slots": {
+            "midnight-frost": {
+              "clock": "day",
+              "variants": [
+                "clear starlight",
+                "silver rime",
+                "calm winter air",
+                "blue midnight"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "At the Turning of the Year, Bonk City's Great Table stretches from the plaza through the parcel gate into the river mist, showered with confetti cut from voided Thursday slips."
+      },
+      {
+        "description": "At the Great Table, the unnamed washer-up sits in honour while Mr. BoonWAP carries steaming stoneware plates himself."
+      },
+      {
+        "description": "A single spilled uneven slice satisfies the prophecy while preserving its ambiguity: nobody knows whether it was luck, manners, or arithmetic, only that the ring turns onward."
+      },
+      {
+        "description": "The figure in plain lines stands ninety degrees to the seating plan and leaves still unnamed; out in the dawnward furrow, the Egg remains warm and unexplained."
+      }
+    ]
+  },
+  "table": {
+    "place": "Bonk City's Great Table at the Turning of the Year: endless linen trestles stretching from the lantern-lit plaza through the open parcel gate down to the misty riverbank.",
+    "light": "Warm golden lantern chains swaying through deep winter teal dusk, catching falling confetti cut from voided calendar slips.",
+    "people": [
+      {
+        "name": "the washer-up (guest of honour)",
+        "want": "a second helping of warm pie and nobody sliding a dirty plate within ten yards of her elbow",
+        "voice": "easy laugh, clinks her brass fork against every toast"
+      },
+      {
+        "name": "Mr. BoonWAP",
+        "want": "to carry every tray cleanly and learn how heavy wet stoneware actually is",
+        "voice": "cheerful, slightly breathless, genuinely proud of his apron"
+      },
+      {
+        "name": "the Genie (off-season)",
+        "want": "one cup of hot cider with zero coincidences attached",
+        "voice": "dry, amused, refuses to bring out his pan scale"
+      },
+      {
+        "name": "the unnamed figure",
+        "want": "nothing announced; stands ninety degrees to the cloth and lets the uneven slice fall where it will",
+        "voice": "silent; plain black ink against lantern-lit twilight"
+      }
+    ],
+    "hooks": [
+      "The feast confetti contains one un-voided Thursday slip still valid until midnight; decide who gets an extra quiet day before the Turning strikes.",
+      "Nine jazz-geese have landed on the far end of the trestle in the river mist and will not rise until somebody shares the uneven ninth sliver.",
+      "Trace the warm glow beneath the dawnward furrow after the lamps go down — knowing beforehand that the Egg will answer no question directly."
+    ],
+    "encounters": [
+      "A burst of voided-slip confetti drifts across the lanterns, turning every face bright gold for a heartbeat.",
+      "Mr. BaneWAP offers the party a crisp slice brushed with a single honest pinch of bitter orchard jam.",
+      "A clown bows so low he nearly knocks a water pitcher; a mime catches the ripple in mid-air without spilling a drop.",
+      "Nine jazz-geese pass overhead in uneven swinging rhythm, and every cup on the cloth rings softly in harmony.",
+      "Torch-ants form a neat ember ring around a single fallen berry crumb on the cobblestones.",
+      "At the far edge of the lantern light, a bowler hat floats calmly above a quiet silhouette turning down the meadow path."
+    ],
+    "finds": [
+      {
+        "wonder": "jazz-geese",
+        "use": "Call out in nine uneven beats at a gathering's turn; the missing ninth note answers cleanly when the whole table listens."
+      },
+      {
+        "wonder": "open-brace",
+        "use": "Leave one deliberate gap at the close of any chronicle so what arrives next year does not have to break the door."
+      }
+    ],
+    "bracework": {
+      "spw": "^{uneven_slice & open_ring}",
+      "does": "Closes a thirteen-chapter ring cleanly without sealing it shut, turning the remainder into momentum for whatever comes after.",
+      "costs": "Nobody gets a perfectly tidy answer; the prophecy stays slightly crooked on purpose."
+    },
+    "question": "When the feast ends whole, what uneven sliver do you leave on purpose so the story can keep turning?"
+  }
+}

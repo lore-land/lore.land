@@ -2,7 +2,7 @@
 #>chapter_23_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 10 of 13: () scope.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 220
   mode: "Aeolian / Quartal"
   tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall (transposed into Book Two's C-axis continuation)"

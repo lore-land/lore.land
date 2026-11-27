@@ -805,7 +805,7 @@ const ICON_SCALES = [
 try {
   const refs = await read('book/content/world/references.json');
   let cards = 0;
-  for (let n = 1; n <= 15; n += 1) {
+  for (let n = 1; n <= chapters.length; n += 1) {
     const slug = pad(n);
     const at = `share chapter ${slug}`;
     const data = await read(`book/content/chapters/${slug}.json`);

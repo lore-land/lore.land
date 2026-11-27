@@ -53,9 +53,10 @@ async function main() {
   let harmonies = { harmonies: [] };
   try { harmonies = await read('book/content/world/harmonies.json'); } catch { /* optional */ }
   const edges = harmonies.harmonies || harmonies.edges || [];
+  const { TOTAL_CHAPTERS } = await import(resolve(ROOT, 'book/scripts/modules/book-extent.mjs'));
   /** @type {{ n: number, title: string, rooms: string[], sigils: Record<string, number>, containers: Record<string, number>, firsts: Record<string, number>, materials: [string, number][], told: number }[]} */
   const chapters = [];
-  for (let n = 1; n <= 15; n += 1) {
+  for (let n = 1; n <= TOTAL_CHAPTERS; n += 1) {
     let data;
     try { data = await read(`book/content/chapters/${pad(n)}.json`); } catch { continue; }
     /** @type {string[]} */

@@ -9,8 +9,14 @@
 
 const clamp = (/** @type {number} */ v, /** @type {number} */ lo, /** @type {number} */ hi) => Math.min(hi, Math.max(lo, v));
 
-export const ROOTS = Object.freeze([293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66, 261.63, 349.23]);
-export const PULSES = Object.freeze([96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96, 90, 108]);
+export const ROOTS = Object.freeze([
+  293.66, 261.63, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66,
+  261.63, 349.23, 329.63, 311.13, 277.18, 349.23, 293.66, 261.63, 392, 220, 246.94, 329.63, 293.66
+]);
+export const PULSES = Object.freeze([
+  96, 92, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96,
+  90, 108, 104, 88, 100, 108, 96, 92, 112, 84, 100, 104, 96
+]);
 export const MAJOR = Object.freeze([0, 2, 4, 7, 9]);
 export const MINOR = Object.freeze([0, 3, 5, 7, 10]);
 export const JAZZ_MAJOR = Object.freeze([0, 2, 4, 5, 7, 9, 11]);

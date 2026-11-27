@@ -2,7 +2,7 @@
 #>chapter_24_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 11 of 13: [] frame.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 246.94
   mode: "Locrian / Raised-6th"
   tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed (transposed into Book Two's C-axis continuation)"

@@ -93,6 +93,72 @@
     &ecology: ~".spw/ecologies/15/ecology.spw"
     sections: 7
   }
+  c16: {
+    title: "The Second Place"
+    &file: ~".spw/chapters/16.spw"
+    &ecology: ~".spw/ecologies/16/ecology.spw"
+    sections: 5
+  }
+  c17: {
+    title: "Ledger of Unasked Questions"
+    &file: ~".spw/chapters/17.spw"
+    &ecology: ~".spw/ecologies/17/ecology.spw"
+    sections: 5
+  }
+  c18: {
+    title: "Flour in the Bell-Tower"
+    &file: ~".spw/chapters/18.spw"
+    &ecology: ~".spw/ecologies/18/ecology.spw"
+    sections: 5
+  }
+  c19: {
+    title: "The Priced Window"
+    &file: ~".spw/chapters/19.spw"
+    &ecology: ~".spw/ecologies/19/ecology.spw"
+    sections: 5
+  }
+  c20: {
+    title: "Two Springs Under the Sill"
+    &file: ~".spw/chapters/20.spw"
+    &ecology: ~".spw/ecologies/20/ecology.spw"
+    sections: 5
+  }
+  c21: {
+    title: "At the Nose of the Work"
+    &file: ~".spw/chapters/21.spw"
+    &ecology: ~".spw/ecologies/21/ecology.spw"
+    sections: 5
+  }
+  c22: {
+    title: "Through the Chute With No Receipt"
+    &file: ~".spw/chapters/22.spw"
+    &ecology: ~".spw/ecologies/22/ecology.spw"
+    sections: 5
+  }
+  c23: {
+    title: "Rehearsal of the Night School"
+    &file: ~".spw/chapters/23.spw"
+    &ecology: ~".spw/ecologies/23/ecology.spw"
+    sections: 5
+  }
+  c24: {
+    title: "Four Windows in One Wall"
+    &file: ~".spw/chapters/24.spw"
+    &ecology: ~".spw/ecologies/24/ecology.spw"
+    sections: 5
+  }
+  c25: {
+    title: "The Warm Hearth Before the Feast"
+    &file: ~".spw/chapters/25.spw"
+    &ecology: ~".spw/ecologies/25/ecology.spw"
+    sections: 5
+  }
+  c26: {
+    title: "The Feast of the Uneven Slice"
+    &file: ~".spw/chapters/26.spw"
+    &ecology: ~".spw/ecologies/26/ecology.spw"
+    sections: 5
+  }
 ]
 
 ^[routes]{
@@ -111,6 +177,17 @@
   "chapter-13": "#>chapter_13"
   "chapter-14": "#>chapter_14"
   "chapter-15": "#>chapter_15"
+  "chapter-16": "#>chapter_16"
+  "chapter-17": "#>chapter_17"
+  "chapter-18": "#>chapter_18"
+  "chapter-19": "#>chapter_19"
+  "chapter-20": "#>chapter_20"
+  "chapter-21": "#>chapter_21"
+  "chapter-22": "#>chapter_22"
+  "chapter-23": "#>chapter_23"
+  "chapter-24": "#>chapter_24"
+  "chapter-25": "#>chapter_25"
+  "chapter-26": "#>chapter_26"
 }
 
 ~[apocrypha]{

@@ -2,7 +2,7 @@
 #>chapter_21_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 8 of 13: @ perspective.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 261.63
   mode: "Mixolydian reflection"
   tonal_role: "mirrored subtonic C4 echoing depths from the well (transposed into Book Two's C-axis continuation)"

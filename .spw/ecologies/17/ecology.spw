@@ -2,7 +2,7 @@
 #>chapter_17_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 4 of 13: ? probe.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 311.13
   mode: "Phrygian / sus2"
   tonal_role: "+1 semitone wind shear against D4 tonic open without resolution (transposed into Book Two's C-axis continuation)"

@@ -8,8 +8,8 @@
 
 ^"book_two"{
   .title: "Wonder About Pi(e)"
-  .status: "working"
-  .chambers: "14 →"
+  .status: "complete"
+  .chambers: "14–26"
   premise: "The Genie paid for Boof's wish with everything he had left, plus one Thursday. The Thursday goes missing from every person's week and stays in the field. On the day nobody kept, someone arrives through the warm furrow without a receipt — a figure in a few plain lines under a hat that never lands."
   shared_question: "What happens to a wish after it leaves the person who made it?"
   book_question: "Can a figure made to signify something become a person?"
@@ -51,9 +51,48 @@
     care: "children may be in the story, never arranged so that someone reading over another's shoulder would want to close the book: the stranger is never placed among children or enrolled as one; an adult does not handle someone else's child; a child is not promoted into a title, card or collectible. The intergenerational note is kept where it belongs: a father sharing his folio with his own children (ch6), and a night school grown-ups attend whether or not they have children (ch15)"
   }
   c16: {
-    .status: "next stone — 2026-11-13"
-    title_seed: "The Second Place"
-    seed: "Boof wears the floating title for one scene at BoonWAP's table. The figure, at the back, dries plates beside the washer-up nobody has asked the name of (story-boonhonk#boonhonk_anchor_last_slice). If the pie is never smaller, why does the person serving it still get tired?"
+    title: "The Second Place"
+    beats: "Boof wears the floating title for one supper course at BoonWAP's table → slips under the baize curtain to the cold spring tub → the figure dries stoneware plates beside the unnamed washer-up → Boof drops the ribbon on a dry apron peg"
+  }
+  c17: {
+    title: "Ledger of Unasked Questions"
+    beats: "checkered inquiry pavilion files YES/NO answers before noon → figure submits a four-cornered sheet → Boof recovers the unspent ch07 coincidence → shelf-owl keeps the open gap clear"
+  }
+  c18: {
+    title: "Flour in the Bell-Tower"
+    beats: "dry feast flour stacked under the belfry louvres → one loose plank lifts a luminous white cloud → a mime leans on an invisible rope while the clapper strikes in velvet hush → the square checks its watches together"
+  }
+  c19: {
+    title: "The Priced Window"
+    beats: "glaziers' alley marks rising chalk tariffs per unbroken hour → light snags on stickers and passes clean through unpriced glass → at dusk pane-snails graze the chalk off clear"
+  }
+  c20: {
+    title: "Two Springs Under the Sill"
+    beats: "swollen canal lock holds sweet brine and bitter orchard runoff → seam-otters knot rush reeds while gates alternate every third chime → re-sweetened Mr. BaneWAP samples bitter jam on the coping wall"
+  }
+  c21: {
+    title: "At the Nose of the Work"
+    beats: "Bonk City read strictly fourteen inches above wet cobblestones → torch-ant detours, grate steam, puddles, and guild boots reveal what tall committee tables hide"
+  }
+  c22: {
+    title: "Through the Chute With No Receipt"
+    beats: "copper parcel chute behind the kitchens turns bundles into descriptions of someone else's packing while pink receipts blow up the return duct → brief passing Fool cameo → porter carries the pie tin by hand"
+  }
+  c23: {
+    title: "Rehearsal of the Night School"
+    beats: "strictly adult workers after hours measure a pie tin with string and dividers → three widths plus a stubborn sliver → unison fourths steady tired hands while the roll keeps one blank line"
+  }
+  c24: {
+    title: "Four Windows in One Wall"
+    beats: "four judges behind four masking shutters prove four contradictory laws about one quiet courtyard walk → Boof nudges two shutters open and crossing shadows restore the single lane"
+  }
+  c25: {
+    title: "The Warm Hearth Before the Feast"
+    beats: "every unfinished Book Two ingredient simmers under one brick bakehouse vault → hungry clowns wait politely outdoors while mimes lean invisibly on warming racks → Boof unlatches the damper before the crust scorches"
+  }
+  c26: {
+    title: "The Feast of the Uneven Slice"
+    beats: "Great Table spans plaza, gate, and river mist under voided-Thursday confetti → washer-up sits in honour while BoonWAP carries plates → figure stands ninety degrees to the seating plan → exactly one uneven slice spills so the ring turns onward → Egg stays warm and unexplained"
   }
 }
 

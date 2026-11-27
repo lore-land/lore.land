@@ -377,6 +377,237 @@
       }
     },
     {
+      "id": "scullery-steam",
+      "name": "Scullery steam",
+      "chapter": 16,
+      "gloss": "Coarse linen, warm brass markers, and wet stoneware behind a baize curtain.",
+      "colors": {
+        "ground": "#f2ece2",
+        "ink": "#2c251d",
+        "accent": "#b06d2e",
+        "glow": "#fbf7ef",
+        "edge": "#7d6c58"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "a brass marker on linen"
+      }
+    },
+    {
+      "id": "blotter-check",
+      "name": "Blotter check",
+      "chapter": 17,
+      "gloss": "Cool slate tiles, blotter dust, and blue ink on an unasked question.",
+      "colors": {
+        "ground": "#eae9ee",
+        "ink": "#212534",
+        "accent": "#485b8c",
+        "glow": "#f6f6fa",
+        "edge": "#6d728a"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.02em",
+        "weight": 400,
+        "from": "pigeonhole labels"
+      }
+    },
+    {
+      "id": "belfry-flour",
+      "name": "Belfry flour",
+      "chapter": 18,
+      "gloss": "Suspended sifted wheat, sun-shaft bronze, and crisp black ink untouched by dust.",
+      "colors": {
+        "ground": "#f4f1ea",
+        "ink": "#2a2623",
+        "accent": "#8e6232",
+        "glow": "#fcfbf7",
+        "edge": "#9a8e7e"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.01em",
+        "weight": 400,
+        "from": "flour-hushed brass"
+      }
+    },
+    {
+      "id": "priced-pane",
+      "name": "The priced pane",
+      "chapter": 19,
+      "gloss": "Cool window teal, linseed putty, and amber lantern-light clearing along a snail trail.",
+      "colors": {
+        "ground": "#e4eeec",
+        "ink": "#173032",
+        "accent": "#c07a2c",
+        "glow": "#f3f8f6",
+        "edge": "#466f73"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0",
+        "weight": 400,
+        "from": "chalk rubbed clean on glass"
+      }
+    },
+    {
+      "id": "lock-sill",
+      "name": "The lock sill",
+      "chapter": 20,
+      "gloss": "Wet oak green, berry-dark brine, and bitter plum jam on dry canal stone.",
+      "colors": {
+        "ground": "#e7eee9",
+        "ink": "#1e332c",
+        "accent": "#7c3e6b",
+        "glow": "#f4f7f2",
+        "edge": "#4b6e61"
+      },
+      "type": {
+        "family": "body",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0",
+        "weight": 400,
+        "from": "two waters on one sill"
+      }
+    },
+    {
+      "id": "cobble-nose",
+      "name": "Cobble level",
+      "chapter": 21,
+      "gloss": "Wet granite setts, grate steam, and teal puddle sky seen fourteen inches up.",
+      "colors": {
+        "ground": "#ebe8e1",
+        "ink": "#292724",
+        "accent": "#3d7b74",
+        "glow": "#f7f4ee",
+        "edge": "#777166"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.01em",
+        "weight": 400,
+        "from": "a trail along the kerb"
+      }
+    },
+    {
+      "id": "copper-chute",
+      "name": "Copper chute",
+      "chapter": 22,
+      "gloss": "Warm riveted copper, cinnamon cellar air, and pink return slips rising in a draft.",
+      "colors": {
+        "ground": "#f2e8df",
+        "ink": "#362218",
+        "accent": "#b45a2a",
+        "glow": "#fbf3eb",
+        "edge": "#8b5c42"
+      },
+      "type": {
+        "family": "mono",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.02em",
+        "weight": 400,
+        "from": "parcel twine and copper"
+      }
+    },
+    {
+      "id": "night-chalk",
+      "name": "Night chalk",
+      "chapter": 23,
+      "gloss": "Slate blue evening, tallow gold, and an unclosed chalk circle on a bench.",
+      "colors": {
+        "ground": "#e8ebf0",
+        "ink": "#1e2736",
+        "accent": "#a87d2e",
+        "glow": "#f5f6f9",
+        "edge": "#56647a"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "italic",
+        "tracking": "0",
+        "weight": 400,
+        "from": "tallow smoke and chalk"
+      }
+    },
+    {
+      "id": "four-shutters",
+      "name": "Four shutters",
+      "chapter": 24,
+      "gloss": "Partitioned booth stone, crimson judge wax, and four quarters of one courtyard.",
+      "colors": {
+        "ground": "#ece9e6",
+        "ink": "#262328",
+        "accent": "#8c3b4a",
+        "glow": "#f7f5f2",
+        "edge": "#68606d"
+      },
+      "type": {
+        "family": "display",
+        "case": "upper",
+        "style": "normal",
+        "tracking": "0.06em",
+        "weight": 500,
+        "from": "four shutter frames"
+      }
+    },
+    {
+      "id": "hearth-vault",
+      "name": "Hearth vault",
+      "chapter": 25,
+      "gloss": "Warm brick glow, rising yeast cream, and oak ember red before the latch opens.",
+      "colors": {
+        "ground": "#f5eae0",
+        "ink": "#382018",
+        "accent": "#c44d2b",
+        "glow": "#fdf4ea",
+        "edge": "#93543a"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.01em",
+        "weight": 400,
+        "from": "brick vault and ember"
+      }
+    },
+    {
+      "id": "uneven-feast",
+      "name": "The uneven slice",
+      "chapter": 26,
+      "gloss": "Parchment linen, lantern gold, and deep feast teal at the Turning of the Year.",
+      "colors": {
+        "ground": "#f3ede1",
+        "ink": "#1d2d30",
+        "accent": "#c08b2d",
+        "glow": "#fbf7ed",
+        "edge": "#2d6a66"
+      },
+      "type": {
+        "family": "display",
+        "case": "none",
+        "style": "normal",
+        "tracking": "0.02em",
+        "weight": 500,
+        "from": "the Great Table"
+      }
+    },
+    {
       "id": "mime-wash",
       "name": "The mime wash",
       "chapter": null,

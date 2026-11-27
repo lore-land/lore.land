@@ -74,6 +74,61 @@
       { "subject": "Parcel post", "search": "Postal service", "lc": "HE6000–7500", "dewey": "383", "wander": "Find the rules for what may be sent by parcel post. Then find the year someone posted a child." },
       { "subject": "Classification", "search": "Classification -- Books", "lc": "Z696–697", "dewey": "025.4", "wander": "Find where the library shelves a book that is about two things. Ask who decided, and whether the book would agree." },
       { "subject": "Carpentry", "lc": "TH5601–5701", "dewey": "694", "wander": "Find how a door is measured for its frame. Then measure something that is standing still." }
+    ],
+    "16": [
+      { "subject": "Housekeeping and kitchens", "search": "Home economics", "lc": "TX653–657", "dewey": "643.3", "wander": "Open an old kitchen manual to the chapter on sculleries. Notice how much space the feast takes and how little goes to the sink." },
+      { "subject": "Table etiquette", "lc": "BJ2041", "dewey": "395.54", "wander": "Find a seating chart for a formal dinner. Ask who stood behind the curtain so the places stayed clean." },
+      { "subject": "Commons", "lc": "HD1286–1289", "dewey": "333.2", "wander": "Look up how shared pastures and bakehouses stayed standing. Every plenty hides an uncounted pair of hands." }
+    ],
+    "17": [
+      { "subject": "Questionnaires", "lc": "H62", "dewey": "001.433", "wander": "Read a guide to writing survey boxes. Notice what disappears when four corners are forced into yes or no." },
+      { "subject": "Archives and filing", "search": "Filing systems", "lc": "HF5736–5746", "dewey": "651.5", "wander": "Find an old cabinet index. Look for the drawer marked Miscellaneous; everything interesting lives there." },
+      { "subject": "Probability and coincidence", "search": "Probabilities", "lc": "QA273", "dewey": "519.2", "wander": "Open to a chapter on rare coincidences. Notice how seldom anyone writes down who owes the next one." }
+    ],
+    "18": [
+      { "subject": "Bells and bell towers", "search": "Bells", "lc": "CC200–260", "dewey": "786.8848", "wander": "Find a drawing of a belfry louvre and its clapper. Imagine what happens when the room fills with fine flour." },
+      { "subject": "Flour milling", "lc": "TS2120–2159", "dewey": "664.72", "wander": "Look up how millers keep dust suspended or still. Light in a flour loft behaves like a solid thing." },
+      { "subject": "Pantomime", "lc": "PN1985–1988", "dewey": "792.3", "wander": "Read about a wall built out of nothing but two open palms. Ask whether a rope tied to nothing can still ring." }
+    ],
+    "19": [
+      { "subject": "Glazing and window glass", "search": "Glazing", "lc": "TH8251–8275", "dewey": "698.5", "wander": "Find how linseed putty sets a pane in its sash. Notice how clear glass goes invisible until someone sticks a price on it." },
+      { "subject": "Optics and refraction", "search": "Refraction", "lc": "QC425", "dewey": "535.324", "wander": "Find a diagram of light passing straight through glass. Ask where the beam snags when the pane carries chalk." },
+      { "subject": "Snails", "lc": "QL430.4", "dewey": "594.3", "wander": "Look up how slow grazers clear algae from stone and glass. Patience erases more tariffs than argument." }
+    ],
+    "20": [
+      { "subject": "Canal locks", "search": "Locks (Hydraulic engineering)", "lc": "TC761", "dewey": "627.1352", "wander": "Find a cross-section of a canal lock chamber. Two waters never have to become one to let a boat pass." },
+      { "subject": "Preserves and jams", "search": "Jam", "lc": "TX612.J3", "dewey": "641.852", "wander": "Look up bitter-orange marmalade and tart berry preserves. Notice what one sharp pinch rescues." },
+      { "subject": "Otters", "lc": "QL737.C25", "dewey": "599.769", "wander": "Find a natural history of river otters. Read how they ride seams where two currents push against each other." }
+    ],
+    "21": [
+      { "subject": "Street paving", "search": "Pavements", "lc": "TE250–278", "dewey": "625.8", "wander": "Look up how cobblestones are laid to shed water. Then imagine reading an entire city fourteen inches off the stones." },
+      { "subject": "Olfaction and scent tracking", "search": "Smell", "lc": "QP458", "dewey": "612.86", "wander": "Read how a scent trail breaks around corners and pools near grates. What looks empty at eye level is crowded at the floor." },
+      { "subject": "Ants", "lc": "QL568.F7", "dewey": "595.796", "wander": "Find a map of foraging trails around obstacles. Small citizens always know where the boots step." }
+    ],
+    "22": [
+      { "subject": "Pneumatic tubes and chutes", "search": "Pneumatic-tube transportation", "lc": "TJ1015", "dewey": "621.8672", "wander": "Find a diagram of old brass message tubes beneath a city. Gravity takes the heavy parcel; draft carries the paper back." },
+      { "subject": "Copper work", "lc": "TT250", "dewey": "739.511", "wander": "Open a tinsmith's handbook to riveted chutes and seams. Notice how copper warms to whatever slides through it." },
+      { "subject": "Translation", "lc": "P306", "dewey": "418.02", "wander": "Read an essay on what changes when a message arrives as a description of someone else's bundle." }
+    ],
+    "23": [
+      { "subject": "Adult education", "search": "Evening and continuation schools", "lc": "LC5501–5560", "dewey": "374", "wander": "Look up evening schools for workers after their shift. Notice what grown-ups bring to a bench that children never carry." },
+      { "subject": "Pi (Number)", "search": "Pi", "lc": "QA484", "dewey": "516.22", "wander": "Find a book on measuring circles with string and dividers. Read the chapter where the circumference refuses to close on an integer." },
+      { "subject": "Choirs and unison singing", "search": "Choral singing", "lc": "MT875", "dewey": "782.5", "wander": "Open to a page on steady breath and fourths. A held note can quiet a shaky hand better than a ruler." }
+    ],
+    "24": [
+      { "subject": "Perspective and framing", "search": "Perspective", "lc": "NC748–750", "dewey": "742", "wander": "Find a plate showing four crops of the same scene. Every window tells the truth and contradicts its neighbour." },
+      { "subject": "Shutters and joinery", "lc": "TH2276", "dewey": "690.1823", "wander": "Look up hinged masking shutters and theatre flats. Opening two at once always changes the shadow on the floor." },
+      { "subject": "Evidence and testimony", "search": "Evidence", "lc": "K2261", "dewey": "347.06", "wander": "Read how four honest witnesses can hand in four incompatible scorecards of one quiet walk across a courtyard." }
+    ],
+    "25": [
+      { "subject": "Baking and ovens", "search": "Baking", "lc": "TX761–778", "dewey": "641.71", "wander": "Open a baker's book to brick vaults and yeast fermentation. Feel how a room builds pressure before the door is unlatched." },
+      { "subject": "Thermodynamics and vents", "search": "Heat", "lc": "QC254", "dewey": "536", "wander": "Find a diagram of radiant hearth heat and flue draft. Everything gathered under one roof asks when to open the vent." },
+      { "subject": "Honeybees", "lc": "QL568.A6", "dewey": "595.799", "wander": "Read how bees warm a hive together before spring opens. Patience smells of wax and berry steam." }
+    ],
+    "26": [
+      { "subject": "Feasts and banquets", "search": "Dinners and dining", "lc": "GT2850–2930", "dewey": "394.12", "wander": "Look up civic feasts that stretched out into the street. Notice who finally gets a chair when the seating plan gives way." },
+      { "subject": "Circles and remainders", "search": "Number theory", "lc": "QA241", "dewey": "512.7", "wander": "Open to modular arithmetic and remainders. Sometimes the uneven slice is the only thing that lets a ring turn onward." },
+      { "subject": "Prophecy in folklore", "search": "Folklore", "lc": "GR", "dewey": "398.2", "wander": "Find a tale where a prophecy comes true by an ordinary slip at supper, and leaves everyone arguing whether it was luck." }
     ]
   }
 }

@@ -15,7 +15,7 @@
  */
 import { TOTAL_CHAPTERS } from './book-extent.mjs';
 // @ts-ignore: a page loads it with its version token, which the type checker cannot resolve; forks.mjs is checked on its own.
-import { readForkSmall, signaturesOf, choseLine } from './forks.mjs?v=2026_11_13.B';
+import { readForkSmall, signaturesOf, choseLine } from './forks.mjs?v=2026_11_16.B';
 
 /** @typedef {'boon' | 'bane' | 'bone' | 'bonk' | 'honk'} Shelf */
 /** @typedef {Record<Shelf, number>} Vector */

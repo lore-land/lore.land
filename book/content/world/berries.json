@@ -32,7 +32,7 @@
         "the-grove": "mushroom broth",
         "the-confluence": "grilled river corn"
       },
-      "chapters": { "1": "dawnward-field", "2": "the-grove", "3": "dawnward-field", "4": "crosswind", "5": "the-grove", "6": "bonk-city", "7": "dawnward-field", "8": "the-grove", "9": "bonk-city", "10": "bone-land", "11": "bonk-city", "12": "the-confluence", "13": "the-confluence", "14": "bonk-city", "15": "parcel-gate" },
+      "chapters": { "1": "dawnward-field", "2": "the-grove", "3": "dawnward-field", "4": "crosswind", "5": "the-grove", "6": "bonk-city", "7": "dawnward-field", "8": "the-grove", "9": "bonk-city", "10": "bone-land", "11": "bonk-city", "12": "the-confluence", "13": "the-confluence", "14": "bonk-city", "15": "parcel-gate", "16": "bonk-city", "17": "crosswind", "18": "bonk-city", "19": "bonk-city", "20": "the-confluence", "21": "bonk-city", "22": "parcel-gate", "23": "bone-land", "24": "crosswind", "25": "dawnward-field", "26": "bonk-city" },
       "in_the_lanes": "crust and filling both, and fed: steps tilt less and the pie settles sooner for a while"
     }
   }

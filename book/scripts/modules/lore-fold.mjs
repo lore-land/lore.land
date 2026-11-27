@@ -34,8 +34,9 @@
  */
 
 import { semanticIndex } from './constellation.mjs?v=2026_11_08.J';
+import { TOTAL_CHAPTERS } from './book-extent.mjs';
 
-const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+const WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty', 'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 const pad = (n) => String(n).padStart(2, '0');
 const SVG = 'http://www.w3.org/2000/svg';
 const reduced = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -192,7 +193,7 @@ function evaluate(space, source) {
       maps.forEach((map) => map.forEach((w, id) => seeds.set(id, Math.max(seeds.get(id) || 0, w * 0.8))));
       const chapterMaps = maps.map(chapterOf);
       const meet = new Map();
-      for (let c = 1; c <= 15; c += 1) {
+      for (let c = 1; c <= TOTAL_CHAPTERS; c += 1) {
         const v = Math.min(...chapterMaps.map((m) => m.get(c) || 0));
         if (v > 0) meet.set(c, v);
       }
@@ -224,7 +225,7 @@ function evaluate(space, source) {
   if (chMax > 0) chapterW.forEach((v, c) => chapterW.set(c, v / chMax));
   const weights = new Map(seeds);
   // Contrast: something warms only as far as it gathers in the question's strong chapters more than the book does overall.
-  const meanW = Array.from({ length: 15 }, (_, i) => chapterW.get(i + 1) || 0).reduce((a, b) => a + b, 0) / 15;
+  const meanW = Array.from({ length: TOTAL_CHAPTERS }, (_, i) => chapterW.get(i + 1) || 0).reduce((a, b) => a + b, 0) / TOTAL_CHAPTERS;
   space.nodes.forEach((node) => {
     if (node.family === 'chapter') {
       const v = chapterW.get(Number(node.key)) || 0;
@@ -440,7 +441,7 @@ export async function initLoreFold(mount = document.querySelector('[data-lore-fo
     said.textContent = lit.length
       ? `${names}${lit.length > 4 ? `, and ${lit.length - 4} more` : ''}. ${result.unknown.length ? `Nothing on the map is called ${result.unknown.join(' or ')}.` : ''}`
       : `Nothing on the map answers to ${result.unknown.join(' or ') || 'that'} yet.`;
-    strip.replaceChildren(...Array.from({ length: 15 }, (_, i) => {
+    strip.replaceChildren(...Array.from({ length: TOTAL_CHAPTERS }, (_, i) => {
       const c = i + 1;
       const w = result.chapterW.get(c) || 0;
       const best = result.top.find((t) => t.place.c === c);

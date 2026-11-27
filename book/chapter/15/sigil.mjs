@@ -11,9 +11,9 @@ const CONFIG = {
     'Whose name did you leave blank so they could fill it in?'
   ],
   route: {
-    href: '/book/chapter/01/',
-    label: '^[route/01]{begin again}',
-    ariaLabel: 'Begin again at chapter 01 until the next stone is set'
+    href: '/book/chapter/16/',
+    label: '^[route/16]{the second place}',
+    ariaLabel: 'Continue to chapter 16: The Second Place'
   }
 };
 

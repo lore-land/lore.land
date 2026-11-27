@@ -1,0 +1,120 @@
+# Chapter 20 Canon Reference
+# Generated from /book/chapter/20/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_20
+#:chapter-canon #!reference
+
+^[chapter/20]{
+  title: "Two Springs Under the Sill"
+  description: "Chapter 20 of Lore.Land: Two Springs Under the Sill. Where Boon.land's sweet canal meets bitter orchard runoff, wet oak lock gates swell shut because one gate belongs to the commons and the other invoices tolls. Seam-otters knot rush ree..."
+  mood: "path"
+  period: "winter"
+  chapter_path: "/book/chapter/20/"
+}
+
+$[chapter/20/made_of]{
+  spell: ^chapter[20]{
+    .rooms[ &{canal_lock}@lockkeeper &<third_chime>@the_land @{bitter_jam}@boof
+      .{tide_sill}@lockkeeper ]
+    @told_by[narrator path boof reflection]
+    $oak $ink $brass
+    =palette[lock_sill]
+    ~berries{ baneberry $boneberry[grilled_river_corn] }
+  }
+  rooms: "Four rooms: three { } rooms and a < > passage; two kept by lockkeeper, the rest by the land and Boof."
+  told_by: "Told by the narrator, the path, Boof and the record."
+  made_of: "Made most of oak and frame, then ink and line, then brass and bronze."
+  palette: "Its palette is the lock sill, earned a layer at a time: wet oak green, berry-dark brine, and bitter plum jam on dry canal stone."
+  berries: "Here baneberries foretell; a boneberry in this chapter tastes of grilled river corn."
+}
+
+&[chapter/20/routes]{
+  web: "/book/chapter/20/"
+  timeline: "/book/timeline.html#chapter-20"
+  motif: ~[motif/chapter-20]{optional}
+}
+
+^[chapter/20/spine]{
+  =prev{ ~".spw/chapters/19.spw#chapter_19" }
+  =next{ ~".spw/chapters/21.spw#chapter_21" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; the path unrolls itself, listening; Boof pads in on a thread of scent; the reflection reads back by candlelight"
+}
+
+^[chapter/20/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Swollen Lock"
+    room: &{canal_lock}@lockkeeper
+    air: "Sweetened brine on one beam, bitter orchard water on the other, and wet oak swelling shut between them."
+    excerpt: "Below the old kiln, where the town’s drainage meets the river meadows, sat a narrow stone canal lock that nobody liked to hurry through. Two waters pressed against its timber doors: sweetened river brine on the townwa..."
+    route: ^[chapter/20/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/20.png"
+    route: ^[chapter/20/s02]{open}
+  ]
+  s03: <
+    handle: "custom-path/03"
+    type: "custom-path"
+    room: &<third_chime>@the_land
+    air: "The otters knot reeds, a mime paddles without a boat, and the sill takes turns by threes."
+    excerpt: "In the center of the lock chamber, seam-otters rolled happily along the unblended boundary, one paw in sweet water and one in bitter, knotting green rush reeds into small floating rings. Directly above them, a serious..."
+    route: ^[chapter/20/s03]{open}
+  >
+  s04: <
+    handle: "custom-boof/04"
+    type: "custom-boof"
+    room: @{bitter_jam}@boof
+    air: "On the coping stone, Mr. BaneWAP sits without a single scheme, tasting jam from a tin spoon."
+    excerpt: "On the dry coping wall beside the lower sluice sat Mr. BaneWAP — smaller, tidier, and far quieter than he had been back in Book One, before his schemes gave out at the confluence. Beside his crust rested a little ston..."
+    route: ^[chapter/20/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{tide_sill}@lockkeeper
+    air: "The oak holds its grain, the rush rings float downstream, and neither current loses its taste."
+    excerpt: "Boof gave BaneWAP one polite tail-thump against the coping stone — neither forgiveness nor suspicion, simply the respect a working dog shows an instrument that has finally found its right measure. Below the lock, the ..."
+    route: ^[chapter/20/s05]{open}
+  >
+]
+
+&[chapter/20/cast]{
+  path: <
+    register: "a road conjured by walking; it unwalks itself behind you"
+    .enters: "custom-path/03"
+  >
+  boof: <
+    register: "working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what"
+    .enters: "custom-boof/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/20/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/20/lore]{
+  notes: [
+    "Where Boon.land's sweet canal meets bitter orchard runoff, swollen oak gates refuse to open at once until they alternate every third chime."
+    "Seam-otters knot rush reeds along the unblended water boundary while a mime paddles smoothly across without a boat."
+    "Having left his schemes behind in Book One, Mr. BaneWAP sits quietly on the lock wall sampling bitter orchard jam, noting that one pinch sets a jam while a whole bowl ruins supper."
+  ]
+}
+
+~[chapter/20/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

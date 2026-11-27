@@ -1,0 +1,335 @@
+{
+  "chapterNumber": 17,
+  "title": "Ledger of Unasked Questions",
+  "logline": "In the checkered inquiry pavilion, clerks file every answer before anyone poses a question, and an unspent coincidence from the market stone turns up in a tray nobody owns.",
+  "epigraph": "An answer filed early has nowhere to put the stranger who arrives with four corners.",
+  "inWhich": "clerks file answers before anyone asks a question, and an unspent coincidence turns up as a form nobody owns",
+  "description": "Chapter 17 of Lore.Land: Ledger of Unasked Questions. Beneath the checkered tiles of the inquiry pavilion on Council Hill, clerks sort pre-stamped replies into yes-and-no boxes while shelf-owls guard empty pigeonholes. When the figure submits a four-cornered drawing and a blue-inked coincidence from the market stone resurfaces, municipal questionnaires meet a question they cannot fold in half.",
+  "mood": "inquiry",
+  "period": "winter",
+  "pillars": [
+    "intrigue",
+    "worldbuilding",
+    "wonder"
+  ],
+  "topics": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 16 · The Second Place",
+      "href": "/book/chapter/16/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 18 · Flour in the Bell-Tower",
+      "href": "/book/chapter/18/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "ledger",
+        "clerk",
+        "clerks",
+        "form",
+        "tray",
+        "blotter",
+        "pigeonhole",
+        "slip",
+        "box"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "coincidence",
+        "oath",
+        "oath-moths",
+        "stranger",
+        "question",
+        "answer"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "nose",
+        "whiskers",
+        "paws"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "checkered",
+        "pavilion",
+        "shelf-owl",
+        "weathercocks",
+        "corners",
+        "ink"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Checkered Pavilion",
+      "room": {
+        "spw": "?[blank_ledger]@clerk",
+        "air": "Black-and-white tiles, blotter paper, and six shelves of stamped answers waiting for a question."
+      },
+      "data-motif": "receipt",
+      "data-trope": "three-honest-records",
+      "climate": {
+        "tempo": "morning",
+        "tint": "archive",
+        "hook": "checkered-pavilion"
+      },
+      "scene": {
+        "vantage": "across a checkered black-and-white stone pavilion floor swept by hilltop cross-breeze dust",
+        "light": "bright cool winter morning slanting between open timber pillars onto stacked blotter pads",
+        "scent": "dry iron-gall ink, blotter dust, cold slate, winter wind off the weathercocks",
+        "edges": [
+          "three clerks at narrow desks stamping YES and NO onto fresh sheets before any petitioner arrives",
+          "tall cedar pigeonholes filled with folded answers, with one wide gap kept clear by a round grey shelf-owl",
+          "outside the pillars, iron weathercocks turning in four disagreed directions",
+          "a plain-line figure standing patiently at the counter holding a four-cornered sheet of blank paper"
+        ],
+        "hint": "an open-sided checkered stone inquiry pavilion on a windy hill; clerks filing answers before questions arrive; cedar pigeonholes with a grey shelf-owl guarding an empty slot; an ink-drawn figure beneath a floating bowler hat holding a square sheet"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At the windy edge of Council Hill stood the inquiry pavilion: sixteen open pillars over a checkered floor where the iron weathercocks creaked overhead and cross-breeze dust drifted across blotter paper. Inside, three municipal clerks worked briskly, stamping {{stamp-words}} onto clean slips and shelving them before noon.",
+          "slots": {
+            "stamp-words": {
+              "clock": "hour",
+              "variants": [
+                "settled answers",
+                "approved replies",
+                "neat decisions",
+                "final rulings"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "It saved a great deal of municipal time, the senior clerk explained to nobody in particular, to file the answers first. When a citizen eventually brought a question up the hill, it could be matched at once to the nearest answer already dry on the shelf."
+        },
+        {
+          "type": "paragraph",
+          "text": "The trouble with filing answers early is that they come in only two shapes: yes and no. Along the back cedar wall, four hundred pigeonholes sat packed with slips trimmed to fit one half of a hinge. Only one compartment near the top stayed empty, because a round grey shelf-owl sat squarely inside it with one amber eye open and clacked her beak whenever a clerk reached up with a stamp.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/17.png",
+        "alt": "The checkered inquiry pavilion: tall cedar pigeonholes packed with YES and NO slips, a grey shelf-owl guarding one empty slot, and the plain-line ink figure under a floating bowler hat holding up a four-cornered drawing that refuses both trays.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Ledger of Unasked Questions: two boxes on the desk, and a four-cornered sheet that refuses to fold."
+    },
+    {
+      "type": "custom-labyrinth",
+      "room": {
+        "spw": "?{four_corners}@the_land",
+        "air": "Every municipal box has two sides. The drawing placed on the counter has four."
+      },
+      "data-motif": "receipt",
+      "climate": {
+        "tempo": "day",
+        "tint": "teal",
+        "hook": "four-corners"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The figure placed a square sheet of coarse paper on the blotter. Drawn on it in clean black ink were four right-angled corners pointing out toward four separate edges, with nothing written inside the middle."
+        },
+        {
+          "type": "paragraph",
+          "text": "The first clerk turned the sheet ninety degrees to see if it became a yes. The second turned it back to see if it became a no. The third slid a ruler along its sides, frowned, and checked the revised form from the parcel gate, which now included a box for what you do not know. Unfortunately the pavilion had not yet received the revised stationery.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "Unable to decide which tray held four directions at once, the three clerks copied the drawing onto four separate slips and filed one in Yes, one in No, one in Deferred, and one under Weather. None of the four trays closed flat afterward."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "&(stray_coincidence)@boof",
+        "air": "An old blueberry-stained slip from the market stone waits in a tray nobody claims."
+      },
+      "data-motif": "oath",
+      "climate": {
+        "tempo": "day",
+        "tint": "gold",
+        "hook": "stray-coincidence"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "While the clerks debated hinges, Boof worked her nose along the lowest shelf, where forgotten slips gather under {{shelf-lint}}. Halfway back, wedged behind a brass paperweight, she caught the unmistakable sweet-slate smell of the market stone and crushed summer blueberry.",
+          "slots": {
+            "shelf-lint": {
+              "clock": "day",
+              "variants": [
+                "blotter shavings",
+                "dried quill fluff",
+                "chalk crumbs",
+                "folded string"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "She hooked the slip out with one careful claw. It was the unspent coincidence left over from the market oath back in Book One — owed to a stranger, payable on arrival, and signed by nobody because the witness had been warm and had no pen. Two grey oath-moths drifted down from the pavilion rafters, inspected the dried berry groove along its margin, and folded their wings flat on top of it.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "The senior clerk peered over the counter. “That,” he said stiffly, “is an orphan liability. We have tried filing it under Asset and under Mischief. Both trays spit it back out.”"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{blotter_dust}@clerk",
+        "air": "The owl keeps the gap clear; the unspent coincidence goes back into the open air."
+      },
+      "data-motif": "receipt",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "archive",
+        "hook": "unasked-question"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The figure reached across the counter — careful not to touch the oath-moths — and tapped the empty pigeonhole where the shelf-owl sat. The owl blinked once, tucked one wing over the blue-stained slip, and settled round as a loaf.",
+          "lean": "bone"
+        },
+        {
+          "type": "bracework",
+          "spw": "?{filed_answer & unasked_question}",
+          "gloss": "A probe holding both halves apart: an answer loses its shape the moment it refuses to wait for what asks it.",
+          "maker": "the pavilion shelf-owl"
+        },
+        {
+          "type": "paragraph",
+          "text": "Outside, the weathercocks groaned and swung half a turn toward the town roofs. Boof sneezed a puff of blotter dust off her muzzle and trotted down the hill path with the figure stepping cleanly behind her. In the pavilion, three trays stood ajar, and one empty slot stayed exactly full enough to hold what had not been asked yet."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "In the checkered inquiry pavilion on Council Hill, clerks stamp Yes and No answers before petitioners arrive, leaving no tray for a four-cornered drawing."
+      },
+      {
+        "description": "A round grey shelf-owl guards one open pigeonhole in the pavilion wall, keeping space for questions not yet posed."
+      },
+      {
+        "description": "The unspent coincidence from Chapter Seven's market oath resurfaces in the pavilion's orphan tray, verified by two oath-moths and kept unspent under the owl's wing."
+      }
+    ]
+  },
+  "table": {
+    "place": "An open-sided checkered stone pavilion near the crest of Council Hill. Wind off the weathercocks lifts blotter dust across cedar filing walls packed with pre-stamped replies.",
+    "light": "Cool crisp hill daylight sliced into stripes by sixteen timber pillars, with one amber lamp-oil eye glowing in the highest empty pigeonhole.",
+    "people": [
+      {
+        "name": "the senior inquiry clerk",
+        "want": "every petition sorted cleanly into Yes or No before the bell",
+        "voice": "clipped, polite, deeply suspicious of right angles"
+      },
+      {
+        "name": "the junior blotter keeper",
+        "want": "to smuggle a box for what you do not know onto the official stationery",
+        "voice": "ink-stained fingers, whispers sideways while stamping"
+      },
+      {
+        "name": "a petitioner from the mill",
+        "want": "an answer to a question nobody has ever written a form for",
+        "voice": "patient, leaning on a flour stick"
+      }
+    ],
+    "hooks": [
+      "The pavilion filed an answer three weeks early and now an entire street is trying to invent the question that matches it before the fine comes due.",
+      "An unspent coincidence slipped out of the orphan tray in a crosswind; follow the oath-moths across Council Hill before a merchant tries to cash it twice.",
+      "The shelf-owl has left her pigeonhole empty for the first time in ten years; discover which unasked question finally walked up the steps."
+    ],
+    "encounters": [
+      "A gust lifts twelve pre-stamped YES slips across the checkered tiles; stepping on two at once counts as a municipal quorum.",
+      "Two oath-moths alight on a party member's sleeve, weighing whether the last promise spoken aloud was true.",
+      "A clerk slides a binary questionnaire across the desk where both boxes read YES IN PART.",
+      "Overhead, seven iron weathercocks spin into seven different opinions and stir up a dust devil inside the pillars.",
+      "The shelf-owl clacks her beak once; a hidden drawer pops open containing a slip written in blueberry ink.",
+      "The plain-line figure folds a blank questionnaire into four corners and sets it upright on the windward sill, where it refuses to blow away."
+    ],
+    "finds": [
+      {
+        "wonder": "shelf-owls",
+        "use": "Set an empty shelf-gap aside in your plans; whatever you refuse to fill early stays open for the right arrival."
+      },
+      {
+        "wonder": "oath-moths",
+        "use": "Hold a doubtful slip still at noon; if the grey moths settle flat along its crease, the promise underneath holds."
+      }
+    ],
+    "bracework": {
+      "spw": "?{filed_answer & unasked_question}",
+      "does": "Suspends a premature ruling until the person it touches has spoken their own question aloud.",
+      "costs": "Every desk in the room loses its tidy schedule for the afternoon."
+    },
+    "question": "Which answer have you already filed before letting the room ask?"
+  }
+}

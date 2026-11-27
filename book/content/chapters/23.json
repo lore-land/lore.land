@@ -1,0 +1,338 @@
+{
+  "chapterNumber": 23,
+  "title": "Rehearsal of the Night School",
+  "logline": "After the day's work, grown-up porters, lamplighters, and laundresses gather by tallow light to measure a pie tin with string and dividers — finding a circle that closes only when their voices hold one steady chord.",
+  "epigraph": "Three widths and a stubborn sliver: a circle does not ask to be rounded off.",
+  "inWhich": "grown-ups gather by tallow light to measure a circle with string and dividers that refuses to close evenly",
+  "description": "Chapter 23 of Lore.Land: Rehearsal of the Night School. In Bonk City's after-hours adult classroom, Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill, and the quiet new pupil drawn in plain lines sit at one oak bench with wooden pie-dividers, twine, and chalk. Measuring a pie tin proves pi refuses an integer, load-beetles click in the timber, and unison humming steadies shaky hands enough to meet at the center.",
+  "mood": "reflection",
+  "period": "winter",
+  "pillars": [
+    "wonder",
+    "stewardship",
+    "worldbuilding"
+  ],
+  "topics": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 22 · Through the Chute With No Receipt",
+      "href": "/book/chapter/22/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 24 · Four Windows in One Wall",
+      "href": "/book/chapter/24/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "night school",
+        "bench",
+        "pie-dividers",
+        "circle",
+        "sliver",
+        "chord",
+        "tallow"
+      ]
+    },
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "chalk",
+        "twine",
+        "rosin",
+        "remainder-moths",
+        "load-beetles",
+        "ruler"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "roll",
+        "Clem Furrow",
+        "Ida Bell",
+        "Noor",
+        "Kettle",
+        "mistress"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "doorframe",
+        "chin",
+        "ears"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "After the Lamps Are Lit",
+      "room": {
+        "spw": ".(night_bench)@teacher",
+        "air": "Warm tallow smoke, tired adult hands, and wooden dividers shared across one long oak bench."
+      },
+      "data-motif": "chalk",
+      "climate": {
+        "tempo": "night",
+        "tint": "hearth",
+        "hook": "night-bench"
+      },
+      "scene": {
+        "vantage": "inside a warm lantern-lit adult night-school room after dark, looking down a long oak bench crowded with workers' elbows, pies, chalk, and wooden rulers",
+        "light": "amber tallow lamps hanging low over a dark slate board, dust motes and rosin drifting in warm gold air",
+        "scent": "warm tallow smoke, rosin dust on wooden geometry dividers, baked crust, clean laundry soap, chalk",
+        "edges": [
+          "adult pupils in aprons and heavy work coats — Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill — leaning over one shared bench",
+          "a large chalk circle drawn on the dark board with a narrow stubborn gap where the ends refuse to meet",
+          "brass and oak pie-dividers beside coils of measured twine and a warm tin pie",
+          "at the bench end, the plain-line figure sitting upright with his floating hat calm under the rafters while Boof rests her chin on the doorframe"
+        ],
+        "hint": "a lantern-lit adult evening classroom after work; grown-up porters, laundresses, and millers gathered at a long oak bench with wooden dividers, string, and a pie tin; a chalk circle on a slate board with a tiny unclosed sliver; the plain-line figure sitting quietly at the bench end"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The night school opened only after the street lamps were lit and the day’s haul was put away. Every seat along the oak bench held a grown working citizen: Clem Furrow still smelling of harness grease, Ida Bell with laundry starch on her sleeves, the Kettle twins straight off the coal dock, and Noor from the upper mill shaking {{mill-dust}} from her scarf.",
+          "slots": {
+            "mill-dust": {
+              "clock": "hour",
+              "variants": [
+                "oat husks",
+                "barley chaff",
+                "sifted bran",
+                "fine chaff"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "At the far end of the bench sat the quiet new pupil drawn in plain black ink, his bowler hovering smoothly in the tallow warmth. The mistress set one round tin pie, two wooden geometry dividers dusted with rosin, and a spool of waxed twine in the center of the oak table."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Tonight is rehearsal,” the mistress said, tapping the dark slate board behind her. “Before the Great Table goes out in the plaza, every hand in this room is going to measure a circle honestly and find out why it will not sit still.”"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/23.png",
+        "alt": "The adult night school after dark: a chalkboard circle with a tiny honest unclosed gap at the rim, brass pie-dividers, measured twine around a warm tin, grown-up workers' hands steadying wooden rulers, and the plain-line pupil at the bench end beneath his floating hat.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "Rehearsal of the Night School: wooden dividers, measured string, and a circle that refuses to round away its sliver."
+    },
+    {
+      "type": "custom-song",
+      "room": {
+        "spw": "%(chalk_circle)@the_land",
+        "air": "Three widths across and a stubborn sliver over: twine and chalk refuse a tidy integer."
+      },
+      "data-motif": "pie",
+      "climate": {
+        "tempo": "night",
+        "tint": "gold",
+        "hook": "chalk-circle"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Noor wrapped the twine snug round the pie tin’s rim, pinched the overlap with her thumb, and laid the length straight across the tin’s middle. One width. Two widths. Three widths — and then a brisk, unapologetic sliver left dangling past the edge.",
+          "lean": "bone"
+        },
+        {
+          "type": "paragraph",
+          "text": "Clem Furrow tried with brass pie-dividers instead, stepping carefully round the paper circle on the bench. Every time he reached the starting dot, the final brass point overshot by the thickness of a knife blade. When one of the Kettle twins pressed the wooden ruler harder against the oak to force the chalk circle shut before dawn, tiny load-beetles inside the old bench grain began to click in dry protest."
+        },
+        {
+          "type": "paragraph",
+          "text": "“Ease off, Kettle,” Ida Bell laughed softly. “Chalk is cheaper than oak, and you cannot bully a circumference into a whole number.”"
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": "&(night_choir)@teacher",
+        "air": "Unison humming holds one open fourth steady enough for tired hands to meet at the center."
+      },
+      "data-motif": "song",
+      "climate": {
+        "tempo": "night",
+        "tint": "teal",
+        "hook": "night-choir"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hands that have hauled sacks and wrung wet sheets all day shake slightly when asked to draw fine lines by tallow light. Seeing the dividers tremble on the slate, the mistress did not correct anyone’s grip. Instead she hummed a single low, open note — plain A, steady as a winter hearth — and waited.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ida joined a fourth above her; Noor took the fifth; Clem and the Kettle twins fell in an octave down, breathing together without counting bars. Inside the steady sound, the trembling stopped. Every wooden ruler and brass point glided calmly to the exact pin at the center of the circle, while three remainder-moths lifted off the chalk ledge and traced wide, unclosing spirals around the lamp."
+        },
+        {
+          "type": "paragraph",
+          "text": "The figure did not hum — plain lines have no throat — yet he set his shorter right arm cleanly beside Ida’s elbow, steadying the twine while she chalked the neatest arc of the evening.",
+          "lean": "boon"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Roll Called Quietly",
+      "room": {
+        "spw": "^(sliver_left)@boof",
+        "air": "The roll closes with one blank line kept cleanly, and nobody rounds the sliver away."
+      },
+      "data-motif": "chalk",
+      "climate": {
+        "tempo": "night",
+        "tint": "archive",
+        "hook": "roll-called"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "At the doorframe, Boof rested her chin on her front paws, listening to the low humming fade into {{quiet-room}}. She had watched councils argue over straight lines for weeks; watching six grown neighbours steady one shared circle without forcing its gap shut smelled considerably better.",
+          "slots": {
+            "quiet-room": {
+              "clock": "minute",
+              "variants": [
+                "tallow crackle",
+                "cooling chalk dust",
+                "winter stillness",
+                "lamp-wick hush"
+              ]
+            }
+          }
+        },
+        {
+          "type": "bracework",
+          "spw": "%(pie_tin & string_sliver)",
+          "gloss": "A scope measuring a whole by keeping its remainder: when voices hold one center, the unclosed sliver stops feeling like an error.",
+          "maker": "the night school"
+        },
+        {
+          "type": "paragraph",
+          "text": "Before snuffing the lamps, the mistress checked the attendance roll: Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill, and one quiet blank line still kept honest at the bottom. Nobody filled it in. Out in the lane, dawn was still hours away, and the chalk circle on the slate kept its small open sliver intact.",
+          "lean": "bone"
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "Bonk City's night school is strictly an after-hours classroom for adult workers — carters, laundresses, dockers, and millers — sharing one oak bench by tallow light."
+      },
+      {
+        "description": "Measuring a pie tin with string and wooden dividers proves every circle carries a stubborn sliver past three widths that cannot be forced closed without making the oak's load-beetles click."
+      },
+      {
+        "description": "When the adult pupils hum an open fourth in unison, tired hands steady enough for every ruler to meet cleanly at the circle's center."
+      }
+    ]
+  },
+  "table": {
+    "place": "A warm lantern-lit adult classroom after hours: one long oak bench dusted in chalk and rosin, a dark slate board, tallow lamps, waxed twine, wooden geometry dividers, and a tin pie.",
+    "light": "Soft amber tallow smoke over deep slate blue, with remainder-moths circling the lamp rims in unclosing loops.",
+    "people": [
+      {
+        "name": "the night school's mistress",
+        "want": "every grown pupil to leave with steadier hands and an unrounded measure",
+        "voice": "calm alto, begins a humming fourth whenever elbows tighten"
+      },
+      {
+        "name": "Ida Bell",
+        "want": "to draw one circle cleanly after twelve hours at the wash-house",
+        "voice": "warm laugh, starch-smelling sleeves, fearless with chalk"
+      },
+      {
+        "name": "Noor of the mill",
+        "want": "to know why three widths of string never quite cover a millstone's rim",
+        "voice": "practical, measures twice with her thumbnail"
+      },
+      {
+        "name": "Clem Furrow",
+        "want": "the bench oak kept quiet so the load-beetles stop scolding his elbows",
+        "voice": "deep bass hum, smells of harness wax"
+      }
+    ],
+    "hooks": [
+      "The school's brass pie-dividers have lost their center pin before the feast rehearsal; borrow a true pin from Bone.land without promising to round the circle off.",
+      "A municipal surveyor insists the night school round its circles to an even three so the feast benches fit the plaza; demonstrate why the sliver keeps the tables standing.",
+      "Remainder-moths from the chalk ledge have settled on the attendance roll, glowing faintly beside the blank bottom line."
+    ],
+    "encounters": [
+      "Load-beetles in the oak bench click sharply whenever someone forces a measurement that does not fit.",
+      "Three remainder-moths lift off the sill and trace a glowing spiral that misses its starting point by an inch.",
+      "A spool of waxed twine rolls under the bench and comes back knotted cleanly by someone nobody saw bend down.",
+      "When the room hums an open fourth together, every lantern flame stops flickering for thirty seconds.",
+      "A fresh chalk circle on the slate board refuses to close by a hair's breadth, yet everything drawn inside it stays level.",
+      "Boof thumps her tail once from the doorway as a bowl of warm boneberries goes round at the break."
+    ],
+    "finds": [
+      {
+        "wonder": "pie-dividers",
+        "use": "Step them round any disputed share; they keep the honest remainder visible instead of hiding it."
+      },
+      {
+        "wonder": "load-beetles",
+        "use": "Listen to the furniture before signing an agreement; a sharp click in the oak warns that the frame is being forced."
+      }
+    ],
+    "bracework": {
+      "spw": "%(pie_tin & string_sliver)",
+      "does": "Lets a group steady a delicate shared task by holding one calm note together instead of rushing.",
+      "costs": "The circle always keeps its small open gap; nobody gets to declare the measure finished forever."
+    },
+    "question": "What stubborn remainder in your work turns out to be the part that keeps everything honest?"
+  }
+}

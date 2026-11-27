@@ -33,7 +33,7 @@
  * passed in. The page only uses spellText, glossFor and INVENTORY_SIGILS.
  */
 
-import { planRooms, resolveSlots, padChapterNumber, chapterOrdinal } from './chapter-render.mjs?v=2026_11_09.I';
+import { planRooms, resolveSlots, padChapterNumber, chapterOrdinal } from './chapter-render.mjs?v=2026_11_16.B';
 import { storyVoiceFor } from './story-lexicon.mjs?v=2026_09_26.A';
 import { KIND_SIGIL } from './kinds.mjs?v=2026_11_09.G';
 import { ROOM_KINDS, ROOM_RESERVED_WORDS, roomSentence, readRoom } from './room-signature.mjs?v=2026_11_08.W';
@@ -57,7 +57,8 @@ export const INVENTORY_SIGILS = Object.freeze([
 ].map(Object.freeze));
 
 const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
-  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty',
+  'twenty-one', 'twenty-two', 'twenty-three', 'twenty-four', 'twenty-five', 'twenty-six'];
 export const countWord = (n) => NUMBER_WORDS[n] ?? String(n);
 const capital = (text) => String(text).charAt(0).toUpperCase() + String(text).slice(1);
 const lower = (text) => String(text).charAt(0).toLowerCase() + String(text).slice(1);

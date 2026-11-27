@@ -37,7 +37,9 @@
         2,
         8,
         12,
-        14
+        14,
+        21,
+        26
       ],
       "motion": "burrows",
       "misread": "Frost-watchers take the warmth under the field for the field's own, and thank the field."
@@ -128,7 +130,8 @@
       "home": 2,
       "echoes": [
         11,
-        13
+        13,
+        18
       ],
       "motion": "flies",
       "misread": "Farmers read tomorrow off their wings, and blame the moths when the smudge was their own."
@@ -218,7 +221,8 @@
       },
       "home": 4,
       "echoes": [
-        7
+        7,
+        17
       ],
       "motion": "stays",
       "misread": "Visitors take the turning for wind; the council takes it for a vote."
@@ -279,7 +283,8 @@
       "home": 6,
       "echoes": [
         13,
-        15
+        15,
+        19
       ],
       "motion": "stays",
       "misread": "The glaziers believe the panes clear themselves overnight."
@@ -309,7 +314,8 @@
       },
       "home": 15,
       "echoes": [
-        6
+        6,
+        22
       ],
       "motion": "flies",
       "misread": "Porters coming early think the gate has been rising on its own all night."
@@ -339,7 +345,8 @@
       },
       "home": 7,
       "echoes": [
-        12
+        12,
+        17
       ],
       "motion": "flies",
       "misread": "Merchants swear louder, as if the moths could be brought by volume."
@@ -400,7 +407,8 @@
       "home": 9,
       "echoes": [
         1,
-        14
+        14,
+        26
       ],
       "motion": "flies",
       "misread": "Everyone who counts them counts eight, and stops."
@@ -430,7 +438,8 @@
       },
       "home": 9,
       "echoes": [
-        10
+        10,
+        18
       ],
       "motion": "flies",
       "misread": "Gossips blame the next village for hearing what was only said here."
@@ -460,7 +469,8 @@
       },
       "home": 10,
       "echoes": [
-        12
+        12,
+        23
       ],
       "motion": "burrows",
       "misread": "Joiners think the beams are complaining, and plane them."
@@ -520,7 +530,8 @@
       },
       "home": 11,
       "echoes": [
-        13
+        13,
+        25
       ],
       "motion": "flies",
       "misread": "Every flower they wait at thinks it is late."
@@ -550,7 +561,8 @@
       },
       "home": 12,
       "echoes": [
-        13
+        13,
+        20
       ],
       "motion": "swims",
       "misread": "Swimmers try to follow them down the seam, and wet both springs."
@@ -580,7 +592,8 @@
       },
       "home": 12,
       "echoes": [
-        14
+        14,
+        20
       ],
       "motion": "stays",
       "misread": "Painters think the bank was drawn that way on purpose."
@@ -610,7 +623,8 @@
       },
       "home": 13,
       "echoes": [
-        1
+        1,
+        17
       ],
       "motion": "stays",
       "misread": "Archivists fill the gaps the owls keep, and the owls leave, offended."
@@ -952,7 +966,8 @@
       },
       "home": 6,
       "echoes": [
-        15
+        15,
+        25
       ],
       "provenance": {
         "made": "by Bonk City's first glaziers, out of the first thing in the city ever struck",
@@ -986,7 +1001,8 @@
       "home": 6,
       "echoes": [
         9,
-        15
+        15,
+        19
       ],
       "provenance": {
         "made": "hammered from the dented brass the kiln would not take",
@@ -1019,7 +1035,8 @@
       },
       "home": 6,
       "echoes": [
-        15
+        15,
+        21
       ],
       "provenance": {
         "made": "by roofers who could not climb in the rain and wanted to hear where to go",
@@ -1108,7 +1125,8 @@
       "home": 6,
       "echoes": [
         13,
-        15
+        15,
+        24
       ]
     },
     {
@@ -1135,7 +1153,9 @@
       },
       "home": 15,
       "echoes": [
-        6
+        6,
+        16,
+        23
       ]
     },
     {
@@ -1286,7 +1306,8 @@
       },
       "home": 10,
       "echoes": [
-        12
+        12,
+        18
       ],
       "provenance": {
         "made": "by Bone.land's first joiners, who wanted the house to say when it was carrying too much",
@@ -1319,7 +1340,8 @@
       },
       "home": 12,
       "echoes": [
-        15
+        15,
+        20
       ]
     },
     {
@@ -1442,7 +1464,8 @@
       },
       "home": 15,
       "echoes": [
-        5
+        5,
+        24
       ]
     },
     {
@@ -1469,7 +1492,8 @@
       },
       "home": 4,
       "echoes": [
-        12
+        12,
+        24
       ]
     },
     {
@@ -1552,7 +1576,8 @@
       },
       "home": 13,
       "echoes": [
-        14
+        14,
+        26
       ]
     },
     {
@@ -1581,7 +1606,8 @@
       "home": 15,
       "echoes": [
         1,
-        14
+        14,
+        25
       ]
     },
     {
@@ -1659,7 +1685,8 @@
       "home": 3,
       "echoes": [
         10,
-        12
+        12,
+        21
       ],
       "craft": "Reuse a pattern before inventing one: every new lesson stands on a past wonder's precipitate (the curriculum)."
     },
@@ -1676,7 +1703,8 @@
       "home": 4,
       "echoes": [
         10,
-        15
+        15,
+        24
       ],
       "craft": "Types before features (L13): name the shape, check it, then build — book:check runs before anything reaches main."
     },
@@ -1693,7 +1721,8 @@
       "home": 5,
       "echoes": [
         8,
-        13
+        13,
+        18
       ],
       "craft": "Probe before you fix (c011, spw:probes): every misalignment is heard and written down before it is mended."
     },
@@ -1710,7 +1739,8 @@
       "home": 6,
       "echoes": [
         13,
-        15
+        15,
+        19
       ],
       "craft": "Nobody loses what they had (c019): returning readers keep their defaults, new things arrive as trials, and every release says what moved."
     },
@@ -1727,7 +1757,8 @@
       "home": 7,
       "echoes": [
         12,
-        14
+        14,
+        22
       ],
       "craft": "Ship increments, not roadmaps: one stone at a time, on the 13th and the 26th."
     },
@@ -1778,7 +1809,8 @@
       "home": 10,
       "echoes": [
         4,
-        15
+        15,
+        23
       ],
       "craft": "Draft in the cheapest material: a plan, a schema, a validator, a trial switch — before oak, before main."
     },
@@ -1795,7 +1827,8 @@
       "home": 11,
       "echoes": [
         7,
-        14
+        14,
+        25
       ],
       "craft": "Trials season before they graduate: a feature opens to everyone only after it has filled."
     },
@@ -1812,7 +1845,8 @@
       "home": 12,
       "echoes": [
         4,
-        13
+        13,
+        20
       ],
       "craft": "Separable layers (PLAN.E architecture): content and engine share one book without either whitening the other."
     },
@@ -1829,7 +1863,8 @@
       "home": 13,
       "echoes": [
         1,
-        14
+        14,
+        26
       ],
       "craft": "Nothing is a dead end (c027): every wonder, card and chapter links onward; the last line stays open."
     },
@@ -1846,7 +1881,8 @@
       "home": 14,
       "echoes": [
         2,
-        15
+        15,
+        16
       ],
       "craft": "Attend to the increment in front of you; the calendar is a projection, the morning is the work."
     },
@@ -1863,7 +1899,8 @@
       "home": 15,
       "echoes": [
         4,
-        13
+        13,
+        17
       ],
       "craft": "Types that admit the unclassified: a schema with room for what it cannot name yet is a schema that lasts."
     },
@@ -1891,7 +1928,9 @@
         "hint": "a dented Bonk City lantern at storm-green dusk, pale remainder-moths circling the new flame in loops that never quite close, each lap landing a little past the last like a spirograph, dust-marks on the glass never repeating, wet cobbles, lamp-oil haze, painterly, quiet, mathematical wonder"
       },
       "home": 15,
-      "echoes": [],
+      "echoes": [
+        23
+      ],
       "motion": "flies",
       "misread": "Anyone who counts their laps thinks one more will close the circle."
     },
@@ -1945,7 +1984,9 @@
         "hint": "a round tin on a frosted night-school windowsill holding paper pie slivers stacked in thinning rings, each layer half the last, never reaching the brim, brass pie-dividers open beside it, a chalk slate of halves, early winter light, painterly, cozy, mathematical"
       },
       "home": 15,
-      "echoes": []
+      "echoes": [
+        22
+      ]
     },
     {
       "id": "horn-button",
@@ -1995,7 +2036,8 @@
       "home": 6,
       "echoes": [
         10,
-        14
+        14,
+        16
       ],
       "residue": {
         "left_by": "Mr. BoonWAP, serving himself at the plaza table and no smaller for it",
@@ -2158,7 +2200,8 @@
       "hint": "Two slips on a bridge rail that the pies did not read.",
       "home": 12,
       "echoes": [
-        15
+        15,
+        22
       ],
       "residue": {
         "left_by": "two slices given at the confluence, one for each reason",
@@ -2192,7 +2235,8 @@
       "hint": "Made in the lanes: every WAP leaves one.",
       "home": 13,
       "echoes": [
-        6
+        6,
+        16
       ],
       "made_in": "lanes",
       "made_by": {
@@ -2231,7 +2275,9 @@
       "note": "Five words kept from the road, in the order they were kept: read, marked by a hop, fed by a slice. It is a line nobody wrote.",
       "hint": "Made in the lanes: five words kept from the road.",
       "home": 14,
-      "echoes": [],
+      "echoes": [
+        21
+      ],
       "made_in": "lanes",
       "made_by": {
         "deed": "found",
@@ -2270,7 +2316,8 @@
       "hint": "Made in the lanes: someone who cannot stop pricing, and a trail taken quickly.",
       "home": 5,
       "echoes": [
-        3
+        3,
+        19
       ],
       "made_in": "lanes",
       "made_by": {

@@ -1,0 +1,22 @@
+# Chapter Twenty-One, At the Nose of the Work: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_21
+!card{
+  *chapter_21{
+    .file["chapter-21.jpg"]
+    .plate["book/images/21.png"]
+    #title["At the Nose of the Work"]
+    #in_which["the whole city is read from fourteen inches above the cobblestones, where crumbs tell what tall tables hide"]
+    #says["Chapter Twenty-One, At the Nose of the Work: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

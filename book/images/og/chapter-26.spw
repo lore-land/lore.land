@@ -1,0 +1,22 @@
+# Chapter Twenty-Six, The Feast of the Uneven Slice: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+#>share_chapter_26
+!card{
+  *chapter_26{
+    .file["chapter-26.jpg"]
+    .plate["book/images/26.png"]
+    #title["The Feast of the Uneven Slice"]
+    #in_which["Bonk City’s Great Table gathers every voice, exactly one slice spills, and the ring closes whole without resetting"]
+    #says["Chapter Twenty-Six, The Feast of the Uneven Slice: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    %width[1200]
+    %height[630]
+    %brightness[92]
+    %saturation[96]
+    %quality[93]
+    =@fit{ @cover }
+    =@grade{ @softer }
+    =@veil{ @leaf_dark }
+    =@type{ @georgia }
+    =@sigil{ @bud }
+    =@codec{ @jpeg }
+  }
+}

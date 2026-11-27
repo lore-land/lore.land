@@ -133,6 +133,17 @@ const PALETTE_MIRROR = {
   'shell-swirl': { name: 'The shell', chapter: 13, colors: { ground: '#e3eeea', ink: '#23423f', accent: '#2c8b86', glow: '#ffffff', edge: '#6f5a7a' } },
   'hill-moon': { name: 'The hill', chapter: 14, colors: { ground: '#ece4f2', ink: '#1f3326', accent: '#5d6a73', glow: '#f4f2ee', edge: '#1b1b1b' } },
   'three-stools': { name: 'Three stools', chapter: 15, colors: { ground: '#d6e6e5', ink: '#123a3e', accent: '#1d5a60', glow: '#f2f0e6', edge: '#0f2a2e' } },
+  'scullery-steam': { name: 'Scullery steam', chapter: 16, colors: { ground: '#f2ece2', ink: '#2c251d', accent: '#b06d2e', glow: '#fbf7ef', edge: '#7d6c58' } },
+  'blotter-check': { name: 'Blotter check', chapter: 17, colors: { ground: '#eae9ee', ink: '#212534', accent: '#485b8c', glow: '#f6f6fa', edge: '#6d728a' } },
+  'belfry-flour': { name: 'Belfry flour', chapter: 18, colors: { ground: '#f4f1ea', ink: '#2a2623', accent: '#8e6232', glow: '#fcfbf7', edge: '#9a8e7e' } },
+  'priced-pane': { name: 'The priced pane', chapter: 19, colors: { ground: '#e4eeec', ink: '#173032', accent: '#c07a2c', glow: '#f3f8f6', edge: '#466f73' } },
+  'lock-sill': { name: 'The lock sill', chapter: 20, colors: { ground: '#e7eee9', ink: '#1e332c', accent: '#7c3e6b', glow: '#f4f7f2', edge: '#4b6e61' } },
+  'cobble-nose': { name: 'Cobble level', chapter: 21, colors: { ground: '#ebe8e1', ink: '#292724', accent: '#3d7b74', glow: '#f7f4ee', edge: '#777166' } },
+  'copper-chute': { name: 'Copper chute', chapter: 22, colors: { ground: '#f2e8df', ink: '#362218', accent: '#b45a2a', glow: '#fbf3eb', edge: '#8b5c42' } },
+  'night-chalk': { name: 'Night chalk', chapter: 23, colors: { ground: '#e8ebf0', ink: '#1e2736', accent: '#a87d2e', glow: '#f5f6f9', edge: '#56647a' } },
+  'four-shutters': { name: 'Four shutters', chapter: 24, colors: { ground: '#ece9e6', ink: '#262328', accent: '#8c3b4a', glow: '#f7f5f2', edge: '#68606d' } },
+  'hearth-vault': { name: 'Hearth vault', chapter: 25, colors: { ground: '#f5eae0', ink: '#382018', accent: '#c44d2b', glow: '#fdf4ea', edge: '#93543a' } },
+  'uneven-feast': { name: 'The uneven slice', chapter: 26, colors: { ground: '#f3ede1', ink: '#1d2d30', accent: '#c08b2d', glow: '#fbf7ed', edge: '#2d6a66' } },
   'mime-wash': { name: 'The mime wash', chapter: null, colors: { ground: '#dfe3ea', ink: '#3c4555', accent: '#8a95a8', glow: '#eef0f4', edge: '#6c5a8e' } }
 };
 export const PALETTE_COLORS_MIRROR = PALETTE_MIRROR;
@@ -146,7 +157,8 @@ const paletteColors = (id) => palettes[id]?.colors || NEUTRAL;
 
 const pad = (n) => String(n).padStart(2, '0');
 const NUMBER_WORDS = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve',
-  'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+  'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty',
+  'Twenty-One', 'Twenty-Two', 'Twenty-Three', 'Twenty-Four', 'Twenty-Five', 'Twenty-Six'];
 export const chapterName = (n) => `Chapter ${NUMBER_WORDS[n] || n}`;
 const fx = (v) => Number(v.toFixed(2));
 const esc = (text) => String(text ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

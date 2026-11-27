@@ -2,7 +2,7 @@
   "note": "The shapes the book writes more than once (book/scripts/tools/rhymes-build.mjs; npm run rhymes:build), found by the workbench parser’s findRhymes over the released chapter mirrors and the trope and character canon. A rhyme is a shape written again with other words (a template with holes); a refrain is the same shape, same words. Each names the tropes it serves; trope-reveal.mjs counts them as evidence a trope has turned. Generated: do not edit by hand.",
   "source": {
     "workbench": "cf41ca22",
-    "released": 15,
+    "released": 26,
     "files": [
       ".spw/chapters/01.spw",
       ".spw/chapters/02.spw",
@@ -19,18 +19,29 @@
       ".spw/chapters/13.spw",
       ".spw/chapters/14.spw",
       ".spw/chapters/15.spw",
+      ".spw/chapters/16.spw",
+      ".spw/chapters/17.spw",
+      ".spw/chapters/18.spw",
+      ".spw/chapters/19.spw",
+      ".spw/chapters/20.spw",
+      ".spw/chapters/21.spw",
+      ".spw/chapters/22.spw",
+      ".spw/chapters/23.spw",
+      ".spw/chapters/24.spw",
+      ".spw/chapters/25.spw",
+      ".spw/chapters/26.spw",
       ".spw/surfaces/tropes.spw",
       ".spw/surfaces/characters.spw"
     ],
     "skipped": []
   },
   "counts": {
-    "found": 88,
-    "kept": 74,
-    "rhymes": 64,
-    "refrains": 10,
-    "held_out": 14,
-    "serving_a_trope": 22
+    "found": 109,
+    "kept": 80,
+    "rhymes": 80,
+    "refrains": 0,
+    "held_out": 16,
+    "serving_a_trope": 33
   },
   "rhymes": [
     {
@@ -38,7 +49,7 @@
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 34,
-      "instances": 15,
+      "instances": 26,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -54,7 +65,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -71,7 +93,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "&[chapter/_/routes]{ web: _ timeline: _ motif: ~[motif/_]{optional} }",
       "holes": [
@@ -83,7 +116,7 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Literal",
@@ -93,7 +126,7 @@
             "\"/book/chapter/03/\"",
             "\"/book/chapter/04/\""
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Literal",
@@ -103,7 +136,7 @@
             "\"/book/timeline.html#chapter-03\"",
             "\"/book/timeline.html#chapter-04\""
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Identifier",
@@ -113,7 +146,7 @@
             "chapter-03",
             "chapter-04"
           ],
-          "distinct": 15
+          "distinct": 26
         }
       ],
       "tropes": []
@@ -122,73 +155,8 @@
       "id": "rhyme-02",
       "kind": "rhyme",
       "head": "Expression",
-      "nodes": 15,
-      "instances": 33,
-      "files": [
-        ".spw/chapters/01.spw",
-        ".spw/chapters/02.spw",
-        ".spw/chapters/03.spw",
-        ".spw/chapters/04.spw",
-        ".spw/chapters/05.spw",
-        ".spw/chapters/06.spw",
-        ".spw/chapters/07.spw",
-        ".spw/chapters/08.spw",
-        ".spw/chapters/09.spw",
-        ".spw/chapters/10.spw",
-        ".spw/chapters/11.spw",
-        ".spw/chapters/12.spw",
-        ".spw/chapters/13.spw",
-        ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
-      ],
-      "chapters": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15
-      ],
-      "template": "route: ^[chapter/_/_]{open}",
-      "holes": [
-        {
-          "kind": "Literal",
-          "fillers": [
-            "01",
-            "02",
-            "03",
-            "04"
-          ],
-          "distinct": 15
-        },
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "s02",
-            "s03",
-            "s06",
-            "s01"
-          ],
-          "distinct": 7
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-03",
-      "kind": "rhyme",
-      "head": "Expression",
       "nodes": 30,
-      "instances": 15,
+      "instances": 26,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -204,7 +172,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -221,7 +200,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "%[chapter/_/measures]{ %sections: _ %prose: _ %plates: 1 %voices: _ }",
       "holes": [
@@ -233,16 +223,17 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Literal",
           "fillers": [
             "7",
             "6",
-            "9"
+            "9",
+            "5"
           ],
-          "distinct": 3
+          "distinct": 4
         },
         {
           "kind": "Literal",
@@ -259,19 +250,20 @@
           "fillers": [
             "1",
             "4",
-            "3"
+            "3",
+            "2"
           ],
-          "distinct": 3
+          "distinct": 4
         }
       ],
       "tropes": []
     },
     {
-      "id": "rhyme-04",
+      "id": "rhyme-03",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 25,
-      "instances": 15,
+      "instances": 26,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -287,7 +279,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -304,7 +307,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "~[chapter/_/adaptation]{ intent: \"Readable raw text first, interactive runtime second.\" extension_rule: \"Prefer additive section handles over mutating existing handle meaning.\" test_probe: \"lore:spw-selection + lore:ebook-section-change\" }",
       "holes": [
@@ -316,17 +330,17 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         }
       ],
       "tropes": []
     },
     {
-      "id": "rhyme-05",
+      "id": "rhyme-04",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 22,
-      "instances": 15,
+      "instances": 26,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -342,7 +356,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -359,7 +384,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "_: [ handle: _ type: \"figure\" image: _ route: ^[chapter/_/_]{open} ]",
       "holes": [
@@ -368,18 +404,20 @@
           "fillers": [
             "s04",
             "s05",
-            "s06"
+            "s06",
+            "s02"
           ],
-          "distinct": 3
+          "distinct": 4
         },
         {
           "kind": "Literal",
           "fillers": [
             "\"figure/04\"",
             "\"figure/05\"",
-            "\"figure/06\""
+            "\"figure/06\"",
+            "\"figure/02\""
           ],
-          "distinct": 3
+          "distinct": 4
         },
         {
           "kind": "Literal",
@@ -389,7 +427,7 @@
             "\"/book/images/03.png\"",
             "\"/book/images/04.png\""
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Literal",
@@ -399,26 +437,27 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Identifier",
           "fillers": [
             "s04",
             "s05",
-            "s06"
+            "s06",
+            "s02"
           ],
-          "distinct": 3
+          "distinct": 4
         }
       ],
       "tropes": []
     },
     {
-      "id": "rhyme-06",
+      "id": "rhyme-05",
       "kind": "rhyme",
       "head": "Frame",
       "nodes": 6,
-      "instances": 21,
+      "instances": 32,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -434,7 +473,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -451,7 +501,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "[chapter/_/_]",
       "holes": [
@@ -463,7 +524,7 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         },
         {
           "kind": "Identifier",
@@ -478,11 +539,11 @@
       "tropes": []
     },
     {
-      "id": "rhyme-07",
+      "id": "rhyme-06",
       "kind": "rhyme",
       "head": "Operation",
       "nodes": 7,
-      "instances": 15,
+      "instances": 26,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -498,7 +559,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -515,7 +587,18 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
       "template": "^[chapter/_/sections]",
       "holes": [
@@ -527,17 +610,17 @@
             "03",
             "04"
           ],
-          "distinct": 15
+          "distinct": 26
         }
       ],
       "tropes": []
     },
     {
-      "id": "rhyme-08",
+      "id": "rhyme-07",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 6,
-      "instances": 15,
+      "instances": 27,
       "files": [
         ".spw/chapters/01.spw",
         ".spw/chapters/02.spw",
@@ -553,7 +636,18 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
@@ -570,10 +664,29 @@
         12,
         13,
         14,
-        15
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
       ],
-      "template": "=palette[_]",
+      "template": "=_[_]",
       "holes": [
+        {
+          "kind": "Operation",
+          "fillers": [
+            "palette",
+            ""
+          ],
+          "distinct": 2
+        },
         {
           "kind": "Identifier",
           "fillers": [
@@ -582,116 +695,17 @@
             "legal_pad",
             "announce"
           ],
-          "distinct": 15
+          "distinct": 27
         }
       ],
       "tropes": []
     },
     {
-      "id": "rhyme-09",
-      "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 58,
-      "instances": 13,
-      "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/04.spw",
-        ".spw/chapters/05.spw",
-        ".spw/chapters/06.spw",
-        ".spw/chapters/07.spw",
-        ".spw/chapters/08.spw",
-        ".spw/chapters/09.spw",
-        ".spw/chapters/10.spw",
-        ".spw/chapters/11.spw",
-        ".spw/chapters/12.spw",
-        ".spw/chapters/13.spw",
-        ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
-      ],
-      "chapters": [
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15
-      ],
-      "template": "&[chapter/_/cast]{ _: < register: _ .enters: _ > _: < register: _ .enters: _ > _: < register: _ .enters: _ > }",
-      "holes": [
-        {
-          "kind": "Literal",
-          "fillers": [
-            "03",
-            "04",
-            "05",
-            "06"
-          ],
-          "distinct": 13
-        },
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "boof",
-            "labyrinth"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what\"",
-            "\"a maze that grows a corridor for every wrong turn, and remembers each one\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"custom-boof/01\"",
-            "\"custom-boof/02\"",
-            "\"custom-labyrinth/01\""
-          ],
-          "distinct": 3
-        },
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "paradox",
-            "mirror",
-            "song",
-            "labyrinth"
-          ],
-          "distinct": 13
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"twin truths braided into one rope, pulling opposite ways\"",
-            "\"a glass that returns the council’s procedure with the spell reversed\"",
-            "\"a melody that pockets what the minutes leave out and hums it elsewhere\"",
-            "\"a maze that grows a corridor for every wrong turn, and remembers each one\""
-          ],
-          "distinct": 13
-        }
-      ],
-      "tropes": [
-        "right-angle-companion",
-        "never-smaller"
-      ]
-    },
-    {
-      "id": "rhyme-10",
+      "id": "rhyme-08",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 34,
-      "instances": 13,
+      "instances": 24,
       "files": [
         ".spw/chapters/02.spw",
         ".spw/chapters/03.spw",
@@ -705,7 +719,18 @@
         ".spw/chapters/11.spw",
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/14.spw",
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw"
       ],
       "chapters": [
         2,
@@ -720,7 +745,18 @@
         11,
         12,
         13,
-        14
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
       ],
       "template": "^[chapter/_/spine]{ =prev{ ~_ } =next{ ~_ } weave: _ reading: _ }",
       "holes": [
@@ -732,7 +768,7 @@
             "04",
             "05"
           ],
-          "distinct": 13
+          "distinct": 24
         },
         {
           "kind": "Literal",
@@ -742,7 +778,7 @@
             "\".spw/chapters/03.spw#chapter_03\"",
             "\".spw/chapters/04.spw#chapter_04\""
           ],
-          "distinct": 13
+          "distinct": 24
         },
         {
           "kind": "Literal",
@@ -752,16 +788,17 @@
             "\".spw/chapters/05.spw#chapter_05\"",
             "\".spw/chapters/06.spw#chapter_06\""
           ],
-          "distinct": 13
+          "distinct": 24
         },
         {
           "kind": "Literal",
           "fillers": [
             "\"{} <> <> <> [] {} <>\"",
             "\"<> <> <> [] {} <>\"",
-            "\"{} <> <> {} <> [] <> {} <>\""
+            "\"{} <> <> {} <> [] <> {} <>\"",
+            "\"<> {} <> <> [] {} <>\""
           ],
-          "distinct": 3
+          "distinct": 8
         },
         {
           "kind": "Literal",
@@ -771,7 +808,7 @@
             "\"Boof pads in on a thread of scent; the mirror turns its silver; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm\"",
             "\"Boof pads in on a thread of scent; a song slips through the wards; the Fool sidles in through a painted door; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm\""
           ],
-          "distinct": 13
+          "distinct": 24
         }
       ],
       "tropes": [
@@ -780,11 +817,94 @@
       ]
     },
     {
-      "id": "rhyme-11",
+      "id": "rhyme-09",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 15,
-      "instances": 13,
+      "instances": 37,
+      "files": [
+        ".spw/chapters/01.spw",
+        ".spw/chapters/02.spw",
+        ".spw/chapters/03.spw",
+        ".spw/chapters/04.spw",
+        ".spw/chapters/05.spw",
+        ".spw/chapters/06.spw",
+        ".spw/chapters/07.spw",
+        ".spw/chapters/08.spw",
+        ".spw/chapters/09.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/11.spw",
+        ".spw/chapters/12.spw",
+        ".spw/chapters/13.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/15.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
+      ],
+      "chapters": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "template": "route: ^[chapter/_/_]{open}",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "01",
+            "02",
+            "03",
+            "04"
+          ],
+          "distinct": 24
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "s02",
+            "s06",
+            "s03",
+            "s01"
+          ],
+          "distinct": 7
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-10",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 58,
+      "instances": 21,
       "files": [
         ".spw/chapters/03.spw",
         ".spw/chapters/04.spw",
@@ -798,7 +918,15 @@
         ".spw/chapters/12.spw",
         ".spw/chapters/13.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/15.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         3,
@@ -813,7 +941,135 @@
         12,
         13,
         14,
-        15
+        15,
+        17,
+        18,
+        19,
+        20,
+        22,
+        24,
+        25,
+        26
+      ],
+      "template": "&[chapter/_/cast]{ _: < register: _ .enters: _ > _: < register: _ .enters: _ > _: < register: _ .enters: _ > }",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "03",
+            "04",
+            "05",
+            "06"
+          ],
+          "distinct": 21
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "boof",
+            "labyrinth",
+            "bonk",
+            "mirror"
+          ],
+          "distinct": 8
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what\"",
+            "\"a maze that grows a corridor for every wrong turn, and remembers each one\"",
+            "\"a blunt bell-note that shakes stray magic out of the meter\"",
+            "\"a glass that returns the council’s procedure with the spell reversed\""
+          ],
+          "distinct": 8
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/01\"",
+            "\"custom-boof/02\"",
+            "\"custom-labyrinth/01\"",
+            "\"custom-labyrinth/03\""
+          ],
+          "distinct": 11
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "paradox",
+            "mirror",
+            "song",
+            "labyrinth"
+          ],
+          "distinct": 14
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"twin truths braided into one rope, pulling opposite ways\"",
+            "\"a glass that returns the council’s procedure with the spell reversed\"",
+            "\"a melody that pockets what the minutes leave out and hums it elsewhere\"",
+            "\"a maze that grows a corridor for every wrong turn, and remembers each one\""
+          ],
+          "distinct": 14
+        }
+      ],
+      "tropes": [
+        "right-angle-companion",
+        "never-smaller"
+      ]
+    },
+    {
+      "id": "rhyme-11",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 15,
+      "instances": 21,
+      "files": [
+        ".spw/chapters/03.spw",
+        ".spw/chapters/04.spw",
+        ".spw/chapters/05.spw",
+        ".spw/chapters/06.spw",
+        ".spw/chapters/07.spw",
+        ".spw/chapters/08.spw",
+        ".spw/chapters/09.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/11.spw",
+        ".spw/chapters/12.spw",
+        ".spw/chapters/13.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/15.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw",
+        ".spw/chapters/26.spw"
+      ],
+      "chapters": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        22,
+        24,
+        25,
+        26
       ],
       "template": "@told_by[_ _ _ _]",
       "holes": [
@@ -834,16 +1090,17 @@
             "song",
             "labyrinth"
           ],
-          "distinct": 13
+          "distinct": 15
         },
         {
           "kind": "Identifier",
           "fillers": [
             "fool",
             "boonberry",
-            "boof"
+            "boof",
+            "echo"
           ],
-          "distinct": 3
+          "distinct": 7
         },
         {
           "kind": "Identifier",
@@ -862,6 +1119,106 @@
     },
     {
       "id": "rhyme-12",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 10,
+      "instances": 15,
+      "files": [
+        ".spw/chapters/02.spw",
+        ".spw/chapters/03.spw",
+        ".spw/chapters/05.spw",
+        ".spw/chapters/08.spw",
+        ".spw/chapters/09.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/12.spw",
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/26.spw"
+      ],
+      "chapters": [
+        2,
+        3,
+        5,
+        8,
+        9,
+        10,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        23,
+        24,
+        26
+      ],
+      "template": "~berries{ $boneberry[_] }",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "mushroom_broth",
+            "roast_chestnut_and_sage",
+            "burnt_ends",
+            "rib_tips"
+          ],
+          "distinct": 7
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-13",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 10,
+      "files": [
+        ".spw/chapters/07.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/25.spw"
+      ],
+      "chapters": [
+        7,
+        10,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        25
+      ],
+      "template": ".{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "cooling_stone",
+            "timber_hall",
+            "brass_marker",
+            "blotter_dust"
+          ],
+          "distinct": 10
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-14",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 48,
@@ -953,48 +1310,169 @@
       ]
     },
     {
-      "id": "rhyme-13",
+      "id": "rhyme-15",
       "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 10,
+      "head": "Parameter",
+      "nodes": 50,
       "instances": 8,
       "files": [
-        ".spw/chapters/02.spw",
-        ".spw/chapters/03.spw",
-        ".spw/chapters/05.spw",
-        ".spw/chapters/08.spw",
-        ".spw/chapters/09.spw",
         ".spw/chapters/10.spw",
-        ".spw/chapters/12.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/17.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/25.spw"
       ],
       "chapters": [
-        2,
-        3,
-        5,
-        8,
-        9,
         10,
-        12,
-        15
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        25
       ],
-      "template": "~berries{ $boneberry[_] }",
+      "template": "_: < handle: _ type: _ room: .{_}@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
       "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s01",
+            "s05"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/01\"",
+            "\"custom-reflection/05\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-reflection\""
+          ],
+          "distinct": 2
+        },
         {
           "kind": "Identifier",
           "fillers": [
-            "mushroom_broth",
-            "roast_chestnut_and_sage",
-            "burnt_ends",
-            "rib_tips"
+            "timber_hall",
+            "blotter_dust",
+            "settled_loft",
+            "unpriced_glass"
           ],
-          "distinct": 6
+          "distinct": 8
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "clerk",
+            "the_land",
+            "lockkeeper"
+          ],
+          "distinct": 5
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Nothing painted, nothing glued: a caret where a beam lifts, a dot where it stands, and the sling set on the dot.\"",
+            "\"The owl keeps the gap clear; the unspent coincidence goes back into the open air.\"",
+            "\"Down in the square, everyone looks up at the missed chime and sets their watches together.\"",
+            "\"By dawn the dearest pane in the alley is the clearest, worth nothing in coin and showing the whole street.\""
+          ],
+          "distinct": 8
         }
       ],
-      "tropes": []
+      "tropes": [
+        "records",
+        "floating-title"
+      ]
     },
     {
-      "id": "rhyme-14",
+      "id": "rhyme-16",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 21,
+      "instances": 8,
+      "files": [
+        ".spw/chapters/17.spw",
+        ".spw/chapters/19.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/23.spw",
+        ".spw/chapters/24.spw",
+        ".spw/chapters/25.spw"
+      ],
+      "chapters": [
+        17,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "template": "#[chapter/_/lore]{ notes: [ _ _ _ ] }",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "17",
+            "19",
+            "20",
+            "21"
+          ],
+          "distinct": 8
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"In the checkered inquiry pavilion on Council Hill, clerks stamp Yes and No answers before petitioners arrive, leaving no tray for a four-cornered drawing.\"",
+            "\"In Bonk City's glaziers' alley, chalk tariffs rise every unbroken hour a pane survives, causing lantern light to catch and bend at every sticker corner.\"",
+            "\"Where Boon.land's sweet canal meets bitter orchard runoff, swollen oak gates refuse to open at once until they alternate every third chime.\"",
+            "\"Seen from Boof's height fourteen inches above Bonk City's cobblestones, guild boots, dropped berry crumbs, and drain-grate steam map the city more honestly than its speeches.\""
+          ],
+          "distinct": 8
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"A round grey shelf-owl guards one open pigeonhole in the pavilion wall, keeping space for questions not yet posed.\"",
+            "\"Glaziers peer only through glass within their purse, leaving neighbours standing side by side looking at different halves of the street.\"",
+            "\"Seam-otters knot rush reeds along the unblended water boundary while a mime paddles smoothly across without a boat.\"",
+            "\"Torch-ants keep winter detour trails running around heavy porters' boots along warm mortar seams.\""
+          ],
+          "distinct": 8
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The unspent coincidence from Chapter Seven's market oath resurfaces in the pavilion's orphan tray, verified by two oath-moths and kept unspent under the owl's wing.\"",
+            "\"At dusk, translucent pane-snails crawl out of the mortar and graze chalk prices back into clear, unpriced glass.\"",
+            "\"Having left his schemes behind in Book One, Mr. BaneWAP sits quietly on the lock wall sampling bitter orchard jam, noting that one pinch sets a jam while a whole bowl ruins supper.\"",
+            "\"Under the feast committee's tall tables, tucked receipts and flour-dusted toes point straight toward the bakehouse and cellar chute.\""
+          ],
+          "distinct": 8
+        }
+      ],
+      "tropes": [
+        "forgiving-glass",
+        "never-smaller"
+      ]
+    },
+    {
+      "id": "rhyme-17",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 7,
@@ -1035,18 +1513,144 @@
       "tropes": []
     },
     {
-      "id": "rhyme-15",
+      "id": "rhyme-18",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 12,
+      "instances": 7,
+      "files": [
+        ".spw/chapters/04.spw",
+        ".spw/chapters/06.spw",
+        ".spw/chapters/11.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/22.spw",
+        ".spw/chapters/25.spw"
+      ],
+      "chapters": [
+        4,
+        6,
+        11,
+        20,
+        21,
+        22,
+        25
+      ],
+      "template": "~berries{ _ $boneberry[_] }",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "baneberry",
+            "boonberry"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "salted_flatbread",
+            "burnt_ends",
+            "grilled_river_corn",
+            "falafel"
+          ],
+          "distinct": 5
+        }
+      ],
+      "tropes": [
+        "said-so",
+        "glimpse"
+      ]
+    },
+    {
+      "id": "rhyme-19",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 7,
+      "files": [
+        ".spw/chapters/02.spw",
+        ".spw/chapters/03.spw",
+        ".spw/chapters/04.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw"
+      ],
+      "chapters": [
+        2,
+        3,
+        4,
+        10,
+        14,
+        16,
+        17
+      ],
+      "template": "?{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "hollow_cedar",
+            "signal_stones",
+            "key_rack",
+            "sill_beam"
+          ],
+          "distinct": 7
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-20",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 6,
+      "files": [
+        ".spw/chapters/01.spw",
+        ".spw/chapters/04.spw",
+        ".spw/chapters/09.spw",
+        ".spw/chapters/12.spw",
+        ".spw/chapters/17.spw",
+        ".spw/chapters/23.spw"
+      ],
+      "chapters": [
+        1,
+        4,
+        9,
+        12,
+        17,
+        23
+      ],
+      "template": "&(_)",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "grove_mouth",
+            "council_table",
+            "eight_shards",
+            "bridge_deck"
+          ],
+          "distinct": 6
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-21",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 6,
-      "instances": 7,
+      "instances": 6,
       "files": [
         ".spw/chapters/03.spw",
         ".spw/chapters/04.spw",
         ".spw/chapters/06.spw",
         ".spw/chapters/10.spw",
         ".spw/chapters/14.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/21.spw"
       ],
       "chapters": [
         3,
@@ -1054,7 +1658,7 @@
         6,
         10,
         14,
-        15
+        21
       ],
       "template": "&_[_]",
       "holes": [
@@ -1082,7 +1686,7 @@
       ]
     },
     {
-      "id": "rhyme-16",
+      "id": "rhyme-22",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 47,
@@ -1168,42 +1772,53 @@
       ]
     },
     {
-      "id": "rhyme-17",
+      "id": "rhyme-23",
       "kind": "rhyme",
       "head": "Parameter",
-      "nodes": 7,
+      "nodes": 6,
       "instances": 5,
       "files": [
-        ".spw/chapters/02.spw",
-        ".spw/chapters/03.spw",
+        ".spw/chapters/01.spw",
         ".spw/chapters/04.spw",
         ".spw/chapters/10.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/13.spw",
+        ".spw/chapters/22.spw"
       ],
       "chapters": [
-        2,
-        3,
+        1,
         4,
         10,
-        14
+        13,
+        22
       ],
-      "template": "?{_}",
+      "template": "!<_>@_",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "hollow_cedar",
-            "signal_stones",
-            "key_rack",
-            "sill_beam"
+            "sloe_hedge",
+            "tabletop",
+            "collar_beam",
+            "shell_door"
           ],
           "distinct": 5
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "the_fool",
+            "fool"
+          ],
+          "distinct": 3
         }
       ],
-      "tropes": []
+      "tropes": [
+        "right-angle-companion"
+      ]
     },
     {
-      "id": "rhyme-18",
+      "id": "rhyme-24",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 6,
@@ -1247,7 +1862,86 @@
       "tropes": []
     },
     {
-      "id": "rhyme-19",
+      "id": "rhyme-25",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 47,
+      "instances": 4,
+      "files": [
+        ".spw/chapters/04.spw",
+        ".spw/chapters/10.spw",
+        ".spw/chapters/13.spw",
+        ".spw/chapters/22.spw"
+      ],
+      "chapters": [
+        4,
+        10,
+        13,
+        22
+      ],
+      "template": "_: < handle: _ type: _ room: !<_>@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s03",
+            "s06"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-fool/03\"",
+            "\"custom-boof/06\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-fool\"",
+            "\"custom-boof\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "tabletop",
+            "collar_beam",
+            "shell_door",
+            "unmarked_hatch"
+          ],
+          "distinct": 4
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "the_fool",
+            "boof",
+            "fool"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"A hot hand-pie set down with a bow. In Boon.land the vizier is baked goods.\"",
+            "\"Plaster sneezes. Oak does not. One knock from overhead, and the pie below signs it.\"",
+            "\"Through the shell-shaped arch, into a morning that smells of gravel, grain, and places not yet visited.\"",
+            "\"A brief passing streak of bells and ribbon ends: you go through a chute, you never camp in it.\""
+          ],
+          "distinct": 4
+        }
+      ],
+      "tropes": [
+        "never-smaller",
+        "right-angle-companion"
+      ]
+    },
+    {
+      "id": "rhyme-26",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 14,
@@ -1279,32 +1973,32 @@
       "tropes": []
     },
     {
-      "id": "rhyme-20",
+      "id": "rhyme-27",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 4,
       "files": [
         ".spw/chapters/01.spw",
-        ".spw/chapters/04.spw",
-        ".spw/chapters/09.spw",
-        ".spw/chapters/12.spw"
+        ".spw/chapters/08.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/24.spw"
       ],
       "chapters": [
         1,
-        4,
-        9,
-        12
+        8,
+        14,
+        24
       ],
-      "template": "&(_)",
+      "template": ".[_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "grove_mouth",
-            "council_table",
-            "eight_shards",
-            "bridge_deck"
+            "furrow_rim",
+            "folded_faces",
+            "frost_lane",
+            "open_courtyard"
           ],
           "distinct": 4
         }
@@ -1312,7 +2006,73 @@
       "tropes": []
     },
     {
-      "id": "rhyme-21",
+      "id": "rhyme-28",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 4,
+      "files": [
+        ".spw/chapters/04.spw",
+        ".spw/chapters/15.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw"
+      ],
+      "chapters": [
+        4,
+        15,
+        18,
+        19
+      ],
+      "template": "@[_]",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "weather_pane",
+            "horn_button",
+            "silent_rope",
+            "putty_frame"
+          ],
+          "distinct": 4
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-29",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 4,
+      "files": [
+        ".spw/chapters/14.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw"
+      ],
+      "chapters": [
+        14,
+        16,
+        20,
+        21
+      ],
+      "template": "@{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "warm_furrow",
+            "second_place",
+            "bitter_jam",
+            "cobble_level"
+          ],
+          "distinct": 4
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-30",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
@@ -1345,50 +2105,426 @@
       "tropes": []
     },
     {
-      "id": "rhyme-22",
+      "id": "rhyme-31",
       "kind": "rhyme",
       "head": "Parameter",
-      "nodes": 6,
+      "nodes": 7,
       "instances": 4,
       "files": [
         ".spw/chapters/01.spw",
-        ".spw/chapters/04.spw",
-        ".spw/chapters/10.spw",
-        ".spw/chapters/13.spw"
+        ".spw/chapters/11.spw",
+        ".spw/chapters/13.spw",
+        ".spw/chapters/25.spw"
       ],
       "chapters": [
         1,
-        4,
-        10,
-        13
+        11,
+        13,
+        25
       ],
-      "template": "!<_>@_",
+      "template": "~{_}",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "sloe_hedge",
-            "tabletop",
-            "collar_beam",
-            "shell_door"
+            "warm_furrow",
+            "quince_rise",
+            "last_line",
+            "warming_rack"
           ],
           "distinct": 4
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-32",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 50,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/13.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/26.spw"
+      ],
+      "chapters": [
+        13,
+        18,
+        26
+      ],
+      "template": "_: < handle: _ type: _ room: !{_}@the_land air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s01",
+            "s03",
+            "s04"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/01\"",
+            "\"custom-bonk/03\"",
+            "\"custom-awakening/04\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-bonk\"",
+            "\"custom-awakening\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "round_archive",
+            "flour_cloud",
+            "uneven_slice"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The ninth honk rolls out over the whole land at once, and the maps finally take the ink.\"",
+            "\"One loose board tips, and twenty pounds of sifted wheat become the room's whole weather.\"",
+            "\"One heel catches a voided Thursday slip, and exactly one warm slice meets the winter cobbles.\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The round room at the end of the river path was smaller and quieter than any map had promised. The seam-otters that had swum beside Boof down the bank turned back at its steps, where the rivers blended and left them n...\"",
+            "\"At the top landing, a single floorboard had worked its oak peg half an inch proud. Nobody had noticed it while stacking sacks. When a hurried apprentice bell-ringer stepped down hard on its lip to check the strike-cor...\"",
+            "\"Then the great ceremonial pie came down the line — the uneven slice cut slightly wider than its neighbours by the night school’s brass dividers, steaming teal and amber on a flat stoneware dish. The carrier was neithe...\""
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": [
+        "missing-day",
+        "exactly-one"
+      ]
+    },
+    {
+      "id": "rhyme-33",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 50,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/03.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/17.spw"
+      ],
+      "chapters": [
+        3,
+        16,
+        17
+      ],
+      "template": "_: < handle: _ type: _ room: ?{_}@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s01",
+            "s05",
+            "s03"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/01\"",
+            "\"custom-reflection/05\"",
+            "\"custom-labyrinth/03\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-reflection\"",
+            "\"custom-labyrinth\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "signal_stones",
+            "endless_stack",
+            "four_corners"
+          ],
+          "distinct": 3
         },
         {
           "kind": "Reference",
           "fillers": [
             "boof",
-            "the_fool"
+            "the_land"
           ],
           "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Two whale-roads almost meeting under the salt, and a ring of skinks pointing where to dig.\"",
+            "\"Arithmetic makes a pie endless. Arithmetic has never once dried a stoneware dish.\"",
+            "\"Every municipal box has two sides. The drawing placed on the counter has four.\""
+          ],
+          "distinct": 3
         }
       ],
       "tropes": [
+        "plain-lines",
+        "floating-title"
+      ]
+    },
+    {
+      "id": "rhyme-34",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 50,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/08.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/24.spw"
+      ],
+      "chapters": [
+        8,
+        14,
+        24
+      ],
+      "template": "_: < handle: _ type: _ room: .[_]@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s01",
+            "s02",
+            "s05"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/01\"",
+            "\"custom-boof/02\"",
+            "\"custom-reflection/05\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-reflection\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "folded_faces",
+            "frost_lane",
+            "open_courtyard"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "the_well",
+            "boof",
+            "judge"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The water shows an older face first, and under it every face it has kept, folded like linen.\"",
+            "\"A dog keeps mornings, not weeks. Hob-deer crop the verge on a day nobody kept.\"",
+            "\"Every quarter happened, none of them was the lane, and all four scorecards go into one honest stack.\""
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": [
+        "missing-day",
         "right-angle-companion"
       ]
     },
     {
-      "id": "rhyme-23",
+      "id": "rhyme-35",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 50,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/15.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/19.spw"
+      ],
+      "chapters": [
+        15,
+        18,
+        19
+      ],
+      "template": "_: < handle: _ type: _ room: @[_]@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s03",
+            "s04"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/03\"",
+            "\"custom-echo/04\"",
+            "\"custom-mirror/03\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-echo\"",
+            "\"custom-mirror\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "horn_button",
+            "silent_rope",
+            "putty_frame"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "mime",
+            "glazier"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"A horn button with two holes. For a moment it is hard to say who is looking at whom.\"",
+            "\"A mime pulls an invisible bell rope, and the real bronze clapper answers in thick white velvet.\"",
+            "\"Every glazier peers only through panes they can afford, so half the alley stays unseen.\""
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": [
+        "plain-lines"
+      ]
+    },
+    {
+      "id": "rhyme-36",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 50,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/16.spw",
+        ".spw/chapters/20.spw",
+        ".spw/chapters/21.spw"
+      ],
+      "chapters": [
+        16,
+        20,
+        21
+      ],
+      "template": "_: < handle: _ type: \"custom-boof\" room: @{_}@boof air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s03",
+            "s04",
+            "s01"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/03\"",
+            "\"custom-boof/04\"",
+            "\"custom-boof/01\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "second_place",
+            "bitter_jam",
+            "cobble_level"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"She wears the title for one honest course, then follows the cold water under the baize.\"",
+            "\"On the coping stone, Mr. BaneWAP sits without a single scheme, tasting jam from a tin spoon.\"",
+            "\"Fourteen inches off the paving slabs: tallow polish, drain steam, and the whole town in plain boots.\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Boof gave the city one full course of good manners. She kept her paws off the cloth. She let three elders shake her front foot and call her the keeper of the table. She did not growl when a musician struck a celebrato...\"",
+            "\"On the dry coping wall beside the lower sluice sat Mr. BaneWAP — smaller, tidier, and far quieter than he had been back in Book One, before his schemes gave out at the confluence. Beside his crust rested a little ston...\"",
+            "\"At six feet up, Bonk City is mostly gables, speeches, and people holding their hats in the breeze. At fourteen inches up — which is where Boof keeps her nose and where the actual work of the town lands — the paving sl...\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "16",
+            "20",
+            "21"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": [
+        "right-angle-companion",
+        "floating-title"
+      ]
+    },
+    {
+      "id": "rhyme-37",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 48,
@@ -1464,28 +2600,28 @@
       ]
     },
     {
-      "id": "rhyme-24",
+      "id": "rhyme-38",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 47,
       "instances": 3,
       "files": [
-        ".spw/chapters/04.spw",
-        ".spw/chapters/10.spw",
-        ".spw/chapters/13.spw"
+        ".spw/chapters/03.spw",
+        ".spw/chapters/07.spw",
+        ".spw/chapters/22.spw"
       ],
       "chapters": [
-        4,
-        10,
-        13
+        3,
+        7,
+        22
       ],
-      "template": "_: < handle: _ type: _ room: !<_>@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "template": "_: < handle: _ type: _ room: *<_>@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
       "holes": [
         {
           "kind": "Parameter",
           "fillers": [
             "s03",
-            "s06"
+            "s04"
           ],
           "distinct": 2
         },
@@ -1493,7 +2629,7 @@
           "kind": "Literal",
           "fillers": [
             "\"custom-fool/03\"",
-            "\"custom-boof/06\""
+            "\"custom-labyrinth/04\""
           ],
           "distinct": 2
         },
@@ -1501,16 +2637,16 @@
           "kind": "Literal",
           "fillers": [
             "\"custom-fool\"",
-            "\"custom-boof\""
+            "\"custom-labyrinth\""
           ],
           "distinct": 2
         },
         {
           "kind": "Identifier",
           "fillers": [
-            "tabletop",
-            "collar_beam",
-            "shell_door"
+            "dune_ridge",
+            "awning_beam",
+            "parcel_bundle"
           ],
           "distinct": 3
         },
@@ -1518,67 +2654,206 @@
           "kind": "Reference",
           "fillers": [
             "the_fool",
-            "boof"
+            "the_land"
           ],
           "distinct": 2
         },
         {
           "kind": "Literal",
           "fillers": [
-            "\"A hot hand-pie set down with a bow. In Boon.land the vizier is baked goods.\"",
-            "\"Plaster sneezes. Oak does not. One knock from overhead, and the pie below signs it.\"",
-            "\"Through the shell-shaped arch, into a morning that smells of gravel, grain, and places not yet visited.\""
+            "\"Somebody walks backward down the dune, turning an old song over. His prints fill behind him.\"",
+            "\"Kings swear on swords. Here it is one berry, and the clause the old songs always skip.\"",
+            "\"Every bundle packed upstairs lands downstairs as a clean description of somebody else's parcel.\""
           ],
           "distinct": 3
         }
       ],
       "tropes": [
-        "right-angle-companion",
-        "warm-question"
+        "floating-title",
+        "never-smaller"
       ]
     },
     {
-      "id": "rhyme-25",
+      "id": "rhyme-39",
       "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 12,
+      "head": "Parameter",
+      "nodes": 47,
       "instances": 3,
       "files": [
-        ".spw/chapters/04.spw",
-        ".spw/chapters/06.spw",
-        ".spw/chapters/11.spw"
+        ".spw/chapters/03.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/20.spw"
       ],
       "chapters": [
-        4,
-        6,
-        11
+        3,
+        14,
+        20
       ],
-      "template": "~berries{ _ $boneberry[_] }",
+      "template": "_: < handle: _ type: _ room: &<_>@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
       "holes": [
         {
-          "kind": "Identifier",
+          "kind": "Parameter",
           "fillers": [
-            "baneberry",
-            "boonberry"
+            "s06",
+            "s07",
+            "s03"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/06\"",
+            "\"custom-path/07\"",
+            "\"custom-path/03\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof\"",
+            "\"custom-path\""
           ],
           "distinct": 2
         },
         {
           "kind": "Identifier",
           "fillers": [
-            "salted_flatbread",
-            "burnt_ends"
+            "one_turn",
+            "bent_lane",
+            "third_chime"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "the_land"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Her weight in the seam, and two old roads settle into one turn. No miracle asked.\"",
+            "\"All that Thursday they cross the land two ways, his straight and hers bent, with nobody in it but the land at work.\"",
+            "\"The otters knot reeds, a mime paddles without a boat, and the sill takes turns by threes.\""
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": [
+        "missing-day",
+        "plain-lines"
+      ]
+    },
+    {
+      "id": "rhyme-40",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 42,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/16.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/23.spw"
+      ],
+      "chapters": [
+        16,
+        21,
+        23
+      ],
+      "template": "&[chapter/_/cast]{ _: < register: _ .enters: _ > reflection: < register: \"the book reading itself back by candlelight, tallying its own spells\" .enters: _ > }",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "16",
+            "21",
+            "23"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "boof",
+            "song"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"working dog of Boon.land; works for the land, trusts an honest scent before a name, and keeps a map of what keeps what\"",
+            "\"a melody that pockets what the minutes leave out and hums it elsewhere\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-boof/03\"",
+            "\"custom-boof/01\"",
+            "\"custom-song/03\""
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"custom-reflection/05\"",
+            "\"custom-reflection/04\""
           ],
           "distinct": 2
         }
       ],
       "tropes": [
-        "said-so",
-        "glimpse"
+        "right-angle-companion"
       ]
     },
     {
-      "id": "rhyme-26",
+      "id": "rhyme-41",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 12,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/16.spw",
+        ".spw/chapters/21.spw",
+        ".spw/chapters/23.spw"
+      ],
+      "chapters": [
+        16,
+        21,
+        23
+      ],
+      "template": "@told_by[_ _ reflection]",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "narrator",
+            "boof"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "boof",
+            "narrator",
+            "song"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-42",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
@@ -1608,7 +2883,37 @@
       "tropes": []
     },
     {
-      "id": "rhyme-27",
+      "id": "rhyme-43",
+      "kind": "rhyme",
+      "head": "Expression",
+      "nodes": 9,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/11.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/19.spw"
+      ],
+      "chapters": [
+        11,
+        14,
+        19
+      ],
+      "template": "room: *[_]",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "split_crust",
+            "ant_torch",
+            "tariff_pane"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-44",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
@@ -1638,29 +2943,29 @@
       "tropes": []
     },
     {
-      "id": "rhyme-28",
+      "id": "rhyme-45",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 3,
       "files": [
-        ".spw/chapters/01.spw",
-        ".spw/chapters/08.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/13.spw",
+        ".spw/chapters/18.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
-        1,
-        8,
-        14
+        13,
+        18,
+        26
       ],
-      "template": ".[_]",
+      "template": "!{_}",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "furrow_rim",
-            "folded_faces",
-            "frost_lane"
+            "round_archive",
+            "flour_cloud",
+            "uneven_slice"
           ],
           "distinct": 3
         }
@@ -1668,29 +2973,29 @@
       "tropes": []
     },
     {
-      "id": "rhyme-29",
+      "id": "rhyme-46",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 3,
       "files": [
-        ".spw/chapters/01.spw",
         ".spw/chapters/11.spw",
-        ".spw/chapters/13.spw"
+        ".spw/chapters/14.spw",
+        ".spw/chapters/19.spw"
       ],
       "chapters": [
-        1,
         11,
-        13
+        14,
+        19
       ],
-      "template": "~{_}",
+      "template": "*[_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "warm_furrow",
-            "quince_rise",
-            "last_line"
+            "split_crust",
+            "ant_torch",
+            "tariff_pane"
           ],
           "distinct": 3
         }
@@ -1698,7 +3003,481 @@
       "tropes": []
     },
     {
-      "id": "rhyme-30",
+      "id": "rhyme-47",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/02.spw",
+        ".spw/chapters/12.spw",
+        ".spw/chapters/19.spw"
+      ],
+      "chapters": [
+        2,
+        12,
+        19
+      ],
+      "template": "*{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "mossy_stone",
+            "plank_bridge",
+            "silver_trail"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-48",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw",
+        ".spw/chapters/21.spw"
+      ],
+      "chapters": [
+        15,
+        16,
+        21
+      ],
+      "template": "&[_]",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "arrivals_board",
+            "scullery_steam",
+            "three_scents"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-49",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/03.spw",
+        ".spw/chapters/05.spw",
+        ".spw/chapters/25.spw"
+      ],
+      "chapters": [
+        3,
+        5,
+        25
+      ],
+      "template": "%{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "sand_seam",
+            "crack_gauge",
+            "ember_pressure"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-50",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/01.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/24.spw"
+      ],
+      "chapters": [
+        1,
+        14,
+        24
+      ],
+      "template": "=[_]",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "berry_row",
+            "quarter_turn",
+            "shutter_wall"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-51",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 6,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/03.spw",
+        ".spw/chapters/07.spw",
+        ".spw/chapters/22.spw"
+      ],
+      "chapters": [
+        3,
+        7,
+        22
+      ],
+      "template": "*<_>@_",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "dune_ridge",
+            "awning_beam",
+            "parcel_bundle"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "the_fool",
+            "the_land"
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-52",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 6,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/03.spw",
+        ".spw/chapters/14.spw",
+        ".spw/chapters/20.spw"
+      ],
+      "chapters": [
+        3,
+        14,
+        20
+      ],
+      "template": "&<_>@_",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "one_turn",
+            "bent_lane",
+            "third_chime"
+          ],
+          "distinct": 3
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "the_land"
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-53",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 55,
+      "instances": 2,
+      "files": [
+        ".spw/chapters/07.spw",
+        ".spw/chapters/16.spw"
+      ],
+      "chapters": [
+        7,
+        16
+      ],
+      "template": "_: { handle: _ type: \"section\" title: _ room: .{_}@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} }",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s05",
+            "s01"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"section/05\"",
+            "\"section/01\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The Shadow Price\"",
+            "\"The Brass Place Marker\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "cooling_stone",
+            "brass_marker"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "boof",
+            "boonwap"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"She stays until the stone cools and the crowd becomes people again.\"",
+            "\"Coarse linen, polished brass, and a pie that loses nothing while the crowd applauds the dog.\""
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": [
+        "right-angle-companion"
+      ]
+    },
+    {
+      "id": "rhyme-54",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 55,
+      "instances": 2,
+      "files": [
+        ".spw/chapters/15.spw",
+        ".spw/chapters/16.spw"
+      ],
+      "chapters": [
+        15,
+        16
+      ],
+      "template": "_: { handle: _ type: \"section\" title: _ room: &[_]@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} }",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s06",
+            "s04"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"section/06\"",
+            "\"section/04\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Three Receipts\"",
+            "\"Behind the Curtain\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "arrivals_board",
+            "scullery_steam"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "bonewap",
+            "washer"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Three records pinned side by side, sources named, and one more box ruled for what nobody knows.\"",
+            "\"Cold spring water, red knuckles, and a plate from the stack handed cleanly to two ink lines.\""
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": [
+        "plain-lines",
+        "records"
+      ]
+    },
+    {
+      "id": "rhyme-55",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 55,
+      "instances": 2,
+      "files": [
+        ".spw/chapters/01.spw",
+        ".spw/chapters/24.spw"
+      ],
+      "chapters": [
+        1,
+        24
+      ],
+      "template": "_: { handle: _ type: \"section\" title: _ room: =[_]@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} }",
+      "holes": [
+        {
+          "kind": "Parameter",
+          "fillers": [
+            "s03",
+            "s01"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"section/03\"",
+            "\"section/01\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"When a Berry Remembers\"",
+            "\"The Partitioned Booth\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "berry_row",
+            "shutter_wall"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "the_berries",
+            "judge"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"One berry wakes with a gold seam, and row by row the field leans toward the trees.\"",
+            "\"Four wooden partitions, four hinged masking shutters, and fresh paint thinner stinging every nose.\""
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": [
+        "glimpse",
+        "right-angle-companion"
+      ]
+    },
+    {
+      "id": "rhyme-56",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 55,
+      "instances": 2,
+      "files": [
+        ".spw/chapters/20.spw",
+        ".spw/chapters/25.spw"
+      ],
+      "chapters": [
+        20,
+        25
+      ],
+      "template": "s01: { handle: \"section/01\" type: \"section\" title: _ room: &{_}@_ air: _ excerpt: _ route: ^[chapter/_/s01]{open} }",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"The Swollen Lock\"",
+            "\"Under One Vault\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "canal_lock",
+            "bakehouse_vault"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "lockkeeper",
+            "baker"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Sweetened brine on one beam, bitter orchard water on the other, and wet oak swelling shut between them.\"",
+            "\"Oak embers, rising yeast carbonation, and every ingredient from eleven chambers simmering under one arch.\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Below the old kiln, where the town’s drainage meets the river meadows, sat a narrow stone canal lock that nobody liked to hurry through. Two waters pressed against its timber doors: sweetened river brine on the townwa...\"",
+            "\"An hour before dusk on the Turning of the Year, everything unfinished in Book Two landed under one curved brick ceiling: the great bakehouse vault whose back flue warmed the bonk-kiln next door. Inside, oak embers hum...\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "20",
+            "25"
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": [
+        "forgiving-glass"
+      ]
+    },
+    {
+      "id": "rhyme-57",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 55,
@@ -1768,7 +3547,7 @@
       ]
     },
     {
-      "id": "rhyme-31",
+      "id": "rhyme-58",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 55,
@@ -1827,7 +3606,76 @@
       "tropes": []
     },
     {
-      "id": "rhyme-32",
+      "id": "rhyme-59",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 55,
+      "instances": 2,
+      "files": [
+        ".spw/chapters/10.spw",
+        ".spw/chapters/23.spw"
+      ],
+      "chapters": [
+        10,
+        23
+      ],
+      "template": "s05: { handle: \"section/05\" type: \"section\" title: _ room: ^(_)@_ air: _ excerpt: _ route: ^[chapter/_/s05]{open} }",
+      "holes": [
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"What the Frame Would Bear\"",
+            "\"Roll Called Quietly\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "anchor_stones",
+            "sliver_left"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Reference",
+          "fillers": [
+            "the_valley",
+            "boof"
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"Struck true, the hall is heard in every kitchen, and the saying softens at its edges the way told things do.\"",
+            "\"The roll closes with one blank line kept cleanly, and nobody rounds the sliver away.\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "\"BoneWAP did not whisper the answer to a council or fold it into a drawer. It let the hall ring — and a hall that size, struck true, is heard in every kitchen of the valley. The chimney-swifts carried it farther than i...\"",
+            "\"At the doorframe, Boof rested her chin on her front paws, listening to the low humming fade into {{quiet-room}}. She had watched councils argue over straight lines for weeks; watching six grown neighbours steady one s...\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "10",
+            "23"
+          ],
+          "distinct": 2
+        }
+      ],
+      "tropes": [
+        "missing-day"
+      ]
+    },
+    {
+      "id": "rhyme-60",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 50,
@@ -1897,26 +3745,26 @@
       ]
     },
     {
-      "id": "rhyme-33",
+      "id": "rhyme-61",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 50,
       "instances": 2,
       "files": [
-        ".spw/chapters/08.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/12.spw",
+        ".spw/chapters/19.spw"
       ],
       "chapters": [
-        8,
-        14
+        12,
+        19
       ],
-      "template": "_: < handle: _ type: \"custom-boof\" room: .[_]@_ air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
+      "template": "_: < handle: _ type: \"custom-boof\" room: *{_}@boof air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
       "holes": [
         {
           "kind": "Parameter",
           "fillers": [
             "s01",
-            "s02"
+            "s04"
           ],
           "distinct": 2
         },
@@ -1924,50 +3772,50 @@
           "kind": "Literal",
           "fillers": [
             "\"custom-boof/01\"",
-            "\"custom-boof/02\""
+            "\"custom-boof/04\""
           ],
           "distinct": 2
         },
         {
           "kind": "Identifier",
           "fillers": [
-            "folded_faces",
-            "frost_lane"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Reference",
-          "fillers": [
-            "the_well",
-            "boof"
+            "plank_bridge",
+            "silver_trail"
           ],
           "distinct": 2
         },
         {
           "kind": "Literal",
           "fillers": [
-            "\"The water shows an older face first, and under it every face it has kept, folded like linen.\"",
-            "\"A dog keeps mornings, not weeks. Hob-deer crop the verge on a day nobody kept.\""
+            "\"Two springs share one bed without forgetting, and the wish is small enough to hold in a mouth.\"",
+            "\"At dusk the pane-snails come out, grazing chalk numerals off the glass without scratching an inch.\""
           ],
           "distinct": 2
         },
         {
           "kind": "Literal",
           "fillers": [
-            "\"The Watering Eye was a well before it was a witness, and a witness long before anyone built a tavern leaning over it like a drinker over a confession. Boof came in under the sagging floorboards, nose first through spi...\"",
-            "\"Boof did not keep a week. She kept mornings. Each one came with its own smell and she took it as it came. A person has to be told what day it is. A dog only has to be there. Keep the morning, not the week, the shepher...\""
+            "\"The confluence smelled of two springs at once: one water chalk-pale and quarry-cold, the other berry-dark and sweet with far orchards. {{bridge-smell}}. Under it all, warm shell. Two great mountain rivers met beneath ...\"",
+            "\"When the glaziers shuttered their lamps and went indoors for supper, Boof stayed in the lane with her nose an inch from the lowest frame. She heard it before she saw it: a faint, patient grazing sound, quieter than {{...\""
+          ],
+          "distinct": 2
+        },
+        {
+          "kind": "Literal",
+          "fillers": [
+            "12",
+            "19"
           ],
           "distinct": 2
         }
       ],
       "tropes": [
-        "missing-day",
-        "right-angle-companion"
+        "right-angle-companion",
+        "forgiving-glass"
       ]
     },
     {
-      "id": "rhyme-34",
+      "id": "rhyme-62",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 50,
@@ -2037,131 +3885,7 @@
       ]
     },
     {
-      "id": "rhyme-35",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 47,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/14.spw"
-      ],
-      "chapters": [
-        3,
-        14
-      ],
-      "template": "_: < handle: _ type: _ room: &<_>@boof air: _ excerpt: _ route: ^[chapter/_/_]{open} >",
-      "holes": [
-        {
-          "kind": "Parameter",
-          "fillers": [
-            "s06",
-            "s07"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"custom-boof/06\"",
-            "\"custom-path/07\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"custom-boof\"",
-            "\"custom-path\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "one_turn",
-            "bent_lane"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"Her weight in the seam, and two old roads settle into one turn. No miracle asked.\"",
-            "\"All that Thursday they cross the land two ways, his straight and hers bent, with nobody in it but the land at work.\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"Boof huffed and walked between the routes, paws in the seam, her weight enough to give their leaning somewhere to go. Under her pads the crust shivered; far down, two long notes found each other. Behind her the two li...\"",
-            "\"When he moved, he did not walk. He was in one place, and then in the next place along, as if the day were being told in pictures and somebody had skipped the ones in between. Then a pause. Then the next picture. Boof ...\""
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": [
-        "missing-day",
-        "plain-lines"
-      ]
-    },
-    {
-      "id": "rhyme-36",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 47,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/07.spw"
-      ],
-      "chapters": [
-        3,
-        7
-      ],
-      "template": "s03: < handle: \"custom-fool/03\" type: \"custom-fool\" room: *<_>@the_fool air: _ excerpt: _ route: ^[chapter/_/s03]{open} >",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "dune_ridge",
-            "awning_beam"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"Somebody walks backward down the dune, turning an old song over. His prints fill behind him.\"",
-            "\"Kings swear on swords. Here it is one berry, and the clause the old songs always skip.\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"The Fool trotted backward down the dune, spinning an empty brass lamp on one finger, salt crusting the hems of his patchwork. He had sampled the old song of genies, and he handed it back changed. It was never three wi...\"",
-            "\"From the dried-fruit stall's crossbeam, among strings of shrivelled berries, he laid it out like a set: the hero's vow, sampled from every saga that ever rattled a mead-hall — swords kissed, blood mingled, thrones pro...\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "03",
-            "07"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": [
-        "never-smaller",
-        "off-switch"
-      ]
-    },
-    {
-      "id": "rhyme-37",
+      "id": "rhyme-63",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 47,
@@ -2223,7 +3947,7 @@
       ]
     },
     {
-      "id": "rhyme-38",
+      "id": "rhyme-64",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 16,
@@ -2275,18 +3999,18 @@
       ]
     },
     {
-      "id": "rhyme-39",
+      "id": "rhyme-65",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 27,
       "instances": 2,
       "files": [
         ".spw/chapters/01.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
         1,
-        15
+        26
       ],
       "template": "^[chapter/_/spine]{ =_{ ~_ } weave: _ reading: _ }",
       "holes": [
@@ -2294,7 +4018,7 @@
           "kind": "Literal",
           "fillers": [
             "01",
-            "15"
+            "26"
           ],
           "distinct": 2
         },
@@ -2310,7 +4034,7 @@
           "kind": "Literal",
           "fillers": [
             "\".spw/chapters/02.spw#chapter_02\"",
-            "\".spw/chapters/14.spw#chapter_14\""
+            "\".spw/chapters/25.spw#chapter_25\""
           ],
           "distinct": 2
         },
@@ -2318,7 +4042,7 @@
           "kind": "Literal",
           "fillers": [
             "\"{} <> {} [] {} {} <>\"",
-            "\"<> {} <> <> [] {} <>\""
+            "\"{} [] <> <> <>\""
           ],
           "distinct": 2
         },
@@ -2326,18 +4050,46 @@
           "kind": "Literal",
           "fillers": [
             "\"the telling opens; Boof pads in on a thread of scent; the telling gathers; the plate catches the light; the telling gathers; the telling gathers; Boof closes the day with the trail still warm\"",
-            "\"the labyrinth grows a new corridor; the telling gathers; Boof pads in on a thread of scent; the reflection reads back by candlelight; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm\""
+            "\"the telling opens; the plate catches the light; Boof pads in on a thread of scent; something old stirs awake; the reflection reads back by candlelight\""
           ],
           "distinct": 2
         }
       ],
       "tropes": [
         "right-angle-companion",
-        "warm-question"
+        "beyond-the-frame"
       ]
     },
     {
-      "id": "rhyme-40",
+      "id": "rhyme-66",
+      "kind": "rhyme",
+      "head": "Parameter",
+      "nodes": 7,
+      "instances": 3,
+      "files": [
+        ".spw/chapters/09.spw",
+        ".spw/chapters/26.spw"
+      ],
+      "chapters": [
+        9,
+        26
+      ],
+      "template": "^{_}",
+      "holes": [
+        {
+          "kind": "Identifier",
+          "fillers": [
+            "shard_ring",
+            "great_table",
+            "open_ring"
+          ],
+          "distinct": 3
+        }
+      ],
+      "tropes": []
+    },
+    {
+      "id": "rhyme-67",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 10,
@@ -2380,7 +4132,7 @@
       "tropes": []
     },
     {
-      "id": "rhyme-41",
+      "id": "rhyme-68",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
@@ -2418,26 +4170,26 @@
       ]
     },
     {
-      "id": "rhyme-42",
+      "id": "rhyme-69",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
       "instances": 2,
       "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/10.spw"
+        ".spw/chapters/18.spw",
+        ".spw/chapters/24.spw"
       ],
       "chapters": [
-        3,
-        10
+        18,
+        24
       ],
-      "template": "room: ?{_}",
+      "template": "room: ![_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "signal_stones",
-            "sill_beam"
+            "belfry_stair",
+            "double_shutter"
           ],
           "distinct": 2
         }
@@ -2445,26 +4197,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-43",
+      "id": "rhyme-70",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
       "instances": 2,
       "files": [
-        ".spw/chapters/07.spw",
-        ".spw/chapters/10.spw"
+        ".spw/chapters/17.spw",
+        ".spw/chapters/24.spw"
       ],
       "chapters": [
-        7,
-        10
+        17,
+        24
       ],
-      "template": "room: .{_}",
+      "template": "room: ?[_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "cooling_stone",
-            "timber_hall"
+            "blank_ledger",
+            "four_shutters"
           ],
           "distinct": 2
         }
@@ -2472,26 +4224,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-44",
+      "id": "rhyme-71",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
       "instances": 2,
       "files": [
-        ".spw/chapters/04.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/21.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
-        4,
-        15
+        21,
+        26
       ],
-      "template": "room: @[_]",
+      "template": "room: @(_)",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "weather_pane",
-            "horn_button"
+            "under_table",
+            "seating_plan"
           ],
           "distinct": 2
         }
@@ -2499,61 +4251,7 @@
       "tropes": []
     },
     {
-      "id": "rhyme-45",
-      "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 9,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/11.spw",
-        ".spw/chapters/14.spw"
-      ],
-      "chapters": [
-        11,
-        14
-      ],
-      "template": "room: *[_]",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "split_crust",
-            "ant_torch"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-46",
-      "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 9,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/02.spw",
-        ".spw/chapters/12.spw"
-      ],
-      "chapters": [
-        2,
-        12
-      ],
-      "template": "room: *{_}",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "mossy_stone",
-            "plank_bridge"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-47",
+      "id": "rhyme-72",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
@@ -2580,7 +4278,7 @@
       "tropes": []
     },
     {
-      "id": "rhyme-48",
+      "id": "rhyme-73",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
@@ -2607,26 +4305,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-49",
+      "id": "rhyme-74",
       "kind": "rhyme",
       "head": "Expression",
       "nodes": 9,
       "instances": 2,
       "files": [
-        ".spw/chapters/01.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/08.spw",
+        ".spw/chapters/23.spw"
       ],
       "chapters": [
-        1,
-        14
+        8,
+        23
       ],
-      "template": "room: =[_]",
+      "template": "room: %(_)",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "berry_row",
-            "quarter_turn"
+            "taproom",
+            "chalk_circle"
           ],
           "distinct": 2
         }
@@ -2634,26 +4332,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-50",
+      "id": "rhyme-75",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 2,
       "files": [
-        ".spw/chapters/07.spw",
-        ".spw/chapters/10.spw"
+        ".spw/chapters/18.spw",
+        ".spw/chapters/24.spw"
       ],
       "chapters": [
-        7,
-        10
+        18,
+        24
       ],
-      "template": ".{_}",
+      "template": "![_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "cooling_stone",
-            "timber_hall"
+            "belfry_stair",
+            "double_shutter"
           ],
           "distinct": 2
         }
@@ -2661,26 +4359,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-51",
+      "id": "rhyme-76",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 2,
       "files": [
-        ".spw/chapters/04.spw",
-        ".spw/chapters/15.spw"
+        ".spw/chapters/17.spw",
+        ".spw/chapters/24.spw"
       ],
       "chapters": [
-        4,
-        15
+        17,
+        24
       ],
-      "template": "@[_]",
+      "template": "?[_]",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "weather_pane",
-            "horn_button"
+            "blank_ledger",
+            "four_shutters"
           ],
           "distinct": 2
         }
@@ -2688,26 +4386,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-52",
+      "id": "rhyme-77",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 2,
       "files": [
-        ".spw/chapters/11.spw",
-        ".spw/chapters/14.spw"
+        ".spw/chapters/21.spw",
+        ".spw/chapters/26.spw"
       ],
       "chapters": [
-        11,
-        14
+        21,
+        26
       ],
-      "template": "*[_]",
+      "template": "@(_)",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "split_crust",
-            "ant_torch"
+            "under_table",
+            "seating_plan"
           ],
           "distinct": 2
         }
@@ -2715,26 +4413,26 @@
       "tropes": []
     },
     {
-      "id": "rhyme-53",
+      "id": "rhyme-78",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 2,
       "files": [
-        ".spw/chapters/02.spw",
-        ".spw/chapters/12.spw"
+        ".spw/chapters/20.spw",
+        ".spw/chapters/25.spw"
       ],
       "chapters": [
-        2,
-        12
+        20,
+        25
       ],
-      "template": "*{_}",
+      "template": "&{_}",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "mossy_stone",
-            "plank_bridge"
+            "canal_lock",
+            "bakehouse_vault"
           ],
           "distinct": 2
         }
@@ -2742,7 +4440,7 @@
       "tropes": []
     },
     {
-      "id": "rhyme-54",
+      "id": "rhyme-79",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
@@ -2769,503 +4467,28 @@
       "tropes": []
     },
     {
-      "id": "rhyme-55",
+      "id": "rhyme-80",
       "kind": "rhyme",
       "head": "Parameter",
       "nodes": 7,
       "instances": 2,
       "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/05.spw"
+        ".spw/chapters/08.spw",
+        ".spw/chapters/23.spw"
       ],
       "chapters": [
-        3,
-        5
+        8,
+        23
       ],
-      "template": "%{_}",
+      "template": "%(_)",
       "holes": [
         {
           "kind": "Identifier",
           "fillers": [
-            "sand_seam",
-            "crack_gauge"
+            "taproom",
+            "chalk_circle"
           ],
           "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-56",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 7,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/07.spw",
-        ".spw/chapters/15.spw"
-      ],
-      "chapters": [
-        7,
-        15
-      ],
-      "template": "=(_)",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "oath_stone",
-            "long_table"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-57",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 7,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/01.spw",
-        ".spw/chapters/14.spw"
-      ],
-      "chapters": [
-        1,
-        14
-      ],
-      "template": "=[_]",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "berry_row",
-            "quarter_turn"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-58",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/06.spw",
-        ".spw/chapters/13.spw"
-      ],
-      "chapters": [
-        6,
-        13
-      ],
-      "template": ".<_>@_",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "mirrored_alley",
-            "starlight_aisle"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Reference",
-          "fillers": [
-            "the_labyrinth",
-            "the_fool"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-59",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/07.spw"
-      ],
-      "chapters": [
-        3,
-        7
-      ],
-      "template": "*<_>@the_fool",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "dune_ridge",
-            "awning_beam"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-60",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/03.spw",
-        ".spw/chapters/14.spw"
-      ],
-      "chapters": [
-        3,
-        14
-      ],
-      "template": "&<_>@boof",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "one_turn",
-            "bent_lane"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-61",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/05.spw",
-        ".spw/chapters/11.spw"
-      ],
-      "chapters": [
-        5,
-        11
-      ],
-      "template": "$<_>@_",
-      "holes": [
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "split_desk",
-            "throne_step"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Reference",
-          "fillers": [
-            "the_floor",
-            "the_fool"
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": []
-    },
-    {
-      "id": "refrain-62",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/13.spw"
-      ],
-      "chapters": [
-        13
-      ],
-      "template": "!{round_archive}",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-63",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/06.spw"
-      ],
-      "chapters": [
-        6
-      ],
-      "template": "?(round_plaza)",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-64",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/14.spw"
-      ],
-      "chapters": [
-        14
-      ],
-      "template": "@{warm_furrow}",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-65",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/08.spw"
-      ],
-      "chapters": [
-        8
-      ],
-      "template": "%(taproom)",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-66",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/02.spw"
-      ],
-      "chapters": [
-        2
-      ],
-      "template": "%[wild_vines]",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-67",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/10.spw"
-      ],
-      "chapters": [
-        10
-      ],
-      "template": "^(anchor_stones)",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-68",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/09.spw"
-      ],
-      "chapters": [
-        9
-      ],
-      "template": "^{shard_ring}",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-69",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/05.spw"
-      ],
-      "chapters": [
-        5
-      ],
-      "template": "={arched_hall}",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-70",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/02.spw"
-      ],
-      "chapters": [
-        2
-      ],
-      "template": "$[listening_thicket]",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "refrain-71",
-      "kind": "refrain",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 2,
-      "files": [
-        ".spw/chapters/06.spw"
-      ],
-      "chapters": [
-        6
-      ],
-      "template": "${kiln_gate}",
-      "holes": [],
-      "tropes": []
-    },
-    {
-      "id": "rhyme-72",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 91,
-      "instances": 2,
-      "files": [
-        ".spw/surfaces/characters.spw"
-      ],
-      "chapters": [],
-      "template": "@_{ .type[character] .first[_] $_ #name[_] &card[_] #where[_] #line[_] #traits[_] #temperament[_] ?want[_] .limit[_] ~escape[_] #reason[_] %carries[_] &hands_on[_] ~eased[_] #ground[_] }",
-      "holes": [
-        {
-          "kind": "ModifierChain",
-          "fillers": [
-            "bane",
-            "boon"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Identifier",
-          "fillers": [
-            "chapter_4",
-            "chapter_6"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Operation",
-          "fillers": [
-            "ink",
-            "flour"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"Mr. BaneWAP\"",
-            "\"Mr. BoonWAP\""
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "ModifierChain",
-          "fillers": [
-            "bane",
-            "boon"
-          ],
-          "distinct": 2
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"/book/chapter/04/\"",
-            "\"/book/chapter/06/\""
-          ],
-          "distinct": 2
-        }
-      ],
-      "tropes": [
-        "off-switch",
-        "never-smaller"
-      ]
-    },
-    {
-      "id": "rhyme-73",
-      "kind": "rhyme",
-      "head": "Parameter",
-      "nodes": 14,
-      "instances": 9,
-      "files": [
-        ".spw/surfaces/tropes.spw"
-      ],
-      "chapters": [],
-      "template": "{ trope: _ through: _ }",
-      "holes": [
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"wap\"",
-            "\"silent-protest\"",
-            "\"missing-day\"",
-            "\"beyond-the-frame\""
-          ],
-          "distinct": 9
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\"Six's margin (clowns going home) ⇄ Six's lanes (clowns satisfied, counted)\"",
-            "\"Eleven's margin (a blank placard) ⇄ the mimes' holds anywhere (the placards multiply)\"",
-            "\"Fourteen's lanes (nobody until Friday) ⇄ Fourteen's margin (a second set of prints)\"",
-            "\"every WAP a plate (the end card) ⇄ Thirteen's margin (the stack, counted)\""
-          ],
-          "distinct": 9
-        }
-      ],
-      "tropes": [
-        "silent-protest",
-        "beyond-the-frame"
-      ]
-    },
-    {
-      "id": "rhyme-74",
-      "kind": "rhyme",
-      "head": "Expression",
-      "nodes": 6,
-      "instances": 3,
-      "files": [
-        ".spw/surfaces/tropes.spw"
-      ],
-      "chapters": [],
-      "template": "&_: ~_",
-      "holes": [
-        {
-          "kind": "Operation",
-          "fillers": [
-            "physics",
-            "book_two",
-            "joinery"
-          ],
-          "distinct": 3
-        },
-        {
-          "kind": "Literal",
-          "fillers": [
-            "\".spw/story-boonhonk.spw#lore_land_story_boonhonk\"",
-            "\".spw/surfaces/wonder-about-pie.spw#book_two\"",
-            "\".spw/surfaces/joinery.spw#the_one_track\""
-          ],
-          "distinct": 3
         }
       ],
       "tropes": []

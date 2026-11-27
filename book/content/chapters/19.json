@@ -1,0 +1,333 @@
+{
+  "chapterNumber": 19,
+  "title": "The Priced Window",
+  "logline": "In Bonk City's glaziers' alley, chalk tariffs tick upward for every unbroken hour a pane survives — until pane-snails slowly graze the numbers back into clear glass.",
+  "epigraph": "Light passes straight through unpriced glass, and snags on every corner of a chalk sticker.",
+  "inWhich": "glaziers chalk rising tariffs onto every pane while pane-snails slowly graze the prices back to clear glass",
+  "description": "Chapter 19 of Lore.Land: The Priced Window. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they can afford, light bends cleanly only where nothing is priced, and at dusk the pane-snails erase the chalk without scratching the sill.",
+  "mood": "labyrinth",
+  "period": "winter",
+  "pillars": [
+    "worldbuilding",
+    "wonder",
+    "stewardship"
+  ],
+  "topics": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif"
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance"
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html"
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise"
+    }
+  ],
+  "relatedRoutes": [
+    {
+      "label": "Chamber 18 · Flour in the Bell-Tower",
+      "href": "/book/chapter/18/",
+      "kicker": "Prev"
+    },
+    {
+      "label": "Civic magic",
+      "href": "/world/civic-magic.html",
+      "kicker": "World"
+    },
+    {
+      "label": "Chamber 20 · Two Springs Under the Sill",
+      "href": "/book/chapter/20/",
+      "kicker": "Next"
+    }
+  ],
+  "lexicon": [
+    {
+      "id": "motif",
+      "label": "Marks & lanterns",
+      "href": "/topics/#motif",
+      "terms": [
+        "glass",
+        "pane",
+        "panes",
+        "pane-snails",
+        "dent-lanterns",
+        "light",
+        "putty",
+        "frame"
+      ]
+    },
+    {
+      "id": "provenance",
+      "label": "Posted receipts",
+      "href": "/topics/#provenance",
+      "terms": [
+        "tariff",
+        "chalk",
+        "glazier",
+        "glaziers",
+        "struck price tag",
+        "coin",
+        "sticker"
+      ]
+    },
+    {
+      "id": "guide",
+      "label": "Boof",
+      "href": "/characters/boof.html",
+      "terms": [
+        "Boof",
+        "nose",
+        "paws",
+        "alley"
+      ]
+    },
+    {
+      "id": "promise",
+      "label": "Public promise",
+      "href": "/topics/#promise",
+      "terms": [
+        "clear",
+        "unpriced",
+        "silver",
+        "trail",
+        "alley"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "type": "section",
+      "title": "The Glaziers’ Alley",
+      "room": {
+        "spw": "*[tariff_pane]@glazier",
+        "air": "Linseed putty, clinking small change, and chalk prices ticking upward by the unbroken hour."
+      },
+      "data-motif": "glass",
+      "climate": {
+        "tempo": "day",
+        "tint": "teal",
+        "hook": "glaziers-alley"
+      },
+      "scene": {
+        "vantage": "looking down a narrow curving alley lined with wooden easels holding framed panes of reclaimed Bonk glass",
+        "light": "late afternoon lantern glow catching beveled edges and splintering slightly at chalked corners",
+        "scent": "linseed oil, fresh putty, damp chalk dust, rain-washed cobbles, small brass change",
+        "edges": [
+          "racks of framed window panes, each bearing a neat chalk tariff in its upper corner",
+          "glaziers peering carefully only through panes within their purse while avoiding the costlier glass",
+          "dent-lanterns hung along the eaves throwing bright double halos onto the alley walls",
+          "a plain-line figure standing behind the one unpriced pane, perfectly sharp and undistorted"
+        ],
+        "hint": "a narrow lantern-lit glaziers' alley lined with framed window panes marked with chalk tariffs; warm amber light catching sticker corners while flowing cleanly through one unpriced frame holding a plain-line ink figure"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Between the lantern market and the old kiln ran the glaziers’ alley, narrow enough that two umbrellas had to negotiate. Every shopfront leaned wooden easels into the lane, displaying framed panes fresh from cooling, smelling of linseed putty and {{alley-air}}.",
+          "slots": {
+            "alley-air": {
+              "clock": "hour",
+              "variants": [
+                "cold chalk",
+                "clinking copper",
+                "damp mortar",
+                "warm rosin"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Because Bonk glass is poured out of old knocks, an unbroken pane grows rarer every hour it survives in a busy street. Each glazier kept a chalk stub behind their ear and ticked the corner price upward on the chime: two coppers at noon, three at one, five if a cart went past without rattling the sash."
+        },
+        {
+          "type": "paragraph",
+          "text": "In the eaves above, dent-lanterns swung on iron hooks, casting bright pools down the alley. Wherever a beam met unpriced glass, it passed clean through as if the frame held nothing at all. Wherever it met a chalked tariff or a gummed paper corner, the light caught, bent crooked, and left a smudged shadow across the cobbles.",
+          "lean": "bone"
+        }
+      ]
+    },
+    {
+      "type": "figure",
+      "img": {
+        "src": "/book/images/19.png",
+        "alt": "The glaziers' alley at dusk: wooden racks of framed window panes marked with chalk tariffs and gummed stickers that snag lantern light, while silver loops of pane-snails clear one frame so the plain-line figure stands crisp and unpriced behind it.",
+        "loading": "lazy",
+        "width": 1280,
+        "height": 720
+      },
+      "figcaption": "The Priced Window: light snags on chalk corners and runs clean where the pane-snails have grazed."
+    },
+    {
+      "type": "custom-mirror",
+      "room": {
+        "spw": "@[putty_frame]@glazier",
+        "air": "Every glazier peers only through panes they can afford, so half the alley stays unseen."
+      },
+      "data-motif": "glass",
+      "climate": {
+        "tempo": "sunset",
+        "tint": "gold",
+        "hook": "putty-frame"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "By custom in that alley, nobody looked through a pane they could not afford to replace. Apprentices squinted down the cheap cloudy squares near the gutter; master glaziers inspected the street through tall clear rectangles priced beyond a baker’s winter earnings.",
+          "lean": "bane"
+        },
+        {
+          "type": "paragraph",
+          "text": "The result was peculiar. Two neighbours standing shoulder to shoulder saw completely different alleys — one saw mostly boots and puddles, the other saw roof tiles and lantern hooks — and both argued cheerfully about whether it was raining."
+        },
+        {
+          "type": "paragraph",
+          "text": "Near the center easel stood one tall frame whose corner carried no chalk at all, only a struck price tag dangling from a broken thread in the gutter below. Through that single unpriced square, the figure in plain lines looked straight down the alley, and the alley looked straight back without bending a single ray."
+        }
+      ]
+    },
+    {
+      "type": "custom-boof",
+      "room": {
+        "spw": "*{silver_trail}@boof",
+        "air": "At dusk the pane-snails come out, grazing chalk numerals off the glass without scratching an inch."
+      },
+      "data-motif": "glass",
+      "climate": {
+        "tempo": "night",
+        "tint": "teal",
+        "hook": "silver-trail"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "When the glaziers shuttered their lamps and went indoors for supper, Boof stayed in the lane with her nose an inch from the lowest frame. She heard it before she saw it: a faint, patient grazing sound, quieter than {{quiet-sound}}.",
+          "slots": {
+            "quiet-sound": {
+              "clock": "minute",
+              "variants": [
+                "rain on wool",
+                "a pencil on cotton",
+                "crumbs settling",
+                "salt in a spoon"
+              ]
+            }
+          }
+        },
+        {
+          "type": "paragraph",
+          "text": "Out from the damp mortar joints slid the pane-snails, translucent shells glowing faint amber in the lantern-backwash. They ignored the putty and ignored the wood. Slowly, in unhurried silver loops, they climbed straight across the chalk tariffs and grazed every numeral clean off the glass.",
+          "lean": "boon"
+        },
+        {
+          "type": "paragraph",
+          "text": "Glass over, never scrape, the old guild rule said — and the snails did neither. They simply ate the soot and the price together, leaving behind a ribbon of glass so honest you could forget the window was even there."
+        }
+      ]
+    },
+    {
+      "type": "custom-reflection",
+      "room": {
+        "spw": ".{unpriced_glass}@the_land",
+        "air": "By dawn the dearest pane in the alley is the clearest, worth nothing in coin and showing the whole street."
+      },
+      "data-motif": "glass",
+      "climate": {
+        "tempo": "morning",
+        "tint": "archive",
+        "hook": "unpriced-glass"
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "When the oldest glazier opened his shutters at first light, his most expensive pane stood completely blank of chalk. Through it he could see a cat on a wet sill, a bread cart turning the bend, Boof sitting calmly by the drain, and the figure’s floating hat moving down the far cobbles without catching on a single reflection.",
+          "lean": "bone"
+        },
+        {
+          "type": "bracework",
+          "spw": "*{chalk_tariff & silver_trail}",
+          "gloss": "Value held beside what clears it: a window proves its worth only when nobody is standing in front of it counting.",
+          "maker": "the glaziers' alley"
+        },
+        {
+          "type": "paragraph",
+          "text": "The glazier reached behind his ear for his chalk stub, paused half a breath, and put the stub back in his apron pocket. He left the pane unpriced all morning, and three people stopped to look through it and remembered where they had left their keys."
+        }
+      ]
+    }
+  ],
+  "lore": {
+    "loreItems": [
+      {
+        "description": "In Bonk City's glaziers' alley, chalk tariffs rise every unbroken hour a pane survives, causing lantern light to catch and bend at every sticker corner."
+      },
+      {
+        "description": "Glaziers peer only through glass within their purse, leaving neighbours standing side by side looking at different halves of the street."
+      },
+      {
+        "description": "At dusk, translucent pane-snails crawl out of the mortar and graze chalk prices back into clear, unpriced glass."
+      }
+    ]
+  },
+  "table": {
+    "place": "The glaziers' alley between the lantern market and the old kiln: crooked timber easels lined with framed panes smelling of linseed putty, damp chalk, and rain-slick stone.",
+    "light": "Amber dent-lantern glow broken into prisms along chalked corners, running clean and silver wherever pane-snails have grazed.",
+    "people": [
+      {
+        "name": "the oldest glazier",
+        "want": "a pane that survives the whole feast week without earning a tariff too tall to lift",
+        "voice": "chalk behind one ear, soft-spoken, respects snails more than tariffs"
+      },
+      {
+        "name": "an apprentice putty-knife",
+        "want": "to look through the tall clear frame once without paying three silver pieces",
+        "voice": "quick eyes, always squinting sideways around corners"
+      },
+      {
+        "name": "a tariff clerk",
+        "want": "every pane clocked on the hour so the guild ledger balances",
+        "voice": "taps a pocket hourglass whenever someone lingers"
+      }
+    ],
+    "hooks": [
+      "A chalk tariff ticked so high overnight that the pane has become too valuable to move out of the alley, blocking the baker's delivery cart.",
+      "Someone replaced the alley's chalk with wax grease so the pane-snails cannot graze it; find who is hoarding the clear view before dusk.",
+      "Looking through the unpriced frame shows a door at the far end of the lane that disappears the moment you step around the easel."
+    ],
+    "encounters": [
+      "A dent-lantern swings in the breeze, throwing two sharp beams that cross at a struck price tag in the gutter.",
+      "Two glaziers argue warmly over whether the sky is clear because one is looking through a two-copper pane and the other through a twelve-copper pane.",
+      "A trail of silver-shelled pane-snails slowly converts a posted fine into a polite blank rectangle.",
+      "A loose cartwheel rattles past; every chalked pane in the lane ticks up one copper in unison.",
+      "Fresh linseed putty holds the faint thumbprint of someone who carried a rectangular door through here last night.",
+      "Through an unpriced pane, the party sees exactly what someone across the lane dropped five minutes ago."
+    ],
+    "finds": [
+      {
+        "wonder": "pane-snails",
+        "use": "Set one on any over-priced notice or clouded pane at dusk; by morning it leaves a clean silver loop straight through the clutter."
+      },
+      {
+        "wonder": "struck-price-tag",
+        "use": "Tie it to a tool or a window you mean to share; anyone trying to quote a fee on it finds their chalk will not bite."
+      }
+    ],
+    "bracework": {
+      "spw": "*{chalk_tariff & silver_trail}",
+      "does": "Clears a single frame of every mark stuck onto it so light passes without bending.",
+      "costs": "Nobody in the guild can agree afterward what the frame ought to sell for."
+    },
+    "question": "What becomes visible the moment nobody puts a price on looking through it?"
+  }
+}

@@ -1,0 +1,121 @@
+# Chapter 18 Canon Reference
+# Generated from /book/chapter/18/index.html#chapter-data
+# Long-form Spw reference for extension, adaptation, and chapter-semantic diffs.
+#>chapter_18
+#:chapter-canon #!reference
+
+^[chapter/18]{
+  title: "Flour in the Bell-Tower"
+  description: "Chapter 18 of Lore.Land: Flour in the Bell-Tower. High above Bonk City's square, porters stack dry feast flour beneath the belfry louvres where chimney-swifts and rehearsal moths shelter. One loose plank turns the whole timber loft into ..."
+  mood: "labyrinth"
+  period: "winter"
+  chapter_path: "/book/chapter/18/"
+}
+
+$[chapter/18/made_of]{
+  spell: ^chapter[18]{
+    .rooms[ ![belfry_stair]@porter !{flour_cloud}@the_land @[silent_rope]@mime
+      .{settled_loft}@boof ]
+    @told_by[narrator the_bonk echo reflection]
+    $brass $flour $oak
+    =palette[belfry_flour]
+    ~berries{ $boneberry[burnt_ends] }
+  }
+  rooms: "Four rooms: two [ ] windows and two { } rooms; one kept by porter, the rest by the land, mime and Boof."
+  told_by: "Told by the narrator, the bonk, an echo and the record."
+  made_of: "Made most of brass and bronze, then flour, then oak and frame."
+  palette: "Its palette is belfry flour, earned a layer at a time: suspended sifted wheat, sun-shaft bronze, and crisp black ink untouched by dust."
+  berries: "A boneberry in this chapter tastes of burnt ends."
+}
+
+&[chapter/18/routes]{
+  web: "/book/chapter/18/"
+  timeline: "/book/timeline.html#chapter-18"
+  motif: ~[motif/chapter-18]{optional}
+}
+
+^[chapter/18/spine]{
+  =prev{ ~".spw/chapters/17.spw#chapter_17" }
+  =next{ ~".spw/chapters/19.spw#chapter_19" }
+  weave: "{} [] <> <> <>"
+  reading: "the telling opens; the plate catches the light; a bonk rings like a struck bell; an echo answers in a borrowed voice; the reflection reads back by candlelight"
+}
+
+^[chapter/18/sections][
+  s01: {
+    handle: "section/01"
+    type: "section"
+    title: "The Steep Timber Stair"
+    room: ![belfry_stair]@porter
+    air: "Ninety narrow oak treads coated in fine white meal, rising into bright slats of winter sun."
+    excerpt: "After three sacks spoiled at the parcel gate, Bonk City’s porters moved the remaining feast flour to the driest room in town: the timber loft directly under the belfry louvres. Ninety narrow treads wound up the inside..."
+    route: ^[chapter/18/s01]{open}
+  }
+  s02: [
+    handle: "figure/02"
+    type: "figure"
+    image: "/book/images/18.png"
+    route: ^[chapter/18/s02]{open}
+  ]
+  s03: <
+    handle: "custom-bonk/03"
+    type: "custom-bonk"
+    room: !{flour_cloud}@the_land
+    air: "One loose board tips, and twenty pounds of sifted wheat become the room's whole weather."
+    excerpt: "At the top landing, a single floorboard had worked its oak peg half an inch proud. Nobody had noticed it while stacking sacks. When a hurried apprentice bell-ringer stepped down hard on its lip to check the strike-cor..."
+    route: ^[chapter/18/s03]{open}
+  >
+  s04: <
+    handle: "custom-echo/04"
+    type: "custom-echo"
+    room: @[silent_rope]@mime
+    air: "A mime pulls an invisible bell rope, and the real bronze clapper answers in thick white velvet."
+    excerpt: "Nobody touched the real strike-cord. Across the loft, however, a solitary mime who had wandered up from the square to escape a troupe rehearsal had already gripped an invisible rope with both white-gloved palms and le..."
+    route: ^[chapter/18/s04]{open}
+  >
+  s05: <
+    handle: "custom-reflection/05"
+    type: "custom-reflection"
+    room: .{settled_loft}@boof
+    air: "Down in the square, everyone looks up at the missed chime and sets their watches together."
+    excerpt: "Down in the plaza, three hundred conversations stopped at once. People in Bonk City can talk through any brass chime without missing a comma, yet a single hour that fails to ring stops every boot on the cobbles. Heads..."
+    route: ^[chapter/18/s05]{open}
+  >
+]
+
+&[chapter/18/cast]{
+  bonk: <
+    register: "a blunt bell-note that shakes stray magic out of the meter"
+    .enters: "custom-bonk/03"
+  >
+  echo: <
+    register: "an old scent re-lit; a summons wearing a borrowed voice, never proof"
+    .enters: "custom-echo/04"
+  >
+  reflection: <
+    register: "the book reading itself back by candlelight, tallying its own spells"
+    .enters: "custom-reflection/05"
+  >
+}
+
+%[chapter/18/measures]{
+  %sections: 5
+  %prose: 1
+  %plates: 1
+  %voices: 3
+}
+
+#[chapter/18/lore]{
+  notes: [
+    "Bonk City stores its dry feast flour in the timber loft directly under the belfry louvres, guarded by Bone.land load-bells."
+    "One loose floorboard launches a suspended flour cloud that muffles the great bronze bell into a soft white halo above the square."
+    "Even inside thick airborne flour, not a grain clings to the figure drawn in plain black ink."
+    "When the hour strikes in silence, every citizen in the square looks up and sets their watch to the same minute."
+  ]
+}
+
+~[chapter/18/adaptation]{
+  intent: "Readable raw text first, interactive runtime second."
+  extension_rule: "Prefer additive section handles over mutating existing handle meaning."
+  test_probe: "lore:spw-selection + lore:ebook-section-change"
+}

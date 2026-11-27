@@ -2,7 +2,7 @@
 #>chapter_20_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 7 of 13: & confluence.
@@ -67,7 +67,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 293.66
   mode: "Dorian uneven"
   tonal_role: "tonic return darkened into asymmetrical 56% counting (transposed into Book Two's C-axis continuation)"

@@ -28,6 +28,17 @@
   ^chamber[11]{ #slug:"paradox-bloom"              !state:public %version:1 .file:"book/images/11.png" &ledger:"AL-001" }
   ^chamber[12]{ #slug:"the-last-confluence"        !state:public %version:1 .file:"book/images/12.png" &ledger:"AL-001" }
   ^chamber[13]{ #slug:"loreland-canon"             !state:public %version:1 .file:"book/images/13.png" &ledger:"AL-001" }
-  ^chamber[14]{ #slug:"the-thursday-nobody-kept"   !state:study %version:1 .file:"book/images/14.png" &ledger:"AL-001" }
-  ^chamber[15]{ #slug:"child-parcel-or-door"       !state:study %version:1 .file:"book/images/15.png" &ledger:"AL-001" }
+  ^chamber[14]{ #slug:"the-thursday-nobody-kept"        !state:study  %version:1 .file:"book/images/14.png" &ledger:"AL-001" }
+  ^chamber[15]{ #slug:"child-parcel-or-door"            !state:study  %version:1 .file:"book/images/15.png" &ledger:"AL-001" }
+  ^chamber[16]{ #slug:"the-second-place"                !state:public %version:1 .file:"book/images/16.png" &ledger:"AL-001" }
+  ^chamber[17]{ #slug:"ledger-of-unasked-questions"     !state:public %version:1 .file:"book/images/17.png" &ledger:"AL-001" }
+  ^chamber[18]{ #slug:"flour-in-the-bell-tower"         !state:public %version:1 .file:"book/images/18.png" &ledger:"AL-001" }
+  ^chamber[19]{ #slug:"the-priced-window"               !state:public %version:1 .file:"book/images/19.png" &ledger:"AL-001" }
+  ^chamber[20]{ #slug:"two-springs-under-the-sill"      !state:public %version:1 .file:"book/images/20.png" &ledger:"AL-001" }
+  ^chamber[21]{ #slug:"at-the-nose-of-the-work"         !state:public %version:1 .file:"book/images/21.png" &ledger:"AL-001" }
+  ^chamber[22]{ #slug:"through-the-chute-no-receipt"    !state:public %version:1 .file:"book/images/22.png" &ledger:"AL-001" }
+  ^chamber[23]{ #slug:"rehearsal-of-the-night-school"   !state:public %version:1 .file:"book/images/23.png" &ledger:"AL-001" }
+  ^chamber[24]{ #slug:"four-windows-in-one-wall"        !state:public %version:1 .file:"book/images/24.png" &ledger:"AL-001" }
+  ^chamber[25]{ #slug:"warm-hearth-before-the-feast"    !state:public %version:1 .file:"book/images/25.png" &ledger:"AL-001" }
+  ^chamber[26]{ #slug:"feast-of-the-uneven-slice"       !state:public %version:1 .file:"book/images/26.png" &ledger:"AL-001" }
 ]

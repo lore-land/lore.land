@@ -28,13 +28,14 @@ const lore = await read('book/content/world/pie-lore.json');
 const { CHARACTERS } = await import(resolve(ROOT, 'book/scripts/modules/characters.mjs'));
 const { INTRO } = await import(resolve(ROOT, 'book/scripts/home/pie-world.mjs'));
 const { ringSlotFor } = await import(resolve(ROOT, 'book/scripts/modules/spw-ast.mjs'));
+const { TOTAL_CHAPTERS } = await import(resolve(ROOT, 'book/scripts/modules/book-extent.mjs'));
 /** @type {Record<string, string[]>} */
 const intro = {};
 Object.entries(INTRO || {}).forEach(([kind, n]) => { const ch = String(n); (intro[ch] = intro[ch] || []).push(kind); });
 
 /** @type {{ n: number, title: string, ring: number, construct: string, openRoom: string, closeRoom: string, rooms: number, wonders: number, people: number, lanes: number, lines: number, palette: number, total: number, laneKinds: string[] }[]} */
 const chapters = [];
-for (let n = 1; n <= 15; n += 1) {
+for (let n = 1; n <= TOTAL_CHAPTERS; n += 1) {
   let data;
   try { data = await read(`book/content/chapters/${pad(n)}.json`); } catch { continue; }
   const slot = ringSlotFor(n);
@@ -108,7 +109,7 @@ lines.push(
   '  deck: { counts: "every card in the lanes, face up or down" empty: "card backs by type" half: "turned cards with their spells and what they are worth" full: "a deck to pass along as spells" next: "a face-down card says not met yet; the chapter that brings it could say where" }',
   '  chapter_inventory: { counts: "every expression a chapter holds, by sigil" empty: "a description spell veiled where unfound" half: "n of m found, by sigil, each lit and walkable" full: "the chapter whole, its spell plain" next: "an unfound item says which room to look in" }',
   '  cast: { counts: "11 people" empty: "silhouettes with where to meet them" half: "you have met n of 7" full: "every portrait, every mood on the model sheet" next: "the first silhouette names its chapter" }',
-  '  carries: { counts: "15 chapters carried, each leaned three ways" empty: "not carried yet" half: "a lean bar a chapter" full: "the whole book leaned by how you carried it" next: "the chapter after the last carried" }',
+  `  carries: { counts: "${chapters.length} chapters carried, each leaned three ways" empty: "not carried yet" half: "a lean bar a chapter" full: "the whole book leaned by how you carried it" next: "the chapter after the last carried" }`,
   '  lore: { counts: "every line from the two pies, one or more grounded in each chapter" empty: "locked lines with their way in" half: "lines set in their rooms on the page" full: "both voices whole" next: "a locked line says the game way and the reading way" }',
   '  atlas: { counts: "27 studies" empty: "veiled in chapter colours" half: "glimpsed through a window shaped like their room" full: "kept whole" next: "find similar walks from any study to the book" }',
   '  progress_spell: { counts: "rooms, wonders, cards, palettes, lore, people" empty: "a spell of zeros that still plays" half: "a spell to copy and compare" full: "a spell of a reader who has been everywhere" next: "^next names the chapter with the most still to find" }',

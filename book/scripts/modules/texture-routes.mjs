@@ -137,7 +137,7 @@ export const TRY = Object.freeze([
   ['?/texture.website/*folio-ampersand-hair-cube', 'one piece: drawn until it turns up in the lanes, then the scan, from spwashi.com'],
   ['?/day.lore.land', 'an event that is always on: the day in the land, a room, a trope, a lens'],
   ['?/day.lore.land/*2026-11-13', 'the same event, on a day named in the address'],
-  ['?/stone.lore.land', 'an event with a date: the next stone, and where it is once it comes'],
+  ['?/stone.lore.land', 'where the two complete books stand, and where to open the latest chamber'],
   ['?/autonomous.feedback/@lore.land', 'the post the Scriptorium reads: every subject, and a door in each'],
   ['?/autonomous.feedback/@lore.land/*charms', 'one subject: a charm to ask the land for'],
   ['?/autonomous.feedback/@lore.land/*game', 'one subject: the game, with what is already answered']

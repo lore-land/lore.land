@@ -25,14 +25,38 @@
   c13: { title: "The Shell-Shaped Door" ring: 13 beat: "^" open: "!{round_archive}@the_land" close: "!<shell_door>@boof" rooms: 5 wonders: 5 people: 0 lanes: 0 lore: 1 palette: 1 total: 7 so_far: 134 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/13/ecology.spw" }
   c14: { title: "The Thursday Nobody Kept" ring: 1 beat: "~" open: "?{kitchen_door}@boof" close: "=<field_edge>@boof" rooms: 8 wonders: 7 people: 1 lanes: 0 lore: 3 palette: 1 total: 12 so_far: 146 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/14/ecology.spw" }
   c15: { title: "Pupil, Parcel, or Door" ring: 2 beat: "#" open: "=<back_lane>@the_city" close: "=(long_table)@the_city" rooms: 6 wonders: 11 people: 2 lanes: 0 lore: 3 palette: 1 total: 17 so_far: 163 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/15/ecology.spw" }
+  c16: { title: "The Second Place" ring: 3 beat: "." open: ".{brass_marker}@boonwap" close: "?{endless_stack}@the_land" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 165 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/16/ecology.spw" }
+  c17: { title: "Ledger of Unasked Questions" ring: 4 beat: "?" open: "?[blank_ledger]@clerk" close: ".{blotter_dust}@clerk" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 167 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/17/ecology.spw" }
+  c18: { title: "Flour in the Bell-Tower" ring: 5 beat: "!" open: "![belfry_stair]@porter" close: ".{settled_loft}@boof" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 169 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/18/ecology.spw" }
+  c19: { title: "The Priced Window" ring: 6 beat: "*" open: "*[tariff_pane]@glazier" close: ".{unpriced_glass}@the_land" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 171 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/19/ecology.spw" }
+  c20: { title: "Two Springs Under the Sill" ring: 7 beat: "&" open: "&{canal_lock}@lockkeeper" close: ".{tide_sill}@lockkeeper" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 173 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/20/ecology.spw" }
+  c21: { title: "At the Nose of the Work" ring: 8 beat: "@" open: "@{cobble_level}@boof" close: ".{drain_steam}@boof" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 175 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/21/ecology.spw" }
+  c22: { title: "Through the Chute With No Receipt" ring: 9 beat: "<>" open: "~<copper_chute>@porter" close: ".{return_duct}@porter" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 177 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/22/ecology.spw" }
+  c23: { title: "Rehearsal of the Night School" ring: 10 beat: "()" open: ".(night_bench)@teacher" close: "^(sliver_left)@boof" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 179 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/23/ecology.spw" }
+  c24: { title: "Four Windows in One Wall" ring: 11 beat: "[]" open: "=[shutter_wall]@judge" close: ".[open_courtyard]@judge" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 181 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/24/ecology.spw" }
+  c25: { title: "The Warm Hearth Before the Feast" ring: 12 beat: "{}" open: "&{bakehouse_vault}@baker" close: ".{feast_eve}@the_land" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 183 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/25/ecology.spw" }
+  c26: { title: "The Feast of the Uneven Slice" ring: 13 beat: "^" open: "^{great_table}@boonwap" close: "^{open_ring}@boof" rooms: 4 wonders: 0 people: 0 lanes: 0 lore: 1 palette: 1 total: 2 so_far: 185 lanes_bring: "nothing new" &ecology: ~".spw/ecologies/26/ecology.spw" }
 }
 
 ?flags{
+  c01_spike: "Dawn in Boon.land offers 14: much to take in at once"
   c01_lane_load: "the lanes bring 6 new things in Dawn in Boon.land: a lot to learn in one chapter"
+  c03_spike: "Signals in the Sand offers 15: much to take in at once"
+  c04_spike: "Crosswind Council offers 17: much to take in at once"
   c04_lane_load: "the lanes bring 9 new things in Crosswind Council: a lot to learn in one chapter"
   c06_spike: "Lanterns of Bonk City offers 20: much to take in at once"
-  c07_lull: "Blueberry Oath offers 5 against an average of 10.9: a lull, unless it is a rest on purpose"
-  c08_lull: "Songs of the Watering Eye offers 5 against an average of 10.9: a lull, unless it is a rest on purpose"
+  c15_spike: "Pupil, Parcel, or Door offers 17: much to take in at once"
+  c16_lull: "The Second Place offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c17_lull: "Ledger of Unasked Questions offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c18_lull: "Flour in the Bell-Tower offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c19_lull: "The Priced Window offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c20_lull: "Two Springs Under the Sill offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c21_lull: "At the Nose of the Work offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c22_lull: "Through the Chute With No Receipt offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c23_lull: "Rehearsal of the Night School offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c24_lull: "Four Windows in One Wall offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c25_lull: "The Warm Hearth Before the Feast offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
+  c26_lull: "The Feast of the Uneven Slice offers 2 against an average of 7.1: a lull, unless it is a rest on purpose"
 }
 
 ^exchange{
@@ -46,7 +70,7 @@
   deck: { counts: "every card in the lanes, face up or down" empty: "card backs by type" half: "turned cards with their spells and what they are worth" full: "a deck to pass along as spells" next: "a face-down card says not met yet; the chapter that brings it could say where" }
   chapter_inventory: { counts: "every expression a chapter holds, by sigil" empty: "a description spell veiled where unfound" half: "n of m found, by sigil, each lit and walkable" full: "the chapter whole, its spell plain" next: "an unfound item says which room to look in" }
   cast: { counts: "11 people" empty: "silhouettes with where to meet them" half: "you have met n of 7" full: "every portrait, every mood on the model sheet" next: "the first silhouette names its chapter" }
-  carries: { counts: "15 chapters carried, each leaned three ways" empty: "not carried yet" half: "a lean bar a chapter" full: "the whole book leaned by how you carried it" next: "the chapter after the last carried" }
+  carries: { counts: "26 chapters carried, each leaned three ways" empty: "not carried yet" half: "a lean bar a chapter" full: "the whole book leaned by how you carried it" next: "the chapter after the last carried" }
   lore: { counts: "every line from the two pies, one or more grounded in each chapter" empty: "locked lines with their way in" half: "lines set in their rooms on the page" full: "both voices whole" next: "a locked line says the game way and the reading way" }
   atlas: { counts: "27 studies" empty: "veiled in chapter colours" half: "glimpsed through a window shaped like their room" full: "kept whole" next: "find similar walks from any study to the book" }
   progress_spell: { counts: "rooms, wonders, cards, palettes, lore, people" empty: "a spell of zeros that still plays" half: "a spell to copy and compare" full: "a spell of a reader who has been everywhere" next: "^next names the chapter with the most still to find" }

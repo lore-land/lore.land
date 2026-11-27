@@ -5,7 +5,7 @@
  */
 
 import { isSighting, readSightings } from './sightings.mjs?v=2026_11_05.B';
-import { readCarries } from './pie-carries.mjs?v=2026_11_08.J';
+import { readCarries } from './pie-carries.mjs?v=2026_11_16.B';
 
 /* The track (book/content/world/tropes.json): a rumour with a `track` winds between the book and the lanes.
  * Heard here, beside the prose, it is kept (lore.rumours.heard.v1) and said in the lanes when a carry

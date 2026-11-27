@@ -2,7 +2,7 @@
 #>chapter_26_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
-#:status #!planned
+#:status #!live
 
 ~<rationale>{
   Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 13 of 13: ^ integration.
@@ -66,7 +66,7 @@
 }
 
 ^"music"{
-  #status: "planned"
+  #status: "live"
   %planned_octave_twin_root: 293.66
   mode: "Ionian tonic cadence"
   tonal_role: "authentic octave return to D4 preparing the Book Two step-down (transposed into Book Two's C-axis continuation)"

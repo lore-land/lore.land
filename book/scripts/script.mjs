@@ -1,7 +1,7 @@
 // scripts/script.mjs
 import { withCacheContext } from './modules/cache-context.mjs?v=2026_11_16.B';
 import { createLoadLifecycle } from './modules/load-lifecycle.mjs?v=2026_11_16.B';
-import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_09.I';
+import { renderChapterBody, renderChapterCoda, padChapterNumber } from './modules/chapter-render.mjs?v=2026_11_16.B';
 import { TOTAL_CHAPTERS } from './modules/book-extent.mjs';
 import {
   bootstrapExperience,
@@ -47,7 +47,7 @@ import { initPieSegues } from './modules/pie-segues.mjs?v=2026_11_16.B';
 import { initPieProjection } from './modules/pie-projection.mjs?v=2026_11_16.B';
 import { initWayThrough } from './modules/way-through.mjs?v=2026_11_16.B';
 import { initDrawnPlaces } from './modules/drawn-places.mjs?v=2026_11_16.B';
-import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_08.J';
+import { initMaterialPaths } from './modules/material-paths.mjs?v=2026_11_16.B';
 import { bindSiteResonance, syncDerivedSparks } from './modules/intrinsic-rewards.mjs?v=2026_11_16.B';
 import { initProjectionSpell } from './modules/projection.mjs?v=2026_11_16.B';
 import { initBeginAgain } from './modules/begin-again.mjs?v=2026_11_16.B';
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           import('./modules/spw-interactions.mjs?v=2026_11_16.B'),
           import('./modules/language-exploration.mjs?v=2026_11_08.N'),
           import('./modules/sightings.mjs?v=2026_11_05.B'),
-          import('./modules/references.mjs?v=2026_11_09.E'),
+          import('./modules/references.mjs?v=2026_11_16.B'),
           import('./modules/trope-strip.mjs?v=2026_11_16.B'),
           import('./modules/glyph-discovery.mjs?v=2026_03_02.A')
         ]);

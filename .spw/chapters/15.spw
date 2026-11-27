@@ -43,6 +43,7 @@ $[chapter/15/made_of]{
 
 ^[chapter/15/spine]{
   =prev{ ~".spw/chapters/14.spw#chapter_14" }
+  =next{ ~".spw/chapters/16.spw#chapter_16" }
   weave: "<> {} <> <> [] {} <>"
   reading: "the labyrinth grows a new corridor; the telling gathers; Boof pads in on a thread of scent; the reflection reads back by candlelight; the plate catches the light; the telling gathers; Boof closes the day with the trail still warm"
 }
