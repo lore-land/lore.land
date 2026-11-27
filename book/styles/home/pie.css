@@ -5457,8 +5457,8 @@ html.pie-settling .pie-voyage {
     column-gap: 0.7rem;
   }
 
-  .pie-setup-why,
-  .pie-setup-teach {
+  .pie-setup-row > .pie-setup-why,
+  .pie-setup-row > .pie-setup-teach {
     grid-column: 2;
   }
 }

@@ -44,22 +44,34 @@
  * Canon: .spw/surfaces/spw-architecture.spw (why linked Spw is hyperbolic, and which loops it has).
  */
 import { renderSpell, SIGIL_ROLES } from './spw-spell.mjs?v=2026_11_16.B';
-import { readRoom, roomSentence, roomKeeper, ROOM_RESERVED_WORDS } from './room-signature.mjs?v=2026_11_08.W';
+import { roomSentence } from './room-signature.mjs?v=2026_11_08.W';
 import {
-  loadLikeness, likenessMark, likenessScore, whyWords, discoveryOf, shownTitle, refreshDiscovery,
-  SIGILS, DIMENSIONS, SET_VALENCE, chapterName
+  loadLikeness, likenessMark, discoveryOf, shownTitle, refreshDiscovery,
+  SIGILS, chapterName
 } from './likeness.mjs?v=2026_11_16.B';
-import { CHARACTERS, identitySpell } from './characters.mjs?v=2026_11_16.B';
-import { KIND_SIGIL, loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
+import { CHARACTERS } from './characters.mjs?v=2026_11_16.B';
+import { loadAlmanac } from './almanac.mjs?v=2026_11_16.B';
+import {
+  STEP, cAbs, cArg, cTurn, cLerp, mobius, alongGeodesic, fromCentre, geodesic, layoutFrom
+} from './spw-disk/geometry.mjs';
+import {
+  EDGE_KINDS, KIND_WORDS, pad2, capital, spwLabel,
+  buildGraph, loopKey, loopsThrough, loopsToOffer,
+  kindLine, tieWords, setLikenessItems, keeperWords,
+  focusFromAddress, readIndexEntries, spellOfSidecar, derivedPaths,
+  subgraphAround, shortestPath, exportWalkAsSpw
+} from './spw-disk/graph.mjs';
+
+export {
+  STEP, mobius, alongGeodesic, fromCentre, geodesic, layoutFrom,
+  EDGE_KINDS, buildGraph, loopKey, loopsThrough, loopsToOffer,
+  kindLine, tieWords, keeperWords, focusFromAddress, readIndexEntries, spellOfSidecar,
+  subgraphAround, shortestPath, exportWalkAsSpw
+};
 
 export const STORE_KEY = 'lore.disk.loops.v1';
-export const STEP = 1.2;        // hyperbolic distance between rings
-const CAP = 60;                 // things drawn at once; the deepest rings are pruned first
-const RING_ONE = 18;            // neighbours on the first ring, at most
-const DEPTH = 3;
 const MOVE_MS = 450;
 const VIEW = 1.17;              // the viewBox half-width: the unit disk, its rim of sigils, a margin
-const HUB = 14;                 // a thing with more neighbours than this is a crowd, not a turn in a loop
 
 const LORE_URL = '/book/content/world/pie-lore.json';
 const CATALOG_URL = '/book/content/catalog.json';
@@ -67,463 +79,7 @@ const PALETTES_URL = '/book/content/world/palettes.json';
 const CHAPTER_URL = (nn) => `/book/content/chapters/${nn}.json`;
 const PIE_HREF = '/pie/';
 
-const pad2 = (n) => String(n).padStart(2, '0');
-const capital = (text) => String(text).charAt(0).toUpperCase() + String(text).slice(1);
-
-/** A label the Spw lexer reads as a name (mirrors chapter-spell.mjs spwLabel, without its weight). */
-function spwLabel(text) {
-  const label = String(text || '').toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'unnamed';
-  const safe = /^[a-z]/.test(label) ? label : `n_${label}`;
-  return ROOM_RESERVED_WORDS.includes(safe) ? `the_${safe}` : safe;
-}
-
-/* ─── The plane: complex numbers, the Möbius map, geodesics ───────────── */
-
-const cSub = (a, b) => [a[0] - b[0], a[1] - b[1]];
-const cMul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
-const cDiv = (a, b) => {
-  const d = b[0] * b[0] + b[1] * b[1] || 1e-12;
-  return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d];
-};
-const cAbs = (a) => Math.hypot(a[0], a[1]);
-const cArg = (a) => Math.atan2(a[1], a[0]);
-const cTurn = (a, phi) => cMul(a, [Math.cos(phi), Math.sin(phi)]);
-const cLerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
-
-/** T_a(z) = (z − a) / (1 − ā z): the disk's own motion, carrying a to the centre. */
-export function mobius(z, a) {
-  return cDiv(cSub(z, a), cSub([1, 0], cMul([a[0], -a[1]], z)));
-}
-
-/** The point at fraction t of the geodesic from the centre to w (constant hyperbolic speed). */
-export function alongGeodesic(w, t) {
-  const r = Math.min(cAbs(w), 0.999999);
-  if (r < 1e-9) return [0, 0];
-  const s = Math.tanh(t * Math.atanh(r)) / r;
-  return [w[0] * s, w[1] * s];
-}
-
-/** Hyperbolic distance from the centre: 2·atanh|z|. */
-export const fromCentre = (z) => 2 * Math.atanh(Math.min(cAbs(z), 0.999999));
-
-/** An SVG path for the geodesic from p to q: an arc orthogonal to the rim, or a diameter. */
-export function geodesic(p, q) {
-  const f = (n) => n.toFixed(4);
-  const [x1, y1] = p;
-  const [x2, y2] = q;
-  const line = `M${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}`;
-  const det = x1 * y2 - x2 * y1;
-  if (Math.abs(det) < 1e-5) return line;
-  const k1 = (x1 * x1 + y1 * y1 + 1) / 2;
-  const k2 = (x2 * x2 + y2 * y2 + 1) / 2;
-  const cx = (k1 * y2 - k2 * y1) / det;
-  const cy = (x1 * k2 - x2 * k1) / det;
-  const r = Math.sqrt(Math.max(cx * cx + cy * cy - 1, 0));
-  if (!Number.isFinite(r) || r > 400) return line;
-  const sweep = (x1 - cx) * (y2 - cy) - (y1 - cy) * (x2 - cx) > 0 ? 1 : 0;
-  return `M${f(x1)} ${f(y1)}A${f(r)} ${f(r)} 0 0 ${sweep} ${f(x2)} ${f(y2)}`;
-}
-
-/* ─── The graph, from the canon ───────────────────────────────────────── */
-
-/* Edge kinds, strongest first: one edge per pair, the first kind that joins them. */
-export const EDGE_KINDS = Object.freeze(['contains', 'card', 'holds', 'beside', 'first', 'palette', 'planted', 'grounded', 'said', 'kept', 'egg', 'returns', 'sigil', 'like']);
-const EDGE_RANK = Object.freeze(Object.fromEntries(EDGE_KINDS.map((kind, i) => [kind, i])));
-const KIND_ORDER = Object.freeze(['chapter', 'room', 'wonder', 'egg', 'lore', 'character', 'palette', 'seed', 'card', 'sound', 'icon', 'index']);
-const KEEPER_IDS = Object.freeze({ boof: 'boof', genie: 'genie', boonwap: 'boon', banewap: 'bane', bonewap: 'bonewap', the_porter: 'porter' });
-const SPEAKER_LABEL = Object.freeze({ boon: 'boonwap', bane: 'banewap' });
-
-/**
- * The web, from the canon's own files (already loaded): likeness.json items and near, the almanac's
- * wonders with where each is marked (semantic.json), the pies' lines, the catalog and the palettes.
- * Host-neutral: the build or a script can call it with the same JSON.
- * @returns {{ nodes: Map<string, object>, adj: Map<string, {to: string, edge: object}[]>, edges: object[] }}
- */
-export function buildGraph({ items = {}, near = {}, wonders = [], places = () => [], lines = [], speakers = {}, chapters = [], palettes = [], derived = null } = {}) {
-  const nodes = new Map();
-  const adj = new Map();
-  const edges = [];
-  const pairs = new Set();
-  const add = (node) => { nodes.set(node.id, node); adj.set(node.id, []); return node; };
-  const link = (a, b, kind, extra = {}) => {
-    if (!a || !b || a === b || !nodes.has(a) || !nodes.has(b)) return null;
-    const key = a < b ? `${a}|${b}` : `${b}|${a}`;
-    if (pairs.has(key)) return null;
-    pairs.add(key);
-    const edge = { key, a, b, kind, ...extra };
-    edges.push(edge);
-    adj.get(a).push({ to: b, edge });
-    adj.get(b).push({ to: a, edge });
-    return edge;
-  };
-  const all = Object.values(items);
-  const ofKind = (kind) => all.filter((item) => item.kind === kind);
-  const chapterId = (n) => `chapter:${pad2(n)}`;
-
-  // Chapters: the catalog's (its "in which"), or the chapters the rooms stand in.
-  const known = new Map(chapters.map((c) => [Number(c.number ?? c.n), c]));
-  ofKind('room').forEach((room) => { if (room.chapter && !known.has(room.chapter)) known.set(room.chapter, { number: room.chapter }); });
-  [...known.keys()].sort((a, b) => a - b).forEach((n) => {
-    const c = known.get(n);
-    add({ id: chapterId(n), kind: 'chapter', chapter: n, sigil: '^', title: c.title || chapterName(n), inWhich: c.inWhich || '', href: c.href || `/book/chapter/${pad2(n)}/`, likeness: { id: chapterId(n), kind: 'chapter', chapter: n, sigil: '^', container: 'room' } });
-  });
-
-  // Rooms: each section of a chapter, by its signature.
-  const roomByAnchor = new Map();
-  ofKind('room').forEach((item) => {
-    const reading = readRoom(item.spw);
-    const n = Number(String(item.id).split('.')[1]) || null;
-    const anchor = String(item.href || '').split('#')[1] || '';
-    add({ id: item.id, kind: 'room', chapter: item.chapter, n, sigil: reading?.op || item.sigil, title: item.title, spell: item.spw, reading, href: item.href, anchor, likeness: item.id });
-    roomByAnchor.set(`${item.chapter}#${anchor}`, item.id);
-  });
-  nodes.forEach((node) => {
-    if (node.kind !== 'chapter') return;
-    const rooms = [...nodes.values()].filter((r) => r.kind === 'room' && r.chapter === node.chapter).sort((a, b) => a.n - b.n);
-    node.rooms = rooms.map((r) => r.id);
-    const palette = ofKind('palette').find((p) => p.chapter === node.chapter);
-    node.spell = `^chapter[${node.chapter}]{ .rooms[${rooms.map((r) => r.reading?.label || spwLabel(r.title)).join(' ')}]${palette ? ` =palette[${spwLabel(String(palette.id).split(':')[1])}]` : ''} }`;
-  });
-  const roomAt = (c, anchor) => roomByAnchor.get(`${c}#${anchor}`) || null;
-
-  // Wonders: the almanac's, with the room each is first met in and the rooms it returns to.
-  const almanacById = new Map(wonders.map((w) => [w.id, w]));
-  ofKind('wonder').forEach((item) => {
-    const key = String(item.id).split(':')[1];
-    const w = almanacById.get(key) || {};
-    const sigil = KIND_SIGIL[w.kind] || item.sigil || '*';
-    const braced = w.kind === 'bracework' ? (w.terms || []).find((t) => /^[?~@&*^!#.=%$]?[[{(<]/.test(t)) : null;
-    add({
-      id: item.id, kind: 'wonder', key, chapter: item.chapter || w.home || null, sigil,
-      title: item.title || String(w.name || key).split(':')[0], wonderKind: w.kind || 'creature', region: w.region || '',
-      note: w.note || '', hint: w.hint || item.hint || '', spell: braced || `${sigil}${spwLabel(key)}{ .at[${spwLabel(w.region || 'the_land')}] }`,
-      href: item.href, characters: item.characters || [], likeness: item.id
-    });
-  });
-
-  // People: the cast, by who they are as a spell.
-  ofKind('character').forEach((item) => {
-    const key = String(item.id).split(':')[1];
-    const c = CHARACTERS[key] || {};
-    add({ id: item.id, kind: 'character', key, chapter: c.first ?? item.chapter ?? null, sigil: '@', title: c.name || item.title, line: c.line || '', spell: identitySpell(key) || `@${spwLabel(key)}`, href: c.href || item.href, likeness: item.id });
-  });
-
-  // Palettes: one a chapter, finished into it a layer at a time.
-  const paletteGloss = new Map(palettes.map((p) => [p.id, p]));
-  ofKind('palette').forEach((item) => {
-    const key = String(item.id).split(':')[1];
-    add({ id: item.id, kind: 'palette', key, chapter: item.chapter || null, sigil: '=', title: item.title, gloss: paletteGloss.get(key)?.gloss || '', spell: `=palette[${spwLabel(key)}]`, href: item.href || '/almanac/#keepsakes', likeness: item.id });
-  });
-
-  // Studies in the seed atlas.
-  ofKind('seed').forEach((item) => {
-    const dimension = DIMENSIONS[item.dimension] || {};
-    add({ id: item.id, kind: 'seed', chapter: item.chapter || null, home: item.home || null, sigil: item.sigil, title: item.title, set: item.set, dimension: item.dimension, gloss: dimension.gloss || '', valence: SET_VALENCE[item.set] || item.valence || '', spell: `${item.sigil}${spwLabel(item.dimension)}[set_${spwLabel(item.set)}]`, href: item.href, likeness: item.id });
-  });
-
-  // The Egg: it may stand here, and ask. Nothing here answers it.
-  const eggCard = items['card:egg'];
-  add({ id: 'egg', kind: 'egg', chapter: eggCard?.chapter || 1, sigil: '?', title: 'The Egg', spell: '?egg', href: eggCard?.chapter ? `/book/chapter/${pad2(eggCard.chapter)}/` : null });
-
-  // The pies' lines, each grounded in a chapter and often a room.
-  lines.forEach((l) => {
-    const who = speakers[l.speaker]?.name || (l.speaker === 'boon' ? 'Mr. BoonWAP' : 'Mr. BaneWAP');
-    const ground = l.ground || null;
-    const path = ground?.chapter ? `book/chapter/${pad2(ground.chapter)}/${ground.anchor ? `#${ground.anchor}` : ''}` : '';
-    add({
-      id: `lore:${l.id}`, kind: 'lore', key: l.id, speaker: l.speaker, who, when: speakers[l.speaker]?.when || '', chapter: ground?.chapter || null,
-      sigil: '#', title: ground?.label ? `${who}, on ${ground.label}` : `${who}, letting slip`, line: l.line, hint: l.hint || '',
-      spell: `#line[${spwLabel(l.id)}]@${SPEAKER_LABEL[l.speaker] || spwLabel(l.speaker)}${path ? `{ ~"${path}" }` : ''}`,
-      href: path ? `/${path}` : PIE_HREF, ground
-    });
-  });
-
-  /* The edges, strongest kinds first. */
-  nodes.forEach((node) => { if (node.kind === 'room') link(chapterId(node.chapter), node.id, 'contains'); });
-  nodes.forEach((node) => {
-    if (node.kind === 'wonder') {
-      const marked = places(node.key) || [];
-      const home = marked.find((p) => p.c === node.chapter) || marked[0];
-      link(node.id, home ? roomAt(home.c, home.id) || chapterId(home.c) : chapterId(node.chapter), 'first');
-    } else if (node.kind === 'character' && node.chapter) {
-      link(node.id, chapterId(node.chapter), 'first');
-    } else if (node.kind === 'egg') {
-      link(node.id, chapterId(node.chapter), 'first');
-    }
-  });
-  nodes.forEach((node) => { if (node.kind === 'palette' && node.chapter) link(chapterId(node.chapter), node.id, 'palette'); });
-  nodes.forEach((node) => { if (node.kind === 'seed' && (node.chapter || node.home)) link(node.id, chapterId(node.chapter || node.home), 'planted', { home: !node.chapter }); });
-  nodes.forEach((node) => {
-    if (node.kind !== 'lore' || !node.ground?.chapter) return;
-    link(node.id, (node.ground.anchor && roomAt(node.ground.chapter, node.ground.anchor)) || chapterId(node.ground.chapter), 'grounded');
-  });
-  nodes.forEach((node) => { if (node.kind === 'lore') link(node.id, `character:${node.speaker}`, 'said'); });
-  nodes.forEach((node) => {
-    const keeper = node.kind === 'room' ? KEEPER_IDS[node.reading?.who] : null;
-    if (keeper) link(node.id, `character:${keeper}`, 'kept');
-  });
-  nodes.forEach((node) => {
-    if (node.kind === 'room' && /\begg\b/i.test(node.title)) link('egg', node.id, 'egg');
-    if (node.kind === 'lore' && /\begg\b/i.test(node.line)) link('egg', node.id, 'egg');
-  });
-  nodes.forEach((node) => {
-    if (node.kind !== 'wonder') return;
-    (places(node.key) || []).forEach((p) => link(node.id, roomAt(p.c, p.id), 'returns'));
-  });
-  // The same motion again: each room to the first room with its sigil in the next chapter that has one.
-  const rooms = [...nodes.values()].filter((r) => r.kind === 'room').sort((a, b) => a.chapter - b.chapter || a.n - b.n);
-  rooms.forEach((room) => {
-    const next = rooms.find((other) => other.chapter > room.chapter && other.sigil === room.sigil);
-    if (next) link(room.id, next.id, 'sigil');
-  });
-  // Likeness: the three nearest that are drawn here (card:egg is the Egg).
-  Object.entries(near).forEach(([id, list]) => {
-    if (!nodes.has(id === 'card:egg' ? 'egg' : id)) return;
-    (list || []).map((other) => (other === 'card:egg' ? 'egg' : other)).filter((other) => nodes.has(other)).slice(0, 3)
-      .forEach((other) => link(id === 'card:egg' ? 'egg' : id, other, 'like'));
-  });
-  // Derived files: one index each for sounds, share cards and icons, and a node for each file.
-  // A share card is tied to its chapter, and the three indexes stand beside one another.
-  if (derived) {
-    const indexes = [];
-    for (const group of [derived.sounds, derived.cards, derived.icons]) {
-      if (!group?.id) continue;
-      add({ id: group.id, kind: 'index', sigil: '&', title: group.title, says: group.says || '', spell: group.spell || `&${spwLabel(group.title)}`, href: group.href || null });
-      indexes.push(group.id);
-      for (const member of group.members || []) {
-        if (!member?.id) continue;
-        add({
-          id: member.id, kind: member.kind, sigil: member.sigil || '=', title: member.title, says: member.says || '',
-          spell: member.spell || '', href: member.href || null, chapter: member.chapter || null
-        });
-        link(group.id, member.id, 'holds');
-        if (member.kind === 'card' && member.chapter) link(chapterId(member.chapter), member.id, 'card');
-      }
-    }
-    if (indexes.length >= 2) {
-      for (let i = 0; i < indexes.length; i += 1) link(indexes[i], indexes[(i + 1) % indexes.length], 'beside');
-    }
-  }
-  // Neighbours in a stable order: the strongest ties first, then by kind, then by name.
-  adj.forEach((list) => list.sort((x, y) => EDGE_RANK[x.edge.kind] - EDGE_RANK[y.edge.kind]
-    || KIND_ORDER.indexOf(nodes.get(x.to).kind) - KIND_ORDER.indexOf(nodes.get(y.to).kind) || x.to.localeCompare(y.to)));
-  return { nodes, adj, edges };
-}
-
-/* ─── Loops ───────────────────────────────────────────────────────────── */
-
-/** One key for a cycle, whichever way round and wherever it starts. */
-export function loopKey(ids) {
-  const n = ids.length;
-  let best = null;
-  for (let i = 0; i < n; i += 1) {
-    for (const dir of [1, -1]) {
-      const seq = Array.from({ length: n }, (_, k) => ids[(i + dir * k + n * 2) % n]).join('|');
-      if (best === null || seq < best) best = seq;
-    }
-  }
-  return best;
-}
-
-/* How good a walk a loop makes, step for step: it crosses kinds of thing, chapters and kinds of tie;
- * likeness alone is thin, a crowd is a shortcut, and four or five steps is a stroll. */
-function loopScore(graph, ids, edges) {
-  const n = ids.length;
-  const kinds = new Set(ids.map((id) => graph.nodes.get(id).kind)).size;
-  const chapters = new Set(ids.map((id) => graph.nodes.get(id).chapter).filter(Boolean)).size;
-  const ties = new Set(edges.map((e) => e.kind)).size;
-  const likes = edges.filter((e) => e.kind === 'like').length;
-  const crowds = ids.slice(1).filter((id) => graph.adj.get(id).length > HUB).length;
-  return ((kinds + ties + Math.min(chapters, 3)) / n) * 4 + (n === 4 || n === 5 ? 1 : n === 3 ? -1.2 : 0) - likes * 0.8 - crowds * 1.5;
-}
-
-/**
- * Every simple cycle of three to six steps through `start`, as { ids, edges, key, score }, best first.
- * A crowd (a thing with more than `hub` neighbours: Boof, the two pies) may be the start, or one turn
- * in the middle, never two: a loop through two crowds is any two things at all.
- */
-export function loopsThrough(graph, start, { min = 3, max = 6, hub = HUB, budget = 80000 } = {}) {
-  if (!graph.adj.has(start)) return [];
-  const found = new Map();
-  const path = [start];
-  const ties = [];
-  const on = new Set([start]);
-  let steps = 0;
-  let crowds = 0;
-  const walk = (id) => {
-    for (const { to, edge } of graph.adj.get(id)) {
-      if (steps > budget) return;
-      steps += 1;
-      if (to === start) {
-        if (path.length >= min && edge !== ties[0]) {
-          const ids = [...path];
-          const key = loopKey(ids);
-          if (!found.has(key)) found.set(key, { ids, edges: [...ties, edge], key });
-        }
-        continue;
-      }
-      if (on.has(to) || path.length >= max) continue;
-      const crowd = graph.adj.get(to).length > hub;
-      if (crowd && crowds) continue;
-      if (crowd) crowds += 1;
-      path.push(to);
-      on.add(to);
-      ties.push(edge);
-      walk(to);
-      path.pop();
-      on.delete(to);
-      ties.pop();
-      if (crowd) crowds -= 1;
-    }
-  };
-  walk(start);
-  return [...found.values()].map((loop) => ({ ...loop, score: loopScore(graph, loop.ids, loop.edges) })).sort((a, b) => b.score - a.score || a.ids.length - b.ids.length || a.key.localeCompare(b.key));
-}
-
-/** A few loops worth walking from here, unlike each other. */
-export function loopsToOffer(graph, start, { limit = 4 } = {}) {
-  const picked = [];
-  for (const loop of loopsThrough(graph, start)) {
-    if (picked.length >= limit) break;
-    const overlaps = picked.some((p) => loop.ids.filter((id) => id !== start && p.ids.includes(id)).length > Math.floor((loop.ids.length - 1) / 2));
-    if (!overlaps) picked.push(loop);
-  }
-  return picked;
-}
-
-/* ─── Layout: rings round the focus, in the hyperbolic plane ──────────── */
-
-/**
- * The focus at the centre, its neighbours on the first ring, theirs beyond, each ring at hyperbolic
- * distance STEP further out; each thing gets a wedge of its parent's, by how much hangs from it.
- * `align` = { id, angle } turns the whole so that id sits at that angle.
- * @returns {{ focus: string, at: Map<string, { id, z, depth, parent, wedge, cap }>, edges: object[] }}
- */
-export function layoutFrom(graph, focus, { cap = CAP, ringOne = RING_ONE, depth = DEPTH, step = STEP, align = null } = {}) {
-  const tree = new Map([[focus, { id: focus, depth: 0, parent: null, children: [] }]]);
-  let frontier = [focus];
-  for (let d = 1; d <= depth && tree.size < cap && frontier.length; d += 1) {
-    // The first ring holds up to ringOne; the second leaves a third of what is left for the rim's crowd.
-    const left = cap - tree.size;
-    const room = d === 1 ? Math.min(left, ringOne) : d < depth ? Math.min(left, Math.max(frontier.length * 2, Math.ceil(left * 0.62))) : left;
-    const queues = frontier.map((id) => graph.adj.get(id).filter((n) => !tree.has(n.to)).map((n) => ({ parent: id, to: n.to })));
-    const next = [];
-    let added = 0;
-    for (let round = 0; added < room && queues.some((q) => q.length); round += 1) {
-      for (const q of queues) {
-        if (added >= room) break;
-        while (q.length && tree.has(q[0].to)) q.shift();
-        const pick = q.shift();
-        if (!pick) continue;
-        const node = { id: pick.to, depth: d, parent: pick.parent, children: [] };
-        tree.set(pick.to, node);
-        tree.get(pick.parent).children.push(node);
-        next.push(pick.to);
-        added += 1;
-      }
-    }
-    frontier = next;
-  }
-  // Weights: a thing with more hanging from it gets a wider wedge.
-  const weigh = (node) => { node.weight = 1 + node.children.reduce((sum, child) => sum + weigh(child), 0) * 0.55; return node.weight; };
-  const root = tree.get(focus);
-  weigh(root);
-  const kindRank = (id) => KIND_ORDER.indexOf(graph.nodes.get(id)?.kind);
-  const at = new Map();
-  const place = (node, from, to) => {
-    const angle = (from + to) / 2;
-    const r = node.depth ? Math.tanh((node.depth * step) / 2) : 0;
-    const wedge = to - from;
-    at.set(node.id, { id: node.id, z: [r * Math.cos(angle), r * Math.sin(angle)], depth: node.depth, parent: node.parent, wedge, angle, cap: node.depth ? 0.46 * wedge * r : 1 });
-    const kids = [...node.children].sort((a, b) => kindRank(a.id) - kindRank(b.id) || a.id.localeCompare(b.id));
-    const total = kids.reduce((sum, k) => sum + k.weight, 0) || 1;
-    let cursor = node.depth ? from : -Math.PI / 2 - (Math.PI * (kids[0]?.weight || 1)) / total;
-    // Each thing's wedge is a share of the one it hangs from; a deep ring may borrow a little room either side.
-    const span = node.depth ? Math.min(wedge * 1.15, Math.PI) : Math.PI * 2;
-    if (node.depth) cursor = angle - span / 2;
-    kids.forEach((kid) => {
-      const share = (span * kid.weight) / total;
-      place(kid, cursor, cursor + share);
-      cursor += share;
-    });
-  };
-  place(root, 0, Math.PI * 2);
-  if (align && at.has(align.id) && at.get(align.id).depth) {
-    const turn = align.angle - cArg(at.get(align.id).z);
-    at.forEach((p) => { p.z = cTurn(p.z, turn); p.angle += turn; });
-  }
-  const drawn = graph.edges.filter((e) => at.has(e.a) && at.has(e.b));
-  return { focus, at, edges: drawn };
-}
-
-/* ─── Words ───────────────────────────────────────────────────────────── */
-
-const KIND_WORDS = Object.freeze({
-  chapter: 'a chapter', room: 'a room', wonder: 'a wonder', character: 'someone in the book', palette: 'a palette',
-  lore: 'a line the pies let slip', seed: 'a study in the seed atlas', egg: 'a question',
-  card: 'a share card', sound: 'a sound', icon: 'an app icon', index: 'an index of what the tools made'
-});
-
-/** "a passage in Chapter Four", "a wonder of the dawnward field". */
-export function kindLine(node) {
-  if (!node) return '';
-  switch (node.kind) {
-    case 'chapter': return `${chapterName(node.chapter)}${node.inWhich ? `, in which ${node.inWhich}` : ''}`;
-    case 'room': return `${node.reading ? `a ${node.reading.kind}` : 'a room'} in ${chapterName(node.chapter)}`;
-    case 'wonder': return `a ${node.wonderKind}${node.chapter ? ` · ${chapterName(node.chapter)}` : ''}`;
-    case 'character': return node.chapter ? `someone first met in ${chapterName(node.chapter)}` : 'someone met in the lanes';
-    case 'palette': return node.chapter ? `the palette of ${chapterName(node.chapter)}` : 'a palette of the lanes';
-    case 'seed': return 'a study in the seed atlas';
-    case 'lore': return `a line ${node.who} lets slip`;
-    case 'egg': return 'a question';
-    case 'card': return node.chapter ? `the share card for ${chapterName(node.chapter)}` : 'a share card';
-    case 'sound': return 'a sound the lanes may play';
-    case 'icon': return 'an app icon drawn from the bud';
-    case 'index': return 'an index of what the tools made';
-    default: return KIND_WORDS[node.kind] || 'a thing';
-  }
-}
-
-/** What the neighbour `to` is, seen from `from`, by the edge between them. */
-export function tieWords(graph, edge, from, to) {
-  const there = graph.nodes.get(to);
-  const here = graph.nodes.get(from);
-  const outward = edge.a === from;
-  switch (edge.kind) {
-    case 'contains': return outward ? 'a room of this chapter' : 'the chapter it stands in';
-    case 'first':
-      if (here.kind === 'egg' || there.kind === 'egg') return outward ? 'where it is first carried' : 'something warm is first carried here';
-      return outward ? (here.kind === 'character' ? 'where they are first met' : 'where it is first met') : 'first met here';
-    case 'returns': return outward ? 'where it comes back' : 'comes back here';
-    case 'grounded': return outward ? 'the place it is about' : 'a line about this place';
-    case 'said': return outward ? 'who lets it slip' : 'a line they let slip';
-    case 'kept': return outward ? 'who keeps it' : 'a room they keep';
-    case 'palette': return outward ? 'its palette' : 'the chapter it colours';
-    case 'planted': return outward ? (edge.home ? 'the chapter it is most at home in' : 'the chapter it is planted in') : 'a study planted here';
-    case 'egg':
-      if (outward) return there.kind === 'lore' ? 'a line that asks after it' : 'where it is carried';
-      return here.kind === 'lore' ? 'it asks after something warm' : 'something warm is carried here';
-    case 'sigil': {
-      const later = there.chapter > here.chapter;
-      return `the same ${here.sigil} ${later ? 'again' : 'before'}, in ${chapterName(there.chapter)}`;
-    }
-    case 'like': {
-      const a = here.likeness;
-      const b = there.likeness;
-      return a && b ? `alike: ${whyWords(likenessScore(likeOf(a), likeOf(b)).shared)}` : 'alike';
-    }
-    case 'card': return outward ? 'its share card' : 'the chapter this card covers';
-    case 'holds': return outward ? 'one it lists' : 'the index that lists it';
-    case 'beside': return 'another index of what the tools made';
-    default: return '';
-  }
-}
-
 let likenessItems = {};
-
-/** A keeper as the book writes them: Boof, the Genie, the Fool. */
-export const keeperWords = (who) => roomKeeper(who).replace(/^the (fool|genie|mirror|archivist|crier|porter|stranger)\b/, (m, w) => (w === 'fool' || w === 'genie' ? `the ${capital(w)}` : m));
-const likeOf = (ref) => (typeof ref === 'string' ? likenessItems[ref] || { id: ref } : ref);
 
 /* ─── This reader's own marks: what was stood on, what was walked ─────── */
 
@@ -571,44 +127,6 @@ const roleOf = (sigil) => SIGIL_ROLES[sigil]?.role || 'plain';
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - ((-2 * t + 2) ** 3) / 2);
 const smooth = (a, b, t) => { const x = Math.min(1, Math.max(0, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
 const short = (text, n = 22) => (String(text).length > n ? `${String(text).slice(0, n - 1).trimEnd()}…` : String(text));
-
-/** Normalise ?focus=chapter:4 → chapter:04. */
-export function focusFromAddress(search = globalThis.location?.search || '') {
-  const raw = new URLSearchParams(search).get('focus');
-  if (!raw) return '';
-  const chapter = /^chapter:(\d{1,2})$/.exec(raw);
-  return chapter ? `chapter:${pad2(Number(chapter[1]))}` : raw;
-}
-
-/** Entries of a flat index: *name{ #key["value"] ~"path" }. */
-export function readIndexEntries(text) {
-  const entries = [];
-  const re = /\*([a-z0-9_]+)\{([^}]*)\}/g;
-  let m;
-  while ((m = re.exec(String(text)))) {
-    const body = m[2];
-    const fields = {};
-    for (const field of body.matchAll(/#([a-z_]+)\["((?:[^"\\]|\\.)*)"\]/g)) fields[field[1]] = field[2];
-    const path = (body.match(/~"([^"]+)"/) || [])[1] || '';
-    entries.push({ name: m[1], fields, path });
-  }
-  return entries;
-}
-
-/** The spell of a sidecar: from its first action block, comments above left off. */
-export function spellOfSidecar(text) {
-  const start = String(text).search(/^!/m);
-  return start >= 0 ? String(text).slice(start).trim() : '';
-}
-
-/** A path in an index, and the sidecar that sits beside that file. */
-function derivedPaths(path) {
-  const clean = String(path || '').replace(/^\//, '');
-  if (!clean) return { href: '', sidecar: '' };
-  if (/\.spw$/i.test(clean)) return { href: `/${clean}`, sidecar: `/${clean}` };
-  if (/\.[a-z0-9]+$/i.test(clean)) return { href: `/${clean}`, sidecar: `/${clean.replace(/\.[a-z0-9]+$/i, '.spw')}` };
-  return { href: `/${clean}/index.spw`, sidecar: `/${clean}/index.spw` };
-}
 
 const niceName = (name) => capital(String(name).replace(/_/g, ' '));
 
@@ -1337,6 +855,7 @@ export function initProjectionDisk(mount) {
   (async () => {
     const sources = await loadSources();
     likenessItems = sources.items;
+    setLikenessItems(sources.items);
     refreshDiscovery();
     graph = buildGraph(sources);
     if (!graph.nodes.size) {

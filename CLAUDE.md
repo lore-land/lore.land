@@ -4,6 +4,8 @@ lore.land — a worldbuilding monument: seeded chapters, inspectable craft, a li
 
 Canon lives in `.spw/` — read `.spw/index.spw` first when you need to find a surface. Authoring conventions and the `spw:*` tooling gotchas are in `.spw/CLAUDE.md` (loads when working under `.spw/`); the in-browser Spw reader is documented in `book/scripts/modules/CLAUDE.md`.
 
+For a model-neutral architecture map, creative extension registries, and static-check invariants see `AGENTS.md` (and `book/scripts/home/AGENTS.md` for *Exactly One Pie*).
+
 CI (`.github/workflows/ci.yml`) is verification only, no deploy step — Pages serves the `main` branch root directly; there's no `dist`-based or `gh-pages` deploy to trigger.
 
 ## Open work

@@ -10,7 +10,7 @@
  * Off, nothing is added to the page.
  */
 
-import { OPERATOR_ROLES, CONTAINER_ROLES } from './spw-interactions.mjs?v=2026_07_23.D';
+import { OPERATOR_ROLES, CONTAINER_ROLES } from './spw-interactions.mjs?v=2026_11_16.B';
 import { resonanceFor } from './spw-resonance.mjs?v=2026_09_26.C';
 
 const SWITCH_ATTRIBUTE = 'data-switch-resonance';

@@ -66,6 +66,7 @@ export const EARS = Object.freeze({
   hush: { set: [0, 4, 7], quiet: 0.5, cap: 0.22, top: 12, take: 'soft' }
 });
 
+/** @param {number} deg @param {readonly number[]} set */
 const nearest = (deg, set) => set.reduce((best, step) => (Math.abs(step - deg) < Math.abs(best - deg) ? step : best), set[0]);
 
 /**
@@ -75,13 +76,14 @@ const nearest = (deg, set) => set.reduce((best, step) => (Math.abs(step - deg) <
  */
 export function soften(plan, ear = 'open') {
   const how = EARS[ear] || EARS.open;
-  if (!plan?.notes?.length || !how.set) return plan;
+  const allowed = how.set;
+  if (!plan?.notes?.length || !allowed) return plan;
   return {
     ...plan,
     ear,
     notes: plan.notes.map((note) => ({
       ...note,
-      deg: note.deg == null ? note.deg : nearest(note.deg, how.set),
+      deg: note.deg == null ? note.deg : nearest(note.deg, allowed),
       octave: Math.min(note.octave ?? 0, how.top),
       dur: Number(Math.min(note.dur, how.cap).toFixed(3)),
       vol: Number(((note.vol || 0.02) * how.quiet).toFixed(4))
