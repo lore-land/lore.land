@@ -36,7 +36,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 23 · Rehearsal of the Night School",
+      "label": "Chamber 23 · Pi at the Night School",
       "href": "/book/chapter/23/",
       "kicker": "Prev"
     },
@@ -46,7 +46,12 @@
       "kicker": "World"
     },
     {
-      "label": "Chamber 25 · The Warm Hearth Before the Feast",
+      "label": "bane.land · the panel of opposite laws",
+      "href": "/?/bane.land/*the-panel-of-opposite-laws",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 25 · Before the Vault Opens Itself",
       "href": "/book/chapter/25/",
       "kicker": "Next"
     }

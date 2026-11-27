@@ -1,12 +1,12 @@
-# Chapter Ten, Bone.land Resonance: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
+# Chapter Ten, Bone.land Answers in Oak: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil.
 #>share_chapter_10
 !card{
   *chapter_10{
     .file["chapter-10.jpg"]
     .plate["book/images/10.png"]
-    #title["Bone.land Resonance"]
+    #title["Bone.land Answers in Oak"]
     #in_which["a hall tells the truth with its weight"]
-    #says["Chapter Ten, Bone.land Resonance: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
+    #says["Chapter Ten, Bone.land Answers in Oak: the plate covered to 1200 by 630, softened, veiled leaf-dark, and set in Georgia with the bud sigil."]
     %width[1200]
     %height[630]
     %brightness[92]

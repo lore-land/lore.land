@@ -1,0 +1,67 @@
+# The substrate — the book cut into layers, the prints made from it, and the ground a local agent may roam
+# A proposal. The cache it reads is built (npm run spw:ecology); the Genie interpreter, the trope.wiki prints and the
+# feedback routes here are designs for the maker to choose from, not work done.
+#>lore_land_surfaces_substrate
+#:surface #!proposal
+#:layer #!pragmatics
+#:status #!seeded
+
+~<rationale>{
+  A desktop printer changed making when the model came apart from the machine: one shared file, a slicer that cuts it into layers, any printer that can read the layers. Indie publishing at scale is the same turn. A chapter is the model; its page, share card, lane leg, sound, almanac entry, trope page and feedback route are prints. On one end, words make sentences and sentences make paragraphs or minutes. A century ago the assembly line was the sentence and the machine it made was the paragraph. Alignment is the lines and the machines suiting each other; flow is how evenly the work moves down the line. The substrate keeps both as numbers, so a print starts from measured layers and a maker sees where page, lane and title part before anything new is made.
+}
+
+^"cache"{
+  &substrate: ~".spw/caches/chapter-substrate.spw#lore_land_chapter_substrate"
+  &ecologies: ~".spw/ecologies/index.spw#lore_land_ecologies_index"
+  &tool: ~".spw/tools/ecology-compose.mjs"
+  measures: "per chapter: words, sentences, paragraphs, rooms, pages, reading minutes; words a sentence (the line), sentences a paragraph (the machine); room shape; spoken share; the lane leg pace beside the page weight; lean, material, container, sigils absent; tropes crossing; how much of the title the page holds"
+  kept: "each ecology keeps two authored blocks, biome and craft; the rest is measured and rewritten by canon:build, so npm run check fails when an ecology drifts from its chapter"
+}
+
+^"titles"{
+  .note: "the title pass of 2026-11-27, so a regular who knew the old names can find them"
+  rubric: "each title names a wonder its chapter holds, in words the page holds too; octave twins rhyme in their ring construct (Dawn and Thursday, an eye and a nose, a furrow kept open and a vault about to open itself); each book spreads boon, bane and bone; the shapes vary (a place, a thing, a sentence, a list, a number); Book Two comes down toward Book One in length"
+  changed: "2 The First Echo → The Egg a Breath Behind · 3 Signals in the Sand → The Salt-Whale Roads · 4 Crosswind Council → The Largest Key Ever Cut · 5 The Quiet Rift → Still Paying the Note · 10 Bone.land Resonance → Bone.land Answers in Oak · 11 Paradox Bloom → The Crown Was Wasps · 12 The Last Confluence → One Furrow Kept Open · 19 The Priced Window → The Snails Who Ate the Prices · 22 Through the Chute With No Receipt → Three Roofs Higher · 23 Rehearsal of the Night School → Pi at the Night School · 25 The Warm Hearth Before the Feast → Before the Vault Opens Itself"
+  kept_names: "the Crosswind Council is still the council on the hill, and Paradox Bloom is still the reward for Chapter Eleven; only the chapter titles moved"
+  gap: "frost: no title names it, and no Book One room carries it though the book opens in a frozen furrow"
+}
+
+^"genie_interpreter"{
+  .note: "extends genie-practice.spw, whose guards stand. Not a feature added on top: the path the site already takes when it reads a spell, under a name the book already has"
+  &practice: ~".spw/surfaces/genie-practice.spw#lore_land_surfaces_genie_practice"
+  &door: ~"book/scripts/modules/texture-routes.mjs"
+  &receipts: ~".spw/state/grants.spw"
+  premise: "the Genie carries things that only make sense once read against something else: an instrument reading, a price, a rule from Chapter Five. The page never says what he is, and never calls anything he carries wise; that is the reader to decide. A reader, or a model acting for one, writes a want as a Spw spell; the real parser reads it; the Genie cross-references the substrate and the registries and answers with a slip computed from them"
+  architecture: "the parts are built: the ?/ door reads a route as a spell (lore.land/?/<surface>/<op><name>), spw-seed reads it in the browser, the caches hold measured layers, and grants.spw prices every change with a receipt. The Genie is what the book calls that path when someone walks it: a spell in, a lookup across the caches, a priced slip out. Nothing new runs; the path gets a face"
+  sigils_are_permissions: "the lead sigil decides what a spell may touch, because the grammar already says what each operator does. ? asks, @ looks from, . stands on and # names: those read. ! acts, ^ binds upward and & merges: those change the canon, and only the maker tools take them. = leans, and a lean on a reader own view is theirs, carried for the session and never saved, as ?lens already is. A model or a local agent gets the read half and a reader lean by grammar, not by a policy written beside it"
+  magic: "the spell is the whole interface. A line that parses is a request with a shape (who asks, what about, where, how much); a line that does not parse is not refused rudely, it is priced as unreadable, which is what his resolution glass already does with wants smaller than a loaf"
+  directable: "a language model may direct the mechanic only by writing spells. It never writes the slip, the price or a line a character says; those come from the canon and the numbers"
+}
+
+!roam[
+  "A local agent reads the substrate, the ecologies and the registries. It writes nothing on main; what it wants changed goes to .studio or into a ?open block a maker answers"
+  "A spell runs only when spw-seed reads it whole and it leads with a read sigil (sigils_are_permissions); spw-cli.mjs already refuses commands that rewrite sources, and the door follows the same line"
+  "The cache is the fence. An agent that needs more than the cache holds asks for it; it does not crawl the tree"
+  "Every effect a spell has carries a price and a receipt in the grants.spw form: what it changes and what it costs. Nothing granted is free"
+  "What a reader asks stays in their browser, as the want-needle does"
+]
+
+^"from_scratch"{
+  trope_wiki: "a trope page is a print of the substrate: the chapters and lanes it crosses, its lean, the octave twin it rhymes across, the classic trope it bends. Start from tropes.json and the tropes line each chapter carries in the cache; ?/trope.wiki/ prints them here before trope.wiki has a host"
+  autonomous_feedback: "a route asks where the flow says a reader may lose the thread (a long line after short ones, a thin room after a heavy one); an answered card becomes a probe a maker reads beside the measured ones"
+  progression: "from Chapter Sixteen, Book Two runs at a third to a half of each octave twin (520 to 775 words, against 1,160 to 1,900), and its lines run longer (18 to 23 words a sentence, against 12 to 15). The ring promises octave rhymes, and weight is part of a rhyme"
+  own_tokens: "a reader may theme the story with a token of their own and lean pages boon, bane or bone with a Spw snippet. Outside signal (an agent such as Grok reading post counts, price or liquidity) enters only as a snippet the reader pastes; the site never fetches a price and never shows one. A token themes as a palette and a word drawn in the book glyphs, which may mean the lanes run without their rendered sprites while it is on"
+  mechanics: "five Book One legs run taut where their pages run thin (Chapters 1, 4, 5, 9 and 10); each is either a counterpoint worth keeping or a ~pace to retune in pie-levels.spw"
+}
+
+?open[
+  "Do the eleven new titles stand? Each is one edit in the chapter JSON, then npm run assets:brand for its card"
+  ~#answer(2026-11-27): "the maker: the titles are okay. They stand"
+  "Ledger of Unasked Questions: the page never says ledger or unasked. Change the title, or let the prose earn it?"
+  "Book Two from Sixteen: grow each chapter toward its twin, or keep it a short winter book on purpose and say so where readers see it?"
+  "The five counter-paced legs: counterpoint, or retune?"
+  "Which read verbs may a model outside the browser use, and does the Genie answer them on the page or only in the Scriptorium?"
+  "trope.wiki: prints at ?/trope.wiki/ on lore.land until the substrate settles, or its own host reading the cache from the start?"
+  "Should an answered feedback card ever write a probe into the substrate, or only a maker?"
+  "Own tokens: how far may an outside signal lean a page (a cap on the lean), and does a token theme the lanes by palette and glyph only, with the sprites off?"
+]

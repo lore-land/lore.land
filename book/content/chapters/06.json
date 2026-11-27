@@ -40,7 +40,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 05 · Rift",
+      "label": "Chamber 05 · Note",
       "href": "/book/chapter/05/",
       "kicker": "Prev"
     },
@@ -48,6 +48,11 @@
       "label": "Marks & lanterns",
       "href": "/topics/#motif",
       "kicker": "Topic"
+    },
+    {
+      "label": "boon.land · the lantern exchange",
+      "href": "/?/boon.land/*the-lantern-exchange",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 07 · Oath",

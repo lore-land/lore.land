@@ -31,7 +31,7 @@
     "smoke": "node book/scripts/tools/browser-smoke.mjs",
     "tools:test": "node --test --test-timeout=180000 \"tools/browser-harness/test/*.test.mjs\" \".spw/tools/*.test.mjs\"",
     "spw": "node .spw/tools/spw-cli.mjs",
-    "canon:build": "npm run spw:characters && npm run spw:way && npm run spw:likeness && npm run spw:sigil-audit && npm run spw:progression",
+    "canon:build": "npm run spw:characters && npm run spw:way && npm run spw:likeness && npm run spw:sigil-audit && npm run spw:progression && npm run spw:ecology",
     "tokens:align": "node book/scripts/tools/align-tokens.mjs",
     "spw:probes": "node .spw/tools/alignment-probes.mjs",
     "spw:plates": "node .spw/tools/plates-manifest.mjs",
@@ -62,6 +62,7 @@
     "spw:way": "node .spw/tools/way-canon.mjs",
     "spw:likeness": "node .spw/tools/likeness-index.mjs",
     "spw:progression": "node .spw/tools/progression-audit.mjs",
+    "spw:ecology": "node .spw/tools/ecology-compose.mjs",
     "css:audit": "node book/scripts/tools/css-audit.mjs"
   },
   "keywords": [],

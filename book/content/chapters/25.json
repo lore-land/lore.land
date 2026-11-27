@@ -1,10 +1,10 @@
 {
   "chapterNumber": 25,
-  "title": "The Warm Hearth Before the Feast",
+  "title": "Before the Vault Opens Itself",
   "logline": "Inside Bonk City's crowded bakehouse vault, every unfinished ingredient from Book Two simmers under one brick arch while hungry clowns wait with startling politeness outside the doors.",
   "epigraph": "Open nothing before it has filled; wait one breath too long, and the vault opens itself.",
   "inWhich": "every unfinished ingredient from the season simmers under one bakehouse vault while hungry clowns wait politely outside",
-  "description": "Chapter 25 of Lore.Land: The Warm Hearth Before the Feast. Beneath the glowing brick arches of the great bakehouse vault, every ingredient gathered across Book Two — boonberries, smoked boneberries, a sharp pinch of orchard jam, sifted flour, rising yeast — builds warmth faster than the flues can vent. Bakers hustle, clowns wait politely outside the arch, mimes lean against invisible warming racks, and the bowler hat still floats unsettled above the figure until the feast itself.",
+  "description": "Chapter 25 of Lore.Land: Before the Vault Opens Itself. Beneath the glowing brick arches of the great bakehouse vault, every ingredient gathered across Book Two — boonberries, smoked boneberries, a sharp pinch of orchard jam, sifted flour, rising yeast — builds warmth faster than the flues can vent. Bakers hustle, clowns wait politely outside the arch, mimes lean against invisible warming racks, and the bowler hat still floats unsettled above the figure until the feast itself.",
   "mood": "boon",
   "period": "winter",
   "pillars": [
@@ -44,6 +44,11 @@
       "label": "Boonberry commons",
       "href": "/world/boonberry-commons.html",
       "kicker": "World"
+    },
+    {
+      "label": "boon.land · the promised pie",
+      "href": "/?/boon.land/*the-promised-pie",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 26 · The Feast of the Uneven Slice",
@@ -168,7 +173,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "The Warm Hearth Before the Feast: every ingredient under one vault, rising faster than the vents can let it go."
+      "figcaption": "Before the Vault Opens Itself: every ingredient under one vault, rising faster than the vents can let it go."
     },
     {
       "type": "custom-boonberry",

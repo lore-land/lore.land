@@ -36,7 +36,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 19 · The Priced Window",
+      "label": "Chamber 19 · The Snails Who Ate the Prices",
       "href": "/book/chapter/19/",
       "kicker": "Prev"
     },
@@ -44,6 +44,11 @@
       "label": "Boonberry commons",
       "href": "/world/boonberry-commons.html",
       "kicker": "World"
+    },
+    {
+      "label": "bone.land · the crossing",
+      "href": "/?/bone.land/*the-crossing",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 21 · At the Nose of the Work",

@@ -1,20 +1,24 @@
-# Chapter 04 Ecology — Crosswind Council
+# Chapter 04 Ecology — The Largest Key Ever Cut
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_04_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 4 of 13: ? probe.
+  Chapter 4 measured from its canon. Ring 4 of 13, ? probe: inquiry before commitment. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 17.
 }
 
 ^"identity"{
   chapter: 4
   book: 1
   ring: 4
-  title: "Crosswind Council"
+  title: "The Largest Key Ever Cut"
   mood: "mirror"
   period: "spring"
+  logline: "No law on the hill covers the egg — a wish is the largest key ever cut, and Mr. BaneWAP wants it filed, appraised, and auctioned to himself."
+  epigraph: "A key may be filed smaller in the open. It may never be grown in the dark."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "! (action)"
   observed_open_room: "&(council_table)@boof"
   observed_close_room: "~<hill_stairs>@boof"
-  modulators: { config: "mirror (reversible)" measure: "%quorum[split]" substrate: "$brass_and_rag_paper" }
+  sigils_present: "& @ ! ? ~"
+  sigils_absent: "# . * ^ = % $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "weathercocks spinning on gable pins, council-slab scribes, Mr. BaneWAP arriving by clause"
   irritant: "procedural objections multiplying faster than anyone files a key"
   circulation: "every draught pushes smoke back across the table so opponents read each other backwards"
+}
+
+^"craft"{
+  modulators: { config: "mirror (reversible)" measure: "%quorum[split]" substrate: "$brass_and_rag_paper" }
+  compost: "first braced contract (&[boon, bane]{table}) held honestly as prose + BaneWAP clause habit"
+  !watch: "strong probing spine; closes on ~<hill_stairs> leaving council verdicts unsettled"
+  mode: "Phrygian / sus2"
+  tonal_role: "+1 semitone wind shear against D4 tonic open without resolution"
+}
+
+^"stations"[
+  s01: { title: "The council table" .spw: "&(council_table)@boof" container: "gathering" $material: "oak" =lean: "bane" %words: 733 %sentences: 49 %paragraphs: 12 }
+  s02: { title: "The weather pane" .spw: "@[weather_pane]@the_mirror" container: "window" $material: "flour" =lean: "bone" %words: 131 %sentences: 9 %paragraphs: 3 }
+  s03: { title: "The tabletop" .spw: "!<tabletop>@the_fool" container: "passage" $material: "" =lean: "bane" %words: 81 %sentences: 6 %paragraphs: 2 }
+  s04: { title: "No Key Covers the Egg" .spw: "?{key_rack}@boof" container: "room" $material: "oak" =lean: "bane" %words: 434 %sentences: 28 %paragraphs: 8 }
+  s05: { title: "The hill stairs" .spw: "~<hill_stairs>@boof" container: "passage" $material: "ink" =lean: "bane" %words: 178 %sentences: 12 %paragraphs: 4 }
+]
+
+%"scale"{
+  %words: 1557
+  %sentences: 104
+  %paragraphs: 29
+  %rooms: 5
+  %pages: 5.7
+  %reading_minutes: 6.8
+  %words_per_sentence: 15
+  %sentences_per_paragraph: 3.6
+  %paragraphs_per_minute: 4.3
+}
+
+~"flow"{
+  room_words: "733 131 81 434 178"
+  room_shape: "█▂▂▅▃"
+  %sentence_spread: 9.6
+  %longest_sentence: 46
+  %spoken_share: 0.03
+  lane_pace: "3 5 7 5 7"
+  page_and_lane: "r -0.86"
+  page_and_lane_reads: "counters"
+}
+
+^"dimensions"{
+  lean: "bane 4, bone 1"
+  material: "oak 2, flour 1, ink 1"
+  container: "passage 2, gathering 1, room 1, window 1"
+  cast: "boof 3"
+  tropes: "said-so plain-lines records"
+  wonders_echoed: "chalk-is-cheaper-than-oak two-springs-one-bed a-box-for-what-you-do-not-know"
+  %title_on_page: 1
+  %biome_on_page: 0.57
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 9 }
   wonder_ids: ["weathercocks", "key-file-bench", "crosswind-loom", "council-slab", "write-it-before-you-argue-it"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "first braced contract (&[boon, bane]{table}) held honestly as prose + BaneWAP clause habit"
-  !digestive_watch: "strong probing spine; closes on ~<hill_stairs> leaving council verdicts unsettled"
+}
+
+^"music"{
+  %tempo: 88
+  %root: 311.13
+  note_name: "Eb4"
+  %swing: 50
+  ~motif: [4 2 4 7 4 0]
+  @theme: council
+  *rhythm: crosswind
+  pattern: "X..x..x.X...x..."
+  rhythm_name: "The crosswind's gusts"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../03/ecology.spw"
   &next: ~"../05/ecology.spw"
   &octave_twin: ~"../17/ecology.spw#chapter_17_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 311.13
-  note_name: "Eb4"
-  %tempo: 88
-  %swing: 50
-  mode: "Phrygian / sus2"
-  tonal_role: "+1 semitone wind shear against D4 tonic open without resolution"
-  ~motif: [4 2 4 7 4 0]
-  @theme: council
-  *rhythm: crosswind
-  pattern: "X..x..x.X...x..."
 }
 
 ^"valence_edges"{

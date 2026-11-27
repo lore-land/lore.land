@@ -412,7 +412,7 @@
 ^"scene_seeds"[
   .note: "drafts in the ch01 scene voice — vantage/light/scent/edges/hint — one per ungrounded chamber. Staked to logline + epigraph; mood word steers the palette lean."
 
-  ^seed[02: "The First Echo"]{
+  ^seed[02: "The Egg a Breath Behind"]{
     status: grounded
     <grounded>{
       &projection: { json: ~"book/content/chapters/02.json#sections.3" mirror: ~".spw/chapters/02.spw" }
@@ -436,7 +436,7 @@
     open: "does the grove echo sound only, or scent and light too? The seed assumes all three; prose may want it narrower."
   }
 
-  ^seed[03: "Signals in the Sand"]{
+  ^seed[03: "The Salt-Whale Roads"]{
     status: draft
     stakes: { logline: "Routes older than the map begin to answer.", epigraph: "A path is a promise with dust on it." }
     proposed_scene: {
@@ -455,7 +455,7 @@
     open: "should the routes' glow be berry-blue instead of gold, tying old ways to the boonberry charge? Gold reads as sun; blue reads as canon."
   }
 
-  ^seed[04: "Crosswind Council"]{
+  ^seed[04: "The Largest Key Ever Cut"]{
     status: draft
     stakes: { logline: "Boon and bane negotiate under shared weather.", epigraph: "Benefit without cost is rumor; cost without benefit is ruin." }
     proposed_scene: {
@@ -474,7 +474,7 @@
     open: "is the council standing or seated? Standing reads urgent; seated reads durable. The chamber's prose should decide the plate."
   }
 
-  ^seed[05: "The Quiet Rift"]{
+  ^seed[05: "Still Paying the Note"]{
     status: draft
     stakes: { logline: "Calm outside. Fracture in the ledger.", epigraph: "Silence is not empty; it is unreconciled." }
     proposed_scene: {
@@ -569,7 +569,7 @@
     open: "are the honks sound-made-solid (canon-forward) or falling signal-glass (image-forward)? The prose should own this before the plate does."
   }
 
-  ^seed[10: "Bone.land Resonance"]{
+  ^seed[10: "Bone.land Answers in Oak"]{
     status: draft
     stakes: { logline: "Structure shakes the veil and holds.", epigraph: "Skeleton first; ornament after the load path is honest." }
     proposed_scene: {
@@ -588,7 +588,7 @@
     open: "is Bone.land's frame timber, bone, or both? The plate leans timber-with-bone-tones; canon should commit."
   }
 
-  ^seed[11: "Paradox Bloom"]{
+  ^seed[11: "The Crown Was Wasps"]{
     status: draft
     stakes: { logline: "Impossible paths flower into usable form.", epigraph: "A contradiction that feeds you is still a tool." }
     proposed_scene: {
@@ -607,7 +607,7 @@
     open: "how loud is the impossibility? The seed keeps it quiet (you notice on the second look); the awakening mood might want it quieter still."
   }
 
-  ^seed[12: "The Last Confluence"]{
+  ^seed[12: "One Furrow Kept Open"]{
     status: draft
     stakes: { logline: "Threads merge without erasing their sources.", epigraph: "Unity that forgets its tributaries becomes empire, not river." }
     proposed_scene: {

@@ -1,11 +1,13 @@
 # Chapter 09 Ecology — Shards of Nine Honks
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_09_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 9 of 13: <> capsule.
+  Chapter 9 measured from its canon. Ring 9 of 13, <> capsule: channels, boundaries, and interfaces. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 22.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "Shards of Nine Honks"
   mood: "puzzle"
   period: "spring"
+  logline: "On the ridge, eight honks lie out as shards of sound — and the pieces assemble into a shape with one hole, exactly egg-sized."
+  epigraph: "An unspent wish is an unsounded note. Everything else in the set was arranged around its silence."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "() (scope)"
   observed_open_room: "#{roof_ridge}@boof"
   observed_close_room: "=<pass_road>@boof"
-  modulators: { config: "puzzle (syncopated)" measure: "%shards[9]" substrate: "$terracotta_and_soot" }
+  sigils_present: "# & ~ ^ ="
+  sigils_absent: ". ? ! * @ % $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "jazz-geese calling in triplets, chimney-swifts banking through flues, shard sorters"
   irritant: "nine honks scattering across ten roof corners so no map reconciles the tenth corner"
   circulation: "air rushes up warm flues and flings shards along rooftop passages from lane to lane"
+}
+
+^"craft"{
+  modulators: { config: "puzzle (syncopated)" measure: "%shards[9]" substrate: "$terracotta_and_soot" }
+  compost: "corner-honk topologyfeeding jazz feel and hopper dynamics in /pie/"
+  !watch: "opens with # instead of <> capsule, though middle and close rely on <chimney_rim> and <pass_road>"
+  mode: "Mixolydian-Blues 9/8"
+  tonal_role: "high-swing G4 with the ninth honk missing and warm"
+}
+
+^"stations"[
+  s01: { title: "The roof ridge" .spw: "#{roof_ridge}@boof" container: "room" $material: "glass" =lean: "bone" %words: 426 %sentences: 24 %paragraphs: 7 }
+  s02: { title: "The eight shards" .spw: "&(eight_shards)@boof" container: "gathering" $material: "glass" =lean: "bane" %words: 125 %sentences: 14 %paragraphs: 2 }
+  s03: { title: "The chimney rim" .spw: "~<chimney_rim>@the_fool" container: "passage" $material: "steam" =lean: "" %words: 42 %sentences: 6 %paragraphs: 2 }
+  s04: { title: "The Shape with One Hole" .spw: "^{shard_ring}@boof" container: "room" $material: "glass" =lean: "boon" %words: 467 %sentences: 26 %paragraphs: 8 }
+  s05: { title: "The pass road" .spw: "=<pass_road>@boof" container: "passage" $material: "glass" =lean: "bone" %words: 103 %sentences: 6 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 1163
+  %sentences: 76
+  %paragraphs: 21
+  %rooms: 5
+  %pages: 4.2
+  %reading_minutes: 5.1
+  %words_per_sentence: 15.3
+  %sentences_per_paragraph: 3.6
+  %paragraphs_per_minute: 4.2
+}
+
+~"flow"{
+  room_words: "426 125 42 467 103"
+  room_shape: "▇▃▂█▃"
+  %sentence_spread: 9.8
+  %longest_sentence: 44
+  %spoken_share: 0.02
+  lane_pace: "4 6 8 4 3"
+  page_and_lane: "r -0.53"
+  page_and_lane_reads: "counters"
+}
+
+^"dimensions"{
+  lean: "bone 2, bane 1, boon 1"
+  material: "glass 4, steam 1"
+  container: "passage 2, room 2, gathering 1"
+  cast: "boof 4"
+  tropes: "plain-lines warm-question"
+  wonders_echoed: "salt-whales signal-skinks dent-lanterns try-it-again the-winch-song-underneath"
+  %title_on_page: 0.67
+  %biome_on_page: 0.4
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 8 }
   wonder_ids: ["jazz-geese", "chimney-swifts", "shard-rack", "one-shard-at-a-time"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "corner-honk topologyfeeding jazz feel and hopper dynamics in /pie/"
-  !digestive_watch: "opens with # instead of <> capsule, though middle and close rely on <chimney_rim> and <pass_road>"
+}
+
+^"music"{
+  %tempo: 112
+  %root: 392
+  note_name: "G4"
+  %swing: 62
+  ~motif: [7 9 12 9 7 4]
+  @theme: honks
+  *rhythm: nine_honks
+  pattern: "X.x.x.x.x.x.x.x."
+  rhythm_name: "Nine honks, the ninth missing"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../08/ecology.spw"
   &next: ~"../10/ecology.spw"
   &octave_twin: ~"../22/ecology.spw#chapter_22_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 392
-  note_name: "G4"
-  %tempo: 112
-  %swing: 62
-  mode: "Mixolydian-Blues 9/8"
-  tonal_role: "high-swing G4 with the ninth honk missing and warm"
-  ~motif: [7 9 12 9 7 4]
-  @theme: honks
-  *rhythm: nine_honks
-  pattern: "X.x.x.x.x.x.x.x."
 }
 
 ^"valence_edges"{

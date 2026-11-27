@@ -1,20 +1,24 @@
-# Chapter 12 Ecology — The Last Confluence
+# Chapter 12 Ecology — One Furrow Kept Open
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_12_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 12 of 13: {} body.
+  Chapter 12 measured from its canon. Ring 12 of 13, {} body: containment, state accumulation, and release. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 25.
 }
 
 ^"identity"{
   chapter: 12
   book: 1
   ring: 12
-  title: "The Last Confluence"
+  title: "One Furrow Kept Open"
   mood: "path"
   period: "spring"
+  logline: "Boof finally knows her wish, and it is small: one warm furrow kept open, always, for whatever arrives next without a receipt."
+  epigraph: "The honest price of a small true wish: everything he had left, plus one Thursday."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "^ (integration)"
   observed_open_room: "*{plank_bridge}@boof"
   observed_close_room: "~<moon_lane>@boof"
-  modulators: { config: "path (confluence)" measure: "%echoes[14]" substrate: "$wet_timber_and_ferry_iron" }
+  sigils_present: "* ^ ~ &"
+  sigils_absent: "# . ? ! @ = % $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "seam-otters stitching waterlines, ink-herons wading reeds, ferrymen ringing crossing bells"
   irritant: "a bridge receipt stamped twice while one furrow on the far bank deliberately stays unplanted"
   circulation: "two springs meet under the deck so bitter and sweet currents swirl without canceling"
+}
+
+^"craft"{
+  modulators: { config: "path (confluence)" measure: "%echoes[14]" substrate: "$wet_timber_and_ferry_iron" }
+  compost: "fourteen echoes braided here plus the explicitly open warm furrow for ch14 arrival"
+  !watch: "high permeability (14 echoes); ends on ~<moon_lane> leading to final Book 1 door"
+  mode: "Dorian polyrhythm"
+  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2"
+}
+
+^"stations"[
+  s01: { title: "The plank bridge" .spw: "*{plank_bridge}@boof" container: "room" $material: "ink" =lean: "boon" %words: 449 %sentences: 32 %paragraphs: 8 }
+  s02: { title: "The far furrow" .spw: "^<far_furrow>@the_land" container: "passage" $material: "steam" =lean: "boon" %words: 163 %sentences: 12 %paragraphs: 3 }
+  s03: { title: "The upstream grove" .spw: "~<upstream_grove>@genie" container: "passage" $material: "brass" =lean: "" %words: 83 %sentences: 4 %paragraphs: 2 }
+  s04: { title: "Both Receipts Posted" .spw: "&(bridge_deck)@boof" container: "gathering" $material: "flour" =lean: "bane" %words: 686 %sentences: 41 %paragraphs: 13 }
+  s05: { title: "The moon lane" .spw: "~<moon_lane>@boof" container: "passage" $material: "flour" =lean: "bone" %words: 135 %sentences: 14 %paragraphs: 3 }
+]
+
+%"scale"{
+  %words: 1516
+  %sentences: 103
+  %paragraphs: 29
+  %rooms: 5
+  %pages: 5.5
+  %reading_minutes: 6.6
+  %words_per_sentence: 14.7
+  %sentences_per_paragraph: 3.6
+  %paragraphs_per_minute: 4.4
+}
+
+~"flow"{
+  room_words: "449 163 83 686 135"
+  room_shape: "▆▃▂█▂"
+  %sentence_spread: 9.8
+  %longest_sentence: 43
+  %spoken_share: 0.02
+  lane_pace: "3 4 3 4 2"
+  page_and_lane: "r 0.48"
+  page_and_lane_reads: "rhymes"
+}
+
+^"dimensions"{
+  lean: "boon 2, bane 1, bone 1"
+  material: "flour 2, brass 1, ink 1, steam 1"
+  container: "passage 3, gathering 1, room 1"
+  cast: "boof 3, genie 1"
+  tropes: "never-smaller off-switch plain-lines missing-day right-angle-companion"
+  wonders_echoed: "torch-ants echo-wrens oath-moths load-beetles crown-wasps want-needle wish-scale bottle-desk oath-scale load-bells council-slab build-where-it-leans promise-the-next-stone pressed-rose"
+  %title_on_page: 1
+  %biome_on_page: 0.6
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 4 }
+  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 9 }
   wonder_ids: ["seam-otters", "ink-herons", "rail-pins", "ferry-bell", "moonrun", "two-springs-one-bed", "bridge-receipts"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "fourteen echoes braided here plus the explicitly open warm furrow for ch14 arrival"
-  !digestive_watch: "high permeability (14 echoes); ends on ~<moon_lane> leading to final Book 1 door"
+}
+
+^"music"{
+  %tempo: 104
+  %root: 329.63
+  note_name: "E4"
+  %swing: 54
+  ~motif: [0 4 2 7 4 9]
+  @theme: rivers
+  *rhythm: confluence
+  pattern: "X..x..x.X..x..x."
+  rhythm_name: "Rivers that remember"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../11/ecology.spw"
   &next: ~"../13/ecology.spw"
   &octave_twin: ~"../25/ecology.spw#chapter_25_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 329.63
-  note_name: "E4"
-  %tempo: 104
-  %swing: 54
-  mode: "Dorian polyrhythm"
-  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2"
-  ~motif: [0 4 2 7 4 9]
-  @theme: rivers
-  *rhythm: confluence
-  pattern: "X..x..x.X..x..x."
 }
 
 ^"valence_edges"{

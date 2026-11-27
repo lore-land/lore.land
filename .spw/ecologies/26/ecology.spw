@@ -1,11 +1,13 @@
 # Chapter 26 Ecology — The Feast of the Uneven Slice
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_26_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 13 of 13: ^ integration.
+  Chapter 26 measured from its canon. Ring 13 of 13, ^ integration: summary, emission, and octave recursion. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 13.
 }
 
 ^"identity"{
@@ -13,8 +15,10 @@
   book: 2
   ring: 13
   title: "The Feast of the Uneven Slice"
-  mood: "planned"
-  period: "winter"
+  mood: "reflection"
+  period: "turning"
+  logline: "At the Turning of the Year, Bonk City's Great Table spans plaza, gate, and river mist — and asks for exactly one spill so an unclosed circle can turn onward without resetting."
+  epigraph: "Exactly one pie spills, the sliver stays unrounded, and the ring turns cleanly on."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "hinges into the next ring (~)"
   represents: "Summary, emission, and octave recursion"
   next_construct: "~ (potential)"
-  planned_open_posture: "^ entry"
-  planned_close_posture: "hands cleanly into ~"
-  modulators: { config: "integration (year-turn octave)" measure: "%slice[pi]" substrate: "$porcelain_brass_and_frost" }
+  observed_open_room: "^{great_table}@boonwap"
+  observed_close_room: "^{open_ring}@boof"
+  sigils_present: "^ @ !"
+  sigils_absent: "~ # . ? * & = % $"
 }
 
 ^"biome"{
@@ -38,38 +43,92 @@
   circulation: "what ends at the table integrates into three permeable lands for Book Three in December"
 }
 
+^"craft"{
+  modulators: { config: "integration (year-turn octave)" measure: "%slice[pi]" substrate: "$porcelain_brass_and_frost" }
+  compost: "completes Ring 2 (^), leaves the Egg mysterious, and opens December doors into Ring 3 (~)"
+  !watch: "Ring 2 Slot 13 (^): preserve prophecy ambiguity; spills exactly one pie without ending curiosity"
+  mode: "Ionian tonic cadence"
+  tonal_role: "authentic octave return to D4 preparing the Book Two step-down (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The Great Table" .spw: "^{great_table}@boonwap" container: "room" $material: "glass" =lean: "boon" %words: 175 %sentences: 8 %paragraphs: 3 }
+  s02: { title: "The seating plan" .spw: "@(seating_plan)@boof" container: "gathering" $material: "ink" =lean: "bone" %words: 167 %sentences: 8 %paragraphs: 3 }
+  s03: { title: "The uneven slice" .spw: "!{uneven_slice}@the_land" container: "room" $material: "steam" =lean: "boon" %words: 209 %sentences: 9 %paragraphs: 4 }
+  s04: { title: "The open ring" .spw: "^{open_ring}@boof" container: "room" $material: "steam" =lean: "boon" %words: 124 %sentences: 5 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 675
+  %sentences: 30
+  %paragraphs: 12
+  %rooms: 4
+  %pages: 2.5
+  %reading_minutes: 2.9
+  %words_per_sentence: 22.5
+  %sentences_per_paragraph: 2.5
+  %paragraphs_per_minute: 4.1
+}
+
+~"flow"{
+  room_words: "175 167 209 124"
+  room_shape: "▇▇█▅"
+  %sentence_spread: 9.5
+  %longest_sentence: 43
+  %spoken_share: 0
+  lane_pace: "4 5 7 5 3"
+  page_and_lane: "r 0.78"
+  page_and_lane_reads: "rhymes"
+}
+
+^"dimensions"{
+  lean: "boon 3, bone 1"
+  material: "steam 2, glass 1, ink 1"
+  container: "room 3, gathering 1"
+  cast: "boof 2, boon 1"
+  tropes: "floating-title beyond-the-frame"
+  wonders_echoed: "torch-ants jazz-geese open-brace leave-room-for-the-path"
+  %title_on_page: 1
+  %biome_on_page: 0.78
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/26.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/26.json"
+  canon_mirror: ~"../../chapters/26.spw"
+  plate: ~"../../../book/images/26.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-26.jpg"
+  palette: "uneven-feast"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 4 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "completes Ring 2 (^), leaves the Egg mysterious, and opens December doors into Ring 3 (~)"
-  !digestive_watch: "Ring 2 Slot 13 (^): preserve prophecy ambiguity; spills exactly one pie without ending curiosity"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 96
+  %root: 293.66
+  note_name: "D4"
+  %swing: 56
+  ~motif: [0 2 4 7 9 12]
+  @theme: feast
+  *rhythm: uneven_slice
+  pattern: "X..x..x.X..x.x.."
+  rhythm_name: "The uneven slice"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../25/ecology.spw"
+  &next: ~"../../surfaces/book-three.spw#lore_land_book_three"
   &octave_twin: ~"../13/ecology.spw#chapter_13_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 293.66
-  mode: "Ionian tonic cadence"
-  tonal_role: "authentic octave return to D4 preparing the Book Two step-down (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

@@ -13,7 +13,7 @@ const CONFIG = {
   route: {
     href: '/book/chapter/22/',
     label: '^[route/22]{through the chute with no receipt}',
-    ariaLabel: 'Continue to chapter 22: Through the Chute With No Receipt'
+    ariaLabel: 'Continue to chapter 22: Three Roofs Higher'
   }
 };
 

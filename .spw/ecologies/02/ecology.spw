@@ -1,20 +1,24 @@
-# Chapter 02 Ecology — The First Echo
+# Chapter 02 Ecology — The Egg a Breath Behind
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_02_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 2 of 13: # annotation.
+  Chapter 2 measured from its canon. Ring 2 of 13, # annotation: how observers classify and frame the same event. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 15.
 }
 
 ^"identity"{
   chapter: 2
   book: 1
   ring: 2
-  title: "The First Echo"
+  title: "The Egg a Breath Behind"
   mood: "grove"
   period: "spring"
+  logline: "The grove repeats the egg a beat late — the wish rehearsing futures it has not decided to grant."
+  epigraph: "An echo is a wish practicing. Practice is not a granting."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: ". (ground)"
   observed_open_room: "?{hollow_cedar}@boof"
   observed_close_room: "^<cedar_fork>@boof"
-  modulators: { config: "grove (curious drift)" measure: "%delay[one_beat]" substrate: "$cedar_and_resin" }
+  sigils_present: "? $ % ~ * ^"
+  sigils_absent: "# . ! & @ ="
 }
 
 ^"biome"{
@@ -36,6 +41,57 @@
   symbiotes: "echo-wrens nesting in bark splits, the lag-stag (hoofprints a beat late), rehearsal-moths"
   irritant: "borrowed voices mimicking questions before anyone asks them cleanly"
   circulation: "an utterance bounces twice through wood cavities and drops off its spare vowel"
+}
+
+^"craft"{
+  modulators: { config: "grove (curious drift)" measure: "%delay[one_beat]" substrate: "$cedar_and_resin" }
+  compost: "delayed causality carried forward by the lag-stag and echo-wren throws"
+  !watch: "four wonders heavy on creature kin; closes strongly on ^<cedar_fork>@boof"
+  mode: "Dorian call"
+  tonal_role: "antiphonal call-and-response answered a beat late"
+}
+
+^"stations"[
+  s01: { title: "A Beat Late" .spw: "?{hollow_cedar}@boof" container: "room" $material: "flour" =lean: "boon" %words: 424 %sentences: 37 %paragraphs: 7 }
+  s02: { title: "The listening thicket" .spw: "$[listening_thicket]@boof" container: "window" $material: "berry" =lean: "boon" %words: 208 %sentences: 13 %paragraphs: 3 }
+  s03: { title: "The wild vines" .spw: "%[wild_vines]@the_berries" container: "window" $material: "steam" =lean: "boon" %words: 226 %sentences: 13 %paragraphs: 4 }
+  s04: { title: "The forked path" .spw: "~<forked_path>@the_echo" container: "passage" $material: "" =lean: "boon" %words: 101 %sentences: 4 %paragraphs: 2 }
+  s05: { title: "What the Echo Keeps" .spw: "*{mossy_stone}@boof" container: "room" $material: "steam" =lean: "boon" %words: 459 %sentences: 31 %paragraphs: 8 }
+  s06: { title: "The cedar fork" .spw: "^<cedar_fork>@boof" container: "passage" $material: "brass" =lean: "boon" %words: 239 %sentences: 18 %paragraphs: 5 }
+]
+
+%"scale"{
+  %words: 1657
+  %sentences: 116
+  %paragraphs: 29
+  %rooms: 6
+  %pages: 6
+  %reading_minutes: 7.2
+  %words_per_sentence: 14.3
+  %sentences_per_paragraph: 4
+  %paragraphs_per_minute: 4
+}
+
+~"flow"{
+  room_words: "424 208 226 101 459 239"
+  room_shape: "▇▄▄▃█▅"
+  %sentence_spread: 9.5
+  %longest_sentence: 46
+  %spoken_share: 0.01
+  lane_pace: "3 4 4 6 4"
+  page_and_lane: "r 0.07"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 6"
+  material: "steam 2, berry 1, brass 1, flour 1"
+  container: "passage 2, room 2, window 2"
+  cast: "boof 4"
+  tropes: "glimpse warm-question right-angle-companion"
+  wonders_echoed: "torch-ants hob-deer keep-the-morning"
+  %title_on_page: 1
+  %biome_on_page: 0.57
 }
 
 ^"assets"{
@@ -50,34 +106,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 3 lore_lines: 1 }
+  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 3 lore_lines: 10 }
   wonder_ids: ["echo-wrens", "lag-stag", "rehearsal-moths", "try-it-again"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "delayed causality carried forward by the lag-stag and echo-wren throws"
-  !digestive_watch: "four wonders heavy on creature kin; closes strongly on ^<cedar_fork>@boof"
+}
+
+^"music"{
+  %tempo: 92
+  %root: 261.63
+  note_name: "C4"
+  %swing: 58
+  ~motif: [7 4 7 4 2 0]
+  @theme: echo
+  *rhythm: echo_wrens
+  pattern: "X..x....X..x...."
+  rhythm_name: "The echo wrens"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../01/ecology.spw"
   &next: ~"../03/ecology.spw"
   &octave_twin: ~"../15/ecology.spw#chapter_15_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 261.63
-  note_name: "C4"
-  %tempo: 92
-  %swing: 58
-  mode: "Dorian call"
-  tonal_role: "antiphonal call-and-response answered a beat late"
-  ~motif: [7 4 7 4 2 0]
-  @theme: echo
-  *rhythm: echo_wrens
-  pattern: "X..x....X..x...."
 }
 
 ^"valence_edges"{

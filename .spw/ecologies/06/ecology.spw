@@ -1,11 +1,13 @@
 # Chapter 06 Ecology — Lanterns of Bonk City
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_06_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 6 of 13: * value.
+  Chapter 6 measured from its canon. Ring 6 of 13, * value: reified objects and portable tokens. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 19.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "Lanterns of Bonk City"
   mood: "labyrinth"
   period: "spring"
+  logline: "In a labyrinth of lantern-light, Mr. BoonWAP — a warm pie who serves himself and is never smaller — asks Boof the one question she cannot answer yet."
+  epigraph: "A wish you can't say yet is still proofing."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "& (confluence)"
   observed_open_room: "${kiln_gate}@boof"
   observed_close_room: "~<iron_gate>@boof"
-  modulators: { config: "labyrinth (dense exchange)" measure: "%plates[stacked]" substrate: "$cullet_glass_and_wax" }
+  sigils_present: "$ . ^ ? ~"
+  sigils_absent: "# ! * & @ = %"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "pane-snails healing cracks, chimney gutters, Mr. BoonWAP holding court, lost-button sweepers"
   irritant: "the uncounted arithmetic bill: pie never shrinks while stacks of dirty dishes grow off-frame"
   circulation: "glass blown hot cools into panes whose reflections double every lantern on the square"
+}
+
+^"craft"{
+  modulators: { config: "labyrinth (dense exchange)" measure: "%plates[stacked]" substrate: "$cullet_glass_and_wax" }
+  compost: "the uncollected button (recovered in ch15), lost-margin pie slice, and furnace glassing rules"
+  !watch: "high density (10 wonders, 6 echoes); serves as Book 1 artifact hub (*)"
+  mode: "Ionian +6 mediant"
+  tonal_role: "bright relative major F4 over glass bells and fairground brass"
+}
+
+^"stations"[
+  s01: { title: "The kiln gate" .spw: "${kiln_gate}@boof" container: "room" $material: "brass" =lean: "boon" %words: 360 %sentences: 25 %paragraphs: 8 }
+  s02: { title: "The mirrored alley" .spw: ".<mirrored_alley>@the_labyrinth" container: "passage" $material: "glass" =lean: "boon" %words: 169 %sentences: 16 %paragraphs: 5 }
+  s03: { title: "The lamp ladder" .spw: "^<lamp_ladder>@the_fool" container: "passage" $material: "brass" =lean: "boon" %words: 54 %sentences: 4 %paragraphs: 2 }
+  s04: { title: "The Pie at the Table" .spw: "?(round_plaza)@boonwap" container: "gathering" $material: "steam" =lean: "boon" %words: 836 %sentences: 74 %paragraphs: 20 }
+  s05: { title: "The iron gate" .spw: "~<iron_gate>@boof" container: "passage" $material: "glass" =lean: "boon" %words: 212 %sentences: 13 %paragraphs: 4 }
+]
+
+%"scale"{
+  %words: 1631
+  %sentences: 132
+  %paragraphs: 39
+  %rooms: 5
+  %pages: 5.9
+  %reading_minutes: 7.1
+  %words_per_sentence: 12.4
+  %sentences_per_paragraph: 3.4
+  %paragraphs_per_minute: 5.5
+}
+
+~"flow"{
+  room_words: "360 169 54 836 212"
+  room_shape: "▄▂▁█▃"
+  %sentence_spread: 9.2
+  %longest_sentence: 43
+  %spoken_share: 0.08
+  lane_pace: "6 5 3 4 6"
+  page_and_lane: "r -0.03"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 5"
+  material: "brass 2, glass 2, steam 1"
+  container: "passage 3, gathering 1, room 1"
+  cast: "boof 2, boon 1"
+  tropes: "exactly-one never-smaller wap glimpse plain-lines forgiving-glass"
+  wonders_echoed: "gate-pigeons pie-dividers storm-weight first-ink-stays horn-button stacked-plate"
+  %title_on_page: 1
+  %biome_on_page: 0.65
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 10 creatures: 1 lore_lines: 3 }
+  flora: { rooms: 5 sections: 6 wonders: 10 creatures: 1 lore_lines: 9 }
   wonder_ids: ["pane-snails", "bonk-kiln", "dent-lanterns", "chime-gutters", "lamp-ladders", "folio-press", "brace-boxes", "pane-faces", "glass-over-never-scrape", "waxed-slice"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "the uncollected button (recovered in ch15), lost-margin pie slice, and furnace glassing rules"
-  !digestive_watch: "high density (10 wonders, 6 echoes); serves as Book 1 artifact hub (*)"
+}
+
+^"music"{
+  %tempo: 108
+  %root: 349.23
+  note_name: "F4"
+  %swing: 60
+  ~motif: [0 4 7 12 7 4]
+  @theme: clowns
+  *rhythm: lantern_glass
+  pattern: "X.x.x...X.x.x..."
+  rhythm_name: "Lantern glass"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../05/ecology.spw"
   &next: ~"../07/ecology.spw"
   &octave_twin: ~"../19/ecology.spw#chapter_19_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 349.23
-  note_name: "F4"
-  %tempo: 108
-  %swing: 60
-  mode: "Ionian +6 mediant"
-  tonal_role: "bright relative major F4 over glass bells and fairground brass"
-  ~motif: [0 4 7 12 7 4]
-  @theme: clowns
-  *rhythm: lantern_glass
-  pattern: "X.x.x...X.x.x..."
 }
 
 ^"valence_edges"{

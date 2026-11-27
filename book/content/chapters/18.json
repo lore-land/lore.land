@@ -46,7 +46,12 @@
       "kicker": "World"
     },
     {
-      "label": "Chamber 19 · The Priced Window",
+      "label": "boon.land · the soft landing",
+      "href": "/?/boon.land/*the-soft-landing",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 19 · The Snails Who Ate the Prices",
       "href": "/book/chapter/19/",
       "kicker": "Next"
     }

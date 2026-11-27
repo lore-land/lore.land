@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="/book/styles/home/hub.css?v=2026_11_09.L&ctx=home:hub">
   <link rel="stylesheet" href="/book/styles/components/interactive.css?v=2026_11_13.B&ctx=canon:baseline">
   <link rel="stylesheet" href="/book/styles/home/atmosphere.css?v=2026_11_09.L&ctx=home:atmosphere">
-  <link rel="stylesheet" href="/book/styles/home/texture.css?v=2026_11_11.A&ctx=texture:page">
+  <link rel="stylesheet" href="/book/styles/home/texture.css?v=2026_11_16.B&ctx=texture:page">
   <link rel="stylesheet" href="/book/styles/home/day.css?v=2026_11_11.A&ctx=texture:page">
   <script defer type="module" src="/book/scripts/home/app.mjs?v=2026_11_16.B"></script>
   <script defer type="module" src="/book/scripts/home/texture-page.mjs?v=2026_11_16.B"></script>
@@ -115,6 +115,21 @@
         <h1 id="event-title" class="texture-title" data-event-title>An event</h1>
         <p class="hub-lede" data-event-says></p>
         <div class="texture-event-body" data-event-body></div>
+      </section>
+
+      <section class="texture-section texture-land" data-land-view hidden aria-labelledby="land-title">
+        <p class="texture-event-kicker" data-land-kicker></p>
+        <h1 id="land-title" class="texture-title" data-land-title>A land</h1>
+        <p class="land-welcome" data-land-welcome></p>
+        <dl class="land-facts" data-land-facts></dl>
+        <h2 class="texture-surface-sub">Rooms <span>one rule each, kept</span></h2>
+        <ol class="land-rooms" data-land-rooms></ol>
+        <h2 class="texture-surface-sub">Bylaws</h2>
+        <ul class="land-bylaws" data-land-bylaws></ul>
+        <p class="land-berries" data-land-berries></p>
+        <h2 class="texture-surface-sub">The same thing, three ways <span>here, then the other two</span></h2>
+        <ul class="land-crossings" data-land-crossings></ul>
+        <nav class="land-signpost" data-land-signpost aria-label="The other lands"></nav>
       </section>
 
       <section class="texture-section texture-piece" data-piece-view hidden aria-labelledby="piece-title">

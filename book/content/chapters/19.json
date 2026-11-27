@@ -1,10 +1,10 @@
 {
   "chapterNumber": 19,
-  "title": "The Priced Window",
+  "title": "The Snails Who Ate the Prices",
   "logline": "In Bonk City's glaziers' alley, chalk tariffs tick upward for every unbroken hour a pane survives — until pane-snails slowly graze the numbers back into clear glass.",
   "epigraph": "Light passes straight through unpriced glass, and snags on every corner of a chalk sticker.",
   "inWhich": "glaziers chalk rising tariffs onto every pane while pane-snails slowly graze the prices back to clear glass",
-  "description": "Chapter 19 of Lore.Land: The Priced Window. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they can afford, light bends cleanly only where nothing is priced, and at dusk the pane-snails erase the chalk without scratching the sill.",
+  "description": "Chapter 19 of Lore.Land: The Snails Who Ate the Prices. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they can afford, light bends cleanly only where nothing is priced, and at dusk the pane-snails erase the chalk without scratching the sill.",
   "mood": "labyrinth",
   "period": "winter",
   "pillars": [
@@ -44,6 +44,11 @@
       "label": "Civic magic",
       "href": "/world/civic-magic.html",
       "kicker": "World"
+    },
+    {
+      "label": "bane.land · the priced window",
+      "href": "/?/bane.land/*the-priced-window",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 20 · Two Springs Under the Sill",
@@ -167,7 +172,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "The Priced Window: light snags on chalk corners and runs clean where the pane-snails have grazed."
+      "figcaption": "The Snails Who Ate the Prices: light snags on chalk corners and runs clean where the pane-snails have grazed."
     },
     {
       "type": "custom-mirror",

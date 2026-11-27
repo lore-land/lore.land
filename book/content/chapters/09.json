@@ -50,6 +50,11 @@
       "kicker": "Topic"
     },
     {
+      "label": "bone.land · the repair with two marks",
+      "href": "/?/bone.land/*the-repair-with-two-marks",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 10 · Bone.land",
       "href": "/book/chapter/10/",
       "kicker": "Next"

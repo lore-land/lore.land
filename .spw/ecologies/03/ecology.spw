@@ -1,20 +1,24 @@
-# Chapter 03 Ecology — Signals in the Sand
+# Chapter 03 Ecology — The Salt-Whale Roads
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_03_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 3 of 13: . ground.
+  Chapter 3 measured from its canon. Ring 3 of 13, . ground: what holds regardless of opinion. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 16.
 }
 
 ^"identity"{
   chapter: 3
   book: 1
   ring: 3
-  title: "Signals in the Sand"
+  title: "The Salt-Whale Roads"
   mood: "paradox"
   period: "spring"
+  logline: "Where two old routes want to be one turn, Boof digs up a Discount Genie who can grant anything — except see what she wants."
+  epigraph: "Perfect version costs a miracle. Mediocre version costs one coincidence and a Thursday."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "? (probe)"
   observed_open_room: "?{signal_stones}@boof"
   observed_close_room: "&<one_turn>@boof"
-  modulators: { config: "paradox (double edge)" measure: "%grain[drift]" substrate: "$silica_and_salt" }
+  sigils_present: "? ! * % &"
+  sigils_absent: "~ # . @ ^ = $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "salt-whales beneath shallow pans, signal-skinks writing transient dashes, the Genie off-hours"
   irritant: "signals erased by tide before the scale can tally why the want needle swung"
   circulation: "heat draws water up, leaving readable salt ridges that crack into signals"
+}
+
+^"craft"{
+  modulators: { config: "paradox (double edge)" measure: "%grain[drift]" substrate: "$silica_and_salt" }
+  compost: "the Genie bargain structure (a wish leaves a coincidence and a missing day owed)"
+  !watch: "rich contrivance flora (4); ground (.) discipline sits inside %/% measurements cleanly"
+  mode: "Mixolydian ground"
+  tonal_role: "b7 earth pedal beneath dual signals and stones"
+}
+
+^"stations"[
+  s01: { title: "The signal stones" .spw: "?{signal_stones}@boof" container: "room" $material: "flour" =lean: "boon" %words: 441 %sentences: 24 %paragraphs: 7 }
+  s02: { title: "The green bottle" .spw: "!(green_bottle)@genie" container: "gathering" $material: "brass" =lean: "" %words: 216 %sentences: 21 %paragraphs: 5 }
+  s03: { title: "The dune ridge" .spw: "*<dune_ridge>@the_fool" container: "passage" $material: "brass" =lean: "boon" %words: 93 %sentences: 9 %paragraphs: 2 }
+  s04: { title: "The Seam in the Sand" .spw: "%{sand_seam}@genie" container: "room" $material: "glass" =lean: "bone" %words: 506 %sentences: 40 %paragraphs: 9 }
+  s05: { title: "The one turn" .spw: "&<one_turn>@boof" container: "passage" $material: "flour" =lean: "bone" %words: 230 %sentences: 15 %paragraphs: 4 }
+]
+
+%"scale"{
+  %words: 1486
+  %sentences: 109
+  %paragraphs: 27
+  %rooms: 5
+  %pages: 5.4
+  %reading_minutes: 6.5
+  %words_per_sentence: 13.6
+  %sentences_per_paragraph: 4
+  %paragraphs_per_minute: 4.2
+}
+
+~"flow"{
+  room_words: "441 216 93 506 230"
+  room_shape: "▇▄▂█▄"
+  %sentence_spread: 9.9
+  %longest_sentence: 56
+  %spoken_share: 0.1
+  lane_pace: "3 5 4 6 3"
+  page_and_lane: "r 0.29"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "bone 2, boon 2"
+  material: "brass 2, flour 2, glass 1"
+  container: "passage 2, room 2, gathering 1"
+  cast: "boof 2, genie 2"
+  tropes: "plain-lines missing-day"
+  wonders_echoed: "struck-price-tag"
+  %title_on_page: 1
+  %biome_on_page: 0.5
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 7 creatures: 2 lore_lines: 9 }
   wonder_ids: ["salt-whales", "signal-skinks", "want-needle", "resolution-glass", "wish-scale", "bottle-desk", "build-where-it-leans"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "the Genie bargain structure (a wish leaves a coincidence and a missing day owed)"
-  !digestive_watch: "rich contrivance flora (4); ground (.) discipline sits inside %/% measurements cleanly"
+}
+
+^"music"{
+  %tempo: 104
+  %root: 329.63
+  note_name: "E4"
+  %swing: 50
+  ~motif: [0 7 9 7 4 2]
+  @theme: genie
+  *rhythm: sand_signals
+  pattern: "X.x.....X.x....."
+  rhythm_name: "Two roads, one step"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../02/ecology.spw"
   &next: ~"../04/ecology.spw"
   &octave_twin: ~"../16/ecology.spw#chapter_16_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 329.63
-  note_name: "E4"
-  %tempo: 104
-  %swing: 50
-  mode: "Mixolydian ground"
-  tonal_role: "b7 earth pedal beneath dual signals and stones"
-  ~motif: [0 7 9 7 4 2]
-  @theme: genie
-  *rhythm: sand_signals
-  pattern: "X.x.....X.x....."
 }
 
 ^"valence_edges"{

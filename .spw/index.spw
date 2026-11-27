@@ -52,6 +52,7 @@
   stories: ~"./surfaces/stories.spw"
   characters: ~"./surfaces/characters.spw"
   genie_practice: ~"./surfaces/genie-practice.spw"
+  substrate: ~"./surfaces/substrate.spw"
   texture_finds: ~"./surfaces/texture-finds.spw"
   formulas: ~"./surfaces/formulas.spw"
   cadence: ~"./surfaces/cadence.spw"

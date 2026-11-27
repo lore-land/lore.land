@@ -1,14 +1,24 @@
 # The three lands — boon.land, bane.land and bone.land as places, room by room
-# A design, proposed. Grounded in the maker's own three_lands (story-boonhonk.spw) and the strains in inoculant.spw;
-# nothing here is a line anyone says, and no room is in a chapter until the maker puts it there.
+# Grounded in the maker's own three_lands (story-boonhonk.spw) and the strains in inoculant.spw. Seeded 2026-11-27: the rooms
+# live in book/content/world/lands.json, read at lore.land/?/boon.land, ?/bane.land and ?/bone.land (lands.mjs), and every
+# chapter is twinned with one room. Nothing here is a line anyone says, and no room is in a chapter until the maker puts it there.
 #>lore_land_surfaces_three_lands
-#:surface #!proposal
+#:surface #!mechanic
+#:status #!seeded
 #:operation #!prime
 #:fixity #!experimental
 #:layer #!semantics
 
 ~<rationale>{
   The maker has already given each land its question. boon.land asks what this could become, bane.land asks what it will cost, bone.land asks what will remain. A question is a weather, though, and a reader needs somewhere to stand. So each land is written as a run of short rooms, each with one plain rule that is a little absurd and entirely kept, and residents described by what they do and what they want, never by what they are for. The lands are funnier for being stated flatly, and kinder for never explaining themselves. A reader who has walked one land should recognise the other two by their rooms: every room has a twin in each of the others, the same thing asked a different question.
+}
+
+^"where_they_live"{
+  &lands: ~"book/content/world/lands.json"
+  &reader: ~"book/scripts/modules/lands.mjs"
+  doors: "each chapter carries one Twinned door in its route rail (relatedRoutes) to the room it leans toward; the room says Twinned with, back. Boof's map on the hub ends at three signs, one to each land, with the distances the lands keep"
+  added: "the rooms the maker wrote are marked from: maker in lands.json; the rest were added so every chapter has a twin, under the same guards"
+  check: "book:check (landProblems): every room whole, nobody speaking, nothing held named, every chapter twinned once and carrying its door"
 }
 
 ^"from_the_maker"{
@@ -68,6 +78,7 @@
 
 ?open[
   "Do the rooms belong in chapters, in the lanes as places a carry passes, or only in the almanac and on Boof's map"
+  ~#answer(2026-11-27): "at their own addresses first, through the ?/ door, each twinned with the chapter that leans toward it; Boof's map points at the three lands. The lanes and the almanac are still open"
   "Is the desk with the bowl in bane.land, in Bonk City, or both"
   "Should the room nobody keeps be a fourth room in every land, or only appear on Thursdays"
   "Which twins should a reader be shown, and which left to find"

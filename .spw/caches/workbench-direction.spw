@@ -90,12 +90,13 @@
     { host: "IntelliJ" path: ".spw/_workbench/extensions/intellij-spw" },
     { host: "Neovim" path: ".spw/_workbench/extensions/neovim-spw" }
   ]
+  .arc_note: "a hypothesis about how tools might meet people at different points, not a prescription for anyone or their career"
   developmental_arc: [
     "early_career: awaken direct wonder and tactile curiosity toward computers and live computation",
     "mid_career: counter technical alienation by turning tools back into expressive, inspectable instruments",
     "late_career: cultivate mentoring capacity and structural empathy — seeing the codebase and interface through another person's eyes"
   ]
-  somatics_law: "Tactile care, pacing, and developed attention belong inside core routing and efficiency engineering: knowing where meaningful transformation happens along the path matters more than arriving instantaneously at a sterile endpoint."
+  somatics_stance: "A stance, not a rule: tactile care, pacing, and developed attention belong inside core routing and efficiency engineering: knowing where meaningful transformation happens along the path matters more than arriving instantaneously at a sterile endpoint."
 }
 
 !"next_engineering_slices"[

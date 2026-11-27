@@ -1,20 +1,24 @@
-# Chapter 10 Ecology — Bone.land Resonance
+# Chapter 10 Ecology — Bone.land Answers in Oak
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_10_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 10 of 13: () scope.
+  Chapter 10 measured from its canon. Ring 10 of 13, () scope: harmonic councils and scoped ensembles. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 23.
 }
 
 ^"identity"{
   chapter: 10
   book: 1
   ring: 10
-  title: "Bone.land Resonance"
+  title: "Bone.land Answers in Oak"
   mood: "bonk"
   period: "spring"
+  logline: "In Bone.land's timber hall, a pie of clean-boiled honesty sets the Egg on the great frame and listens to what it will bear — and the answer, rung through every beam, ends BaneWAP's patience: the smallest wishes have the longest arcs."
+  epigraph: "Skeleton first. A wish, like a roof, is only as grand as the spine that must hold it."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "[] (frame)"
   observed_open_room: ".{timber_hall}@boof"
   observed_close_room: "~<rear_archway>@boof"
-  modulators: { config: "bonk (bone-led)" measure: "%load[bearing]" substrate: "$seasoned_oak_and_chalk" }
+  sigils_present: ". ? ! ^ ~"
+  sigils_absent: "# * & @ = % $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "load-beetles testing mortises, BoneWAP munching savory lunches, joiners with mallets"
   irritant: "ornament pretending to bear weight when tapped with a mallet"
   circulation: "every beam transfers stress aloud across joints until the weakest chalk mark flakes off"
+}
+
+^"craft"{
+  modulators: { config: "bonk (bone-led)" measure: "%load[bearing]" substrate: "$seasoned_oak_and_chalk" }
+  compost: "structural load vocabulary carried forward directly into Bone.land triad architecture"
+  !watch: "strong gathering acoustics (^(anchor_stones)@the_valley); carries warm ch06 slice unbroken"
+  mode: "Aeolian / Quartal"
+  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall"
+}
+
+^"stations"[
+  s01: { title: "The timber hall" .spw: ".{timber_hall}@boof" container: "room" $material: "oak" =lean: "bone" %words: 541 %sentences: 39 %paragraphs: 10 }
+  s02: { title: "The sill beam" .spw: "?{sill_beam}@bonewap" container: "room" $material: "oak" =lean: "bone" %words: 222 %sentences: 17 %paragraphs: 5 }
+  s03: { title: "The collar beam" .spw: "!<collar_beam>@the_fool" container: "passage" $material: "oak" =lean: "bone" %words: 37 %sentences: 5 %paragraphs: 2 }
+  s04: { title: "What the Frame Would Bear" .spw: "^(anchor_stones)@the_valley" container: "gathering" $material: "oak" =lean: "bone" %words: 472 %sentences: 28 %paragraphs: 8 }
+  s05: { title: "The rear archway" .spw: "~<rear_archway>@boof" container: "passage" $material: "oak" =lean: "bane" %words: 163 %sentences: 13 %paragraphs: 3 }
+]
+
+%"scale"{
+  %words: 1435
+  %sentences: 102
+  %paragraphs: 28
+  %rooms: 5
+  %pages: 5.2
+  %reading_minutes: 6.2
+  %words_per_sentence: 14.1
+  %sentences_per_paragraph: 3.6
+  %paragraphs_per_minute: 4.5
+}
+
+~"flow"{
+  room_words: "541 222 37 472 163"
+  room_shape: "█▄▁▇▃"
+  %sentence_spread: 8.9
+  %longest_sentence: 42
+  %spoken_share: 0.02
+  lane_pace: "3 4 6 4 8"
+  page_and_lane: "r -0.73"
+  page_and_lane_reads: "counters"
+}
+
+^"dimensions"{
+  lean: "bone 4, bane 1"
+  material: "oak 5"
+  container: "passage 2, room 2, gathering 1"
+  cast: "boof 2, bonewap 1"
+  tropes: ""
+  wonders_echoed: "remembrancers chimney-swifts crack-gauge well-winch build-where-it-leans write-it-before-you-argue-it waxed-slice"
+  %title_on_page: 1
+  %biome_on_page: 0.6
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 5 creatures: 1 lore_lines: 9 }
   wonder_ids: ["load-beetles", "listening-mallet", "load-bells", "mortise-marks", "chalk-is-cheaper-than-oak"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "structural load vocabulary carried forward directly into Bone.land triad architecture"
-  !digestive_watch: "strong gathering acoustics (^(anchor_stones)@the_valley); carries warm ch06 slice unbroken"
+}
+
+^"music"{
+  %tempo: 84
+  %root: 220
+  note_name: "A3"
+  %swing: 50
+  ~motif: [0 2 7 9 12 9]
+  @theme: hall
+  *rhythm: bone_hall
+  pattern: "X.....x.....x..."
+  rhythm_name: "A hall that tells the truth"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../09/ecology.spw"
   &next: ~"../11/ecology.spw"
   &octave_twin: ~"../23/ecology.spw#chapter_23_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 220
-  note_name: "A3"
-  %tempo: 84
-  %swing: 50
-  mode: "Aeolian / Quartal"
-  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall"
-  ~motif: [0 2 7 9 12 9]
-  @theme: hall
-  *rhythm: bone_hall
-  pattern: "X.....x.....x..."
 }
 
 ^"valence_edges"{

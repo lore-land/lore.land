@@ -46,6 +46,11 @@
       "kicker": "World"
     },
     {
+      "label": "boon.land · the Thursday office",
+      "href": "/?/boon.land/*the-thursday-office",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 15 · Pupil, Parcel, or Door",
       "href": "/book/chapter/15/",
       "kicker": "Next"

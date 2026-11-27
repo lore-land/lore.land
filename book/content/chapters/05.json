@@ -1,9 +1,9 @@
 {
   "chapterNumber": 5,
-  "title": "The Quiet Rift",
+  "title": "Still Paying the Note",
   "logline": "Two claims pull at one warm egg until the floor itself parts — and the crack beneath the hall is still singing the price of a grand wish granted centuries ago.",
   "epigraph": "Silence is not empty. It is two wants holding the same breath.",
-  "description": "Chapter 5 of Lore.Land: The Quiet Rift. In a hushed hall of tall arches, a boon-claim and a bane-claim pull at the unspent wish until the slate floor parts beneath it, and the Genie stands astride the crack to teach the physics of wishing: a small turn costs a little; a grand one is still being paid. Redirect, don't create.",
+  "description": "Chapter 5 of Lore.Land: Still Paying the Note. In a hushed hall of tall arches, a boon-claim and a bane-claim pull at the unspent wish until the slate floor parts beneath it, and the Genie stands astride the crack to teach the physics of wishing: a small turn costs a little; a grand one is still being paid. Redirect, don't create.",
   "mood": "song",
   "period": "spring",
   "pillars": [
@@ -40,7 +40,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 04 · Council",
+      "label": "Chamber 04 · Key",
       "href": "/book/chapter/04/",
       "kicker": "Prev"
     },
@@ -48,6 +48,11 @@
       "label": "Town Archive",
       "href": "/world/civic-magic.html#archive",
       "kicker": "Office"
+    },
+    {
+      "label": "bane.land · the hall of instalments",
+      "href": "/?/bane.land/*the-hall-of-instalments",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 06 · Lanterns",
@@ -273,7 +278,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "The Quiet Rift: two claims, one warm egg, and a crack older than anyone's claim."
+      "figcaption": "Still Paying the Note: two claims, one warm egg, and a crack older than anyone's claim."
     },
     {
       "type": "section",

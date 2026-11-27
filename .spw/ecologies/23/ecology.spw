@@ -1,20 +1,24 @@
-# Chapter 23 Ecology — Rehearsal of the Night School
+# Chapter 23 Ecology — Pi at the Night School
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_23_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 10 of 13: () scope.
+  Chapter 23 measured from its canon. Ring 10 of 13, () scope: harmonic councils and scoped ensembles. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 10.
 }
 
 ^"identity"{
   chapter: 23
   book: 2
   ring: 10
-  title: "Rehearsal of the Night School"
-  mood: "planned"
+  title: "Pi at the Night School"
+  mood: "reflection"
   period: "winter"
+  logline: "After the day's work, grown-up porters, lamplighters, and laundresses gather by tallow light to measure a pie tin with string and dividers — finding a circle that closes only when their voices hold one steady chord."
+  epigraph: "Three widths and a stubborn sliver: a circle does not ask to be rounded off."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "narrows into a framed selection ([])"
   represents: "Harmonic councils and scoped ensembles"
   next_construct: "[] (frame)"
-  planned_open_posture: "() entry"
-  planned_close_posture: "hands cleanly into []"
-  modulators: { config: "scope (convened chorus)" measure: "%chord[5_to_1]" substrate: "$slate_chalk_and_rosin" }
+  observed_open_room: ".(night_bench)@teacher"
+  observed_close_room: "^(sliver_left)@boof"
+  sigils_present: ". % & ^"
+  sigils_absent: "~ # ? ! * @ = $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "voices in tune hold a chord steady enough for shaky rulers to meet at center"
 }
 
+^"craft"{
+  modulators: { config: "scope (convened chorus)" measure: "%chord[5_to_1]" substrate: "$slate_chalk_and_rosin" }
+  compost: "deepens Bone.land bench camaraderie into geometry practice for the looming Feast"
+  !watch: "Ring 2 Slot 10 (()): strictly adult night-school per wonder-about-pie.spw care rules"
+  mode: "Aeolian / Quartal"
+  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "After the Lamps Are Lit" .spw: ".(night_bench)@teacher" container: "gathering" $material: "oak" =lean: "bone" %words: 159 %sentences: 6 %paragraphs: 3 }
+  s02: { title: "The chalk circle" .spw: "%(chalk_circle)@the_land" container: "gathering" $material: "brass" =lean: "bone" %words: 134 %sentences: 9 %paragraphs: 3 }
+  s03: { title: "The night choir" .spw: "&(night_choir)@teacher" container: "gathering" $material: "ink" =lean: "boon" %words: 152 %sentences: 7 %paragraphs: 3 }
+  s04: { title: "Roll Called Quietly" .spw: "^(sliver_left)@boof" container: "gathering" $material: "ink" =lean: "bone" %words: 104 %sentences: 5 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 549
+  %sentences: 27
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 2
+  %reading_minutes: 2.4
+  %words_per_sentence: 20.3
+  %sentences_per_paragraph: 2.5
+  %paragraphs_per_minute: 4.6
+}
+
+~"flow"{
+  room_words: "159 134 152 104"
+  room_shape: "█▇█▆"
+  %sentence_spread: 10.7
+  %longest_sentence: 46
+  %spoken_share: 0.09
+  lane_pace: "2 3 5 4 3"
+  page_and_lane: "r -0.08"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "bone 3, boon 1"
+  material: "ink 2, brass 1, oak 1"
+  container: "gathering 4"
+  cast: "boof 1"
+  tropes: ""
+  wonders_echoed: "load-beetles pie-dividers chalk-is-cheaper-than-oak remainder-moths"
+  %title_on_page: 1
+  %biome_on_page: 0.55
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/23.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/23.json"
+  canon_mirror: ~"../../chapters/23.spw"
+  plate: ~"../../../book/images/23.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-23.jpg"
+  palette: "night-chalk"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "deepens Bone.land bench camaraderie into geometry practice for the looming Feast"
-  !digestive_watch: "Ring 2 Slot 10 (()): strictly adult night-school per wonder-about-pie.spw care rules"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 84
+  %root: 220
+  note_name: "A3"
+  %swing: 50
+  ~motif: [0 5 7 5 2 0]
+  @theme: night_school
+  *rhythm: night_dividers
+  pattern: "X....x....x....."
+  rhythm_name: "Three widths and a sliver"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../22/ecology.spw"
   &next: ~"../24/ecology.spw"
   &octave_twin: ~"../10/ecology.spw#chapter_10_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 220
-  mode: "Aeolian / Quartal"
-  tonal_role: "lowest tessitura A3 (dominant V of D): structural fourths of Bone Hall (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

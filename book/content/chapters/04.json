@@ -1,9 +1,9 @@
 {
   "chapterNumber": 4,
-  "title": "Crosswind Council",
+  "title": "The Largest Key Ever Cut",
   "logline": "No law on the hill covers the egg — a wish is the largest key ever cut, and Mr. BaneWAP wants it filed, appraised, and auctioned to himself.",
   "epigraph": "A key may be filed smaller in the open. It may never be grown in the dark.",
-  "description": "Chapter 4 of Lore.Land: Crosswind Council. Boof carries the unspent wish to the hilltop table, where a bitter pie in a banker's crust argues it should be filed and auctioned — and the mirror shows every delegate what wanting becomes when it hoards.",
+  "description": "Chapter 4 of Lore.Land: The Largest Key Ever Cut. Boof carries the unspent wish to the hilltop table, where a bitter pie in a banker's crust argues it should be filed and auctioned — and the mirror shows every delegate what wanting becomes when it hoards.",
   "mood": "mirror",
   "period": "spring",
   "pillars": [
@@ -40,7 +40,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 03 · Sand",
+      "label": "Chamber 03 · Salt-Whales",
       "href": "/book/chapter/03/",
       "kicker": "Prev"
     },
@@ -50,7 +50,12 @@
       "kicker": "Office"
     },
     {
-      "label": "Chamber 05 · Rift",
+      "label": "bane.land · the auction of small things",
+      "href": "/?/bane.land/*the-auction-of-small-things",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 05 · Note",
       "href": "/book/chapter/05/",
       "kicker": "Next"
     }
@@ -292,7 +297,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "Crosswind Council: keys narrow in the open; a wish is too large to file."
+      "figcaption": "The Largest Key Ever Cut: keys narrow in the open; a wish is too large to file."
     },
     {
       "type": "section",

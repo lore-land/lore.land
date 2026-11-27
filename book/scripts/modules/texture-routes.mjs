@@ -17,6 +17,9 @@
  * autonomous.feedback, the post the Scriptorium reads, is played through the same door: ?/autonomous.feedback/@lore.land
  * reads the book's own client file (/.well-known/autonomous-feedback.json), *subject narrows it to one, and every
  * door opens the post itself. An address here carries no words a reader writes: those go on the card.
+ *
+ * The three lands come through it too (lands.mjs): ?/boon.land, ?/bane.land and ?/bone.land, and *a-room for one
+ * room in a land, first. Every chapter is twinned with one room, and the room points back.
  */
 
 export const ROUTE_OPS = Object.freeze({
@@ -36,7 +39,11 @@ export const ROUTE_OPS = Object.freeze({
 const SURFACE = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/i;
 
 /* A surface may say what its own parts mean; the operator keeps its role. */
+const LAND_READS = { '*': 'one room in the land, shown first' };
 export const SURFACE_READS = Object.freeze({
+  'boon.land': LAND_READS,
+  'bane.land': LAND_READS,
+  'bone.land': LAND_READS,
   'autonomous.feedback': {
     '@': 'whose post: the site whose client file it reads',
     '*': 'one subject on it: what a card is about'
@@ -97,13 +104,16 @@ export function writeRoute({ surface, perspective, value, action, config, motif,
   return `?/${segments.map((s, i) => (i === 0 ? s : `${s[0]}${encodeSegment(s.slice(1))}`)).join('/')}`;
 }
 
-/** What a route lands on: an event (route-events.mjs: day.lore.land, stone.lore.land, a promotional surface), the post,
+/** What a route lands on: an event (route-events.mjs: day.lore.land, stone.lore.land, a promotional surface), a land
+ * (lands.mjs: boon.land, bane.land, bone.land, and *a-room in one), the post,
  * a pack (the one whose own route, /surface/@maker, it begins with), the surface itself, or one piece on a surface
  * (texture.website/*folio-…: a thing itself, texture-finds.mjs). */
-export function resolveRoute(route, packs = [], events = []) {
+export function resolveRoute(route, packs = [], events = [], lands = []) {
   if (!route) return { kind: 'none' };
   const event = route.surface ? events.find((e) => e.surface === route.surface) : null;
   if (event) return { kind: 'event', event };
+  const land = route.surface ? lands.find((l) => l.id === route.surface) : null;
+  if (land) return { kind: 'land', land, room: route.value || null };
   if (route.surface === 'autonomous.feedback') return { kind: 'post', host: route.perspective || 'lore.land', subject: route.value || null };
   if (route.surface === 'texture.website' && !route.perspective && /^(folio|panel)-/.test(route.value || '')) return { kind: 'piece', id: route.value };
   const pack = packs.find((p) => {
@@ -135,6 +145,9 @@ export const TRY = Object.freeze([
   ['?/texture.website/@spwashi/.word:moon/.material:wash/?edit', 'through spw.quest: an edit written in the address'],
   ['?/texture.website/@spwashi/!pie+and+egg/?clarify/?resonate', 'through spw.quest: what it means, and what echoes it'],
   ['?/texture.website/*folio-ampersand-hair-cube', 'one piece: drawn until it turns up in the lanes, then the scan, from spwashi.com'],
+  ['?/boon.land', 'a land: population to be decided'],
+  ['?/bane.land/*the-receipt-office', 'one room in a land, shown first: the sign has already been charged to you'],
+  ['?/bone.land/*the-bench', 'the room where the joiners have lunch, and say nothing else about it'],
   ['?/day.lore.land', 'an event that is always on: the day in the land, a room, a trope, a lens'],
   ['?/day.lore.land/*2026-11-13', 'the same event, on a day named in the address'],
   ['?/stone.lore.land', 'where the two complete books stand, and where to open the latest chamber'],

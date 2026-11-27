@@ -55,7 +55,12 @@
       "kicker": "Experience"
     },
     {
-      "label": "Chamber 02 · Echo",
+      "label": "boon.land · the warm furrow",
+      "href": "/?/boon.land/*the-warm-furrow",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 02 · Breath",
       "href": "/book/chapter/02/",
       "kicker": "Next"
     }

@@ -1,19 +1,19 @@
-# Lore.Land Chapter Ecologies Index (01..26)
-# Accounts for every chapter in Ring 1 (Book One: 01..13) and Ring 2 (Book Two: 14..26),
-# separated cleanly from the generated .spw/chapters/NN.spw build mirrors.
+# Lore.Land Chapter Ecologies Index (composed by .spw/tools/ecology-compose.mjs; do not edit by hand, re-run npm run spw:ecology)
+# Every chapter on the Ring of Thirteen, Book One and Book Two, apart from the generated .spw/chapters/NN.spw mirrors.
 #>lore_land_ecologies_index
 #:canon #!ecologies
 #:layer #!pragmatics
 #:status #!active
 
 ~<rationale>{
-  Chapters need distinct internal physiology—substrate, metabolites, symbiotes, irritants, assets, and gut health—rather than flat uniform containers. Organizing folders 01 through 26 under .spw/ecologies/ keeps generated chapter mirrors clean under .spw/chapters/ while letting Books One and Two compare octave resonance (~ # . ? ! * & @ <> () [] {} ^) and balance re-derivations before Book Three opens.
+  Chapters need distinct internal physiology rather than flat uniform containers. Each ecology keeps two authored blocks, the biome and the craft notes, and measures the rest from the canon, so it cannot drift from the chapter it describes. The substrate cache lays all of them on one ladder.
 }
 
 ^"meta"{
   total_chapters: 26
   books: 2
   sequence: "~ # . ? ! * & @ <> () [] {} ^"
+  &substrate: ~"../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &world_ecology: ~"../surfaces/ecology.spw#ecology"
   &ring_tour: ~"../surfaces/rooms.spw#ring_tour"
   &book_three: ~"../surfaces/book-three.spw#lore_land_book_three"
@@ -21,30 +21,30 @@
 }
 
 &[ecologies][
-  c01: { title: "Dawn in Boon.land" book: 1 ring: 1 construct: "~" status: "live" &ecology: ~"./01/ecology.spw" }
-  c02: { title: "The First Echo" book: 1 ring: 2 construct: "#" status: "live" &ecology: ~"./02/ecology.spw" }
-  c03: { title: "Signals in the Sand" book: 1 ring: 3 construct: "." status: "live" &ecology: ~"./03/ecology.spw" }
-  c04: { title: "Crosswind Council" book: 1 ring: 4 construct: "?" status: "live" &ecology: ~"./04/ecology.spw" }
-  c05: { title: "The Quiet Rift" book: 1 ring: 5 construct: "!" status: "live" &ecology: ~"./05/ecology.spw" }
-  c06: { title: "Lanterns of Bonk City" book: 1 ring: 6 construct: "*" status: "live" &ecology: ~"./06/ecology.spw" }
-  c07: { title: "Blueberry Oath" book: 1 ring: 7 construct: "&" status: "live" &ecology: ~"./07/ecology.spw" }
-  c08: { title: "Songs of the Watering Eye" book: 1 ring: 8 construct: "@" status: "live" &ecology: ~"./08/ecology.spw" }
-  c09: { title: "Shards of Nine Honks" book: 1 ring: 9 construct: "<>" status: "live" &ecology: ~"./09/ecology.spw" }
-  c10: { title: "Bone.land Resonance" book: 1 ring: 10 construct: "()" status: "live" &ecology: ~"./10/ecology.spw" }
-  c11: { title: "Paradox Bloom" book: 1 ring: 11 construct: "[]" status: "live" &ecology: ~"./11/ecology.spw" }
-  c12: { title: "The Last Confluence" book: 1 ring: 12 construct: "{}" status: "live" &ecology: ~"./12/ecology.spw" }
-  c13: { title: "The Shell-Shaped Door" book: 1 ring: 13 construct: "^" status: "live" &ecology: ~"./13/ecology.spw" }
-  c14: { title: "The Thursday Nobody Kept" book: 2 ring: 1 construct: "~" status: "live" &ecology: ~"./14/ecology.spw" }
-  c15: { title: "Pupil, Parcel, or Door" book: 2 ring: 2 construct: "#" status: "live" &ecology: ~"./15/ecology.spw" }
-  c16: { title: "The Second Place" book: 2 ring: 3 construct: "." status: "live" &ecology: ~"./16/ecology.spw" }
-  c17: { title: "Ledger of Unasked Questions" book: 2 ring: 4 construct: "?" status: "live" &ecology: ~"./17/ecology.spw" }
-  c18: { title: "Flour in the Bell-Tower" book: 2 ring: 5 construct: "!" status: "live" &ecology: ~"./18/ecology.spw" }
-  c19: { title: "The Priced Window" book: 2 ring: 6 construct: "*" status: "live" &ecology: ~"./19/ecology.spw" }
-  c20: { title: "Two Springs Under the Sill" book: 2 ring: 7 construct: "&" status: "live" &ecology: ~"./20/ecology.spw" }
-  c21: { title: "At the Nose of the Work" book: 2 ring: 8 construct: "@" status: "live" &ecology: ~"./21/ecology.spw" }
-  c22: { title: "Through the Chute With No Receipt" book: 2 ring: 9 construct: "<>" status: "live" &ecology: ~"./22/ecology.spw" }
-  c23: { title: "Rehearsal of the Night School" book: 2 ring: 10 construct: "()" status: "live" &ecology: ~"./23/ecology.spw" }
-  c24: { title: "Four Windows in One Wall" book: 2 ring: 11 construct: "[]" status: "live" &ecology: ~"./24/ecology.spw" }
-  c25: { title: "The Warm Hearth Before the Feast" book: 2 ring: 12 construct: "{}" status: "live" &ecology: ~"./25/ecology.spw" }
-  c26: { title: "The Feast of the Uneven Slice" book: 2 ring: 13 construct: "^" status: "live" &ecology: ~"./26/ecology.spw" }
+  c01: { title: "Dawn in Boon.land" book: 1 ring: 1 construct: "~" %words: 1894 %minutes: 8.2 shape: "█▃▅▇▃▃" status: "live" &ecology: ~"./01/ecology.spw" }
+  c02: { title: "The Egg a Breath Behind" book: 1 ring: 2 construct: "#" %words: 1657 %minutes: 7.2 shape: "▇▄▄▃█▅" status: "live" &ecology: ~"./02/ecology.spw" }
+  c03: { title: "The Salt-Whale Roads" book: 1 ring: 3 construct: "." %words: 1486 %minutes: 6.5 shape: "▇▄▂█▄" status: "live" &ecology: ~"./03/ecology.spw" }
+  c04: { title: "The Largest Key Ever Cut" book: 1 ring: 4 construct: "?" %words: 1557 %minutes: 6.8 shape: "█▂▂▅▃" status: "live" &ecology: ~"./04/ecology.spw" }
+  c05: { title: "Still Paying the Note" book: 1 ring: 5 construct: "!" %words: 1249 %minutes: 5.4 shape: "▆▂▂█▅" status: "live" &ecology: ~"./05/ecology.spw" }
+  c06: { title: "Lanterns of Bonk City" book: 1 ring: 6 construct: "*" %words: 1631 %minutes: 7.1 shape: "▄▂▁█▃" status: "live" &ecology: ~"./06/ecology.spw" }
+  c07: { title: "Blueberry Oath" book: 1 ring: 7 construct: "&" %words: 1274 %minutes: 5.5 shape: "█▂▂▄▁" status: "live" &ecology: ~"./07/ecology.spw" }
+  c08: { title: "Songs of the Watering Eye" book: 1 ring: 8 construct: "@" %words: 1427 %minutes: 6.2 shape: "▆█▂▇▃" status: "live" &ecology: ~"./08/ecology.spw" }
+  c09: { title: "Shards of Nine Honks" book: 1 ring: 9 construct: "<>" %words: 1163 %minutes: 5.1 shape: "▇▃▂█▃" status: "live" &ecology: ~"./09/ecology.spw" }
+  c10: { title: "Bone.land Answers in Oak" book: 1 ring: 10 construct: "()" %words: 1435 %minutes: 6.2 shape: "█▄▁▇▃" status: "live" &ecology: ~"./10/ecology.spw" }
+  c11: { title: "The Crown Was Wasps" book: 1 ring: 11 construct: "[]" %words: 1385 %minutes: 6 shape: "█▂▂▅▁" status: "live" &ecology: ~"./11/ecology.spw" }
+  c12: { title: "One Furrow Kept Open" book: 1 ring: 12 construct: "{}" %words: 1516 %minutes: 6.6 shape: "▆▃▂█▂" status: "live" &ecology: ~"./12/ecology.spw" }
+  c13: { title: "The Shell-Shaped Door" book: 1 ring: 13 construct: "^" %words: 1602 %minutes: 7 shape: "█▂▂▄▃" status: "live" &ecology: ~"./13/ecology.spw" }
+  c14: { title: "The Thursday Nobody Kept" book: 2 ring: 1 construct: "~" %words: 2826 %minutes: 12.3 shape: "▃▄▂▄▃█▅▂" status: "live" &ecology: ~"./14/ecology.spw" }
+  c15: { title: "Pupil, Parcel, or Door" book: 2 ring: 2 construct: "#" %words: 2570 %minutes: 11.2 shape: "▄▇▄█▅▆" status: "live" &ecology: ~"./15/ecology.spw" }
+  c16: { title: "The Second Place" book: 2 ring: 3 construct: "." %words: 775 %minutes: 3.4 shape: "█▅█▆" status: "live" &ecology: ~"./16/ecology.spw" }
+  c17: { title: "Ledger of Unasked Questions" book: 2 ring: 4 construct: "?" %words: 549 %minutes: 2.4 shape: "█▇▇▅" status: "live" &ecology: ~"./17/ecology.spw" }
+  c18: { title: "Flour in the Bell-Tower" book: 2 ring: 5 construct: "!" %words: 557 %minutes: 2.4 shape: "███▆" status: "live" &ecology: ~"./18/ecology.spw" }
+  c19: { title: "The Snails Who Ate the Prices" book: 2 ring: 6 construct: "*" %words: 518 %minutes: 2.3 shape: "█▇▇▆" status: "live" &ecology: ~"./19/ecology.spw" }
+  c20: { title: "Two Springs Under the Sill" book: 2 ring: 7 construct: "&" %words: 520 %minutes: 2.3 shape: "▇█▆▄" status: "live" &ecology: ~"./20/ecology.spw" }
+  c21: { title: "At the Nose of the Work" book: 2 ring: 8 construct: "@" %words: 519 %minutes: 2.3 shape: "▇█▇▅" status: "live" &ecology: ~"./21/ecology.spw" }
+  c22: { title: "Three Roofs Higher" book: 2 ring: 9 construct: "<>" %words: 548 %minutes: 2.4 shape: "█▇█▆" status: "live" &ecology: ~"./22/ecology.spw" }
+  c23: { title: "Pi at the Night School" book: 2 ring: 10 construct: "()" %words: 549 %minutes: 2.4 shape: "█▇█▆" status: "live" &ecology: ~"./23/ecology.spw" }
+  c24: { title: "Four Windows in One Wall" book: 2 ring: 11 construct: "[]" %words: 529 %minutes: 2.3 shape: "▇██▅" status: "live" &ecology: ~"./24/ecology.spw" }
+  c25: { title: "Before the Vault Opens Itself" book: 2 ring: 12 construct: "{}" %words: 529 %minutes: 2.3 shape: "▇██▅" status: "live" &ecology: ~"./25/ecology.spw" }
+  c26: { title: "The Feast of the Uneven Slice" book: 2 ring: 13 construct: "^" %words: 675 %minutes: 2.9 shape: "▇▇█▅" status: "live" &ecology: ~"./26/ecology.spw" }
 ]

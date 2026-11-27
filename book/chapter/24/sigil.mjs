@@ -13,7 +13,7 @@ const CONFIG = {
   route: {
     href: '/book/chapter/25/',
     label: '^[route/25]{the warm hearth before the feast}',
-    ariaLabel: 'Continue to chapter 25: The Warm Hearth Before the Feast'
+    ariaLabel: 'Continue to chapter 25: Before the Vault Opens Itself'
   }
 };
 

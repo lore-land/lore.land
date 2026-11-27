@@ -1,11 +1,13 @@
 # Chapter 16 Ecology — The Second Place
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_16_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 3 of 13: . ground.
+  Chapter 16 measured from its canon. Ring 3 of 13, . ground: what holds regardless of opinion. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 3.
 }
 
 ^"identity"{
@@ -13,8 +15,10 @@
   book: 2
   ring: 3
   title: "The Second Place"
-  mood: "planned"
+  mood: "boon"
   period: "winter"
+  logline: "Boof wears the city's chosen title for one supper at Mr. BoonWAP's long table, while behind the baize curtain the unnamed figure dries plates beside the washer-up nobody has asked the name of."
+  epigraph: "If the pie is never smaller, why do the hands at the sink still tire?"
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "raises an open question (?)"
   represents: "What holds regardless of opinion"
   next_construct: "? (probe)"
-  planned_open_posture: ". entry"
-  planned_close_posture: "hands cleanly into ?"
-  modulators: { config: "bone (maintenance truth)" measure: "%plates_washed[many]" substrate: "$linen_brass_and_soapsuds" }
+  observed_open_room: ".{brass_marker}@boonwap"
+  observed_close_room: "?{endless_stack}@the_land"
+  sigils_present: ". @ & ?"
+  sigils_absent: "~ # ! * ^ = % $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "plates circulate from table to tub faster than BoonWAP speeches finish a sentence"
 }
 
+^"craft"{
+  modulators: { config: "bone (maintenance truth)" measure: "%plates_washed[many]" substrate: "$linen_brass_and_soapsuds" }
+  compost: "first explicit view into maintenance labor behind infinite bounty (links into Book 3 commons)"
+  !watch: "seeded in wonder-about-pie.spw#c16; ideal Slot 3 (.) chapter grounding invisible physical care"
+  mode: "Mixolydian ground"
+  tonal_role: "b7 earth pedal beneath dual signals and stones (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The Brass Place Marker" .spw: ".{brass_marker}@boonwap" container: "room" $material: "brass" =lean: "boon" %words: 234 %sentences: 15 %paragraphs: 4 }
+  s02: { title: "The second place" .spw: "@{second_place}@boof" container: "room" $material: "oak" =lean: "boon" %words: 145 %sentences: 8 %paragraphs: 3 }
+  s03: { title: "Behind the Curtain" .spw: "&[scullery_steam]@washer" container: "window" $material: "ink" =lean: "bone" %words: 228 %sentences: 12 %paragraphs: 4 }
+  s04: { title: "The endless stack" .spw: "?{endless_stack}@the_land" container: "room" $material: "flour" =lean: "boon" %words: 168 %sentences: 8 %paragraphs: 3 }
+]
+
+%"scale"{
+  %words: 775
+  %sentences: 43
+  %paragraphs: 14
+  %rooms: 4
+  %pages: 2.8
+  %reading_minutes: 3.4
+  %words_per_sentence: 18
+  %sentences_per_paragraph: 3.1
+  %paragraphs_per_minute: 4.2
+}
+
+~"flow"{
+  room_words: "234 145 228 168"
+  room_shape: "█▅█▆"
+  %sentence_spread: 8.1
+  %longest_sentence: 37
+  %spoken_share: 0.03
+  lane_pace: "3 5 6 4 3"
+  page_and_lane: "r -0.36"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 3, bone 1"
+  material: "brass 1, flour 1, ink 1, oak 1"
+  container: "room 3, window 1"
+  cast: "boof 1, boon 1"
+  tropes: "floating-title beyond-the-frame"
+  wonders_echoed: "pie-dividers keep-the-morning waxed-slice stacked-plate"
+  %title_on_page: 1
+  %biome_on_page: 0.6
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/16.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/16.json"
+  canon_mirror: ~"../../chapters/16.spw"
+  plate: ~"../../../book/images/16.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-16.jpg"
+  palette: "scullery-steam"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 4 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "first explicit view into maintenance labor behind infinite bounty (links into Book 3 commons)"
-  !digestive_watch: "seeded in wonder-about-pie.spw#c16; ideal Slot 3 (.) chapter grounding invisible physical care"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 104
+  %root: 329.63
+  note_name: "E4"
+  %swing: 50
+  ~motif: [0 4 7 4 2 0]
+  @theme: scullery
+  *rhythm: scullery_stack
+  pattern: "X...x..xX...x..."
+  rhythm_name: "Plates behind the curtain"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../15/ecology.spw"
   &next: ~"../17/ecology.spw"
   &octave_twin: ~"../03/ecology.spw#chapter_03_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 329.63
-  mode: "Mixolydian ground"
-  tonal_role: "b7 earth pedal beneath dual signals and stones (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

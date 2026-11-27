@@ -553,3 +553,35 @@ body[data-surface='monument'] .boof-map-fallback {
     scale: 1.9;
   }
 }
+
+/* Off the edge of the map: three signs to the lands (lands.mjs), each an arm pointing out of the hedge. */
+body[data-surface='monument'] .boof-map-edge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+body[data-surface='monument'] .boof-map-edge-lede {
+  flex: 1 1 100%;
+  margin: 0;
+  color: var(--hub-muted, inherit);
+}
+body[data-surface='monument'] .boof-map-sign {
+  --sign-accent: var(--hub-accent-deep, #2c6f6a);
+  display: inline-grid;
+  gap: 0.1rem;
+  padding: 0.5rem 1.2rem 0.5rem 0.8rem;
+  border-left: 3px solid var(--sign-accent);
+  background: var(--hub-panel, #fffaf0);
+  clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 50%, calc(100% - 0.75rem) 100%, 0 100%);
+  color: inherit;
+  text-decoration: none;
+}
+body[data-surface='monument'] .boof-map-sign[data-lean='boon'] { --sign-accent: #1f7a74; }
+body[data-surface='monument'] .boof-map-sign[data-lean='bane'] { --sign-accent: #4a2a45; }
+body[data-surface='monument'] .boof-map-sign[data-lean='bone'] { --sign-accent: #8a3b32; }
+body[data-surface='monument'] .boof-map-sign-name { font-family: var(--font-family-mono, monospace); font-weight: 600; }
+body[data-surface='monument'] .boof-map-sign-distance { font-size: 0.85rem; color: var(--hub-muted, inherit); }
+body[data-surface='monument'] .boof-map-sign:hover .boof-map-sign-name,
+body[data-surface='monument'] .boof-map-sign:focus-visible .boof-map-sign-name { text-decoration: underline; }

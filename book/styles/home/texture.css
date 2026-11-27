@@ -1044,3 +1044,102 @@ lore-folio .lore-folio-near,
 lore-folio .lore-folio-motifs {
   color: var(--hub-muted);
 }
+
+/* ─── The three lands (lands.mjs): a road sign, the rooms as cards, a signpost home ─────────────────────────
+ * Story serif for the rules, mono for the structure (residents, want, twinned). Each land takes its berry's
+ * colour as an accent: boon teal and amber, bane plum-black, bone a bone-white with a dusk-red blush. */
+.texture-land {
+  --land-accent: var(--hub-accent-deep, #2c6f6a);
+  --land-blush: color-mix(in srgb, var(--land-accent) 12%, transparent);
+}
+.texture-land[data-lean='boon'] { --land-accent: #1f7a74; --land-blush: color-mix(in srgb, #e0a23a 16%, transparent); }
+.texture-land[data-lean='bane'] { --land-accent: #4a2a45; --land-blush: color-mix(in srgb, #4a2a45 12%, transparent); }
+.texture-land[data-lean='bone'] { --land-accent: #8a3b32; --land-blush: color-mix(in srgb, #efe6d6 70%, transparent); }
+
+.land-welcome {
+  display: inline-block;
+  margin: 0.5rem 0 1rem;
+  padding: 0.55rem 0.9rem;
+  border: 2px solid var(--land-accent);
+  border-radius: 0.3rem;
+  background: var(--land-blush);
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.land-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0 0 1.5rem;
+}
+.land-facts dt {
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hub-muted, inherit);
+  align-self: baseline;
+}
+.land-facts dd { margin: 0; }
+
+.land-rooms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 0.9rem;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+.land-room {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-top: 3px solid var(--land-accent);
+  border-radius: 0.35rem;
+  background: var(--hub-panel, #fffaf0);
+  scroll-margin-top: 5rem;
+}
+.land-room.is-named { box-shadow: 0 0 0 2px var(--land-accent); background: color-mix(in srgb, var(--hub-panel, #fffaf0) 85%, var(--land-blush)); }
+.land-room.is-missing { grid-column: 1 / -1; border-top-color: var(--hub-line, #ccc); color: var(--hub-muted, inherit); }
+.land-room h3 { margin: 0; font-size: 1.05rem; }
+.land-room h3 a { color: inherit; text-decoration-color: var(--land-accent); }
+.land-room p { margin: 0; }
+.land-room-rule { font-family: var(--hub-display, Georgia, serif); font-size: 1.02rem; line-height: 1.45; }
+.land-room-who,
+.land-room-want,
+.land-room-twin { font-size: 0.88rem; color: var(--hub-muted, inherit); }
+.land-room-who span,
+.land-room-want span,
+.land-room-twin span { font-family: var(--font-family-mono, monospace); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.land-room-twin a { color: var(--land-accent); }
+
+.land-bylaws { margin: 0 0 1rem; padding-left: 0; list-style: none; display: grid; gap: 0.3rem; }
+.land-bylaws span { font-family: var(--font-family-mono, monospace); font-size: 0.8rem; color: var(--land-accent); }
+.land-berries { margin: 0 0 1.75rem; color: var(--hub-muted, inherit); font-style: italic; }
+
+.land-crossings { margin: 0 0 1.75rem; padding: 0; list-style: none; display: grid; gap: 0.4rem; }
+.land-crossing-thing { font-family: var(--font-family-mono, monospace); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--hub-muted, inherit); }
+.land-crossing-here { font-weight: 600; color: var(--land-accent); }
+
+.land-signpost { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0 0 1rem; }
+.land-sign-arm {
+  display: inline-grid;
+  gap: 0.1rem;
+  padding: 0.5rem 1.1rem 0.5rem 0.8rem;
+  border: 1px solid var(--hub-line, #ccc);
+  border-radius: 0.25rem;
+  clip-path: polygon(0 0, calc(100% - 0.7rem) 0, 100% 50%, calc(100% - 0.7rem) 100%, 0 100%);
+  background: var(--hub-panel, #fffaf0);
+  color: inherit;
+  text-decoration: none;
+}
+.land-sign-arm.is-home { clip-path: polygon(0.7rem 0, 100% 0, 100% 100%, 0.7rem 100%, 0 50%); padding: 0.5rem 0.8rem 0.5rem 1.1rem; }
+.land-sign-name { font-family: var(--font-family-mono, monospace); font-weight: 600; }
+.land-sign-distance { font-size: 0.85rem; color: var(--hub-muted, inherit); }
+.land-sign-arm:hover .land-sign-name,
+.land-sign-arm:focus-visible .land-sign-name { text-decoration: underline; }
+.land-crossing-where { font-family: var(--font-family-mono, monospace); font-size: 0.78rem; }

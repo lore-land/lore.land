@@ -50,6 +50,11 @@
       "kicker": "Office"
     },
     {
+      "label": "bone.land · the strata library",
+      "href": "/?/bone.land/*the-strata-library",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 09 · Shards",
       "href": "/book/chapter/09/",
       "kicker": "Next"

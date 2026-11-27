@@ -1,20 +1,24 @@
-# Chapter 19 Ecology — The Priced Window
+# Chapter 19 Ecology — The Snails Who Ate the Prices
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_19_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 6 of 13: * value.
+  Chapter 19 measured from its canon. Ring 6 of 13, * value: reified objects and portable tokens. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 6.
 }
 
 ^"identity"{
   chapter: 19
   book: 2
   ring: 6
-  title: "The Priced Window"
-  mood: "planned"
+  title: "The Snails Who Ate the Prices"
+  mood: "labyrinth"
   period: "winter"
+  logline: "In Bonk City's glaziers' alley, chalk tariffs tick upward for every unbroken hour a pane survives — until pane-snails slowly graze the numbers back into clear glass."
+  epigraph: "Light passes straight through unpriced glass, and snags on every corner of a chalk sticker."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "invites meeting and exchange (&)"
   represents: "Reified objects and portable tokens"
   next_construct: "& (confluence)"
-  planned_open_posture: "* entry"
-  planned_close_posture: "hands cleanly into &"
-  modulators: { config: "value (commodity absurdity)" measure: "%pane_hours[ticks]" substrate: "$putty_sand_and_lead_came" }
+  observed_open_room: "*[tariff_pane]@glazier"
+  observed_close_room: ".{unpriced_glass}@the_land"
+  sigils_present: "* @ ."
+  sigils_absent: "~ # ? ! & ^ = % $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "light bends smoothly through unpriced glass yet catches on sticker corners at dusk"
 }
 
+^"craft"{
+  modulators: { config: "value (commodity absurdity)" measure: "%pane_hours[ticks]" substrate: "$putty_sand_and_lead_came" }
+  compost: "directly braids bane.land priced-window satire into Bonk City winter architecture"
+  !watch: "Ring 2 Slot 6 (*): mirror of Ch06 lanterns—let objects stay weird and under-explained"
+  mode: "Ionian +6 mediant"
+  tonal_role: "bright relative major F4 over glass bells and fairground brass (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The Glaziers’ Alley" .spw: "*[tariff_pane]@glazier" container: "window" $material: "glass" =lean: "bone" %words: 155 %sentences: 7 %paragraphs: 3 }
+  s02: { title: "The putty frame" .spw: "@[putty_frame]@glazier" container: "window" $material: "glass" =lean: "bane" %words: 133 %sentences: 6 %paragraphs: 3 }
+  s03: { title: "The silver trail" .spw: "*{silver_trail}@boof" container: "room" $material: "glass" =lean: "boon" %words: 126 %sentences: 7 %paragraphs: 3 }
+  s04: { title: "The unpriced glass" .spw: ".{unpriced_glass}@the_land" container: "room" $material: "glass" =lean: "bone" %words: 104 %sentences: 4 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 518
+  %sentences: 24
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 1.9
+  %reading_minutes: 2.3
+  %words_per_sentence: 21.6
+  %sentences_per_paragraph: 2.2
+  %paragraphs_per_minute: 4.9
+}
+
+~"flow"{
+  room_words: "155 133 126 104"
+  room_shape: "█▇▇▆"
+  %sentence_spread: 7.7
+  %longest_sentence: 39
+  %spoken_share: 0
+  lane_pace: "4 5 6 4 3"
+  page_and_lane: "r 0.4"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "bone 2, bane 1, boon 1"
+  material: "glass 4"
+  container: "room 2, window 2"
+  cast: "boof 1"
+  tropes: ""
+  wonders_echoed: "pane-snails dent-lanterns glass-over-never-scrape struck-price-tag"
+  %title_on_page: 1
+  %biome_on_page: 0.63
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/19.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/19.json"
+  canon_mirror: ~"../../chapters/19.spw"
+  plate: ~"../../../book/images/19.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-19.jpg"
+  palette: "priced-pane"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "directly braids bane.land priced-window satire into Bonk City winter architecture"
-  !digestive_watch: "Ring 2 Slot 6 (*): mirror of Ch06 lanterns—let objects stay weird and under-explained"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 108
+  %root: 349.23
+  note_name: "F4"
+  %swing: 58
+  ~motif: [0 4 7 9 7 4]
+  @theme: glazier
+  *rhythm: snail_clear
+  pattern: "X..x....x..x...."
+  rhythm_name: "Grazed clear by dusk"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../18/ecology.spw"
   &next: ~"../20/ecology.spw"
   &octave_twin: ~"../06/ecology.spw#chapter_06_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 349.23
-  mode: "Ionian +6 mediant"
-  tonal_role: "bright relative major F4 over glass bells and fairground brass (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

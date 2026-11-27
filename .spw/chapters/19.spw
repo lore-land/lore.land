@@ -5,8 +5,8 @@
 #:chapter-canon #!reference
 
 ^[chapter/19]{
-  title: "The Priced Window"
-  description: "Chapter 19 of Lore.Land: The Priced Window. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they can afford,..."
+  title: "The Snails Who Ate the Prices"
+  description: "Chapter 19 of Lore.Land: The Snails Who Ate the Prices. Along the narrow glaziers' alley of Bonk City, framed panes smell of linseed putty and carry chalk tariffs ticking higher by the unbroken hour. Glaziers peer only through glass they..."
   mood: "labyrinth"
   period: "winter"
   chapter_path: "/book/chapter/19/"

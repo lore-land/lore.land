@@ -46,6 +46,11 @@
       "kicker": "World"
     },
     {
+      "label": "bane.land · the form with two boxes",
+      "href": "/?/bane.land/*the-form-with-two-boxes",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 18 · Flour in the Bell-Tower",
       "href": "/book/chapter/18/",
       "kicker": "Next"

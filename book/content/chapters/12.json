@@ -1,9 +1,9 @@
 {
   "chapterNumber": 12,
-  "title": "The Last Confluence",
+  "title": "One Furrow Kept Open",
   "logline": "Boof finally knows her wish, and it is small: one warm furrow kept open, always, for whatever arrives next without a receipt.",
   "epigraph": "The honest price of a small true wish: everything he had left, plus one Thursday.",
-  "description": "Chapter 12 of Lore.Land: The Last Confluence. Boof names her small true wish at the meeting of two rivers; the Off-Season Genie prices it honestly and retires into the grove as its next echo. BaneWAP, re-sweetened, splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts — every thread meets in a membrane that shares without giving the house away.",
+  "description": "Chapter 12 of Lore.Land: One Furrow Kept Open. Boof names her small true wish at the meeting of two rivers; the Off-Season Genie prices it honestly and retires into the grove as its next echo. BaneWAP, re-sweetened, splits himself as apology; BoonWAP receives him warm; BoneWAP posts both receipts — every thread meets in a membrane that shares without giving the house away.",
   "mood": "path",
   "period": "spring",
   "pillars": [
@@ -40,7 +40,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 11 · Bloom",
+      "label": "Chamber 11 · Wasps",
       "href": "/book/chapter/11/",
       "kicker": "Prev"
     },
@@ -48,6 +48,11 @@
       "label": "Boonberry commons",
       "href": "/world/boonberry-commons.html",
       "kicker": "World"
+    },
+    {
+      "label": "boon.land · the warm furrow",
+      "href": "/?/boon.land/*the-warm-furrow",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 13 · Canon",
@@ -291,7 +296,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "The Last Confluence: everything he had left, plus one Thursday."
+      "figcaption": "One Furrow Kept Open: everything he had left, plus one Thursday."
     },
     {
       "type": "section",

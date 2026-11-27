@@ -31,6 +31,7 @@ import { ROOM_KINDS, readRoom, roomShapeProblems } from '../modules/room-signatu
 import { RING_OPERATOR_ORDER } from '../modules/spw-ast.mjs';
 import { packProblems } from '../modules/packs.mjs';
 import { eventProblems } from '../modules/route-events.mjs';
+import { landProblems } from '../modules/lands.mjs';
 import { MOTIF_FORMS } from '../modules/audio-model.mjs';
 import { FORMER_LIVES } from '../home/pie-mimes.mjs';
 import { readLevels, legTerms, castId, meetsOf, BEATS } from '../home/pie-rhythm.mjs';
@@ -646,6 +647,19 @@ for (const entry of packIndex.packs) {
   if (share('bakes') < 0.15 || share('panes') < 0.15 || share('prospered') < 0.3) error('mimes', 'the former lives lost their proportions (bakers, broken glass, years of doing well)');
   notes.push(`mimes: ${FORMER_LIVES.length} former lives; ${Math.round(share('prospered') * 100)}% did well for years, ${Math.round(share('panes') * 100)}% swept up real glass, ${Math.round(share('bakes') * 100)}% bake`);
 }
+/* The three lands through the ?/ door (lands.mjs; .spw/surfaces/three-lands.spw): every room whole and kept to its
+ * guards, every chapter twinned with exactly one room, and the chapter carrying a Twinned door to it. */
+{
+  const landsFile = await read('book/content/world/lands.json').catch(() => null);
+  if (!landsFile) error('lands', 'book/content/world/lands.json will not load');
+  else {
+    const byNumber = new Map(chapters.map((c) => [c.chapterNumber, c]));
+    landProblems(landsFile, { chapters: chapters.length, routesOf: (n) => byNumber.get(n)?.relatedRoutes || [] }).forEach((p) => error('lands', p));
+    const rooms = landsFile.lands.reduce((sum, l) => sum + l.rooms.length, 0);
+    notes.push(`lands: ${landsFile.lands.map((l) => `${l.id} ${l.rooms.length}`).join(', ')} rooms (${rooms}); every chapter twinned`);
+  }
+}
+
 /* Events through the ?/ door (route-events.mjs): each entry whole, no two on one surface, none on a pack's surface. */
 {
   const eventsFile = await read('book/content/events.json').catch(() => null);
@@ -655,7 +669,7 @@ for (const entry of packIndex.packs) {
   const seen = new Set();
   events.forEach((e) => { if (seen.has(e.surface)) error('events', `${e.surface} is two events`); seen.add(e.surface); });
   const packSurfaces = new Set(packIndex.packs.map((entry) => String(entry.route || '').split('/')[1]).filter(Boolean));
-  events.forEach((e) => { if (packSurfaces.has(e.surface) || e.surface === 'autonomous.feedback') error('events', `${e.surface} is already a surface, not an event`); });
+  events.forEach((e) => { if (packSurfaces.has(e.surface) || e.surface === 'autonomous.feedback' || /^(boon|bane|bone)\.land$/.test(e.surface)) error('events', `${e.surface} is already a surface, not an event`); });
   notes.push(`events: ${events.length} through the ?/ door (${events.map((e) => e.surface).join(', ')})`);
 }
 

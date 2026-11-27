@@ -1,20 +1,24 @@
-# Chapter 25 Ecology — The Warm Hearth Before the Feast
+# Chapter 25 Ecology — Before the Vault Opens Itself
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_25_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 12 of 13: {} body.
+  Chapter 25 measured from its canon. Ring 12 of 13, {} body: containment, state accumulation, and release. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 12.
 }
 
 ^"identity"{
   chapter: 25
   book: 2
   ring: 12
-  title: "The Warm Hearth Before the Feast"
-  mood: "planned"
+  title: "Before the Vault Opens Itself"
+  mood: "boon"
   period: "winter"
+  logline: "Inside Bonk City's crowded bakehouse vault, every unfinished ingredient from Book Two simmers under one brick arch while hungry clowns wait with startling politeness outside the doors."
+  epigraph: "Open nothing before it has filled; wait one breath too long, and the vault opens itself."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "discharges upward into integration (^)"
   represents: "Containment, state accumulation, and release"
   next_construct: "^ (integration)"
-  planned_open_posture: "{} entry"
-  planned_close_posture: "hands cleanly into ^"
-  modulators: { config: "body (peak containment)" measure: "%charge[full]" substrate: "$fire_brick_and_yeast" }
+  observed_open_room: "&{bakehouse_vault}@baker"
+  observed_close_room: ".{feast_eve}@the_land"
+  sigils_present: "& ~ % ."
+  sigils_absent: "# ? ! * @ ^ = $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "heat cycles across brick arches until every character converges under one enclosed roof"
 }
 
+^"craft"{
+  modulators: { config: "body (peak containment)" measure: "%charge[full]" substrate: "$fire_brick_and_yeast" }
+  compost: "accumulates full Ring 2 tension right before the Feast of the Uneven Slice spills over"
+  !watch: "Ring 2 Slot 12 ({}): mirror ch12 convergence while keeping the hat unsettled until ch26"
+  mode: "Dorian polyrhythm"
+  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2 (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "Under One Vault" .spw: "&{bakehouse_vault}@baker" container: "room" $material: "steam" =lean: "boon" %words: 137 %sentences: 5 %paragraphs: 3 }
+  s02: { title: "The warming rack" .spw: "~{warming_rack}@boonwap" container: "room" $material: "flour" =lean: "boon" %words: 144 %sentences: 6 %paragraphs: 3 }
+  s03: { title: "The ember pressure" .spw: "%{ember_pressure}@boof" container: "room" $material: "flour" =lean: "bone" %words: 154 %sentences: 7 %paragraphs: 3 }
+  s04: { title: "The feast eve" .spw: ".{feast_eve}@the_land" container: "room" $material: "brass" =lean: "boon" %words: 94 %sentences: 5 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 529
+  %sentences: 23
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 1.9
+  %reading_minutes: 2.3
+  %words_per_sentence: 23
+  %sentences_per_paragraph: 2.1
+  %paragraphs_per_minute: 4.8
+}
+
+~"flow"{
+  room_words: "137 144 154 94"
+  room_shape: "▇██▅"
+  %sentence_spread: 10
+  %longest_sentence: 47
+  %spoken_share: 0
+  lane_pace: "5 6 8 7 5"
+  page_and_lane: "r 0.65"
+  page_and_lane_reads: "rhymes"
+}
+
+^"dimensions"{
+  lean: "boon 3, bone 1"
+  material: "flour 2, brass 1, steam 1"
+  container: "room 4"
+  cast: "boof 1, boon 1"
+  tropes: ""
+  wonders_echoed: "early-bees bonk-kiln hearth-drift open-nothing-before-it-has-filled"
+  %title_on_page: 1
+  %biome_on_page: 0.6
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/25.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/25.json"
+  canon_mirror: ~"../../chapters/25.spw"
+  plate: ~"../../../book/images/25.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-25.jpg"
+  palette: "hearth-vault"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "accumulates full Ring 2 tension right before the Feast of the Uneven Slice spills over"
-  !digestive_watch: "Ring 2 Slot 12 ({}): mirror ch12 convergence while keeping the hat unsettled until ch26"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 104
+  %root: 329.63
+  note_name: "E4"
+  %swing: 54
+  ~motif: [0 4 7 9 12 9]
+  @theme: vault
+  *rhythm: hearth_vent
+  pattern: "X.x..x..X.x..x.."
+  rhythm_name: "Embers before the latch"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../24/ecology.spw"
   &next: ~"../26/ecology.spw"
   &octave_twin: ~"../12/ecology.spw#chapter_12_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 329.63
-  mode: "Dorian polyrhythm"
-  tonal_role: "V/V supertonic E4 braiding two rivers across 3+3+2 (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

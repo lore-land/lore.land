@@ -7,7 +7,8 @@
 
 ^"meta"{
   .updated: "2026-11-16"
-  .role: "Cross-surface design proposals for factshift.center and spw.quest grounded in cognitive, interactive, and semiotic navigation theory"
+  .role: "Cross-surface design proposals for factshift.center and spw.quest, thought through with frames borrowed from cognitive, interactive, and semiotic navigation theory"
+  .posture: "proposals for the makers of factshift.center and spw.quest, not tasks for an agent reading lore.land. The theories named are frames to think with, not laws; the gains are hoped for, not measured"
   .consumer: "factshift.center + spw.quest + spw-workbench + lore.land"
   .companion_surface: ~".spw/surfaces/workbench-proposals.spw#lore_land_surfaces_workbench_proposals"
   .upstream_caches: [
@@ -52,7 +53,7 @@
   epistemic_actions: {
     principle: "Kirsh & Maglio Epistemic Action vs Pragmatic Action"
     mechanism: "In both factshift.center and spw.quest/pivot, gestures default to epistemic priming (~ potential) before pragmatic commitment (! action -> * receipt). Scrubbing the operator slider or edge rail shows the resulting expression, spoken gloss, and force shift in place before the user commits."
-    cognitive_gain: "Eliminates mental lookahead burden and syntax-error anxiety: learners explore the grammar by reversible physical probing rather than blind typing."
+    hoped_gain: "Not measured: less mental lookahead and less fear of syntax errors, if learners can probe the grammar reversibly instead of typing blind."
   }
   embodied_image_schemas: {
     principle: "Lakoff/Johnson Sensorimotor Containers & Talmy Force Dynamics"
@@ -156,7 +157,7 @@
   q1_zero_trace_parse_and_precomputed_shelf: {
     target: "workers/spw-quest/src/file-reader.js, public/js/semantic/spw-workbench-reader.js"
     proposal: [
-      "Consume the zero-trace parse(input) fast path (collect: false skipping performance.now() and generator trace yields) to cut cold-start CPU time by ~70% and prevent Cloudflare Worker 1102/1027 limits.",
+      "Consume the zero-trace parse(input) fast path (collect: false skipping performance.now() and generator trace yields) which might cut cold-start CPU time a good deal (an estimate, not measured here) and help avoid Cloudflare Worker 1102/1027 limits.",
       "Precompute SPECIMENS slot readings and USAGE counts at build time in carry-guide.mjs alongside assets/index.html so Worker isolates start with zero cold-parse work."
     ]
   }

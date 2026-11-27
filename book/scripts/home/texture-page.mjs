@@ -16,6 +16,7 @@
 import { loadPacks, schemeParts, PLAN_STATES } from '../modules/packs.mjs?v=2026_11_11.A';
 import { readRoute, writeRoute, resolveRoute, TRY } from '../modules/texture-routes.mjs?v=2026_11_16.B';
 import { loadEvents, eventState, daysBetween, localDay } from '../modules/route-events.mjs?v=2026_11_11.A';
+import { LANDS_SRC, landRoute } from '../modules/lands.mjs?v=2026_11_16.B';
 import { TOTAL_CHAPTERS, NEXT_STONE } from '../modules/book-extent.mjs';
 import { MATERIALS, PHYSICS, factshiftAddress, physicsDelta } from '../modules/texture-materials.mjs?v=2026_11_09.H';
 import { VERBS, passThrough } from '../modules/quest-middleware.mjs?v=2026_11_09.H';
@@ -462,6 +463,8 @@ const DIALS_BY_OP = DIALS;
 let packsCache = [];
 let findingsCache = null;
 let eventsCache = [];
+let landsCache = [];
+let landsDoc = null;
 
 /* ─── Events, through the same door (route-events.mjs): a standing day, a dated release, a promotional window ─── */
 const longDate = (iso) => new Date(`${iso}T12:00:00`).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
@@ -496,6 +499,46 @@ async function paintEvent(event) {
     return;
   }
   body.replaceChildren(...(event.lands && s.state !== 'before' ? [el('p', {}, el('a', { href: event.lands.startsWith('?/') ? `/${event.lands}` : event.lands }, 'Go there \u2192'))] : []));
+}
+
+/* ─── The three lands (lands.mjs): a sign, a weather, the bylaws, and the rooms, each twinned with a chapter ─── */
+let catalogCache = null;
+const catalog = async () => (catalogCache = catalogCache || await fetch('/book/content/catalog.json').then((r) => (r.ok ? r.json() : null)).catch(() => null));
+async function paintLand({ land, room }) {
+  const book = await catalog();
+  const chapter = (n) => (book?.chapters || []).find((c) => c.number === n);
+  const others = landsCache.filter((l) => l.id !== land.id);
+  const view = $('[data-land-view]');
+  view.dataset.lean = land.lean;
+  $('[data-land-kicker]').textContent = `${land.id} · a land, through lore.land`;
+  $('[data-land-title]').textContent = land.id;
+  $('[data-land-welcome]').textContent = land.welcome;
+  $('[data-land-facts]').replaceChildren(
+    el('dt', {}, 'Asks'), el('dd', {}, land.question),
+    el('dt', {}, 'Weather'), el('dd', {}, land.weather),
+    el('dt', {}, 'Mind'), el('dd', {}, land.danger));
+  // A room named in the address comes first; the others keep their order.
+  const rooms = room ? [...land.rooms.filter((r) => r.id === room), ...land.rooms.filter((r) => r.id !== room)] : land.rooms;
+  $('[data-land-rooms]').replaceChildren(...rooms.map((r) => el('li', { className: `land-room${r.id === room ? ' is-named' : ''}`, id: r.id },
+    el('h3', {}, el('a', { href: `/${landRoute(land.id, r.id)}` }, r.room)),
+    el('p', { className: 'land-room-rule' }, r.rule),
+    el('p', { className: 'land-room-who' }, el('span', {}, 'Residents · '), r.residents),
+    el('p', { className: 'land-room-want' }, el('span', {}, 'Want · '), r.want),
+    ...(r.twinned || []).map((n) => {
+      const c = chapter(n);
+      return el('p', { className: 'land-room-twin' }, el('span', {}, 'Twinned with · '),
+        el('a', { href: `/book/chapter/${String(n).padStart(2, '0')}/` }, `Chapter ${n}${c ? `, ${c.title}` : ''}`));
+    }))));
+  if (room && !land.rooms.some((r) => r.id === room)) $('[data-land-rooms]').prepend(el('li', { className: 'land-room is-missing' }, el('p', {}, `No room called ${room} in ${land.id}. These are the rooms it keeps.`)));
+  $('[data-land-bylaws]').replaceChildren(...land.bylaws.map((b, i) => el('li', {}, el('span', {}, `Bylaw ${i + 1}. `), b)));
+  $('[data-land-berries]').textContent = land.berries;
+  $('[data-land-crossings]').replaceChildren(...(landsDoc?.crossings || []).map((x) => el('li', {},
+    el('span', { className: 'land-crossing-thing' }, x.thing), ' ',
+    el('span', { className: 'land-crossing-here' }, x[land.id]),
+    ...others.map((o) => [' · ', el('a', { href: `/${landRoute(o.id)}` }, el('span', { className: 'land-crossing-where' }, `${o.id}: `), x[o.id])]).flat())));
+  $('[data-land-signpost]').replaceChildren(...others.map((o) => el('a', { className: 'land-sign-arm', href: `/${landRoute(o.id)}` },
+    el('span', { className: 'land-sign-name' }, o.id), el('span', { className: 'land-sign-distance' }, o.distance))),
+  el('a', { className: 'land-sign-arm is-home', href: '/#chapter-list' }, el('span', { className: 'land-sign-name' }, 'lore.land'), el('span', { className: 'land-sign-distance' }, 'back the way you came')));
 }
 
 /* ─── One piece of texture.website (texture-finds.mjs): drawn until it turns up in the lanes, then the scan ─── */
@@ -576,7 +619,8 @@ function paint() {
   }
   paintReceipts(receipts);
   paintRoute();
-  const answer = resolveRoute(route, packsCache, eventsCache);
+  const answer = resolveRoute(route, packsCache, eventsCache, landsCache);
+  $('[data-land-view]').hidden = answer.kind !== 'land';
   $('[data-event-view]').hidden = answer.kind !== 'event';
   $('[data-piece-view]').hidden = answer.kind !== 'piece';
   $('[data-maker-view]').hidden = answer.kind !== 'pack';
@@ -584,7 +628,8 @@ function paint() {
   $('[data-surface-view]').hidden = answer.kind !== 'surface';
   $('[data-unknown-view]').hidden = answer.kind !== 'unknown' && answer.kind !== 'none';
   $('[data-post-view]').hidden = answer.kind !== 'post';
-  document.title = answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : answer.kind === 'post' ? `autonomous.feedback · Lore.Land` : answer.kind === 'event' ? `${answer.event.title} · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
+  document.title = answer.kind === 'land' ? `${answer.land.id} · Lore.Land` : answer.kind === 'pack' ? `${answer.pack.title} · Lore.Land` : answer.kind === 'post' ? `autonomous.feedback · Lore.Land` : answer.kind === 'event' ? `${answer.event.title} · Lore.Land` : `${route?.raw || '?/'} · Lore.Land`;
+  if (answer.kind === 'land') { paintLand(answer); return; }
   if (answer.kind === 'post') { paintPost(answer); return; }
   if (answer.kind === 'event') { paintEvent(answer.event); return; }
   if (answer.kind === 'piece') { paintPiece(answer.id); return; }
@@ -616,11 +661,14 @@ async function start() {
   history.replaceState(null, '', `/${route.raw}${location.hash}`);
   paintRoute();
   $('[data-route-try]').replaceChildren(...TRY.map(([r, says]) => el('li', {}, el('a', { href: `/${r}` }, el('code', {}, r)), ` ${says}`)));
-  const [packs, handData, events] = await Promise.all([
+  const [packs, handData, events, lands] = await Promise.all([
     loadPacks(),
     fetch('/book/fonts/spwashi/hand.json').then((r) => { if (!r.ok) throw new Error(`hand.json ${r.status}`); return r.json(); }),
-    loadEvents()
+    loadEvents(),
+    fetch(LANDS_SRC).then((r) => (r.ok ? r.json() : null)).catch(() => null)
   ]);
+  landsDoc = lands;
+  landsCache = Array.isArray(lands?.lands) ? lands.lands : [];
   hand = handData;
   eventsCache = events;
   packsCache = packs;

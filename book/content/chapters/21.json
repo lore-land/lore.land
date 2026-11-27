@@ -46,7 +46,12 @@
       "kicker": "Guide"
     },
     {
-      "label": "Chamber 22 · Through the Chute With No Receipt",
+      "label": "bone.land · the low road",
+      "href": "/?/bone.land/*the-low-road",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 22 · Three Roofs Higher",
       "href": "/book/chapter/22/",
       "kicker": "Next"
     }

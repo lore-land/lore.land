@@ -1,11 +1,13 @@
 # Chapter 17 Ecology — Ledger of Unasked Questions
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_17_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 4 of 13: ? probe.
+  Chapter 17 measured from its canon. Ring 4 of 13, ? probe: inquiry before commitment. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 4.
 }
 
 ^"identity"{
@@ -13,8 +15,10 @@
   book: 2
   ring: 4
   title: "Ledger of Unasked Questions"
-  mood: "planned"
+  mood: "inquiry"
   period: "winter"
+  logline: "In the checkered inquiry pavilion, clerks file every answer before anyone poses a question, and an unspent coincidence from the market stone turns up in a tray nobody owns."
+  epigraph: "An answer filed early has nowhere to put the stranger who arrives with four corners."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "provokes a decisive act (!)"
   represents: "Inquiry before commitment"
   next_construct: "! (action)"
-  planned_open_posture: "? entry"
-  planned_close_posture: "hands cleanly into !"
-  modulators: { config: "probe (civic doubt)" measure: "%blanks_filed[uncounted]" substrate: "$blotter_rag_and_ash" }
+  observed_open_room: "?[blank_ledger]@clerk"
+  observed_close_room: ".{blotter_dust}@clerk"
+  sigils_present: "? & ."
+  sigils_absent: "~ # ! * @ ^ = % $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "unasked riddles linger under benches until someone drops a coin or asks the dog by mistake"
 }
 
+^"craft"{
+  modulators: { config: "probe (civic doubt)" measure: "%blanks_filed[uncounted]" substrate: "$blotter_rag_and_ash" }
+  compost: "revisits the unspent ch07 coincidence as an administrative puzzle nobody owns"
+  !watch: "Ring 2 Slot 4 (?): needs a puzzle with zero clean civic answer to preserve Ch04 echo"
+  mode: "Phrygian / sus2"
+  tonal_role: "+1 semitone wind shear against D4 tonic open without resolution (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The Checkered Pavilion" .spw: "?[blank_ledger]@clerk" container: "window" $material: "brass" =lean: "bane" %words: 165 %sentences: 7 %paragraphs: 3 }
+  s02: { title: "The four corners" .spw: "?{four_corners}@the_land" container: "room" $material: "ink" =lean: "bane" %words: 144 %sentences: 8 %paragraphs: 3 }
+  s03: { title: "The stray coincidence" .spw: "&(stray_coincidence)@boof" container: "gathering" $material: "berry" =lean: "boon" %words: 143 %sentences: 9 %paragraphs: 3 }
+  s04: { title: "The blotter dust" .spw: ".{blotter_dust}@clerk" container: "room" $material: "flour" =lean: "bone" %words: 97 %sentences: 5 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 549
+  %sentences: 29
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 2
+  %reading_minutes: 2.4
+  %words_per_sentence: 18.9
+  %sentences_per_paragraph: 2.6
+  %paragraphs_per_minute: 4.6
+}
+
+~"flow"{
+  room_words: "165 144 143 97"
+  room_shape: "█▇▇▅"
+  %sentence_spread: 8.6
+  %longest_sentence: 36
+  %spoken_share: 0.04
+  lane_pace: "3 4 6 5 4"
+  page_and_lane: "r -0.18"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "bane 2, bone 1, boon 1"
+  material: "berry 1, brass 1, flour 1, ink 1"
+  container: "room 2, gathering 1, window 1"
+  cast: "boof 1"
+  tropes: ""
+  wonders_echoed: "weathercocks oath-moths shelf-owls a-box-for-what-you-do-not-know"
+  %title_on_page: 0.33
+  %biome_on_page: 0.48
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/17.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/17.json"
+  canon_mirror: ~"../../chapters/17.spw"
+  plate: ~"../../../book/images/17.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-17.jpg"
+  palette: "blotter-check"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "revisits the unspent ch07 coincidence as an administrative puzzle nobody owns"
-  !digestive_watch: "Ring 2 Slot 4 (?): needs a puzzle with zero clean civic answer to preserve Ch04 echo"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 88
+  %root: 311.13
+  note_name: "Eb4"
+  %swing: 50
+  ~motif: [0 2 5 7 5 2]
+  @theme: pavilion
+  *rhythm: unasked_stamp
+  pattern: "X.x...x.X...x..."
+  rhythm_name: "Stamps before the question"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../16/ecology.spw"
   &next: ~"../18/ecology.spw"
   &octave_twin: ~"../04/ecology.spw#chapter_04_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 311.13
-  mode: "Phrygian / sus2"
-  tonal_role: "+1 semitone wind shear against D4 tonic open without resolution (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

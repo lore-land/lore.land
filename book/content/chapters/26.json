@@ -36,7 +36,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 25 · The Warm Hearth Before the Feast",
+      "label": "Chamber 25 · Before the Vault Opens Itself",
       "href": "/book/chapter/25/",
       "kicker": "Prev"
     },
@@ -49,6 +49,11 @@
       "label": "Book One · Dawn in Boon.land",
       "href": "/book/chapter/01/",
       "kicker": "Begin Again"
+    },
+    {
+      "label": "boon.land · the long table, unset",
+      "href": "/?/boon.land/*the-long-table-unset",
+      "kicker": "Twinned"
     }
   ],
   "lexicon": [

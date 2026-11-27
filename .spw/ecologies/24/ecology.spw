@@ -1,11 +1,13 @@
 # Chapter 24 Ecology — Four Windows in One Wall
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_24_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 11 of 13: [] frame.
+  Chapter 24 measured from its canon. Ring 11 of 13, [] frame: indexing, filtering, and borderline paradox. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 11.
 }
 
 ^"identity"{
@@ -13,8 +15,10 @@
   book: 2
   ring: 11
   title: "Four Windows in One Wall"
-  mood: "planned"
+  mood: "labyrinth"
   period: "winter"
+  logline: "Four judges peer through four masking shutters cut in the same wall and prove four cleanly opposite laws while the unnamed figure strolls unbroken behind all of them."
+  epigraph: "Each shutter proved a flawless law and missed three quarters of the courtyard."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "accumulates charge inside a body ({})"
   represents: "Indexing, filtering, and borderline paradox"
   next_construct: "{} (body)"
-  planned_open_posture: "[] entry"
-  planned_close_posture: "hands cleanly into {}"
-  modulators: { config: "frame (contrastive index)" measure: "%shutters[4]" substrate: "$painted_pine_and_felt" }
+  observed_open_room: "=[shutter_wall]@judge"
+  observed_close_room: ".[open_courtyard]@judge"
+  sigils_present: "= ? ! ."
+  sigils_absent: "~ # * & @ ^ % $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "opening two shutters at once throws crossing shadows that cancel each frame independently"
 }
 
+^"craft"{
+  modulators: { config: "frame (contrastive index)" measure: "%shutters[4]" substrate: "$painted_pine_and_felt" }
+  compost: "aligns directly with /pie/ split-panel UI and paradoxical rule lenses ([])"
+  !watch: "Ring 2 Slot 11 ([]): avoid turning frames into cold riddleboxes—keep visual slapstick vivid"
+  mode: "Locrian / Raised-6th"
+  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The Partitioned Booth" .spw: "=[shutter_wall]@judge" container: "window" $material: "oak" =lean: "bane" %words: 132 %sentences: 5 %paragraphs: 3 }
+  s02: { title: "The four shutters" .spw: "?[four_shutters]@the_land" container: "window" $material: "ink" =lean: "boon" %words: 160 %sentences: 7 %paragraphs: 3 }
+  s03: { title: "The double shutter" .spw: "![double_shutter]@boof" container: "window" $material: "glass" =lean: "boon" %words: 150 %sentences: 7 %paragraphs: 3 }
+  s04: { title: "The open courtyard" .spw: ".[open_courtyard]@judge" container: "window" $material: "brass" =lean: "" %words: 87 %sentences: 5 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 529
+  %sentences: 24
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 1.9
+  %reading_minutes: 2.3
+  %words_per_sentence: 22
+  %sentences_per_paragraph: 2.2
+  %paragraphs_per_minute: 4.8
+}
+
+~"flow"{
+  room_words: "132 160 150 87"
+  room_shape: "▇██▅"
+  %sentence_spread: 12
+  %longest_sentence: 51
+  %spoken_share: 0.02
+  lane_pace: "4 6 7 6 4"
+  page_and_lane: "r 0.77"
+  page_and_lane_reads: "rhymes"
+}
+
+^"dimensions"{
+  lean: "boon 2, bane 1"
+  material: "brass 1, glass 1, ink 1, oak 1"
+  container: "window 4"
+  cast: "boof 1"
+  tropes: ""
+  wonders_echoed: "brace-boxes door-rule council-slab write-it-before-you-argue-it"
+  %title_on_page: 1
+  %biome_on_page: 0.65
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/24.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/24.json"
+  canon_mirror: ~"../../chapters/24.spw"
+  plate: ~"../../../book/images/24.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-24.jpg"
+  palette: "four-shutters"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "aligns directly with /pie/ split-panel UI and paradoxical rule lenses ([])"
-  !digestive_watch: "Ring 2 Slot 11 ([]): avoid turning frames into cold riddleboxes—keep visual slapstick vivid"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 100
+  %root: 246.94
+  note_name: "B3"
+  %swing: 50
+  ~motif: [0 3 7 10 7 3]
+  @theme: shutters
+  *rhythm: four_shutters
+  pattern: "X...X...X...x..."
+  rhythm_name: "Four shutters in one wall"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../23/ecology.spw"
   &next: ~"../25/ecology.spw"
   &octave_twin: ~"../11/ecology.spw#chapter_11_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 246.94
-  mode: "Locrian / Raised-6th"
-  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

@@ -46,6 +46,11 @@
       "kicker": "World"
     },
     {
+      "label": "bane.land · the seating office",
+      "href": "/?/bane.land/*the-seating-office",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 17 · Ledger of Unasked Questions",
       "href": "/book/chapter/17/",
       "kicker": "Next"

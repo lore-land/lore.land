@@ -1,20 +1,24 @@
-# Chapter 11 Ecology — Paradox Bloom
+# Chapter 11 Ecology — The Crown Was Wasps
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_11_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 11 of 13: [] frame.
+  Chapter 11 measured from its canon. Ring 11 of 13, [] frame: indexing, filtering, and borderline paradox. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 24.
 }
 
 ^"identity"{
   chapter: 11
   book: 1
   ring: 11
-  title: "Paradox Bloom"
+  title: "The Crown Was Wasps"
   mood: "awakening"
   period: "spring"
+  logline: "BaneWAP seizes the egg and wishes huge — and the wish grants at once, minimum-viable, an empire hollow as a rented crown."
+  epigraph: "A grand wish grants easily. It is the finishing that never comes."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "{} (body)"
   observed_open_room: "!(bloom_garden)@banewap"
   observed_close_room: "=<blackthorn_gap>@boof"
-  modulators: { config: "awakening (paradox bloom)" measure: "%thorns[hopped]" substrate: "$blackthorn_and_wasp_wax" }
+  sigils_present: "! * $ ~ ="
+  sigils_absent: "# . ? & @ ^ %"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "crown-wasps guarding blooms, early bees braving frost, BaneWAP posting legalisms on petals"
   irritant: "an off switch printed right inside the villainous clause while roses grow across every lane"
   circulation: "frost holds stems stiff until a hopped breath shakes nectar loose from the thorns"
+}
+
+^"craft"{
+  modulators: { config: "awakening (paradox bloom)" measure: "%thorns[hopped]" substrate: "$blackthorn_and_wasp_wax" }
+  compost: "the bloom-garden trial logic in /pie/ and BaneWAP self-refuting clauses"
+  !watch: "strong [] paradoxical framing in court rules; opens directly on !(bloom_garden)"
+  mode: "Locrian / Raised-6th"
+  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed"
+}
+
+^"stations"[
+  s01: { title: "The bloom garden" .spw: "!(bloom_garden)@banewap" container: "gathering" $material: "flour" =lean: "bane" %words: 710 %sentences: 57 %paragraphs: 12 }
+  s02: { title: "The split crust" .spw: "*[split_crust]@banewap" container: "window" $material: "flour" =lean: "boon" %words: 145 %sentences: 15 %paragraphs: 3 }
+  s03: { title: "The throne step" .spw: "$<throne_step>@the_fool" container: "passage" $material: "oak" =lean: "bane" %words: 53 %sentences: 4 %paragraphs: 2 }
+  s04: { title: "The Wish That Would Not Finish" .spw: "~{quince_rise}@boof" container: "room" $material: "steam" =lean: "boon" %words: 430 %sentences: 30 %paragraphs: 8 }
+  s05: { title: "The blackthorn gap" .spw: "=<blackthorn_gap>@boof" container: "passage" $material: "" =lean: "" %words: 47 %sentences: 4 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 1385
+  %sentences: 110
+  %paragraphs: 27
+  %rooms: 5
+  %pages: 5
+  %reading_minutes: 6
+  %words_per_sentence: 12.6
+  %sentences_per_paragraph: 4.1
+  %paragraphs_per_minute: 4.5
+}
+
+~"flow"{
+  room_words: "710 145 53 430 47"
+  room_shape: "█▂▂▅▁"
+  %sentence_spread: 9.2
+  %longest_sentence: 47
+  %spoken_share: 0.02
+  lane_pace: "9 8 6 4 2"
+  page_and_lane: "r 0.5"
+  page_and_lane_reads: "rhymes"
+}
+
+^"dimensions"{
+  lean: "bane 2, boon 2"
+  material: "flour 2, oak 1, steam 1"
+  container: "passage 2, gathering 1, room 1, window 1"
+  cast: "bane 2, boof 2"
+  tropes: "silent-protest off-switch said-so plain-lines warm-question"
+  wonders_echoed: "rehearsal-moths"
+  %title_on_page: 1
+  %biome_on_page: 0.48
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 4 }
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 2 lore_lines: 7 }
   wonder_ids: ["crown-wasps", "early-bees", "open-nothing-before-it-has-filled", "pressed-rose"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "the bloom-garden trial logic in /pie/ and BaneWAP self-refuting clauses"
-  !digestive_watch: "strong [] paradoxical framing in court rules; opens directly on !(bloom_garden)"
+}
+
+^"music"{
+  %tempo: 100
+  %root: 246.94
+  note_name: "B3"
+  %swing: 50
+  ~motif: [4 7 9 7 4 2]
+  @theme: bloom
+  *rhythm: early_bloom
+  pattern: "..x...x...x...X."
+  rhythm_name: "Before the seed"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../10/ecology.spw"
   &next: ~"../12/ecology.spw"
   &octave_twin: ~"../24/ecology.spw#chapter_24_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 246.94
-  note_name: "B3"
-  %tempo: 100
-  %swing: 50
-  mode: "Locrian / Raised-6th"
-  tonal_role: "pre-cadential B3 anticipating the beat ahead of its seed"
-  ~motif: [4 7 9 7 4 2]
-  @theme: bloom
-  *rhythm: early_bloom
-  pattern: "..x...x...x...X."
 }
 
 ^"valence_edges"{

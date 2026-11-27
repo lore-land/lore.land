@@ -1,11 +1,13 @@
 # Chapter 08 Ecology — Songs of the Watering Eye
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_08_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 8 of 13: @ perspective.
+  Chapter 8 measured from its canon. Ring 8 of 13, @ perspective: standpoint and observer-relative truth. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 21.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "Songs of the Watering Eye"
   mood: "game"
   period: "spring"
+  logline: "At a tavern leaning over a well that folds every face it has held, the Genie prices wishes for locals — and Boof's small asks come back unpriceable."
+  epigraph: "The well keeps every face; the tavern keeps every round. Between them, all debts are known."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "<> (capsule)"
   observed_open_room: ".[folded_faces]@the_well"
   observed_close_room: "~<rocky_ridge>@boof"
-  modulators: { config: "game (observer inversion)" measure: "%fathoms[well]" substrate: "$limestone_and_wet_hemp" }
+  sigils_present: ". % = # ~"
+  sigils_absent: "? ! * & @ ^ $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "remembrancers tending pulley notches, well-winch singers, quiet observers from below"
   irritant: "buckets hauled up full of reflection when readers expected bucketed facts"
   circulation: "singing down the well returns the song slower, pitched to the depth of water left"
+}
+
+^"craft"{
+  modulators: { config: "game (observer inversion)" measure: "%fathoms[well]" substrate: "$limestone_and_wet_hemp" }
+  compost: "sub-surface perspective shift (@) priming ch14 and the subterranean salt under Bonk City"
+  !watch: "another low lull (total 5); strong @ observer keeper (@the_well), zero lanes intro yet"
+  mode: "Mixolydian reflection"
+  tonal_role: "mirrored subtonic C4 echoing depths from the well"
+}
+
+^"stations"[
+  s01: { title: "The folded faces" .spw: ".[folded_faces]@the_well" container: "window" $material: "ink" =lean: "boon" %words: 364 %sentences: 21 %paragraphs: 5 }
+  s02: { title: "The taproom" .spw: "%(taproom)@genie" container: "gathering" $material: "ink" =lean: "bane" %words: 483 %sentences: 35 %paragraphs: 6 }
+  s03: { title: "The trapdoor" .spw: "=<trapdoor>@the_fool" container: "passage" $material: "brass" =lean: "bone" %words: 67 %sentences: 2 %paragraphs: 2 }
+  s04: { title: "The Unpriceable Want" .spw: "#{well_rim}@the_well" container: "room" $material: "glass" =lean: "boon" %words: 389 %sentences: 34 %paragraphs: 7 }
+  s05: { title: "The rocky ridge" .spw: "~<rocky_ridge>@boof" container: "passage" $material: "oak" =lean: "" %words: 124 %sentences: 10 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 1427
+  %sentences: 102
+  %paragraphs: 22
+  %rooms: 5
+  %pages: 5.2
+  %reading_minutes: 6.2
+  %words_per_sentence: 14
+  %sentences_per_paragraph: 4.6
+  %paragraphs_per_minute: 3.5
+}
+
+~"flow"{
+  room_words: "364 483 67 389 124"
+  room_shape: "▆█▂▇▃"
+  %sentence_spread: 9.4
+  %longest_sentence: 42
+  %spoken_share: 0.04
+  lane_pace: "3 6 5 3 4"
+  page_and_lane: "r -0.01"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 2, bane 1, bone 1"
+  material: "ink 2, brass 1, glass 1, oak 1"
+  container: "passage 2, gathering 1, room 1, window 1"
+  cast: "boof 1, genie 1"
+  tropes: "slow-gift missing-day"
+  wonders_echoed: "torch-ants want-needle resolution-glass listen-before-you-mend"
+  %title_on_page: 0.67
+  %biome_on_page: 0.46
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 9 }
   wonder_ids: ["remembrancers", "well-winch", "the-winch-song-underneath"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "sub-surface perspective shift (@) priming ch14 and the subterranean salt under Bonk City"
-  !digestive_watch: "another low lull (total 5); strong @ observer keeper (@the_well), zero lanes intro yet"
+}
+
+^"music"{
+  %tempo: 92
+  %root: 261.63
+  note_name: "C4"
+  %swing: 50
+  ~motif: [0 0 2 2 4 2]
+  @theme: well
+  *rhythm: well_drips
+  pattern: "X.......x......."
+  rhythm_name: "Drips at the well's rim"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../07/ecology.spw"
   &next: ~"../09/ecology.spw"
   &octave_twin: ~"../21/ecology.spw#chapter_21_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 261.63
-  note_name: "C4"
-  %tempo: 92
-  %swing: 50
-  mode: "Mixolydian reflection"
-  tonal_role: "mirrored subtonic C4 echoing depths from the well"
-  ~motif: [0 0 2 2 4 2]
-  @theme: well
-  *rhythm: well_drips
-  pattern: "X.......x......."
 }
 
 ^"valence_edges"{

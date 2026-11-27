@@ -1,9 +1,9 @@
 {
   "chapterNumber": 3,
-  "title": "Signals in the Sand",
+  "title": "The Salt-Whale Roads",
   "logline": "Where two old routes want to be one turn, Boof digs up a Discount Genie who can grant anything — except see what she wants.",
   "epigraph": "Perfect version costs a miracle. Mediocre version costs one coincidence and a Thursday.",
-  "description": "Chapter 3 of Lore.Land: Signals in the Sand. Boof carries the unspent wish onto the wind-cut flats, where two buried routes, old salt-whale roads, want to be one turn, and finds the Off-Season Genie folded in a half-buried bottle — retired, deadpan, and unable to read a want as small as hers.",
+  "description": "Chapter 3 of Lore.Land: The Salt-Whale Roads. Boof carries the unspent wish onto the wind-cut flats, where two buried routes, old salt-whale roads, want to be one turn, and finds the Off-Season Genie folded in a half-buried bottle — retired, deadpan, and unable to read a want as small as hers.",
   "mood": "paradox",
   "period": "spring",
   "pillars": [
@@ -40,7 +40,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 02 · Echo",
+      "label": "Chamber 02 · Breath",
       "href": "/book/chapter/02/",
       "kicker": "Prev"
     },
@@ -50,7 +50,12 @@
       "kicker": "Guide"
     },
     {
-      "label": "Chamber 04 · Council",
+      "label": "bone.land · the old roads office",
+      "href": "/?/bone.land/*the-old-roads-office",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 04 · Key",
       "href": "/book/chapter/04/",
       "kicker": "Next"
     }

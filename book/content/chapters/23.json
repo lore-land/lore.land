@@ -1,10 +1,10 @@
 {
   "chapterNumber": 23,
-  "title": "Rehearsal of the Night School",
+  "title": "Pi at the Night School",
   "logline": "After the day's work, grown-up porters, lamplighters, and laundresses gather by tallow light to measure a pie tin with string and dividers — finding a circle that closes only when their voices hold one steady chord.",
   "epigraph": "Three widths and a stubborn sliver: a circle does not ask to be rounded off.",
   "inWhich": "grown-ups gather by tallow light to measure a circle with string and dividers that refuses to close evenly",
-  "description": "Chapter 23 of Lore.Land: Rehearsal of the Night School. In Bonk City's after-hours adult classroom, Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill, and the quiet new pupil drawn in plain lines sit at one oak bench with wooden pie-dividers, twine, and chalk. Measuring a pie tin proves pi refuses an integer, load-beetles click in the timber, and unison humming steadies shaky hands enough to meet at the center.",
+  "description": "Chapter 23 of Lore.Land: Pi at the Night School. In Bonk City's after-hours adult classroom, Clem Furrow, Ida Bell, the Kettle twins, Noor of the mill, and the quiet new pupil drawn in plain lines sit at one oak bench with wooden pie-dividers, twine, and chalk. Measuring a pie tin proves pi refuses an integer, load-beetles click in the timber, and unison humming steadies shaky hands enough to meet at the center.",
   "mood": "reflection",
   "period": "winter",
   "pillars": [
@@ -36,7 +36,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 22 · Through the Chute With No Receipt",
+      "label": "Chamber 22 · Three Roofs Higher",
       "href": "/book/chapter/22/",
       "kicker": "Prev"
     },
@@ -44,6 +44,11 @@
       "label": "Civic magic",
       "href": "/world/civic-magic.html",
       "kicker": "World"
+    },
+    {
+      "label": "bone.land · the bench",
+      "href": "/?/bone.land/*the-bench",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 24 · Four Windows in One Wall",
@@ -165,7 +170,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "Rehearsal of the Night School: wooden dividers, measured string, and a circle that refuses to round away its sliver."
+      "figcaption": "Pi at the Night School: wooden dividers, measured string, and a circle that refuses to round away its sliver."
     },
     {
       "type": "custom-song",

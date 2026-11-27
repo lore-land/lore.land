@@ -56,6 +56,7 @@
     &finds: ~"./finds.spw"
     &jokes: ~"./jokes.spw"
     &genie_practice: ~"./genie-practice.spw"
+    &substrate: ~"./substrate.spw"
     &gossip_and_kitchens: ~"./gossip-and-kitchens.spw"
     &places_in_the_lanes: ~"./places-in-the-lanes.spw"
     &reactions_in_the_lanes: ~"./reactions-in-the-lanes.spw"

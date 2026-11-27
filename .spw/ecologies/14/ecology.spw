@@ -1,11 +1,13 @@
 # Chapter 14 Ecology — The Thursday Nobody Kept
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_14_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 1 of 13: ~ potential.
+  Chapter 14 measured from its canon. Ring 1 of 13, ~ potential: what waits before being named. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 1.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "The Thursday Nobody Kept"
   mood: "path"
   period: "winter"
+  logline: "The Genie's price comes due: a Thursday goes missing from every person's week but not from the field — and on the day nobody kept, Boof finds someone standing under the hat."
+  epigraph: "A week can lose a day. A field never has."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "# (annotation)"
   observed_open_room: "?{kitchen_door}@boof"
   observed_close_room: "=<field_edge>@boof"
-  modulators: { config: "path (zero-person day)" measure: "%absent[thursday]" substrate: "$winter_frost_and_ember" }
+  sigils_present: "? . = @ * & !"
+  sigils_absent: "~ # ^ % $"
 }
 
 ^"biome"{
@@ -36,6 +41,59 @@
   symbiotes: "page-foxes skirting margins, hob-deer leaping fences, torch-ant line-crews lit from an arm tip"
   irritant: "a calendar day missing from every townsfolk pocket, leaving Friday crowded at the border"
   circulation: "one figure steps at 90 degrees across frozen contours, lighting a dead ant-torch with his own short arm"
+}
+
+^"craft"{
+  modulators: { config: "path (zero-person day)" measure: "%absent[thursday]" substrate: "$winter_frost_and_ember" }
+  compost: "a shortened right arm warming an ant-street and a gap left rectangular in the hawthorn hedge"
+  !watch: "slot 1 (~) chapter currently has 0 ~ rooms (?{kitchen_door} opens; @{warm_furrow} mid)—prime re-derivation candidate"
+  mode: "Lydian #4"
+  tonal_role: "suspended shimmer opening a held wish before it is receipted"
+}
+
+^"stations"[
+  s01: { title: "The Wrong Quiet" .spw: "?{kitchen_door}@boof" container: "room" $material: "frost" =lean: "boon" %words: 193 %sentences: 18 %paragraphs: 6 }
+  s02: { title: "The frost lane" .spw: ".[frost_lane]@boof" container: "window" $material: "frost" =lean: "boon" %words: 362 %sentences: 24 %paragraphs: 6 }
+  s03: { title: "The quarter turn" .spw: "=[quarter_turn]@the_berries" container: "window" $material: "berry" =lean: "boon" %words: 92 %sentences: 7 %paragraphs: 3 }
+  s04: { title: "The Hat Above the Furrow" .spw: "@{warm_furrow}@boof" container: "room" $material: "steam" =lean: "boon" %words: 397 %sentences: 32 %paragraphs: 10 }
+  s05: { title: "The ant torch" .spw: "*[ant_torch]@boof" container: "window" $material: "steam" =lean: "boon" %words: 250 %sentences: 17 %paragraphs: 7 }
+  s06: { title: "The bent lane" .spw: "&<bent_lane>@boof" container: "passage" $material: "ink" =lean: "boon" %words: 864 %sentences: 58 %paragraphs: 14 }
+  s07: { title: "Friday" .spw: "!(crier_cart)@the_crier" container: "gathering" $material: "ink" =lean: "bane" %words: 525 %sentences: 42 %paragraphs: 15 }
+  s08: { title: "The field edge" .spw: "=<field_edge>@boof" container: "passage" $material: "steam" =lean: "boon" %words: 143 %sentences: 11 %paragraphs: 5 }
+]
+
+%"scale"{
+  %words: 2826
+  %sentences: 209
+  %paragraphs: 66
+  %rooms: 8
+  %pages: 10.3
+  %reading_minutes: 12.3
+  %words_per_sentence: 13.5
+  %sentences_per_paragraph: 3.2
+  %paragraphs_per_minute: 5.4
+}
+
+~"flow"{
+  room_words: "193 362 92 397 250 864 525 143"
+  room_shape: "▃▄▂▄▃█▅▂"
+  %sentence_spread: 11.1
+  %longest_sentence: 73
+  %spoken_share: 0.01
+  lane_pace: "2 4 3 5 7"
+  page_and_lane: "r 0.09"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 7, bane 1"
+  material: "steam 3, frost 2, ink 2, berry 1"
+  container: "window 3, passage 2, room 2, gathering 1"
+  cast: "boof 6"
+  tropes: "floating-title plain-lines missing-day torch-arm"
+  wonders_echoed: "torch-ants echo-wrens lag-stag jazz-geese ink-herons open-brace hearth-drift try-it-again promise-the-next-stone open-nothing-before-it-has-filled leave-room-for-the-path waxed-slice"
+  %title_on_page: 1
+  %biome_on_page: 0.57
 }
 
 ^"assets"{
@@ -50,34 +108,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 8 sections: 9 wonders: 7 creatures: 3 lore_lines: 3 }
+  flora: { rooms: 8 sections: 9 wonders: 7 creatures: 3 lore_lines: 13 }
   wonder_ids: ["hob-deer", "page-fox", "keep-the-morning", "frill-lichen", "relit-torch", "criers-note", "found-line"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "a shortened right arm warming an ant-street and a gap left rectangular in the hawthorn hedge"
-  !digestive_watch: "slot 1 (~) chapter currently has 0 ~ rooms (?{kitchen_door} opens; @{warm_furrow} mid)—prime re-derivation candidate"
+}
+
+^"music"{
+  %tempo: 90
+  %root: 261.63
+  note_name: "C4"
+  %swing: 50
+  ~motif: [7 4 2 0]
+  @theme: thursday
+  *rhythm: kept_thursday
+  pattern: "X..............."
+  rhythm_name: "The Thursday nobody kept"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../13/ecology.spw"
   &next: ~"../15/ecology.spw"
   &octave_twin: ~"../01/ecology.spw#chapter_01_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 261.63
-  note_name: "C4"
-  %tempo: 90
-  %swing: 50
-  mode: "Lydian #4"
-  tonal_role: "suspended shimmer opening a held wish before it is receipted"
-  ~motif: [7 4 2 0]
-  @theme: thursday
-  *rhythm: kept_thursday
-  pattern: "X..............."
 }
 
 ^"valence_edges"{

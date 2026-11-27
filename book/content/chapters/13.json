@@ -46,7 +46,7 @@
   ],
   "relatedRoutes": [
     {
-      "label": "Chamber 12 · Confluence",
+      "label": "Chamber 12 · Furrow",
       "href": "/book/chapter/12/",
       "kicker": "Prev"
     },
@@ -54,6 +54,11 @@
       "label": "Civic offices",
       "href": "/world/civic-magic.html",
       "kicker": "World"
+    },
+    {
+      "label": "bone.land · the strata library",
+      "href": "/?/bone.land/*the-strata-library",
+      "kicker": "Twinned"
     },
     {
       "label": "Chamber 14 · The Thursday",

@@ -1,20 +1,24 @@
-# Chapter 05 Ecology — The Quiet Rift
+# Chapter 05 Ecology — Still Paying the Note
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_05_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 5 of 13: ! action.
+  Chapter 5 measured from its canon. Ring 5 of 13, ! action: state transition and consequence. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 18.
 }
 
 ^"identity"{
   chapter: 5
   book: 1
   ring: 5
-  title: "The Quiet Rift"
+  title: "Still Paying the Note"
   mood: "song"
   period: "spring"
+  logline: "Two claims pull at one warm egg until the floor itself parts — and the crack beneath the hall is still singing the price of a grand wish granted centuries ago."
+  epigraph: "Silence is not empty. It is two wants holding the same breath."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "* (value)"
   observed_open_room: "={arched_hall}@boof"
   observed_close_room: "^<archway>@boof"
-  modulators: { config: "song (bone-weighted)" measure: "%aperture[mm]" substrate: "$split_oak_and_chord" }
+  sigils_present: "= ^ $ %"
+  sigils_absent: "~ # . ? ! * & @"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "hum-crickets gauging seam width, crack-gauges, musicians listening before hammering"
   irritant: "price tags hung directly over structural fractures instead of shimming them"
   circulation: "pitch drops an octave whenever the hall widens by a millimeter under load"
+}
+
+^"craft"{
+  modulators: { config: "song (bone-weighted)" measure: "%aperture[mm]" substrate: "$split_oak_and_chord" }
+  compost: "the first mimes and acoustic crack discipline feeding Bone.land later in ch10"
+  !watch: "lacks direct ! action room despite slot 5 ! role—tension is carried via = and ^"
+  mode: "Chromatic leading-tone"
+  tonal_role: "-1 semitone below tonic D4: hairline fracture before release"
+}
+
+^"stations"[
+  s01: { title: "The arched hall" .spw: "={arched_hall}@boof" container: "room" $material: "ink" =lean: "bane" %words: 341 %sentences: 27 %paragraphs: 7 }
+  s02: { title: "The note stair" .spw: "^<note_stair>@the_song" container: "passage" $material: "" =lean: "" %words: 85 %sentences: 6 %paragraphs: 2 }
+  s03: { title: "The split desk" .spw: "$<split_desk>@the_floor" container: "passage" $material: "" =lean: "boon" %words: 58 %sentences: 5 %paragraphs: 2 }
+  s04: { title: "Wish-Physics Over the Crack" .spw: "%{crack_gauge}@genie" container: "room" $material: "brass" =lean: "bone" %words: 495 %sentences: 45 %paragraphs: 9 }
+  s05: { title: "The archway" .spw: "^<archway>@boof" container: "passage" $material: "glass" =lean: "boon" %words: 270 %sentences: 17 %paragraphs: 4 }
+]
+
+%"scale"{
+  %words: 1249
+  %sentences: 100
+  %paragraphs: 24
+  %rooms: 5
+  %pages: 4.5
+  %reading_minutes: 5.4
+  %words_per_sentence: 12.5
+  %sentences_per_paragraph: 4.2
+  %paragraphs_per_minute: 4.4
+}
+
+~"flow"{
+  room_words: "341 85 58 495 270"
+  room_shape: "▆▂▂█▅"
+  %sentence_spread: 9.2
+  %longest_sentence: 47
+  %spoken_share: 0.05
+  lane_pace: "5 6 6 5 3"
+  page_and_lane: "r -0.44"
+  page_and_lane_reads: "counters"
+}
+
+^"dimensions"{
+  lean: "boon 2, bane 1, bone 1"
+  material: "brass 1, glass 1, ink 1"
+  container: "passage 3, room 2"
+  cast: "boof 2, genie 1"
+  tropes: "missing-day"
+  wonders_echoed: "door-rule"
+  %title_on_page: 1
+  %biome_on_page: 0.52
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 4 creatures: 1 lore_lines: 8 }
   wonder_ids: ["hum-crickets", "crack-gauge", "listen-before-you-mend", "struck-price-tag"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "the first mimes and acoustic crack discipline feeding Bone.land later in ch10"
-  !digestive_watch: "lacks direct ! action room despite slot 5 ! role—tension is carried via = and ^"
+}
+
+^"music"{
+  %tempo: 100
+  %root: 277.18
+  note_name: "Db4"
+  %swing: 50
+  ~motif: [9 7 4 2 4 7]
+  @theme: rift
+  *rhythm: quiet_rift
+  pattern: "X.......X.x....."
+  rhythm_name: "Two slips, one harvest"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../04/ecology.spw"
   &next: ~"../06/ecology.spw"
   &octave_twin: ~"../18/ecology.spw#chapter_18_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 277.18
-  note_name: "C#4"
-  %tempo: 100
-  %swing: 50
-  mode: "Chromatic leading-tone"
-  tonal_role: "-1 semitone below tonic D4: hairline fracture before release"
-  ~motif: [9 7 4 2 4 7]
-  @theme: rift
-  *rhythm: quiet_rift
-  pattern: "X.......X.x....."
 }
 
 ^"valence_edges"{

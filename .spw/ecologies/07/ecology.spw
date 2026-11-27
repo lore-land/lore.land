@@ -1,11 +1,13 @@
 # Chapter 07 Ecology — Blueberry Oath
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_07_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 7 of 13: & confluence.
+  Chapter 7 measured from its canon. Ring 7 of 13, & confluence: oaths, merges, and non-destructive composition. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 20.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "Blueberry Oath"
   mood: "shadow"
   period: "spring"
+  logline: "At the market stone Boof swears the only oath a wish allows: to spend it when the want is true — and learns the shadow price, that every spent wish owes a coincidence to a stranger."
+  epigraph: "Every wish is paid twice: once by the wisher, once by someone who never hears about it."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "@ (perspective)"
   observed_open_room: "=(oath_stone)@boof"
   observed_close_room: "~<long_alley>@the_stranger"
-  modulators: { config: "shadow (two-sided)" measure: "%coincidence[1]" substrate: "$blueberry_stain_and_slate" }
+  sigils_present: "= # * . ~"
+  sigils_absent: "? ! & @ ^ % $"
 }
 
 ^"biome"{
@@ -36,6 +41,56 @@
   symbiotes: "oath-moths fluttering toward blue lamps, oath-scale keepers, strangers carrying small coincidences"
   irritant: "vows spoken lightly crystallizing into heavy stoneweights on the pocket hem"
   circulation: "berry stain seeps downward while spoken oaths cool into solid tiles underfoot"
+}
+
+^"craft"{
+  modulators: { config: "shadow (two-sided)" measure: "%coincidence[1]" substrate: "$blueberry_stain_and_slate" }
+  compost: "one unassigned good coincidence left intentionally uncollected until Book Two"
+  !watch: "low count lull (total 5) intentionally pacing a quiet oath after ch06 kiln density"
+  mode: "Dorian uneven"
+  tonal_role: "tonic return darkened into asymmetrical 56% counting"
+}
+
+^"stations"[
+  s01: { title: "The oath stone" .spw: "=(oath_stone)@boof" container: "gathering" $material: "berry" =lean: "bone" %words: 689 %sentences: 45 %paragraphs: 10 }
+  s02: { title: "The oath shadow" .spw: "#[oath_shadow]@genie" container: "window" $material: "ink" =lean: "boon" %words: 132 %sentences: 13 %paragraphs: 3 }
+  s03: { title: "The awning beam" .spw: "*<awning_beam>@the_fool" container: "passage" $material: "berry" =lean: "boon" %words: 93 %sentences: 8 %paragraphs: 2 }
+  s04: { title: "The Shadow Price" .spw: ".{cooling_stone}@boof" container: "room" $material: "berry" =lean: "bone" %words: 317 %sentences: 20 %paragraphs: 5 }
+  s05: { title: "The long alley" .spw: "~<long_alley>@the_stranger" container: "passage" $material: "brass" =lean: "" %words: 43 %sentences: 4 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 1274
+  %sentences: 90
+  %paragraphs: 22
+  %rooms: 5
+  %pages: 4.6
+  %reading_minutes: 5.5
+  %words_per_sentence: 14.2
+  %sentences_per_paragraph: 4.1
+  %paragraphs_per_minute: 4
+}
+
+~"flow"{
+  room_words: "689 132 93 317 43"
+  room_shape: "█▂▂▄▁"
+  %sentence_spread: 8.9
+  %longest_sentence: 37
+  %spoken_share: 0.06
+  lane_pace: "4 3 6 3 2"
+  page_and_lane: "r 0.1"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "bone 2, boon 2"
+  material: "berry 3, brass 1, ink 1"
+  container: "passage 2, gathering 1, room 1, window 1"
+  cast: "boof 2, genie 1"
+  tropes: "right-angle-companion"
+  wonders_echoed: "weathercocks key-file-bench open-nothing-before-it-has-filled"
+  %title_on_page: 1
+  %biome_on_page: 0.51
 }
 
 ^"assets"{
@@ -50,34 +105,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 5 sections: 6 wonders: 3 creatures: 1 lore_lines: 9 }
   wonder_ids: ["oath-moths", "oath-scale", "promise-the-next-stone"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "one unassigned good coincidence left intentionally uncollected until Book Two"
-  !digestive_watch: "low count lull (total 5) intentionally pacing a quiet oath after ch06 kiln density"
+}
+
+^"music"{
+  %tempo: 96
+  %root: 293.66
+  note_name: "D4"
+  %swing: 56
+  ~motif: [2 4 7 4 2 0]
+  @theme: oath
+  *rhythm: oath_fruit
+  pattern: "X..x..x...x..x.."
+  rhythm_name: "An oath paid in fruit"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../06/ecology.spw"
   &next: ~"../08/ecology.spw"
   &octave_twin: ~"../20/ecology.spw#chapter_20_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %root: 293.66
-  note_name: "D4"
-  %tempo: 96
-  %swing: 56
-  mode: "Dorian uneven"
-  tonal_role: "tonic return darkened into asymmetrical 56% counting"
-  ~motif: [2 4 7 4 2 0]
-  @theme: oath
-  *rhythm: oath_fruit
-  pattern: "X..x..x...x..x.."
 }
 
 ^"valence_edges"{

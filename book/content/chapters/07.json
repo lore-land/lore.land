@@ -50,6 +50,11 @@
       "kicker": "World"
     },
     {
+      "label": "bone.land · the oath groove",
+      "href": "/?/bone.land/*the-oath-groove",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 08 · Well",
       "href": "/book/chapter/08/",
       "kicker": "Next"

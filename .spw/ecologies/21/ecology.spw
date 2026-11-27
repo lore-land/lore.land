@@ -1,11 +1,13 @@
 # Chapter 21 Ecology — At the Nose of the Work
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_21_ecology
 #:ecology #!book-2
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Book Two chapter ecology holding Ring 2 slot rhythm ahead of prose authoring. Anchored at Ring 8 of 13: @ perspective.
+  Chapter 21 measured from its canon. Ring 8 of 13, @ perspective: standpoint and observer-relative truth. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 8.
 }
 
 ^"identity"{
@@ -13,8 +15,10 @@
   book: 2
   ring: 8
   title: "At the Nose of the Work"
-  mood: "planned"
+  mood: "path"
   period: "winter"
+  logline: "Read strictly from fourteen inches off the cobblestones, Bonk City's dropped berry crumbs, boot polish, and grate steam tell the whole civic plot tall tables hide."
+  epigraph: "Above the cloth they debate who leads the feast; below it, every crumb already points to the ovens."
 }
 
 ^"grammar"{
@@ -25,9 +29,10 @@
   closing_perspective: "opens a directional crossing (<>)"
   represents: "Standpoint and observer-relative truth"
   next_construct: "<> (capsule)"
-  planned_open_posture: "@ entry"
-  planned_close_posture: "hands cleanly into <>"
-  modulators: { config: "perspective (animal empiricism)" measure: "%scent_trails[3]" substrate: "$cobble_damp_and_tallow" }
+  observed_open_room: "@{cobble_level}@boof"
+  observed_close_room: ".{drain_steam}@boof"
+  sigils_present: "@ & ."
+  sigils_absent: "~ # ? ! * ^ = % $"
 }
 
 ^"biome"{
@@ -38,39 +43,92 @@
   circulation: "scent plumes hug warm drains and reveal where clerks hurried before bells rang"
 }
 
+^"craft"{
+  modulators: { config: "perspective (animal empiricism)" measure: "%scent_trails[3]" substrate: "$cobble_damp_and_tallow" }
+  compost: "grounds Ch08 observer inversion in embodied dog-height phenomenology"
+  !watch: "Ring 2 Slot 8 (@): keep children absent from civic alleys; Boof stays literal, never coy"
+  mode: "Mixolydian reflection"
+  tonal_role: "mirrored subtonic C4 echoing depths from the well (transposed into Book Two's C-axis continuation)"
+}
+
+^"stations"[
+  s01: { title: "The cobble level" .spw: "@{cobble_level}@boof" container: "room" $material: "steam" =lean: "boon" %words: 133 %sentences: 6 %paragraphs: 3 }
+  s02: { title: "The three scents" .spw: "&[three_scents]@boof" container: "window" $material: "flour" =lean: "boon" %words: 164 %sentences: 8 %paragraphs: 3 }
+  s03: { title: "Under the Tall Tables" .spw: "@(under_table)@the_land" container: "gathering" $material: "ink" =lean: "boon" %words: 139 %sentences: 8 %paragraphs: 3 }
+  s04: { title: "The drain steam" .spw: ".{drain_steam}@boof" container: "room" $material: "flour" =lean: "bone" %words: 83 %sentences: 4 %paragraphs: 2 }
+]
+
+%"scale"{
+  %words: 519
+  %sentences: 26
+  %paragraphs: 11
+  %rooms: 4
+  %pages: 1.9
+  %reading_minutes: 2.3
+  %words_per_sentence: 20
+  %sentences_per_paragraph: 2.4
+  %paragraphs_per_minute: 4.9
+}
+
+~"flow"{
+  room_words: "133 164 139 83"
+  room_shape: "▇█▇▅"
+  %sentence_spread: 8
+  %longest_sentence: 41
+  %spoken_share: 0
+  lane_pace: "3 4 5 5 4"
+  page_and_lane: "r 0.14"
+  page_and_lane_reads: "loose"
+}
+
+^"dimensions"{
+  lean: "boon 3, bone 1"
+  material: "flour 2, ink 1, steam 1"
+  container: "room 2, gathering 1, window 1"
+  cast: "boof 3"
+  tropes: ""
+  wonders_echoed: "torch-ants chime-gutters build-where-it-leans found-line"
+  %title_on_page: 1
+  %biome_on_page: 0.56
+}
+
 ^"assets"{
-  prose_status: "unwritten — seed at book/content/chapters/21.json when drafted"
-  canon_mirror: "generated upon first chapters:build + spw:export"
-  plate: "unpainted — planned beside .spw/state/plates-manifest.spw"
-  plate_state: "planned"
-  og_card: "pending chapter build"
-  palette: "unassigned — mixes into Book 2 cycle"
+  prose_json: ~"../../../book/content/chapters/21.json"
+  canon_mirror: ~"../../chapters/21.spw"
+  plate: ~"../../../book/images/21.png"
+  plate_state: "public"
+  og_card: ~"../../../book/images/og/chapter-21.jpg"
+  palette: "cobble-nose"
   characters_met: []
   lanes_introduced: []
 }
 
 %"gut_health"{
-  flora: { rooms: 0 wonders: 0 creatures: 0 status: "soil prepared for drafting" }
+  flora: { rooms: 4 sections: 5 wonders: 0 creatures: 0 lore_lines: 3 }
   wonder_ids: []
-  permeability: "ring slot mapped; awaiting prose + wonders"
-  compost: "grounds Ch08 observer inversion in embodied dog-height phenomenology"
-  !digestive_watch: "Ring 2 Slot 8 (@): keep children absent from civic alleys; Boof stays literal, never coy"
+  permeability: "live page + /pie/ voyage leg + ?/ doors"
+}
+
+^"music"{
+  %tempo: 92
+  %root: 261.63
+  note_name: "C4"
+  %swing: 50
+  ~motif: [0 2 4 7 4 2]
+  @theme: cobble
+  *rhythm: fourteen_inches
+  pattern: "X.x.x...X...x.x."
+  rhythm_name: "Fourteen inches up"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
 }
 
 ^"navigation"{
   &prev: ~"../20/ecology.spw"
   &next: ~"../22/ecology.spw"
   &octave_twin: ~"../08/ecology.spw#chapter_08_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
   &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
   &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
-}
-
-^"music"{
-  #status: "live"
-  %planned_octave_twin_root: 261.63
-  mode: "Mixolydian reflection"
-  tonal_role: "mirrored subtonic C4 echoing depths from the well (transposed into Book Two's C-axis continuation)"
 }
 
 ^"valence_edges"{

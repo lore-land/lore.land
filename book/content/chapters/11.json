@@ -1,9 +1,9 @@
 {
   "chapterNumber": 11,
-  "title": "Paradox Bloom",
+  "title": "The Crown Was Wasps",
   "logline": "BaneWAP seizes the egg and wishes huge — and the wish grants at once, minimum-viable, an empire hollow as a rented crown.",
   "epigraph": "A grand wish grants easily. It is the finishing that never comes.",
-  "description": "Chapter 11 of Lore.Land: Paradox Bloom. BaneWAP snatches the unspent wish and wishes an empire; karmic momentum obliges one coincidence at a time, delivering it mediocre and hollow. Bloom arrives before seed, his hoarded berries wake inside him, and the egg — unfinished, unfinishable — rolls back warm to Boof's paws.",
+  "description": "Chapter 11 of Lore.Land: The Crown Was Wasps. BaneWAP snatches the unspent wish and wishes an empire; karmic momentum obliges one coincidence at a time, delivering it mediocre and hollow. Bloom arrives before seed, his hoarded berries wake inside him, and the egg — unfinished, unfinishable — rolls back warm to Boof's paws.",
   "mood": "awakening",
   "period": "spring",
   "pillars": [
@@ -50,7 +50,12 @@
       "kicker": "World"
     },
     {
-      "label": "Chamber 12 · Confluence",
+      "label": "bane.land · the minimum viable empire",
+      "href": "/?/bane.land/*the-minimum-viable-empire",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 12 · Furrow",
       "href": "/book/chapter/12/",
       "kicker": "Next"
     }
@@ -328,7 +333,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "Paradox Bloom: the empire arrives; the wish does not finish."
+      "figcaption": "The Crown Was Wasps: the empire arrives; the wish does not finish."
     },
     {
       "type": "section",

@@ -13,7 +13,7 @@ const CONFIG = {
   route: {
     href: '/book/chapter/19/',
     label: '^[route/19]{the priced window}',
-    ariaLabel: 'Continue to chapter 19: The Priced Window'
+    ariaLabel: 'Continue to chapter 19: The Snails Who Ate the Prices'
   }
 };
 

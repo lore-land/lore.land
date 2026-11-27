@@ -1,10 +1,10 @@
 {
   "chapterNumber": 22,
-  "title": "Through the Chute With No Receipt",
+  "title": "Three Roofs Higher",
   "logline": "Behind the guild basements, a sloped copper parcel chute turns every bundle into a description of what someone else packed, while receipts blow backward up the return duct.",
   "epigraph": "Never camp inside a chute; gravity takes the bundle, and the draft keeps the paper.",
   "inWhich": "parcels slide down a copper chute as descriptions of someone else’s bundle while receipts blow up the return duct",
-  "description": "Chapter 22 of Lore.Land: Through the Chute With No Receipt. Twisting behind Bonk City's kitchen walls and guild cellars runs a riveted copper parcel chute humming with brass static and warm cinnamon air. Cellar mice ride ribbon ends, the Fool makes a single sideways cameo through an unmarked hatch, bundles emerge described as somebody else's packing, and pink receipts sail straight back up the parallel return duct.",
+  "description": "Chapter 22 of Lore.Land: Three Roofs Higher. Twisting behind Bonk City's kitchen walls and guild cellars runs a riveted copper parcel chute humming with brass static and warm cinnamon air. Cellar mice ride ribbon ends, the Fool makes a single sideways cameo through an unmarked hatch, bundles emerge described as somebody else's packing, and pink receipts sail straight back up the parallel return duct.",
   "mood": "labyrinth",
   "period": "winter",
   "pillars": [
@@ -46,7 +46,12 @@
       "kicker": "World"
     },
     {
-      "label": "Chamber 23 · Rehearsal of the Night School",
+      "label": "bane.land · the receipt office",
+      "href": "/?/bane.land/*the-receipt-office",
+      "kicker": "Twinned"
+    },
+    {
+      "label": "Chamber 23 · Pi at the Night School",
       "href": "/book/chapter/23/",
       "kicker": "Next"
     }
@@ -166,7 +171,7 @@
         "width": 1280,
         "height": 720
       },
-      "figcaption": "Through the Chute With No Receipt: gravity moves parcels down, and the return duct blows paper back up."
+      "figcaption": "Three Roofs Higher: gravity moves parcels down, and the return duct blows paper back up."
     },
     {
       "type": "custom-fool",

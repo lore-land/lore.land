@@ -19,25 +19,25 @@ export const chapterManifest = [
   },
   {
     number: 2,
-    title: 'The First Echo',
+    title: 'The Egg a Breath Behind',
     logline: 'The grove repeats the egg a beat late — the wish rehearsing futures it has not decided to grant.',
     spw: '^[chapter/02]{ ("bane.land") [ <echo>{ distant drums answer } ] }'
   },
   {
     number: 3,
-    title: 'Signals in the Sand',
+    title: 'The Salt-Whale Roads',
     logline: 'Where two old routes want to be one turn, Boof digs up a Discount Genie who can grant anything — except see what she wants.',
     spw: '^[chapter/03]{ ?[signal]{ dunes whisper old routes } }'
   },
   {
     number: 4,
-    title: 'Crosswind Council',
+    title: 'The Largest Key Ever Cut',
     logline: 'No law on the hill covers the egg — a wish is the largest key ever cut, and Mr. BaneWAP wants it filed, appraised, and auctioned to himself.',
     spw: '^[chapter/04]{ &[council]{ boon + bane negotiate } }'
   },
   {
     number: 5,
-    title: 'The Quiet Rift',
+    title: 'Still Paying the Note',
     logline: 'Two claims pull at one warm egg until the floor itself parts — and the crack beneath the hall is still singing the price of a grand wish granted centuries ago.',
     spw: '^[chapter/05]{ ~[rift]{ calm outside, fracture within } }'
   },
@@ -67,19 +67,19 @@ export const chapterManifest = [
   },
   {
     number: 10,
-    title: 'Bone.land Resonance',
+    title: 'Bone.land Answers in Oak',
     logline: 'In Bone.land\'s timber hall, a pie of clean-boiled honesty sets the Egg on the great frame and listens to what it will bear — and the answer, rung through every beam, ends BaneWAP\'s patience: the smallest wishes have the longest arcs.',
     spw: '^[chapter/10]{ ("bone.land") [ <concert>{ truth shakes the veil } ] }'
   },
   {
     number: 11,
-    title: 'Paradox Bloom',
+    title: 'The Crown Was Wasps',
     logline: 'BaneWAP seizes the egg and wishes huge — and the wish grants at once, minimum-viable, an empire hollow as a rented crown.',
     spw: '^[chapter/11]{ ~[paradox]{ impossible paths flower } }'
   },
   {
     number: 12,
-    title: 'The Last Confluence',
+    title: 'One Furrow Kept Open',
     logline: 'Boof finally knows her wish, and it is small: one warm furrow kept open, always, for whatever arrives next without a receipt.',
     spw: '^[chapter/12]{ &[confluence]{ all threads merge } }'
   },

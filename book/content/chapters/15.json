@@ -46,6 +46,11 @@
       "kicker": "World"
     },
     {
+      "label": "bane.land · the records hall",
+      "href": "/?/bane.land/*the-records-hall",
+      "kicker": "Twinned"
+    },
+    {
       "label": "Chamber 16 · The Second Place",
       "href": "/book/chapter/16/",
       "kicker": "Next"

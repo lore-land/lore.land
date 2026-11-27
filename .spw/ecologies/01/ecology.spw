@@ -1,11 +1,13 @@
 # Chapter 01 Ecology — Dawn in Boon.land
+# Composed by .spw/tools/ecology-compose.mjs (npm run spw:ecology) from the chapter JSON, likeness, almanac, pie levels
+# and the plates manifest. ^"biome" and ^"craft" are authored and kept; every other block is measured and rewritten.
 #>chapter_01_ecology
 #:ecology #!book-1
 #:layer #!pragmatics
 #:status #!live
 
 ~<rationale>{
-  Live chapter ecology grounded in book/content/chapters JSON and world registries. Anchored at Ring 1 of 13: ~ potential.
+  Chapter 1 measured from its canon. Ring 1 of 13, ~ potential: what waits before being named. Its rooms can be read as the stations of one line, in order; its twin an octave away is Chapter 14.
 }
 
 ^"identity"{
@@ -15,6 +17,8 @@
   title: "Dawn in Boon.land"
   mood: "boon"
   period: "spring"
+  logline: "At dawn, Boof digs a warm egg out of a frozen furrow — an unspent wish, humming like a held breath, that every map in Boon.land refuses to write down."
+  epigraph: "A wish is not a thing. It is a direction the world has not agreed to turn yet."
 }
 
 ^"grammar"{
@@ -27,7 +31,8 @@
   next_construct: "# (annotation)"
   observed_open_room: "~{warm_furrow}@boof"
   observed_close_room: "&(grove_mouth)@boof"
-  modulators: { config: "boon (dawnward hope)" measure: "%heat[unspent]" substrate: "$loam_and_beeswax" }
+  sigils_present: "~ . = # ! &"
+  sigils_absent: "? * @ ^ % $"
 }
 
 ^"biome"{
@@ -36,6 +41,57 @@
   symbiotes: "Boof (nose-first surveyor), torch-ants heating tree roots, leaning berry rows"
   irritant: "uncatalogued egg refusing wet archival ink on map paper"
   circulation: "warmth runs from deep soil through roots to pond to mill wheel"
+}
+
+^"craft"{
+  modulators: { config: "boon (dawnward hope)" measure: "%heat[unspent]" substrate: "$loam_and_beeswax" }
+  compost: "an unspent wish without a receipt that keeps one furrow warm across all books"
+  !watch: "balanced entry (~ opening present); closes on &(grove_mouth) before formal echo (#)"
+  mode: "Lydian #4"
+  tonal_role: "suspended shimmer opening a held wish before it is receipted"
+}
+
+^"stations"[
+  s01: { title: "The Warm Furrow" .spw: "~{warm_furrow}@boof" container: "room" $material: "steam" =lean: "boon" %words: 584 %sentences: 47 %paragraphs: 13 }
+  s02: { title: "The furrow rim" .spw: ".[furrow_rim]@boof" container: "window" $material: "flour" =lean: "boon" %words: 138 %sentences: 11 %paragraphs: 3 }
+  s03: { title: "When a Berry Remembers" .spw: "=[berry_row]@the_berries" container: "window" $material: "berry" =lean: "boon" %words: 319 %sentences: 30 %paragraphs: 6 }
+  s04: { title: "The Maps That Look Away" .spw: "#{map_house}@the_archivist" container: "room" $material: "ink" =lean: "bone" %words: 469 %sentences: 43 %paragraphs: 13 }
+  s05: { title: "Following the Hum" .spw: "!<sloe_hedge>@boof" container: "passage" $material: "berry" =lean: "boon" %words: 207 %sentences: 19 %paragraphs: 5 }
+  s06: { title: "The grove mouth" .spw: "&(grove_mouth)@boof" container: "gathering" $material: "berry" =lean: "boon" %words: 177 %sentences: 19 %paragraphs: 6 }
+]
+
+%"scale"{
+  %words: 1894
+  %sentences: 169
+  %paragraphs: 46
+  %rooms: 6
+  %pages: 6.9
+  %reading_minutes: 8.2
+  %words_per_sentence: 11.2
+  %sentences_per_paragraph: 3.7
+  %paragraphs_per_minute: 5.6
+}
+
+~"flow"{
+  room_words: "584 138 319 469 207 177"
+  room_shape: "█▃▅▇▃▃"
+  %sentence_spread: 9.1
+  %longest_sentence: 60
+  %spoken_share: 0
+  lane_pace: "2 6 4 3 7"
+  page_and_lane: "r -0.84"
+  page_and_lane_reads: "counters"
+}
+
+^"dimensions"{
+  lean: "boon 5, bone 1"
+  material: "berry 3, flour 1, ink 1, steam 1"
+  container: "room 2, window 2, gathering 1, passage 1"
+  cast: "boof 4"
+  tropes: "glimpse warm-question right-angle-companion"
+  wonders_echoed: "jazz-geese shelf-owls hearth-drift leave-room-for-the-path"
+  %title_on_page: 1
+  %biome_on_page: 0.67
 }
 
 ^"assets"{
@@ -50,33 +106,31 @@
 }
 
 %"gut_health"{
-  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 1 lore_lines: 1 }
+  flora: { rooms: 6 sections: 7 wonders: 4 creatures: 1 lore_lines: 13 }
   wonder_ids: ["torch-ants", "press-stones", "drying-line", "first-ink-stays"]
   permeability: "live page + /pie/ voyage leg + ?/ doors"
-  compost: "an unspent wish without a receipt that keeps one furrow warm across all books"
-  !digestive_watch: "balanced entry (~ opening present); closes on &(grove_mouth) before formal echo (#)"
-}
-
-^"navigation"{
-  &next: ~"../02/ecology.spw"
-  &octave_twin: ~"../14/ecology.spw#chapter_14_ecology"
-  &levels: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
-  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
-  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
 }
 
 ^"music"{
-  #status: "live"
+  %tempo: 96
   %root: 293.66
   note_name: "D4"
-  %tempo: 96
   %swing: 50
-  mode: "Lydian #4"
-  tonal_role: "suspended shimmer opening a held wish before it is receipted"
   ~motif: [0 2 4 7 9 7]
   @theme: boof
   *rhythm: torch_march
   pattern: "X...x...X...x..."
+  rhythm_name: "The torch-ant march"
+  &level: ~"../../runtime/pie-levels.spw#lore_land_runtime_pie_levels"
+}
+
+^"navigation"{
+  &prev: ~"../index.spw"
+  &next: ~"../02/ecology.spw"
+  &octave_twin: ~"../14/ecology.spw#chapter_14_ecology"
+  &substrate: ~"../../caches/chapter-substrate.spw#lore_land_chapter_substrate"
+  &sound: ~"../../surfaces/sound-and-voice.spw#tonal_ring"
+  &poetics: ~"../../surfaces/poetics.spw#lore_land_surfaces_poetics"
 }
 
 ^"valence_edges"{
