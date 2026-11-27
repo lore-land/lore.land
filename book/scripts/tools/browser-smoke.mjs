@@ -846,6 +846,39 @@ const SCENARIOS = [
     const off = await page.ev(knockThrice('clerk'));
     if (off.callbacks) throw new Error(`with the switch off something called back: ${JSON.stringify(off.callbacks)}`);
   }],
+  ['a kept copy of a module gives way to the network, and the offline page lists what was kept', async (page) => {
+    // The shelf outlives releases and is older than this release's cache; caches.match() once let it answer forever.
+    await page.goto('/charm/?sw=force');
+    await page.waitFor(`Boolean(navigator.serviceWorker.controller)`, { timeoutMs: 15000 });
+    try {
+      const got = await page.ev(`(async () => {
+        const shelf = await caches.open('lore-kept-assets-v1');
+        const stale = () => new Response('export const STALE = true;', { headers: { 'content-type': 'text/javascript' } });
+        await shelf.put('/book/scripts/modules/book-extent.mjs', stale());
+        await shelf.put('/book/scripts/modules/book-extent.mjs?v=smoke', stale());
+        const plain = await (await fetch('/book/scripts/modules/book-extent.mjs')).text();
+        const versioned = await (await fetch('/book/scripts/modules/book-extent.mjs?v=smoke')).text();
+        await new Promise((r) => setTimeout(r, 400));
+        const kept = await (await shelf.match('/book/scripts/modules/book-extent.mjs')).text();
+        return { plain: plain.includes('STALE'), versioned: versioned.includes('STALE'), kept: kept.includes('STALE') };
+      })()`);
+      if (got.plain) throw new Error('a module with no ?v= token answered from the kept shelf, not the network');
+      if (!got.versioned) throw new Error('a versioned module on the kept shelf was not served from it');
+      if (got.kept) throw new Error('the answer from the network did not refresh the kept shelf');
+      await page.ev(`(async () => {
+        const pages = await caches.open('lore-pages-v1');
+        const kept = (title) => new Response('<title>' + title + ' · Lore.Land</title>', { headers: { 'content-type': 'text/html' } });
+        await pages.put('/book/chapter/01/', kept('Dawn in Boon.land'));
+        await pages.put('/pie/', kept('Exactly One Pie'));
+      })()`);
+      await page.goto('/book/pwa/offline.html');
+      await page.waitFor(`!document.getElementById('rooms').hidden`);
+      const shelf = await page.ev(`({ chapters: document.getElementById('shelf').textContent, rooms: document.getElementById('rooms').textContent })`);
+      if (!shelf.chapters.includes('Dawn in Boon.land') || !shelf.rooms.includes('Exactly One Pie')) throw new Error(`the offline shelf missed a kept page: ${JSON.stringify(shelf)}`);
+    } finally {
+      await page.ev(`(async () => { for (const r of await navigator.serviceWorker.getRegistrations()) await r.unregister(); for (const k of await caches.keys()) await caches.delete(k); })()`);
+    }
+  }],
   ['editor: the sticker & profile card studio renders, stamps stickers, and writes Spw invites', async (page) => {
     await page.goto('/editor/');
     await page.waitFor(`Boolean(document.querySelector('svg.editor-canvas-svg [data-sticker-id]'))`, { timeoutMs: 8000 });

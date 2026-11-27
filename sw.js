@@ -49,6 +49,53 @@ function cacheable(response) {
   return response && response.ok && response.type === 'basic';
 }
 
+/* The kept shelf survives releases, so it must never stand in front of a fresher copy. A copy is looked for in this
+ * release's cache first, then on the shelf; a fresh answer from the network is written to this release's cache and
+ * over the shelf's copy, when the shelf holds one. (caches.match() looks in the order the caches were made, and the
+ * shelf is older than every release's cache: through it, a kept copy answered forever and its refresh was never read.) */
+async function cachedCopy(request) {
+  for (const name of [CACHE_VERSION, KEPT_ASSETS]) {
+    const hit = await (await caches.open(name)).match(request);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+async function remember(request, response) {
+  await (await caches.open(CACHE_VERSION)).put(request, response.clone());
+  const shelf = await caches.open(KEPT_ASSETS);
+  if (await shelf.match(request)) await shelf.put(request, response);
+}
+
+/** Code and data with no ?v= token can change under the same address; they are asked of the network first, as the
+ * browser would ask without a worker, so a fresh page never imports last release's sibling module. */
+function changesInPlace(url) {
+  return !url.searchParams.has('v') && /\.(?:m?js|css|json|spw|webmanifest)$/.test(url.pathname);
+}
+
+async function networkFirst(event, request) {
+  try {
+    const response = await fetch(request);
+    if (cacheable(response)) event.waitUntil(remember(request, response.clone()));
+    return response;
+  } catch {
+    return (await cachedCopy(request)) || Response.error();
+  }
+}
+
+async function staleWhileRevalidate(event, request) {
+  const cached = await cachedCopy(request);
+  const network = fetch(request).then((response) => {
+    if (cacheable(response)) event.waitUntil(remember(request, response.clone()));
+    return response;
+  });
+  if (cached) {
+    event.waitUntil(network.catch(() => null));
+    return cached;
+  }
+  return network;
+}
+
 /** Stylesheets and scripts a kept page links to, so it is kept dressed. */
 function linkedAssets(html, base) {
   const found = new Set();
@@ -167,38 +214,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  /* The book's own data (catalog, release notes, the almanac, the hand) is asked of the network first, so a
-   * returning reader never reads last release's notes; the copy answers offline. */
-  if (url.pathname.startsWith('/book/content/') || url.pathname.startsWith('/book/fonts/spwashi/')) {
-    event.respondWith((async () => {
-      try {
-        const response = await fetch(request);
-        if (cacheable(response)) {
-          const copy = response.clone();
-          event.waitUntil(caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy)));
-        }
-        return response;
-      } catch {
-        const cached = await caches.match(request);
-        return cached || Response.error();
-      }
-    })());
+  /* The book's own data (catalog, release notes, the almanac, the hand) and any code without a ?v= token are asked
+   * of the network first, so a returning reader never reads last release's notes or runs last release's module; the
+   * copy answers offline. Everything else (versioned code, plates, fonts) answers from its copy and is refreshed behind. */
+  if (url.pathname.startsWith('/book/content/') || url.pathname.startsWith('/book/fonts/spwashi/') || changesInPlace(url)) {
+    event.respondWith(networkFirst(event, request));
     return;
   }
 
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const networkFetch = fetch(request)
-        .then((response) => {
-          if (cacheable(response)) {
-            const copy = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached);
-
-      return cached || networkFetch;
-    })
-  );
+  event.respondWith(staleWhileRevalidate(event, request));
 });

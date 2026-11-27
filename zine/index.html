@@ -26,6 +26,21 @@
   <meta name="twitter:title" content="The Boonberry Broadside · a zine you fold from one sheet">
   <meta name="twitter:description" content="One sheet, one slit, eight panels. A pocket of Boon.land made to be printed, folded badly, and drawn in with strangers.">
   <meta name="twitter:image" content="https://lore.land/seeds/2026-03-01/spwashi_lore.land_hero_ab096673-48d1-42cc-806e-88f43001c127.webp">
+  <script>
+    /* The cover the binder put on this copy (home/bindery.mjs), before first paint. */
+    try {
+      const covers = ['paper', 'glass', 'salt', 'ember', 'slate', 'night'];
+      const asCover = { rag: 'paper', glass: 'glass', salt: 'salt', ember: 'ember', slate: 'slate', starfield: 'night' };
+      const q = new URLSearchParams(location.search);
+      const story = q.get('story') === 'mine' ? {} : JSON.parse(sessionStorage.getItem('lore.story.v1') || '{}') || {};
+      let cover = asCover[q.get('binding')] || asCover[story.binding] || localStorage.getItem('lore.monument.theme');
+      if (!covers.includes(cover)) {
+        const nook = JSON.parse(localStorage.getItem('lore.nook.v1') || '{}');
+        cover = asCover[nook.binding] || '';
+      }
+      if (cover) document.documentElement.dataset.theme = cover;
+    } catch { /* the default cover */ }
+  </script>
   <link rel="preload" href="/book/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/book/styles/core/fonts.css?v=2026_11_09.I&ctx=canon:fonts">
   <link rel="stylesheet" href="/book/styles/core/layers.css?v=2026_11_09.H&ctx=canon:baseline">

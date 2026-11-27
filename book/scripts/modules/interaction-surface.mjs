@@ -218,14 +218,25 @@ export function initServiceWorkerUpdate(registration, options = {}) {
 
   registration.addEventListener('updatefound', onUpdateFound);
 
-  // Periodic quiet check on long-lived tabs (once per hour).
-  const interval = window.setInterval(() => {
+  // Periodic quiet check on long-lived tabs (once per hour), and on coming back to one: an installed
+  // app is more often brought back from the background than opened fresh, and a hidden tab's timers sleep.
+  let checkedAt = Date.now();
+  const check = () => {
+    checkedAt = Date.now();
     registration.update?.().catch(() => {});
-  }, 60 * 60 * 1000);
+  };
+  const interval = window.setInterval(check, 60 * 60 * 1000);
+  const onVisible = () => {
+    if (document.visibilityState === 'visible' && Date.now() - checkedAt > 30 * 60 * 1000) {
+      check();
+    }
+  };
+  document.addEventListener('visibilitychange', onVisible);
 
   return () => {
     destroyed = true;
     registration.removeEventListener('updatefound', onUpdateFound);
+    document.removeEventListener('visibilitychange', onVisible);
     window.clearInterval(interval);
     toastEl?.remove();
     toastEl = null;

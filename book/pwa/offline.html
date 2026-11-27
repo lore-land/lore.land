@@ -77,6 +77,8 @@
       text-align: left;
     }
 
+    .shelf[hidden] { display: none; }
+
     .shelf a {
       display: grid;
       grid-template-columns: 2.6rem minmax(0, 1fr);
@@ -132,46 +134,63 @@
     <h1 id="offline-title">The lantern is banked</h1>
     <p id="offline-lede">You are offline. Anything new waits, hearthward and patient, until you reconnect.</p>
     <ol class="shelf" id="shelf" hidden></ol>
+    <ul class="shelf" id="rooms" hidden></ul>
     <div class="doors">
       <button type="button" id="retry">Try the network again</button>
       <a href="/">The entrance</a>
     </div>
   </main>
   <script>
-    /* The shelf: chapters this browser has kept (sw.js, lore-pages-v1). */
+    /* The shelf: pages this browser has kept (sw.js, lore-pages-v1): the chapters, numbered, then the game, the
+       desk and the other rooms. The worker answers a lost navigation with this page under the address that was
+       asked for, so that address is the page that was not kept. */
+    const ROOMS = { '/pie/': 'play', '/scriptorium/': 'desk', '/almanac/': 'found', '/seeds/2026-02-28/': 'atlas', '/texture/': 'hand', '/zine/': 'zine', '/folios/': 'folio' };
+    const asked = location.pathname !== '/book/pwa/offline.html' && location.pathname !== '/';
+    const lede = document.getElementById('offline-lede');
+    if (asked) lede.textContent = 'You are offline, and this page was not kept. It waits, hearthward and patient, until you reconnect.';
     (async () => {
       if (!('caches' in window)) return;
       try {
         const cache = await caches.open('lore-pages-v1');
-        const keys = (await cache.keys())
-          .map((request) => new URL(request.url))
-          .filter((url) => /^\/book\/chapter\/\d{2}\/$/.test(url.pathname))
+        const urls = (await cache.keys()).map((request) => new URL(request.url));
+        const chapters = urls.filter((url) => /^\/book\/chapter\/\d{2}\/$/.test(url.pathname))
           .sort((a, b) => a.pathname.localeCompare(b.pathname));
-        if (!keys.length) return;
-        const shelf = document.getElementById('shelf');
-        for (const url of keys) {
+        const order = Object.keys(ROOMS);
+        const rank = (url) => (order.includes(url.pathname) ? order.indexOf(url.pathname) : order.length);
+        const rooms = urls.filter((url) => url.pathname !== '/' && url.pathname !== location.pathname && !chapters.includes(url) && !url.pathname.startsWith('/book/pwa/'))
+          .sort((a, b) => rank(a) - rank(b) || a.pathname.localeCompare(b.pathname));
+        const titled = async (url) => {
           const response = await cache.match(url.href);
           const html = response ? await response.text() : '';
-          const title = ((html.match(/<title[^>]*>([^<|]*)/i) || [])[1] || '').trim();
-          const num = url.pathname.match(/(\d{2})/)[1];
-          const item = document.createElement('li');
-          const link = document.createElement('a');
-          link.href = url.pathname;
-          const n = document.createElement('span');
-          n.className = 'num';
-          n.textContent = num;
-          const t = document.createElement('span');
-          t.textContent = title || 'Chapter ' + num;
-          link.append(n, t);
-          item.append(link);
-          shelf.append(item);
-        }
-        shelf.hidden = false;
-        document.getElementById('offline-lede').textContent =
-          'You are offline, but these chapters are on your shelf and read in full.';
+          return ((html.match(/<title[^>]*>([^<]*)/i) || [])[1] || '').split(/\s[·—|]\s/)[0].trim();
+        };
+        const fill = async (list, entries, mark, fallback) => {
+          for (const url of entries) {
+            const item = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = url.pathname;
+            const n = document.createElement('span');
+            n.className = 'num';
+            n.textContent = mark(url);
+            const t = document.createElement('span');
+            t.textContent = (await titled(url)) || fallback(url);
+            link.append(n, t);
+            item.append(link);
+            list.append(item);
+          }
+          list.hidden = !entries.length;
+        };
+        await fill(document.getElementById('shelf'), chapters, (url) => url.pathname.match(/(\d{2})/)[1], (url) => 'Chapter ' + url.pathname.match(/(\d{2})/)[1]);
+        await fill(document.getElementById('rooms'), rooms, (url) => ROOMS[url.pathname] || '·', (url) => url.pathname);
+        if (!chapters.length && !rooms.length) return;
+        lede.textContent = asked
+          ? 'You are offline, and this page was not kept. These were, and open in full.'
+          : 'You are offline, but these are on your shelf and open in full.';
       } catch (error) { /* the shelf is a courtesy; the page stands without it */ }
     })();
     document.getElementById('retry').addEventListener('click', () => location.reload());
+    /* When the network comes back, go where you were headed. */
+    window.addEventListener('online', () => location.reload());
   </script>
 </body>
 </html>

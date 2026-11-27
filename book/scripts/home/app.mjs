@@ -23,7 +23,7 @@ import {
   initSegmentKeyboard,
   initPointerCraft,
   withViewTransition
-} from '../modules/interaction-surface.mjs?v=2026_08_27.A';
+} from '../modules/interaction-surface.mjs?v=2026_11_16.B';
 import { initProductionFlow } from '../modules/production-flow.mjs?v=2026_08_27.A';
 import { beginAgainButton, keptMarks, readingMarks } from '../modules/begin-again.mjs?v=2026_11_16.B';
 import { initBindery, nookBinding, coverForBinding } from './bindery.mjs?v=2026_11_16.B';
@@ -231,6 +231,12 @@ function applyClimate({ theme, wonder, lighting }) {
   document.body.dataset.theme = theme;
   document.body.dataset.wonder = wonder;
   document.body.dataset.lighting = lighting;
+  // The browser chrome (and an installed app's title bar) takes the cover's paper, as a chapter's nook does.
+  // The token, not the body's colour: that one is mid-transition when a cover changes.
+  const paper = getComputedStyle(document.body).getPropertyValue('--hub-paper').trim();
+  if (paper) {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', paper);
+  }
 
   // Depth defaults for static lighting modes
   if (lighting === 'still') {

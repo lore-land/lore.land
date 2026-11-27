@@ -37,7 +37,7 @@ import {
   initServiceWorkerUpdate,
   initSegmentKeyboard,
   initPointerCraft
-} from './modules/interaction-surface.mjs?v=2026_08_27.A';
+} from './modules/interaction-surface.mjs?v=2026_11_16.B';
 import { initProductionFlow } from './modules/production-flow.mjs?v=2026_08_27.A';
 import { initAlmanac } from './modules/almanac.mjs?v=2026_11_16.B';
 import { initLiving } from './modules/living.mjs?v=2026_11_16.B';

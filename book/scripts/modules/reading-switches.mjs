@@ -738,6 +738,14 @@ export function initReadingSwitches({ announce } = {}) {
   installListeners.add(syncInstall);
   syncInstall();
   panel.append(install);
+  // An iPhone or iPad never makes the browser's offer, so the same readers are told where the shelf is instead.
+  const apple = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (apple && invited && !isInstalled() && !('onbeforeinstallprompt' in window)) {
+    const hint = document.createElement('p');
+    hint.className = 'reading-switches-note reading-install-hint';
+    hint.textContent = 'To put Lore.Land on your shelf: Share, then Add to Home Screen. It opens as its own book and keeps the chapters for reading offline.';
+    panel.append(hint);
+  }
 
   LAYER_GROUPS.forEach(({ layer, title, note, engaged: needsEngaged }) => {
     if (needsEngaged && !engaged) {
