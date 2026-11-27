@@ -29,7 +29,7 @@
   toast: "a notice of one sentence: chapter, a new place ({where}), and meet, a first meeting ({who})"
   tag: "a small label over the lanes: combo, satisfied"
   spill: "when the pie goes down: title and line"
-  reveal: "the line under a card as it turns face up"
+  reveal: "the line under a card as it turns face up, and a trope as its stage rises ({what} the trope, {where} the stage)"
   points: "one sentence for a lean earned: boon, bane, bone"
   settle: "the receipt that says what changed, anywhere on the site ({what}); a register sits beside the plain words, never instead of them"
 }
@@ -84,6 +84,7 @@
     #spill.title["POV: you are the floor now."]
     #spill.line["POV: you were exactly one pie, and now you are a great many crumbs."]
     #reveal.line["POV: you are this card, and somebody finally turned you over."]
+    #reveal.trope["POV: you are {what}, and you just became {where}."]
     #points.boon["POV: you were kind, and the land kept it."]
     #points.bane["POV: it was foretold, and you let it come true."]
     #points.bone["POV: you did it exactly, and nobody had to say so."]
@@ -115,6 +116,7 @@
     #spill.title["nobody: / the floor: pie."]
     #spill.line["Nobody asked the floor for pie, and the floor got a whole one."]
     #reveal.line["nobody: / this card: hello, it is me."]
+    #reveal.trope["nobody: / {what}: hello, I am {where} now."]
     #points.boon["nobody: / you: being kind anyway."]
     #points.bane["nobody: / Mr. BaneWAP: as I foretold."]
     #points.bone["nobody: / you: exactly right, without a word."]
@@ -139,6 +141,7 @@
     #spill.title["Core memory unlocked, and also on the floor."]
     #spill.line["Some memories are made of pie, and this one is mostly flour on the floor."]
     #reveal.line["Core memory unlocked: this card, the first time it turned."]
+    #reveal.trope["Core memory unlocked: {what}, the first time it was {where}."]
     #points.boon["Core memory unlocked: a kindness, kept the way a berry keeps summer."]
     #points.bane["Core memory unlocked: the knock you will tell everyone about."]
     #points.bone["Core memory unlocked: doing it exactly right, once."]
@@ -169,6 +172,7 @@
     #spill.title["Did not understand the assignment."]
     #spill.line["The assignment was exactly one pie, and the floor has handed in its own."]
     #reveal.line["This card understood the assignment."]
+    #reveal.trope["{what} understood the assignment: {where}."]
     #points.boon["Kindness understood the assignment."]
     #points.bane["The foretelling understood the assignment, unfortunately."]
     #points.bone["You understood the assignment, to the crumb."]
@@ -200,6 +204,7 @@
     #spill.title["The audacity of the floor."]
     #spill.line["The floor took the pie as if it had been promised one."]
     #reveal.line["The audacity of this card, face down all this time."]
+    #reveal.trope["The audacity of {what}, turning up {where}."]
     #points.boon["The audacity of being kind on purpose."]
     #points.bane["The audacity of a foretelling that comes true because it was said."]
     #points.bone["The audacity of doing it exactly right."]
@@ -231,6 +236,7 @@
     #spill.title["Plot twist: exactly zero pies."]
     #spill.line["Plot twist: the floor was where this pie was going all along."]
     #reveal.line["Plot twist: this card was reading you."]
+    #reveal.trope["Plot twist: {what} was {where} the whole time."]
     #points.boon["Plot twist: the kind thing was also the clever thing."]
     #points.bane["Plot twist: it was foretold, and you let it."]
     #points.bone["Plot twist: no magic, only doing it right."]
@@ -257,6 +263,7 @@
     #spill.title["Me: exactly one pie. Also me: none."]
     #spill.line["Me: careful with the pie. Also me: the floor, the flour, all of it."]
     #reveal.line["Me: I will not turn every card. Also me: turning this one."]
+    #reveal.trope["Me: I will ignore the pattern. Also me: {what}, {where}."]
     #points.boon["Me: I will hurry. Also me: stopping to be kind."]
     #points.bane["Me: that will never happen. Also me: it happened."]
     #points.bone["Me: close enough. Also me: exactly."]
@@ -281,6 +288,7 @@
     #spill.title["Tell me you spilled without telling me you spilled."]
     #spill.line["Flour on the floor, juice on your sleeve: nobody had to say a thing."]
     #reveal.line["Tell me you turned a card without telling me: one card, turned."]
+    #reveal.trope["Tell me {what} grew up without telling me: it is {where}."]
     #points.boon["Tell me you are kind without telling me: a kindness, kept."]
     #points.bane["Tell me it was foretold without telling me: it happened."]
     #points.bone["Tell me you did it exactly without telling me: exactly."]

@@ -681,7 +681,9 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     // One trope a room is said aloud and heard; the rest rise quietly (their tag, and the carry's sheet).
     if (run.tropeSaidRoom === roomShown) return;
     run.tropeSaidRoom = roomShown;
-    showToast(`${trope.name} · ${reveal.stage}`, `${reveal.words || ''}${reveal.spw ? ` ${reveal.spw}` : ''}`.trim(), 3800, 'wonder', 2, 'stage');
+    const plainTrope = `${reveal.words || ''}${reveal.spw ? ` ${reveal.spw}` : ''}`.trim();
+    const tropeLine = biased('reveal.trope', plainTrope, { what: trope.name, where: reveal.stage, seed: reveal.index });
+    showToast(`${trope.name} · ${reveal.stage}`, tropeLine, 3800, 'wonder', 2, 'stage');
     let refrain = null;
     try { refrain = (refrainsFor(trope.id) || [])[0] || null; } catch { refrain = null; }
     tropeMotif(trope.id, reveal.index, { refrain });
@@ -9543,6 +9545,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       motifCues: setting('motifCues'),
       songSpace: setting('songSpace'),
       mix: setting('mix'),
+      ear: setting('ear'),
       styleVoicing: styleNow.voicing,
       styleInterval: styleNow.interval,
       patternMode: String(charTune.pattern_mode || 'chapter'),
@@ -10012,10 +10015,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
       return [boardBlock(), holdsList(), nodeOf('p', 'pie-setup-subhead', 'What you see'), list, ...(panelPlan ? [nodeOf('p', 'pie-setup-plan', `${panelPlan.arrangement === 'fill' ? '' : 'Arranged for this screen. '}${panelPlan.why}`)] : [])];
     };
     const SOUND_CLUSTERS = [
-      ['storybook', 'Storybook', 'Even & folk-scored', { music: 'full', themes: 'themes', glow: 'bar', cues: 'shaped', feel: 'written', swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced' }],
-      ['hearth_jazz', 'Hearth jazz', 'Deep pocket, vibes & cues', { music: 'full', themes: 'themes', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'deep', voicing: 'warm', motifCues: 'board', songSpace: 'hall', mix: 'music' }],
-      ['by_ear', 'By ear', 'Strong lane & motif cues', { music: 'groove', themes: 'calls', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'lilt', voicing: 'bright', motifCues: 'board', songSpace: 'natural', mix: 'ear' }],
-      ['hushed', 'Hushed', 'Close room, straight time', { music: 'quiet', themes: 'calls', glow: 'off', cues: 'one', feel: 'written', swing: 'straight', voicing: 'velvet', motifCues: 'off', songSpace: 'close', mix: 'balanced' }]
+      ['storybook', 'Storybook', 'Even & folk-scored', { music: 'full', themes: 'themes', glow: 'bar', cues: 'shaped', feel: 'written', swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', ear: 'open' }],
+      ['hearth_jazz', 'Hearth jazz', 'Deep pocket, vibes & cues', { music: 'full', themes: 'themes', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'deep', voicing: 'warm', motifCues: 'board', songSpace: 'hall', mix: 'music', ear: 'warm' }],
+      ['by_ear', 'By ear', 'Strong lane & motif cues', { music: 'groove', themes: 'calls', glow: 'beat', cues: 'shaped', feel: 'jazz', swing: 'lilt', voicing: 'bright', motifCues: 'board', songSpace: 'natural', mix: 'ear', ear: 'bright' }],
+      ['hushed', 'Hushed', 'Close room, straight time', { music: 'quiet', themes: 'calls', glow: 'off', cues: 'one', feel: 'written', swing: 'straight', voicing: 'velvet', motifCues: 'off', songSpace: 'close', mix: 'balanced', ear: 'hush' }]
     ];
     const applyCluster = (values, label) => {
       applyBoardView(values);

@@ -38,27 +38,34 @@ export const HANDLES = Object.freeze({
     deep: { shelf: 'bonk', teach: 'The note sits back, like a reply you drafted twice and still sent.', joke: 'drafted_twice', nudge: 'a reply drafted twice' }
   },
   wap: {
-    splat: { shelf: 'boon', teach: 'Crust, then filling. The classic, which is a way of saying nobody argued.' },
-    pillow: { shelf: 'bone', teach: 'Into a cushion. The argument still happened. The room agreed not to quote it.', joke: 'cushion', nudge: 'a cushion' },
-    cream: { shelf: 'honk', teach: 'Whipped cream and a slide whistle. Someone brought a noisemaker to a meeting and called it morale.', joke: 'birthday', nudge: 'a whistle at a meeting' },
-    bell: { shelf: 'boon', teach: 'A fairground ding, as if the prize were news. You had already paid for the ticket.', joke: 'prize', nudge: 'a prize already paid for' }
+    splat: { shelf: 'boon', teach: 'A slapstick crack, then the wet fall. Crust, then filling. Three recorded takes, so it is never one slap.' },
+    pillow: { shelf: 'bone', teach: 'The crack is muffled, as into a cushion. The filling still arrives.', joke: 'cushion', nudge: 'a cushion' },
+    cream: { shelf: 'honk', teach: 'The crack, then a slide whistle. A noisemaker brought to a meeting.', joke: 'birthday', nudge: 'a whistle at a meeting' },
+    bell: { shelf: 'boon', teach: 'The crack, then a fairground ding. The prize sounds like news.', joke: 'prize', nudge: 'a prize already paid for' }
   },
   steps: {
-    ground: { shelf: 'bone', teach: 'The ground underfoot. Grass scrapes. Cobble ticks.' },
-    tiptoe: { shelf: 'honk', teach: 'A plucked note. Leaving the group chat without the “sorry, gotta run”.', joke: 'tiptoe', nudge: 'a quiet exit' },
-    felt: { shelf: 'bane', teach: 'Hushed. The apology you practice in socks so the hallway will not quote you.', joke: 'socks', nudge: 'socks in the hall' },
-    wood: { shelf: 'bonk', teach: 'A woodblock tock. Every step announced, like a read receipt you cannot turn off.', joke: 'receipt', nudge: 'a read receipt' }
+    ground: { shelf: 'bone', teach: 'The ground underfoot. Grass is a guiro scrape. Cobble is a clave tick. The ear chooses which of the three takes.' },
+    tiptoe: { shelf: 'honk', teach: 'A plucked note above that ground. The lane is still there, softer.', joke: 'tiptoe', nudge: 'a quiet exit' },
+    felt: { shelf: 'bane', teach: 'Almost no attack. Socks. The scrape and the tick stay, hushed.', joke: 'socks', nudge: 'socks in the hall' },
+    wood: { shelf: 'bonk', teach: 'A woodblock tock on the step. Every step announced.', joke: 'receipt', nudge: 'a read receipt' }
   },
   voicing: {
-    folk: { shelf: 'boon', teach: 'Celesta, wood, and strings. A story told at a table.' },
-    warm: { shelf: 'bone', teach: 'Vibes and a low bass. The parlour where everyone agrees to be kind.' },
-    bright: { shelf: 'honk', teach: 'Bells and brass. A notification that thinks it is a trumpet.' },
-    velvet: { shelf: 'bane', teach: 'Felt hammers and a soft choir. Night mode for a feeling.' }
+    folk: { shelf: 'boon', teach: 'Celesta and wood lead the theme. A table, not a stage.' },
+    warm: { shelf: 'bone', teach: 'Vibes and a low bass. The theme sits in the parlour.' },
+    bright: { shelf: 'honk', teach: 'Bells. The theme announces itself before the answer.' },
+    velvet: { shelf: 'bane', teach: 'Felt hammers. The same theme, as if the room had gone to night.' }
   },
   songSpace: {
     natural: { shelf: 'bone', teach: 'The place you are already in: field, plaza, or court.' },
     close: { shelf: 'bane', teach: 'Dry and near. A voice memo recorded under a blanket.' },
     hall: { shelf: 'boon', teach: 'A concert hall. Even a small honk is handed a balcony.' }
+  },
+  ear: {
+    open: { shelf: 'bone', teach: 'The chapter’s intervals, and the recorded takes in turn. Nothing is softened.' },
+    bright: { shelf: 'honk', teach: 'A wider pentatonic, still lifted. The loudest take of each sound: the crack, the tick.', joke: 'bright', nudge: 'the loudest take' },
+    warm: { shelf: 'boon', teach: 'A pentatonic, in the room, a little quieter. The middle take: the body of the sound.', joke: 'pentatonic', nudge: 'a softer tune' },
+    near: { shelf: 'bone', teach: 'A triad, short, close. The middle take again, and the egg’s beating tones stay out.', joke: 'triad', nudge: 'a near triad' },
+    hush: { shelf: 'bane', teach: 'That triad, shorter, the quietest take, and nothing above the room.', joke: 'hush', nudge: 'a hush' }
   },
   music: {
     quiet: { shelf: 'bone', teach: 'Only what happens. The room does not accompany you.' },
@@ -66,12 +73,12 @@ export const HANDLES = Object.freeze({
     full: { shelf: 'boon', teach: 'The room’s chord, held. You are inside the song, and the song has noticed.' }
   },
   themes: {
-    calls: { shelf: 'honk', teach: 'A short call each. They announce themselves and do not stay for the answer.' },
-    themes: { shelf: 'boon', teach: 'Each one keeps a theme, and the chapter’s lean colours it.' }
+    calls: { shelf: 'honk', teach: 'A short call, three notes, and they leave. The chapter does not answer.' },
+    themes: { shelf: 'boon', teach: 'The carrier’s three steps, coloured by this chapter’s lean. The theme stays long enough to be answered.' }
   },
   cues: {
-    shaped: { shelf: 'bone', teach: 'Low things rise, tall things fall. The warning has looked at the obstacle.' },
-    one: { shelf: 'boon', teach: 'One warning for everything. Efficient, and a little myopic.' },
+    shaped: { shelf: 'bone', teach: 'A low thing rises a step. A tall thing falls one. The warning has looked at what is coming.' },
+    one: { shelf: 'boon', teach: 'One warning for everything, the same interval. You learn the sound and not the shape.' },
     off: { shelf: 'bane', teach: 'No warning. You meet the wall with your face, which is also data.' }
   },
   tap: {

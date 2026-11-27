@@ -51,3 +51,51 @@ export function voicePlan(who, gesture) {
     }))
   };
 }
+
+/**
+ * Five ears, finest at the ends. open is the chapter. bright keeps a wider
+ * pentatonic and the lift. warm sits in the room. near is a triad, close.
+ * hush is that triad, shorter, and nothing above the room.
+ * @type {Readonly<Record<string, { set: readonly number[] | null, quiet: number, cap: number, top: number, take: 'turn' | 'bright' | 'body' | 'soft' }>>}
+ */
+export const EARS = Object.freeze({
+  open: { set: null, quiet: 1, cap: 9, top: 48, take: 'turn' },
+  bright: { set: [0, 2, 4, 7, 9], quiet: 0.9, cap: 0.5, top: 24, take: 'bright' },
+  warm: { set: [0, 2, 4, 7], quiet: 0.78, cap: 0.42, top: 12, take: 'body' },
+  near: { set: [0, 4, 7], quiet: 0.66, cap: 0.32, top: 12, take: 'body' },
+  hush: { set: [0, 4, 7], quiet: 0.5, cap: 0.22, top: 12, take: 'soft' }
+});
+
+const nearest = (deg, set) => set.reduce((best, step) => (Math.abs(step - deg) < Math.abs(best - deg) ? step : best), set[0]);
+
+/**
+ * How the ear wants a plan. open returns the same plan.
+ * @param {VoicePlan | { notes?: Note[], lean?: string }} plan
+ * @param {string} [ear]
+ */
+export function soften(plan, ear = 'open') {
+  const how = EARS[ear] || EARS.open;
+  if (!plan?.notes?.length || !how.set) return plan;
+  return {
+    ...plan,
+    ear,
+    notes: plan.notes.map((note) => ({
+      ...note,
+      deg: note.deg == null ? note.deg : nearest(note.deg, how.set),
+      octave: Math.min(note.octave ?? 0, how.top),
+      dur: Number(Math.min(note.dur, how.cap).toFixed(3)),
+      vol: Number(((note.vol || 0.02) * how.quiet).toFixed(4))
+    }))
+  };
+}
+
+/**
+ * Which recorded take to prefer. The library is the 21 CC0 takes already
+ * decoded with the page. turn keeps the round robin. bright is the loudest
+ * of an event, body the middle, soft the quietest. No new file is fetched.
+ * @param {string} [ear]
+ * @returns {'turn' | 'bright' | 'body' | 'soft'}
+ */
+export function takeSense(ear = 'open') {
+  return (EARS[ear] || EARS.open).take;
+}

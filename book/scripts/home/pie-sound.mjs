@@ -80,6 +80,7 @@
  */
 
 import { acousticEffectPlan, acousticPositionPlan, motifMemoryPlan } from '../modules/audio-model.mjs';
+import { soften, takeSense } from './pie/tune/personality.mjs';
 
 export { acousticEffectPlan, acousticPositionPlan, motifMemoryPlan };
 
@@ -87,7 +88,7 @@ let audio = null;
 let bus = null;
 let noiseBuffer = null;
 const sound = { root: 293.66, minor: false, open: false, ground: 'field', muffled: false, thin: false, pulse: 96, swing: 0.5, written: 0.5, jazz: false, motif: null, development: null, carrier: '', rest: 0, harmonicTension: 0, styleInterval: 0, lane: 2, row: 0, prevLane: 2, prevRow: 0, chapter: 1 };
-const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', patternMode: 'chapter', styleVoicing: '', jazzLean: 1 };
+const musical = { swing: 'chapter', voicing: 'folk', motifCues: 'room', songSpace: 'natural', mix: 'balanced', ear: 'open', patternMode: 'chapter', styleVoicing: '', jazzLean: 1 };
 const swingTarget = () => {
   if (musical.swing === 'straight') return 0.5;
   if (musical.swing === 'lilt') return 0.58;
@@ -368,10 +369,20 @@ function ensureSamples() {
     .catch(() => {});
 }
 
-/** One take of an event, not the same take twice in a row. */
+/**
+ * One take of an event. The ear may ask for the loudest, the middle, or the
+ * quietest of the takes already decoded. Otherwise not the same take twice.
+ */
 function pickSample(event) {
   const list = sampleGroups?.get(event);
   if (!list?.length) return null;
+  const sense = takeSense(musical.ear);
+  if (sense === 'soft') return list.reduce((a, b) => (a.gain <= b.gain ? a : b));
+  if (sense === 'bright') return list.reduce((a, b) => (a.gain >= b.gain ? a : b));
+  if (sense === 'body' && list.length > 2) {
+    const ordered = [...list].sort((a, b) => a.gain - b.gain);
+    return ordered[Math.floor(ordered.length / 2)];
+  }
   let i = Math.floor(Math.random() * list.length);
   if (list.length > 1 && i === lastSample.get(event)) i = (i + 1) % list.length;
   lastSample.set(event, i);
@@ -2313,12 +2324,13 @@ export function setSoundFeel(feel = 'written') {
 }
 
 /** Update musicality settings cluster: swing, voicing, motifCues, songSpace, mix, plus optional creator style accents. */
-export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, styleVoicing, styleInterval, patternMode, jazzLean: leaning } = {}) {
+export function setSoundConfig({ swing, voicing, motifCues, songSpace, mix, ear, styleVoicing, styleInterval, patternMode, jazzLean: leaning } = {}) {
   if (['chapter', 'straight', 'lilt', 'deep'].includes(swing)) musical.swing = swing;
   if (['folk', 'warm', 'bright', 'velvet'].includes(voicing)) musical.voicing = voicing;
   if (['off', 'room', 'board'].includes(motifCues)) musical.motifCues = motifCues;
   if (['natural', 'close', 'hall'].includes(songSpace)) musical.songSpace = songSpace;
   if (['balanced', 'music', 'ear'].includes(mix)) musical.mix = mix;
+  if (['open', 'bright', 'warm', 'near', 'hush'].includes(ear)) musical.ear = ear;
   if (['folk', 'warm', 'bright', 'velvet', ''].includes(styleVoicing)) musical.styleVoicing = styleVoicing;
   if (typeof patternMode === 'string' && patternMode) musical.patternMode = patternMode;
   if (Number.isFinite(Number(styleInterval))) sound.styleInterval = clamp(Number(styleInterval), 0, 14);
@@ -3410,11 +3422,11 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // Audio Easter Eggs: mathematical prophecies, golden spirals, infinite sliver tin, celestial egg harmonics, and theme flourishes.
       case 'easter_egg': {
         const info = typeof param === 'object' && param ? param : { kind: String(param || 'pi') };
-        const plan = easterEggPlan(info.kind, info);
+        const plan = soften(easterEggPlan(info.kind, info), musical.ear);
         if (plan?.notes?.length) {
           renderNotes(plan.notes, plan.delay || 0, plan.lean || sound.carrier || 'poised_69');
         }
-        if (info.kind === 'egg_warmth') {
+        if (info.kind === 'egg_warmth' && musical.ear !== 'hush' && musical.ear !== 'near') {
           tone('sine', 130.81, 131.2, 0.7, 0.08, 0, { attack: 0.09, cents: 0, side: -0.2 });
           tone('sine', 196.0, 196.5, 0.7, 0.06, 0.04, { attack: 0.09, cents: 0, side: 0.2 });
           tone('sine', 317.0, 318.0, 0.6, 0.035, 0.08, { attack: 0.12, cents: 2, side: 0 });
@@ -3424,7 +3436,7 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // A character's thematic flourish during play (e.g. on tricks, streaks, or meeting milestones):
       case 'theme_flourish': {
         const who = typeof param === 'string' ? param : (param?.who || sound.carrier || 'boof');
-        const plan = themeFlourishPlan(who, param?.event || 'trick');
+        const plan = soften(themeFlourishPlan(who, param?.event || 'trick'), musical.ear);
         if (plan?.notes?.length) {
           renderNotes(plan.notes, answer, JAZZ_LEANS[who] || 'poised_69');
         }
@@ -3433,7 +3445,8 @@ export function playTone(kind, param = 1, pan = 0, depth = 0) {
       // The carrier's three steps, already planned (pie/tune/personality.mjs).
       case 'voice': {
         const plan = typeof param === 'object' ? param : null;
-        if (plan?.notes?.length) renderNotes(plan.notes, 0, plan.lean || 'poised_69');
+        const heard = soften(plan, musical.ear);
+        if (heard?.notes?.length) renderNotes(heard.notes, 0, heard.lean || 'poised_69');
         break;
       }
       default: break;

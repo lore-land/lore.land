@@ -121,6 +121,7 @@ export const SETUP = Object.freeze([
   ['motifCues', 'Motif cues', [['off', 'Chapter open & ending only'], ['room', 'Rooms, tilt tension & recipes'], ['board', 'Speak ahead hazards, lanes & pantry']], 'room'],
   ['songSpace', 'Space', [['natural', 'Follow each place (field, plaza, court)'], ['close', 'Close underfoot, dry'], ['hall', 'Resonant concert hall']], 'natural'],
   ['mix', 'Balance', [['balanced', 'Voices and ground even'], ['music', 'Lead with harmony, soft foley'], ['ear', 'Lead with steps & lane warnings']], 'balanced'],
+  ['ear', 'Pleasantness', [['open', 'As written: the chapter’s intervals, and the takes in turn'], ['bright', 'Bright: a wider pentatonic, the loudest take'], ['warm', 'Warm: pentatonic, in the room, the middle take'], ['near', 'Near: a triad, short, the middle take'], ['hush', 'Hush: a triad, the quietest take, nothing above the room']], 'open'],
   ['wap', 'The WAP', [['splat', 'A splat, crust over filling'], ['pillow', 'Into a pillow, soft'], ['cream', 'Whipped cream and a slide whistle'], ['bell', 'A fairground bell']], 'splat'],
   ['steps', 'A step across the lanes', [['ground', 'The ground underfoot'], ['tiptoe', 'Tiptoe, a plucked note'], ['felt', 'Felt slippers, hushed'], ['wood', 'A woodblock tock']], 'ground'],
   ['panelsAt', 'Caption and heights', [['beside', 'Beside the cabinet (wide screens)'], ['cabinet', 'In the cabinet']], 'beside'],
@@ -142,7 +143,7 @@ export const SETUP_GROUPS = Object.freeze([
   ['touch', 'Taps and swipes', 'touch', ['tap', 'doubleTap', 'swipeUp']],
   ['story', 'The story', 'book', ['storyAt', 'storyIn', 'storyMotion', 'storyLine', 'flowSize']],
   ['cards', 'Cards and captions', 'cards', ['cardPace', 'caption']],
-  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow', 'feel', 'swing', 'voicing', 'motifCues', 'songSpace', 'mix', 'cues', 'wap', 'steps']]
+  ['music', 'Music and rhythm', 'sound', ['music', 'themes', 'glow', 'feel', 'swing', 'voicing', 'motifCues', 'songSpace', 'mix', 'ear', 'cues', 'wap', 'steps']]
 ]);
 
 /* ─── How a screen is held: each a set of choices made at once, drawn, and said as Spw ───
