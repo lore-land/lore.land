@@ -79,8 +79,10 @@
   %longest_sentence: 60
   %spoken_share: 0
   lane_pace: "2 6 4 3 7"
-  page_and_lane: "r -0.84"
-  page_and_lane_reads: "counters"
+  %leg_cobbles: 463
+  %chars_per_cobble: 22
+  caption_load: "26 22 22 20 19"
+  %caption_strain: 0.15
 }
 
 ^"dimensions"{

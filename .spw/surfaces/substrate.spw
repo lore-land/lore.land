@@ -51,7 +51,7 @@
   autonomous_feedback: "a route asks where the flow says a reader may lose the thread (a long line after short ones, a thin room after a heavy one); an answered card becomes a probe a maker reads beside the measured ones"
   progression: "from Chapter Sixteen, Book Two runs at a third to a half of each octave twin (520 to 775 words, against 1,160 to 1,900), and its lines run longer (18 to 23 words a sentence, against 12 to 15). The ring promises octave rhymes, and weight is part of a rhyme"
   own_tokens: "a reader may theme the story with a token of their own and lean pages boon, bane or bone with a Spw snippet. Outside signal (an agent such as Grok reading post counts, price or liquidity) enters only as a snippet the reader pastes; the site never fetches a price and never shows one. A token themes as a palette and a word drawn in the book glyphs, which may mean the lanes run without their rendered sprites while it is on"
-  mechanics: "five Book One legs run taut where their pages run thin (Chapters 1, 4, 5, 9 and 10); each is either a counterpoint worth keeping or a ~pace to retune in pie-levels.spw"
+  mechanics: "the lanes caption every paragraph, each given an equal share of a leg chars / 22 cobbles long (200 to 480), so the strain is a long paragraph captioned where the leg is taut. On 2026-11-27 eight legs were eased where their long paragraphs fall (4, 5, 8, 9, 11, 13, 14, 15), each keeping its peak and its shape; Fifteen, the most strained, went from 1.08 to 0.44 and kept the storm at the gate as its height. Eleven still opens at its height on the snatch and falls to slack, as its smoke scenario holds, only faster through the long paragraphs (0.80 to 0.38). Fourteen and Fifteen are held by the 480 cap and still read faster than the book rate"
 }
 
 ?open[
@@ -60,6 +60,8 @@
   "Ledger of Unasked Questions: the page never says ledger or unasked. Change the title, or let the prose earn it?"
   "Book Two from Sixteen: grow each chapter toward its twin, or keep it a short winter book on purpose and say so where readers see it?"
   "The five counter-paced legs: counterpoint, or retune?"
+  ~#retired(2026-11-27): "the question compared room words with pace, which is not how the lanes read; measured as the game reads (paragraphs, leg length, paceAt), the strained legs were others, and they were retuned (mechanics, above)"
+  "Should the leg cap rise for Fourteen and Fifteen, or should their longest paragraphs be read off the road (in the strip, not the lanes)?"
   "Which read verbs may a model outside the browser use, and does the Genie answer them on the page or only in the Scriptorium?"
   "trope.wiki: prints at ?/trope.wiki/ on lore.land until the substrate settles, or its own host reading the cache from the start?"
   "Should an answered feedback card ever write a probe into the substrate, or only a maker?"

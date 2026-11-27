@@ -47,6 +47,7 @@ const { ringSlotFor, RING_SEQUENCE } = await import(resolve(ROOT, 'book/scripts/
 const { TOTAL_CHAPTERS } = await import(resolve(ROOT, 'book/scripts/modules/book-extent.mjs'));
 const { CHARACTERS } = await import(resolve(ROOT, 'book/scripts/modules/characters.mjs'));
 const { INTRO } = await import(resolve(ROOT, 'book/scripts/home/pie-world.mjs'));
+const { paceAt } = await import(resolve(ROOT, 'book/scripts/home/pie-rhythm.mjs'));
 const likeness = await readJson('book/content/world/likeness.json');
 const almanac = await readJson('book/content/world/almanac.json');
 const palettes = await readJson('book/content/world/palettes.json');
@@ -86,19 +87,25 @@ const mean = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0)
 const spread = (xs) => { const m = mean(xs); return Math.sqrt(mean(xs.map((x) => (x - m) ** 2))); };
 /** @param {number[]} xs */
 const spark = (xs) => { const top = Math.max(...xs, 1); return xs.map((x) => BARS[Math.min(BARS.length - 1, Math.round((x / top) * (BARS.length - 1)))]).join(''); };
-/** Resample a series to n points by straight lines between its own. @param {number[]} xs @param {number} n */
-const resample = (xs, n) => {
-  if (!xs.length) return [];
-  if (xs.length === 1) return Array(n).fill(xs[0]);
-  return Array.from({ length: n }, (_v, i) => { const at = (i * (xs.length - 1)) / (n - 1); const lo = Math.floor(at); const hi = Math.min(xs.length - 1, lo + 1); return xs[lo] + (xs[hi] - xs[lo]) * (at - lo); });
-};
-/** @param {number[]} a @param {number[]} b */
-const pearson = (a, b) => {
-  const ma = mean(a); const mb = mean(b);
-  const num = a.reduce((s, x, i) => s + (x - ma) * (b[i] - mb), 0);
-  const den = Math.sqrt(a.reduce((s, x) => s + (x - ma) ** 2, 0) * b.reduce((s, y) => s + (y - mb) ** 2, 0));
-  return den ? num / den : 0;
-};
+/* The leg as the game reads it (pie-game.mjs loadLeg, tickFlows): every paragraph block, slots at variant zero, each
+   given an equal share of a leg chars / 22 cobbles long, held between 200 and 480. A paragraph's load is its
+   characters per cobble; 22 is the book's own rate by construction, so a capped leg reads faster than that. */
+const LEG = { charsPerCobble: 22, min: 200, max: 480 };
+/** @param {any[]} sections @returns {string[]} */
+function legParagraphs(sections) {
+  /** @type {string[]} */ const out = [];
+  /** @param {any} node */
+  const walk = (node) => (node.content || []).forEach((/** @type {any} */ item) => {
+    if (item.type === 'paragraph' && item.text) out.push(String(item.text).replace(/\{\{([a-z0-9-]+)\}\}/gi, (_m, k) => item.slots?.[k]?.variants?.[0] ?? ''));
+    else if (Array.isArray(item.content)) walk(item);
+  });
+  sections.forEach(walk);
+  return out;
+}
+/** Caption strain: load above the book rate, where the leg is past half taut, averaged over the leg. @param {number[]} loads @param {number[]} pace */
+const captionStrain = (loads, pace) => (loads.length ? loads.reduce((sum, load, i) => sum + Math.max(0, load - LEG.charsPerCobble) * Math.max(0, paceAt(pace, (i + 0.5) / loads.length) - 0.5), 0) / loads.length : 0);
+/** Mean of a series in k equal parts, in order. @param {number[]} xs @param {number} k */
+const parts = (xs, k) => Array.from({ length: k }, (_v, j) => { const slice = xs.filter((_x, i) => Math.floor((i / xs.length) * k) === j); return slice.length ? mean(slice) : 0; });
 /** Content words of a phrase (title, biome line), for asking whether the prose holds them. @param {string} text */
 const contentWords = (text) => (text.toLowerCase().match(/[\p{L}][\p{L}’'-]*/gu) || []).map((w) => w.replace(/[’']s$/, '')).filter((w) => w.length > 1 && !STOP.has(w));
 /** Share of a phrase's content words the prose holds (a five-letter stem is enough: answers ~ answered). @param {string} phrase @param {string} prose */
@@ -202,8 +209,11 @@ for (let n = 1; n <= TOTAL_CHAPTERS; n += 1) {
   const sentences = sentenceLengths.length;
   const paragraphs = stations.reduce((a, s) => a + s.paragraphs, 0);
   const level = levelOf(n);
-  const roomWords = stations.map((s) => s.words);
-  const lanePace = level.pace.length ? pearson(resample(roomWords, level.pace.length), level.pace) : 0;
+  const legParas = legParagraphs(sections);
+  const legChars = legParas.reduce((sum, p) => sum + p.length, 0);
+  const legCobbles = Math.min(LEG.max, Math.max(LEG.min, Math.round(legChars / LEG.charsPerCobble)));
+  const loads = legParas.map((p) => p.length / (legCobbles / Math.max(1, legParas.length)));
+  const strain = level.pace.length ? captionStrain(loads, level.pace) : 0;
   /** @type {Record<string, Record<string, number>>} */
   const dims = { valence: {}, material: {}, container: {}, sigil: {}, cast: {} };
   for (const s of stations) {
@@ -220,7 +230,7 @@ for (let n = 1; n <= TOTAL_CHAPTERS; n += 1) {
   const kept = keptBlocks(existing);
   const biomeText = (kept.biome.match(/"[^"]*"/g) || []).join(' ');
   chapters.push({
-    n, data, slot, stations, words, sentences, paragraphs, level, lanePace, dims, wonders, echoes, crossing, met, palette, kept,
+    n, data, slot, stations, words, sentences, paragraphs, level, legChars, legCobbles, loads, strain, dims, wonders, echoes, crossing, met, palette, kept,
     rooms: stations.length,
     minutes: words / WORDS_PER_MINUTE, pages: words / WORDS_PER_PAGE,
     wordsPerSentence: mean(sentenceLengths), sentenceSpread: spread(sentenceLengths), longestSentence: Math.max(0, ...sentenceLengths),
@@ -234,8 +244,6 @@ for (let n = 1; n <= TOTAL_CHAPTERS; n += 1) {
 
 /* ─── Write each ecology ──────────────────────────────────────────────────────────────────────────────────────── */
 
-/** @param {number} r */
-const paceWord = (r) => (r >= 0.4 ? 'rhymes' : r <= -0.4 ? 'counters' : 'loose');
 const byN = Object.fromEntries(chapters.map((c) => [c.n, c]));
 
 for (const c of chapters) {
@@ -287,7 +295,8 @@ for (const c of chapters) {
     '~"flow"{',
     `  room_words: "${c.stations.map((/** @type {any} */ s) => s.words).join(' ')}"`, `  room_shape: "${spark(c.stations.map((/** @type {any} */ s) => s.words))}"`,
     `  %sentence_spread: ${round(c.sentenceSpread)}`, `  %longest_sentence: ${c.longestSentence}`, `  %spoken_share: ${round(c.spoken, 2)}`,
-    `  lane_pace: "${level.pace.join(' ')}"`, `  page_and_lane: "r ${round(c.lanePace, 2)}"`, `  page_and_lane_reads: "${paceWord(c.lanePace)}"`,
+    `  lane_pace: "${level.pace.join(' ')}"`, `  %leg_cobbles: ${c.legCobbles}`, `  %chars_per_cobble: ${round(c.legChars / c.legCobbles)}`,
+    `  caption_load: "${parts(c.loads, 5).map((x) => Math.round(x)).join(' ')}"`, `  %caption_strain: ${round(c.strain, 2)}`,
     '}',
     '',
     '^"dimensions"{',
@@ -396,7 +405,8 @@ const probes = [];
 for (const c of chapters) {
   if (c.titleGround < 0.5) probes.push(`c${pad(c.n)}_title: "${q(c.data.title)} — under half its words are in the prose (${round(c.titleGround, 2)})"`);
   if (c.biomeGround && c.biomeGround < 0.35) probes.push(`c${pad(c.n)}_biome: "the authored biome names little the prose holds (${round(c.biomeGround, 2)}); reread ^biome against the rooms"`);
-  if (c.lanePace <= -0.4) probes.push(`c${pad(c.n)}_lane: "the leg is taut where the page is thin (r ${round(c.lanePace, 2)}); a counterpoint, or a pace to retune"`);
+  if (c.strain > 0.3) probes.push(`c${pad(c.n)}_lane: "long paragraphs are captioned where the leg is taut (caption strain ${round(c.strain, 2)}); ease ~pace there, or let the paragraph be read off the road"`);
+  if (Math.round(c.legChars / LEG.charsPerCobble) > LEG.max) probes.push(`c${pad(c.n)}_cap: "the leg is held at ${LEG.max} cobbles, so its captions run at ${round(c.legChars / c.legCobbles)} characters a cobble against ${LEG.charsPerCobble}"`);
   if (c.wordsPerSentence > 24) probes.push(`c${pad(c.n)}_lines: "long lines (${round(c.wordsPerSentence)} words a sentence)"`);
 }
 const uneven = twins.filter((t) => t.ratio > 1.6 || t.ratio < 0.6);
@@ -429,7 +439,7 @@ const substrate = [
   '}',
   '',
   '&"chapters"[',
-  ...chapters.map((c) => `  c${pad(c.n)}: { title: "${q(c.data.title)}" ring: ${c.slot.ring} construct: "${c.slot.symbol}" %words: ${c.words} %sentences: ${c.sentences} %paragraphs: ${c.paragraphs} %rooms: ${c.rooms} %pages: ${round(c.pages)} %minutes: ${round(c.minutes)} %words_per_sentence: ${round(c.wordsPerSentence)} %sentences_per_paragraph: ${round(c.sentencesPerParagraph)} shape: "${spark(c.stations.map((/** @type {any} */ s) => s.words))}" %spoken: ${round(c.spoken, 2)} lane_pace: "${c.level.pace.join(' ')}" page_and_lane: "r ${round(c.lanePace, 2)}" lean: "${tally(c.dims.valence)}" material: "${tally(c.dims.material)}" sigils_absent: "${c.absentSigils.join(' ')}" tropes: "${c.crossing.join(' ')}" %title_on_page: ${round(c.titleGround, 2)} &ecology: ~"../ecologies/${pad(c.n)}/ecology.spw" }`),
+  ...chapters.map((c) => `  c${pad(c.n)}: { title: "${q(c.data.title)}" ring: ${c.slot.ring} construct: "${c.slot.symbol}" %words: ${c.words} %sentences: ${c.sentences} %paragraphs: ${c.paragraphs} %rooms: ${c.rooms} %pages: ${round(c.pages)} %minutes: ${round(c.minutes)} %words_per_sentence: ${round(c.wordsPerSentence)} %sentences_per_paragraph: ${round(c.sentencesPerParagraph)} shape: "${spark(c.stations.map((/** @type {any} */ s) => s.words))}" %spoken: ${round(c.spoken, 2)} lane_pace: "${c.level.pace.join(' ')}" %leg_cobbles: ${c.legCobbles} %caption_strain: ${round(c.strain, 2)} lean: "${tally(c.dims.valence)}" material: "${tally(c.dims.material)}" sigils_absent: "${c.absentSigils.join(' ')}" tropes: "${c.crossing.join(' ')}" %title_on_page: ${round(c.titleGround, 2)} &ecology: ~"../ecologies/${pad(c.n)}/ecology.spw" }`),
   ']',
   '',
   '&"octave_twins"[',
@@ -443,7 +453,7 @@ const substrate = [
   '^"prints"{',
   '  .note: "what each consumer reads from this cache; a new print adds a row here before it reads anything"',
   '  page: "chapter pages read the chapter JSON directly; this cache only describes them"',
-  '  lanes: "pie levels may retune ~pace where page_and_lane reads counters"',
+  '  lanes: "pie-levels.spw ~pace is read against caption_load: a leg eases where its paragraphs are long, so captions can be read between dodges"',
   '  share_cards: "assets:brand sets the title; title_on_page counts how many title words the page or its epigraph holds, which says nothing about whether the title is right"',
   '  trope_wiki: "tropes per chapter, octave twins and lean give a trope page its crossings and its two registers"',
   '  autonomous_feedback: "shape and sentences_per_paragraph are counts a feedback route could ask beside; whether a reader loses the thread there is what the route asks, not what the count says"',
