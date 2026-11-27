@@ -855,6 +855,11 @@ body[data-surface='monument'] .almanac-card-plate {
   object-fit: cover;
 }
 
+.almanac-card-plate.is-portrait img {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
 .almanac-card-plate figcaption {
   padding: 0.3rem 0.6rem;
   font-family: var(--font-family-heading, monospace);

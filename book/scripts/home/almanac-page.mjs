@@ -189,9 +189,17 @@ function clueFor(wonder) {
 function plateFigure(wonder, kept) {
   const plate = wonder.plate;
   if (!plate?.src) return null;
-  const img = el('img', { src: plate.src, alt: kept ? `${wonder.name}, ${plate.state === 'study' ? 'a drawn study' : 'its plate'}` : '', loading: 'lazy', decoding: 'async', width: '600', height: '400' });
-  if (!kept) return el('figure', { className: 'almanac-card-plate is-veiled', 'aria-hidden': 'true' }, img);
-  return el('figure', { className: 'almanac-card-plate' }, img,
+  const img = el('img', {
+    src: plate.src,
+    alt: kept ? plate.alt || `${wonder.name}, ${plate.state === 'study' ? 'a drawn study' : 'its plate'}` : '',
+    loading: 'lazy',
+    decoding: 'async',
+    width: plate.width || 600,
+    height: plate.height || 400
+  });
+  const className = `almanac-card-plate${plate.height > plate.width ? ' is-portrait' : ''}`;
+  if (!kept) return el('figure', { className: `${className} is-veiled`, 'aria-hidden': 'true' }, img);
+  return el('figure', { className }, img,
     el('figcaption', {}, plate.state === 'study' ? 'A drawn study · the plate is still to paint' : 'Plate'));
 }
 

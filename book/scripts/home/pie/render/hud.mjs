@@ -186,9 +186,41 @@ export function initHudRenderer({
     } else {
       drawGroundFor(s.id, scroll, 1);
     }
+    // Tint the road edges with the scene's own light before drawing the lane and traffic cues.
+    const edge = ctx.createLinearGradient(0, 0, W, 0);
+    const edgeInk = mix(top, colors.night, 0.42);
+    edge.addColorStop(0, rgba(edgeInk, 0.2));
+    edge.addColorStop(0.2, rgba(edgeInk, 0));
+    edge.addColorStop(0.8, rgba(edgeInk, 0));
+    edge.addColorStop(1, rgba(edgeInk, 0.2));
+    ctx.fillStyle = edge;
+    ctx.fillRect(0, board.y0, W, board.h);
     const beatSnap = (!reduced?.matches && !record.view.zen && state === 'running') ? conductor.beatState?.() : null;
     const beatPulse = beatSnap ? Math.exp(-beatSnap.phase * 4.5) : 0;
-    ctx.strokeStyle = mix(colors.muted, colors.paper, clamp(0.6 - beatPulse * 0.14, 0.4, 0.65));
+    if (run && state !== 'title' && !record.view.zen) {
+      const left = run.lane * LANE_W;
+      const light = ctx.createLinearGradient(0, 0, 0, H);
+      light.addColorStop(0, rgba(colors.gold, 0));
+      light.addColorStop(0.75, rgba(colors.gold, 0.21));
+      light.addColorStop(1, rgba(colors.gold, 0.06));
+      ctx.fillStyle = light;
+      ctx.fillRect(left + 2, 0, LANE_W - 4, H);
+      ctx.fillRect(left + 2, 0, 2, H);
+      ctx.fillRect(left + LANE_W - 4, 0, 2, H);
+      ctx.strokeStyle = rgba(colors.ink, 0.24);
+      ctx.lineWidth = 1;
+      for (let row = 0; row < ROWS; row += 1) {
+        const y = rowY(row) - 18;
+        for (let lane = 0; lane < LANES; lane += 1) {
+          const x = laneX(lane);
+          ctx.beginPath();
+          ctx.moveTo(x - 5, y);
+          ctx.lineTo(x + 5, y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.strokeStyle = mix(colors.muted, colors.paper, clamp(0.48 - beatPulse * 0.14, 0.34, 0.52));
     ctx.setLineDash([6 + beatPulse * 1.5, 10 - beatPulse * 1.5]);
     for (let lane = 1; lane < LANES; lane += 1) {
       ctx.beginPath();
@@ -198,12 +230,6 @@ export function initHudRenderer({
     }
     ctx.setLineDash([]);
     if (run && state !== 'title') {
-      const laneAlpha = (0.26 + beatPulse * 0.08).toFixed(2);
-      const glow = ctx.createLinearGradient(0, 0, 0, H);
-      glow.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      glow.addColorStop(1, mix(colors.paper, 'rgb(255, 255, 255)', 0.5).replace('rgb(', 'rgba(').replace(')', `, ${laneAlpha})`));
-      ctx.fillStyle = glow;
-      ctx.fillRect(run.x - LANE_W / 2, 0, LANE_W, H);
       for (let row = 0; row < ROWS; row += 1) {
         const ty = rowY(row) - 18;
         const isBeatRow = beatSnap && ((3 - beatSnap.beatIndex) === row);

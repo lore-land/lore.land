@@ -46,7 +46,7 @@ export function initPieCards({
   carrierById, carrierStats, pad2, chapterWords, mimesHold, shelveCard, cardsTurned,
   writePower, renderSpell, tropeEmblemSVG, biased, formerWords, reasonFor,
   laneX, nodeOf, pct, round2, fmtPts, roomsReadIn, discoveriesNow, isUnlocked, pieParts,
-  tropeOfKind, withCanvasTarget, fresh, makeThing,
+  tropeOfKind, withCanvasTarget, fresh, makeThing, tropeStages, readTropeStage,
   drawFigure, drawBoonWAP, drawBaneWAP, drawBoof, drawThing, drawPie,
   getCtx, getRun, getState, setState, setLastTime, getBookRules, getKnockRules, getLeanRules, getPlay,
   getLore, getLikenessMod, getChosenStartChapter, setChosenStartChapter, getIntroMode, setIntroMode,
@@ -429,7 +429,21 @@ export function initPieCards({
         const emblem = tropeEmblemSVG(trope.id, { size: 40, sigil: trope.sigil });
         if (emblem) { const mark = nodeOf('i', 'pie-cardface-emblem'); mark.innerHTML = emblem; p.append(mark); }
         p.append(nodeOf('span', '', 'The trope'), ` ${trope.name}`, ...(trope.bends?.length ? [nodeOf('em', '', ` (${trope.bends.join(', ')})`)] : []), compact || !trope.crossings?.into_lanes?.says ? '' : ` — ${trope.crossings.into_lanes.says}`);
-        return [p];
+        const reveal = compact ? null : readTropeStage(trope);
+        if (!reveal) return [p];
+        const stage = nodeOf('div', 'pie-trope-stage');
+        const steps = nodeOf('ol', 'pie-trope-steps');
+        steps.setAttribute('aria-label', 'Trope development');
+        tropeStages.forEach((name, i) => {
+          const step = nodeOf('li', i <= reveal.index ? 'is-reached' : '', name);
+          if (i === reveal.index) step.setAttribute('aria-current', 'step');
+          steps.append(step);
+        });
+        stage.append(steps);
+        if (reveal.words) stage.append(nodeOf('p', '', reveal.words));
+        if (reveal.spw) stage.append(nodeOf('code', '', reveal.spw));
+        stage.append(nodeOf('small', '', reveal.deepen));
+        return [p, stage];
       })(),
       chips,
       book

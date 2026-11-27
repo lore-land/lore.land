@@ -2341,8 +2341,11 @@
         ]
       },
       "plate": {
-        "src": "/book/images/studies/artifact-struck-price-tag-v1.svg",
-        "state": "study"
+        "src": "/book/images/studies/artifact-struck-price-tag-plate.webp",
+        "state": "public",
+        "width": 640,
+        "height": 960,
+        "alt": "A lamplit paper tag with 3, 2 and 1 struck through, above a coin and a right-pointing arrow"
       }
     },
     {
@@ -2381,8 +2384,11 @@
         ]
       },
       "plate": {
-        "src": "/book/images/studies/artifact-pressed-rose-v1.svg",
-        "state": "study"
+        "src": "/book/images/studies/artifact-pressed-rose-plate.webp",
+        "state": "public",
+        "width": 640,
+        "height": 960,
+        "alt": "A dark pressed rose with a thorn on its stem, laid across the small print of a creased contract"
       }
     }
   ]

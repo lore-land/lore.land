@@ -453,14 +453,23 @@ export function initPieDraw({
       ctx.fillStyle = ink;
       ctx.fillText(key === 'echoes' ? String(Math.ceil(v)) : glyph, bx, by + 0.5);
     });
+    // Frame the carrier's footprint so a hop reads as separation from the road.
+    ctx.fillStyle = 'rgba(26, 23, 36, 0.25)';
+    ctx.beginPath();
+    ctx.ellipse(x, run.y + 15, 14, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
     // The catch: step toward the lean.
     if (run.wobble >= 0.24 && Math.abs(run.tiltDir || 0) >= 0.3 && !run.spill) {
       const side = Math.sign(run.tiltDir);
-      const pulse = calm ? 1 : 0.65 + Math.sin(run.t * 9) * 0.35;
-      const cx = x + side * 50;
+      const pulse = calm ? 1 : 0.9 + Math.sin(run.t * 9) * 0.1;
+      const cx = clamp(x + side * 50, 24, W - 24);
       const cy = y - 18;
       ctx.globalAlpha = pulse;
-      ctx.strokeStyle = '#2c8b86';
+      ctx.fillStyle = '#123b39';
+      ctx.beginPath();
+      ctx.roundRect(cx - 22, cy - 10, 44, 31, 6);
+      ctx.fill();
+      ctx.strokeStyle = '#a9dfcb';
       ctx.lineWidth = 2.4;
       ctx.lineCap = 'round';
       ctx.beginPath();
@@ -468,7 +477,7 @@ export function initPieDraw({
       ctx.moveTo(cx - side * 9, cy - 6); ctx.lineTo(cx - side * 3, cy); ctx.lineTo(cx - side * 9, cy + 6);
       ctx.stroke();
       ctx.font = '700 7px "JetBrainsMono", ui-monospace, monospace';
-      ctx.fillStyle = '#2c8b86';
+      ctx.fillStyle = '#effcf3';
       ctx.fillText('CATCH', cx - side * 3, cy + 13);
       ctx.globalAlpha = 1;
     }

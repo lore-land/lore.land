@@ -571,7 +571,11 @@ async function paintFound() {
     box.append(wrap);
   }
   list.parentElement.hidden = false;
-  list.replaceChildren(...pieces.map((p) => el('li', {}, el('a', { href: mod.pieceRoute(p) }, p.title))));
+  list.replaceChildren(...pieces.map((p) => {
+    const art = el('span', { className: 'texture-found-art' });
+    art.innerHTML = mod.folioPictureHTML(p, { sizes: '9rem' });
+    return el('li', {}, el('a', { href: mod.pieceRoute(p) }, art, el('span', {}, p.title)));
+  }));
 }
 
 /* ─── autonomous.feedback, played through: lore.land's client file, a door in every subject ───

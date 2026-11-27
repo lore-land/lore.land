@@ -1323,6 +1323,25 @@ export function initThingsRenderer({
     const render = CUSTOM_THING_RENDERERS.get(thing.kind) || BUILTIN_THING_RENDERERS[thing.kind];
     if (render) render(ctx, thing, { run, colors, state, reduced, mix, clamp, laneX, W, LANES, LANE_W });
     ctx.restore();
+    if (WIDE.has(thing.kind) && run && state === 'running' && !record.view.zen
+      && !thing.knocked && !thing.cleared && !thing.wapped && Number.isInteger(thing.gap)
+      && thing.gap >= 0 && thing.gap < LANES && y < run.y - 24 && run.y - y < 220) {
+      const gx = laneX(thing.gap);
+      ctx.save();
+      ctx.fillStyle = '#123b39';
+      ctx.strokeStyle = '#a9dfcb';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(gx - 21, y - 8, 42, 16, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.font = '800 9px "JetBrainsMono", ui-monospace, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#effcf3';
+      ctx.fillText('↑ GAP', gx, y);
+      ctx.restore();
+    }
     if (thing.isNew && !thing.wapped && !thing.knocked && !thing.cleared && run && thing.y < run.y - 20) {
       const tx = WIDE.has(thing.kind) ? W / 2 : thing.x;
       const ty = thing.y - thing.h / 2 - (WIDE.has(thing.kind) ? 18 : 14);

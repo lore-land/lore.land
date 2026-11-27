@@ -190,6 +190,8 @@ export function initCastRenderer({
     const vis = recipeVisualFor(rec);
     const swell = run && !run.spill ? 0.85 + richness() * 0.4 : 1;
     ctx.scale(swell, swell);
+    ctx.fillStyle = 'rgba(39, 23, 31, 0.46)';
+    ctx.beginPath(); ctx.ellipse(0, 5, 21, 5, 0, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = vis.plateFill;
     ctx.beginPath(); ctx.ellipse(0, 3, 21, 5, 0, 0, Math.PI * 2); ctx.fill();
     if (vis.plateRim) {
@@ -197,6 +199,15 @@ export function initCastRenderer({
       ctx.lineWidth = 1.2;
       ctx.stroke();
     }
+    const side = ctx.createLinearGradient(0, -1, 0, 6);
+    side.addColorStop(0, vis.crustTop);
+    side.addColorStop(1, vis.crustBottom);
+    ctx.fillStyle = side;
+    ctx.beginPath();
+    ctx.moveTo(-vis.rx, -1);
+    ctx.bezierCurveTo(-vis.rx + 2, 8, vis.rx - 2, 8, vis.rx, -1);
+    ctx.closePath();
+    ctx.fill();
     const crust = ctx.createLinearGradient(0, -8, 0, 4);
     crust.addColorStop(0, vis.crustTop);
     crust.addColorStop(1, vis.crustBottom);
@@ -782,7 +793,7 @@ export function initCastRenderer({
     const placed = [];
     run.tags.forEach((tag) => {
       const half = ctx.measureText(tag.text).width / 2 + 3;
-      let y = tag.y - tag.t * 20;
+      let y = tag.y - (reduced?.matches || tag.trope ? 0 : tag.t * 20);
       for (let tries = 0; tries < 6; tries += 1) {
         const hit = placed.find((p) => Math.abs(p.y - y) < 12 && p.x - p.half < tag.x + half && tag.x - half < p.x + p.half);
         if (!hit) break;
@@ -794,7 +805,20 @@ export function initCastRenderer({
       ctx.fillStyle = tag.text === 'TAX' || tag.hurt ? '#c0392b' : '#b8860b';
       ctx.font = '800 11px "JetBrainsMono", ui-monospace, monospace';
       ctx.textAlign = 'center';
-      ctx.fillText(tag.text, tag.x, y);
+      if (tag.trope) {
+        const width = Math.min(W - 16, half * 2 + 14);
+        ctx.fillStyle = '#262034';
+        ctx.strokeStyle = '#e4b96c';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(tag.x - width / 2, y - 13, width, 19, 5);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#fff0d0';
+        ctx.fillText(tag.text, tag.x, y, width - 12);
+      } else {
+        ctx.fillText(tag.text, tag.x, y);
+      }
       ctx.restore();
     });
   };

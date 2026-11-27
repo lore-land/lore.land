@@ -211,7 +211,7 @@ import { formerLife, grudgeOf, marchWeight, mimeInstead, formerWords, BAKERY_FLO
 import { vectorOf, deedsFrom, branchOdds, SCHEME_SIGNATURES, schemeChose, chainStart, chainStep, CHAINS, SHELVES } from '../modules/valence-shelves.mjs?v=2026_11_16.B';
 import { reasonFor } from './pie-reasons.mjs?v=2026_11_12.A';
 import { createPacer, foldedWords } from './pie-pacing.mjs?v=2026_11_12.A';
-import { revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_13.B';
+import { STAGES, revealStage, noteCrossing, tropeSignals, refrainsFor, loadRhymes } from '../modules/trope-reveal.mjs?v=2026_11_13.B';
 import { cadenceOf } from '../modules/spw-cadence.mjs?v=2026_11_16.B';
 import { gossipFrom, ANT_KINDS, ANT_SAYS } from './pie-ants.mjs?v=2026_11_11.A';
 import { reactionFor, powerMoments, ended as timersEnded, REACTIONS } from './pie-reactions.mjs?v=2026_11_13.B';
@@ -494,7 +494,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     run.lastTropeStage = reveal.stage;
     writeRecord(record);
     if (was < 0 && reveal.index === 0) return;   // a seed is planted quietly; the hint is the first thing said
-    run.tags.push({ x: W / 2, y: 96, t: 0, text: `${trope.sigil || ''} ${trope.name.toUpperCase()} · ${reveal.spw || reveal.stage.toUpperCase()}`.trim() });
+    run.tags.push({ x: W / 2, y: 96, t: 0, trope: true, text: `${trope.name} · ${reveal.stage}` });
     // One trope a room is said aloud and heard; the rest rise quietly (their tag, and the carry's sheet).
     if (run.tropeSaidRoom === roomShown) return;
     run.tropeSaidRoom = roomShown;
@@ -4016,8 +4016,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
         if (state !== 'over' || run !== endedRun || !cardLinks) return;
         const a = document.createElement('a');
         a.href = found.href;
-        a.className = 'pie-card-link';
-        a.textContent = `A piece turned up: ${found.piece.title} →`;
+        a.className = 'pie-card-link pie-card-find-link';
+        const art = nodeOf('span', 'pie-card-find-art');
+        art.innerHTML = findsMod.folioPictureHTML(found.piece, { sizes: '3rem' });
+        a.append(art, nodeOf('span', '', `A piece turned up: ${found.piece.title} →`));
         cardLinks.append(a);
       };
       setTimeout(addLink, 2600);
@@ -6355,6 +6357,10 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     discoveriesNow: () => discoveries(record),
     isUnlocked, pieParts,
     tropeOfKind, withCanvasTarget, fresh, makeThing,
+    tropeStages: STAGES,
+    readTropeStage: (trope) => tropeRevealOn()
+      ? revealStage(trope, tropeSignals(trope.id, { trope, lean: run?.shelfV || null }))
+      : null,
     drawFigure, drawBoonWAP, drawBaneWAP, drawBoof, drawThing, drawPie,
     getCtx: () => ctx,
     getRun: () => run,

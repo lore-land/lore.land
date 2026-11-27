@@ -378,7 +378,8 @@ body[data-surface='monument'] .pie-main {
   border: 1px solid var(--cabinet-glow);
   border-radius: 1.1rem;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--hub-gold) 12%, transparent), transparent 32%),
+    linear-gradient(150deg, color-mix(in srgb, var(--cabinet-glow) 26%, transparent), transparent 42%),
+    repeating-linear-gradient(168deg, transparent 0 4px, rgb(62 39 23 / 4%) 5px, transparent 8px),
     var(--hub-panel);
   box-shadow:
     0 20px 44px rgba(12, 16, 24, 0.16),
@@ -416,9 +417,8 @@ body[data-surface='monument'] .pie-main {
   position: relative;
   overflow: hidden;
   border-radius: 0.7rem;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--hub-ink) 20%, transparent),
-  inset 0 2px 8px rgba(10, 12, 16, 0.12);
+  background: #201d2a;
+  box-shadow: 0 0 0 1px #282030, 0 0 0 3px var(--cabinet-glow), 0 4px 8px rgb(28 19 26 / 30%);
 }
 
 .pie-screen canvas {
@@ -1871,6 +1871,9 @@ html.pie-immersive {
   grid-column: 1;
   width: 3.6rem;
   height: 3.6rem;
+  border-radius: 0.5rem;
+  background: radial-gradient(ellipse at 46% 38%, var(--hub-paper), color-mix(in srgb, var(--card-edge) 21%, var(--hub-panel)));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-edge) 45%, var(--hub-line));
 }
 
 .pie-cardface > .pie-cardface-name {
@@ -6438,4 +6441,62 @@ html.pie-settling .pie-voyage {
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+.pie-trope-stage {
+  display: grid;
+  gap: 0.4rem;
+  align-self: stretch;
+  width: 100%;
+  padding: 0.55rem;
+  border: 1px solid var(--hub-line);
+  background: color-mix(in srgb, var(--hub-gold) 8%, var(--hub-panel));
+}
+
+.pie-trope-stage p { margin: 0; }
+.pie-trope-stage code { overflow-wrap: anywhere; }
+
+.pie-trope-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 0.7rem;
+}
+
+.pie-trope-steps li {
+  padding: 0.1rem 0.35rem;
+  border: 1px dotted var(--hub-muted);
+  border-radius: 1rem;
+  color: var(--hub-muted);
+  text-transform: capitalize;
+}
+
+.pie-trope-steps .is-reached {
+  border-style: solid;
+  border-color: var(--hub-gold);
+  color: var(--hub-ink);
+}
+
+.pie-trope-steps [aria-current='step'] {
+  background: var(--hub-ink);
+  color: var(--hub-panel);
+  font-weight: 700;
+}
+
+.pie-card-find-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pie-card-find-art img {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  background: #22232e;
 }
