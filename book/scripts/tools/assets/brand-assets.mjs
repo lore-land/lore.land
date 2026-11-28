@@ -1,15 +1,15 @@
 /**
- * brand-assets.mjs — share cards and app icons from canon, reproducibly.
+ * brand-assets.mjs — share cards, the favicon, and app icon records from canon.
  *
  *   node book/scripts/tools/assets/brand-assets.mjs            (npm run assets:brand)
  *   node book/scripts/tools/assets/brand-assets.mjs --og       only chapter share cards
  *   node book/scripts/tools/assets/brand-assets.mjs --og --chapters=14,15   only those cards
- *   node book/scripts/tools/assets/brand-assets.mjs --icons    only PWA icons
+ *   node book/scripts/tools/assets/brand-assets.mjs --icons    only favicon and PWA icon records
  *
  * Chapter cards (book/images/og/chapter-NN.jpg, 1200×630): the chapter's own
  * plate (book/images/NN.png) under a leaf-dark veil, set in the cover type —
- * bud sigil, LORE . LAND, "Chapter One", title, "In which …". Icons
- * (book/pwa/icons/): the bud sigil in cover gold on the cover field, as
+ * bud sigil, LORE . LAND, "Chapter One", title, "In which …". Bitmap icons
+ * (book/pwa/icons/): committed renders of the gold bud on green, as
  * "any" (192, 512), "maskable" (512, sigil inside the safe zone) and an
  * Apple touch icon (180).
  *
@@ -89,24 +89,27 @@ function magick(args) {
   execFileSync('magick', args, { stdio: ['ignore', 'ignore', 'inherit'] });
 }
 
-function buildIcons(work) {
+function buildIcons() {
   mkdirSync(ICON_DIR, { recursive: true });
-  // "any": the sigil fills the tile; "maskable": it sits inside the 80% safe
-  // circle so every launcher mask keeps it whole.
-  renderSvg(sigilSvg({ size: 192, scale: 0.62, stroke: 1.5 }), join(ICON_DIR, 'icon-192.png'), work);
-  renderSvg(sigilSvg({ size: 512, scale: 0.62, stroke: 1.2 }), join(ICON_DIR, 'icon-512.png'), work);
-  renderSvg(sigilSvg({ size: 512, scale: 0.44, stroke: 1.3 }), join(ICON_DIR, 'icon-maskable-512.png'), work);
-  renderSvg(sigilSvg({ size: 180, scale: 0.56, stroke: 1.5 }), join(ICON_DIR, 'apple-touch-icon.png'), work);
+  // The generated bitmap art is canonical; the SVG is the small tab mark.
+  for (const { file, size } of ICONS.filter((icon) => icon.file.endsWith('.png'))) {
+    const png = readFileSync(join(ICON_DIR, file));
+    if (png.length < 33 || png.toString('hex', 0, 8) !== '89504e470d0a1a0a' ||
+        png.readUInt32BE(16) !== size || png.readUInt32BE(20) !== size ||
+        png[24] !== 8 || png[25] !== 2) {
+      throw new Error(`${file} must be an opaque ${size}×${size} RGB PNG`);
+    }
+  }
   writeFileSync(join(ICON_DIR, 'favicon.svg'), `${sigilSvg({ size: 32, scale: 0.78, stroke: 2.1 })}\n`);
   writeIconSidecars();
-  console.log('icons: icon-192, icon-512, icon-maskable-512, apple-touch-icon, favicon.svg');
+  console.log('icons: verified bitmap exports and rebuilt favicon.svg');
 }
 
 const ICONS = Object.freeze([
-  { file: 'icon-192.png', id: 'icon_192', size: 192, scale: 0.62, stroke: 1.5, scaleName: 'mark', says: 'The bud sigil in cover gold on the cover field, 192 pixels, any purpose.' },
-  { file: 'icon-512.png', id: 'icon_512', size: 512, scale: 0.62, stroke: 1.2, scaleName: 'mark', says: 'The same bud, 512 pixels, any purpose.' },
-  { file: 'icon-maskable-512.png', id: 'icon_maskable', size: 512, scale: 0.44, stroke: 1.3, scaleName: 'safe', says: 'The bud inside the maskable safe zone, 512 pixels.' },
-  { file: 'apple-touch-icon.png', id: 'apple_touch', size: 180, scale: 0.56, stroke: 1.5, scaleName: 'touch', says: 'The bud as the Apple touch icon, 180 pixels.' },
+  { file: 'icon-192.png', id: 'icon_192', size: 192, scaleName: 'mark', says: 'A lit gold bud on deep green, 192 pixels, any purpose.' },
+  { file: 'icon-512.png', id: 'icon_512', size: 512, scaleName: 'mark', says: 'The same full-bleed gold bud, 512 pixels, any purpose.' },
+  { file: 'icon-maskable-512.png', id: 'icon_maskable', size: 512, scaleName: 'safe', says: 'The full-bleed gold bud inside the maskable safe zone, 512 pixels.' },
+  { file: 'apple-touch-icon.png', id: 'apple_touch', size: 180, scaleName: 'touch', says: 'The bud as the Apple touch icon, 180 pixels.' },
   { file: 'favicon.svg', id: 'favicon', size: 32, scale: 0.78, stroke: 2.1, scaleName: 'small', says: 'The bud as a favicon, the stroke thickened so it survives at 32 pixels.' },
 ]);
 
@@ -151,6 +154,7 @@ ${edges}
 
 function iconSidecar(icon) {
   const edges = mutationEdges([...ICON_MUTATIONS, ['scale', icon.scaleName]]).map((edge) => `    ${edge}`).join('\n');
+  const geometry = icon.scale === undefined ? '' : `\n    %scale[${icon.scale}]\n    %stroke[${icon.stroke}]`;
   return `# ${icon.says}
 #>${icon.id}
 !icon{
@@ -158,8 +162,7 @@ function iconSidecar(icon) {
     .file[${spwQuote(icon.file)}]
     #says[${spwQuote(icon.says)}]
     %size[${icon.size}]
-    %scale[${icon.scale}]
-    %stroke[${icon.stroke}]
+${geometry}
 ${edges}
   }
 }
@@ -188,7 +191,7 @@ function writeIconSidecars() {
   mkdirSync(ICON_DIR, { recursive: true });
   for (const icon of ICONS) writeFileSync(join(ICON_DIR, `${icon.file.replace(/\.[^.]+$/, '')}.spw`), iconSidecar(icon));
   const lines = ICONS.map((icon) => `  *${icon.id}{ #says[${spwQuote(icon.says)}] ~"book/pwa/icons/${icon.file}" }`);
-  writeFileSync(join(ICON_DIR, 'index.spw'), `# App icons drawn from the bud sigil. shortcut-pie.png and shortcut-atlas.png are hand icons and keep no mutation record.
+  writeFileSync(join(ICON_DIR, 'index.spw'), `# App icon renders based on the bud sigil. shortcut-pie.png and shortcut-atlas.png are hand icons and keep no mutation record.
 #>app_icons
 !icons{
 ${lines.join('\n')}
@@ -258,7 +261,7 @@ if (only.includes('--sidecars')) {
   need('rsvg-convert');
   const work = mkdtempSync(join(tmpdir(), 'lore-brand-'));
   try {
-    if (!only.length || only.includes('--icons')) buildIcons(work);
+    if (!only.length || only.includes('--icons')) buildIcons();
     if (!only.length || only.includes('--og')) buildCards(work, onlyChapters);
   } finally {
     rmSync(work, { recursive: true, force: true });

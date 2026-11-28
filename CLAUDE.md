@@ -16,7 +16,7 @@ Open work is in `.spw/index.spw` `~direction` and in `npm run spw:plans`, whose 
 
 Chapter share images are cards, not raw plates.
 
-- `npm run assets:brand` (`book/scripts/tools/assets/brand-assets.mjs`) sets each public plate (`book/images/NN.png`) in the cover type into `book/images/og/chapter-NN.jpg` (1200×630) and rebuilds the PWA icons from the bud sigil. `-- --og` makes only the cards, `-- --og --chapters=14,15` only those cards, `-- --icons` only the icons.
+- `npm run assets:brand` (`book/scripts/tools/assets/brand-assets.mjs`) sets each public plate (`book/images/NN.png`) in the cover type into `book/images/og/chapter-NN.jpg` (1200×630) and checks the committed PWA PNGs and rebuilds the SVG favicon. `-- --og` makes only the cards, `-- --og --chapters=14,15` only those cards, `-- --icons` checks icon sizes and rebuilds the favicon and icon records.
 - Each card and each rebuilt icon keeps a `.spw` sidecar beside the file (description and mutations). `npm run assets:brand -- --sidecars` rewrites the sidecars from chapter JSON without ImageMagick.
 - The picture pass is authoring-time only (needs `magick`, `rsvg-convert`, macOS Georgia); outputs are committed.
 - Re-run after a title, "in which" line, plate or sigil changes, then `npm run chapters:build`.

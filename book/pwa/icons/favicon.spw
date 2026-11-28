@@ -5,6 +5,7 @@
     .file["favicon.svg"]
     #says["The bud as a favicon, the stroke thickened so it survives at 32 pixels."]
     %size[32]
+
     %scale[0.78]
     %stroke[2.1]
     =@sigil{ @bud }

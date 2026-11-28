@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lore-pwa-v2026_11_16.B';
+const CACHE_VERSION = 'lore-pwa-v2026_11_27.icons';
 /* Chapters a reader has opened (or asked to keep) live in their own cache,
  * which survives releases: navigations are network-first, so a kept page is
  * only ever served when the network is gone, and it is refreshed on the next
@@ -20,7 +20,10 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_VERSION).then((cache) => cache.addAll([
       '/book/pwa/offline.html',
       '/book/pwa/icons/favicon.svg',
-      '/book/pwa/icons/icon-192.png'
+      '/book/pwa/icons/icon-192.png',
+      '/book/pwa/icons/icon-512.png',
+      '/book/pwa/icons/icon-maskable-512.png',
+      '/book/pwa/icons/apple-touch-icon.png'
     ]))
       .then(() => self.skipWaiting())
   );
