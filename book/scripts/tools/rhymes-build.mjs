@@ -37,7 +37,7 @@ const surfaces = [];
 const skipped = [];
 for (const file of [...chapterFiles, ...canonFiles]) {
   const source = readFileSync(resolve(ROOT, file), 'utf8');
-  const out = seed.parse(source, { lexProfile: 'prose' });
+  const out = seed.parse(source, { lexProfile: 'prose', eventPolicy: 'none' });   // no rule trace: findRhymes reads the tree
   if (!out.ast || !out.completeness?.complete || out.completeness?.proseFallback) { skipped.push(file); continue; }
   surfaces.push({ file, source, columns: seed.columnsOfAst(out.ast, { success: out.success, complete: out.completeness.complete, proseFallback: out.completeness.proseFallback }) });
 }

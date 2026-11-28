@@ -184,7 +184,8 @@ import { TOTAL_CHAPTERS } from '../modules/book-extent.mjs';
 import { CARDS, CARD_TYPES } from './pie-cards.mjs?v=2026_11_11.A';
 import { turnCard as shelveCard, cardsTurned } from '../modules/collection.mjs?v=2026_11_16.B';
 import { POWER_SPELLS, WORDS, powersInPlay, takePowersFromAddress, readSpells, describePower, visitSpells, setVisitSpells, powersLink, carryProvenance } from './pie-powers.mjs?v=2026_11_09.F';
-import { loadRules, readRules, writePower, loadParser } from './pie-spw.mjs?v=2026_11_16.B';
+import { loadRules, readRules, writePower, loadParser, RULES_URL } from './pie-spw.mjs?v=2026_11_16.B';
+import { onSurface } from '../modules/spw-live.mjs?v=2026_11_16.B';
 import { CHARACTERS, REASONS, remembers, portraitSVG, identitySpell as characterSpell } from '../modules/characters.mjs?v=2026_11_16.B';
 import { placeSVG, tropeEmblemSVG, PLACES, COLORS as PLACE_COLORS } from '../modules/panel-art.mjs?v=2026_11_16.B';
 import { renderSpell } from '../modules/spw-spell.mjs?v=2026_11_16.B';
@@ -192,12 +193,12 @@ import { createShow, LEGEND } from './pie-show.mjs?v=2026_11_11.A';
 import { createHeights, clearance, HEIGHTS_DEFAULTS } from './pie-heights.mjs?v=2026_11_16.B';
 import { primeAudio, wapSound, playTone, setSoundPlace, setSoundMood, setSoundRoom, setSoundTilt, markBeat, rhythmHit, rhythmFound, chapterIncipit, chapterCadence, leitmotif, setMusicBed, landQuality, landPulse, approachCue, characterMotif, dimensionFanfare, characterTheme, mimeRest, curtainCall, setThemes, setSoundCarrier, setSoundConfig, setBoardHarmonicState, playBoardMotifCue, setBoardPosition } from './pie-sound.mjs?v=2026_11_16.B';
 import { shelfColor, chainSting, tropeMotif, cadenceVoice, foreshadowHear, setSoundScene, setAmbience, sceneMaterial, laneWarning, powerEnding, TEXTURES, setSoundTextures, setSoundFeel, feelSample, auditionChapterProgression } from './pie-sound.mjs?v=2026_11_16.B';
-import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseTuningDomains, writeTuningDomains, effectiveDomain } from '../modules/pie-tuning.mjs';
+import { TUNING_DOMAINS, DOMAIN_ORDER, patternStep, loadAudioTropes, parseAudioTropes, TROPES_URL as AUDIO_TROPES_URL, parseTuningDomains, writeTuningDomains, effectiveDomain } from '../modules/pie-tuning.mjs';
 import { VALUE_DEFS, VALUE_IDS, newValueState, noteValueEvent, rankValues, valueBlessing, parallelReflection, recordChapterParallel, readChapterParallels } from '../modules/pie-values.mjs';
 import { BUILTIN_STYLES, parseCreatorStyle, formatCreatorStyle, allCreatorStyles, saveCreatorStyle, activeCreatorStyle, setActiveCreatorStyle, styleLineForProvenance } from '../modules/creator-styles.mjs';
 import { noteSpark, syncDerivedSparks, bindSiteResonance } from '../modules/intrinsic-rewards.mjs?v=2026_11_16.B';
-import { loadLevels, createConductor, foundRhythms, meetsOf, paceAt, BEATS } from './pie-rhythm.mjs?v=2026_11_16.B';
-import { loadMotifs } from './pie-tropes.mjs';
+import { loadLevels, readLevels, LEVELS_URL, createConductor, foundRhythms, meetsOf, paceAt, BEATS } from './pie-rhythm.mjs?v=2026_11_16.B';
+import { loadMotifs, readMotifs, TROPES_URL as MOTIFS_URL } from './pie-tropes.mjs';
 import { loadWay, readWay, asideNow, pairFor, takeWayFromAddress } from '../modules/way-through.mjs?v=2026_11_16.B';
 import { loadMechanics, open as unlockOpen, earn, standing, unlockWords, mechanics as unlockMechanics, UNLOCK_EVENT } from '../modules/unlocks.mjs?v=2026_11_16.B';
 import { planPanels, settlePlan, beatOf } from './pie-panels.mjs?v=2026_11_11.A';
@@ -591,12 +592,15 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
    * and motif; rows come on its beats; one room keeps a rhythm, found by playing along. */
   let levelData = { levels: {}, rhythms: {} };
   const conductor = createConductor({ onFound: (r) => foundRhythm(r) });
-  loadLevels().then((data) => {
+  const takeLevels = (data) => {
     levelData = data;
     meetsAt = meetsOf(data.levels);
     conductor.setLevels(data);
     if (run?.chapter) conductor.setChapter(run.chapter, data.levels[run.chapter]);
-  });
+  };
+  loadLevels().then(takeLevels);
+  // npm run dev: a saved pie-levels.spw retunes the legs in place (spw-live.mjs); the deployed page never hears it.
+  onSurface(LEVELS_URL, 'the chapter levels', (text) => takeLevels({ text, ...readLevels(text) }));
   /* How each leg plays as its chapter develops it (pie-levels.spw: &meets, &kinds, @cast, !schemes, ~pace, %egg, ^beat),
    * a trial (chapter-tuned): what a leg brings in first, the mix it keeps in its own place, who may come and which of
    * his schemes, how taut it is through its length, and whether the Egg is passed. With the trial off, a term left out,
@@ -614,6 +618,7 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   const legTension = () => { const p = progress(); const pace = tunedLeg()?.pace; return pace?.length ? paceAt(pace, p) : p; };
   /* Whose it is: each character's theme (.spw/runtime/audio-tropes.spw), and the reader's way through (way-through.mjs). */
   loadMotifs().then((motifs) => setThemes(motifs));
+  onSurface(MOTIFS_URL, 'the character motifs', (text) => setThemes(readMotifs(text)));
   takeWayFromAddress();
   let wayData = null;
   let way = readWay();
@@ -4236,6 +4241,19 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
     paintStress?.();
     paintDesk?.();
   });
+  /* npm run dev: a saved pie-rules.spw is read again in place (spw-live.mjs), as a visit's spells are, so a tuning is
+   * tried by saving it. Before the rules are first read there is nothing to replace: that read fetches the saved file. */
+  onSurface(RULES_URL, 'the lanes’ rules', (source) => {
+    if (!bookRules) return false;
+    return readRules(source).then(async (read) => {
+      bookRules = { ...read, source };
+      await readVisit();
+      paintBench?.();
+      paintStress?.();
+      paintDesk?.();
+    });
+  });
+  onSurface(AUDIO_TROPES_URL, 'the tuning patterns', (text) => { audioTropes = parseAudioTropes(text); });
   const powerFor = (id) => play.powers[String(id).replace(/-/g, '_')] || null;
 
   /** Whether this carry is running on the book's own spell for a power, or a visit's replacement. */
@@ -6441,6 +6459,11 @@ export function initPieGame(root = document.querySelector('[data-pie-game]')) {
   initBiasFromURL();
   whenQuiet(() => {
     warmBiasParser();
+    loadRegisters().then(({ registers }) => { biasRegisters = registers || {}; paintBias(); }).catch(() => {});
+  });
+  // npm run dev: registers replaced in place (a saved bias.spw, spw-live.mjs) are the ones Setup offers from then on.
+  window.addEventListener(BIAS_EVENT, (event) => {
+    if (event.detail?.from !== 'registers') return;
     loadRegisters().then(({ registers }) => { biasRegisters = registers || {}; paintBias(); }).catch(() => {});
   });
 

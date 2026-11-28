@@ -5,7 +5,7 @@
 #:layer #!pragmatics
 
 ^"meta"{
-  .updated: "2026-11-17"
+  .updated: "2026-11-28"
   .role: "Cross-host architectural proposals for spw-workbench, factshift.center interaction semantics, and CS foundations of guided Spw manipulation"
   .rationale: "spw-workbench now serves four live host surfaces: spw.quest (Cloudflare Worker guide and interactive pivot/entry puzzles), factshift.center (force-directed spatial canvas, edge-rail scrubbing, body-pinch folding, and joint/seam rewriting), spwashi.com (personal hub, 1,322-surface corpus, upstream-workbench-recommendations, and algorithmic/linguistic affordance caches), and lore.land (illustrated serial, musical AST sonification, and lane play). Reviewing their histories, telemetry, and stress audits together exposes where parser mechanics, spatial gestures, Computer Science abstractions, and guided symbolic manipulation converge into one shared substrate."
   .hosts_reviewed: [
@@ -78,6 +78,8 @@
       "Bump lore.land workbench pin past cf41ca22 to bcf0da18+ so workers/builds inherit rule_trace_when_kept immediately.",
       "Update outlineFromSource in spw-lsp to reuse warm document parses (or pass eventPolicy none) and add a rule-per-byte lint for prose-heavy bodies."
     ]
+    landed: "2026-11-28: lore.land is pinned at 39bea1be. The vendored bundle (book/scripts/tools/bundle-spw-seed.mjs) sets the parser default to keep no rule trace, so every browser and Node reader of it has the fast path, the parses its readers make inside included. Measured in Node: pie-levels.spw 709 ms to 58 ms, pie-rules.spw 346 ms to 34 ms, a typed spell line about 1.3 ms to 0.17 ms; spw:lint, which reads the source, passes none itself and went from 14.5 s to 3.1 s. Trees, errors, warnings and completeness are unchanged; a trace is kept when asked for."
+    remaining: "Upstream readers still parse with the trace default inside them: pivots.ts statements() reads every candidate pivot back through parse(text), and geometry-inspect, topography-probe, derived-marks, authority, form-ladders, measure-protocol, self-mass, fingerprint and composition-forms do the same. Either default ParserOptions.eventPolicy to none and ask for a trace where one is kept, or pass none in those reads. Then lore.land can drop its bundle-time default."
   }
   p2_unify_line_and_pivots_with_byte_spans: {
     target: "packages/spw-seed/src/line/index.ts, packages/spw-seed/src/experimental/pivots.ts"
@@ -124,6 +126,11 @@
       "Unify ~# aspect with #>, #:, and #! under ParticleNode so dialect signatures and ParticleMix never rescan raw source.",
       "Build a file-scoped alias binder over the AST and generate TextMate / semantic tokens from one operator table checked by compareLex against lex() and lite/scan()."
     ]
+  }
+  p9_one_lens_many_focuses: {
+    target: "packages/spw-seed/src/canonical/particle-theory.ts (analyzeParticleField, unpaired_focus)"
+    problem: "lore.land headers write one lens and several focuses (#:surface #!story #!game #!track). At 39bea1be analyzeParticleField pairs only the first focus with its lens and reports each later one as unpaired_focus: 34 hazards over 164 surfaces, every one of this shape, and no other hazard kind (spw inspect particles .spw)."
+    ask: "Say whether a lens governs every focus after it in its run until the next lens. If it does, pair them and drop the hazard. If it does not, lore.land would write the lens again (#:surface #!story #:surface #!game), and that is for the maker to decide; the canon is unchanged until then."
   }
   p8_anti_unification_and_scientific_affordances: {
     target: "packages/spw-seed/src/experimental/*, packages/spw-seed/src/grammar/expressions.ts"

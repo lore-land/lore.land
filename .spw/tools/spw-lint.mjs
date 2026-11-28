@@ -41,7 +41,7 @@ let restatingTotal = 0;
 for (const file of files) {
   const rel = path.relative(ROOT, file);
   const text = fs.readFileSync(file, 'utf8');
-  const result = parse(text, { lexProfile: 'prose' });
+  const result = parse(text, { lexProfile: 'prose', eventPolicy: 'none' });   // no rule trace: errors and warnings are kept either way
 
   errorTotal += result.errors.length;
   warningTotal += result.warnings.length;

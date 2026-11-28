@@ -27,6 +27,8 @@
  * vendored spw-seed parser, when something has loaded it (warmBiasParser), reads spells too.
  */
 
+import { onSurface } from './spw-live.mjs?v=2026_11_16.B';
+
 export const BIAS_EVENT = 'lore:bias';
 export const RESPONSE_FAMILIES = Object.freeze(['pop', 'toast', 'tag', 'spill', 'reveal', 'points', 'settle']);
 
@@ -113,30 +115,41 @@ export function readRegisters(text) {
   return { registers: out, anchors: names };
 }
 
+/** Take a reading of bias.spw as the registers. False if it held none (the old ones stay). */
+function takeRegisters(read) {
+  if (!Object.keys(read.registers).length) return false;
+  registers = read.registers;
+  anchors = read.anchors;
+  // A bias read before the registers came (or under the old ones) is read again, now that names can be checked.
+  if (active) {
+    const again = readBias(active.source || active.expr);
+    active = again.ok ? { expr: again.expr, source: active.source, layers: again.layers, combination: again.combination, from: active.from } : null;
+  }
+  return true;
+}
+
 /** Fetch and read /.spw/runtime/bias.spw once. Resolves { registers, anchors }. */
 export function loadRegisters() {
   if (registers) return Promise.resolve({ registers, anchors });
   if (!loading) {
     const get = typeof fetch === 'function' ? fetch(REGISTERS_URL).then((res) => (res.ok ? res.text() : '')) : Promise.resolve('');
     loading = get.catch(() => '').then((text) => {
-      const read = readRegisters(text);
-      if (Object.keys(read.registers).length) {
-        registers = read.registers;
-        anchors = read.anchors;
-        // A bias read before the registers came is read again, now that names can be checked.
-        if (active) {
-          const again = readBias(active.source || active.expr);
-          active = again.ok ? { expr: again.expr, source: active.source, layers: again.layers, combination: again.combination, from: active.from } : null;
-          dispatch(active?.from || 'registers');
-        }
-      } else {
-        loading = null;   // nothing read: the next call tries again
-      }
+      const had = Boolean(active);
+      if (!takeRegisters(readRegisters(text))) loading = null;   // nothing read: the next call tries again
+      else if (had) dispatch(active?.from || 'registers');
       return { registers: registers || {}, anchors: anchors || {} };
     });
   }
   return loading;
 }
+
+// npm run dev: a saved bias.spw replaces the registers in place (spw-live.mjs); the deployed page never hears it.
+onSurface(REGISTERS_URL, 'the bias registers', (text) => {
+  if (!takeRegisters(readRegisters(text))) return false;
+  loading = Promise.resolve({ registers, anchors });
+  dispatch('registers');
+  return true;
+});
 
 /** Let readBias use the real parser too (lazily; shares the instance pie-spw.mjs loads). */
 export function warmBiasParser() {

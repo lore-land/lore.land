@@ -33,6 +33,7 @@ Passing checks do not show that something plays or reads right.
 - Add a scenario when something passes every check while being wrong.
 - A new player's story cards stop the game clock, so confirm time advances before trusting a run.
 - Sound can be measured but not judged; say so if nobody has listened.
+- To tune a `.spw/runtime/*.spw` surface, run `npm run dev` and save it: the terminal says whether it reads whole, and the open page takes it in place (`.spw/CLAUDE.md`, "Drafting a runtime surface live").
 
 ## Releasing
 

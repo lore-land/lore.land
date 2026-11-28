@@ -1,7 +1,7 @@
 {
   "note": "The shapes the book writes more than once (book/scripts/tools/rhymes-build.mjs; npm run rhymes:build), found by the workbench parser’s findRhymes over the released chapter mirrors and the trope and character canon. A rhyme is a shape written again with other words (a template with holes); a refrain is the same shape, same words. Each names the tropes it serves; trope-reveal.mjs counts them as evidence a trope has turned. Generated: do not edit by hand.",
   "source": {
-    "workbench": "cf41ca22",
+    "workbench": "39bea1be",
     "released": 26,
     "files": [
       ".spw/chapters/01.spw",
@@ -36,7 +36,7 @@
     "skipped": []
   },
   "counts": {
-    "found": 109,
+    "found": 108,
     "kept": 80,
     "rhymes": 80,
     "refrains": 0,
@@ -3888,7 +3888,7 @@
       "id": "rhyme-63",
       "kind": "rhyme",
       "head": "Parameter",
-      "nodes": 47,
+      "nodes": 48,
       "instances": 2,
       "files": [
         ".spw/chapters/05.spw",

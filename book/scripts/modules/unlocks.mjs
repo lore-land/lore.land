@@ -24,6 +24,7 @@ const STORE = 'lore.unlocks.v1';
 const VISIT = 'lore.unlocks.visit';
 
 import { parseProseSpw, topExpressions, bodyExpressions, frameItems, unquoteText } from './spw-ast.mjs?v=2026_11_16.B';
+import { onSurface } from './spw-live.mjs?v=2026_11_16.B';
 
 /* ─── Reading the registry: a small reader for a plain, regular file ─── */
 
@@ -135,6 +136,14 @@ export function loadMechanics() {
   return loading;
 }
 export const mechanics = () => registry?.mechanics || {};
+
+// npm run dev: a saved mechanics.spw is the registry from then on (spw-live.mjs): weights and thresholds are asked of
+// it the next time anything asks, and whatever its weight now reaches is kept. The deployed page never hears it.
+onSurface(MECHANICS_URL, 'the unlock mechanics', (text) => {
+  registry = readMechanics(text);
+  loading = Promise.resolve(registry);
+  earn();
+});
 
 /* ─── What the reader keeps (counted, never chosen) ─── */
 

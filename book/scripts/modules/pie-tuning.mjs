@@ -16,7 +16,7 @@
 /** @typedef {{ label: string, sigil: string, min: number, max: number, step: number, unit?: string, says: string }} DialSpec */
 /** @typedef {{ id: string, title: string, spell: string, says: string, dials: Record<string, number>, choices?: Record<string, string[]>, values: Record<string, number | string> }} DomainConfig */
 
-const TROPES_URL = '/.spw/runtime/audio-tropes.spw';
+export const TROPES_URL = '/.spw/runtime/audio-tropes.spw';
 
 /** Bounded numeric & symbolic tuning domains. */
 export const TUNING_DOMAINS = Object.freeze({

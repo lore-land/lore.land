@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { spwLive } from './book/scripts/tools/vite-spw-live.mjs';
 
 const chapterInputs = Object.fromEntries(
     readdirSync(resolve(__dirname, 'book/chapter'), { withFileTypes: true })
@@ -24,6 +25,9 @@ export default defineConfig({
     // Serve from root — the site is a static MPA
     root: '.',
     publicDir: false, // no separate public dir, everything is at root
+
+    // Dev only: a saved .spw surface is read by the workbench parser and handed to the page's readers in place.
+    plugins: [spwLive()],
 
     server: {
         port: 3000,

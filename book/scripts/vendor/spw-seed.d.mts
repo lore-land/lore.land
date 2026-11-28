@@ -13,7 +13,8 @@ export interface ParseResult {
   warnings: ParseIssue[];
   events?: unknown[];
 }
-export interface ParseOptions { lexProfile?: 'default' | 'prose' }
+/** eventPolicy: the bundle keeps no rule trace unless asked ('trace'); errors and warnings are kept either way. */
+export interface ParseOptions { lexProfile?: 'default' | 'prose'; eventPolicy?: 'trace' | 'diagnostics' | 'none' }
 export interface BiasEdge { anchor: unknown; axis: unknown; targets: unknown[]; sign: unknown }
 export function parse(text: string, options?: ParseOptions): ParseResult;
 export function readBias(node: unknown): BiasEdge | null;

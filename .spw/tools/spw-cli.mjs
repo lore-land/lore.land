@@ -10,9 +10,10 @@ import { spawnSync } from 'node:child_process';
 import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
-/** Commands that read. `format` and `mount` are allowed only in their read forms, below. */
-const READS = new Set(['doctor', 'roots', 'tree', 'census', 'graph', 'formula', 'density', 'form', 'lattice', 'measure', 'authority', 'taste', 'stack', 'fingerprint', 'lint', 'query', 'resolve', 'select', 'outline', 'ls', 'inspect', 'help']);
-const WRITE_FLAGS = /^--(write|apply|fix|save|html|force)(=|$)/;
+/** Commands that read. `format` and `mount` are allowed only in their read forms, below. say, pairs, pivot, sheet, exp,
+ * expand, cite and follow read since workbench 39bea1be (expand --write and cite --remember are refused by flag). */
+const READS = new Set(['doctor', 'roots', 'tree', 'census', 'graph', 'formula', 'density', 'form', 'lattice', 'measure', 'authority', 'taste', 'stack', 'fingerprint', 'lint', 'query', 'resolve', 'select', 'outline', 'ls', 'inspect', 'help', 'say', 'pairs', 'pivot', 'sheet', 'exp', 'expand', 'cite', 'follow']);
+const WRITE_FLAGS = /^--(write|apply|fix|save|html|force|remember|out)(=|$)/;
 
 /**
  * Why a command line may not run, or null if it may.

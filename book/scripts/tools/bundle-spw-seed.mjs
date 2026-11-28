@@ -23,6 +23,7 @@ const ENTRY = path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/index.ts');
 // scanPairLabels reads a sealed line's label and its mirrored close (finds, seasons); spokenLine says a line in the
 // names of its parts (the board line, for whoever reads Setup by ear). readLine/writeLine/slotHash/readRegisterStamps/
 // readMarks/checkLine/hydrateSnippet arrived with workbench 84cf313; splitMarks/readFragments/pivotsOf/pivotReadCounts (spw.pivots/1) arrived with cf41ca22.
+// 39bea1be (rule_trace_when_kept, bcf0da18) builds no rule trace when the parse keeps none; see TRACE below.
 const EXPORTS = [
   'parse',
   'readBias',
@@ -46,6 +47,24 @@ const EXPORTS = [
   'pivotReadCounts'
 ];
 const OUTFILE = path.join(ROOT, 'book/scripts/vendor/spw-seed.mjs');
+/* Nothing lore.land runs reads a parse's rule trace, and the workbench's parse() keeps one unless told otherwise:
+ * on .spw/runtime/pie-levels.spw that is 194,098 events and about twelve times the time. So the bundle's own default
+ * keeps none. That covers the parses its readers make inside (pivotsOf reads every candidate back through parse()).
+ * Trees, errors, warnings and completeness are the same either way; pass { eventPolicy: 'trace' } to keep a trace.
+ * The line is matched exactly, so a workbench bump that moves it fails here, not silently. */
+const TRACE = { file: path.join(ROOT, '.spw/_workbench/packages/spw-seed/src/types/state.ts'), from: "  eventPolicy: 'trace',\n  lexProfile: undefined,", to: "  eventPolicy: 'none',\n  lexProfile: undefined," };
+const quietTrace = {
+  name: 'lore-quiet-trace',
+  /** @param {import('esbuild').PluginBuild} build */
+  setup(build) {
+    build.onLoad({ filter: /[\\/]types[\\/]state\.ts$/ }, (args) => {
+      if (path.resolve(args.path) !== TRACE.file) return undefined;
+      const source = fs.readFileSync(args.path, 'utf8');
+      if (!source.includes(TRACE.from)) throw new Error(`[bundle-spw-seed] the parser's default event policy moved (${path.relative(ROOT, TRACE.file)}); look again before bundling`);
+      return { contents: source.replace(TRACE.from, TRACE.to), loader: 'ts' };
+    });
+  }
+};
 const VERIFY = process.argv.includes('--verify');
 
 if (!fs.existsSync(ENTRY)) {
@@ -55,7 +74,8 @@ if (!fs.existsSync(ENTRY)) {
 
 const banner = `/* GENERATED — do not hand-edit.
    Bundled from .spw/_workbench/packages/spw-seed/src/index.ts (spw-workbench parser kernel)
-   via node book/scripts/tools/bundle-spw-seed.mjs. Regenerate after every workbench update. */
+   via node book/scripts/tools/bundle-spw-seed.mjs. Regenerate after every workbench update.
+   parse() keeps no rule trace by default here; pass { eventPolicy: 'trace' } for one. */
 `;
 
 const result = await esbuild.build({
@@ -68,6 +88,7 @@ const result = await esbuild.build({
   platform: 'browser',
   target: 'es2022',
   banner: { js: banner },
+  plugins: [quietTrace],
   write: false,
   logLevel: 'silent'
 });

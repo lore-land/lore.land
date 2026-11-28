@@ -42,6 +42,8 @@ Model-neutral guide to `lore.land`: architecture, canon routing, JavaScript modu
   - `ebook/storage.mjs` — `localStorage` reading state, register persistence, nearest-section viewport probe.
 - `spw-portable.mjs` (`// @ts-check`) — client-side `#spw64=` base64url URL fragment codec (`encodeSpwFragment`, `decodeSpwFragment`), cross-host `word[mode]{body}(scene)<concept>` slot projector (`projectCrossHostSlot`), and portable door URL builder (`buildPortableDoorUrl`).
 
+- `spw-live.mjs` (`// @ts-check`) — `onSurface(url, name, read)`: under `npm run dev`, a saved `.spw` surface is checked by the workbench parser in the dev server (`book/scripts/tools/vite-spw-live.mjs`, serve only) and handed to the reader that took it, in place; a draft that does not read whole is not handed on. Readers of `.spw/runtime/*.spw` subscribe beside their loaders. Nothing announces on the deployed site.
+
 ### *Exactly One Pie* (`book/scripts/home/` + `book/scripts/home/pie/`)
 See `book/scripts/home/AGENTS.md` for the full subsystem map:
 - `pie-game.mjs` — core simulation loop, lane physics, trope crossings, chapter progression.
